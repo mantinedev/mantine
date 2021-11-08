@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
-import { getSizeValue, useExtractedMargins } from '@mantine/styles';
+import { useExtractedMargins, useMantineTheme } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { Input } from '../Input';
@@ -64,7 +64,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     }: PasswordInputProps,
     ref
   ) => {
-    const rightSectionWidth = getSizeValue({ size, sizes: rightSectionSizes });
+    const theme = useMantineTheme();
+    const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
     const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
     const uuid = useUuid(id);
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
@@ -74,7 +75,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       <ActionIcon<'button'>
         tabIndex={toggleTabIndex}
         radius={radius}
-        size={getSizeValue({ size, sizes: buttonSizes })}
+        size={theme.fn.size({ size, sizes: buttonSizes })}
         aria-hidden="true"
         onMouseDown={(event) => {
           event.preventDefault();
@@ -87,7 +88,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           }
         }}
       >
-        <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
+        <PasswordToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
       </ActionIcon>
     );
 

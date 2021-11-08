@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface InputWrapperStyles {
   size: MantineSize;
@@ -13,7 +13,7 @@ export default createStyles((theme, { size }: InputWrapperStyles) => ({
   label: {
     display: 'block',
     marginBottom: 5,
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
     wordBreak: 'break-word',
@@ -34,7 +34,7 @@ export default createStyles((theme, { size }: InputWrapperStyles) => ({
     color: `${
       theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6]
     } !important`,
-    fontSize: `${getSizeValue({ size, sizes: theme.fontSizes }) - 2}px !important`,
+    fontSize: `${theme.fn.size({ size, sizes: theme.fontSizes }) - 2}px !important`,
     lineHeight: 1.2,
   },
 

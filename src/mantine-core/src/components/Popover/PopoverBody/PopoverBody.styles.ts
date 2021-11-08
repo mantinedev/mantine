@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineShadow } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineShadow } from '@mantine/styles';
 
 interface PopoverBodyStyles {
   shadow: MantineShadow;
@@ -16,7 +16,7 @@ export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyl
   popover: {
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     pointerEvents: 'all',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
   },
 
   body: {
@@ -24,18 +24,18 @@ export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyl
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     boxShadow: shadow in theme.shadows ? theme.shadows[shadow] : shadow,
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
   },
 
   inner: {
-    padding: getSizeValue({ size: spacing, sizes: theme.spacing }),
+    padding: theme.fn.size({ size: spacing, sizes: theme.spacing }),
   },
 
   header: {
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
     }`,
-    padding: `${theme.spacing.xs / 1.5}px ${getSizeValue({
+    padding: `${theme.spacing.xs / 1.5}px ${theme.fn.size({
       size: spacing,
       sizes: theme.spacing,
     })}px`,

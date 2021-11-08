@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getSizeValue,
   MANTINE_SIZES,
   MantineSize,
   MantineTheme,
@@ -50,7 +49,7 @@ export default createStyles(
     root: {
       boxSizing: 'border-box',
       flexGrow: grow ? 1 : 0,
-      padding: getSizeValue({ size: gutter, sizes: theme.spacing }) / 2,
+      padding: theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
       marginLeft: offset ? `${100 / (columns / offset)}%` : undefined,
       flexBasis: getColumnWidth(span, columns),
       flexShrink: 0,

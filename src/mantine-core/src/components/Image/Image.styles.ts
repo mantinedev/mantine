@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface ImageStyles {
   radius: MantineNumberSize;
@@ -20,7 +20,7 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
     width: '100%',
     height: '100%',
     border: 0,
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
   },
 
   caption: {
@@ -37,7 +37,7 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     position: 'absolute',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     top: 0,
     left: 0,
     right: 0,

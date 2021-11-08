@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface MenuBodyStyles {
   size: MantineNumberSize;
@@ -16,7 +16,7 @@ const MENU_PADDING = 4;
 
 export default createStyles((theme, { size }: MenuBodyStyles) => ({
   body: {
-    width: getSizeValue({ size, sizes }),
+    width: theme.fn.size({ size, sizes }),
     overflow: 'hidden',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     pointerEvents: 'all',

@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  MantineSize,
-  MantineTheme,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
 
 import type { InputVariant } from './Input';
 
@@ -109,10 +103,10 @@ export default createStyles(
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
-            minHeight: getSizeValue({ size, sizes }),
-            paddingLeft: getSizeValue({ size, sizes }) / 3,
-            paddingRight: getSizeValue({ size, sizes }) / 3,
-            borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+            minHeight: theme.fn.size({ size, sizes }),
+            paddingLeft: theme.fn.size({ size, sizes }) / 3,
+            paddingRight: theme.fn.size({ size, sizes }) / 3,
+            borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
           }
         : null;
 
@@ -133,7 +127,7 @@ export default createStyles(
     return {
       root: {
         position: 'relative',
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       },
 
       input:
@@ -146,13 +140,13 @@ export default createStyles(
                 ? variant === 'unstyled'
                   ? undefined
                   : 'auto'
-                : getSizeValue({ size, sizes }),
+                : theme.fn.size({ size, sizes }),
               WebkitTapHighlightColor: 'transparent',
-              lineHeight: multiline ? theme.lineHeight : `${getSizeValue({ size, sizes }) - 2}px`,
+              lineHeight: multiline ? theme.lineHeight : `${theme.fn.size({ size, sizes }) - 2}px`,
               appearance: 'none',
               resize: 'none',
               boxSizing: 'border-box',
-              fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+              fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
               width: '100%',
               color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
               display: 'block',
@@ -191,7 +185,7 @@ export default createStyles(
             },
 
       withIcon: {
-        paddingLeft: `${getSizeValue({ size, sizes })}px !important`,
+        paddingLeft: `${theme.fn.size({ size, sizes })}px !important`,
       },
 
       icon: {
@@ -204,7 +198,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: getSizeValue({ size, sizes }),
+        width: theme.fn.size({ size, sizes }),
         color: invalid
           ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
           : theme.colorScheme === 'dark'

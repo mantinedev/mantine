@@ -3,7 +3,6 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getSizeValue,
   getSharedColorScheme,
   MantineColor,
   useExtractedMargins,
@@ -80,7 +79,7 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
     const loader = (
-      <Loader color={colors.color} size={getSizeValue({ size, sizes }) - 12} {...loaderProps} />
+      <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
     );
 
     return (

@@ -16,6 +16,7 @@ interface MantineThemeFunctions {
   focusStyles(): CSSObject;
   themeColor(color: string, shade: number): string;
   rgba(color: string, alpha: number): string;
+  size(props: { size: string | number; sizes: Record<string, any> }): any;
 }
 
 export interface MantineTheme {

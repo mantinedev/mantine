@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineNumberSize,
   MantineColor,
-  getSizeValue,
   getSharedColorScheme,
 } from '@mantine/styles';
 
@@ -28,10 +27,10 @@ export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
     position: 'relative',
     userSelect: 'none',
     overflow: 'hidden',
-    width: getSizeValue({ size, sizes }),
-    minWidth: getSizeValue({ size, sizes }),
-    height: getSizeValue({ size, sizes }),
-    borderRadius: radius ? getSizeValue({ size: radius, sizes: theme.radius }) : size,
+    width: theme.fn.size({ size, sizes }),
+    minWidth: theme.fn.size({ size, sizes }),
+    height: theme.fn.size({ size, sizes }),
+    borderRadius: radius ? theme.fn.size({ size: radius, sizes: theme.radius }) : size,
   },
 
   image: {
@@ -43,7 +42,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
 
   placeholder: {
     ...theme.fn.fontStyles(),
-    fontSize: getSizeValue({ size, sizes }) / 2.5,
+    fontSize: theme.fn.size({ size, sizes }) / 2.5,
     color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
     fontWeight: 700,
     backgroundColor: getSharedColorScheme({ theme, color, variant: 'light' }).background,

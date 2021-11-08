@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineTheme } from '@mantine/styles';
 
 export const sizes = {
   xs: 180,
@@ -17,25 +17,29 @@ interface DrawerStyles {
   size: number | string;
 }
 
+interface GetPositionStyles {
+  position: DrawerPosition;
+  size: number | string;
+  theme: MantineTheme;
+}
+
 function getPositionStyles({
   position,
   size,
-}: {
-  position: DrawerPosition;
-  size: number | string;
-}): Partial<Record<keyof React.CSSProperties, any>> {
+  theme,
+}: GetPositionStyles): Partial<Record<keyof React.CSSProperties, any>> {
   switch (position) {
     case 'top':
-      return { top: 0, left: 0, right: 0, height: getSizeValue({ size, sizes }) };
+      return { top: 0, left: 0, right: 0, height: theme.fn.size({ size, sizes }) };
 
     case 'bottom':
-      return { bottom: 0, left: 0, right: 0, height: getSizeValue({ size, sizes }) };
+      return { bottom: 0, left: 0, right: 0, height: theme.fn.size({ size, sizes }) };
 
     case 'right':
-      return { bottom: 0, top: 0, right: 0, width: getSizeValue({ size, sizes }) };
+      return { bottom: 0, top: 0, right: 0, width: theme.fn.size({ size, sizes }) };
 
     case 'left':
-      return { bottom: 0, top: 0, left: 0, width: getSizeValue({ size, sizes }) };
+      return { bottom: 0, top: 0, left: 0, width: theme.fn.size({ size, sizes }) };
 
     default:
       return null;
@@ -59,7 +63,7 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
     },
 
     drawer: {
-      ...getPositionStyles({ position, size }),
+      ...getPositionStyles({ position, size, theme }),
       maxWidth: '100%',
       maxHeight: '100vh',
       position: 'fixed',

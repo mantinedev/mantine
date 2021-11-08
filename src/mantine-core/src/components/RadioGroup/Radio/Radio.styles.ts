@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue, MantineColor } from '@mantine/styles';
+import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
 
 interface RadioStyles {
   size: MantineSize;
@@ -33,9 +33,9 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
       }`,
       position: 'relative',
       appearance: 'none',
-      width: getSizeValue({ sizes, size }),
-      height: getSizeValue({ sizes, size }),
-      borderRadius: getSizeValue({ sizes, size }),
+      width: theme.fn.size({ sizes, size }),
+      height: theme.fn.size({ sizes, size }),
+      borderRadius: theme.fn.size({ sizes, size }),
       margin: 0,
       marginRight: theme.spacing.sm,
       display: 'flex',
@@ -50,9 +50,9 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
           content: '""',
           display: 'block',
           backgroundColor: theme.white,
-          width: getSizeValue({ sizes, size }) / 2,
-          height: getSizeValue({ sizes, size }) / 2,
-          borderRadius: getSizeValue({ sizes, size }) / 2,
+          width: theme.fn.size({ sizes, size }) / 2,
+          height: theme.fn.size({ sizes, size }) / 2,
+          borderRadius: theme.fn.size({ sizes, size }) / 2,
         },
       },
 
@@ -72,7 +72,7 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
       display: 'flex',
       alignItems: 'center',
       fontSize: theme.fontSizes[size] || theme.fontSizes.md,
-      lineHeight: `${getSizeValue({ sizes, size })}px`,
+      lineHeight: `${theme.fn.size({ sizes, size })}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       [`&.${labelDisabled.ref}`]: {

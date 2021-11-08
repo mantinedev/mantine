@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  MantineSize,
-  getSizeValue,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 
 export const WRAPPER_PADDING = 4;
 
@@ -45,7 +39,7 @@ export default createStyles(
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
       WebkitTapHighlightColor: 'transparent',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       fontWeight: 500,
       fontSize: size in theme.fontSizes ? theme.fontSizes[size] : theme.fontSizes.sm,
       cursor: 'pointer',
@@ -117,7 +111,7 @@ export default createStyles(
         position: 'relative',
         display: fullWidth ? 'flex' : 'inline-flex',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         overflow: 'hidden',
         padding: WRAPPER_PADDING,
       },
@@ -138,7 +132,7 @@ export default createStyles(
 
       active: {
         boxSizing: 'border-box',
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         position: 'absolute',
         top: 4,
         bottom: 4,

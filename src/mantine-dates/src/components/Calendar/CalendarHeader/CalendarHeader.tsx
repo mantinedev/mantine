@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Group,
-  ActionIcon,
-  getSizeValue,
-  DefaultProps,
-  MantineSize,
-  useMantineTheme,
-} from '@mantine/core';
+import { Group, ActionIcon, DefaultProps, MantineSize, useMantineTheme } from '@mantine/core';
 import { ArrowIcon } from '../ArrowIcon';
 import { CalendarLabel } from '../CalendarLabel/CalendarLabel';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
@@ -63,8 +56,8 @@ export function CalendarHeader({
   preventFocus = false,
 }: CalendarHeaderProps) {
   const theme = useMantineTheme();
-  const iconSize = getSizeValue({ size, sizes: iconSizes });
-  const iconButtonSize = getSizeValue({ size, sizes: DAY_SIZES });
+  const iconSize = theme.fn.size({ size, sizes: iconSizes });
+  const iconButtonSize = theme.fn.size({ size, sizes: DAY_SIZES });
 
   return (
     <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>

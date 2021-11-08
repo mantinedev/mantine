@@ -4,7 +4,6 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getSizeValue,
   MantineColor,
   ClassNames,
 } from '@mantine/styles';
@@ -118,7 +117,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
 
     return (
       <Group
-        spacing={spacing || getSizeValue({ size, sizes: theme.spacing }) / 2}
+        spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
         ref={ref}
         sx={sx}
         {...others}

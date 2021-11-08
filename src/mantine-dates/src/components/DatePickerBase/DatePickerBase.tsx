@@ -13,7 +13,7 @@ import {
   MantineSize,
   Modal,
   CloseButton,
-  getSizeValue,
+  useMantineTheme,
   MantineShadow,
   ClassNames,
   useExtractedMargins,
@@ -157,6 +157,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     }: DatePickerBaseProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const { classes, cx } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
@@ -251,7 +252,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               invalid={!!error}
               readOnly={!allowFreeInput}
               rightSection={rightSection}
-              rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
+              rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onChange={onChange}

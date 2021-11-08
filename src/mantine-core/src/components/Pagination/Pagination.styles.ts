@@ -2,7 +2,6 @@ import {
   createStyles,
   getSharedColorScheme,
   MantineNumberSize,
-  getSizeValue,
   MantineColor,
 } from '@mantine/styles';
 
@@ -47,11 +46,11 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
       }`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      height: getSizeValue({ size, sizes }),
-      minWidth: getSizeValue({ size, sizes }),
-      padding: `0 ${getSizeValue({ size, sizes: theme.spacing }) / 2}px`,
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      height: theme.fn.size({ size, sizes }),
+      minWidth: theme.fn.size({ size, sizes }),
+      padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 2}px`,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 

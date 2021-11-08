@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue } from '@mantine/core';
+import { createStyles, MantineSize } from '@mantine/core';
 
 interface DayStyles {
   size: MantineSize;
@@ -35,10 +35,10 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
       position: 'relative',
       WebkitTapHighlightColor: 'transparent',
       backgroundColor: 'transparent',
-      width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
-      height: getSizeValue({ size, sizes }),
-      lineHeight: `${getSizeValue({ size, sizes })}px`,
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      width: fullWidth ? '100%' : theme.fn.size({ size, sizes }),
+      height: theme.fn.size({ size, sizes }),
+      lineHeight: `${theme.fn.size({ size, sizes })}px`,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       padding: 0,
       borderRadius: theme.radius.sm,
       border: '1px dotted transparent',

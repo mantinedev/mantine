@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface ListStyles {
   withPadding: boolean;
@@ -11,7 +11,7 @@ export default createStyles((theme, { withPadding, size, listStyleType }: ListSt
     ...theme.fn.fontStyles(),
     listStyleType,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     lineHeight: theme.lineHeight,
     margin: 0,
     paddingLeft: withPadding ? theme.spacing.xl : 0,

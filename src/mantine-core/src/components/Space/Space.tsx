@@ -3,7 +3,6 @@ import {
   useExtractedMargins,
   DefaultProps,
   MantineNumberSize,
-  getSizeValue,
   useMantineTheme,
   useSx,
 } from '@mantine/styles';
@@ -21,8 +20,8 @@ export const Space = forwardRef<HTMLDivElement, SpaceProps>(
     const { sxClassName, css, cx } = useSx({ sx, className });
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const width = getSizeValue({ size: w, sizes: theme.spacing });
-    const height = getSizeValue({ size: h, sizes: theme.spacing });
+    const width = theme.fn.size({ size: w, sizes: theme.spacing });
+    const height = theme.fn.size({ size: h, sizes: theme.spacing });
 
     return (
       <div

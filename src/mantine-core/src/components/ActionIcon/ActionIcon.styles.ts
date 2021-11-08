@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getSizeValue,
   getSharedColorScheme,
   MantineColor,
   MantineTheme,
@@ -70,11 +69,11 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
     WebkitAppearance: 'none',
     WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
-    height: getSizeValue({ size, sizes }),
-    minHeight: getSizeValue({ size, sizes }),
-    width: getSizeValue({ size, sizes }),
-    minWidth: getSizeValue({ size, sizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    height: theme.fn.size({ size, sizes }),
+    minHeight: theme.fn.size({ size, sizes }),
+    width: theme.fn.size({ size, sizes }),
+    minWidth: theme.fn.size({ size, sizes }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     padding: 0,
     lineHeight: 1,
     display: 'flex',
@@ -113,7 +112,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
         theme.colorScheme === 'dark'
           ? theme.fn.rgba(theme.colors.dark[7], 0.5)
           : 'rgba(255, 255, 255, .5)',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
       cursor: 'not-allowed',
     },
   },

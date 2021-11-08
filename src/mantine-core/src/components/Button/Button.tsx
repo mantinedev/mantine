@@ -4,7 +4,6 @@ import {
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  getSizeValue,
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
@@ -121,7 +120,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     const loader = (
       <Loader
         color={colors.color}
-        size={getSizeValue({ size, sizes: heights }) / 2}
+        size={theme.fn.size({ size, sizes: heights }) / 2}
         {...loaderProps}
       />
     );

@@ -7,7 +7,13 @@ import {
   useUuid,
   useClickOutside,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useExtractedMargins,
+  useMantineTheme,
+} from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -158,6 +164,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }: SelectProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const { classes, cx } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
@@ -455,6 +462,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               input: cx({ [classes.input]: !searchable }, classNames?.input),
             }}
             {...getSelectRightSectionProps({
+              theme,
               rightSection,
               rightSectionWidth,
               styles,

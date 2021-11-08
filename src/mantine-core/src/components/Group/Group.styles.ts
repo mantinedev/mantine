@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
@@ -30,14 +30,14 @@ export default createStyles(
         align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
       flexWrap: noWrap ? 'nowrap' : 'wrap',
       justifyContent: direction === 'row' && POSITIONS[position],
-      gap: getSizeValue({ size: spacing, sizes: theme.spacing }),
+      gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
 
     child: {
       boxSizing: 'border-box',
       maxWidth:
         grow && direction === 'row'
-          ? `calc(${100 / count}% - ${getSizeValue({ size: spacing, sizes: theme.spacing })}px)`
+          ? `calc(${100 / count}% - ${theme.fn.size({ size: spacing, sizes: theme.spacing })}px)`
           : undefined,
       flexGrow: grow ? 1 : 0,
     },

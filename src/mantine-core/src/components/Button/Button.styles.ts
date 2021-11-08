@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineSize,
   MantineNumberSize,
-  getSizeValue,
   MantineSizes,
   getSharedColorScheme,
   MantineColor,
@@ -143,7 +142,7 @@ export default createStyles(
           theme.colorScheme === 'dark'
             ? theme.fn.rgba(theme.colors.dark[7], 0.5)
             : 'rgba(255, 255, 255, .5)',
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
         cursor: 'not-allowed',
       },
     } as const;
@@ -175,11 +174,11 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getWidthStyles(fullWidth),
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         fontWeight: 600,
         position: 'relative',
         lineHeight: 1,
-        fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         WebkitTapHighlightColor: 'transparent',
         userSelect: 'none',
         boxSizing: 'border-box',

@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 interface MenuButtonStyles {
   radius: MantineNumberSize;
@@ -20,7 +20,7 @@ export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
     boxSizing: 'border-box',
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
     cursor: 'pointer',
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     color: color
       ? theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7)
       : theme.colorScheme === 'dark'

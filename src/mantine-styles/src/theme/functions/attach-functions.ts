@@ -9,6 +9,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       themeColor: fns.themeColor(themeBase),
       focusStyles: fns.focusStyles(themeBase),
       rgba: fns.rgba,
+      size: fns.size,
     },
   };
 }

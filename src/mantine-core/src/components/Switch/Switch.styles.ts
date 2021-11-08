@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  MantineSize,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 
 interface SwitchStyles {
   color: MantineColor;
@@ -42,8 +36,8 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
 export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
-  const handleSize = getSizeValue({ size, sizes: handleSizes });
-  const borderRadius = getSizeValue({ size: radius, sizes: theme.radius });
+  const handleSize = theme.fn.size({ size, sizes: handleSizes });
+  const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
 
   return {
     root: {
@@ -60,9 +54,9 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
-      height: getSizeValue({ size, sizes: switchHeight }),
-      width: getSizeValue({ size, sizes: switchWidth }),
-      minWidth: getSizeValue({ size, sizes: switchWidth }),
+      height: theme.fn.size({ size, sizes: switchHeight }),
+      width: theme.fn.size({ size, sizes: switchWidth }),
+      minWidth: theme.fn.size({ size, sizes: switchWidth }),
       margin: 0,
       transitionProperty: 'background-color, border-color',
       transitionTimingFunction: theme.transitionTimingFunction,
@@ -95,8 +89,8 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
 
         '&::before': {
           transform: `translateX(${
-            getSizeValue({ size, sizes: switchWidth }) -
-            getSizeValue({ size, sizes: handleSizes }) -
+            theme.fn.size({ size, sizes: switchWidth }) -
+            theme.fn.size({ size, sizes: handleSizes }) -
             (size === 'xs' ? 3 : 4) // borderWidth: 2 + padding: 2 * 2
           }px)`,
           borderColor: theme.white,
@@ -119,7 +113,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
     label: {
       ...theme.fn.fontStyles(),
       WebkitTapHighlightColor: 'transparent',
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       fontFamily: theme.fontFamily,
       paddingLeft: theme.spacing.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

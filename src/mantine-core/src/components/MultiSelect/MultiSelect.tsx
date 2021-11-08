@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  useMantineTheme,
 } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -201,6 +202,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }: MultiSelectProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const { classes, cx } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
@@ -494,6 +496,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               input: cx({ [classes.input]: !searchable }, classNames?.input),
             }}
             {...getSelectRightSectionProps({
+              theme,
               rightSection,
               rightSectionWidth,
               styles,

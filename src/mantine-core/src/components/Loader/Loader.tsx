@@ -3,7 +3,6 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getSizeValue,
   MantineColor,
   MantineTheme,
   useExtractedMargins,
@@ -56,7 +55,7 @@ export function Loader({
 
   return (
     <Component
-      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      size={theme.fn.size({ size, sizes: LOADER_SIZES })}
       style={mergedStyles}
       color={
         _color in theme.colors

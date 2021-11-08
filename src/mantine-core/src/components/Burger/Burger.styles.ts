@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 interface BurgerStyles {
   size: MantineNumberSize;
@@ -14,7 +14,7 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, color }: BurgerStyles, getRef) => {
-  const sizeValue = getSizeValue({ size, sizes });
+  const sizeValue = theme.fn.size({ size, sizes });
   const opened = { ref: getRef('opened') } as const;
 
   return {

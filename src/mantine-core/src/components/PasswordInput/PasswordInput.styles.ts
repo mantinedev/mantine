@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 interface PasswordInputStyles {
@@ -20,8 +20,8 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     position: 'absolute',
     display: 'block',
     width: `calc(100% - ${rightSectionWidth}px)`,
-    paddingLeft: getSizeValue({ size, sizes: INPUT_SIZES }) / 3,
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    paddingLeft: theme.fn.size({ size, sizes: INPUT_SIZES }) / 3,
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     top: 0,
     bottom: 0,
     left: 0,
@@ -43,6 +43,6 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
   },
 
   withIcon: {
-    paddingLeft: `${getSizeValue({ size, sizes: INPUT_SIZES })}px !important`,
+    paddingLeft: `${theme.fn.size({ size, sizes: INPUT_SIZES })}px !important`,
   },
 }));

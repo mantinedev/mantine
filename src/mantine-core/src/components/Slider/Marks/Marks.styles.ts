@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { sizes } from '../SliderRoot/SliderRoot.styles';
 
 interface MarksStyles {
@@ -14,14 +14,14 @@ export default createStyles((theme, { size, color }: MarksStyles) => ({
 
   mark: {
     boxSizing: 'border-box',
-    border: `${getSizeValue({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
+    border: `${theme.fn.size({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
     zIndex: 1,
-    height: getSizeValue({ sizes, size }),
-    width: getSizeValue({ sizes, size }),
+    height: theme.fn.size({ sizes, size }),
+    width: theme.fn.size({ sizes, size }),
     borderRadius: 1000,
-    transform: `translateX(-${getSizeValue({ sizes, size }) / 2}px)`,
+    transform: `translateX(-${theme.fn.size({ sizes, size }) / 2}px)`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
   },
 
