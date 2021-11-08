@@ -114,4 +114,22 @@ describe('@mantine/core/DualList', () => {
 
     expect(handleChange).toBeCalledTimes(2);
   });
+
+  it('can render items with checkboxes', () => {
+    const available = ['123', '456', '789'];
+    const selected = ['abc', 'def', 'ghi'];
+
+    const withoutCheckboxes = shallow(<DualList available={available} selected={selected} />);
+    const withCheckboxes = shallow(
+      <DualList available={available} selected={selected} checkboxes />
+    );
+
+    const totalItems = available.length + selected.length;
+
+    expect(withoutCheckboxes.render().find('.mantine-DualListItem-item').length).toBe(totalItems);
+    expect(withoutCheckboxes.render().find('.mantine-Checkbox-root').length).toBe(0);
+
+    expect(withCheckboxes.render().find('.mantine-DualListItem-item').length).toBe(totalItems);
+    expect(withCheckboxes.render().find('.mantine-Checkbox-root').length).toBe(totalItems);
+  });
 });

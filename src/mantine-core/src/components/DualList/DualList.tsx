@@ -22,6 +22,7 @@ import { ActionIcon } from '../ActionIcon';
 import { Title } from '../Title';
 import { Paper } from '../Paper';
 import { TextInput, TextInputProps } from '../TextInput';
+import { Checkbox } from '../Checkbox';
 
 export type DualListStylesNames = ClassNames<typeof useStyles>;
 
@@ -35,11 +36,14 @@ interface ListItemProps extends Omit<TextProps<'div'>, 'onClick'> {
   size: MantineSize;
   item: IListItem;
   isSelected: boolean;
+  hasCheckbox: boolean;
   onClick?: (e: React.MouseEvent, item: IListItem) => void;
+  onCheckboxChange?: (e: React.ChangeEvent, item: IListItem) => void;
 }
 
 const ListItem = ({
   size,
+  hasCheckbox,
   item,
   isSelected,
   className,
@@ -47,6 +51,7 @@ const ListItem = ({
   styles,
   children,
   onClick,
+  onCheckboxChange,
   ...others
 }: ListItemProps) => {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'DualListItem' });
@@ -58,23 +63,41 @@ const ListItem = ({
     }
   };
 
-  return (
-    <Text
-      {...others}
-      styles={styles}
-      size={size}
-      className={cx(className, classes.item, {
-        [classes.selectedItem]: isSelected,
-        [classes.disabled]: disabled,
-      })}
-      onClick={handleClick}
-    >
+  const handleCheckboxChange = (e: React.ChangeEvent) => {
+    if (!disabled) {
+      onCheckboxChange?.(e, item);
+    }
+  };
+
+  const computedClassName = cx(className, classes.item, {
+    [classes.selectedItem]: isSelected,
+    [classes.disabled]: disabled,
+  });
+
+  const sharedProps = { size, styles, className: computedClassName };
+
+  return hasCheckbox ? (
+    <Checkbox
+      {...sharedProps}
+      styles={{
+        ...styles,
+        label: {
+          width: '100%',
+        },
+      }}
+      checked={isSelected}
+      label={value}
+      onChange={handleCheckboxChange}
+    />
+  ) : (
+    <Text {...others} {...sharedProps} onClick={handleClick}>
       {value}
     </Text>
   );
 };
 
 interface IListProps {
+  checkboxes: boolean;
   emptyPlaceholder: string;
   position: 'left' | 'right';
   label: string;
@@ -96,6 +119,7 @@ const RenderList: ListComponent = forwardRef(
     {
       emptyPlaceholder,
       component,
+      checkboxes,
       position,
       label,
       items,
@@ -113,7 +137,7 @@ const RenderList: ListComponent = forwardRef(
     }: ListProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const [selectedItems, setSelectedItems] = useState<IListItem[] | null>(null);
+    const [selectedItems, setSelectedItems] = useState<IListItem[]>([]);
     const [multiSelectionRootIdx, setMultiSelectionRootIdx] = useState<number | null>(null);
     const [search, setSearch] = useState<string>('');
 
@@ -133,11 +157,12 @@ const RenderList: ListComponent = forwardRef(
     };
 
     const hasMovableItems = (): boolean => filterItems().some((item) => item.disabled === false);
-    const hasSelectedItems = (): boolean => selectedItems && selectedItems.length > 0;
-    const itemIsSelected = (item: IListItem): boolean => selectedItems?.includes(item);
+    const hasSelectedItems = (): boolean => selectedItems.length > 0;
+    const itemIsSelected = (item: IListItem): boolean =>
+      hasSelectedItems() && selectedItems.includes(item);
 
     const clearSelection = () => {
-      setSelectedItems(null);
+      setSelectedItems([]);
       setMultiSelectionRootIdx(null);
     };
 
@@ -184,6 +209,14 @@ const RenderList: ListComponent = forwardRef(
       }
     };
 
+    const handleClickCheckboxItem = (e: React.ChangeEvent, item: IListItem) => {
+      if (itemIsSelected(item)) {
+        setSelectedItems(selectedItems.filter((_item) => _item.id !== item.id));
+      } else {
+        setSelectedItems([...selectedItems, item]);
+      }
+    };
+
     const RenderMoveIcon = () => (
       <ActionIcon
         className={classes.action}
@@ -223,10 +256,12 @@ const RenderList: ListComponent = forwardRef(
           {filtered.map((item) => (
             <ListItem
               key={item.id}
+              hasCheckbox={checkboxes}
               size={size}
               item={item}
               isSelected={itemIsSelected(item)}
               onClick={handleClickItem}
+              onCheckboxChange={handleClickCheckboxItem}
               style={style}
               {...stylesProps}
             />
@@ -279,6 +314,9 @@ export interface DualListData {
 export interface DualListProps extends DefaultProps<DualListStylesNames> {
   /** Items shown in the available (left) list */
   available: (IListItem | string)[];
+
+  /** Whether the items are prefixes with a checkbox */
+  checkboxes?: boolean;
 
   /** Placeholder to be shown when a list is empty */
   emptyPlaceholder?: string;
@@ -340,6 +378,7 @@ const initializeItems = (items: (IListItem | string)[]): IListItem[] =>
 
 export const DualList: DualListComponent & { displayName?: string } = ({
   className,
+  checkboxes = false,
   size = 'md',
   emptyPlaceholder = 'No items found...',
   leftEmptyPlaceholder = emptyPlaceholder,
@@ -399,6 +438,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
     <Paper padding={size} {...others} className={cx(classes.root, className)} style={style}>
       <RenderList
         component={ListElement}
+        checkboxes={checkboxes}
         emptyPlaceholder={leftEmptyPlaceholder}
         position="left"
         label={leftLabel}
@@ -415,6 +455,7 @@ export const DualList: DualListComponent & { displayName?: string } = ({
       />
       <RenderList
         component={ListElement}
+        checkboxes={checkboxes}
         emptyPlaceholder={rightEmptyPlaceholder}
         position="right"
         label={rightLabel}

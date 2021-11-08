@@ -74,7 +74,7 @@ export default createStyles((theme, { size }: DualListStylesProps) => {
       },
     },
     item: {
-      padding: `0 ${theme.spacing.sm}px`,
+      padding: `calc(${theme.spacing[size]}px / 2)`,
       userSelect: 'none',
 
       '&:focus-visible': {
