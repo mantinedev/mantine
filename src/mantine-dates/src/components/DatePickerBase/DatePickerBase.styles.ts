@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSizeValue, MantineSize, INPUT_SIZES } from '@mantine/core';
+import { createStyles, MantineSize, INPUT_SIZES } from '@mantine/core';
 
 interface DatePickerBaseStyles {
   size: MantineSize;
@@ -7,13 +7,13 @@ interface DatePickerBaseStyles {
 
 export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => ({
   wrapper: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     cursor: 'pointer',
   },
 
   placeholder: {
-    lineHeight: `${getSizeValue({ size, sizes: INPUT_SIZES }) - 2}px`,
+    lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 2}px`,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -37,6 +37,10 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
   input: {
     cursor: 'pointer',
     whiteSpace: 'nowrap',
+  },
+
+  freeInput: {
+    cursor: 'text',
   },
 
   dropdown: {

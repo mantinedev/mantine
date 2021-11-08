@@ -20,4 +20,10 @@ storiesOf('@mantine/dates/Calendar', module)
       <WrappedCalendar withSelect disableOutsideEvents style={{ marginTop: 40 }} />
     </div>
   ))
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('First day of the week', () => (
+    <div style={{ padding: 40, width: 400 }}>
+      <WrappedCalendar minDate={new Date()} firstDayOfWeek="monday" />
+      <WrappedCalendar minDate={new Date()} firstDayOfWeek="sunday" />
+    </div>
+  ));

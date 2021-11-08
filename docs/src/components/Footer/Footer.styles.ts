@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from '../Layout/Navbar/Navbar.styles';
 import { BREAKPOINT as MDX_PAGE_BREAKPOINT } from '../MdxPage/settings';
 
@@ -99,7 +99,7 @@ export default createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
 
     '& a': {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     },
   },

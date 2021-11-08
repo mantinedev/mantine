@@ -2,12 +2,22 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize } from './MantineSize';
 import type { Tuple } from './Tuple';
 import type { DeepPartial } from './DeepPartial';
+import { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
   lineHeight: CSSProperties['lineHeight'];
+}
+
+interface MantineThemeFunctions {
+  fontStyles(): CSSObject;
+  focusStyles(): CSSObject;
+  themeColor(color: string, shade: number): string;
+  rgba(color: string, alpha: number): string;
+  size(props: { size: string | number; sizes: Record<string, any> }): any;
+  linearGradient(deg: number, ...colors: string[]): string;
 }
 
 export interface MantineTheme {
@@ -40,6 +50,9 @@ export interface MantineTheme {
       h6: HeadingStyle;
     };
   };
+
+  fn: MantineThemeFunctions;
 }
 
-export type MantineThemeOverride = DeepPartial<MantineTheme>;
+export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
+export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn'>>;

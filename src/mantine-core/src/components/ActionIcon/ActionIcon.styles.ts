@@ -1,12 +1,7 @@
 import {
   createStyles,
   MantineNumberSize,
-  getSizeValue,
-  getFontStyles,
-  getFocusStyles,
-  getThemeColor,
   getSharedColorScheme,
-  hexToRgba,
   MantineColor,
   MantineTheme,
 } from '@mantine/styles';
@@ -43,7 +38,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   if (variant === 'hover' || variant === 'transparent') {
     return {
       border: '1px solid transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       backgroundColor: 'transparent',
 
       '&:hover':
@@ -51,9 +46,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
           ? {}
           : {
               backgroundColor:
-                theme.colorScheme === 'dark'
-                  ? theme.colors.dark[8]
-                  : getThemeColor({ theme, color, shade: 0 }),
+                theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.fn.themeColor(color, 0),
             },
     };
   }
@@ -69,18 +62,18 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
 
 export default createStyles((theme, { color, size, radius }: ActionIconStyles) => ({
   root: {
-    ...getFocusStyles(theme),
-    ...getFontStyles(theme),
+    ...theme.fn.focusStyles(),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     appearance: 'none',
     WebkitAppearance: 'none',
     WebkitTapHighlightColor: 'transparent',
     boxSizing: 'border-box',
-    height: getSizeValue({ size, sizes }),
-    minHeight: getSizeValue({ size, sizes }),
-    width: getSizeValue({ size, sizes }),
-    minWidth: getSizeValue({ size, sizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    height: theme.fn.size({ size, sizes }),
+    minHeight: theme.fn.size({ size, sizes }),
+    width: theme.fn.size({ size, sizes }),
+    minWidth: theme.fn.size({ size, sizes }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     padding: 0,
     lineHeight: 1,
     display: 'flex',
@@ -91,17 +84,8 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
     '&:disabled': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
-
-      backgroundColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
-      borderColor: getThemeColor({
-        theme,
-        color: 'gray',
-        shade: theme.colorScheme === 'dark' ? 8 : 1,
-      }),
+      backgroundColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
+      borderColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
     },
 
     '&:not(:disabled):active': {
@@ -126,9 +110,9 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
       bottom: -1,
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors.dark[7], 0.5)
+          ? theme.fn.rgba(theme.colors.dark[7], 0.5)
           : 'rgba(255, 255, 255, .5)',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
       cursor: 'not-allowed',
     },
   },

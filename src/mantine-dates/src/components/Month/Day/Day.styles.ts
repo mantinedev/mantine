@@ -1,11 +1,4 @@
-import {
-  getFontStyles,
-  getFocusStyles,
-  createStyles,
-  MantineSize,
-  getSizeValue,
-  hexToRgba,
-} from '@mantine/core';
+import { createStyles, MantineSize } from '@mantine/core';
 
 interface DayStyles {
   size: MantineSize;
@@ -37,15 +30,15 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
     lastInRange,
 
     day: {
-      ...getFontStyles(theme),
-      ...getFocusStyles(theme),
+      ...theme.fn.fontStyles(),
+      ...theme.fn.focusStyles(),
       position: 'relative',
       WebkitTapHighlightColor: 'transparent',
       backgroundColor: 'transparent',
-      width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
-      height: getSizeValue({ size, sizes }),
-      lineHeight: `${getSizeValue({ size, sizes })}px`,
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      width: fullWidth ? '100%' : theme.fn.size({ size, sizes }),
+      height: theme.fn.size({ size, sizes }),
+      lineHeight: `${theme.fn.size({ size, sizes })}px`,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       padding: 0,
       borderRadius: theme.radius.sm,
       border: '1px dotted transparent',
@@ -75,7 +68,7 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
       [`&.${inRange.ref}:not(:disabled)`]: {
         backgroundColor:
           theme.colorScheme === 'dark'
-            ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+            ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
             : theme.colors[theme.primaryColor][0],
         borderRadius: 0,
       },

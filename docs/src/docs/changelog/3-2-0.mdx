@@ -1,0 +1,30 @@
+---
+group: 'changelog'
+title: 'Version 3.2.0'
+order: 1
+slug: /changelog/3-2-0/
+release: https://github.com/mantinedev/mantine/releases/tag/3.2.0
+date: 'November 26th, 2021'
+---
+
+import { DatePickerDemos } from '@demos/dates';
+
+## Breaking changes
+
+- [Group](https://mantine.dev/core/group/) component was migrated to [flexbox gap](https://caniuse.com/flexbox-gap), it no longer uses hack with negative margins, thus `withGutter` prop is not longer supported.
+- [Button](https://mantine.dev/core/button/) component no longer supports `link` variant due to Styles API limitations, use [Anchor](https://mantine.dev/core/anchor/) component instead.
+- `@mantine/core` package no longer exports `getFontStyles`, `getFocusStyles` and `hexToRgba` functions, replace them with [theme functions](https://mantine.dev/theming/functions/): `theme.fn.fontStyles()`, `theme.fn.focusStyles()`, `theme.fn.rgba()`.
+
+## New features
+
+[DatePicker](https://mantine.dev/dates/date-picker/) component now supports free input:
+
+<Demo data={DatePickerDemos.freeInput} />
+
+## Other changes
+
+- Two new guides were added: [RTL Support](https://mantine.dev/theming/rtl/) and [Responsive styles](https://mantine.dev/theming/responsive/)
+- All date picking components from @mantine/dates package now support first day of week customization (either sunday or monday)
+- [Tabs](https://mantine.dev/core/tabs/) component pills variant was redesigned to be more neutral
+- [SegmentedControl](https://mantine.dev/core/segmented-control/) component is now a generic – it accepts values as single type argument
+- [Autocomplete](https://mantine.dev/core/autocomplete/), [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) dropdowns are now rendered within [Popper](https://mantine.dev/core/popper/). This means that dropdown element is now aware of its position on screen and will change placement based on container scroll position. You should also experience less issues with z-index configuration.

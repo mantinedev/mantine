@@ -1,8 +1,9 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
+import { DefaultProps, useMantineTheme } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
+import { FirstDayOfWeek } from '../../types';
 import { Month } from '../Month/Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
@@ -28,6 +29,9 @@ export interface RangeCalendarProps
 
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
@@ -59,6 +63,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       size = 'sm',
       onMouseLeave,
       __staticSelector = 'range-calendar',
+      firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       ...others
     }: RangeCalendarProps,
@@ -157,7 +162,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
                 ...initialStyles,
                 backgroundColor:
                   theme.colorScheme === 'dark'
-                    ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+                    ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
                     : theme.colors[theme.primaryColor][0],
                 borderRadius: 0,
               };
@@ -174,6 +179,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
           fullWidth={fullWidth}
           size={size}
           onDayMouseEnter={(date) => setHoveredDay(date)}
+          firstDayOfWeek={firstDayOfWeek}
           __staticSelector={__staticSelector}
         />
       </CalendarWrapper>

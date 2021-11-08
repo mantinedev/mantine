@@ -186,7 +186,7 @@ storiesOf('@mantine/core/Tabs', module)
         <Tab label="Nothing here" />
         <Tab label="Outline" />
       </Tabs>
-      <Tabs variant="pills">
+      <Tabs variant="pills" mt={40}>
         <Tab label="First" icon={<ImageIcon />} />
         <Tab label="Only tabs" />
         <Tab label="Nothing here" />

@@ -89,44 +89,12 @@ function Demo({ active }) {
 }
 ```
 
-## getFocusStyles
-
-`getFocusStyles` function returns mantine focus styles in jss format for interactive elements.
-Focus styles are visible only when user navigates with keyboard.
-
-```tsx
-import { getFocusStyles, createStyles } from '@mantine/core';
-
-createStyles((theme) => ({
-  button: {
-    ...getFocusStyles(theme),
-    color: 'red',
-  },
-}));
-```
-
-## getFontStyles
-
-`getFontStyles` function returns font styles from theme with [font smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth):
-
-```tsx
-import { getFontStyles, createStyles } from '@mantine/core';
-
-createUseStyles((theme) => ({
-  wrapper: {
-    ...getFontStyles(theme),
-    color: 'red',
-  },
-}));
-```
-
 ## Global styles
 
 To set global styles use `Global` component:
 
 ```tsx
-import { getFontStyles } from './utils';
-import { Global } from '../tss/Global';
+import { Global } from '@mantine/core';
 
 export function GlobalStyles() {
   return (
@@ -137,7 +105,7 @@ export function GlobalStyles() {
         },
 
         body: {
-          ...getFontStyles(theme),
+          ...theme.fn.fontStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,

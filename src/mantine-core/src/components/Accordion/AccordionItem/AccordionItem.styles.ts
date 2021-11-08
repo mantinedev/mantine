@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles, getFontStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export type AccordionIconPosition = 'right' | 'left';
 
@@ -52,8 +52,8 @@ export default createStyles(
       },
 
       control: {
-        ...getFocusStyles(theme),
-        ...getFontStyles(theme),
+        ...theme.fn.focusStyles(),
+        ...theme.fn.fontStyles(),
         width: '100%',
         display: 'flex',
         alignItems: 'center',
@@ -71,7 +71,7 @@ export default createStyles(
       },
 
       content: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         lineHeight: theme.lineHeight,
         paddingLeft: iconPosition === 'right' ? 0 : ICON_SIZE + theme.spacing.xs / 2,
       },

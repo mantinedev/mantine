@@ -3,7 +3,6 @@ import {
   DefaultProps,
   Input,
   InputWrapper,
-  Text,
   InputBaseProps,
   InputWrapperBaseProps,
   Paper,
@@ -14,7 +13,6 @@ import {
   MantineSize,
   Modal,
   CloseButton,
-  getSizeValue,
   MantineShadow,
   ClassNames,
   useExtractedMargins,
@@ -40,14 +38,14 @@ export interface DatePickerBaseSharedProps
     InputWrapperBaseProps,
     DefaultProps<DatePickerStylesNames>,
     Omit<
-      React.ComponentPropsWithoutRef<'button'>,
-      'value' | 'defaultValue' | 'onChange' | 'placeholder'
+      React.ComponentPropsWithoutRef<'input'>,
+      'value' | 'defaultValue' | 'placeholder' | 'size'
     > {
   /** Props spread to root element (InputWrapper) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Placeholder, displayed when date is not selected */
-  placeholder?: React.ReactNode;
+  placeholder?: string;
 
   /** Dropdown appear/disappear transition */
   transition?: MantineTransition;
@@ -84,6 +82,9 @@ export interface DatePickerBaseSharedProps
 
   /** Popper zIndex */
   zIndex?: number;
+
+  /** call onChange with last valid value onBlur */
+  fixOnBlur?: boolean;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -101,6 +102,9 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
 
   /** Called when clear button in clicked */
   onClear(): void;
+
+  /** Allow free input */
+  allowFreeInput?: boolean;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -111,7 +115,7 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
-export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>(
+export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
   (
     {
       classNames,
@@ -120,6 +124,7 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       styles,
       wrapperProps,
       required,
+      allowFreeInput = false,
       label,
       error,
       id,
@@ -142,12 +147,16 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
       onClear,
       positionDependencies = [],
       zIndex = 3,
+      onBlur,
+      onFocus,
+      onChange,
+      name = 'date',
       sx,
       ...others
     }: DatePickerBaseProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
     );
@@ -157,13 +166,17 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
 
-    const focusTrapRef = useFocusTrap(dropdownOpened);
+    const focusTrapRef = useFocusTrap(!allowFreeInput && dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
-    const closeDropdown = () => setDropdownOpened(false);
+
+    const closeDropdown = () => {
+      setDropdownOpened(false);
+    };
+
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
       event.nativeEvent.code === 'Escape' && closeDropdown();
 
-    useClickOutside(() => dropdownType === 'popover' && closeDropdown(), null, [
+    useClickOutside(() => dropdownType === 'popover' && !allowFreeInput && closeDropdown(), null, [
       dropdownElement,
       rootElement,
     ]);
@@ -178,6 +191,21 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         size={size}
       />
     ) : null;
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+
+      if (allowFreeInput) {
+        closeDropdown();
+      }
+    };
+
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onFocus === 'function' && onFocus(event);
+      if (allowFreeInput) {
+        setDropdownOpened(true);
+      }
+    };
 
     return (
       <InputWrapper
@@ -199,29 +227,36 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
         <div ref={setRootElement}>
           <div className={classes.wrapper}>
             <Input
-              component="button"
-              type="button"
-              classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+              classNames={{
+                ...classNames,
+                input: cx(
+                  classes.input,
+                  { [classes.freeInput]: allowFreeInput },
+                  classNames?.input
+                ),
+              }}
               styles={styles}
-              onClick={() => setDropdownOpened(!dropdownOpened)}
+              onClick={() =>
+                !allowFreeInput ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
+              }
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
               __staticSelector={__staticSelector}
               size={size}
+              name={name}
+              placeholder={placeholder}
+              value={inputLabel}
               required={required}
               invalid={!!error}
+              readOnly={!allowFreeInput}
               rightSection={rightSection}
-              rightSectionWidth={getSizeValue({ size, sizes: RIGHT_SECTION_WIDTH })}
+              rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              onChange={onChange}
+              autoComplete="off"
               {...rest}
-            >
-              {inputLabel ? (
-                <div className={classes.value}>{inputLabel}</div>
-              ) : (
-                <Text className={classes.placeholder} size={size}>
-                  {placeholder}
-                </Text>
-              )}
-            </Input>
+            />
           </div>
 
           {dropdownType === 'popover' ? (
@@ -239,13 +274,14 @@ export const DatePickerBase = forwardRef<HTMLButtonElement, DatePickerBaseProps>
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
-              onTransitionEnd={() => inputRef.current?.focus()}
+              onTransitionEnd={() => !allowFreeInput && inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}
                 ref={useMergedRef(focusTrapRef, setDropdownElement)}
                 data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
+                aria-hidden={allowFreeInput || undefined}
               >
                 <Paper className={classes.dropdown} shadow={shadow}>
                   {children}

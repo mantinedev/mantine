@@ -1,7 +1,6 @@
 import React from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -100,8 +99,10 @@ export function MantineModal({
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, overflow }, { sx, classNames, styles, name: 'Modal' });
+  const { classes, cx, theme } = useStyles(
+    { size, overflow },
+    { sx, classNames, styles, name: 'Modal' }
+  );
   const focusTrapRef = useFocusTrap(opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'

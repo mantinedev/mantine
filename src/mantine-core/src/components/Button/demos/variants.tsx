@@ -9,7 +9,6 @@ function Demo() {
         <Button>Default filled variant</Button>
         <Button variant="light">Light variant</Button>
         <Button variant="outline">Outline variant</Button>
-        <Button variant="link">Link variant</Button>
       </Group>
     </>
   );

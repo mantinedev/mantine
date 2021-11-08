@@ -5,6 +5,7 @@ import {
   useDidUpdate,
   useScrollIntoView,
   useUuid,
+  useClickOutside,
 } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
@@ -157,7 +158,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }: SelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles();
+    const { classes, cx, theme } = useStyles();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
@@ -165,6 +166,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const uuid = useUuid(id);
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
@@ -184,6 +186,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
+    );
+
+    useClickOutside(
+      () => setDropdownOpened(false),
+      ['mousedown', 'touchstart'],
+      [inputRef.current, dropdownRef.current]
     );
 
     const sortedData = groupSortData({ data: formattedData });
@@ -278,50 +286,63 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
 
+      const isColumn = direction === 'column';
+
+      const handlePrevious = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index - 1,
+            (index) => index > 0
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'start' : 'end',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
+      const handleNext = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index - 1,
-              (index) => index > 0
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          isColumn ? handlePrevious() : handleNext();
 
-              scrollIntoView({
-                alignment: 'start',
-              });
-            }
-
-            return nextIndex;
-          });
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index + 1,
-              (index) => index < filteredData.length - 1
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-
-              scrollIntoView({
-                alignment: 'end',
-              });
-            }
-
-            return nextIndex;
-          });
+          isColumn ? handleNext() : handlePrevious();
           break;
         }
 
@@ -434,6 +455,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               input: cx({ [classes.input]: !searchable }, classNames?.input),
             }}
             {...getSelectRightSectionProps({
+              theme,
               rightSection,
               rightSectionWidth,
               styles,
@@ -446,6 +468,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           />
 
           <SelectDropdown
+            referenceElement={inputRef.current}
             mounted={dropdownOpened}
             transition={transition}
             transitionDuration={transitionDuration}
@@ -458,6 +481,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="Select"
             dropdownComponent={dropdownComponent}
+            direction={direction}
+            onDirectionChange={setDirection}
           >
             <SelectItems
               data={filteredData}

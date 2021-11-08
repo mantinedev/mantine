@@ -12,7 +12,16 @@ describe('@mantine/dates/get-month-days', () => {
     expect(monthDays[2][0]).toEqual(new Date(2021, 1, 15));
     expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toEqual(new Date(2021, 2, 0));
   });
+  it('returns all month days for given date, first day of week - sunday', () => {
+    const monthDays = getMonthDays(new Date(2021, 1, 2), 'sunday');
+    expect(monthDays).toHaveLength(5);
 
+    expect(monthDays[0][2]).toEqual(new Date(2021, 1, 2));
+    expect(monthDays[0][3]).toEqual(new Date(2021, 1, 3));
+    expect(monthDays[1][1]).toEqual(new Date(2021, 1, 8));
+    expect(monthDays[2][1]).toEqual(new Date(2021, 1, 15));
+    expect(monthDays[monthDays.length - 1][0]).toEqual(new Date(2021, 1, 28));
+  });
   it('returns outside days for given month', () => {
     // April 2021 has outside days in the beginning and end of month
     const monthDays = getMonthDays(new Date(2021, 3, 2));
@@ -21,5 +30,13 @@ describe('@mantine/dates/get-month-days', () => {
     expect(monthDays[0][0]).toEqual(new Date(2021, 2, 29));
     expect(monthDays[0][1]).toEqual(new Date(2021, 2, 30));
     expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toEqual(new Date(2021, 4, 2));
+  });
+  it('returns outside days for given month, first day of the week - sunday', () => {
+    const monthDays = getMonthDays(new Date(2021, 3, 2), 'sunday');
+
+    expect(monthDays).toHaveLength(5);
+    expect(monthDays[0][0]).toEqual(new Date(2021, 2, 28));
+    expect(monthDays[0][1]).toEqual(new Date(2021, 2, 29));
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toEqual(new Date(2021, 4, 1));
   });
 });

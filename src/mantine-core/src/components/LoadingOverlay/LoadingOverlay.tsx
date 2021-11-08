@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme, DefaultProps, MantineMargin, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineMargin, MantineNumberSize } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
@@ -47,8 +47,7 @@ export function LoadingOverlay({
   sx,
   ...others
 }: LoadingOverlayProps) {
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles(null, { sx, name: 'LoadingOverlay' });
+  const { classes, cx, theme } = useStyles(null, { sx, name: 'LoadingOverlay' });
 
   return (
     <Transition duration={transitionDuration} mounted={visible} transition="fade">

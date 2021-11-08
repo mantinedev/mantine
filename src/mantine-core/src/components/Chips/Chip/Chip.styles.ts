@@ -2,9 +2,6 @@ import {
   createStyles,
   MantineNumberSize,
   MantineSize,
-  getSizeValue,
-  getFontStyles,
-  getThemeColor,
   getSharedColorScheme,
   MantineColor,
 } from '@mantine/styles';
@@ -50,7 +47,7 @@ interface ChipStyles {
 export default createStyles((theme, { radius, size, color }: ChipStyles, getRef) => {
   const label = {
     ref: getRef('label'),
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     display: 'inline-block',
@@ -59,12 +56,12 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
     }`,
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-    height: getSizeValue({ size, sizes }),
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
-    lineHeight: `${getSizeValue({ size, sizes }) - 2}px`,
-    paddingLeft: getSizeValue({ size, sizes: padding }),
-    paddingRight: getSizeValue({ size, sizes: padding }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    height: theme.fn.size({ size, sizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+    lineHeight: `${theme.fn.size({ size, sizes }) - 2}px`,
+    paddingLeft: theme.fn.size({ size, sizes: padding }),
+    paddingRight: theme.fn.size({ size, sizes: padding }),
     cursor: 'pointer',
     whiteSpace: 'nowrap',
     transition: 'background-color 100ms ease',
@@ -92,12 +89,14 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
 
   const iconWrapper = {
     ref: getRef('iconWrapper'),
-    color: getThemeColor({ theme, color, shade: 6 }),
+    color: theme.fn.themeColor(color, 6),
     width:
-      getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,
+      theme.fn.size({ size, sizes: iconSizes }) +
+      theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
     maxWidth:
-      getSizeValue({ size, sizes: iconSizes }) + getSizeValue({ size, sizes: theme.spacing }) / 1.5,
-    height: getSizeValue({ size, sizes: iconSizes }),
+      theme.fn.size({ size, sizes: iconSizes }) +
+      theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
+    height: theme.fn.size({ size, sizes: iconSizes }),
     display: 'inline-block',
     verticalAlign: 'middle',
     overflow: 'hidden',
@@ -131,11 +130,11 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
     },
 
     checked: {
-      paddingLeft: getSizeValue({ size, sizes: checkedPadding }),
-      paddingRight: getSizeValue({ size, sizes: checkedPadding }),
+      paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
+      paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
 
       [`&.${outline.ref}`]: {
-        border: `1px solid ${getThemeColor({ theme, color, shade: 6 })}`,
+        border: `1px solid ${theme.fn.themeColor(color, 6)}`,
       },
 
       [`&.${filled.ref}`]: {
@@ -143,14 +142,14 @@ export default createStyles((theme, { radius, size, color }: ChipStyles, getRef)
           backgroundColor:
             theme.colorScheme === 'dark'
               ? getSharedColorScheme({ color, theme, variant: 'light' }).background
-              : getThemeColor({ theme, color, shade: 1 }),
+              : theme.fn.themeColor(color, 1),
         },
       },
     },
 
     checkIcon: {
-      width: getSizeValue({ size, sizes: iconSizes }),
-      height: getSizeValue({ size, sizes: iconSizes }) / 1.1,
+      width: theme.fn.size({ size, sizes: iconSizes }),
+      height: theme.fn.size({ size, sizes: iconSizes }) / 1.1,
       display: 'block',
     },
 

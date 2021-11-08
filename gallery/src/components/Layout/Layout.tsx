@@ -1,6 +1,15 @@
 import React from 'react';
-import { MantineProvider, NormalizeCSS, GlobalStyles, ColorScheme } from '@mantine/core';
+import {
+  MantineProvider,
+  NormalizeCSS,
+  GlobalStyles,
+  ColorScheme,
+  ColorSchemeProvider,
+} from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
+import { Header } from './Header/Header';
+import { HEADER_HEIGHT } from './Header/Header.styles';
+import '../../fonts/GreycfifCF/styles.css';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,10 +29,13 @@ export function Layout({ children }: LayoutProps) {
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
-    <MantineProvider theme={{ colorScheme }}>
-      <NormalizeCSS />
-      <GlobalStyles />
-      {children}
-    </MantineProvider>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }}>
+        <NormalizeCSS />
+        <GlobalStyles />
+        <Header />
+        <main style={{ paddingTop: HEADER_HEIGHT }}>{children}</main>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }

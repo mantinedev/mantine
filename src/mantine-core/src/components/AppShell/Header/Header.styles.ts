@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export interface HeaderPosition {
   top?: number;
@@ -18,14 +18,14 @@ interface HeaderStyles {
 export default createStyles(
   (theme, { height, padding, fixed, position, zIndex }: HeaderStyles) => ({
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       ...position,
       zIndex,
       height,
       maxHeight: height,
       position: fixed ? 'fixed' : 'static',
       boxSizing: 'border-box',
-      padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+      padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       borderBottom: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]

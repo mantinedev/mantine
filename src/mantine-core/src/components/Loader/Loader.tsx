@@ -1,10 +1,7 @@
 import React from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getThemeColor,
-  getSizeValue,
   MantineColor,
   MantineTheme,
   useExtractedMargins,
@@ -48,8 +45,7 @@ export function Loader({
   sx,
   ...others
 }: LoaderProps) {
-  const { sxClassName } = useSx({ sx, className });
-  const theme = useMantineTheme();
+  const { sxClassName, theme } = useSx({ sx, className });
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const Component = LOADERS[defaultLoader] || LOADERS.bars;
@@ -57,11 +53,11 @@ export function Loader({
 
   return (
     <Component
-      size={getSizeValue({ size, sizes: LOADER_SIZES })}
+      size={theme.fn.size({ size, sizes: LOADER_SIZES })}
       style={mergedStyles}
       color={
         _color in theme.colors
-          ? getThemeColor({ theme, color: _color, shade: theme.colorScheme === 'dark' ? 4 : 6 })
+          ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : 6)
           : color
       }
       role="presentation"

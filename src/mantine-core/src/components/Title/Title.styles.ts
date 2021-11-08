@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
@@ -8,7 +8,7 @@ interface TitleStyles {
 
 export default createStyles((theme, { element }: TitleStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,
     fontWeight: theme.headings.fontWeight,
     fontSize: theme.headings.sizes[element].fontSize,

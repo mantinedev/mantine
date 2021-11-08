@@ -1,4 +1,4 @@
-import { getFocusStyles, createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   links: {
@@ -10,7 +10,7 @@ export default createStyles((theme) => ({
   },
 
   link: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     display: 'block',
     padding: theme.spacing.xl,
     borderRadius: theme.radius.md,

@@ -1,4 +1,5 @@
 export { usage } from './usage';
+export { firstDaySunday } from './firstDaySunday';
 export { withSelect } from './withSelect';
 export { boundaries } from './boundaries';
 export { exclude } from './exclude';

@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  getFontStyles,
-  getFocusStyles,
-  getThemeColor,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface TabControlStyles {
   color: MantineColor;
@@ -19,8 +13,8 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
     tabLabel: {},
 
     tabControl: {
-      ...getFontStyles(theme),
-      ...getFocusStyles(theme),
+      ...theme.fn.fontStyles(),
+      ...theme.fn.focusStyles(),
       WebkitTapHighlightColor: 'transparent',
       boxSizing: 'border-box',
       display: 'block',
@@ -44,12 +38,9 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
       [orientation === 'horizontal' ? 'borderBottom' : 'borderRight']: '2px solid transparent',
 
       [`&.${tabActive.ref}`]: {
-        color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 7 }),
-        [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 4 : 7,
-        }),
+        color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+        [orientation === 'horizontal' ? 'borderBottomColor' : 'borderRightColor']:
+          theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       },
     },
 
@@ -70,14 +61,21 @@ export default createStyles((theme, { color, orientation }: TabControlStyles, ge
     },
 
     pills: {
-      borderRadius: 1000,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+      borderRadius: theme.radius.sm,
+      backgroundColor: 'transparent',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
-      fontSize: theme.fontSizes.md,
+      fontSize: theme.fontSizes.sm,
+      height: 'auto',
+      padding: `${theme.spacing.xs}px ${theme.spacing.lg}px`,
+      fontWeight: 500,
+
+      '&:hover': {
+        background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      },
 
       [`&.${tabActive.ref}`]: {
-        color: theme.white,
-        background: getThemeColor({ theme, color, shade: 6 }),
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
       },
     },
 

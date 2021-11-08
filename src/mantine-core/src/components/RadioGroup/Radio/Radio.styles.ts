@@ -1,12 +1,4 @@
-import {
-  createStyles,
-  MantineSize,
-  getSizeValue,
-  getFontStyles,
-  getFocusStyles,
-  getThemeColor,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
 
 interface RadioStyles {
   size: MantineSize;
@@ -34,16 +26,16 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
     },
 
     radio: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       position: 'relative',
       appearance: 'none',
-      width: getSizeValue({ sizes, size }),
-      height: getSizeValue({ sizes, size }),
-      borderRadius: getSizeValue({ sizes, size }),
+      width: theme.fn.size({ sizes, size }),
+      height: theme.fn.size({ sizes, size }),
+      borderRadius: theme.fn.size({ sizes, size }),
       margin: 0,
       marginRight: theme.spacing.sm,
       display: 'flex',
@@ -51,16 +43,16 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
       justifyContent: 'center',
 
       '&:checked': {
-        background: getThemeColor({ theme, color, shade: 6 }),
-        borderColor: getThemeColor({ theme, color, shade: 6 }),
+        background: theme.fn.themeColor(color, 6),
+        borderColor: theme.fn.themeColor(color, 6),
 
         '&::before': {
           content: '""',
           display: 'block',
           backgroundColor: theme.white,
-          width: getSizeValue({ sizes, size }) / 2,
-          height: getSizeValue({ sizes, size }) / 2,
-          borderRadius: getSizeValue({ sizes, size }) / 2,
+          width: theme.fn.size({ sizes, size }) / 2,
+          height: theme.fn.size({ sizes, size }) / 2,
+          borderRadius: theme.fn.size({ sizes, size }) / 2,
         },
       },
 
@@ -76,11 +68,11 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
     },
 
     label: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       display: 'flex',
       alignItems: 'center',
       fontSize: theme.fontSizes[size] || theme.fontSizes.md,
-      lineHeight: `${getSizeValue({ sizes, size })}px`,
+      lineHeight: `${theme.fn.size({ sizes, size })}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       [`&.${labelDisabled.ref}`]: {

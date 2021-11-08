@@ -1,8 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getSizeValue,
-  getFontStyles,
   getSharedColorScheme,
   MantineColor,
 } from '@mantine/styles';
@@ -39,11 +37,11 @@ export default createStyles(
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });
 
-    const iconSize = getSizeValue({ size, sizes });
+    const iconSize = theme.fn.size({ size, sizes });
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -52,7 +50,7 @@ export default createStyles(
         height: iconSize,
         minWidth: iconSize,
         minHeight: iconSize,
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         backgroundColor: colors.background,
         color: colors.color,
         backgroundImage: variant === 'gradient' ? colors.background : null,

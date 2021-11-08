@@ -1,12 +1,6 @@
 import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import { useFocusTrap } from '@mantine/hooks';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  MantineShadow,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineShadow, ClassNames } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper/Paper';
 import { Divider } from '../../Divider/Divider';
@@ -118,8 +112,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
 
     const hoveredTimeout = useRef<number>();
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Menu' });
+    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
     const [hovered, setHovered] = useState(-1);
     const focusTrapRef = useFocusTrap(trapFocus);
 

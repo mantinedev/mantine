@@ -1,12 +1,4 @@
-import {
-  createStyles,
-  MantineSize,
-  getFontStyles,
-  getSizeValue,
-  getFocusStyles,
-  MantineColor,
-  getSharedColorScheme,
-} from '@mantine/styles';
+import { createStyles, MantineSize, MantineColor, getSharedColorScheme } from '@mantine/styles';
 
 export const sizes = {
   xs: 14,
@@ -33,7 +25,7 @@ interface CheckboxStyles {
 export default createStyles(
   (theme, { size, color, transitionDuration }: CheckboxStyles, getRef) => {
     const colors = getSharedColorScheme({ color, theme, variant: 'filled' });
-    const _size = getSizeValue({ size, sizes });
+    const _size = theme.fn.size({ size, sizes });
 
     const icon = {
       ref: getRef('icon'),
@@ -44,7 +36,7 @@ export default createStyles(
       transitionTimingFunction: 'ease',
       transitionDuration: `${transitionDuration}ms`,
       pointerEvents: 'none',
-      width: getSizeValue({ size, sizes: iconSizes }),
+      width: theme.fn.size({ size, sizes: iconSizes }),
       position: 'absolute',
       zIndex: 1,
       top: 0,
@@ -73,16 +65,16 @@ export default createStyles(
       },
 
       label: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
         paddingLeft: theme.spacing.sm,
-        fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       },
 
       input: {
-        ...getFocusStyles(theme),
+        ...theme.fn.focusStyles(),
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
         border: `1px solid ${

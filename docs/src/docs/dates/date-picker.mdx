@@ -44,6 +44,13 @@ Then set `locale` prop in component:
 
 <Demo data={DatePickerDemos.localization} />
 
+## First day of the week
+
+Set the first day of the week using `firstDayOfWeek` prop.
+Accepts either `sunday` or `monday` as values.
+
+<Demo data={DatePickerDemos.firstDaySunday} />
+
 ## Open calendal within modal
 
 You can change the way calendar pop up on the page.
@@ -80,6 +87,24 @@ Set `minDate` and `maxDate` props to define minimum and maximum possible dates.
 Dates which are not included in available interval will be disabled:
 
 <Demo data={DatePickerDemos.boundaries} />
+
+## Allow free input
+
+By setting `allowFreeInput` prop you stop input from being readonly.
+With this option user is allowed to type date manually:
+
+<Demo data={DatePickerDemos.freeInput} />
+
+By default DatePicker will try to parse date using dayjs with given `inputFormat`,
+to change that provide `dateParser` function:
+
+```tsx
+const dateParser = (dateString) => new Date(Date.parse(dateString));
+<DatePicker allowFreeInput dateParser={dateParser} />;
+```
+
+`dateParser` function should always return Date object.
+If parsed date is invalid when input is blurred value will be restored to last valid value.
 
 ## Exclude dates
 

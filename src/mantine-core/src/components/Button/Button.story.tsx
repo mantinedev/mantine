@@ -126,9 +126,6 @@ storiesOf('@mantine/core/Button', module)
       <Button component="a" fullWidth style={{ marginTop: 20 }}>
         Full width link button
       </Button>
-      <Button variant="link" fullWidth style={{ marginTop: 20 }}>
-        Full width link variant
-      </Button>
     </div>
   ))
   .add('Overflow', () => (
@@ -136,9 +133,6 @@ storiesOf('@mantine/core/Button', module)
       <Button fullWidth>Full width button</Button>
       <Button component="a" fullWidth style={{ marginTop: 20 }}>
         Full width link button
-      </Button>
-      <Button variant="link" fullWidth style={{ marginTop: 20 }}>
-        Full width link variant
       </Button>
     </div>
   ))
