@@ -14,6 +14,21 @@ export interface ColProps
   /** Column left offset */
   offset?: number;
 
+  /** Column left offset at (min-width: theme.breakpoints.xs) */
+  offsetXs?: number;
+
+  /** Column left offset at (min-width: theme.breakpoints.sm) */
+  offsetSm?: number;
+
+  /** Column left offset at (min-width: theme.breakpoints.md) */
+  offsetMd?: number;
+
+  /** Column left offset at (min-width: theme.breakpoints.lg) */
+  offsetLg?: number;
+
+  /** Column left offset at (min-width: theme.breakpoints.xl) */
+  offsetXl?: number;
+
   /** Space between columns from theme, or number to set value in px, controlled by Grid component */
   gutter?: MantineNumberSize;
 
@@ -47,6 +62,11 @@ export function Col({
   span,
   gutter,
   offset = 0,
+  offsetXs = 0,
+  offsetSm = 0,
+  offsetMd = 0,
+  offsetLg = 0,
+  offsetXl = 0,
   grow,
   xs,
   sm,
@@ -60,7 +80,23 @@ export function Col({
   ...others
 }: ColProps) {
   const { classes, cx } = useStyles(
-    { gutter, offset, xs, sm, md, lg, xl, grow, columns, span },
+    {
+      gutter,
+      offset,
+      offsetXs,
+      offsetSm,
+      offsetMd,
+      offsetLg,
+      offsetXl,
+      xs,
+      sm,
+      md,
+      lg,
+      xl,
+      grow,
+      columns,
+      span,
+    },
     { sx, name: 'Col' }
   );
 
