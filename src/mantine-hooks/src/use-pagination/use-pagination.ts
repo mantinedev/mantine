@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 import { range } from '../utils';
 
