@@ -114,7 +114,7 @@ function NextGuide({ dependencies }: GuideProps) {
     <Guide
       dependencies={dependencies}
       initScript="npx create-next-app --ts"
-      action="Get stared with Next.js Github template"
+      action="Get started with Next.js Github template"
       actionLink="https://github.com/mantinedev/mantine-next-template"
     >
       <Text weight={500} mt={30} mb={5} size="lg">
@@ -131,7 +131,7 @@ function GatsbyGuide({ dependencies }: GuideProps) {
     <Guide
       dependencies={`${dependencies} gatsby-plugin-mantine`}
       initScript="npm init gatsby"
-      action="Get stared with Gatsby.js Github template"
+      action="Get started with Gatsby.js Github template"
       actionLink="https://github.com/mantinedev/mantine-gatsby-template"
       withDone
     >
