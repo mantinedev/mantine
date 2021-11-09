@@ -8,6 +8,7 @@ date: 'November 26th, 2021'
 ---
 
 import { DatePickerDemos } from '@demos/dates';
+import { useOsDemo } from '@docs/demos';
 
 ## Breaking changes
 
@@ -68,6 +69,12 @@ You can now add any amount of custom properties on Mantine theme using `other` k
   transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
 })} />
 ```
+
+## New components and hooks
+
+With new [use-os](https://mantine.dev/hooks/use-os/) hook you can detect user os:
+
+<Demo data={useOsDemo} />
 
 ## New features
 
