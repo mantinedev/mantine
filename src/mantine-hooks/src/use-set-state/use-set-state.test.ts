@@ -21,4 +21,10 @@ describe('@mantine/hooks/use-set-state', () => {
     act(() => hook.result.current[1]({ a: 3, b: 'test-2' }));
     expect(hook.result.current[0]).toEqual({ ...data, a: 3, b: 'test-2' });
   });
+
+  it('sets state with state function', () => {
+    const hook = renderHook(() => useSetState(data));
+    act(() => hook.result.current[1]((current) => ({ a: current.a + 1 })));
+    expect(hook.result.current[0]).toEqual({ ...data, a: 2 });
+  });
 });
