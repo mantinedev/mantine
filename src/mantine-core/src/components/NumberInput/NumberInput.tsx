@@ -111,15 +111,29 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const _max = typeof max === 'number' ? max : Infinity;
 
     const increment = () => {
-      const result = clamp({ value: finalValue + step, min: _min, max: _max }).toFixed(precision);
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      if (_value === undefined) {
+        // if the input is empty, on increment set the value to the min
+        // or if the min is not defined, set the value to 0.
+        handleValueChange(min ?? 0);
+        setTempValue(min?.toFixed(precision) ?? '0');
+      } else {
+        const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
+        handleValueChange(parseFloat(result));
+        setTempValue(result);
+      }
     };
 
     const decrement = () => {
-      const result = clamp({ value: finalValue - step, min: _min, max: _max }).toFixed(precision);
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      if (_value === undefined) {
+        // if the input is empty, on decrement set the value to the min
+        // or if the min is not defined, set the value to 0.
+        handleValueChange(min ?? 0);
+        setTempValue(min?.toFixed(precision) ?? '0');
+      } else {
+        const result = clamp({ value: _value - step, min: _min, max: _max }).toFixed(precision);
+        handleValueChange(parseFloat(result));
+        setTempValue(result);
+      }
     };
 
     assignRef(handlersRef, { increment, decrement });
@@ -128,6 +142,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       if (typeof value === 'number' && !focused) {
         setValue(value);
         setTempValue(value.toFixed(precision));
+      }
+      if (defaultValue === undefined && value === undefined && !focused) {
+        setValue(value);
+        setTempValue('');
       }
     }, [value]);
 
@@ -185,11 +203,16 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
         if (!Number.isNaN(val)) {
           if (!noClampOnBlur) {
+            // the input is a parsable number, set the value to the clamped value.
+            // This will turn an input like "2.34abc" into 2.34 if precision is 2.
             setTempValue(val.toFixed(precision));
             handleValueChange(val);
           }
         } else {
-          setTempValue(finalValue.toFixed(precision));
+          // The input is not empty but the input is not a number and should be set to the last number value or empty.
+          // i.e. in the case that the input was "10" and the user selected it and then typed "abc" onBlur it'll reset to 10.
+          // in the case that the input was empty and the user typed "abc" onBlur it'll reset to empty.
+          setTempValue(finalValue?.toFixed(precision) ?? '');
         }
       }
 
@@ -200,6 +223,21 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setFocused(true);
       typeof onFocus === 'function' && onFocus(event);
+    };
+
+    /**
+     * Handle KeyDown to have arrow up and down events trigger increment/decrement.
+     * Since we're using `type="text"` instead of `type="number"` we have to manually handle the up/down keys.
+     */
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'ArrowUp') {
+        // prevent cursor from going to the beginning of the input.
+        // it will now mimic the behavior of an input type="number" and move the cursor to the end.
+        event.preventDefault();
+        increment();
+      } else if (event.key === 'ArrowDown') {
+        decrement();
+      }
     };
 
     return (
@@ -213,6 +251,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
         rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
         rightSectionWidth={getSizeValue({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}
