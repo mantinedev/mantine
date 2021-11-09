@@ -76,6 +76,18 @@ With new [use-os](https://mantine.dev/hooks/use-os/) hook you can detect user os
 
 <Demo data={useOsDemo} />
 
+New [use-set-state](https://mantine.dev/hooks/use-set-state/) lets you work with state like in class components:
+
+```tsx
+const [state, setState] = useSetState({ name: 'John', age: 35, job: 'Engineer' });
+
+state; // -> { name: 'John', age: 35, job: 'Engineer' }
+
+setState({ name: 'Jane' }); // -> { name: 'Jane', age: 35, job: 'Engineer' }
+setState({ age: 25, job: 'Manager' }); // -> { name: 'Jane', age: 25, job: 'Manager' }
+setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32, job: 'Manager' }
+```
+
 ## New features
 
 [DatePicker](https://mantine.dev/dates/date-picker/) component now supports free input:
