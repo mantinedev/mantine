@@ -39,5 +39,7 @@ export { useFullscreen } from './use-fullscreen/use-fullscreen';
 export { useLogger } from './use-logger/use-logger';
 export { useHover } from './use-hover/use-hover';
 export { useUuid } from './use-uuid/use-uuid';
+export { useOs } from './use-os/use-os';
 
 export type { UseMovePosition } from './use-move/use-move';
+export type { OS } from './use-os/use-os';
