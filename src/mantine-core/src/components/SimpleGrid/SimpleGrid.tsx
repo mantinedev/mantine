@@ -13,7 +13,7 @@ export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWitho
   breakpoints?: SimpleGridBreakpoint[];
 
   /** Default amount of columns, used when none of breakpoints can be applied  */
-  cols: number;
+  cols?: number;
 
   /** Default spacing between columns, used when none of breakpoints can be applied */
   spacing?: MantineNumberSize;
@@ -24,7 +24,7 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     {
       className,
       breakpoints = [],
-      cols,
+      cols = 1,
       spacing = 'md',
       children,
       style,
