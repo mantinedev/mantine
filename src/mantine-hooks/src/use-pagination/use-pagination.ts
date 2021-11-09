@@ -40,18 +40,15 @@ export function usePagination({
     rule: (_page) => typeof _page === 'number' && _page <= total,
   });
 
-  const setPage = useCallback(
-    (pageNumber: number) => {
-      if (pageNumber <= 0) {
-        setActivePage(1);
-      } else if (pageNumber > total) {
-        setActivePage(total);
-      } else {
-        setActivePage(pageNumber);
-      }
-    },
-    [total]
-  );
+  const setPage = (pageNumber: number) => {
+    if (pageNumber <= 0) {
+      setActivePage(1);
+    } else if (pageNumber > total) {
+      setActivePage(total);
+    } else {
+      setActivePage(pageNumber);
+    }
+  };
 
   const next = () => setPage(activePage + 1);
   const previous = () => setPage(activePage - 1);
