@@ -16,4 +16,13 @@ storiesOf('@mantine/dates/DateRangePicker', module)
         <DateRangePicker label="Second" />
       </Group>
     </div>
+  ))
+  .add('Multiple Months', () => (
+    <div style={{ padding: 40 }}>
+      <DateRangePicker
+        placeholder="Dates range"
+        defaultValue={[new Date(), new Date()]}
+        withMultipleMonths
+      />
+    </div>
   ));

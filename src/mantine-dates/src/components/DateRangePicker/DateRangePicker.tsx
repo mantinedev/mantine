@@ -34,6 +34,9 @@ export interface DateRangePickerProps
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
+
+  /** Show two months next to each other */
+  withMultipleMonths?: boolean;
 }
 
 const validationRule = (val: any) =>
@@ -73,6 +76,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       clearable = true,
       clearButtonLabel,
       allowSingleDateInRange = false,
+      withMultipleMonths = false,
       ...others
     }: DateRangePickerProps,
     ref
@@ -149,6 +153,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             fullWidth={dropdownType === 'modal'}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
             allowSingleDateInRange={allowSingleDateInRange}
+            withMultipleMonths={withMultipleMonths}
           />
         </DatePickerBase>
 
