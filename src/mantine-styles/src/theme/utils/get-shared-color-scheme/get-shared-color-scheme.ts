@@ -28,7 +28,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       border: 'transparent',
       background: theme.fn.rgba(
-        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 9 : 0),
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
         theme.colorScheme === 'dark' ? 0.35 : 1
       ),
       color:
@@ -58,9 +58,9 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
 
   if (variant === 'outline') {
     return {
-      border: theme.fn.rgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 7), 0.65),
+      border: theme.fn.rgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7), 0.75),
       background: 'transparent',
-      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 7),
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
     };
   }
 
