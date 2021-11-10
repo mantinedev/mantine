@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface ColorPickerStyles {
   size: MantineSize;
@@ -18,14 +18,14 @@ export default createStyles((theme, { size, fullWidth }: ColorPickerStyles) => (
 
   root: {
     boxSizing: 'border-box',
-    width: fullWidth ? '100%' : getSizeValue({ size, sizes }),
+    width: fullWidth ? '100%' : theme.fn.size({ size, sizes }),
     padding: 1,
   },
 
   body: {
     display: 'flex',
     boxSizing: 'border-box',
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingTop: theme.fn.size({ size, sizes: theme.spacing }) / 2,
   },
 
   sliders: {

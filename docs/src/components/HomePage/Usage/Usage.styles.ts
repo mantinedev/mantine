@@ -1,8 +1,8 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   guide: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

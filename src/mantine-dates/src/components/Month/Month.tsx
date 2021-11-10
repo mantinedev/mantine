@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { DefaultProps, Text, MantineSize, ClassNames, useExtractedMargins } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import { FirstDayOfWeek } from '../../types';
 import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
@@ -37,6 +38,9 @@ export interface MonthSettings {
 
   /** Set to true to make calendar take 100% of container width */
   fullWidth?: boolean;
+
+  /** Prevent focusing upon clicking */
+  preventFocus?: boolean;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -68,6 +72,9 @@ export interface MonthProps
 
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
 }
 
 const noop = () => {};
@@ -95,7 +102,9 @@ export function Month({
   __staticSelector = 'Month',
   size = 'sm',
   fullWidth = false,
+  preventFocus = false,
   sx,
+  firstDayOfWeek = 'monday',
   ...others
 }: MonthProps) {
   const { classes, cx } = useStyles(
@@ -104,7 +113,7 @@ export function Month({
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const days = getMonthDays(month);
+  const days = getMonthDays(month, firstDayOfWeek);
 
   const focusDay = (date: Date, diff: number) => {
     const offset = new Date(date);
@@ -155,7 +164,7 @@ export function Month({
     }
   }, []);
 
-  const weekdays = getWeekdaysNames(locale).map((weekday) => (
+  const weekdays = getWeekdaysNames(locale, firstDayOfWeek).map((weekday) => (
     <th className={classes.weekdayCell} key={weekday}>
       <Text size={size} className={classes.weekday}>
         {upperFirst(weekday)}
@@ -192,6 +201,7 @@ export function Month({
               daysRefs.current[date.toISOString()] = button;
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
+            onMouseDown={(event) => preventFocus && event.preventDefault()}
             value={date}
             outside={dayProps.outside}
             weekend={dayProps.weekend}

@@ -47,12 +47,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     title: {
       color: theme.white,
+      marginBottom: 5,
     },
 
     body: {
       color: theme.colors.gray[3],
-      marginTop: -theme.spacing.xs,
-      marginBottom: -theme.spacing.lg / 2,
     },
 
     bodyText: {
@@ -72,6 +71,7 @@ interface ImageCardProps {
 
 export function ImageCard({ image, title, author, views, comments, link }: ImageCardProps) {
   const { classes } = useStyles();
+  const iconStyle = { marginRight: 7, width: 12, height: 12 };
 
   return (
     <Card
@@ -97,15 +97,15 @@ export function ImageCard({ image, title, author, views, comments, link }: Image
               {author}
             </Text>
 
-            <Group spacing="lg" style={{ marginRight: 0 }}>
+            <Group spacing="lg">
               <Center>
-                <EyeOpenIcon style={{ marginRight: 7, width: 12, height: 12 }} />
+                <EyeOpenIcon style={iconStyle} />
                 <Text size="sm" className={classes.bodyText}>
                   {views}
                 </Text>
               </Center>
               <Center>
-                <ChatBubbleIcon style={{ marginRight: 7, width: 12, height: 12 }} />
+                <ChatBubbleIcon style={iconStyle} />
                 <Text size="sm" className={classes.bodyText}>
                   {comments}
                 </Text>

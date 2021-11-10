@@ -10,6 +10,7 @@ import {
   Paper,
   Text,
   LoadingOverlay,
+  Anchor,
   useMantineTheme,
 } from '../../src';
 
@@ -168,11 +169,11 @@ export function AuthenticationForm({
 
         {!noSubmit && (
           <Group position="apart" style={{ marginTop: 25 }}>
-            <Button variant="link" color="gray" onClick={toggleFormType} size="sm">
+            <Anchor component="button" color="gray" onClick={toggleFormType} size="sm">
               {formType === 'register'
                 ? 'Have an account? Login'
                 : "Don't have an account? Register"}
-            </Button>
+            </Anchor>
 
             <Button color="blue" type="submit">
               {formType === 'register' ? 'Register' : 'Login'}

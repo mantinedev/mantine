@@ -25,6 +25,11 @@ storiesOf('@mantine/dates/RangeCalendar', module)
       <WrappedRangeCalendar />
     </div>
   ))
+  .add('First day of the week - Sunday', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar firstDayOfWeek="sunday" />
+    </div>
+  ))
   .add('Multiple months', () => (
     <div style={{ padding: 40 }}>
       <WrappedRangeCalendar withMultipleMonths />

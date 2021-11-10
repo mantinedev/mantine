@@ -27,7 +27,7 @@ instead you specify amount of columns per row:
 
 Provide an array to `breakpoints` prop to define responsive behavior:
 
-- `maxWidth` – max-width at which media query will work
+- `maxWidth` or `minWidth` – max-width or min-width at which media query will work
 - `cols` – amount of columns per row at given max-width
 - `spacing` – optional spacing at given max-width, if not provided spacing from component prop will be used instead
 
@@ -47,6 +47,24 @@ You can also use breakpoints from theme to set `maxWidth`:
 <Demo data={SimpleGridDemos.themeBreakpoints} />
 
 You can configure theme breakpoint values in [MantineProvider](/theming/extend-theme/#breakpoints).
+
+## min-width breakpoints
+
+If you prefer a mobile first approach you can use use min-width breakpoints:
+
+```tsx
+<SimpleGrid
+  breakpoints={[
+    { minWidth: 'sm', cols: 2 },
+    { minWidth: 'md', cols: 3 },
+    { minWidth: 1200, cols: 4 },
+  ]}
+>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</SimpleGrid>
+```
 
 ## Spacing
 

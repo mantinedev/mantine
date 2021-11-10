@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/core';
-import banner from './banner.png';
+import banner from './banner.webp';
 
 export default createStyles((theme) => ({
   wrapper: {
@@ -19,10 +19,10 @@ export default createStyles((theme) => ({
 
   title: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 44,
-    letterSpacing: -1,
     lineHeight: 1.2,
-    fontWeight: 800,
+    fontWeight: 900,
   },
 
   highlight: {
@@ -39,15 +39,8 @@ export default createStyles((theme) => ({
   body: {
     flex: '0 0 700px',
     paddingTop: 140,
-    paddingLeft: theme.spacing.xl * 2,
-    paddingRight: theme.spacing.xl * 2,
     position: 'relative',
     zIndex: 1,
-
-    '@media (max-width: 1310px)': {
-      paddingLeft: theme.spacing.xl,
-      paddingRight: theme.spacing.xl,
-    },
   },
 
   image: {

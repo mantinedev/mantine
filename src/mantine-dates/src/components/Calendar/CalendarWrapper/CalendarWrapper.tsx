@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { MantineSize, getSizeValue, useExtractedMargins, useSx, DefaultProps } from '@mantine/core';
+import { MantineSize, useExtractedMargins, useSx, DefaultProps } from '@mantine/core';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 
 interface CalendarWrapperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -14,10 +14,10 @@ export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
     ref
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { sxClassName } = useSx({ sx, className });
+    const { sxClassName, theme } = useSx({ sx, className });
 
     const getMaxWidth = (sizeValues) => {
-      const maxWidth = getSizeValue(sizeValues) * 7;
+      const maxWidth = theme.fn.size(sizeValues) * 7;
       return hasMultipleMonths ? maxWidth * 2 + 16 : maxWidth;
     };
 

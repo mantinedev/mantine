@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import dayjs from 'dayjs';
 import { DefaultProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { FirstDayOfWeek } from '../../types';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
@@ -35,6 +36,9 @@ export interface CalendarSettings extends MonthSettings {
 
   /** Years range for year select */
   yearsRange?: { from: number; to: number };
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
 }
 
 export type CalendarStylesNames = Exclude<MonthStylesNames, 'root'> | CalendarLabelStylesNames;
@@ -86,6 +90,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       __staticSelector = 'Calendar',
       monthLabel,
       yearLabel,
+      preventFocus,
+      firstDayOfWeek = 'monday',
       ...others
     }: CalendarProps,
     ref
@@ -118,6 +124,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           month={_month}
           setMonth={setMonth}
           labelFormat={labelFormat}
+          preventFocus={preventFocus}
           __staticSelector={__staticSelector}
           monthLabel={monthLabel}
           yearLabel={yearLabel}
@@ -136,8 +143,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           classNames={classNames}
           styles={styles}
           fullWidth={fullWidth}
+          preventFocus={preventFocus}
           size={size}
           locale={locale}
+          firstDayOfWeek={firstDayOfWeek}
           __staticSelector={__staticSelector}
         />
       </CalendarWrapper>

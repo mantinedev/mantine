@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Group,
-  ActionIcon,
-  getSizeValue,
-  DefaultProps,
-  MantineSize,
-  useMantineTheme,
-} from '@mantine/core';
+import { Group, ActionIcon, DefaultProps, MantineSize, useMantineTheme } from '@mantine/core';
 import { ArrowIcon } from '../ArrowIcon';
 import { CalendarLabel } from '../CalendarLabel/CalendarLabel';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
@@ -38,6 +31,7 @@ interface CalendarHeaderProps extends DefaultProps {
   __staticSelector: string;
   monthLabel?: string;
   yearLabel?: string;
+  preventFocus?: boolean;
   previousMonthHidden?: boolean;
   nextMonthHidden?: boolean;
 }
@@ -61,18 +55,21 @@ export function CalendarHeader({
   __staticSelector,
   monthLabel,
   yearLabel,
+  preventFocus = false,
   previousMonthHidden = false,
   nextMonthHidden = false,
 }: CalendarHeaderProps) {
   const theme = useMantineTheme();
-  const iconSize = getSizeValue({ size, sizes: iconSizes });
-  const iconButtonSize = getSizeValue({ size, sizes: DAY_SIZES });
+  const iconSize = theme.fn.size({ size, sizes: iconSizes });
+  const iconButtonSize = theme.fn.size({ size, sizes: DAY_SIZES });
 
   return (
     <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={previousMonthLabel}
         onClick={onPreviousMonth}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
+        tabIndex={preventFocus ? -1 : 0}
         disabled={previousMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation
@@ -94,11 +91,14 @@ export function CalendarHeader({
         __staticSelector={__staticSelector}
         monthLabel={monthLabel}
         yearLabel={yearLabel}
+        preventFocus={preventFocus}
       />
 
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={nextMonthLabel}
         onClick={onNextMonth}
+        tabIndex={preventFocus ? -1 : 0}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         disabled={nextMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation

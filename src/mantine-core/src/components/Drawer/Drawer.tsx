@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
@@ -121,8 +120,10 @@ export function MantineDrawer({
   sx,
   ...others
 }: DrawerProps) {
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, position }, { sx, classNames, styles, name: 'Drawer' });
+  const { classes, cx, theme } = useStyles(
+    { size, position },
+    { sx, classNames, styles, name: 'Drawer' }
+  );
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   const [, lockScroll] = useScrollLock();

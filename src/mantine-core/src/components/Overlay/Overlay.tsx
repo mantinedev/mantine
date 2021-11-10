@@ -3,8 +3,6 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   MantineNumberSize,
-  getSizeValue,
-  useMantineTheme,
   useSx,
   DefaultProps,
 } from '@mantine/styles';
@@ -47,8 +45,7 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
     }: OverlayProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { css, sxClassName, cx } = useSx({ sx, className });
-    const theme = useMantineTheme();
+    const { css, sxClassName, cx, theme } = useSx({ sx, className });
     const Element = component || 'div';
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
@@ -63,7 +60,7 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
             bottom: 0,
             left: 0,
             right: 0,
-            borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+            borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
             zIndex,
           }),
           sxClassName

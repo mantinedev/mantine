@@ -1,11 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
@@ -56,8 +50,10 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     }: ThumbProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size }, { classNames, styles, name: 'Slider' });
+    const { classes, cx, theme } = useStyles(
+      { color, size },
+      { classNames, styles, name: 'Slider' }
+    );
     const [focused, setFocused] = useState(false);
     const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 

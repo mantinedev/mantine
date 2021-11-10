@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, getSizeValue, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -105,7 +105,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }: ColorInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );
@@ -181,7 +181,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               (withPreview ? (
                 <ColorSwatch
                   color={isColorValid(_value) ? _value : '#fff'}
-                  size={getSizeValue({ size, sizes: SWATCH_SIZES })}
+                  size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
                 />
               ) : null)
             }
@@ -204,7 +204,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           arrowSize={3}
           zIndex={dropdownZIndex}
           arrowClassName={classes.arrow}
-          arrowStyle={{ left: getSizeValue({ size, sizes: ARROW_OFFSET }) }}
+          arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
         >
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>

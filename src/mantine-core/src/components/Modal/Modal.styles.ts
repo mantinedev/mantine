@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export const sizes = {
   xs: 320,
@@ -52,7 +52,7 @@ export default createStyles((theme, { overflow, size }: ModalStyles) => ({
   },
 
   modal: {
-    width: getSizeValue({ sizes, size }),
+    width: theme.fn.size({ sizes, size }),
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },

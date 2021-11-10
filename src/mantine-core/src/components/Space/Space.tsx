@@ -1,12 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  useExtractedMargins,
-  DefaultProps,
-  MantineNumberSize,
-  getSizeValue,
-  useMantineTheme,
-  useSx,
-} from '@mantine/styles';
+import { useExtractedMargins, DefaultProps, MantineNumberSize, useSx } from '@mantine/styles';
 
 export interface SpaceProps extends DefaultProps {
   /** Width, set to add horizontal spacing */
@@ -18,11 +11,10 @@ export interface SpaceProps extends DefaultProps {
 
 export const Space = forwardRef<HTMLDivElement, SpaceProps>(
   ({ w, h, style, sx, className, ...others }: SpaceProps, ref) => {
-    const { sxClassName, css, cx } = useSx({ sx, className });
-    const theme = useMantineTheme();
+    const { sxClassName, css, cx, theme } = useSx({ sx, className });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const width = getSizeValue({ size: w, sizes: theme.spacing });
-    const height = getSizeValue({ size: h, sizes: theme.spacing });
+    const width = theme.fn.size({ size: w, sizes: theme.spacing });
+    const height = theme.fn.size({ size: h, sizes: theme.spacing });
 
     return (
       <div

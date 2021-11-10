@@ -1,4 +1,4 @@
-import { createStyles, getThemeColor, getFontStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface AlertStyles {
   color: MantineColor;
@@ -6,15 +6,13 @@ interface AlertStyles {
 
 export default createStyles((theme, { color }: AlertStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.radius.sm,
     backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[5]
-        : getThemeColor({ theme, color, shade: 0 }),
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
   },
 
   wrapper: {
@@ -27,7 +25,7 @@ export default createStyles((theme, { color }: AlertStyles) => ({
 
   title: {
     boxSizing: 'border-box',
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
+    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
     margin: 0,
     marginBottom: 7,
     display: 'flex',
@@ -45,7 +43,7 @@ export default createStyles((theme, { color }: AlertStyles) => ({
   },
 
   icon: {
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 5 : 7 }),
+    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
     lineHeight: 1,
     width: 20,
     height: 20,
@@ -57,7 +55,7 @@ export default createStyles((theme, { color }: AlertStyles) => ({
   },
 
   message: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     lineHeight: theme.lineHeight,
     borderBottomLeftRadius: theme.radius.sm,
     borderBottomRightRadius: theme.radius.sm,

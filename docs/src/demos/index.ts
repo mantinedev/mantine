@@ -23,6 +23,7 @@ export * from './hooks/use-logger';
 export * from './hooks/use-mouse';
 export * from './hooks/use-move';
 export * from './hooks/use-hover';
+export * from './hooks/use-os';
 
 export * from './theme';
 

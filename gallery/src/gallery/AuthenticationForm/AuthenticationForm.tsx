@@ -10,12 +10,11 @@ import {
   Button,
   Divider,
   Checkbox,
-  useMantineTheme,
+  Anchor,
 } from '@mantine/core';
 import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
 
 export function AuthenticationForm(props: PaperProps<'div'>) {
-  const theme = useMantineTheme();
   const [type, toggle] = useToggle('login', ['login', 'register']);
   const form = useForm({
     initialValues: {
@@ -36,17 +35,16 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
       shadow="sm"
       radius="md"
       padding="xl"
-      {...props}
-      style={{
+      sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-        ...props.style,
-      }}
+      })}
+      {...props}
     >
       <Text size="lg" weight={500}>
         Welcome to Mantine, {type} with
       </Text>
 
-      <Group grow style={{ marginTop: 5, marginBottom: 15 }}>
+      <Group grow mb="md" mt="sm">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group>
@@ -54,7 +52,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
       <Divider label="Or continue with email" labelPosition="center" />
 
       <form onSubmit={form.onSubmit(() => {})}>
-        <Group direction="column" grow style={{ marginTop: 5 }}>
+        <Group direction="column" grow mt={5}>
           {type === 'register' && (
             <TextInput
               label="Name"
@@ -91,12 +89,12 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
           )}
         </Group>
 
-        <Group position="apart" style={{ marginTop: 15 }}>
-          <Button variant="link" color="gray" onClick={() => toggle()} size="xs">
+        <Group position="apart" mt="lg">
+          <Anchor component="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
-          </Button>
+          </Anchor>
           <Button type="submit">{upperFirst(type)}</Button>
         </Group>
       </form>

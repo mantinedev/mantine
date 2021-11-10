@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStyles, Title, Container, Accordion, ThemeIcon, Button } from '@mantine/core';
 import { PlusIcon } from '@primer/octicons-react';
-import { Blobs } from '@mantine/decorations';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('control');
@@ -10,10 +9,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
     wrapper: {
       paddingTop: theme.spacing.xl * 2,
       minHeight: 820,
-      backgroundImage: `linear-gradient(162deg, ${theme.colors.blue[6]} 0%, ${theme.colors.violet[5]} 100%)`,
+      backgroundImage: `radial-gradient(${theme.colors[theme.primaryColor][6]} 0%, ${
+        theme.colors[theme.primaryColor][4]
+      } 100%)`,
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'top left',
-      backgroundSize: '100%',
       position: 'relative',
     },
 
@@ -54,7 +54,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
     },
 
     gradient: {
-      backgroundImage: `linear-gradient(104deg, ${theme.colors.indigo[6]} 0%, ${theme.colors.violet[5]} 100%)`,
+      backgroundImage: `radial-gradient(${theme.colors[theme.primaryColor][6]} 0%, ${
+        theme.colors[theme.primaryColor][5]
+      } 100%)`,
     },
 
     itemOpened: {
@@ -82,8 +84,6 @@ export function FaqWithBg() {
   const { classes, cx } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Blobs />
-
       <Container size="sm">
         <Title align="center" className={classes.title}>
           Frequently Asked Questions

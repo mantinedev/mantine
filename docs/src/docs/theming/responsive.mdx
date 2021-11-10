@@ -1,0 +1,211 @@
+---
+group: 'theming'
+title: Responsive styles
+slug: /theming/responsive/
+order: 3
+---
+
+import { DEFAULT_THEME } from '@mantine/core';
+import { GridDemos, SimpleGridDemos, AppShellDemos, MediaQueryDemos } from '@demos/core';
+import { CreateStylesDemos } from '@docs/demos';
+
+# Responsive styles
+
+`@mantine/core` package exports several components that can help you organize responsive styles without writing CSS.
+Note that in most cases that are not covered in this guide, the best approach to make your app responsive is to
+add styles with [createStyles](/theming/create-styles/) function.
+
+## Configure breakpoints
+
+`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are set in px (rem, em and other values are not supported).
+You can configure these values with [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function YourApp() {
+  return (
+    <MantineProvider
+      theme={{
+        breakpoints: {
+          xs: 500,
+          sm: 800,
+          md: 1000,
+          lg: 1200,
+          xl: 1400,
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+Default `theme.breakpoints` values are the same as in Bootstrap:
+
+<DataTable
+  head={['Breakpoint', 'Viewport width']}
+  data={Object.keys(DEFAULT_THEME.breakpoints).map((size) => [
+    size,
+    `${DEFAULT_THEME.breakpoints[size]}px`,
+  ])}
+/>
+
+## Layout components
+
+Most of layout components support responsive features. This section includes basic responsive features,
+visit components documentation to learn more.
+
+[Grid](/core/grid/) component allows you to set columns span based on `theme.breakpoints`.
+Grid is based on flexbox and can be used in older browsers (IE11+):
+
+<Demo data={GridDemos.responsive} />
+
+[SimpleGrid](/core/simple-grid/) component allows you to create a layout with given amount of columns with equal width.
+SimpleGrid is based on CSS grid and can have issue in older browsers (IE11+):
+
+<Demo data={SimpleGridDemos.breakpoints} />
+
+[AppShell](/core/app-shell/) component can be used to create a common layout pattern: `Header – Navbar – Content`:
+
+<Demo data={AppShellDemos.usage} />
+
+AppShell includes several responsive features with which you can build collapsible Navbar without any additional styles ([demo](/app-shell-demo/)):
+
+```tsx
+import { useState } from 'react';
+import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <AppShell
+      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+      navbarOffsetBreakpoint="sm"
+      // fixed prop on AppShell will be automatically added to Header and Navbar
+      fixed
+      navbar={
+        <Navbar
+          padding="md"
+          // Breakpoint at which navbar will be hidden if hidden prop is true
+          hiddenBreakpoint="sm"
+          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
+          hidden={!opened}
+          width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
+        >
+          <Text>Application navbar</Text>
+        </Navbar>
+      }
+      header={
+        <Header height={70} padding="md">
+          {/* You can handle other responsive styles with MediaQuery component or createStyles function */}
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
+
+            <Text>Application header</Text>
+          </div>
+        </Header>
+      }
+    >
+      <Text>Resize app to see responsive navbar in action</Text>
+    </AppShell>
+  );
+}
+```
+
+## Media queries in createStyles
+
+In most cases using [createStyles](/theming/create-styles/) function is cleanest way to add responsive styles to any element.
+Consider using it first before _hacking_ your way out of writing CSS with other approaches:
+
+<Demo data={CreateStylesDemos.createStylesMedia} />
+
+## MediaQuery component
+
+[MediaQuery](/core/media-query/) component lets you apply styles to given component or element if given media query matches:
+
+<Demo data={MediaQueryDemos.query} />
+
+## Changing component size based on media query
+
+Most of Mantine components support `size` prop with `xs`, `sm`, `md`, `lg` and `xl` values.
+You cannot change these values within component props. Instead you can use [MediaQuery](/core/media-query/) component
+to render different components based on media query:
+
+```tsx
+<>
+  <MediaQuery largerThan="sm">
+    <TextInput size="xl" />
+  </MediaQuery>
+
+  <MediaQuery smallerThan="sm">
+    <TextInput size="md" />
+  </MediaQuery>
+</>
+```
+
+The approach with [MediaQuery](/core/media-query/) component will work with SSR. If you do not need SSR support
+the more cleaner way to change size is to use [use-media-query](/hooks/use-media-query/) hook:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  // Will always return false during ssr, use only when you do not have ssr
+  const largeScreen = useMediaQuery('(min-width: 900px)');
+  return <TextInput size={largeScreen ? 'xl' : 'md'} />;
+}
+```
+
+## Inline media queries with sx
+
+All Mantine components support `sx` prop with which you can add styles (including responsive styles) to root component element:
+
+```tsx
+<TextInput
+  sx={(theme) => ({
+    background: theme.colors.gray[0],
+    padding: theme.spacing.md,
+
+    '@media (max-width: 755px)': {
+      padding: theme.spacing.sm,
+    },
+  })}
+/>
+```
+
+If you want to add styles with `sx` prop to non-Mantine component, you can wrap it in [Box](/core/box/):
+
+```tsx
+// Example with react-router-dom Link
+import { Link } from 'react-router-dom';
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      component={Link}
+      to="/some-path/"
+      sx={(theme) => ({
+        fontSize: theme.fontSizes.md,
+        '@media (max-width: 755px)': {
+          fontSize: theme.fontSizes.sm,
+        },
+      })}
+    >
+      Styled react-router link
+    </Box>
+  );
+}
+```

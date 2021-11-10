@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 // eslint-disable-next-line import/no-cycle
 import { NAVBAR_BREAKPOINT } from '../Navbar/Navbar.styles';
 
@@ -73,7 +73,7 @@ export default createStyles((theme) => ({
   },
 
   version: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     fontWeight: 700,
     textDecoration: 'none',
     marginBottom: 6,

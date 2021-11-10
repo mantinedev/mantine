@@ -2,17 +2,16 @@ import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => ({
   dropdown: {
+    ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
-    position: 'absolute',
     zIndex: 10,
-    top: theme.spacing.xs / 2,
-    left: 0,
-    right: 0,
+    pointerEvents: 'auto',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     padding: 4,
     overflowY: 'auto',
+    display: 'flex',
   },
 }));

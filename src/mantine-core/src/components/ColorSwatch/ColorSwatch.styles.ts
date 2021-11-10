@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, getFocusStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface ColorSwatchStyles {
   radius: MantineNumberSize;
@@ -10,12 +10,12 @@ export default createStyles((theme, { size, radius }: ColorSwatchStyles) => {
 
   return {
     root: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       width: size,
       height: size,
       WebkitTapHighlightColor: 'transparent',
       border: 0,
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       appearance: 'none',
       WebkitAppearance: 'none',
       padding: 0,
@@ -25,7 +25,7 @@ export default createStyles((theme, { size, radius }: ColorSwatchStyles) => {
 
     overlay: {
       position: 'absolute',
-      borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       top: 0,
       left: 0,
       right: 0,

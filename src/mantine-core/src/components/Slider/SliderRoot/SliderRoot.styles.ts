@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSizeValue, MantineNumberSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface SliderRootStyles {
   size: MantineNumberSize;
@@ -14,10 +14,10 @@ export const sizes = {
 
 export default createStyles((theme, { size }: SliderRootStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     WebkitTapHighlightColor: 'transparent',
     outline: 0,
-    height: getSizeValue({ sizes, size }) * 2,
+    height: theme.fn.size({ sizes, size }) * 2,
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',

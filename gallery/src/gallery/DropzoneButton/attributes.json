@@ -1,0 +1,11 @@
+{
+  "title": "Dropzone with button",
+  "category": "dropzones",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/others/dropzone/", "/core/button/", "/core/group/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
