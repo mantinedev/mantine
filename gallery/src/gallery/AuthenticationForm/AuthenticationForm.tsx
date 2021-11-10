@@ -44,7 +44,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
         Welcome to Mantine, {type} with
       </Text>
 
-      <Group grow mt={5} mb="md">
+      <Group grow mb="md" mt="sm">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group>
@@ -89,7 +89,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
           )}
         </Group>
 
-        <Group position="apart" mt="md">
+        <Group position="apart" mt="lg">
           <Anchor component="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'

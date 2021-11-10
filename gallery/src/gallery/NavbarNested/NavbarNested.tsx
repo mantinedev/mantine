@@ -70,7 +70,11 @@ const useStyles = createStyles((theme) => ({
   links: {
     marginLeft: -theme.spacing.md,
     marginRight: -theme.spacing.md,
+  },
+
+  linksInner: {
     paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xl,
   },
 
   footer: {
@@ -96,7 +100,9 @@ export function NavbarNested() {
       </Navbar.Section>
 
       <Navbar.Section grow className={classes.links}>
-        <Scrollbars>{links}</Scrollbars>
+        <Scrollbars>
+          <div className={classes.linksInner}>{links}</div>
+        </Scrollbars>
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>

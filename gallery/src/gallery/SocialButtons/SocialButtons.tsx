@@ -29,7 +29,7 @@ export function GithubButton(props: ButtonProps<'button'>) {
 
 export function SocialButtons() {
   return (
-    <Group position="center">
+    <Group position="center" sx={{ padding: 15 }}>
       <GoogleButton>Continue with Google</GoogleButton>
       <TwitterButton href="https://twitter.com/mantinedev" target="_blank">
         Follow on Twitter

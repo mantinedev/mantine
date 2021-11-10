@@ -84,12 +84,12 @@ export function NavbarMinimal() {
     <Navbar height={750} width={{ base: 80 }} padding="md">
       <Image src={logo} alt="Mantine logo" width={40} mx="auto" />
       <Navbar.Section grow mt={50}>
-        <Group direction="column" align="center">
+        <Group direction="column" align="center" spacing={0}>
           {links}
         </Group>
       </Navbar.Section>
       <Navbar.Section>
-        <Group direction="column" align="center">
+        <Group direction="column" align="center" spacing={0}>
           <NavbarLink icon={SwitchHorizontal} label="Change account" />
           <NavbarLink icon={Logout} label="Logout" />
         </Group>
