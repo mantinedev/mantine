@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -127,6 +127,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Limit amount of items selected */
+  maxSelectedValues?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -192,6 +195,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       dropdownComponent,
       onDropdownClose,
       onDropdownOpen,
+      maxSelectedValues,
       ...others
     }: MultiSelectProps,
     ref
@@ -208,12 +212,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [searchValue, setSearchValue] = useState('');
+
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
       offset: 5,
       cancelable: false,
       isList: true,
     });
+
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
 
@@ -241,6 +247,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       rule: (val) => Array.isArray(val),
       onChange,
     });
+
+    const [searchDisabled, setSearchDisabled] = useState(
+      disabled || (!!maxSelectedValues && maxSelectedValues < _value.length)
+    );
 
     const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
 
@@ -291,6 +301,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       );
     }, [searchValue]);
 
+    useEffect(() => {
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) setSearchDisabled(false);
+    }, [_value]);
+
     const handleItemSelect = (item: SelectItem) => {
       setTimeout(() => {
         clearSearchOnChange && handleSearchChange('');
@@ -298,6 +312,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           handleValueRemove(item.value);
         } else {
           setValue([..._value, item.value]);
+          if (_value.length === maxSelectedValues - 1) {
+            setSearchDisabled(true);
+            setDropdownOpened(false);
+          }
           if (hovered === filteredData.length - 1) {
             setHovered(filteredData.length - 2);
           }
@@ -464,7 +482,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !disabled && setDropdownOpened(!dropdownOpened);
+              !searchDisabled && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
             }}
             classNames={{
@@ -502,7 +520,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 onBlur={handleInputBlur}
                 readOnly={!searchable}
                 placeholder={_value.length === 0 ? placeholder : undefined}
-                disabled={disabled}
+                disabled={searchDisabled}
                 data-mantine-stop-propagation={dropdownOpened}
                 autoComplete="off"
                 {...rest}
