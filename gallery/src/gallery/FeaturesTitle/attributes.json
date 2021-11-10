@@ -3,7 +3,15 @@
   "category": "features",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [],
+  "dependencies": [
+    "/core/title/",
+    "/core/grid/",
+    "/core/simple-grid/",
+    "/core/button/",
+    "/core/text/",
+    "/core/theme-icon/",
+    "@primer/octicons-react"
+  ],
   "canvas": {
     "center": true,
     "maxWidth": 1060
