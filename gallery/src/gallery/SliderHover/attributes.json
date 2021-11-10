@@ -1,0 +1,11 @@
+{
+  "title": "Slider with thumb visible on hover",
+  "category": "sliders",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/slider/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

@@ -72,3 +72,4 @@ export { DropzoneButton } from './DropzoneButton/DropzoneButton';
 export { SliderFilled } from './SliderFilled/SliderFilled';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SliderLabel } from './SliderLabel/SliderLabel';
+export { SliderHover } from './SliderHover/SliderHover';
