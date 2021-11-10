@@ -6,11 +6,27 @@ function WrappedRangeCalendar(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeCalendar>, 'value' | 'onChange'>
 ) {
   const [value, onChange] = useState<[Date, Date]>([null, null]);
-  return <RangeCalendar month={value[0]} value={value} onChange={onChange} {...props} />;
+  const [month, setMonth] = useState<Date>(null);
+
+  return (
+    <RangeCalendar
+      month={month ?? value[0]}
+      value={value}
+      onChange={onChange}
+      onMonthChange={setMonth}
+      {...props}
+    />
+  );
 }
 
-storiesOf('@mantine/dates/RangeCalendar', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
-    <WrappedRangeCalendar />
-  </div>
-));
+storiesOf('@mantine/dates/RangeCalendar', module)
+  .add('General usage', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar />
+    </div>
+  ))
+  .add('Multiple months', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar withMultipleMonths />
+    </div>
+  ));

@@ -1,8 +1,8 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
+import { DefaultProps, useMantineTheme, hexToRgba, Group } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { isSameDate } from '../../utils';
+import { isSameDate, isSameMonth } from '../../utils';
 import { Month } from '../Month/Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
@@ -31,6 +31,9 @@ export interface RangeCalendarProps
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
+
+  /** Show two months next to each other */
+  withMultipleMonths?: boolean;
 }
 
 export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
@@ -60,6 +63,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       onMouseLeave,
       __staticSelector = 'range-calendar',
       allowSingleDateInRange = false,
+      withMultipleMonths = false,
       ...others
     }: RangeCalendarProps,
     ref
@@ -93,8 +97,9 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       setHoveredDay(null);
     };
 
-    const shouldHighlightDate = (date: Date, modifiers: DayModifiers) => {
-      if (pickedDate instanceof Date && hoveredDay instanceof Date) {
+    const shouldHighlightDate = (date: Date, modifiers: DayModifiers, currentMonth: Date) => {
+      const isInCurrentMonth = withMultipleMonths ? isSameMonth(date, currentMonth) : true;
+      if (pickedDate instanceof Date && hoveredDay instanceof Date && isInCurrentMonth) {
         const result: [Date, Date] = [hoveredDay, pickedDate];
         result.sort((a, b) => a.getTime() - b.getTime());
         return (
@@ -115,67 +120,133 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       rule: (val) => val instanceof Date,
     });
 
-    const disabledState = getDisabledState({ month: _month, minDate, maxDate });
+    const disabledState = getDisabledState({
+      month: _month,
+      minDate,
+      maxDate,
+      hasMultipleMonths: withMultipleMonths,
+    });
+
+    const dayStyles = (date, modifiers, isSecondMonth = false) => {
+      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : {};
+      if (
+        shouldHighlightDate(
+          date,
+          modifiers,
+          dayjs(_month)
+            .add(isSecondMonth ? 1 : 0, 'month')
+            .toDate()
+        )
+      ) {
+        return {
+          ...initialStyles,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
+              : theme.colors[theme.primaryColor][0],
+          borderRadius: 0,
+        };
+      }
+
+      return initialStyles;
+    };
 
     return (
       <CalendarWrapper
         size={size}
         fullWidth={fullWidth}
+        hasMultipleMonths={withMultipleMonths}
         onMouseLeave={handleMouseLeave}
         ref={ref}
         {...others}
       >
-        <CalendarHeader
-          size={size}
-          nextMonthLabel={nextMonthLabel}
-          previousMonthLabel={previousMonthLabel}
-          previousMonthDisabled={disabledState.previousDisabled}
-          nextMonthDisabled={disabledState.nextDisabled}
-          onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
-          onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
-          classNames={classNames}
-          styles={styles}
-          locale={locale}
-          withSelect={withSelect}
-          yearsRange={yearsRange}
-          month={_month}
-          setMonth={setMonth}
-          labelFormat={labelFormat}
-          __staticSelector={__staticSelector}
-        />
+        <Group noWrap style={{ alignItems: 'flex-start' }}>
+          <div>
+            <CalendarHeader
+              size={size}
+              nextMonthLabel={nextMonthLabel}
+              previousMonthLabel={previousMonthLabel}
+              previousMonthDisabled={disabledState.previousDisabled}
+              nextMonthDisabled={disabledState.nextDisabled}
+              onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+              onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+              classNames={classNames}
+              styles={styles}
+              locale={locale}
+              withSelect={withSelect}
+              yearsRange={yearsRange}
+              month={_month}
+              setMonth={setMonth}
+              labelFormat={labelFormat}
+              __staticSelector={__staticSelector}
+              nextMonthHidden={withMultipleMonths}
+            />
 
-        <Month
-          month={_month}
-          range={value}
-          value={pickedDate}
-          onChange={setRangeDate}
-          dayClassName={dayClassName}
-          dayStyle={(date, modifiers) => {
-            const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : {};
-            if (shouldHighlightDate(date, modifiers)) {
-              return {
-                ...initialStyles,
-                backgroundColor:
-                  theme.colorScheme === 'dark'
-                    ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
-                    : theme.colors[theme.primaryColor][0],
-                borderRadius: 0,
-              };
-            }
+            <Month
+              month={_month}
+              range={value}
+              value={pickedDate}
+              onChange={setRangeDate}
+              dayClassName={dayClassName}
+              dayStyle={(date, modifiers) => dayStyles(date, modifiers)}
+              disableOutsideDayStyle={withMultipleMonths}
+              disableOutsideEvents={disableOutsideEvents}
+              minDate={minDate}
+              maxDate={maxDate}
+              excludeDate={excludeDate}
+              classNames={classNames}
+              styles={styles}
+              fullWidth={fullWidth}
+              size={size}
+              onDayMouseEnter={(date) => setHoveredDay(date)}
+              __staticSelector={__staticSelector}
+            />
+          </div>
 
-            return initialStyles;
-          }}
-          disableOutsideEvents={disableOutsideEvents}
-          minDate={minDate}
-          maxDate={maxDate}
-          excludeDate={excludeDate}
-          classNames={classNames}
-          styles={styles}
-          fullWidth={fullWidth}
-          size={size}
-          onDayMouseEnter={(date) => setHoveredDay(date)}
-          __staticSelector={__staticSelector}
-        />
+          {withMultipleMonths && (
+            <div>
+              <CalendarHeader
+                size={size}
+                nextMonthLabel={nextMonthLabel}
+                previousMonthLabel={previousMonthLabel}
+                previousMonthDisabled={disabledState.previousDisabled}
+                nextMonthDisabled={disabledState.nextDisabled}
+                onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+                onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+                classNames={classNames}
+                styles={styles}
+                locale={locale}
+                withSelect={withSelect}
+                yearsRange={yearsRange}
+                month={dayjs(_month).add(1, 'month').toDate()}
+                setMonth={setMonth}
+                labelFormat={labelFormat}
+                __staticSelector={`${__staticSelector}-second-month`}
+                previousMonthHidden
+              />
+
+              <Month
+                month={dayjs(_month).add(1, 'month').toDate()}
+                range={value}
+                value={pickedDate}
+                onChange={setRangeDate}
+                dayClassName={dayClassName}
+                dayStyle={(date, modifiers) => dayStyles(date, modifiers, true)}
+                disableOutsideDayStyle
+                disableOutsideEvents={disableOutsideEvents}
+                minDate={minDate}
+                maxDate={maxDate}
+                excludeDate={excludeDate}
+                classNames={classNames}
+                styles={styles}
+                fullWidth={fullWidth}
+                size={size}
+                onDayMouseEnter={(date) => setHoveredDay(date)}
+                __staticSelector={`${__staticSelector}-second-month`}
+              />
+            </div>
+          )}
+        </Group>
       </CalendarWrapper>
     );
   }

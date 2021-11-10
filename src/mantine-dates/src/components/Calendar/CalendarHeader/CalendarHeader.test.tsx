@@ -78,6 +78,32 @@ describe('@mantine/dates/CalendarHeader', () => {
     expect(buttons.at(1).prop('aria-label')).toBe('test-next-month');
   });
 
+  it('passes previousMonthHidden and nextMonthHidden props to corresponding controls', () => {
+    const buttons = shallow(
+      <CalendarHeader
+        {...defaultProps}
+        nextMonthLabel="test-next-month"
+        previousMonthLabel="test-previous-month"
+      />
+    ).find(ActionIcon);
+
+    const buttonsHidden = shallow(
+      <CalendarHeader
+        {...defaultProps}
+        nextMonthLabel="test-next-month"
+        previousMonthLabel="test-previous-month"
+        previousMonthHidden
+        nextMonthHidden
+      />
+    ).find(ActionIcon);
+
+    expect(buttons.at(0).prop('style').visibility).toBe('visible');
+    expect(buttons.at(1).prop('style').visibility).toBe('visible');
+
+    expect(buttonsHidden.at(0).prop('style').visibility).toBe('hidden');
+    expect(buttonsHidden.at(1).prop('style').visibility).toBe('hidden');
+  });
+
   it('has correct displayName', () => {
     expect(CalendarHeader.displayName).toEqual('@mantine/dates/CalendarHeader');
   });

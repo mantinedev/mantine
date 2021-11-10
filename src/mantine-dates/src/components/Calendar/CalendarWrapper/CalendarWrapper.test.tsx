@@ -32,6 +32,14 @@ describe('@mantine/dates/CalendarWrapper', () => {
     expect(sm.render().css('max-width')).toBe(`${DAY_SIZES.sm * 7}px`);
   });
 
+  it('sets max-width based on size value with multiple months', () => {
+    const xl = shallow(<CalendarWrapper hasMultipleMonths size="xl" fullWidth={false} />);
+    const sm = shallow(<CalendarWrapper hasMultipleMonths size="sm" fullWidth={false} />);
+
+    expect(xl.render().css('max-width')).toBe(`${DAY_SIZES.xl * 14 + 16}px`);
+    expect(sm.render().css('max-width')).toBe(`${DAY_SIZES.sm * 14 + 16}px`);
+  });
+
   it('ignores size if fullWidth is set to true', () => {
     const element = shallow(<CalendarWrapper size="xl" fullWidth />);
     expect(element.render().css('max-width')).toBe('100%');
