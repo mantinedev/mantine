@@ -1,17 +1,14 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  checkAccessibility,
-  itSupportsStylesApi,
   itSupportsMargins,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { MultiSelect } from './MultiSelect';
-import { MultiSelect as MultiSelectStylesApi } from './styles.api';
 
 const defaultProps = {
   data: ['React', 'Angular', 'Svelte', 'Vue'],
@@ -23,41 +20,6 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsStyle(MultiSelect, defaultProps);
   itSupportsMargins(MultiSelect, defaultProps);
   itSupportsRef(MultiSelect, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(
-    MultiSelect,
-    {
-      ...defaultProps,
-      initiallyOpened: true,
-      icon: '$',
-      label: 'test-label',
-      description: 'test-description',
-      error: 'test-error',
-      required: true,
-    },
-    Object.keys(MultiSelectStylesApi).filter(
-      (key) =>
-        key !== 'hovered' &&
-        key !== 'nothingFound' &&
-        key !== 'disabled' &&
-        key !== 'separator' &&
-        key !== 'separatorLabel'
-    ),
-    'MultiSelect'
-  );
-
-  checkAccessibility([
-    mount(<MultiSelect {...defaultProps} label="test-label" />),
-    mount(<MultiSelect {...defaultProps} label="test-label" defaultValue={[]} />),
-    mount(<MultiSelect {...defaultProps} label="test-label" initiallyOpened />),
-    mount(
-      <MultiSelect
-        {...defaultProps}
-        aria-label="test-label"
-        clearable
-        clearButtonLabel="Clear field"
-      />
-    ),
-  ]);
 
   it('passes required, invalid, icon and radius props to Input component', () => {
     const element = shallow(

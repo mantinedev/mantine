@@ -78,6 +78,7 @@ const useStyles = createStyles((theme) => ({
     padding: 0,
     width: 20,
     height: 20,
+    pointerEvents: 'none',
   },
 
   collections: {
@@ -89,7 +90,7 @@ const useStyles = createStyles((theme) => ({
   collectionsHeader: {
     paddingLeft: theme.spacing.md + 2,
     paddingRight: theme.spacing.md,
-    marginBottom: 0,
+    marginBottom: 5,
   },
 
   collectionLink: {

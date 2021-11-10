@@ -1,0 +1,10 @@
+{
+  "title": "Country picker",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/select/", "react-flagpack"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 260
+  }
+}

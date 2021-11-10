@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   DefaultProps,
-  getThemeColor,
   MantineColor,
   useExtractedMargins,
   useSx,
@@ -25,11 +24,7 @@ export const Mark = forwardRef<HTMLElement, MarkProps>(
         style={mergedStyles}
         className={cx(
           css({
-            backgroundColor: getThemeColor({
-              theme,
-              color,
-              shade: theme.colorScheme === 'dark' ? 5 : 2,
-            }),
+            backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 2),
             color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
           }),
           sxClassName

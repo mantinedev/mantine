@@ -1,13 +1,11 @@
 import React, { forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useUuid } from '@mantine/hooks';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import { CheckboxIcon } from '../../Checkbox';
@@ -79,8 +77,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
     ref
   ) => {
     const uuid = useUuid(id);
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { radius, size, color },
       { classNames, styles, name: __staticSelector }
     );

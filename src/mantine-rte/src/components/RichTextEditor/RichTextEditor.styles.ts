@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface RichTextEditorStyles {
   saveLabel: string;
@@ -9,7 +9,7 @@ interface RichTextEditorStyles {
 export default createStyles(
   (theme, { saveLabel, removeLabel, editLabel }: RichTextEditorStyles) => ({
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       fontSize: theme.fontSizes.sm,
       border: `1px solid ${
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]

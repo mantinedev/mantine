@@ -5,13 +5,13 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 
 // Banners
 export { EmailBanner } from './EmailBanner/EmailBanner';
+export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
 export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
-export { ImageActionCard } from './ImageActionCard/ImageActionCard';
 export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
@@ -25,13 +25,14 @@ export { AutocompleteLoading } from './AutocompleteLoading/AutocompleteLoading';
 export { CheckboxCard } from './CheckboxCard/CheckboxCard';
 export { ContainedInputs } from './ContainedInputs/ContainedInputs';
 export { CountriesSelect } from './CountriesSelect/CountriesSelect';
+export { CountryPicker } from './CountryPicker/CountryPicker';
 export { CurrencyInput } from './CurrencyInput/CurrencyInput';
 export { FloatingLabelInput } from './FloatingLabelInput/FloatingLabelInput';
 export { ForgotPasswordInput } from './ForgotPasswordInput/ForgotPasswordInput';
 export { ImageCheckboxes } from './ImageCheckboxes/ImageCheckboxes';
 export { InputValidation } from './InputValidation/InputValidation';
 export { InputWithButton } from './InputWithButton/InputWithButton';
-export { SliderInput } from './SliderInput/SliderInput';
+export { QuantityInput } from './QuantityInput/QuantityInput';
 export { TagPicker } from './TagPicker/TagPicker';
 
 // Hero
@@ -43,6 +44,7 @@ export { HeroTitle } from './HeroTitle/HeroTitle';
 export { FeaturesAsymmetrical } from './FeaturesAsymmetrical/FeaturesAsymmetrical';
 export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
 export { FeaturesImages } from './FeaturesImages/FeaturesImages';
+export { FeaturesTitle } from './FeaturesTitle/FeaturesTitle';
 
 // Faq
 export { FaqSimple } from './FaqSimple/FaqSimple';
@@ -64,3 +66,8 @@ export { UserMenu } from './UserMenu/UserMenu';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
+
+// Sliders
+export { SliderFilled } from './SliderFilled/SliderFilled';
+export { SliderInput } from './SliderInput/SliderInput';
+export { SliderLabel } from './SliderLabel/SliderLabel';

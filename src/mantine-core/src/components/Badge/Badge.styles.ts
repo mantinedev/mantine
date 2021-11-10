@@ -2,10 +2,6 @@ import {
   createStyles,
   MantineSize,
   MantineNumberSize,
-  getFontStyles,
-  getThemeColor,
-  getFocusStyles,
-  getSizeValue,
   getSharedColorScheme,
   MantineColor,
 } from '@mantine/styles';
@@ -61,7 +57,7 @@ export default createStyles(
     theme,
     { color, size, radius, gradientFrom, gradientTo, gradientDeg, fullWidth }: BadgeStyles
   ) => {
-    const dotSize = getSizeValue({ size, sizes: dotSizes });
+    const dotSize = theme.fn.size({ size, sizes: dotSizes });
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     const lightColors = getSharedColorScheme({ color, theme, variant: 'light' });
     const filledColors = getSharedColorScheme({ theme, color, variant: 'filled' });
@@ -88,22 +84,22 @@ export default createStyles(
       },
 
       root: {
-        ...getFocusStyles(theme),
-        ...getFontStyles(theme),
+        ...theme.fn.focusStyles(),
+        ...theme.fn.fontStyles(),
         fontSize,
         height,
         WebkitTapHighlightColor: 'transparent',
         lineHeight: `${height - 2}px`,
         border: '1px solid transparent',
         textDecoration: 'none',
-        padding: `0 ${getSizeValue({ size, sizes: theme.spacing }) / 1.5}px`,
+        padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px`,
         boxSizing: 'border-box',
         display: fullWidth ? 'flex' : 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         width: fullWidth ? '100%' : 'auto',
         textTransform: 'uppercase',
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         fontWeight: 700,
         letterSpacing: 0.25,
         cursor: 'default',
@@ -137,7 +133,7 @@ export default createStyles(
         backgroundColor: 'transparent',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
-        paddingLeft: getSizeValue({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
+        paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
 
         '&::before': {
           content: '""',
@@ -145,11 +141,7 @@ export default createStyles(
           width: dotSize,
           height: dotSize,
           borderRadius: dotSize,
-          backgroundColor: getThemeColor({
-            theme,
-            color,
-            shade: theme.colorScheme === 'dark' ? 4 : 6,
-          }),
+          backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
           marginRight: dotSize,
         },
       },

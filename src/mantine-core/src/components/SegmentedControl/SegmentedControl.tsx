@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useReducedMotion, useUncontrolled } from '@mantine/hooks';
+import { useReducedMotion, useUncontrolled, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
   ClassNames,
-  useUuid,
   useExtractedMargins,
 } from '@mantine/styles';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';

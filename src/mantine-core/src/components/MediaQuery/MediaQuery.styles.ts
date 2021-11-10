@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, CSSObject } from '@mantine/styles';
+import { createStyles, MantineNumberSize, CSSObject } from '@mantine/styles';
 
 interface MediaQueryStyles {
   smallerThan: MantineNumberSize;
@@ -13,13 +13,15 @@ export default createStyles(
 
     if (smallerThan) {
       media[
-        `@media (min-width: ${getSizeValue({ size: smallerThan, sizes: theme.breakpoints }) + 1}px)`
+        `@media (min-width: ${
+          theme.fn.size({ size: smallerThan, sizes: theme.breakpoints }) + 1
+        }px)`
       ] = styles;
     }
 
     if (largerThan) {
       media[
-        `@media (max-width: ${getSizeValue({ size: largerThan, sizes: theme.breakpoints })}px)`
+        `@media (max-width: ${theme.fn.size({ size: largerThan, sizes: theme.breakpoints })}px)`
       ] = styles;
     }
 

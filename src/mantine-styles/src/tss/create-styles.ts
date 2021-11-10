@@ -56,7 +56,7 @@ export function createStyles<Key extends string = string, Params = void>(
       })
     ) as Record<Key, string>;
 
-    return { classes: mergeClassNames(cx, classes, options?.classNames, options?.name), cx };
+    return { classes: mergeClassNames(cx, classes, options?.classNames, options?.name), cx, theme };
   }
 
   return useStyles;

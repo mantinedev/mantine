@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { DefaultProps, MantineSize, useUuid, useExtractedMargins } from '@mantine/styles';
+import { useUuid } from '@mantine/hooks';
+import { DefaultProps, MantineSize, useExtractedMargins } from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import { Input, InputBaseProps } from '../Input/Input';

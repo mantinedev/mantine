@@ -138,6 +138,27 @@ package with `Navbar.Section`, set `grow` property and render `Scrollbars` compo
 
 <Demo data={AppShellDemos.scrollbars} />
 
+## Wrapping Navbar and Header components
+
+AppShell component requires Navbar and Header components to be direct children at `navbar` and `header` props.
+If you want to wrap Navbar component with your own custom component you will need to pass props to navbar and header:
+
+```tsx
+import { AppShell, Navbar, NavbarProps } from '@mantine/core';
+
+function CustomNavbar(props: NavbarProps) {
+  return <Navbar {...props}>Custom navbar</Navbar>;
+}
+
+function App() {
+  return (
+    <AppShell navbar={<CustomNavbar width={{ base: 300 }} height={500} padding="xs" />}>
+      App content
+    </AppShell>
+  );
+}
+```
+
 ## Semantic elements
 
 - Both Header and Navbar components root element is `nav`

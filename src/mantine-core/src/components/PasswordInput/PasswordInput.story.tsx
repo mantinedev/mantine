@@ -70,7 +70,7 @@ storiesOf('@mantine/core/PasswordInput', module)
   ))
   .add('Custom radius', () => (
     <div style={{ width: 300, padding: 20 }}>
-      <PasswordInput label="Radius" placeholder="Radius" radius="lg" />
+      <PasswordInput label="Radius" placeholder="Radius" radius="xl" />
     </div>
   ))
   .add('Autofocus', () => (

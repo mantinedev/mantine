@@ -13,7 +13,6 @@ export function CurrencyInput() {
   const select = (
     <NativeSelect
       data={data}
-      variant="default"
       styles={{
         input: {
           fontWeight: 500,

@@ -1,4 +1,4 @@
-import { createStyles, getThemeColor, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface NotificationStyles {
   color: MantineColor;
@@ -55,19 +55,11 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
         bottom: 4,
         left: 4,
         borderRadius: 4,
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 6 : 7,
-        }),
+        backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
       },
 
       [`& .${icon.ref}`]: {
-        backgroundColor: getThemeColor({
-          theme,
-          color,
-          shade: theme.colorScheme === 'dark' ? 6 : 7,
-        }),
+        backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
         color: theme.white,
       },
     },

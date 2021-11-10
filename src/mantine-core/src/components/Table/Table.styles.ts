@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 interface TableStyles {
   captionSide: 'top' | 'bottom';
@@ -13,7 +13,7 @@ export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
     hover,
 
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       width: '100%',
       borderCollapse: 'collapse',
       captionSide,

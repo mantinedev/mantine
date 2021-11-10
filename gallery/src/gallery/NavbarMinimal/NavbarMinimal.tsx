@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Navbar,
-  Image,
-  Tooltip,
-  UnstyledButton,
-  createStyles,
-  Group,
-  hexToRgba,
-} from '@mantine/core';
+import { Navbar, Image, Tooltip, UnstyledButton, createStyles, Group } from '@mantine/core';
 import {
   Icon as TablerIcon,
   Home2,
@@ -41,7 +33,7 @@ const useStyles = createStyles((theme) => ({
     '&, &:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
           : theme.colors[theme.primaryColor][0],
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
     },
@@ -92,12 +84,12 @@ export function NavbarMinimal() {
     <Navbar height={750} width={{ base: 80 }} padding="md">
       <Image src={logo} alt="Mantine logo" width={40} mx="auto" />
       <Navbar.Section grow mt={50}>
-        <Group direction="column" align="center">
+        <Group direction="column" align="center" spacing={0}>
           {links}
         </Group>
       </Navbar.Section>
       <Navbar.Section>
-        <Group direction="column" align="center">
+        <Group direction="column" align="center" spacing={0}>
           <NavbarLink icon={SwitchHorizontal} label="Change account" />
           <NavbarLink icon={Logout} label="Logout" />
         </Group>

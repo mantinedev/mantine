@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
 export interface NavbarWidth {
@@ -42,14 +42,14 @@ export default createStyles(
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         ...position,
         zIndex,
         height,
         width: width.base,
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
-        padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+        padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
@@ -60,7 +60,7 @@ export default createStyles(
       },
 
       hidden: {
-        [`@media (max-width: ${getSizeValue({
+        [`@media (max-width: ${theme.fn.size({
           size: hiddenBreakpoint,
           sizes: theme.breakpoints,
         })}px)`]: {

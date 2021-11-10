@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface GridStyles {
   gutter: MantineNumberSize;
@@ -8,7 +8,7 @@ interface GridStyles {
 
 export default createStyles((theme, { justify, align, gutter }: GridStyles) => ({
   root: {
-    margin: -getSizeValue({ size: gutter, sizes: theme.spacing }) / 2,
+    margin: -theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: justify,

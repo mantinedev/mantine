@@ -1,0 +1,11 @@
+{
+  "title": "Features with title",
+  "category": "features",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 1060
+  }
+}

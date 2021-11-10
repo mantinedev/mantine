@@ -1,5 +1,5 @@
 {
-  "title": "Inputs with floating label",
+  "title": "Input with floating label",
   "category": "inputs",
   "author": "rtivital",
   "dependencies": ["/core/text-input/", "/core/select/"],

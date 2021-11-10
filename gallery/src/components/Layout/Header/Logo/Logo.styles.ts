@@ -1,8 +1,13 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
+  wrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+
   logo: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     textDecoration: 'none',
     userSelect: 'none',
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
@@ -10,5 +15,13 @@ export default createStyles((theme) => ({
 
   image: {
     height: 30,
+  },
+
+  version: {
+    ...theme.fn.focusStyles(),
+    fontWeight: 700,
+    textDecoration: 'none',
+    marginBottom: 6,
+    marginLeft: theme.spacing.md,
   },
 }));

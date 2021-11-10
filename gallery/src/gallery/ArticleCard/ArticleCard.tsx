@@ -36,8 +36,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   footer: {
-    marginTop: theme.spacing.xs / 2,
-    marginBottom: -theme.spacing.md,
+    marginTop: theme.spacing.md,
   },
 }));
 

@@ -4,7 +4,7 @@ import { PasswordInput, Text, Group, UnstyledButton, PasswordInputProps } from '
 export function ForgotPasswordInput(props: PasswordInputProps) {
   return (
     <>
-      <Group position="apart" mb={-4}>
+      <Group position="apart" mb={5}>
         <Text component="label" htmlFor="your-password" size="sm" weight={500}>
           Your password
         </Text>

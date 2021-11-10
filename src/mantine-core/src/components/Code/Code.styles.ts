@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getSharedColorScheme, MantineColor } from '@mantine/styles';
+import { createStyles, getSharedColorScheme, MantineColor } from '@mantine/styles';
 
 interface CodeStyles {
   color: MantineColor;
@@ -8,7 +8,7 @@ export default createStyles((theme, { color }: CodeStyles) => {
   const colors = getSharedColorScheme({ theme, color, variant: 'light' });
   return {
     root: {
-      ...getFontStyles(theme),
+      ...theme.fn.fontStyles(),
       lineHeight: theme.lineHeight,
       padding: `2px ${theme.spacing.xs / 2}px`,
       borderRadius: theme.radius.sm,

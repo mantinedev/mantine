@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  createStyles,
-  Navbar,
-  UnstyledButton,
-  Tooltip,
-  hexToRgba,
-  Title,
-  Image,
-} from '@mantine/core';
+import { createStyles, Navbar, UnstyledButton, Tooltip, Title, Image } from '@mantine/core';
 import {
   Home2,
   Gauge,
@@ -26,12 +18,12 @@ const useStyles = createStyles((theme) => ({
 
   aside: {
     flex: '0 0 60px',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     borderRight: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
   },
 
@@ -58,7 +50,7 @@ const useStyles = createStyles((theme) => ({
     '&, &:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
+          ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
           : theme.colors[theme.primaryColor][0],
       color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
     },
@@ -67,13 +59,13 @@ const useStyles = createStyles((theme) => ({
   title: {
     boxSizing: 'border-box',
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    marginBottom: theme.spacing.md,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    marginBottom: theme.spacing.xl,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     padding: theme.spacing.md,
     paddingTop: 18,
     height: 60,
     borderBottom: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
   },
 
@@ -83,33 +75,28 @@ const useStyles = createStyles((theme) => ({
     height: 60,
     paddingTop: theme.spacing.md,
     borderBottom: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
     }`,
     marginBottom: theme.spacing.xl,
   },
 
   link: {
+    boxSizing: 'border-box',
     display: 'block',
     textDecoration: 'none',
     borderTopRightRadius: theme.radius.md,
     borderBottomRightRadius: theme.radius.md,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    padding: `0 ${theme.spacing.md}px`,
     fontSize: theme.fontSizes.sm,
-    marginLeft: -1,
     marginRight: theme.spacing.md,
     fontWeight: 500,
-    borderLeft: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-    }`,
+    height: 44,
+    lineHeight: '44px',
 
     '&:hover': {
-      borderLeftColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 4],
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? hexToRgba(theme.colors[theme.primaryColor][9], 0.25)
-          : theme.colors[theme.primaryColor][0],
-      color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     },
   },
 

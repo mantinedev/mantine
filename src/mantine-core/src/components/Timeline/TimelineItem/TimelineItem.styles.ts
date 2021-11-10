@@ -1,4 +1,4 @@
-import { createStyles, getThemeColor, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface TimelineItemStyles {
   bulletSize: number;
@@ -76,30 +76,18 @@ export default createStyles(
 
       itemLineActive: {
         '&::before': {
-          borderLeftColor: getThemeColor({
-            theme,
-            color,
-            shade: theme.colorScheme === 'light' ? 6 : 7,
-          }),
+          borderLeftColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
         },
       },
 
       itemActive: {
         [`& .${itemBullet.ref}`]: {
-          borderColor: getThemeColor({
-            theme,
-            color,
-            shade: theme.colorScheme === 'light' ? 6 : 7,
-          }),
+          borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
           backgroundColor: theme.white,
         },
 
         [`& .${itemBulletWithChild.ref}`]: {
-          backgroundColor: getThemeColor({
-            theme,
-            color,
-            shade: theme.colorScheme === 'light' ? 6 : 7,
-          }),
+          backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
           color: theme.white,
         },
       },

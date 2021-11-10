@@ -151,6 +151,23 @@ Component support the same keyboard events as regular radio group.
 
 ## TypeScript
 
+### Generic type
+
+You can set specific type to `value` and `onChange` by using a generic type:
+
+```tsx
+type Value = 'react' | 'ng' | 'vue' | 'svelte';
+
+<SegmentedControl<Value>
+  data={[
+    { label: 'React', value: 'react' },
+    { label: 'Angular', value: 'ng' },
+    { label: 'Vue', value: 'vue' },
+    { label: 'Svelte', value: 'svelte' },
+  ]}
+/>;
+```
+
 ### Component props type
 
 Import component props type:

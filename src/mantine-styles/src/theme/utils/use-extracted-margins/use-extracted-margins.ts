@@ -1,5 +1,4 @@
 import { useMantineTheme } from '../../MantineProvider';
-import { getSizeValue } from '../get-size-value/get-size-value';
 import type { MantineMargins } from '../../types';
 
 interface UseExtractedMargins {
@@ -24,20 +23,20 @@ export function useExtractedMargins({ others, style }: UseExtractedMargins) {
   const mergedStyles: React.CSSProperties = { ...style };
 
   if (isValidMargin(others.my)) {
-    const margin = getSizeValue({ size: others.my, sizes: theme.spacing });
+    const margin = theme.fn.size({ size: others.my, sizes: theme.spacing });
     mergedStyles.marginTop = margin;
     mergedStyles.marginBottom = margin;
   }
 
   if (isValidMargin(others.mx)) {
-    const margin = getSizeValue({ size: others.mx, sizes: theme.spacing });
+    const margin = theme.fn.size({ size: others.mx, sizes: theme.spacing });
     mergedStyles.marginLeft = margin;
     mergedStyles.marginRight = margin;
   }
 
   Object.keys(margins).forEach((margin) => {
     if (isValidMargin(others[margin])) {
-      mergedStyles[margins[margin]] = getSizeValue({ size: others[margin], sizes: theme.spacing });
+      mergedStyles[margins[margin]] = theme.fn.size({ size: others[margin], sizes: theme.spacing });
     }
   });
 

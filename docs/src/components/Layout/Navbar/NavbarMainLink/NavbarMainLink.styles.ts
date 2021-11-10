@@ -1,8 +1,8 @@
-import { createStyles, MantineTheme, getFocusStyles } from '@mantine/core';
+import { createStyles, MantineTheme } from '@mantine/core';
 
 export default createStyles((theme: MantineTheme) => ({
   mainLink: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
     display: 'flex',
     alignItems: 'center',

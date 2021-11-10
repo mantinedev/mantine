@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  UnstyledButton,
-  Checkbox,
-  Text,
-  Image,
-  SimpleGrid,
-  createStyles,
-  hexToRgba,
-} from '@mantine/core';
+import { UnstyledButton, Checkbox, Text, Image, SimpleGrid, createStyles } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import icons from './icons';
 
@@ -28,7 +20,7 @@ const useStyles = createStyles((theme, { checked }: { checked: boolean }) => ({
     padding: theme.spacing.sm,
     backgroundColor: checked
       ? theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors[theme.primaryColor][8], 0.3)
+        ? theme.fn.rgba(theme.colors[theme.primaryColor][8], 0.3)
         : theme.colors[theme.primaryColor][0]
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[8]

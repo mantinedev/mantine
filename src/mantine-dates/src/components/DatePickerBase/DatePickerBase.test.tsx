@@ -26,25 +26,12 @@ describe('@mantine/dates/DatePickerBase', () => {
   itSupportsClassName(DatePickerBase, defaultProps);
   itSupportsStyle(DatePickerBase, defaultProps);
   itSupportsMargins(DatePickerBase, defaultProps);
-  itSupportsRef(DatePickerBase, defaultProps, HTMLButtonElement);
+  itSupportsRef(DatePickerBase, defaultProps, HTMLInputElement);
 
   it('passes __staticSelector prop to InputWrapper and Input components', () => {
     const element = shallow(<DatePickerBase {...defaultProps} __staticSelector="test-selector" />);
     expect(element.find(Input).prop('__staticSelector')).toBe('test-selector');
     expect(element.find(InputWrapper).prop('__staticSelector')).toBe('test-selector');
-  });
-
-  it('renders given placeholder if inputLabel is not set', () => {
-    const element = shallow(<DatePickerBase {...defaultProps} placeholder="test-placeholder" />);
-    expect(element.render().find('.mantine-date-picker-placeholder').text()).toBe(
-      'test-placeholder'
-    );
-  });
-
-  it('does not render placeholder if inputLabel is set', () => {
-    const element = shallow(<DatePickerBase {...defaultProps} inputLabel="test-label" />);
-    expect(element.render().find('.mantine-date-picker-placeholder')).toHaveLength(0);
-    expect(element.find(Input).find('.mantine-date-picker-value').text()).toBe('test-label');
   });
 
   it('does not render dropdown if dropdownOpened is set to false', () => {

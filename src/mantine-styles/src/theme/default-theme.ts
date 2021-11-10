@@ -1,10 +1,11 @@
-import { MantineTheme } from './types';
+import { MantineThemeBase } from './types';
 import { DEFAULT_COLORS } from './default-colors';
+import { attachFunctions } from './functions/attach-functions';
 
 export const MANTINE_COLORS = Object.keys(DEFAULT_COLORS);
 export const MANTINE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
-export const DEFAULT_THEME: MantineTheme = {
+export const _DEFAULT_THEME: MantineThemeBase = {
   loader: 'oval',
   colorScheme: 'light',
   white: '#fff',
@@ -71,4 +72,8 @@ export const DEFAULT_THEME: MantineTheme = {
       h6: { fontSize: 14, lineHeight: 1.5 },
     },
   },
+
+  other: {},
 };
+
+export const DEFAULT_THEME = attachFunctions(_DEFAULT_THEME);

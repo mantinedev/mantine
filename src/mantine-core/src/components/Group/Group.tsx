@@ -20,9 +20,6 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Defines align-items css property */
   align?: React.CSSProperties['alignItems'];
-
-  /** Defines padding for the root component */
-  withGutter?: boolean;
 }
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>(
@@ -37,7 +34,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
       grow = false,
       spacing = 'md',
       direction = 'row',
-      withGutter = false,
       sx,
       ...others
     }: GroupProps,
@@ -53,7 +49,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
         position,
         direction,
         count,
-        withGutter,
       },
       { sx, name: 'Group' }
     );

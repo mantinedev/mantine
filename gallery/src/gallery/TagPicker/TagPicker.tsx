@@ -13,6 +13,7 @@ export function TagPicker() {
       creatable
       getCreateLabel={(query) => `+ Create ${query}`}
       onCreate={(query) => setData((current) => [...current, query])}
+      nothingFound="Nothing found..."
     />
   );
 }

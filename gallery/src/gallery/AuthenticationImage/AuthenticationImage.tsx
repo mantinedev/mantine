@@ -62,7 +62,7 @@ export function AuthenticationImage() {
 
         <Text align="center" mt="md">
           Don&apos;t have an account?{' '}
-          <Anchor href="#" weight={700}>
+          <Anchor<'a'> href="#" weight={700} onClick={(event) => event.preventDefault()}>
             Register
           </Anchor>
         </Text>

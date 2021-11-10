@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface JsonInputStyles {
   size: MantineSize;
@@ -7,6 +7,6 @@ interface JsonInputStyles {
 export default createStyles((theme, { size }: JsonInputStyles) => ({
   input: {
     fontFamily: theme.fontFamilyMonospace,
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }) - 2,
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
   },
 }));

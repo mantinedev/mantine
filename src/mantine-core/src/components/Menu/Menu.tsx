@@ -1,11 +1,16 @@
 import React, { useState, useRef, cloneElement, forwardRef } from 'react';
-import { useClickOutside, useMergedRef, useWindowEvent, useUncontrolled } from '@mantine/hooks';
+import {
+  useClickOutside,
+  useMergedRef,
+  useWindowEvent,
+  useUncontrolled,
+  useUuid,
+} from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  useUuid,
   MantineMargin,
 } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';

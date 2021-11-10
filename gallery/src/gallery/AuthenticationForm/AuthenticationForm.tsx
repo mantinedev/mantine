@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Checkbox,
+  Anchor,
 } from '@mantine/core';
 import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
 
@@ -43,7 +44,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
         Welcome to Mantine, {type} with
       </Text>
 
-      <Group grow mt={5} mb="md">
+      <Group grow mb="md" mt="sm">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group>
@@ -88,12 +89,12 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
           )}
         </Group>
 
-        <Group position="apart" mt="md">
-          <Button variant="link" color="gray" onClick={() => toggle()} size="xs">
+        <Group position="apart" mt="lg">
+          <Anchor component="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
-          </Button>
+          </Anchor>
           <Button type="submit">{upperFirst(type)}</Button>
         </Group>
       </form>
