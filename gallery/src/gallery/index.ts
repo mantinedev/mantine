@@ -44,6 +44,7 @@ export { HeroTitle } from './HeroTitle/HeroTitle';
 export { FeaturesAsymmetrical } from './FeaturesAsymmetrical/FeaturesAsymmetrical';
 export { FeaturesGrid } from './FeaturesGrid/FeaturesGrid';
 export { FeaturesImages } from './FeaturesImages/FeaturesImages';
+export { FeaturesTitle } from './FeaturesTitle/FeaturesTitle';
 
 // Faq
 export { FaqSimple } from './FaqSimple/FaqSimple';
