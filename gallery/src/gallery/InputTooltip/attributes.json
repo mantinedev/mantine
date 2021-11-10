@@ -1,0 +1,17 @@
+{
+  "title": "Inputs with tooltip",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/tooltip/",
+    "/core/text-input/",
+    "/core/password-input/",
+    "/core/center/",
+    "/core/text/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
