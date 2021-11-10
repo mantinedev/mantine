@@ -2,6 +2,7 @@ import { createStyles } from '@mantine/styles';
 
 export default createStyles((theme) => ({
   dropdown: {
+    ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
     zIndex: 10,
     pointerEvents: 'auto',
