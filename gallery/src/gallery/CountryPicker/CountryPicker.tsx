@@ -31,6 +31,8 @@ export function CountryPicker() {
       size="md"
       data={data}
       icon={<Flag code={value} size="S" />}
+      transitionDuration={150}
+      transition="pop"
       itemComponent={SelectItem}
       maxDropdownHeight={400}
       value={value}
