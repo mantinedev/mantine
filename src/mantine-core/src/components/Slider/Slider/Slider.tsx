@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useUncontrolled, useMove } from '@mantine/hooks';
+import React, { useRef, useState, forwardRef } from 'react';
+import { useUncontrolled, useMove, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getPosition } from '../utils/get-position/get-position';
@@ -73,131 +73,136 @@ export interface SliderProps
   showLabelOnHover?: boolean;
 }
 
-export function Slider({
-  classNames,
-  styles,
-  color,
-  value,
-  onChange,
-  size = 'md',
-  radius = 'xl',
-  min = 0,
-  max = 100,
-  step = 1,
-  defaultValue,
-  name,
-  marks = [],
-  label = (f) => f,
-  labelTransition = 'skew-down',
-  labelTransitionDuration = 150,
-  labelTransitionTimingFunction,
-  labelAlwaysOn = false,
-  thumbLabel = '',
-  showLabelOnHover = true,
-  ...others
-}: SliderProps) {
-  const [hovered, setHovered] = useState(false);
-  const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: 0,
-    rule: (val) => typeof val === 'number',
-    onChange,
-  });
-  const thumb = useRef<HTMLDivElement>();
-  const position = getPosition({ value: _value, min, max });
-  const _label = typeof label === 'function' ? label(_value) : label;
+export const Slider = forwardRef<HTMLDivElement, SliderProps>(
+  (
+    {
+      classNames,
+      styles,
+      color,
+      value,
+      onChange,
+      size = 'md',
+      radius = 'xl',
+      min = 0,
+      max = 100,
+      step = 1,
+      defaultValue,
+      name,
+      marks = [],
+      label = (f) => f,
+      labelTransition = 'skew-down',
+      labelTransitionDuration = 150,
+      labelTransitionTimingFunction,
+      labelAlwaysOn = false,
+      thumbLabel = '',
+      showLabelOnHover = true,
+      ...others
+    }: SliderProps,
+    ref
+  ) => {
+    const [hovered, setHovered] = useState(false);
+    const [_value, setValue] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: 0,
+      rule: (val) => typeof val === 'number',
+      onChange,
+    });
+    const thumb = useRef<HTMLDivElement>();
+    const position = getPosition({ value: _value, min, max });
+    const _label = typeof label === 'function' ? label(_value) : label;
 
-  const handleChange = (val: number) => {
-    const nextValue = getChangeValue({ value: val, min, max, step });
-    setValue(nextValue);
-  };
+    const handleChange = (val: number) => {
+      const nextValue = getChangeValue({ value: val, min, max, step });
+      setValue(nextValue);
+    };
 
-  const { ref: container, active } = useMove(({ x }) => handleChange(x));
+    const { ref: container, active } = useMove(({ x }) => handleChange(x));
 
-  function handleThumbMouseDown(
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) {
-    if (event.cancelable) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }
-
-  const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    switch (event.nativeEvent.code) {
-      case 'ArrowUp':
-      case 'ArrowRight': {
+    function handleThumbMouseDown(
+      event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+    ) {
+      if (event.cancelable) {
         event.preventDefault();
-        thumb.current.focus();
-        setValue(Math.min(Math.max(_value + step, min), max));
-        break;
-      }
-
-      case 'ArrowDown':
-      case 'ArrowLeft': {
-        event.preventDefault();
-        thumb.current.focus();
-        setValue(Math.min(Math.max(_value - step, min), max));
-        break;
-      }
-
-      default: {
-        break;
+        event.stopPropagation();
       }
     }
-  };
 
-  return (
-    <SliderRoot
-      {...others}
-      size={size}
-      ref={container}
-      onKeyDownCapture={handleTrackKeydownCapture}
-      classNames={classNames}
-      styles={styles}
-    >
-      <Track
-        offset={0}
-        filled={position}
-        marks={marks}
+    const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      switch (event.nativeEvent.code) {
+        case 'ArrowUp':
+        case 'ArrowRight': {
+          event.preventDefault();
+          thumb.current.focus();
+          setValue(Math.min(Math.max(_value + step, min), max));
+          break;
+        }
+
+        case 'ArrowDown':
+        case 'ArrowLeft': {
+          event.preventDefault();
+          thumb.current.focus();
+          setValue(Math.min(Math.max(_value - step, min), max));
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
+    };
+
+    return (
+      <SliderRoot
+        {...others}
         size={size}
-        radius={radius}
-        color={color}
-        min={min}
-        max={max}
-        value={_value}
-        onChange={setValue}
-        styles={styles}
-        onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
-        onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
+        ref={useMergedRef(container, ref)}
+        onKeyDownCapture={handleTrackKeydownCapture}
         classNames={classNames}
+        styles={styles}
       >
-        <Thumb
-          max={max}
-          min={min}
-          value={_value}
-          position={position}
-          dragging={active}
-          color={color}
+        <Track
+          offset={0}
+          filled={position}
+          marks={marks}
           size={size}
-          label={_label}
-          ref={thumb}
-          onMouseDown={handleThumbMouseDown}
-          labelTransition={labelTransition}
-          labelTransitionDuration={labelTransitionDuration}
-          labelTransitionTimingFunction={labelTransitionTimingFunction}
-          labelAlwaysOn={labelAlwaysOn}
-          classNames={classNames}
+          radius={radius}
+          color={color}
+          min={min}
+          max={max}
+          value={_value}
+          onChange={setValue}
           styles={styles}
-          thumbLabel={thumbLabel}
-          showLabelOnHover={showLabelOnHover && hovered}
-        />
-      </Track>
+          onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
+          onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
+          classNames={classNames}
+        >
+          <Thumb
+            max={max}
+            min={min}
+            value={_value}
+            position={position}
+            dragging={active}
+            color={color}
+            size={size}
+            label={_label}
+            ref={thumb}
+            onMouseDown={handleThumbMouseDown}
+            labelTransition={labelTransition}
+            labelTransitionDuration={labelTransitionDuration}
+            labelTransitionTimingFunction={labelTransitionTimingFunction}
+            labelAlwaysOn={labelAlwaysOn}
+            classNames={classNames}
+            styles={styles}
+            thumbLabel={thumbLabel}
+            showLabelOnHover={showLabelOnHover && hovered}
+          />
+        </Track>
 
-      <input type="hidden" name={name} value={_value} />
-    </SliderRoot>
-  );
-}
+        <input type="hidden" name={name} value={_value} />
+      </SliderRoot>
+    );
+  }
+);
 
 Slider.displayName = '@mantine/core/Slider';

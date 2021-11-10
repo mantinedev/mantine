@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
 import { RangeSlider as RangeSliderStylesApi } from '../styles.api';
@@ -22,6 +23,7 @@ describe('@mantine/core/RangeSlider', () => {
   itSupportsClassName(RangeSlider, defaultProps);
   itSupportsOthers(RangeSlider, defaultProps);
   itSupportsMargins(RangeSlider, defaultProps);
+  itSupportsRef(RangeSlider, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     RangeSlider,
     { label: 'test-label', labelAlwaysOn: true, marks: [{ value: 10, label: 'test' }], value: 50 },
