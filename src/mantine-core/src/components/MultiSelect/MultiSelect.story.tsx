@@ -276,4 +276,26 @@ storiesOf('@mantine/core/MultiSelect', module)
         />
       </MantineProvider>
     </div>
+  ))
+  .add('Max Selected Values', () => (
+    <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
+      <MultiSelect
+        label="Searchable with Max Selectable Values"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+        maxSelectedValues={5}
+      />
+      <MultiSelect
+        label="Non-searchable with Max Selectable Values"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        maxSelectedValues={5}
+      />
+    </Group>
   ));
