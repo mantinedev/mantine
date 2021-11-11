@@ -29,8 +29,8 @@ export interface NumberInputProps
       | 'classNames'
       | 'styles'
     > {
-  /** onChange input handler for controlled variant, note that input event is not exposed */
-  onChange?(value: number): void;
+  /** onChange input handler for controlled variant, note that input event is not exposed. It will return undefined if the input is empty, otherwise it'll return a number */
+  onChange?(value: number | undefined): void;
 
   /** Input value for controlled variant */
   value?: number;
@@ -91,14 +91,18 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     );
     const [focused, setFocused] = useState(false);
     const [_value, setValue] = useState(
-      typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : 0
+      typeof value === 'number'
+        ? value
+        : typeof defaultValue === 'number'
+        ? defaultValue
+        : undefined
     );
     const finalValue = typeof value === 'number' ? value : _value;
     const [tempValue, setTempValue] = useState(
       typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
     );
     const inputRef = useRef<HTMLInputElement>();
-    const handleValueChange = (val: number) => {
+    const handleValueChange = (val: number | undefined) => {
       typeof onChange === 'function' && onChange(val);
       setValue(val);
     };
@@ -107,15 +111,29 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const _max = typeof max === 'number' ? max : Infinity;
 
     const increment = () => {
-      const result = clamp({ value: finalValue + step, min: _min, max: _max }).toFixed(precision);
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      if (_value === undefined) {
+        // if the input is empty, on increment set the value to the min
+        // or if the min is not defined, set the value to 0.
+        handleValueChange(min ?? 0);
+        setTempValue(min?.toFixed(precision) ?? '0');
+      } else {
+        const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
+        handleValueChange(parseFloat(result));
+        setTempValue(result);
+      }
     };
 
     const decrement = () => {
-      const result = clamp({ value: finalValue - step, min: _min, max: _max }).toFixed(precision);
-      handleValueChange(parseFloat(result));
-      setTempValue(result);
+      if (_value === undefined) {
+        // if the input is empty, on decrement set the value to the min
+        // or if the min is not defined, set the value to 0.
+        handleValueChange(min ?? 0);
+        setTempValue(min?.toFixed(precision) ?? '0');
+      } else {
+        const result = clamp({ value: _value - step, min: _min, max: _max }).toFixed(precision);
+        handleValueChange(parseFloat(result));
+        setTempValue(result);
+      }
     };
 
     assignRef(handlersRef, { increment, decrement });
@@ -124,6 +142,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       if (typeof value === 'number' && !focused) {
         setValue(value);
         setTempValue(value.toFixed(precision));
+      }
+      if (defaultValue === undefined && value === undefined && !focused) {
+        setValue(value);
+        setTempValue('');
       }
     }, [value]);
 
@@ -157,24 +179,41 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     );
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const val = event.currentTarget.value;
+      const val = event.target.value;
       setTempValue(val);
-
-      const parsed = Number(val);
-      val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parsed);
+      // Check if the input is empty. This relies on the input type being "text" and not "number". See #375 for more details.
+      if (val === '') {
+        handleValueChange(undefined);
+      } else {
+        const parsed = Number(val);
+        val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parsed);
+      }
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      const parsedVal = parseFloat(event.target.value);
-      const val = clamp({ value: parsedVal, min: _min, max: _max });
-
-      if (!Number.isNaN(val)) {
-        if (!noClampOnBlur) {
-          setTempValue(val.toFixed(precision));
-          handleValueChange(val);
-        }
+      // Check if the input is empty. This relies on the input type being "text" and not "number". See #375 for more details.
+      if (event.target.value === '') {
+        // if the input is empty, handle the change by propogating undefined to onChange.
+        setTempValue('');
+        handleValueChange(undefined);
       } else {
-        setTempValue(finalValue.toFixed(precision));
+        // The input is not empty, set the value to the clamped value unless the noClampOnBlur prop is set.
+        const parsedVal = parseFloat(event.target.value);
+        const val = clamp({ value: parsedVal, min: _min, max: _max });
+
+        if (!Number.isNaN(val)) {
+          if (!noClampOnBlur) {
+            // the input is a parsable number, set the value to the clamped value.
+            // This will turn an input like "2.34abc" into 2.34 if precision is 2.
+            setTempValue(val.toFixed(precision));
+            handleValueChange(val);
+          }
+        } else {
+          // The input is not empty but the input is not a number and should be set to the last number value or empty.
+          // i.e. in the case that the input was "10" and the user selected it and then typed "abc" onBlur it'll reset to 10.
+          // in the case that the input was empty and the user typed "abc" onBlur it'll reset to empty.
+          setTempValue(finalValue?.toFixed(precision) ?? '');
+        }
       }
 
       setFocused(false);
@@ -186,6 +225,21 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       typeof onFocus === 'function' && onFocus(event);
     };
 
+    /**
+     * Handle KeyDown to have arrow up and down events trigger increment/decrement.
+     * Since we're using `type="text"` instead of `type="number"` we have to manually handle the up/down keys.
+     */
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'ArrowUp') {
+        // prevent cursor from going to the beginning of the input.
+        // it will now mimic the behavior of an input type="number" and move the cursor to the end.
+        event.preventDefault();
+        increment();
+      } else if (event.key === 'ArrowDown') {
+        decrement();
+      }
+    };
+
     return (
       <TextInput
         {...others}
@@ -193,10 +247,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         value={tempValue}
         disabled={disabled}
         ref={useMergedRef(inputRef, ref)}
-        type="number"
+        type="text" // type="text" is used to be able to distuinguish between an empty input and an input with an invalid number string entered. See #375 for more details.
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
         rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
         rightSectionWidth={theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}
