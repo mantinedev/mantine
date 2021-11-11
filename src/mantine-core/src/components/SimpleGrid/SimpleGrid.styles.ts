@@ -21,7 +21,7 @@ export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridSt
       sizes: theme.breakpoints,
     });
 
-    acc[`@media (${property}: ${breakpointSize}px)`] = {
+    acc[`@media (${property}: ${breakpointSize + property === 'max-width' ? 0 : 1}px)`] = {
       gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
       gap: theme.fn.size({
         size: breakpoint.spacing || spacing,
