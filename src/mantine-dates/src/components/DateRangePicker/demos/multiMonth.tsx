@@ -15,7 +15,7 @@ function Demo() {
 
   return (
     <DateRangePicker
-      withMultipleMonths
+      amountOfMonths={2}
       label="Book hotel"
       placeholder="Pick dates range"
       value={value}
@@ -34,7 +34,7 @@ function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
       <DateRangePicker
-        withMultipleMonths
+        amountOfMonths={2}
         label="Book hotel"
         placeholder="Pick dates range"
         value={value}
