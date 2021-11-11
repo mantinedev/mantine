@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.2.0
 date: 'November 26th, 2021'
 ---
 
-import { DatePickerDemos } from '@demos/dates';
+import { DatePickerDemos, DateRangePickerDemos } from '@demos/dates';
 import { PasswordInputDemos } from '@demos/core';
 import { useOsDemo } from '@docs/demos';
 
@@ -125,6 +125,11 @@ setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32
 [DatePicker](https://mantine.dev/dates/date-picker/) component now supports free input:
 
 <Demo data={DatePickerDemos.freeInput} />
+
+[DatePicker](https://mantine.dev/dates/date-picker/), [DateRangePicker](https://mantine.dev/dates/date-range-picker/), [Calendar](https://mantine.dev/dates/calendar/) and [RangeCalendar](https://mantine.dev/dates/range-calendar/)
+components now support multiple months rendering:
+
+<Demo data={DateRangePickerDemos.multipleMonths} />
 
 [PasswordInput](https://mantine.dev/core/password-input/) component now supports visibility toggle icon changing:
 
