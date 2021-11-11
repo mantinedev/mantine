@@ -39,6 +39,9 @@ export interface DateRangePickerProps
 
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
+
+  /** Allows to show multiple months */
+  amountOfMonths?: number;
 }
 
 const validationRule = (val: any) =>
@@ -79,6 +82,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       clearButtonLabel,
       firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
+      amountOfMonths = 1,
       ...others
     }: DateRangePickerProps,
     ref
@@ -156,6 +160,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             firstDayOfWeek={firstDayOfWeek}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
             allowSingleDateInRange={allowSingleDateInRange}
+            amountOfMonths={amountOfMonths}
           />
         </DatePickerBase>
 
