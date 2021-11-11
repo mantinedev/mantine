@@ -27,7 +27,7 @@ function Demo() {
   );
 }
 
-export const multiMonth: MantineDemo = {
+export const multipleMonths: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
