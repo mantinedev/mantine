@@ -60,6 +60,13 @@ export function CalendarHeader({
   const theme = useMantineTheme();
   const iconSize = theme.fn.size({ size, sizes: iconSizes });
   const iconButtonSize = theme.fn.size({ size, sizes: DAY_SIZES });
+  const controlStyles = {
+    '&:disabled': {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      opacity: 0.4,
+    },
+  };
 
   return (
     <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>
@@ -72,6 +79,7 @@ export function CalendarHeader({
         size={iconButtonSize}
         style={{ visibility: ['prev', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
         data-mantine-stop-propagation
+        sx={controlStyles}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -101,6 +109,7 @@ export function CalendarHeader({
         size={iconButtonSize}
         style={{ visibility: ['next', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
         data-mantine-stop-propagation
+        sx={controlStyles}
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>
