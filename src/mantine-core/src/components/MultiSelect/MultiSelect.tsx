@@ -255,8 +255,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onChange,
     });
 
-    const [searchDisabled, setSearchDisabled] = useState(
-      disabled || (!!maxSelectedValues && maxSelectedValues < _value.length)
+    const [valuesOverflow, setValuesOverflow] = useState(
+      !!maxSelectedValues && maxSelectedValues < _value.length
     );
 
     const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
@@ -309,7 +309,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [searchValue]);
 
     useEffect(() => {
-      if (!!maxSelectedValues && _value.length < maxSelectedValues) setSearchDisabled(false);
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) setValuesOverflow(false);
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
@@ -320,7 +320,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         } else {
           setValue([..._value, item.value]);
           if (_value.length === maxSelectedValues - 1) {
-            setSearchDisabled(true);
+            setValuesOverflow(true);
             setDropdownOpened(false);
           }
           if (hovered === filteredData.length - 1) {
@@ -504,7 +504,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !searchDisabled && setDropdownOpened(!dropdownOpened);
+              !disabled && !valuesOverflow && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
             }}
             classNames={{
@@ -541,9 +541,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                readOnly={!searchable}
+                readOnly={!searchable || valuesOverflow}
                 placeholder={_value.length === 0 ? placeholder : undefined}
-                disabled={searchDisabled}
+                disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
                 autoComplete="off"
                 {...rest}
