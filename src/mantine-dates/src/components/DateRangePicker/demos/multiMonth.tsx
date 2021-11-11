@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import { Group } from '@mantine/core';
-import { RangeCalendar } from '../RangeCalendar';
+import { DateRangePicker } from '../DateRangePicker';
 
 const code = `
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { RangeCalendar } from '@mantine/dates';
-
+import { DateRangePicker } from '@mantine/dates';
 function Demo() {
   const [value, setValue] = useState<[Date, Date]>([
     dayjs(new Date()).startOf('month').toDate(),
     dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
   ]);
-
-  return <RangeCalendar value={value} onChange={setValue} />;
+  return (
+    <DateRangePicker
+      amountOfMonths={2}
+      label="Book hotel"
+      placeholder="Pick dates range"
+      value={value}
+      onChange={setValue}
+    />
+  );
 }
 `;
 
@@ -25,13 +30,19 @@ function Demo() {
   ]);
 
   return (
-    <Group position="center">
-      <RangeCalendar value={value} onChange={setValue} />
-    </Group>
+    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
+      <DateRangePicker
+        amountOfMonths={2}
+        label="Book hotel"
+        placeholder="Pick dates range"
+        value={value}
+        onChange={setValue}
+      />
+    </div>
   );
 }
 
-export const usage: MantineDemo = {
+export const multiMonth: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
