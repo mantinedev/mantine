@@ -43,7 +43,7 @@ export default function GalleryComponentPage({ pageContext }: GalleryComponentPa
   const [primaryColor, setPrimaryColor] = useState('blue');
 
   return (
-    <Layout>
+    <Layout noHeader>
       <Head title={pageContext.attributes.title} />
 
       <ComponentPreviewControls

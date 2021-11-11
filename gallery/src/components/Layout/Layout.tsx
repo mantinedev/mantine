@@ -13,11 +13,12 @@ import '../../fonts/GreycfifCF/styles.css';
 
 interface LayoutProps {
   children: React.ReactNode;
+  noHeader?: boolean;
 }
 
 const THEME_KEY = 'mantine-color-scheme';
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, noHeader = false }: LayoutProps) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
@@ -33,8 +34,8 @@ export function Layout({ children }: LayoutProps) {
       <MantineProvider theme={{ colorScheme }}>
         <NormalizeCSS />
         <GlobalStyles />
-        <Header />
-        <main style={{ paddingTop: HEADER_HEIGHT }}>{children}</main>
+        {!noHeader && <Header />}
+        <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
       </MantineProvider>
     </ColorSchemeProvider>
   );
