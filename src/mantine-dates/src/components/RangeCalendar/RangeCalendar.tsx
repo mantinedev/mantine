@@ -131,10 +131,13 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     });
 
     const dayStyles = (date: Date, modifiers: DayModifiers, currentMonth: Date) => {
-      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : {};
+      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
+      const outsideStyles = modifiers.outside && hasMultipleMonths ? { display: 'none' } : null;
+
       if (shouldHighlightDate(date, modifiers, currentMonth)) {
         return {
           ...initialStyles,
+          ...outsideStyles,
           backgroundColor:
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
@@ -143,7 +146,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         };
       }
 
-      return initialStyles;
+      return { ...initialStyles, ...outsideStyles };
     };
 
     return (

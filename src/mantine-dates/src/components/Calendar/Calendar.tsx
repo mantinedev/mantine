@@ -4,6 +4,7 @@ import { DefaultProps, Group } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { FirstDayOfWeek } from '../../types';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
+import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { CalendarWrapper } from './CalendarWrapper/CalendarWrapper';
@@ -111,6 +112,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     const disabledState = getDisabledState({ month: _month, minDate, maxDate });
     const hasMultipleMonths = amountOfMonths > 1;
 
+    const dayStyles = (date: Date, modifiers: DayModifiers) => {
+      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
+      const outsideStyles = modifiers.outside && amountOfMonths > 1 ? { display: 'none' } : null;
+      return { ...initialStyles, ...outsideStyles };
+    };
+
     return (
       <CalendarWrapper
         size={size}
@@ -161,7 +168,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
                     value={value}
                     onChange={onChange}
                     dayClassName={dayClassName}
-                    dayStyle={dayStyle}
                     disableOutsideEvents={disableOutsideEvents}
                     minDate={minDate}
                     maxDate={maxDate}
@@ -174,6 +180,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
                     locale={locale}
                     firstDayOfWeek={firstDayOfWeek}
                     __staticSelector={__staticSelector}
+                    dayStyle={dayStyles}
                   />
                 </div>
               );
