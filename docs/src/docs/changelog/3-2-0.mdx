@@ -15,6 +15,7 @@ import { useOsDemo } from '@docs/demos';
 - [Group](https://mantine.dev/core/group/) component was migrated to [flexbox gap](https://caniuse.com/flexbox-gap), it no longer uses hack with negative margins, thus `withGutter` prop is not longer supported.
 - [Button](https://mantine.dev/core/button/) component no longer supports `link` variant due to Styles API limitations, use [Anchor](https://mantine.dev/core/anchor/) component instead.
 - `@mantine/core` package no longer exports `getFontStyles`, `getFocusStyles` and `hexToRgba` functions, replace them with [theme functions](https://mantine.dev/theming/functions/): `theme.fn.fontStyles()`, `theme.fn.focusStyles()`, `theme.fn.rgba()`.
+- [AppShell](https://mantine.dev/core/app-shell/) component was migrated to mobile-first approach, the way Navbar `width` is set was changed
 
 ## Functions on theme
 
@@ -70,6 +71,36 @@ You can now add any amount of custom properties on Mantine theme using `other` k
 })} />
 ```
 
+## Mobile first approach
+
+All layout components now support mobile first approach:
+
+- [SimpleGrid](https://mantine.dev/core/simple-grid/) component now supports `minWidth` breakpoints (`cols` prop is no longer required):
+
+```tsx
+<SimpleGrid
+  breakpoints={[
+    { minWidth: 'sm', cols: 2 },
+    { minWidth: 'md', cols: 3 },
+    { minWidth: 1200, cols: 4 },
+  ]}
+>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</SimpleGrid>
+```
+
+- [AppShell](https://mantine.dev/core/app-shell/) component was migrated to use mobile first approach (**breaking change**) – you will need to change how Navbar width is set:
+
+```tsx
+// old way
+<Navbar width={{ base: 400, breakpoints: { sm: '100%', lg: 500 } }} />
+
+// new way (mobile first), base width defaults to 100%
+<Navbar width={{ sm: 400, lg: 500 }} />
+```
+
 ## New components and hooks
 
 With new [use-os](https://mantine.dev/hooks/use-os/) hook you can detect user os:
@@ -102,4 +133,3 @@ setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32
 - [SegmentedControl](https://mantine.dev/core/segmented-control/) component is now a generic – it accepts values as single type argument
 - [Autocomplete](https://mantine.dev/core/autocomplete/), [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) dropdowns are now rendered within [Popper](https://mantine.dev/core/popper/). This means that dropdown element is now aware of its position on screen and will change placement based on container scroll position. You should also experience less issues with z-index configuration.
 - [Col](https://mantine.dev/core/grid/) component now supports responsive offset props: `offsetXs={5}`, `offsetMd={10}`, etc.
-- [SimpleGrid](https://mantine.dev/core/simple-grid/) component now supports mobile first approach with [min-width breakpoints](https://mantine.dev/core/simple-grid/#min-width-breakpoints)
