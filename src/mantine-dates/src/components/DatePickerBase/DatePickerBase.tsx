@@ -150,6 +150,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onBlur,
       onFocus,
       onChange,
+      onKeyDown,
       name = 'date',
       sx,
       ...others
@@ -207,6 +208,13 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      typeof onKeyDown === 'function' && onKeyDown(event);
+      if (event.code === 'Space' && !allowFreeInput) {
+        setDropdownOpened(true);
+      }
+    };
+
     return (
       <InputWrapper
         required={required}
@@ -226,7 +234,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       >
         <div ref={setRootElement}>
           <div className={classes.wrapper}>
-            <Input
+            <Input<'input'>
               classNames={{
                 ...classNames,
                 input: cx(
@@ -239,6 +247,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               onClick={() =>
                 !allowFreeInput ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
               }
+              onKeyDown={handleKeyDown}
               id={uuid}
               ref={useMergedRef(ref, inputRef)}
               __staticSelector={__staticSelector}
