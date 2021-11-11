@@ -42,7 +42,7 @@ describe('@mantine/core/MultiSelect/DefaultValue', () => {
   it('calls onRemove when CloseButton is clicked', () => {
     const spy = jest.fn();
     const element = shallow(<DefaultValue {...defaultProps} onRemove={spy} />);
-    element.find(CloseButton).simulate('click');
+    element.find(CloseButton).simulate('mousedown');
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

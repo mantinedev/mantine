@@ -46,7 +46,7 @@ export function DefaultValue({
       {!disabled && (
         <CloseButton
           aria-hidden
-          onClick={onRemove}
+          onMouseDown={onRemove}
           size={buttonSizes[size]}
           radius={2}
           color="blue"
