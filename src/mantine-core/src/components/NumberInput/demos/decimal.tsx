@@ -17,6 +17,7 @@ function Demo() {
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <NumberInput
         label="Number input with decimal steps"
+        placeholder="Decimal steps"
         defaultValue={0.05}
         precision={2}
         min={-1}

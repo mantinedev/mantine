@@ -63,6 +63,7 @@ function Demo() {
         value={value}
         onChange={(val) => setValue(val)}
         handlersRef={handlers}
+        placeholder="0"
         max={10}
         min={0}
         step={2}
