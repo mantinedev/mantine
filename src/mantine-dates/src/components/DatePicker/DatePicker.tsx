@@ -186,6 +186,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           locale={locale}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
+          month={
+            allowFreeInput
+              ? _value instanceof Date
+                ? _value
+                : initialMonth || new Date()
+              : undefined
+          }
           initialMonth={initialMonth || (_value instanceof Date ? _value : new Date())}
           value={_value instanceof Date ? _value : dayjs(_value).toDate()}
           onChange={handleValueChange}
