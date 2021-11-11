@@ -32,6 +32,7 @@ storiesOf('@mantine/dates/RangeCalendar', module)
   ))
   .add('Multiple months', () => (
     <div style={{ padding: 40 }}>
-      <WrappedRangeCalendar withMultipleMonths />
+      <WrappedRangeCalendar amountOfMonths={2} />
+      <WrappedRangeCalendar amountOfMonths={3} />
     </div>
   ));

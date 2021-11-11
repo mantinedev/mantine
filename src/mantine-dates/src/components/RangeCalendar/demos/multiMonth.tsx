@@ -16,7 +16,7 @@ function Demo() {
 
   return (
     <Group position="center">
-      <RangeCalendar withMultipleMonths value={value} onChange={setValue} />
+      <RangeCalendar amountOfMonths={2} value={value} onChange={setValue} />
     </Group>
   );
 }
@@ -30,7 +30,7 @@ function Demo() {
 
   return (
     <Group position="center">
-      <RangeCalendar withMultipleMonths value={value} onChange={setValue} />
+      <RangeCalendar amountOfMonths={2} value={value} onChange={setValue} />
     </Group>
   );
 }

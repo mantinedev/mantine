@@ -92,8 +92,7 @@ describe('@mantine/dates/CalendarHeader', () => {
         {...defaultProps}
         nextMonthLabel="test-next-month"
         previousMonthLabel="test-previous-month"
-        previousMonthHidden
-        nextMonthHidden
+        hiddenMonth="both"
       />
     ).find(ActionIcon);
 

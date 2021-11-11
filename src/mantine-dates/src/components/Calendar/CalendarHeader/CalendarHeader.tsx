@@ -32,8 +32,7 @@ interface CalendarHeaderProps extends DefaultProps {
   monthLabel?: string;
   yearLabel?: string;
   preventFocus?: boolean;
-  previousMonthHidden?: boolean;
-  nextMonthHidden?: boolean;
+  hiddenMonth?: 'next' | 'prev' | 'both'
 }
 
 export function CalendarHeader({
@@ -56,8 +55,7 @@ export function CalendarHeader({
   monthLabel,
   yearLabel,
   preventFocus = false,
-  previousMonthHidden = false,
-  nextMonthHidden = false,
+  hiddenMonth
 }: CalendarHeaderProps) {
   const theme = useMantineTheme();
   const iconSize = theme.fn.size({ size, sizes: iconSizes });
@@ -73,7 +71,7 @@ export function CalendarHeader({
         disabled={previousMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation
-        style={{ visibility: previousMonthHidden ? 'hidden' : 'visible' }}
+        style={{ visibility: ['prev', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -102,7 +100,7 @@ export function CalendarHeader({
         disabled={nextMonthDisabled}
         size={iconButtonSize}
         data-mantine-stop-propagation
-        style={{ visibility: nextMonthHidden ? 'hidden' : 'visible' }}
+        style={{ visibility: ['next', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>

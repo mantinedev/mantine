@@ -5,12 +5,12 @@ import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
 interface CalendarWrapperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   size: MantineSize;
   fullWidth: boolean;
-  hasMultipleMonths?: boolean;
+  amountOfMonths?: number;
 }
 
 export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
   (
-    { size, fullWidth, hasMultipleMonths, style, sx, className, ...others }: CalendarWrapperProps,
+    { size, fullWidth, amountOfMonths = 1, style, sx, className, ...others }: CalendarWrapperProps,
     ref
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
@@ -18,7 +18,7 @@ export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
 
     const getMaxWidth = (sizeValues) => {
       const maxWidth = theme.fn.size(sizeValues) * 7;
-      return hasMultipleMonths ? maxWidth * 2 + 16 : maxWidth;
+      return amountOfMonths > 1 ? maxWidth * amountOfMonths + (amountOfMonths - 1) * 16 : maxWidth;
     };
 
     return (

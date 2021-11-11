@@ -68,15 +68,15 @@ describe('@mantine/dates/RangeCalendar', () => {
 
   it('passes __staticSelector prop to CalendarHeader and Month components', () => {
     const element = shallow(
-      <RangeCalendar {...defaultProps} withMultipleMonths __staticSelector="test-selector" />
+      <RangeCalendar {...defaultProps} amountOfMonths={2} __staticSelector="test-selector" />
     );
 
     expect(element.find(Month).at(0).prop('__staticSelector')).toBe('test-selector');
     expect(element.find(CalendarHeader).at(0).prop('__staticSelector')).toBe('test-selector');
 
-    expect(element.find(Month).at(1).prop('__staticSelector')).toBe('test-selector-second-month');
+    expect(element.find(Month).at(1).prop('__staticSelector')).toBe('test-selector-month-1');
     expect(element.find(CalendarHeader).at(1).prop('__staticSelector')).toBe(
-      'test-selector-second-month'
+      'test-selector-month-1'
     );
   });
 
@@ -90,7 +90,7 @@ describe('@mantine/dates/RangeCalendar', () => {
         withSelect
         yearsRange={{ from: 2011, to: 2032 }}
         labelFormat="MM YYYY"
-        withMultipleMonths
+        amountOfMonths={2}
       />
     ).find(CalendarHeader);
 
@@ -130,7 +130,7 @@ describe('@mantine/dates/RangeCalendar', () => {
         excludeDate={excludeDate}
         fullWidth
         size="xl"
-        withMultipleMonths
+        amountOfMonths={2}
       />
     ).find(Month);
 
