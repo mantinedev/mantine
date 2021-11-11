@@ -7,11 +7,13 @@ export function getSortedBreakpoints<T>(breakpoints: Breakpoints<T>, theme: Mant
     return [];
   }
 
-  const values = Object.keys(breakpoints).map((breakpoint) => [
-    theme.fn.size({ size: breakpoint, sizes: theme.breakpoints }),
-    breakpoints[breakpoint],
-  ]);
+  const values = Object.keys(breakpoints)
+    .filter((breakpoint) => breakpoint !== 'base')
+    .map((breakpoint) => [
+      theme.fn.size({ size: breakpoint, sizes: theme.breakpoints }),
+      breakpoints[breakpoint],
+    ]);
 
   values.sort((a, b) => b[0] - a[0]);
-  return values as [number, T][];
+  return values.reverse() as [number, T][];
 }

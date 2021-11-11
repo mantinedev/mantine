@@ -8,7 +8,7 @@ const lorem =
 
 storiesOf('@mantine/core/AppShell/Navbar', module)
   .add('General usage', () => (
-    <Navbar>
+    <Navbar width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section>Second section</Navbar.Section>
       <Navbar.Section grow style={{ backgroundColor: 'silver' }}>
@@ -18,7 +18,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     </Navbar>
   ))
   .add('Grow section with scrollbars', () => (
-    <Navbar padding="md">
+    <Navbar padding="md" width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section grow component={Scrollbars}>
         {Array(20)
@@ -32,7 +32,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     </Navbar>
   ))
   .add('Fixed position', () => (
-    <Navbar fixed position={{ top: 60, left: 0 }}>
+    <Navbar fixed position={{ top: 60, left: 0 }} width={{ base: 100, sm: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section>Second section</Navbar.Section>
       <Navbar.Section grow style={{ backgroundColor: 'silver' }}>
@@ -42,13 +42,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     </Navbar>
   ))
   .add('With width breakpoints', () => (
-    <Navbar
-      style={{ background: 'silver' }}
-      width={{
-        base: 400,
-        breakpoints: { 900: 300, md: 350, xs: '100%' },
-      }}
-    >
+    <Navbar style={{ background: 'silver' }} width={{ sm: 300, lg: 400 }}>
       This is navbar
     </Navbar>
   ));

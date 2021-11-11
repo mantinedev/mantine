@@ -45,7 +45,7 @@ function getNavbarWidth(element: React.ReactElement) {
 }
 
 function getNavbarBreakpoints(element: React.ReactElement, theme: MantineTheme) {
-  const breakpoints = element?.props?.width?.breakpoints;
+  const breakpoints = element?.props?.width;
   return breakpoints != null
     ? getSortedBreakpoints<{ width: number | string; height: number | string }>(
         breakpoints as any,

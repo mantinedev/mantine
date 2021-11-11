@@ -16,12 +16,7 @@ function NavbarToggle() {
       navbarOffsetBreakpoint="sm"
       fixed
       navbar={
-        <Navbar
-          padding="md"
-          hiddenBreakpoint="sm"
-          hidden={!opened}
-          width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
-        >
+        <Navbar padding="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Text>Application navbar</Text>
         </Navbar>
       }
@@ -83,10 +78,7 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     </AppShell>
   ))
   .add('Fixed with Navbar breakpoints', () => (
-    <AppShell
-      fixed
-      navbar={<Navbar width={{ base: 400, breakpoints: { sm: 200, md: 300 } }}>Navbar</Navbar>}
-    >
+    <AppShell fixed navbar={<Navbar width={{ base: 100, sm: 200, md: 300 }}>Navbar</Navbar>}>
       App shell
     </AppShell>
   ))
@@ -94,16 +86,7 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     <AppShell
       fixed
       navbarOffsetBreakpoint="sm"
-      navbar={
-        <Navbar
-          width={{
-            base: 300,
-            breakpoints: { sm: '100%', md: 350, lg: 400 },
-          }}
-        >
-          Navbar
-        </Navbar>
-      }
+      navbar={<Navbar width={{ md: 350, lg: 400 }}>Navbar</Navbar>}
     >
       App shell
     </AppShell>

@@ -42,7 +42,7 @@ type NavbarComponent = ((props: NavbarProps) => React.ReactElement) & {
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   (
     {
-      width = { base: 300 },
+      width,
       height = '100vh',
       padding = 0,
       fixed = false,

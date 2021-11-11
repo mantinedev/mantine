@@ -1,10 +1,7 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
-export interface NavbarWidth {
-  base: string | number;
-  breakpoints?: Partial<Record<string, string | number>>;
-}
+export type NavbarWidth = Partial<Record<string, string | number>>;
 
 export interface NavbarPosition {
   top?: number;
@@ -14,7 +11,7 @@ export interface NavbarPosition {
 }
 
 interface NavbarStyles {
-  width: NavbarWidth;
+  width: Partial<Record<string, string | number>>;
   height: string | number;
   padding: MantineNumberSize;
   position: NavbarPosition;
@@ -26,18 +23,15 @@ interface NavbarStyles {
 export default createStyles(
   (theme, { height, width, padding, fixed, position, hiddenBreakpoint, zIndex }: NavbarStyles) => {
     const breakpoints =
-      typeof width?.breakpoints === 'object' && width.breakpoints !== null
-        ? getSortedBreakpoints(width.breakpoints, theme).reduce(
-            (acc, [breakpoint, breakpointSize]) => {
-              acc[`@media (max-width: ${breakpoint}px)`] = {
-                width: breakpointSize,
-                minWidth: breakpointSize,
-              };
+      typeof width === 'object' && width !== null
+        ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
+            acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+              width: breakpointSize,
+              minWidth: breakpointSize,
+            };
 
-              return acc;
-            },
-            {}
-          )
+            return acc;
+          }, {})
         : null;
 
     return {
@@ -46,7 +40,7 @@ export default createStyles(
         ...position,
         zIndex,
         height,
-        width: width.base,
+        width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
         padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
