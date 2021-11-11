@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import dayjs from 'dayjs';
-import { DefaultProps } from '@mantine/core';
+import { DefaultProps, Group } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { FirstDayOfWeek } from '../../types';
 import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
@@ -39,6 +39,9 @@ export interface CalendarSettings extends MonthSettings {
 
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeek;
+
+  /** Amount of displayed months */
+  amountOfMonths?: number;
 }
 
 export type CalendarStylesNames = Exclude<MonthStylesNames, 'root'> | CalendarLabelStylesNames;
@@ -92,6 +95,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       yearLabel,
       preventFocus,
       firstDayOfWeek = 'monday',
+      amountOfMonths = 1,
       ...others
     }: CalendarProps,
     ref
@@ -105,50 +109,76 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     });
 
     const disabledState = getDisabledState({ month: _month, minDate, maxDate });
+    const hasMultipleMonths = amountOfMonths > 1;
 
     return (
-      <CalendarWrapper size={size} fullWidth={fullWidth} ref={ref} {...others}>
-        <CalendarHeader
-          size={size}
-          nextMonthLabel={nextMonthLabel}
-          previousMonthLabel={previousMonthLabel}
-          previousMonthDisabled={disabledState.previousDisabled}
-          nextMonthDisabled={disabledState.nextDisabled}
-          onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
-          onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
-          classNames={classNames}
-          styles={styles}
-          locale={locale}
-          withSelect={withSelect}
-          yearsRange={yearsRange}
-          month={_month}
-          setMonth={setMonth}
-          labelFormat={labelFormat}
-          preventFocus={preventFocus}
-          __staticSelector={__staticSelector}
-          monthLabel={monthLabel}
-          yearLabel={yearLabel}
-        />
+      <CalendarWrapper
+        size={size}
+        fullWidth={fullWidth}
+        ref={ref}
+        amountOfMonths={amountOfMonths}
+        {...others}
+      >
+        <Group noWrap style={{ alignItems: 'flex-start' }}>
+          {Array(amountOfMonths)
+            .fill(0)
+            .map((_, monthIndex) => {
+              const isFirstMonth = monthIndex === 0;
+              const isLastMonth = monthIndex === amountOfMonths - 1;
+              const monthToRender = isFirstMonth
+                ? _month
+                : dayjs(_month).add(monthIndex, 'month').toDate();
+              const hiddenMonth = isFirstMonth ? 'next' : isLastMonth ? 'prev' : 'both';
 
-        <Month
-          month={_month}
-          value={value}
-          onChange={onChange}
-          dayClassName={dayClassName}
-          dayStyle={dayStyle}
-          disableOutsideEvents={disableOutsideEvents}
-          minDate={minDate}
-          maxDate={maxDate}
-          excludeDate={excludeDate}
-          classNames={classNames}
-          styles={styles}
-          fullWidth={fullWidth}
-          preventFocus={preventFocus}
-          size={size}
-          locale={locale}
-          firstDayOfWeek={firstDayOfWeek}
-          __staticSelector={__staticSelector}
-        />
+              return (
+                <div key={`month-${monthIndex}`}>
+                  <CalendarHeader
+                    size={size}
+                    nextMonthLabel={nextMonthLabel}
+                    previousMonthLabel={previousMonthLabel}
+                    previousMonthDisabled={disabledState.previousDisabled}
+                    nextMonthDisabled={disabledState.nextDisabled}
+                    onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+                    onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+                    classNames={classNames}
+                    styles={styles}
+                    locale={locale}
+                    withSelect={withSelect}
+                    yearsRange={yearsRange}
+                    month={monthToRender}
+                    setMonth={setMonth}
+                    labelFormat={labelFormat}
+                    hiddenMonth={hasMultipleMonths ? hiddenMonth : undefined}
+                    __staticSelector={
+                      isFirstMonth ? __staticSelector : `${__staticSelector}-month-${monthIndex}`
+                    }
+                    monthLabel={monthLabel}
+                    yearLabel={yearLabel}
+                  />
+
+                  <Month
+                    month={monthToRender}
+                    value={value}
+                    onChange={onChange}
+                    dayClassName={dayClassName}
+                    dayStyle={dayStyle}
+                    disableOutsideEvents={disableOutsideEvents}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    excludeDate={excludeDate}
+                    classNames={classNames}
+                    styles={styles}
+                    fullWidth={fullWidth}
+                    preventFocus={preventFocus}
+                    size={size}
+                    locale={locale}
+                    firstDayOfWeek={firstDayOfWeek}
+                    __staticSelector={__staticSelector}
+                  />
+                </div>
+              );
+            })}
+        </Group>
       </CalendarWrapper>
     );
   }

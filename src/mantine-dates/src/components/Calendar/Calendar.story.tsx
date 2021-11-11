@@ -5,7 +5,7 @@ import { Calendar } from './Calendar';
 
 function WrappedCalendar(props: React.ComponentPropsWithoutRef<typeof Calendar>) {
   const [value, onChange] = useState(new Date());
-  return <Calendar month={value} value={value} onChange={onChange} {...props} />;
+  return <Calendar value={value} onChange={onChange} {...props} />;
 }
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -25,5 +25,12 @@ storiesOf('@mantine/dates/Calendar', module)
     <div style={{ padding: 40, width: 400 }}>
       <WrappedCalendar minDate={new Date()} firstDayOfWeek="monday" />
       <WrappedCalendar minDate={new Date()} firstDayOfWeek="sunday" />
+    </div>
+  ))
+  .add('Amount of months', () => (
+    <div style={{ padding: 40, width: 400 }}>
+      <WrappedCalendar minDate={new Date()} amountOfMonths={1} />
+      <WrappedCalendar minDate={new Date()} amountOfMonths={2} />
+      <WrappedCalendar minDate={new Date()} amountOfMonths={3} />
     </div>
   ));

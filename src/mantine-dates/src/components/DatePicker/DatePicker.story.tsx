@@ -130,6 +130,13 @@ storiesOf('@mantine/dates/DatePicker', module)
       <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
     </div>
   ))
+  .add('Amount of months', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <DatePicker amountOfMonths={1} label="One month" />
+      <DatePicker amountOfMonths={2} label="Two months" />
+      <DatePicker amountOfMonths={3} label="Three months" />
+    </div>
+  ))
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Controlled />

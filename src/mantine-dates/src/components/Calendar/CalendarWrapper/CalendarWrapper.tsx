@@ -15,18 +15,16 @@ export const CalendarWrapper = forwardRef<HTMLDivElement, CalendarWrapperProps>(
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { sxClassName, theme } = useSx({ sx, className });
-
-    const getMaxWidth = (sizeValues) => {
-      const maxWidth = theme.fn.size(sizeValues) * 7;
-      return amountOfMonths > 1 ? maxWidth * amountOfMonths + (amountOfMonths - 1) * 16 : maxWidth;
-    };
+    const _maxWidth = theme.fn.size({ size, sizes: DAY_SIZES }) * 7;
+    const maxWidth =
+      amountOfMonths > 1 ? _maxWidth * amountOfMonths + (amountOfMonths - 1) * 16 : _maxWidth;
 
     return (
       <div
         ref={ref}
         className={sxClassName}
         style={{
-          maxWidth: fullWidth ? '100%' : getMaxWidth({ size, sizes: DAY_SIZES }),
+          maxWidth: fullWidth ? '100%' : maxWidth,
           ...mergedStyles,
         }}
         {...rest}

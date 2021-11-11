@@ -32,16 +32,26 @@ storiesOf('@mantine/dates/DateRangePicker', module)
     <>
       <div style={{ padding: 40 }}>
         <DateRangePicker
+          label="One month"
+          placeholder="Dates range"
+          defaultValue={[new Date(), new Date()]}
+          amountOfMonths={1}
+        />
+
+        <DateRangePicker
           label="Two months"
           placeholder="Dates range"
           defaultValue={[new Date(), new Date()]}
           amountOfMonths={2}
+          mt="xl"
         />
+
         <DateRangePicker
           label="Three months"
           placeholder="Dates range"
           defaultValue={[new Date(), new Date()]}
           amountOfMonths={3}
+          mt="xl"
         />
       </div>
     </>

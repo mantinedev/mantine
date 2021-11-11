@@ -78,6 +78,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       firstDayOfWeek = 'monday',
       onFocus,
       onBlur,
+      amountOfMonths,
       ...others
     }: DatePickerProps,
     ref
@@ -202,6 +203,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}
+          amountOfMonths={amountOfMonths}
         />
       </DatePickerBase>
     );
