@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Text, Group, Button, createStyles, MantineTheme, useMantineTheme } from '@mantine/core';
 import { Dropzone, DropzoneStatus, MIME_TYPES } from '@mantine/dropzone';
 import { CloudUpload } from 'tabler-icons-react';
@@ -39,10 +39,12 @@ function getActiveColor(status: DropzoneStatus, theme: MantineTheme) {
 export function DropzoneButton() {
   const theme = useMantineTheme();
   const { classes } = useStyles();
+  const openRef = useRef<() => void>();
 
   return (
     <div className={classes.wrapper}>
       <Dropzone
+        openRef={openRef}
         onDrop={() => {}}
         className={classes.dropzone}
         radius="md"
@@ -75,7 +77,7 @@ export function DropzoneButton() {
         )}
       </Dropzone>
 
-      <Button className={classes.control} size="md" radius="xl">
+      <Button className={classes.control} size="md" radius="xl" onClick={() => openRef.current()}>
         Select files
       </Button>
     </div>
