@@ -6,7 +6,7 @@ function WrappedRangeCalendar(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeCalendar>, 'value' | 'onChange'>
 ) {
   const [value, onChange] = useState<[Date, Date]>([null, null]);
-  return <RangeCalendar month={value[0]} value={value} onChange={onChange} {...props} />;
+  return <RangeCalendar value={value} onChange={onChange} {...props} />;
 }
 
 storiesOf('@mantine/dates/RangeCalendar', module)
@@ -18,5 +18,11 @@ storiesOf('@mantine/dates/RangeCalendar', module)
   .add('First day of the week - Sunday', () => (
     <div style={{ padding: 40 }}>
       <WrappedRangeCalendar firstDayOfWeek="sunday" />
+    </div>
+  ))
+  .add('Multiple months', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar amountOfMonths={2} />
+      <WrappedRangeCalendar amountOfMonths={3} />
     </div>
   ));
