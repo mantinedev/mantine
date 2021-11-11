@@ -114,6 +114,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
     const handleChange = (val: number) => {
       const nextValue = getChangeValue({ value: val, min, max, step });
+      thumb.current?.focus();
       setValue(nextValue);
     };
 
