@@ -14,3 +14,4 @@ export { notClearable } from './notClearable';
 export { validation } from './validation';
 export { disabled } from './disabled';
 export { freeInput } from './freeInput';
+export { multipleMonths } from './multipleMonths';
