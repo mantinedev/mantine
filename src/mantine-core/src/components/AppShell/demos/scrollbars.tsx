@@ -11,7 +11,7 @@ import { Navbar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs">
+    <Navbar height={600} padding="xs" width={{ base: 300 }}>
       <Navbar.Section mt="xs"><Brand /></Navbar.Section>
 
       <Navbar.Section grow mt="lg">
@@ -28,7 +28,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs">
+    <Navbar height={600} padding="xs" width={{ base: 300 }}>
       <Navbar.Section mt="xs">
         <Brand />
       </Navbar.Section>
