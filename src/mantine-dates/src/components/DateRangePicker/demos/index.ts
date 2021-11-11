@@ -1,2 +1,2 @@
 export { usage } from './usage';
-export { multiMonth } from './multiMonth';
+export { multipleMonths } from './multipleMonths';
