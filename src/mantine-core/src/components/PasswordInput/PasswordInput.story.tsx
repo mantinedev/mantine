@@ -27,6 +27,9 @@ storiesOf('@mantine/core/PasswordInput', module)
       <WrappedPasswordInput label="Password" placeholder="Password" type="password" />
     </div>
   ))
+  .add('Custom visibility toggle icon', () => (
+    <PasswordInput visibilityToggleIcon={({ reveal }) => <div>{reveal ? 'R' : 'H'}</div>} />
+  ))
   .add('Sizes', () => <div style={{ width: 300, padding: 20 }}>{sizes}</div>)
   .add('With icon', () => (
     <div style={{ width: 300, padding: 20 }}>

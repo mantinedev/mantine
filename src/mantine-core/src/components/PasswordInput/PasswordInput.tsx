@@ -11,6 +11,9 @@ import useStyles from './PasswordInput.styles';
 export interface PasswordInputProps extends React.ComponentPropsWithoutRef<typeof TextInput> {
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
+
+  /** Provide your own visibility toggle icon */
+  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number }>;
 }
 
 const buttonSizes = {
@@ -56,6 +59,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       classNames,
       styles,
       variant,
+      visibilityToggleIcon: VisibilityToggleIcon = PasswordToggleIcon,
       __staticSelector = 'PasswordInput',
       rightSection: _rightSection,
       rightSectionWidth: _rightSectionWidth,
@@ -89,7 +93,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           }
         }}
       >
-        <PasswordToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
+        <VisibilityToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
       </ActionIcon>
     );
 
