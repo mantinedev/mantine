@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Modal } from '@mantine/core';
-import { ModalsContext, ModalSettings } from './context';
+import { ModalsContext, ModalSettings, ConfirmLabels } from './context';
 
 export interface ModalsProviderProps {
   children: React.ReactNode;
   modals?: Record<string, React.ReactNode>;
   modalProps?: ModalSettings;
+  labels?: ConfirmLabels;
 }
 
 interface CurrentModal {
@@ -13,7 +14,7 @@ interface CurrentModal {
   props: ModalSettings;
 }
 
-export function ModalsProvider({ children, modals, modalProps }: ModalsProviderProps) {
+export function ModalsProvider({ children, modals, modalProps, labels }: ModalsProviderProps) {
   const [opened, setOpened] = useState(false);
   const [currentModal, setCurrentModal] = useState<CurrentModal>({ modal: null, props: {} });
   const handleClose = () => setOpened(false);
@@ -27,6 +28,7 @@ export function ModalsProvider({ children, modals, modalProps }: ModalsProviderP
   return (
     <ModalsContext.Provider
       value={{
+        labels,
         opened: currentModal.modal,
         open: handleOpen,
         close: handleClose,
