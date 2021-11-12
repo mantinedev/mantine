@@ -10,6 +10,17 @@ function Demo() {
     title: 'This is content modal',
   });
 
+  const confirmModal2 = useConfirmModal(
+    {
+      confirmProps: { color: 'red', children: 'I am sure' },
+      closeOnCancel: false,
+      closeOnConfirm: false,
+      onCancel: () => confirmModal2.closeAll(),
+      onConfirm: () => confirmModal2.closeAll(),
+    },
+    { title: 'Are you really sure' }
+  );
+
   const confirmModal = useConfirmModal(
     {
       description: (
@@ -22,7 +33,7 @@ function Demo() {
       confirmProps: { color: 'red' },
       closeOnConfirm: false,
       onCancel: () => console.log('Cancel'),
-      onConfirm: () => contentModal.open(),
+      onConfirm: () => confirmModal2.open(),
     },
     { title: 'Please confirm this action' }
   );

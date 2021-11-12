@@ -10,7 +10,8 @@ interface ModalsContextType {
   modals: string[];
   labels: ConfirmLabels;
   open: (modal: string, props?: ModalSettings) => void;
-  close: () => void;
+  close: (id: string) => void;
+  closeAll: () => void;
 }
 
 export const ModalsContext = createContext<ModalsContextType>({
@@ -18,5 +19,6 @@ export const ModalsContext = createContext<ModalsContextType>({
   labels: { confirm: '', cancel: '' },
   open: () => {},
   close: () => {},
+  closeAll: () => {},
   modals: [],
 });

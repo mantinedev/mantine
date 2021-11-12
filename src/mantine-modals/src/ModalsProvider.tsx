@@ -18,10 +18,14 @@ interface ModalState {
 export function ModalsProvider({ children, modals, modalProps, labels }: ModalsProviderProps) {
   const [opened, handlers] = useListState<ModalState>([]);
   const [currentModal, setCurrentModal] = useState<ModalState>({ modal: null, props: null });
-  const handleClose = () => {
-    handlers.pop();
+  const closeAll = () => handlers.setState([]);
 
-    if (opened.length > 1) {
+  const handleClose = (id: string) => {
+    if (opened.length <= 1) {
+      closeAll();
+    } else {
+      const index = opened.findIndex((item) => item.modal === id);
+      index !== -1 && handlers.remove(index);
       setCurrentModal(opened[opened.length - 2]);
     }
   };
@@ -40,12 +44,13 @@ export function ModalsProvider({ children, modals, modalProps, labels }: ModalsP
         opened: currentModal?.modal || null,
         open: handleOpen,
         close: handleClose,
+        closeAll,
         modals: Object.keys(modals),
       }}
     >
       <Modal
         opened={opened.length > 0}
-        onClose={handleClose}
+        onClose={() => handleClose(currentModal?.modal)}
         {...modalProps}
         {...currentModal?.props}
       >

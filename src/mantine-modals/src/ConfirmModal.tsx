@@ -3,6 +3,7 @@ import { Button, Group, Box, ButtonProps } from '@mantine/core';
 import { ModalsContext } from './context';
 
 export interface ConfirmModalProps {
+  id?: string;
   onCancel?(): void;
   onConfirm?(): void;
   closeOnConfirm?: boolean;
@@ -13,6 +14,7 @@ export interface ConfirmModalProps {
 }
 
 export function ConfirmModal({
+  id,
   cancelProps,
   confirmProps,
   description,
@@ -27,13 +29,13 @@ export function ConfirmModal({
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof cancelProps?.onClick === 'function' && cancelProps?.onClick(event);
     typeof onCancel === 'function' && onCancel();
-    closeOnCancel && ctx?.close();
+    closeOnCancel && ctx?.close(id);
   };
 
   const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof confirmProps?.onClick === 'function' && confirmProps?.onClick(event);
     typeof onConfirm === 'function' && onConfirm();
-    closeOnConfirm && ctx?.close();
+    closeOnConfirm && ctx?.close(id);
   };
 
   return (

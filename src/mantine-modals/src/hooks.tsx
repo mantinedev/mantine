@@ -27,7 +27,8 @@ export function useModal(modal: string, props?: ModalSettings) {
   return {
     opened: ctx.opened === modal,
     open: () => ctx.open(modal, props || {}),
-    close: ctx.close,
+    close: () => ctx.close(modal),
+    closeAll: ctx.closeAll,
   };
 }
 
@@ -39,7 +40,8 @@ export function useContentModal(children: React.ReactNode, props?: ModalSettings
     id,
     opened: ctx.opened === id,
     open: () => ctx.open(id, { ...props, children }),
-    close: ctx.close,
+    close: () => ctx.close(id),
+    closeAll: ctx.closeAll,
   };
 }
 
@@ -50,7 +52,8 @@ export function useConfirmModal(modalProps: ConfirmModalProps, props?: ModalSett
   return {
     id,
     opened: ctx.opened === id,
-    open: () => ctx.open(id, { ...props, children: <ConfirmModal {...modalProps} /> }),
-    close: ctx.close,
+    open: () => ctx.open(id, { ...props, children: <ConfirmModal {...modalProps} id={id} /> }),
+    close: () => ctx.close(id),
+    closeAll: ctx.closeAll,
   };
 }
