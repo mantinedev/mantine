@@ -1,0 +1,25 @@
+{
+  "name": "@mantine/modals",
+  "description": "Modals manager based on Mantine components",
+  "version": "3.1.8",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/modals/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-modals"
+  },
+  "peerDependencies": {
+    "@mantine/core": "3.1.8",
+    "@mantine/hooks": "3.1.8",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
