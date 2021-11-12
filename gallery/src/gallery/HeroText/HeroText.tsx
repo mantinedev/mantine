@@ -39,7 +39,8 @@ const useStyles = createStyles((theme) => ({
     fontSize: 40,
     letterSpacing: -1,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.spacing.xs,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     '@media (max-width: 520px)': {
       fontSize: 28,
