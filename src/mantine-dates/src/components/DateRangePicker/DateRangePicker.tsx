@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import dayjs from 'dayjs';
+import { useMantineTheme } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSettings } from '../Calendar/Calendar';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -57,7 +58,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       styles,
       shadow = 'sm',
       locale = 'en',
-      inputFormat = 'MMMM D, YYYY',
+      inputFormat,
       transitionDuration = 200,
       transitionTimingFunction,
       nextMonthLabel,
@@ -87,6 +88,8 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     }: DateRangePickerProps,
     ref
   ) => {
+    const theme = useMantineTheme();
+    const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
@@ -124,9 +127,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           inputLabel={
             valueValid
               ? `${upperFirst(
-                  dayjs(_value[0]).locale(locale).format(inputFormat)
+                  dayjs(_value[0]).locale(locale).format(dateFormat)
                 )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(locale).format(inputFormat)
+                  dayjs(_value[1]).locale(locale).format(dateFormat)
                 )}`
               : ''
           }

@@ -7,6 +7,7 @@ export const MANTINE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export const _DEFAULT_THEME: MantineThemeBase = {
   loader: 'oval',
+  dateFormat: 'MMMM D, YYYY',
   colorScheme: 'light',
   white: '#fff',
   black: '#000',

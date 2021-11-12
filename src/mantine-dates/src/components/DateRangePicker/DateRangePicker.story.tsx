@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Group } from '@mantine/core';
+import { Group, MantineProvider } from '@mantine/core';
 import { DateRangePicker } from './DateRangePicker';
 
 storiesOf('@mantine/dates/DateRangePicker', module)
@@ -55,4 +55,9 @@ storiesOf('@mantine/dates/DateRangePicker', module)
         />
       </div>
     </>
+  ))
+  .add('Date format on theme', () => (
+    <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
+      <DateRangePicker label="First" />
+    </MantineProvider>
   ));

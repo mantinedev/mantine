@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, Group, Modal, Button } from '@mantine/core';
+import { MANTINE_SIZES, Group, Modal, Button, MantineProvider } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
 
@@ -141,4 +141,9 @@ storiesOf('@mantine/dates/DatePicker', module)
     <div style={{ padding: 40, maxWidth: 300 }}>
       <Controlled />
     </div>
+  ))
+  .add('Date format on theme', () => (
+    <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
+      <DatePicker label="One month" />
+    </MantineProvider>
   ));
