@@ -96,10 +96,11 @@ export function HeroText() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Automated AI code reviews for{' '}
+          Automated AI{' '}
           <Text component="span" color={theme.primaryColor} inherit>
-            any stack
-          </Text>
+            code reviews
+          </Text>{' '}
+          for any stack
         </Title>
 
         <Container padding={0} size={600}>
@@ -110,11 +111,11 @@ export function HeroText() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} size="lg">
-            Get started for free
-          </Button>
           <Button className={classes.control} size="lg" variant="default" color="gray">
-            Live demo
+            Book a demo
+          </Button>
+          <Button className={classes.control} size="lg">
+            Purchase a license
           </Button>
         </div>
       </div>
