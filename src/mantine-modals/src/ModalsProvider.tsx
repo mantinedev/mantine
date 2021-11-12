@@ -4,9 +4,16 @@ import { useListState } from '@mantine/hooks';
 import { ModalsContext, ModalSettings, ConfirmLabels } from './context';
 
 export interface ModalsProviderProps {
+  /** Your app */
   children: React.ReactNode;
+
+  /** Predefined modals */
   modals?: Record<string, React.ReactNode>;
+
+  /** Shared Modal component props, applied for every modal */
   modalProps?: ModalSettings;
+
+  /** Confirm modal labels */
   labels?: ConfirmLabels;
 }
 
