@@ -73,6 +73,8 @@ Hook provides handlers to work with array data:
 
 - `append` – add items to the end of the list
 - `prepend` – add items to the start of the list
+- `pop` – remove last item
+- `shift` – remove first item
 - `insert` – insert items at given index
 - `remove` – remove items at given indices
 - `reorder` – move item from one position to another
@@ -99,6 +101,8 @@ function useListState<T>(initialValue: T[] = []): [
     prepend: (...items: T[]) => void;
     insert: (index: number, ...items: T[]) => void;
     apply: (fn: (item: T, index?: number) => T) => void;
+    pop: () => void;
+    shift: () => void;
     applyWhere: (
       condition: (item: T, index?: number) => boolean,
       fn: (item: T, index?: number) => T)

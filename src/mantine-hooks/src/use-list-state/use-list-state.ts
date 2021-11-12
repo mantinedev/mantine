@@ -15,6 +15,20 @@ export function useListState<T>(initialValue: T[] = []) {
   const remove = (...indices: number[]) =>
     setState((current) => current.filter((_, index) => !indices.includes(index)));
 
+  const pop = () =>
+    setState((current) => {
+      const cloned = [...current];
+      cloned.pop();
+      return cloned;
+    });
+
+  const shift = () =>
+    setState((current) => {
+      const cloned = [...current];
+      cloned.shift();
+      return cloned;
+    });
+
   const reorder = ({ from, to }: { from: number; to: number }) =>
     setState((current) => {
       const cloned = [...current];
@@ -52,6 +66,8 @@ export function useListState<T>(initialValue: T[] = []) {
       append,
       prepend,
       insert,
+      pop,
+      shift,
       apply,
       applyWhere,
       remove,
