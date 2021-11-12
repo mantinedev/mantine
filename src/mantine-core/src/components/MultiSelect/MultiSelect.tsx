@@ -132,6 +132,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Limit amount of items selected */
+  maxSelectedValues?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -197,6 +200,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       dropdownComponent,
       onDropdownClose,
       onDropdownOpen,
+      maxSelectedValues,
       ...others
     }: MultiSelectProps,
     ref
@@ -215,12 +219,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const [searchValue, setSearchValue] = useState('');
+
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
       offset: 5,
       cancelable: false,
       isList: true,
     });
+
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
 
@@ -249,7 +255,16 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onChange,
     });
 
-    const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
+    const valuesOverflow = useRef(!!maxSelectedValues && maxSelectedValues < _value.length);
+
+    const handleValueRemove = (_val: string) => {
+      const newValue = _value.filter((val) => val !== _val);
+      setValue(newValue);
+
+      if (!!maxSelectedValues && newValue.length < maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
+    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       handleSearchChange(event.currentTarget.value);
@@ -305,6 +320,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           handleValueRemove(item.value);
         } else {
           setValue([..._value, item.value]);
+          if (_value.length === maxSelectedValues - 1) {
+            valuesOverflow.current = true;
+            setDropdownOpened(false);
+          }
           if (hovered === filteredData.length - 1) {
             setHovered(filteredData.length - 2);
           }
@@ -486,7 +505,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !disabled && setDropdownOpened(!dropdownOpened);
+              !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
             }}
             classNames={{
@@ -523,7 +542,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                readOnly={!searchable}
+                readOnly={!searchable || valuesOverflow.current}
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
