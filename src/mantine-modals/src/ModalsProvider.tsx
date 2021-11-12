@@ -22,7 +22,7 @@ interface ModalState {
   props: ModalSettings;
 }
 
-export function ModalsProvider({ children, modals, modalProps, labels }: ModalsProviderProps) {
+export function ModalsProvider({ children, modals = {}, modalProps, labels }: ModalsProviderProps) {
   const [opened, handlers] = useListState<ModalState>([]);
   const [currentModal, setCurrentModal] = useState<ModalState>({ modal: null, props: null });
   const closeAll = () => handlers.setState([]);
