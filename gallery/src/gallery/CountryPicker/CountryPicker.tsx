@@ -32,7 +32,11 @@ export function CountryPicker() {
       data={data}
       icon={<Flag code={value} size="S" />}
       transitionDuration={150}
-      transition="pop"
+      transition={{
+        in: { opacity: 1, transform: 'translateY(0px) scale(1)' },
+        out: { opacity: 0, transform: 'translateY(10px) scale(1.1)' },
+        transitionProperty: 'opacity, transform',
+      }}
       itemComponent={SelectItem}
       maxDropdownHeight={400}
       value={value}
