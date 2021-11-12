@@ -35,6 +35,9 @@ export interface CheckboxProps
 
   /** Check/uncheck transition duration, set to 0 to disable all transitions */
   transitionDuration?: number;
+
+  /** Replace default icon */
+  icon?: React.FC<{ indeterminate: boolean; className: string }>;
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
@@ -55,6 +58,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       classNames,
       styles,
       transitionDuration = 100,
+      icon: Icon = CheckboxIcon,
       sx,
       ...others
     }: CheckboxProps,
@@ -81,7 +85,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {...rest}
           />
 
-          <CheckboxIcon indeterminate={indeterminate} className={classes.icon} />
+          <Icon indeterminate={indeterminate} className={classes.icon} />
         </div>
 
         {label && (
