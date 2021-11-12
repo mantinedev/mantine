@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
-import '../../fonts/GreycfifCF/styles.css';
+import '../../fonts/GreycliffCF/styles.css';
 
 const THEME_KEY = 'mantine-color-scheme';
 
