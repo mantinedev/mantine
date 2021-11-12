@@ -9,12 +9,13 @@ const useStyles = createStyles((theme) => ({
 
   input: {
     height: 'auto',
-    paddingTop: 22,
+    paddingTop: 18,
   },
 
   label: {
     position: 'absolute',
     pointerEvents: 'none',
+    fontSize: theme.fontSizes.xs,
     paddingLeft: theme.spacing.sm,
     paddingTop: theme.spacing.sm / 2,
     zIndex: 1,
