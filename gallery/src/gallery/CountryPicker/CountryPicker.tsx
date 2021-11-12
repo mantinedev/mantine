@@ -4,7 +4,7 @@ import Flag from 'react-flagpack';
 
 const data = [
   { label: 'Russia', value: 'RU' },
-  { label: 'United State', value: 'US' },
+  { label: 'United States', value: 'US' },
   { label: 'Australia', value: 'AU' },
   { label: 'Belgium', value: 'BE' },
   { label: 'Poland', value: 'PL' },
