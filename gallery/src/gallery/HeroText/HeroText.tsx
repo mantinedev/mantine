@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, Title, Text, Button, Container, useMantineTheme } from '@mantine/core';
-import { Dots } from '@mantine/decorations';
+import { Dots } from './Dots';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {

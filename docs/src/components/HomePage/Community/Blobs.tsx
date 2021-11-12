@@ -38,5 +38,3 @@ export function Blobs({
     </svg>
   );
 }
-
-Blobs.displayName = '@mantine/decorations/Blobs';

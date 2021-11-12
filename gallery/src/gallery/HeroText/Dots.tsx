@@ -119,5 +119,3 @@ export function Dots({ size = 185, radius = 2.5, ...others }: DotsProps) {
     </svg>
   );
 }
-
-Dots.displayName = '@mantine/decorations/Dots';
