@@ -52,7 +52,14 @@ export function CheckboxCard({
       onClick={() => handleChange(!value)}
       className={cx(classes.button, className)}
     >
-      <Checkbox checked={value} onChange={() => {}} tabIndex={-1} size="md" mr="xl" />
+      <Checkbox
+        checked={value}
+        onChange={() => {}}
+        tabIndex={-1}
+        size="md"
+        mr="xl"
+        styles={{ input: { cursor: 'pointer' } }}
+      />
 
       <div>
         <Text weight={500} mb={7} sx={{ lineHeight: 1 }}>

@@ -79,7 +79,12 @@ export function ImageCheckbox({
         </Text>
       </div>
 
-      <Checkbox checked={value} onChange={() => {}} tabIndex={-1} />
+      <Checkbox
+        checked={value}
+        onChange={() => {}}
+        tabIndex={-1}
+        styles={{ input: { cursor: 'pointer' } }}
+      />
     </UnstyledButton>
   );
 }
