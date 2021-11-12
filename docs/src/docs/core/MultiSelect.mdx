@@ -195,6 +195,10 @@ Apart from `itemComponent` you can customize appearance of label by providing `l
 
 <Demo data={MultiSelectDemos.countries} />
 
+## Max selected values
+
+<Demo data={MultiSelectDemos.maxSelectedValues} />
+
 ## Performance
 
 If you have a large data set (> 100 items) you will have to optimize items rendering.
@@ -269,12 +273,6 @@ function Demo() {
   return <MultiSelect ref={ref} />;
 }
 ```
-
-## Max Selected Values
-
-You can set the maximum values that can be selected using the `maxSelectedValues` prop.
-
-<Demo data={MultiSelectDemos.maxSelectedValues} />
 
 ## Accessibility
 

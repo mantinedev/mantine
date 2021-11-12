@@ -8,7 +8,7 @@ date: 'November 26th, 2021'
 ---
 
 import { DatePickerDemos, DateRangePickerDemos } from '@demos/dates';
-import { PasswordInputDemos } from '@demos/core';
+import { PasswordInputDemos, MultiSelectDemos } from '@demos/core';
 import { useOsDemo } from '@docs/demos';
 
 ## Breaking changes
@@ -130,6 +130,10 @@ setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32
 components now support multiple months rendering:
 
 <Demo data={DateRangePickerDemos.multipleMonths} />
+
+[MultiSelect](https://mantine.dev/core/multi-select/) component now supports limiting maximum selected values:
+
+<Demo data={MultiSelectDemos.maxSelectedValues} />
 
 [PasswordInput](https://mantine.dev/core/password-input/) component now supports visibility toggle icon changing:
 

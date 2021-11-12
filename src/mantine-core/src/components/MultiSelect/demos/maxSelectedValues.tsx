@@ -3,26 +3,7 @@ import { MultiSelect } from '../MultiSelect';
 import { data } from './_data';
 
 const code = `
-const data = [
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'riot', label: 'Riot' },
-  { value: 'next', label: 'Next.js' },
-  { value: 'blitz', label: 'Blitz.js' },
-];
-
-function Demo() {
-  return (
-    <MultiSelect
-      data={data}
-      label="Your favorite frameworks/libraries"
-      placeholder="Pick atmost 3 values"
-      maxSelectedValues={3}
-    />
-  );
-}
+<MultiSelect maxSelectedValues={3} />
 `;
 
 function Demo() {
@@ -30,8 +11,9 @@ function Demo() {
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
       <MultiSelect
         data={data}
-        label="Your favorite frameworks/libraries"
-        placeholder="Pick atmost 3 values"
+        label="Pick 3 values or less"
+        placeholder="Pick 3 values or less"
+        searchable
         maxSelectedValues={3}
       />
     </div>
