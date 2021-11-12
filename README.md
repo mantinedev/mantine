@@ -48,6 +48,6 @@ Mantine has a very friendly community, we are always happy to help you get start
 
 [Become a contributor](https://mantine.dev/pages/contributing/)
 
-## Licence
+## License
 
 MIT

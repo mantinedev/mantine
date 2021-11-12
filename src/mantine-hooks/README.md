@@ -54,6 +54,6 @@ npm install @mantine/hooks
 - [use-mouse](https://mantine.dev/hooks/use-mouse/) – track mouse position over document or given element
 - [use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) – get viewport width and height
 
-## Licence
+## License
 
-All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence.
+All Mantine packages have MIT license. All Mantine dependencies also have MIT license.

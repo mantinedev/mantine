@@ -19,6 +19,6 @@ npm install @mantine/notifications @mantine/core @mantine/hooks
 npx install-peerdeps @mantine/notifications
 ```
 
-## Licence
+## License
 
-All Mantine packages have MIT licence. All @mantine/notifications dependencies also have MIT licence, except react-transition-group package which has BSD-3-Clause license.
+All Mantine packages have MIT license. All @mantine/notifications dependencies also have MIT license, except react-transition-group package which has BSD-3-Clause license.
