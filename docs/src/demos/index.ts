@@ -28,3 +28,4 @@ export * from './hooks/use-os';
 export * from './theme';
 
 export * as CreateStylesDemos from './create-styles';
+export * as ModalsDemos from './modals';

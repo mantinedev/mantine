@@ -13,6 +13,8 @@ installation: '@mantine/modals'
 license: MIT
 ---
 
+import { ModalsDemos } from '@docs/demos';
+
 ## Installation
 
 Package depends on @mantine/core and @mantine/hooks.
@@ -29,4 +31,25 @@ Install with yarn:
 yarn add @mantine/modals @mantine/core @mantine/hooks
 ```
 
-## Usage
+## Setup ModalsProvider
+
+Wrap your app with `ModalsProvider` component:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+
+function App() {
+  return (
+    <MantineProvider>
+      <ModalsProvider>
+        <YourApp />
+      </ModalsProvider>
+    </MantineProvider>
+  );
+}
+```
+
+## Confirm modal
+
+<Demo data={ModalsDemos.confirm} />

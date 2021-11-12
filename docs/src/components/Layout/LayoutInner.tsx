@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
+import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
@@ -37,6 +39,8 @@ const query = graphql`
   }
 `;
 
+const authModal = <AuthenticationForm noPadding noShadow />;
+
 export function LayoutInner({ children, location }: LayoutProps) {
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
   const shouldRenderHeader = !shouldExcludeHeader(location.pathname);
@@ -66,9 +70,14 @@ export function LayoutInner({ children, location }: LayoutProps) {
 
       <main className={classes.main}>
         <div className={classes.content}>
-          <NotificationsProvider>
-            <MdxProvider>{children}</MdxProvider>
-          </NotificationsProvider>
+          <ModalsProvider
+            labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
+            modals={{ auth: authModal }}
+          >
+            <NotificationsProvider>
+              <MdxProvider>{children}</MdxProvider>
+            </NotificationsProvider>
+          </ModalsProvider>
         </div>
       </main>
     </div>
