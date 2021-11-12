@@ -9,7 +9,7 @@ import {
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
 import { Header } from './Header/Header';
 import { HEADER_HEIGHT } from './Header/Header.styles';
-import '../../fonts/GreycfifCF/styles.css';
+import '../../fonts/GreycliffCF/styles.css';
 
 interface LayoutProps {
   children: React.ReactNode;
