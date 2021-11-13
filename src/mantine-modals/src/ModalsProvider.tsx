@@ -30,6 +30,28 @@ export interface ModalsProviderProps {
   labels?: ConfirmLabels;
 }
 
+function extractConfirmModalProps(props: OpenConfirmModal) {
+  if (!props) {
+    return { confirmProps: {}, modalProps: {} };
+  }
+
+  const {
+    id,
+    children,
+    onCancel,
+    onConfirm,
+    closeOnConfirm,
+    closeOnCancel,
+    cancelProps,
+    confirmProps,
+    groupProps,
+    labels,
+    ...others
+  } = props;
+
+  return { id, ...others };
+}
+
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
   const [state, handlers] = useListState<ModalState>([]);
   const [currentModal, setCurrentModal] = useState<ModalState>({
@@ -100,7 +122,9 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         opened={state.length > 0}
         onClose={() => closeModal(currentModal?.id)}
         {...modalProps}
-        {...currentModal?.props}
+        {...(currentModal?.type === 'confirm'
+          ? extractConfirmModalProps(currentModal?.props)
+          : currentModal?.props)}
       >
         {content}
       </Modal>

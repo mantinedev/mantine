@@ -9,7 +9,6 @@ export interface ConfirmModalProps {
   onConfirm?(): void;
   closeOnConfirm?: boolean;
   closeOnCancel?: boolean;
-  description?: React.ReactNode;
   cancelProps?: ButtonProps<'button'>;
   confirmProps?: ButtonProps<'button'>;
   groupProps?: GroupProps;
