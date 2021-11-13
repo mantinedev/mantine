@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, clamp } from '@mantine/hooks';
+import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -154,7 +154,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         color={color}
         variant={variant}
         orientation={orientation}
-        buttonRef={useMergedRef((node: HTMLButtonElement) => {
+        buttonRef={mergeRefs((node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
         }, tab.ref)}
         onClick={() => activeTab !== index && handleActiveTabChange(index)}

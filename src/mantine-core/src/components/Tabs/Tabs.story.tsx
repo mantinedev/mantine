@@ -17,6 +17,21 @@ function Controlled() {
   );
 }
 
+function Dynamic() {
+  const [tabs, setTabs] = useState([1, 2, 3, 4]);
+  const increment = () => setTabs((current) => [...current, current[current.length - 1] + 1]);
+  const children = tabs.map((tab) => <Tab key={tab} label={`tab ${tab}`} />);
+
+  return (
+    <div>
+      <Tabs>{children}</Tabs>
+      <button type="button" onClick={increment}>
+        increment
+      </button>
+    </div>
+  );
+}
+
 function NgIcon() {
   return (
     <svg
@@ -103,6 +118,7 @@ storiesOf('@mantine/core/Tabs', module)
       </Tabs>
     </div>
   ))
+  .add('Dynamic children', () => <Dynamic />)
   .add('Controlled', () => <Controlled />)
   .add('Positions', () => (
     <div style={{ padding: 50 }}>
