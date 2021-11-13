@@ -9,7 +9,7 @@ date: 'November 26th, 2021'
 
 import { DatePickerDemos, DateRangePickerDemos } from '@demos/dates';
 import { PasswordInputDemos, MultiSelectDemos } from '@demos/core';
-import { useOsDemo } from '@docs/demos';
+import { useOsDemo, ModalsDemos } from '@docs/demos';
 
 ## Breaking changes
 
@@ -101,6 +101,17 @@ All layout components now support mobile first approach:
 // new way (mobile first), base width defaults to 100%
 <Navbar width={{ sm: 400, lg: 500 }} />
 ```
+
+## New @mantine/modals package
+
+New [@mantine/modals](https://mantine.dev/others/modals/) package is similar to [@mantine/notification](https://mantine.dev/others/notifications/) but for modals.
+It includes modals manager that allows you to:
+
+- create shared modals context storage
+- show confirm modals
+- handle multiple modals layers
+
+<Demo data={ModalsDemos.confirmCustomize} />
 
 ## New components and hooks
 
