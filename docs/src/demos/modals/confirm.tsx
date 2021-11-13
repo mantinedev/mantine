@@ -1,44 +1,44 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
-import { useConfirmModal } from '@mantine/modals';
+import { useModals } from '@mantine/modals';
 import { useNotifications } from '@mantine/notifications';
 
 const code = `
 import { Group, Button, Text } from '@mantine/core';
-import { useConfirmModal } from '@mantine/modals';
+import { useModals } from '@mantine/modals';
 
 function Demo() {
-  const description = (
-    <Text size="sm">
-      This action is so important that you are required to confirm it with a modal. Please click
-      one of these buttons to proceed.
-    </Text>
-  );
+  const modals = useModals();
 
-  const modal = useConfirmModal(
-    {
-      description,
-      onCancel: () => console.log('Canceled'),
-      onConfirm: () => console.log('Confirmed'),
-    },
-    { title: 'Please confirm your action' }
-  );
+  const openConfirmModal = () => modals.openConfirmModal({
+    title: 'Please confirm your action',
+    children: (
+      <Text size="sm">
+        This action is so important that you are required to confirm it with a modal. Please click
+        one of these buttons to proceed.
+      </Text>
+    ),
+    onCancel: () => console.log('Cancel'),
+    onConfirm: () => console.log('Confirmed'),
+  });
 
-  return <Button onClick={() => modal.open()}>Open confirm modal</Button>;
+  return <Button onClick={openConfirmModal}>Open confirm modal</Button>;
 }
 `;
 
 function Demo() {
   const notifications = useNotifications();
-  const modal = useConfirmModal(
-    {
-      description: (
+  const modals = useModals();
+
+  const openConfirmModal = () =>
+    modals.openConfirmModal({
+      title: 'Please confirm your action',
+      children: (
         <Text size="sm">
           This action is so important that you are required to confirm it with a modal. Please click
           one of these buttons to proceed.
         </Text>
       ),
-
       onCancel: () =>
         notifications.showNotification({
           title: 'Canceled',
@@ -51,13 +51,11 @@ function Demo() {
           message: 'Confirm modal was confirmed',
           color: 'teal',
         }),
-    },
-    { title: 'Please confirm your action' }
-  );
+    });
 
   return (
     <Group position="center">
-      <Button onClick={() => modal.open()}>Open confirm modal</Button>
+      <Button onClick={openConfirmModal}>Open confirm modal</Button>
     </Group>
   );
 }

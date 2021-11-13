@@ -39,7 +39,7 @@ const query = graphql`
   }
 `;
 
-const authModal = <AuthenticationForm noPadding noShadow />;
+const authModal = () => <AuthenticationForm noPadding noShadow />;
 
 export function LayoutInner({ children, location }: LayoutProps) {
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
