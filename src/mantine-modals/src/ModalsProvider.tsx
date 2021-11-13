@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Modal } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
-import { ModalsContext, ModalSettings, ConfirmLabels } from './context';
+import { useListState, randomId } from '@mantine/hooks';
+import {
+  ModalsContext,
+  ModalSettings,
+  ConfirmLabels,
+  OpenConfirmModal,
+  ModalState,
+} from './context';
+import { ConfirmModal } from './ConfirmModal';
 
 export interface ModalsProviderProps {
   /** Your app */
@@ -17,51 +24,67 @@ export interface ModalsProviderProps {
   labels?: ConfirmLabels;
 }
 
-interface ModalState {
-  modal: string;
-  props: ModalSettings;
-}
-
-export function ModalsProvider({ children, modals = {}, modalProps, labels }: ModalsProviderProps) {
-  const [opened, handlers] = useListState<ModalState>([]);
-  const [currentModal, setCurrentModal] = useState<ModalState>({ modal: null, props: null });
+export function ModalsProvider({ children, modalProps, labels }: ModalsProviderProps) {
+  const [state, handlers] = useListState<ModalState>([]);
+  const [currentModal, setCurrentModal] = useState<ModalState>({
+    id: null,
+    props: null,
+    type: 'content',
+  });
   const closeAll = () => handlers.setState([]);
 
-  const handleClose = (id: string) => {
-    if (opened.length <= 1) {
+  const openModal = (props: ModalSettings) => {
+    const id = props.id || randomId();
+    handlers.append({ id, props, type: 'content' });
+    setCurrentModal({ id, props, type: 'content' });
+    return id;
+  };
+
+  const openConfirmModal = (props: OpenConfirmModal) => {
+    const id = props.id || randomId();
+    handlers.append({ id, props, type: 'confirm' });
+    setCurrentModal({ id, props, type: 'confirm' });
+    return id;
+  };
+
+  const closeModal = (id: string) => {
+    if (state.length <= 1) {
       closeAll();
     } else {
-      const index = opened.findIndex((item) => item.modal === id);
+      const index = state.findIndex((item) => item.id === id);
       index !== -1 && handlers.remove(index);
-      setCurrentModal(opened[opened.length - 2]);
+      setCurrentModal(state[state.length - 2]);
     }
   };
 
-  const handleOpen = (modal: string, props: ModalSettings) => {
-    handlers.append({ modal, props });
-    setCurrentModal({ modal, props });
-  };
-
-  const content = modals[currentModal?.modal] || null;
+  const content =
+    currentModal?.type === 'confirm' ? (
+      <ConfirmModal
+        {...currentModal.props}
+        id={currentModal.id}
+        labels={currentModal.props.labels || labels}
+      />
+    ) : (
+      currentModal?.props?.children
+    );
 
   return (
     <ModalsContext.Provider
       value={{
-        labels,
-        opened: currentModal?.modal || null,
-        open: handleOpen,
-        close: handleClose,
+        modals: state,
+        openModal,
+        openConfirmModal,
+        closeModal,
         closeAll,
-        modals: Object.keys(modals),
       }}
     >
       <Modal
-        opened={opened.length > 0}
-        onClose={() => handleClose(currentModal?.modal)}
+        opened={state.length > 0}
+        onClose={() => closeModal(currentModal?.id)}
         {...modalProps}
         {...currentModal?.props}
       >
-        {content || currentModal?.props?.children}
+        {content}
       </Modal>
 
       {children}
