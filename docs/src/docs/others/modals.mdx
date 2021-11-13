@@ -53,3 +53,37 @@ function App() {
 ## Confirm modal
 
 <Demo data={ModalsDemos.confirm} />
+
+## Context modals
+
+You can define any amount of modals in ModalsProvider context:
+
+```tsx
+import { ContextModalProps, ModalsProvider } from '@mantine/modals';
+import { Text, Button } from '@mantine/core';
+
+const TestModal = ({ context, id }: ContextModalProps) => (
+  <>
+    <Text size="sm">
+      This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals
+      hook
+    </Text>
+    <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
+      Close modal
+    </Button>
+  </>
+);
+
+function App() {
+  return (
+    <ModalsProvider modals={{ test: TestModal /* ...other modals */ }}>
+      <YourApp />
+    </ModalsProvider>
+  );
+}
+```
+
+And then open one of these modals with `openContextModal` function.
+`openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
+
+<Demo data={ModalsDemos.context} />

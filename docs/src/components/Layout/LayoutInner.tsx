@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
-import { ModalsProvider } from '@mantine/modals';
-import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
+import { ModalsProvider, ContextModalProps } from '@mantine/modals';
+import { Text, Button } from '@mantine/core';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
@@ -39,7 +39,17 @@ const query = graphql`
   }
 `;
 
-const authModal = () => <AuthenticationForm noPadding noShadow />;
+const testModal = ({ context, id }: ContextModalProps) => (
+  <>
+    <Text size="sm">
+      This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals
+      hook
+    </Text>
+    <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
+      Close modal
+    </Button>
+  </>
+);
 
 export function LayoutInner({ children, location }: LayoutProps) {
   const navbarCollapsed = useMediaQuery(`(max-width: ${NAVBAR_BREAKPOINT}px)`);
@@ -72,7 +82,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
         <div className={classes.content}>
           <ModalsProvider
             labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
-            modals={{ auth: authModal }}
+            modals={{ test: testModal }}
           >
             <NotificationsProvider>
               <MdxProvider>{children}</MdxProvider>
