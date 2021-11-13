@@ -52,7 +52,28 @@ function App() {
 
 ## Confirm modal
 
+@mantine/modals package includes special modal that can be used for confirmations.
+Component includes confirm and cancel buttons and supports children to display additional
+information about action. Use `openConfirmModal` function to open a confirm modal:
+
 <Demo data={ModalsDemos.confirm} />
+
+`openConfirmModal` function accepts one argument with following properties:
+
+- `id` – modal id, defaults to random id, can be used to close modal programmatically
+- `children` – additional modal content displayed before actions
+- `onCancel` – called when cancel button is clicked
+- `onConfirm` – called when confirm button is clicked
+- `closeOnConfirm` – should modal be closed when confirm button is clicked, defaults to `true`
+- `closeOnCancel` – should modal be closed when cancel button is clicked, defaults to `true`
+- `cancelProps` – cancel button props
+- `confirmProps` – confirm button props
+- `groupProps` – buttons [Group](/core/group/) props
+- `labels` – cancel and confirm buttons labels, can be defined on ModalsProvider
+
+Using this properties you can customize confirm modal to match current context requirements:
+
+<Demo data={ModalsDemos.confirmCustomize} />
 
 ## Context modals
 

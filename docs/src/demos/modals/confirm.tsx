@@ -4,7 +4,7 @@ import { useModals } from '@mantine/modals';
 import { useNotifications } from '@mantine/notifications';
 
 const code = `
-import { Group, Button, Text } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 
 function Demo() {
