@@ -39,7 +39,7 @@ const query = graphql`
   }
 `;
 
-const testModal = ({ context, id }: ContextModalProps) => (
+const demonstrationModal = ({ context, id }: ContextModalProps) => (
   <>
     <Text size="sm">
       This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals
@@ -82,7 +82,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
         <div className={classes.content}>
           <ModalsProvider
             labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
-            modals={{ test: testModal }}
+            modals={{ demonstration: demonstrationModal }}
           >
             <NotificationsProvider>
               <MdxProvider>{children}</MdxProvider>

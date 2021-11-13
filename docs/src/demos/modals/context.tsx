@@ -9,9 +9,9 @@ import { useModals } from '@mantine/modals';
 function Demo() {
   const modals = useModals();
   const openContextModal = () =>
-    modals.openContextModal('test', { title: 'Test modal from context' });
+    modals.openContextModal('demonstration', { title: 'Test modal from context' });
 
-  return <Button onClick={openContextModal}>Open test context modal</Button>;
+  return <Button onClick={openContextModal}>Open demonstration context modal</Button>;
 }
 `;
 
@@ -19,11 +19,11 @@ function Demo() {
   const modals = useModals();
 
   const openContextModal = () =>
-    modals.openContextModal('test', { title: 'Test modal from context' });
+    modals.openContextModal('demonstration', { title: 'Test modal from context' });
 
   return (
     <Group position="center">
-      <Button onClick={openContextModal}>Open test context modal</Button>
+      <Button onClick={openContextModal}>Open demonstration context modal</Button>
     </Group>
   );
 }
