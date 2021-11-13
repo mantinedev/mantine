@@ -108,3 +108,10 @@ And then open one of these modals with `openContextModal` function.
 `openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
 
 <Demo data={ModalsDemos.context} />
+
+## Multiple opened modals
+
+You can open multiple layers of modals. Every opened modal is added as first element in modals queue.
+To close all opened modals call `modals.closeAll()` function:
+
+<Demo data={ModalsDemos.multipleSteps} />
