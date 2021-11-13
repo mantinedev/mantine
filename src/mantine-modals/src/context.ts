@@ -8,28 +8,25 @@ export type ConfirmLabels = Record<'confirm' | 'cancel', string>;
 
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
 
-export interface ModalsContextType {
-  modals: any[];
+export type ModalState =
+  | { id: string; props: ModalSettings; type: 'content' }
+  | { id: string; props: OpenConfirmModal; type: 'confirm' }
+  | { id: string; props: OpenConfirmModal; type: 'context'; ctx: string };
+
+export interface ModalsContext {
+  modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
+  openContextModal: (modal: string, props: ModalSettings) => string;
   closeModal: (id: string) => void;
   closeAll: () => void;
 }
 
-// export interface ModalState {
-//   id: string;
-//   props: ModalSettings;
-//   type: 'content' | 'confirm';
-// }
-
-export type ModalState =
-  | { id: string; props: ModalSettings; type: 'content' }
-  | { id: string; props: OpenConfirmModal; type: 'confirm' };
-
-export const ModalsContext = createContext<ModalsContextType>({
+export const modalsContext = createContext<ModalsContext>({
   modals: [],
   openModal: () => null,
   openConfirmModal: () => null,
+  openContextModal: () => null,
   closeAll: () => {},
   closeModal: () => {},
 });

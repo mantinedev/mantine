@@ -2,10 +2,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Text, Group } from '@mantine/core';
-import { ModalsProvider, useModals } from './index';
+import { ModalsProvider, useModals, ContextModalProps } from './index';
 
 function Demo() {
   const modals = useModals();
+
+  const showContextModal = () => modals.openContextModal('hello', { title: 'Context modal' });
+
   const showContentModal = () =>
     modals.openModal({
       title: 'Hello there',
@@ -37,7 +40,7 @@ function Demo() {
 
   return (
     <Group sx={{ padding: 40 }}>
-      {/* <Button onClick={() => providerModal.open()}>Open provider modal</Button> */}
+      <Button onClick={showContextModal}>Open context modal</Button>
       <Button onClick={showConfirmModal} color="red">
         Open confirm modal
       </Button>
@@ -50,7 +53,14 @@ function Demo() {
 
 storiesOf('@mantine/modals', module).add('Custom modal', () => (
   <ModalsProvider
-    modals={{ hello: <div>Hello</div> }}
+    modals={{
+      hello: ({ context, id }: ContextModalProps) => (
+        <div>
+          <div>Test custom modal</div>
+          <Button onClick={() => context.closeModal(id)}>Close</Button>
+        </div>
+      ),
+    }}
     labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
   >
     <Demo />

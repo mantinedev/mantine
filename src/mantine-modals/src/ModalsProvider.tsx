@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '@mantine/core';
 import { useListState, randomId } from '@mantine/hooks';
 import {
+  modalsContext,
   ModalsContext,
   ModalSettings,
   ConfirmLabels,
@@ -10,12 +11,17 @@ import {
 } from './context';
 import { ConfirmModal } from './ConfirmModal';
 
+export interface ContextModalProps {
+  context: ModalsContext;
+  id: string;
+}
+
 export interface ModalsProviderProps {
   /** Your app */
   children: React.ReactNode;
 
   /** Predefined modals */
-  modals?: Record<string, React.ReactNode>;
+  modals?: Record<string, React.FC<ContextModalProps>>;
 
   /** Shared Modal component props, applied for every modal */
   modalProps?: ModalSettings;
@@ -24,7 +30,7 @@ export interface ModalsProviderProps {
   labels?: ConfirmLabels;
 }
 
-export function ModalsProvider({ children, modalProps, labels }: ModalsProviderProps) {
+export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
   const [state, handlers] = useListState<ModalState>([]);
   const [currentModal, setCurrentModal] = useState<ModalState>({
     id: null,
@@ -47,6 +53,13 @@ export function ModalsProvider({ children, modalProps, labels }: ModalsProviderP
     return id;
   };
 
+  const openContextModal = (modal: string, props: OpenConfirmModal) => {
+    const id = props.id || randomId();
+    handlers.append({ id, props, type: 'context', ctx: modal });
+    setCurrentModal({ id, props, type: 'context', ctx: modal });
+    return id;
+  };
+
   const closeModal = (id: string) => {
     if (state.length <= 1) {
       closeAll();
@@ -57,8 +70,21 @@ export function ModalsProvider({ children, modalProps, labels }: ModalsProviderP
     }
   };
 
+  const ContextModal = currentModal?.type === 'context' ? modals[currentModal?.ctx] : () => null;
+
+  const ctx = {
+    modals: state,
+    openModal,
+    openConfirmModal,
+    openContextModal,
+    closeModal,
+    closeAll,
+  };
+
   const content =
-    currentModal?.type === 'confirm' ? (
+    currentModal?.type === 'context' ? (
+      <ContextModal context={ctx} id={currentModal?.id} />
+    ) : currentModal?.type === 'confirm' ? (
       <ConfirmModal
         {...currentModal.props}
         id={currentModal.id}
@@ -69,15 +95,7 @@ export function ModalsProvider({ children, modalProps, labels }: ModalsProviderP
     );
 
   return (
-    <ModalsContext.Provider
-      value={{
-        modals: state,
-        openModal,
-        openConfirmModal,
-        closeModal,
-        closeAll,
-      }}
-    >
+    <modalsContext.Provider value={ctx}>
       <Modal
         opened={state.length > 0}
         onClose={() => closeModal(currentModal?.id)}
@@ -88,6 +106,6 @@ export function ModalsProvider({ children, modalProps, labels }: ModalsProviderP
       </Modal>
 
       {children}
-    </ModalsContext.Provider>
+    </modalsContext.Provider>
   );
 }
