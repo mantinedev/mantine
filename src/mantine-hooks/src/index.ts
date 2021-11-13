@@ -17,7 +17,7 @@ export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effe
 export { useListState } from './use-list-state/use-list-state';
 export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
 export { useMediaQuery } from './use-media-query/use-media-query';
-export { useMergedRef } from './use-merged-ref/use-merged-ref';
+export { useMergedRef, mergeRefs } from './use-merged-ref/use-merged-ref';
 export { useMouse } from './use-mouse/use-mouse';
 export { useMove, clampUseMovePosition } from './use-move/use-move';
 export { usePagination } from './use-pagination/use-pagination';

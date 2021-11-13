@@ -8,3 +8,9 @@ export function useMergedRef<T = any>(...refs: Ref<T>[]) {
     refs.forEach((ref) => assignRef(ref, node));
   }, refs);
 }
+
+export function mergeRefs<T = any>(...refs: Ref<T>[]) {
+  return (node: T | null) => {
+    refs.forEach((ref) => assignRef(ref, node));
+  };
+}
