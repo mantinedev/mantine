@@ -87,6 +87,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const theme = useMantineTheme();
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
+    const [calendarMonth, setCalendarMonth] = useState(initialMonth || new Date());
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
 
@@ -116,7 +117,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const handleValueChange = (date: Date) => {
       setValue(date);
-      setInputState(dayjs(date).locale(locale).format(dateFormat));
+      setInputState(upperFirst(dayjs(date).locale(locale).format(dateFormat)));
       closeCalendarOnChange && setDropdownOpened(false);
     };
 
@@ -137,7 +138,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       if (dayjs(date).isValid()) {
         setValue(date);
         setLastValidValue(date);
-        setInputState(dayjs(date).locale(locale).format(dateFormat));
+        setInputState(upperFirst(dayjs(date).locale(locale).format(dateFormat)));
       } else if (fixOnBlur) {
         setValue(lastValidValue);
       }
@@ -149,11 +150,14 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDropdownOpened(true);
+
       const date = parseDate(event.target.value);
       if (dayjs(date).isValid()) {
         setValue(date);
         setLastValidValue(date);
         setInputState(event.target.value);
+        setCalendarMonth(date);
       } else {
         setInputState(event.target.value);
       }
@@ -189,14 +193,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           locale={locale}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
-          month={
-            allowFreeInput
-              ? _value instanceof Date
-                ? _value
-                : initialMonth || new Date()
-              : undefined
-          }
+          month={allowFreeInput ? calendarMonth : undefined}
           initialMonth={initialMonth || (_value instanceof Date ? _value : new Date())}
+          onMonthChange={setCalendarMonth}
           value={_value instanceof Date ? _value : dayjs(_value).toDate()}
           onChange={handleValueChange}
           labelFormat={labelFormat}

@@ -161,6 +161,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
                     }
                     monthLabel={monthLabel}
                     yearLabel={yearLabel}
+                    preventFocus={preventFocus}
                   />
 
                   <Month
