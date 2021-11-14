@@ -34,4 +34,9 @@ export const PACKAGES_DATA = [
     description: 'Capture files with drag and drop',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dropzone'],
   },
+  {
+    package: '@mantine/modals',
+    description: 'Centralized modals manager',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/modals'],
+  },
 ];
