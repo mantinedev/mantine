@@ -1,6 +1,7 @@
 import React from 'react';
 import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { UnstyledButton } from '../../Button';
+import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
 
 export type StepStylesNames = ClassNames<typeof useStyles>;
@@ -42,16 +43,26 @@ export function Step({
   progressIcon,
   children,
   withIcon = true,
-  iconSize = 32,
+  iconSize = 42,
   ...others
 }: StepProps) {
   const { classes, cx } = useStyles({ color, iconSize }, { name: 'Steps' });
-  const _icon =
-    state === 'stepCompleted' ? completedIcon : state === 'stepProgress' ? progressIcon : icon;
+  const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
 
   return (
     <UnstyledButton className={cx(classes.step, classes[state], className)} {...others}>
-      {withIcon && <div className={classes.stepIcon}>{_icon || icon}</div>}
+      {withIcon && (
+        <div className={classes.stepIcon}>
+          <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
+            {(transitionStyles) => (
+              <div className={classes.stepCompletedIcon} style={transitionStyles}>
+                {completedIcon}
+              </div>
+            )}
+          </Transition>
+          {state !== 'stepCompleted' ? _icon || icon : null}
+        </div>
+      )}
       {children && <div className={classes.stepLabel}>{children}</div>}
     </UnstyledButton>
   );

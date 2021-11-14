@@ -1,4 +1,5 @@
 import React, { Children } from 'react';
+import { CheckboxIcon } from '../Checkbox';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { Step } from './Step/Step';
 import useStyles from './Stepper.styles';
@@ -24,7 +25,7 @@ export function Stepper({
   children,
   onStepClick,
   active,
-  completedIcon,
+  completedIcon = <CheckboxIcon indeterminate={false} width={20} height={20} />,
   progressIcon,
 }: StepperProps) {
   const { classes } = useStyles();
