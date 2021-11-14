@@ -313,6 +313,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       );
     }, [searchValue]);
 
+    useDidUpdate(() => {
+      //using greater than equal to take into account creatable type.
+      if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+    }, [_value]);
+
     const handleItemSelect = (item: SelectItem) => {
       setTimeout(() => {
         clearSearchOnChange && handleSearchChange('');
@@ -439,7 +444,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={() => handleValueRemove(item.value)}
+          onRemove={(e) => {
+            if (dropdownOpened) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+            handleValueRemove(item.value);
+          }}
           key={item.value}
           size={size}
           styles={styles}
@@ -518,7 +529,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               rightSectionWidth,
               styles,
               size,
-              shouldClear: clearable && _value.length > 0,
+              shouldClear: !disabled && clearable && _value.length > 0,
               clearButtonLabel,
               onClear: handleClear,
               error,
