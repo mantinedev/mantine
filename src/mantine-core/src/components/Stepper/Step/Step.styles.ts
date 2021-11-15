@@ -19,6 +19,7 @@ export default createStyles(
   (theme, { color, iconSize, size, allowStepClick }: StepStyles, getRef) => {
     const stepIcon = getRef('stepIcon');
     const stepCompletedIcon = getRef('stepCompletedIcon');
+    const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
 
     return {
       step: {
@@ -30,9 +31,10 @@ export default createStyles(
       stepIcon: {
         boxSizing: 'border-box',
         ref: stepIcon,
-        height: iconSize || theme.fn.size({ size, sizes: iconSizes }),
-        width: iconSize || theme.fn.size({ size, sizes: iconSizes }),
-        borderRadius: iconSize || theme.fn.size({ size, sizes: iconSizes }),
+        height: _iconSize,
+        width: _iconSize,
+        minWidth: _iconSize,
+        borderRadius: _iconSize,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
