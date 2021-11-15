@@ -28,6 +28,8 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
       border: `2px solid ${theme.colors.gray[1]}`,
       transition: 'background-color 150ms ease, border-color 150ms ease',
       position: 'relative',
+      fontWeight: 700,
+      color: theme.colors.gray[7],
     },
 
     stepCompletedIcon: {
@@ -57,8 +59,14 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
       },
     },
 
-    stepLabel: {
+    stepBody: {
       marginLeft: theme.spacing.sm,
     },
+
+    stepLabel: {
+      fontWeight: 500,
+    },
+
+    stepDescription: {},
   };
 });

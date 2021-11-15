@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { Text } from '../../Text';
 import { UnstyledButton } from '../../Button';
 import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
@@ -28,7 +29,10 @@ export interface StepProps
   progressIcon?: React.ReactNode;
 
   /** Step label, render after icon */
-  children?: React.ReactNode;
+  label?: React.ReactNode;
+
+  /** Step description */
+  description?: React.ReactNode;
 
   /** Icon wrapper size in px */
   iconSize?: number;
@@ -41,7 +45,8 @@ export function Step({
   icon,
   completedIcon,
   progressIcon,
-  children,
+  label,
+  description,
   withIcon = true,
   iconSize = 42,
   ...others
@@ -63,7 +68,14 @@ export function Step({
           {state !== 'stepCompleted' ? _icon || icon : null}
         </div>
       )}
-      {children && <div className={classes.stepLabel}>{children}</div>}
+      <div className={classes.stepBody}>
+        {label && <div className={classes.stepLabel}>{label}</div>}
+        {description && (
+          <Text className={classes.stepDescription} color="dimmed" size="sm">
+            {description}
+          </Text>
+        )}
+      </div>
     </UnstyledButton>
   );
 }
