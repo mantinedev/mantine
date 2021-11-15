@@ -1,6 +1,7 @@
 import React from 'react';
 import { DefaultProps, MantineColor, ClassNames, MantineSize } from '@mantine/styles';
 import { Text } from '../../Text';
+import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
 import { UnstyledButton } from '../../Button';
 import { Transition } from '../../Transition';
@@ -40,6 +41,9 @@ export interface StepProps
 
   /** Component size */
   size?: MantineSize;
+
+  /** Indicates loading state on step */
+  loading?: boolean;
 }
 
 const defaultIconSizes = {
@@ -62,6 +66,7 @@ export function Step({
   withIcon = true,
   iconSize,
   size = 'md',
+  loading,
   ...others
 }: StepProps) {
   const { classes, cx, theme } = useStyles({ color, iconSize, size }, { name: 'Steps' });
@@ -75,15 +80,20 @@ export function Step({
           <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
             {(transitionStyles) => (
               <div className={classes.stepCompletedIcon} style={transitionStyles}>
-                {completedIcon || (
-                  <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
+                {loading ? (
+                  <Loader color="#fff" size={_iconSize} />
+                ) : (
+                  completedIcon || (
+                    <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
+                  )
                 )}
               </div>
             )}
           </Transition>
-          {state !== 'stepCompleted' ? _icon || icon : null}
+          {state !== 'stepCompleted' ? loading ? <Loader size={_iconSize} /> : _icon || icon : null}
         </div>
       )}
+
       <div className={classes.stepBody}>
         {label && <Text className={classes.stepLabel}>{label}</Text>}
         {description && (
