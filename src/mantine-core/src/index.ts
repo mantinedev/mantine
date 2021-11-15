@@ -63,6 +63,7 @@ export * from './components/Skeleton';
 export * from './components/Slider';
 export * from './components/Space';
 export * from './components/Spoiler';
+export * from './components/Stepper';
 export * from './components/Switch';
 export * from './components/Table';
 export * from './components/Tabs';

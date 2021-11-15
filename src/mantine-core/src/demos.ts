@@ -60,6 +60,7 @@ export * as SkeletonDemos from './components/Skeleton/demos';
 export * as SliderDemos from './components/Slider/demos';
 export * as SpaceDemos from './components/Space/demos';
 export * as SpoilerDemos from './components/Spoiler/demos';
+export * as StepperDemos from './components/Stepper/demos';
 export * as SwitchDemos from './components/Switch/demos';
 export * as TableDemos from './components/Table/demos';
 export * as TabsDemos from './components/Tabs/demos';
