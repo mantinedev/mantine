@@ -31,7 +31,7 @@ function Demo() {
 }
 
 function EventsDemo() {
-  const idle = useIdle(2000, ['click', 'touchstart']);
+  const idle = useIdle(2000, { events: ['click', 'touchstart'] });
 
   return (
     <Group position="center">
