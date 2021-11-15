@@ -6,7 +6,6 @@ import {
   MantineSize,
   useExtractedMargins,
 } from '@mantine/styles';
-import { Breadcrumbs } from '../Breadcrumbs';
 import { Step } from './Step/Step';
 import useStyles from './Stepper.styles';
 
@@ -54,37 +53,46 @@ export function Stepper({
   ...others
 }: StepperProps) {
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const { classes, cx } = useStyles({ contentPadding }, { name: 'Stepper' });
+  const { classes, cx } = useStyles({ contentPadding, color }, { name: 'Stepper' });
   const filteredChildren = Children.toArray(children).filter(
     (item: React.ReactElement) => item.type === Step
   ) as React.ReactElement[];
 
-  const items = filteredChildren.map((item, index) => (
-    <Step
-      {...item.props}
-      icon={item.props.icon || index + 1}
-      key={index}
-      state={active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'}
-      onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
-      completedIcon={item.props.completedIcon || completedIcon}
-      progressIcon={item.props.progressIcon || progressIcon}
-      color={item.props.color || color}
-      iconSize={iconSize}
-      size={size}
-    />
-  ));
+  const items = filteredChildren.reduce((acc, item, index, array) => {
+    acc.push(
+      <Step
+        {...item.props}
+        icon={item.props.icon || index + 1}
+        key={index}
+        state={
+          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
+        }
+        onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
+        completedIcon={item.props.completedIcon || completedIcon}
+        progressIcon={item.props.progressIcon || progressIcon}
+        color={item.props.color || color}
+        iconSize={iconSize}
+        size={size}
+      />
+    );
+
+    if (index !== array.length - 1) {
+      acc.push(
+        <div
+          className={cx(classes.separator, { [classes.separatorActive]: index < active })}
+          key={`separator-${index}`}
+        />
+      );
+    }
+
+    return acc;
+  }, [] as React.ReactNode[]);
 
   const content = filteredChildren[active]?.props?.children;
 
   return (
     <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <Breadcrumbs
-        className={classes.steps}
-        classNames={{ separator: classes.separator }}
-        separator={<div />}
-      >
-        {items}
-      </Breadcrumbs>
+      <div className={classes.steps}>{items}</div>
       {content && <div className={classes.content}>{content}</div>}
     </div>
   );
