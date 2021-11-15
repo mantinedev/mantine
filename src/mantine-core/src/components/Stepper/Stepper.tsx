@@ -1,4 +1,5 @@
 import React, { Children } from 'react';
+import { MantineColor } from '@mantine/styles';
 import { CheckboxIcon } from '../Checkbox';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { Step } from './Step/Step';
@@ -19,6 +20,9 @@ export interface StepperProps {
 
   /** Step icon displayed when step is in progress */
   progressIcon?: React.ReactNode;
+
+  /** Active and progress Step colors from theme.colors */
+  color?: MantineColor;
 }
 
 export function Stepper({
@@ -27,6 +31,7 @@ export function Stepper({
   active,
   completedIcon = <CheckboxIcon indeterminate={false} width={20} height={20} />,
   progressIcon,
+  color,
 }: StepperProps) {
   const { classes } = useStyles();
 
@@ -43,6 +48,7 @@ export function Stepper({
         onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
         completedIcon={item.props.completedIcon || completedIcon}
         progressIcon={item.props.progressIcon || progressIcon}
+        color={item.props.color || color}
       />
     ));
 

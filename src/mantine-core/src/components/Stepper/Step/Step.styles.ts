@@ -67,6 +67,8 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
       fontWeight: 500,
     },
 
-    stepDescription: {},
+    stepDescription: {
+      marginTop: 2,
+    },
   };
 });

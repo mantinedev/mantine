@@ -11,13 +11,13 @@ function Wrapper(props: Partial<StepperProps>) {
     <>
       <Stepper active={active} onStepClick={setActive} {...props}>
         <Stepper.Step label="First" description="First description">
-          First
+          First step content here
         </Stepper.Step>
         <Stepper.Step label="Second" description="Second description">
-          Second
+          Second step content here
         </Stepper.Step>
         <Stepper.Step label="Last" description="Last description">
-          Last
+          Last step content here
         </Stepper.Step>
       </Stepper>
 
@@ -34,6 +34,6 @@ function Wrapper(props: Partial<StepperProps>) {
 
 storiesOf('@mantine/core/Stepper', module).add('General usage', () => (
   <div style={{ padding: 40 }}>
-    <Wrapper />
+    <Wrapper color="teal" />
   </div>
 ));
