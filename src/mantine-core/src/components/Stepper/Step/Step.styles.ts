@@ -1,11 +1,20 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, MantineSize } from '@mantine/styles';
 
 interface StepStyles {
   color: MantineColor;
   iconSize: number;
+  size: MantineSize;
 }
 
-export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => {
+const iconSizes = {
+  xs: 34,
+  sm: 36,
+  md: 42,
+  lg: 48,
+  xl: 52,
+};
+
+export default createStyles((theme, { color, iconSize, size }: StepStyles, getRef) => {
   const stepIcon = getRef('stepIcon');
   const stepCompletedIcon = getRef('stepCompletedIcon');
 
@@ -18,9 +27,9 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
     stepIcon: {
       boxSizing: 'border-box',
       ref: stepIcon,
-      height: iconSize,
-      width: iconSize,
-      borderRadius: iconSize,
+      height: iconSize || theme.fn.size({ size, sizes: iconSizes }),
+      width: iconSize || theme.fn.size({ size, sizes: iconSizes }),
+      borderRadius: iconSize || theme.fn.size({ size, sizes: iconSizes }),
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -30,6 +39,7 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
       position: 'relative',
       fontWeight: 700,
       color: theme.colors.gray[7],
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     },
 
     stepCompletedIcon: {
@@ -60,15 +70,18 @@ export default createStyles((theme, { color, iconSize }: StepStyles, getRef) => 
     },
 
     stepBody: {
-      marginLeft: theme.spacing.sm,
+      marginLeft: size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm,
     },
 
     stepLabel: {
       fontWeight: 500,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     },
 
     stepDescription: {
-      marginTop: 2,
+      marginTop: theme.fn.size({ size, sizes: theme.spacing }) / 3,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
+      lineHeight: 1,
     },
   };
 });

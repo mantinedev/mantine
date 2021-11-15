@@ -1,11 +1,16 @@
 import React, { Children } from 'react';
-import { MantineColor, DefaultProps, MantineNumberSize } from '@mantine/styles';
-import { CheckboxIcon } from '../Checkbox';
+import {
+  MantineColor,
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  useExtractedMargins,
+} from '@mantine/styles';
 import { Breadcrumbs } from '../Breadcrumbs';
 import { Step } from './Step/Step';
 import useStyles from './Stepper.styles';
 
-export interface StepperProps extends DefaultProps {
+export interface StepperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -29,6 +34,9 @@ export interface StepperProps extends DefaultProps {
 
   /** Content padding-top from theme.spacing or number to set value in px */
   contentPadding?: MantineNumberSize;
+
+  /** Component size */
+  size?: MantineSize;
 }
 
 export function Stepper({
@@ -36,12 +44,16 @@ export function Stepper({
   children,
   onStepClick,
   active,
-  completedIcon = <CheckboxIcon indeterminate={false} width={20} height={20} />,
+  completedIcon,
   progressIcon,
   color,
   iconSize,
+  style,
   contentPadding = 'md',
+  size = 'md',
+  ...others
 }: StepperProps) {
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const { classes, cx } = useStyles({ contentPadding }, { name: 'Stepper' });
   const filteredChildren = Children.toArray(children).filter(
     (item: React.ReactElement) => item.type === Step
@@ -58,13 +70,14 @@ export function Stepper({
       progressIcon={item.props.progressIcon || progressIcon}
       color={item.props.color || color}
       iconSize={iconSize}
+      size={size}
     />
   ));
 
   const content = filteredChildren[active]?.props?.children;
 
   return (
-    <div className={cx(classes.root, className)}>
+    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
       <Breadcrumbs
         className={classes.steps}
         classNames={{ separator: classes.separator }}

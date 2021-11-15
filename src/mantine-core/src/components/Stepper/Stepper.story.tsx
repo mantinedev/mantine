@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stepper, StepperProps } from './Stepper';
@@ -32,8 +33,14 @@ function Wrapper(props: Partial<StepperProps>) {
   );
 }
 
-storiesOf('@mantine/core/Stepper', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
-    <Wrapper color="teal" />
-  </div>
+const sizes = MANTINE_SIZES.map((size, index) => (
+  <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} />
 ));
+
+storiesOf('@mantine/core/Stepper', module)
+  .add('General usage', () => (
+    <div style={{ padding: 40 }}>
+      <Wrapper color="teal" />
+    </div>
+  ))
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);

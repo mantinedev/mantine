@@ -1,6 +1,7 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineSize } from '@mantine/styles';
 import { Text } from '../../Text';
+import { CheckboxIcon } from '../../Checkbox';
 import { UnstyledButton } from '../../Button';
 import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
@@ -36,7 +37,18 @@ export interface StepProps
 
   /** Icon wrapper size in px */
   iconSize?: number;
+
+  /** Component size */
+  size?: MantineSize;
 }
+
+const defaultIconSizes = {
+  xs: 16,
+  sm: 18,
+  md: 20,
+  lg: 22,
+  xl: 24,
+};
 
 export function Step({
   className,
@@ -48,10 +60,12 @@ export function Step({
   label,
   description,
   withIcon = true,
-  iconSize = 42,
+  iconSize,
+  size = 'md',
   ...others
 }: StepProps) {
-  const { classes, cx } = useStyles({ color, iconSize }, { name: 'Steps' });
+  const { classes, cx, theme } = useStyles({ color, iconSize, size }, { name: 'Steps' });
+  const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
   const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
 
   return (
@@ -61,7 +75,9 @@ export function Step({
           <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
             {(transitionStyles) => (
               <div className={classes.stepCompletedIcon} style={transitionStyles}>
-                {completedIcon}
+                {completedIcon || (
+                  <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
+                )}
               </div>
             )}
           </Transition>
@@ -71,7 +87,7 @@ export function Step({
       <div className={classes.stepBody}>
         {label && <div className={classes.stepLabel}>{label}</div>}
         {description && (
-          <Text className={classes.stepDescription} color="dimmed" size="sm">
+          <Text className={classes.stepDescription} color="dimmed">
             {description}
           </Text>
         )}
