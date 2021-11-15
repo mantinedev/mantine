@@ -33,12 +33,14 @@ export default createStyles((theme, { color, iconSize, size }: StepStyles, getRe
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.colors.gray[1],
-      border: `2px solid ${theme.colors.gray[1]}`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      border: `2px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+      }`,
       transition: 'background-color 150ms ease, border-color 150ms ease',
       position: 'relative',
       fontWeight: 700,
-      color: theme.colors.gray[7],
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     },
 
@@ -57,14 +59,14 @@ export default createStyles((theme, { color, iconSize, size }: StepStyles, getRe
 
     stepProgress: {
       [`& .${stepIcon}`]: {
-        borderColor: theme.fn.themeColor(color, 6),
+        borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
       },
     },
 
     stepCompleted: {
       [`& .${stepIcon}`]: {
-        backgroundColor: theme.fn.themeColor(color, 6),
-        borderColor: theme.fn.themeColor(color, 6),
+        backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
+        borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
         color: theme.white,
       },
     },
@@ -76,6 +78,7 @@ export default createStyles((theme, { color, iconSize, size }: StepStyles, getRe
     stepLabel: {
       fontWeight: 500,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      lineHeight: 1,
     },
 
     stepDescription: {

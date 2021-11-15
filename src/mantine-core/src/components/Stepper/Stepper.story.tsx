@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
+import { DarkStory } from '../../../demos/DarkStory/DarkStory';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stepper, StepperProps } from './Stepper';
@@ -43,4 +44,11 @@ storiesOf('@mantine/core/Stepper', module)
       <Wrapper color="teal" />
     </div>
   ))
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('Dark theme', () => (
+    <DarkStory>
+      <div style={{ padding: 40 }}>
+        <Wrapper color="teal" />
+      </div>
+    </DarkStory>
+  ));

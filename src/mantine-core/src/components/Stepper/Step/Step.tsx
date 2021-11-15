@@ -85,7 +85,7 @@ export function Step({
         </div>
       )}
       <div className={classes.stepBody}>
-        {label && <div className={classes.stepLabel}>{label}</div>}
+        {label && <Text className={classes.stepLabel}>{label}</Text>}
         {description && (
           <Text className={classes.stepDescription} color="dimmed">
             {description}

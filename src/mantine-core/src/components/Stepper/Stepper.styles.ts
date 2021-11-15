@@ -14,7 +14,7 @@ export default createStyles((theme, { contentPadding }: StepperStyles) => ({
   separator: {
     flex: 1,
     height: 2,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
     marginLeft: theme.spacing.md,
     marginRight: theme.spacing.md,
   },
