@@ -5,11 +5,16 @@ import {
   MantineNumberSize,
   MantineSize,
   useExtractedMargins,
+  ClassNames,
 } from '@mantine/styles';
-import { Step } from './Step/Step';
+import { Step, StepStylesNames } from './Step/Step';
 import useStyles from './Stepper.styles';
 
-export interface StepperProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type StepperStylesNames = ClassNames<typeof useStyles> | StepStylesNames;
+
+export interface StepperProps
+  extends DefaultProps<StepperStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -57,12 +62,17 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       style,
       contentPadding = 'md',
       size = 'md',
+      classNames,
+      styles,
       ...others
     }: StepperProps,
     ref
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const { classes, cx } = useStyles({ contentPadding, color }, { name: 'Stepper' });
+    const { classes, cx } = useStyles(
+      { contentPadding, color },
+      { classNames, styles, name: 'Stepper' }
+    );
     const filteredChildren = Children.toArray(children).filter(
       (item: React.ReactElement) => item.type === Step
     ) as React.ReactElement[];
@@ -84,6 +94,8 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           color={item.props.color || color}
           iconSize={iconSize}
           size={size}
+          classNames={classNames}
+          styles={styles}
         />
       );
 

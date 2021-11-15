@@ -77,13 +77,15 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       loading,
       allowStepClick = true,
       __staticSelector = 'Step',
+      classNames,
+      styles,
       ...others
     }: StepProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
       { color, iconSize, size, allowStepClick },
-      { name: __staticSelector }
+      { name: __staticSelector, classNames, styles }
     );
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
