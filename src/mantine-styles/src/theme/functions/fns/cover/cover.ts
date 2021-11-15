@@ -1,11 +1,11 @@
 import type { CSSObject } from '../../../../tss';
 
-export function cover(): CSSObject {
+export function cover(offset: number | string = 0): CSSObject {
   return {
     position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    top: offset,
+    right: offset,
+    left: offset,
+    bottom: offset,
   };
 }

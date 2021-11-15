@@ -148,3 +148,15 @@ theme.fn.radialGradient(24, '#000', '#fff'); // -> radial-gradient(circle, #000 
 theme.fn.radialGradient(133, 'blue', 'red', 'orange', 'cyan', 'white');
 // -> radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)
 ```
+
+## cover
+
+`cover` function returns styles to fully cover parent element:
+
+```tsx
+theme.fn.cover();
+// -> { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 }
+
+theme.fn.cover(10);
+// -> { position: 'absolute', top: 10, right: 10, bottom: 10, left: 10 }
+```
