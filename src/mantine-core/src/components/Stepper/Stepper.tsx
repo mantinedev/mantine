@@ -71,6 +71,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       acc.push(
         <Step
           {...item.props}
+          __staticSelector="Stepper"
           icon={item.props.icon || index + 1}
           key={index}
           state={

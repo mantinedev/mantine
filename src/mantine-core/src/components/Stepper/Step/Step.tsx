@@ -47,6 +47,9 @@ export interface StepProps
 
   /** Set to false to disable clicks on step */
   allowStepClick?: boolean;
+
+  /** Static selector base */
+  __staticSelector?: string;
 }
 
 const defaultIconSizes = {
@@ -73,13 +76,14 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       size = 'md',
       loading,
       allowStepClick = true,
+      __staticSelector = 'Step',
       ...others
     }: StepProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
       { color, iconSize, size, allowStepClick },
-      { name: 'Steps' }
+      { name: __staticSelector }
     );
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
@@ -107,6 +111,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
                 </div>
               )}
             </Transition>
+
             {state !== 'stepCompleted' ? (
               loading ? (
                 <Loader size={_iconSize} />
@@ -117,14 +122,16 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
           </div>
         )}
 
-        <div className={classes.stepBody}>
-          {label && <Text className={classes.stepLabel}>{label}</Text>}
-          {description && (
-            <Text className={classes.stepDescription} color="dimmed">
-              {description}
-            </Text>
-          )}
-        </div>
+        {(label || description) && (
+          <div className={classes.stepBody}>
+            {label && <Text className={classes.stepLabel}>{label}</Text>}
+            {description && (
+              <Text className={classes.stepDescription} color="dimmed">
+                {description}
+              </Text>
+            )}
+          </div>
+        )}
       </UnstyledButton>
     );
   }
