@@ -44,6 +44,9 @@ export interface StepProps
 
   /** Indicates loading state on step */
   loading?: boolean;
+
+  /** Set to false to disable clicks on step */
+  allowStepClick?: boolean;
 }
 
 const defaultIconSizes = {
@@ -67,14 +70,23 @@ export function Step({
   iconSize,
   size = 'md',
   loading,
+  allowStepClick = true,
   ...others
 }: StepProps) {
-  const { classes, cx, theme } = useStyles({ color, iconSize, size }, { name: 'Steps' });
+  const { classes, cx, theme } = useStyles(
+    { color, iconSize, size, allowStepClick },
+    { name: 'Steps' }
+  );
+
   const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
   const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
 
   return (
-    <UnstyledButton className={cx(classes.step, classes[state], className)} {...others}>
+    <UnstyledButton
+      className={cx(classes.step, classes[state], className)}
+      tabIndex={allowStepClick ? 0 : -1}
+      {...others}
+    >
       {withIcon && (
         <div className={classes.stepIcon}>
           <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>

@@ -68,6 +68,7 @@ export function Stepper({
           active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
         }
         onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
+        allowStepClick={typeof onStepClick === 'function'}
         completedIcon={item.props.completedIcon || completedIcon}
         progressIcon={item.props.progressIcon || progressIcon}
         color={item.props.color || color}

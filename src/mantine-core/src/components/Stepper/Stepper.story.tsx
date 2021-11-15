@@ -53,22 +53,17 @@ storiesOf('@mantine/core/Stepper', module)
       </Stepper>
     </div>
   ))
-  .add('Loading state dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 40 }}>
-        <Stepper active={2}>
-          <Stepper.Step label="First" />
-          <Stepper.Step label="Second" loading />
-          <Stepper.Step label="Third" />
-        </Stepper>
-      </div>
-    </DarkStory>
-  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Dark theme', () => (
     <DarkStory>
       <div style={{ padding: 40 }}>
         <Wrapper color="teal" />
+
+        <Stepper active={2} mt="xl">
+          <Stepper.Step label="First" />
+          <Stepper.Step label="Second" loading />
+          <Stepper.Step label="Third" />
+        </Stepper>
       </div>
     </DarkStory>
   ));
