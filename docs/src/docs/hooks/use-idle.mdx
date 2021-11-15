@@ -22,12 +22,22 @@ Hook detect if user does nothing for given time in ms:
 ## Custom events
 
 By default hook will listen to keypress, mousemove, touchmove, click and scroll events to set idle status.
-To change that provide a list of events as second argument:
+To change that provide a list of events in the options argument:
 
 <Demo data={useIdleEvents} />
+
+## Initial state
+
+By default the hook will return an idle state.
+To change that provide an initial state value in the options argument:
+
+<Demo data={useIdleInitialState} />
 
 ### Definition
 
 ```tsx
-function useIdle(timeout: number, events?: string[]): boolean;
+function useIdle(
+  timeout: number,
+  options?: Partial<{ events: string[]; initialState: boolean }>
+): boolean;
 ```
