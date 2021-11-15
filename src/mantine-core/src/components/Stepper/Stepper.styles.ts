@@ -1,7 +1,13 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-export default createStyles((theme) => ({
-  root: {
+interface StepperStyles {
+  contentPadding: MantineNumberSize;
+}
+
+export default createStyles((theme, { contentPadding }: StepperStyles) => ({
+  root: {},
+
+  steps: {
     alignItems: 'center',
   },
 
@@ -11,5 +17,10 @@ export default createStyles((theme) => ({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2],
     marginLeft: theme.spacing.md,
     marginRight: theme.spacing.md,
+  },
+
+  content: {
+    ...theme.fn.fontStyles(),
+    paddingTop: theme.fn.size({ size: contentPadding, sizes: theme.spacing }),
   },
 }));
