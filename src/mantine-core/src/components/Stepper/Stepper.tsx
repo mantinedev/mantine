@@ -39,6 +39,9 @@ export interface StepperProps
   /** Content padding-top from theme.spacing or number to set value in px */
   contentPadding?: MantineNumberSize;
 
+  /** Component orientation */
+  orientation?: 'vertical' | 'horizontal';
+
   /** Component size */
   size?: MantineSize;
 }
@@ -62,6 +65,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       style,
       contentPadding = 'md',
       size = 'md',
+      orientation = 'horizontal',
       classNames,
       styles,
       ...others
@@ -70,7 +74,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
-      { contentPadding, color },
+      { contentPadding, color, orientation },
       { classNames, styles, name: 'Stepper' }
     );
     const filteredChildren = Children.toArray(children).filter(

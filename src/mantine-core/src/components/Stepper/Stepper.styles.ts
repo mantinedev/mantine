@@ -3,22 +3,28 @@ import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 interface StepperStyles {
   contentPadding: MantineNumberSize;
   color: MantineColor;
+  orientation?: 'vertical' | 'horizontal';
 }
 
-export default createStyles((theme, { contentPadding, color }: StepperStyles) => ({
+export default createStyles((theme, { contentPadding, color, orientation }: StepperStyles) => ({
   root: {},
 
   steps: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: orientation === 'horizontal' ? 'row' : 'column',
+    alignItems: orientation === 'horizontal' ? 'center' : 'flex-start',
   },
 
   separator: {
     flex: 1,
     height: 2,
+    minHeight: orientation === 'vertical' ? theme.spacing.xl : undefined,
+    width: orientation === 'vertical' ? 2 : undefined,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-    marginLeft: theme.spacing.md,
-    marginRight: theme.spacing.md,
+    marginLeft: orientation === 'horizontal' ? theme.spacing.md : 19,
+    marginRight: orientation === 'horizontal' ? theme.spacing.md : 0,
+    marginTop: orientation === 'vertical' ? theme.spacing.xs : 0,
+    marginBottom: orientation === 'vertical' ? theme.spacing.xs : 0,
   },
 
   separatorActive: {

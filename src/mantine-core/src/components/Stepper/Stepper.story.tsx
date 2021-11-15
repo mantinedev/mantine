@@ -44,6 +44,11 @@ storiesOf('@mantine/core/Stepper', module)
       <Wrapper color="teal" />
     </div>
   ))
+  .add('Vertical orientation', () => (
+    <div style={{ padding: 40 }}>
+      <Wrapper orientation="vertical" />
+    </div>
+  ))
   .add('Loading state', () => (
     <div style={{ padding: 40 }}>
       <Stepper active={0}>
