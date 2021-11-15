@@ -14,6 +14,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       linearGradient: fns.linearGradient,
       rgba: fns.rgba,
       size: fns.size,
+      cover: fns.cover,
     },
   };
 }

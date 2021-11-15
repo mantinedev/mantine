@@ -14,6 +14,7 @@ export interface HeadingStyle {
 interface MantineThemeFunctions {
   fontStyles(): CSSObject;
   focusStyles(): CSSObject;
+  cover(): CSSObject;
   themeColor(color: string, shade: number): string;
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;

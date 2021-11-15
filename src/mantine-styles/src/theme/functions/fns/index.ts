@@ -6,6 +6,7 @@ import { radialGradient } from './radial-gradient/radial-gradient';
 import { smallerThan, largerThan } from './breakpoints/breakpoints';
 import { rgba } from './rgba/rgba';
 import { size } from './size/size';
+import { cover } from './cover/cover';
 
 export const fns = {
   fontStyles,
@@ -17,4 +18,5 @@ export const fns = {
   largerThan,
   rgba,
   size,
+  cover,
 } as const;
