@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { Children, forwardRef } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -38,66 +38,76 @@ export interface StepperProps extends DefaultProps, React.ComponentPropsWithoutR
   size?: MantineSize;
 }
 
-export function Stepper({
-  className,
-  children,
-  onStepClick,
-  active,
-  completedIcon,
-  progressIcon,
-  color,
-  iconSize,
-  style,
-  contentPadding = 'md',
-  size = 'md',
-  ...others
-}: StepperProps) {
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const { classes, cx } = useStyles({ contentPadding, color }, { name: 'Stepper' });
-  const filteredChildren = Children.toArray(children).filter(
-    (item: React.ReactElement) => item.type === Step
-  ) as React.ReactElement[];
+type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
+  displayName: string;
+  Step: typeof Step;
+};
 
-  const items = filteredChildren.reduce((acc, item, index, array) => {
-    acc.push(
-      <Step
-        {...item.props}
-        icon={item.props.icon || index + 1}
-        key={index}
-        state={
-          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
-        }
-        onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
-        allowStepClick={typeof onStepClick === 'function'}
-        completedIcon={item.props.completedIcon || completedIcon}
-        progressIcon={item.props.progressIcon || progressIcon}
-        color={item.props.color || color}
-        iconSize={iconSize}
-        size={size}
-      />
-    );
+export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
+  (
+    {
+      className,
+      children,
+      onStepClick,
+      active,
+      completedIcon,
+      progressIcon,
+      color,
+      iconSize,
+      style,
+      contentPadding = 'md',
+      size = 'md',
+      ...others
+    }: StepperProps,
+    ref
+  ) => {
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ contentPadding, color }, { name: 'Stepper' });
+    const filteredChildren = Children.toArray(children).filter(
+      (item: React.ReactElement) => item.type === Step
+    ) as React.ReactElement[];
 
-    if (index !== array.length - 1) {
+    const items = filteredChildren.reduce((acc, item, index, array) => {
       acc.push(
-        <div
-          className={cx(classes.separator, { [classes.separatorActive]: index < active })}
-          key={`separator-${index}`}
+        <Step
+          {...item.props}
+          icon={item.props.icon || index + 1}
+          key={index}
+          state={
+            active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
+          }
+          onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
+          allowStepClick={typeof onStepClick === 'function'}
+          completedIcon={item.props.completedIcon || completedIcon}
+          progressIcon={item.props.progressIcon || progressIcon}
+          color={item.props.color || color}
+          iconSize={iconSize}
+          size={size}
         />
       );
-    }
 
-    return acc;
-  }, [] as React.ReactNode[]);
+      if (index !== array.length - 1) {
+        acc.push(
+          <div
+            className={cx(classes.separator, { [classes.separatorActive]: index < active })}
+            key={`separator-${index}`}
+          />
+        );
+      }
 
-  const content = filteredChildren[active]?.props?.children;
+      return acc;
+    }, [] as React.ReactNode[]);
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <div className={classes.steps}>{items}</div>
-      {content && <div className={classes.content}>{content}</div>}
-    </div>
-  );
-}
+    const content = filteredChildren[active]?.props?.children;
+
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+        <div className={classes.steps}>{items}</div>
+        {content && <div className={classes.content}>{content}</div>}
+      </div>
+    );
+  }
+) as any;
 
 Stepper.Step = Step;
 Stepper.displayName = '@mantine/core/Stepper';
