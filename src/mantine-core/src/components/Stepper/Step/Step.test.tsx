@@ -4,8 +4,9 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  checkAccessibility,
 } from '@mantine/tests';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Loader } from '../../Loader';
 import { Step } from './Step';
 
@@ -14,6 +15,11 @@ describe('@mantine/core/Step', () => {
   itSupportsOthers(Step, {});
   itSupportsStyle(Step, {});
   itSupportsRef(Step, {}, HTMLButtonElement);
+  checkAccessibility([
+    mount(<Step aria-label="Test" />),
+    mount(<Step title="Test" />),
+    mount(<Step label="Test" />),
+  ]);
 
   it('renders icon when withIcon is true', () => {
     const withIcon = shallow(<Step withIcon />);
