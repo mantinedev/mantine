@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  MantineProvider,
-  NormalizeCSS,
-  GlobalStyles,
-  ColorSchemeProvider,
-  ColorScheme,
-} from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 import '../../fonts/GreycliffCF/styles.css';
@@ -28,9 +22,6 @@ export default function Layout({ children, location }: LayoutProps) {
       <MantineProvider
         theme={{ colorScheme, headings: { fontFamily: 'Greycliff CF, sans serif' } }}
       >
-        <GlobalStyles />
-        <NormalizeCSS />
-
         <LayoutInner location={location}>{children}</LayoutInner>
       </MantineProvider>
     </ColorSchemeProvider>

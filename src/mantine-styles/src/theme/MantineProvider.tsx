@@ -1,9 +1,12 @@
+/* eslint-disable import/no-cycle */
 import React, { createContext, useContext } from 'react';
 import type { Options as EmotionCacheOptions } from '@emotion/cache';
 import { DEFAULT_THEME } from './default-theme';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
 import { mergeTheme } from './utils/merge-theme/merge-theme';
+import { GlobalStyles } from './GlobalStyles';
+import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
   string,
@@ -38,6 +41,8 @@ interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
   emotionOptions?: EmotionCacheOptions;
+  withNormalizeCSS?: boolean;
+  withGlobalStyles?: boolean;
   children: React.ReactNode;
 }
 
@@ -45,12 +50,16 @@ export function MantineProvider({
   theme,
   styles = {},
   emotionOptions,
+  withNormalizeCSS = true,
+  withGlobalStyles = true,
   children,
 }: MantineProviderProps) {
   return (
     <MantineThemeContext.Provider
       value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
     >
+      {withNormalizeCSS && <NormalizeCSS />}
+      {withGlobalStyles && <GlobalStyles />}
       {children}
     </MantineThemeContext.Provider>
   );
