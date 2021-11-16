@@ -27,7 +27,16 @@ import { StepperDemos } from '@demos/core';
 
 ## With custom icons
 
+You can replace step icon by setting `icon` prop on Step component.
+To change completed check icon set `completedIcon` on Stepper component.
+You can use any React node as icon: component, string, number:
+
 <Demo data={StepperDemos.icons} />
+
+You can use Stepper with icons only. Note that in this case you will have to
+set `aria-label` or `title` on Step component to make it accessible:
+
+<Demo data={StepperDemos.iconsOnly} />
 
 ## Get step ref
 

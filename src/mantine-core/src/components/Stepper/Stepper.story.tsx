@@ -68,6 +68,21 @@ storiesOf('@mantine/core/Stepper', module)
       </Stepper>
     </div>
   ))
+  .add('Icons only', () => (
+    <div style={{ padding: 40 }}>
+      <Stepper active={1}>
+        <Stepper.Step />
+        <Stepper.Step />
+        <Stepper.Step />
+      </Stepper>
+
+      <Stepper active={1} mt={60} orientation="vertical">
+        <Stepper.Step />
+        <Stepper.Step />
+        <Stepper.Step />
+      </Stepper>
+    </div>
+  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Vertical sizes', () => (
     <div style={{ padding: 40 }}>
