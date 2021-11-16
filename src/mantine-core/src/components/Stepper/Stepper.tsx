@@ -78,7 +78,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
-      { contentPadding, color, orientation, iconPosition },
+      { contentPadding, color, orientation, iconPosition, size, iconSize },
       { classNames, styles, name: 'Stepper' }
     );
     const filteredChildren = Children.toArray(children).filter(

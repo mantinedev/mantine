@@ -8,7 +8,7 @@ interface StepStyles {
   iconPosition: 'right' | 'left';
 }
 
-const iconSizes = {
+export const iconSizes = {
   xs: 34,
   sm: 36,
   md: 42,

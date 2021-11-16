@@ -1,15 +1,22 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, MantineSize } from '@mantine/styles';
+import { iconSizes } from './Step/Step.styles';
 
 interface StepperStyles {
   contentPadding: MantineNumberSize;
+  iconSize?: number;
+  size: MantineSize;
   color: MantineColor;
   orientation: 'vertical' | 'horizontal';
   iconPosition: 'right' | 'left';
 }
 
 export default createStyles(
-  (theme, { contentPadding, color, orientation, iconPosition }: StepperStyles) => {
-    const separatorPadding = 19;
+  (theme, { contentPadding, color, orientation, iconPosition, iconSize, size }: StepperStyles) => {
+    const separatorOffset =
+      typeof iconSize !== 'undefined'
+        ? iconSize / 2 - 1
+        : theme.fn.size({ size, sizes: iconSizes }) / 2 - 1;
+
     return {
       root: {},
 
@@ -34,13 +41,13 @@ export default createStyles(
           orientation === 'horizontal'
             ? theme.spacing.md
             : iconPosition === 'left'
-            ? separatorPadding
+            ? separatorOffset
             : 0,
         marginRight:
           orientation === 'horizontal'
             ? theme.spacing.md
             : iconPosition === 'right'
-            ? separatorPadding
+            ? separatorOffset
             : 0,
         marginTop: orientation === 'vertical' ? theme.spacing.xs / 2 : 0,
         marginBottom: orientation === 'vertical' ? theme.spacing.xs / 2 : 0,

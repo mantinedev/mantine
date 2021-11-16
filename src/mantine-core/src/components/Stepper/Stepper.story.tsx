@@ -38,6 +38,10 @@ const sizes = MANTINE_SIZES.map((size, index) => (
   <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} />
 ));
 
+const verticalSizes = MANTINE_SIZES.map((size, index) => (
+  <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} orientation="vertical" />
+));
+
 storiesOf('@mantine/core/Stepper', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
@@ -65,6 +69,12 @@ storiesOf('@mantine/core/Stepper', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('Vertical sizes', () => (
+    <div style={{ padding: 40 }}>
+      {verticalSizes}
+      <Wrapper mt={60} orientation="vertical" iconSize={80} />
+    </div>
+  ))
   .add('Dark theme', () => (
     <DarkStory>
       <div style={{ padding: 40 }}>
