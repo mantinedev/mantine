@@ -90,66 +90,6 @@ storiesOf('@mantine/core/Stepper', module)
       <Wrapper mt={60} orientation="vertical" iconSize={80} />
     </div>
   ))
-  .add('Styles API', () => (
-    <div style={{ padding: 40 }}>
-      <Wrapper
-        styles={(theme) => ({
-          root: {
-            padding: theme.spacing.md,
-            backgroundColor: theme.colors.gray[0],
-          },
-
-          separator: {
-            borderTop: `2px dashed ${theme.colors.gray[4]}`,
-            borderRadius: theme.radius.xl,
-            backgroundColor: 'transparent',
-          },
-
-          separatorActive: {
-            borderWidth: 0,
-          },
-
-          stepIcon: {
-            borderColor: 'transparent',
-            backgroundColor: theme.white,
-          },
-
-          step: {
-            transition: 'transform 150ms ease',
-          },
-
-          stepProgress: {
-            transform: 'scale(1.05)',
-          },
-        })}
-      />
-    </div>
-  ))
-  .add('Styles API 2', () => (
-    <div style={{ padding: 40 }}>
-      <Wrapper
-        styles={{
-          stepBody: {
-            display: 'none',
-          },
-
-          step: {
-            padding: 0,
-          },
-
-          stepIcon: {
-            borderWidth: 4,
-          },
-
-          separator: {
-            marginLeft: -2,
-            marginRight: -2,
-            height: 10,
-          },
-        }}
-      />
-    </div>
-  ))
   .add('Dark theme', () => (
     <DarkStory>
       <div style={{ padding: 40 }}>

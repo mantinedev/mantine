@@ -17,19 +17,30 @@ export default createStyles(
         ? iconSize / 2 - 1
         : theme.fn.size({ size, sizes: iconSizes }) / 2 - 1;
 
+    const verticalOrientationStyles = {
+      steps: {
+        flexDirection: 'column',
+        alignItems: iconPosition === 'left' ? 'flex-start' : 'flex-end',
+      },
+
+      separator: {
+        width: 2,
+        minHeight: theme.spacing.xl,
+        marginLeft: iconPosition === 'left' ? separatorOffset : 0,
+        marginRight: iconPosition === 'right' ? separatorOffset : 0,
+        marginTop: theme.spacing.xs / 2,
+        marginBottom: theme.spacing.xs / 2,
+      },
+    } as const;
+
     return {
       root: {},
 
       steps: {
         display: 'flex',
         boxSizing: 'border-box',
-        flexDirection: orientation === 'horizontal' ? 'row' : 'column',
-        alignItems:
-          orientation === 'horizontal'
-            ? 'center'
-            : iconPosition === 'left'
-            ? 'flex-start'
-            : 'flex-end',
+        alignItems: 'center',
+        ...(orientation === 'vertical' ? verticalOrientationStyles.steps : null),
       },
 
       separator: {
@@ -37,23 +48,10 @@ export default createStyles(
         transition: 'background-color 150ms ease',
         flex: 1,
         height: 2,
-        minHeight: orientation === 'vertical' ? theme.spacing.xl : undefined,
-        width: orientation === 'vertical' ? 2 : undefined,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-        marginLeft:
-          orientation === 'horizontal'
-            ? theme.spacing.md
-            : iconPosition === 'left'
-            ? separatorOffset
-            : 0,
-        marginRight:
-          orientation === 'horizontal'
-            ? theme.spacing.md
-            : iconPosition === 'right'
-            ? separatorOffset
-            : 0,
-        marginTop: orientation === 'vertical' ? theme.spacing.xs / 2 : 0,
-        marginBottom: orientation === 'vertical' ? theme.spacing.xs / 2 : 0,
+        marginLeft: theme.spacing.md,
+        marginRight: theme.spacing.md,
+        ...(orientation === 'vertical' ? verticalOrientationStyles.separator : null),
       },
 
       separatorActive: {
