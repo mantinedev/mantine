@@ -5,6 +5,7 @@ interface StepStyles {
   iconSize: number;
   size: MantineSize;
   allowStepClick: boolean;
+  iconPosition: 'right' | 'left';
 }
 
 const iconSizes = {
@@ -16,15 +17,17 @@ const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { color, iconSize, size, allowStepClick }: StepStyles, getRef) => {
+  (theme, { color, iconSize, size, allowStepClick, iconPosition }: StepStyles, getRef) => {
     const stepIcon = getRef('stepIcon');
     const stepCompletedIcon = getRef('stepCompletedIcon');
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
+    const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
 
     return {
       step: {
         display: 'flex',
         alignItems: 'center',
+        flexDirection: iconPosition === 'left' ? 'row' : 'row-reverse',
         cursor: allowStepClick ? 'pointer' : 'default',
       },
 
@@ -73,16 +76,19 @@ export default createStyles(
       },
 
       stepBody: {
-        marginLeft: size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm,
+        marginLeft: iconPosition === 'left' ? iconMargin : undefined,
+        marginRight: iconPosition === 'right' ? iconMargin : undefined,
       },
 
       stepLabel: {
+        textAlign: iconPosition,
         fontWeight: 500,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: 1,
       },
 
       stepDescription: {
+        textAlign: iconPosition,
         marginTop: theme.fn.size({ size, sizes: theme.spacing }) / 3,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
         lineHeight: 1,

@@ -42,6 +42,9 @@ export interface StepperProps
   /** Component orientation */
   orientation?: 'vertical' | 'horizontal';
 
+  /** Icon position relative to step body */
+  iconPosition?: 'right' | 'left';
+
   /** Component size */
   size?: MantineSize;
 }
@@ -66,6 +69,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       contentPadding = 'md',
       size = 'md',
       orientation = 'horizontal',
+      iconPosition = 'left',
       classNames,
       styles,
       ...others
@@ -74,7 +78,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
-      { contentPadding, color, orientation },
+      { contentPadding, color, orientation, iconPosition },
       { classNames, styles, name: 'Stepper' }
     );
     const filteredChildren = Children.toArray(children).filter(
@@ -100,6 +104,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           size={size}
           classNames={classNames}
           styles={styles}
+          iconPosition={item.props.iconPosition || iconPosition}
         />
       );
 

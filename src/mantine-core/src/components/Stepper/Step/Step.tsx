@@ -39,6 +39,9 @@ export interface StepProps
   /** Icon wrapper size in px */
   iconSize?: number;
 
+  /** Icon position relative to step body */
+  iconPosition?: 'right' | 'left';
+
   /** Component size */
   size?: MantineSize;
 
@@ -76,6 +79,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       size = 'md',
       loading,
       allowStepClick = true,
+      iconPosition = 'left',
       __staticSelector = 'Step',
       classNames,
       styles,
@@ -84,7 +88,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, iconSize, size, allowStepClick },
+      { color, iconSize, size, allowStepClick, iconPosition },
       { name: __staticSelector, classNames, styles }
     );
 

@@ -47,6 +47,12 @@ storiesOf('@mantine/core/Stepper', module)
   .add('Vertical orientation', () => (
     <div style={{ padding: 40 }}>
       <Wrapper orientation="vertical" />
+      <Wrapper orientation="vertical" iconPosition="right" mt="xl" />
+    </div>
+  ))
+  .add('Icon position right', () => (
+    <div style={{ padding: 40 }}>
+      <Wrapper iconPosition="right" />
     </div>
   ))
   .add('Loading state', () => (
