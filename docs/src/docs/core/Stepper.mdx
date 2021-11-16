@@ -21,7 +21,13 @@ import { StepperDemos } from '@demos/core';
 
 ## Color and size
 
+You can use any color from `theme.colors`, by default Stepper will use `theme.primaryColor`:
+
 <Demo data={StepperDemos.configurator} />
+
+Component size is controlled by two props: `size` and `iconSize`.
+`size` prop controls icon size, label and description font size.
+`iconSize` allows to overwrite icon size separately from other size values:
 
 <Demo data={StepperDemos.iconSizeConfigurator} />
 
@@ -38,15 +44,25 @@ set `aria-label` or `title` on Step component to make it accessible:
 
 <Demo data={StepperDemos.iconsOnly} />
 
+You can also change completed icon for each step, for example, to indicate error state:
+
+<Demo data={StepperDemos.stepColor} />
+
 ## Vertical orientation
 
 <Demo data={StepperDemos.orientation} />
 
 ## Icon position
 
+To change step icon and body arrangement set `iconPosition` to `right`,
+this option is most useful for RTL:
+
 <Demo data={StepperDemos.iconPosition} />
 
 ## Loading state
+
+To indicate loading state set `loading` prop on Step component,
+Loader will replace step icon. You can configure default loader in [MantineProvider](/theming/mantine-provider/).
 
 <Demo data={StepperDemos.loading} />
 
