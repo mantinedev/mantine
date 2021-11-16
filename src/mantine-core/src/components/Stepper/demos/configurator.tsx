@@ -3,7 +3,7 @@ import { Stepper, StepperProps } from '../Stepper';
 
 function Wrapper(props: Partial<StepperProps>) {
   return (
-    <Stepper {...props} active={1}>
+    <Stepper {...props} breakpoint="sm" active={1}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
     </Stepper>

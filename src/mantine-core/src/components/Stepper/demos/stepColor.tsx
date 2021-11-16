@@ -17,7 +17,7 @@ const code = `
 
 function Demo() {
   return (
-    <Stepper active={2}>
+    <Stepper active={2} breakpoint="sm">
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step
         label="Step 2"

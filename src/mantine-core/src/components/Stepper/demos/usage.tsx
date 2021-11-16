@@ -14,7 +14,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive}>
+      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
         <Stepper.Step label="Fist step" description="Create an account">
           Step 1 content: Create an account
         </Stepper.Step>
@@ -44,7 +44,7 @@ function Demo() {
 
   return (
     <>
-      <Stepper active={active} onStepClick={setActive}>
+      <Stepper active={active} onStepClick={setActive} breakpoint="sm">
         <Stepper.Step label="Fist step" description="Create an account">
           <Content>Step 1 content: Create an account</Content>
         </Stepper.Step>
