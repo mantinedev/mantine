@@ -22,6 +22,7 @@ export default createStyles(
 
       steps: {
         display: 'flex',
+        boxSizing: 'border-box',
         flexDirection: orientation === 'horizontal' ? 'row' : 'column',
         alignItems:
           orientation === 'horizontal'
@@ -32,6 +33,8 @@ export default createStyles(
       },
 
       separator: {
+        boxSizing: 'border-box',
+        transition: 'background-color 150ms ease',
         flex: 1,
         height: 2,
         minHeight: orientation === 'vertical' ? theme.spacing.xl : undefined,
