@@ -18,6 +18,20 @@ import { useOsDemo, ModalsDemos } from '@docs/demos';
 - `@mantine/core` package no longer exports `getFontStyles`, `getFocusStyles` and `hexToRgba` functions, replace them with [theme functions](https://mantine.dev/theming/functions/): `theme.fn.fontStyles()`, `theme.fn.focusStyles()`, `theme.fn.rgba()`.
 - [AppShell](https://mantine.dev/core/app-shell/) component was migrated to mobile-first approach, the way Navbar `width` is set was changed
 
+## Normalize.css and global styles on MantineProvider
+
+[MantineProvider](https://mantine.dev/theming/mantine-provider/) now supports adding global styles and normalize.css
+with props:
+
+```tsx
+<MantineProvider withGlobalStyles withNormalizeCSS>
+  <App />
+</MantineProvider>
+```
+
+Note that GlobalStyles and NormalizeCSS component that were previously used to add global styles will be
+removed in next major version (4.0).
+
 ## Functions on theme
 
 Mantine theme now adds several functions ([full list](https://mantine.dev/theming/functions/)) that can help you
