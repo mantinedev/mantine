@@ -129,7 +129,7 @@ function StyledStepper(props: StepperProps) {
 function Demo() {
   const [active, setActive] = useState(1);
   return (
-    <StyledStepper active={active} onStepClick={setActive}>
+    <StyledStepper active={active} onStepClick={setActive} breakpoint="sm">
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
       <Stepper.Step label="Step 3" description="Get full access" />

@@ -52,6 +52,23 @@ You can also change completed icon for each step, for example, to indicate error
 
 <Demo data={StepperDemos.orientation} />
 
+## Responsive styles
+
+To change orientation based on viewport size set `breakpoint` prop.
+In following example stepper will have horizontal orientation when viewport width is more
+than `theme.breakpoints.md`:
+
+```tsx
+<Stepper breakpoint="md">{/* ...steps */}</Stepper>
+```
+
+You can [configure breakpoints](/theming/extend-theme/#breakpoints) in MantineProvider or use
+number to set breakpoint in px:
+
+```tsx
+<Stepper breakpoint={755}>{/* ...steps */}</Stepper>
+```
+
 ## Icon position
 
 To change step icon and body arrangement set `iconPosition` to `right`,
