@@ -14,6 +14,21 @@ storiesOf('@mantine/core/Title', module)
       <Title order={6}>h6 title</Title>
     </div>
   ))
+  .add('Styles API on MantineProvider', () => (
+    <div style={{ padding: 20 }}>
+      <MantineProvider
+        styles={{
+          Title: (theme) => ({
+            root: {
+              color: theme.colorScheme === 'dark' ? 'blue' : 'red',
+            },
+          }),
+        }}
+      >
+        <Title order={1}>MantineProvider styles</Title>
+      </MantineProvider>
+    </div>
+  ))
   .add('Dark theme', () => (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
       <div
