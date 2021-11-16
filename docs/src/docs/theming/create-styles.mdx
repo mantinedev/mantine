@@ -96,7 +96,7 @@ To set global styles use `Global` component:
 ```tsx
 import { Global } from '@mantine/core';
 
-export function GlobalStyles() {
+export function Demo() {
   return (
     <Global
       styles={(theme) => ({
@@ -116,47 +116,6 @@ export function GlobalStyles() {
 }
 ```
 
-## normalize.css
-
-`@mantine/core` exports `NormalizeCSS` component with [normalize.css](https://necolas.github.io/normalize.css/) styles:
-
-```tsx
-import { MantineProvider, NormalizeCSS } from '@mantine/core';
-
-function Demo() {
-  return (
-    <MantineProvider>
-      <NormalizeCSS />
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-## GlobalStyles component
-
-GlobalStyles component will help you work with dark color scheme, it sets body styles:
-
-- background color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
-- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
-- font-family and font-smoothing based on theme
-- font-size to `theme.fontSize.md`
-
-GlobalStyles must be included only once and rendered inside MantineProvider:
-
-```tsx
-import { MantineProvider, GlobalStyles } from '@mantine/core';
-
-function Demo() {
-  return (
-    <MantineProvider>
-      <GlobalStyles />
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
 ## Inline styles
 
 Most of Mantine components support [Styles API](/theming/styles-api/).
@@ -164,13 +123,6 @@ You can override default component styles inline or using [MantineProvider](/the
 the same way as with `createStyles`:
 
 <Demo data={TabsDemos.stylesApi} />
-
-## sx prop
-
-All Mantine components support `sx` prop, you can add styles to root element and subscribe to theme with this
-prop. This is useful when you want customize component without creating separate `createStyles` hook:
-
-<Demo data={CreateStylesDemos.createStylesSx} />
 
 ## Using createStyles without @mantine/core
 

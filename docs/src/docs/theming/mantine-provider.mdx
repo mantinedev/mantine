@@ -143,6 +143,23 @@ All components that are rendered inside MantineProvider will inherit those style
 
 <Demo data={providerStyles} />
 
+## Normalize.css and global styles
+
+MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles:
+
+- background color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
+- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
+- font-family and font-smoothing based on theme
+- font-size to `theme.fontSize.md`
+
+To enable these global styles set `withNormalizeCSS` and `withGlobalStyles` props:
+
+```tsx
+<MantineProvider withNormalizeCSS withGlobalStyles>
+  <App />
+</MantineProvider>
+```
+
 ## Configure emotion
 
 You can configure [emotion cache options](https://emotion.sh/docs/@emotion/cache#options) in MantineProvider.

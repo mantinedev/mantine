@@ -50,8 +50,8 @@ export function MantineProvider({
   theme,
   styles = {},
   emotionOptions,
-  withNormalizeCSS = true,
-  withGlobalStyles = true,
+  withNormalizeCSS = false,
+  withGlobalStyles = false,
   children,
 }: MantineProviderProps) {
   return (

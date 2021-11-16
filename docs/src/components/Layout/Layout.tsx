@@ -20,6 +20,8 @@ export default function Layout({ children, location }: LayoutProps) {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
         theme={{ colorScheme, headings: { fontFamily: 'Greycliff CF, sans serif' } }}
       >
         <LayoutInner location={location}>{children}</LayoutInner>
