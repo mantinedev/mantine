@@ -47,6 +47,9 @@ export interface StepperProps
 
   /** Component size */
   size?: MantineSize;
+
+  /** Breakpoint at which orientation will change from horizontal to vertical */
+  breakpoint?: MantineNumberSize;
 }
 
 type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
@@ -69,6 +72,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       contentPadding = 'md',
       size = 'md',
       orientation = 'horizontal',
+      breakpoint,
       iconPosition = 'left',
       classNames,
       styles,
@@ -78,7 +82,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   ) => {
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
-      { contentPadding, color, orientation, iconPosition, size, iconSize },
+      { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
       { classNames, styles, name: 'Stepper' }
     );
     const filteredChildren = Children.toArray(children).filter(

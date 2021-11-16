@@ -8,10 +8,16 @@ interface StepperStyles {
   color: MantineColor;
   orientation: 'vertical' | 'horizontal';
   iconPosition: 'right' | 'left';
+  breakpoint: MantineNumberSize;
 }
 
 export default createStyles(
-  (theme, { contentPadding, color, orientation, iconPosition, iconSize, size }: StepperStyles) => {
+  (
+    theme,
+    { contentPadding, color, orientation, iconPosition, iconSize, size, breakpoint }: StepperStyles
+  ) => {
+    const shouldBeResponsive = typeof breakpoint !== 'undefined';
+    const breakpointValue = theme.fn.size({ size: breakpoint, sizes: theme.breakpoints });
     const separatorOffset =
       typeof iconSize !== 'undefined'
         ? iconSize / 2 - 1
@@ -33,6 +39,16 @@ export default createStyles(
       },
     } as const;
 
+    const responsiveStyles = {
+      steps: {
+        [`@media (max-width: ${breakpointValue}px)`]: verticalOrientationStyles.steps,
+      },
+
+      separator: {
+        [`@media (max-width: ${breakpointValue}px)`]: verticalOrientationStyles.separator,
+      },
+    } as const;
+
     return {
       root: {},
 
@@ -41,6 +57,7 @@ export default createStyles(
         boxSizing: 'border-box',
         alignItems: 'center',
         ...(orientation === 'vertical' ? verticalOrientationStyles.steps : null),
+        ...(shouldBeResponsive ? responsiveStyles.steps : null),
       },
 
       separator: {
@@ -52,6 +69,7 @@ export default createStyles(
         marginLeft: theme.spacing.md,
         marginRight: theme.spacing.md,
         ...(orientation === 'vertical' ? verticalOrientationStyles.separator : null),
+        ...(shouldBeResponsive ? responsiveStyles.separator : null),
       },
 
       separatorActive: {

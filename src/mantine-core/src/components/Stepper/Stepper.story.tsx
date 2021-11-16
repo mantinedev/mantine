@@ -83,6 +83,11 @@ storiesOf('@mantine/core/Stepper', module)
       </Stepper>
     </div>
   ))
+  .add('Responsive', () => (
+    <div style={{ padding: 40 }}>
+      <Wrapper breakpoint="sm" />
+    </div>
+  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Vertical sizes', () => (
     <div style={{ padding: 40 }}>
