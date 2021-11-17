@@ -81,7 +81,12 @@ function findInitialTab(tabs: TabType[]) {
   return -1;
 }
 
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
+type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
+  displayName: string;
+  Tab: typeof Tab;
+};
+
+export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
   (
     {
       className,
@@ -189,6 +194,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       </div>
     );
   }
-);
+) as any;
 
 Tabs.displayName = '@mantine/core/Tabs';
+Tabs.Tab = Tab;

@@ -1,20 +1,20 @@
 import React from 'react';
-import { Tabs, Tab, TabsProps } from '../index';
+import { Tabs, TabsProps } from '../index';
 
 function Wrapper(props: TabsProps) {
   return (
     <Tabs {...props} styles={{ body: { paddingTop: 5 } }}>
-      <Tab label="First">First tab content</Tab>
-      <Tab label="Second">Second tab content</Tab>
-      <Tab label="Third">Third tab content</Tab>
+      <Tabs.Tab label="First">First tab content</Tabs.Tab>
+      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
+      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
     </Tabs>
   );
 }
 
 const codeTemplate = (props: string) => `<Tabs${props}>
-  <Tab label="First">First tab content</Tab>
-  <Tab label="Second">Second tab content</Tab>
-  <Tab label="Third">Third tab content</Tab>
+  <Tabs.Tab label="First">First tab content</Tabs.Tab>
+  <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
+  <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
 </Tabs>`;
 
 export const positionConfigurator: MantineDemo = {
