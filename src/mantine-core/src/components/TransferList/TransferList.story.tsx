@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { TransferList, TransferListProps, TransferListData } from './TransferList';
+import { TransferList, TransferListProps, TransferListData } from './index';
 
 function Wrapper(props: Partial<TransferListProps>) {
   const [data, setData] = useState<TransferListData>([[], []]);

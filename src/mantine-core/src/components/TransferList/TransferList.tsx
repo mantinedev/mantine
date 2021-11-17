@@ -1,14 +1,7 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/styles';
 import { RenderList } from './RenderList/RenderList';
-
-export interface TransferListItem {
-  value: string;
-  label: string;
-  [key: string]: any;
-}
-
-export type TransferListData = [TransferListItem[], TransferListItem[]];
+import { TransferListData } from './types';
 
 export interface TransferListProps
   extends DefaultProps,
