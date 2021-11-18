@@ -31,6 +31,30 @@ function Demo() {
 }
 ```
 
+## mergeRefs function
+
+`useMergedRef` hooks memoizes refs with `useCallback` hook, but in some cases
+memoizing is not a valid strategy, for example, when you are working with a list
+of dynamic components React will complain that different amount of hooks was called
+across two renders. To fix that issue use `mergeRefs` function instead:
+
+```tsx
+import { useRef } from 'react';
+import { useClickOutside, useFocusTrap, mergeRefs } from '@mantine/hooks';
+
+function Demo() {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(() => {});
+  const mergedRef = mergeRefs(myRef, useClickOutsideRef);
+  return <div ref={mergedRef} />;
+}
+```
+
+`mergeRefs` works the same way as `useMergedRef` but does not use hooks internally.
+Use it only when you cannot use `useMergedRef`. Note that `mergeRefs` will not work
+correctly with [use-focus-trap](/hooks/use-focus-trap/) hook, you are required to
+use `useMergedRef` with it.
+
 ## TypeScript
 
 ### Definition
