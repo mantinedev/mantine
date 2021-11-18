@@ -37,6 +37,10 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
             ? theme.colors.dark[0]
             : theme.colors.dark[9]
           : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
+      hover: theme.fn.rgba(
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
+        theme.colorScheme === 'dark' ? 0.45 : 0.65
+      ),
     };
   }
 
@@ -45,6 +49,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
       border: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4],
       background: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      hover: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
     };
   }
 
@@ -53,14 +58,19 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
       border: 'transparent',
       background: theme.white,
       color: theme.fn.themeColor(color, 7),
+      hover: null,
     };
   }
 
   if (variant === 'outline') {
     return {
       border: theme.fn.rgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7), 0.75),
-      background: 'transparent',
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+      hover:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[8]
+          : theme.fn.rgba(theme.fn.themeColor(color, 0), 0.35),
     };
   }
 
@@ -78,6 +88,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
       )} 0%, ${theme.fn.themeColor(merged.to, 6)} 100%)`,
       color: theme.white,
       border: 'transparent',
+      hover: null,
     };
   }
 
@@ -86,5 +97,6 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     border: 'transparent',
     background: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 6),
     color: theme.white,
+    hover: theme.fn.themeColor(color, 7),
   };
 }

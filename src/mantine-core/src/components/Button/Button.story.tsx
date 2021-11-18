@@ -3,6 +3,7 @@ import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
+import { DarkStory } from '../../../demos/DarkStory/DarkStory';
 import { Group } from '../Group/Group';
 import { Button, UnstyledButton } from './index';
 
@@ -70,17 +71,27 @@ storiesOf('@mantine/core/Button', module)
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'link' })}</Group>
       <div style={{ backgroundColor: 'silver' }}>
         <Group style={{ padding: 20 }}>{getThemes({ variant: 'white' })}</Group>
       </div>
     </>
   ))
+  .add('Dark theme', () => (
+    <DarkStory>
+      <Group style={{ padding: 20 }}>{getThemes()}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
+      <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
+      <div style={{ backgroundColor: 'silver' }}>
+        <Group style={{ padding: 20 }}>{getThemes({ variant: 'white' })}</Group>
+      </div>
+    </DarkStory>
+  ))
   .add('Link button themes', () => (
     <>
       <Group style={{ padding: 20 }}>{getLinkThemes()}</Group>
       <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'outline' })}</Group>
-      <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'link' })}</Group>
+      <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'default' })}</Group>
     </>
   ))
   .add('Sizes', () => <Group style={{ padding: 20 }}>{sizes}</Group>)
