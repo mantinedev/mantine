@@ -9,7 +9,7 @@ export function GoogleButton(props: ButtonProps<'button'>) {
 }
 
 export function FacebookButton(props: ButtonProps<'button'>) {
-  return <Button sx={{ backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
+  return <Button style={{ backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
 }
 
 // Twitter button as anchor
@@ -22,7 +22,7 @@ export function GithubButton(props: ButtonProps<'button'>) {
     <Button
       {...props}
       leftIcon={<GitHubLogoIcon />}
-      sx={{ backgroundColor: '#000', color: '#fff' }}
+      style={{ backgroundColor: '#000', color: '#fff' }}
     />
   );
 }
