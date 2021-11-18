@@ -50,6 +50,9 @@ export interface MenuBodyProps
 
   /** Trap focus inside menu */
   trapFocus?: boolean;
+
+  /** Called when menu is closed with escape */
+  onEscape(): void;
 }
 
 function getNextItem(active: number, items: MenuItemType[]) {
@@ -101,6 +104,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
       styles,
       radius,
       trapFocus = true,
+      onEscape,
       ...others
     }: MenuBodyProps,
     ref
@@ -114,7 +118,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
     const [hovered, setHovered] = useState(-1);
-    const focusTrapRef = useFocusTrap(trapFocus);
+    const focusTrapRef = useFocusTrap(trapFocus && opened);
 
     useEffect(() => {
       if (!opened) {
@@ -133,6 +137,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
 
       if (code === 'Escape') {
         onClose();
+        onEscape();
       }
 
       if (code === 'Tab' && trapFocus) {
@@ -173,6 +178,7 @@ export const MenuBody = forwardRef<HTMLDivElement, MenuBodyProps>(
             onClick={(event) => {
               if (closeOnItemClick) {
                 onClose();
+                onEscape();
               }
 
               if (typeof item.props.onClick === 'function') {

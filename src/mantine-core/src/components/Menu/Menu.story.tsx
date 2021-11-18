@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { menuItems } from './demos/_menu-items';
+import { TextInput } from '../TextInput';
 import { Menu } from './Menu';
 import { DarkStory } from '../../../demos';
 
@@ -20,6 +21,12 @@ storiesOf('@mantine/core/Menu', module)
       <Menu position="right" withArrow closeOnItemClick>
         {menuItems}
       </Menu>
+    </div>
+  ))
+  .add('Focus behavior', () => (
+    <div style={{ padding: 60 }}>
+      <TextInput placeholder="Focus me when menu is opened" mb="xl" />
+      <Controlled />
     </div>
   ))
   .add('Controlled', () => (

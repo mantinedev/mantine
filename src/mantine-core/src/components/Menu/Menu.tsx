@@ -139,6 +139,8 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(menuId);
 
+    const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
+
     const [_opened, setOpened] = useUncontrolled({
       value: opened,
       defaultValue: false,
@@ -231,6 +233,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
         >
           <MenuBody
             {...menuBodyProps}
+            onEscape={focusReference}
             opened={_opened}
             onClose={handleClose}
             id={uuid}
