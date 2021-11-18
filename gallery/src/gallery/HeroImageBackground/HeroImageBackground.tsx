@@ -84,6 +84,10 @@ const useStyles = createStyles((theme) => ({
   secondaryControl: {
     color: theme.white,
     backgroundColor: 'rgba(255, 255, 255, .4)',
+
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, .45) !important',
+    },
   },
 }));
 
