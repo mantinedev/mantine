@@ -26,7 +26,7 @@ export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames
 export interface MenuProps
   extends Omit<DefaultProps<MenuStylesNames>, MantineMargin>,
     SharedPopperProps,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
   children: React.ReactNode;
 
