@@ -103,6 +103,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const handleValueChange = (range: [Date, Date]) => {
       setValue(range);
+      window.setTimeout(() => inputRef.current?.focus(), 0);
       closeCalendarOnChange && validationRule(range) && setDropdownOpened(false);
     };
 
@@ -110,6 +111,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const handleClear = () => {
       setValue([null, null]);
+      setDropdownOpened(true);
       inputRef.current?.focus();
     };
 

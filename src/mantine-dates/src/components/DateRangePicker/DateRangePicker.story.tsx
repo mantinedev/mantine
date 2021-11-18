@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Group, MantineProvider } from '@mantine/core';
+import { Group, MantineProvider, TextInput } from '@mantine/core';
 import { DateRangePicker } from './DateRangePicker';
 
 storiesOf('@mantine/dates/DateRangePicker', module)
@@ -26,6 +26,12 @@ storiesOf('@mantine/dates/DateRangePicker', module)
         <DateRangePicker label="First" />
         <DateRangePicker label="Second" />
       </Group>
+    </div>
+  ))
+  .add('Focus behavior with other inputs', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <TextInput placeholder="Focus me when dropdown is opened" />
+      <DateRangePicker placeholder="Pick date" label="Date range picker" mt="xl" />
     </div>
   ))
   .add('Multiple Months', () => (
