@@ -90,7 +90,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
         </Group>
 
         <Group position="apart" mt="lg">
-          <Anchor component="button" color="gray" onClick={() => toggle()} size="xs">
+          <Anchor component="button" type="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
               : "Don't have an account? Register"}
