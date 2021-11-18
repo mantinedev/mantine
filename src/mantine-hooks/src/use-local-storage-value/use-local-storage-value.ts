@@ -42,5 +42,5 @@ export function useLocalStorageValue<T extends string>({
     }
   }, [defaultValue, value, setLocalStorageValue]);
 
-  return [value, setLocalStorageValue] as const;
+  return [value || defaultValue, setLocalStorageValue] as const;
 }
