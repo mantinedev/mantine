@@ -109,11 +109,17 @@ export function Popover({
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
-  useFocusReturn({ opened: opened || noFocusTrap, transitionDuration });
+
+  const returnFocus = useFocusReturn({
+    opened: opened || noFocusTrap,
+    transitionDuration,
+    shouldReturnFocus: false,
+  });
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
       handleClose();
+      window.setTimeout(returnFocus, transitionDuration + 10);
     }
   };
 

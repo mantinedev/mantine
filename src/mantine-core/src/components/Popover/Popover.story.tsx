@@ -19,7 +19,7 @@ function ZIndex() {
         placement="start"
         styles={{ body: { width: 120 } }}
         position="bottom"
-        transitionDuration={1500}
+        transitionDuration={100}
       >
         Hello World
       </Popover>
@@ -58,6 +58,12 @@ storiesOf('@mantine/core/Popover', module)
         transition="slide-up"
         withCloseButton
       />
+    </div>
+  ))
+  .add('Focus behavior', () => (
+    <div style={{ padding: 100 }}>
+      <ZIndex />
+      <TextInput placeholder="Focus me when popover is opened" />
     </div>
   ))
   .add('zIndex', () => (
