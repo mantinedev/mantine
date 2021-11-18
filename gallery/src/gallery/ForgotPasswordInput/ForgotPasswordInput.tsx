@@ -1,15 +1,17 @@
 import React from 'react';
-import { PasswordInput, Text, Group, UnstyledButton, PasswordInputProps } from '@mantine/core';
+import { PasswordInput, Text, Group, PasswordInputProps, Anchor } from '@mantine/core';
 
-export function ForgotPasswordInput(props: PasswordInputProps) {
+export function ForgotPasswordInput({ className, style, ...others }: PasswordInputProps) {
   return (
-    <>
+    <div className={className} style={style}>
       <Group position="apart" mb={5}>
         <Text component="label" htmlFor="your-password" size="sm" weight={500}>
           Your password
         </Text>
 
-        <UnstyledButton
+        <Anchor<'a'>
+          href="#"
+          onClick={(event) => event.preventDefault()}
           sx={(theme) => ({
             paddingTop: 2,
             color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
@@ -18,9 +20,9 @@ export function ForgotPasswordInput(props: PasswordInputProps) {
           })}
         >
           Forgot your password?
-        </UnstyledButton>
+        </Anchor>
       </Group>
-      <PasswordInput placeholder="Your password" id="your-password" {...props} />
-    </>
+      <PasswordInput placeholder="Your password" id="your-password" {...others} />
+    </div>
   );
 }
