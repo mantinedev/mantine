@@ -19,7 +19,7 @@ export type TabsStylesNames =
 
 export interface TabsProps
   extends DefaultProps<TabsStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
 
