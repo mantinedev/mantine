@@ -34,8 +34,8 @@ export function CountryPicker() {
       transitionDuration={150}
       transition={{
         in: { opacity: 1, transform: 'translateY(0px) scale(1)' },
-        out: { opacity: 0, transform: 'translateY(10px) scale(1.1)' },
-        transitionProperty: 'opacity, transform',
+        out: { opacity: 0, transform: 'translateY(-10px) scale(1.01)' },
+        transitionProperty: 'transform',
       }}
       itemComponent={SelectItem}
       maxDropdownHeight={400}
