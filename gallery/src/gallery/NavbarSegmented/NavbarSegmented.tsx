@@ -125,7 +125,7 @@ export function NavbarSegmented() {
   ));
 
   return (
-    <Navbar height={840} padding="md" className={classes.navbar}>
+    <Navbar height={840} width={{ sm: 300 }} padding="md" className={classes.navbar}>
       <Navbar.Section>
         <Text weight={500} size="sm" className={classes.title} color="dimmed" mb="xs">
           bgluesticker@mantine.dev
