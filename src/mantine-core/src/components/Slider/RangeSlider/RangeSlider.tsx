@@ -80,6 +80,9 @@ export interface RangeSliderProps
 
   /**If true slider label will appear on hover */
   showLabelOnHover?: boolean;
+
+  /** Thumbs children, can be used to add icons */
+  thumbChildren?: React.ReactNode;
 }
 
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
@@ -107,6 +110,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       thumbFromLabel = '',
       thumbToLabel = '',
       showLabelOnHover = true,
+      thumbChildren,
       ...others
     }: RangeSliderProps,
     ref
@@ -257,6 +261,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       styles,
     };
 
+    const hasArrayThumbChildren = Array.isArray(thumbChildren);
+
     return (
       <SliderRoot
         {...others}
@@ -308,7 +314,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             onMouseDown={(event) => handleThumbMouseDown(event, 0)}
             onFocus={() => setFocused(0)}
             showLabelOnHover={showLabelOnHover && hovered}
-          />
+          >
+            {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
+          </Thumb>
 
           <Thumb
             {...sharedThumbProps}
@@ -323,7 +331,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             onMouseDown={(event) => handleThumbMouseDown(event, 1)}
             onFocus={() => setFocused(1)}
             showLabelOnHover={showLabelOnHover && hovered}
-          />
+          >
+            {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
+          </Thumb>
         </Track>
 
         <input type="hidden" name={`${name}_from`} value={_value[0]} />

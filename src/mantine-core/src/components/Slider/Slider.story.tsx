@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
+import { Heart } from 'tabler-icons-react';
 import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 
@@ -55,6 +56,12 @@ storiesOf('@mantine/core/Slider', module)
           { value: 100, label: 'xl' },
         ]}
       />
+    </div>
+  ))
+  .add('With thumb children', () => (
+    <div style={{ width: 280, padding: 40 }}>
+      <Slider thumbChildren={<Heart />} />
+      <RangeSlider thumbChildren={[<Heart />, 'H']} />
     </div>
   ))
   .add('Styled', () => (

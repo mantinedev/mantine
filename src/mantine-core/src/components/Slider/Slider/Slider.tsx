@@ -69,8 +69,11 @@ export interface SliderProps
   /** Thumb aria-label */
   thumbLabel?: string;
 
-  /**If true slider label will appear on hover */
+  /** If true slider label will appear on hover */
   showLabelOnHover?: boolean;
+
+  /** Thumb children, can be used to add icon */
+  thumbChildren?: React.ReactNode;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(
@@ -96,6 +99,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       labelAlwaysOn = false,
       thumbLabel = '',
       showLabelOnHover = true,
+      thumbChildren,
       ...others
     }: SliderProps,
     ref
@@ -197,7 +201,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             styles={styles}
             thumbLabel={thumbLabel}
             showLabelOnHover={showLabelOnHover && hovered}
-          />
+          >
+            {thumbChildren}
+          </Thumb>
         </Track>
 
         <input type="hidden" name={name} value={_value} />

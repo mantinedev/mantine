@@ -23,6 +23,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onFocus?(): void;
   onBlur?(): void;
   showLabelOnHover?: boolean;
+  children?: React.ReactNode;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -47,6 +48,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onFocus,
       onBlur,
       showLabelOnHover,
+      children = null,
     }: ThumbProps,
     ref
   ) => {
@@ -81,6 +83,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onClick={(event) => event.stopPropagation()}
         style={{ left: `${position}%` }}
       >
+        {children}
         <Transition
           mounted={label != null && isVisible}
           duration={labelTransitionDuration}
