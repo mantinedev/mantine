@@ -47,6 +47,7 @@ export function SliderInput() {
         value={value}
         onChange={setValue}
         label="Your daily kcal consumption"
+        placeholder="2200 is an average value"
         step={50}
         min={0}
         max={8000}
