@@ -118,7 +118,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
     const handleChange = (val: number) => {
       const nextValue = getChangeValue({ value: val, min, max, step });
-      thumb.current?.focus();
       setValue(nextValue);
     };
 
@@ -163,6 +162,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
         size={size}
         ref={useMergedRef(container, ref)}
         onKeyDownCapture={handleTrackKeydownCapture}
+        onMouseDownCapture={() => container.current?.focus()}
         classNames={classNames}
         styles={styles}
       >
