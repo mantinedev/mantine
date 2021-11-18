@@ -2,9 +2,8 @@
   "title": "User menu",
   "category": "users",
   "author": "rtivital",
-  "dependencies": ["/core/text/", "/core/menu/", "/core/avatar/"],
+  "dependencies": ["/core/text/", "/core/menu/", "/core/avatar/", "/core/group/", "/core/divider/"],
   "canvas": {
-    "center": true,
-    "maxWidth": 320
+    "center": false
   }
 }
