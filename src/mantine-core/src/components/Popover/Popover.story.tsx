@@ -19,7 +19,6 @@ function ZIndex() {
         placement="start"
         styles={{ body: { width: 120 } }}
         position="bottom"
-        transitionDuration={100}
       >
         Hello World
       </Popover>

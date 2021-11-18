@@ -119,7 +119,7 @@ export function Popover({
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!noEscape && event.nativeEvent.code === 'Escape') {
       handleClose();
-      window.setTimeout(returnFocus, transitionDuration + 10);
+      window.setTimeout(returnFocus, 0);
     }
   };
 
