@@ -17,6 +17,10 @@ const code = `
       height: 42,
       paddingLeft: 20,
       paddingRight: 20,
+
+      '&:hover': {
+        backgroundColor: '#00acee !important',
+      },
     },
 
     leftIcon: {
@@ -44,6 +48,10 @@ function Demo() {
             height: 42,
             paddingLeft: 20,
             paddingRight: 20,
+
+            '&:hover': {
+              backgroundColor: '#00acee !important',
+            },
           },
 
           leftIcon: {

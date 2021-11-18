@@ -96,9 +96,10 @@ interface GetVariantStyles {
   theme: MantineTheme;
   color: MantineColor;
   variant: 'filled' | 'outline' | 'light' | 'default' | 'white';
+  loadingRef: string;
 }
 
-function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
+function getVariantStyles({ variant, theme, color, loadingRef }: GetVariantStyles) {
   const colors = getSharedColorScheme({
     theme,
     color,
@@ -111,7 +112,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
     backgroundImage: colors.background,
     color: colors.color,
 
-    '&:hover': {
+    [`&:not(.${loadingRef}):hover`]: {
       backgroundColor: colors.hover,
     },
   };
@@ -161,11 +162,11 @@ export default createStyles(
     return {
       loading,
 
-      outline: getVariantStyles({ variant: 'outline', theme, color }),
-      filled: getVariantStyles({ variant: 'filled', theme, color }),
-      light: getVariantStyles({ variant: 'light', theme, color }),
-      default: getVariantStyles({ variant: 'default', theme, color }),
-      white: getVariantStyles({ variant: 'white', theme, color }),
+      outline: getVariantStyles({ variant: 'outline', theme, color, loadingRef: loading.ref }),
+      filled: getVariantStyles({ variant: 'filled', theme, color, loadingRef: loading.ref }),
+      light: getVariantStyles({ variant: 'light', theme, color, loadingRef: loading.ref }),
+      default: getVariantStyles({ variant: 'default', theme, color, loadingRef: loading.ref }),
+      white: getVariantStyles({ variant: 'white', theme, color, loadingRef: loading.ref }),
 
       gradient: {
         border: 0,

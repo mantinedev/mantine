@@ -15,9 +15,15 @@ function Demo() {
   return (
     <>
       <Group position="center">{getColors({ variant: 'hover' })}</Group>
-      <Group position="center">{getColors({ variant: 'outline' })}</Group>
-      <Group position="center">{getColors({ variant: 'light' })}</Group>
-      <Group position="center">{getColors({ variant: 'filled' })}</Group>
+      <Group position="center" mt="md">
+        {getColors({ variant: 'outline' })}
+      </Group>
+      <Group position="center" mt="md">
+        {getColors({ variant: 'light' })}
+      </Group>
+      <Group position="center" mt="md">
+        {getColors({ variant: 'filled' })}
+      </Group>
     </>
   );
 }
