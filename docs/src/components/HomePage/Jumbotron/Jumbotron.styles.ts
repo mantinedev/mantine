@@ -87,6 +87,12 @@ export default createStyles((theme) => ({
     borderWidth: 2,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
     backgroundColor: 'transparent',
+
+    '&:hover': {
+      backgroundColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
+      } !important`,
+    },
   },
 
   feature: {
