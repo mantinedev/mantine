@@ -4,11 +4,25 @@ import { useDidUpdate } from '../use-did-update/use-did-update';
 interface UseFocusReturn {
   opened: boolean;
   transitionDuration: number;
+  shouldReturnFocus?: boolean;
 }
 
 /** Returns focus to last active element, used in Modal and Drawer */
-export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
-  const returnFocus = useRef<HTMLElement>();
+export function useFocusReturn({
+  opened,
+  transitionDuration,
+  shouldReturnFocus = true,
+}: UseFocusReturn) {
+  const lastActiveElement = useRef<HTMLElement>();
+  const returnFocus = () => {
+    if (
+      lastActiveElement.current &&
+      'focus' in lastActiveElement.current &&
+      typeof lastActiveElement.current.focus === 'function'
+    ) {
+      lastActiveElement.current?.focus();
+    }
+  };
 
   useDidUpdate(() => {
     let timeout = -1;
@@ -22,17 +36,9 @@ export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
     document.addEventListener('keydown', clearFocusTimeout);
 
     if (opened) {
-      returnFocus.current = document.activeElement as HTMLElement;
-    } else {
-      timeout = window.setTimeout(() => {
-        if (
-          returnFocus.current &&
-          'focus' in returnFocus.current &&
-          typeof returnFocus.current.focus === 'function'
-        ) {
-          returnFocus.current?.focus();
-        }
-      }, transitionDuration + 10);
+      lastActiveElement.current = document.activeElement as HTMLElement;
+    } else if (shouldReturnFocus) {
+      timeout = window.setTimeout(returnFocus, transitionDuration + 10);
     }
 
     return () => {
@@ -40,4 +46,6 @@ export function useFocusReturn({ opened, transitionDuration }: UseFocusReturn) {
       document.removeEventListener('keydown', clearFocusTimeout);
     };
   }, [opened]);
+
+  return returnFocus;
 }
