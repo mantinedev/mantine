@@ -125,6 +125,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const handleClear = () => {
       setValue(null);
       setLastValidValue(null);
+      setInputState('');
+      setDropdownOpened(true);
       inputRef.current?.focus();
     };
 
