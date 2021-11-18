@@ -17,10 +17,19 @@ export function RenderList({
   data,
   onSelect,
   selection,
-  itemComponent,
+  itemComponent: ItemComponent,
 }: RenderListProps) {
   const { classes, cx } = useStyles();
-  return <div className={cx(classes.renderList, className)}>RenderList</div>;
+  const items = data.map((item) => (
+    <ItemComponent
+      key={item.value}
+      data={item}
+      onSelect={() => onSelect(item.value)}
+      selected={selection.includes(item.value)}
+    />
+  ));
+
+  return <div className={cx(classes.renderList, className)}>{items}</div>;
 }
 
 RenderList.displayName = '@mantine/core/RenderList';
