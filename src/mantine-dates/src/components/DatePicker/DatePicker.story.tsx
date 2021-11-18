@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, Group, Modal, Button, MantineProvider } from '@mantine/core';
+import { MANTINE_SIZES, Group, Modal, Button, MantineProvider, TextInput } from '@mantine/core';
 import dayjs from 'dayjs';
 import { DatePicker } from './DatePicker';
 
@@ -87,6 +87,12 @@ storiesOf('@mantine/dates/DatePicker', module)
         initialMonth={dayjs(new Date()).subtract(1, 'year').toDate()}
         style={{ marginTop: 20 }}
       />
+    </div>
+  ))
+  .add('Focus behavior with other inputs', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <TextInput placeholder="Focus me when dropdown is opened" />
+      <DatePicker placeholder="Pick date" label="Date picker" mt="xl" />
     </div>
   ))
   .add('With free input', () => (

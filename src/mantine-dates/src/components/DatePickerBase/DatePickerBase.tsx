@@ -174,8 +174,10 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       setDropdownOpened(false);
     };
 
-    const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) =>
+    const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) => {
       event.nativeEvent.code === 'Escape' && closeDropdown();
+      window.setTimeout(() => inputRef.current?.focus(), 0);
+    };
 
     useClickOutside(() => dropdownType === 'popover' && !allowFreeInput && closeDropdown(), null, [
       dropdownElement,
@@ -284,7 +286,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
-              onTransitionEnd={() => !allowFreeInput && inputRef.current?.focus()}
             >
               <div
                 className={classes.dropdownWrapper}

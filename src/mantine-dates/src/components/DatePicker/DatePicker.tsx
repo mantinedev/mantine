@@ -119,6 +119,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(date);
       setInputState(upperFirst(dayjs(date).locale(locale).format(dateFormat)));
       closeCalendarOnChange && setDropdownOpened(false);
+      window.setTimeout(() => inputRef.current?.focus(), 0);
     };
 
     const handleClear = () => {
