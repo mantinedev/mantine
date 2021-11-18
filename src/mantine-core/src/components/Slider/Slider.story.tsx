@@ -60,8 +60,12 @@ storiesOf('@mantine/core/Slider', module)
   ))
   .add('With thumb children', () => (
     <div style={{ width: 280, padding: 40 }}>
-      <Slider thumbChildren={<Heart />} />
-      <RangeSlider thumbChildren={[<Heart />, 'H']} />
+      <Slider
+        thumbChildren={<Heart />}
+        color="red"
+        defaultValue={40}
+        styles={{ thumb: { borderWidth: 2, height: 26, width: 26, padding: 3 } }}
+      />
     </div>
   ))
   .add('Styled', () => (
