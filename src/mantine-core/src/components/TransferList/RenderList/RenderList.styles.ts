@@ -44,7 +44,7 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
   },
 
@@ -57,16 +57,18 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     borderRightWidth: 0,
     borderLeftWidth: 0,
     display: 'block',
+    borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
   },
 
   transferListControl: {
     borderTop: 0,
     borderRightWidth: reversed ? undefined : 0,
     borderLeftWidth: reversed ? 0 : undefined,
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
     '&:disabled': {
-      backgroundColor: 'transparent',
-      borderColor: theme.colors.gray[4],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     },
   },
 }));
