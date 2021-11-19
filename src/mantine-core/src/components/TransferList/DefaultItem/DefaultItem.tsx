@@ -5,7 +5,12 @@ import type { TransferListItemComponent, TransferListItemComponentProps } from '
 export const DefaultItem: TransferListItemComponent = ({
   data,
   selected,
-  onSelect,
 }: TransferListItemComponentProps) => (
-  <Checkbox checked={selected} onChange={onSelect} label={data.label} />
+  <Checkbox
+    checked={selected}
+    onChange={() => {}}
+    label={data.label}
+    tabIndex={-1}
+    sx={{ pointerEvents: 'none' }}
+  />
 );

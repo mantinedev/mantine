@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
+import { UnstyledButton } from '../../Button';
+import { TextInput } from '../../TextInput';
+import { Text } from '../../Text';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
 
@@ -10,6 +13,10 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   onSelect(value: string | string[]): void;
   selection: string[];
   itemComponent: TransferListItemComponent;
+  withSearch: boolean;
+  searchPlaceholder: string;
+  filter(query: string, item: TransferListItem): boolean;
+  nothingFound?: React.ReactNode;
 }
 
 export function RenderList({
@@ -18,18 +25,43 @@ export function RenderList({
   onSelect,
   selection,
   itemComponent: ItemComponent,
+  withSearch,
+  searchPlaceholder,
+  filter,
+  nothingFound,
 }: RenderListProps) {
   const { classes, cx } = useStyles();
-  const items = data.map((item) => (
-    <ItemComponent
-      key={item.value}
-      data={item}
-      onSelect={() => onSelect(item.value)}
-      selected={selection.includes(item.value)}
-    />
-  ));
+  const [query, setQuery] = useState('');
+  const items = data
+    .filter((item) => filter(query, item))
+    .map((item) => (
+      <UnstyledButton
+        onClick={() => onSelect(item.value)}
+        key={item.value}
+        className={classes.renderListItem}
+      >
+        <ItemComponent data={item} selected={selection.includes(item.value)} />
+      </UnstyledButton>
+    ));
 
-  return <div className={cx(classes.renderList, className)}>{items}</div>;
+  return (
+    <div className={cx(classes.renderList, className)}>
+      {withSearch && (
+        <TextInput
+          value={query}
+          onChange={(event) => setQuery(event.currentTarget.value)}
+          placeholder={searchPlaceholder}
+        />
+      )}
+      {items.length > 0 ? (
+        items
+      ) : (
+        <Text color="dimmed" size="sm" align="center">
+          {nothingFound}
+        </Text>
+      )}
+    </div>
+  );
 }
 
 RenderList.displayName = '@mantine/core/RenderList';

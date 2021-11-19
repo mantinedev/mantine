@@ -21,6 +21,6 @@ function Wrapper(props: Partial<TransferListProps>) {
 
 storiesOf('@mantine/core/TransferList', module).add('General usage', () => (
   <div style={{ padding: 40 }}>
-    <Wrapper />
+    <Wrapper searchPlaceholder="Search..." nothingFound="Nothing found..." />
   </div>
 ));
