@@ -21,12 +21,38 @@ import { TransferListDemos } from '@demos/core';
 
 ## Replace list element
 
+You can provide your own wrapper for list, this is most useful
+if you want to use custom scrollbars. Example with [react-custom-scrollbars](https://www.npmjs.com/package/react-custom-scrollbars):
+
 <Demo data={TransferListDemos.scrollbars} />
 
 ## Custom item component
+
+You can replace default item component with your own to customize item appearance.
+To do so:
+
+- Add additional props to data
+- Build a component which will consume your data object
+- Provide custom component via `itemComponent` prop
+- Customize search with `filter` function
 
 <Demo data={TransferListDemos.itemComponent} />
 
 ## Initial selection
 
+Set initial selected items with `initialSelection` prop.
+Value should be a tuple of two arrays which contain values from data:
+
 <Demo data={TransferListDemos.initialSelection} />
+
+## Responsive styles
+
+Set `breakpoint` prop to specify at which breakpoint TransferList will collapse to 1 column:
+
+```tsx
+// -> breakpoint from theme.breakpoints: value is theme.breakpoints.sm
+<TransferList breakpoint="sm" />
+
+// -> breakpoint in px: value is 755px
+<TransferList breakpoint={755} />
+```
