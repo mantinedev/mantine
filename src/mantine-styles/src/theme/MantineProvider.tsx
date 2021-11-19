@@ -1,11 +1,10 @@
-/* eslint-disable import/no-cycle */
 import React, { createContext, useContext } from 'react';
 import type { Options as EmotionCacheOptions } from '@emotion/cache';
+import { Global } from '@emotion/react';
 import { DEFAULT_THEME } from './default-theme';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
 import { mergeTheme } from './utils/merge-theme/merge-theme';
-import { GlobalStyles } from './GlobalStyles';
 import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
@@ -44,6 +43,27 @@ interface MantineProviderProps {
   withNormalizeCSS?: boolean;
   withGlobalStyles?: boolean;
   children: React.ReactNode;
+}
+
+function GlobalStyles() {
+  const theme = useMantineTheme();
+  return (
+    <Global
+      styles={{
+        '*, *::before, *::after': {
+          boxSizing: 'border-box',
+        },
+
+        body: {
+          ...theme.fn.fontStyles(),
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          lineHeight: theme.lineHeight,
+          fontSizes: theme.fontSizes.md,
+        } as any,
+      }}
+    />
+  );
 }
 
 export function MantineProvider({
