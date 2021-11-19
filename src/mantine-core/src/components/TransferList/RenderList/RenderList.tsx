@@ -34,17 +34,45 @@ export function RenderList({
 }: RenderListProps) {
   const { classes, cx } = useStyles();
   const [query, setQuery] = useState('');
-  const items = data
-    .filter((item) => filter(query, item))
-    .map((item) => (
-      <UnstyledButton
-        onClick={() => onSelect(item.value)}
-        key={item.value}
-        className={classes.renderListItem}
-      >
-        <ItemComponent data={item} selected={selection.includes(item.value)} />
-      </UnstyledButton>
-    ));
+  const [hovered, setHovered] = useState(-1);
+  const filteredData = data.filter((item) => filter(query, item));
+
+  const items = filteredData.map((item, index) => (
+    <UnstyledButton
+      tabIndex={withSearch ? -1 : 0}
+      onClick={() => onSelect(item.value)}
+      key={item.value}
+      onMouseEnter={() => setHovered(index)}
+      className={cx(classes.renderListItem, {
+        [classes.renderListItemHovered]: index === hovered,
+      })}
+    >
+      <ItemComponent data={item} selected={selection.includes(item.value)} />
+    </UnstyledButton>
+  ));
+
+  const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (event.code) {
+      case 'Enter': {
+        if (filteredData[hovered]) {
+          event.preventDefault();
+          onSelect(filteredData[hovered].value);
+        }
+        break;
+      }
+
+      case 'ArrowDown': {
+        event.preventDefault();
+        setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+        break;
+      }
+
+      case 'ArrowUp': {
+        event.preventDefault();
+        setHovered((current) => (current > 0 ? current - 1 : current));
+      }
+    }
+  };
 
   return (
     <div className={cx(classes.renderList, className)}>
@@ -58,14 +86,20 @@ export function RenderList({
         {withSearch && (
           <TextInput
             value={query}
-            onChange={(event) => setQuery(event.currentTarget.value)}
+            onChange={(event) => {
+              setQuery(event.currentTarget.value);
+              setHovered(0);
+            }}
+            onFocus={() => setHovered(0)}
+            onBlur={() => setHovered(-1)}
             placeholder={searchPlaceholder}
             radius={0}
+            onKeyDown={handleSearchKeydown}
             classNames={{ input: classes.renderListSearch }}
           />
         )}
 
-        <div className={classes.renderListItems}>
+        <div className={classes.renderListItems} onMouseLeave={() => setHovered(-1)}>
           {items.length > 0 ? (
             items
           ) : (

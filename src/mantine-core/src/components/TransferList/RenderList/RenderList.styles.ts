@@ -14,10 +14,10 @@ export default createStyles((theme) => ({
     marginLeft: theme.spacing.sm - 7,
     marginRight: theme.spacing.sm - 7,
     borderRadius: theme.radius.sm,
+  },
 
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
+  renderListItemHovered: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   renderListItems: {
