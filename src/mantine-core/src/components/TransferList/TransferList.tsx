@@ -76,7 +76,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       const items: TransferListData = Array(2) as any;
       const moveToIndex = listIndex === 0 ? 1 : 0;
       items[listIndex] = [];
-      items[moveToIndex] = [...value[listIndex], ...value[moveToIndex]];
+      items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
       onChange(items);
       handlers.deselectAll(listIndex);
     };
@@ -96,7 +96,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
         { filtered: [], current: [] }
       );
       items[listIndex] = transferData.filtered;
-      items[moveToIndex] = [...value[moveToIndex], ...transferData.current];
+      items[moveToIndex] = [...transferData.current, ...value[moveToIndex]];
       onChange(items);
       handlers.deselectAll(listIndex);
     };
