@@ -41,8 +41,13 @@ export function RenderList({
   onMoveAll,
   onMove,
   height,
+  classNames,
+  styles,
 }: RenderListProps) {
-  const { classes, cx } = useStyles({ reversed, height });
+  const { classes, cx } = useStyles(
+    { reversed, height },
+    { name: 'TransferList', classNames, styles }
+  );
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));

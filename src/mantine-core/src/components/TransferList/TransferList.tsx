@@ -1,14 +1,16 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
-import { RenderList } from './RenderList/RenderList';
+import { DefaultProps, MantineNumberSize, useExtractedMargins, ClassNames } from '@mantine/styles';
+import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { SimpleGrid } from '../SimpleGrid';
 import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
 import { TransferListData, TransferListItemComponent, TransferListItem } from './types';
 import useStyles from './TransferList.styles';
 
+export type TransferListStylesNames = ClassNames<typeof useStyles> | RenderListStylesNames;
+
 export interface TransferListProps
-  extends DefaultProps,
+  extends DefaultProps<TransferListStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: TransferListData;
   onChange(value: TransferListData): void;
@@ -40,9 +42,14 @@ export function TransferList({
   height = 150,
   listComponent,
   breakpoint,
+  classNames,
+  styles,
+  sx,
+  style,
   ...others
 }: TransferListProps) {
-  const { classes, cx } = useStyles();
+  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const { classes, cx } = useStyles(null, { name: 'TransferList', classNames, styles, sx });
   const [selection, handlers] = useSelectionState(initialSelection);
 
   const handleMoveAll = (listIndex: 0 | 1) => {
@@ -82,7 +89,8 @@ export function TransferList({
       spacing="xl"
       breakpoints={breakpoints}
       className={cx(classes.root, className)}
-      {...others}
+      style={mergedStyles}
+      {...rest}
     >
       <RenderList
         data={value[0]}
@@ -97,6 +105,8 @@ export function TransferList({
         title={titles[0]}
         height={height}
         listComponent={listComponent}
+        classNames={classNames}
+        styles={styles}
       />
 
       <RenderList
@@ -112,6 +122,8 @@ export function TransferList({
         title={titles[1]}
         height={height}
         listComponent={listComponent}
+        classNames={classNames}
+        styles={styles}
         reversed
       />
     </SimpleGrid>
