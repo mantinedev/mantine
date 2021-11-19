@@ -23,6 +23,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   onMoveAll(): void;
   onMove(): void;
   height: number;
+  listComponent?: React.FC<any>;
 }
 
 export function RenderList({
@@ -31,6 +32,7 @@ export function RenderList({
   onSelect,
   selection,
   itemComponent: ItemComponent,
+  listComponent,
   searchPlaceholder,
   filter,
   nothingFound,
@@ -44,6 +46,7 @@ export function RenderList({
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));
+  const ListComponent = listComponent || 'div';
 
   const items = filteredData.map((item, index) => (
     <UnstyledButton
@@ -130,7 +133,7 @@ export function RenderList({
           </ActionIcon>
         </div>
 
-        <div className={classes.renderListItems} onMouseLeave={() => setHovered(-1)}>
+        <ListComponent className={classes.renderListItems} onMouseLeave={() => setHovered(-1)}>
           {items.length > 0 ? (
             items
           ) : (
@@ -138,7 +141,7 @@ export function RenderList({
               {nothingFound}
             </Text>
           )}
-        </div>
+        </ListComponent>
       </div>
     </div>
   );

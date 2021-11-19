@@ -19,6 +19,7 @@ export interface TransferListProps
   filter?(query: string, item: TransferListItem): boolean;
   titles?: [string, string];
   height?: number;
+  listComponent?: React.FC<any>;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -36,6 +37,7 @@ export function TransferList({
   titles = [null, null],
   initialSelection,
   height = 150,
+  listComponent,
   ...others
 }: TransferListProps) {
   const { classes, cx } = useStyles();
@@ -84,6 +86,7 @@ export function TransferList({
         nothingFound={nothingFound}
         title={titles[0]}
         height={height}
+        listComponent={listComponent}
       />
 
       <Space w="xl" />
@@ -100,6 +103,7 @@ export function TransferList({
         nothingFound={nothingFound}
         title={titles[1]}
         height={height}
+        listComponent={listComponent}
         reversed
       />
     </div>
