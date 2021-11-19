@@ -4,6 +4,7 @@ import { RenderList } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { useSelectionState } from './use-selection-state/use-selection-state';
 import { TransferListData, TransferListItemComponent, TransferListItem } from './types';
+import useStyles from './TransferList.styles';
 
 export interface TransferListProps
   extends DefaultProps,
@@ -15,6 +16,7 @@ export interface TransferListProps
   searchPlaceholder?: string;
   nothingFound?: React.ReactNode;
   filter?(query: string, item: TransferListItem): boolean;
+  titles?: [string, string];
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -29,12 +31,15 @@ export function TransferList({
   searchPlaceholder,
   filter = defaultFilter,
   nothingFound,
+  className,
+  titles = ['', ''],
   ...others
 }: TransferListProps) {
+  const { classes, cx } = useStyles();
   const [selection, setSelection] = useSelectionState();
 
   return (
-    <div {...others}>
+    <div className={cx(classes.root, className)} {...others}>
       <RenderList
         data={data[0]}
         selection={selection[0]}
@@ -44,9 +49,10 @@ export function TransferList({
         searchPlaceholder={searchPlaceholder}
         filter={filter}
         nothingFound={nothingFound}
+        title={titles[0]}
       />
 
-      <div>Controls</div>
+      <div className={classes.controls}>Controls</div>
 
       <RenderList
         data={data[1]}
@@ -57,6 +63,7 @@ export function TransferList({
         searchPlaceholder={searchPlaceholder}
         filter={filter}
         nothingFound={nothingFound}
+        title={titles[1]}
       />
     </div>
   );

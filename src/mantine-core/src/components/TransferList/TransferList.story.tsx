@@ -20,7 +20,11 @@ function Wrapper(props: Partial<TransferListProps>) {
 }
 
 storiesOf('@mantine/core/TransferList', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
-    <Wrapper searchPlaceholder="Search..." nothingFound="Nothing found..." />
+  <div style={{ padding: 40, maxWidth: 800 }}>
+    <Wrapper
+      searchPlaceholder="Search..."
+      nothingFound="Nothing found..."
+      titles={['Frameworks', 'Libraries']}
+    />
   </div>
 ));

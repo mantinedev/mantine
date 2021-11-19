@@ -17,6 +17,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   searchPlaceholder: string;
   filter(query: string, item: TransferListItem): boolean;
   nothingFound?: React.ReactNode;
+  title?: React.ReactNode;
 }
 
 export function RenderList({
@@ -29,6 +30,7 @@ export function RenderList({
   searchPlaceholder,
   filter,
   nothingFound,
+  title,
 }: RenderListProps) {
   const { classes, cx } = useStyles();
   const [query, setQuery] = useState('');
@@ -46,20 +48,33 @@ export function RenderList({
 
   return (
     <div className={cx(classes.renderList, className)}>
-      {withSearch && (
-        <TextInput
-          value={query}
-          onChange={(event) => setQuery(event.currentTarget.value)}
-          placeholder={searchPlaceholder}
-        />
-      )}
-      {items.length > 0 ? (
-        items
-      ) : (
-        <Text color="dimmed" size="sm" align="center">
-          {nothingFound}
+      {title && (
+        <Text weight={500} className={classes.renderListTitle}>
+          {title}
         </Text>
       )}
+
+      <div className={classes.renderListBody}>
+        {withSearch && (
+          <TextInput
+            value={query}
+            onChange={(event) => setQuery(event.currentTarget.value)}
+            placeholder={searchPlaceholder}
+            radius={0}
+            classNames={{ input: classes.renderListSearch }}
+          />
+        )}
+
+        <div className={classes.renderListItems}>
+          {items.length > 0 ? (
+            items
+          ) : (
+            <Text color="dimmed" size="sm" align="center">
+              {nothingFound}
+            </Text>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
