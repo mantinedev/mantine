@@ -1,8 +1,8 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
-import { Space } from '../Space';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { RenderList } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
+import { SimpleGrid } from '../SimpleGrid';
 import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
 import { TransferListData, TransferListItemComponent, TransferListItem } from './types';
 import useStyles from './TransferList.styles';
@@ -20,6 +20,7 @@ export interface TransferListProps
   titles?: [string, string];
   height?: number;
   listComponent?: React.FC<any>;
+  breakpoint?: MantineNumberSize;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -38,6 +39,7 @@ export function TransferList({
   initialSelection,
   height = 150,
   listComponent,
+  breakpoint,
   ...others
 }: TransferListProps) {
   const { classes, cx } = useStyles();
@@ -72,8 +74,16 @@ export function TransferList({
     handlers.deselectAll(listIndex);
   };
 
+  const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
+
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <SimpleGrid
+      cols={2}
+      spacing="xl"
+      breakpoints={breakpoints}
+      className={cx(classes.root, className)}
+      {...others}
+    >
       <RenderList
         data={value[0]}
         selection={selection[0]}
@@ -88,8 +98,6 @@ export function TransferList({
         height={height}
         listComponent={listComponent}
       />
-
-      <Space w="xl" />
 
       <RenderList
         data={value[1]}
@@ -106,6 +114,6 @@ export function TransferList({
         listComponent={listComponent}
         reversed
       />
-    </div>
+    </SimpleGrid>
   );
 }

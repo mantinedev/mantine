@@ -22,16 +22,17 @@ function Wrapper(props: Partial<TransferListProps>) {
 
 storiesOf('@mantine/core/TransferList', module)
   .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 800 }}>
+    <div style={{ padding: 40 }}>
       <Wrapper
         searchPlaceholder="Search..."
         nothingFound="Nothing here"
         titles={['Frameworks', 'Libraries']}
+        breakpoint="sm"
       />
     </div>
   ))
   .add('With custom scrollbars', () => (
-    <div style={{ padding: 40, maxWidth: 800 }}>
+    <div style={{ padding: 40 }}>
       <Wrapper
         searchPlaceholder="Search..."
         nothingFound="Nothing here"
