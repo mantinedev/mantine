@@ -71,5 +71,6 @@ export * as ThemeIconDemos from './components/ThemeIcon/demos';
 export * as TimelineDemos from './components/Timeline/demos';
 export * as TitleDemos from './components/Title/demos';
 export * as TooltipDemos from './components/Tooltip/demos';
+export * as TransferListDemos from './components/TransferList/demos';
 export * as TransitionDemos from './components/Transition/demos';
 export * as TypographyStylesProviderDemos from './components/TypographyStylesProvider/demos';

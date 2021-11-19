@@ -42,5 +42,6 @@ export * from './components/Switch/styles.api';
 export * from './components/Tabs/styles.api';
 export * from './components/Timeline/styles.api';
 export * from './components/Tooltip/styles.api';
+export * from './components/TransferList/styles.api';
 export * from './components/Textarea/styles.api';
 export * from './components/TextInput/styles.api';
