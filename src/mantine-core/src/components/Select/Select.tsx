@@ -227,7 +227,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
       if (newSelectedValue) {
         handleSearchChange(newSelectedValue.label);
-      } else if (!isCreatable) {
+      } else if (!isCreatable || !_value) {
         handleSearchChange('');
       }
     }, [_value]);
