@@ -161,33 +161,18 @@ theme.fn.cover(10);
 // -> { position: 'absolute', top: 10, right: 10, bottom: 10, left: 10 }
 ```
 
-## lighten
+## lighten and darken
 
-`lighten` can be used to lighten a color by a given percentage:
-
-```tsx
-theme.fn.lighten('#228BE6', 0.1); // 10%
-// -> "rgba(56, 151, 233, 1)"
-
-theme.fn.lighten('rgb(46, 149, 11)', 0.1); // 50%
-// -> "rgba(151, 202, 133, 1)"
-
-theme.fn.lighten('rgba(219, 91, 17, 0.6)', 0.1)
-// -> "rgba(223, 107, 41, 0.6)"
-```
-
-## darken
-
-`darken` can be used to darken a color by a given percentage.
+`lighten` and `darken` functions can be used to lighten or darken a color by a given percentage.
+Both functions work with hex, rgb and rgba formats and always return color in rgba format:
 
 ```tsx
-theme.fn.darken('#12B886', 0.1); // 10%
-// -> "rgba(16, 166, 121, 1)"
+theme.fn.lighten('#228BE6', 0.1); // lighten by 10%
+// -> rgba(56, 151, 233, 1)
 
-theme.fn.darken('rgb(245, 159, 0)', 0.5); // 50%
-// -> "rgba(123, 80, 0, 1)"
+theme.fn.darken('rgb(245, 159, 0)', 0.5); // darken by 50%
+// -> rgba(123, 80, 0, 1)
 
-theme.fn.darken('rgba(214, 51, 108, 0.6)', 0.1)
-// -> "rgba(193, 46, 97, 0.6)"
+theme.fn.darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
+// -> rgba(123, 80, 0, 1, .3)
 ```
-
