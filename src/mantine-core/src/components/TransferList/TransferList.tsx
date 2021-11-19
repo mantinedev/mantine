@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -28,93 +28,99 @@ export function defaultFilter(query: string, item: TransferListItem) {
   return item.label.toLowerCase().trim().includes(query.toLowerCase().trim());
 }
 
-export function TransferList({
-  value,
-  onChange,
-  itemComponent = DefaultItem,
-  searchPlaceholder,
-  filter = defaultFilter,
-  nothingFound,
-  titles = [null, null],
-  initialSelection,
-  height = 150,
-  listComponent,
-  breakpoint,
-  classNames,
-  styles,
-  sx,
-  style,
-  ...others
-}: TransferListProps) {
-  const [selection, handlers] = useSelectionState(initialSelection);
+export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
+  (
+    {
+      value,
+      onChange,
+      itemComponent = DefaultItem,
+      searchPlaceholder,
+      filter = defaultFilter,
+      nothingFound,
+      titles = [null, null],
+      initialSelection,
+      height = 150,
+      listComponent,
+      breakpoint,
+      classNames,
+      styles,
+      sx,
+      ...others
+    }: TransferListProps,
+    ref
+  ) => {
+    const [selection, handlers] = useSelectionState(initialSelection);
 
-  const handleMoveAll = (listIndex: 0 | 1) => {
-    const items: TransferListData = Array(2) as any;
-    const moveToIndex = listIndex === 0 ? 1 : 0;
-    items[listIndex] = [];
-    items[moveToIndex] = [...value[listIndex], ...value[moveToIndex]];
-    onChange(items);
-    handlers.deselectAll(listIndex);
-  };
+    const handleMoveAll = (listIndex: 0 | 1) => {
+      const items: TransferListData = Array(2) as any;
+      const moveToIndex = listIndex === 0 ? 1 : 0;
+      items[listIndex] = [];
+      items[moveToIndex] = [...value[listIndex], ...value[moveToIndex]];
+      onChange(items);
+      handlers.deselectAll(listIndex);
+    };
 
-  const handleMove = (listIndex: 0 | 1) => {
-    const moveToIndex = listIndex === 0 ? 1 : 0;
-    const items: TransferListData = Array(2) as any;
-    const transferData = value[listIndex].reduce(
-      (acc, item) => {
-        if (!selection[listIndex].includes(item.value)) {
-          acc.filtered.push(item);
-        } else {
-          acc.current.push(item);
-        }
-        return acc;
-      },
-      { filtered: [], current: [] }
+    const handleMove = (listIndex: 0 | 1) => {
+      const moveToIndex = listIndex === 0 ? 1 : 0;
+      const items: TransferListData = Array(2) as any;
+      const transferData = value[listIndex].reduce(
+        (acc, item) => {
+          if (!selection[listIndex].includes(item.value)) {
+            acc.filtered.push(item);
+          } else {
+            acc.current.push(item);
+          }
+          return acc;
+        },
+        { filtered: [], current: [] }
+      );
+      items[listIndex] = transferData.filtered;
+      items[moveToIndex] = [...value[moveToIndex], ...transferData.current];
+      onChange(items);
+      handlers.deselectAll(listIndex);
+    };
+
+    const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
+
+    return (
+      <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} ref={ref} {...others}>
+        <RenderList
+          data={value[0]}
+          selection={selection[0]}
+          onSelect={(val) => handlers.select(0, val)}
+          onMoveAll={() => handleMoveAll(0)}
+          onMove={() => handleMove(0)}
+          itemComponent={itemComponent}
+          searchPlaceholder={searchPlaceholder}
+          filter={filter}
+          nothingFound={nothingFound}
+          title={titles[0]}
+          height={height}
+          listComponent={listComponent}
+          classNames={classNames}
+          styles={styles}
+        />
+
+        <RenderList
+          data={value[1]}
+          selection={selection[1]}
+          onSelect={(val) => handlers.select(1, val)}
+          onMoveAll={() => handleMoveAll(1)}
+          onMove={() => handleMove(1)}
+          itemComponent={itemComponent}
+          searchPlaceholder={searchPlaceholder}
+          filter={filter}
+          nothingFound={nothingFound}
+          title={titles[1]}
+          height={height}
+          listComponent={listComponent}
+          classNames={classNames}
+          styles={styles}
+          reversed
+        />
+      </SimpleGrid>
     );
-    items[listIndex] = transferData.filtered;
-    items[moveToIndex] = [...value[moveToIndex], ...transferData.current];
-    onChange(items);
-    handlers.deselectAll(listIndex);
-  };
+  }
+);
 
-  const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
-
-  return (
-    <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} {...others}>
-      <RenderList
-        data={value[0]}
-        selection={selection[0]}
-        onSelect={(val) => handlers.select(0, val)}
-        onMoveAll={() => handleMoveAll(0)}
-        onMove={() => handleMove(0)}
-        itemComponent={itemComponent}
-        searchPlaceholder={searchPlaceholder}
-        filter={filter}
-        nothingFound={nothingFound}
-        title={titles[0]}
-        height={height}
-        listComponent={listComponent}
-        classNames={classNames}
-        styles={styles}
-      />
-
-      <RenderList
-        data={value[1]}
-        selection={selection[1]}
-        onSelect={(val) => handlers.select(1, val)}
-        onMoveAll={() => handleMoveAll(1)}
-        onMove={() => handleMove(1)}
-        itemComponent={itemComponent}
-        searchPlaceholder={searchPlaceholder}
-        filter={filter}
-        nothingFound={nothingFound}
-        title={titles[1]}
-        height={height}
-        listComponent={listComponent}
-        classNames={classNames}
-        styles={styles}
-        reversed
-      />
-    </SimpleGrid>
-  );
-}
+TransferList.displayName = '@mantine/core/TransferList';
