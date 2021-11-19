@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/styles';
+import { Space } from '../Space';
 import { RenderList } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { useSelectionState } from './use-selection-state/use-selection-state';
@@ -12,7 +13,6 @@ export interface TransferListProps
   data: TransferListData;
   onChange(value: TransferListData): void;
   itemComponent?: TransferListItemComponent;
-  withSearch?: boolean;
   searchPlaceholder?: string;
   nothingFound?: React.ReactNode;
   filter?(query: string, item: TransferListItem): boolean;
@@ -27,7 +27,6 @@ export function TransferList({
   data,
   onChange,
   itemComponent = DefaultItem,
-  withSearch = true,
   searchPlaceholder,
   filter = defaultFilter,
   nothingFound,
@@ -45,25 +44,24 @@ export function TransferList({
         selection={selection[0]}
         onSelect={(value) => setSelection(0, value)}
         itemComponent={itemComponent}
-        withSearch={withSearch}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
         nothingFound={nothingFound}
         title={titles[0]}
       />
 
-      <div className={classes.controls}>Controls</div>
+      <Space w="xl" />
 
       <RenderList
         data={data[1]}
         selection={selection[1]}
         onSelect={(value) => setSelection(1, value)}
         itemComponent={itemComponent}
-        withSearch={withSearch}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
         nothingFound={nothingFound}
         title={titles[1]}
+        reversed
       />
     </div>
   );

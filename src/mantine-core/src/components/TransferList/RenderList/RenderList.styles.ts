@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/styles';
 
-export default createStyles((theme) => ({
+interface RenderListStyles {
+  reversed: boolean;
+}
+
+export default createStyles((theme, { reversed }: RenderListStyles) => ({
   renderList: {
     flex: 1,
     display: 'flex',
@@ -25,8 +29,14 @@ export default createStyles((theme) => ({
     paddingBottom: theme.spacing.xs / 2,
   },
 
+  renderListHeader: {
+    display: 'flex',
+    flexDirection: reversed ? 'row-reverse' : 'row',
+  },
+
   renderListBody: {
     flex: 1,
+    overflow: 'hidden',
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     border: `1px solid ${
@@ -39,11 +49,20 @@ export default createStyles((theme) => ({
   },
 
   renderListSearch: {
-    width: 'calc(100% + 2px)',
-    marginLeft: -1,
-    marginRight: -1,
-    marginTop: -1,
-    borderTopRightRadius: theme.radius.sm,
-    borderTopLeftRadius: theme.radius.sm,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
+    display: 'block',
+  },
+
+  renderListControl: {
+    borderTop: 0,
+    borderRightWidth: reversed ? undefined : 0,
+    borderLeftWidth: reversed ? 0 : undefined,
+
+    '&:disabled': {
+      backgroundColor: 'transparent',
+      borderColor: theme.colors.gray[4],
+    },
   },
 }));
