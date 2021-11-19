@@ -20,6 +20,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   nothingFound?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
+  onMoveAll(): void;
 }
 
 export function RenderList({
@@ -33,6 +34,7 @@ export function RenderList({
   nothingFound,
   title,
   reversed,
+  onMoveAll,
 }: RenderListProps) {
   const { classes, cx } = useStyles({ reversed });
   const [query, setQuery] = useState('');
@@ -117,6 +119,7 @@ export function RenderList({
             radius={0}
             className={classes.renderListControl}
             disabled={data.length === 0}
+            onClick={onMoveAll}
           >
             {reversed ? <FirstIcon /> : <LastIcon />}
           </ActionIcon>

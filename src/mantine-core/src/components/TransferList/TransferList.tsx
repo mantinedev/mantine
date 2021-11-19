@@ -38,6 +38,14 @@ export function TransferList({
 }: TransferListProps) {
   const { classes, cx } = useStyles();
   const [selection, handlers] = useSelectionState(initialSelection);
+  const handleMoveAll = (listIndex: 0 | 1) => {
+    const items: TransferListData = Array(2) as any;
+    const indexToMove = listIndex === 0 ? 1 : 0;
+    items[listIndex] = [];
+    items[indexToMove] = [...data[listIndex], ...data[indexToMove]];
+    onChange(items);
+    handlers.deselectAll(listIndex);
+  };
 
   return (
     <div className={cx(classes.root, className)} {...others}>
@@ -45,6 +53,7 @@ export function TransferList({
         data={data[0]}
         selection={selection[0]}
         onSelect={(value) => handlers.select(0, value)}
+        onMoveAll={() => handleMoveAll(0)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
@@ -58,6 +67,7 @@ export function TransferList({
         data={data[1]}
         selection={selection[1]}
         onSelect={(value) => handlers.select(1, value)}
+        onMoveAll={() => handleMoveAll(1)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}

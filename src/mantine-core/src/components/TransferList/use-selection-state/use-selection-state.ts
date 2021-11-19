@@ -30,7 +30,18 @@ export function useSelectionState(initialSelection: Selection = [[], []]) {
       return clone;
     });
 
-  const handlers = { select: handleSelect, deselect: handleDeselect };
+  const handleDeselectAll = (listIndex: 0 | 1) =>
+    setSelection((currentSelection) => {
+      const clone: Selection = [...currentSelection];
+      clone[listIndex] = [];
+      return clone;
+    });
+
+  const handlers = {
+    select: handleSelect,
+    deselect: handleDeselect,
+    deselectAll: handleDeselectAll,
+  };
 
   return [selection, handlers] as const;
 }
