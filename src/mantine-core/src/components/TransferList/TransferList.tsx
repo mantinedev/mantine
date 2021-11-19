@@ -11,16 +11,37 @@ export type TransferListStylesNames = RenderListStylesNames;
 export interface TransferListProps
   extends DefaultProps<TransferListStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+  /** Current value */
   value: TransferListData;
+
+  /** Called when value changes */
   onChange(value: TransferListData): void;
+
+  /** Initial items selection */
   initialSelection?: Selection;
+
+  /** Custom item component */
   itemComponent?: TransferListItemComponent;
+
+  /** Search fields placeholder */
   searchPlaceholder?: string;
+
+  /** Nothing found message */
   nothingFound?: React.ReactNode;
+
+  /** Function to filter search results */
   filter?(query: string, item: TransferListItem): boolean;
+
+  /** Lists titles */
   titles?: [string, string];
-  height?: number;
+
+  /** List items height */
+  listHeight?: number;
+
+  /** Change list component, can be used to add custom scrollbars */
   listComponent?: React.FC<any>;
+
+  /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
 }
 
@@ -39,7 +60,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       nothingFound,
       titles = [null, null],
       initialSelection,
-      height = 150,
+      listHeight = 150,
       listComponent,
       breakpoint,
       classNames,
@@ -95,7 +116,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           filter={filter}
           nothingFound={nothingFound}
           title={titles[0]}
-          height={height}
+          height={listHeight}
           listComponent={listComponent}
           classNames={classNames}
           styles={styles}
@@ -112,7 +133,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           filter={filter}
           nothingFound={nothingFound}
           title={titles[1]}
-          height={height}
+          height={listHeight}
           listComponent={listComponent}
           classNames={classNames}
           styles={styles}

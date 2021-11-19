@@ -37,7 +37,7 @@ storiesOf('@mantine/core/TransferList', module)
         searchPlaceholder="Search..."
         nothingFound="Nothing here"
         titles={['Frameworks', 'Libraries']}
-        height={100}
+        listHeight={100}
         listComponent={(props) => (
           <Scrollbars style={{ height: 100 }}>
             <div {...props} />
