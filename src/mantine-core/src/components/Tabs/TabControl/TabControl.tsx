@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, useSx } from '@mantine/styles';
 import { TabProps } from '../Tab/Tab';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
@@ -29,9 +29,11 @@ export function TabControl({
   styles,
   orientation = 'horizontal',
   icon: __,
+  sx,
   ...others
 }: TabControlProps) {
   const { label, icon, color: overrideColor, ...props } = tabProps;
+  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
     { color: overrideColor || color, orientation },
     { classNames, styles, name: 'Tabs' }
@@ -46,6 +48,7 @@ export function TabControl({
         classes.tabControl,
         classes[variant],
         { [classes.tabActive]: active },
+        sxClassName,
         className
       )}
       type="button"
