@@ -17,6 +17,7 @@ import { MenuBody } from './MenuBody';
 const defaultProps = {
   opened: true,
   onClose: () => {},
+  onEscape: () => {},
   children: <MenuItem>test-1</MenuItem>,
 };
 
