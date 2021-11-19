@@ -2,9 +2,10 @@ import { createStyles } from '@mantine/styles';
 
 interface RenderListStyles {
   reversed: boolean;
+  height: number;
 }
 
-export default createStyles((theme, { reversed }: RenderListStyles) => ({
+export default createStyles((theme, { reversed, height }: RenderListStyles) => ({
   renderList: {
     flex: 1,
     display: 'flex',
@@ -27,6 +28,9 @@ export default createStyles((theme, { reversed }: RenderListStyles) => ({
   renderListItems: {
     paddingTop: theme.spacing.xs / 2,
     paddingBottom: theme.spacing.xs / 2,
+    overflow: 'auto',
+    height,
+    maxHeight: height,
   },
 
   renderListHeader: {

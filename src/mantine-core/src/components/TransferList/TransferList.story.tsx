@@ -23,7 +23,7 @@ storiesOf('@mantine/core/TransferList', module).add('General usage', () => (
   <div style={{ padding: 40, maxWidth: 800 }}>
     <Wrapper
       searchPlaceholder="Search..."
-      nothingFound="Nothing found..."
+      nothingFound="Nothing here"
       titles={['Frameworks', 'Libraries']}
     />
   </div>

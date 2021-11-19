@@ -22,6 +22,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   reversed?: boolean;
   onMoveAll(): void;
   onMove(): void;
+  height: number;
 }
 
 export function RenderList({
@@ -37,8 +38,9 @@ export function RenderList({
   reversed,
   onMoveAll,
   onMove,
+  height,
 }: RenderListProps) {
-  const { classes, cx } = useStyles({ reversed });
+  const { classes, cx } = useStyles({ reversed, height });
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));
@@ -132,7 +134,7 @@ export function RenderList({
           {items.length > 0 ? (
             items
           ) : (
-            <Text color="dimmed" size="sm" align="center">
+            <Text color="dimmed" size="sm" align="center" mt="sm">
               {nothingFound}
             </Text>
           )}
