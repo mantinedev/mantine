@@ -1,9 +1,5 @@
 import React from 'react';
-import { PrevIcon } from '../icons/PrevIcon';
-import { NextIcon } from '../icons/NextIcon';
-import { DotsIcon } from '../icons/DotsIcon';
-import { FirstIcon } from '../icons/FirstIcon';
-import { LastIcon } from '../icons/LastIcon';
+import * as _icons from '../icons';
 
 export interface PaginationItemProps extends React.ComponentPropsWithoutRef<'button'> {
   page: number | 'dots' | 'prev' | 'next' | 'first' | 'last';
@@ -12,11 +8,11 @@ export interface PaginationItemProps extends React.ComponentPropsWithoutRef<'but
 }
 
 const icons = {
-  dots: DotsIcon,
-  next: NextIcon,
-  prev: PrevIcon,
-  first: FirstIcon,
-  last: LastIcon,
+  dots: _icons.DotsIcon,
+  next: _icons.NextIcon,
+  prev: _icons.PrevIcon,
+  first: _icons.FirstIcon,
+  last: _icons.LastIcon,
 };
 
 export function DefaultItem({ page, active, onClick, ...others }: PaginationItemProps) {
