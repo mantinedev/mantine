@@ -1,5 +1,5 @@
 import React from 'react';
-import { Global } from '../tss/Global';
+import { Global } from '../tss';
 
 export function GlobalStyles() {
   return (
