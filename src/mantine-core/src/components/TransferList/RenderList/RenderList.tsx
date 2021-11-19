@@ -12,7 +12,7 @@ export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
 interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   data: TransferListItem[];
-  onSelect(value: string | string[]): void;
+  onSelect(value: string): void;
   selection: string[];
   itemComponent: TransferListItemComponent;
   searchPlaceholder: string;

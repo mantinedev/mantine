@@ -3,7 +3,7 @@ import { DefaultProps } from '@mantine/styles';
 import { Space } from '../Space';
 import { RenderList } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
-import { useSelectionState } from './use-selection-state/use-selection-state';
+import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
 import { TransferListData, TransferListItemComponent, TransferListItem } from './types';
 import useStyles from './TransferList.styles';
 
@@ -12,6 +12,7 @@ export interface TransferListProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   data: TransferListData;
   onChange(value: TransferListData): void;
+  initialSelection?: Selection;
   itemComponent?: TransferListItemComponent;
   searchPlaceholder?: string;
   nothingFound?: React.ReactNode;
@@ -32,17 +33,18 @@ export function TransferList({
   nothingFound,
   className,
   titles = ['', ''],
+  initialSelection,
   ...others
 }: TransferListProps) {
   const { classes, cx } = useStyles();
-  const [selection, setSelection] = useSelectionState();
+  const [selection, handlers] = useSelectionState(initialSelection);
 
   return (
     <div className={cx(classes.root, className)} {...others}>
       <RenderList
         data={data[0]}
         selection={selection[0]}
-        onSelect={(value) => setSelection(0, value)}
+        onSelect={(value) => handlers.select(0, value)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
@@ -55,7 +57,7 @@ export function TransferList({
       <RenderList
         data={data[1]}
         selection={selection[1]}
-        onSelect={(value) => setSelection(1, value)}
+        onSelect={(value) => handlers.select(1, value)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}

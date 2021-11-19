@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-type Selection = [string[], string[]];
+export type Selection = [string[], string[]];
 
-export function useSelectionState() {
-  const [selection, setSelection] = useState<Selection>([[], []]);
+export function useSelectionState(initialSelection: Selection = [[], []]) {
+  const [selection, setSelection] = useState<Selection>(initialSelection);
 
-  const handleSelect = (listIndex: 0 | 1, value: string | string[]) =>
+  const handleSelect = (listIndex: 0 | 1, value: string) =>
     setSelection((currentSelection) => {
       const listSelection = currentSelection[listIndex];
       let result = listSelection;
@@ -16,8 +16,6 @@ export function useSelectionState() {
         } else {
           result = [...listSelection, value];
         }
-      } else {
-        result = [...new Set([...listSelection, ...value])];
       }
 
       const clone: Selection = [...currentSelection];
@@ -25,5 +23,14 @@ export function useSelectionState() {
       return clone;
     });
 
-  return [selection, handleSelect] as const;
+  const handleDeselect = (listIndex: 0 | 1, values: string[]) =>
+    setSelection((currentSelection) => {
+      const clone: Selection = [...currentSelection];
+      clone[listIndex] = currentSelection[listIndex].filter((item) => !values.includes(item));
+      return clone;
+    });
+
+  const handlers = { select: handleSelect, deselect: handleDeselect };
+
+  return [selection, handlers] as const;
 }
