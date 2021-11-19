@@ -59,8 +59,8 @@ export function RenderList({
       onClick={() => onSelect(item.value)}
       key={item.value}
       onMouseEnter={() => setHovered(index)}
-      className={cx(classes.renderListItem, {
-        [classes.renderListItemHovered]: index === hovered,
+      className={cx(classes.transferListItem, {
+        [classes.transferListItemHovered]: index === hovered,
       })}
     >
       <ItemComponent data={item} selected={selection.includes(item.value)} />
@@ -91,15 +91,15 @@ export function RenderList({
   };
 
   return (
-    <div className={cx(classes.renderList, className)}>
+    <div className={cx(classes.transferList, className)}>
       {title && (
-        <Text weight={500} className={classes.renderListTitle}>
+        <Text weight={500} className={classes.transferListTitle}>
           {title}
         </Text>
       )}
 
-      <div className={classes.renderListBody}>
-        <div className={classes.renderListHeader}>
+      <div className={classes.transferListBody}>
+        <div className={classes.transferListHeader}>
           <TextInput
             value={query}
             onChange={(event) => {
@@ -112,14 +112,14 @@ export function RenderList({
             radius={0}
             onKeyDown={handleSearchKeydown}
             sx={{ flex: 1 }}
-            classNames={{ input: classes.renderListSearch }}
+            classNames={{ input: classes.transferListSearch }}
           />
 
           <ActionIcon
             variant="default"
             size={36}
             radius={0}
-            className={classes.renderListControl}
+            className={classes.transferListControl}
             disabled={selection.length === 0}
             onClick={onMove}
           >
@@ -130,7 +130,7 @@ export function RenderList({
             variant="default"
             size={36}
             radius={0}
-            className={classes.renderListControl}
+            className={classes.transferListControl}
             disabled={data.length === 0}
             onClick={onMoveAll}
           >
@@ -138,7 +138,7 @@ export function RenderList({
           </ActionIcon>
         </div>
 
-        <ListComponent className={classes.renderListItems} onMouseLeave={() => setHovered(-1)}>
+        <ListComponent className={classes.transferListItems} onMouseLeave={() => setHovered(-1)}>
           {items.length > 0 ? (
             items
           ) : (

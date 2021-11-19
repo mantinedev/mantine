@@ -1,13 +1,12 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { SimpleGrid } from '../SimpleGrid';
 import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
 import { TransferListData, TransferListItemComponent, TransferListItem } from './types';
-import useStyles from './TransferList.styles';
 
-export type TransferListStylesNames = ClassNames<typeof useStyles> | RenderListStylesNames;
+export type TransferListStylesNames = RenderListStylesNames;
 
 export interface TransferListProps
   extends DefaultProps<TransferListStylesNames>,
@@ -36,7 +35,6 @@ export function TransferList({
   searchPlaceholder,
   filter = defaultFilter,
   nothingFound,
-  className,
   titles = [null, null],
   initialSelection,
   height = 150,
@@ -48,8 +46,6 @@ export function TransferList({
   style,
   ...others
 }: TransferListProps) {
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const { classes, cx } = useStyles(null, { name: 'TransferList', classNames, styles, sx });
   const [selection, handlers] = useSelectionState(initialSelection);
 
   const handleMoveAll = (listIndex: 0 | 1) => {
@@ -84,14 +80,7 @@ export function TransferList({
   const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
 
   return (
-    <SimpleGrid
-      cols={2}
-      spacing="xl"
-      breakpoints={breakpoints}
-      className={cx(classes.root, className)}
-      style={mergedStyles}
-      {...rest}
-    >
+    <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} {...others}>
       <RenderList
         data={value[0]}
         selection={selection[0]}

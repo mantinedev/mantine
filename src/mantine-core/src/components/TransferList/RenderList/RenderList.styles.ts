@@ -6,13 +6,13 @@ interface RenderListStyles {
 }
 
 export default createStyles((theme, { reversed, height }: RenderListStyles) => ({
-  renderList: {
+  transferList: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
   },
 
-  renderListItem: {
+  transferListItem: {
     display: 'block',
     width: 'calc(100% - 14px)',
     padding: 7,
@@ -21,11 +21,11 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     borderRadius: theme.radius.sm,
   },
 
-  renderListItemHovered: {
+  transferListItemHovered: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
-  renderListItems: {
+  transferListItems: {
     paddingTop: theme.spacing.xs / 2,
     paddingBottom: theme.spacing.xs / 2,
     overflow: 'auto',
@@ -33,12 +33,12 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     maxHeight: height,
   },
 
-  renderListHeader: {
+  transferListHeader: {
     display: 'flex',
     flexDirection: reversed ? 'row-reverse' : 'row',
   },
 
-  renderListBody: {
+  transferListBody: {
     flex: 1,
     overflow: 'hidden',
     borderRadius: theme.radius.sm,
@@ -48,18 +48,18 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     }`,
   },
 
-  renderListTitle: {
+  transferListTitle: {
     marginBottom: 5,
   },
 
-  renderListSearch: {
+  transferListSearch: {
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
     display: 'block',
   },
 
-  renderListControl: {
+  transferListControl: {
     borderTop: 0,
     borderRightWidth: reversed ? undefined : 0,
     borderLeftWidth: reversed ? 0 : undefined,
