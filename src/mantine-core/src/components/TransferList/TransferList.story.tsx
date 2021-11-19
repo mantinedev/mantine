@@ -16,7 +16,7 @@ const mockdata: TransferListData = [
 
 function Wrapper(props: Partial<TransferListProps>) {
   const [data, setData] = useState<TransferListData>(mockdata);
-  return <TransferList data={data} onChange={setData} {...props} />;
+  return <TransferList value={data} onChange={setData} {...props} />;
 }
 
 storiesOf('@mantine/core/TransferList', module).add('General usage', () => (

@@ -10,7 +10,7 @@ import useStyles from './TransferList.styles';
 export interface TransferListProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
-  data: TransferListData;
+  value: TransferListData;
   onChange(value: TransferListData): void;
   initialSelection?: Selection;
   itemComponent?: TransferListItemComponent;
@@ -25,24 +25,45 @@ export function defaultFilter(query: string, item: TransferListItem) {
 }
 
 export function TransferList({
-  data,
+  value,
   onChange,
   itemComponent = DefaultItem,
   searchPlaceholder,
   filter = defaultFilter,
   nothingFound,
   className,
-  titles = ['', ''],
+  titles = [null, null],
   initialSelection,
   ...others
 }: TransferListProps) {
   const { classes, cx } = useStyles();
   const [selection, handlers] = useSelectionState(initialSelection);
+
   const handleMoveAll = (listIndex: 0 | 1) => {
     const items: TransferListData = Array(2) as any;
-    const indexToMove = listIndex === 0 ? 1 : 0;
+    const moveToIndex = listIndex === 0 ? 1 : 0;
     items[listIndex] = [];
-    items[indexToMove] = [...data[listIndex], ...data[indexToMove]];
+    items[moveToIndex] = [...value[listIndex], ...value[moveToIndex]];
+    onChange(items);
+    handlers.deselectAll(listIndex);
+  };
+
+  const handleMove = (listIndex: 0 | 1) => {
+    const moveToIndex = listIndex === 0 ? 1 : 0;
+    const items: TransferListData = Array(2) as any;
+    const transferData = value[listIndex].reduce(
+      (acc, item) => {
+        if (!selection[listIndex].includes(item.value)) {
+          acc.filtered.push(item);
+        } else {
+          acc.current.push(item);
+        }
+        return acc;
+      },
+      { filtered: [], current: [] }
+    );
+    items[listIndex] = transferData.filtered;
+    items[moveToIndex] = [...value[moveToIndex], ...transferData.current];
     onChange(items);
     handlers.deselectAll(listIndex);
   };
@@ -50,10 +71,11 @@ export function TransferList({
   return (
     <div className={cx(classes.root, className)} {...others}>
       <RenderList
-        data={data[0]}
+        data={value[0]}
         selection={selection[0]}
-        onSelect={(value) => handlers.select(0, value)}
+        onSelect={(val) => handlers.select(0, val)}
         onMoveAll={() => handleMoveAll(0)}
+        onMove={() => handleMove(0)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
@@ -64,10 +86,11 @@ export function TransferList({
       <Space w="xl" />
 
       <RenderList
-        data={data[1]}
+        data={value[1]}
         selection={selection[1]}
-        onSelect={(value) => handlers.select(1, value)}
+        onSelect={(val) => handlers.select(1, val)}
         onMoveAll={() => handleMoveAll(1)}
+        onMove={() => handleMove(1)}
         itemComponent={itemComponent}
         searchPlaceholder={searchPlaceholder}
         filter={filter}
