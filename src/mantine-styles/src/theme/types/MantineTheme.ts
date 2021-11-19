@@ -22,6 +22,8 @@ interface MantineThemeFunctions {
   radialGradient(...colors: string[]): string;
   smallerThan(breakpoint: MantineNumberSize): string;
   largerThan(breakpoint: MantineNumberSize): string;
+  lighten(color: string, alpha: number): string;
+  darken(color: string, alpha: number): string;
 }
 
 export interface MantineTheme {
