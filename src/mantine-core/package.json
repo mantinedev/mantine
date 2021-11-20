@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@mantine/styles": "3.2.1",
+    "@radix-ui/react-scroll-area": "^0.1.1",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",
