@@ -70,6 +70,9 @@ export interface ModalProps
 
   /** Should modal be closed when outside click was registered? */
   closeOnClickOutside?: boolean;
+
+  /** Controls if modal should be centered */
+  centered?: boolean;
 }
 
 export function MantineModal({
@@ -94,13 +97,14 @@ export function MantineModal({
   styles,
   sx,
   closeOnClickOutside = true,
+  centered = true,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
-    { size, overflow },
+    { size, overflow, centered },
     { sx, classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(opened);
