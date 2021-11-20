@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { ScrollArea } from '../../ScrollArea/ScrollArea';
 import { Navbar } from './Navbar';
 
 const lorem =
@@ -20,7 +20,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
   .add('Grow section with scrollbars', () => (
     <Navbar padding="md" width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
-      <Navbar.Section grow component={Scrollbars}>
+      <Navbar.Section grow component={ScrollArea}>
         {Array(20)
           .fill(0)
           .map((_, i) => (
