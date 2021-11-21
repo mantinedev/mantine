@@ -152,4 +152,9 @@ storiesOf('@mantine/dates/DatePicker', module)
     <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
       <DatePicker label="One month" />
     </MantineProvider>
+  ))
+  .add('Without Portal', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <DatePicker placeholder="Pick date" label="Date picker" withinPortal={false} />
+    </div>
   ));

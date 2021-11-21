@@ -98,6 +98,9 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -154,6 +157,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       dropdownComponent,
       onDropdownClose,
       onDropdownOpen,
+      withinPortal,
       ...others
     }: SelectProps,
     ref
@@ -483,6 +487,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             dropdownComponent={dropdownComponent}
             direction={direction}
             onDirectionChange={setDirection}
+            withinPortal={withinPortal}
           >
             <SelectItems
               data={filteredData}

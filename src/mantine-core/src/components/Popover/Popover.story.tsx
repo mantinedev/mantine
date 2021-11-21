@@ -88,4 +88,17 @@ storiesOf('@mantine/core/Popover', module)
         />
       </div>
     </MantineProvider>
+  ))
+  .add('Without Portal', () => (
+    <div style={{ padding: 400 }}>
+      <Wrapper
+        withArrow
+        position="top"
+        placement="center"
+        title="Hello!"
+        transition="slide-up"
+        withCloseButton
+        withinPortal={false}
+      />
+    </div>
   ));

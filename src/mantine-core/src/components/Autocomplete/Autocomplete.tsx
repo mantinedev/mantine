@@ -86,6 +86,9 @@ export interface AutocompleteProps
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -127,6 +130,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       nothingFound,
       onDropdownClose,
       onDropdownOpen,
+      withinPortal,
       ...others
     }: AutocompleteProps,
     ref
@@ -297,6 +301,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             direction={direction}
             onDirectionChange={setDirection}
             referenceElement={inputRef.current}
+            withinPortal={withinPortal}
           >
             <SelectItems
               data={filteredData}

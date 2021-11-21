@@ -59,4 +59,14 @@ storiesOf('@mantine/core/Autocomplete', module)
         data={['React', 'Angular', 'Svelte', 'Vue']}
       />
     </div>
+  ))
+  .add('Without Portal', () => (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Autocomplete
+        label="Choose your favorite library/framework"
+        placeholder="Choose value"
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        withinPortal={false}
+      />
+    </div>
   ));

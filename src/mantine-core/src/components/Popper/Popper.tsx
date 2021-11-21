@@ -2,9 +2,9 @@ import React, { useMemo, useState, useRef } from 'react';
 import { usePopper, StrictModifier } from 'react-popper';
 import type { Placement } from '@popperjs/core';
 import { useDidUpdate } from '@mantine/hooks';
-import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
 import { parsePopperPosition } from './parse-popper-position/parse-popper-position';
+import { PopperContainer } from './PopperContainer/PopperContainer';
 import useStyles from './Popper.styles';
 
 export interface SharedPopperProps {
@@ -69,6 +69,9 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
 
   /** Called when popper changes its placement */
   onPlacementChange?(placement: Placement): void;
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -92,6 +95,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   allowPlacementChange = true,
   placementFallbacks = ['bottom'],
   onPlacementChange,
+  withinPortal = true,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
@@ -157,7 +161,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
     >
       {(transitionStyles) => (
         <div>
-          <Portal zIndex={zIndex}>
+          <PopperContainer withinPortal={withinPortal} zIndex={zIndex}>
             <div
               ref={setPopperElement}
               style={{ ...styles.popper, pointerEvents: 'none' }}
@@ -178,7 +182,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
                 )}
               </div>
             </div>
-          </Portal>
+          </PopperContainer>
         </div>
       )}
     </Transition>
