@@ -1,5 +1,5 @@
 function escapeRegex(value: string) {
-  return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  return value.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 }
 
 export function highlighter(value: string, _highlight: string | string[]) {
