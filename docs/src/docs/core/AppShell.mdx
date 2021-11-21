@@ -35,10 +35,11 @@ AppShell, Header and Navbar components include bare minimum default styles to si
 
 ```tsx
 import { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
