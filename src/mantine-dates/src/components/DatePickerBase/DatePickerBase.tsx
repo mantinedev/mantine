@@ -85,6 +85,9 @@ export interface DatePickerBaseSharedProps
 
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -147,6 +150,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onClear,
       positionDependencies = [],
       zIndex = 3,
+      withinPortal = true,
       onBlur,
       onFocus,
       onChange,
@@ -282,6 +286,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               position="bottom"
               placement="start"
               gutter={10}
+              withinPortal={withinPortal}
               withArrow
               arrowSize={3}
               zIndex={zIndex}

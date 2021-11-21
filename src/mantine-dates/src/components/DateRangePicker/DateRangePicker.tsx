@@ -84,6 +84,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       amountOfMonths = 1,
+      withinPortal = true,
       ...others
     }: DateRangePickerProps,
     ref
@@ -140,6 +141,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           clearable={clearable && valueValid}
           clearButtonLabel={clearButtonLabel}
           onClear={handleClear}
+          withinPortal={withinPortal}
           {...others}
         >
           <RangeCalendar

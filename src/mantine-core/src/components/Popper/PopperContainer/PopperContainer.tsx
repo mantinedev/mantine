@@ -19,7 +19,7 @@ export function PopperContainer({
   children,
   zIndex = 1,
   className,
-  withinPortal,
+  withinPortal = false,
 }: PopperContainerProps) {
   if (withinPortal) {
     return (

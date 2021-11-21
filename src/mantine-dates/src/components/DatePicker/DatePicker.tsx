@@ -75,6 +75,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearButtonLabel,
       fixOnBlur = true,
       allowFreeInput,
+      withinPortal = true,
       dateParser,
       firstDayOfWeek = 'monday',
       onFocus,
@@ -188,6 +189,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         disabled={disabled}
+        withinPortal={withinPortal}
         {...others}
       >
         <Calendar
