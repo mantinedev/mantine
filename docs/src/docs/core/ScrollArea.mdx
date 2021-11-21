@@ -17,4 +17,13 @@ import { ScrollAreaDemos } from '@demos/core';
 
 ## Usage
 
-<Demo data={ScrollAreaDemos.usage} />
+ScrollArea component is based on [Radix UI scroll area component](https://www.radix-ui.com/docs/primitives/components/scroll-area).
+It is adapted to work well with light and dark color schemes and supports following props:
+
+- `type` defines scrollbars behavior:
+  - `hover` – scrollbars are visible on hover
+  - `scroll` – scrollbars are visible on scroll
+  - `auto` – similar to `overflow: auto` – scrollbars are always visible whether the content is overflowing
+  - `always` – same as `auto` but scrollbars are always visible regardless of whether the content is overflowing
+
+<Demo data={ScrollAreaDemos.configurator} />

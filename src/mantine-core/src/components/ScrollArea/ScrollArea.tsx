@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { useState, forwardRef } from 'react';
 import * as RadixScrollArea from '@radix-ui/react-scroll-area';
 import { DefaultProps, useExtractedMargins, ClassNames } from '@mantine/styles';
 import useStyles from './ScrollArea.styles';
@@ -19,6 +19,9 @@ export interface ScrollAreaProps
 
   /** Reading direction of the scroll area */
   dir?: 'ltr' | 'rtl';
+
+  /** Should scrollbars be offset with padding */
+  offsetScrollbars?: boolean;
 }
 
 export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
@@ -34,13 +37,15 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       scrollHideDelay = 1000,
       type = 'hover',
       dir = 'ltr',
+      offsetScrollbars = true,
       ...others
     }: ScrollAreaProps,
     ref
   ) => {
+    const [scrollbarHovered, setScrollbarHovered] = useState(false);
     const { mergedStyles, rest } = useExtractedMargins({ style, others });
     const { classes, cx } = useStyles(
-      { scrollbarSize },
+      { scrollbarSize, offsetScrollbars, dir, scrollbarHovered },
       { name: 'ScrollArea', classNames, styles, sx }
     );
 
@@ -59,10 +64,18 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
           orientation="horizontal"
           className={classes.scrollbar}
           forceMount
+          onMouseEnter={() => setScrollbarHovered(true)}
+          onMouseLeave={() => setScrollbarHovered(false)}
         >
           <RadixScrollArea.Thumb className={classes.thumb} />
         </RadixScrollArea.Scrollbar>
-        <RadixScrollArea.Scrollbar orientation="vertical" className={classes.scrollbar} forceMount>
+        <RadixScrollArea.Scrollbar
+          orientation="vertical"
+          className={classes.scrollbar}
+          forceMount
+          onMouseEnter={() => setScrollbarHovered(true)}
+          onMouseLeave={() => setScrollbarHovered(false)}
+        >
           <RadixScrollArea.Thumb className={classes.thumb} />
         </RadixScrollArea.Scrollbar>
         <RadixScrollArea.Corner className={classes.corner} />
