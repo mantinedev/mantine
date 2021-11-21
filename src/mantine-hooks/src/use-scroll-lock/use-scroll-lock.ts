@@ -4,6 +4,8 @@ import { getLockStyles } from './utils/get-lock-styles';
 import { injectStyles } from './utils/inject-style-tag';
 import { insertStyleTag } from './utils/insert-style-tag';
 import { makeStyleTag } from './utils/make-style-tag';
+import { useOs } from '../use-os/use-os';
+import { toggleTouchListener } from './utils/toggle-touch-listener';
 
 export function useScrollLock(
   lock?: boolean,
@@ -13,6 +15,7 @@ export function useScrollLock(
 ) {
   const [scrollLocked, setScrollLocked] = useState(lock || false);
   const scrollTop = useRef(0);
+  const isIos = useOs() === 'ios';
 
   const { disableBodyPadding } = options;
 
@@ -33,6 +36,10 @@ export function useScrollLock(
     injectStyles(sheet, styles);
     insertStyleTag(sheet);
 
+    if (isIos) {
+      toggleTouchListener(true);
+    }
+
     stylesheet.current = sheet;
   };
 
@@ -41,6 +48,10 @@ export function useScrollLock(
 
     stylesheet.current.parentNode.removeChild(stylesheet.current);
     stylesheet.current = null;
+
+    if (isIos) {
+      toggleTouchListener(false);
+    }
   };
 
   useEffect(() => {
