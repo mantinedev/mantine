@@ -22,6 +22,9 @@ export interface ScrollAreaProps
 
   /** Should scrollbars be offset with padding */
   offsetScrollbars?: boolean;
+
+  /** Get viewport ref */
+  viewportRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
@@ -38,6 +41,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       type = 'hover',
       dir = 'ltr',
       offsetScrollbars = true,
+      viewportRef,
       ...others
     }: ScrollAreaProps,
     ref
@@ -59,7 +63,9 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         ref={ref}
         {...rest}
       >
-        <RadixScrollArea.Viewport className={classes.viewport}>{children}</RadixScrollArea.Viewport>
+        <RadixScrollArea.Viewport className={classes.viewport} ref={viewportRef}>
+          {children}
+        </RadixScrollArea.Viewport>
         <RadixScrollArea.Scrollbar
           orientation="horizontal"
           className={classes.scrollbar}
