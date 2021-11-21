@@ -75,10 +75,11 @@ AppShell includes several responsive features with which you can build collapsib
 
 ```tsx
 import { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
