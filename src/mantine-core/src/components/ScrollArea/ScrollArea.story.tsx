@@ -27,6 +27,15 @@ storiesOf('@mantine/core/ScrollArea', module)
       </ScrollArea>
     </div>
   ))
+  .add('RTL', () => (
+    <div style={{ padding: 40, backgroundColor: '#eee' }}>
+      <ScrollArea style={{ width: 400, height: 100, background: '#fff' }} dir="rtl">
+        <Text style={{ height: 500, width: 800 }} align="center">
+          Both scrollbars
+        </Text>
+      </ScrollArea>
+    </div>
+  ))
   .add('Dark theme', () => (
     <DarkStory>
       <div style={{ padding: 40 }}>
