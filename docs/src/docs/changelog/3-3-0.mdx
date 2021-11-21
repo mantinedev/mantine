@@ -1,0 +1,21 @@
+---
+group: 'changelog'
+title: 'Version 3.3.0'
+order: 1
+slug: /changelog/3-3-0/
+release: https://github.com/mantinedev/mantine/releases/tag/3.3.0
+date: 'November 19th, 2021'
+---
+
+import { ScrollAreaDemos } from '@demos/core';
+
+## New components
+
+New [ScrollArea](https://mantine.dev/core/scroll-area/) component lets you easily manage custom scrollbars
+without any external libraries:
+
+<Demo data={ScrollAreaDemos.configurator} />
+
+## Other changes
+
+- Components that use [Popper](https://mantine.dev/core/popper/) ([Select](https://mantine.dev/core/select/), [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.) now support an option to disable rendering within portal
