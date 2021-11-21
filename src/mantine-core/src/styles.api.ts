@@ -33,6 +33,7 @@ export * from './components/Popover/styles.api';
 export * from './components/Progress/styles.api';
 export * from './components/RadioGroup/styles.api';
 export * from './components/RingProgress/styles.api';
+export * from './components/ScrollArea/styles.api';
 export * from './components/SegmentedControl/styles.api';
 export * from './components/Select/styles.api';
 export * from './components/Slider/styles.api';
