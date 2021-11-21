@@ -15,6 +15,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   uuid: string;
   shadow: MantineShadow;
   maxDropdownHeight?: number | string;
+  withinPortal?: boolean;
   children: React.ReactNode;
   __staticSelector: string;
   dropdownComponent?: React.FC<any>;
@@ -33,6 +34,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       uuid,
       shadow,
       maxDropdownHeight,
+      withinPortal = true,
       children,
       classNames,
       styles,
@@ -54,6 +56,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         position="bottom"
+        withinPortal={withinPortal}
         placementFallbacks={['top']}
         onPlacementChange={(placement: string) => {
           const nextDirection = placement === 'top' ? 'column-reverse' : 'column';

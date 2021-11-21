@@ -47,4 +47,11 @@ storiesOf('@mantine/core/Tooltip', module)
         <Button>Button</Button>
       </Tooltip>
     </div>
+  ))
+  .add('Without Portal', () => (
+    <div style={{ padding: 100 }}>
+      <Tooltip label="tooltip" withinPortal={false}>
+        <Button>Button</Button>
+      </Tooltip>
+    </div>
   ));

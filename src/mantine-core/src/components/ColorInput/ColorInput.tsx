@@ -51,6 +51,9 @@ export interface ColorInputProps
 
   /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 const SWATCH_SIZES = {
@@ -97,6 +100,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       dropdownZIndex = 1,
       transitionDuration = 0,
       transitionTimingFunction,
+      withinPortal,
       className,
       style,
       swatches,
@@ -205,6 +209,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           zIndex={dropdownZIndex}
           arrowClassName={classes.arrow}
           arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
+          withinPortal={withinPortal}
         >
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>

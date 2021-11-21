@@ -74,6 +74,14 @@ function BaseStory() {
         dropdownZIndex={1000}
       />
       <ControlledInput />
+      <ColorInput
+        label="Without Portal"
+        placeholder="Pick color"
+        format="hsla"
+        withinPortal={false}
+        style={{ marginTop: 15 }}
+        dropdownZIndex={10}
+      />
     </div>
   );
 }

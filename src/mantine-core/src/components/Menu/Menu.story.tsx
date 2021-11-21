@@ -40,4 +40,11 @@ storiesOf('@mantine/core/Menu', module)
         <Menu>{menuItems}</Menu>
       </div>
     </DarkStory>
+  ))
+  .add('Without Portal', () => (
+    <div style={{ padding: 60 }}>
+      <Menu position="right" withArrow closeOnItemClick withinPortal={false}>
+        {menuItems}
+      </Menu>
+    </div>
   ));

@@ -67,6 +67,9 @@ export interface PopoverProps
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Popover({
@@ -95,6 +98,7 @@ export function Popover({
   shadow = 'sm',
   closeButtonLabel,
   positionDependencies = [],
+  withinPortal = true,
   id,
   classNames,
   styles,
@@ -142,6 +146,7 @@ export function Popover({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
+        withinPortal={withinPortal}
       >
         <PopoverBody
           shadow={shadow}

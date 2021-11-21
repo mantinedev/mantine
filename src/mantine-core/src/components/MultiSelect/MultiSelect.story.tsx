@@ -298,4 +298,30 @@ storiesOf('@mantine/core/MultiSelect', module)
         maxSelectedValues={5}
       />
     </Group>
+  ))
+  .add('Without Portal', () => (
+    <>
+      <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
+        <MultiSelect
+          label="Multi select"
+          data={data}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+          withinPortal={false}
+        />
+        <TextInput label="Text input" placeholder="Select items" />
+      </Group>
+      <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
+        <TextInput label="Text input" placeholder="Select items" />
+        <MultiSelect
+          label="Multi select with separator and disabled items"
+          data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
+          defaultValue={['react', 'ng']}
+          placeholder="Select items"
+          nothingFound="Nothing found"
+          withinPortal={false}
+        />
+      </Group>
+    </>
   ));

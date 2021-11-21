@@ -80,6 +80,9 @@ export interface MenuProps
 
   /** Trap focus inside menu */
   trapFocus?: boolean;
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 const defaultControl = (
@@ -121,6 +124,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       radius = 'sm',
       delay = 0,
       zIndex = 1,
+      withinPortal = true,
       classNames,
       styles,
       closeOnScroll = true,
@@ -230,6 +234,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
           arrowSize={3}
           zIndex={zIndex}
           arrowClassName={classes.arrow}
+          withinPortal={withinPortal}
         >
           <MenuBody
             {...menuBodyProps}

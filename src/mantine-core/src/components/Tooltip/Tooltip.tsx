@@ -47,6 +47,9 @@ export interface TooltipProps
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Tooltip({
@@ -70,6 +73,7 @@ export function Tooltip({
   wrapLines = false,
   allowPointerEvents = false,
   positionDependencies = [],
+  withinPortal = true,
   tooltipRef,
   tooltipId,
   classNames,
@@ -113,6 +117,7 @@ export function Tooltip({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[color, ...positionDependencies]}
+        withinPortal={withinPortal}
       >
         <div
           className={classes.body}

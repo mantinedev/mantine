@@ -134,6 +134,13 @@ storiesOf('@mantine/core/Select', module)
         data={largeData}
         style={{ marginTop: 20 }}
       />
+      <Select
+        label="Without Portal"
+        placeholder="Choose value"
+        data={data}
+        withinPortal={false}
+        style={{ marginTop: 20 }}
+      />
     </div>
   ))
   .add('With custom scrollbars', () => (
