@@ -13,7 +13,7 @@ source: 'mantine-core/src/components/ScrollArea/ScrollArea.tsx'
 docs: 'core/ScrollArea.mdx'
 ---
 
-import { ScrollAreaDemos } from '@demos/core';
+import { AppShellDemos, ScrollAreaDemos } from '@demos/core';
 
 ## Usage
 
@@ -42,3 +42,10 @@ You can programmatically scroll to any position. To do so
 get viewport element ref with `viewportRef` prop and call `scrollTo` method:
 
 <Demo data={ScrollAreaDemos.scrollTo} />
+
+## Usage with other components
+
+ScrollArea integrates seamlessly with all Mantine components that can require scrollbars.
+For example, ypu can use ScrollArea with [Navbar.Section](/core/app-shell/) component:
+
+<Demo data={AppShellDemos.scrollbars} />
