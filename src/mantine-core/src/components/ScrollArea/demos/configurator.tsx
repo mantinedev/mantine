@@ -44,15 +44,6 @@ export const configurator: MantineDemo = {
       defaultValue: 'ltr',
     },
     {
-      name: 'scrollHideDelay',
-      type: 'number',
-      min: 0,
-      max: 6000,
-      step: 500,
-      defaultValue: 1000,
-      initialValue: 1000,
-    },
-    {
       name: 'offsetScrollbars',
       type: 'boolean',
       defaultValue: false,
@@ -66,6 +57,15 @@ export const configurator: MantineDemo = {
       step: 2,
       defaultValue: 10,
       initialValue: 10,
+    },
+    {
+      name: 'scrollHideDelay',
+      type: 'number',
+      min: 0,
+      max: 6000,
+      step: 500,
+      defaultValue: 1000,
+      initialValue: 1000,
     },
   ],
 };
