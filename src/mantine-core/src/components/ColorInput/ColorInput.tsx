@@ -52,7 +52,7 @@ export interface ColorInputProps
   /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
-  /** Whether to render the target element in a Portal */
+  /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 }
 

@@ -87,7 +87,7 @@ export interface AutocompleteProps
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
 
-  /** Whether to render the target element in a Portal */
+  /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 }
 

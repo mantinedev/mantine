@@ -68,7 +68,7 @@ export interface PopoverProps
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
 
-  /** Whether to render the target element in a Portal */
+  /** Whether to render the popover in a Portal */
   withinPortal?: boolean;
 }
 

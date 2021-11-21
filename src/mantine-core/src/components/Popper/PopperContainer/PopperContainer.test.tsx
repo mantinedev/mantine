@@ -24,7 +24,7 @@ describe('@mantine/core/PopperContainer', () => {
       <PopperContainer className="test-popper-container" zIndex={1543}>
         test-popper-container
       </PopperContainer>,
-      { attachTo: target },
+      { attachTo: target }
     );
 
     const container = document.querySelector('.test-popper-container');
@@ -39,7 +39,7 @@ describe('@mantine/core/PopperContainer', () => {
       <div className="virtual-dom-parent">
         <PopperContainer className="test-in-parent">test-in-parent</PopperContainer>
       </div>,
-      { attachTo: target },
+      { attachTo: target }
     );
 
     const container = document.querySelector('.test-in-parent');
@@ -55,9 +55,11 @@ describe('@mantine/core/PopperContainer', () => {
 
     mount(
       <div className="virtual-dom-parent">
-        <PopperContainer className="test-in-portal" withinPortal>test-in-portal</PopperContainer>
+        <PopperContainer className="test-in-portal" withinPortal>
+          test-in-portal
+        </PopperContainer>
       </div>,
-      { attachTo: target },
+      { attachTo: target }
     );
 
     const container = document.querySelector('.test-in-portal');

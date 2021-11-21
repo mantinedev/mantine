@@ -81,7 +81,7 @@ export interface MenuProps
   /** Trap focus inside menu */
   trapFocus?: boolean;
 
-  /** Whether to render the target element in a Portal */
+  /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 }
 

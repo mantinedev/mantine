@@ -136,7 +136,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   /** Limit amount of items selected */
   maxSelectedValues?: number;
 
-  /** Whether to render the target element in a Portal */
+  /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 }
 
