@@ -21,6 +21,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   referenceElement?: HTMLElement;
   direction?: React.CSSProperties['flexDirection'];
   onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
+  zIndex?: number;
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -40,6 +41,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
+      zIndex = 2000,
       __staticSelector,
     }: SelectDropdownProps,
     ref
@@ -55,6 +57,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionTimingFunction={transitionTimingFunction}
         position="bottom"
         placementFallbacks={['top']}
+        zIndex={zIndex}
         onPlacementChange={(placement: string) => {
           const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
 

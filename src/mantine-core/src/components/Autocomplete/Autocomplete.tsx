@@ -86,6 +86,9 @@ export interface AutocompleteProps
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -127,6 +130,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       nothingFound,
       onDropdownClose,
       onDropdownOpen,
+      zIndex,
       ...others
     }: AutocompleteProps,
     ref
@@ -297,6 +301,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             direction={direction}
             onDirectionChange={setDirection}
             referenceElement={inputRef.current}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}
