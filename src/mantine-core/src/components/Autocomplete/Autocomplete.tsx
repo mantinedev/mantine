@@ -89,6 +89,9 @@ export interface AutocompleteProps
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -131,6 +134,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
+      zIndex,
       ...others
     }: AutocompleteProps,
     ref
@@ -302,6 +306,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             onDirectionChange={setDirection}
             referenceElement={inputRef.current}
             withinPortal={withinPortal}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}

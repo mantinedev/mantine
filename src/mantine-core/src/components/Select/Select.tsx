@@ -101,6 +101,9 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -158,6 +161,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
+      zIndex,
       ...others
     }: SelectProps,
     ref
@@ -488,6 +492,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             direction={direction}
             onDirectionChange={setDirection}
             withinPortal={withinPortal}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}

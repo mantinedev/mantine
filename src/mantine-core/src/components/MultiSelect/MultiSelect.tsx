@@ -138,6 +138,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -205,6 +208,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
+      zIndex,
       ...others
     }: MultiSelectProps,
     ref
@@ -584,6 +588,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             direction={direction}
             onDirectionChange={setDirection}
             withinPortal={withinPortal}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}
