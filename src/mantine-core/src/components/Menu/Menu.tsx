@@ -128,6 +128,8 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onMouseLeave,
       onMouseEnter,
       onChange,
+      placementFallbacks,
+      allowPlacementChange,
       ...others
     }: MenuProps,
     ref
@@ -221,6 +223,8 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
           referenceElement={referenceElement}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
+          placementFallbacks={placementFallbacks}
+          allowPlacementChange={allowPlacementChange}
           transition={transition}
           mounted={_opened}
           position={position}

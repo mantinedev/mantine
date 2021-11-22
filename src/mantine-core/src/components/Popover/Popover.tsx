@@ -95,6 +95,8 @@ export function Popover({
   shadow = 'sm',
   closeButtonLabel,
   positionDependencies = [],
+  allowPlacementChange,
+  placementFallbacks,
   id,
   classNames,
   styles,
@@ -142,6 +144,8 @@ export function Popover({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
+        allowPlacementChange={allowPlacementChange}
+        placementFallbacks={placementFallbacks}
       >
         <PopoverBody
           shadow={shadow}

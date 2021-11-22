@@ -75,6 +75,8 @@ export function Tooltip({
   classNames,
   styles,
   sx,
+  allowPlacementChange,
+  placementFallbacks,
   ...others
 }: TooltipProps) {
   const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Tooltip' });
@@ -113,6 +115,8 @@ export function Tooltip({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[color, ...positionDependencies]}
+        allowPlacementChange={allowPlacementChange}
+        placementFallbacks={placementFallbacks}
       >
         <div
           className={classes.body}
