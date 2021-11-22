@@ -6,6 +6,7 @@ import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
 import { parsePopperPosition } from './parse-popper-position/parse-popper-position';
 import useStyles from './Popper.styles';
+import { getFallbackPlacement } from './get-fallback-placement/get-fallback-placement';
 
 export interface SharedPopperProps {
   /** Position relative to reference element */
@@ -34,6 +35,12 @@ export interface SharedPopperProps {
 
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Controls popper flip behavior  */
+  allowPlacementChange?: boolean;
+
+  /** Controls where popper can flip out */
+  placementFallbacks?: Placement[];
 }
 
 export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
@@ -61,12 +68,6 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   /** valid popperjs modifiers array */
   modifiers?: StrictModifier[];
 
-  /** Controls popper flip behavior  */
-  allowPlacementChange?: boolean;
-
-  /** Controls where popper can flip out */
-  placementFallbacks?: Placement[];
-
   /** Called when popper changes its placement */
   onPlacementChange?(placement: Placement): void;
 }
@@ -90,7 +91,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   modifiers = [],
   onTransitionEnd,
   allowPlacementChange = true,
-  placementFallbacks = ['bottom'],
+  placementFallbacks,
   onPlacementChange,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
@@ -132,7 +133,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
         name: 'flip',
         enabled: allowPlacementChange,
         options: {
-          fallbackPlacements: placementFallbacks,
+          fallbackPlacements: placementFallbacks || getFallbackPlacement(initialPlacement),
         },
       },
       // @ts-ignore
