@@ -37,7 +37,10 @@ export default createStyles(
       boxSizing: 'border-box',
       maxWidth:
         grow && direction === 'row'
-          ? `calc(${100 / count}% - ${theme.fn.size({ size: spacing, sizes: theme.spacing })}px)`
+          ? `calc(${100 / count}% - ${
+              theme.fn.size({ size: spacing, sizes: theme.spacing }) -
+              theme.fn.size({ size: spacing, sizes: theme.spacing }) / count
+            }px)`
           : undefined,
       flexGrow: grow ? 1 : 0,
     },
