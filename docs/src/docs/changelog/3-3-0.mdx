@@ -22,6 +22,31 @@ without any external libraries:
 
 <Demo data={ModalDemos.centered} />
 
+[use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+    age: (value) => value > 21,
+  },
+  errorMessages: {
+    name: 'Name must include at least 2 characters',
+    age: 'You must be 21 or older to enter',
+  },
+});
+
+form.validate();
+form.errors;
+// -> { name: 'Name must include at least 2 characters', age: 'You must be 21 or older to enter' }
+
+form.setFieldValue('name', 'John');
+form.validate();
+form.errors;
+// -> { name: null, age: 'You must be 21 or older to enter' }
+```
+
 ## Other changes
 
 - Components that use [Popper](https://mantine.dev/core/popper/) ([Select](https://mantine.dev/core/select/), [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.) now support an option to disable rendering within portal
