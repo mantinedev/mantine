@@ -169,7 +169,13 @@ export function AuthenticationForm({
 
         {!noSubmit && (
           <Group position="apart" style={{ marginTop: 25 }}>
-            <Anchor component="button" color="gray" onClick={toggleFormType} size="sm">
+            <Anchor
+              component="button"
+              type="button"
+              color="gray"
+              onClick={toggleFormType}
+              size="sm"
+            >
               {formType === 'register'
                 ? 'Have an account? Login'
                 : "Don't have an account? Register"}
