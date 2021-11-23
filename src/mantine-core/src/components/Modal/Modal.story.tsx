@@ -46,7 +46,12 @@ function WrappedModal(
 
 storiesOf('@mantine/core/Modal', module)
   .add('General usage', () => (
-    <WrappedModal title="Authentication form" closeOnClickOutside={false}>
+    <WrappedModal title="Authentication form">
+      <AuthenticationForm noPadding noShadow />
+    </WrappedModal>
+  ))
+  .add('Centered', () => (
+    <WrappedModal title="Authentication form" centered>
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   ))
@@ -57,6 +62,15 @@ storiesOf('@mantine/core/Modal', module)
   ))
   .add('Vertical scroll', () => (
     <WrappedModal title="Authentication form">
+      {Array(100)
+        .fill('REACT IS NOT A FRAMEWORK')
+        .map((c) => (
+          <Text weight={700}>{c}</Text>
+        ))}
+    </WrappedModal>
+  ))
+  .add('Centered with overflow', () => (
+    <WrappedModal title="Authentication form" centered overflow="outside">
       {Array(100)
         .fill('REACT IS NOT A FRAMEWORK')
         .map((c) => (

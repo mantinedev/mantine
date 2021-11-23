@@ -97,7 +97,7 @@ export function MantineModal({
   styles,
   sx,
   closeOnClickOutside = true,
-  centered = true,
+  centered = false,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
