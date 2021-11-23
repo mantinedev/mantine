@@ -32,6 +32,7 @@ use-form hook accepts `configuration` object as single argument:
 
 - `initialValues` – object with initial form values
 - `validationRules` – objects of functions that will be used to validate form values
+- `errorMessages` – object of react nodes that will be used to ser errors, if not provided errors will be set to true
 
 Hook returns object with properties:
 
@@ -42,7 +43,7 @@ Hook returns object with properties:
 - `validateField` – function to validate single field value with `validationRules`
 - `errors` – object of booleans which contains results of running `validationRules` functions on corresponding fields
 - `setFieldError` – function to set single field error in `errors`
-- `resetErrors` – function to set all `errors` to false
+- `resetErrors` – function to set all `errors` to null
 - `setErrors` – React useState hook setState action to set `errors`
 - `reset` – function to reset all `values` and `errors` to initial state
 - `onSubmit` – wrapper function for form onSubmit event handler
@@ -94,6 +95,33 @@ const signUpForm = useForm({
     confirmPassword: (confirmPassword, values) => confirmPassword === values.password,
   },
 });
+```
+
+### errorMessages
+
+You can provide `errorMessages` object that will be set to `errors` when validation fails:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validationRules: {
+    name: (value) => value.trim().length >= 2,
+    age: (value) => value > 21,
+  },
+  errorMessages: {
+    name: 'Name must include at least 2 characters',
+    age: 'You must be 21 or older to enter',
+  },
+});
+
+form.validate();
+form.errors;
+// -> { name: 'Name must include at least 2 characters', age: 'You must be 21 or older to enter' }
+
+form.setFieldValue('name', 'John');
+form.validate();
+form.errors;
+// -> { name: null, age: 'You must be 21 or older to enter' }
 ```
 
 ### form.values
@@ -161,14 +189,14 @@ const form = useForm({
   },
 });
 
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 
 form.validate();
-form.errors; // -> { name: true, age: false }
+form.errors; // -> { name: true, age: null }
 
 form.setFieldValue('name', 'Bob');
 form.validate();
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 ```
 
 ### form.validateField
@@ -187,7 +215,7 @@ const form = useForm({
 
 form.setFieldValue('age', 12);
 form.validateField('age');
-form.errors; // -> { age: true, name: false }
+form.errors; // -> { age: true, name: null }
 
 form.validateField('name');
 form.errors; // -> { age: true, name: true }
@@ -206,13 +234,19 @@ const form = useForm({
   },
 });
 
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 
+// Mark name field as invalid manually
 form.setFieldError('name', true);
-form.errors; // -> { name: true, age: false }
+form.errors; // -> { name: true, age: null }
 
-form.setFieldError('name', true);
-form.errors; // -> { name: false, age: false }
+// Invalidate name field manually
+form.setFieldError('name', null);
+form.errors; // -> { name: null, age: null }
+
+// Set custom error message
+form.setFieldError('name', 'Error from server');
+form.errors; // -> { name: 'Error from server', age: null }
 ```
 
 ### form.setErrors
@@ -222,38 +256,30 @@ Use it when external fields validation occurs, e.g. on server:
 
 ```tsx
 const form = useForm({ initialValues: { name: '', age: 0 } });
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 
-// You can set errors with object
 form.setErrors({ name: true, age: true });
 form.errors; // -> { name: true, age: true }
-
-// or with callback
-form.setErrors((errors) => ({
-  name: !errors.name,
-  age: !errors.age,
-}));
-form.errors; // -> { name: false, age: false }
 ```
 
 ### form.resetErrors
 
-`resetErrors` sets all `errors` to false:
+`resetErrors` sets all `errors` to null:
 
 ```tsx
 const form = useForm({ initialValues: { name: '', age: 0 } });
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 
 form.setErrors({ name: true, age: true });
 form.errors; // -> { name: true, age: true }
 
 form.resetErrors();
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 ```
 
 ### form.reset
 
-`reset` function sets all `errors` to false and sets `values` to `initialValues`:
+`reset` function sets all `errors` to null and sets `values` to `initialValues`:
 
 ```tsx
 const form = useForm({ initialValues: { name: '', age: 0 } });
@@ -264,7 +290,7 @@ form.errors; // -> { name: true, age: true }
 form.values; // -> { name: 'Bob', age: 25 }
 
 form.reset();
-form.errors; // -> { name: false, age: false }
+form.errors; // -> { name: null, age: null }
 form.values; // -> { name: '', age: 0 }
 ```
 
@@ -314,6 +340,9 @@ function useForm<T extends { [key: string]: any }>(configuration: {
   initialValues: T;
   validationRules?: {
     [P in keyof T]?: (value: T[P], values?: T) => boolean;
+  };
+  errorMessages?: {
+    [P in keyof T]?: React.ReactNode;
   };
 }): {
   values: T;

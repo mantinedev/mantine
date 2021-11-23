@@ -53,7 +53,15 @@ export function AuthenticationForm({
       lastName: (value) => formType === 'login' || value.trim().length >= 2,
       email: (value) => /^\S+@\S+$/.test(value),
       password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
-      confirmPassword: (val, values) => val === values.password,
+      confirmPassword: (val, values) => formType === 'login' || val === values.password,
+    },
+
+    errorMessages: {
+      firstName: 'First name should include at least 2 characters',
+      lastName: 'Last name should include at least 2 characters',
+      email: 'Invalid email',
+      password: 'Password should contain 1 number, 1 letter and at least 6 characters',
+      confirmPassword: "Passwords don't match. Try again",
     },
   });
 
@@ -93,7 +101,7 @@ export function AuthenticationForm({
               value={form.values.firstName}
               onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
               onFocus={() => form.setFieldError('firstName', false)}
-              error={form.errors.firstName && 'First name should include at least 2 characters'}
+              error={form.errors.firstName}
               variant={inputVariant}
             />
 
@@ -105,7 +113,7 @@ export function AuthenticationForm({
               value={form.values.lastName}
               onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
               onFocus={() => form.setFieldError('lastName', false)}
-              error={form.errors.lastName && 'Last name should include at least 2 characters'}
+              error={form.errors.lastName}
               variant={inputVariant}
             />
           </div>
@@ -119,7 +127,7 @@ export function AuthenticationForm({
           value={form.values.email}
           onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
           onFocus={() => form.setFieldError('email', false)}
-          error={form.errors.email && 'Field should contain a valid email'}
+          error={form.errors.email}
           variant={inputVariant}
         />
 
@@ -133,10 +141,7 @@ export function AuthenticationForm({
           onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
           onFocus={() => form.setFieldError('password', false)}
           variant={inputVariant}
-          error={
-            form.errors.password &&
-            'Password should contain 1 number, 1 letter and at least 6 characters'
-          }
+          error={form.errors.password}
         />
 
         {formType === 'register' && (
@@ -148,7 +153,7 @@ export function AuthenticationForm({
             icon={<LockClosedIcon />}
             value={form.values.confirmPassword}
             onChange={(event) => form.setFieldValue('confirmPassword', event.currentTarget.value)}
-            error={form.errors.confirmPassword && "Passwords don't match. Try again"}
+            error={form.errors.confirmPassword}
           />
         )}
 
