@@ -40,7 +40,7 @@ export function useAccordionState({
     } else {
       const newValues = Array(itemsCount)
         .fill(0)
-        .reduce((acc, item, itemIndex) => {
+        .reduce((acc, _, itemIndex) => {
           acc[itemIndex] = false;
           return acc;
         }, {}) as Record<string, boolean>;

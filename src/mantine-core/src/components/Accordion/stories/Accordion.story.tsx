@@ -4,7 +4,7 @@ import { baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
-import { Accordion } from '../Accordion';
+import { Accordion, AccordionProps } from '../Accordion';
 import { useAccordionState } from '../use-accordion-state/use-accordion-state';
 
 const form = (
@@ -14,8 +14,8 @@ const form = (
   </>
 );
 
-function Controlled() {
-  const [state, handlers] = useAccordionState({ itemsCount: 3, multiple: true });
+function Controlled(props: Partial<AccordionProps>) {
+  const [state, handlers] = useAccordionState({ itemsCount: 3, multiple: props.multiple || false });
 
   return (
     <>
@@ -36,6 +36,7 @@ function Controlled() {
         sx={{ maxWidth: 400 }}
         state={state}
         onChange={handlers.setState}
+        {...props}
       >
         {baseDemoItems}
       </Accordion>
@@ -82,4 +83,5 @@ storiesOf('@mantine/core/Accordion/stories', module)
     </Accordion>
   ))
   .add('Dynamic children', () => <Dynamic />)
-  .add('Controlled', () => <Controlled />);
+  .add('Controlled single', () => <Controlled />)
+  .add('Controlled multiple', () => <Controlled multiple />);
