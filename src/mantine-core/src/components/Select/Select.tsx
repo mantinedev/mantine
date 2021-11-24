@@ -5,7 +5,6 @@ import {
   useDidUpdate,
   useScrollIntoView,
   useUuid,
-  useClickOutside,
 } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
@@ -194,12 +193,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
-    );
-
-    useClickOutside(
-      () => setDropdownOpened(false),
-      ['mousedown', 'touchstart'],
-      [inputRef.current, dropdownRef.current]
     );
 
     const sortedData = groupSortData({ data: formattedData });
