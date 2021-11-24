@@ -64,7 +64,7 @@ const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
     style={{ ...props.style, position: 'absolute', maxHeight: 300, width: '100%' }}
     viewportRef={ref}
   >
-    <div style={{ padding: 3 }}>{props.children}</div>
+    {props.children}
   </ScrollArea>
 ));
 
