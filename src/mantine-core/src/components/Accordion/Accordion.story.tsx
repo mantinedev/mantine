@@ -1,13 +1,19 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { attachDemos } from '@mantine/ds';
 import { StyledAccordion } from './demos/stylesApi';
 import { BaseDemo, baseDemoItems } from './demos/_base';
 import { IconReplaceDemo } from './demos/icon';
 import { IconsReplacementDemo } from './demos/icons';
 import { AccordionDemo } from './demos/label';
 import { Accordion } from './Accordion';
+import * as demos from './demos';
 
-storiesOf('@mantine/core/Accordion', module)
+const stories = storiesOf('@mantine/core/Accordion', module);
+
+attachDemos(stories, demos);
+
+stories
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 540 }}>
       <BaseDemo />

@@ -1,0 +1,13 @@
+{
+  "name": "@mantine/ds",
+  "private": true,
+  "version": "3.2.2",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
