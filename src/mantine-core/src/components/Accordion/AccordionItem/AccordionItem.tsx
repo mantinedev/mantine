@@ -30,6 +30,7 @@ interface AccordionItemProps
   onToggle?(): void;
   transitionDuration?: number;
   id?: string;
+  controlRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function AccordionItem({
@@ -46,6 +47,7 @@ export function AccordionItem({
   disableIconRotation = false,
   iconPosition = 'left',
   id,
+  controlRef,
   ...others
 }: AccordionItemProps) {
   const forceUpdate = useForceUpdate();
@@ -64,18 +66,21 @@ export function AccordionItem({
       className={cx(classes.item, { [classes.itemOpened]: opened }, sxClassName, className)}
       {...others}
     >
-      <UnstyledButton
-        className={classes.control}
-        onClick={onToggle}
-        type="button"
-        aria-expanded={opened}
-        aria-controls={`${id}-body`}
-        id={id}
-      >
-        <Center className={classes.icon}>{icon}</Center>
+      <h3 style={{ margin: 0, fontWeight: 'normal' }}>
+        <UnstyledButton
+          className={classes.control}
+          onClick={onToggle}
+          type="button"
+          aria-expanded={opened}
+          aria-controls={`${id}-body`}
+          id={id}
+          ref={controlRef}
+        >
+          <Center className={classes.icon}>{icon}</Center>
 
-        <div className={classes.label}>{label}</div>
-      </UnstyledButton>
+          <div className={classes.label}>{label}</div>
+        </UnstyledButton>
+      </h3>
 
       <Collapse in={opened} transitionDuration={duration}>
         <div className={classes.content} role="region" id={`${id}-body`} aria-labelledby={id}>

@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
-import { useUuid } from '@mantine/hooks';
+import { useUuid, useDidUpdate } from '@mantine/hooks';
 import { Box } from '../Box';
 import {
   AccordionItem,
@@ -73,6 +73,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ref
   ) => {
     const uuid = useUuid(id);
+    const controlsRefs = useRef<HTMLButtonElement[]>([]);
     const items = React.Children.toArray(children).filter(
       (item: AccordionItemType) => item.type === AccordionItem
     ) as AccordionItemType[];
@@ -85,6 +86,32 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       initialState,
       onChange,
     });
+
+    const handleItemKeydown = (event: React.KeyboardEvent<HTMLDivElement>, index: number) => {
+      if (event.code === 'ArrowDown') {
+        event.preventDefault();
+        const nextFocusElement = controlsRefs.current[index + 1];
+        if (nextFocusElement) {
+          nextFocusElement.focus();
+        } else {
+          controlsRefs.current[0]?.focus();
+        }
+      }
+
+      if (event.code === 'ArrowUp') {
+        event.preventDefault();
+        const previousFocusElement = controlsRefs.current[index - 1];
+        if (previousFocusElement) {
+          previousFocusElement.focus();
+        } else {
+          controlsRefs.current[controlsRefs.current.length - 1]?.focus();
+        }
+      }
+    };
+
+    useDidUpdate(() => {
+      controlsRefs.current = controlsRefs.current.slice(0, items.length);
+    }, [items.length]);
 
     const controls = items.map((item, index) => (
       <AccordionItem
@@ -99,6 +126,10 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         classNames={classNames}
         styles={styles}
         id={`${uuid}-${index}`}
+        onKeyDown={(event) => handleItemKeydown(event, index)}
+        controlRef={(node) => {
+          controlsRefs.current[index] = node;
+        }}
       />
     ));
 
