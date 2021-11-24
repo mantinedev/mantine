@@ -77,6 +77,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     const items = React.Children.toArray(children).filter(
       (item: AccordionItemType) => item.type === AccordionItem
     ) as AccordionItemType[];
+
     const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
 
     const [value, handlers] = useAccordionState({
