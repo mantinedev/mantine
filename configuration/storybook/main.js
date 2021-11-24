@@ -14,6 +14,7 @@ module.exports = {
     'storybook-dark-mode',
     'storybook-addon-outline',
     '@storybook/addon-a11y',
+    '@storybook/addon-viewport',
   ],
   webpackFinal: async (config) => {
     config.resolve = {

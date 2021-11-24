@@ -55,6 +55,7 @@
     "@rollup/plugin-replace": "^2.4.2",
     "@rollup/plugin-typescript": "^8.2.1",
     "@storybook/addon-a11y": "^6.3.12",
+    "@storybook/addon-viewport": "^6.3.12",
     "@storybook/react": "^6.2.9",
     "@sucrase/jest-plugin": "^2.1.1",
     "@testing-library/react-hooks": "^7.0.0",
