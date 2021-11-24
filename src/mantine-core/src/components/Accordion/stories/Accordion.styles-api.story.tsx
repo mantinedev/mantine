@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { generateBorderStyles } from '@mantine/ds';
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineProvider } from '@mantine/styles';
 import { baseDemoItems } from '../demos/_base';
 import { Accordion } from '../Accordion';
 import { Accordion as AccordionStylesApi } from '../styles.api';
@@ -21,8 +21,11 @@ storiesOf('@mantine/core/Accordion/styles-api', module)
   .add('With sx', () => (
     <div style={{ padding: 40 }}>
       <Accordion sx={{ maxWidth: 400, border: '1px solid red' }} mx="auto">
-        <Accordion.Item label="There" sx={(theme) => ({ color: theme.colors.blue[7] })}>
-          Hello
+        <Accordion.Item label="First item" sx={{ border: '1px solid blue' }}>
+          First content
+        </Accordion.Item>
+        <Accordion.Item label="Second item" sx={{ border: '1px solid blue' }}>
+          Second content
         </Accordion.Item>
       </Accordion>
     </div>
@@ -45,4 +48,13 @@ storiesOf('@mantine/core/Accordion/styles-api', module)
     <div style={{ padding: 40 }}>
       <WithClassNames />
     </div>
+  ))
+  .add('Styles API on MantineProvider', () => (
+    <MantineProvider styles={{ Accordion: styles }}>
+      <div style={{ padding: 40 }}>
+        <Accordion sx={{ maxWidth: 400 }} mx="auto">
+          {baseDemoItems}
+        </Accordion>
+      </div>
+    </MantineProvider>
   ));
