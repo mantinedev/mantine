@@ -1,19 +1,53 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { attachDemos } from '@mantine/ds';
+import { attachDemos, generateBorderStyles } from '@mantine/ds';
+import { createStyles } from '@mantine/styles';
+import { baseDemoItems } from './demos/_base';
 import { Accordion } from './Accordion';
 import * as demos from './demos';
+import { Accordion as AccordionStylesApi } from './styles.api';
 
 const stories = storiesOf('@mantine/core/Accordion/demos', module);
 
 attachDemos(stories, demos);
 
-storiesOf('@mantine/core/Accordion', module).add('With sx', () => (
-  <div style={{ padding: 40, maxWidth: 540 }}>
-    <Accordion sx={(theme) => ({ backgroundColor: theme.colors.blue[5] })}>
-      <Accordion.Item label="There" sx={{ backgroundColor: 'red' }}>
-        Hello
-      </Accordion.Item>
+const styles = generateBorderStyles(AccordionStylesApi);
+const useStyles = createStyles(() => styles);
+
+function WithClassNames() {
+  return (
+    <Accordion sx={{ maxWidth: 400 }} mx="auto" classNames={useStyles().classes}>
+      {baseDemoItems}
     </Accordion>
-  </div>
-));
+  );
+}
+
+storiesOf('@mantine/core/Accordion/styles-api', module)
+  .add('With sx', () => (
+    <div style={{ padding: 40 }}>
+      <Accordion sx={{ maxWidth: 400, border: '1px solid red' }} mx="auto">
+        <Accordion.Item label="There" sx={(theme) => ({ color: theme.colors.blue[7] })}>
+          Hello
+        </Accordion.Item>
+      </Accordion>
+    </div>
+  ))
+  .add('With styles as object', () => (
+    <div style={{ padding: 40 }}>
+      <Accordion sx={{ maxWidth: 400 }} mx="auto" styles={styles}>
+        {baseDemoItems}
+      </Accordion>
+    </div>
+  ))
+  .add('With styles as function', () => (
+    <div style={{ padding: 40 }}>
+      <Accordion sx={{ maxWidth: 400 }} mx="auto" styles={() => styles}>
+        {baseDemoItems}
+      </Accordion>
+    </div>
+  ))
+  .add('With styles as classNames', () => (
+    <div style={{ padding: 40 }}>
+      <WithClassNames />
+    </div>
+  ));
