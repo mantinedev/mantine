@@ -67,7 +67,7 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 storiesOf('@mantine/dates/DatePicker', module)
   .add('Uncontrolled', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker placeholder="Pick date" label="Date picker" />
       <DatePicker
         placeholder="Pick date"
@@ -90,13 +90,13 @@ storiesOf('@mantine/dates/DatePicker', module)
     </div>
   ))
   .add('Focus behavior with other inputs', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <TextInput placeholder="Focus me when dropdown is opened" />
       <DatePicker placeholder="Pick date" label="Date picker" mt="xl" />
     </div>
   ))
   .add('With free input', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput />
 
       <DatePicker
@@ -112,7 +112,7 @@ storiesOf('@mantine/dates/DatePicker', module)
       <ControlledFreeInput />
     </div>
   ))
-  .add('Sizes', () => <div style={{ maxWidth: 300, padding: 40 }}>{sizes}</div>)
+  .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
   .add('Placeholder overflow', () => (
     <div style={{ maxWidth: 200, padding: 30 }}>
       <DatePicker placeholder="Placeholder so large it overflows" />
@@ -132,19 +132,19 @@ storiesOf('@mantine/dates/DatePicker', module)
     </WrappedModal>
   ))
   .add('In modal', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
     </div>
   ))
   .add('Amount of months', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker amountOfMonths={1} label="One month" />
       <DatePicker amountOfMonths={2} label="Two months" />
       <DatePicker amountOfMonths={3} label="Three months" />
     </div>
   ))
   .add('Controlled', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
     </div>
   ))
@@ -154,7 +154,7 @@ storiesOf('@mantine/dates/DatePicker', module)
     </MantineProvider>
   ))
   .add('Without Portal', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker placeholder="Pick date" label="Date picker" withinPortal={false} />
     </div>
   ));
