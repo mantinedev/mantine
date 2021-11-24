@@ -102,6 +102,7 @@
     "rollup-plugin-node-externals": "^2.2.0",
     "rollup-plugin-visualizer": "^5.5.0",
     "simple-git": "^2.39.0",
+    "storybook-addon-outline": "^1.4.1",
     "storybook-addon-turbo-build": "^1.0.0-beta.0",
     "storybook-dark-mode": "^1.0.8",
     "surge": "^0.23.0",
