@@ -87,7 +87,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       onChange,
     });
 
-    const handleItemKeydown = (event: React.KeyboardEvent<HTMLDivElement>, index: number) => {
+    const handleItemKeydown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
       if (event.code === 'ArrowDown') {
         event.preventDefault();
         const nextFocusElement = controlsRefs.current[index + 1];
@@ -126,7 +126,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         classNames={classNames}
         styles={styles}
         id={`${uuid}-${index}`}
-        onKeyDown={(event) => handleItemKeydown(event, index)}
+        onControlKeyDown={(event) => handleItemKeydown(event, index)}
         controlRef={(node) => {
           controlsRefs.current[index] = node;
         }}

@@ -32,6 +32,7 @@ interface AccordionItemProps
   transitionDuration?: number;
   id?: string;
   controlRef?: React.ForwardedRef<HTMLButtonElement>;
+  onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 export function AccordionItem({
@@ -48,6 +49,7 @@ export function AccordionItem({
   iconPosition = 'left',
   id,
   controlRef,
+  onControlKeyDown,
   ...others
 }: AccordionItemProps) {
   const reduceMotion = useReducedMotion();
@@ -68,6 +70,7 @@ export function AccordionItem({
           aria-controls={`${id}-body`}
           id={id}
           ref={controlRef}
+          onKeyDown={onControlKeyDown}
         >
           <Center className={classes.icon}>{icon}</Center>
 
