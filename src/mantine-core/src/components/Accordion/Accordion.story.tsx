@@ -1,56 +1,19 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { attachDemos } from '@mantine/ds';
-import { StyledAccordion } from './demos/stylesApi';
-import { BaseDemo, baseDemoItems } from './demos/_base';
-import { IconReplaceDemo } from './demos/icon';
-import { IconsReplacementDemo } from './demos/icons';
-import { AccordionDemo } from './demos/label';
 import { Accordion } from './Accordion';
 import * as demos from './demos';
 
-const stories = storiesOf('@mantine/core/Accordion', module);
+const stories = storiesOf('@mantine/core/Accordion/demos', module);
 
 attachDemos(stories, demos);
 
-stories
-  .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <BaseDemo />
-    </div>
-  ))
-  .add('With sx', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <Accordion sx={(theme) => ({ backgroundColor: theme.colors.blue[5] })}>
-        <Accordion.Item label="There" sx={{ backgroundColor: 'red' }}>
-          Hello
-        </Accordion.Item>
-      </Accordion>
-    </div>
-  ))
-  .add('Multiple selected items', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <BaseDemo multiple />
-    </div>
-  ))
-  .add('Icon on the right', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <BaseDemo iconPosition="right" />
-    </div>
-  ))
-  .add('Replace icon', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <IconReplaceDemo />
-      <IconsReplacementDemo style={{ marginTop: 60 }} />
-    </div>
-  ))
-  .add('Custom labels', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <AccordionDemo />
-    </div>
-  ))
-  .add('Styles API', () => (
-    <div style={{ padding: 40, maxWidth: 540 }}>
-      <StyledAccordion>{baseDemoItems}</StyledAccordion>
-    </div>
-  ));
+storiesOf('@mantine/core/Accordion', module).add('With sx', () => (
+  <div style={{ padding: 40, maxWidth: 540 }}>
+    <Accordion sx={(theme) => ({ backgroundColor: theme.colors.blue[5] })}>
+      <Accordion.Item label="There" sx={{ backgroundColor: 'red' }}>
+        Hello
+      </Accordion.Item>
+    </Accordion>
+  </div>
+));
