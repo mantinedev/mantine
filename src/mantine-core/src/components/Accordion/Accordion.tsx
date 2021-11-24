@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins, useSx } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
 import { useUuid } from '@mantine/hooks';
+import { Box } from '../Box';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -66,17 +67,12 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       icon,
       classNames,
       styles,
-      style,
-      className,
       id,
-      sx,
       ...others
     }: AccordionProps,
     ref
   ) => {
-    const { sxClassName } = useSx({ sx, className });
     const uuid = useUuid(id);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const items = React.Children.toArray(children).filter(
       (item: AccordionItemType) => item.type === AccordionItem
     ) as AccordionItemType[];
@@ -107,9 +103,9 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ));
 
     return (
-      <div style={mergedStyles} ref={ref} className={sxClassName} {...rest}>
+      <Box ref={ref} {...others}>
         {controls}
-      </div>
+      </Box>
     );
   }
 ) as any;
