@@ -77,9 +77,9 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       (item: AccordionItemType) => item.type === AccordionItem
     ) as AccordionItemType[];
 
-    const [value, onToggle] = useAccordionState({
+    const [value, handlers] = useAccordionState({
       multiple,
-      items,
+      itemsCount: items.length,
       initialItem,
       state,
       initialState,
@@ -95,7 +95,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         key={index}
         transitionDuration={transitionDuration}
         opened={value[index]}
-        onToggle={() => onToggle(index)}
+        onToggle={() => handlers.toggle(index)}
         classNames={classNames}
         styles={styles}
         id={`${uuid}-${index}`}

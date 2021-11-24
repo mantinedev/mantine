@@ -10,44 +10,44 @@ export function createAccordionState(length: number, initialItem = -1) {
 export type AccordionState = Record<string, boolean>;
 
 interface UseAccordionState {
-  multiple: boolean;
-  initialState: AccordionState;
-  state: AccordionState;
-  items: unknown[];
-  initialItem: number;
-  onChange(state: Record<string, boolean>): void;
+  multiple?: boolean;
+  initialState?: AccordionState;
+  state?: AccordionState;
+  itemsCount: number;
+  initialItem?: number;
+  onChange?(state: Record<string, boolean>): void;
 }
 
 export function useAccordionState({
   initialState,
-  items,
-  initialItem,
+  itemsCount,
+  initialItem = -1,
   state,
   onChange,
-  multiple,
+  multiple = false,
 }: UseAccordionState) {
-  const _initialState = initialState || createAccordionState(items.length, initialItem);
-
-  const [value, setValue] = useUncontrolled({
+  const [value, setState] = useUncontrolled({
     value: state,
-    defaultValue: _initialState,
+    defaultValue: initialState || createAccordionState(itemsCount, initialItem),
     finalValue: {} as Record<string, boolean>,
     onChange,
     rule: (val) => val !== null && typeof val === 'object',
   });
 
-  const handleItemToggle = (index: number) => {
+  const toggle = (index: number) => {
     if (multiple) {
-      setValue({ ...value, [index]: !value[index] });
+      setState({ ...value, [index]: !value[index] });
     } else {
-      const newValues = items.reduce((acc, item, itemIndex) => {
-        acc[itemIndex] = false;
-        return acc;
-      }, {}) as Record<string, boolean>;
+      const newValues = Array(itemsCount)
+        .fill(0)
+        .reduce((acc, item, itemIndex) => {
+          acc[itemIndex] = false;
+          return acc;
+        }, {}) as Record<string, boolean>;
       newValues[index] = !value[index];
-      setValue(newValues);
+      setState(newValues);
     }
   };
 
-  return [value, handleItemToggle] as const;
+  return [value, { toggle, setState }] as const;
 }

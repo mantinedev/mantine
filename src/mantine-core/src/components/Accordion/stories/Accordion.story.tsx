@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
 import { Accordion } from '../Accordion';
+import { useAccordionState } from '../use-accordion-state/use-accordion-state';
 
 const form = (
   <>
@@ -11,6 +13,35 @@ const form = (
     <TextInput label="Name" placeholder="Name" mt="md" />
   </>
 );
+
+function Controlled() {
+  const [state, handlers] = useAccordionState({ itemsCount: 3, multiple: true });
+
+  return (
+    <>
+      <Group position="center" mt="xl">
+        <Button variant="outline" onClick={() => handlers.toggle(0)}>
+          Toggle 0
+        </Button>
+        <Button variant="outline" onClick={() => handlers.toggle(1)}>
+          Toggle 1
+        </Button>
+        <Button variant="outline" onClick={() => handlers.toggle(2)}>
+          Toggle 2
+        </Button>
+      </Group>
+      <Accordion
+        mt="xl"
+        mx="auto"
+        sx={{ maxWidth: 400 }}
+        state={state}
+        onChange={handlers.setState}
+      >
+        {baseDemoItems}
+      </Accordion>
+    </>
+  );
+}
 
 function Dynamic() {
   const [count, setCount] = useState(2);
@@ -50,4 +81,5 @@ storiesOf('@mantine/core/Accordion/stories', module)
       <Accordion.Item label="Second tab">{form}</Accordion.Item>
     </Accordion>
   ))
-  .add('Dynamic children', () => <Dynamic />);
+  .add('Dynamic children', () => <Dynamic />)
+  .add('Controlled', () => <Controlled />);
