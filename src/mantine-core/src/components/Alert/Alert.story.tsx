@@ -14,7 +14,7 @@ const getThemes = (props?: any) =>
 
 storiesOf('@mantine/core/Alert', module)
   .addDecorator((Story, props) => (
-    <div style={{ maxWidth: 400, margin: 'auto', padding: 40 }}>
+    <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
       <Story {...props} />
     </div>
   ))

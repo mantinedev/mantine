@@ -11,9 +11,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     <Navbar width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section>Second section</Navbar.Section>
-      <Navbar.Section grow style={{ backgroundColor: 'silver' }}>
-        Grow section
-      </Navbar.Section>
+      <Navbar.Section grow>Grow section</Navbar.Section>
       <Navbar.Section>Last section</Navbar.Section>
     </Navbar>
   ))
@@ -35,9 +33,7 @@ storiesOf('@mantine/core/AppShell/Navbar', module)
     <Navbar fixed position={{ top: 60, left: 0 }} width={{ base: 100, sm: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section>Second section</Navbar.Section>
-      <Navbar.Section grow style={{ backgroundColor: 'silver' }}>
-        Grow section
-      </Navbar.Section>
+      <Navbar.Section grow>Grow section</Navbar.Section>
       <Navbar.Section>Last section</Navbar.Section>
     </Navbar>
   ))

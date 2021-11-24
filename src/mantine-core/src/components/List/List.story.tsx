@@ -3,11 +3,10 @@ import { storiesOf } from '@storybook/react';
 import { CommentIcon } from '@primer/octicons-react';
 import { ThemeIcon } from '../ThemeIcon/ThemeIcon';
 import { List } from './List';
-import { DarkStory } from '../../../demos';
 
 function BaseStory() {
   return (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 500 }}>
       <div>
         <List
           spacing="xs"
@@ -39,10 +38,4 @@ function BaseStory() {
   );
 }
 
-storiesOf('@mantine/core/List', module)
-  .add('General usage', () => <BaseStory />)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <BaseStory />
-    </DarkStory>
-  ));
+storiesOf('@mantine/core/List', module).add('General usage', () => <BaseStory />);

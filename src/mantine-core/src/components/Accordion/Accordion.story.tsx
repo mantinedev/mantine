@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { StyledAccordion } from './demos/stylesApi';
 import { BaseDemo, baseDemoItems } from './demos/_base';
-import { DarkStory } from '../../../demos';
 import { IconReplaceDemo } from './demos/icon';
 import { IconsReplacementDemo } from './demos/icons';
 import { AccordionDemo } from './demos/label';
@@ -48,14 +47,4 @@ storiesOf('@mantine/core/Accordion', module)
     <div style={{ padding: 40, maxWidth: 540 }}>
       <StyledAccordion>{baseDemoItems}</StyledAccordion>
     </div>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 40, maxWidth: 540 }}>
-        <BaseDemo />
-        <StyledAccordion style={{ marginTop: 60 }}>{baseDemoItems}</StyledAccordion>
-        <IconsReplacementDemo style={{ marginTop: 60 }} />
-        <AccordionDemo style={{ marginTop: 60 }} />
-      </div>
-    </DarkStory>
   ));

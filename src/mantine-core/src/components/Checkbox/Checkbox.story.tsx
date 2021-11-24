@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
-import { DarkStory } from '../../../demos';
 
 function CheckboxWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof Checkbox>, 'value' | 'onChange'>
@@ -48,9 +47,4 @@ storiesOf('@mantine/core/Checkbox', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
   .add('Controlled', () => <CheckboxWrapper label="Controlled" style={{ padding: 15 }} />)
-  .add('States', () => <States />)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <States />
-    </DarkStory>
-  ));
+  .add('States', () => <States />);

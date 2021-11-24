@@ -3,12 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { Group } from '../Group/Group';
 import { Chip } from './Chip/Chip';
 import { Chips } from './Chips';
-import { DarkStory } from '../../../demos';
 
 function BaseDemo(props?: any) {
   return (
     <div style={{ padding: 40 }}>
-      <Chips multiple {...props}>
+      <Chips variant="outline" multiple {...props}>
         <Chip value="1">First</Chip>
         <Chip value="2" disabled>
           Second
@@ -48,9 +47,4 @@ storiesOf('@mantine/core/Chips', module)
         xl chip
       </Chip>
     </Group>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <BaseDemo />
-    </DarkStory>
   ));

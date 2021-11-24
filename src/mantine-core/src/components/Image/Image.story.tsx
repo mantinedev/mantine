@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Text } from '../Text/Text';
 import { Image } from './Image';
-import { DarkStory } from '../../../demos';
 
 function BaseStory() {
   return (
@@ -27,10 +26,4 @@ function BaseStory() {
   );
 }
 
-storiesOf('@mantine/core/Image', module)
-  .add('General usage', () => <BaseStory />)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <BaseStory />
-    </DarkStory>
-  ));
+storiesOf('@mantine/core/Image', module).add('General usage', () => <BaseStory />);

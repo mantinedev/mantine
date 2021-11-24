@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Loader, LoaderProps } from './Loader';
-import { DarkStory } from '../../../demos';
 
 const getThemes = (props?: LoaderProps) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -17,9 +16,4 @@ storiesOf('@mantine/core/Loader', module)
   .add('Oval', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'oval' })}</div>)
   .add('Dots', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'dots' })}</div>)
   .add('Bars', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'bars' })}</div>)
-  .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 15 }}>{getThemes()}</div>
-    </DarkStory>
-  ));
+  .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>);

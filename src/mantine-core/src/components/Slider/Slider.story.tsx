@@ -18,7 +18,7 @@ function RangeWrapper(
 
 storiesOf('@mantine/core/Slider', module)
   .add('General usage', () => (
-    <div style={{ padding: 100, minHeight: '100vh' }}>
+    <div style={{ padding: 100 }}>
       <Slider defaultValue={60} size="xs" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size="sm" styles={{ root: { marginTop: 25 } }} />
       <Slider defaultValue={60} size="md" styles={{ root: { marginTop: 25 } }} />
@@ -28,7 +28,7 @@ storiesOf('@mantine/core/Slider', module)
     </div>
   ))
   .add('Controlled', () => (
-    <div style={{ width: 280, padding: 40 }}>
+    <div style={{ width: 380, padding: 40 }}>
       <Wrapper
         step={25}
         radius={0}
@@ -59,7 +59,7 @@ storiesOf('@mantine/core/Slider', module)
     </div>
   ))
   .add('With thumb children', () => (
-    <div style={{ width: 280, padding: 40 }}>
+    <div style={{ width: 380, padding: 40 }}>
       <Slider
         thumbChildren={<Heart />}
         color="red"
@@ -69,7 +69,7 @@ storiesOf('@mantine/core/Slider', module)
     </div>
   ))
   .add('Styled', () => (
-    <div style={{ width: 280, padding: 40 }}>
+    <div style={{ width: 380, padding: 40 }}>
       <Slider
         defaultValue={40}
         marks={[

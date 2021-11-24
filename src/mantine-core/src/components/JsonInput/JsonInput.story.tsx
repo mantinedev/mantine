@@ -12,7 +12,14 @@ function Controlled() {
 storiesOf('@mantine/core/JsonInput', module)
   .add('General usage', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <JsonInput formatOnBlur autosize validationError="Invalid JSON" />
+      <JsonInput
+        formatOnBlur
+        autosize
+        minRows={3}
+        validationError="Invalid JSON"
+        label="Your package.json"
+        placeholder="Your package.json"
+      />
     </div>
   ))
   .add('Controlled', () => (

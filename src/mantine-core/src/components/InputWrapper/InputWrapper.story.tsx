@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { InputWrapper } from './InputWrapper';
 import { Text } from '../Text/Text';
-import { DarkStory } from '../../../demos';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <InputWrapper
@@ -33,7 +32,7 @@ storiesOf('@mantine/core/InputWrapper', module)
     </div>
   ))
   .add('Error overflow', () => (
-    <div style={{ padding: 15, maxWidth: 300, backgroundColor: '#f3f3f3' }}>
+    <div style={{ padding: 15, maxWidth: 300, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
       <InputWrapper label="Input label" required id="input-wrapper-1" error={lorem}>
         <Text>Input is located here</Text>
       </InputWrapper>
@@ -49,7 +48,7 @@ storiesOf('@mantine/core/InputWrapper', module)
   ))
 
   .add('Label overflow', () => (
-    <div style={{ padding: 15, maxWidth: 300, backgroundColor: '#f3f3f3' }}>
+    <div style={{ padding: 15, maxWidth: 300, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
       <InputWrapper
         label="This input has so large label that it should get to the next line"
         required
@@ -66,19 +65,4 @@ storiesOf('@mantine/core/InputWrapper', module)
         <Text>Input is located here</Text>
       </InputWrapper>
     </div>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 40 }}>
-        <InputWrapper
-          label="Dark theme label"
-          description="Dark theme description"
-          error="Dark theme error"
-          required
-          id="input-wrapper-1"
-        >
-          <Text>Input is located here</Text>
-        </InputWrapper>
-      </div>
-    </DarkStory>
   ));

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { Group } from '../Group/Group';
 import { Button } from '../Button/Button';
@@ -68,26 +67,8 @@ storiesOf('@mantine/core/Popover', module)
   .add('zIndex', () => (
     <div style={{ padding: 100 }}>
       <ZIndex />
-      <ZIndex />
       <Switch label="Switch label" />
     </div>
-  ))
-  .add('Dark theme', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <div
-        style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 400, minHeight: '100vh' }}
-      >
-        <Wrapper
-          withArrow
-          position="top"
-          placement="center"
-          title="Hello!"
-          transition="slide-up"
-          withCloseButton
-          gutter={15}
-        />
-      </div>
-    </MantineProvider>
   ))
   .add('Without Portal', () => (
     <div style={{ padding: 400 }}>

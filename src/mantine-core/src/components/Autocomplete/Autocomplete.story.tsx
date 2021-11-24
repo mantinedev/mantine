@@ -18,7 +18,7 @@ function DynamicData() {
 
 storiesOf('@mantine/core/Autocomplete', module)
   .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
         label="Choose your favorite library/framework"
         placeholder="Choose value"
@@ -27,7 +27,7 @@ storiesOf('@mantine/core/Autocomplete', module)
     </div>
   ))
   .add('Repetitive data', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
         label="Choose your favorite library/framework"
         placeholder="Choose value"
@@ -36,7 +36,7 @@ storiesOf('@mantine/core/Autocomplete', module)
     </div>
   ))
   .add('Fixed value', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
         label="Choose your favorite library/framework"
         placeholder="Choose value"
@@ -47,12 +47,12 @@ storiesOf('@mantine/core/Autocomplete', module)
     </div>
   ))
   .add('Dynamic data', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <DynamicData />
     </div>
   ))
   .add('Strings as data', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
         label="Choose your favorite library/framework"
         placeholder="Choose value"
@@ -61,7 +61,7 @@ storiesOf('@mantine/core/Autocomplete', module)
     </div>
   ))
   .add('Without Portal', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
         label="Choose your favorite library/framework"
         placeholder="Choose value"

@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
-
+import { MANTINE_SIZES } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Group } from '../Group/Group';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
@@ -90,31 +89,4 @@ storiesOf('@mantine/core/NumberInput', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40, maxWidth: 400 }}>{sizes}</div>)
-  .add('Handlers', () => <HandlersWrapper />)
-  .add('Dark theme', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <div
-        style={{ backgroundColor: DEFAULT_THEME.colors.dark[7], padding: 40, minHeight: '100vh' }}
-      >
-        <div style={{ maxWidth: 400, padding: 20 }}>
-          <Wrapper max={10} step={1} min={-10} placeholder="Number input" />
-          <Wrapper
-            style={{ marginTop: 15 }}
-            variant="filled"
-            max={10}
-            step={1}
-            min={-10}
-            placeholder="Number input"
-          />
-          <Wrapper
-            style={{ marginTop: 15 }}
-            variant="unstyled"
-            max={10}
-            step={1}
-            min={-10}
-            placeholder="Number input"
-          />
-        </div>
-      </div>
-    </MantineProvider>
-  ));
+  .add('Handlers', () => <HandlersWrapper />);

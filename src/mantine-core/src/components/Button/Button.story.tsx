@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link, MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
-import { DarkStory } from '../../../demos/DarkStory/DarkStory';
 import { Group } from '../Group/Group';
 import { Button, UnstyledButton } from './index';
 
@@ -76,18 +74,7 @@ storiesOf('@mantine/core/Button', module)
       </div>
     </>
   ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <Group style={{ padding: 20 }}>{getThemes()}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'default' })}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline' })}</Group>
-      <div style={{ backgroundColor: 'silver' }}>
-        <Group style={{ padding: 20 }}>{getThemes({ variant: 'white' })}</Group>
-      </div>
-    </DarkStory>
-  ))
-  .add('Link button themes', () => (
+  .add('As link', () => (
     <>
       <Group style={{ padding: 20 }}>{getLinkThemes()}</Group>
       <Group style={{ padding: 20 }}>{getLinkThemes({ variant: 'outline' })}</Group>
@@ -109,13 +96,6 @@ storiesOf('@mantine/core/Button', module)
       </Group>
 
       <Group style={{ padding: 20 }}>
-        {getLinkThemes({
-          rightIcon: <ExternalLinkIcon style={{ width: 12 }} />,
-          variant: 'link',
-        })}
-      </Group>
-
-      <Group style={{ padding: 20 }}>
         {getThemes({
           leftIcon: <CalendarIcon style={{ width: 14 }} />,
           rightIcon: <ExternalLinkIcon style={{ width: 14 }} />,
@@ -128,7 +108,6 @@ storiesOf('@mantine/core/Button', module)
       <Group style={{ padding: 20 }}>{getThemes({ disabled: true })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline', disabled: true })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light', disabled: true })}</Group>
-      <Group style={{ padding: 20 }}>{getThemes({ variant: 'link', disabled: true })}</Group>
     </>
   ))
   .add('Full width', () => (
@@ -140,7 +119,7 @@ storiesOf('@mantine/core/Button', module)
     </div>
   ))
   .add('Overflow', () => (
-    <div style={{ width: 120, padding: 20, backgroundColor: '#f3f3f3' }}>
+    <div style={{ width: 120, padding: 20, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
       <Button fullWidth>Full width button</Button>
       <Button component="a" fullWidth style={{ marginTop: 20 }}>
         Full width link button
@@ -151,13 +130,4 @@ storiesOf('@mantine/core/Button', module)
     <div style={{ padding: 40 }}>
       <Group>{loading}</Group>
     </div>
-  ))
-  .add('React router', () => (
-    <MemoryRouter>
-      <Group style={{ padding: 20 }}>
-        <Button component={Link} to="/hello">
-          Mantine button
-        </Button>
-      </Group>
-    </MemoryRouter>
   ));

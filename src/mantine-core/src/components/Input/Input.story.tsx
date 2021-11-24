@@ -6,7 +6,6 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
-import { DarkStory } from '../../../demos';
 
 function ValidInvalid() {
   const [valid, toggle] = useBooleanToggle();
@@ -47,7 +46,7 @@ const sizes = MANTINE_SIZES.map((size) => (
 ));
 
 const getStates = (props?: any) => (
-  <div style={{ maxWidth: 300, padding: 50 }}>
+  <div style={{ maxWidth: 400, padding: 50 }}>
     <Input placeholder="Text" {...props} />
     <Input placeholder="Tel" type="tel" style={{ marginTop: 15 }} {...props} />
     <Input placeholder="Number" type="number" {...props} style={{ marginTop: 15 }} />
@@ -86,7 +85,7 @@ const getStates = (props?: any) => (
 
 storiesOf('@mantine/core/Input', module)
   .add('Sizes', () => <div style={{ maxWidth: 300, padding: 50 }}>{sizes}</div>)
-  .add('Default variant', () => <>{getStates()}</>)
+  .add('Default variant', () => <>{getStates({ variant: 'default' })}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)
   .add('Unstyled variant', () => <>{getStates({ variant: 'unstyled' })}</>)
   .add('Custom component: button', () => (
@@ -120,10 +119,4 @@ storiesOf('@mantine/core/Input', module)
     </>
   ))
   .add('Invalid toggle', () => <ValidInvalid />)
-  .add('With classNames', () => <WithStyles />)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <ValidInvalid />
-      {getStates()}
-    </DarkStory>
-  ));
+  .add('With classNames', () => <WithStyles />);

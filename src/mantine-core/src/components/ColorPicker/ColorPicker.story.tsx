@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
-import { DarkStory } from '../../../demos';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <div style={{ marginTop: 40 }}>
@@ -31,9 +30,4 @@ function BaseStory() {
 
 storiesOf('@mantine/core/ColorPicker', module)
   .add('General usage', () => <BaseStory />)
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <BaseStory />
-    </DarkStory>
-  ));
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);

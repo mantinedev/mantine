@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { menuItems } from './demos/_menu-items';
 import { TextInput } from '../TextInput';
 import { Menu } from './Menu';
-import { DarkStory } from '../../../demos';
 
 function Controlled() {
   const [opened, setOpened] = useState(false);
@@ -33,13 +32,6 @@ storiesOf('@mantine/core/Menu', module)
     <div style={{ padding: 60 }}>
       <Controlled />
     </div>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 60 }}>
-        <Menu>{menuItems}</Menu>
-      </div>
-    </DarkStory>
   ))
   .add('Without Portal', () => (
     <div style={{ padding: 60 }}>

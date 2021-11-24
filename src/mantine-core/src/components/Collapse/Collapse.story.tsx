@@ -33,7 +33,7 @@ storiesOf('@mantine/core/Collapse', module)
           collapse
         </Button>
 
-        <Collapse in={open} sx={{ maxWidth: 600, backgroundColor: '#e5d5e4' }}>
+        <Collapse in={open} sx={{ maxWidth: 600, backgroundColor: 'rgba(0, 0, 0, .2)' }}>
           {content}
         </Collapse>
       </div>

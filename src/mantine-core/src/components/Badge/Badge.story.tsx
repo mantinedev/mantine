@@ -6,7 +6,6 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Avatar } from '../Avatar/Avatar';
 import { Group } from '../Group/Group';
 import { Badge } from './Badge';
-import { DarkStory } from '../../../demos';
 
 const section = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
@@ -97,7 +96,7 @@ storiesOf('@mantine/core/Badge', module)
     </>
   ))
   .add('Full width', () => (
-    <div style={{ width: 300, padding: 20, background: '#f9f9f9' }}>
+    <div style={{ width: 300, padding: 20, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
       <Badge fullWidth>Full width badge</Badge>
       <Badge fullWidth variant="filled" style={{ marginTop: 10 }}>
         Full width badge
@@ -132,7 +131,7 @@ storiesOf('@mantine/core/Badge', module)
     </Group>
   ))
   .add('Overflow', () => (
-    <div style={{ width: 140, padding: 20, background: '#f9f9f9' }}>
+    <div style={{ width: 140, padding: 20, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
       <Badge fullWidth>Badge with overflow</Badge>
       <Badge fullWidth variant="filled" style={{ marginTop: 10 }}>
         Badge with overflow
@@ -163,12 +162,4 @@ storiesOf('@mantine/core/Badge', module)
       <Group style={{ padding: 10 }}>{getDots({ size: 'lg' })}</Group>
       <Group style={{ padding: 10 }}>{getDots({ size: 'xl' })}</Group>
     </>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <Group style={{ padding: 10 }}>{getThemes()}</Group>
-      <Group style={{ padding: 10 }}>{getThemes({ variant: 'outline' })}</Group>
-      <Group style={{ padding: 10 }}>{getThemes({ variant: 'filled' })}</Group>
-      <Group style={{ padding: 10 }}>{getThemes({ variant: 'dot' })}</Group>
-    </DarkStory>
   ));

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { SegmentedControl } from './SegmentedControl';
-import { DarkStory } from '../../../demos';
 
 const data = [
   { label: 'React', value: 'react' },
@@ -56,14 +55,4 @@ storiesOf('@mantine/core/SegmentedControl', module)
     <div style={{ padding: 40 }}>
       <SegmentedControl data={simpleData} defaultValue="Vue" />
     </div>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 40 }}>
-        <Wrapper />
-        <div>
-          <Wrapper color="blue" style={{ marginTop: 20 }} />
-        </div>
-      </div>
-    </DarkStory>
   ));

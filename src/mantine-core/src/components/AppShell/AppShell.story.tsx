@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, useMantineTheme } from '@mantine/styles';
 import { Burger } from '../Burger';
 import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
@@ -10,9 +10,15 @@ import { AppShell } from './AppShell';
 
 function NavbarToggle() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
   return (
     <AppShell
-      styles={{ main: { background: '#e5e5e5' } }}
+      styles={{
+        main: {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        },
+      }}
       navbarOffsetBreakpoint="sm"
       fixed
       navbar={

@@ -4,7 +4,6 @@ import { RocketIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ThemeIcon } from './ThemeIcon';
-import { DarkStory } from '../../../demos';
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
@@ -30,12 +29,4 @@ storiesOf('@mantine/core/ThemeIcon', module)
         <RocketIcon style={{ width: 20, height: 20 }} />
       </ThemeIcon>
     </Group>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <div style={{ padding: 40 }}>
-        <Group style={{ padding: 20 }}>{getThemes()}</Group>
-        <Group style={{ padding: 20 }}>{getThemes({ variant: 'light' })}</Group>
-      </div>
-    </DarkStory>
   ));

@@ -71,14 +71,13 @@ function Creatable() {
       creatable
       onCreate={(query) => setData((c) => [...c, query])}
       getCreateLabel={(query) => `+ Create ${query}`}
-      style={{ marginTop: 20 }}
     />
   );
 }
 
 storiesOf('@mantine/core/Select', module)
   .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         label="Choose your favorite library/framework"
         placeholder="Choose value"
@@ -144,7 +143,7 @@ storiesOf('@mantine/core/Select', module)
     </div>
   ))
   .add('With custom scrollbars', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         data={largeData}
         label="custom scrollbars"
@@ -154,12 +153,12 @@ storiesOf('@mantine/core/Select', module)
     </div>
   ))
   .add('Creatable', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Creatable />
     </div>
   ))
   .add('String as data', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         label="Choose your favorite library/framework"
         placeholder="Choose value"

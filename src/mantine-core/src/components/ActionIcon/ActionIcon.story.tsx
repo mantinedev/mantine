@@ -4,7 +4,6 @@ import { GearIcon } from '@modulz/radix-icons';
 import { DEFAULT_THEME, MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
-import { DarkStory } from '../../../demos';
 
 const VARIANTS = ['default', 'outline', 'filled', 'light', 'hover', 'transparent'] as const;
 
@@ -74,13 +73,4 @@ storiesOf('@mantine/core/ActionIcon', module)
         ))}
       </Group>
     </>
-  ))
-  .add('Dark theme', () => (
-    <DarkStory>
-      <Group style={{ padding: 10 }}>{getVariants({ color: 'blue' })}</Group>
-      <Group style={{ padding: 10 }}>{getVariants({ color: 'red' })}</Group>
-      <Group style={{ padding: 10 }}>{getVariants({ disabled: true })}</Group>
-      <Group style={{ padding: 10 }}>{getVariants({ disabled: true, color: 'blue' })}</Group>
-      <Group style={{ padding: 10 }}>{getVariants({ loading: true, color: 'blue' })}</Group>
-    </DarkStory>
   ));

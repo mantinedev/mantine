@@ -4,7 +4,6 @@ import { CheckIcon } from '@modulz/radix-icons';
 import { Text } from '../Text/Text';
 import { Avatar } from '../Avatar/Avatar';
 import { Timeline } from './Timeline';
-import { DarkStory } from '../../../demos';
 
 function BaseStory() {
   return (
@@ -49,10 +48,4 @@ function BaseStory() {
   );
 }
 
-storiesOf('@mantine/core/Timeline', module)
-  .add('General usage', () => <BaseStory />)
-  .add('Dark theme', () => (
-    <DarkStory>
-      <BaseStory />
-    </DarkStory>
-  ));
+storiesOf('@mantine/core/Timeline', module).add('General usage', () => <BaseStory />);

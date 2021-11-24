@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, MANTINE_SIZES, DEFAULT_THEME } from '@mantine/styles';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
@@ -93,7 +93,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   </Group>
 ));
 
-const variants = (['default', 'filled', 'unstyled', 'headless'] as const).map((variant) => (
+const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   <Group grow key={variant} style={{ marginTop: 30 }} direction="column">
     <MultiSelect
       variant={variant}
@@ -119,7 +119,7 @@ storiesOf('@mantine/core/MultiSelect', module)
         />
         <TextInput label="Text input" placeholder="Select items" />
       </Group>
-      <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
+      <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start" mt="md">
         <TextInput label="Text input" placeholder="Select items" />
         <MultiSelect
           label="Multi select with separator and disabled items"
@@ -245,36 +245,6 @@ storiesOf('@mantine/core/MultiSelect', module)
   .add('Countries select', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <CountriesSelect />
-    </div>
-  ))
-  .add('Dark theme', () => (
-    <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-      <MantineProvider theme={{ colorScheme: 'dark' }}>
-        <CountriesSelect />
-
-        <MultiSelect
-          style={{ marginTop: 30 }}
-          label="Multi select"
-          data={data}
-          defaultValue={['react', 'ng']}
-          placeholder="Select items"
-          nothingFound="Nothing found"
-          searchable
-          clearable
-        />
-
-        <MultiSelect
-          style={{ marginTop: 30 }}
-          label="Multi select"
-          data={data}
-          defaultValue={['react', 'ng']}
-          placeholder="Select items"
-          nothingFound="Nothing found"
-          searchable
-          clearable
-          disabled
-        />
-      </MantineProvider>
     </div>
   ))
   .add('Max Selected Values', () => (

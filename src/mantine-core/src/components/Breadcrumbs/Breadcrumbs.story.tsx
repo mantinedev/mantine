@@ -22,13 +22,8 @@ storiesOf('@mantine/core/Breadcrumbs', module)
   ))
   .add('Custom separator', () => (
     <div style={{ padding: 50 }}>
-      <Breadcrumbs style={{ marginTop: 20 }} separator="→">
-        {items}
-      </Breadcrumbs>
-      <Breadcrumbs
-        style={{ marginTop: 20 }}
-        separator={<CaretRightIcon style={{ width: 18, height: 18 }} />}
-      >
+      <Breadcrumbs separator="→">{items}</Breadcrumbs>
+      <Breadcrumbs mt="xl" separator={<CaretRightIcon style={{ width: 18, height: 18 }} />}>
         {items}
       </Breadcrumbs>
     </div>

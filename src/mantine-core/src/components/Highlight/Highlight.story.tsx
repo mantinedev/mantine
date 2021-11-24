@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Highlight } from './Highlight';
-import { DarkStory } from '../../../demos';
 
 const themes = Object.keys(DEFAULT_THEME.colors).map((color) => (
   <Highlight key={color} highlightColor={color} highlight="light">
@@ -46,5 +45,4 @@ storiesOf('@mantine/core/Highlight', module)
     >
       Highlight this
     </Highlight>
-  ))
-  .add('Dark theme', () => <DarkStory>{themes}</DarkStory>);
+  ));

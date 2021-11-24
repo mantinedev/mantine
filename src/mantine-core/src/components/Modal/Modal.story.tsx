@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
 import { AuthenticationForm } from '../../../demos';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
@@ -92,24 +91,15 @@ storiesOf('@mantine/core/Modal', module)
       <AuthenticationForm noPadding noShadow />
     </WrappedModal>
   ))
-  .add('With select', () => (
-    <WrappedModal>
-      <Select data={['react', 'ng']} />
-      <Autocomplete data={['react', 'ng']} />
-      <MultiSelect data={['react', 'ng']} />
+  .add('With overlay components', () => (
+    <WrappedModal title="Modal with overlay items">
+      <Select data={['react', 'ng']} placeholder="Select" />
+      <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />
+      <MultiSelect data={['react', 'ng']} mt="md" mb="md" placeholder="MultiSelect" />
       <PopoverWrapper />
-      <ColorInput dropdownZIndex={1000} />
+      <ColorInput dropdownZIndex={1000} mt="md" mb="md" placeholder="Color input" />
       <Menu zIndex={1000}>
         <Menu.Item>Hello</Menu.Item>
       </Menu>
     </WrappedModal>
-  ))
-  .add('Dark theme', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <div style={{ background: DEFAULT_THEME.colors.dark[7], minHeight: '100vh', padding: 50 }}>
-        <WrappedModal title="Authentication form">
-          <AuthenticationForm noPadding noShadow />
-        </WrappedModal>
-      </div>
-    </MantineProvider>
   ));
