@@ -1,6 +1,7 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useSx } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
 import { Center } from '../../Center';
@@ -41,7 +42,6 @@ export function AccordionItem({
   className,
   classNames,
   styles,
-  sx,
   transitionDuration,
   icon = <ChevronIcon />,
   disableIconRotation = false,
@@ -52,17 +52,13 @@ export function AccordionItem({
 }: AccordionItemProps) {
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
     { transitionDuration: duration, disableIconRotation, iconPosition },
     { classNames, styles, name: 'Accordion' }
   );
 
   return (
-    <div
-      className={cx(classes.item, { [classes.itemOpened]: opened }, sxClassName, className)}
-      {...others}
-    >
+    <Box className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
       <h3 style={{ margin: 0, fontWeight: 'normal' }}>
         <UnstyledButton
           className={classes.control}
@@ -84,7 +80,7 @@ export function AccordionItem({
           <div className={classes.contentInner}>{children}</div>
         </div>
       </Collapse>
-    </div>
+    </Box>
   );
 }
 

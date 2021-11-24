@@ -16,19 +16,19 @@ export default createStyles(
     { transitionDuration, disableIconRotation, iconPosition }: AccordionItemStyles,
     getRef
   ) => {
-    const icon = {
-      ref: getRef('icon'),
-      transition: `transform ${transitionDuration}ms ease`,
-      marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
-      marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
-      width: ICON_SIZE,
-      minWidth: ICON_SIZE,
-      height: ICON_SIZE,
-      borderRadius: ICON_SIZE,
-    } as const;
+    const icon = getRef('icon');
 
     return {
-      icon,
+      icon: {
+        ref: icon,
+        transition: `transform ${transitionDuration}ms ease`,
+        marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
+        marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
+        width: ICON_SIZE,
+        minWidth: ICON_SIZE,
+        height: ICON_SIZE,
+        borderRadius: ICON_SIZE,
+      },
 
       label: {
         color: 'inherit',
@@ -46,7 +46,7 @@ export default createStyles(
       },
 
       itemOpened: {
-        [`& .${icon.ref}`]: {
+        [`& .${icon}`]: {
           transform: disableIconRotation ? 'none' : 'rotate(180deg)',
         },
       },
