@@ -1,15 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { attachDemos, generateBorderStyles } from '@mantine/ds';
+import { generateBorderStyles } from '@mantine/ds';
 import { createStyles } from '@mantine/styles';
-import { baseDemoItems } from './demos/_base';
-import { Accordion } from './Accordion';
-import * as demos from './demos';
-import { Accordion as AccordionStylesApi } from './styles.api';
-
-const stories = storiesOf('@mantine/core/Accordion/demos', module);
-
-attachDemos(stories, demos);
+import { baseDemoItems } from '../demos/_base';
+import { Accordion } from '../Accordion';
+import { Accordion as AccordionStylesApi } from '../styles.api';
 
 const styles = generateBorderStyles(AccordionStylesApi);
 const useStyles = createStyles(() => styles);
