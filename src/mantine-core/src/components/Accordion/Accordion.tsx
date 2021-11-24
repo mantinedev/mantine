@@ -1,6 +1,6 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
-import { useUuid, useDidUpdate } from '@mantine/hooks';
+import { useUuid } from '@mantine/hooks';
 import { Box } from '../Box';
 import {
   AccordionItem,
@@ -9,6 +9,7 @@ import {
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
 import { useAccordionState, AccordionState } from './use-accordion-state/use-accordion-state';
+import { useAccordionFocus } from './use-accordion-focus/use-accordion-focus';
 
 export interface AccordionProps
   extends DefaultProps<AccordionItemStylesNames>,
@@ -73,10 +74,10 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ref
   ) => {
     const uuid = useUuid(id);
-    const controlsRefs = useRef<HTMLButtonElement[]>([]);
     const items = React.Children.toArray(children).filter(
       (item: AccordionItemType) => item.type === AccordionItem
     ) as AccordionItemType[];
+    const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
 
     const [value, handlers] = useAccordionState({
       multiple,
@@ -86,32 +87,6 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       initialState,
       onChange,
     });
-
-    const handleItemKeydown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
-      if (event.code === 'ArrowDown') {
-        event.preventDefault();
-        const nextFocusElement = controlsRefs.current[index + 1];
-        if (nextFocusElement) {
-          nextFocusElement.focus();
-        } else {
-          controlsRefs.current[0]?.focus();
-        }
-      }
-
-      if (event.code === 'ArrowUp') {
-        event.preventDefault();
-        const previousFocusElement = controlsRefs.current[index - 1];
-        if (previousFocusElement) {
-          previousFocusElement.focus();
-        } else {
-          controlsRefs.current[controlsRefs.current.length - 1]?.focus();
-        }
-      }
-    };
-
-    useDidUpdate(() => {
-      controlsRefs.current = controlsRefs.current.slice(0, items.length);
-    }, [items.length]);
 
     const controls = items.map((item, index) => (
       <AccordionItem
@@ -126,10 +101,8 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         classNames={classNames}
         styles={styles}
         id={`${uuid}-${index}`}
-        onControlKeyDown={(event) => handleItemKeydown(event, index)}
-        controlRef={(node) => {
-          controlsRefs.current[index] = node;
-        }}
+        onControlKeyDown={handleItemKeydown(index)}
+        controlRef={assignControlRef(index)}
       />
     ));
 
@@ -142,5 +115,4 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
 ) as any;
 
 Accordion.Item = AccordionItem;
-
 Accordion.displayName = '@mantine/core/Accordion';
