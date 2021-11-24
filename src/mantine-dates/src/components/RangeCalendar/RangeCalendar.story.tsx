@@ -26,4 +26,28 @@ storiesOf('@mantine/dates/RangeCalendar', module)
       <WrappedRangeCalendar amountOfMonths={2} />
       <WrappedRangeCalendar amountOfMonths={3} />
     </div>
+  ))
+  .add('With Styles API', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar
+        amountOfMonths={1}
+        styles={{
+          firstInRange: {
+            backgroundColor: 'red !important',
+          },
+          lastInRange: {
+            backgroundColor: 'blue !important',
+          },
+          selected: {
+            backgroundColor: 'orange !important',
+          },
+          inRange: {
+            backgroundColor: 'cyan !important',
+          },
+          weekend: {
+            color: 'silver !important',
+          },
+        }}
+      />
+    </div>
   ));
