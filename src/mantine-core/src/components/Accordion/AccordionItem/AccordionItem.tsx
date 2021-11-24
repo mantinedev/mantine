@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
+import { useReducedMotion } from '@mantine/hooks';
 import { DefaultProps, ClassNames, useSx } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
@@ -50,7 +50,6 @@ export function AccordionItem({
   controlRef,
   ...others
 }: AccordionItemProps) {
-  const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const { sxClassName } = useSx({ sx });
@@ -58,8 +57,6 @@ export function AccordionItem({
     { transitionDuration: duration, disableIconRotation, iconPosition },
     { classNames, styles, name: 'Accordion' }
   );
-
-  useWindowEvent('resize', () => forceUpdate());
 
   return (
     <div
