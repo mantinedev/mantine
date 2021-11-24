@@ -103,6 +103,7 @@
     "rollup-plugin-visualizer": "^5.5.0",
     "simple-git": "^2.39.0",
     "storybook-addon-turbo-build": "^1.0.0-beta.0",
+    "storybook-dark-mode": "^1.0.8",
     "surge": "^0.23.0",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",

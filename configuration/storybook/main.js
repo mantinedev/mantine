@@ -9,7 +9,7 @@ const stories = argv.gallery
 
 module.exports = {
   stories,
-  addons: ['storybook-addon-turbo-build'],
+  addons: ['storybook-addon-turbo-build', 'storybook-dark-mode'],
   webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,
