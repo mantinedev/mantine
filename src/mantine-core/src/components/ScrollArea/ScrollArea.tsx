@@ -40,7 +40,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       scrollHideDelay = 1000,
       type = 'hover',
       dir = 'ltr',
-      offsetScrollbars = true,
+      offsetScrollbars = false,
       viewportRef,
       ...others
     }: ScrollAreaProps,

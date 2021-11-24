@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useMantineTheme } from '@mantine/styles';
+import { Select } from '../Select';
 import { Text } from '../Text';
 import { ScrollArea, ScrollAreaProps } from './ScrollArea';
 
@@ -57,6 +58,40 @@ function Wrapper(props: ScrollAreaProps) {
   );
 }
 
+const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
+  <ScrollArea
+    {...props}
+    style={{ ...props.style, position: 'absolute', maxHeight: 300, width: '100%' }}
+    viewportRef={ref}
+  >
+    <div style={{ padding: 3 }}>{props.children}</div>
+  </ScrollArea>
+));
+
+const data = Array(50)
+  .fill(0)
+  .map((_, index) => ({
+    value: `${index}`,
+    label: `Item ${index}`,
+  }));
+
+function WithSelect() {
+  return (
+    <Select
+      data={data}
+      label="Select with custom scrollbars"
+      placeholder="Dropdown rendered as custom component"
+      searchable
+      dropdownComponent={CustomScrollbars}
+    />
+  );
+}
+
 storiesOf('@mantine/core/ScrollArea', module)
   .add('General usage', () => <Wrapper />)
-  .add('RTL', () => <Wrapper dir="rtl" />);
+  .add('RTL', () => <Wrapper dir="rtl" />)
+  .add('With Select', () => (
+    <div style={{ padding: 40 }}>
+      <WithSelect />
+    </div>
+  ));
