@@ -15,49 +15,30 @@ styles: ['Accordion']
 
 import { AccordionDemos } from '@demos/core';
 
-## Components
-
-- `Accordion.Item` – utility component to pass data to `Accordion` component, does not render anything on its own. Do not use outside of `Accordion` component.
-- `Accordion` – receives data from `AccordionItem` content and renders component
-
 ## Usage
 
-<Demo data={AccordionDemos.usage} />
+<Demo data={AccordionDemos.configurator} />
 
 ## Change labels
-
-You can use any react component as label:
 
 <Demo data={AccordionDemos.label} />
 
 ## Change icons
 
-You can change icons for all items by setting `icon` prop on Accordion component:
+You can change icon for all items by setting `icon` prop on Accordion component:
 
 <Demo data={AccordionDemos.icon} />
 
-Or you can set icon individually for each item:
+To change icon individually for each item set `icon` prop on `Accordion.Item` component:
 
 <Demo data={AccordionDemos.icons} />
 
-## Icon position
-
-Change icon position by setting `iconPosition` prop, it can be either `left` (default) or `right`:
-
-<Demo data={AccordionDemos.iconPosition} />
-
 ## Styles API
 
-Default Accordion has bare minimum styles to make customization more simple,
-you can add any additional styles with [Styles API](/theming/styles-api/):
+By default Accordion has bare minimum styles to make customization simple,
+you can add additional styles with [Styles API](/theming/styles-api/):
 
-<Demo data={AccordionDemos.stylesApi} />
-
-## Multiple opened items
-
-Set `multiple` prop on Accordion component to allow any amount of items to be opened at the same time:
-
-<Demo data={AccordionDemos.multiple} />
+<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## Component state
 
@@ -67,7 +48,7 @@ In most cases you would use uncontrolled Accordion, to change initial opened ite
 // -> Third element will be opened initially
 <Accordion initialItem={2} />;
 
-// -> No element will be opened initially
+// -> No element will be opened initially (default)
 <Accordion initialItem={-1} />;
 ```
 

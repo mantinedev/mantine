@@ -26,8 +26,7 @@ function Demo() {
       <Accordion.Item label={<AccordionLabel image="./avatar.png" label="Bender Bending Rodríguez" description="..." />}>
         <Text size="sm">{item.content}</Text>
       </Accordion.Item>
-
-      {/* ... more items */}
+      {/* ... other items */}
     </Accordion>
   );
 }
@@ -37,8 +36,6 @@ interface AccordionLabelProps {
   label: string;
   image: string;
   description: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  content?: string;
 }
 
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {

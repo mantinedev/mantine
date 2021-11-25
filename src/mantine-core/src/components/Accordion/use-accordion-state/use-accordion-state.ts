@@ -1,4 +1,4 @@
-import { useUncontrolled } from '@mantine/hooks';
+import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 
 export function createAccordionState(length: number, initialItem = -1) {
   return Array.from({ length }).reduce((acc, _item, index) => {
@@ -48,6 +48,12 @@ export function useAccordionState({
       setState(newValues);
     }
   };
+
+  useDidUpdate(() => {
+    if (!multiple) {
+      setState(createAccordionState(itemsCount));
+    }
+  }, [multiple]);
 
   return [value, { toggle, setState }] as const;
 }
