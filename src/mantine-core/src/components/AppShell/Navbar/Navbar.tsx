@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { ClassNames, DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../../Box';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
@@ -54,7 +55,6 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       hidden = false,
       className,
       classNames,
-      style,
       styles,
       sx,
       children,
@@ -67,20 +67,18 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       { classNames, styles, sx, name: 'Navbar' }
     );
 
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     return (
-      <nav
+      <Box
+        component="nav"
         ref={ref}
         className={cx(classes.root, { [classes.hidden]: hidden }, className)}
-        style={mergedStyles}
-        {...rest}
+        {...others}
       >
         {children}
-      </nav>
+      </Box>
     );
   }
 ) as any;
 
 Navbar.Section = NavbarSection;
-
 Navbar.displayName = '@mantine/core/Navbar';

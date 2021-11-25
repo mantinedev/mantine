@@ -5,13 +5,14 @@ import {
   MantineTheme,
   useMantineTheme,
   ClassNames,
+  MantineMargin,
 } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
-export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
+export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, MantineMargin> {
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 
