@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
-import { useUuid } from '@mantine/hooks';
+import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
 import {
   AccordionItem,
@@ -111,7 +111,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         styles={styles}
         id={`${uuid}-${index}`}
         onControlKeyDown={handleItemKeydown(index)}
-        controlRef={assignControlRef(index)}
+        controlRef={mergeRefs(assignControlRef(index), item.props?.controlRef)}
         offsetIcon={offsetIcon}
         iconSize={iconSize}
       />

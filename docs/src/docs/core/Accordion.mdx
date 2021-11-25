@@ -66,6 +66,23 @@ In more advanced cases you can control Accordion state with `useAccordionState` 
 
 <Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
 
+## Get control ref
+
+Use `controlRef` prop on Accordion.Item component to get control button ref:
+
+```tsx
+import { useRef } from 'react';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>();
+  return (
+    <Accordion>
+      <Accordion.Item label="First item" controlRef={ref} />
+    </Accordion>
+  );
+}
+```
+
 ## Accessibility
 
 Accordion component is accessible by default, it follows [WAI ARIA guidelines](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html):

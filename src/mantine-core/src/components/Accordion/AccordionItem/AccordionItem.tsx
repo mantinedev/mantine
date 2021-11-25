@@ -17,6 +17,7 @@ export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef
   children?: React.ReactNode;
   disableIconRotation?: boolean;
   iconPosition?: AccordionIconPosition;
+  controlRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export interface AccordionItemType {
@@ -31,7 +32,6 @@ interface AccordionItemProps
   onToggle?(): void;
   transitionDuration?: number;
   id?: string;
-  controlRef?: React.ForwardedRef<HTMLButtonElement>;
   onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
   offsetIcon?: boolean;
   iconSize?: number;

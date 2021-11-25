@@ -8,6 +8,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  waitForComponentToPaint,
 } from '@mantine/tests';
 import { Button } from '../Button';
 import { Accordion } from './Accordion';
@@ -50,6 +51,17 @@ describe('@mantine/core/Accordion', () => {
 
     expect(element.find(Accordion.Item)).toHaveLength(2);
     expect(element.children()).toHaveLength(2);
+  });
+
+  it('supports controlRef on Accordion.Item', async () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    const element = mount(
+      <Accordion>
+        <Accordion.Item controlRef={ref} />
+      </Accordion>
+    );
+    await waitForComponentToPaint(element);
+    expect(ref.current instanceof HTMLButtonElement).toBe(true);
   });
 
   it('exposes AccordionItem component as Accordion.Item', () => {
