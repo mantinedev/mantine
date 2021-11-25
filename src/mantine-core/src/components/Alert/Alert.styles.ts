@@ -57,17 +57,10 @@ export default createStyles((theme, { color }: AlertStyles) => ({
   message: {
     ...theme.fn.fontStyles(),
     lineHeight: theme.lineHeight,
-    borderBottomLeftRadius: theme.radius.sm,
-    borderBottomRightRadius: theme.radius.sm,
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-    '&:only-child': {
-      borderTopRightRadius: theme.radius.sm,
-      borderTopLeftRadius: theme.radius.sm,
-    },
   },
 
   closeButton: {
