@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, useMantineTheme } from '@mantine/styles';
-import { Burger } from '../Burger';
-import { Text } from '../Text';
-import { MediaQuery } from '../MediaQuery';
-import { Header } from './Header/Header';
-import { Navbar } from './Navbar/Navbar';
-import { AppShell } from './AppShell';
+import { Burger } from '../../Burger';
+import { Text } from '../../Text';
+import { MediaQuery } from '../../MediaQuery';
+import { Header } from '../Header/Header';
+import { Navbar } from '../Navbar/Navbar';
+import { AppShell } from '../AppShell';
 
 function NavbarToggle() {
   const [opened, setOpened] = useState(false);
@@ -49,7 +49,7 @@ function NavbarToggle() {
   );
 }
 
-storiesOf('@mantine/core/AppShell/AppShell', module)
+storiesOf('@mantine/core/AppShell/stories/AppShell', module)
   .add('Static', () => (
     <AppShell
       header={<Header height={50}>Header</Header>}
