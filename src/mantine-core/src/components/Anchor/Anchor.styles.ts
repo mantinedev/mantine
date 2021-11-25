@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/styles';
 
 export default createStyles(() => ({
-  anchor: {
+  root: {
     backgroundColor: 'transparent',
     cursor: 'pointer',
     padding: 0,

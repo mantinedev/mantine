@@ -23,7 +23,7 @@ export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
         component={(component || 'a') as any}
         variant="link"
         ref={ref}
-        className={cx(classes.anchor, className)}
+        className={cx(classes.root, className)}
         {...others}
       />
     );
