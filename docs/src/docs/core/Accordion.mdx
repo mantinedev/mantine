@@ -33,13 +33,6 @@ To change icon individually for each item set `icon` prop on `Accordion.Item` co
 
 <Demo data={AccordionDemos.icons} />
 
-## Styles API
-
-By default Accordion has bare minimum styles to make customization simple,
-you can add additional styles with [Styles API](/theming/styles-api/):
-
-<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
-
 ## Component state
 
 In most cases you would use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
@@ -65,31 +58,46 @@ function Demo() {
 }
 ```
 
+## Change transition
+
+To change transition duration set `transitionDuration` prop in ms:
+
+<Demo data={AccordionDemos.customTransitions} />
+
+To disable transitions set `transitionDuration` to 0:
+
+<Demo data={AccordionDemos.disableTransitions} />
+
+## Customize styles
+
+By default Accordion has bare minimum styles to make customization simple,
+you can add additional styles with [Styles API](/theming/styles-api/):
+
+<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
+
+## Accessibility
+
+Accordion component is accessible by default, it follows [WAI ARIA guidelines](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html):
+
+- All controls are included in `Tab` sequence
+- `Up` and `Down` arrows move focus to previous/next control
+- Item body has `role="region"` attribute
+- Item control has `aria-expanded`, `aria-controls`, `aria-labelledby` attributes
+- When user prefers to reduce motion, `transitionDuration` is automatically set to 0
+
+To make component accessible for screen reader include descriptive in `Accordion.Item` label:
+
+```tsx
+<Accordion.Item label={<div />}>Content</Accordion.Item> // -> not ok
+<Accordion.Item label="First item">Content</Accordion.Item> // -> ok
+<Accordion.Item label={<div>First item</div>}>Content</Accordion.Item> // -> ok
+```
+
 ## TypeScript
 
-### Component props type
+@mantine/core package exports following types associated with Accordion:
 
-Import component props type:
-
-```tsx
-import type { AccordionProps } from '@mantine/core';
-```
-
-`AccordionProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### AccordionStylesNames type
-
-`AccordionStylesNames` type is a union with Accordion [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { AccordionStylesNames } from '@mantine/core';
-
-const accordionClasses: Partial<Record<AccordionStylesNames, 'string'>> = {
-  item: 'accordion-item',
-  itemOpened: 'accordion-itemOpened',
-};
-
-<Accordion classNames={accordionClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.
+- `AccordionProps` – Accordion component props
+- `AccordionItemProps` – Accordion.Item component props
+- `AccordionState` – Accordion state type
+- `AccordionStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)

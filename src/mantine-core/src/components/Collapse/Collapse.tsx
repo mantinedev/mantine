@@ -46,7 +46,7 @@ export function Collapse({
     onTransitionEnd,
   });
 
-  if (transitionDuration === 0) {
+  if (duration === 0) {
     return opened ? (
       <div className={sxClassName} {...rest}>
         {children}
