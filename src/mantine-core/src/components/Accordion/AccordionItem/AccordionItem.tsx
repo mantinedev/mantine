@@ -33,6 +33,8 @@ interface AccordionItemProps
   id?: string;
   controlRef?: React.ForwardedRef<HTMLButtonElement>;
   onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+  offsetIcon?: boolean;
+  iconSize?: number;
 }
 
 export function AccordionItem({
@@ -46,6 +48,8 @@ export function AccordionItem({
   transitionDuration,
   icon = <ChevronIcon />,
   disableIconRotation = false,
+  offsetIcon = true,
+  iconSize = 24,
   iconPosition = 'left',
   id,
   controlRef,
@@ -55,7 +59,7 @@ export function AccordionItem({
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const { classes, cx } = useStyles(
-    { transitionDuration: duration, disableIconRotation, iconPosition },
+    { transitionDuration: duration, disableIconRotation, iconPosition, offsetIcon, iconSize },
     { classNames, styles, name: 'Accordion' }
   );
 

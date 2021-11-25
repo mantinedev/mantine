@@ -46,6 +46,12 @@ export interface AccordionProps
 
   /** Change icon position: left or right */
   iconPosition?: AccordionIconPosition;
+
+  /** Should icon be offset with padding, applicable only when iconPosition is right */
+  offsetIcon?: boolean;
+
+  /** Icon width in px */
+  iconSize?: number;
 }
 
 type AccordionComponent = ((props: AccordionProps) => React.ReactElement) & {
@@ -65,6 +71,8 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       disableIconRotation = false,
       transitionDuration = 200,
       iconPosition = 'left',
+      offsetIcon = true,
+      iconSize = 24,
       icon,
       classNames,
       styles,
@@ -104,6 +112,8 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         id={`${uuid}-${index}`}
         onControlKeyDown={handleItemKeydown(index)}
         controlRef={assignControlRef(index)}
+        offsetIcon={offsetIcon}
+        iconSize={iconSize}
       />
     ));
 

@@ -3,7 +3,7 @@ import { AccordionProps } from '../Accordion';
 import { BaseDemo } from './_base';
 
 function Wrapper(props: Partial<AccordionProps>) {
-  return <BaseDemo {...props} />;
+  return <BaseDemo {...props} initialItem={0} />;
 }
 
 const codeTemplate = (props: string) => `<Accordion${props}>
@@ -35,6 +35,16 @@ export const configurator: MantineDemo = {
       initialValue: 'left',
       defaultValue: 'left',
     },
+    {
+      name: 'iconSize',
+      type: 'number',
+      initialValue: 24,
+      defaultValue: 24,
+      min: 10,
+      max: 40,
+      step: 4,
+    },
+    { name: 'offsetIcon', type: 'boolean', initialValue: true, defaultValue: true },
     { name: 'disableIconRotation', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'multiple', type: 'boolean', initialValue: false, defaultValue: false },
   ],

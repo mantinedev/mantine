@@ -6,14 +6,20 @@ interface AccordionItemStyles {
   transitionDuration: number;
   disableIconRotation: boolean;
   iconPosition: AccordionIconPosition;
+  offsetIcon: boolean;
+  iconSize: number;
 }
-
-const ICON_SIZE = 24;
 
 export default createStyles(
   (
     theme,
-    { transitionDuration, disableIconRotation, iconPosition }: AccordionItemStyles,
+    {
+      transitionDuration,
+      disableIconRotation,
+      iconPosition,
+      offsetIcon,
+      iconSize,
+    }: AccordionItemStyles,
     getRef
   ) => {
     const icon = getRef('icon');
@@ -24,10 +30,9 @@ export default createStyles(
         transition: `transform ${transitionDuration}ms ease`,
         marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
         marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
-        width: ICON_SIZE,
-        minWidth: ICON_SIZE,
-        height: ICON_SIZE,
-        borderRadius: ICON_SIZE,
+        width: iconSize,
+        minWidth: iconSize,
+        borderRadius: iconSize,
       },
 
       label: {
@@ -58,7 +63,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         flexDirection: iconPosition === 'right' ? 'row-reverse' : 'row',
-        padding: `${theme.spacing.sm}px ${theme.spacing.md / 2}px`,
+        padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
         paddingLeft: iconPosition === 'right' ? theme.spacing.sm + 4 : null,
         fontWeight: 500,
         textAlign: 'left',
@@ -73,7 +78,8 @@ export default createStyles(
       content: {
         ...theme.fn.fontStyles(),
         lineHeight: theme.lineHeight,
-        paddingLeft: iconPosition === 'right' ? 0 : ICON_SIZE + theme.spacing.xs / 2,
+        paddingLeft:
+          iconPosition === 'right' ? 0 : offsetIcon ? iconSize + theme.spacing.xs / 2 : 0,
       },
 
       contentInner: {
