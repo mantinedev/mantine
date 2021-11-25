@@ -16,7 +16,7 @@ const form = (
 );
 
 function Controlled(props: Partial<AccordionProps>) {
-  const [state, handlers] = useAccordionState({ itemsCount: 3, multiple: props.multiple || false });
+  const [state, handlers] = useAccordionState({ total: 3, multiple: props.multiple || false });
 
   return (
     <>
