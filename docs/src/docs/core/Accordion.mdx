@@ -105,7 +105,7 @@ To make component accessible for screen reader include descriptive in `Accordion
 
 @mantine/core package exports following types associated with Accordion:
 
-- `AccordionProps` – Accordion component props
-- `AccordionItemProps` – Accordion.Item component props
+- `AccordionProps` – Accordion component props, extends `React.ComponentPropsWithoutRef<'div'>`
+- `AccordionItemProps` – Accordion.Item component props, extends `React.ComponentPropsWithoutRef<'div'>`
 - `AccordionState` – Accordion state type
 - `AccordionStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)

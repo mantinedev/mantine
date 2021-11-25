@@ -141,11 +141,7 @@ ActionIcon renders a regular button element. Set `title` or `aria-label` props f
 
 @mantine/core package exports following types associated with ActionIcon:
 
-ActionIconStylesNames
-ActionIconVariant
-CloseButtonProps
-
 - `ActionIconProps` – ActionIcon component props, generic type: `ActionIconProps<'a'>`
 - `ActionIconVariant` – a union of all variants
-- `CloseButtonProps` – CloseButton component props
-- `ActionIconStylesNames` – – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)
+- `CloseButtonProps` – CloseButton component props, extends `React.ComponentPropsWithoutRef<'button'>`
+- `ActionIconStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)
