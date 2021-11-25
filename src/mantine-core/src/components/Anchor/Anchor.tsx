@@ -18,12 +18,15 @@ export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
     ref: PolymorphicRef<C>
   ) => {
     const { classes, cx } = useStyles(null, { name: 'Anchor', sx, classNames, styles });
+    const buttonProps = component === 'button' ? { type: 'button' } : null;
+
     return (
       <Text
         component={(component || 'a') as any}
         variant="link"
         ref={ref}
         className={cx(classes.root, className)}
+        {...buttonProps}
         {...others}
       />
     );
