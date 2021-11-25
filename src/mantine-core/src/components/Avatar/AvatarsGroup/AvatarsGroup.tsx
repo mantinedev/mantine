@@ -13,19 +13,19 @@ export interface AvatarsGroupProps
   /** <Avatar /> components only */
   children?: React.ReactNode;
 
-  /** Child Avatars width and height */
+  /** Child <Avatar /> components width and height */
   size?: MantineNumberSize;
 
-  /** Child Avatars radius */
+  /** Child <Avatar /> radius */
   radius?: MantineNumberSize;
 
-  /** Maximum amount of Avatar components rendered, everything after limit is truncated */
+  /** Maximum amount of <Avatar /> components rendered, everything after limit is truncated */
   limit?: number;
 
   /** Spacing between avatars */
   spacing?: MantineNumberSize;
 
-  /** Total number of Child Avatars, overrides the truncated length */
+  /** Total number of Child Avatars, overrides the truncated amount */
   total?: number;
 }
 
