@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
 import useStyles, { HeaderPosition } from './Header.styles';
 
-export interface HeaderProps extends DefaultProps {
+export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'nav'> {
   /** Header content */
   children: React.ReactNode;
 

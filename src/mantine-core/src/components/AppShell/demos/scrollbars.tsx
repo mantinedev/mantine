@@ -10,10 +10,16 @@ import { Navbar, ScrollArea } from '@mantine/core';
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs" width={{ base: 300 }}>
+    <Navbar height={600} padding={10} width={{ base: 300 }}>
       <Navbar.Section mt="xs"><Brand /></Navbar.Section>
 
-      <Navbar.Section grow mt="lg" component={ScrollArea}>
+      <Navbar.Section
+        grow
+        component={ScrollArea}
+        ml={-10}
+        mr={-10}
+        sx={{ paddingLeft: 10, paddingRight: 10 }}
+      >
         {/* scrollable content here */}
       </Navbar.Section>
 
@@ -25,15 +31,23 @@ function Demo() {
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs" width={{ base: 300 }}>
+    <Navbar height={600} padding={10} width={{ base: 300 }}>
       <Navbar.Section mt="xs">
         <Brand />
       </Navbar.Section>
-      <Navbar.Section grow mt="lg" component={ScrollArea}>
-        <MainLinks />
-        <MainLinks />
-        <MainLinks />
-        <MainLinks />
+      <Navbar.Section
+        grow
+        component={ScrollArea}
+        ml={-10}
+        mr={-10}
+        sx={{ paddingLeft: 10, paddingRight: 10 }}
+      >
+        <div style={{ paddingTop: 15, paddingBottom: 15 }}>
+          <MainLinks />
+          <MainLinks />
+          <MainLinks />
+          <MainLinks />
+        </div>
       </Navbar.Section>
       <Navbar.Section>
         <User />

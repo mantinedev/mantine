@@ -5,7 +5,9 @@ import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
-export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
+export interface NavbarProps
+  extends DefaultProps<NavbarStylesNames>,
+    React.ComponentPropsWithoutRef<'nav'> {
   /** Navbar width with breakpoints */
   width?: NavbarWidth;
 
