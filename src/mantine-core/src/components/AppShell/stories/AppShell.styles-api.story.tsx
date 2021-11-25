@@ -35,6 +35,11 @@ function WithClassNames() {
 
 storiesOf('@mantine/core/AppShell/styles-api', module)
   .add('With sx', () => <Wrapper sx={styles} />)
+  .add('AppShell Styles API', () => (
+    <AppShell styles={{ root: { border: '1px solid red' }, main: { border: '1px solid blue' } }}>
+      content
+    </AppShell>
+  ))
   .add('With styles as object', () => <Wrapper styles={rootStyles} />)
   .add('With styles as function', () => <Wrapper styles={() => rootStyles} />)
   .add('With styles as classNames', () => <WithClassNames />)
