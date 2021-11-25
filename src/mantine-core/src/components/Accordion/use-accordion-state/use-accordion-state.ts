@@ -13,14 +13,14 @@ interface UseAccordionState {
   multiple?: boolean;
   initialState?: AccordionState;
   state?: AccordionState;
-  itemsCount: number;
+  total: number;
   initialItem?: number;
   onChange?(state: Record<string, boolean>): void;
 }
 
 export function useAccordionState({
   initialState,
-  itemsCount,
+  total,
   initialItem = -1,
   state,
   onChange,
@@ -28,7 +28,7 @@ export function useAccordionState({
 }: UseAccordionState) {
   const [value, setState] = useUncontrolled({
     value: state,
-    defaultValue: initialState || createAccordionState(itemsCount, initialItem),
+    defaultValue: initialState || createAccordionState(total, initialItem),
     finalValue: {} as Record<string, boolean>,
     onChange,
     rule: (val) => val !== null && typeof val === 'object',
@@ -38,7 +38,7 @@ export function useAccordionState({
     if (multiple) {
       setState({ ...value, [index]: !value[index] });
     } else {
-      const newValues = Array(itemsCount)
+      const newValues = Array(total)
         .fill(0)
         .reduce((acc, _, itemIndex) => {
           acc[itemIndex] = false;
@@ -51,7 +51,7 @@ export function useAccordionState({
 
   useDidUpdate(() => {
     if (!multiple) {
-      setState(createAccordionState(itemsCount));
+      setState(createAccordionState(total));
     }
   }, [multiple]);
 

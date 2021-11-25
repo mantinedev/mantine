@@ -90,7 +90,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
 
     const [value, handlers] = useAccordionState({
       multiple,
-      itemsCount: items.length,
+      total: items.length,
       initialItem,
       state,
       initialState,

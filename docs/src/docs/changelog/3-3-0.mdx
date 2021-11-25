@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.3.0
 date: 'November 19th, 2021'
 ---
 
-import { ScrollAreaDemos, ModalDemos } from '@demos/core';
+import { ScrollAreaDemos, ModalDemos, AccordionDemos } from '@demos/core';
 
 ## New components
 
@@ -21,6 +21,10 @@ without any external libraries:
 [Modal](https://mantine.dev/core/modal/) component can now be centered:
 
 <Demo data={ModalDemos.centered} />
+
+[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
+
+<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
 
 [use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
 

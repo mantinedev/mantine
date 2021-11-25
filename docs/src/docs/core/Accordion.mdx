@@ -33,31 +33,6 @@ To change icon individually for each item set `icon` prop on `Accordion.Item` co
 
 <Demo data={AccordionDemos.icons} />
 
-## Component state
-
-In most cases you would use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
-
-```tsx
-// -> Third element will be opened initially
-<Accordion initialItem={2} />;
-
-// -> No element will be opened initially (default)
-<Accordion initialItem={-1} />;
-```
-
-If you need to manage component state on your own provide `state` and `onChange` props:
-
-```tsx
-import { useState } from 'react';
-import { Accordion } from '@mantine/core';
-
-function Demo() {
-  // Second item will be initially opened
-  const [state, onChange] = useState({ 0: false, 1: true, 2: false });
-  return <Accordion state={state} onChange={onChange} />;
-}
-```
-
 ## Change transition
 
 To change transition duration set `transitionDuration` prop in ms:
@@ -74,6 +49,22 @@ By default Accordion has bare minimum styles to make customization simple,
 you can add additional styles with [Styles API](/theming/styles-api/):
 
 <Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
+
+## Control state
+
+In most cases you would want to use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
+
+```tsx
+// -> Third element will be opened initially
+<Accordion initialItem={2} />;
+
+// -> No element will be opened initially (default)
+<Accordion initialItem={-1} />;
+```
+
+In more advanced cases you can control Accordion state with `useAccordionState` hook:
+
+<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
 
 ## Accessibility
 

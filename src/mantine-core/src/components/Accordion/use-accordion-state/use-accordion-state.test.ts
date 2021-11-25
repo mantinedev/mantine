@@ -3,7 +3,7 @@ import { useAccordionState, createAccordionState } from './use-accordion-state';
 
 const defaultProps = {
   initialState: null,
-  itemsCount: 3,
+  total: 3,
   initialItem: null,
   state: null,
   onChange: () => {},
@@ -34,7 +34,7 @@ describe('@mantine/core/Accordion/use-accordion-state', () => {
 
   it('creates initial state based on items if state and initialState are not provided', () => {
     const hook = renderHook(() => useAccordionState(defaultProps));
-    expect(hook.result.current[0]).toEqual(createAccordionState(defaultProps.itemsCount));
+    expect(hook.result.current[0]).toEqual(createAccordionState(defaultProps.total));
   });
 
   it('correctly handles single item changes', () => {
