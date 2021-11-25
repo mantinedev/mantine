@@ -10,5 +10,5 @@ export const disableTransitions: MantineDemo = {
 export const customTransitions: MantineDemo = {
   type: 'demo',
   component: () => <BaseDemo transitionDuration={1000} sx={{ maxWidth: 560 }} mx="auto" />,
-  code: '<Accordion transitionDuration={1000} />',
+  code: '<Accordion transitionDuration={1000} /> // -> 1000ms transition duration',
 };
