@@ -77,6 +77,7 @@ export default createStyles(
 
       content: {
         ...theme.fn.fontStyles(),
+        wordBreak: 'break-word',
         lineHeight: theme.lineHeight,
         paddingLeft:
           iconPosition === 'right' ? 0 : offsetIcon ? iconSize + theme.spacing.xs / 2 : 0,

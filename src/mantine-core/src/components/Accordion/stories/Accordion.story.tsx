@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { RtlProvider } from '@mantine/ds';
+import { paragraph } from '@mantine/mockdata';
 import { BaseDemo, baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';
 import { Button } from '../../Button';
@@ -86,6 +87,23 @@ storiesOf('@mantine/core/Accordion/stories', module)
   .add('Dynamic children', () => <Dynamic />)
   .add('Controlled single', () => <Controlled />)
   .add('Controlled multiple', () => <Controlled multiple />)
+  .add('Multiline label', () => (
+    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
+      <Accordion.Item label="First item with a large label that will collapse to second line">
+        {paragraph}
+      </Accordion.Item>
+      <Accordion.Item label="Second item with even larger label that will also collapse to second line or maybe even on third line, who knows">
+        {paragraph}
+      </Accordion.Item>
+    </Accordion>
+  ))
+  .add('Overflow label', () => (
+    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }} initialItem={0}>
+      <Accordion.Item label="SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere">
+        SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere
+      </Accordion.Item>
+    </Accordion>
+  ))
   .add('Rtl', () => (
     <RtlProvider>
       <BaseDemo mx="auto" sx={{ maxWidth: 400 }} mt="xl" />
