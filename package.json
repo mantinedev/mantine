@@ -112,6 +112,7 @@
     "storybook-addon-outline": "^1.4.1",
     "storybook-addon-turbo-build": "^1.0.0-beta.0",
     "storybook-dark-mode": "^1.0.8",
+    "stylis": "^4.0.10",
     "surge": "^0.23.0",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
@@ -143,6 +144,7 @@
     "react-router-dom": "^5.2.0",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2",
+    "stylis-plugin-rtl": "^2.1.1",
     "tabler-icons-react": "^1.35.0"
   },
   "resolutions": {

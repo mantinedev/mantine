@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { baseDemoItems } from '../demos/_base';
+import { RtlProvider } from '@mantine/ds';
+import { BaseDemo, baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
@@ -84,4 +85,9 @@ storiesOf('@mantine/core/Accordion/stories', module)
   ))
   .add('Dynamic children', () => <Dynamic />)
   .add('Controlled single', () => <Controlled />)
-  .add('Controlled multiple', () => <Controlled multiple />);
+  .add('Controlled multiple', () => <Controlled multiple />)
+  .add('Rtl', () => (
+    <RtlProvider>
+      <BaseDemo mx="auto" sx={{ maxWidth: 400 }} mt="xl" />
+    </RtlProvider>
+  ));
