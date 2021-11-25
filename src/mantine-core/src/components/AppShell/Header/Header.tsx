@@ -27,6 +27,8 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     {
       children,
       className,
+      classNames,
+      styles,
       style,
       height,
       padding = 0,
@@ -41,7 +43,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { height, padding, fixed, position, zIndex },
-      { name: 'Header', sx }
+      { name: 'Header', sx, classNames, styles }
     );
 
     return (
