@@ -100,7 +100,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
 
     return (
       <div
-        className={cx(classes.root, classes[_variant], className)}
+        className={cx(classes.wrapper, classes[_variant], className)}
         style={mergedStyles}
         {...wrapperProps}
       >

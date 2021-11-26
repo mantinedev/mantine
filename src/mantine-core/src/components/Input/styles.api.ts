@@ -1,7 +1,7 @@
 import { InputStylesNames } from './Input';
 
 export const Input: Record<InputStylesNames, string> = {
-  root: 'Root element',
+  wrapper: 'Root Input element',
   icon: 'Input icon wrapper on the left side of the input, controlled by icon prop',
   withIcon: 'Input element styles when used with icon, controlled by icon prop',
   input: 'Main input element',

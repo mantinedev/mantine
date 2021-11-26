@@ -125,7 +125,7 @@ export default createStyles(
       : null;
 
     return {
-      root: {
+      wrapper: {
         position: 'relative',
         borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       },
