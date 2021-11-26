@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { usePopper, StrictModifier } from 'react-popper';
 import type { Placement } from '@popperjs/core';
 import { useDidUpdate } from '@mantine/hooks';
@@ -55,20 +55,11 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   /** useEffect dependencies to force update popper position */
   forceUpdateDependencies?: any[];
 
-  // Called when transition ends
+  /** Called when transition ends */
   onTransitionEnd?(): void;
 
-  /** valid popperjs modifiers array */
+  /** Popperjs modifiers array */
   modifiers?: StrictModifier[];
-
-  /** Controls popper flip behavior  */
-  allowPlacementChange?: boolean;
-
-  /** Controls where popper can flip out */
-  placementFallbacks?: Placement[];
-
-  /** Called when popper changes its placement */
-  onPlacementChange?(placement: Placement): void;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -89,9 +80,6 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   forceUpdateDependencies = [],
   modifiers = [],
   onTransitionEnd,
-  allowPlacementChange = true,
-  placementFallbacks = ['bottom'],
-  onPlacementChange,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
@@ -99,25 +87,6 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
 
   const initialPlacement: Placement =
     placement === 'center' ? position : `${position}-${placement}`;
-
-  const previousPlacement = useRef<Placement>(initialPlacement);
-
-  // https://popper.js.org/react-popper/v2/faq/#why-i-get-render-loop-whenever-i-put-a-function-inside-the-popper-configuration
-  const directionControlModifier = useMemo(
-    () => ({
-      name: 'directionControl',
-      enabled: allowPlacementChange && Boolean(onPlacementChange),
-      phase: 'main',
-      fn: ({ state }) => {
-        if (onPlacementChange && previousPlacement.current !== state.placement) {
-          previousPlacement.current = state.placement;
-
-          onPlacementChange(state.placement);
-        }
-      },
-    }),
-    [onPlacementChange, allowPlacementChange]
-  );
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
     placement: initialPlacement,
@@ -128,15 +97,6 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
           offset: [0, padding],
         },
       },
-      {
-        name: 'flip',
-        enabled: allowPlacementChange,
-        options: {
-          fallbackPlacements: placementFallbacks,
-        },
-      },
-      // @ts-ignore
-      directionControlModifier,
       ...modifiers,
     ],
   });
