@@ -25,11 +25,13 @@ export const Card: CardComponent & { displayName?: string; Section: React.FC<Car
         radius = 'sm',
         children,
         sx,
+        classNames,
+        styles,
         ...others
       }: CardProps<C>,
       ref: PolymorphicRef<C>
     ) => {
-      const { classes, cx } = useStyles(null, { name: 'Card', sx });
+      const { classes, cx } = useStyles(null, { name: 'Card', sx, classNames, styles });
 
       const content = Children.map(children, (child) => {
         if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
