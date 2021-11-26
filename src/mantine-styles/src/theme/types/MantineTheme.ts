@@ -63,4 +63,6 @@ export interface MantineTheme {
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
-export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn'>>;
+export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn' | 'other'>> & {
+  other?: Record<string, any>;
+};
