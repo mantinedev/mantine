@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Autocomplete } from './Autocomplete';
+import { Autocomplete } from '../Autocomplete';
 
 function DynamicData() {
   const [value, setValue] = useState('');
@@ -16,16 +16,7 @@ function DynamicData() {
   );
 }
 
-storiesOf('@mantine/core/Autocomplete', module)
-  .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
-      />
-    </div>
-  ))
+storiesOf('@mantine/core/Autocomplete/stories', module)
   .add('Repetitive data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete
