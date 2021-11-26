@@ -23,10 +23,10 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Avatar width and height */
   size?: MantineNumberSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Value from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Color from theme used for letter and icon placeholders */
+  /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
 }
 

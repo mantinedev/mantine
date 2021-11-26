@@ -25,7 +25,7 @@ export interface AvatarsGroupProps
   /** Spacing between avatars */
   spacing?: MantineNumberSize;
 
-  /** Total number of Child Avatars, overrides the truncated amount */
+  /** Total number of child <Avatar />, overrides the truncated amount */
   total?: number;
 }
 
