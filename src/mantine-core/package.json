@@ -1,7 +1,7 @@
 {
   "name": "@mantine/core",
   "description": "React components library focused on usability, accessibility and developer experience",
-  "version": "3.2.1",
+  "version": "3.2.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/src/index.d.ts",
@@ -15,12 +15,12 @@
     "directory": "src/mantine-core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "3.2.1",
+    "@mantine/hooks": "3.2.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/styles": "3.2.1",
+    "@mantine/styles": "3.2.3",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",

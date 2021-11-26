@@ -61,24 +61,12 @@ storiesOf('@mantine/core/Group', module)
   ))
   .add('Grow', () => (
     <div style={{ padding: 15, backgroundColor: '#f3f3f3' }}>
-      <Group grow>
-        <Button>Button 1</Button>
+      <Group grow sx={{ backgroundColor: 'red' }}>
+        <Button>
+          Button with so much content that it will try to take space from other elements
+        </Button>
         <Button>Button 2</Button>
-        <button type="button">Hello</button>
+        <Button>Button 3</Button>
       </Group>
     </div>
-  ))
-  .add('Disable Gutter', () => (
-    <>
-      <h5>Without Gutter</h5>
-      <Group>
-        <Button>Button 1</Button>
-        <Button>Button 2</Button>
-      </Group>
-      <h5>With Gutter</h5>
-      <Group>
-        <Button>Button 1</Button>
-        <Button>Button 2</Button>
-      </Group>
-    </>
   ));

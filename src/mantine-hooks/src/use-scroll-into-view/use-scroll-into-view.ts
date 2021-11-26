@@ -61,55 +61,58 @@ export function useScrollIntoView<
     }
   };
 
-  const scrollIntoView = useCallback(({ alignment = 'start' }: ScrollIntoViewAnimation = {}) => {
-    shouldStop.current = false;
+  const scrollIntoView = useCallback(
+    ({ alignment = 'start' }: ScrollIntoViewAnimation = {}) => {
+      shouldStop.current = false;
 
-    if (frameID.current) {
-      cancel();
-    }
-
-    const start = getScrollStart({ parent: scrollableRef.current, axis }) ?? 0;
-
-    const change =
-      getRelativePosition({
-        parent: scrollableRef.current,
-        target: targetRef.current,
-        axis,
-        alignment,
-        offset,
-        isList,
-      }) - (scrollableRef.current ? 0 : start);
-
-    function animateScroll() {
-      if (startTime.current === 0) {
-        startTime.current = performance.now();
-      }
-
-      const now = performance.now();
-      const elapsed = now - startTime.current;
-
-      // easing timing progress
-      const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
-
-      const distance = start + change * easing(t);
-
-      setScrollParam({
-        parent: scrollableRef.current,
-        axis,
-        distance,
-      });
-
-      if (!shouldStop.current && t < 1) {
-        frameID.current = requestAnimationFrame(animateScroll);
-      } else {
-        typeof onScrollFinish === 'function' && onScrollFinish();
-        startTime.current = 0;
-        frameID.current = 0;
+      if (frameID.current) {
         cancel();
       }
-    }
-    animateScroll();
-  }, []);
+
+      const start = getScrollStart({ parent: scrollableRef.current, axis }) ?? 0;
+
+      const change =
+        getRelativePosition({
+          parent: scrollableRef.current,
+          target: targetRef.current,
+          axis,
+          alignment,
+          offset,
+          isList,
+        }) - (scrollableRef.current ? 0 : start);
+
+      function animateScroll() {
+        if (startTime.current === 0) {
+          startTime.current = performance.now();
+        }
+
+        const now = performance.now();
+        const elapsed = now - startTime.current;
+
+        // easing timing progress
+        const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
+
+        const distance = start + change * easing(t);
+
+        setScrollParam({
+          parent: scrollableRef.current,
+          axis,
+          distance,
+        });
+
+        if (!shouldStop.current && t < 1) {
+          frameID.current = requestAnimationFrame(animateScroll);
+        } else {
+          typeof onScrollFinish === 'function' && onScrollFinish();
+          startTime.current = 0;
+          frameID.current = 0;
+          cancel();
+        }
+      }
+      animateScroll();
+    },
+    [scrollableRef.current]
+  );
 
   const handleStop = () => {
     if (cancelable) {

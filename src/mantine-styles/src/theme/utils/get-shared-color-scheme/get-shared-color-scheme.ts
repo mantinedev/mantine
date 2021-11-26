@@ -65,11 +65,11 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
   if (variant === 'outline') {
     return {
       border: theme.fn.rgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7), 0.75),
-      background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      background: 'transparent',
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       hover:
         theme.colorScheme === 'dark'
-          ? theme.colors.dark[8]
+          ? theme.fn.rgba(theme.fn.themeColor(color, 4), 0.05)
           : theme.fn.rgba(theme.fn.themeColor(color, 0), 0.35),
     };
   }

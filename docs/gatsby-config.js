@@ -4,7 +4,6 @@ module.exports = {
   flags: {
     DEV_SSR: false,
     FAST_DEV: true,
-    LMDB_STORE: true,
   },
 
   siteMetadata: {

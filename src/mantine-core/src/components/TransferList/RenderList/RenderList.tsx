@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
+import { useScrollIntoView } from '@mantine/hooks';
 import { UnstyledButton } from '../../Button';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
@@ -53,6 +54,15 @@ export function RenderList({
   const filteredData = data.filter((item) => filter(query, item));
   const ListComponent = listComponent || 'div';
 
+  const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
+    duration: 0,
+    offset: 5,
+    cancelable: false,
+    isList: true,
+  });
+
   const items = filteredData.map((item, index) => (
     <UnstyledButton
       tabIndex={-1}
@@ -62,6 +72,12 @@ export function RenderList({
       className={cx(classes.transferListItem, {
         [classes.transferListItemHovered]: index === hovered,
       })}
+      ref={(node: HTMLButtonElement) => {
+        if (itemsRefs && itemsRefs.current) {
+          // eslint-disable-next-line no-param-reassign
+          itemsRefs.current[item.value] = node;
+        }
+      }}
     >
       <ItemComponent data={item} selected={selection.includes(item.value)} />
     </UnstyledButton>
@@ -79,13 +95,33 @@ export function RenderList({
 
       case 'ArrowDown': {
         event.preventDefault();
-        setHovered((current) => (current < filteredData.length - 1 ? current + 1 : current));
+        setHovered((current) => {
+          const nextIndex = current < filteredData.length - 1 ? current + 1 : current;
+
+          targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+          scrollIntoView({
+            alignment: 'end',
+          });
+
+          return nextIndex;
+        });
         break;
       }
 
       case 'ArrowUp': {
         event.preventDefault();
-        setHovered((current) => (current > 0 ? current - 1 : current));
+        setHovered((current) => {
+          const nextIndex = current > 0 ? current - 1 : current;
+
+          targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+          scrollIntoView({
+            alignment: 'start',
+          });
+
+          return nextIndex;
+        });
       }
     }
   };
@@ -138,7 +174,11 @@ export function RenderList({
           </ActionIcon>
         </div>
 
-        <ListComponent className={classes.transferListItems} onMouseLeave={() => setHovered(-1)}>
+        <ListComponent
+          className={classes.transferListItems}
+          ref={scrollableRef}
+          onMouseLeave={() => setHovered(-1)}
+        >
           {items.length > 0 ? (
             items
           ) : (

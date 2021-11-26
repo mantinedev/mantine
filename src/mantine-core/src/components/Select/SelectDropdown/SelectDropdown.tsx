@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import type { Placement } from '@popperjs/core';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
@@ -21,6 +22,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   referenceElement?: HTMLElement;
   direction?: React.CSSProperties['flexDirection'];
   onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
+  zIndex?: number;
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -40,11 +42,14 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
+      zIndex = 2000,
       __staticSelector,
     }: SelectDropdownProps,
     ref
   ) => {
     const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
+
+    const previousPlacement = useRef<Placement>('bottom');
 
     return (
       <Popper
@@ -55,13 +60,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionTimingFunction={transitionTimingFunction}
         position="bottom"
         placementFallbacks={['top']}
-        onPlacementChange={(placement: string) => {
-          const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
-
-          if (direction !== nextDirection) {
-            onDirectionChange && onDirectionChange(nextDirection);
-          }
-        }}
+        zIndex={zIndex}
         modifiers={[
           {
             // @ts-ignore
@@ -76,6 +75,23 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
             effect: ({ state }) => {
               // eslint-disable-next-line no-param-reassign
               state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
+            },
+          },
+          {
+            // @ts-ignore
+            name: 'directionControl',
+            enabled: true,
+            phase: 'main',
+            fn: ({ state }) => {
+              if (previousPlacement.current !== state.placement) {
+                previousPlacement.current = state.placement;
+
+                const nextDirection = state.placement === 'top' ? 'column-reverse' : 'column';
+
+                if (direction !== nextDirection) {
+                  onDirectionChange && onDirectionChange(nextDirection);
+                }
+              }
             },
           },
         ]}

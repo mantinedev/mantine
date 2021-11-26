@@ -24,6 +24,14 @@ storiesOf('@mantine/core/Highlight', module)
       </Highlight>
     </>
   ))
+  .add('Regex symbols', () => (
+    <>
+      <Highlight highlight="(this">Highlight (this)</Highlight>
+      <Highlight highlight="this'">Highlight this&apos;</Highlight>
+      <Highlight highlight="this[">Highlight this[</Highlight>
+      <Highlight highlight="[this]">Highlight [this]</Highlight>
+    </>
+  ))
   .add('Themes', () => <>{themes}</>)
   .add('Custom component', () => (
     <Highlight

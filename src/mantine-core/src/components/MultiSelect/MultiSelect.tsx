@@ -135,6 +135,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Limit amount of items selected */
   maxSelectedValues?: number;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -201,6 +204,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownClose,
       onDropdownOpen,
       maxSelectedValues,
+      zIndex,
       ...others
     }: MultiSelectProps,
     ref
@@ -579,6 +583,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             referenceElement={wrapperRef.current}
             direction={direction}
             onDirectionChange={setDirection}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}

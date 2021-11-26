@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "3.2.1",
+  "version": "3.2.3",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -106,7 +106,7 @@
     "surge": "^0.23.0",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "4.3.5",
+    "typescript": "4.5.2",
     "yargs": "^17.0.1"
   },
   "dependencies": {
