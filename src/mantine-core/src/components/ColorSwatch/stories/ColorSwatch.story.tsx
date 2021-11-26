@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { Group } from '../Group/Group';
-import { ColorSwatch } from './ColorSwatch';
+import { Group } from '../../Group/Group';
+import { ColorSwatch } from '../ColorSwatch';
 
 const swatches = Object.keys(DEFAULT_THEME.colors).map((theme) => (
   <ColorSwatch color={DEFAULT_THEME.colors[theme][5]} key={theme} size={20} />
@@ -16,14 +16,9 @@ const transparent = Object.keys(DEFAULT_THEME.colors).map((theme) => (
   />
 ));
 
-const radiuses = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 1000] as const).map((radius) => (
-  <ColorSwatch color={DEFAULT_THEME.colors.blue[5]} key={radius} radius={radius} size={100} />
-));
-
-storiesOf('@mantine/core/ColorSwatch', module)
-  .add('General Usage', () => <Group style={{ padding: 15 }}>{swatches}</Group>)
-  .add('Custom radius', () => <Group style={{ padding: 15 }}>{radiuses}</Group>)
-  .add('Transparent', () => <Group style={{ padding: 15 }}>{transparent}</Group>)
+storiesOf('@mantine/core/ColorSwatch/stories', module)
+  .add('Colors', () => <Group style={{ padding: 15 }}>{swatches}</Group>)
+  .add('Opaque colors', () => <Group style={{ padding: 15 }}>{transparent}</Group>)
   .add('Custom components', () => (
     <Group style={{ padding: 15 }}>
       <ColorSwatch color="#f300f3" component="button" />

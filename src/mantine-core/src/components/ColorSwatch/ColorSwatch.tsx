@@ -39,11 +39,16 @@ export const ColorSwatch: ColorSwatchComponent & { displayName?: string } = forw
       children,
       style,
       sx,
+      classNames,
+      styles,
       ...others
     }: ColorSwatchProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles({ radius, size }, { sx, name: 'ColorSwatch' });
+    const { classes, cx } = useStyles(
+      { radius, size },
+      { sx, classNames, styles, name: 'ColorSwatch' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const Element = component || 'div';
