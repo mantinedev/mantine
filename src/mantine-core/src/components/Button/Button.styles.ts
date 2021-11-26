@@ -96,10 +96,9 @@ interface GetVariantStyles {
   theme: MantineTheme;
   color: MantineColor;
   variant: 'filled' | 'outline' | 'light' | 'default' | 'white';
-  loadingRef: string;
 }
 
-function getVariantStyles({ variant, theme, color, loadingRef }: GetVariantStyles) {
+function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   const colors = getSharedColorScheme({
     theme,
     color,
@@ -112,7 +111,7 @@ function getVariantStyles({ variant, theme, color, loadingRef }: GetVariantStyle
     backgroundImage: colors.background,
     color: colors.color,
 
-    [`&:not(.${loadingRef}):hover`]: {
+    '&:hover': {
       backgroundColor: colors.hover,
     },
   };
@@ -133,24 +132,7 @@ export default createStyles(
     }: ButtonStylesProps,
     getRef
   ) => {
-    const loading = {
-      ref: getRef('loading'),
-
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        top: -1,
-        left: -1,
-        right: -1,
-        bottom: -1,
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? theme.fn.rgba(theme.colors.dark[7], 0.5)
-            : 'rgba(255, 255, 255, .5)',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
-        cursor: 'not-allowed',
-      },
-    } as const;
+    const loading = getRef('loading');
 
     const gradient = getSharedColorScheme({
       theme,
@@ -160,13 +142,31 @@ export default createStyles(
     });
 
     return {
-      loading,
+      loading: {
+        ref: loading,
+        pointerEvents: 'none',
 
-      outline: getVariantStyles({ variant: 'outline', theme, color, loadingRef: loading.ref }),
-      filled: getVariantStyles({ variant: 'filled', theme, color, loadingRef: loading.ref }),
-      light: getVariantStyles({ variant: 'light', theme, color, loadingRef: loading.ref }),
-      default: getVariantStyles({ variant: 'default', theme, color, loadingRef: loading.ref }),
-      white: getVariantStyles({ variant: 'white', theme, color, loadingRef: loading.ref }),
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: -1,
+          left: -1,
+          right: -1,
+          bottom: -1,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.fn.rgba(theme.colors.dark[7], 0.5)
+              : 'rgba(255, 255, 255, .5)',
+          borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+          cursor: 'not-allowed',
+        },
+      },
+
+      outline: getVariantStyles({ variant: 'outline', theme, color }),
+      filled: getVariantStyles({ variant: 'filled', theme, color }),
+      light: getVariantStyles({ variant: 'light', theme, color }),
+      default: getVariantStyles({ variant: 'default', theme, color }),
+      white: getVariantStyles({ variant: 'white', theme, color }),
 
       gradient: {
         border: 0,
@@ -200,7 +200,7 @@ export default createStyles(
           transform: 'translateY(1px)',
         },
 
-        [`&:not(.${loading.ref}):disabled`]: {
+        [`&:not(.${loading}):disabled`]: {
           borderColor: 'transparent',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],

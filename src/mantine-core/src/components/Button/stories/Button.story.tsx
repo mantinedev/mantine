@@ -2,17 +2,17 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
 import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
-import { Group } from '../Group/Group';
-import { Button, UnstyledButton } from './index';
+import { Group } from '../../Group/Group';
+import { Button, ButtonProps, UnstyledButton } from '../index';
 
-const getThemes = (props?: any) =>
+const getThemes = (props?: Partial<ButtonProps<'button'>>) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
     <Button key={color} color={color} {...props}>
       {color}
     </Button>
   ));
 
-const getLinkThemes = (props?: any) =>
+const getLinkThemes = (props?: Partial<ButtonProps<'a'>>) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
     <Button
       component="a"
@@ -44,24 +44,11 @@ const loading = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => 
   </Button>
 ));
 
-storiesOf('@mantine/core/Button', module)
+storiesOf('@mantine/core/Button/stories', module)
   .add('UnstyledButton', () => (
     <div style={{ padding: 20 }}>
       <UnstyledButton>unstyled</UnstyledButton>
     </div>
-  ))
-  .add('Gradient', () => (
-    <Group style={{ padding: 20 }}>
-      <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-        Indigo cyan
-      </Button>
-      <Button variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 90 }}>
-        Lime green
-      </Button>
-      <Button variant="gradient" gradient={{ from: 'teal', to: 'cyan', deg: 180 }}>
-        Teal cyan
-      </Button>
-    </Group>
   ))
   .add('Themes', () => (
     <>
@@ -97,6 +84,7 @@ storiesOf('@mantine/core/Button', module)
 
       <Group style={{ padding: 20 }}>
         {getThemes({
+          variant: 'default',
           leftIcon: <CalendarIcon style={{ width: 14 }} />,
           rightIcon: <ExternalLinkIcon style={{ width: 14 }} />,
         })}
@@ -109,22 +97,6 @@ storiesOf('@mantine/core/Button', module)
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'outline', disabled: true })}</Group>
       <Group style={{ padding: 20 }}>{getThemes({ variant: 'light', disabled: true })}</Group>
     </>
-  ))
-  .add('Full width', () => (
-    <div style={{ padding: 20 }}>
-      <Button fullWidth>Full width button</Button>
-      <Button component="a" fullWidth style={{ marginTop: 20 }}>
-        Full width link button
-      </Button>
-    </div>
-  ))
-  .add('Overflow', () => (
-    <div style={{ width: 120, padding: 20, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
-      <Button fullWidth>Full width button</Button>
-      <Button component="a" fullWidth style={{ marginTop: 20 }}>
-        Full width link button
-      </Button>
-    </div>
   ))
   .add('Loading', () => (
     <div style={{ padding: 40 }}>

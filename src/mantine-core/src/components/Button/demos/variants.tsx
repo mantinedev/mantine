@@ -6,9 +6,10 @@ function Demo() {
   return (
     <>
       <Group position="center">
-        <Button>Default filled variant</Button>
+        <Button>Filled variant</Button>
         <Button variant="light">Light variant</Button>
         <Button variant="outline">Outline variant</Button>
+        <Button variant="default">Default variant</Button>
       </Group>
     </>
   );
