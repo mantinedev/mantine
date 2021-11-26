@@ -24,29 +24,7 @@ and places given separator (defaults to `/`) between them:
 
 ## TypeScript
 
-### Component props type
+@mantine/core package exports following types associated with Breadcrumbs:
 
-Import component props type:
-
-```tsx
-import type { BreadcrumbsProps } from '@mantine/core';
-```
-
-`BreadcrumbsProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### BreadcrumbsStylesNames type
-
-`BreadcrumbsStylesNames` type is a union with Breadcrumbs [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { BreadcrumbsStylesNames } from '@mantine/core';
-
-const breadcrumbsClasses: Partial<Record<BreadcrumbsStylesNames, 'string'>> = {
-  breadcrumb: 'breadcrumbs-breadcrumb',
-  separator: 'breadcrumbs-separator',
-};
-
-<Breadcrumbs classNames={breadcrumbsClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.
+- `BreadcrumbsProps` – Breadcrumbs component props, extends `React.ComponentProps<'div'>`
+- `BreadcrumbsStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)
