@@ -22,7 +22,7 @@ export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, M
   /** zIndex prop passed to Navbar and Header components */
   zIndex?: number;
 
-  /** Switch from static layout to fixed */
+  /** true to switch from static layout to fixed */
   fixed?: boolean;
 
   /** AppShell content */

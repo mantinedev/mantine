@@ -8,19 +8,19 @@ export type AlertStylesNames = ClassNames<typeof useStyles>;
 export interface AlertProps
   extends DefaultProps<AlertStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Optional alert title */
+  /** Alert title */
   title?: React.ReactNode;
 
   /** Alert message */
   children: React.ReactNode;
 
-  /** Alert title and line colors from theme */
+  /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Icon displayed before title */
+  /** Icon displayed next to title */
   icon?: React.ReactNode;
 
-  /** Display close button */
+  /** True to display close button */
   withCloseButton?: boolean;
 
   /** Called when close button is clicked */
