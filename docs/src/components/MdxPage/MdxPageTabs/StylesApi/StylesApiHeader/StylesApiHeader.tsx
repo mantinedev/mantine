@@ -18,11 +18,11 @@ export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps)
 
       {singleNode ? (
         <Text style={{ marginBottom: 15 }}>
-          {component} renders single node, use className and style props to override styles:
+          {component} renders single node, use className, sx or style props to override styles:
         </Text>
       ) : (
         <Text style={{ maxWidth: 600, marginBottom: 30 }}>
-          Mantine components support styling of individual elements by adding your class or inline
+          Mantine components support styling of individual elements by adding your classes or inline
           styles to any element inside component. For more information see{' '}
           <GatsbyLink to="/theming/styles-api/">styles API guide</GatsbyLink>.
         </Text>
