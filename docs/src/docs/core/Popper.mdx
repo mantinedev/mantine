@@ -101,26 +101,6 @@ By default Popper has `z-index: 1`, you can change that with `zIndex` prop:
 <Popper zIndex={100} {...otherProps} />
 ```
 
-## Flip
-
-Popper has [`flip`](https://popper.js.org/docs/v2/modifiers/flip/) behavior to control it's placement relatively to it's parent.
-
-By default `flip` is turned on, you can change that with `allowPlacementChange` prop.
-If it's enabled `placementFallbacks` prop controls available alternative placements.
-After each placement change `onPlacementChange` which takes current placement as argument.
-
-```tsx
-<Popper
-  allowPlacementChange
-  position="top"
-  placementFallbacks={['bottom']}
-  onPlacementChange={(placement) => {
-    console.log(placement);
-  }}
-  {...otherProps}
-/>
-```
-
 ## TypeScript
 
 ```tsx
