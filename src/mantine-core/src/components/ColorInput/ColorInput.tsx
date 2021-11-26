@@ -97,10 +97,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       icon,
       transition = 'pop-top-left',
       id,
-      dropdownZIndex = 1,
+      dropdownZIndex = 10,
       transitionDuration = 0,
       transitionTimingFunction,
-      withinPortal,
+      withinPortal = true,
       className,
       style,
       swatches,
@@ -228,6 +228,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 withPicker={withPicker}
                 size={size}
                 focusable={false}
+                styles={styles}
+                classNames={classNames}
               />
             </Paper>
           </div>

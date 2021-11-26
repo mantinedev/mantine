@@ -149,7 +149,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     }, [format]);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <div className={cx(classes.wrapper, className)} style={mergedStyles} ref={ref} {...rest}>
         {withPicker && (
           <>
             <Saturation

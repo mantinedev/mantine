@@ -4,7 +4,28 @@ import { ActionIcon } from '../../ActionIcon/ActionIcon';
 import { ColorInput } from '../ColorInput';
 
 const code = `
-<ColorInput placeholder="Pick color" label="Your favorite color" />
+import { useState } from 'react';
+import { UpdateIcon } from '@modulz/radix-icons';
+import { ActionIcon, ColorInput } from '@mantine/core';
+
+const randomColor = () => \`#\${Math.floor(Math.random() * 16777215).toString(16)}\`;
+
+function Demo() {
+  const [value, onChange] = useState(randomColor());
+  return (
+    <ColorInput
+      placeholder="Pick color"
+      label="Your favorite color"
+      value={value}
+      onChange={onChange}
+      rightSection={
+        <ActionIcon onClick={() => onChange(randomColor())}>
+          <UpdateIcon />
+        </ActionIcon>
+      }
+    />
+  );
+}
 `;
 
 const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
