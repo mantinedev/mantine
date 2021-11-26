@@ -79,13 +79,3 @@ const MyButton => ({ label, className }) => <button className={className}>{label
 // Will work with MediaQuery – handle className
 const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
 ```
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { MediaQueryProps } from '@mantine/core';
-```
-
-`MediaQueryProps` does not extends any interfaces, props descriptions are available under _Component props_ tab.

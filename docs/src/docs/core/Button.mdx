@@ -155,12 +155,3 @@ To create custom buttons not related to Button component, use UnstyledButton com
 it renders regular button without default browser styles and with Mantine focus styles:
 
 <Demo data={ButtonDemos.unstyled} />
-
-## TypeScript
-
-@mantine/core package exports following types associated with Button:
-
-- `ButtonProps` – Button component props, generic type: `ButtonProps<'button'>`
-- `ButtonVariant` – a union of all variants
-- `UnstyledButtonProps` – UnstyledButton component props, extends `React.ComponentPropsWithoutRef<'button'>`
-- `ButtonStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)

@@ -152,11 +152,3 @@ Provide `aria-label` in case you use component without label for screen reader s
 <Autocomplete label="My input" />; // -> ok, input and label is connected
 <Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-@mantine/core package exports following types associated with Autocomplete:
-
-- `AutocompleteItem` – data item type
-- `AutocompleteProps` – Autocomplete component props, extends `React.ComponentProps<'input'>`
-- `AutocompleteStylesNames` – a union of styles names that can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props)

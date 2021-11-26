@@ -127,15 +127,3 @@ By default, Popper content will be rendered inside a [Portal](/core/portal/) com
 
 You can opt-out of this behavior through the `withinPortal` prop, setting it to `false`. Other Mantine components
 relying on Popper expose this prop too.
-
-## TypeScript
-
-```tsx
-import type { PopperProps } from '@mantine/core';
-```
-
-`PopperProps` is a generic, it accepts reference element type as single argument:
-
-```tsx
-type MyPopperProps = PopperProps<HTMLDivElement>;
-```

@@ -167,13 +167,3 @@ function App() {
 
 - Both Header and Navbar components root element is `nav`
 - AppShell wraps content with `main` tag – **!important** do not use `main` tag inside AppShell
-
-## Typescript
-
-@mantine/core package exports following types associated with AppShell:
-
-- `AppShellProps` – Anchor component props, extends `React.ComponentProps<'div'>`
-- `NavbarProps` – Navbar component props, extends `React.ComponentProps<'nav'>`
-- `NavbarSectionProps` – Navbar.Section component props, generic type: `Navbar.Section<'div'>`
-- `HeaderProps` – Navbar component props, extends `React.ComponentProps<'nav'>`
-- `AppShellStylesNames` and `NavbarStylesNames` – unions of styles names which can be used with [Styles API](/theming/styles-api/) (`classNames` and `styles` props), Navbar.Section and Header components support only `root` style name and thus do not export styles names types
