@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider } from '@mantine/ds';
+import { RtlProvider } from '@mantine/ds/src';
 import { paragraph } from '@mantine/mockdata';
 import { BaseDemo, baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';

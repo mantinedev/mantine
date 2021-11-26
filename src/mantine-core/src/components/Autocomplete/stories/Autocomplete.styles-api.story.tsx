@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/ds';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/ds/src';
 import { Autocomplete, AutocompleteProps } from '../Autocomplete';
 import { Autocomplete as AutocompleteStylesApi } from '../styles.api';
 

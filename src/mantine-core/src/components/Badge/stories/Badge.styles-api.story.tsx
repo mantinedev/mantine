@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { generateBorderStyles } from '@mantine/ds';
+import { generateBorderStyles } from '@mantine/ds/src';
 import { Group } from '../../Group';
 import { Badge, BadgeProps } from '../Badge';
 import { Badge as BadgeStylesApi } from '../styles.api';
