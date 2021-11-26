@@ -87,7 +87,7 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
     return (
       <Element
         {...rest}
-        className={cx(classes.root, classes[variant], className)}
+        className={cx(classes[variant], classes.root, className)}
         style={mergedStyles}
         ref={ref}
       >
