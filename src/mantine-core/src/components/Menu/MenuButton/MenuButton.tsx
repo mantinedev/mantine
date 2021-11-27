@@ -5,13 +5,14 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   useSx,
+  DefaultProps,
 } from '@mantine/styles';
 import { SharedMenuItemProps } from '../MenuItem/MenuItem';
 import useStyles from './MenuButton.styles';
 
 export type MenuButtonStylesNames = ClassNames<typeof useStyles>;
 
-interface _MenuButtonProps extends SharedMenuItemProps {
+interface _MenuButtonProps extends DefaultProps<MenuButtonStylesNames>, SharedMenuItemProps {
   /** Menu item label */
   children: React.ReactNode;
 
