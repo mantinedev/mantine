@@ -1,6 +1,4 @@
-/* eslint-disable react/jsx-pascal-case */
 import React, { forwardRef } from 'react';
-import cx from 'clsx';
 import { MantineColor, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
@@ -28,26 +26,15 @@ type HighlightComponent = <C extends React.ElementType = 'div'>(
 
 export const Highlight: HighlightComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
-    {
-      children,
-      highlight,
-      highlightColor = 'yellow',
-      className,
-      component,
-      ...others
-    }: HighlightProps<C>,
+    { children, highlight, highlightColor = 'yellow', component, ...others }: HighlightProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const highlightChunks = highlighter(children, highlight);
     const _Text = Text as any;
 
     return (
-      <_Text
-        component={component}
-        className={cx('mantine-highlight', className)}
-        ref={ref}
-        {...others}
-      >
+      // eslint-disable-next-line react/jsx-pascal-case
+      <_Text component={component} ref={ref} {...others}>
         {highlightChunks.map(({ chunk, highlighted }, i) =>
           highlighted ? (
             <Mark key={i} color={highlightColor}>
