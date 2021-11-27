@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { JsonInput } from './JsonInput';
+import { JsonInput } from '../JsonInput';
 
 function Controlled() {
   const [value, onChange] = useState('');

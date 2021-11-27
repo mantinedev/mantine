@@ -3,6 +3,7 @@ import {
   itSupportsClassName,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
   defaultInputProps,
   getInputStylesApiKeys,
 } from '@mantine/tests';
@@ -14,6 +15,7 @@ describe('@mantine/core/JsonInput', () => {
   itSupportsStyle(JsonInput, {});
   itSupportsClassName(JsonInput, {});
   itSupportsMargins(JsonInput, {});
+  itSupportsRef(JsonInput, {}, HTMLTextAreaElement);
   itSupportsStylesApi(
     JsonInput,
     defaultInputProps,
