@@ -34,11 +34,10 @@ export function JsonInput({
   onFocus,
   onBlur,
   error,
-  styles,
-  classNames,
   formatOnBlur = false,
   size = 'sm',
   validationError,
+  classNames,
   ...others
 }: JsonInputProps) {
   const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });

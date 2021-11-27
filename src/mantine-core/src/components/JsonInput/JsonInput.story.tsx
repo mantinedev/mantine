@@ -9,21 +9,8 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/core/JsonInput', module)
-  .add('General usage', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <JsonInput
-        formatOnBlur
-        autosize
-        minRows={3}
-        validationError="Invalid JSON"
-        label="Your package.json"
-        placeholder="Your package.json"
-      />
-    </div>
-  ))
-  .add('Controlled', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Controlled />
-    </div>
-  ));
+storiesOf('@mantine/core/JsonInput/stories', module).add('Controlled', () => (
+  <div style={{ padding: 40, maxWidth: 400 }}>
+    <Controlled />
+  </div>
+));
