@@ -23,8 +23,9 @@ function WithinPopover() {
         placement="start"
         withArrow
         withCloseButton
+        styles={{ body: { width: 300 } }}
       >
-        <DatePicker placeholder="Pick date" label="Event date" required />
+        <DatePicker placeholder="Pick date" label="Event date" required withinPortal={false} />
       </Popover>
     </Group>
   );

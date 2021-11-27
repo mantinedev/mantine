@@ -84,7 +84,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       amountOfMonths = 1,
-      withinPortal = false,
+      withinPortal = true,
       ...others
     }: DateRangePickerProps,
     ref

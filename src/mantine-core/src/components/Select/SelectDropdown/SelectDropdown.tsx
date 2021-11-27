@@ -36,7 +36,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       uuid,
       shadow,
       maxDropdownHeight,
-      withinPortal = false,
+      withinPortal = true,
       children,
       classNames,
       styles,

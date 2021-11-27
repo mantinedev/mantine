@@ -75,7 +75,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearButtonLabel,
       fixOnBlur = true,
       allowFreeInput,
-      withinPortal = false,
+      withinPortal = true,
       dateParser,
       firstDayOfWeek = 'monday',
       onFocus,
