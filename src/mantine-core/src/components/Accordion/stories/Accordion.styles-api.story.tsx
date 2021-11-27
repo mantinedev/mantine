@@ -57,4 +57,12 @@ storiesOf('@mantine/core/Accordion/styles-api', module)
         </Accordion>
       </div>
     </MantineProvider>
+  ))
+  .add('Accordion.Item styles api override', () => (
+    <Accordion styles={{ icon: { border: '1px solid red' } }} sx={{ maxWidth: 400 }} mx="auto">
+      <Accordion.Item label="Test">Test</Accordion.Item>
+      <Accordion.Item label="Test" styles={{ icon: { border: '1px solid blue' } }}>
+        Test
+      </Accordion.Item>
+    </Accordion>
   ));

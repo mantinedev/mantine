@@ -11,7 +11,9 @@ import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 export type { AccordionIconPosition };
 export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 
-export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface PublicAccordionItemProps
+  extends DefaultProps<AccordionItemStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   label?: React.ReactNode;
   icon?: React.ReactNode;
   children?: React.ReactNode;
@@ -25,9 +27,7 @@ export interface AccordionItemType {
   props: PublicAccordionItemProps;
 }
 
-interface AccordionItemProps
-  extends DefaultProps<AccordionItemStylesNames>,
-    PublicAccordionItemProps {
+interface AccordionItemProps extends PublicAccordionItemProps {
   opened?: boolean;
   onToggle?(): void;
   transitionDuration?: number;

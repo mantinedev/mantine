@@ -32,7 +32,6 @@ export default createStyles(
         marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
         width: iconSize,
         minWidth: iconSize,
-        borderRadius: iconSize,
       },
 
       label: {

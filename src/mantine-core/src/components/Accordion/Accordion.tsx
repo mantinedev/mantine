@@ -107,8 +107,8 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         transitionDuration={transitionDuration}
         opened={value[index]}
         onToggle={() => handlers.toggle(index)}
-        classNames={classNames}
-        styles={styles}
+        classNames={item.props?.classNames || classNames}
+        styles={item.props?.styles || styles}
         id={`${uuid}-${index}`}
         onControlKeyDown={handleItemKeydown(index)}
         controlRef={mergeRefs(assignControlRef(index), item.props?.controlRef)}
