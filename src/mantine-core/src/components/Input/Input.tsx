@@ -10,10 +10,9 @@ import {
   PolymorphicRef,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Input.styles';
+import useStyles, { InputVariant } from './Input.styles';
 
-export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
-export type InputStylesNames = Exclude<ClassNames<typeof useStyles>, InputVariant>;
+export type InputStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
@@ -93,7 +92,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const theme = useMantineTheme();
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
-      { radius, size, multiline, variant: _variant, invalid, disabled },
+      { radius, size, multiline, variant: _variant, invalid },
       { sx, classNames, styles, name: __staticSelector }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
@@ -101,7 +100,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
 
     return (
       <Box
-        className={cx(classes.wrapper, classes[_variant], className)}
+        className={cx(classes.wrapper, className)}
         style={mergedStyles}
         sx={sx}
         {...wrapperProps}
@@ -113,7 +112,11 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={invalid}
-          className={cx(classes.input, { [classes.withIcon]: icon, [classes.invalid]: invalid })}
+          className={cx(classes[`${_variant}Variant`], classes.input, {
+            [classes.withIcon]: icon,
+            [classes.invalid]: invalid,
+            [classes.disabled]: disabled,
+          })}
           disabled={disabled}
           style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
         />
