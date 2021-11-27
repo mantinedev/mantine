@@ -1,8 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { InputWrapper } from './InputWrapper';
-import { Text } from '../Text/Text';
+import { paragraph } from '@mantine/mockdata';
+import { InputWrapper } from '../InputWrapper';
+import { Text } from '../../Text/Text';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <InputWrapper
@@ -19,28 +20,18 @@ const sizes = MANTINE_SIZES.map((size) => (
   </InputWrapper>
 ));
 
-const lorem =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet consequatur vitae commodi ipsa ipsam vel voluptatem eligendi placeat. Deleniti nulla atque officiis mollitia quasi numquam explicabo animi earum quas labore.';
-
-storiesOf('@mantine/core/InputWrapper', module)
+storiesOf('@mantine/core/InputWrapper/stories', module)
   .add('Sizes', () => <div style={{ padding: 15, maxWidth: 400 }}>{sizes}</div>)
-  .add('Label only', () => (
-    <div style={{ padding: 15, maxWidth: 400 }}>
-      <InputWrapper label="Input label" required id="input-wrapper-1">
-        <Text>Input is located here</Text>
-      </InputWrapper>
-    </div>
-  ))
   .add('Error overflow', () => (
     <div style={{ padding: 15, maxWidth: 300, backgroundColor: 'rgba(0, 0, 0, .1)' }}>
-      <InputWrapper label="Input label" required id="input-wrapper-1" error={lorem}>
+      <InputWrapper label="Input label" required id="input-wrapper-1" error={paragraph}>
         <Text>Input is located here</Text>
       </InputWrapper>
       <InputWrapper
         label="Input label"
         required
         id="input-wrapper-1"
-        error={lorem.replace(/\s/g, '')}
+        error={paragraph.replace(/\s/g, '')}
       >
         <Text>Input is located here</Text>
       </InputWrapper>

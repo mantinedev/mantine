@@ -11,8 +11,8 @@ export default createStyles((theme, { size }: InputWrapperStyles) => ({
   },
 
   label: {
-    display: 'block',
-    marginBottom: 5,
+    display: 'inline-block',
+    marginBottom: 4,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
