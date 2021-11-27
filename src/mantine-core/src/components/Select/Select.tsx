@@ -287,8 +287,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       );
     }, [inputValue]);
 
-    const getSelectedItemIndex = () =>
-      _value ? filteredData.findIndex((el) => el.value === _value) : -1;
+    const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : -1;
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
@@ -365,7 +364,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             event.preventDefault();
             setDropdownOpened(!dropdownOpened);
 
-            setHovered(getSelectedItemIndex());
+            setHovered(selectedItemIndex);
           }
           break;
         }
@@ -376,7 +375,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
-            setHovered(getSelectedItemIndex());
+            setHovered(selectedItemIndex);
           }
         }
       }
@@ -410,7 +409,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       setDropdownOpened(!dropdownOpened);
 
       if (_value && !dropdownOpened) {
-        setHovered(getSelectedItemIndex());
+        setHovered(selectedItemIndex);
       }
     };
 
