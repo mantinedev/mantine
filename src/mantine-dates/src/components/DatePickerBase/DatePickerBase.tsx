@@ -150,7 +150,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onClear,
       positionDependencies = [],
       zIndex = 3,
-      withinPortal = true,
+      withinPortal = false,
       onBlur,
       onFocus,
       onChange,

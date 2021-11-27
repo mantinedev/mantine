@@ -98,7 +98,7 @@ export function Popover({
   shadow = 'sm',
   closeButtonLabel,
   positionDependencies = [],
-  withinPortal = true,
+  withinPortal = false,
   id,
   classNames,
   styles,

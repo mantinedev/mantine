@@ -73,7 +73,7 @@ export function Tooltip({
   wrapLines = false,
   allowPointerEvents = false,
   positionDependencies = [],
-  withinPortal = true,
+  withinPortal = false,
   tooltipRef,
   tooltipId,
   classNames,

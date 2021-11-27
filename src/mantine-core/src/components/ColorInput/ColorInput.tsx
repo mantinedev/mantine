@@ -100,7 +100,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       dropdownZIndex = 10,
       transitionDuration = 0,
       transitionTimingFunction,
-      withinPortal = true,
+      withinPortal = false,
       className,
       style,
       swatches,

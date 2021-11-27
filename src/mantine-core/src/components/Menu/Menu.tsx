@@ -157,7 +157,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       radius = 'sm',
       delay = 0,
       zIndex = 10,
-      withinPortal = true,
+      withinPortal = false,
       trapFocus = true,
       classNames,
       styles,
