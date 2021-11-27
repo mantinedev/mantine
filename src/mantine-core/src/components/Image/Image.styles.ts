@@ -7,7 +7,6 @@ interface ImageStyles {
 export default createStyles((theme, { radius }: ImageStyles) => ({
   root: {
     position: 'relative',
-    overflow: 'hidden',
   },
 
   figure: {

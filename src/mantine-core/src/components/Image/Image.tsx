@@ -83,12 +83,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     }, [src]);
 
     return (
-      <div
-        className={cx(classes.root, className)}
-        style={{ width, height, ...mergedStyles }}
-        ref={ref}
-        {...rest}
-      >
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         {isPlaceholder && (
           <div className={classes.placeholder} title={alt}>
             {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
@@ -100,7 +95,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
             className={classes.image}
             src={src}
             alt={alt}
-            style={{ objectFit: fit }}
+            style={{ objectFit: fit, width, height }}
             ref={imageRef}
             onLoad={(event) => {
               setLoaded(true);
