@@ -166,13 +166,14 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onMouseEnter,
       onChange,
       className,
+      sx,
       ...others
     }: MenuProps,
     ref
   ) => {
     const [hovered, setHovered] = useState(-1);
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
+    const { classes, cx, theme } = useStyles({ size }, { sx, classNames, styles, name: 'Menu' });
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
