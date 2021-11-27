@@ -9,8 +9,8 @@ describe('@mantine/core/PopperContainer', () => {
     document.getElementsByTagName('body')[0].innerHTML = '';
   });
 
-  itRendersChildren(PopperContainer, {});
-  itSupportsClassName(PopperContainer, {});
+  itRendersChildren(PopperContainer, { withinPortal: false });
+  itSupportsClassName(PopperContainer, { withinPortal: false });
 
   it('has correct displayName', () => {
     expect(PopperContainer.displayName).toEqual('@mantine/core/PopperContainer');
@@ -21,7 +21,7 @@ describe('@mantine/core/PopperContainer', () => {
     document.body.appendChild(target);
 
     mount(
-      <PopperContainer className="test-popper-container" zIndex={1543}>
+      <PopperContainer withinPortal={false} className="test-popper-container" zIndex={1543}>
         test-popper-container
       </PopperContainer>,
       { attachTo: target }
@@ -37,7 +37,9 @@ describe('@mantine/core/PopperContainer', () => {
 
     mount(
       <div className="virtual-dom-parent">
-        <PopperContainer className="test-in-parent">test-in-parent</PopperContainer>
+        <PopperContainer withinPortal={false} className="test-in-parent">
+          test-in-parent
+        </PopperContainer>
       </div>,
       { attachTo: target }
     );

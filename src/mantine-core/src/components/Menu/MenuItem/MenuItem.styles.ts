@@ -1,11 +1,11 @@
 import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
-interface MenuButtonStyles {
+interface MenuItemStyles {
   radius: MantineNumberSize;
   color: MantineColor;
 }
 
-export default createStyles((theme, { radius, color }: MenuButtonStyles) => ({
+export default createStyles((theme, { radius, color }: MenuItemStyles) => ({
   item: {
     ...theme.fn.fontStyles(),
     WebkitTapHighlightColor: 'transparent',

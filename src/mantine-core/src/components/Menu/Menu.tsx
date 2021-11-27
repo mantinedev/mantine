@@ -19,12 +19,16 @@ import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { MenuIcon } from './MenuIcon';
-import { MenuItem, MenuItemComponent, MenuItemType } from './MenuItem/MenuItem';
+import {
+  MenuItem,
+  MenuItemComponent,
+  MenuItemType,
+  MenuItemStylesNames,
+} from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
-import { MenuButton, MenuButtonStylesNames } from './MenuButton/MenuButton';
 import useStyles from './Menu.styles';
 
-export type MenuStylesNames = ClassNames<typeof useStyles> | MenuButtonStylesNames;
+export type MenuStylesNames = ClassNames<typeof useStyles> | MenuItemStylesNames;
 
 export interface MenuProps
   extends DefaultProps<MenuStylesNames>,
@@ -285,7 +289,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     const content = items.map((item, index) => {
       if (item.type === MenuItem) {
         return (
-          <MenuButton<'button'>
+          <MenuItem<'button'>
             {...item.props}
             key={index}
             hovered={hovered === index}
