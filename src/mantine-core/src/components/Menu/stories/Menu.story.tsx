@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
+import { WithinOverlays } from '@mantine/ds/src';
 import { menuItems } from '../demos/_menu-items';
 import { TextInput } from '../../TextInput';
 import { Container } from '../../Container';
@@ -45,4 +46,9 @@ storiesOf('@mantine/core/Menu/stories', module)
       <Controlled />
     </div>
   ))
-  .add('Within scroll container', () => <WithScroll />);
+  .add('Within scroll container', () => <WithScroll />)
+  .add('Within overlays', () => (
+    <WithinOverlays>
+      <Menu withinPortal={false}>{menuItems}</Menu>
+    </WithinOverlays>
+  ));

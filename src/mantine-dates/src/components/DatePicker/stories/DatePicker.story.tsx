@@ -1,53 +1,8 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import {
-  MANTINE_SIZES,
-  Modal,
-  Button,
-  MantineProvider,
-  TextInput,
-  Popover,
-  Group,
-} from '@mantine/core';
+import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
+import { WithinOverlays } from '@mantine/ds/src';
 import { DatePicker } from '../DatePicker';
-
-function WithinPopover() {
-  const [opened, setOpened] = useState(false);
-  return (
-    <Group position="center" mt="xl">
-      <Popover
-        opened={opened}
-        onClose={() => setOpened(false)}
-        target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
-        position="bottom"
-        placement="start"
-        withArrow
-        withCloseButton
-        styles={{ body: { width: 300 } }}
-      >
-        <DatePicker placeholder="Pick date" label="Event date" required withinPortal={false} />
-      </Popover>
-    </Group>
-  );
-}
-
-function WrappedModal(
-  props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
-) {
-  const [opened, setOpened] = useState(true);
-
-  return (
-    <div style={{ padding: 50 }}>
-      <Button onClick={() => setOpened(true)}>Open Modal</Button>
-      <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Date picker in modal"
-        {...props}
-      />
-    </div>
-  );
-}
 
 function Controlled() {
   const [value, onChange] = useState(new Date());
@@ -99,12 +54,6 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 storiesOf('@mantine/dates/DatePicker/stories', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
-  .add('Within Modal', () => (
-    <WrappedModal>
-      <DatePicker placeholder="Pick date" label="Date picker" zIndex={1000} />
-    </WrappedModal>
-  ))
-  .add('Within Popover', () => <WithinPopover />)
   .add('Dropdown type modal', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
@@ -154,4 +103,9 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
     <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
       <DatePicker label="One month" />
     </MantineProvider>
+  ))
+  .add('Within overlays', () => (
+    <WithinOverlays>
+      <DatePicker placeholder="Pick date" label="Event date" withinPortal={false} />
+    </WithinOverlays>
   ));
