@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
+  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from './TimeField/TimeField';
@@ -45,7 +46,7 @@ describe('@mantine/dates/TimeInput', () => {
       required: true,
       disabled: true,
     },
-    Object.keys(TimeInputStylesApi).filter((key) => key !== 'invalid'),
+    getInputStylesApiKeys(Object.keys(TimeInputStylesApi).filter((key) => key !== 'invalid')),
     'TimeInput'
   );
 

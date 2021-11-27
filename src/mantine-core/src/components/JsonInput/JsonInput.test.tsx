@@ -4,6 +4,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   defaultInputProps,
+  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { JsonInput } from './JsonInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
@@ -16,7 +17,7 @@ describe('@mantine/core/JsonInput', () => {
   itSupportsStylesApi(
     JsonInput,
     defaultInputProps,
-    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
     'JsonInput'
   );
 
