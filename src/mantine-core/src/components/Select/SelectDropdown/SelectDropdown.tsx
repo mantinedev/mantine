@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import type { Placement } from '@popperjs/core';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
@@ -50,6 +51,8 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
   ) => {
     const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
 
+    const previousPlacement = useRef<Placement>('bottom');
+
     return (
       <Popper
         referenceElement={referenceElement}
@@ -61,13 +64,6 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         withinPortal={withinPortal}
         placementFallbacks={['top']}
         zIndex={zIndex}
-        onPlacementChange={(placement: string) => {
-          const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
-
-          if (direction !== nextDirection) {
-            onDirectionChange && onDirectionChange(nextDirection);
-          }
-        }}
         modifiers={[
           {
             // @ts-ignore
@@ -82,6 +78,23 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
             effect: ({ state }) => {
               // eslint-disable-next-line no-param-reassign
               state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
+            },
+          },
+          {
+            // @ts-ignore
+            name: 'directionControl',
+            enabled: true,
+            phase: 'main',
+            fn: ({ state }) => {
+              if (previousPlacement.current !== state.placement) {
+                previousPlacement.current = state.placement;
+
+                const nextDirection = state.placement === 'top' ? 'column-reverse' : 'column';
+
+                if (direction !== nextDirection) {
+                  onDirectionChange && onDirectionChange(nextDirection);
+                }
+              }
             },
           },
         ]}
