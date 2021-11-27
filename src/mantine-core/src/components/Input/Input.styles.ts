@@ -80,26 +80,9 @@ function getVariantStyles({ variant, theme }: { variant: InputVariant; theme: Ma
   return null;
 }
 
-function getInvalidStyles({ invalid, theme }: { invalid: boolean; theme: MantineTheme }) {
-  if (!invalid) {
-    return null;
-  }
-
-  const color = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
-
-  return {
-    color,
-    borderColor: color,
-
-    '&::placeholder': {
-      opacity: 1,
-      color,
-    },
-  };
-}
-
 export default createStyles(
   (theme, { size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
+    const invalidColor = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
@@ -180,12 +163,20 @@ export default createStyles(
               '&[type=number]': {
                 MozAppearance: 'textfield',
               },
-
-              ...getInvalidStyles({ invalid, theme }),
             },
 
       withIcon: {
         paddingLeft: `${theme.fn.size({ size, sizes })}px !important`,
+      },
+
+      invalid: {
+        color: invalidColor,
+        borderColor: invalidColor,
+
+        '&::placeholder': {
+          opacity: 1,
+          color: invalidColor,
+        },
       },
 
       icon: {

@@ -31,4 +31,14 @@ storiesOf('@mantine/core/Input/styles-api', module)
     <MantineProvider styles={{ Input: () => styles }}>
       <Wrapper />
     </MantineProvider>
+  ))
+  .add('Custom invalid styles', () => (
+    <Input
+      placeholder="Invalid input"
+      invalid
+      sx={{ maxWidth: 400 }}
+      mx="auto"
+      mt="xl"
+      styles={{ invalid: { borderColor: 'blue', '&::placeholder': { color: 'blue' } } }}
+    />
   ));

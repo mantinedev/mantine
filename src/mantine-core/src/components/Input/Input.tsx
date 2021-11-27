@@ -113,7 +113,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={invalid}
-          className={cx({ [classes.withIcon]: icon }, classes.input)}
+          className={cx(classes.input, { [classes.withIcon]: icon, [classes.invalid]: invalid })}
           disabled={disabled}
           style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
         />
