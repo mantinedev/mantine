@@ -80,6 +80,9 @@ export interface MenuProps
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Should focus be trapped when menu is opened */
+  trapFocus?: boolean;
 }
 
 const defaultControl = (
@@ -155,6 +158,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       delay = 0,
       zIndex = 10,
       withinPortal = true,
+      trapFocus = true,
       classNames,
       styles,
       closeOnScroll = false,
@@ -240,7 +244,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (_opened) {
-        if (event.nativeEvent.code === 'Tab') {
+        if (event.nativeEvent.code === 'Tab' && trapFocus) {
           event.preventDefault();
         }
 
