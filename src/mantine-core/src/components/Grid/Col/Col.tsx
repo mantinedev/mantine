@@ -75,6 +75,8 @@ export function Col({
   xl,
   columns,
   className,
+  classNames,
+  styles,
   id,
   sx,
   ...others
@@ -97,7 +99,7 @@ export function Col({
       columns,
       span,
     },
-    { sx, name: 'Col' }
+    { sx, classNames, styles, name: 'Col' }
   );
 
   if (!isValidSpan(span) || span > columns) {
