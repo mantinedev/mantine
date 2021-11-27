@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Button } from '../Button/Button';
-import { Group } from './Group';
+import { Button } from '../../Button/Button';
+import { Group } from '../Group';
 
 const positions = (['left', 'center', 'apart', 'right'] as const).map((position) => (
   <div style={{ padding: 15, backgroundColor: 'rgba(0, 0, 0, .1)', margin: 20 }} key={position}>
@@ -23,7 +23,7 @@ const spacings = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 50] as const).map((spacing) 
   </div>
 ));
 
-storiesOf('@mantine/core/Group', module)
+storiesOf('@mantine/core/Group/stories', module)
   .add('Positions', () => <>{positions}</>)
   .add('Spacing', () => <>{spacings}</>)
   .add('No wrap', () => (
