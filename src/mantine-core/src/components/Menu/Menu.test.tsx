@@ -5,6 +5,7 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsMargins,
   itSupportsRef,
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
@@ -35,6 +36,7 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
+  itSupportsMargins(Menu, defaultProps);
   itSupportsRef(Menu, defaultProps, HTMLButtonElement);
 
   it('calls onClose and onOpen function with corresponding events', () => {
