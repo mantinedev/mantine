@@ -9,6 +9,7 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Input.styles';
 
 export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
@@ -99,9 +100,10 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const Element: any = component || 'input';
 
     return (
-      <div
+      <Box
         className={cx(classes.wrapper, classes[_variant], className)}
         style={mergedStyles}
+        sx={sx}
         {...wrapperProps}
       >
         {icon && <div className={classes.icon}>{icon}</div>}
@@ -125,7 +127,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
             {rightSection}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 );

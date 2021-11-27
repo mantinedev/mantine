@@ -1,11 +1,11 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MANTINE_SIZES } from '@mantine/styles';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { Input } from './Input';
+import { ActionIcon } from '../../ActionIcon/ActionIcon';
+import { Input } from '../Input';
 
 function ValidInvalid() {
   const [valid, toggle] = useBooleanToggle();
@@ -19,20 +19,6 @@ function ValidInvalid() {
       </button>
     </div>
   );
-}
-
-const useStyles = createStyles({
-  input: {
-    border: '2px solid red',
-
-    '&::placeholder': {
-      color: 'red',
-    },
-  },
-});
-
-function WithStyles() {
-  return <Input classNames={useStyles().classes} placeholder="red" />;
 }
 
 const actionIcon = (
@@ -83,8 +69,8 @@ const getStates = (props?: any) => (
   </div>
 );
 
-storiesOf('@mantine/core/Input', module)
-  .add('Sizes', () => <div style={{ maxWidth: 300, padding: 50 }}>{sizes}</div>)
+storiesOf('@mantine/core/Input/stories', module)
+  .add('Sizes', () => <div style={{ maxWidth: 400, padding: 50 }}>{sizes}</div>)
   .add('Default variant', () => <>{getStates({ variant: 'default' })}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)
   .add('Unstyled variant', () => <>{getStates({ variant: 'unstyled' })}</>)
@@ -118,5 +104,4 @@ storiesOf('@mantine/core/Input', module)
       })}
     </>
   ))
-  .add('Invalid toggle', () => <ValidInvalid />)
-  .add('With classNames', () => <WithStyles />);
+  .add('Invalid toggle', () => <ValidInvalid />);

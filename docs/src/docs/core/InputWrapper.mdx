@@ -15,6 +15,20 @@ styles: ['InputWrapper']
 
 import { InputWrapperDemos } from '@demos/core';
 
+## Disclaimer
+
+**!important:** Do not use InputWrapper with Mantine inputs, it is already included in most inputs:
+
+```tsx
+// Incorrect usage, input is not accessible
+<InputWrapper label="Input label">
+  <TextInput />
+</InputWrapper>
+
+// TextInput already includes InputWrapper
+<TextInput label="Input label" description="Input description" />
+```
+
 ## Usage
 
 InputWrapper is used to wrap for all Mantine inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/) and others).
