@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+import { RtlProvider } from '@mantine/ds/src';
 import { ColorInput } from '../ColorInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -39,4 +40,9 @@ function ControlledInput() {
 
 storiesOf('@mantine/core/ColorInput/stories', module)
   .add('Controlled', () => <ControlledInput />)
-  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('RTL', () => (
+    <RtlProvider>
+      <ControlledInput />
+    </RtlProvider>
+  ));
