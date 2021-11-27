@@ -214,6 +214,7 @@ export function MantineDrawer({
           {!noOverlay && (
             <div style={transitionStyles.overlay}>
               <Overlay
+                className={classes.overlay}
                 opacity={_overlayOpacity}
                 zIndex={zIndex}
                 color={

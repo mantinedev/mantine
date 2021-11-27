@@ -14,7 +14,6 @@ styles: ['Drawer']
 ---
 
 import { DrawerDemos } from '@demos/core';
-import { DRAWER_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -48,20 +47,6 @@ Size cannot exceed 100% of width and 100vh of height.
 ```
 
 <Demo data={DrawerDemos.sizes} />
-
-You can get predefined sizes by importing `DRAWER_SIZES`:
-
-```tsx
-import { DRAWER_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Drawer width']}
-  data={Object.keys(DRAWER_SIZES).map((size) => [
-    size,
-    `${DRAWER_SIZES[size]}${typeof DRAWER_SIZES[size] === 'number' ? 'px' : ''}`,
-  ])}
-/>
 
 ## Control behavior
 
