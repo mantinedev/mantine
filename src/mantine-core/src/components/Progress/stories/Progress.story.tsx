@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { Button } from '../Button/Button';
-import { Group } from '../Group/Group';
-import { Progress } from './Progress';
+import { Button } from '../../Button/Button';
+import { Group } from '../../Group/Group';
+import { Progress } from '../Progress';
 
 function SetDemo() {
   const [value, setValue] = useState(50);
@@ -28,32 +28,10 @@ const getThemes = (props?: any) =>
     <Progress key={color} color={color} value={50} style={{ marginTop: 20 }} {...props} />
   ));
 
-storiesOf('@mantine/core/Progress', module)
-  .add('General usage', () => (
-    <div style={{ maxWidth: 500, padding: 50 }}>
-      <Progress value={0} />
-      <Progress value={20} style={{ marginTop: 20 }} />
-      <Progress value={40} style={{ marginTop: 20 }} />
-      <Progress value={60} style={{ marginTop: 20 }} />
-      <Progress value={80} style={{ marginTop: 20 }} />
-      <Progress value={80} style={{ marginTop: 20 }} striped />
-      <Progress value={100} style={{ marginTop: 20 }} />
-    </div>
-  ))
+storiesOf('@mantine/core/Progress/stories', module)
   .add('Sizes', () => <div style={{ maxWidth: 500, padding: 50 }}>{sizes}</div>)
-  .add('Themes', () => <div style={{ maxWidth: 500, padding: 50 }}>{getThemes()}</div>)
+  .add('Colors', () => <div style={{ maxWidth: 500, padding: 50 }}>{getThemes()}</div>)
   .add('Striped', () => (
     <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ striped: true })}</div>
-  ))
-  .add('Sections', () => (
-    <div style={{ maxWidth: 500, padding: 50 }}>
-      <Progress
-        sections={[
-          { value: 10, color: 'violet' },
-          { value: 25, color: 'pink' },
-          { value: 20, color: 'cyan' },
-        ]}
-      />
-    </div>
   ))
   .add('Value changes', () => <SetDemo />);
