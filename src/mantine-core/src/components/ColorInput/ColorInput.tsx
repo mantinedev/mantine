@@ -97,7 +97,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       icon,
       transition = 'pop-top-left',
       id,
-      dropdownZIndex = 10,
+      dropdownZIndex = 1000,
       transitionDuration = 0,
       transitionTimingFunction,
       withinPortal = true,
