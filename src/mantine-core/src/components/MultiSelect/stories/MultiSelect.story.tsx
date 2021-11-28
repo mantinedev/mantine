@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { Group } from '../Group/Group';
-import { TextInput } from '../TextInput/TextInput';
-import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
-import { MultiSelect } from './MultiSelect';
-import { CountriesSelect } from './demos/countries';
+import { Group } from '../../Group/Group';
+import { TextInput } from '../../TextInput/TextInput';
+import { SegmentedControl } from '../../SegmentedControl/SegmentedControl';
+import { MultiSelect } from '../MultiSelect';
 
 const data = [
   { value: 'react', label: 'React' },
@@ -59,25 +58,6 @@ function Controlled() {
   );
 }
 
-function Creatable() {
-  const [creatableData, setData] = useState(stringData);
-
-  return (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <MultiSelect
-        label="Creatable Select"
-        data={creatableData}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        searchable
-        creatable
-        onCreate={(query) => setData((c) => [...c, query])}
-        getCreateLabel={(query) => `+ Create ${query}`}
-      />
-    </div>
-  );
-}
-
 const sizes = MANTINE_SIZES.map((size) => (
   <Group grow key={size} style={{ marginTop: 30 }} direction="column">
     <MultiSelect
@@ -106,7 +86,7 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   </Group>
 ));
 
-storiesOf('@mantine/core/MultiSelect', module)
+storiesOf('@mantine/core/MultiSelect/stories', module)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
@@ -142,7 +122,7 @@ storiesOf('@mantine/core/MultiSelect', module)
       <SegmentedControl data={data} />
     </div>
   ))
-  .add('Grouped and Disabled Data', () => (
+  .add('Grouped and disabled data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <MultiSelect
         label="Multi select"
@@ -177,7 +157,6 @@ storiesOf('@mantine/core/MultiSelect', module)
     </div>
   ))
   .add('Controlled', () => <Controlled />)
-  .add('Creatable', () => <Creatable />)
   .add('Searchable', () => (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect
@@ -219,34 +198,8 @@ storiesOf('@mantine/core/MultiSelect', module)
       />
     </div>
   ))
-  .add('Disabled', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <MultiSelect
-        label="Multi select"
-        data={data}
-        defaultValue={['react', 'ng']}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        searchable
-        clearable
-        disabled
-      />
-      <MultiSelect
-        label="Multi select"
-        data={data}
-        placeholder="Select items"
-        nothingFound="Nothing found"
-        disabled
-      />
-    </div>
-  ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
-  .add('Countries select', () => (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <CountriesSelect />
-    </div>
-  ))
   .add('Max Selected Values', () => (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect
@@ -268,30 +221,4 @@ storiesOf('@mantine/core/MultiSelect', module)
         maxSelectedValues={5}
       />
     </Group>
-  ))
-  .add('Without Portal', () => (
-    <>
-      <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
-        <MultiSelect
-          label="Multi select"
-          data={data}
-          defaultValue={['react', 'ng']}
-          placeholder="Select items"
-          nothingFound="Nothing found"
-          withinPortal={false}
-        />
-        <TextInput label="Text input" placeholder="Select items" />
-      </Group>
-      <Group style={{ padding: 40, paddingTop: 0 }} grow align="flex-start">
-        <TextInput label="Text input" placeholder="Select items" />
-        <MultiSelect
-          label="Multi select with separator and disabled items"
-          data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
-          defaultValue={['react', 'ng']}
-          placeholder="Select items"
-          nothingFound="Nothing found"
-          withinPortal={false}
-        />
-      </Group>
-    </>
   ));
