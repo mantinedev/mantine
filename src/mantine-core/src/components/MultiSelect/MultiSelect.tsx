@@ -454,7 +454,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={(event) => {
+          onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (dropdownOpened) {
               event.preventDefault();
               event.stopPropagation();

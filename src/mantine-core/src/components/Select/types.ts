@@ -14,7 +14,7 @@ export interface SelectItem {
 export type SelectDataItem = string | SelectItem;
 
 export type BaseSelectStylesNames =
-  | Exclude<InputStylesNames, 'rightSection'>
+  | InputStylesNames
   | InputWrapperStylesNames
   | SelectItemsStylesNames
   | SelectDropdownStylesNames;
