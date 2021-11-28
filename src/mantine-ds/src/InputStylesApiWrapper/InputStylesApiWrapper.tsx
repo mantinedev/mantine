@@ -3,7 +3,6 @@ import React from 'react';
 export function InputStylesApiWrapper({ component: Component, ...props }: any) {
   return (
     <Component
-      {...props}
       style={{ maxWidth: 400 }}
       placeholder="Placeholder"
       label="Label"
@@ -13,6 +12,7 @@ export function InputStylesApiWrapper({ component: Component, ...props }: any) {
       error="Error"
       mx="auto"
       mt="xl"
+      {...props}
     />
   );
 }

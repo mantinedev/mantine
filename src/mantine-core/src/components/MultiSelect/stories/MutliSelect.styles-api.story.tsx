@@ -14,6 +14,7 @@ function Wrapper(props: Partial<MultiSelectProps>) {
       component={MultiSelect}
       value={['React', 'Angular']}
       data={['React', 'Angular', 'Vue', 'Svelte']}
+      rightSection={null}
       {...props}
     />
   );
