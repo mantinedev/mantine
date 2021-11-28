@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { AuthenticationForm } from '../../../demos';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
-import { Select } from '../Select/Select';
-import { Autocomplete } from '../Autocomplete/Autocomplete';
-import { Popover } from '../Popover/Popover';
-import { ColorInput } from '../ColorInput/ColorInput';
-import { Menu } from '../Menu/Menu';
-import { Modal } from './Modal';
-import { MultiSelect } from '../MultiSelect/MultiSelect';
+import { Button } from '../../Button/Button';
+import { Text } from '../../Text/Text';
+import { Select } from '../../Select/Select';
+import { Autocomplete } from '../../Autocomplete/Autocomplete';
+import { Popover } from '../../Popover/Popover';
+import { ColorInput } from '../../ColorInput/ColorInput';
+import { Menu } from '../../Menu/Menu';
+import { Modal } from '../Modal';
+import { MultiSelect } from '../../MultiSelect/MultiSelect';
 
 function PopoverWrapper() {
   const [opened, setOpened] = useState(false);
@@ -43,29 +42,10 @@ function WrappedModal(
   );
 }
 
-storiesOf('@mantine/core/Modal', module)
-  .add('General usage', () => (
-    <WrappedModal title="Authentication form">
-      <AuthenticationForm noPadding noShadow />
-    </WrappedModal>
-  ))
-  .add('Centered', () => (
-    <WrappedModal title="Authentication form" centered>
-      <AuthenticationForm noPadding noShadow />
-    </WrappedModal>
-  ))
-  .add('Horizontal overflow', () => (
+storiesOf('@mantine/core/Modal/stories', module)
+  .add('Content overflow', () => (
     <WrappedModal title="This title is so large that there is no space to fit it all on single line and it will wrap on the second one or may be even on the third one">
       IDecidedToPutSoMuchUnbreakableContentInsideModalSoThatItWillOverflow
-    </WrappedModal>
-  ))
-  .add('Vertical scroll', () => (
-    <WrappedModal title="Authentication form">
-      {Array(100)
-        .fill('REACT IS NOT A FRAMEWORK')
-        .map((c) => (
-          <Text weight={700}>{c}</Text>
-        ))}
     </WrappedModal>
   ))
   .add('Centered with overflow', () => (
@@ -77,21 +57,7 @@ storiesOf('@mantine/core/Modal', module)
         ))}
     </WrappedModal>
   ))
-  .add('Inside overflow', () => (
-    <WrappedModal title="Authentication form" overflow="inside">
-      {Array(100)
-        .fill('REACT IS NOT A FRAMEWORK')
-        .map((c) => (
-          <Text weight={700}>{c}</Text>
-        ))}
-    </WrappedModal>
-  ))
-  .add('Custom modal width', () => (
-    <WrappedModal title="Authentication form" size="xs">
-      <AuthenticationForm noPadding noShadow />
-    </WrappedModal>
-  ))
-  .add('With overlay components', () => (
+  .add('With popper components', () => (
     <WrappedModal title="Modal with overlay items">
       <Select data={['react', 'ng']} placeholder="Select" />
       <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />
