@@ -29,7 +29,7 @@ export default createStyles((theme, { radius, color }: MenuItemStyles) => ({
 
     '&:disabled': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-      cursor: 'not-allowed',
+      pointerEvents: 'none',
     },
   },
 

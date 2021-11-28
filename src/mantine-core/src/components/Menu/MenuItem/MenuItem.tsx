@@ -25,6 +25,9 @@ export interface SharedMenuItemProps extends DefaultProps<MenuItemStylesNames> {
   /** Any react node to render on the right side of item, for example, keyboard shortcut or badge */
   rightSection?: React.ReactNode;
 
+  /** Is item disabled */
+  disabled?: boolean;
+
   /** Is item hovered, controlled by parent Menu component */
   hovered?: boolean;
 
@@ -40,7 +43,7 @@ export type MenuItemProps<C extends React.ElementType> = PolymorphicComponentPro
   SharedMenuItemProps
 >;
 
-export type MenuItemComponent = <C extends React.ElementType = 'div'>(
+export type MenuItemComponent = <C extends React.ElementType = 'button'>(
   props: MenuItemProps<C>
 ) => React.ReactElement;
 

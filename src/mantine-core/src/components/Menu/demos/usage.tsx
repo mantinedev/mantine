@@ -5,7 +5,7 @@ import { menuItems } from './_menu-items';
 
 const code = `
 import React from 'react';
-import { Menu, MenuItem, MenuLabel, Divider, Text } from '@mantine/core';
+import { Menu, Divider, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16,7 +16,7 @@ function Demo() {
       <Menu.Item icon={<ImageIcon />}>Gallery</Menu.Item>
       <Menu.Item
         icon={<MagnifyingGlassIcon />}
-        rightSection={<Text size="xs" color="gray">⌘K</Text>}
+        rightSection={<Text size="xs" color="dimmed">⌘K</Text>}
       >
         Search
       </Menu.Item>

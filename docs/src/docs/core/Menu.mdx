@@ -56,6 +56,7 @@ Menu.Item renders button and accepts following props:
 - `icon` – icon on the left
 - `children` – item label
 - `rightSection` – react node, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
+- `disabled` – disables item
 - `...others` – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `sx`, `className`
 
 ```tsx
@@ -71,6 +72,10 @@ Menu.Item renders button and accepts following props:
   Label
 </Menu.Item>
 ```
+
+## Disabled item
+
+<Demo data={MenuDemos.disabled} />
 
 ## Custom control
 

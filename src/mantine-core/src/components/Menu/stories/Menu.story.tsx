@@ -5,6 +5,7 @@ import { WithinOverlays } from '@mantine/ds/src';
 import { menuItems } from '../demos/_menu-items';
 import { TextInput } from '../../TextInput';
 import { Container } from '../../Container';
+import { Divider } from '../../Divider';
 import { Menu } from '../Menu';
 
 function Controlled() {
@@ -51,4 +52,17 @@ storiesOf('@mantine/core/Menu/stories', module)
     <WithinOverlays>
       <Menu withinPortal={false}>{menuItems}</Menu>
     </WithinOverlays>
+  ))
+  .add('Disabled items', () => (
+    <Menu>
+      <Menu.Item disabled>Zero Item</Menu.Item>
+      <Menu.Label>Items</Menu.Label>
+      <Menu.Item>First Item</Menu.Item>
+      <Menu.Item disabled>Second Item</Menu.Item>
+      <Menu.Label>Items 2</Menu.Label>
+      <Menu.Item disabled>Third Item</Menu.Item>
+      <Menu.Item>Forth Item</Menu.Item>
+      <Divider />
+      <Menu.Item>Last Item</Menu.Item>
+    </Menu>
   ));
