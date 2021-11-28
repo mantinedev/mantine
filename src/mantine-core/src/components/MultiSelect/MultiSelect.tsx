@@ -452,12 +452,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={(e) => {
+          onRemove={(event) => {
             if (dropdownOpened) {
-              e.preventDefault();
-              e.stopPropagation();
+              event.preventDefault();
+              event.stopPropagation();
             }
             handleValueRemove(item.value);
+            setDropdownOpened(true);
           }}
           key={item.value}
           size={size}
