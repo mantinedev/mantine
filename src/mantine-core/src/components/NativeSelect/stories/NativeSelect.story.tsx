@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { RtlProvider } from '@mantine/ds/src';
 import { NativeSelect, NativeSelectProps } from '../NativeSelect';
 
 const stringData = ['React', 'Angular', 'Vue', 'Svelte'];
@@ -25,4 +26,9 @@ storiesOf('@mantine/core/NativeSelect/stories', module)
   ))
   .add('String data', () => (
     <NativeSelect label="Data as string" data={stringData} placeholder="String data" />
+  ))
+  .add('RTL', () => (
+    <RtlProvider>
+      <NativeSelect label="Right to left" data={stringData} placeholder="String data" />
+    </RtlProvider>
   ));

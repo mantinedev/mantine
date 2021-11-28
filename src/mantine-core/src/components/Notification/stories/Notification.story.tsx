@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { RtlProvider } from '@mantine/ds/src';
 import {
   CheckIcon,
   Cross2Icon,
@@ -9,7 +10,7 @@ import {
 } from '@modulz/radix-icons';
 import { Notification } from '../Notification';
 
-storiesOf('@mantine/core/Notification/stories', module).add('All variants', () => (
+const demo = (
   <div style={{ padding: 60 }}>
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
       <Notification
@@ -155,4 +156,8 @@ storiesOf('@mantine/core/Notification/stories', module).add('All variants', () =
       </Notification>
     </div>
   </div>
-));
+);
+
+storiesOf('@mantine/core/Notification/stories', module)
+  .add('All variants', () => demo)
+  .add('RTL', () => <RtlProvider>{demo}</RtlProvider>);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
+import { RtlProvider } from '@mantine/ds/src';
 import { RadioGroup, Radio } from '../index';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -44,4 +45,9 @@ storiesOf('@mantine/core/RadioGroup/stories', module)
     </RadioGroup>
   ))
   .add('Sizes', () => <>{sizes}</>)
-  .add('Controlled', () => <Controlled />);
+  .add('Controlled', () => <Controlled />)
+  .add('RTL', () => (
+    <RtlProvider>
+      <Controlled />
+    </RtlProvider>
+  ));

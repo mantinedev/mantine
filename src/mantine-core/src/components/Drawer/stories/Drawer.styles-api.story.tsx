@@ -2,19 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
 import { generateBorderStyles } from '@mantine/ds/src';
-import { Drawer, DrawerProps } from '../Drawer';
 import { Drawer as DrawerStylesApi } from '../styles.api';
+import { Wrapper } from './_wrapper';
 
 const styles = generateBorderStyles(DrawerStylesApi);
 const useStyles = createStyles(() => styles);
-
-function Wrapper(props: Partial<DrawerProps>) {
-  return (
-    <Drawer {...props} opened title="Drawer" padding="xl" onClose={() => {}}>
-      Drawer
-    </Drawer>
-  );
-}
 
 function WithClassNames() {
   return <Wrapper classNames={useStyles().classes} />;
