@@ -131,7 +131,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onChange,
       itemComponent = DefaultItem,
       onKeyDown,
-      onFocus,
       onBlur,
       transition = 'fade',
       transitionDuration = 0,
@@ -174,6 +173,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
+    const isColumn = direction === 'column';
     const uuid = useUuid(id);
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
@@ -284,68 +284,71 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       );
     }, [inputValue]);
 
-    const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : -1;
+    const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
+
+    const handlePrevious = () => {
+      setHovered((current) => {
+        const nextIndex = getNextIndex(
+          current,
+          (index) => index - 1,
+          (index) => index > 0
+        );
+
+        targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+        scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+        return nextIndex;
+      });
+    };
+
+    const handleNext = () => {
+      setHovered((current) => {
+        const nextIndex = getNextIndex(
+          current,
+          (index) => index + 1,
+          (index) => index < filteredData.length - 1
+        );
+
+        targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+        scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        return nextIndex;
+      });
+    };
+
+    const scrollSelectedItemIntoView = () =>
+      window.setTimeout(() => {
+        targetRef.current = itemsRefs.current[filteredData[selectedItemIndex]?.value];
+        scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      }, 0);
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
 
-      const isColumn = direction === 'column';
-
-      const handlePrevious = () => {
-        setHovered((current) => {
-          const nextIndex = getNextIndex(
-            current,
-            (index) => index - 1,
-            (index) => index > 0
-          );
-
-          if (dropdownOpened) {
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-
-            scrollIntoView({
-              alignment: isColumn ? 'start' : 'end',
-            });
-          }
-
-          return nextIndex;
-        });
-      };
-
-      const handleNext = () => {
-        setHovered((current) => {
-          const nextIndex = getNextIndex(
-            current,
-            (index) => index + 1,
-            (index) => index < filteredData.length - 1
-          );
-
-          if (dropdownOpened) {
-            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
-
-            scrollIntoView({
-              alignment: isColumn ? 'end' : 'start',
-            });
-          }
-
-          return nextIndex;
-        });
-      };
-
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
-          setDropdownOpened(true);
 
-          isColumn ? handlePrevious() : handleNext();
+          if (!dropdownOpened) {
+            setHovered(selectedItemIndex);
+            setDropdownOpened(true);
+            scrollSelectedItemIntoView();
+          } else {
+            isColumn ? handlePrevious() : handleNext();
+          }
 
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
-          setDropdownOpened(true);
 
-          isColumn ? handleNext() : handlePrevious();
+          if (!dropdownOpened) {
+            setHovered(selectedItemIndex);
+            setDropdownOpened(true);
+            scrollSelectedItemIntoView();
+          } else {
+            isColumn ? handleNext() : handlePrevious();
+          }
+
           break;
         }
 
@@ -360,26 +363,25 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           if (!searchable) {
             event.preventDefault();
             setDropdownOpened(!dropdownOpened);
-
             setHovered(selectedItemIndex);
+            scrollSelectedItemIntoView();
           }
           break;
         }
 
         case 'Enter': {
+          event.preventDefault();
+
           if (filteredData[hovered] && dropdownOpened) {
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
             setHovered(selectedItemIndex);
+            scrollSelectedItemIntoView();
           }
         }
       }
-    };
-
-    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onFocus === 'function' && onFocus(event);
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -451,7 +453,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             aria-controls={dropdownOpened ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
             onClick={handleInputClick}
-            onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             readOnly={!searchable}
             disabled={disabled}
