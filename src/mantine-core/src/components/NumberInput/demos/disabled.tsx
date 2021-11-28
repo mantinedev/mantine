@@ -1,9 +1,7 @@
 import React from 'react';
 import { NumberInput } from '../NumberInput';
 
-const code = `
-<NumberInput disabled />
-`;
+const code = '<NumberInput disabled />';
 
 function Demo() {
   return (
