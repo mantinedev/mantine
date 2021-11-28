@@ -284,6 +284,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       );
     }, [inputValue]);
 
+    const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : -1;
+
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
 
@@ -358,13 +360,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           if (!searchable) {
             event.preventDefault();
             setDropdownOpened(!dropdownOpened);
-            setHovered(
-              getNextIndex(
-                -1,
-                (index) => index + 1,
-                (index) => index < filteredData.length - 1
-              )
-            );
+
+            setHovered(selectedItemIndex);
           }
           break;
         }
@@ -375,6 +372,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
+            setHovered(selectedItemIndex);
           }
         }
       }
@@ -402,6 +400,14 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       }
       setHovered(0);
       setDropdownOpened(true);
+    };
+
+    const handleInputClick = () => {
+      setDropdownOpened(!dropdownOpened);
+
+      if (_value && !dropdownOpened) {
+        setHovered(selectedItemIndex);
+      }
     };
 
     return (
@@ -444,7 +450,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             aria-autocomplete="list"
             aria-controls={dropdownOpened ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-            onClick={() => setDropdownOpened(!dropdownOpened)}
+            onClick={handleInputClick}
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             readOnly={!searchable}
