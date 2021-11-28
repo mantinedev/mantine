@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
-import { AuthenticationForm } from '../../../demos';
-import { Button } from '../Button/Button';
-import { Group } from '../Group/Group';
-import { LoadingOverlay } from './LoadingOverlay';
+import { AuthenticationForm } from '../../../../demos';
+import { Button } from '../../Button/Button';
+import { Group } from '../../Group/Group';
+import { LoadingOverlay } from '../LoadingOverlay';
 
 function LoadingOverlayDemo(props?: any) {
   const [visible, setVisible] = useState(true);
@@ -49,7 +49,7 @@ const customLoader = (
   </svg>
 );
 
-storiesOf('@mantine/core/LoadingOverlay', module)
+storiesOf('@mantine/core/LoadingOverlay/stories', module)
   .add('General usage', () => <LoadingOverlayDemo />)
   .add('Custom Loader props', () => (
     <MantineProvider theme={{ loader: 'bars' }}>
