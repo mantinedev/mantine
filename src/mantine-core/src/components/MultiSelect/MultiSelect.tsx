@@ -410,6 +410,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         }
 
         case 'Enter': {
+          event.preventDefault();
+
           if (filteredData[hovered] && dropdownOpened) {
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
