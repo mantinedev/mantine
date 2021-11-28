@@ -44,14 +44,3 @@ Alternatively, you can use a number to set width or height in px:
 <Loader size="sm" /> // -> predefined small size
 <Loader size={50} /> // -> size in px
 ```
-
-You can get predefined sizes by importing `LOADER_SIZES`:
-
-```tsx
-import { LOADER_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Height or width']}
-  data={Object.keys(LOADER_SIZES).map((size) => [size, `${LOADER_SIZES[size]}px`])}
-/>
