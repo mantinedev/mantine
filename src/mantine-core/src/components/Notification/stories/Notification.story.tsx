@@ -7,9 +7,9 @@ import {
   ExclamationTriangleIcon,
   BookmarkIcon,
 } from '@modulz/radix-icons';
-import { Notification } from './Notification';
+import { Notification } from '../Notification';
 
-storiesOf('@mantine/core/Notification', module).add('General Usage', () => (
+storiesOf('@mantine/core/Notification/stories', module).add('All variants', () => (
   <div style={{ padding: 60 }}>
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
       <Notification

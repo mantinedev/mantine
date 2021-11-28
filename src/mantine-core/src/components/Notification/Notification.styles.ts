@@ -9,6 +9,8 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
   const icon = getRef('icon');
 
   return {
+    closeButton: {},
+
     icon: {
       ref: icon,
       boxSizing: 'border-box',
