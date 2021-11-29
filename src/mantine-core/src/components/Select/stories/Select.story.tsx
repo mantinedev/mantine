@@ -1,6 +1,6 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { getSelectScrollArea } from '../get-select-scroll-area/get-select-scroll-area';
 import { Select } from '../Select';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
@@ -28,16 +28,6 @@ const largeData = Array(50)
     value: `${index}`,
     label: `Item ${index}`,
   }));
-
-const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
-  <Scrollbars
-    {...props}
-    style={{ ...props.style, height: 300 }}
-    ref={(scrollbars: any) => scrollbars?.view && ref(scrollbars.view)}
-  >
-    <div style={{ padding: 3 }}>{props.children}</div>
-  </Scrollbars>
-));
 
 function Controlled({ clearable = false }: { clearable?: boolean }) {
   const [value, setValue] = useState(null);
@@ -127,7 +117,7 @@ storiesOf('@mantine/core/Select/stories', module)
         data={largeData}
         label="custom scrollbars"
         placeholder="select with custom scrollbars"
-        dropdownComponent={CustomScrollbars}
+        dropdownComponent={getSelectScrollArea({ maxHeight: 220 })}
       />
     </div>
   ))
