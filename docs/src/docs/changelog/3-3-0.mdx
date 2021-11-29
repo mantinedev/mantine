@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.3.0
 date: 'November 19th, 2021'
 ---
 
-import { ScrollAreaDemos, ModalDemos, AccordionDemos } from '@demos/core';
+import { ScrollAreaDemos, ModalDemos, AccordionDemos, SelectDemos } from '@demos/core';
 
 ## New components
 
@@ -17,6 +17,11 @@ without any external libraries:
 <Demo data={ScrollAreaDemos.configurator} />
 
 ## New features
+
+[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now use [ScrollArea](https://mantine.dev/core/scroll-area/)
+as a default dropdown element:
+
+<Demo data={SelectDemos.large} />
 
 [Modal](https://mantine.dev/core/modal/) component can now be centered:
 
@@ -66,3 +71,4 @@ form.errors;
 - Fix click outside not working with [Modal](https://mantine.dev/core/modal/) with outside overflow
 - [InputWrapper](https://mantine.dev/core/input-wrapper/) label now has `display: inline-block` styles, these styles will prevent input focusing when empty area above the input is clicked
 - [Select](https://mantine.dev/core/select/) component now correctly handles up and down arrow keys with selected value
+- Fix incorrect opened dropdown state in [Select](https://mantine.dev/core/select/) component when search results are empty and nothing found message is not provided
