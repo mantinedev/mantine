@@ -221,9 +221,10 @@ You can enable them by setting optional props:
 
 <Demo data={MultiSelectDemos.transitions} />
 
-## Custom scrollbars
+## Native scrollbars
 
-You can add custom scrollbars to dropdown with [react-custom-scrollbars](https://github.com/malte-wessel/react-custom-scrollbars) package:
+By default, MultiSelect uses [ScrollArea](/core/scroll-area/) to render dropdown.
+If you want to use native scrollbars instead, set `div` as a dropdown component:
 
 <Demo data={MultiSelectDemos.scrollbars} />
 

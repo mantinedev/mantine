@@ -20,6 +20,7 @@ import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultVal
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import {
   SelectItem,
   SelectDataItem,
@@ -125,7 +126,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   onCreate?: (query: string) => void;
 
   /** Change dropdown component, can be used to add custom scrollbars */
-  dropdownComponent?: React.FC<any>;
+  dropdownComponent?: any;
 
   /** Called when dropdown is opened */
   onDropdownOpen?(): void;
@@ -586,7 +587,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
-            dropdownComponent={dropdownComponent}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             referenceElement={wrapperRef.current}
             direction={direction}
             onDirectionChange={setDirection}
