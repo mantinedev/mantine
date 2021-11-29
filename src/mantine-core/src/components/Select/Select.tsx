@@ -410,6 +410,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
       if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
+        scrollSelectedItemIntoView();
       }
     };
 
