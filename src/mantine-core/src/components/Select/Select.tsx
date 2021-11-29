@@ -439,7 +439,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           aria-haspopup="listbox"
           aria-owns={`${uuid}-items`}
           aria-controls={uuid}
-          aria-expanded={dropdownOpened}
+          aria-expanded={shouldShowDropdown}
           onMouseLeave={() => setHovered(-1)}
           tabIndex={-1}
         >
@@ -456,13 +456,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             value={inputValue}
             onChange={handleInputChange}
             aria-autocomplete="list"
-            aria-controls={dropdownOpened ? `${uuid}-items` : null}
+            aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
             onClick={handleInputClick}
             onBlur={handleInputBlur}
             readOnly={!searchable}
             disabled={disabled}
-            data-mantine-stop-propagation={dropdownOpened}
+            data-mantine-stop-propagation={shouldShowDropdown}
             autoComplete="off"
             classNames={{
               ...classNames,
