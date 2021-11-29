@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { getSelectScrollArea } from '../get-select-scroll-area/get-select-scroll-area';
 import { Select } from '../Select';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
@@ -111,13 +110,13 @@ storiesOf('@mantine/core/Select/stories', module)
       />
     </div>
   ))
-  .add('With custom scrollbars', () => (
+  .add('With native scrollbars', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         data={largeData}
-        label="custom scrollbars"
-        placeholder="select with custom scrollbars"
-        dropdownComponent={getSelectScrollArea({ maxHeight: 220 })}
+        label="Native scrollbars"
+        placeholder="Select with native scrollbars"
+        dropdownComponent="div"
       />
     </div>
   ))

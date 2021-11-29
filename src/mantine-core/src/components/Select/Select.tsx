@@ -7,6 +7,7 @@ import {
   useUuid,
 } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
+import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -89,8 +90,8 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   /** Called when create option is selected */
   onCreate?: (query: string) => void;
 
-  /** Change dropdown component, can be used to add custom scrollbars */
-  dropdownComponent?: React.FC<any>;
+  /** Change dropdown component, can be used to add native scrollbars */
+  dropdownComponent?: any;
 
   /** Called when dropdown is opened */
   onDropdownOpen?(): void;
@@ -492,7 +493,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="Select"
-            dropdownComponent={dropdownComponent}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             direction={direction}
             onDirectionChange={setDirection}
             withinPortal={withinPortal}
