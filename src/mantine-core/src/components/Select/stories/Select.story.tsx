@@ -1,7 +1,9 @@
 import React, { useState, forwardRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Select } from './Select';
+import { Select } from '../Select';
+import { Button } from '../../Button';
+import { Group } from '../../Group';
 
 const data = [
   { value: 'react', label: 'React' },
@@ -51,9 +53,14 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
         data={data}
         style={{ marginTop: 20 }}
       />
-      <button type="button" onClick={() => setValue(null)}>
-        Set value to null
-      </button>
+      <Group mt="md">
+        <Button variant="outline" onClick={() => setValue(null)}>
+          Set null
+        </Button>
+        <Button variant="outline" onClick={() => setValue('react')}>
+          Set value
+        </Button>
+      </Group>
     </div>
   );
 }
@@ -75,36 +82,14 @@ function Creatable() {
   );
 }
 
-storiesOf('@mantine/core/Select', module)
-  .add('General usage', () => (
+storiesOf('@mantine/core/Select/stories', module)
+  .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Select
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-      />
-      <Select
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-        disabled
-      />
-      <Select
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-        searchable
-        disabled
-      />
-      <Select
-        searchable
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={data}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
       <Controlled />
+    </div>
+  ))
+  .add('Fixed value', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         label="Controlled (fixed value)"
         placeholder="Choose value"
@@ -113,32 +98,26 @@ storiesOf('@mantine/core/Select', module)
         data={data}
         style={{ marginTop: 20 }}
       />
+    </div>
+  ))
+  .add('Disabled items', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         label="Disabled Elements"
         placeholder="Choose value"
         data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
         style={{ marginTop: 20 }}
       />
+    </div>
+  ))
+  .add('Grouped data', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
         label="With Grouped and Disabled Data"
         placeholder="Choose value"
         data={groupedData}
         style={{ marginTop: 20 }}
         searchable
-      />
-      <Select
-        label="Large data set"
-        placeholder="Choose value"
-        searchable
-        data={largeData}
-        style={{ marginTop: 20 }}
-      />
-      <Select
-        label="Without Portal"
-        placeholder="Choose value"
-        data={data}
-        withinPortal={false}
-        style={{ marginTop: 20 }}
       />
     </div>
   ))
@@ -164,59 +143,15 @@ storiesOf('@mantine/core/Select', module)
         placeholder="Choose value"
         data={stringData}
       />
+    </div>
+  ))
+  .add('Searchable without nothing found', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
-        searchable
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        limit={2}
-        data={stringData}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
-      <Select
-        label="Controlled (fixed value)"
-        placeholder="Choose value"
-        searchable
-        value="react"
-        data={stringData}
-        style={{ marginTop: 20 }}
-      />
-      <Select
-        size="xl"
-        searchable
-        clearable
         label="Choose your favorite library/framework"
         placeholder="Choose value"
         data={stringData}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
-      <Select
-        clearable
-        label="Choose your favorite library/framework"
-        placeholder="Choose value"
-        data={stringData}
-        style={{ marginTop: 20 }}
-        nothingFound="No options"
-      />
-      <Select
-        clearable
-        creatable
-        getCreateLabel={(query) => `create ${query}`}
-        label="Creatable Select"
-        placeholder="Choose value"
         searchable
-        data={stringData}
-        style={{ marginTop: 20 }}
-      />
-      <Select
-        clearable
-        label="Controlled (fixed value)"
-        placeholder="Choose value"
-        searchable
-        value="React"
-        data={stringData}
-        style={{ marginTop: 20 }}
       />
     </div>
   ));

@@ -412,6 +412,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       }
     };
 
+    const shouldShowDropdown =
+      dropdownOpened &&
+      (searchable && !creatable ? filteredData.length > 0 || !!nothingFound : dropdownOpened);
+
     return (
       <InputWrapper
         required={required}
@@ -477,7 +481,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
           <SelectDropdown
             referenceElement={inputRef.current}
-            mounted={dropdownOpened}
+            mounted={shouldShowDropdown}
             transition={transition}
             transitionDuration={transitionDuration}
             transitionTimingFunction={transitionTimingFunction}

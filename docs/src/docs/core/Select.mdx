@@ -252,9 +252,9 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<Select label="My select" />; // -> ok, select and label is connected
-<Select />; // not ok, select is not labeled
-<Select aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+<Select /> // -> not ok, select is not labeled
+<Select label="My select" /> // -> ok, select and label is connected
+<Select aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
 If you use `clearable` option set `clearButtonLabel`:
