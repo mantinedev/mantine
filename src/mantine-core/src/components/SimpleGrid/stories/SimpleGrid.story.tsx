@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { SimpleGrid } from './SimpleGrid';
+import { SimpleGrid } from '../SimpleGrid';
 
-storiesOf('@mantine/core/SimpleGrid', module)
-  .add('General usage', () => (
+storiesOf('@mantine/core/SimpleGrid/stories', module)
+  .add('With max-width', () => (
     <>
       <div style={{ backgroundColor: 'gray' }}>
         <SimpleGrid
@@ -30,9 +30,9 @@ storiesOf('@mantine/core/SimpleGrid', module)
             { minWidth: 980, cols: 3 },
           ]}
         >
-          <div style={{ backgroundColor: 'red' }}>first</div>
-          <div style={{ backgroundColor: 'red' }}>second</div>
-          <div style={{ backgroundColor: 'red' }}>third</div>
+          <div style={{ backgroundColor: 'blue' }}>first</div>
+          <div style={{ backgroundColor: 'blue' }}>second</div>
+          <div style={{ backgroundColor: 'blue' }}>third</div>
         </SimpleGrid>
       </div>
     </>
