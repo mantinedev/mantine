@@ -12,7 +12,7 @@ export function UseFormAuthDemo({ toggle = false }: { toggle: boolean }) {
 
   return (
     <CodeDemo
-      code={code}
+      code={code.replace('../../src', '@mantine/core')}
       language="tsx"
       toggle={toggle}
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
