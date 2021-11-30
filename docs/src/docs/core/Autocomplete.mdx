@@ -148,7 +148,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<Autocomplete />; // not ok, input is not labeled
-<Autocomplete label="My input" />; // -> ok, input and label is connected
-<Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+<Autocomplete /> // -> not ok, input is not labeled
+<Autocomplete label="My input" /> // -> ok, input and label is connected
+<Autocomplete aria-label="My input" /> // -> ok, label is not visible but will be announced by screen reader
 ```

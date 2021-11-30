@@ -67,7 +67,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<NativeSelect /> // not ok, select is not labeled
+<NativeSelect /> // -> not ok, select is not labeled
 <NativeSelect label="My select" /> // -> ok, select and label is connected
 <NativeSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```

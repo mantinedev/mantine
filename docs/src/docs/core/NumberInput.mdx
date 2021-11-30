@@ -111,7 +111,7 @@ Increment/decrement controls have `aria-hidden` attribute and cannot be focused
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<NumberInput /> // not ok, input is not labeled
+<NumberInput /> // -> not ok, input is not labeled
 <NumberInput label="Your age" /> // -> ok, input and label is connected
 <NumberInput aria-label="Your age" /> // -> ok, label is not visible but will be announced by screen reader
 ```

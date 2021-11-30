@@ -113,7 +113,7 @@ If you want to make component accessible do not disable free input.
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<ColorInput label="My input" />; // -> ok, input and label is connected
-<ColorInput />; // not ok, input is not labeled
-<ColorInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+<ColorInput /> // -> not ok, input is not labeled
+<ColorInput label="My input" /> // -> ok, input and label is connected
+<ColorInput aria-label="My input" /> // -> ok, label is not visible but will be announced by screen reader
 ```

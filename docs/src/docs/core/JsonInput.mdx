@@ -57,7 +57,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<JsonInput /> // not ok, textarea is not labeled
+<JsonInput /> // -> not ok, textarea is not labeled
 <JsonInput label="package.json" /> // -> ok, textarea and label is connected
 <JsonInput aria-label="package.json" /> // -> ok, label is not visible but will be announced by screen reader
 ```

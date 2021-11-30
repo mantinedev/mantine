@@ -280,9 +280,9 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<MultiSelect label="My select" />; // -> ok, select and label is connected
-<MultiSelect />; // not ok, select is not labeled
-<MultiSelect aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+<MultiSelect /> // -> not ok, select is not labeled
+<MultiSelect label="My select" /> // -> ok, select and label is connected
+<MultiSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
 
 If you use `clearable` option set `clearButtonLabel`:

@@ -77,7 +77,7 @@ function Demo() {
 Provide `aria-label` in case you use checkbox without label for screen reader support:
 
 ```tsx
-<Checkbox /> // not ok, input is not labeled
+<Checkbox /> // -> not ok, input is not labeled
 <Checkbox label="My checkbox" /> // -> ok, input and label is connected
 <Checkbox aria-label="My checkbox" /> // -> ok, label is not visible but will be announced by screen reader
 ```
