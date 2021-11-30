@@ -42,7 +42,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     {
       classNames,
       styles,
-      locale = 'en',
+      locale,
       nextMonthLabel,
       previousMonthLabel,
       initialMonth,
@@ -74,6 +74,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     const [hoveredDay, setHoveredDay] = useState<Date>(null);
     const [pickedDate, setPickedDate] = useState<Date>(null);
     const hasMultipleMonths = amountOfMonths > 1;
+    const finalLocale = locale || theme.datesLocale;
 
     const setRangeDate = (date: Date) => {
       if (pickedDate instanceof Date) {
@@ -181,7 +182,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
                     onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
                     classNames={classNames}
                     styles={styles}
-                    locale={locale}
+                    locale={finalLocale}
                     withSelect={withSelect}
                     yearsRange={yearsRange}
                     month={monthToRender}

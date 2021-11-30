@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import dayjs from 'dayjs';
-import { DefaultProps, Group } from '@mantine/core';
+import { DefaultProps, Group, useMantineTheme } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { FirstDayOfWeek } from '../../types';
-import { Month, MonthSettings, MonthStylesNames } from '../Month/Month';
+import { Month, MonthSettings, MonthStylesNames } from '../Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarLabelStylesNames } from './CalendarLabel/CalendarLabel';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
@@ -72,7 +72,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     {
       classNames,
       styles,
-      locale = 'en',
+      locale,
       nextMonthLabel,
       previousMonthLabel,
       initialMonth,
@@ -101,6 +101,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     }: CalendarProps,
     ref
   ) => {
+    const theme = useMantineTheme();
+    const finalLocale = locale || theme.datesLocale;
     const [_month, setMonth] = useUncontrolled({
       value: month,
       defaultValue: initialMonth,
@@ -149,7 +151,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
                     onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
                     classNames={classNames}
                     styles={styles}
-                    locale={locale}
+                    locale={finalLocale}
                     withSelect={withSelect}
                     yearsRange={yearsRange}
                     month={monthToRender}
@@ -178,7 +180,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
                     fullWidth={fullWidth}
                     preventFocus={preventFocus}
                     size={size}
-                    locale={locale}
+                    locale={finalLocale}
                     firstDayOfWeek={firstDayOfWeek}
                     __staticSelector={__staticSelector}
                     dayStyle={dayStyles}
