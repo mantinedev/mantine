@@ -65,7 +65,6 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       breakpoint,
       classNames,
       styles,
-      sx,
       ...others
     }: TransferListProps,
     ref
