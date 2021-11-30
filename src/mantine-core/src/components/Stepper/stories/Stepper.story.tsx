@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { Button } from '../Button';
-import { Group } from '../Group';
-import { Stepper, StepperProps } from './Stepper';
+import { Button } from '../../Button';
+import { Group } from '../../Group';
+import { Stepper, StepperProps } from '../Stepper';
 
 function Wrapper(props: Partial<StepperProps>) {
   const [active, setActive] = useState(1);
@@ -33,6 +33,42 @@ function Wrapper(props: Partial<StepperProps>) {
   );
 }
 
+function DynamicChildren() {
+  const [active, setActive] = useState(1);
+  const [count, setCount] = useState(3);
+
+  const items = Array(count)
+    .fill(0)
+    .map((_, index) => <Stepper.Step label={`Step ${index + 1}`} key={index} />);
+
+  return (
+    <>
+      <Stepper active={active} onStepClick={setActive}>
+        {items}
+      </Stepper>
+
+      <Group mt={40}>
+        <Button variant="default" onClick={() => setActive(active - 1)}>
+          Previous
+        </Button>
+
+        <Button onClick={() => setActive(active + 1)}>Next</Button>
+        <Button
+          variant="outline"
+          color="red"
+          onClick={() => setCount((c) => (c - 1 > 0 ? c - 1 : 0))}
+        >
+          Remove step
+        </Button>
+
+        <Button variant="outline" onClick={() => setCount((c) => c + 1)}>
+          Add step
+        </Button>
+      </Group>
+    </>
+  );
+}
+
 const sizes = MANTINE_SIZES.map((size, index) => (
   <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} />
 ));
@@ -41,7 +77,7 @@ const verticalSizes = MANTINE_SIZES.map((size, index) => (
   <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} orientation="vertical" />
 ));
 
-storiesOf('@mantine/core/Stepper', module)
+storiesOf('@mantine/core/Stepper/stories', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
       <Wrapper color="teal" />
@@ -92,5 +128,10 @@ storiesOf('@mantine/core/Stepper', module)
     <div style={{ padding: 40 }}>
       {verticalSizes}
       <Wrapper mt={60} orientation="vertical" iconSize={80} />
+    </div>
+  ))
+  .add('Dynamic children', () => (
+    <div style={{ padding: 40 }}>
+      <DynamicChildren />
     </div>
   ));
