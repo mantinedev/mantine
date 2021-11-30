@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { paragraph } from '@mantine/mockdata';
-import { RtlProvider } from '@Mantine/ds/src';
+import { RtlProvider } from '@mantine/ds/src';
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../../Text/Text';
 
