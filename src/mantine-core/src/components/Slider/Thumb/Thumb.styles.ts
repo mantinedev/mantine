@@ -9,7 +9,7 @@ interface ThumbStyles {
 export default createStyles((theme, { color, size }: ThumbStyles) => ({
   label: {
     position: 'absolute',
-    top: -32,
+    top: -36,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[9],
     fontSize: theme.fontSizes.xs,
     color: theme.white,
