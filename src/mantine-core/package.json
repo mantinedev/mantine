@@ -4,7 +4,7 @@
   "version": "3.2.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "types": "lib/src/index.d.ts",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
