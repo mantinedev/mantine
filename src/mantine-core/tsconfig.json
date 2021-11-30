@@ -9,7 +9,13 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@mantine/hooks": ["../mantine-hooks/src"],
+      "@mantine/styles": ["../mantine-styles/src"],
+      "@mantine/tests": ["../mantine-tests/src"],
+      "@mantine/mockdata": ["../mantine-mockdata/src"]
+    }
   },
   "references": [
     { "path": "../mantine-hooks" },
