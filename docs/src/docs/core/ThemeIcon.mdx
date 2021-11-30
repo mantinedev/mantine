@@ -14,7 +14,6 @@ styles: ['ThemeIcon', 'single-node']
 ---
 
 import { ThemeIconDemos } from '@demos/core';
-import { THEME_ICON_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -58,17 +57,6 @@ Alternatively, you can use a number to set width and height in px:
 Sizes from xs to xl:
 
 <Demo data={ThemeIconDemos.sizes} />
-
-You can get default sizes for action icon by importing `THEME_ICON_SIZES`:
-
-```tsx
-import { THEME_ICON_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Width and height']}
-  data={Object.keys(THEME_ICON_SIZES).map((size) => [size, `${THEME_ICON_SIZES[size]}px`])}
-/>
 
 ## Radius
 
