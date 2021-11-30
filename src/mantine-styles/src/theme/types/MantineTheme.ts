@@ -60,6 +60,8 @@ export interface MantineTheme {
 
   fn: MantineThemeFunctions;
   other: Record<string, any>;
+
+  datesLocale: string;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;

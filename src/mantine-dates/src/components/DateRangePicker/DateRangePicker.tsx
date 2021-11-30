@@ -90,6 +90,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     ref
   ) => {
     const theme = useMantineTheme();
+    const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
@@ -130,9 +131,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           inputLabel={
             valueValid
               ? `${upperFirst(
-                  dayjs(_value[0]).locale(locale).format(dateFormat)
+                  dayjs(_value[0]).locale(finalLocale).format(dateFormat)
                 )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(locale).format(dateFormat)
+                  dayjs(_value[1]).locale(finalLocale).format(dateFormat)
                 )}`
               : ''
           }
@@ -147,7 +148,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           <RangeCalendar
             classNames={classNames}
             styles={styles}
-            locale={locale}
+            locale={finalLocale}
             nextMonthLabel={nextMonthLabel}
             previousMonthLabel={previousMonthLabel}
             initialMonth={valueValid ? _value[0] : initialMonth}

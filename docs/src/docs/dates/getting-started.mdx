@@ -44,7 +44,7 @@ yarn add dayjs @mantine/core @mantine/hooks @mantine/dates
 
 ## Localization
 
-Mantine dates use [dayjs](https://day.js.org/) library for localization.
+Mantine dates uses [dayjs](https://day.js.org/) library for localization.
 Follow [example](https://day.js.org/docs/en/i18n/loading-into-nodejs) to load required locales in your application:
 
 ```tsx
@@ -52,7 +52,7 @@ Follow [example](https://day.js.org/docs/en/i18n/loading-into-nodejs) to load re
 import 'dayjs/locale/de';
 ```
 
-Then when you use components provide imported locale:
+[MantineProvider](/theming/mantine-provider/) allows you to set a `datesLocale` property for all date components, or you can overwrite the locale on a per component basis:
 
 ```tsx
 import { DatePicker, Calendar, Month } from '@mantine/dates';

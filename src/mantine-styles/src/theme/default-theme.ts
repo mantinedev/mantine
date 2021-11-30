@@ -75,6 +75,7 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
 
   other: {},
+  datesLocale: 'en',
 };
 
 export const DEFAULT_THEME = attachFunctions(_DEFAULT_THEME);
