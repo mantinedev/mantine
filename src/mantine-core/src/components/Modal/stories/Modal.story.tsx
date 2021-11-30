@@ -64,8 +64,8 @@ storiesOf('@mantine/core/Modal/stories', module)
       <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />
       <MultiSelect data={['react', 'ng']} mt="md" mb="md" placeholder="MultiSelect" />
       <PopoverWrapper />
-      <ColorInput dropdownZIndex={1000} mt="md" mb="md" placeholder="Color input" />
-      <Menu zIndex={1000}>
+      <ColorInput mt="md" mb="md" placeholder="Color input" />
+      <Menu>
         <Menu.Item>Hello</Menu.Item>
       </Menu>
     </WrappedModal>

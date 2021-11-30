@@ -160,7 +160,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       trigger = 'click',
       radius = 'sm',
       delay = 0,
-      zIndex = 10,
+      zIndex = 10000,
       withinPortal = true,
       trapFocus = true,
       classNames,
