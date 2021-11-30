@@ -21,9 +21,6 @@ import { TabsDemos } from '@demos/core';
 
 ## Controlled Tabs
 
-Tabs state can be controlled, to implement this pass `active` and `onTabChange` props.
-You can also use `onTabChange` callback with uncontrolled Tabs.
-
 ```tsx
 import { useState } from 'react';
 import { Tabs } from '@mantine/core';
@@ -43,22 +40,16 @@ function Demo() {
 
 ## Tabs with icons
 
-You can add any React node as icon by setting `icon` prop on `Tab` component.
-If `icon` prop is set, it is not necessary to pass `label`. You can use icons from any react icons library, for example:
-
-- [radix icons](https://icons.modulz.app/) (used in mantine packages)
-- [feather](https://feathericons.com/)
-- [react-icons](https://react-icons.github.io/react-icons)
+Add any React node as icon by setting `icon` prop on `Tabs.Tab` component.
+If `icon` prop is set, it is not necessary to pass `label`:
 
 <Demo data={TabsDemos.icons} />
 
 ## Change colors
 
-You can change color of individual tab by passing `color` property to `Tab` component,
-or change color of all tabs by passing color to `Tabs` component.
+Change color of individual tab by setting `color` property to `Tabs.Tab` component,
+or change color of all tabs by setting `color` on `Tabs` component.
 Color that you pass to these components should be defined in [theme.colors](/theming/extend-theme/#default-colors).
-
-Color calculation prioritizes deeper values: first `<Tab color="value" />` value will be used if defined, then `<Tabs color="value">`, after that value will be set to `theme.primaryColor`.
 
 <Demo data={TabsDemos.colors} />
 
@@ -87,8 +78,6 @@ To remove all default styles set `variant` prop to `unstyled`:
 
 ## Get tab control ref
 
-You can get tab control ref by passing `ref` prop to `Tab` component
-
 ```tsx
 import { useRef } from 'react';
 import { Tabs } from '@mantine/core';
@@ -110,8 +99,7 @@ function TabsDemo() {
 
 ## Accessibility and usability
 
-Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
-Component fully supports keyboard events handling and has correct aria-roles:
+Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility:
 
 - Use right and left arrow keys to change tabs when orientation is horizontal
 - Use down and up arrow keys to change tabs when orientation is vertical
