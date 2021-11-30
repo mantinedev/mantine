@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "./types", "../../configuration/types"],
+  "exclude": ["./lib", "./esm", "./cjs", "**/*.story.tsx"],
   "compilerOptions": {
     "rootDir": "src",
     "baseUrl": ".",
