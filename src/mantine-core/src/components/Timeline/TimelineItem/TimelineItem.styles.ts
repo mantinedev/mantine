@@ -10,38 +10,39 @@ interface TimelineItemStyles {
 
 export default createStyles(
   (theme, { bulletSize, color, align, lineVariant, lineWidth }: TimelineItemStyles, getRef) => {
-    const itemBulletWithChild = {
-      ref: getRef('itemBulletWithChild'),
-      borderWidth: 1,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-    };
-
-    const itemBullet = {
-      ref: getRef('itemBullet'),
-      boxSizing: 'border-box',
-      width: bulletSize,
-      height: bulletSize,
-      borderRadius: bulletSize,
-      border: `${lineWidth}px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-      position: 'absolute',
-      top: 0,
-      left: align === 'left' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
-      right: align === 'right' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: theme.white,
-    } as const;
+    const itemBulletWithChild = getRef('itemBulletWithChild');
+    const itemBullet = getRef('itemBullet');
 
     return {
-      itemBulletWithChild,
-      itemBullet,
       itemBody: {},
       itemContent: {},
+
+      itemBulletWithChild: {
+        ref: itemBulletWithChild,
+        borderWidth: 1,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+      },
+
+      itemBullet: {
+        ref: itemBullet,
+        boxSizing: 'border-box',
+        width: bulletSize,
+        height: bulletSize,
+        borderRadius: bulletSize,
+        border: `${lineWidth}px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        position: 'absolute',
+        top: 0,
+        left: align === 'left' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
+        right: align === 'right' ? -bulletSize / 2 - lineWidth / 2 : 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: theme.white,
+      },
 
       item: {
         position: 'relative',
@@ -81,12 +82,12 @@ export default createStyles(
       },
 
       itemActive: {
-        [`& .${itemBullet.ref}`]: {
+        [`& .${itemBullet}`]: {
           borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
           backgroundColor: theme.white,
         },
 
-        [`& .${itemBulletWithChild.ref}`]: {
+        [`& .${itemBulletWithChild}`]: {
           backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
           color: theme.white,
         },
