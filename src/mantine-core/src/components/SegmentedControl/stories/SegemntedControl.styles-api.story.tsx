@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/ds/src';
 import { SegmentedControl, SegmentedControlProps } from '../SegmentedControl';
 import { SegmentedControl as SegmentedControlStylesApi } from '../styles.api';
 
@@ -9,13 +9,7 @@ const styles = generateBorderStyles(SegmentedControlStylesApi);
 const useStyles = createStyles(() => styles);
 
 function Wrapper(props: Partial<SegmentedControlProps<string>>) {
-  return (
-    <InputStylesApiWrapper
-      component={SegmentedControl}
-      data={['React', 'Angular', 'Vue']}
-      {...props}
-    />
-  );
+  return <SegmentedControl data={['React', 'Angular', 'Vue']} {...props} />;
 }
 
 function WithClassNames() {
