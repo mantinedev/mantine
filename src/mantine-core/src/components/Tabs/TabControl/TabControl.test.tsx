@@ -23,24 +23,16 @@ describe('@mantine/core/TabControl', () => {
   });
 
   it('renders icon from tabProps', () => {
-    const withIcon = shallow(<TabControl {...defaultProps} tabProps={{ icon: '$' }} />).render();
-
-    const withoutIcon = shallow(
-      <TabControl {...defaultProps} tabProps={{ icon: null, label: 'test' }} />
-    ).render();
+    const withIcon = shallow(<TabControl {...defaultProps} icon="$" />).render();
+    const withoutIcon = shallow(<TabControl {...defaultProps} icon={null} label="test" />).render();
 
     expect(withIcon.find('.mantine-Tabs-tabIcon').text()).toBe('$');
     expect(withoutIcon.find('.mantine-Tabs-tabIcon')).toHaveLength(0);
   });
 
   it('renders label from tabProps', () => {
-    const withLabel = shallow(
-      <TabControl {...defaultProps} tabProps={{ label: 'test' }} />
-    ).render();
-
-    const withoutLabel = shallow(
-      <TabControl {...defaultProps} tabProps={{ icon: '$', label: null }} />
-    ).render();
+    const withLabel = shallow(<TabControl {...defaultProps} label="test" />).render();
+    const withoutLabel = shallow(<TabControl {...defaultProps} icon="$" label={null} />).render();
 
     expect(withLabel.find('.mantine-Tabs-tabLabel').text()).toBe('test');
     expect(withoutLabel.find('.mantine-Tabs-tabLabel')).toHaveLength(0);
@@ -48,14 +40,7 @@ describe('@mantine/core/TabControl', () => {
 
   it('spreads tabProps to root element', () => {
     const element = shallow(
-      <TabControl
-        {...defaultProps}
-        tabProps={{
-          label: 'test',
-          disabled: true,
-          title: 'test-title',
-        }}
-      />
+      <TabControl {...defaultProps} label="test" disabled title="test-title" />
     ).render();
 
     expect(element.attr('disabled')).toBe('disabled');

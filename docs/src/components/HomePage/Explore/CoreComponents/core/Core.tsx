@@ -30,19 +30,18 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function CoreDemo() {
-  const tabStyle = { fontSize: 18, marginLeft: 5 };
   const iconStyles = { width: 16, height: 16 };
   const { classes } = useStyles();
 
   return (
     <Tabs grow variant="pills" classNames={classes}>
-      <Tab label="Inputs" icon={<InputIcon style={iconStyles} />} styles={{ label: tabStyle }}>
+      <Tab label="Inputs" icon={<InputIcon style={iconStyles} />}>
         <InputsDemo />
       </Tab>
-      <Tab label="Overlays" icon={<StackIcon style={iconStyles} />} styles={{ label: tabStyle }}>
+      <Tab label="Overlays" icon={<StackIcon style={iconStyles} />}>
         <OverlaysDemos />
       </Tab>
-      <Tab label="Content" icon={<DashboardIcon style={iconStyles} />} styles={{ label: tabStyle }}>
+      <Tab label="Content" icon={<DashboardIcon style={iconStyles} />}>
         <ContentDemos />
       </Tab>
     </Tabs>
