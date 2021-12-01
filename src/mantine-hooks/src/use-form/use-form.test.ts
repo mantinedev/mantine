@@ -24,6 +24,23 @@ const MESSAGES_FORM = {
   },
 };
 
+const BOOLEAN_FORM = {
+  initialValues: {
+    email: '',
+    termsAndConditions: false,
+  },
+
+  validationRules: {
+    email: (email: string) => email === 'test@email.dev',
+    termsAndConditions: (value: boolean) => value,
+  },
+
+  errorMessages: {
+    email: 'test-email-error',
+    termsAndConditions: 'test-terms-and-conditions-error',
+  },
+};
+
 describe('@mantine/hooks/use-form', () => {
   it('returns correct values', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
@@ -265,5 +282,33 @@ describe('@mantine/hooks/use-form', () => {
       email: 'test-external-error',
       name: null,
     });
+  });
+
+  it('returns correct values in getInputProps function', () => {
+    const hook = renderHook(() => useForm(BOOLEAN_FORM));
+    const inputProps = hook.result.current.getInputProps('email');
+    const checkboxProps = hook.result.current.getInputProps('termsAndConditions', {
+      type: 'checkbox',
+    });
+
+    expect(checkboxProps.checked).toBe(false);
+    expect(checkboxProps.error).toBe(undefined);
+    expect(typeof checkboxProps.onChange).toBe('function');
+
+    expect(inputProps.value).toBe('');
+    expect(inputProps.error).toBe(undefined);
+    expect(typeof inputProps.onChange).toBe('function');
+
+    act(() => inputProps.onChange('test@email'));
+    expect(hook.result.current.getInputProps('email').value).toBe('test@email');
+    expect(hook.result.current.getInputProps('email').error).toBe(undefined);
+
+    act(() => {
+      hook.result.current.validate();
+    });
+    expect(hook.result.current.getInputProps('email').error).toBe('test-email-error');
+    expect(hook.result.current.getInputProps('termsAndConditions').error).toBe(
+      'test-terms-and-conditions-error'
+    );
   });
 });
