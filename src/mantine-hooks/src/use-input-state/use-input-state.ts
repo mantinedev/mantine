@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
-export function useInputState<T>(initialState: T) {
-  const [value, setValue] = useState(initialState);
-
-  const handleChange = (val: T | React.ChangeEvent<any> | ((current: T) => T)) => {
+export function getInputOnChange<T>(setValue: (value: T | ((current: T) => T)) => void) {
+  return (val: T | React.ChangeEvent<any> | ((current: T) => T)) => {
     if (!val) {
       setValue(val as T);
     } else if (typeof val === 'function') {
@@ -20,6 +18,9 @@ export function useInputState<T>(initialState: T) {
       setValue(val);
     }
   };
+}
 
-  return [value, handleChange] as const;
+export function useInputState<T>(initialState: T) {
+  const [value, setValue] = useState(initialState);
+  return [value, getInputOnChange<T>(setValue)] as const;
 }
