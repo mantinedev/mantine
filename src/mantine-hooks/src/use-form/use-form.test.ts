@@ -79,7 +79,6 @@ describe('@mantine/hooks/use-form', () => {
   it('validates field with given function with validateField handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
 
-    // email
     act(() => hook.result.current.validateField('email'));
     expect(hook.result.current.errors.email).toBe(true);
 
@@ -87,13 +86,19 @@ describe('@mantine/hooks/use-form', () => {
     act(() => hook.result.current.validateField('email'));
     expect(hook.result.current.errors.email).toBe(null);
 
-    // confirm email
     act(() => hook.result.current.validateField('confirmEmail'));
     expect(hook.result.current.errors.confirmEmail).toBe(true);
 
     act(() => hook.result.current.setFieldValue('confirmEmail', 'test@email.dev'));
     act(() => hook.result.current.validateField('confirmEmail'));
     expect(hook.result.current.errors.confirmEmail).toBe(null);
+  });
+
+  it('sets message from given errorMessages with validateField handler', () => {
+    const hook = renderHook(() => useForm(MESSAGES_FORM));
+    expect(hook.result.current.errors.email).toBe(null);
+    act(() => hook.result.current.validateField('email'));
+    expect(hook.result.current.errors.email).toBe('test-email-error');
   });
 
   it('validates all fields with given functions with validate handler', () => {
