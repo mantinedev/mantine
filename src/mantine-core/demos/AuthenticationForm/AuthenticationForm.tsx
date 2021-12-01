@@ -31,7 +31,6 @@ export function AuthenticationForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
   const theme = useMantineTheme();
-  const inputVariant = theme.colorScheme === 'dark' ? 'filled' : 'default';
 
   const toggleFormType = () => {
     setFormType((current) => (current === 'register' ? 'login' : 'register'));
@@ -57,8 +56,6 @@ export function AuthenticationForm({
     },
 
     errorMessages: {
-      firstName: 'First name should include at least 2 characters',
-      lastName: 'Last name should include at least 2 characters',
       email: 'Invalid email',
       password: 'Password should contain 1 number, 1 letter and at least 6 characters',
       confirmPassword: "Passwords don't match. Try again",
@@ -91,89 +88,69 @@ export function AuthenticationForm({
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <LoadingOverlay visible={loading} />
         {formType === 'register' && (
-          <div style={{ display: 'flex', marginBottom: 15 }}>
+          <Group grow>
             <TextInput
               data-autofocus
               required
               placeholder="Your first name"
               label="First name"
-              style={{ marginRight: 20, flex: '0 0 calc(50% - 10px)' }}
-              value={form.values.firstName}
-              onChange={(event) => form.setFieldValue('firstName', event.currentTarget.value)}
-              onFocus={() => form.setFieldError('firstName', false)}
-              error={form.errors.firstName}
-              variant={inputVariant}
+              {...form.getInputProps('firstName')}
             />
 
             <TextInput
               required
               placeholder="Your last name"
               label="Last name"
-              style={{ flex: '0 0 calc(50% - 10px)' }}
-              value={form.values.lastName}
-              onChange={(event) => form.setFieldValue('lastName', event.currentTarget.value)}
-              onFocus={() => form.setFieldError('lastName', false)}
-              error={form.errors.lastName}
-              variant={inputVariant}
+              {...form.getInputProps('lastName')}
             />
-          </div>
+          </Group>
         )}
 
         <TextInput
+          mt="md"
           required
           placeholder="Your email"
           label="Email"
           icon={<EnvelopeClosedIcon />}
-          value={form.values.email}
-          onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-          onFocus={() => form.setFieldError('email', false)}
-          error={form.errors.email}
-          variant={inputVariant}
+          {...form.getInputProps('email')}
         />
 
         <PasswordInput
-          style={{ marginTop: 15 }}
+          mt="md"
           required
           placeholder="Password"
           label="Password"
           icon={<LockClosedIcon />}
-          value={form.values.password}
-          onChange={(event) => form.setFieldValue('password', event.currentTarget.value)}
-          onFocus={() => form.setFieldError('password', false)}
-          variant={inputVariant}
-          error={form.errors.password}
+          {...form.getInputProps('password')}
         />
 
         {formType === 'register' && (
           <PasswordInput
-            style={{ marginTop: 15 }}
+            mt="md"
             required
             label="Confirm Password"
             placeholder="Confirm password"
             icon={<LockClosedIcon />}
-            value={form.values.confirmPassword}
-            onChange={(event) => form.setFieldValue('confirmPassword', event.currentTarget.value)}
-            error={form.errors.confirmPassword}
+            {...form.getInputProps('confirmPassword')}
           />
         )}
 
         {formType === 'register' && (
           <Checkbox
-            style={{ marginTop: 20 }}
+            mt="xl"
             label="I agree to sell my soul and privacy to this corporation"
-            checked={form.values.termsOfService}
-            onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
+            {...form.getInputProps('termsOfService', { type: 'checkbox' })}
           />
         )}
 
         {error && (
-          <Text color="red" size="sm" style={{ marginTop: 10 }}>
+          <Text color="red" size="sm" mt="sm">
             {error}
           </Text>
         )}
 
         {!noSubmit && (
-          <Group position="apart" style={{ marginTop: 25 }}>
+          <Group position="apart" mt="xl">
             <Anchor
               component="button"
               type="button"
