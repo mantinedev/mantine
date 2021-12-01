@@ -47,6 +47,7 @@ Hook returns object with properties:
 - `setErrors` – React useState hook setState action to set `errors`
 - `reset` – function to reset all `values` and `errors` to initial state
 - `onSubmit` – wrapper function for form onSubmit event handler
+- `getInputProps` – returns an object with `value`, `onChange` and `error` that should be spread on input, work perfect with Mantine inputs
 
 ### initialValues
 
@@ -134,6 +135,34 @@ form.values; // -> { name: '', age: 0 }
 
 form.setFieldValue('name', 'Bob');
 form.values; // -> { name: 'Bob', age: 0 }
+```
+
+### form.getInputProps
+
+`getInputProps` function returns an object with `value` (of `checked` for checkboxes), `onChange` and `error` that should be spread on input, work perfect with Mantine inputs:
+
+```tsx
+const form = useForm({
+  initialValues: { name: 'initial-name', termsOfService: false },
+  validationRules: { name: (value) => value.trim().length >= 2 },
+  errorMessages: { name: 'Name must include at least 2 letters' },
+});
+
+form.getInputProps('name'); // -> returns object with the following properties:
+// value – input value
+// onChange – input onChange function, works with all Mantine and regular inputs
+// error – error message if input is invalid
+
+form.getInputProps('termsOfService', { type: 'checkbox' }); // -> returns object with the following properties:
+// checked – input[type="checkbox"] checked value
+// onChange – input onChange event, works with Mantine Checkbox, Switch and regular input[type="checkbox"]
+// error – error message if input is invalid
+
+// Use getInputProps to simplify common validation workflows:
+import { TextInput, Checkbox } from '@mantine/core';
+
+<TextInput label="Name" {...form.getInputProps('name')} />
+<Checkbox label="Name" {...form.getInputProps('termsOfService', { type: 'checkbox' })} />
 ```
 
 ### form.setFieldValue

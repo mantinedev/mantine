@@ -65,8 +65,8 @@ export function useForm<T extends { [key: string]: any }>({
       [field]:
         typeof validationRules[field] === 'function'
           ? validationRules[field](values[field], values)
-            ? errorMessages[field] || null
-            : true
+            ? null
+            : errorMessages[field] || true
           : null,
     }));
 
