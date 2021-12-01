@@ -1,6 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "../../configuration/types"],
+  "exclude": [
+    "./lib",
+    "./esm",
+    "./cjs",
+    "**/*.story.tsx",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/styles.api.ts",
+    "src/components/*/demos/*",
+    "src/demos.ts"
+  ],
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",

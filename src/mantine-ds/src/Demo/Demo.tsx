@@ -3,6 +3,8 @@ import { useMantineTheme } from '@mantine/core';
 import CodeDemo from './CodeDemo/CodeDemo';
 import Configurator from './Configurator/Configurator';
 
+export { CodeDemo, Configurator };
+
 type ConfiguratorProps = React.ComponentProps<typeof Configurator>;
 type CodeDemoProps = React.ComponentProps<typeof CodeDemo>;
 

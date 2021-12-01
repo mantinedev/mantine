@@ -8,7 +8,10 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@mantine/src": ["../mantine-src/src"]
+    }
   },
   "references": [{ "path": "../mantine-ssr" }]
 }

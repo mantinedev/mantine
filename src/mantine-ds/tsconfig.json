@@ -8,12 +8,15 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@mantine/core": ["../mantine-core/src"],
+      "@mantine/hooks": ["../mantine-hooks/src"],
+      "@mantine/prism": ["../mantine-prism/src"]
+    }
   },
   "references": [
     { "path": "../mantine-hooks" },
-    { "path": "../mantine-styles" },
-    { "path": "../mantine-tests" },
     { "path": "../mantine-core" },
     { "path": "../mantine-prism" }
   ]

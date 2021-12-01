@@ -8,30 +8,27 @@ date: 'November 19th, 2021'
 ---
 
 import { ScrollAreaDemos, ModalDemos, AccordionDemos, SelectDemos } from '@demos/core';
+import { UseFormBaseDemo } from '@docs/demos';
 
-## New components
+## ScrollArea component
 
 New [ScrollArea](https://mantine.dev/core/scroll-area/) component lets you easily manage custom scrollbars
 without any external libraries:
 
 <Demo data={ScrollAreaDemos.configurator} />
 
-## New features
-
-[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now use [ScrollArea](https://mantine.dev/core/scroll-area/)
-as a default dropdown element:
+ScrollArea is now rendered as default dropdown element in [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/)
+and [TransferList](https://mantine.dev/core/transfer-list/) components:
 
 <Demo data={SelectDemos.large} />
 
-[Modal](https://mantine.dev/core/modal/) component can now be centered:
+## use-form hook improvements
 
-<Demo data={ModalDemos.centered} />
+[use-form](https://mantine.dev/hooks/use-form/) hook now includes new `getInputProps` handler to simplify inputs
 
-[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
+<UseFormBaseDemo />
 
-<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
-
-[use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
+Also [use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
 
 ```tsx
 const form = useForm({
@@ -56,6 +53,16 @@ form.errors;
 // -> { name: null, age: 'You must be 21 or older to enter' }
 ```
 
+## New features
+
+[Modal](https://mantine.dev/core/modal/) component can now be centered:
+
+<Demo data={ModalDemos.centered} />
+
+[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
+
+<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
+
 ## Other changes
 
 - Components that use [Popper](https://mantine.dev/core/popper/) ([Select](https://mantine.dev/core/select/), [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.) now support an option to disable rendering within portal
@@ -63,6 +70,7 @@ form.errors;
 - Components that use [Popper](https://mantine.dev/core/popper/) now support rendering without [Portal](https://mantine.dev/core/portal/) by setting `withinPortal={false}`. This option is useful when you want to use [Select](https://mantine.dev/core/select/) and other components inside [Popover](https://mantine.dev/core/popover/) or other components that use [use-click-outside](https://mantine.dev/hooks/use-click-outside/).
 - [Accordion](https://mantine.dev/core/accordion/) component now supports `iconSize` and `offsetIcon` props
 - [Menu](https://mantine.dev/core/menu/) component now support disabled items
+- You can now change default locale that is used in all `@mantine/dates` components with `dateLocale` on [MantineProvider](https://mantine.dev/theming/mantine-provider/)
 
 ## Bug fixes
 

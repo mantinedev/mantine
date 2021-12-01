@@ -8,7 +8,10 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@mantine/styles": ["../mantine-styles/src"]
+    }
   },
   "references": [{ "path": "../mantine-styles" }]
 }
