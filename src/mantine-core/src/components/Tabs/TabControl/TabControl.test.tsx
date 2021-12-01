@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { itSupportsStyle, itSupportsRef, itSupportsOthers } from '@mantine/tests';
 import { TabControl } from './TabControl';
 
-const defaultProps = { active: true, tabProps: { label: 'test', icon: '$' } };
+const defaultProps = { active: true };
 
 describe('@mantine/core/TabControl', () => {
   itSupportsStyle(TabControl, defaultProps);
@@ -22,7 +22,7 @@ describe('@mantine/core/TabControl', () => {
     expect(inactive.attr('aria-selected')).toBe('false');
   });
 
-  it('renders icon from tabProps', () => {
+  it('renders icon', () => {
     const withIcon = shallow(<TabControl {...defaultProps} icon="$" />).render();
     const withoutIcon = shallow(<TabControl {...defaultProps} icon={null} label="test" />).render();
 
@@ -30,21 +30,12 @@ describe('@mantine/core/TabControl', () => {
     expect(withoutIcon.find('.mantine-Tabs-tabIcon')).toHaveLength(0);
   });
 
-  it('renders label from tabProps', () => {
+  it('renders label', () => {
     const withLabel = shallow(<TabControl {...defaultProps} label="test" />).render();
     const withoutLabel = shallow(<TabControl {...defaultProps} icon="$" label={null} />).render();
 
     expect(withLabel.find('.mantine-Tabs-tabLabel').text()).toBe('test');
     expect(withoutLabel.find('.mantine-Tabs-tabLabel')).toHaveLength(0);
-  });
-
-  it('spreads tabProps to root element', () => {
-    const element = shallow(
-      <TabControl {...defaultProps} label="test" disabled title="test-title" />
-    ).render();
-
-    expect(element.attr('disabled')).toBe('disabled');
-    expect(element.attr('title')).toBe('test-title');
   });
 
   it('has correct displayName', () => {
