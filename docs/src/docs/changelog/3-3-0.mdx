@@ -8,6 +8,7 @@ date: 'November 19th, 2021'
 ---
 
 import { ScrollAreaDemos, ModalDemos, AccordionDemos, SelectDemos } from '@demos/core';
+import { UseFormBaseDemo } from '@docs/demos';
 
 ## New components
 
@@ -16,22 +17,13 @@ without any external libraries:
 
 <Demo data={ScrollAreaDemos.configurator} />
 
-## New features
+## use-form hook improvements
 
-[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now use [ScrollArea](https://mantine.dev/core/scroll-area/)
-as a default dropdown element:
+[use-form](https://mantine.dev/hooks/use-form/) hook now includes new `getInputProps` handler to simplify inputs
 
-<Demo data={SelectDemos.large} />
+<UseFormBaseDemo />
 
-[Modal](https://mantine.dev/core/modal/) component can now be centered:
-
-<Demo data={ModalDemos.centered} />
-
-[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
-
-<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
-
-[use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
+Also [use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
 
 ```tsx
 const form = useForm({
@@ -55,6 +47,21 @@ form.validate();
 form.errors;
 // -> { name: null, age: 'You must be 21 or older to enter' }
 ```
+
+## New features
+
+[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now use [ScrollArea](https://mantine.dev/core/scroll-area/)
+as a default dropdown element:
+
+<Demo data={SelectDemos.large} />
+
+[Modal](https://mantine.dev/core/modal/) component can now be centered:
+
+<Demo data={ModalDemos.centered} />
+
+[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
+
+<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
 
 ## Other changes
 
