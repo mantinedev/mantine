@@ -10,12 +10,17 @@ date: 'November 19th, 2021'
 import { ScrollAreaDemos, ModalDemos, AccordionDemos, SelectDemos } from '@demos/core';
 import { UseFormBaseDemo } from '@docs/demos';
 
-## New components
+## ScrollArea component
 
 New [ScrollArea](https://mantine.dev/core/scroll-area/) component lets you easily manage custom scrollbars
 without any external libraries:
 
 <Demo data={ScrollAreaDemos.configurator} />
+
+ScrollArea is now rendered as default dropdown element in [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/)
+and [TransferList](https://mantine.dev/core/transfer-list/) components:
+
+<Demo data={SelectDemos.large} />
 
 ## use-form hook improvements
 
@@ -49,11 +54,6 @@ form.errors;
 ```
 
 ## New features
-
-[Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now use [ScrollArea](https://mantine.dev/core/scroll-area/)
-as a default dropdown element:
-
-<Demo data={SelectDemos.large} />
 
 [Modal](https://mantine.dev/core/modal/) component can now be centered:
 
