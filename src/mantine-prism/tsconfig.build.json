@@ -1,7 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "./types", "../../configuration/types"],
-  "exclude": ["./lib", "./esm", "./cjs"],
+  "exclude": [
+    "./lib",
+    "./esm",
+    "./cjs",
+    "**/*.story.tsx",
+    "**/*.test.tsx",
+    "**/*.test.ts",
+    "**/styles.api.ts",
+    "src/components/*/demos/*",
+    "src/demos.ts"
+  ],
   "compilerOptions": {
     "rootDir": "src",
     "baseUrl": ".",
@@ -9,6 +19,7 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
+    "composite": true,
     "paths": {
       "@mantine/core": ["../mantine-core/src"],
       "@mantine/hooks": ["../mantine-hooks/src"],

@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "include": ["./src", "./types", "../../configuration/types"],
-  "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "rootDir": "src",
     "baseUrl": ".",
@@ -9,6 +8,10 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
-  }
+    "composite": true,
+    "paths": {
+      "@mantine/src": ["../mantine-src/src"]
+    }
+  },
+  "references": [{ "path": "../mantine-ssr" }]
 }
