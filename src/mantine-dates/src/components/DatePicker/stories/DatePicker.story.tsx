@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
-import { WithinOverlays } from '@mantine/ds/src';
+import { WithinOverlays, SubmitForm } from '@mantine/ds/src';
 import { DatePicker } from '../DatePicker';
 
 function Controlled() {
@@ -108,4 +108,18 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
     <WithinOverlays>
       <DatePicker placeholder="Pick date" label="Event date" withinPortal={false} />
     </WithinOverlays>
+  ))
+  .add('Within form', () => (
+    <SubmitForm>
+      <DatePicker placeholder="Submit with enter" label="Event date" />
+    </SubmitForm>
+  ))
+  .add('Within form: free input', () => (
+    <SubmitForm>
+      <DatePicker
+        placeholder="Submit with enter with free input"
+        label="Event date"
+        allowFreeInput
+      />
+    </SubmitForm>
   ));

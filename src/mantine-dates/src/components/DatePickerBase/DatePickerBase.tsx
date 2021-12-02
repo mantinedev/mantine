@@ -204,7 +204,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
-
       if (allowFreeInput) {
         closeDropdown();
       }
@@ -219,7 +218,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
-      if (event.code === 'Space' && !allowFreeInput) {
+      if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
         event.preventDefault();
         setDropdownOpened(true);
       }
