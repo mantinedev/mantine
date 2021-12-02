@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { ScrollArea } from '@mantine/core';
 import NavbarMainLink from './NavbarMainLink/NavbarMainLink';
 import NavbarDocsCategory from './NavbarDocsCategory/NavbarDocsCategory';
 import { getDocsData } from '../get-docs-data';
@@ -33,12 +33,12 @@ export default function Navbar({ data, opened, onClose }: NavbarProps) {
 
   return (
     <nav className={cx(classes.navbar, { [classes.opened]: opened })}>
-      <Scrollbars style={{ height: '100vh' }} universal>
+      <ScrollArea style={{ height: '100vh' }} type="scroll">
         <div className={classes.body}>
           {main}
           <div className={classes.docs}>{docs}</div>
         </div>
-      </Scrollbars>
+      </ScrollArea>
     </nav>
   );
 }
