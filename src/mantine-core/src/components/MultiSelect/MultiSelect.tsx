@@ -416,7 +416,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           event.preventDefault();
 
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -425,8 +424,21 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           break;
         }
 
+        case 'Space': {
+          if (!searchable) {
+            event.preventDefault();
+            if (filteredData[hovered] && dropdownOpened) {
+              handleItemSelect(filteredData[hovered]);
+            } else {
+              setDropdownOpened(true);
+            }
+          }
+
+          break;
+        }
+
         case 'Backspace': {
-          if (_value.length > 0 && searchValue.length === 0 && searchable) {
+          if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
           }
