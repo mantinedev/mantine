@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Heart } from 'tabler-icons-react';
+import { paragraph } from '@mantine/mockdata/src';
 import { Slider } from '../Slider/Slider';
 import { RangeSlider } from '../RangeSlider/RangeSlider';
 
@@ -45,6 +46,12 @@ storiesOf('@mantine/core/Slider/stories', module)
           { value: 100, label: 'xl' },
         ]}
       />
+    </div>
+  ))
+  .add('Near text: user-select', () => (
+    <div style={{ maxWidth: 500, margin: 'auto' }}>
+      <Slider />
+      <p>{paragraph}</p>
     </div>
   ))
   .add('With thumb children', () => (
