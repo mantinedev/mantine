@@ -139,6 +139,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       itemComponent = DefaultItem,
       onKeyDown,
       onBlur,
+      onFocus,
       transition = 'fade',
       transitionDuration = 0,
       initiallyOpened = false,
@@ -369,11 +370,16 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
         case 'Space': {
           if (!searchable) {
-            event.preventDefault();
-            setDropdownOpened(!dropdownOpened);
-            setHovered(selectedItemIndex);
-            scrollSelectedItemIntoView();
+            if (filteredData[hovered] && dropdownOpened) {
+              event.preventDefault();
+              handleItemSelect(filteredData[hovered]);
+            } else {
+              setDropdownOpened(!dropdownOpened);
+              setHovered(selectedItemIndex);
+              scrollSelectedItemIntoView();
+            }
           }
+
           break;
         }
 
@@ -399,6 +405,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       setDropdownOpened(false);
     };
 
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onFocus === 'function' && onFocus(event);
+      if (searchable) {
+        setDropdownOpened(true);
+      }
+    };
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (clearable && event.currentTarget.value === '') {
         handleChange(null);
@@ -413,7 +426,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     const handleInputClick = () => {
-      setDropdownOpened(!dropdownOpened);
+      if (!searchable) {
+        setDropdownOpened(!dropdownOpened);
+      } else {
+        setDropdownOpened(true);
+      }
 
       if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
@@ -467,6 +484,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
             onClick={handleInputClick}
             onBlur={handleInputBlur}
+            onFocus={handleInputFocus}
             readOnly={!searchable}
             disabled={disabled}
             data-mantine-stop-propagation={shouldShowDropdown}
