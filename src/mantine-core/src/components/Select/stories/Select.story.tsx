@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { SubmitForm } from '@mantine/ds/src';
 import { Select } from '../Select';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
@@ -143,4 +144,9 @@ storiesOf('@mantine/core/Select/stories', module)
         searchable
       />
     </div>
+  ))
+  .add('Within form', () => (
+    <SubmitForm>
+      <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
+    </SubmitForm>
   ));
