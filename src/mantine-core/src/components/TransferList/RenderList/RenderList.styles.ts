@@ -5,6 +5,8 @@ interface RenderListStyles {
   height: number;
 }
 
+const ITEM_PADDING = 7;
+
 export default createStyles((theme, { reversed, height }: RenderListStyles) => ({
   transferList: {
     flex: 1,
@@ -14,11 +16,19 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
 
   transferListItem: {
     display: 'block',
-    width: 'calc(100% - 14px)',
-    padding: 7,
-    marginLeft: theme.spacing.sm - 7,
-    marginRight: theme.spacing.sm - 7,
+    width: `calc(100% - ${ITEM_PADDING * 2}px)`,
+    padding: ITEM_PADDING,
+    marginLeft: theme.spacing.sm - ITEM_PADDING,
+    marginRight: theme.spacing.sm - ITEM_PADDING,
     borderRadius: theme.radius.sm,
+
+    '&:first-of-type': {
+      marginTop: theme.spacing.sm - ITEM_PADDING,
+    },
+
+    '&:last-of-type': {
+      marginBottom: theme.spacing.sm - ITEM_PADDING,
+    },
   },
 
   transferListItemHovered: {
@@ -26,8 +36,6 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
   },
 
   transferListItems: {
-    paddingTop: theme.spacing.xs / 2,
-    paddingBottom: theme.spacing.xs / 2,
     overflow: 'auto',
     height,
     maxHeight: height,

@@ -86,8 +86,8 @@ export function RenderList({
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
       case 'Enter': {
+        event.preventDefault();
         if (filteredData[hovered]) {
-          event.preventDefault();
           onSelect(filteredData[hovered].value);
         }
         break;
@@ -175,9 +175,10 @@ export function RenderList({
         </div>
 
         <ListComponent
-          className={classes.transferListItems}
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
+          className={classes.transferListItems}
+          style={{ height, position: 'relative' }}
         >
           {items.length > 0 ? (
             items
