@@ -224,6 +224,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
+      setDropdownOpened(true);
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
