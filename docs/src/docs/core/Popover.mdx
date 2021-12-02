@@ -125,3 +125,18 @@ To specify initial focus element add `data-autofocus` attribute:
   <input />
 </Popover>
 ```
+
+## Usage with other overlays
+
+Popover listens for outside clicks with [use-click-outside](/hooks/use-click-outside/) hook.
+This means that it is not possible to use elements that render overlays within [Portal](/core/portal/)
+inside Popover. To use components like [Autocomplete](/core/autocomplete/),
+[Menu](/core/menu/), [DatePicker](/dates/date-picker/) portal feature should be disabled for these components:
+
+```tsx
+<Popover>
+  <Menu withinPortal={false} />
+  <Autocomplete withinPortal={false} />
+  <DatePicker withinPortal={false} />
+</Popover>
+```
