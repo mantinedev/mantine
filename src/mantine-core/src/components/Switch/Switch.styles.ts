@@ -7,27 +7,27 @@ interface SwitchStyles {
 }
 
 const switchHeight = {
-  xs: 14,
-  sm: 18,
-  md: 22,
-  lg: 28,
-  xl: 34,
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 30,
+  xl: 36,
 };
 
 const switchWidth = {
-  xs: 28,
-  sm: 36,
-  md: 42,
-  lg: 54,
-  xl: 66,
+  xs: 30,
+  sm: 38,
+  md: 44,
+  lg: 56,
+  xl: 68,
 };
 
 const handleSizes = {
-  xs: 10,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 26,
+  xs: 12,
+  sm: 14,
+  md: 18,
+  lg: 22,
+  xl: 28,
 };
 
 export const sizes = Object.keys(switchHeight).reduce((acc, size) => {

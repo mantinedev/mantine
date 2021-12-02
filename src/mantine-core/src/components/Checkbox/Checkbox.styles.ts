@@ -1,11 +1,11 @@
 import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
 
 export const sizes = {
-  xs: 14,
-  sm: 18,
-  md: 22,
-  lg: 28,
-  xl: 34,
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 30,
+  xl: 36,
 };
 
 const iconSizes = {
