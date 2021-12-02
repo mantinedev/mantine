@@ -234,7 +234,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
       typeof onClick === 'function' && onClick(event);
-      setDropdownOpened(!dropdownOpened);
+      setDropdownOpened(true);
     };
 
     const shouldRenderDropdown =
