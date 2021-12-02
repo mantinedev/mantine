@@ -34,16 +34,6 @@ export const configurator: MantineDemo = {
       defaultValue: 'hover',
     },
     {
-      name: 'dir',
-      type: 'segmented',
-      data: [
-        { value: 'rtl', label: 'RTL' },
-        { value: 'ltr', label: 'LTR' },
-      ],
-      initialValue: 'ltr',
-      defaultValue: 'ltr',
-    },
-    {
       name: 'offsetScrollbars',
       type: 'boolean',
       defaultValue: false,

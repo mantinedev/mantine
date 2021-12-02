@@ -28,7 +28,6 @@ It is adapted to work well with light and dark color schemes and supports the fo
 - `offsetScrollbars` – offset scrollbars with padding
 - `scrollbarSize` – scrollbar size in px, controls scrollbar and thumb width/height
 - `scrollHideDelay` – delay in md to hide scrollbars, applicable only when type is `hover` or `scroll`
-- `dir` – change scrollbars and content direction
 
 <Demo data={ScrollAreaDemos.configurator} />
 
@@ -38,7 +37,7 @@ It is adapted to work well with light and dark color schemes and supports the fo
 
 ## Scroll to position
 
-You can programmatically scroll to any position. To do so
+To programmatically scroll to any position,
 get viewport element ref with `viewportRef` prop and call `scrollTo` method:
 
 <Demo data={ScrollAreaDemos.scrollTo} />
@@ -46,6 +45,6 @@ get viewport element ref with `viewportRef` prop and call `scrollTo` method:
 ## Usage with other components
 
 ScrollArea integrates seamlessly with all Mantine components that can require scrollbars.
-For example, ypu can use ScrollArea with [Navbar.Section](/core/app-shell/) component:
+For example, it can be used with [Navbar.Section](/core/app-shell/) component:
 
 <Demo data={AppShellDemos.scrollbars} />
