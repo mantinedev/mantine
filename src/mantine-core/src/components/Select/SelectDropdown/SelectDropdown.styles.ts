@@ -4,7 +4,6 @@ export default createStyles((theme) => ({
   dropdown: {
     ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
-    zIndex: 10,
     pointerEvents: 'auto',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${

@@ -6,7 +6,13 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, MantineShadow, useExtractedMargins } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  MantineShadow,
+  useExtractedMargins,
+  getDefaultZIndex,
+} from '@mantine/styles';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -160,7 +166,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      zIndex,
+      zIndex = getDefaultZIndex('popover'),
       ...others
     }: SelectProps,
     ref

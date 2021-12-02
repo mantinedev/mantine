@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
@@ -79,7 +80,7 @@ export function Popover({
   title,
   onClose,
   opened,
-  zIndex = 1,
+  zIndex = getDefaultZIndex('popover'),
   arrowSize = 4,
   withArrow = false,
   transition = 'fade',

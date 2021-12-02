@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDefaultZIndex } from '@mantine/styles';
 import { Portal } from '../../Portal';
 
 export interface PopperContainerProps {
@@ -17,7 +18,7 @@ export interface PopperContainerProps {
 
 export function PopperContainer({
   children,
-  zIndex = 1,
+  zIndex = getDefaultZIndex('popover'),
   className,
   withinPortal = true,
 }: PopperContainerProps) {

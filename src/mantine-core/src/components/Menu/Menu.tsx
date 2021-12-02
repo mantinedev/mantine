@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Divider } from '../Divider/Divider';
 import { Paper } from '../Paper/Paper';
@@ -160,7 +161,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       trigger = 'click',
       radius = 'sm',
       delay = 0,
-      zIndex = 10000,
+      zIndex = getDefaultZIndex('popover'),
       withinPortal = true,
       trapFocus = true,
       classNames,

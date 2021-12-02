@@ -21,7 +21,6 @@ function PopoverWrapper() {
       styles={{ body: { width: 260 } }}
       position="bottom"
       withArrow
-      zIndex={1000}
     >
       <div style={{ display: 'flex' }}>
         <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>

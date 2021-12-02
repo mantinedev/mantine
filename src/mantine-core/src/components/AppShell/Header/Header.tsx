@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
 import { Box } from '../../Box';
 import useStyles, { HeaderPosition } from './Header.styles';
 
@@ -35,7 +35,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       fixed = false,
       position = { top: 0, left: 0, right: 0 },
       sx,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       ...others
     }: HeaderProps,
     ref

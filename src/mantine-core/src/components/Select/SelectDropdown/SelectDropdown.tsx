@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
@@ -44,7 +44,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
-      zIndex = 2000,
+      zIndex = getDefaultZIndex('popover'),
       __staticSelector,
     }: SelectDropdownProps,
     ref

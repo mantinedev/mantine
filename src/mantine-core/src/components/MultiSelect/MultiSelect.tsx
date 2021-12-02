@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -209,7 +210,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
-      zIndex,
+      zIndex = getDefaultZIndex('popover'),
       ...others
     }: MultiSelectProps,
     ref

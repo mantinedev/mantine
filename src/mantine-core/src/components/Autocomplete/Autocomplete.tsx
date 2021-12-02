@@ -6,6 +6,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import {
   InputWrapper,
@@ -134,7 +135,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      zIndex,
+      zIndex = getDefaultZIndex('popover'),
       ...others
     }: AutocompleteProps,
     ref

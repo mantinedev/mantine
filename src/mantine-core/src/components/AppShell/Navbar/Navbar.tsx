@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { ClassNames, DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { ClassNames, DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
 import { Box } from '../../Box';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
@@ -50,7 +50,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       padding = 0,
       fixed = false,
       position = { top: 0, left: 0 },
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       hiddenBreakpoint = 'md',
       hidden = false,
       className,

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePopper, StrictModifier } from 'react-popper';
+import { getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
 import { useDidUpdate } from '@mantine/hooks';
 import { Transition, MantineTransition } from '../Transition';
@@ -79,7 +80,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
-  zIndex = 100,
+  zIndex = getDefaultZIndex('popover'),
   forceUpdateDependencies = [],
   modifiers = [],
   onTransitionEnd,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineMargin, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineMargin, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
 import { Overlay } from '../Overlay/Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader/Loader';
@@ -40,7 +40,7 @@ export function LoadingOverlay({
   overlayOpacity = 0.75,
   overlayColor,
   transitionDuration = 200,
-  zIndex = 1000,
+  zIndex = getDefaultZIndex('overlay'),
   style,
   loader,
   radius,

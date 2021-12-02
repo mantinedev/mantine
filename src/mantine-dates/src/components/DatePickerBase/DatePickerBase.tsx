@@ -16,6 +16,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/core';
 import {
   useClickOutside,
@@ -149,7 +150,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonLabel,
       onClear,
       positionDependencies = [],
-      zIndex = 3,
+      zIndex = getDefaultZIndex('popover'),
       withinPortal = true,
       onBlur,
       onFocus,

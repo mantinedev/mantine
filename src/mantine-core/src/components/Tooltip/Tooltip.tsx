@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineMargin } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineMargin,
+  getDefaultZIndex,
+} from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
@@ -67,7 +73,7 @@ export function Tooltip({
   placement = 'center',
   transition = 'pop-top-left',
   transitionDuration = 100,
-  zIndex = 1000,
+  zIndex = getDefaultZIndex('popover'),
   transitionTimingFunction,
   width = 'auto',
   wrapLines = false,

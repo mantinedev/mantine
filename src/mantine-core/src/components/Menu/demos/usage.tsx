@@ -34,7 +34,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu zIndex={10}>{menuItems}</Menu>
+      <Menu>{menuItems}</Menu>
     </Group>
   );
 }

@@ -16,7 +16,7 @@ const code = `
 function Demo() {
   return (
     <Group position="center">
-      <Menu zIndex={10}>
+      <Menu>
         {menuItems.slice(0, 4)}
         <Menu.Item disabled icon={<MagnifyingGlassIcon width={14} height={14} />}>
           Search

@@ -6,6 +6,7 @@ import {
   MantineShadow,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Text } from '../Text/Text';
@@ -87,7 +88,6 @@ export function MantineModal({
   transitionDuration = 300,
   closeButtonLabel,
   overlayColor,
-  zIndex = 1000,
   overflow = 'outside',
   transition = 'pop',
   padding = 'lg',
@@ -130,6 +130,11 @@ export function MantineModal({
     >
       {(transitionStyles) => (
         <div className={cx(classes.root, className)} {...others}>
+          {closeOnClickOutside && (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+            <div onClick={onClose} className={classes.clickOutsideOverlay} style={{ zIndex: 2 }} />
+          )}
+
           <div
             className={classes.inner}
             onKeyDownCapture={(event) => {
@@ -137,14 +142,8 @@ export function MantineModal({
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
               shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
             }}
-            style={{ zIndex: zIndex + 1 }}
             ref={focusTrapRef}
           >
-            {closeOnClickOutside && (
-              // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-              <div onClick={onClose} className={classes.clickOutsideOverlay} />
-            )}
-
             <Paper<'div'>
               className={classes.modal}
               shadow={shadow}
@@ -153,11 +152,12 @@ export function MantineModal({
               aria-labelledby={titleId}
               aria-describedby={bodyId}
               aria-modal
+              tabIndex={-1}
               style={{
                 ...transitionStyles.modal,
                 marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+                zIndex: 3,
               }}
-              tabIndex={-1}
             >
               {(title || !hideCloseButton) && (
                 <div className={classes.header}>
@@ -179,11 +179,11 @@ export function MantineModal({
 
           <div style={transitionStyles.overlay}>
             <Overlay
+              zIndex={0}
               color={
                 overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
               }
               opacity={_overlayOpacity}
-              zIndex={zIndex}
             />
           </div>
         </div>
@@ -192,9 +192,12 @@ export function MantineModal({
   );
 }
 
-export function Modal(props: React.ComponentPropsWithoutRef<typeof MantineModal>) {
+export function Modal({
+  zIndex = getDefaultZIndex('modal'),
+  ...props
+}: React.ComponentPropsWithoutRef<typeof MantineModal>) {
   return (
-    <Portal zIndex={props.zIndex || 1000}>
+    <Portal zIndex={zIndex}>
       <MantineModal {...props} />
     </Portal>
   );

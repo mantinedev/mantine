@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -97,7 +97,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       icon,
       transition = 'pop-top-left',
       id,
-      dropdownZIndex = 1000,
+      dropdownZIndex = getDefaultZIndex('popover'),
       transitionDuration = 0,
       transitionTimingFunction,
       withinPortal = true,

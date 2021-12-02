@@ -6,6 +6,7 @@ import {
   useMantineTheme,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints';
 import useStyles from './AppShell.styles';
@@ -62,7 +63,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       navbar,
       header,
       fixed = false,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       padding = 'md',
       navbarOffsetBreakpoint,
       className,

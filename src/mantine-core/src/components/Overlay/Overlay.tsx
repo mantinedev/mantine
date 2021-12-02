@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   useSx,
   DefaultProps,
+  getDefaultZIndex,
 } from '@mantine/styles';
 
 interface _OverlayProps extends DefaultProps {
@@ -37,7 +38,7 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
       opacity = 0.6,
       color = '#fff',
       gradient,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('modal'),
       component,
       radius = 0,
       sx,
