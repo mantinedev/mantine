@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider, WithinOverlays } from '@mantine/ds/src';
+import { RtlProvider, WithinOverlays, SubmitForm } from '@mantine/ds/src';
 import { Autocomplete } from '../Autocomplete';
 
 function DynamicData() {
@@ -61,6 +61,15 @@ storiesOf('@mantine/core/Autocomplete/stories', module)
         withinPortal={false}
       />
     </WithinOverlays>
+  ))
+  .add('Within form', () => (
+    <SubmitForm>
+      <Autocomplete
+        label="Press enter"
+        placeholder="Choose value"
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+      />
+    </SubmitForm>
   ))
   .add('RTL', () => (
     <RtlProvider>

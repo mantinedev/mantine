@@ -4,3 +4,4 @@ export { generateBorderStyles } from './generate-border-styles';
 export { RtlProvider } from './RtlProvider/RltProvider';
 export { InputStylesApiWrapper } from './InputStylesApiWrapper/InputStylesApiWrapper';
 export { WithinOverlays } from './WithinOverlays/WithinOverlays';
+export { SubmitForm } from './SubmitForm/SubmitForm';

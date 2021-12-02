@@ -201,8 +201,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         }
 
         case 'Enter': {
-          if (filteredData[hovered] && dropdownOpened) {
+          if (dropdownOpened) {
             event.preventDefault();
+          }
+
+          if (filteredData[hovered] && dropdownOpened) {
             handleChange(filteredData[hovered].value);
             typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
             setDropdownOpened(false);
