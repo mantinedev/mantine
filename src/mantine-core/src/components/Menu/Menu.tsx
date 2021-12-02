@@ -11,20 +11,28 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  MantineMargin,
+  useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
+import { Divider } from '../Divider/Divider';
+import { Paper } from '../Paper/Paper';
+import { Text } from '../Text/Text';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { MenuIcon } from './MenuIcon';
-import { MenuBody, MenuBodyStylesNames } from './MenuBody/MenuBody';
-import { MenuItem, MenuItemComponent } from './MenuItem/MenuItem';
+import {
+  MenuItem,
+  MenuItemComponent,
+  MenuItemType,
+  MenuItemStylesNames,
+} from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
-export type MenuStylesNames = ClassNames<typeof useStyles> | MenuBodyStylesNames;
+export type MenuStylesNames = ClassNames<typeof useStyles> | MenuItemStylesNames;
 
 export interface MenuProps
-  extends Omit<DefaultProps<MenuStylesNames>, MantineMargin>,
+  extends DefaultProps<MenuStylesNames>,
     SharedPopperProps,
     React.ComponentPropsWithRef<'div'> {
   /** <MenuItem /> and <Divider /> components only, children are passed to MenuBody component  */
@@ -44,9 +52,6 @@ export interface MenuProps
 
   /** Menu button aria-label and title props */
   menuButtonLabel?: string;
-
-  /** MenuBody component props */
-  menuBodyProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
 
   /** Predefined menu width or number for width in px */
   size?: MantineNumberSize;
@@ -78,7 +83,10 @@ export interface MenuProps
   /** Close menu on scroll */
   closeOnScroll?: boolean;
 
-  /** Trap focus inside menu */
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
+
+  /** Should focus be trapped when menu is opened */
   trapFocus?: boolean;
 }
 
@@ -94,6 +102,40 @@ type MenuComponent = {
   Label: React.FC<MenuLabelProps>;
 } & ((props: MenuProps) => React.ReactElement);
 
+function getNextItem(active: number, items: MenuItemType[]) {
+  for (let i = active + 1; i < items.length; i += 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  return active;
+}
+
+function findInitialItem(items: MenuItemType[]) {
+  for (let i = 0; i < items.length; i += 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+function getPreviousItem(active: number, items: MenuItemType[]) {
+  for (let i = active - 1; i >= 0; i -= 1) {
+    if (!items[i].props.disabled && items[i].type === MenuItem) {
+      return i;
+    }
+  }
+
+  if (!items[active] || items[active].type !== MenuItem) {
+    return findInitialItem(items);
+  }
+
+  return active;
+}
+
 export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
   (
     {
@@ -104,7 +146,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       opened,
       style,
       menuId,
-      menuBodyProps = {},
       closeOnItemClick = true,
       transitionDuration = 250,
       size = 'md',
@@ -120,24 +161,30 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       trigger = 'click',
       radius = 'sm',
       delay = 0,
-      zIndex = 1,
+      zIndex = getDefaultZIndex('popover'),
+      withinPortal = true,
+      trapFocus = true,
       classNames,
       styles,
-      closeOnScroll = true,
-      trapFocus = true,
+      closeOnScroll = false,
       onMouseLeave,
       onMouseEnter,
       onChange,
+      className,
+      sx,
       ...others
     }: MenuProps,
     ref
   ) => {
-    const { classes } = useStyles(null, { classNames, styles, name: 'Menu' });
+    const [hovered, setHovered] = useState(-1);
+    const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
+    const { classes, cx, theme } = useStyles({ size }, { sx, classNames, styles, name: 'Menu' });
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(menuId);
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
 
@@ -177,7 +224,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     const controlEventHandlers =
       trigger === 'click'
         ? { onClick: toggleMenu }
-        : { onMouseEnter: handleOpen, onFocus: handleOpen };
+        : { onMouseEnter: handleOpen, onClick: toggleMenu };
 
     const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       typeof onMouseLeave === 'function' && onMouseLeave(event);
@@ -196,6 +243,38 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       window.clearTimeout(delayTimeout.current);
     };
 
+    const items = React.Children.toArray(children).filter(
+      (item: MenuItemType) =>
+        item.type === MenuItem || item.type === Divider || item.type === MenuLabel
+    ) as MenuItemType[];
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (_opened) {
+        if (event.nativeEvent.code === 'Tab' && trapFocus) {
+          event.preventDefault();
+        }
+
+        if (event.nativeEvent.code === 'ArrowDown') {
+          event.preventDefault();
+          const prevIndex = getNextItem(hovered, items);
+          setHovered(prevIndex);
+          buttonsRefs.current[prevIndex].focus();
+        }
+
+        if (event.nativeEvent.code === 'ArrowUp') {
+          event.preventDefault();
+          const prevIndex = getPreviousItem(hovered, items);
+          setHovered(prevIndex);
+          buttonsRefs.current[prevIndex].focus();
+        }
+
+        if (event.nativeEvent.code === 'Escape') {
+          handleClose();
+          focusReference();
+        }
+      }
+    };
+
     const menuControl = cloneElement(control, {
       ...controlEventHandlers,
       role: 'button',
@@ -205,15 +284,65 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       'aria-label': menuButtonLabel,
       title: menuButtonLabel,
       [controlRefProp]: useMergedRef(setReferenceElement, ref),
+      onKeyDown: handleKeyDown,
+    });
+
+    const content = items.map((item, index) => {
+      if (item.type === MenuItem) {
+        return (
+          <MenuItem<'button'>
+            {...item.props}
+            key={index}
+            hovered={hovered === index}
+            onHover={() => setHovered(index)}
+            radius={radius}
+            onMouseLeave={() => setHovered(-1)}
+            onKeyDown={handleKeyDown}
+            styles={styles}
+            classNames={classNames}
+            onClick={(event) => {
+              if (closeOnItemClick) {
+                handleClose();
+                trigger === 'click' && focusReference();
+              }
+
+              if (typeof item.props.onClick === 'function') {
+                item.props.onClick(event);
+              }
+            }}
+            ref={(node) => {
+              buttonsRefs.current[index] = node;
+            }}
+          />
+        );
+      }
+
+      if (item.type === MenuLabel) {
+        return <Text key={index} className={classes.label} {...(item.props as any)} />;
+      }
+
+      if (item.type === Divider) {
+        return (
+          <Divider
+            variant="solid"
+            className={classes.divider}
+            my={theme.spacing.xs / 2}
+            key={index}
+          />
+        );
+      }
+
+      return null;
     });
 
     return (
       <div
         ref={setWrapperElement}
-        style={{ display: 'inline-block', position: 'relative', ...style }}
+        style={mergedStyles}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleMouseEnter}
-        {...others}
+        className={cx(classes.root, className)}
+        {...rest}
       >
         {menuControl}
 
@@ -230,25 +359,20 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
           arrowSize={3}
           zIndex={zIndex}
           arrowClassName={classes.arrow}
+          withinPortal={withinPortal}
         >
-          <MenuBody
-            {...menuBodyProps}
-            onEscape={focusReference}
-            opened={_opened}
-            onClose={handleClose}
-            id={uuid}
-            closeOnItemClick={closeOnItemClick}
-            size={size}
+          <Paper
             shadow={shadow}
-            classNames={classNames}
-            styles={styles}
+            className={classes.body}
+            role="menu"
+            aria-orientation="vertical"
             radius={radius}
-            trapFocus={trigger !== 'hover' && trapFocus}
-            transitionDuration={transitionDuration}
+            onMouseLeave={() => setHovered(-1)}
             ref={setDropdownElement}
+            {...others}
           >
-            {children}
-          </MenuBody>
+            {content}
+          </Paper>
         </Popper>
       </div>
     );

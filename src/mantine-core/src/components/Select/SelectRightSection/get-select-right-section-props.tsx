@@ -28,13 +28,15 @@ export function getSelectRightSectionProps({
     return { rightSection, rightSectionWidth, styles };
   }
 
+  const _styles = typeof styles === 'function' ? styles(theme) : styles;
+
   return {
     rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
     rightSection: <SelectRightSection {...props} />,
     styles: {
-      ...styles,
+      ..._styles,
       rightSection: {
-        ...styles?.rightSection,
+        ..._styles?.rightSection,
         pointerEvents: props.shouldClear ? undefined : 'none',
       },
     },

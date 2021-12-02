@@ -48,7 +48,6 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
-    zIndex: 4,
     padding: `${theme.spacing.md}px ${theme.spacing.xs}px`,
   },
 

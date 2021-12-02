@@ -46,7 +46,7 @@ function Demo() {
     ));
 
     return (
-      <Group key={position} position="center" style={{ marginTop: index !== 0 && 5 }}>
+      <Group key={position} position="center" mt={index === 0 ? 0 : 'md'}>
         {placements}
       </Group>
     );

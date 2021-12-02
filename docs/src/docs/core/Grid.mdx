@@ -54,7 +54,7 @@ columns are placed on next row:
 
 ## Justify and align
 
-Since grid is a flex container, you can control `justify-content` and `align-items` properties:
+Since grid is a flexbox container, you can control `justify-content` and `align-items` properties:
 
 <Demo data={GridDemos.flexConfigurator} />
 
@@ -69,10 +69,10 @@ In this example up to `md` there will be 1 column, from `md` to `lg` there will 
 
 ## Change columns count
 
-By default grid uses 12 columns layout, you can change it by setting `columns` prop on Grid component.
-Note that in this case columns span and offset will be calculated relative to this value.
+By default, grid uses 12 columns layout, you can change it by setting `columns` prop on Grid component.
+Note that in this case, columns span and offset will be calculated relative to this value.
 
-In this example first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
+In this example, first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
 
 <Demo data={GridDemos.columns} />
 
@@ -110,13 +110,3 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
   <ColWrapper span={4}>3</ColWrapper>
 </Grid>;
 ```
-
-## TypeScript
-
-Import components props types:
-
-```tsx
-import type { GridProps, ColProps } from '@mantine/core';
-```
-
-Both `GridProps` and `ColProps` extend `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

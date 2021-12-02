@@ -53,6 +53,7 @@ export * as PopperDemos from './components/Popper/demos';
 export * as ProgressDemos from './components/Progress/demos';
 export * as RadioGroupDemos from './components/RadioGroup/demos';
 export * as RingProgressDemos from './components/RingProgress/demos';
+export * as ScrollAreaDemos from './components/ScrollArea/demos';
 export * as SegmentedControlDemos from './components/SegmentedControl/demos';
 export * as SelectDemos from './components/Select/demos';
 export * as SimpleGridDemos from './components/SimpleGrid/demos';

@@ -15,6 +15,20 @@ styles: ['InputWrapper']
 
 import { InputWrapperDemos } from '@demos/core';
 
+## Disclaimer
+
+**!important:** Do not use InputWrapper with Mantine inputs, it is already included in most inputs:
+
+```tsx
+// Incorrect usage, input is not accessible
+<InputWrapper label="Input label">
+  <TextInput />
+</InputWrapper>
+
+// TextInput already includes InputWrapper
+<TextInput label="Input label" description="Input description" />
+```
+
 ## Usage
 
 InputWrapper is used to wrap for all Mantine inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/) and others).
@@ -53,32 +67,3 @@ function WithoutLabel() {
   );
 }
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { InputWrapperProps } from '@mantine/core';
-```
-
-`InputWrapperProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### InputWrapperStylesNames type
-
-`InputWrapperStylesNames` type is a union with InputWrapper [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { InputWrapperStylesNames } from '@mantine/core';
-
-const inputWrapperClasses: Partial<Record<InputWrapperStylesNames, 'string'>> = {
-  label: 'wrapper-label',
-  description: 'wrapper-description',
-};
-
-<InputWrapper classNames={inputWrapperClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

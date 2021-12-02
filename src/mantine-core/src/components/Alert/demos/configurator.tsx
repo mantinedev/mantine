@@ -1,6 +1,5 @@
 import React from 'react';
 import { XCircleFillIcon } from '@primer/octicons-react';
-import { demoBase } from './_demo-base';
 import { Alert } from '../Alert';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
@@ -19,7 +18,6 @@ const codeTemplate = (
 </Alert>`;
 
 export const configurator: MantineDemo = {
-  ...demoBase,
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
@@ -32,5 +30,6 @@ export const configurator: MantineDemo = {
         'Something terrible happened! You made a mistake and there is no going back, your data was lost forever!',
     },
     { name: 'color', type: 'color', initialValue: 'red', defaultValue: 'blue' },
+    { name: 'withCloseButton', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

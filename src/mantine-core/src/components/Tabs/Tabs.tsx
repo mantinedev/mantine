@@ -8,8 +8,7 @@ import {
   useExtractedMargins,
 } from '@mantine/styles';
 import { Group, GroupPosition } from '../Group';
-import { Tab, TabType } from './Tab/Tab';
-import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
+import { TabControl, TabControlStylesNames, TabType } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
 export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
@@ -83,7 +82,7 @@ function findInitialTab(tabs: TabType[]) {
 
 type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
   displayName: string;
-  Tab: typeof Tab;
+  Tab: typeof TabControl;
 };
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
@@ -117,7 +116,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
     const tabs = React.Children.toArray(children).filter(
-      (item: TabType) => item.type === Tab
+      (item: TabType) => item.type === TabControl
     ) as TabType[];
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
@@ -154,7 +153,6 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         {...tab.props}
         key={index}
         active={activeTab === index}
-        tabProps={tab.props}
         onKeyDown={handleKeyDown}
         color={color}
         variant={variant}
@@ -197,4 +195,4 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
 ) as any;
 
 Tabs.displayName = '@mantine/core/Tabs';
-Tabs.Tab = Tab;
+Tabs.Tab = TabControl;

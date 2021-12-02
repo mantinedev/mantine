@@ -8,8 +8,11 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  waitForComponentToPaint,
 } from '@mantine/tests';
+import { Button } from '../Button';
 import { Accordion } from './Accordion';
+import { AccordionItem } from './AccordionItem/AccordionItem';
 import { Accordion as AccordionStylesApi } from './styles.api';
 
 const defaultProps = {
@@ -33,6 +36,36 @@ describe('@mantine/core/Accordion', () => {
   it('renders correct amount of items', () => {
     const element = shallow(<Accordion {...defaultProps} />);
     expect(element.find(Accordion.Item)).toHaveLength(defaultProps.children.length);
+  });
+
+  it('filters out unexpected children', () => {
+    const element = shallow(
+      <Accordion>
+        <Accordion.Item label="Child 1 label">Child 1</Accordion.Item>
+        <p>Unexpected child 1</p>
+        <div>Unexpected child 1</div>
+        <Accordion.Item label="Child 2 label">Child 2</Accordion.Item>
+        <Button>Unexpected component</Button>
+      </Accordion>
+    );
+
+    expect(element.find(Accordion.Item)).toHaveLength(2);
+    expect(element.children()).toHaveLength(2);
+  });
+
+  it('supports controlRef on Accordion.Item', async () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    const element = mount(
+      <Accordion>
+        <Accordion.Item controlRef={ref} />
+      </Accordion>
+    );
+    await waitForComponentToPaint(element);
+    expect(ref.current instanceof HTMLButtonElement).toBe(true);
+  });
+
+  it('exposes AccordionItem component as Accordion.Item', () => {
+    expect(Accordion.Item).toEqual(AccordionItem);
   });
 
   it('has correct displayName', () => {

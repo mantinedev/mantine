@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { ColorSliderStylesNames } from './ColorSlider/ColorSlider';
@@ -94,7 +95,6 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       hueLabel,
       alphaLabel,
       className,
-      style,
       styles,
       classNames,
       sx,
@@ -104,9 +104,8 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
   ) => {
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },
-      { classNames, styles, sx, name: __staticSelector }
+      { classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
     const withAlpha = format === 'rgba' || format === 'hsla';
@@ -149,7 +148,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     }, [format]);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.wrapper, className)} sx={sx} ref={ref} {...others}>
         {withPicker && (
           <>
             <Saturation
@@ -217,7 +216,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             __staticSelector={__staticSelector}
           />
         )}
-      </div>
+      </Box>
     );
   }
 );

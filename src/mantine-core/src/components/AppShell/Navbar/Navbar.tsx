@@ -1,11 +1,14 @@
 import React, { forwardRef } from 'react';
-import { ClassNames, DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { ClassNames, DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import { Box } from '../../Box';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
 export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
-export interface NavbarProps extends DefaultProps<NavbarStylesNames> {
+export interface NavbarProps
+  extends DefaultProps<NavbarStylesNames>,
+    React.ComponentPropsWithoutRef<'nav'> {
   /** Navbar width with breakpoints */
   width?: NavbarWidth;
 
@@ -47,12 +50,11 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       padding = 0,
       fixed = false,
       position = { top: 0, left: 0 },
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       hiddenBreakpoint = 'md',
       hidden = false,
       className,
       classNames,
-      style,
       styles,
       sx,
       children,
@@ -65,20 +67,18 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       { classNames, styles, sx, name: 'Navbar' }
     );
 
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     return (
-      <nav
+      <Box
+        component="nav"
         ref={ref}
         className={cx(classes.root, { [classes.hidden]: hidden }, className)}
-        style={mergedStyles}
-        {...rest}
+        {...others}
       >
         {children}
-      </nav>
+      </Box>
     );
   }
 ) as any;
 
 Navbar.Section = NavbarSection;
-
 Navbar.displayName = '@mantine/core/Navbar';

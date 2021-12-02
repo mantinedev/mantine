@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { charactersList } from '@mantine/mockdata';
 import { Checkbox } from '../../Checkbox';
 import { Group } from '../../Group';
 import { Avatar } from '../../Avatar';
@@ -9,7 +10,6 @@ import {
   TransferListItemComponent,
   TransferListItemComponentProps,
 } from '../index';
-import { LABELS_DATA } from '../../Accordion/demos/_mockdata';
 
 const code = `
 import { useState } from 'react';
@@ -82,7 +82,7 @@ function Demo() {
 `;
 
 const initialValues: TransferListData = [
-  LABELS_DATA.map((item, index) => ({ ...item, value: index.toString() })),
+  charactersList.map((item, index) => ({ ...item, value: index.toString() })),
   [],
 ];
 

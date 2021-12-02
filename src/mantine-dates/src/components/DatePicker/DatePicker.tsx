@@ -49,7 +49,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       classNames,
       styles,
       shadow = 'sm',
-      locale = 'en',
+      locale,
       inputFormat,
       transitionDuration = 200,
       transitionTimingFunction,
@@ -75,6 +75,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       clearButtonLabel,
       fixOnBlur = true,
       allowFreeInput,
+      withinPortal = true,
       dateParser,
       firstDayOfWeek = 'monday',
       onFocus,
@@ -85,6 +86,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     ref
   ) => {
     const theme = useMantineTheme();
+    const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const [calendarMonth, setCalendarMonth] = useState(initialMonth || new Date());
@@ -102,7 +104,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const [focused, setFocused] = useState(false);
     const [inputState, setInputState] = useState(
-      _value instanceof Date ? upperFirst(dayjs(_value).locale(locale).format(dateFormat)) : ''
+      _value instanceof Date ? upperFirst(dayjs(_value).locale(finalLocale).format(dateFormat)) : ''
     );
 
     useEffect(() => {
@@ -111,13 +113,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       }
 
       if (value instanceof Date && !focused) {
-        setInputState(dayjs(value).locale(locale).format(dateFormat));
+        setInputState(dayjs(value).locale(finalLocale).format(dateFormat));
       }
     }, [value, focused]);
 
     const handleValueChange = (date: Date) => {
       setValue(date);
-      setInputState(upperFirst(dayjs(date).locale(locale).format(dateFormat)));
+      setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
       closeCalendarOnChange && setDropdownOpened(false);
       window.setTimeout(() => inputRef.current?.focus(), 0);
     };
@@ -131,7 +133,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     };
 
     const parseDate = (date: string) =>
-      dateParser ? dateParser(date) : dayjs(date, dateFormat, locale).toDate();
+      dateParser ? dateParser(date) : dayjs(date, dateFormat, finalLocale).toDate();
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
@@ -141,7 +143,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       if (dayjs(date).isValid()) {
         setValue(date);
         setLastValidValue(date);
-        setInputState(upperFirst(dayjs(date).locale(locale).format(dateFormat)));
+        setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
       } else if (fixOnBlur) {
         setValue(lastValidValue);
       }
@@ -188,12 +190,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         disabled={disabled}
+        withinPortal={withinPortal}
         {...others}
       >
         <Calendar
           classNames={classNames}
           styles={styles}
-          locale={locale}
+          locale={finalLocale}
           nextMonthLabel={nextMonthLabel}
           previousMonthLabel={previousMonthLabel}
           month={allowFreeInput ? calendarMonth : undefined}

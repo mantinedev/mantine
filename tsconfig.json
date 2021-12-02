@@ -8,6 +8,7 @@
     "./gallery/src",
     "./scripts",
     "./configuration",
+    "./configuration/types",
     "./tests"
   ],
   "exclude": ["public", ".cache", "configuration/jest", "configuration/storybook/main.js"],

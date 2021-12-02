@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineMargin } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineMargin,
+  getDefaultZIndex,
+} from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import useStyles from './Tooltip.styles';
 
@@ -47,6 +53,9 @@ export interface TooltipProps
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Tooltip({
@@ -64,12 +73,13 @@ export function Tooltip({
   placement = 'center',
   transition = 'pop-top-left',
   transitionDuration = 100,
-  zIndex = 1000,
+  zIndex = getDefaultZIndex('popover'),
   transitionTimingFunction,
   width = 'auto',
   wrapLines = false,
   allowPointerEvents = false,
   positionDependencies = [],
+  withinPortal = true,
   tooltipRef,
   tooltipId,
   classNames,
@@ -113,6 +123,7 @@ export function Tooltip({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[color, ...positionDependencies]}
+        withinPortal={withinPortal}
       >
         <div
           className={classes.body}

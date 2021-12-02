@@ -11,6 +11,7 @@ import {
 } from '@mantine/tests';
 import { Paper } from '../Paper/Paper';
 import { Card } from './Card';
+import { CardSection } from './CardSection/CardSection';
 
 describe('@mantine/core/Card', () => {
   itSupportsOthers(Card, {});
@@ -29,6 +30,10 @@ describe('@mantine/core/Card', () => {
     );
     expect(element.find(Paper).prop('padding')).toBe(29);
     expect(element.find(Paper).prop('radius')).toBe('xl');
+  });
+
+  it('exposes CardSection as Card.Section', () => {
+    expect(Card.Section).toBe(CardSection);
   });
 
   it('has correct displayName', () => {

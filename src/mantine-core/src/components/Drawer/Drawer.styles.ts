@@ -47,13 +47,17 @@ function getPositionStyles({
 }
 
 export default createStyles((theme, { position, size }: DrawerStyles, getRef) => {
-  const noOverlay = { ref: getRef('noOverlay') } as const;
+  const noOverlay = getRef('noOverlay');
 
   return {
-    noOverlay,
+    overlay: {},
+
+    noOverlay: {
+      ref: noOverlay,
+    },
 
     root: {
-      [`&:not(.${noOverlay.ref})`]: {
+      [`&:not(.${noOverlay})`]: {
         position: 'fixed',
         top: 0,
         left: 0,

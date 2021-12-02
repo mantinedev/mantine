@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { SimpleGrid } from '../SimpleGrid';
 import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
@@ -39,7 +40,7 @@ export interface TransferListProps
   listHeight?: number;
 
   /** Change list component, can be used to add custom scrollbars */
-  listComponent?: React.FC<any>;
+  listComponent?: any;
 
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
@@ -61,11 +62,10 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       titles = [null, null],
       initialSelection,
       listHeight = 150,
-      listComponent,
+      listComponent = SelectScrollArea,
       breakpoint,
       classNames,
       styles,
-      sx,
       ...others
     }: TransferListProps,
     ref

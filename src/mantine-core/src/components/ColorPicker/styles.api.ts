@@ -1,7 +1,7 @@
 import { ColorPickerStylesNames } from './ColorPicker';
 
 export const ColorPicker: Record<ColorPickerStylesNames, string> = {
-  root: 'Root element',
+  wrapper: 'Root element',
   body: 'Includes hue and alpha sliders and color preview',
   preview: 'Color preview',
   sliders: 'Hue and alpha sliders wrapper',

@@ -28,7 +28,7 @@ function Value({ value, label, onRemove, classNames, ...others }) {
           <Flag code={value} size="S" />
         </div>
         <div style={{ lineHeight: 1, fontSize: 12 }}>{label}</div>
-        <CloseButton onClick={onRemove} variant="transparent" size={22} iconSize={14} />
+        <CloseButton onMouseDown={onRemove} variant="transparent" size={22} iconSize={14} tabIndex={-1} />
       </div>
     </div>
   );
@@ -83,7 +83,13 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
           <Flag code={value} size="S" />
         </div>
         <div style={{ lineHeight: 1, fontSize: 12 }}>{label}</div>
-        <CloseButton onClick={onRemove} variant="transparent" size={22} iconSize={14} />
+        <CloseButton
+          onMouseDown={onRemove}
+          variant="transparent"
+          size={22}
+          iconSize={14}
+          tabIndex={-1}
+        />
       </div>
     </div>
   );

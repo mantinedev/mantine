@@ -9,6 +9,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   defaultInputProps,
+  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
@@ -39,7 +40,7 @@ describe('@mantine/core/Textarea', () => {
   itSupportsStylesApi(
     Textarea,
     defaultInputProps,
-    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
     'Textarea'
   );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 
-const waitForComponentToPaint = async (wrapper: any) => {
+export const waitForComponentToPaint = async (wrapper: any) => {
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve));
     wrapper.update();

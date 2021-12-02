@@ -22,13 +22,13 @@ function Controlled() {
 
 storiesOf('@mantine/dates/TimeInput', module)
   .add('General usage', () => (
-    <div style={{ width: 320, padding: 40 }}>
+    <div style={{ width: 400, padding: 40 }}>
       <TimeInput label="Time input" disabled />
     </div>
   ))
   .add('Controlled', () => (
-    <div style={{ width: 320, padding: 40 }}>
+    <div style={{ width: 400, padding: 40 }}>
       <Controlled />
     </div>
   ))
-  .add('Sizes', () => <div style={{ width: 320, padding: 40 }}>{sizes}</div>);
+  .add('Sizes', () => <div style={{ width: 400, padding: 40 }}>{sizes}</div>);

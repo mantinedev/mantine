@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineColor,
-  useExtractedMargins,
-  useSx,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, useExtractedMargins } from '@mantine/styles';
+import useStyles from './Mark.styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
   /** Background color from theme.colors */
@@ -13,24 +8,11 @@ export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Mark = forwardRef<HTMLElement, MarkProps>(
-  ({ color = 'yellow', style, sx, className, ...others }: MarkProps, ref) => {
-    const theme = useMantineTheme();
-    const { sxClassName, css, cx } = useSx({ sx, className });
+  ({ color = 'yellow', style, sx, className, classNames, styles, ...others }: MarkProps, ref) => {
+    const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Mark' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-
     return (
-      <mark
-        ref={ref}
-        style={mergedStyles}
-        className={cx(
-          css({
-            backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 2),
-            color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : 'inherit',
-          }),
-          sxClassName
-        )}
-        {...rest}
-      />
+      <mark ref={ref} style={mergedStyles} className={cx(classes.root, className)} {...rest} />
     );
   }
 );

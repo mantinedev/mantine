@@ -19,17 +19,16 @@ import { TransferListDemos } from '@demos/core';
 
 <Demo data={TransferListDemos.usage} />
 
-## Replace list element
+## Native scrollbars
 
-You can provide your own wrapper for list, this is most useful
-if you want to use custom scrollbars. Example with [react-custom-scrollbars](https://www.npmjs.com/package/react-custom-scrollbars):
+By default, TransferList uses [ScrollArea](/core/scroll-area/) to render list.
+If you want to use native scrollbars instead, set `div` as a list component:
 
 <Demo data={TransferListDemos.scrollbars} />
 
 ## Custom item component
 
-You can replace default item component with your own to customize item appearance.
-To do so:
+To customize item appearance, replace default item component:
 
 - Add additional props to data
 - Build a component which will consume your data object

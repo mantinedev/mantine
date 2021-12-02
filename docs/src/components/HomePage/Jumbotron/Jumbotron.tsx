@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme, SimpleGrid } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
+import { Hero } from './Hero';
 import { FEATURES_DATA } from './features';
 import useStyles from './Jumbotron.styles';
 
@@ -29,9 +30,7 @@ export function Jumbotron() {
   return (
     <div className={classes.jumbotron}>
       <Container size={1100} className={classes.inner}>
-        <h1 className={classes.title}>
-          A <span className={classes.highlight}>fully featured</span> React components library
-        </h1>
+        <Hero />
 
         <Text className={classes.description}>
           Build fully functional accessible web applications faster than ever – Mantine includes

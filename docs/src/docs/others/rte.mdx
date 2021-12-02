@@ -127,6 +127,23 @@ if you are planning to use images.
 - `⌘ + K` / `Ctrl + K` – add link to current selection
 - `⌘ + option + 1` / `Ctrl + Alt + 1` – toggle heading at current line, valid for 1-6 headings
 
+## Get editor ref
+
+```tsx
+import { useRef, useEffect } from 'react';
+import { RichTextEditor, Editor } from '@mantine/rte';
+
+function Demo() {
+  const editorRef = useRef<Editor>();
+
+  useEffect(() => {
+    editorRef.current.focus();
+  }, []);
+
+  return <RichTextEditor ref={editorRef} {...otherProps} />;
+}
+```
+
 ## Server side rendering
 
 Quill does not support server side rendering as it relies on browser API.

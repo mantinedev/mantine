@@ -17,9 +17,6 @@ import { TextInputDemos } from '@demos/core';
 
 ## Usage
 
-Use TextInput when you need to capture text from user.
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={TextInputDemos.configurator} />
 
 ## Controlled
@@ -44,19 +41,13 @@ function Demo() {
 
 ## With icon
 
-You can use any React node as icon:
-
 <Demo data={TextInputDemos.icon} />
 
 ## With right section
 
-You can use any React node as right section:
-
 <Demo data={TextInputDemos.rightSection} />
 
 ## Get input ref
-
-You can get input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
@@ -73,36 +64,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<TextInput label="My input" />; // -> ok, input and label is connected
-<TextInput />; // not ok, input is not labeled
-<TextInput aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+<TextInput /> // -> not ok, input is not labeled
+<TextInput label="My input" /> // -> ok, input and label is connected
+<TextInput aria-label="My input" /> // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { TextInputProps } from '@mantine/core';
-```
-
-`TextInputProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
-
-### TextInputStylesNames type
-
-`TextInputStylesNames` type is a union with TextInput [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { TextInputStylesNames } from '@mantine/core';
-
-const inputClasses: Partial<Record<TextInputStylesNames, 'string'>> = {
-  label: 'input-label',
-  description: 'input-description',
-};
-
-<TextInput classNames={inputClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

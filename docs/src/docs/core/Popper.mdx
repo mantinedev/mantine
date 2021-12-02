@@ -16,10 +16,10 @@ import { PopperDemos, TooltipDemos } from '@demos/core';
 
 ## Usage
 
-Popper is an utility component used under the hood in [Menu](/core/menu/), [Progress](/core/popover/), [Tooltip](/core/tooltip/)
+Popper is a utility component used under the hood in [Menu](/core/menu/), [Progress](/core/popover/), [Tooltip](/core/tooltip/)
 and other Mantine components. You can use it to create your own dropdowns and popovers if Mantine components do not meet your requirements.
 
-To start using Popper add following required props first:
+To use Popper, add the following required props first:
 
 - `referenceElement` – element based on which popper will be positioned
 - `children` – popper content, any React node
@@ -64,12 +64,12 @@ Popper position is controlled by these props:
 ## Transitions
 
 Popper uses [Transition](/core/transition/) component to animate presence.
-You can choose one of premade transitions or create your own. All premade transitions demo
+You can choose one of the premade transitions or create your own. All premade transitions demo
 ([Tooltip](/core/tooltip/) component which uses Popper):
 
 <Demo data={TooltipDemos.transitions} />
 
-You can control Popper transition with following props:
+You can control Popper transition with the following props:
 
 - `transition` – premade transition name or custom transition styles object
 - `transitionDuration` – transition duration in ms, defaults to 0
@@ -87,7 +87,7 @@ You can control Popper transition with following props:
 ## Force position update
 
 In some cases Popper position will get outdated since it is rendered in [Portal](/core/portal/)
-Popper does not know about layout changes. To force position update provide an array of dependencies which trigger layout updates:
+Popper does not know about layout changes. To force position update, provide an array of dependencies which trigger layout updates:
 
 ```tsx
 <Popper forceUpdateDependencies={[firstDependency, secondDependency]} {...otherProps} />
@@ -95,20 +95,8 @@ Popper does not know about layout changes. To force position update provide an a
 
 ## z-index
 
-By default Popper has `z-index: 1`, you can change that with `zIndex` prop:
+By default, Popper has `z-index: 1`, you can change that with `zIndex` prop:
 
 ```tsx
 <Popper zIndex={100} {...otherProps} />
-```
-
-## TypeScript
-
-```tsx
-import type { PopperProps } from '@mantine/core';
-```
-
-`PopperProps` is a generic, it accepts reference element type as single argument:
-
-```tsx
-type MyPopperProps = PopperProps<HTMLDivElement>;
 ```

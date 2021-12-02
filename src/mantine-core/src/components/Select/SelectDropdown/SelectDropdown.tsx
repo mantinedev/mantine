@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
@@ -16,6 +16,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   uuid: string;
   shadow: MantineShadow;
   maxDropdownHeight?: number | string;
+  withinPortal?: boolean;
   children: React.ReactNode;
   __staticSelector: string;
   dropdownComponent?: React.FC<any>;
@@ -35,6 +36,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       uuid,
       shadow,
       maxDropdownHeight,
+      withinPortal = true,
       children,
       classNames,
       styles,
@@ -42,7 +44,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
-      zIndex = 2000,
+      zIndex = getDefaultZIndex('popover'),
       __staticSelector,
     }: SelectDropdownProps,
     ref
@@ -59,6 +61,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
         position="bottom"
+        withinPortal={withinPortal}
         placementFallbacks={['top']}
         zIndex={zIndex}
         modifiers={[

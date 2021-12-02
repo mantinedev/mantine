@@ -5,12 +5,12 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
+  itSupportsMargins,
   itSupportsRef,
 } from '@mantine/tests';
 import { Divider } from '../Divider/Divider';
 import { Button } from '../Button/Button';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { MenuBody } from './MenuBody/MenuBody';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
 import { Menu } from './Menu';
@@ -36,32 +36,8 @@ describe('@mantine/core/Menu', () => {
   itSupportsClassName(Menu, defaultProps);
   itSupportsStyle(Menu, defaultProps);
   itSupportsOthers(Menu, defaultProps);
+  itSupportsMargins(Menu, defaultProps);
   itSupportsRef(Menu, defaultProps, HTMLButtonElement);
-
-  it('passes props to MenuBody component', () => {
-    const element = shallow(
-      <Menu
-        opened
-        shadow="xl"
-        size="xs"
-        transitionDuration={645}
-        closeOnItemClick={false}
-        menuBodyProps={{ 'data-test-menu': true, style: { color: 'red' } }}
-      >
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-      </Menu>
-    ).find(MenuBody);
-
-    expect(element.prop('children')).toHaveLength(3);
-    expect(element.prop('shadow')).toBe('xl');
-    expect(element.prop('size')).toBe('xs');
-    expect(element.prop('transitionDuration')).toBe(645);
-    expect(element.prop('closeOnItemClick')).toBe(false);
-    expect(element.prop('data-test-menu')).toBe(true);
-    expect(element.prop('style').color).toBe('red');
-  });
 
   it('calls onClose and onOpen function with corresponding events', () => {
     const onOpen = jest.fn();
@@ -105,7 +81,6 @@ describe('@mantine/core/Menu', () => {
     );
 
     expect(element.find(ActionIcon).prop('aria-controls')).toBe('test-id');
-    expect(element.find(MenuBody).prop('id')).toBe('test-id');
   });
 
   it('exports Menu.Item and Menu.Label components', () => {

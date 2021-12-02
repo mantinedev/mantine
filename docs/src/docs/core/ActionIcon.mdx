@@ -14,16 +14,14 @@ styles: ['ActionIcon']
 ---
 
 import { ActionIconDemos } from '@demos/core';
-import { ACTION_ICON_SIZES } from '@mantine/core';
 
 ## Usage
 
 <Demo data={ActionIconDemos.configurator} />
 
-## Icons
+## Children
 
-You can use icons from any react icons library, for example, [radix icons](https://icons.modulz.app/), [feather icons](https://feathericons.com/) or [react-icons](https://react-icons.github.io/react-icons).
-Note that component **does not control icon size** and you need to specify it manually on icon component for better fit:
+ActionIcon accepts any React node as child. It **does not control icon size**, specify it manually on icon component to match ActionIcon size:
 
 ```tsx
 <ActionIcon>
@@ -31,15 +29,9 @@ Note that component **does not control icon size** and you need to specify it ma
 </ActionIcon>
 ```
 
-## Where to use
-
-Password input visibility toggle example:
-
-<Demo data={ActionIconDemos.usage} />
-
 ## Variants
 
-ActionIcon has 5 variants: hover (default), transparent, filled, light and outline:
+ActionIcon has 6 variants: hover, default, transparent, filled, light and outline:
 
 <Demo data={ActionIconDemos.variants} />
 
@@ -68,18 +60,12 @@ Alternatively, you can use a number to set radius or size in px:
 <ActionIcon size={50} /> // -> { width: '50px', height: '50px' }
 ```
 
-<Demo data={ActionIconDemos.sizes} />
+## Close button
 
-You can get default sizes values by importing `ACTION_ICON_SIZES`:
+CloseButton is a premade ActionIcon with close icon, it is used in all other components: [Popover](/core/popover/), [Modal](/core/modal/), [Notification](/core/Notification/), etc.
+Component accepts the same props as ActionIcon with additional `iconSize` prop to control icon width and height:
 
-```tsx
-import { ACTION_ICON_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Width and height']}
-  data={Object.keys(ACTION_ICON_SIZES).map((size) => [size, `${ACTION_ICON_SIZES[size]}px`])}
-/>
+<Demo data={ActionIconDemos.closeButton} />
 
 ## Usage with react-router and other libraries
 
@@ -99,58 +85,7 @@ function Demo() {
 }
 ```
 
-## Get element ref
-
-You can get button ref with `ref` prop:
-
-```tsx
-import { useRef } from 'react';
-import { ActionIcon } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef();
-  return <ActionIcon ref={ref} />;
-}
-```
-
-To use `ref` with custom component in TypeScript you will need to specify generic types:
-
-```tsx
-// Simple variant with function ref – specify type on node itself:
-<ActionIcon component="a" ref={(node) => {}} />
-```
-
-## Close button
-
-CloseButton is a premade ActionIcon with close icon, it is used in all other components: [Popover](/core/popover/), [Modal](/core/modal/), [Notification](/core/Notification/), etc.
-Component accepts the same props as ActionIcon with additional `iconSize` prop to control icon width and height:
-
-<Demo data={ActionIconDemos.closeButton} />
-
-## Accessibility
-
-ActionIcon renders a regular button element.
-Include `title` or `aria-label` props for screen reader support
-as by design element does not associated label.
-
-```tsx
-// Set title to show message on hover
-<ActionIcon title="Settings">
-  <GearIcon />
-</ActionIcon>
-
-// Set aria-label to announce control with screen reader
-<ActionIcon aria-label="Settings">
-  <GearIcon />
-</ActionIcon>
-```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
+To use custom component with TypeScript, provide type (should match `component` prop):
 
 ```tsx
 // With element
@@ -172,35 +107,32 @@ in case you need full type coverage for events and `ref`:
 />
 ```
 
-### Component props type
+## Get element ref
 
-Import component props type:
+You can get button ref with `ref` prop:
 
 ```tsx
-import type { ActionIconProps, CloseButtonProps } from '@mantine/core';
+import { useRef } from 'react';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef();
+  return <ActionIcon ref={ref} />;
+}
 ```
 
-`ActionIconProps` is a generic type, it accepts either a string or component type as single type argument:
+To use `ref` with custom component in TypeScript you will need to specify generic types:
 
 ```tsx
-// ActionIconProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorIconProps = ActionIconProps<'a'>;
-
-// ActionIconProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomIconProps = ActionIconProps<typeof MyOtherComponent>;
+<ActionIcon<'a'> component="a" ref={(node) => {}} />
 ```
 
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
+## Accessibility
 
-`CloseButtonProps` unlike `ActionIconProps` is not a generic as component is always considered to be a button,
-it extends `React.ComponentPropsWithoutRef<'button'>`.
-
-### ActionIconVariant type
-
-`ActionIconVariant` is a union, it includes all ActionIcon variants:
+ActionIcon renders a regular button element. Set `title` or `aria-label` props for screen reader support:
 
 ```tsx
-import type { ActionIconVariant } from '@mantine/core';
-
-const myVariant: ActionIconVariant = 'filled';
+<ActionIcon /> // -> not visible to screen reader
+<ActionIcon title="Settings" /> // -> ok
+<ActionIcon aria-label="Settings" /> // -> ok
 ```

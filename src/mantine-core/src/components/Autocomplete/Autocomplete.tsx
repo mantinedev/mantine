@@ -6,6 +6,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import {
   InputWrapper,
@@ -87,6 +88,9 @@ export interface AutocompleteProps
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
 
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
+
   /** Dropdown z-index */
   zIndex?: number;
 }
@@ -130,7 +134,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       nothingFound,
       onDropdownClose,
       onDropdownOpen,
-      zIndex,
+      withinPortal,
+      zIndex = getDefaultZIndex('popover'),
       ...others
     }: AutocompleteProps,
     ref
@@ -140,7 +145,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
-
     const inputRef = useRef<HTMLInputElement>(null);
     const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
@@ -186,21 +190,22 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
-
           isColumn ? handlePrevious() : handleNext();
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
-
           isColumn ? handleNext() : handlePrevious();
           break;
         }
 
         case 'Enter': {
-          if (filteredData[hovered] && dropdownOpened) {
+          if (dropdownOpened) {
             event.preventDefault();
+          }
+
+          if (filteredData[hovered] && dropdownOpened) {
             handleChange(filteredData[hovered].value);
             typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
             setDropdownOpened(false);
@@ -219,6 +224,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
+      setDropdownOpened(true);
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -228,7 +234,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
       typeof onClick === 'function' && onClick(event);
-      setDropdownOpened(!dropdownOpened);
+      setDropdownOpened(true);
     };
 
     const shouldRenderDropdown =
@@ -301,6 +307,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             direction={direction}
             onDirectionChange={setDirection}
             referenceElement={inputRef.current}
+            withinPortal={withinPortal}
             zIndex={zIndex}
           >
             <SelectItems

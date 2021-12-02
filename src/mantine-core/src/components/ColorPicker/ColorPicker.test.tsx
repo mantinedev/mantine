@@ -27,7 +27,7 @@ describe('@mantine/core/ColorPicker', () => {
   itSupportsStylesApi(
     ColorPicker,
     { swatches, format: 'rgba' },
-    Object.keys(ColorPickerStylesApi),
+    Object.keys(ColorPickerStylesApi).filter((key) => key !== 'wrapper'),
     'ColorPicker'
   );
 

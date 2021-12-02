@@ -19,7 +19,7 @@ import { AppShellDemos } from '@demos/core';
 
 ## Usage
 
-AppShell is a layout component that can be used to create common Header - Navbar - Content layout pattern.
+AppShell is a layout component that can be used to create a common Header - Navbar - Content layout pattern.
 AppShell, Header and Navbar components include bare minimum default styles to simplify customization.
 
 <Demo data={AppShellDemos.usage} />
@@ -28,17 +28,18 @@ AppShell, Header and Navbar components include bare minimum default styles to si
 
 <Anchor href="/app-shell-demo/" target="_blank" mb="xl" style={{ display: 'block' }}>
   <Center inline>
-    <span style={{ marginRight: 7 }}>View responsive example in new tab</span>
+    <span style={{ marginRight: 7 }}>Open responsive example in new tab</span>
     <ExternalLinkIcon width={18} height={18} />
   </Center>
 </Anchor>
 
 ```tsx
 import { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
@@ -136,8 +137,8 @@ To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
 
 ### Navbar with custom scrollbars
 
-You can use [react-custom-scrollbars](https://malte-wessel.com/react-custom-scrollbars/)
-package with `Navbar.Section`, set `grow` property and render `Scrollbars` component inside:
+You can use [ScrollArea](/core/scroll-area/) component with `Navbar.Section`,
+set `grow` property and replace root element with `ScrollArea` component:
 
 <Demo data={AppShellDemos.scrollbars} />
 
@@ -166,21 +167,3 @@ function App() {
 
 - Both Header and Navbar components root element is `nav`
 - AppShell wraps content with `main` tag – **!important** do not use `main` tag inside AppShell
-
-## TypeScript
-
-### Components props types
-
-You can import AppShell, Navbar, Header and Navbar.Section components props types from `@mantine/core` package:
-
-- `AppShellProps`
-- `NavbarProps`
-- `NavbarSectionProps`
-- `HeaderProps`
-
-### Components styles names
-
-You can import AppShell and Navbar styles names from `@mantine/core` package:
-
-- `AppShellStylesNames`
-- `NavbarStylesNames`

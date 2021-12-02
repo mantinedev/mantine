@@ -29,30 +29,14 @@ const elements = [
 ];
 ```
 
-Table component accepts the same children as table element and adds mantine theme styles.
-
 <Demo data={TableDemos.usage} />
 
 ## Caption and tfoot
 
-Table support tfoot and caption elements.
-Pass `captionSide` prop (top or bottom) to change caption position.
+Table support tfoot and caption elements. Set `captionSide` prop (top or bottom) to change caption position.
 
 <Demo data={TableDemos.captions} />
 
 ## Striped and rows hover
 
-You can make table striped by passing `striped` prop to `Table`.
-If `highlightOnHover` prop is true rows will be highlighted with gray color on hover.
-
 <Demo data={TableDemos.configurator} />
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { TableProps } from '@mantine/core';
-```
-
-`TableProps` extends `React.ComponentPropsWithoutRef<'table'>`, all other props are available under _Component props_ tab.

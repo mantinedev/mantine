@@ -70,7 +70,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
-        <Anchor component="button" color="gray" onClick={onCancel}>
+        <Anchor component="button" color="gray" size="sm" onClick={onCancel}>
           Cancel
         </Anchor>
         <Button type="submit" size="sm">
@@ -192,7 +192,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
-        <Anchor component="button" color="gray" onClick={onCancel}>
+        <Anchor component="button" color="gray" onClick={onCancel} size="sm">
           Cancel
         </Anchor>
         <Button type="submit">Save</Button>

@@ -104,14 +104,8 @@ describe('@mantine/core/Modal', () => {
     expect(element.find(Overlay).prop('color')).toBe('#fff');
   });
 
-  it('sets correct z-index based on zIndex prop', () => {
-    const element = mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
-    expect(element.find(Overlay).prop('zIndex')).toBe(87);
-    expect(element.render().find('.mantine-Modal-inner').css('z-index')).toBe('88');
-  });
-
   it('locks scroll on mount', () => {
-    mount(<MantineModal opened onClose={() => {}} zIndex={87} />);
+    mount(<MantineModal opened onClose={() => {}} />);
 
     setTimeout(() => {
       expect(document.body.style.overflow).toBe('hidden');

@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import { Box } from '../../Box';
 import useStyles, { HeaderPosition } from './Header.styles';
 
-export interface HeaderProps extends DefaultProps {
+export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'nav'> {
   /** Header content */
   children: React.ReactNode;
 
@@ -27,27 +28,27 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     {
       children,
       className,
-      style,
+      classNames,
+      styles,
       height,
       padding = 0,
       fixed = false,
       position = { top: 0, left: 0, right: 0 },
       sx,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       ...others
     }: HeaderProps,
     ref
   ) => {
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { height, padding, fixed, position, zIndex },
-      { name: 'Header', sx }
+      { name: 'Header', sx, classNames, styles }
     );
 
     return (
-      <nav className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box component="nav" className={cx(classes.root, className)} ref={ref} {...others}>
         {children}
-      </nav>
+      </Box>
     );
   }
 );

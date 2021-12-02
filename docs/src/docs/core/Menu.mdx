@@ -14,7 +14,6 @@ styles: ['Menu']
 ---
 
 import { MenuDemos } from '@demos/core';
-import { MENU_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -46,19 +45,19 @@ To show menu on hover set props:
 - `trigger` to hover
 - `delay` to number in ms (defaults to 0)
 
-In this case menu will use `onMouseEnter` and `onFocus` events instead of `onClick`:
+In this case, menu will use `onMouseEnter` and `onFocus` events instead of `onClick`:
 
 <Demo data={MenuDemos.hover} />
 
 ## Menu.Item component
 
-You can use [Divider](/core/divider/) (renders horizontal line) and Menu.Item components inside Menu.
-Menu.Item renders button and accepts props:
+Menu.Item renders button and accepts following props:
 
-- **icon** – icon on the left
-- **children** – item label
-- **rightSection** – any element, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
-- **...others** – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `className`
+- `icon` – icon on the left
+- `children` – item label
+- `rightSection` – react node, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
+- `disabled` – disables item
+- `...others` – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `sx`, `className`
 
 ```tsx
 <Menu.Item
@@ -74,15 +73,18 @@ Menu.Item renders button and accepts props:
 </Menu.Item>
 ```
 
+## Disabled item
+
+<Demo data={MenuDemos.disabled} />
+
 ## Custom control
 
-By default menu button uses [ActionIcon](/core/action-icon/) with horizontal dots.
-You can change it by setting `control` and `controlRefProp` props:
+By default, menu button uses [ActionIcon](/core/action-icon/) with horizontal dots.
+You can change it by setting `control` and `controlRefProp` props.
+`controlRefProp` is a prop name with which element ref can be accessed.
+It defaults to `ref`, to change that set `controlRefProp="customRefProp"`.
 
 <Demo data={MenuDemos.controls} />
-
-`controlRefProp` is the prop name with which element ref can be accessed.
-It defaults to `ref`, to change that set `controlRefProp="customRefProp"`
 
 ## Change menu position
 
@@ -123,17 +125,6 @@ You can also use number value to set width in px:
 <Menu size={200} /> // -> 200px width
 ```
 
-You can get predefined menu sizes by importing `MENU_SIZES`:
-
-```tsx
-import { MENU_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Menu width']}
-  data={Object.keys(MENU_SIZES).map((size) => [size, `${MENU_SIZES[size]}px`])}
-/>
-
 ## Custom component as Menu.Item
 
 By default menu items render as button, to change that set `component` prop on Menu.Item component:
@@ -147,19 +138,6 @@ By default menu items render as button, to change that set `component` prop on M
 ```
 
 <Demo data={MenuDemos.component} />
-
-## Customize behavior
-
-You can control menu behavior with following props:
-
-- `trapFocus` – traps focus inside menu when it is opened
-- `closeOnScroll` – closes menu when page is scrolled
-
-By default both options are `true` to ensure better accessibility, to turn them off set to `false`:
-
-```tsx
-<Menu trapFocus={false} closeOnScroll={false} />
-```
 
 ## Store items separately
 
@@ -198,8 +176,6 @@ for example, change hovered item color:
 
 ## Get control element ref
 
-You can get menu control ref by passing `ref` prop to Menu component:
-
 ```tsx
 import { useRef } from 'react';
 import { Menu } from '@mantine/core';
@@ -213,45 +189,15 @@ function Demo() {
 ## Accessibility and usability
 
 To make component more accessible for users with screen readers set `menuButtonLabel` prop.
-Use it in case you chose control which does not include text, for example, default ActionIcon with horizontal dots icon.
+Set it in case you use a control which does not include text, for example, default ActionIcon with horizontal dots icon.
 
 Component behavior and properties:
 
-- When menu is opened focus is trapped inside
-- When menu is closed focus is moved back to menu control
+- When menu is opened, focus is trapped inside
+- When menu is closed, focus is moved back to menu control
 - Focus inside menu is controlled with up and down arrows, tab key has no effect
-- By default when menu item is clicked, menu closes, change it with `closeOnItemClick` prop
-- Menu is closed when user clicks outside ot presses escape
+- By default, when menu item is clicked, menu closes, change it with `closeOnItemClick` prop
+- Menu is closed when user clicks outside or presses escape
 - Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
 - Menu body has `menu` role, `aria-orientation` is always set to `vertical`
 - Menu item has `menuitem` role
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { MenuProps, MenuItemProps, MenuLabelProps } from '@mantine/core';
-```
-
-`MenuProps`, `MenuItemProps` and `MenuLabelProps` extend `React.ComponentPropsWithoutRef<'div'>`,
-all other props are available under _Component props_ tab.
-
-### MenuStylesNames type
-
-`MenuStylesNames` type is a union with Menu [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { MenuStylesNames } from '@mantine/core';
-
-const menuClasses: Partial<Record<MenuStylesNames, 'string'>> = {
-  item: 'menu-item',
-  arrow: 'menu-arrow',
-};
-
-<Menu classNames={menuClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

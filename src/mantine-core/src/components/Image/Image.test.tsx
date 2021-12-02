@@ -54,9 +54,9 @@ describe('@mantine/core/Image', () => {
     expect(element.find('img').prop('style').objectFit).toBe('contain');
   });
 
-  it('sets given width and height on wrapper element', () => {
+  it('sets given width and height on img element', () => {
     const element = shallow(<Image {...defaultProps} width={478} height={207} />);
-    const styles = element.find('.mantine-Image-root').prop('style');
+    const styles = element.find('.mantine-Image-image').prop('style');
     expect(styles.width).toBe(478);
     expect(styles.height).toBe(207);
   });

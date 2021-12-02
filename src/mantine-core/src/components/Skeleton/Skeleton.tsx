@@ -30,12 +30,18 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       style,
       circle,
       radius = 'sm',
+      classNames,
+      styles,
       ...others
     }: SkeletonProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ height, width, circle, radius }, { name: 'Skeleton', sx });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(
+      { height, width, circle, radius },
+      { classNames, styles, name: 'Skeleton', sx }
+    );
+
     return (
       <div
         className={cx(classes.root, { [classes.visible]: visible }, className)}

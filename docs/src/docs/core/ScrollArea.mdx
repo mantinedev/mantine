@@ -1,0 +1,50 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: ScrollArea
+order: 1
+slug: /core/scroll-area/
+category: 'misc'
+description: 'Area with custom scrollbars'
+props: ['ScrollArea']
+styles: ['ScrollArea']
+import: "import { ScrollArea } from '@mantine/core';"
+source: 'mantine-core/src/components/ScrollArea/ScrollArea.tsx'
+docs: 'core/ScrollArea.mdx'
+---
+
+import { AppShellDemos, ScrollAreaDemos } from '@demos/core';
+
+## Usage
+
+ScrollArea component is based on [Radix UI scroll area component](https://www.radix-ui.com/docs/primitives/components/scroll-area).
+It is adapted to work well with light and dark color schemes and supports the following props:
+
+- `type` defines scrollbars behavior:
+  - `hover` – scrollbars are visible on hover
+  - `scroll` – scrollbars are visible on scroll
+  - `auto` – similar to `overflow: auto` – scrollbars are always visible whether the content is overflowing
+  - `always` – same as `auto` but scrollbars are always visible regardless of whether the content is overflowing
+- `offsetScrollbars` – offset scrollbars with padding
+- `scrollbarSize` – scrollbar size in px, controls scrollbar and thumb width/height
+- `scrollHideDelay` – delay in md to hide scrollbars, applicable only when type is `hover` or `scroll`
+
+<Demo data={ScrollAreaDemos.configurator} />
+
+## Horizontal scrollbars
+
+<Demo data={ScrollAreaDemos.horizontal} />
+
+## Scroll to position
+
+To programmatically scroll to any position,
+get viewport element ref with `viewportRef` prop and call `scrollTo` method:
+
+<Demo data={ScrollAreaDemos.scrollTo} />
+
+## Usage with other components
+
+ScrollArea integrates seamlessly with all Mantine components that can require scrollbars.
+For example, it can be used with [Navbar.Section](/core/app-shell/) component:
+
+<Demo data={AppShellDemos.scrollbars} />

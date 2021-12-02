@@ -1,7 +1,7 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
 import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/core';
-import { useUuid } from '@mantine/hooks';
+import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -58,61 +58,72 @@ export interface RichTextEditorProps
   stickyOffset?: number | string;
 }
 
-export function RichTextEditor({
-  value,
-  onChange,
-  onImageUpload = defaultImageUpload,
-  sticky = true,
-  stickyOffset = 0,
-  labels = DEFAULT_LABELS,
-  controls = DEFAULT_CONTROLS,
-  id,
-  style,
-  className,
-  classNames,
-  styles,
-  sx,
-  ...others
-}: RichTextEditorProps) {
-  const uuid = useUuid(id);
-  const editorRef = useRef<any>();
-  const { classes, cx } = useStyles(
-    { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
-    { sx, classNames, styles, name: 'RichTextEditor' }
-  );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
+  (
+    {
+      value,
+      onChange,
+      onImageUpload = defaultImageUpload,
+      sticky = true,
+      stickyOffset = 0,
+      labels = DEFAULT_LABELS,
+      controls = DEFAULT_CONTROLS,
+      id,
+      style,
+      className,
+      classNames,
+      styles,
+      sx,
+      ...others
+    }: RichTextEditorProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const editorRef = useRef<Editor>();
+    const { classes, cx } = useStyles(
+      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
+      { sx, classNames, styles, name: 'RichTextEditor' }
+    );
+    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
-  const modules = useMemo(
-    () => ({
-      ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
-      imageUploader: {
-        upload: (file: File) => onImageUpload(file),
-      },
-    }),
-    [uuid]
-  );
+    const modules = useMemo(
+      () => ({
+        ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
+        imageUploader: {
+          upload: (file: File) => onImageUpload(file),
+        },
+      }),
+      [uuid]
+    );
 
-  useEffect(() => {
-    if (editorRef.current) {
-      attachShortcuts(editorRef?.current?.editor?.keyboard);
-    }
-  }, []);
+    useEffect(() => {
+      if (editorRef.current) {
+        attachShortcuts(editorRef?.current?.editor?.keyboard);
+      }
+    }, []);
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <Toolbar
-        controls={controls}
-        labels={labels}
-        sticky={sticky}
-        stickyOffset={stickyOffset}
-        classNames={classNames}
-        styles={styles}
-        id={uuid}
-      />
+    return (
+      <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+        <Toolbar
+          controls={controls}
+          labels={labels}
+          sticky={sticky}
+          stickyOffset={stickyOffset}
+          classNames={classNames}
+          styles={styles}
+          id={uuid}
+        />
 
-      <Editor theme="snow" modules={modules} value={value} onChange={onChange} ref={editorRef} />
-    </div>
-  );
-}
+        <Editor
+          theme="snow"
+          modules={modules}
+          value={value}
+          onChange={onChange}
+          ref={mergeRefs(editorRef, ref)}
+        />
+      </div>
+    );
+  }
+);
 
 RichTextEditor.displayName = '@mantine/rte/RichTextEditor';

@@ -16,6 +16,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/core';
 import {
   useClickOutside,
@@ -85,6 +86,9 @@ export interface DatePickerBaseSharedProps
 
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -146,7 +150,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonLabel,
       onClear,
       positionDependencies = [],
-      zIndex = 3,
+      zIndex = getDefaultZIndex('popover'),
+      withinPortal = true,
       onBlur,
       onFocus,
       onChange,
@@ -199,7 +204,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
-
       if (allowFreeInput) {
         closeDropdown();
       }
@@ -214,7 +218,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
-      if (event.code === 'Space' && !allowFreeInput) {
+      if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
         event.preventDefault();
         setDropdownOpened(true);
       }
@@ -284,6 +288,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               position="bottom"
               placement="start"
               gutter={10}
+              withinPortal={withinPortal}
               withArrow
               arrowSize={3}
               zIndex={zIndex}

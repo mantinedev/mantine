@@ -14,10 +14,26 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Code = forwardRef<HTMLElement, CodeProps>(
-  ({ className, children, block = false, color, style, sx, ...others }: CodeProps, ref) => {
+  (
+    {
+      className,
+      children,
+      block = false,
+      color,
+      style,
+      sx,
+      styles,
+      classNames,
+      ...others
+    }: CodeProps,
+    ref
+  ) => {
     const theme = useMantineTheme();
     const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-    const { classes, cx } = useStyles({ color: themeColor }, { name: 'Code', sx });
+    const { classes, cx } = useStyles(
+      { color: themeColor },
+      { name: 'Code', sx, styles, classNames }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     if (block) {

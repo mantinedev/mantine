@@ -83,35 +83,32 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     }, [src]);
 
     return (
-      <div
-        className={cx(classes.root, className)}
-        style={{ width, height, ...mergedStyles }}
-        ref={ref}
-        {...rest}
-      >
-        {isPlaceholder && (
-          <div className={classes.placeholder} title={alt}>
-            {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
-          </div>
-        )}
-
+      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
         <figure className={classes.figure}>
-          <img
-            className={classes.image}
-            src={src}
-            alt={alt}
-            style={{ objectFit: fit }}
-            ref={imageRef}
-            onLoad={(event) => {
-              setLoaded(true);
-              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-            }}
-            onError={(event) => {
-              setError(true);
-              typeof imageProps?.onError === 'function' && imageProps.onError(event);
-            }}
-            {...imageProps}
-          />
+          <div className={classes.imageWrapper}>
+            <img
+              className={classes.image}
+              src={src}
+              alt={alt}
+              style={{ objectFit: fit, width, height }}
+              ref={imageRef}
+              onLoad={(event) => {
+                setLoaded(true);
+                typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
+              }}
+              onError={(event) => {
+                setError(true);
+                typeof imageProps?.onError === 'function' && imageProps.onError(event);
+              }}
+              {...imageProps}
+            />
+
+            {isPlaceholder && (
+              <div className={classes.placeholder} title={alt}>
+                {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+              </div>
+            )}
+          </div>
 
           {!!caption && (
             <Text component="figcaption" size="sm" align="center" className={classes.caption}>

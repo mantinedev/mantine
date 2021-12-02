@@ -14,21 +14,14 @@ styles: ['ThemeIcon', 'single-node']
 ---
 
 import { ThemeIconDemos } from '@demos/core';
-import { THEME_ICON_SIZES } from '@mantine/core';
 
 ## Usage
-
-Use ThemeIcon to display an svg icon with theme color background and color. You can use icons from any react icons library, for example:
-
-- [radix icons](https://icons.modulz.app/) (used in mantine packages)
-- [feather](https://feathericons.com/)
-- [react-icons](https://react-icons.github.io/react-icons)
 
 <Demo data={ThemeIconDemos.configurator} />
 
 ## Color
 
-You can use any color from [theme.colors](/theming/extend-theme/#default-colors),
+ThemeIcon supports all colors from [theme.colors](/theming/extend-theme/#default-colors),
 default color is [theme.primaryColor](/theming/extend-theme/#primary-color):
 
 <Demo data={ThemeIconDemos.colors} />
@@ -46,9 +39,9 @@ To use gradient as ThemeIcon background:
 
 ## Size
 
-Note that component **does not control icon size** and you need to specify it manually on icon component for better fit.
-ThemeIcon has 5 predefined sizes: xs, sm, md, lg, xl. Size defines background width and height.
-Alternatively, you can use a number to set width and height in px:
+ThemeIcon **does not control icon size**, specify it manually on icon component for better fit.
+ThemeIcon has 5 predefined sizes: xs, sm, md, lg, xl. Size controls width and height.
+Alternatively, a number can be used to set width and height in px:
 
 ```tsx
 <ThemeIcon size="lg" /> // -> theme predefined large size
@@ -59,21 +52,10 @@ Sizes from xs to xl:
 
 <Demo data={ThemeIconDemos.sizes} />
 
-You can get default sizes for action icon by importing `THEME_ICON_SIZES`:
-
-```tsx
-import { THEME_ICON_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Width and height']}
-  data={Object.keys(THEME_ICON_SIZES).map((size) => [size, `${THEME_ICON_SIZES[size]}px`])}
-/>
-
 ## Radius
 
 xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, you can use a number to set radius in px:
+Alternatively, a number can be used to set radius in px:
 
 ```tsx
 <ThemeIcon radius="lg" /> // -> theme predefined large radius
@@ -84,13 +66,3 @@ Alternatively, you can use a number to set radius in px:
 Default radius from xs to xl for xl size:
 
 <Demo data={ThemeIconDemos.radius} />
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { ThemeIconProps } from '@mantine/core';
-```
-
-`ThemeIconProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

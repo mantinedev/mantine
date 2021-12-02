@@ -21,11 +21,12 @@ describe('@mantine/core/Chip', () => {
   itSupportsClassName(Chip, defaultProps);
   itRendersChildren(Chip, defaultProps);
   itSupportsRef(Chip, defaultProps, HTMLInputElement);
-
   itSupportsStylesApi(
     Chip,
     defaultProps,
-    Object.keys(ChipStylesApi).filter((key) => key !== 'disabled'),
+    Object.keys(ChipStylesApi).filter(
+      (key) => key !== 'outline' && key !== 'filled' && key !== 'disabled'
+    ),
     'Chip'
   );
 

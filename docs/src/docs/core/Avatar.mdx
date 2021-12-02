@@ -14,7 +14,6 @@ styles: ['Avatar', 'AvatarsGroup']
 ---
 
 import { AvatarDemos } from '@demos/core';
-import { AVATAR_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -22,10 +21,8 @@ import { AVATAR_SIZES } from '@mantine/core';
 
 ## Placeholder
 
-If `src` prop is not set, equals to null or image cannot be loaded,
-placeholder icon will be rendered instead.
-You can use any React node instead of placeholder icon.
-Usually icon or initials are used in this case:
+If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
+You can use any React node instead of placeholder icon. Usually icon or initials are used in this case:
 
 <Demo data={AvatarDemos.placeholders} />
 
@@ -45,19 +42,6 @@ Alternatively, you can use a number to set radius or size in px:
 <Avatar size={50} /> // -> { width: '50px', height: '50px' }
 ```
 
-<Demo data={AvatarDemos.sizes} />
-
-You can get predefined avatar sizes by importing `AVATAR_SIZES`:
-
-```tsx
-import { AVATAR_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Width and height']}
-  data={Object.keys(AVATAR_SIZES).map((size) => [size, `${AVATAR_SIZES[size]}px`])}
-/>
-
 ## Change root element
 
 You can set `component` prop on Avatar to use provide custom root element,
@@ -76,35 +60,7 @@ function Demo() {
 }
 ```
 
-## Avatars Group
-
-You can use AvatarsGroup to stack avatar components, set `limit` prop to truncate avatars:
-
-<Demo data={AvatarDemos.avatarsGroup} />
-
-You can also use `total` prop to override truncated avatars length:
-
-<Demo data={AvatarDemos.total} />
-
-## Accessibility
-
-Avatar renders img html element. It is important to add alt text.
-In case of image load failing alt will be used as `title` for placeholder.
-
-```tsx
-// alt is used as alt img attribute
-<Avatar src={image} alt="Rob Johnson" />
-
-// alt is used as title attribute
-<Avatar alt="Rob Johnson">RJ</Avatar>
-```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
+To use a custom component with TypeScript, you need to pass an additional type:
 
 ```tsx
 // With element
@@ -126,39 +82,24 @@ in case you need full type coverage for events and `ref`:
 />
 ```
 
-### Component props type
+## Avatars Group
 
-Import component props type:
+Use AvatarsGroup to stack avatar components, set `limit` prop to truncate avatars:
 
-```tsx
-import type { AvatarProps, AvatarsGroupProps } from '@mantine/core';
-```
+<Demo data={AvatarDemos.avatarsGroup} />
 
-`AvatarProps` is a generic type, it accepts either a string or component type as single type argument:
+To override truncated avatars length set `total` prop:
 
-```tsx
-// AvatarProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorAvatarProps = AvatarProps<'a'>;
+<Demo data={AvatarDemos.total} />
 
-// AvatarProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomAvatarProps = AvatarProps<typeof MyOtherComponent>;
-```
+## Accessibility
 
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
-
-### AvatarStylesNames type
-
-`AvatarStylesNames` type is a union with Avatar [Styles API](/theming/styles-api/) names:
+Avatar renders img html element. It is important to add alt text.
+If image fails to load alt will be used as `title` for placeholder.
 
 ```tsx
-import type { AvatarStylesNames } from '@mantine/core';
-
-const avatarClasses: Partial<Record<AvatarStylesNames, 'string'>> = {
-  image: 'avatar-image',
-  placeholder: 'avatar-placeholder',
-};
-
-<Avatar classNames={avatarClasses} />;
+<Avatar src={image} /> // -> not ok, no alt for image
+<Avatar src={image} alt="Rob Johnson" /> // -> ok
+<Avatar alt="Rob Johnson">RJ</Avatar> // -> ok, alt is used as title attribute
+<Avatar>RJ</Avatar> // -> ok, title is not required
 ```
-
-See full styles descriptions list under _Styles API_ tab.

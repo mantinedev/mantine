@@ -46,6 +46,14 @@ export function Collapse({
     onTransitionEnd,
   });
 
+  if (duration === 0) {
+    return opened ? (
+      <div className={sxClassName} {...rest}>
+        {children}
+      </div>
+    ) : null;
+  }
+
   return (
     <div {...getCollapseProps({ style: mergedStyles, ...rest })} className={sxClassName}>
       <div

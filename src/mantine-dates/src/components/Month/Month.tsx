@@ -1,5 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { DefaultProps, Text, MantineSize, ClassNames, useExtractedMargins } from '@mantine/core';
+import {
+  DefaultProps,
+  Text,
+  MantineSize,
+  ClassNames,
+  useExtractedMargins,
+  useMantineTheme,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
@@ -87,7 +94,7 @@ export function Month({
   onChange,
   autoFocus = false,
   disableOutsideEvents = false,
-  locale = 'en',
+  locale,
   dayClassName,
   dayStyle,
   disableOutsideDayStyle = false,
@@ -112,6 +119,8 @@ export function Month({
     { sx, classNames, styles, name: __staticSelector }
   );
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  const theme = useMantineTheme();
+  const finalLocale = locale || theme.datesLocale;
   const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month, firstDayOfWeek);
 
@@ -164,7 +173,7 @@ export function Month({
     }
   }, []);
 
-  const weekdays = getWeekdaysNames(locale, firstDayOfWeek).map((weekday) => (
+  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
     <th className={classes.weekdayCell} key={weekday}>
       <Text size={size} className={classes.weekday}>
         {upperFirst(weekday)}

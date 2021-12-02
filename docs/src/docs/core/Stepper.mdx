@@ -4,7 +4,7 @@ package: '@mantine/core'
 title: Stepper
 order: 1
 slug: /core/stepper/
-category: 'data-display'
+category: 'navigation'
 description: 'Display content divided into a steps sequence'
 props: ['Stepper', 'Step']
 import: "import { Stepper, Step } from '@mantine/core';"
@@ -123,33 +123,3 @@ to make component visible for screen readers in case you do not specify `label` 
 <Stepper.Step aria-label="Create an account" /> // -> ok
 <Stepper.Step title="Create an account" /> // -> ok
 ```
-
-## TypeScript
-
-### Component props
-
-Import component props type:
-
-```tsx
-import type { StepperProps, StepProps } from '@mantine/core';
-```
-
-- `StepperProps` extends `React.ComponentPropsWithoutRef<'div'>`
-- `StepProps` extends `React.ComponentPropsWithoutRef<'button'>`
-
-### StepperNames type
-
-`StepperNames` type is a union with Stepper [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { StepperNames } from '@mantine/core';
-
-const stepperClasses: Partial<Record<StepperNames, 'string'>> = {
-  step: 'stepper-step',
-  stepCompleted: 'stepper-completed',
-};
-
-<Stepper classNames={stepperClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

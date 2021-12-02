@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -20,6 +21,7 @@ import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultVal
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import {
   SelectItem,
   SelectDataItem,
@@ -125,7 +127,7 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   onCreate?: (query: string) => void;
 
   /** Change dropdown component, can be used to add custom scrollbars */
-  dropdownComponent?: React.FC<any>;
+  dropdownComponent?: any;
 
   /** Called when dropdown is opened */
   onDropdownOpen?(): void;
@@ -135,6 +137,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Limit amount of items selected */
   maxSelectedValues?: number;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 
   /** Dropdown z-index */
   zIndex?: number;
@@ -204,7 +209,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownClose,
       onDropdownOpen,
       maxSelectedValues,
-      zIndex,
+      withinPortal,
+      zIndex = getDefaultZIndex('popover'),
+      name,
       ...others
     }: MultiSelectProps,
     ref
@@ -406,8 +413,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         }
 
         case 'Enter': {
+          event.preventDefault();
+
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -416,8 +424,21 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           break;
         }
 
+        case 'Space': {
+          if (!searchable) {
+            event.preventDefault();
+            if (filteredData[hovered] && dropdownOpened) {
+              handleItemSelect(filteredData[hovered]);
+            } else {
+              setDropdownOpened(true);
+            }
+          }
+
+          break;
+        }
+
         case 'Backspace': {
-          if (_value.length > 0 && searchValue.length === 0 && searchable) {
+          if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
           }
@@ -448,12 +469,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={(e) => {
+          onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (dropdownOpened) {
-              e.preventDefault();
-              e.stopPropagation();
+              event.preventDefault();
+              event.stopPropagation();
             }
             handleValueRemove(item.value);
+            setDropdownOpened(true);
           }}
           key={item.value}
           size={size}
@@ -579,10 +601,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
-            dropdownComponent={dropdownComponent}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             referenceElement={wrapperRef.current}
             direction={direction}
             onDirectionChange={setDirection}
+            withinPortal={withinPortal}
             zIndex={zIndex}
           >
             <SelectItems
@@ -603,6 +626,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             />
           </SelectDropdown>
         </div>
+
+        {name && <input type="hidden" name={name} value={_value.join(',')} />}
       </InputWrapper>
     );
   }

@@ -17,7 +17,7 @@ function HandlersWrapper() {
 
   return (
     <Group spacing={5}>
-      <ActionIcon size={42} variant="outline" onClick={() => handlers.current.decrement()}>
+      <ActionIcon size={42} variant="default" onClick={() => handlers.current.decrement()}>
         –
       </ActionIcon>
       <NumberInput
@@ -30,7 +30,7 @@ function HandlersWrapper() {
         step={2}
         styles={{ input: { width: 54, textAlign: 'center' } }}
       />
-      <ActionIcon size={42} variant="outline" onClick={() => handlers.current.increment()}>
+      <ActionIcon size={42} variant="default" onClick={() => handlers.current.increment()}>
         +
       </ActionIcon>
     </Group>
@@ -43,18 +43,20 @@ function Demo() {
   const [value, setValue] = useState(0);
   const handlers = useRef<NumberInputHandlers>();
 
+  const controlStyles = {
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[4],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+    transitionDuration: '0ms',
+  };
+
   return (
     <Group spacing={5} position="center">
       <ActionIcon
         size={36}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.decrement()}
-        style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[4],
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-          transitionDuration: '0ms',
-        }}
+        style={controlStyles}
       >
         –
       </ActionIcon>
@@ -73,12 +75,7 @@ function Demo() {
         size={36}
         variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
         onClick={() => handlers.current.increment()}
-        style={{
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          borderColor: theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[4],
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-          transitionDuration: '0ms',
-        }}
+        style={controlStyles}
       >
         +
       </ActionIcon>

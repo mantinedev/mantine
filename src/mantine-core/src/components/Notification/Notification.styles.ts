@@ -6,21 +6,23 @@ interface NotificationStyles {
 }
 
 export default createStyles((theme, { color, disallowClose }: NotificationStyles, getRef) => {
-  const icon = {
-    ref: getRef('icon'),
-    boxSizing: 'border-box',
-    marginRight: theme.spacing.md,
-    width: 28,
-    height: 28,
-    borderRadius: 28,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: theme.white,
-  } as const;
+  const icon = getRef('icon');
 
   return {
-    icon,
+    closeButton: {},
+
+    icon: {
+      ref: icon,
+      boxSizing: 'border-box',
+      marginRight: theme.spacing.md,
+      width: 28,
+      height: 28,
+      borderRadius: 28,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: theme.white,
+    },
 
     withIcon: {
       paddingLeft: theme.spacing.xs,
@@ -58,7 +60,7 @@ export default createStyles((theme, { color, disallowClose }: NotificationStyles
         backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
       },
 
-      [`& .${icon.ref}`]: {
+      [`& .${icon}`]: {
         backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
         color: theme.white,
       },

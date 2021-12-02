@@ -45,6 +45,15 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
     },
   },
 
+  invalid: {
+    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+
+    '&::placeholder': {
+      opacity: 1,
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+    },
+  },
+
   withIcon: {
     paddingLeft: `${theme.fn.size({ size, sizes: INPUT_SIZES })}px !important`,
   },

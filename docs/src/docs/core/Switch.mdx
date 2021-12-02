@@ -14,37 +14,28 @@ styles: ['Switch']
 ---
 
 import { SwitchDemos } from '@demos/core';
-import { SWITCH_SIZES } from '@mantine/core';
 
 ## Usage
 
-Switch is another variant of [Checkbox](/core/checkbox/)
-component. Use it to capture boolean value input from user.
-For better accessibility set `label` prop, it will add associated label element.
-
 <Demo data={SwitchDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />;
+}
+```
 
 ## Sizes
 
-Switch has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size, input width and height.
+Switch has 5 predefined sizes: xs, sm, md, lg, xl. Size defines label font-size, input width and height.
 
 <Demo data={SwitchDemos.sizes} />
-
-You can get switch sizes by importing `SWITCH_SIZES`:
-
-```tsx
-import { SWITCH_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Width', 'Height']}
-  data={Object.keys(SWITCH_SIZES).map((size) => [
-    size,
-    `${SWITCH_SIZES[size].width}px`,
-    `${SWITCH_SIZES[size].height}px`,
-  ])}
-/>
 
 ## Radius
 
@@ -59,21 +50,7 @@ Alternatively, you can use a number to set radius in px:
 
 <Demo data={SwitchDemos.radius} />
 
-## Controlled
-
-```tsx
-import { useState } from 'react';
-import { Switch } from '@mantine/core';
-
-function Demo() {
-  const [checked, setChecked] = useState(false);
-  return <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} />;
-}
-```
-
 ## Get input ref
-
-You can get input ref with `ref` prop to:
 
 ```tsx
 import { useRef } from 'react';
@@ -87,39 +64,10 @@ function Demo() {
 
 ## Accessibility
 
-Switch is a regular input with checkbox type. Provide `aria-label` in case you use switch without label for screen reader support:
+Switch is a regular input with checkbox type. Provide `aria-label` if Switch is used without `label`:
 
 ```tsx
-<Switch label="I agree to everything" />; // -> ok, input and label is connected
-<Switch />; // not ok, input is not labeled
-<Switch aria-label="I agree to everything" />; // -> ok, label is not visible but will be announced by screen reader
+<Switch /> // -> not ok, input is not labeled
+<Switch label="I agree to everything" /> // -> ok, input and label is connected
+<Switch aria-label="I agree to everything" /> // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-### Component props
-
-Import component props type:
-
-```tsx
-import type { SwitchProps } from '@mantine/core';
-```
-
-`SwitchProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
-
-### SwitchStylesNames type
-
-`SwitchStylesNames` type is a union with Switch [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { SwitchStylesNames } from '@mantine/core';
-
-const switchClasses: Partial<Record<SwitchStylesNames, 'string'>> = {
-  icon: 'switch-icon',
-  label: 'switch-label',
-};
-
-<Switch classNames={switchClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

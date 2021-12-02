@@ -84,11 +84,13 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
       amountOfMonths = 1,
+      withinPortal = true,
       ...others
     }: DateRangePickerProps,
     ref
   ) => {
     const theme = useMantineTheme();
+    const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
@@ -103,8 +105,10 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const handleValueChange = (range: [Date, Date]) => {
       setValue(range);
-      window.setTimeout(() => inputRef.current?.focus(), 0);
-      closeCalendarOnChange && validationRule(range) && setDropdownOpened(false);
+      if (closeCalendarOnChange && validationRule(range)) {
+        setDropdownOpened(false);
+        window.setTimeout(() => inputRef.current?.focus(), 0);
+      }
     };
 
     const valueValid = validationRule(_value);
@@ -129,9 +133,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           inputLabel={
             valueValid
               ? `${upperFirst(
-                  dayjs(_value[0]).locale(locale).format(dateFormat)
+                  dayjs(_value[0]).locale(finalLocale).format(dateFormat)
                 )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(locale).format(dateFormat)
+                  dayjs(_value[1]).locale(finalLocale).format(dateFormat)
                 )}`
               : ''
           }
@@ -140,12 +144,13 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           clearable={clearable && valueValid}
           clearButtonLabel={clearButtonLabel}
           onClear={handleClear}
+          withinPortal={withinPortal}
           {...others}
         >
           <RangeCalendar
             classNames={classNames}
             styles={styles}
-            locale={locale}
+            locale={finalLocale}
             nextMonthLabel={nextMonthLabel}
             previousMonthLabel={previousMonthLabel}
             initialMonth={valueValid ? _value[0] : initialMonth}

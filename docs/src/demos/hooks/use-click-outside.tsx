@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, Button, Group, useMantineTheme } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import CodeDemo from '../../components/Demo/CodeDemo/CodeDemo';
+import { CodeDemo } from '@mantine/ds';
 
 const getCode = (events?: string) => `import { useState } from 'react';
 import { Paper, Button } from '@mantine/core';

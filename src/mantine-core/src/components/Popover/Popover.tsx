@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Popper, SharedPopperProps } from '../Popper/Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
@@ -67,6 +68,9 @@ export interface PopoverProps
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Whether to render the popover in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Popover({
@@ -76,7 +80,7 @@ export function Popover({
   title,
   onClose,
   opened,
-  zIndex = 1,
+  zIndex = getDefaultZIndex('popover'),
   arrowSize = 4,
   withArrow = false,
   transition = 'fade',
@@ -95,6 +99,7 @@ export function Popover({
   shadow = 'sm',
   closeButtonLabel,
   positionDependencies = [],
+  withinPortal = true,
   id,
   classNames,
   styles,
@@ -142,6 +147,7 @@ export function Popover({
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
+        withinPortal={withinPortal}
       >
         <PopoverBody
           shadow={shadow}

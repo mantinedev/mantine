@@ -17,7 +17,7 @@ import { GroupDemos } from '@demos/core';
 
 ## Usage
 
-Group allows you to compose any elements and components in flex container.
+Group allows you to compose any elements and components in a flex container.
 Use these props to change elements position inside Group:
 
 - **position** controls `justify-content` property
@@ -43,19 +43,3 @@ const MyButton => ({ label, className }) => <button className={className}>{label
 // Will work with Group – handle className
 const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
 ```
-
-## With divider
-
-You can use [Divider](/core/divider/) component to add additional visual separation and spacing:
-
-<Demo data={GroupDemos.divider} />
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { GroupProps } from '@mantine/core';
-```
-
-`GroupProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

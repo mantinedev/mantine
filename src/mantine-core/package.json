@@ -4,7 +4,7 @@
   "version": "3.2.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
-  "types": "lib/src/index.d.ts",
+  "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@mantine/styles": "3.2.3",
+    "@radix-ui/react-scroll-area": "^0.1.1",
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",
