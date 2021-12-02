@@ -161,6 +161,11 @@ describe('@mantine/core/Select', () => {
     expect(spy).toHaveBeenCalledWith(null);
   });
 
+  it('renders hidden input with current input value', () => {
+    const element = shallow(<Select {...defaultProps} name="custom-select" value="test-1" />);
+    expect(element.render().find('input[name="custom-select"]').attr('value')).toBe('test-1');
+  });
+
   it('has correct displayName', () => {
     expect(Select.displayName).toEqual('@mantine/core/Select');
   });

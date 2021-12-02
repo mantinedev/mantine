@@ -211,6 +211,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       maxSelectedValues,
       withinPortal,
       zIndex = getDefaultZIndex('popover'),
+      name,
       ...others
     }: MultiSelectProps,
     ref
@@ -613,6 +614,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             />
           </SelectDropdown>
         </div>
+
+        {name && <input type="hidden" name={name} value={_value.join(',')} />}
       </InputWrapper>
     );
   }

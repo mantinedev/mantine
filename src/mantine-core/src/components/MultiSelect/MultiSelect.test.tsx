@@ -51,6 +51,15 @@ describe('@mantine/core/MultiSelect', () => {
     expect(element.find(InputWrapper).prop('description')).toBe('test-description');
   });
 
+  it('renders hidden input with current input value', () => {
+    const element = shallow(
+      <MultiSelect {...defaultProps} name="custom-select" value={['React', 'Angular']} />
+    );
+    expect(element.render().find('input[name="custom-select"]').attr('value')).toBe(
+      'React,Angular'
+    );
+  });
+
   it('has correct displayName', () => {
     expect(MultiSelect.displayName).toEqual('@mantine/core/MultiSelect');
   });

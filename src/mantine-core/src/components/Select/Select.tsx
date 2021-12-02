@@ -167,6 +167,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownOpen,
       withinPortal,
       zIndex = getDefaultZIndex('popover'),
+      name,
       ...others
     }: SelectProps,
     ref
@@ -525,6 +526,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             />
           </SelectDropdown>
         </div>
+
+        {name && <input type="hidden" name={name} value={_value} />}
       </InputWrapper>
     );
   }
