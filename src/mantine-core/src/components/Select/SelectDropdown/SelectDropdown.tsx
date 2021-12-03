@@ -111,13 +111,10 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
           className={classes.dropdown}
           shadow={shadow}
           ref={ref}
-          style={{
-            maxHeight: maxDropdownHeight,
-            flexDirection: direction,
-          }}
+          style={{ maxHeight: maxDropdownHeight }}
           onMouseDown={(event) => event.preventDefault()}
         >
-          {children}
+          <div style={{ display: 'flex', flexDirection: direction }}>{children}</div>
         </Paper>
       </Popper>
     );
