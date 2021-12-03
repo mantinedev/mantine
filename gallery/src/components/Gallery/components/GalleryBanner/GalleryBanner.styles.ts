@@ -75,11 +75,19 @@ export default createStyles((theme) => ({
   controlMain: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
+    },
   },
 
   controlSecondary: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+
+    '&:hover': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+    },
   },
 
   features: {
