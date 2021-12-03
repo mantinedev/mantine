@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { paragraph } from '@mantine/mockdata';
 import { SubmitForm } from '@mantine/ds/src';
 import { Select } from '../Select';
 import { Button } from '../../Button';
@@ -54,6 +55,10 @@ function Controlled({ clearable = false }: { clearable?: boolean }) {
     </div>
   );
 }
+
+const content = Array(10)
+  .fill(0)
+  .map((_, index) => <p key={index}>{paragraph}</p>);
 
 function Creatable() {
   const [creatableData, setData] = useState(stringData);
@@ -149,4 +154,21 @@ storiesOf('@mantine/core/Select/stories', module)
     <SubmitForm>
       <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
     </SubmitForm>
+  ))
+  .add('Out of viewport', () => (
+    <div style={{ position: 'relative', marginTop: 40 }}>
+      <Select
+        label="Out of viewport"
+        data={data}
+        placeholder="Select items"
+        sx={{ position: 'absolute', right: '-50%' }}
+      />
+    </div>
+  ))
+  .add('Popper flip', () => (
+    <div style={{ maxWidth: 600, margin: 'auto' }}>
+      {content}
+      <Select label="Dropdown flip" data={data} placeholder="Select items" />
+      {content}
+    </div>
   ));

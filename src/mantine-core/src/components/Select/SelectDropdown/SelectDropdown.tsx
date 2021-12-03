@@ -66,6 +66,10 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         zIndex={zIndex}
         modifiers={[
           {
+            name: 'preventOverflow',
+            enabled: false,
+          },
+          {
             // @ts-ignore
             name: 'sameWidth',
             enabled: true,
