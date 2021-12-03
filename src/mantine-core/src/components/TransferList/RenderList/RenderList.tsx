@@ -45,10 +45,7 @@ export function RenderList({
   classNames,
   styles,
 }: RenderListProps) {
-  const { classes, cx } = useStyles(
-    { reversed, height },
-    { name: 'TransferList', classNames, styles }
-  );
+  const { classes, cx } = useStyles({ reversed }, { name: 'TransferList', classNames, styles });
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));
@@ -178,7 +175,7 @@ export function RenderList({
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
           className={classes.transferListItems}
-          style={{ height, position: 'relative' }}
+          style={{ height, position: 'relative', overflowX: 'hidden' }}
         >
           {items.length > 0 ? (
             items

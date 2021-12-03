@@ -2,12 +2,11 @@ import { createStyles } from '@mantine/styles';
 
 interface RenderListStyles {
   reversed: boolean;
-  height: number;
 }
 
 const ITEM_PADDING = 7;
 
-export default createStyles((theme, { reversed, height }: RenderListStyles) => ({
+export default createStyles((theme, { reversed }: RenderListStyles) => ({
   transferList: {
     flex: 1,
     display: 'flex',
@@ -37,8 +36,6 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
 
   transferListItems: {
     overflow: 'auto',
-    height,
-    maxHeight: height,
   },
 
   transferListHeader: {
@@ -48,7 +45,6 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
 
   transferListBody: {
     flex: 1,
-    overflow: 'hidden',
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     border: `1px solid ${
