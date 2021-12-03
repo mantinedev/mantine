@@ -22,6 +22,7 @@ export { useMouse } from './use-mouse/use-mouse';
 export { useMove, clampUseMovePosition } from './use-move/use-move';
 export { usePagination } from './use-pagination/use-pagination';
 export { useQueue } from './use-queue/use-queue';
+export { usePageLeave } from './use-page-leave/use-page-leave';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollIntoView } from './use-scroll-into-view/use-scroll-into-view';
 export { useResizeObserver } from './use-resize-observer/use-resize-observer';
