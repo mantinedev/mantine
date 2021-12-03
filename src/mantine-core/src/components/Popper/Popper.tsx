@@ -114,7 +114,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
 
   return (
     <Transition
-      mounted={mounted}
+      mounted={mounted && !!referenceElement}
       duration={transitionDuration}
       transition={transition}
       timingFunction={transitionTimingFunction}
