@@ -154,7 +154,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         key={index}
         active={activeTab === index}
         onKeyDown={handleKeyDown}
-        color={color}
+        color={tab.props.color || color}
         variant={variant}
         orientation={orientation}
         buttonRef={mergeRefs((node: HTMLButtonElement) => {
