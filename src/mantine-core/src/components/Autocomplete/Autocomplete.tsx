@@ -93,6 +93,9 @@ export interface AutocompleteProps
 
   /** Dropdown z-index */
   zIndex?: number;
+
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -136,6 +139,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownOpen,
       withinPortal,
       zIndex = getDefaultZIndex('popover'),
+      dropdownPosition = 'bottom',
       ...others
     }: AutocompleteProps,
     ref
@@ -309,6 +313,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             referenceElement={inputRef.current}
             withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}

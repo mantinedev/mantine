@@ -110,6 +110,9 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Dropdown z-index */
   zIndex?: number;
+
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -169,6 +172,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       withinPortal,
       zIndex = getDefaultZIndex('popover'),
       name,
+      dropdownPosition,
       ...others
     }: SelectProps,
     ref
@@ -524,6 +528,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             onDirectionChange={setDirection}
             withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}

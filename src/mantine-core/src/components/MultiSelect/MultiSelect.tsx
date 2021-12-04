@@ -143,6 +143,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
 
   /** Dropdown z-index */
   zIndex?: number;
+
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -212,6 +215,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       withinPortal,
       zIndex = getDefaultZIndex('popover'),
       name,
+      dropdownPosition = 'flip',
       ...others
     }: MultiSelectProps,
     ref
@@ -607,6 +611,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             onDirectionChange={setDirection}
             withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}
