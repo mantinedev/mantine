@@ -7,6 +7,7 @@ export * from './hooks/use-document-title';
 export * from './hooks/use-idle';
 export * from './hooks/use-interval';
 export * from './hooks/use-media-query';
+export * from './hooks/use-page-leave';
 export * from './hooks/use-reduced-motion';
 export * from './hooks/use-scroll-into-view';
 export * from './hooks/use-resize-observer';
