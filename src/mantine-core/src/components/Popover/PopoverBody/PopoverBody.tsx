@@ -8,7 +8,7 @@ export type PopoverBodyStylesNames = ClassNames<typeof useStyles>;
 
 interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   shadow: MantineShadow;
   radius: MantineNumberSize;
   spacing: MantineNumberSize;
@@ -17,6 +17,8 @@ interface PopoverBodyProps
   bodyId: string;
   onClose(): void;
   closeButtonLabel: string;
+  width?: number | string;
+  title?: React.ReactNode;
 }
 
 export const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
@@ -34,12 +36,13 @@ export const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
       onClose,
       closeButtonLabel,
       children,
+      width,
       ...others
     }: PopoverBodyProps,
     ref
   ) => {
     const { classes } = useStyles(
-      { shadow, radius, spacing },
+      { shadow, radius, spacing, width },
       { classNames, styles, name: 'Popover' }
     );
 
