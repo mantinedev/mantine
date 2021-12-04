@@ -84,6 +84,7 @@ export interface SelectSharedProps<Item, Value> {
   /** Dropdown positioning behavior */
   dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
+
 export interface SelectProps
   extends DefaultProps<BaseSelectStylesNames>,
     BaseSelectProps,
