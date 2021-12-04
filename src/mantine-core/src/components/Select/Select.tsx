@@ -21,32 +21,29 @@ import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
-import { SelectDataItem, SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
+import { SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 import { groupSortData } from './group-sort-data/group-sort-data';
 import useStyles from './Select.styles';
 
-export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSelectProps {
-  /** Input size */
-  size?: MantineSize;
-
+export interface SelectSharedProps<Item, Value> {
   /** Select data used to renderer items in dropdown */
-  data: SelectDataItem[];
-
-  /** Change item renderer */
-  itemComponent?: React.FC<any>;
-
-  /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: MantineShadow;
+  data: (string | Item)[];
 
   /** Controlled input value */
-  value?: string | null;
+  value?: Value;
 
   /** Uncontrolled input defaultValue */
-  defaultValue?: string | null;
+  defaultValue?: Value;
 
   /** Controlled input onChange handler */
-  onChange?(value: string | null): void;
+  onChange?(value: Value): void;
+
+  /** Function based on which items in dropdown are filtered */
+  filter?(value: string, item: Item): boolean;
+
+  /** Input size */
+  size?: MantineSize;
 
   /** Dropdown body appear/disappear transition */
   transition?: MantineTransition;
@@ -57,29 +54,51 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
 
+  /** Dropdown shadow from theme or any value to set box-shadow */
+  shadow?: MantineShadow;
+
   /** Initial dropdown opened state */
   initiallyOpened?: boolean;
 
-  /** Function based on which items in dropdown are filtered */
-  filter?(value: string, item: SelectItem): boolean;
+  /** Change item renderer */
+  itemComponent?: React.FC<any>;
 
+  /** Called when dropdown is opened */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown is closed */
+  onDropdownClose?(): void;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
+
+  /** Limit amount of items displayed at a time for searchable select */
+  limit?: number;
+
+  /** Nothing found label */
+  nothingFound?: React.ReactNode;
+
+  /** Dropdown z-index */
+  zIndex?: number;
+
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
+}
+export interface SelectProps
+  extends DefaultProps<BaseSelectStylesNames>,
+    BaseSelectProps,
+    SelectSharedProps<SelectItem | string, string | null> {
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;
 
   /** Set to true to enable search */
   searchable?: boolean;
 
-  /** Nothing found label */
-  nothingFound?: React.ReactNode;
-
   /** Allow to clear item */
   clearable?: boolean;
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
-
-  /** Limit amount of items displayed at a time for searchable select */
-  limit?: number;
 
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
@@ -98,21 +117,6 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
-
-  /** Called when dropdown is opened */
-  onDropdownOpen?(): void;
-
-  /** Called when dropdown is closed */
-  onDropdownClose?(): void;
-
-  /** Whether to render the dropdown in a Portal */
-  withinPortal?: boolean;
-
-  /** Dropdown z-index */
-  zIndex?: number;
-
-  /** Dropdown positioning behavior */
-  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export function defaultFilter(value: string, item: SelectItem) {

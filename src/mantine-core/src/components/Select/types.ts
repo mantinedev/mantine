@@ -11,8 +11,6 @@ export interface SelectItem {
   [key: string]: any;
 }
 
-export type SelectDataItem = string | SelectItem;
-
 export type BaseSelectStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
@@ -21,4 +19,4 @@ export type BaseSelectStylesNames =
 
 export type BaseSelectProps = InputWrapperBaseProps &
   InputBaseProps &
-  Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'>;
+  Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size' | 'defaultValue'>;
