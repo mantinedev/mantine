@@ -19,6 +19,6 @@ export function itSupportsRef(
     const ref = React.createRef<typeof refType>();
     const element = mount(<Component {...requiredProps} {...{ [refProp]: ref }} />);
     await waitForComponentToPaint(element);
-    expect(ref.current instanceof refType).toBe(true);
+    expect(ref.current?.constructor).toBe(refType);
   });
 }

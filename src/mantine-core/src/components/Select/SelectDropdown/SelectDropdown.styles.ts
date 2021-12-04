@@ -11,6 +11,6 @@ export default createStyles((theme) => ({
     }`,
     padding: 4,
     overflowY: 'auto',
-    display: 'flex',
+    width: '100%',
   },
 }));

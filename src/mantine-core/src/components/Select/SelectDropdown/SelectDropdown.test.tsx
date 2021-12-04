@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsRef } from '@mantine/tests';
 import { SelectDropdown } from './SelectDropdown';
 import { Paper } from '../../Paper';
 
@@ -18,7 +17,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/SelectDropdown', () => {
-  itSupportsRef(SelectDropdown, defaultProps, HTMLDivElement);
   it('sets correct id and aria-labelledby props on listbox', () => {
     const props = shallow(<SelectDropdown {...defaultProps} />)
       .find(Paper)
