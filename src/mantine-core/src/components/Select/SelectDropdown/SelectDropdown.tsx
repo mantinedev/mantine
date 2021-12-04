@@ -103,19 +103,20 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
           },
         ]}
       >
-        <Paper<'div'>
-          component={(dropdownComponent || 'div') as any}
-          id={`${uuid}-items`}
-          aria-labelledby={`${uuid}-label`}
-          role="listbox"
-          className={classes.dropdown}
-          shadow={shadow}
-          ref={ref}
-          style={{ maxHeight: maxDropdownHeight }}
-          onMouseDown={(event) => event.preventDefault()}
-        >
-          <div style={{ display: 'flex', flexDirection: direction }}>{children}</div>
-        </Paper>
+        <div style={{ maxHeight: maxDropdownHeight, display: 'flex' }}>
+          <Paper<'div'>
+            component={(dropdownComponent || 'div') as any}
+            id={`${uuid}-items`}
+            aria-labelledby={`${uuid}-label`}
+            role="listbox"
+            className={classes.dropdown}
+            shadow={shadow}
+            ref={ref}
+            onMouseDown={(event) => event.preventDefault()}
+          >
+            <div style={{ display: 'flex', flexDirection: direction }}>{children}</div>
+          </Paper>
+        </div>
       </Popper>
     );
   }
