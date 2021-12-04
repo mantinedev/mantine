@@ -91,6 +91,9 @@ export interface AutocompleteProps
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 
+  /** Whether to switch item order and keyboard navigation on dropdown position flip */
+  switchDirectionOnFlip?: boolean;
+
   /** Dropdown z-index */
   zIndex?: number;
 }
@@ -135,6 +138,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
+      switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       ...others
     }: AutocompleteProps,
@@ -306,6 +310,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             __staticSelector="Autocomplete"
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
             referenceElement={inputRef.current}
             withinPortal={withinPortal}
             zIndex={zIndex}

@@ -108,6 +108,9 @@ export interface SelectProps extends DefaultProps<BaseSelectStylesNames>, BaseSe
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 
+  /** Whether to switch item order and keyboard navigation on dropdown position flip */
+  switchDirectionOnFlip?: boolean;
+
   /** Dropdown z-index */
   zIndex?: number;
 }
@@ -167,6 +170,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
+      switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       name,
       ...others
@@ -522,6 +526,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             dropdownComponent={dropdownComponent || SelectScrollArea}
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
             withinPortal={withinPortal}
             zIndex={zIndex}
           >
