@@ -21,8 +21,7 @@ import { BadgeDemos } from '@demos/core';
 
 ## Colors
 
-Default Badge color is `theme.primaryColor`.
-You can use any color defined in [theme.colors](/theming/extend-theme/#default-colors).
+Badge supports all colors from [theme.colors](/theming/extend-theme/#default-colors).
 Note that not all colors in some variants are compatible with dark theme:
 
 <Demo data={BadgeDemos.colors} />
@@ -42,7 +41,7 @@ To use gradient as Badge background:
 
 Control badge font-size, height and padding with `size` and border-radius with `radius`.
 Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius in px:
+Alternatively, use a number to set radius in px:
 
 ```tsx
 <Badge radius="lg" /> // -> theme predefined large radius
@@ -54,21 +53,18 @@ Alternatively, you can use a number to set radius in px:
 
 ## Full width and overflow
 
-Badge will take full width of container if you set `fullWidth` prop.
+Badge will take full width of container if `fullWidth` prop is `true`.
 If badge cannot fit in its container, overflow content will be hidden with ellipsis:
 
 <Demo data={BadgeDemos.overflow} />
 
 ## Right and left sections
 
-You can add any react node as right and left section to badge.
-Use it to add interactive parts (for example, remove button) or additional information:
-
 <Demo data={BadgeDemos.sections} />
 
 ## Custom component
 
-You can change badge root element by passing React element to `component` prop.
+To change badge root element pass React element to `component` prop:
 
 <Demo data={BadgeDemos.component} />
 

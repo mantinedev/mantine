@@ -22,7 +22,7 @@ import { AvatarDemos } from '@demos/core';
 ## Placeholder
 
 If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
-You can use any React node instead of placeholder icon. Usually icon or initials are used in this case:
+Any React node can be used instead of placeholder icon. Usually icon or initials are used in this case:
 
 <Demo data={AvatarDemos.placeholders} />
 
@@ -32,7 +32,7 @@ You can use any React node instead of placeholder icon. Usually icon or initials
 
 Control avatar width and height with `size` and border-radius with `radius`.
 Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius or size in px:
+Alternatively, a number can be used to set radius or size in px:
 
 ```tsx
 <Avatar radius="lg" /> // -> theme predefined large radius
@@ -44,12 +44,9 @@ Alternatively, you can use a number to set radius or size in px:
 
 ## Change root element
 
-You can set `component` prop on Avatar to use provide custom root element,
-for example, you can make avatar a link:
-
 <Demo data={AvatarDemos.link} />
 
-You can also use React component instead of an element, for example, Link from react-router-dom:
+With custom component (react router example):
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -60,7 +57,7 @@ function Demo() {
 }
 ```
 
-To use a custom component with TypeScript, you need to pass an additional type:
+To use a custom component with TypeScript, pass an additional type:
 
 ```tsx
 // With element

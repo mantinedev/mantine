@@ -25,7 +25,7 @@ import { AccordionDemos } from '@demos/core';
 
 ## Change icons
 
-You can change icon for all items by setting `icon` prop on Accordion component:
+To change icon for all items set `icon` prop on Accordion component:
 
 <Demo data={AccordionDemos.icon} />
 
@@ -46,13 +46,13 @@ To disable transitions, set `transitionDuration` to 0:
 ## Customize styles
 
 By default, Accordion has bare minimum styles to make customization simple,
-you can add additional styles with [Styles API](/theming/styles-api/):
+add additional styles with [Styles API](/theming/styles-api/):
 
 <Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## Control state
 
-In most cases, you would want to use uncontrolled Accordion, to change initial opened item use `initialItem` prop:
+In most cases, Accordion can be uncontrolled, to change initial opened item use `initialItem` prop:
 
 ```tsx
 // -> Third element will be opened initially
@@ -62,7 +62,7 @@ In most cases, you would want to use uncontrolled Accordion, to change initial o
 <Accordion initialItem={-1} />;
 ```
 
-In more advanced cases, you can control Accordion state with `useAccordionState` hook:
+In more advanced cases, Accordion state can be controlled with `useAccordionState` hook:
 
 <Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
 

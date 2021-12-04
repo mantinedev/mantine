@@ -25,7 +25,7 @@ ActionIcon accepts any React node as child. It **does not control icon size**, s
 
 ```tsx
 <ActionIcon>
-  <YourIcon style={{ width: 16, height: 16 }} />
+  <SomeIcon style={{ width: 16, height: 16 }} />
 </ActionIcon>
 ```
 
@@ -37,7 +37,7 @@ ActionIcon has 6 variants: hover, default, transparent, filled, light and outlin
 
 ## Color
 
-You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors):
+ActionIcon supports all colors from [theme.colors](/theming/extend-theme/#default-colors):
 
 ```tsx
 <ActionIcon color="red" />
@@ -50,7 +50,7 @@ You can choose any color defined in [theme.colors](/theming/extend-theme/#defaul
 
 Control button width and height with `size` and border-radius with `radius`.
 Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius or size in px:
+Alternatively, use a number to set radius or size in px:
 
 ```tsx
 <ActionIcon radius="lg" /> // -> theme predefined large radius
@@ -69,8 +69,8 @@ Component accepts the same props as ActionIcon with additional `iconSize` prop t
 
 ## Usage with react-router and other libraries
 
-You can use ActionIcon component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
-or other similar libraries by passing `Link` as component to ActionIcon:
+To use ActionIcon component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
+or other similar libraries pass `Link` as component to ActionIcon:
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -109,8 +109,6 @@ To use custom component with TypeScript, provide type (should match `component` 
 
 ## Get element ref
 
-You can get button ref with `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
@@ -121,7 +119,7 @@ function Demo() {
 }
 ```
 
-To use `ref` with custom component in TypeScript you will need to specify generic types:
+To use `ref` with custom component in TypeScript, specify generic type:
 
 ```tsx
 <ActionIcon<'a'> component="a" ref={(node) => {}} />
