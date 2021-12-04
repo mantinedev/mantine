@@ -74,11 +74,6 @@ describe('@mantine/core/PopoverBody', () => {
     expect(element.find('.mantine-Popover-close').attr('aria-label')).toBe('test-close');
   });
 
-  it('renders title based on title prop', () => {
-    const element = shallow(<PopoverBody {...defaultProps} title="test-title" />).render();
-    expect(element.find('.mantine-Popover-title').text()).toBe('test-title');
-  });
-
   it('renders header with given title', () => {
     const withoutHeader = shallow(<PopoverBody {...defaultProps} title={null} />).render();
     const withHeader = shallow(<PopoverBody {...defaultProps} title="test-title" />).render();
