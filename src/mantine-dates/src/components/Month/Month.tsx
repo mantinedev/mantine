@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   DefaultProps,
   Text,
@@ -10,7 +10,7 @@ import {
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
-import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
+import { getMonthDays, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
 import useStyles from './Month.styles';
@@ -48,6 +48,9 @@ export interface MonthSettings {
 
   /** Prevent focusing upon clicking */
   preventFocus?: boolean;
+
+  /** Called when keydown event is registered on day */
+  onDayKeyDown?(date: Date, event: React.KeyboardEvent): void;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -82,6 +85,9 @@ export interface MonthProps
 
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeek;
+
+  /** Get days buttons refs */
+  daysRefs?: React.RefObject<Record<string, HTMLButtonElement>>;
 }
 
 const noop = () => {};
@@ -112,6 +118,8 @@ export function Month({
   preventFocus = false,
   sx,
   firstDayOfWeek = 'monday',
+  onDayKeyDown,
+  daysRefs,
   ...others
 }: MonthProps) {
   const { classes, cx } = useStyles(
@@ -121,43 +129,7 @@ export function Month({
   const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const theme = useMantineTheme();
   const finalLocale = locale || theme.datesLocale;
-  const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
   const days = getMonthDays(month, firstDayOfWeek);
-
-  const focusDay = (date: Date, diff: number) => {
-    const offset = new Date(date);
-    offset.setDate(date.getDate() + diff);
-
-    if (offset.toISOString() in daysRefs.current) {
-      if (!(!isSameMonth(month, offset) && disableOutsideEvents)) {
-        daysRefs.current[offset.toISOString()].focus();
-      }
-    }
-  };
-
-  const handleKeyDown = (currentDate: Date, event: React.KeyboardEvent) => {
-    const { code } = event.nativeEvent;
-
-    if (code === 'ArrowUp') {
-      event.preventDefault();
-      focusDay(currentDate, -7);
-    }
-
-    if (code === 'ArrowDown') {
-      event.preventDefault();
-      focusDay(currentDate, 7);
-    }
-
-    if (code === 'ArrowRight') {
-      event.preventDefault();
-      currentDate.getDay() !== 0 && focusDay(currentDate, 1);
-    }
-
-    if (code === 'ArrowLeft') {
-      event.preventDefault();
-      currentDate.getDay() !== 1 && focusDay(currentDate, -1);
-    }
-  };
 
   useEffect(() => {
     if (autoFocus) {
@@ -207,7 +179,10 @@ export function Month({
         <td className={classes.cell} key={cellIndex}>
           <Day
             ref={(button) => {
-              daysRefs.current[date.toISOString()] = button;
+              if (daysRefs?.current) {
+                // eslint-disable-next-line no-param-reassign
+                daysRefs.current[date.toISOString()] = button;
+              }
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
             onMouseDown={(event) => preventFocus && event.preventDefault()}
@@ -220,7 +195,7 @@ export function Month({
             firstInMonth={cellIndex === 0 && rowIndex === 0}
             selected={(dayProps.selected || dayProps.selectedInRange) && !withoutStylesOutsideMonth}
             hasValue={hasValueInMonthRange}
-            onKeyDown={handleKeyDown}
+            onKeyDown={onDayKeyDown}
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             styles={styles}

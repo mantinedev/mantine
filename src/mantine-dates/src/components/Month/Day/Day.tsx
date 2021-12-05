@@ -62,7 +62,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         type="button"
         onClick={onClick}
         ref={ref}
-        onKeyDown={(event) => onKeyDown(value, event)}
+        onKeyDown={(event) => typeof onKeyDown === 'function' && onKeyDown(value, event)}
         onMouseEnter={(event) => onMouseEnter(value, event)}
         tabIndex={hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1}
         data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}

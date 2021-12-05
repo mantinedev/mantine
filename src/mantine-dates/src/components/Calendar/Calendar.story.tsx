@@ -16,8 +16,8 @@ storiesOf('@mantine/dates/Calendar', module)
   .add('General usage', () => (
     <div style={{ padding: 40, width: 400 }}>
       <WrappedCalendar minDate={new Date()} />
-      <WrappedCalendar maxDate={new Date()} />
-      <WrappedCalendar withSelect disableOutsideEvents style={{ marginTop: 40 }} />
+      <WrappedCalendar maxDate={new Date()} mt="xl" />
+      <WrappedCalendar withSelect disableOutsideEvents mt="xl" />
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
