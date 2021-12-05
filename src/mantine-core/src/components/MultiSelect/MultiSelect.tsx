@@ -141,6 +141,9 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
 
+  /** Whether to switch item order and keyboard navigation on dropdown position flip */
+  switchDirectionOnFlip?: boolean;
+
   /** Dropdown z-index */
   zIndex?: number;
 }
@@ -210,6 +213,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
+      switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       name,
       ...others
@@ -605,6 +609,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             referenceElement={wrapperRef.current}
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
             withinPortal={withinPortal}
             zIndex={zIndex}
           >
