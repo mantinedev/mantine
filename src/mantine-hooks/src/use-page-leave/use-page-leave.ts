@@ -1,14 +1,8 @@
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export function usePageLeave(onPageLeave: () => void) {
-  const handler = (event: MouseEvent) => {
-    // http://help.dottoro.com/ljltrsom.php
+  useWindowEvent('mouseout', (event) => {
     const from = event.relatedTarget || (event as any).toElement;
-
-    if (!from || (from as any).nodeName === 'HTML') {
-      onPageLeave();
-    }
-  };
-
-  useWindowEvent('mouseout', handler);
+    (!from || (from as any).nodeName === 'HTML') && onPageLeave();
+  });
 }
