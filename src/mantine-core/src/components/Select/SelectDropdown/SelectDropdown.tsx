@@ -23,6 +23,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   referenceElement?: HTMLElement;
   direction?: React.CSSProperties['flexDirection'];
   onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
+  switchDirectionOnFlip?: boolean;
   zIndex?: number;
 }
 
@@ -44,6 +45,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
+      switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       __staticSelector,
     }: SelectDropdownProps,
@@ -95,7 +97,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
 
                 const nextDirection = state.placement === 'top' ? 'column-reverse' : 'column';
 
-                if (direction !== nextDirection) {
+                if (direction !== nextDirection && switchDirectionOnFlip) {
                   onDirectionChange && onDirectionChange(nextDirection);
                 }
               }

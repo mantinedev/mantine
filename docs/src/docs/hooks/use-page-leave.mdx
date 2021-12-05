@@ -1,0 +1,27 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'utils'
+title: 'use-page-leave'
+order: 1
+slug: /hooks/use-page-leave/
+description: 'Monitor when user leaves page'
+import: "import { useOs } from '@mantine/hooks';"
+docs: 'hooks/use-page-leave.mdx'
+source: 'mantine-hooks/src/use-page-leave/use-page-leave.ts'
+---
+
+import { usePageLeaveDemo } from '@docs/demos';
+
+## Usage
+
+Hook detect event when mouse leaves current page.
+It accepts function as an argument that is fired each time mouse leaves page.
+
+<Demo data={usePageLeaveDemo} />
+
+## Definition
+
+```tsx
+function usePageLeave(onPageLeave: () => void): void;
+```
