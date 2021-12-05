@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-export function getInputOnChange<T>(setValue: (value: T | ((current: T) => T)) => void) {
+export function getInputOnChange<T>(
+  setValue: (value: null | undefined | T | ((current: T) => T)) => void
+) {
   return (val: T | React.ChangeEvent<any> | ((current: T) => T)) => {
     if (!val) {
       setValue(val as T);
