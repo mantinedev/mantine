@@ -180,7 +180,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const inputRef = useRef<HTMLInputElement>();
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-    const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const isColumn = direction === 'column';
     const uuid = useUuid(id);
@@ -244,10 +243,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     const handleItemSelect = (item: SelectItem) => {
       handleChange(item.value);
+
       if (item.creatable) {
-        setCreatableDataValue(item.value);
         typeof onCreate === 'function' && onCreate(item.value);
       }
+
       if (inputMode === 'uncontrolled') {
         handleSearchChange(item.label);
       }
@@ -261,7 +261,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       searchable,
       limit,
       searchValue: inputValue,
-      creatable: !!creatableDataValue && creatableDataValue === inputValue,
       filter,
     });
 
