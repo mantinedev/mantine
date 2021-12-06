@@ -413,14 +413,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleSearchChange(event.currentTarget.value);
+
       if (clearable && event.currentTarget.value === '') {
         handleChange(null);
-        if (inputMode === 'uncontrolled') {
-          handleSearchChange('');
-        }
-      } else {
-        handleSearchChange(event.currentTarget.value);
       }
+
       setHovered(0);
       setDropdownOpened(true);
     };
