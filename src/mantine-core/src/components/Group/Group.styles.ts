@@ -27,9 +27,16 @@ export default createStyles(
       display: 'flex',
       flexDirection: direction,
       alignItems:
-        align || (direction === 'row' ? 'center' : grow ? 'stretch' : POSITIONS[position]),
+        align ||
+        (direction === 'row'
+          ? 'center'
+          : grow
+          ? 'stretch'
+          : position === 'apart'
+          ? 'flex-start'
+          : POSITIONS[position]),
       flexWrap: noWrap ? 'nowrap' : 'wrap',
-      justifyContent: direction === 'row' && POSITIONS[position],
+      justifyContent: direction === 'row' ? POSITIONS[position] : undefined,
       gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
 
