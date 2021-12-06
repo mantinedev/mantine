@@ -88,7 +88,9 @@ export function useForm<T extends { [key: string]: any }>({
     options?: { type?: 'checkbox' | 'default' }
   ) => ({
     [options?.type === 'checkbox' ? 'checked' : 'value']: values[field],
-    onChange: getInputOnChange<U>((val: U | null | undefined) => setFieldValue(field, val)),
+    onChange: getInputOnChange<U>((val: U) => setFieldValue(field, val)) as (
+      val: U | null | undefined
+    ) => void,
     error: errors[field] || undefined,
   });
 
