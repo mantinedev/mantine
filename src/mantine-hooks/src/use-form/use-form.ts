@@ -89,7 +89,7 @@ export function useForm<T extends { [key: string]: any }>({
   ) => ({
     [options?.type === 'checkbox' ? 'checked' : 'value']: values[field],
     onChange: getInputOnChange<U>((val: U) => setFieldValue(field, val)) as (
-      val: U | null | undefined
+      val: U | React.ChangeEvent<any> | null | undefined
     ) => void,
     error: errors[field] || undefined,
   });
