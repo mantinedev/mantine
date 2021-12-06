@@ -231,9 +231,12 @@ export function MantineDrawer({
   );
 }
 
-export function Drawer(props: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
+export function Drawer({
+  zIndex = getDefaultZIndex('modal'),
+  ...props
+}: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
   return (
-    <Portal zIndex={props.zIndex || 1000}>
+    <Portal zIndex={zIndex}>
       <MantineDrawer {...props} />
     </Portal>
   );
