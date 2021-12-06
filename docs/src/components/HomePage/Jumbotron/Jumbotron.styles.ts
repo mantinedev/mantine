@@ -11,36 +11,13 @@ export default createStyles((theme) => ({
 
   inner: {
     position: 'relative',
-    paddingTop: 200,
+    paddingTop: 220,
     paddingBottom: 180,
 
     [BREAKPOINT]: {
       paddingBottom: 100,
       paddingTop: 90,
     },
-  },
-
-  title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontWeight: 900,
-    fontSize: 104,
-    lineHeight: 1,
-    margin: 0,
-    padding: 0,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-
-    [BREAKPOINT]: {
-      fontSize: 40,
-      lineHeight: 1.2,
-    },
-  },
-
-  highlight: {
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
   },
 
   description: {
@@ -87,6 +64,12 @@ export default createStyles((theme) => ({
     borderWidth: 2,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
     backgroundColor: 'transparent',
+
+    '&:hover': {
+      backgroundColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
+      } !important`,
+    },
   },
 
   feature: {

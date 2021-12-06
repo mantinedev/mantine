@@ -12,8 +12,14 @@ export const clampUseMovePosition = (position: UseMovePosition) => ({
   y: clamp({ min: 0, max: 1, value: position.y }),
 });
 
+interface useMoveHandlers {
+  onScrubStart?(): void;
+  onScrubEnd?(): void;
+}
+
 export function useMove<T extends HTMLElement = HTMLDivElement>(
-  onChange: (value: UseMovePosition) => void
+  onChange: (value: UseMovePosition) => void,
+  handlers?: useMoveHandlers
 ) {
   const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
@@ -61,6 +67,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     const startScrubbing = () => {
       if (!isSliding.current && mounted.current) {
         isSliding.current = true;
+        typeof handlers?.onScrubStart === 'function' && handlers.onScrubStart();
         setActive(true);
         bindEvents();
       }
@@ -69,6 +76,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     const stopScrubbing = () => {
       if (isSliding.current && mounted.current) {
         isSliding.current = false;
+        typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
         setActive(false);
         unbindEvents();
       }

@@ -1,4 +1,4 @@
-import { createStyles, hexToRgba } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH } from '../settings';
 
 export default createStyles((theme) => ({
@@ -47,7 +47,9 @@ export default createStyles((theme) => ({
   linkActive: {
     borderLeftColor: theme.colors.blue[5],
     backgroundColor:
-      theme.colorScheme === 'dark' ? hexToRgba(theme.colors.blue[9], 0.45) : theme.colors.blue[0],
+      theme.colorScheme === 'dark'
+        ? theme.fn.rgba(theme.colors.blue[9], 0.45)
+        : theme.colors.blue[0],
     color: theme.colorScheme === 'dark' ? theme.colors.blue[1] : theme.colors.blue[8],
   },
 

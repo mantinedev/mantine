@@ -10,7 +10,7 @@ export function useLogger(componentName: string, props: any[]) {
 
   useDidUpdate(() => {
     console.log(`${componentName} updated`, ...props);
-  });
+  }, props);
 
   return null;
 }

@@ -6,19 +6,19 @@ import { Group } from '../../Group';
 const code = `
 const hide = { display: 'none' };
 
-<MediaQuery largerThan="lg">
+<MediaQuery largerThan="lg" styles={hide}>
   <Badge>Larger than lg</Badge>
 </MediaQuery>
 
-<MediaQuery smallerThan="lg">
+<MediaQuery smallerThan="lg" styles={hide}>
   <Badge color="red">Smaller than lg</Badge>
 </MediaQuery>
 
-<MediaQuery smallerThan="xl" largerThan="sm">
+<MediaQuery smallerThan="xl" largerThan="sm" styles={hide}>
   <Badge color="pink">Smaller than xl, larger than sm</Badge>
 </MediaQuery>
 
-<MediaQuery smallerThan={1500} largerThan={800}>
+<MediaQuery smallerThan={1500} largerThan={800} styles={hide}>
   <Badge color="cyan">Smaller than 1500px, larger than 800px</Badge>
 </MediaQuery>
 `;

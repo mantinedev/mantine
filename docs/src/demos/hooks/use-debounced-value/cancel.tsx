@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text, Button } from '@mantine/core';
-import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
+import { CodeDemo } from '@mantine/ds';
 
 const code = `import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';

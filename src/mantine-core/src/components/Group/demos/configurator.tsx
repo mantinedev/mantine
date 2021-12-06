@@ -47,6 +47,5 @@ export const configurator: MantineDemo = {
     },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'grow', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'withGutter', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

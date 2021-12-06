@@ -6,7 +6,9 @@ import { menuItems } from './_menu-items';
 function Wrapper(props: MenuProps) {
   return (
     <Group position="center">
-      <Menu {...props}>{menuItems}</Menu>
+      <Menu opened trapFocus={false} {...props}>
+        {menuItems}
+      </Menu>
     </Group>
   );
 }

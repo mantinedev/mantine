@@ -1,10 +1,8 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  getSizeValue,
   getSharedColorScheme,
   MantineGradient,
   MantineColor,
@@ -100,14 +98,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     }: ButtonProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const theme = useMantineTheme();
-    const colors = getSharedColorScheme({
-      color,
-      theme,
-      variant: variant === 'link' ? 'light' : variant,
-    });
-
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       {
         radius,
         color,
@@ -120,12 +111,13 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
       },
       { classNames, styles, sx, name: 'Button' }
     );
+    const colors = getSharedColorScheme({ color, theme, variant });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element = component || 'button';
     const loader = (
       <Loader
         color={colors.color}
-        size={getSizeValue({ size, sizes: heights }) / 2}
+        size={theme.fn.size({ size, sizes: heights }) / 2}
         {...loaderProps}
       />
     );
@@ -133,7 +125,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     return (
       <Element
         {...rest}
-        className={cx(classes.root, classes[variant], { [classes.loading]: loading }, className)}
+        className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
         disabled={disabled || loading}
         ref={ref}

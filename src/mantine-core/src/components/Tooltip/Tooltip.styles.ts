@@ -1,4 +1,4 @@
-import { createStyles, getThemeColor, getFontStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface TooltipStyles {
   color: MantineColor;
@@ -21,8 +21,8 @@ export default createStyles((theme, { color }: TooltipStyles) => ({
   },
 
   body: {
-    ...getFontStyles(theme),
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+    ...theme.fn.fontStyles(),
+    backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.radius.sm,
@@ -40,7 +40,7 @@ export default createStyles((theme, { color }: TooltipStyles) => ({
 
   arrow: {
     border: 0,
-    background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 9 }),
+    background: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
     zIndex: 1,
   },
 }));

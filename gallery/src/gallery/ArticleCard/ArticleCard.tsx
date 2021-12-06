@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     display: 'block',
-    marginTop: theme.spacing.xs,
+    marginTop: theme.spacing.md,
     marginBottom: theme.spacing.xs / 2,
   },
 
@@ -36,8 +36,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   footer: {
-    marginTop: theme.spacing.xs / 2,
-    marginBottom: -theme.spacing.md,
+    marginTop: theme.spacing.md,
   },
 }));
 
@@ -65,24 +64,21 @@ export function ArticleCard({
 }: ArticleCardProps & Omit<React.ComponentPropsWithoutRef<'div'>, keyof ArticleCardProps>) {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
+  const linkProps = { href: link, target: '_blank', rel: 'noopener noreferrer' };
 
   return (
     <Card shadow="sm" className={cx(classes.card, className)} {...others}>
       <Card.Section>
-        <a href={link} target="_blank" rel="noreferrer">
+        <a {...linkProps}>
           <Image src={image} height={180} />
         </a>
       </Card.Section>
 
-      <Badge
-        className={classes.rating}
-        variant="gradient"
-        gradient={{ from: 'indigo', to: 'cyan' }}
-      >
+      <Badge className={classes.rating} variant="gradient" gradient={{ from: 'yellow', to: 'red' }}>
         {rating}
       </Badge>
 
-      <Text className={classes.title} weight={500} component="a" href={link} target="_blank">
+      <Text className={classes.title} weight={500} component="a" {...linkProps}>
         {title}
       </Text>
 
@@ -92,13 +88,13 @@ export function ArticleCard({
 
       <Group position="apart" className={classes.footer}>
         <Center>
-          <Avatar src={author.image} size={24} radius="xl" style={{ marginRight: 8 }} />
+          <Avatar src={author.image} size={24} radius="xl" mr="xs" />
           <Text size="sm" inline>
             {author.name}
           </Text>
         </Center>
 
-        <Group spacing={8} style={{ marginRight: 0 }}>
+        <Group spacing={8} mr={0}>
           <ActionIcon className={classes.action} style={{ color: theme.colors.red[6] }}>
             <HeartIcon />
           </ActionIcon>

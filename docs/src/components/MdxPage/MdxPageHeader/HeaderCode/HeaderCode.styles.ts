@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   wrapper: {
@@ -23,7 +23,7 @@ export default createStyles((theme) => ({
   },
 
   copy: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     padding: 0,
     border: 0,
     appearance: 'none',

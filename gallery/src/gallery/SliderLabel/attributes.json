@@ -1,0 +1,12 @@
+{
+  "title": "Range slider with labels",
+  "category": "sliders",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

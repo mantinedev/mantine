@@ -1,27 +1,27 @@
 import React from 'react';
 import { ImageIcon, ChatBubbleIcon, MixerVerticalIcon } from '@modulz/radix-icons';
-import { Tabs, Tab, TabsProps } from '../index';
+import { Tabs, TabsProps } from '../index';
 
 function Wrapper(props: TabsProps) {
   return (
     <Tabs {...props}>
-      <Tab label="Gallery" icon={<ImageIcon />}>
+      <Tabs.Tab label="Gallery" icon={<ImageIcon />}>
         Gallery tab content
-      </Tab>
-      <Tab label="Messages" icon={<ChatBubbleIcon />}>
+      </Tabs.Tab>
+      <Tabs.Tab label="Messages" icon={<ChatBubbleIcon />}>
         Messages tab content
-      </Tab>
-      <Tab label="Settings" icon={<MixerVerticalIcon />}>
+      </Tabs.Tab>
+      <Tabs.Tab label="Settings" icon={<MixerVerticalIcon />}>
         Settings tab content
-      </Tab>
+      </Tabs.Tab>
     </Tabs>
   );
 }
 
 const codeTemplate = (props: string) => `<Tabs${props}>
-  <Tab label="Gallery" icon={<ImageIcon />}>Gallery tab content</Tab>
-  <Tab label="Messages" icon={<ChatBubbleIcon />}>Messages tab content</Tab>
-  <Tab label="Settings" icon={<MixerVerticalIcon />}>Settings tab content</Tab>
+  <Tabs.Tab label="Gallery" icon={<ImageIcon />}>Gallery tab content</Tabs.Tab>
+  <Tabs.Tab label="Messages" icon={<ChatBubbleIcon />}>Messages tab content</Tabs.Tab>
+  <Tabs.Tab label="Settings" icon={<MixerVerticalIcon />}>Settings tab content</Tabs.Tab>
 </Tabs>`;
 
 export const colorsConfigurator: MantineDemo = {

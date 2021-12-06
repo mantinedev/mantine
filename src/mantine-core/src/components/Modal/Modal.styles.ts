@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export const sizes = {
   xs: 320,
@@ -12,9 +12,10 @@ export const sizes = {
 interface ModalStyles {
   overflow: 'outside' | 'inside';
   size: string | number;
+  centered: boolean;
 }
 
-export default createStyles((theme, { overflow, size }: ModalStyles) => ({
+export default createStyles((theme, { overflow, size, centered }: ModalStyles) => ({
   root: {
     position: 'fixed',
     top: 0,
@@ -33,11 +34,11 @@ export default createStyles((theme, { overflow, size }: ModalStyles) => ({
     padding: `${theme.spacing.xl * 2}px ${theme.spacing.md}px`,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    alignItems: centered ? 'center' : 'flex-start',
   },
 
   clickOutsideOverlay: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
@@ -52,7 +53,7 @@ export default createStyles((theme, { overflow, size }: ModalStyles) => ({
   },
 
   modal: {
-    width: getSizeValue({ sizes, size }),
+    width: theme.fn.size({ sizes, size }),
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },

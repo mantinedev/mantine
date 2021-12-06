@@ -1,0 +1,10 @@
+{
+  "title": "Number input with currency select",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/text-input/", "/core/native-select/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

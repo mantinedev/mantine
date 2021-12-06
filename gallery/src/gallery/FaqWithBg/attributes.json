@@ -3,6 +3,7 @@
   "category": "faq",
   "author": "rtivital",
   "responsive": true,
+  "withColor": true,
   "dependencies": [
     "/core/accordion/",
     "/core/title/",

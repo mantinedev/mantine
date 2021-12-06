@@ -11,12 +11,10 @@ interface ColorControlProps {
 export function ColorControl({ onChange, value }: ColorControlProps) {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
-  const colors = ['red', 'pink', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green'].map(
-    (color) => ({
-      swatch: theme.colors[color][6],
-      color,
-    })
-  );
+  const colors = Object.keys(theme.colors).map((color) => ({
+    swatch: theme.colors[color][6],
+    color,
+  }));
 
   const swatches = colors.map(({ color, swatch }) => (
     <ColorSwatch

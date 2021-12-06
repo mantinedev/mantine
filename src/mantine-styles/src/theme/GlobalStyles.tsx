@@ -1,6 +1,5 @@
 import React from 'react';
-import { getFontStyles } from './utils';
-import { Global } from '../tss/Global';
+import { Global } from '../tss';
 
 export function GlobalStyles() {
   return (
@@ -11,11 +10,12 @@ export function GlobalStyles() {
         },
 
         body: {
-          ...getFontStyles(theme),
+          ...theme.fn.fontStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
-        },
+          fontSizes: theme.fontSizes.md,
+        } as any,
       })}
     />
   );

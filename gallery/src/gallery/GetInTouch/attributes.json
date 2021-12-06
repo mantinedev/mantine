@@ -10,7 +10,8 @@
     "/core/text/",
     "/core/button/",
     "/core/group/",
-    "/gallery/component/contact-icons",
+    "/core/simple-grid/",
+    "/component/contact-icons/",
     "https://www.svgbackgrounds.com/"
   ],
   "canvas": {

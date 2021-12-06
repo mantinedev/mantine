@@ -1,4 +1,4 @@
-import { createStyles, getFontStyles, getThemeColor, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
 interface BlockquoteStyles {
   color: MantineColor;
@@ -6,7 +6,7 @@ interface BlockquoteStyles {
 
 export default createStyles((theme, { color }: BlockquoteStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     fontSize: theme.fontSizes.lg,
     lineHeight: theme.lineHeight,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -27,7 +27,7 @@ export default createStyles((theme, { color }: BlockquoteStyles) => ({
   },
 
   icon: {
-    color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 6 : 7 }),
+    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
     marginRight: theme.spacing.lg,
     marginTop: 2,
     width: 22,

@@ -1,0 +1,19 @@
+{
+  "title": "Card with icon features",
+  "category": "cards",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/card/",
+    "/core/text/",
+    "/core/group/",
+    "/core/badge/",
+    "/core/image/",
+    "/core/button/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

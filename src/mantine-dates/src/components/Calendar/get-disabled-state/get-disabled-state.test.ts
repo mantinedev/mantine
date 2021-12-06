@@ -17,11 +17,37 @@ describe('@mantine/dates/Calendar/get-disabled-state', () => {
   });
 
   it('returns correct disabled state for maxDate', () => {
-    const disabled = getDisabledState({ month: new Date(), minDate: null, maxDate: new Date() });
+    const disabled = getDisabledState({
+      month: new Date(),
+      minDate: null,
+      maxDate: new Date(),
+      amountOfMonths: 1,
+    });
     const notDisabled = getDisabledState({
       month: new Date(),
       minDate: null,
       maxDate: dayjs(new Date()).add(10, 'years').toDate(),
+      amountOfMonths: 1,
+    });
+
+    expect(disabled.nextDisabled).toBe(true);
+    expect(disabled.previousDisabled).toBe(false);
+    expect(notDisabled.previousDisabled).toBe(false);
+    expect(notDisabled.nextDisabled).toBe(false);
+  });
+
+  it('returns correct disabled state for maxDate with multiple months', () => {
+    const disabled = getDisabledState({
+      month: new Date(),
+      minDate: null,
+      maxDate: dayjs(new Date()).add(1, 'months').toDate(),
+      amountOfMonths: 2,
+    });
+    const notDisabled = getDisabledState({
+      month: new Date(),
+      minDate: null,
+      maxDate: dayjs(new Date()).add(2, 'months').toDate(),
+      amountOfMonths: 2,
     });
 
     expect(disabled.nextDisabled).toBe(true);

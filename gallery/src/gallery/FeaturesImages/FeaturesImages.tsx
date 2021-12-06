@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Text,
-  Container,
-  ThemeIcon,
-  Title,
-  SimpleGrid,
-  hexToRgba,
-  createStyles,
-} from '@mantine/core';
+import { Image, Text, Container, ThemeIcon, Title, SimpleGrid, createStyles } from '@mantine/core';
 import IMAGES from './images';
 
 const useStyles = createStyles((theme) => ({
@@ -53,7 +44,7 @@ const useStyles = createStyles((theme) => ({
   highlight: {
     backgroundColor:
       theme.colorScheme === 'dark'
-        ? hexToRgba(theme.colors[theme.primaryColor][6], 0.55)
+        ? theme.fn.rgba(theme.colors[theme.primaryColor][6], 0.55)
         : theme.colors[theme.primaryColor][0],
     padding: 5,
     paddingTop: 0,

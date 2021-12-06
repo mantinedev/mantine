@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface TabsStyles {
   tabPadding: MantineNumberSize;
@@ -21,7 +21,7 @@ export default createStyles((theme, { tabPadding, orientation }: TabsStyles, get
     },
 
     body: {
-      [orientation === 'horizontal' ? 'paddingTop' : 'paddingLeft']: getSizeValue({
+      [orientation === 'horizontal' ? 'paddingTop' : 'paddingLeft']: theme.fn.size({
         size: tabPadding,
         sizes: theme.spacing,
       }),

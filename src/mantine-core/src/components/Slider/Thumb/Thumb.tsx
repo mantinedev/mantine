@@ -1,11 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
@@ -29,6 +23,7 @@ interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onFocus?(): void;
   onBlur?(): void;
   showLabelOnHover?: boolean;
+  children?: React.ReactNode;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -53,11 +48,14 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onFocus,
       onBlur,
       showLabelOnHover,
+      children = null,
     }: ThumbProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles({ color, size }, { classNames, styles, name: 'Slider' });
+    const { classes, cx, theme } = useStyles(
+      { color, size },
+      { classNames, styles, name: 'Slider' }
+    );
     const [focused, setFocused] = useState(false);
     const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 
@@ -85,6 +83,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onClick={(event) => event.stopPropagation()}
         style={{ left: `${position}%` }}
       >
+        {children}
         <Transition
           mounted={label != null && isVisible}
           duration={labelTransitionDuration}

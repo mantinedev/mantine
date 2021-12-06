@@ -1,11 +1,11 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface AutocompleteStyles {
   size: MantineSize;
 }
 
 export default createStyles((theme, { size }: AutocompleteStyles) => {
-  const spacing = getSizeValue({ size, sizes: theme.spacing });
+  const spacing = theme.fn.size({ size, sizes: theme.spacing });
 
   return {
     wrapper: {
@@ -16,7 +16,7 @@ export default createStyles((theme, { size }: AutocompleteStyles) => {
       textAlign: 'left',
       width: '100%',
       padding: `${spacing / 1.5}px ${spacing}`,
-      fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     },
 

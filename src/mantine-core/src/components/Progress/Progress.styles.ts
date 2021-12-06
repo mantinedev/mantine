@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getThemeColor,
-  getSizeValue,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export const sizes = {
   xs: 3,
@@ -24,9 +18,9 @@ interface ProgressStyles {
 export default createStyles((theme, { color, radius, size, striped }: ProgressStyles) => ({
   root: {
     position: 'relative',
-    height: getSizeValue({ size, sizes }),
+    height: theme.fn.size({ size, sizes }),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     overflow: 'hidden',
   },
 
@@ -36,7 +30,7 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
     bottom: 0,
     left: 0,
     height: '100%',
-    backgroundColor: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 4 : 6 }),
+    backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
     transition: `width 200ms ${theme.transitionTimingFunction}`,
     backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
     backgroundImage: striped
@@ -44,13 +38,13 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
       : 'none',
 
     '&:last-of-type': {
-      borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderBottomRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     },
 
     '&:first-of-type': {
-      borderTopLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-      borderBottomLeftRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+      borderTopLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderBottomLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     },
 
     '@media (prefers-reduced-motion)': {

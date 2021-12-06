@@ -67,15 +67,24 @@ describe('@mantine/dates/RangeCalendar', () => {
   });
 
   it('passes __staticSelector prop to CalendarHeader and Month components', () => {
-    const element = shallow(<RangeCalendar {...defaultProps} __staticSelector="test-selector" />);
-    expect(element.find(Month).prop('__staticSelector')).toBe('test-selector');
-    expect(element.find(CalendarHeader).prop('__staticSelector')).toBe('test-selector');
+    const element = shallow(
+      <RangeCalendar {...defaultProps} amountOfMonths={2} __staticSelector="test-selector" />
+    );
+
+    expect(element.find(Month).at(0).prop('__staticSelector')).toBe('test-selector');
+    expect(element.find(CalendarHeader).at(0).prop('__staticSelector')).toBe('test-selector');
+
+    expect(element.find(Month).at(1).prop('__staticSelector')).toBe('test-selector-month-1');
+    expect(element.find(CalendarHeader).at(1).prop('__staticSelector')).toBe(
+      'test-selector-month-1'
+    );
   });
 
   it('passes size, nextMonthLabel, previousMonthLabel, withSelect, yearsRange, labelFormat props to CalendarHeader component', () => {
-    const props = shallow(
+    const calendarHeaders = shallow(
       <RangeCalendar
         {...defaultProps}
+        amountOfMonths={2}
         size="xl"
         nextMonthLabel="test-next-label"
         previousMonthLabel="test-previous-label"
@@ -83,9 +92,10 @@ describe('@mantine/dates/RangeCalendar', () => {
         yearsRange={{ from: 2011, to: 2032 }}
         labelFormat="MM YYYY"
       />
-    )
-      .find(CalendarHeader)
-      .props();
+    ).find(CalendarHeader);
+
+    const props = calendarHeaders.at(0).props();
+    const propsSecondHeader = calendarHeaders.at(1).props();
 
     expect(props.size).toBe('xl');
     expect(props.nextMonthLabel).toBe('test-next-label');
@@ -93,6 +103,13 @@ describe('@mantine/dates/RangeCalendar', () => {
     expect(props.withSelect).toBe(true);
     expect(props.yearsRange).toEqual({ from: 2011, to: 2032 });
     expect(props.labelFormat).toBe('MM YYYY');
+
+    expect(propsSecondHeader.size).toBe('xl');
+    expect(propsSecondHeader.nextMonthLabel).toBe('test-next-label');
+    expect(propsSecondHeader.previousMonthLabel).toBe('test-previous-label');
+    expect(propsSecondHeader.withSelect).toBe(true);
+    expect(propsSecondHeader.yearsRange).toEqual({ from: 2011, to: 2032 });
+    expect(propsSecondHeader.labelFormat).toBe('MM YYYY');
   });
 
   it('passes range, dayClassName, disableOutsideEvents, minDate, maxDate, excludeDate, fullWidth, size props to Month component', () => {
@@ -102,9 +119,10 @@ describe('@mantine/dates/RangeCalendar', () => {
     const dayClassName = jest.fn();
     const excludeDate = jest.fn();
 
-    const props = shallow(
+    const months = shallow(
       <RangeCalendar
         {...defaultProps}
+        amountOfMonths={2}
         value={value}
         dayClassName={dayClassName}
         disableOutsideEvents
@@ -114,9 +132,10 @@ describe('@mantine/dates/RangeCalendar', () => {
         fullWidth
         size="xl"
       />
-    )
-      .find(Month)
-      .props();
+    ).find(Month);
+
+    const props = months.at(0).props();
+    const propsSecondMonth = months.at(1).props();
 
     expect(props.range).toBe(value);
     expect(props.dayClassName).toBe(dayClassName);
@@ -126,6 +145,15 @@ describe('@mantine/dates/RangeCalendar', () => {
     expect(props.disableOutsideEvents).toBe(true);
     expect(props.fullWidth).toBe(true);
     expect(props.size).toBe('xl');
+
+    expect(propsSecondMonth.range).toBe(value);
+    expect(propsSecondMonth.dayClassName).toBe(dayClassName);
+    expect(propsSecondMonth.minDate).toBe(minDate);
+    expect(propsSecondMonth.maxDate).toBe(maxDate);
+    expect(propsSecondMonth.excludeDate).toBe(excludeDate);
+    expect(propsSecondMonth.disableOutsideEvents).toBe(true);
+    expect(propsSecondMonth.fullWidth).toBe(true);
+    expect(propsSecondMonth.size).toBe('xl');
   });
 
   it('has correct displayName', () => {

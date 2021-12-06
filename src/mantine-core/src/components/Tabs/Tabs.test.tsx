@@ -11,19 +11,18 @@ import {
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs } from './Tabs';
-import { Tab } from './Tab/Tab';
 import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
-  <Tab label="tab-1" key="tab-1" icon="test-icon">
+  <Tabs.Tab label="tab-1" key="tab-1" icon="test-icon">
     tab-1
-  </Tab>,
-  <Tab label="tab-2" key="tab-2">
+  </Tabs.Tab>,
+  <Tabs.Tab label="tab-2" key="tab-2">
     tab-2
-  </Tab>,
-  <Tab label="tab-3" key="tab-3">
+  </Tabs.Tab>,
+  <Tabs.Tab label="tab-3" key="tab-3">
     tab-3
-  </Tab>,
+  </Tabs.Tab>,
 ];
 
 const defaultProps = { children: content };
@@ -105,8 +104,8 @@ describe('@mantine/core/Tabs', () => {
   it('does not render tab content wrapper if tab has no content', () => {
     const element = shallow(
       <Tabs>
-        <Tab label="With content">test-content</Tab>
-        <Tab label="No content" />
+        <Tabs.Tab label="With content">test-content</Tabs.Tab>
+        <Tabs.Tab label="No content" />
       </Tabs>
     );
 
@@ -122,24 +121,24 @@ describe('@mantine/core/Tabs', () => {
   it('correctly handles initial disabled tabs with uncontrolled mode', () => {
     const firstDisabled = shallow(
       <Tabs>
-        <Tab label="1" disabled>
+        <Tabs.Tab label="1" disabled>
           test-content-1
-        </Tab>
-        <Tab label="2">test-content-2</Tab>
-        <Tab label="3">test-content-3</Tab>
+        </Tabs.Tab>
+        <Tabs.Tab label="2">test-content-2</Tabs.Tab>
+        <Tabs.Tab label="3">test-content-3</Tabs.Tab>
       </Tabs>
     );
 
     const first2Disabled = shallow(
       <Tabs>
-        <Tab label="1" disabled>
+        <Tabs.Tab label="1" disabled>
           test-content-1
-        </Tab>
-        <Tab label="2" disabled>
+        </Tabs.Tab>
+        <Tabs.Tab label="2" disabled>
           test-content-2
-        </Tab>
-        <Tab label="3">test-content-3</Tab>
-        <Tab label="4">test-content-4</Tab>
+        </Tabs.Tab>
+        <Tabs.Tab label="3">test-content-3</Tabs.Tab>
+        <Tabs.Tab label="4">test-content-4</Tabs.Tab>
       </Tabs>
     );
 
@@ -150,11 +149,11 @@ describe('@mantine/core/Tabs', () => {
   it('correctly handles disabled tabs keyboard events', () => {
     const element = mount(
       <Tabs>
-        <Tab label="1">test-content-1</Tab>
-        <Tab label="2" disabled>
+        <Tabs.Tab label="1">test-content-1</Tabs.Tab>
+        <Tabs.Tab label="2" disabled>
           test-content-2
-        </Tab>
-        <Tab label="3">test-content-3</Tab>
+        </Tabs.Tab>
+        <Tabs.Tab label="3">test-content-3</Tabs.Tab>
       </Tabs>
     );
 
@@ -172,7 +171,7 @@ describe('@mantine/core/Tabs', () => {
     const ref = React.createRef<HTMLButtonElement>();
     mount(
       <Tabs>
-        <Tab ref={ref} label="test" />
+        <Tabs.Tab ref={ref} label="test" />
       </Tabs>
     );
     expect(ref.current instanceof HTMLButtonElement).toBe(true);

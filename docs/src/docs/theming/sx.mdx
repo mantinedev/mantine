@@ -1,0 +1,149 @@
+---
+group: 'theming'
+title: sx prop
+slug: /theming/sx/
+order: 1
+---
+
+# sx prop
+
+All Mantine components support `sx` prop. With `sx` you can add styles to component **root** element.
+If you need to customize other elements within component use [Styles API](/theming/styles-api/).
+
+## sx object
+
+With `sx` prop you can add inline styles to any component the same way you would do it as with [createStyles](/theming/create-styles/)
+function. Styles added with `sx` will be parsed by [emotion](https://emotion.sh) and added to page head or specified target container in [MantineProvider](/theming/mantine-provider/).
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return <Text sx={{ color: 'red', fontSize: 18, lineHeight: 1.4 }}>My custom text</Text>;
+}
+```
+
+You can use pseudo-classes, media queries and all other nested selectors with `sx`:
+
+```tsx
+<Text
+  sx={{
+    '&:hover': {
+      backgroundColor: '#eee',
+    },
+
+    '@media (max-width: 755px)': {
+      fontSize: 14,
+    },
+  }}
+>
+  My custom text
+</Text>
+```
+
+## Subscribe to theme
+
+Use a function instead of an object to subscribe to Mantine theme:
+
+```tsx
+<Text
+  sx={(theme) => ({
+    // subscribe to color scheme changes
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
+
+    // or use any other static values from theme
+    color: theme.colors.gray[1],
+    fontSize: theme.fontSizes.sm,
+    fontWeight: 500,
+  })}
+>
+  My custom text
+</Text>
+```
+
+## Box component
+
+[Box](/core/box/) is an utility polymorphic component that can be used to style non Mantine components or elements with sx:
+
+```tsx
+import { Box } from '@mantine/core';
+import { Link } from 'react-router-dom';
+
+// Box with custom element
+function BoxWithElement() {
+  return (
+    <Box
+      component="a"
+      href="https://mantine.dev"
+      target="_blank"
+      sx={(theme) => ({
+        color: theme.colors.blue[5],
+        textDecoration: 'none',
+
+        '&:hover': {
+          color: theme.colors.blue[7],
+        },
+      })}
+    >
+      Custom link
+    </Box>
+  );
+}
+
+// Box with custom component
+function BoxWithElement() {
+  return (
+    <Box
+      component={Link}
+      to="/route"
+      sx={(theme) => ({
+        color: theme.colors.blue[5],
+        textDecoration: 'none',
+
+        '&:hover': {
+          color: theme.colors.blue[7],
+        },
+      })}
+    >
+      Custom react-router link
+    </Box>
+  );
+}
+```
+
+## Storing styles in a variable
+
+To create sharable styles you can store them in a variable:
+
+```tsx
+const styles = {
+  border: '1px solid #eee',
+  color: '#999',
+
+  '&:hover': {
+    backgroundColor: '#eee',
+  },
+};
+
+// styles object is compatible with every Mantine component
+<Text sx={styles} />;
+<Box sx={styles} />;
+```
+
+To store function styles in a variable you will need to use `MantineTheme` type in case you are using TypeScript:
+
+```tsx
+import { MantineTheme } from '@mantine/core';
+
+const styles = (theme: MantineTheme) => ({
+  border: `1px solid ${theme.colors.gray[3]}`,
+  color: theme.colors.gray[7],
+
+  '&:hover': {
+    backgroundColor: theme.colors.gray[0],
+  },
+});
+
+<Text sx={styles} />;
+<Box sx={styles} />;
+```

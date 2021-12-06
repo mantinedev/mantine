@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineSize, useExtractedMargins, useMantineTheme } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -64,6 +64,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
     ref
   ) => {
     const uuid = useUuid(id);
+    const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const formattedData = data.map((item) =>
@@ -115,6 +116,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
           classNames={classNames}
           __staticSelector="NativeSelect"
           {...getSelectRightSectionProps({
+            theme,
             rightSection,
             rightSectionWidth,
             styles,

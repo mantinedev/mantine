@@ -16,7 +16,16 @@ import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 function Demo() {
-  const idleStatus = useIdle(2000, ['click', 'touchstart']);
+  const idleStatus = useIdle(2000, { events: ['click', 'touchstart'] });
+  return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
+};`;
+
+const initialStateCode = `
+import { Badge } from '@mantine/core';
+import { useIdle } from '@mantine/hooks';
+
+function Demo() {
+  const idleStatus = useIdle(2000, { initialState: false });
   return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
 };`;
 
@@ -31,7 +40,17 @@ function Demo() {
 }
 
 function EventsDemo() {
-  const idle = useIdle(2000, ['click', 'touchstart']);
+  const idle = useIdle(2000, { events: ['click', 'touchstart'] });
+
+  return (
+    <Group position="center">
+      <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>
+    </Group>
+  );
+}
+
+function InitialStateDemo() {
+  const idle = useIdle(2000, { initialState: false });
 
   return (
     <Group position="center">
@@ -50,4 +69,10 @@ export const useIdleEvents: MantineDemo = {
   type: 'demo',
   code: eventsCode,
   component: EventsDemo,
+};
+
+export const useIdleInitialState: MantineDemo = {
+  type: 'demo',
+  code: initialStateCode,
+  component: InitialStateDemo,
 };

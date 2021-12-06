@@ -40,7 +40,7 @@ export default class _Document extends Document {
 ```tsx
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { MantineProvider, NormalizeCSS, GlobalStyles } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -53,13 +53,13 @@ export default function App(props: AppProps) {
       </Head>
 
       <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
         theme={{
           /** Put your mantine theme override here */
           colorScheme: 'light',
         }}
       >
-        <NormalizeCSS />
-        <GlobalStyles />
         <Component {...pageProps} />
       </MantineProvider>
     </>

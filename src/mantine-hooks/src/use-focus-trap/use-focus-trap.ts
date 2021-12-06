@@ -1,10 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import {
-  markForFocusLater,
-  returnFocus,
-  setupScopedFocus,
-  teardownScopedFocus,
-} from './focus-manager';
 import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 import { scopeTab } from './scope-tab';
 import { createAriaHider } from './create-aria-hider';
@@ -23,15 +17,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
         restoreAria.current();
       }
 
-      if (ref.current) {
-        returnFocus();
-        teardownScopedFocus();
-      }
-
       if (node) {
-        setupScopedFocus(node);
-        markForFocusLater();
-
         const processNode = (_node: HTMLElement) => {
           restoreAria.current = createAriaHider(_node);
 

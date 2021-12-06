@@ -1,10 +1,7 @@
-import { createStyles, getFontStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 import { getSortedBreakpoints } from '../get-sorted-breakpoints';
 
-export interface NavbarWidth {
-  base: string | number;
-  breakpoints?: Partial<Record<string, string | number>>;
-}
+export type NavbarWidth = Partial<Record<string, string | number>>;
 
 export interface NavbarPosition {
   top?: number;
@@ -14,7 +11,7 @@ export interface NavbarPosition {
 }
 
 interface NavbarStyles {
-  width: NavbarWidth;
+  width: Partial<Record<string, string | number>>;
   height: string | number;
   padding: MantineNumberSize;
   position: NavbarPosition;
@@ -26,30 +23,27 @@ interface NavbarStyles {
 export default createStyles(
   (theme, { height, width, padding, fixed, position, hiddenBreakpoint, zIndex }: NavbarStyles) => {
     const breakpoints =
-      typeof width?.breakpoints === 'object' && width.breakpoints !== null
-        ? getSortedBreakpoints(width.breakpoints, theme).reduce(
-            (acc, [breakpoint, breakpointSize]) => {
-              acc[`@media (max-width: ${breakpoint}px)`] = {
-                width: breakpointSize,
-                minWidth: breakpointSize,
-              };
+      typeof width === 'object' && width !== null
+        ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
+            acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+              width: breakpointSize,
+              minWidth: breakpointSize,
+            };
 
-              return acc;
-            },
-            {}
-          )
+            return acc;
+          }, {})
         : null;
 
     return {
       root: {
-        ...getFontStyles(theme),
+        ...theme.fn.fontStyles(),
         ...position,
         zIndex,
         height,
-        width: width.base,
+        width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
-        padding: getSizeValue({ size: padding, sizes: theme.spacing }),
+        padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
@@ -60,7 +54,7 @@ export default createStyles(
       },
 
       hidden: {
-        [`@media (max-width: ${getSizeValue({
+        [`@media (max-width: ${theme.fn.size({
           size: hiddenBreakpoint,
           sizes: theme.breakpoints,
         })}px)`]: {

@@ -14,8 +14,6 @@ styles: ['Divider']
 ---
 
 import { DividerDemos } from '@demos/core';
-import { GroupDemos } from '@demos/core';
-import { DIVIDER_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -32,34 +30,9 @@ by setting `label` and control its appearance with `labelPosition` and `labelPro
 
 <Demo data={DividerDemos.labels} />
 
-## Vertical orientation
-
-<Demo data={GroupDemos.divider} />
-
 ## Sizes
 
 Divider has predefined sizes: xs, sm, md, lg, xl.
 You can pass size as number and it will be set as height in px:
 
 <Demo data={DividerDemos.sizes} />
-
-You can get predefined sizes by importing `DIVIDER_SIZES`:
-
-```tsx
-import { DIVIDER_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Height or width']}
-  data={Object.keys(DIVIDER_SIZES).map((size) => [size, `${DIVIDER_SIZES[size]}px`])}
-/>
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { DividerProps } from '@mantine/core';
-```
-
-`DividerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

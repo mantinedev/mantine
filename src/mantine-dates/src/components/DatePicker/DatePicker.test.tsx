@@ -1,10 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  checkAccessibility,
 } from '@mantine/tests';
 import { DatePicker } from './DatePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
@@ -14,12 +15,13 @@ describe('@mantine/dates/DatePicker', () => {
   itSupportsClassName(DatePicker, {});
   itSupportsStyle(DatePicker, {});
   itSupportsMargins(DatePicker, {});
-  itSupportsRef(DatePicker, {}, HTMLButtonElement);
+  itSupportsRef(DatePicker, {}, HTMLInputElement);
+  checkAccessibility([mount(<DatePicker label="date picker" />)]);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DatePicker initiallyOpened />);
-    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('date-picker');
-    expect(element.find(Calendar).prop('__staticSelector')).toBe('date-picker');
+    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('DatePicker');
+    expect(element.find(Calendar).prop('__staticSelector')).toBe('DatePicker');
   });
 
   it('sets label on DatePickerBase based on inputFormat prop', () => {

@@ -206,4 +206,26 @@ describe('@mantine/hooks/use-list-state', () => {
     const [state] = hook.result.current;
     expect(state).toEqual(['test-1', 'test-3']);
   });
+
+  it('removes last item with pop handler', () => {
+    const hook = renderHook(() => useListState(['test-1', 'test-2', 'test-3']));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.pop();
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual(['test-1', 'test-2']);
+  });
+
+  it('removes first item with shift handler', () => {
+    const hook = renderHook(() => useListState(['test-1', 'test-2', 'test-3']));
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.shift();
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual(['test-2', 'test-3']);
+  });
 });

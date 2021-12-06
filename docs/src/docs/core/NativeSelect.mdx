@@ -17,12 +17,6 @@ import { NativeSelectDemos } from '@demos/core';
 
 ## Usage
 
-Use select when you need to capture user feedback limited to certain options.
-If you only have 2-5 options consider using [RadioGroup](/core/radio-group/) instead of select,
-as it provides better UX for smaller data sets.
-
-Component supports all props from [Input](/core/input/) (except for `rightSection`) and [InputWrapper](/core/input-wrapper/) components.
-
 <Demo data={NativeSelectDemos.configurator} />
 
 ## Controlled
@@ -47,8 +41,6 @@ function Demo() {
 
 ## With icon
 
-You can use any React node as icon:
-
 <Demo data={NativeSelectDemos.icon} />
 
 ## Right section
@@ -60,14 +52,12 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 ## Get input ref
 
-You can get input ref by passing `ref` prop to NativeSelect component:
-
 ```tsx
 import { useRef } from 'react';
 import { NativeSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef();
   return <NativeSelect ref={ref} />;
 }
 ```
@@ -77,36 +67,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<NativeSelect label="My select" />; // -> ok, select and label is connected
-<NativeSelect />; // not ok, select is not labeled
-<NativeSelect aria-label="My select" />; // -> ok, label is not visible but will be announced by screen reader
+<NativeSelect /> // -> not ok, select is not labeled
+<NativeSelect label="My select" /> // -> ok, select and label is connected
+<NativeSelect aria-label="My select" /> // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { NativeSelectProps } from '@mantine/core';
-```
-
-`NativeSelectProps` extends `React.ComponentPropsWithoutRef<'select'>`, all other props are available under _Component props_ tab.
-
-### NativeSelectStylesNames type
-
-`NativeSelectStylesNames` type is a union with NativeSelect [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { NativeSelectStylesNames } from '@mantine/core';
-
-const selectClasses: Partial<Record<NativeSelectStylesNames, 'string'>> = {
-  label: 'select-label',
-  description: 'select-description',
-};
-
-<NativeSelect classNames={selectClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

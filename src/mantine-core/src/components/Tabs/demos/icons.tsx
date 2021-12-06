@@ -1,25 +1,25 @@
 import React from 'react';
 import { MixerHorizontalIcon, ChatBubbleIcon } from '@modulz/radix-icons';
-import { Tabs, Tab } from '../index';
+import { Tabs } from '../index';
 
 const code = `
 <Tabs>
-  <Tab label="Chat" icon={<ChatBubbleIcon />}>Chat here</Tab>
-  <Tab label="Settings" icon={<MixerHorizontalIcon />}>Settings</Tab>
-  <Tab icon="$">Get money!</Tab>
+  <Tabs.Tab label="Chat" icon={<ChatBubbleIcon />}>Chat here</Tabs.Tab>
+  <Tabs.Tab label="Settings" icon={<MixerHorizontalIcon />}>Settings</Tabs.Tab>
+  <Tabs.Tab icon="$">Get money!</Tabs.Tab>
 </Tabs>
 `;
 
 function Demo() {
   return (
     <Tabs styles={{ body: { paddingTop: 5 } }}>
-      <Tab label="Chat" icon={<ChatBubbleIcon />}>
+      <Tabs.Tab label="Chat" icon={<ChatBubbleIcon />}>
         Chat here
-      </Tab>
-      <Tab label="Settings" icon={<MixerHorizontalIcon />}>
+      </Tabs.Tab>
+      <Tabs.Tab label="Settings" icon={<MixerHorizontalIcon />}>
         Settings
-      </Tab>
-      <Tab icon="$">Get money!</Tab>
+      </Tabs.Tab>
+      <Tabs.Tab icon="$">Get money!</Tabs.Tab>
     </Tabs>
   );
 }

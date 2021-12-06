@@ -27,8 +27,8 @@ Props `hideLabel` and `showLabel` are required – they are used as spoiler togg
 
 ## Transition duration
 
-Control transition duration by setting `transitionDuration` prop (transition-duration css property in ms).
-To disable animations set prop to 0:
+Control transition duration by setting `transitionDuration` prop (transition-duration CSS property in ms).
+To disable animations, set prop to 0:
 
 <Demo data={SpoilerDemos.transitions} />
 
@@ -40,32 +40,3 @@ You can get control button ref with `controlRef` prop:
 const spoilerControlRef = useRef();
 <Spoiler controlRef={spoilerControlRef} />;
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { SpoilerProps } from '@mantine/core';
-```
-
-`SpoilerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### SpoilerStylesNames type
-
-`SpoilerStylesNames` type is a union with Spoiler [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { SpoilerStylesNames } from '@mantine/core';
-
-const spoilerClasses: Partial<Record<SpoilerStylesNames, 'string'>> = {
-  content: 'spoiler-content',
-  control: 'spoiler-control',
-};
-
-<Spoiler classNames={spoilerClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

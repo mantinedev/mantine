@@ -1,6 +1,4 @@
 import { MantineTheme } from '../../types';
-import { getThemeColor } from '../get-theme-color/get-theme-color';
-import { hexToRgba } from '../hex-to-rgba/hex-to-rgba';
 
 interface GetSharedColorScheme {
   color?: string;
@@ -29,11 +27,20 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
   if (variant === 'light') {
     return {
       border: 'transparent',
-      background: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 9 : 0 }),
+      background: theme.fn.rgba(
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
         theme.colorScheme === 'dark' ? 0.35 : 1
       ),
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 2 : 9 }),
+      color:
+        color === 'dark'
+          ? theme.colorScheme === 'dark'
+            ? theme.colors.dark[0]
+            : theme.colors.dark[9]
+          : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
+      hover: theme.fn.rgba(
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
+        theme.colorScheme === 'dark' ? 0.45 : 0.65
+      ),
     };
   }
 
@@ -42,6 +49,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
       border: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4],
       background: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      hover: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
     };
   }
 
@@ -49,18 +57,20 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       border: 'transparent',
       background: theme.white,
-      color: getThemeColor({ theme, color, shade: 7 }),
+      color: theme.fn.themeColor(color, 7),
+      hover: null,
     };
   }
 
   if (variant === 'outline') {
     return {
-      border: hexToRgba(
-        getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
-        0.65
-      ),
+      border: theme.fn.rgba(theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7), 0.75),
       background: 'transparent',
-      color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+      hover:
+        theme.colorScheme === 'dark'
+          ? theme.fn.rgba(theme.fn.themeColor(color, 4), 0.05)
+          : theme.fn.rgba(theme.fn.themeColor(color, 0), 0.35),
     };
   }
 
@@ -72,20 +82,21 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     };
 
     return {
-      background: `linear-gradient(${merged.deg}deg, ${getThemeColor({
-        theme,
-        color: merged.from,
-        shade: 6,
-      })} 0%, ${getThemeColor({ theme, color: merged.to, shade: 6 })} 100%)`,
+      background: `linear-gradient(${merged.deg}deg, ${theme.fn.themeColor(
+        merged.from,
+        6
+      )} 0%, ${theme.fn.themeColor(merged.to, 6)} 100%)`,
       color: theme.white,
       border: 'transparent',
+      hover: null,
     };
   }
 
   // Filled variant as default
   return {
     border: 'transparent',
-    background: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 8 : 6 }),
+    background: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 6),
     color: theme.white,
+    hover: theme.fn.themeColor(color, 7),
   };
 }

@@ -23,7 +23,7 @@ You can change fonts and other text styles for headings, code and all other comp
 - `theme.fontSizes` – controls font-size in all components except headings
 - `theme.headings` – controls font-family, line-heigh and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
 
-<Demo data={themeColorsExtend} />
+<Demo data={themeFontsExtend} />
 
 ## Default colors
 
@@ -56,7 +56,7 @@ You can use some of these tools to generate or copy ready color palettes:
 - [Smart Swatch](https://smart-swatch.netlify.app/)
 - [Palx](https://palx.jxnblk.com/)
 
-<Demo data={themeFontsExtend} />
+<Demo data={themeColorsExtend} />
 
 ## Primary color
 
@@ -150,3 +150,29 @@ Mantine uses Bootstrap's breakpoint values as defaults:
     `${DEFAULT_THEME.breakpoints[size]}px`,
   ])}
 />
+
+## Add your own properties to theme
+
+You can add any amount of properties using `other`:
+
+```tsx
+// Add any other properties on theme
+<MantineProvider
+  theme={{
+    other: {
+      fontFamilySecondary: 'Arial',
+      lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
+      reduceMotion: true,
+    },
+  }}
+>
+  <App />
+</MantineProvider>
+
+// Then use your custom properties
+<Box sx={(theme) => ({
+  fontFamily: theme.other.fontFamilySecondary,
+  lineHeight: theme.other.lineHeight[2],
+  transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
+})} />
+```

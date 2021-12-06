@@ -7,7 +7,7 @@ interface PackageJson {
   readonly version: string;
   readonly private: boolean;
   readonly main: string;
-  readonly licence: string;
+  readonly license: string;
   readonly types?: string;
   readonly author: string;
   readonly sideEffects?: boolean;

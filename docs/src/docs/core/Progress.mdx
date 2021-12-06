@@ -14,21 +14,19 @@ styles: ['Progress']
 ---
 
 import { ProgressDemos, PasswordInputDemos } from '@demos/core';
-import { PROGRESS_SIZES } from '@mantine/core';
 
 ## Usage
 
-Use Progress to display progress of action that takes long time or includes multiple steps.
-
 Progress component has one required prop `value` – filled bar width in %.
 You can change bar color by passing `color` prop, by default `theme.primaryColor` will be used.
-If you set `striped` prop to true bar will have stipes.
+If you set `striped` prop to true bar will have stripes.
 
 <Demo data={ProgressDemos.configurator} />
 
 ## Multiple sections
 
-You can display multiple sections instead of single progress bar. Note that in this case `value` prop will be ignored:
+You can display multiple sections instead of a single progress bar.
+Note that in this case `value` prop will be ignored:
 
 <Demo data={ProgressDemos.sections} />
 
@@ -47,17 +45,6 @@ Alternatively, you can use a number to set height in px:
 <Progress size="sm" /> // -> predefined small size
 <Progress size={50} /> // -> { height: 50 }
 ```
-
-You can get default sizes by importing `PROGRESS_SIZES`:
-
-```tsx
-import { PROGRESS_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Height']}
-  data={Object.keys(PROGRESS_SIZES).map((size) => [size, `${PROGRESS_SIZES[size]}px`])}
-/>
 
 ## Radius
 
@@ -81,32 +68,3 @@ Provide aria-label attribute to label progress:
 ```tsx
 <Progress aria-label="Uploading progress" value={10} />
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { ProgressProps } from '@mantine/core';
-```
-
-`ProgressProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### ProgressStylesNames type
-
-`ProgressStylesNames` type is a union with Progress [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { ProgressStylesNames } from '@mantine/core';
-
-const progressClasses: Partial<Record<ProgressStylesNames, 'string'>> = {
-  root: 'progress-root',
-  bar: 'progress-bar',
-};
-
-<Progress classNames={progressClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

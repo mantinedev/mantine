@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   useExtractedMargins,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
@@ -20,6 +21,7 @@ import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultVal
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import {
   SelectItem,
   SelectDataItem,
@@ -125,13 +127,22 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   onCreate?: (query: string) => void;
 
   /** Change dropdown component, can be used to add custom scrollbars */
-  dropdownComponent?: React.FC<any>;
+  dropdownComponent?: any;
 
   /** Called when dropdown is opened */
   onDropdownOpen?(): void;
 
   /** Called when dropdown is closed */
   onDropdownClose?(): void;
+
+  /** Limit amount of items selected */
+  maxSelectedValues?: number;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
+
+  /** Dropdown z-index */
+  zIndex?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -197,28 +208,36 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       dropdownComponent,
       onDropdownClose,
       onDropdownOpen,
+      maxSelectedValues,
+      withinPortal,
+      zIndex = getDefaultZIndex('popover'),
+      name,
       ...others
     }: MultiSelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
+    const wrapperRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
     const uuid = useUuid(id);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
+    const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const [searchValue, setSearchValue] = useState('');
+
     const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
       duration: 0,
       offset: 5,
       cancelable: false,
       isList: true,
     });
+
     const isCreatable = creatable && typeof getCreateLabel === 'function';
     let createLabel = null;
 
@@ -247,7 +266,16 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onChange,
     });
 
-    const handleValueRemove = (_val: string) => setValue(_value.filter((val) => val !== _val));
+    const valuesOverflow = useRef(!!maxSelectedValues && maxSelectedValues < _value.length);
+
+    const handleValueRemove = (_val: string) => {
+      const newValue = _value.filter((val) => val !== _val);
+      setValue(newValue);
+
+      if (!!maxSelectedValues && newValue.length < maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
+    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       handleSearchChange(event.currentTarget.value);
@@ -296,6 +324,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       );
     }, [searchValue]);
 
+    useDidUpdate(() => {
+      //using greater than equal to take into account creatable type.
+      if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+    }, [_value]);
+
     const handleItemSelect = (item: SelectItem) => {
       setTimeout(() => {
         clearSearchOnChange && handleSearchChange('');
@@ -303,6 +336,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           handleValueRemove(item.value);
         } else {
           setValue([..._value, item.value]);
+          if (_value.length === maxSelectedValues - 1) {
+            valuesOverflow.current = true;
+            setDropdownOpened(false);
+          }
           if (hovered === filteredData.length - 1) {
             setHovered(filteredData.length - 2);
           }
@@ -314,56 +351,71 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      const isColumn = direction === 'column';
+
+      const handleNext = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
+      const handlePrevious = () => {
+        setHovered((current) => {
+          const nextIndex = getNextIndex(
+            current,
+            (index) => index - 1,
+            (index) => index > 0
+          );
+
+          if (dropdownOpened) {
+            targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+
+            scrollIntoView({
+              alignment: isColumn ? 'start' : 'end',
+            });
+          }
+
+          return nextIndex;
+        });
+      };
+
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index - 1,
-              (index) => index > 0
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          isColumn ? handlePrevious() : handleNext();
 
-              scrollIntoView({
-                alignment: 'start',
-              });
-            }
-
-            return nextIndex;
-          });
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
           setDropdownOpened(true);
-          setHovered((current) => {
-            const nextIndex = getNextIndex(
-              current,
-              (index) => index + 1,
-              (index) => index < filteredData.length - 1
-            );
 
-            if (dropdownOpened) {
-              targetRef.current = itemsRefs.current[filteredData[nextIndex]?.value];
+          isColumn ? handleNext() : handlePrevious();
 
-              scrollIntoView({
-                alignment: 'end',
-              });
-            }
-
-            return nextIndex;
-          });
           break;
         }
 
         case 'Enter': {
+          event.preventDefault();
+
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -372,8 +424,21 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           break;
         }
 
+        case 'Space': {
+          if (!searchable) {
+            event.preventDefault();
+            if (filteredData[hovered] && dropdownOpened) {
+              handleItemSelect(filteredData[hovered]);
+            } else {
+              setDropdownOpened(true);
+            }
+          }
+
+          break;
+        }
+
         case 'Backspace': {
-          if (_value.length > 0 && searchValue.length === 0 && searchable) {
+          if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
           }
@@ -404,7 +469,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={() => handleValueRemove(item.value)}
+          onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
+            if (dropdownOpened) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            handleValueRemove(item.value);
+            setDropdownOpened(true);
+          }}
           key={item.value}
           size={size}
           styles={styles}
@@ -454,6 +526,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           aria-expanded={dropdownOpened}
           onMouseLeave={() => setHovered(-1)}
           tabIndex={-1}
+          ref={wrapperRef}
         >
           <Input<'div'>
             __staticSelector="MultiSelect"
@@ -469,7 +542,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             icon={icon}
             onMouseDown={(event) => {
               event.preventDefault();
-              !disabled && setDropdownOpened(!dropdownOpened);
+              !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
               inputRef.current?.focus();
             }}
             classNames={{
@@ -477,11 +550,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               input: cx({ [classes.input]: !searchable }, classNames?.input),
             }}
             {...getSelectRightSectionProps({
+              theme,
               rightSection,
               rightSectionWidth,
               styles,
               size,
-              shouldClear: clearable && _value.length > 0,
+              shouldClear: !disabled && clearable && _value.length > 0,
               clearButtonLabel,
               onClear: handleClear,
               error,
@@ -505,7 +579,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
-                readOnly={!searchable}
+                readOnly={!searchable || valuesOverflow.current}
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
@@ -527,7 +601,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
-            dropdownComponent={dropdownComponent}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
+            referenceElement={wrapperRef.current}
+            direction={direction}
+            onDirectionChange={setDirection}
+            withinPortal={withinPortal}
+            zIndex={zIndex}
           >
             <SelectItems
               data={filteredData}
@@ -547,6 +626,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             />
           </SelectDropdown>
         </div>
+
+        {name && <input type="hidden" name={name} value={_value.join(',')} />}
       </InputWrapper>
     );
   }

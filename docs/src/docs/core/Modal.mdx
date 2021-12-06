@@ -14,7 +14,6 @@ styles: ['Modal']
 ---
 
 import { ModalDemos } from '@demos/core';
-import { MODAL_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -30,10 +29,14 @@ It will still be possible to close modal by clicking on overlay or pressing esca
 
 <Demo data={ModalDemos.header} />
 
+## Center modal vertically
+
+<Demo data={ModalDemos.centered} />
+
 ## Change size
 
 You can change modal width by setting `size` prop to predefined size or any valid width, for example, 55% or 200px.
-Size controls modal width, max-width is set to 100% with spacing on left and right, no matter what `size` is passed 100% will not be exceed
+Size controls modal width, max-width is set to 100% with spacing on left and right, no matter what `size` is passed 100% will not be exceeded:
 
 ```tsx
 <Modal size="sm" /> // -> predefined small size
@@ -44,21 +47,6 @@ Size controls modal width, max-width is set to 100% with spacing on left and rig
 ```
 
 <Demo data={ModalDemos.sizes} />
-
-Modal has 6 predefined sizes: xs, sm, md (default), lg, xl and full.
-You can get these values by importing `MODAL_SIZES`:
-
-```tsx
-import { MODAL_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Modal width']}
-  data={Object.keys(MODAL_SIZES).map((size) => [
-    size,
-    `${MODAL_SIZES[size]}${typeof size === 'number' ? 'px' : ''}`,
-  ])}
-/>
 
 ## Customize overlay
 
@@ -100,7 +88,7 @@ To specify initial focus element add `data-autofocus` attribute:
 
 ## Accessibility and usability
 
-- When modal is opened focus is trapped inside and vertical scroll is locked at current position
+- When modal is opened, focus is trapped inside and vertical scroll is locked at current position
 - When user clicks on overlay or presses escape modal closes
 - Modal transitions are disabled if user prefers to reduce motion
 - Modal wrapper has `aria-modal="true"` and `role="dialog"` attributes
@@ -112,32 +100,3 @@ For better screen reader support set `closeButtonLabel` prop:
 // sets title attribute on close button
 <Modal closeButtonLabel="Close authentication modal" />
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { ModalProps } from '@mantine/core';
-```
-
-`ModalProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### ModalStylesNames type
-
-`ModalStylesNames` type is a union with Modal [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { ModalStylesNames } from '@mantine/core';
-
-const modalClasses: Partial<Record<ModalStylesNames, 'string'>> = {
-  header: 'modal-header',
-  title: 'modal-title',
-};
-
-<Modal classNames={modalClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

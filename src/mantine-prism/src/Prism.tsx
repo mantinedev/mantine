@@ -5,8 +5,6 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  getThemeColor,
-  hexToRgba,
   MantineColor,
   ClassNames,
   useExtractedMargins,
@@ -119,19 +117,8 @@ export function Prism({
                 const shouldHighlight = lineNumber in highlightLines;
                 const lineColor =
                   theme.colorScheme === 'dark'
-                    ? hexToRgba(
-                        getThemeColor({
-                          theme,
-                          color: highlightLines[lineNumber]?.color,
-                          shade: 9,
-                        }),
-                        0.25
-                      )
-                    : getThemeColor({
-                        theme,
-                        color: highlightLines[lineNumber]?.color,
-                        shade: 0,
-                      });
+                    ? theme.fn.rgba(theme.fn.themeColor(highlightLines[lineNumber]?.color, 9), 0.25)
+                    : theme.fn.themeColor(highlightLines[lineNumber]?.color, 0);
 
                 return (
                   <div
@@ -145,11 +132,10 @@ export function Prism({
                         data-mantine-line-number
                         style={{
                           color: shouldHighlight
-                            ? getThemeColor({
-                                theme,
-                                color: highlightLines[lineNumber]?.color,
-                                shade: theme.colorScheme === 'dark' ? 5 : 8,
-                              })
+                            ? theme.fn.themeColor(
+                                highlightLines[lineNumber]?.color,
+                                theme.colorScheme === 'dark' ? 5 : 8
+                              )
                             : undefined,
                         }}
                       >
@@ -166,11 +152,10 @@ export function Prism({
                             style={{
                               ...tokenProps.style,
                               color: shouldHighlight
-                                ? getThemeColor({
-                                    theme,
-                                    color: highlightLines[lineNumber]?.color,
-                                    shade: theme.colorScheme === 'dark' ? 5 : 8,
-                                  })
+                                ? theme.fn.themeColor(
+                                    highlightLines[lineNumber]?.color,
+                                    theme.colorScheme === 'dark' ? 5 : 8
+                                  )
                                 : (tokenProps?.style?.color as string),
                             }}
                           />

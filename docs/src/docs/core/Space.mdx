@@ -25,7 +25,7 @@ Use Space component to add horizontal or vertical spacing between elements:
 
 ## Where to use
 
-In most cases you would want to use margin props instead of Space when working with Mantine components:
+In most cases, you would want to use margin props instead of Space when working with Mantine components:
 
 ```tsx
 <Text>First line</Text>
@@ -33,8 +33,8 @@ In most cases you would want to use margin props instead of Space when working w
 <Text mt="md">Second line</Text>
 ```
 
-But when you work with regular html elements you do not have access to `theme.spacing` and you may want to use
-Space component in order to skip direct theme subscription:
+But when you work with regular HTML elements you do not have access to `theme.spacing` and you may want to use
+Space component to skip direct theme subscription:
 
 ```tsx
 <div>First line</div>
@@ -55,13 +55,3 @@ Space component in order to skip direct theme subscription:
 // Width will be set to 30px
 <Space w={30} />
 ```
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { SpaceProps } from '@mantine/core';
-```
-
-`SpaceProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

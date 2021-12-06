@@ -1,4 +1,4 @@
-import { createStyles, INPUT_SIZES, MantineSize, getSizeValue } from '@mantine/core';
+import { createStyles, INPUT_SIZES, MantineSize } from '@mantine/core';
 
 interface TimeInputStyles {
   size: MantineSize;
@@ -22,18 +22,18 @@ export default createStyles((theme, { size }: TimeInputStyles) => ({
     display: 'flex',
     alignItems: 'center',
     // -2 for border offset
-    height: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
+    height: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
   },
 
   timeInput: {
-    width: getSizeValue({ size, sizes: inputSizes }),
+    width: theme.fn.size({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',
     color: 'inherit',
     padding: 0,
     textAlign: 'center',
     border: '1px solid transparent',
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     lineHeight: 1,
     outline: 0,
 

@@ -1,0 +1,19 @@
+{
+  "title": "Authentication page with image",
+  "category": "authentication",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/title/",
+    "/core/text/",
+    "/core/text-input/",
+    "/core/password-input/",
+    "/core/button/",
+    "/core/anchor/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

@@ -5,13 +5,15 @@ import {
   MantineTheme,
   useMantineTheme,
   ClassNames,
+  MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { getSortedBreakpoints } from './get-sorted-breakpoints';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
-export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
+export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, MantineMargin> {
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 
@@ -21,7 +23,7 @@ export interface AppShellProps extends DefaultProps<AppShellStylesNames> {
   /** zIndex prop passed to Navbar and Header components */
   zIndex?: number;
 
-  /** Switch from static layout to fixed */
+  /** true to switch from static layout to fixed */
   fixed?: boolean;
 
   /** AppShell content */
@@ -45,7 +47,7 @@ function getNavbarWidth(element: React.ReactElement) {
 }
 
 function getNavbarBreakpoints(element: React.ReactElement, theme: MantineTheme) {
-  const breakpoints = element?.props?.width?.breakpoints;
+  const breakpoints = element?.props?.width;
   return breakpoints != null
     ? getSortedBreakpoints<{ width: number | string; height: number | string }>(
         breakpoints as any,
@@ -61,7 +63,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       navbar,
       header,
       fixed = false,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('app'),
       padding = 'md',
       navbarOffsetBreakpoint,
       className,

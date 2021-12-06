@@ -6,11 +6,48 @@ function WrappedRangeCalendar(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeCalendar>, 'value' | 'onChange'>
 ) {
   const [value, onChange] = useState<[Date, Date]>([null, null]);
-  return <RangeCalendar month={value[0]} value={value} onChange={onChange} {...props} />;
+  return <RangeCalendar value={value} onChange={onChange} {...props} />;
 }
 
-storiesOf('@mantine/dates/RangeCalendar', module).add('General usage', () => (
-  <div style={{ padding: 40 }}>
-    <WrappedRangeCalendar />
-  </div>
-));
+storiesOf('@mantine/dates/RangeCalendar', module)
+  .add('General usage', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar />
+    </div>
+  ))
+  .add('First day of the week - Sunday', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar firstDayOfWeek="sunday" />
+    </div>
+  ))
+  .add('Multiple months', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar amountOfMonths={1} />
+      <WrappedRangeCalendar amountOfMonths={2} />
+      <WrappedRangeCalendar amountOfMonths={3} />
+    </div>
+  ))
+  .add('With Styles API', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedRangeCalendar
+        amountOfMonths={1}
+        styles={{
+          firstInRange: {
+            backgroundColor: 'red !important',
+          },
+          lastInRange: {
+            backgroundColor: 'blue !important',
+          },
+          selected: {
+            backgroundColor: 'orange !important',
+          },
+          inRange: {
+            backgroundColor: 'cyan !important',
+          },
+          weekend: {
+            color: 'silver !important',
+          },
+        }}
+      />
+    </div>
+  ));

@@ -3,9 +3,9 @@ import {
   DefaultProps,
   MantineNumberSize,
   useExtractedMargins,
-  getSizeValue,
   useMantineTheme,
 } from '@mantine/styles';
+import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -13,7 +13,7 @@ export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWitho
   breakpoints?: SimpleGridBreakpoint[];
 
   /** Default amount of columns, used when none of breakpoints can be applied  */
-  cols: number;
+  cols?: number;
 
   /** Default spacing between columns, used when none of breakpoints can be applied */
   spacing?: MantineNumberSize;
@@ -24,25 +24,23 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     {
       className,
       breakpoints = [],
-      cols,
+      cols = 1,
       spacing = 'md',
       children,
       style,
       sx,
+      classNames,
+      styles,
       ...others
     }: SimpleGridProps,
     ref
   ) => {
     const theme = useMantineTheme();
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const sortedBreakpoints = [...breakpoints].sort(
-      (a, b) =>
-        getSizeValue({ size: b.maxWidth, sizes: theme.breakpoints }) -
-        getSizeValue({ size: a.maxWidth, sizes: theme.breakpoints })
-    );
+    const sortedBreakpoints = getSortedBreakpoints(theme, breakpoints);
     const { classes, cx } = useStyles(
       { breakpoints: sortedBreakpoints, cols, spacing },
-      { sx, name: 'SimpleGrid' }
+      { sx, classNames, styles, name: 'SimpleGrid' }
     );
 
     return (

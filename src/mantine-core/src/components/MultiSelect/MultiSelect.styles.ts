@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
 interface MultiSelectStyles {
@@ -12,7 +12,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStyles) => ({
   },
 
   values: {
-    minHeight: getSizeValue({ size, sizes: INPUT_SIZES }) - 2,
+    minHeight: theme.fn.size({ size, sizes: INPUT_SIZES }) - 2,
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
@@ -31,7 +31,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStyles) => ({
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     padding: 0,
     margin: theme.spacing.xs / 2,
     appearance: 'none',
@@ -41,7 +41,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStyles) => ({
       color: invalid
         ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
         : theme.colorScheme === 'dark'
-        ? theme.colors.dark[2]
+        ? theme.colors.dark[3]
         : theme.colors.gray[5],
     },
 

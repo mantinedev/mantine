@@ -17,9 +17,6 @@ function Demo() {
         <Button compact variant="outline">
           Compact outline button
         </Button>
-        <Button compact variant="link">
-          Compact link button
-        </Button>
       </Group>
     </>
   );

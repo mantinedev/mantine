@@ -1,0 +1,10 @@
+{
+  "title": "Creatable tag picker",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/multi-select/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

@@ -8,8 +8,7 @@ import {
   useExtractedMargins,
 } from '@mantine/styles';
 import { Group, GroupPosition } from '../Group';
-import { Tab, TabType } from './Tab/Tab';
-import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
+import { TabControl, TabControlStylesNames, TabType } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
 export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
@@ -19,7 +18,7 @@ export type TabsStylesNames =
 
 export interface TabsProps
   extends DefaultProps<TabsStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <Tab /> components only */
   children: React.ReactNode;
 
@@ -81,7 +80,12 @@ function findInitialTab(tabs: TabType[]) {
   return -1;
 }
 
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
+type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
+  displayName: string;
+  Tab: typeof TabControl;
+};
+
+export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
   (
     {
       className,
@@ -112,7 +116,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
     const tabs = React.Children.toArray(children).filter(
-      (item: TabType) => item.type === Tab
+      (item: TabType) => item.type === TabControl
     ) as TabType[];
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
@@ -149,9 +153,8 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         {...tab.props}
         key={index}
         active={activeTab === index}
-        tabProps={tab.props}
         onKeyDown={handleKeyDown}
-        color={color}
+        color={tab.props.color || color}
         variant={variant}
         orientation={orientation}
         buttonRef={mergeRefs((node: HTMLButtonElement) => {
@@ -173,7 +176,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
             role="tablist"
             direction={orientation === 'horizontal' ? 'row' : 'column'}
             aria-orientation={orientation}
-            spacing={variant === 'pills' ? 'md' : 0}
+            spacing={variant === 'pills' ? 5 : 0}
             position={position}
             grow={grow}
           >
@@ -189,6 +192,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       </div>
     );
   }
-);
+) as any;
 
 Tabs.displayName = '@mantine/core/Tabs';
+Tabs.Tab = TabControl;

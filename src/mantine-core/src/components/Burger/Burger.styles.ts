@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  getFocusStyles,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 interface BurgerStyles {
   size: MantineNumberSize;
@@ -20,14 +14,14 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, color }: BurgerStyles, getRef) => {
-  const sizeValue = getSizeValue({ size, sizes });
+  const sizeValue = theme.fn.size({ size, sizes });
   const opened = { ref: getRef('opened') } as const;
 
   return {
     opened,
 
     root: {
-      ...getFocusStyles(theme),
+      ...theme.fn.focusStyles(),
       WebkitTapHighlightColor: 'transparent',
       borderRadius: theme.radius.sm,
       width: sizeValue + theme.spacing.xs,

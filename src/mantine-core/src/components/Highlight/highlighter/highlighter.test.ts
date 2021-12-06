@@ -53,4 +53,19 @@ describe('@mantine/core/Highlight/highlighter', () => {
   it('does not highlight if nothing found', () => {
     expect(highlighter(VALUE, 'Hi, there')).toEqual([{ chunk: VALUE, highlighted: false }]);
   });
+
+  it('escapes regex symbols', () => {
+    expect(highlighter('[Hello], there', 'lo], t')).toEqual([
+      { chunk: '[Hel', highlighted: false },
+      { chunk: 'lo], t', highlighted: true },
+      { chunk: 'here', highlighted: false },
+    ]);
+
+    expect(highlighter('([Hello]), there', ['([H', 'o])'])).toEqual([
+      { chunk: '([H', highlighted: true },
+      { chunk: 'ell', highlighted: false },
+      { chunk: 'o])', highlighted: true },
+      { chunk: ', there', highlighted: false },
+    ]);
+  });
 });

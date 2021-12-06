@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { NativeSelect } from './NativeSelect';
@@ -51,7 +52,7 @@ describe('@mantine/core/NativeSelect', () => {
       description: 'test-description',
       required: true,
     },
-    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
+    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
     'NativeSelect'
   );
 

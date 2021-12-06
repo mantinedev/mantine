@@ -18,6 +18,7 @@ interface CalendarLabelProps extends DefaultProps<CalendarLabelStylesNames> {
   size: MantineSize;
   monthLabel?: string;
   yearLabel?: string;
+  preventFocus?: boolean;
 }
 
 export function CalendarLabel({
@@ -33,6 +34,7 @@ export function CalendarLabel({
   __staticSelector,
   monthLabel,
   yearLabel,
+  preventFocus,
 }: CalendarLabelProps) {
   const selectSize = size === 'lg' || size === 'xl' ? 'md' : 'xs';
   const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
@@ -44,6 +46,7 @@ export function CalendarLabel({
         className={classes.calendarSelect}
         size={selectSize}
         value={value.getMonth()}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         onChange={(event) =>
           onChange(dayjs(value).set('month', parseInt(event.currentTarget.value, 10)).toDate())
         }
@@ -58,6 +61,7 @@ export function CalendarLabel({
         className={classes.calendarSelect}
         size={selectSize}
         value={value.getFullYear()}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         onChange={(event) =>
           onChange(dayjs(value).set('year', parseInt(event.currentTarget.value, 10)).toDate())
         }

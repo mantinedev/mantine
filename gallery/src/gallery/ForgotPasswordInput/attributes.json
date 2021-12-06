@@ -1,0 +1,11 @@
+{
+  "title": "Forgot password on input label",
+  "category": "inputs",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/password-input/", "/core/text/", "/core/button/#unstyled-button"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

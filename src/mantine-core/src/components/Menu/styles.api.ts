@@ -1,6 +1,7 @@
 import type { MenuStylesNames } from './Menu';
 
 export const Menu: Record<MenuStylesNames, string> = {
+  root: 'Root element',
   body: 'Menu body',
   divider: 'Divider inside menu body',
   label: 'Menu label wrapper (Text component)',

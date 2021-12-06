@@ -2,26 +2,14 @@ import {
   createStyles,
   MantineSize,
   MantineNumberSize,
-  getFontStyles,
-  getSizeValue,
-  getFocusStyles,
-  getThemeColor,
   MantineSizes,
   getSharedColorScheme,
-  hexToRgba,
   MantineColor,
   MantineTheme,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
-export type ButtonVariant =
-  | 'link'
-  | 'filled'
-  | 'outline'
-  | 'light'
-  | 'gradient'
-  | 'white'
-  | 'default';
+export type ButtonVariant = 'filled' | 'outline' | 'light' | 'gradient' | 'white' | 'default';
 
 interface ButtonStylesProps {
   color: MantineColor;
@@ -122,6 +110,10 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
     backgroundColor: colors.background,
     backgroundImage: colors.background,
     color: colors.color,
+
+    '&:hover': {
+      backgroundColor: colors.hover,
+    },
   };
 }
 
@@ -140,24 +132,7 @@ export default createStyles(
     }: ButtonStylesProps,
     getRef
   ) => {
-    const loading = {
-      ref: getRef('loading'),
-
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        top: -1,
-        left: -1,
-        right: -1,
-        bottom: -1,
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? hexToRgba(theme.colors.dark[7], 0.5)
-            : 'rgba(255, 255, 255, .5)',
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
-        cursor: 'not-allowed',
-      },
-    } as const;
+    const loading = getRef('loading');
 
     const gradient = getSharedColorScheme({
       theme,
@@ -167,7 +142,25 @@ export default createStyles(
     });
 
     return {
-      loading,
+      loading: {
+        ref: loading,
+        pointerEvents: 'none',
+
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: -1,
+          left: -1,
+          right: -1,
+          bottom: -1,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.fn.rgba(theme.colors.dark[7], 0.5)
+              : 'rgba(255, 255, 255, .5)',
+          borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+          cursor: 'not-allowed',
+        },
+      },
 
       outline: getVariantStyles({ variant: 'outline', theme, color }),
       filled: getVariantStyles({ variant: 'filled', theme, color }),
@@ -179,18 +172,22 @@ export default createStyles(
         border: 0,
         backgroundImage: gradient.background,
         color: gradient.color,
+
+        '&:hover': {
+          backgroundSize: '200%',
+        },
       },
 
       root: {
         ...getSizeStyles({ compact, size }),
-        ...getFontStyles(theme),
-        ...getFocusStyles(theme),
+        ...theme.fn.fontStyles(),
+        ...theme.fn.focusStyles(),
         ...getWidthStyles(fullWidth),
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         fontWeight: 600,
         position: 'relative',
         lineHeight: 1,
-        fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         WebkitTapHighlightColor: 'transparent',
         userSelect: 'none',
         boxSizing: 'border-box',
@@ -203,7 +200,7 @@ export default createStyles(
           transform: 'translateY(1px)',
         },
 
-        [`&:not(.${loading.ref}):disabled`]: {
+        [`&:not(.${loading}):disabled`]: {
           borderColor: 'transparent',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
@@ -239,32 +236,6 @@ export default createStyles(
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
-      },
-
-      link: {
-        padding: 0,
-        borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
-        backgroundColor: 'transparent',
-        border: 0,
-        display: 'inline-block',
-        color: getThemeColor({ theme, color, shade: theme.colorScheme === 'dark' ? 3 : 7 }),
-        cursor: 'pointer',
-        height: 'auto',
-        lineHeight: theme.lineHeight,
-        fontWeight: 400,
-
-        '&:hover': {
-          textDecoration: 'underline',
-        },
-
-        '&:disabled': {
-          color: theme.colors.gray[5],
-          cursor: 'not-allowed',
-
-          '&:hover': {
-            textDecoration: 'none',
-          },
-        },
       },
     };
   }

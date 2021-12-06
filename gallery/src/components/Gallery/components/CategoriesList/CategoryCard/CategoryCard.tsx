@@ -19,7 +19,7 @@ export function CategoryCard({ name, url, count, category, className }: Category
   return (
     <Card className={cx(classes.card, className)} radius="md">
       <CardSection className={classes.imageWrapper}>
-        <Image className={classes.image} src={images[category][theme.colorScheme]} />
+        <Image className={classes.image} src={images[category][theme.colorScheme]} alt={name} />
       </CardSection>
 
       <Text className={classes.title}>{name}</Text>

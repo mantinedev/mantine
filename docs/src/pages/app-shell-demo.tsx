@@ -17,12 +17,7 @@ export default function AppShellDemo() {
         navbarOffsetBreakpoint="sm"
         fixed
         navbar={
-          <Navbar
-            padding="md"
-            hiddenBreakpoint="sm"
-            hidden={!opened}
-            width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
-          >
+          <Navbar padding="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 400 }}>
             <Text>Application navbar</Text>
           </Navbar>
         }

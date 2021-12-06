@@ -1,11 +1,12 @@
 import React from 'react';
-import { getSizeValue } from '@mantine/styles';
+import { MantineTheme } from '@mantine/styles';
 import { SelectRightSection, SelectRightSectionProps } from './SelectRightSection';
 
 interface GetRightSectionProps extends SelectRightSectionProps {
   rightSection?: React.ReactNode;
   rightSectionWidth?: number;
   styles: Record<string, any>;
+  theme: MantineTheme;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -20,19 +21,22 @@ export function getSelectRightSectionProps({
   styles,
   rightSection,
   rightSectionWidth,
+  theme,
   ...props
 }: GetRightSectionProps) {
   if (rightSection) {
     return { rightSection, rightSectionWidth, styles };
   }
 
+  const _styles = typeof styles === 'function' ? styles(theme) : styles;
+
   return {
-    rightSectionWidth: getSizeValue({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
+    rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
     rightSection: <SelectRightSection {...props} />,
     styles: {
-      ...styles,
+      ..._styles,
       rightSection: {
-        ...styles?.rightSection,
+        ..._styles?.rightSection,
         pointerEvents: props.shouldClear ? undefined : 'none',
       },
     },

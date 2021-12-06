@@ -93,6 +93,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             color="gray"
             onClick={onClose}
             variant="hover"
+            className={classes.closeButton}
           />
         )}
       </div>

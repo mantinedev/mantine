@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useUncontrolled, useUuid } from '@mantine/hooks';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -12,7 +11,7 @@ import {
 import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = Exclude<ClassNames<typeof useStyles>, 'filled' | 'outline'>;
+export type ChipStylesNames = ClassNames<typeof useStyles>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,
@@ -73,15 +72,15 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
       checked,
       defaultChecked,
       onChange,
+      sx,
       ...others
     }: ChipProps,
     ref
   ) => {
     const uuid = useUuid(id);
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { radius, size, color },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, sx, name: __staticSelector }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [value, setValue] = useUncontrolled({

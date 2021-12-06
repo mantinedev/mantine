@@ -27,7 +27,7 @@ export default function GalleryCategoryPage({ pageContext }: GalleryCategoryPage
     <Layout>
       <Head title={pageContext.category.name} />
       <GalleryPage>
-        <Container size="lg" style={{ paddingTop: 40 }}>
+        <Container size="xl" mt={50}>
           <CategoryHeader category={pageContext.category} />
           {canvases}
         </Container>

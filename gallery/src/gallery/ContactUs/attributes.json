@@ -1,0 +1,23 @@
+{
+  "title": "Contact us form",
+  "category": "contact",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/title/",
+    "/core/text-input/",
+    "/core/textarea/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "/core/simple-grid/",
+    "/core/action-icon/",
+    "/component/contact-icons/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 1000
+  }
+}

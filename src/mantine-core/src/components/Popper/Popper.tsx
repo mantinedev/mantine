@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { usePopper } from 'react-popper';
+import { usePopper, StrictModifier } from 'react-popper';
+import { getDefaultZIndex } from '@mantine/styles';
+import type { Placement } from '@popperjs/core';
 import { useDidUpdate } from '@mantine/hooks';
-import { Portal } from '../Portal';
 import { Transition, MantineTransition } from '../Transition';
 import { parsePopperPosition } from './parse-popper-position/parse-popper-position';
+import { PopperContainer } from './PopperContainer/PopperContainer';
 import useStyles from './Popper.styles';
 
 export interface SharedPopperProps {
@@ -54,8 +56,14 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   /** useEffect dependencies to force update popper position */
   forceUpdateDependencies?: any[];
 
-  // Called when transition ends
+  /** Called when transition ends */
   onTransitionEnd?(): void;
+
+  /** Popperjs modifiers array */
+  modifiers?: StrictModifier[];
+
+  /** Whether to render the target element in a Portal */
+  withinPortal?: boolean;
 }
 
 export function Popper<T extends HTMLElement = HTMLDivElement>({
@@ -72,17 +80,30 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
-  zIndex = 100,
+  zIndex = getDefaultZIndex('popover'),
   forceUpdateDependencies = [],
+  modifiers = [],
   onTransitionEnd,
+  withinPortal = true,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
 
+  const initialPlacement: Placement =
+    placement === 'center' ? position : `${position}-${placement}`;
+
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
-    placement: placement === 'center' ? position : `${position}-${placement}`,
-    modifiers: [{ name: 'offset', options: { offset: [0, padding] } }],
+    placement: initialPlacement,
+    modifiers: [
+      {
+        name: 'offset',
+        options: {
+          offset: [0, padding],
+        },
+      },
+      ...modifiers,
+    ],
   });
 
   const parsedAttributes = parsePopperPosition(attributes.popper?.['data-popper-placement']);
@@ -93,7 +114,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
 
   return (
     <Transition
-      mounted={mounted}
+      mounted={mounted && !!referenceElement}
       duration={transitionDuration}
       transition={transition}
       timingFunction={transitionTimingFunction}
@@ -101,7 +122,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
     >
       {(transitionStyles) => (
         <div>
-          <Portal zIndex={zIndex}>
+          <PopperContainer withinPortal={withinPortal} zIndex={zIndex}>
             <div
               ref={setPopperElement}
               style={{ ...styles.popper, pointerEvents: 'none' }}
@@ -122,7 +143,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
                 )}
               </div>
             </div>
-          </Portal>
+          </PopperContainer>
         </div>
       )}
     </Transition>

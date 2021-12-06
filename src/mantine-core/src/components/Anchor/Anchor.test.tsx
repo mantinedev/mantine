@@ -1,3 +1,5 @@
+import React from 'react';
+import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itRendersChildren,
@@ -17,6 +19,16 @@ describe('@mantine/core/Anchor', () => {
   itSupportsMargins(Anchor, {});
   itIsPolymorphic(Anchor, {}, { dive: true });
   itSupportsRef(Anchor, {}, HTMLAnchorElement);
+
+  it('adds type="button" attribute if component prop is button', () => {
+    const link = shallow(<Anchor component="a" />);
+    const button = shallow(<Anchor component="button" />);
+    const buttonReset = shallow(<Anchor component="button" type="reset" />);
+
+    expect(link.render().attr('type')).toBe(undefined);
+    expect(button.render().attr('type')).toBe('button');
+    expect(buttonReset.render().attr('type')).toBe('reset');
+  });
 
   it('has correct displayName', () => {
     expect(Anchor.displayName).toEqual('@mantine/core/Anchor');

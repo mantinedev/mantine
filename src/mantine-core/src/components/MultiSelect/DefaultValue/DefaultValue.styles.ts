@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 
 interface DefaultLabelStyles {
   size: MantineSize;
@@ -41,12 +41,12 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
       ? theme.colors.dark[0]
       : theme.colors.gray[7],
     lineHeight: 1,
-    height: getSizeValue({ size, sizes }),
-    paddingLeft: getSizeValue({ size, sizes: theme.spacing }),
-    paddingRight: disabled ? getSizeValue({ size, sizes: theme.spacing }) : 0,
+    height: theme.fn.size({ size, sizes }),
+    paddingLeft: theme.fn.size({ size, sizes: theme.spacing }),
+    paddingRight: disabled ? theme.fn.size({ size, sizes: theme.spacing }) : 0,
     fontWeight: 500,
-    fontSize: getSizeValue({ size, sizes: fontSizes }),
-    borderRadius: getSizeValue({ size: radius, sizes: theme.radius }),
+    fontSize: theme.fn.size({ size, sizes: fontSizes }),
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     cursor: disabled ? 'not-allowed' : 'default',
     userSelect: 'none',
     maxWidth: 'calc(100% - 20px)',
@@ -54,7 +54,7 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
 
   defaultValueRemove: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-    marginLeft: getSizeValue({ size, sizes: theme.spacing }) / 6,
+    marginLeft: theme.fn.size({ size, sizes: theme.spacing }) / 6,
   },
 
   label: {

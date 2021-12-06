@@ -29,8 +29,9 @@ const useStyles = createStyles((theme) => ({
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
     color: theme.white,
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.spacing.xs,
     textAlign: 'center',
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     '@media (max-width: 520px)': {
       fontSize: 28,
@@ -83,6 +84,10 @@ const useStyles = createStyles((theme) => ({
   secondaryControl: {
     color: theme.white,
     backgroundColor: 'rgba(255, 255, 255, .4)',
+
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, .45) !important',
+    },
   },
 }));
 

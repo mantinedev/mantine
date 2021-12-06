@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn } from '@mantine/hooks';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Paper } from '../Paper/Paper';
 import { Overlay } from '../Overlay/Overlay';
@@ -106,7 +106,7 @@ export function MantineDrawer({
   transition,
   transitionDuration = 250,
   transitionTimingFunction = 'ease',
-  zIndex = 1000,
+  zIndex = getDefaultZIndex('modal'),
   overlayColor,
   overlayOpacity,
   children,
@@ -121,8 +121,10 @@ export function MantineDrawer({
   sx,
   ...others
 }: DrawerProps) {
-  const theme = useMantineTheme();
-  const { classes, cx } = useStyles({ size, position }, { sx, classNames, styles, name: 'Drawer' });
+  const { classes, cx, theme } = useStyles(
+    { size, position },
+    { sx, classNames, styles, name: 'Drawer' }
+  );
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   const [, lockScroll] = useScrollLock();
@@ -213,6 +215,7 @@ export function MantineDrawer({
           {!noOverlay && (
             <div style={transitionStyles.overlay}>
               <Overlay
+                className={classes.overlay}
                 opacity={_overlayOpacity}
                 zIndex={zIndex}
                 color={
@@ -228,9 +231,12 @@ export function MantineDrawer({
   );
 }
 
-export function Drawer(props: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
+export function Drawer({
+  zIndex = getDefaultZIndex('modal'),
+  ...props
+}: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
   return (
-    <Portal zIndex={props.zIndex || 1000}>
+    <Portal zIndex={zIndex}>
       <MantineDrawer {...props} />
     </Portal>
   );

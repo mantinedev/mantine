@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface ContainerStyles {
   fluid: boolean;
@@ -16,10 +16,10 @@ export const sizes = {
 
 export default createStyles((theme, { fluid, size, padding }: ContainerStyles) => ({
   root: {
-    maxWidth: fluid ? '100%' : getSizeValue({ size, sizes }),
+    maxWidth: fluid ? '100%' : theme.fn.size({ size, sizes }),
     marginLeft: 'auto',
     marginRight: 'auto',
-    paddingLeft: getSizeValue({ size: padding, sizes: theme.spacing }),
-    paddingRight: getSizeValue({ size: padding, sizes: theme.spacing }),
+    paddingLeft: theme.fn.size({ size: padding, sizes: theme.spacing }),
+    paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
   },
 }));

@@ -8,6 +8,7 @@ import {
   checkAccessibility,
   itSupportsMargins,
   defaultInputProps,
+  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
@@ -23,7 +24,7 @@ describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsStylesApi(
     TimeRangeInput,
     defaultInputProps,
-    Object.keys(TimeRangeInputStylesApi),
+    getInputStylesApiKeys(Object.keys(TimeRangeInputStylesApi)),
     'TimeRangeInput'
   );
 

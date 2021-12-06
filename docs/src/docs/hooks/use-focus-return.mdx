@@ -34,11 +34,31 @@ useFocusReturn({
 
   // Transition duration in ms, used to set timeout as element cannot be focused when focus trap is active
   transitionDuration: 200,
+
+  // Optional Should focus be returned automatically? Defaults to true
+  shouldReturnFocus: true,
 });
+```
+
+If `shouldReturnFocus` option is set to false you can call returned function to focus last active element:
+
+```tsx
+const returnFocus = useFocusReturn({
+  opened: false,
+  transitionDuration: 200,
+  shouldReturnFocus: true,
+});
+
+// ... later
+returnFocus();
 ```
 
 ## Definition
 
 ```tsx
-function useFocusReturn(settings: { opened: boolean; transitionDuration: number }): void;
+function useFocusReturn(settings: {
+  opened: boolean;
+  transitionDuration: number;
+  shouldReturnFocus?: boolean;
+}): () => void;
 ```

@@ -1,4 +1,4 @@
-import { createStyles, getFocusStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   group: {
@@ -14,7 +14,7 @@ export default createStyles((theme) => ({
   },
 
   item: {
-    ...getFocusStyles(theme),
+    ...theme.fn.focusStyles(),
     minHeight: 86,
     display: 'block',
     border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]}`,

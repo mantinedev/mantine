@@ -51,7 +51,7 @@ in order to get static selector. `createStyles` receives `getRef` function to ha
 
 To merge class names use `cx` function, it has the same api as [clsx](https://www.npmjs.com/package/clsx) package.
 
-**!important:** Do not external libraries like [classnames](https://www.npmjs.com/package/classnames)
+**!important:** Do not use external libraries like [classnames](https://www.npmjs.com/package/classnames)
 or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
 as it will produce styles collisions.
 
@@ -89,46 +89,14 @@ function Demo({ active }) {
 }
 ```
 
-## getFocusStyles
-
-`getFocusStyles` function returns mantine focus styles in jss format for interactive elements.
-Focus styles are visible only when user navigates with keyboard.
-
-```tsx
-import { getFocusStyles, createStyles } from '@mantine/core';
-
-createStyles((theme) => ({
-  button: {
-    ...getFocusStyles(theme),
-    color: 'red',
-  },
-}));
-```
-
-## getFontStyles
-
-`getFontStyles` function returns font styles from theme with [font smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth):
-
-```tsx
-import { getFontStyles, createStyles } from '@mantine/core';
-
-createUseStyles((theme) => ({
-  wrapper: {
-    ...getFontStyles(theme),
-    color: 'red',
-  },
-}));
-```
-
 ## Global styles
 
 To set global styles use `Global` component:
 
 ```tsx
-import { getFontStyles } from './utils';
-import { Global } from '../tss/Global';
+import { Global } from '@mantine/core';
 
-export function GlobalStyles() {
+export function Demo() {
   return (
     <Global
       styles={(theme) => ({
@@ -137,53 +105,13 @@ export function GlobalStyles() {
         },
 
         body: {
-          ...getFontStyles(theme),
+          ...theme.fn.fontStyles(),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
         },
       })}
     />
-  );
-}
-```
-
-## normalize.css
-
-`@mantine/core` exports `NormalizeCSS` component with [normalize.css](https://necolas.github.io/normalize.css/) styles:
-
-```tsx
-import { MantineProvider, NormalizeCSS } from '@mantine/core';
-
-function Demo() {
-  return (
-    <MantineProvider>
-      <NormalizeCSS />
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-## GlobalStyles component
-
-GlobalStyles component will help you work with dark color scheme, it sets body styles:
-
-- background color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
-- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
-- font-family and font-smoothing based on theme
-
-GlobalStyles must be included only once and rendered inside MantineProvider:
-
-```tsx
-import { MantineProvider, GlobalStyles } from '@mantine/core';
-
-function Demo() {
-  return (
-    <MantineProvider>
-      <GlobalStyles />
-      <YourApp />
-    </MantineProvider>
   );
 }
 ```
@@ -195,13 +123,6 @@ You can override default component styles inline or using [MantineProvider](/the
 the same way as with `createStyles`:
 
 <Demo data={TabsDemos.stylesApi} />
-
-## sx prop
-
-All Mantine components support `sx` prop, you can add styles to root element and subscribe to theme with this
-prop. This is useful when you want customize component without creating separate `createStyles` hook:
-
-<Demo data={CreateStylesDemos.createStylesSx} />
 
 ## Using createStyles without @mantine/core
 

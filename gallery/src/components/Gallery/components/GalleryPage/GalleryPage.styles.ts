@@ -1,9 +1,7 @@
 import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
-  wrapper: {
-    paddingTop: 22,
-  },
+  wrapper: {},
 
   content: {
     minHeight: 'calc(100vh - 60px)',

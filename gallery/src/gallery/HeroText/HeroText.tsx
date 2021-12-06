@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, Title, Text, Button, Container, useMantineTheme } from '@mantine/core';
-import { Dots } from '@mantine/decorations';
+import { Dots } from './Dots';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -39,7 +39,8 @@ const useStyles = createStyles((theme) => ({
     fontSize: 40,
     letterSpacing: -1,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.spacing.xs,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     '@media (max-width: 520px)': {
       fontSize: 28,
@@ -96,10 +97,11 @@ export function HeroText() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Automated AI code reviews for{' '}
+          Automated AI{' '}
           <Text component="span" color={theme.primaryColor} inherit>
-            any stack
-          </Text>
+            code reviews
+          </Text>{' '}
+          for any stack
         </Title>
 
         <Container padding={0} size={600}>
@@ -110,11 +112,11 @@ export function HeroText() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} size="lg">
-            Get started for free
-          </Button>
           <Button className={classes.control} size="lg" variant="default" color="gray">
-            Live demo
+            Book a demo
+          </Button>
+          <Button className={classes.control} size="lg">
+            Purchase a license
           </Button>
         </div>
       </div>

@@ -14,12 +14,12 @@ describe('@mantine/dates/DateRangePicker', () => {
   itSupportsClassName(DateRangePicker, {});
   itSupportsStyle(DateRangePicker, {});
   itSupportsMargins(DateRangePicker, {});
-  itSupportsRef(DateRangePicker, {}, HTMLButtonElement);
+  itSupportsRef(DateRangePicker, {}, HTMLInputElement);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DateRangePicker initiallyOpened />);
-    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('date-range-picker');
-    expect(element.find(RangeCalendar).prop('__staticSelector')).toBe('date-range-picker');
+    expect(element.find(DatePickerBase).prop('__staticSelector')).toBe('DateRangePicker');
+    expect(element.find(RangeCalendar).prop('__staticSelector')).toBe('DateRangePicker');
   });
 
   it('sets label on DatePickerBase based on inputFormat prop', () => {

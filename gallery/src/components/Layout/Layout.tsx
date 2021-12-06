@@ -1,14 +1,18 @@
 import React from 'react';
-import { MantineProvider, NormalizeCSS, GlobalStyles, ColorScheme } from '@mantine/core';
+import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
+import { Header } from './Header/Header';
+import { HEADER_HEIGHT } from './Header/Header.styles';
+import '../../fonts/GreycliffCF/styles.css';
 
 interface LayoutProps {
   children: React.ReactNode;
+  noHeader?: boolean;
 }
 
 const THEME_KEY = 'mantine-color-scheme';
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, noHeader = false }: LayoutProps) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
@@ -20,10 +24,11 @@ export function Layout({ children }: LayoutProps) {
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
-    <MantineProvider theme={{ colorScheme }}>
-      <NormalizeCSS />
-      <GlobalStyles />
-      {children}
-    </MantineProvider>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        {!noHeader && <Header />}
+        <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 }

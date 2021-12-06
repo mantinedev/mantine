@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface ThumbStyles {
   size: MantineSize;
@@ -13,7 +13,7 @@ export const THUMB_SIZES = {
 };
 
 export default createStyles((theme, { size }: ThumbStyles) => {
-  const _size = getSizeValue({ size, sizes: THUMB_SIZES });
+  const _size = theme.fn.size({ size, sizes: THUMB_SIZES });
   return {
     thumb: {
       overflow: 'hidden',

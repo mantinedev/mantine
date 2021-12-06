@@ -48,7 +48,7 @@ export function CategoriesList({ categories }: CategoriesListProps) {
   });
 
   return (
-    <Container size={1308} padding={15} className={classes.wrapper}>
+    <Container size="xl" padding="md" className={classes.wrapper}>
       {cards}
     </Container>
   );

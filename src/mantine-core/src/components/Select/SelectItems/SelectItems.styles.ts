@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 
 interface SelectItemsStyles {
   size: MantineSize;
@@ -9,12 +9,12 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${getSizeValue({ size, sizes: theme.spacing }) / 1.5}px ${getSizeValue({
+    padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
       size,
       sizes: theme.spacing,
     })}px`,
     cursor: 'pointer',
-    fontSize: getSizeValue({ size, sizes: theme.fontSizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderRadius: theme.radius.sm,
   },
@@ -32,8 +32,8 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
   nothingFound: {
     boxSizing: 'border-box',
     color: theme.colors.gray[6],
-    paddingTop: getSizeValue({ size, sizes: theme.spacing }) / 2,
-    paddingBottom: getSizeValue({ size, sizes: theme.spacing }) / 2,
+    paddingTop: theme.fn.size({ size, sizes: theme.spacing }) / 2,
+    paddingBottom: theme.fn.size({ size, sizes: theme.spacing }) / 2,
     textAlign: 'center',
   },
 
@@ -46,7 +46,7 @@ export default createStyles((theme, { size }: SelectItemsStyles) => ({
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${getSizeValue({ size, sizes: theme.spacing }) / 1.5}px ${getSizeValue({
+    padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
       size,
       sizes: theme.spacing,
     })}px`,

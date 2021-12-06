@@ -52,6 +52,6 @@ function App() {
 }
 ```
 
-## Licence
+## License
 
-All Mantine packages have MIT licence. All Mantine dependencies also have MIT licence.
+All Mantine packages have MIT license. All Mantine dependencies also have MIT license.

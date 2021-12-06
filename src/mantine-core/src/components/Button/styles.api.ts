@@ -6,7 +6,6 @@ export const Button: Record<ButtonStylesNames, string> = {
   filled: 'Filled variant root element modifier',
   light: 'Light variant root element modifier',
   default: 'Default variant root element modifier',
-  link: 'Link variant root element modifier',
   gradient: 'Gradient variant root element modifier',
   white: 'White variant root element modifier',
   loading: 'Loading root element modifier',

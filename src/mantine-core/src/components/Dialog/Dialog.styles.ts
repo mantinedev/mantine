@@ -1,4 +1,4 @@
-import { createStyles, getSizeValue, MantineNumberSize, getFontStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface DialogStyles {
   size: MantineNumberSize;
@@ -14,10 +14,10 @@ const sizes = {
 
 export default createStyles((theme, { size }: DialogStyles) => ({
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     position: 'relative',
-    width: getSizeValue({ size, sizes }),
+    width: theme.fn.size({ size, sizes }),
     maxWidth: '100%',
     minHeight: 50,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,

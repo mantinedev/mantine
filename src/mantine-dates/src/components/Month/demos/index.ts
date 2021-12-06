@@ -1,4 +1,5 @@
 export { boundaries } from './boundaries';
+export { firstDaySunday } from './firstDaySunday';
 export { exclude } from './exclude';
 export { range } from './range';
 export { styles } from './styles';

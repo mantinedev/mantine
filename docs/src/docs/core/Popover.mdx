@@ -126,31 +126,17 @@ To specify initial focus element add `data-autofocus` attribute:
 </Popover>
 ```
 
-## TypeScript
+## Usage with other overlays
 
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { PopoverProps } from '@mantine/core';
-```
-
-`PopoverProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### PopoverStylesNames type
-
-`PopoverStylesNames` type is a union with Popover [Styles API](/theming/styles-api/) names:
+Popover listens for outside clicks with [use-click-outside](/hooks/use-click-outside/) hook.
+This means that it is not possible to use elements that render overlays within [Portal](/core/portal/)
+inside Popover. To use components like [Autocomplete](/core/autocomplete/),
+[Menu](/core/menu/), [DatePicker](/dates/date-picker/) portal feature should be disabled for these components:
 
 ```tsx
-import type { PopoverStylesNames } from '@mantine/core';
-
-const popoverClasses: Partial<Record<PopoverStylesNames, 'string'>> = {
-  header: 'popover-header',
-  title: 'popover-title',
-};
-
-<Popover classNames={popoverClasses} />;
+<Popover>
+  <Menu withinPortal={false} />
+  <Autocomplete withinPortal={false} />
+  <DatePicker withinPortal={false} />
+</Popover>
 ```
-
-See full styles descriptions list under _Styles API_ tab.

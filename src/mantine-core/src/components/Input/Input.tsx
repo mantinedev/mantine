@@ -9,10 +9,10 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
-import useStyles from './Input.styles';
+import { Box } from '../Box';
+import useStyles, { InputVariant } from './Input.styles';
 
-export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
-export type InputStylesNames = Exclude<ClassNames<typeof useStyles>, InputVariant>;
+export type InputStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
@@ -92,16 +92,17 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const theme = useMantineTheme();
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
-      { radius, size, multiline, variant: _variant, invalid, disabled },
+      { radius, size, multiline, variant: _variant, invalid },
       { sx, classNames, styles, name: __staticSelector }
     );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const Element: any = component || 'input';
 
     return (
-      <div
-        className={cx(classes.root, classes[_variant], className)}
+      <Box
+        className={cx(classes.wrapper, className)}
         style={mergedStyles}
+        sx={sx}
         {...wrapperProps}
       >
         {icon && <div className={classes.icon}>{icon}</div>}
@@ -111,7 +112,11 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={invalid}
-          className={cx({ [classes.withIcon]: icon }, classes.input)}
+          className={cx(classes[`${_variant}Variant`], classes.input, {
+            [classes.withIcon]: icon,
+            [classes.invalid]: invalid,
+            [classes.disabled]: disabled,
+          })}
           disabled={disabled}
           style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
         />
@@ -125,7 +130,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
             {rightSection}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 );

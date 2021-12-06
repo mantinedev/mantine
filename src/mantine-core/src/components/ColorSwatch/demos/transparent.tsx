@@ -1,15 +1,15 @@
 import React from 'react';
-import { useMantineTheme, hexToRgba } from '@mantine/styles';
+import { useMantineTheme } from '@mantine/styles';
 import { ColorSwatch } from '../ColorSwatch';
 import { Group } from '../../Group/Group';
 
 const code = `
-import { ColorSwatch, Group, useMantineTheme, hexToRgba } from '@mantine/core';
+import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
   const swatches = Object.keys(theme.colors).map((color) => (
-    <ColorSwatch key={color} color={hexToRgba(theme.colors[color][6], 0.5)} />
+    <ColorSwatch key={color} color={theme.fn.rgba(theme.colors[color][6], 0.5)} />
   ));
 
   return (
@@ -23,7 +23,7 @@ function Demo() {
 function Demo() {
   const theme = useMantineTheme();
   const swatches = Object.keys(theme.colors).map((color) => (
-    <ColorSwatch key={color} color={hexToRgba(theme.colors[color][6], 0.5)} />
+    <ColorSwatch key={color} color={theme.fn.rgba(theme.colors[color][6], 0.5)} />
   ));
 
   return (

@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 
 interface NumberInputStyles {
   radius: MantineNumberSize;
@@ -27,7 +27,7 @@ export default createStyles((theme, { radius, size }: NumberInputStyles) => ({
     position: 'relative',
     flex: '0 0 50%',
     boxSizing: 'border-box',
-    width: getSizeValue({ size, sizes: CONTROL_SIZES }),
+    width: theme.fn.size({ size, sizes: CONTROL_SIZES }),
     padding: 0,
     WebkitTapHighlightColor: 'transparent',
     borderBottom: `1px solid ${
@@ -58,7 +58,7 @@ export default createStyles((theme, { radius, size }: NumberInputStyles) => ({
   },
 
   controlUp: {
-    borderTopRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+    borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
 
     '&::after': {
       borderWidth: '0 5px 5px 5px',
@@ -73,7 +73,7 @@ export default createStyles((theme, { radius, size }: NumberInputStyles) => ({
   },
 
   controlDown: {
-    borderBottomRightRadius: getSizeValue({ size: radius, sizes: theme.radius }) - 1,
+    borderBottomRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
     borderBottom: 0,
 
     '&::after': {

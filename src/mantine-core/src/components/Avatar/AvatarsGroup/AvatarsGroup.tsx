@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
 import { Avatar } from '../Avatar';
+import { Box } from '../../Box';
 import { Center } from '../../Center';
 import useStyles from './AvatarsGroup.styles';
 
@@ -12,66 +13,79 @@ export interface AvatarsGroupProps
   /** <Avatar /> components only */
   children?: React.ReactNode;
 
-  /** Child Avatars width and height */
+  /** Child <Avatar /> components width and height */
   size?: MantineNumberSize;
 
-  /** Child Avatars radius */
+  /** Child <Avatar /> radius */
   radius?: MantineNumberSize;
 
-  /** Maximum amount of Avatar components rendered, everything after limit is truncated */
+  /** Maximum amount of <Avatar /> components rendered, everything after limit is truncated */
   limit?: number;
 
   /** Spacing between avatars */
   spacing?: MantineNumberSize;
 
-  /** Total number of Child Avatars, overrides the truncated length */
+  /** Total number of child <Avatar />, overrides the truncated amount */
   total?: number;
 }
 
-export function AvatarsGroup({
-  className,
-  children,
-  size = 'md',
-  radius = 'xl',
-  limit = 2,
-  classNames,
-  styles,
-  spacing = 'lg',
-  total,
-  sx,
-  ...others
-}: AvatarsGroupProps) {
-  const { classes, cx } = useStyles({ spacing }, { classNames, styles, sx, name: 'AvatarsGroup' });
-
-  const avatars = React.Children.toArray(children)
-    .filter((child: React.ReactElement) => child.type === Avatar)
-    .map((child: React.ReactElement, index) =>
-      React.cloneElement(child, {
-        size,
-        radius,
-        key: index,
-        className: cx(classes.child, child.props.className),
-        style: {
-          ...child.props.style,
-          zIndex: index + 1,
-        },
-      })
+export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
+  (
+    {
+      className,
+      children,
+      size = 'md',
+      radius = 'xl',
+      limit = 2,
+      classNames,
+      styles,
+      spacing = 'lg',
+      total,
+      sx,
+      ...others
+    }: AvatarsGroupProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { spacing },
+      { classNames, styles, sx, name: 'AvatarsGroup' }
     );
 
-  const clampedMax = limit < 2 ? 2 : limit;
-  const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
-  const truncatedAvatars = total ? total - Math.min(avatars.length, clampedMax) : extraAvatars;
+    const avatars = React.Children.toArray(children)
+      .filter((child: React.ReactElement) => child.type === Avatar)
+      .map((child: React.ReactElement, index) =>
+        React.cloneElement(child, {
+          size,
+          radius,
+          key: index,
+          className: cx(classes.child, child.props.className),
+          style: {
+            ...child.props.style,
+            zIndex: index + 1,
+          },
+        })
+      );
 
-  return (
-    <div className={cx(className, classes.root)} {...others}>
-      {avatars.slice(0, avatars.length - extraAvatars)}
-      {truncatedAvatars ? (
-        <Avatar size={size} radius={radius} className={classes.child} style={{ zIndex: limit + 1 }}>
-          <Center className={classes.truncated}>+{truncatedAvatars}</Center>
-        </Avatar>
-      ) : null}
-    </div>
-  );
-}
+    const clampedMax = limit < 2 ? 2 : limit;
+    const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
+    const truncatedAvatars = total ? total - Math.min(avatars.length, clampedMax) : extraAvatars;
+
+    return (
+      <Box className={cx(className, classes.root)} ref={ref} {...others}>
+        {avatars.slice(0, avatars.length - extraAvatars)}
+        {truncatedAvatars ? (
+          <Avatar
+            size={size}
+            radius={radius}
+            className={classes.child}
+            style={{ zIndex: limit + 1 }}
+          >
+            <Center className={classes.truncated}>+{truncatedAvatars}</Center>
+          </Avatar>
+        ) : null}
+      </Box>
+    );
+  }
+);
 
 AvatarsGroup.displayName = '@mantine/core/AvatarsGroup';

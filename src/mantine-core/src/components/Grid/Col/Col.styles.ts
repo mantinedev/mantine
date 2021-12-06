@@ -1,7 +1,6 @@
 import {
   createStyles,
   MantineNumberSize,
-  getSizeValue,
   MANTINE_SIZES,
   MantineSize,
   MantineTheme,
@@ -12,6 +11,11 @@ interface ColStyles {
   columns: number;
   grow: boolean;
   offset: number;
+  offsetXs: number;
+  offsetSm: number;
+  offsetMd: number;
+  offsetLg: number;
+  offsetXl: number;
   span: number;
   xs: number;
   sm: number;
@@ -21,14 +25,18 @@ interface ColStyles {
 }
 
 const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
+const getColumnOffset = (offset: number, columns: number) =>
+  offset ? `${100 / (columns / offset)}%` : undefined;
 
 function getBreakpointsStyles({
   sizes,
+  offsets,
   theme,
   columns,
   grow,
 }: {
   sizes: Record<MantineSize, number>;
+  offsets: Record<MantineSize, number>;
   grow: boolean;
   theme: MantineTheme;
   columns: number;
@@ -39,6 +47,7 @@ function getBreakpointsStyles({
         flexBasis: getColumnWidth(sizes[size], columns),
         flexShrink: 0,
         maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
+        marginLeft: getColumnOffset(offsets[size], columns),
       };
     }
     return acc;
@@ -46,16 +55,41 @@ function getBreakpointsStyles({
 }
 
 export default createStyles(
-  (theme, { gutter, grow, offset, columns, span, xs, sm, md, lg, xl }: ColStyles) => ({
+  (
+    theme,
+    {
+      gutter,
+      grow,
+      offset,
+      offsetXs,
+      offsetSm,
+      offsetMd,
+      offsetLg,
+      offsetXl,
+      columns,
+      span,
+      xs,
+      sm,
+      md,
+      lg,
+      xl,
+    }: ColStyles
+  ) => ({
     root: {
       boxSizing: 'border-box',
       flexGrow: grow ? 1 : 0,
-      padding: getSizeValue({ size: gutter, sizes: theme.spacing }) / 2,
-      marginLeft: offset ? `${100 / (columns / offset)}%` : undefined,
+      padding: theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
+      marginLeft: getColumnOffset(offset, columns),
       flexBasis: getColumnWidth(span, columns),
       flexShrink: 0,
       maxWidth: grow ? 'unset' : getColumnWidth(span, columns),
-      ...getBreakpointsStyles({ sizes: { xs, sm, md, lg, xl }, theme, columns, grow }),
+      ...getBreakpointsStyles({
+        sizes: { xs, sm, md, lg, xl },
+        offsets: { xs: offsetXs, sm: offsetSm, md: offsetMd, lg: offsetLg, xl: offsetXl },
+        theme,
+        columns,
+        grow,
+      }),
     },
   })
 );

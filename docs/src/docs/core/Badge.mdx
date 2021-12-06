@@ -14,7 +14,6 @@ styles: ['Badge']
 ---
 
 import { BadgeDemos } from '@demos/core';
-import { BADGE_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -53,17 +52,6 @@ Alternatively, you can use a number to set radius in px:
 
 <Demo data={BadgeDemos.sizes} />
 
-You can get predefined badge heights by importing `BADGE_SIZES`:
-
-```tsx
-import { BADGE_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Badge height']}
-  data={Object.keys(BADGE_SIZES).map((size) => [size, `${BADGE_SIZES[size]}px`])}
-/>
-
 ## Full width and overflow
 
 Badge will take full width of container if you set `fullWidth` prop.
@@ -84,12 +72,7 @@ You can change badge root element by passing React element to `component` prop.
 
 <Demo data={BadgeDemos.component} />
 
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
+To use custom component with TypeScript provide type:
 
 ```tsx
 // With element
@@ -109,51 +92,4 @@ in case you need full type coverage for events and `ref`:
     window.myRef = node;
   }}
 />
-```
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { BadgeProps } from '@mantine/core';
-```
-
-`BadgeProps` is a generic type, it accepts either a string or component type as single type argument:
-
-```tsx
-// BadgeProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorBadgeProps = BadgeProps<'a'>;
-
-// BadgeProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomBadgeProps = BadgeProps<typeof MyOtherComponent>;
-```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
-
-### BadgeStylesNames type
-
-`BadgeStylesNames` type is a union with Badge [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { BadgeStylesNames } from '@mantine/core';
-
-const badgeClasses: Partial<Record<BadgeStylesNames, 'string'>> = {
-  inner: 'badge-inner',
-  leftSection: 'badge-leftSection',
-};
-
-<Badge classNames={badgeClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.
-
-### BadgeVariant type
-
-`BadgeVariant` is a union, it includes all Badge variants:
-
-```tsx
-import type { BadgeVariant } from '@mantine/core';
-
-const myVariant: BadgeVariant = 'light';
 ```

@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSizeValue,
-  MantineTheme,
-  CSSObject,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineTheme, CSSObject } from '@mantine/styles';
 
 interface AppShellStyles {
   padding: MantineNumberSize;
@@ -16,9 +10,9 @@ interface AppShellStyles {
 }
 
 function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObject {
-  const padding = getSizeValue({ size: props.padding, sizes: theme.spacing });
+  const padding = theme.fn.size({ size: props.padding, sizes: theme.spacing });
   const offset = props.navbarOffsetBreakpoint
-    ? getSizeValue({ size: props.navbarOffsetBreakpoint, sizes: theme.breakpoints })
+    ? theme.fn.size({ size: props.navbarOffsetBreakpoint, sizes: theme.breakpoints })
     : null;
 
   if (!props.fixed) {
@@ -26,7 +20,7 @@ function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObjec
   }
 
   const queries = props.navbarBreakpoints.reduce((acc, [breakpoint, breakpointSize]) => {
-    acc[`@media (max-width: ${breakpoint}px)`] = {
+    acc[`@media (min-width: ${breakpoint + 1}px)`] = {
       paddingLeft: `calc(${breakpointSize}px + ${padding}px)`,
     };
 

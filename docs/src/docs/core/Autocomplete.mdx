@@ -74,7 +74,7 @@ Autocomplete support two different data formats:
 ## Custom item component
 
 You can change autocomplete item component and filtering logic that is used in search.
-To do so you will need to:
+To do so, you will need to:
 
 - Add extra props to `data` objects
 - Create `filter` function which determines whether item should be added to the search results
@@ -96,13 +96,13 @@ Based on this data shape you can create custom `filter` function and `itemCompon
 
 ## Limit amount of options
 
-By default Autocomplete will render 5 items at a time, to change that set `limit` prop:
+By default, Autocomplete will render 5 items at a time, to change that set `limit` prop:
 
 <Demo data={AutocompleteDemos.limit} />
 
 ## Animations
 
-By default dropdown animations are turned off to increase responsiveness.
+By default, dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
@@ -112,8 +112,6 @@ You can enable them by setting optional props:
 <Demo data={AutocompleteDemos.animations} />
 
 ## With icon
-
-You can use any React node as in icon:
 
 <Demo data={AutocompleteDemos.icon} demoProps={{ zIndex: 4 }} />
 
@@ -150,50 +148,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<Autocomplete label="My input" />; // -> ok, input and label is connected
-<Autocomplete />; // not ok, input is not labeled
-<Autocomplete aria-label="My input" />; // -> ok, label is not visible but will be announced by screen reader
+<Autocomplete /> // -> not ok, input is not labeled
+<Autocomplete label="My input" /> // -> ok, input and label is connected
+<Autocomplete aria-label="My input" /> // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-### AutocompleteProps type
-
-Import component props type:
-
-```tsx
-import type { AutocompleteProps } from '@mantine/core';
-```
-
-`AutocompleteProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
-
-### AutocompleteItem type
-
-`AutocompleteItem` type lets you validate object items that will be passed to Autocomplete `data` prop:
-
-```tsx
-import type { AutocompleteItem } from '@mantine/core';
-
-const autocompleteData: AutocompleteItem[] = [
-  { value: 'John' },
-  { value: 'Jake' },
-  { value: 'Amy' },
-];
-```
-
-### AutocompleteStylesNames type
-
-`AutocompleteStylesNames` type is a union with Autocomplete [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { AutocompleteStylesNames } from '@mantine/core';
-
-const autocompleteClasses: Partial<Record<AutocompleteStylesNames, 'string'>> = {
-  dropdown: 'autocomplete-dropdown',
-  input: 'autocomplete-input',
-};
-
-<Autocomplete classNames={autocompleteClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

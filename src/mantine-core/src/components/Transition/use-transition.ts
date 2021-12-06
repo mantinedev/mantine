@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useReducedMotion, useDidUpdate } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/styles';
 
@@ -57,6 +57,8 @@ export function useTransition({
   useDidUpdate(() => {
     handleStateChange(mounted);
   }, [mounted]);
+
+  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
 
   return {
     transitionDuration,

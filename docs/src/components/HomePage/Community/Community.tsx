@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Group, Text, Title, useMantineTheme } from '@mantine/core';
-import { Blobs } from '@mantine/decorations';
 import { SocialButton } from '../../SocialButton/SocialButton';
+import { Blobs } from './Blobs';
 import useStyles from './Community.styles';
 
 export function Community() {

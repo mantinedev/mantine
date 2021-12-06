@@ -82,26 +82,7 @@ function Demo() {
 }
 ```
 
-## Get root element ref
-
-You can get root element ref by setting `ref` prop:
-
-```tsx
-import { useRef } from 'react';
-import { Card } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef();
-  return <Card ref={ref} />;
-}
-```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
+To use custom component with TypeScript provide type:
 
 ```tsx
 // With element
@@ -123,22 +104,16 @@ in case you need full type coverage for events and `ref`:
 />
 ```
 
-### Component props type
+## Get root element ref
 
-Import component props type:
-
-```tsx
-import type { CardProps } from '@mantine/core';
-```
-
-`CardProps` is a generic type, it accepts either a string or component type as single type argument:
+You can get root element ref by setting `ref` prop:
 
 ```tsx
-// CardProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorCardProps = CardProps<'a'>;
+import { useRef } from 'react';
+import { Card } from '@mantine/core';
 
-// CardProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomCardProps = CardProps<typeof MyOtherComponent>;
+function Demo() {
+  const ref = useRef();
+  return <Card ref={ref} />;
+}
 ```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
-import { getSizeValue, useExtractedMargins } from '@mantine/styles';
+import { useExtractedMargins, useMantineTheme } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { TextInput } from '../TextInput/TextInput';
 import { Input } from '../Input';
@@ -11,6 +11,9 @@ import useStyles from './PasswordInput.styles';
 export interface PasswordInputProps extends React.ComponentPropsWithoutRef<typeof TextInput> {
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
+
+  /** Provide your own visibility toggle icon */
+  visibilityToggleIcon?: React.FC<{ reveal: boolean; size: number }>;
 }
 
 const buttonSizes = {
@@ -56,6 +59,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       classNames,
       styles,
       variant,
+      visibilityToggleIcon: VisibilityToggleIcon = PasswordToggleIcon,
       __staticSelector = 'PasswordInput',
       rightSection: _rightSection,
       rightSectionWidth: _rightSectionWidth,
@@ -65,7 +69,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     }: PasswordInputProps,
     ref
   ) => {
-    const rightSectionWidth = getSizeValue({ size, sizes: rightSectionSizes });
+    const theme = useMantineTheme();
+    const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
     const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
     const uuid = useUuid(id);
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
@@ -75,7 +80,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       <ActionIcon<'button'>
         tabIndex={toggleTabIndex}
         radius={radius}
-        size={getSizeValue({ size, sizes: buttonSizes })}
+        size={theme.fn.size({ size, sizes: buttonSizes })}
         aria-hidden="true"
         onMouseDown={(event) => {
           event.preventDefault();
@@ -88,7 +93,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           }
         }}
       >
-        <PasswordToggleIcon reveal={reveal} size={getSizeValue({ size, sizes: iconSizes })} />
+        <VisibilityToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
       </ActionIcon>
     );
 
@@ -125,7 +130,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         >
           <input
             type={reveal ? 'text' : 'password'}
-            className={cx(classes.innerInput, { [classes.withIcon]: icon })}
+            className={cx(classes.innerInput, {
+              [classes.withIcon]: icon,
+              [classes.invalid]: !!error,
+            })}
             disabled={disabled}
             id={uuid}
             ref={ref}

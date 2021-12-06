@@ -1,8 +1,9 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, useMantineTheme, hexToRgba } from '@mantine/core';
+import { DefaultProps, useMantineTheme, Group } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { isSameDate } from '../../utils';
+import { isSameDate, isSameMonth } from '../../utils';
+import { FirstDayOfWeek } from '../../types';
 import { Month } from '../Month/Month';
 import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import { CalendarHeader } from '../Calendar/CalendarHeader/CalendarHeader';
@@ -29,6 +30,9 @@ export interface RangeCalendarProps
   /** Static css selector base */
   __staticSelector?: string;
 
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
+
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
 }
@@ -38,7 +42,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     {
       classNames,
       styles,
-      locale = 'en',
+      locale,
       nextMonthLabel,
       previousMonthLabel,
       initialMonth,
@@ -59,7 +63,9 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       size = 'sm',
       onMouseLeave,
       __staticSelector = 'range-calendar',
+      firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
+      amountOfMonths = 1,
       ...others
     }: RangeCalendarProps,
     ref
@@ -67,6 +73,8 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     const theme = useMantineTheme();
     const [hoveredDay, setHoveredDay] = useState<Date>(null);
     const [pickedDate, setPickedDate] = useState<Date>(null);
+    const hasMultipleMonths = amountOfMonths > 1;
+    const finalLocale = locale || theme.datesLocale;
 
     const setRangeDate = (date: Date) => {
       if (pickedDate instanceof Date) {
@@ -93,8 +101,9 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       setHoveredDay(null);
     };
 
-    const shouldHighlightDate = (date: Date, modifiers: DayModifiers) => {
-      if (pickedDate instanceof Date && hoveredDay instanceof Date) {
+    const shouldHighlightDate = (date: Date, modifiers: DayModifiers, currentMonth: Date) => {
+      const isInCurrentMonth = hasMultipleMonths ? isSameMonth(date, currentMonth) : true;
+      if (pickedDate instanceof Date && hoveredDay instanceof Date && isInCurrentMonth) {
         const result: [Date, Date] = [hoveredDay, pickedDate];
         result.sort((a, b) => a.getTime() - b.getTime());
         return (
@@ -115,67 +124,102 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       rule: (val) => val instanceof Date,
     });
 
-    const disabledState = getDisabledState({ month: _month, minDate, maxDate });
+    const disabledState = getDisabledState({
+      month: _month,
+      minDate,
+      maxDate,
+      amountOfMonths,
+    });
+
+    const dayStyles = (date: Date, modifiers: DayModifiers, currentMonth: Date) => {
+      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
+      const outsideStyles = modifiers.outside && hasMultipleMonths ? { display: 'none' } : null;
+
+      if (shouldHighlightDate(date, modifiers, currentMonth)) {
+        return {
+          ...initialStyles,
+          ...outsideStyles,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
+              : theme.colors[theme.primaryColor][0],
+          borderRadius: 0,
+        };
+      }
+
+      return { ...initialStyles, ...outsideStyles };
+    };
 
     return (
       <CalendarWrapper
         size={size}
         fullWidth={fullWidth}
+        amountOfMonths={amountOfMonths}
         onMouseLeave={handleMouseLeave}
         ref={ref}
         {...others}
       >
-        <CalendarHeader
-          size={size}
-          nextMonthLabel={nextMonthLabel}
-          previousMonthLabel={previousMonthLabel}
-          previousMonthDisabled={disabledState.previousDisabled}
-          nextMonthDisabled={disabledState.nextDisabled}
-          onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
-          onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
-          classNames={classNames}
-          styles={styles}
-          locale={locale}
-          withSelect={withSelect}
-          yearsRange={yearsRange}
-          month={_month}
-          setMonth={setMonth}
-          labelFormat={labelFormat}
-          __staticSelector={__staticSelector}
-        />
+        <Group noWrap style={{ alignItems: 'flex-start' }}>
+          {Array(amountOfMonths)
+            .fill(0)
+            .map((_, monthIndex) => {
+              const isFirstMonth = monthIndex === 0;
+              const isLastMonth = monthIndex === amountOfMonths - 1;
+              const monthToRender = isFirstMonth
+                ? _month
+                : dayjs(_month).add(monthIndex, 'month').toDate();
+              const hiddenMonth = isFirstMonth ? 'next' : isLastMonth ? 'prev' : 'both';
 
-        <Month
-          month={_month}
-          range={value}
-          value={pickedDate}
-          onChange={setRangeDate}
-          dayClassName={dayClassName}
-          dayStyle={(date, modifiers) => {
-            const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : {};
-            if (shouldHighlightDate(date, modifiers)) {
-              return {
-                ...initialStyles,
-                backgroundColor:
-                  theme.colorScheme === 'dark'
-                    ? hexToRgba(theme.colors[theme.primaryColor][9], 0.3)
-                    : theme.colors[theme.primaryColor][0],
-                borderRadius: 0,
-              };
-            }
+              return (
+                <div key={`month-${monthIndex}`}>
+                  <CalendarHeader
+                    size={size}
+                    nextMonthLabel={nextMonthLabel}
+                    previousMonthLabel={previousMonthLabel}
+                    previousMonthDisabled={disabledState.previousDisabled}
+                    nextMonthDisabled={disabledState.nextDisabled}
+                    onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'month').toDate())}
+                    onNextMonth={() => setMonth(dayjs(_month).add(1, 'month').toDate())}
+                    classNames={classNames}
+                    styles={styles}
+                    locale={finalLocale}
+                    withSelect={withSelect}
+                    yearsRange={yearsRange}
+                    month={monthToRender}
+                    setMonth={setMonth}
+                    labelFormat={labelFormat}
+                    hiddenMonth={hasMultipleMonths ? hiddenMonth : undefined}
+                    __staticSelector={
+                      isFirstMonth ? __staticSelector : `${__staticSelector}-month-${monthIndex}`
+                    }
+                  />
 
-            return initialStyles;
-          }}
-          disableOutsideEvents={disableOutsideEvents}
-          minDate={minDate}
-          maxDate={maxDate}
-          excludeDate={excludeDate}
-          classNames={classNames}
-          styles={styles}
-          fullWidth={fullWidth}
-          size={size}
-          onDayMouseEnter={(date) => setHoveredDay(date)}
-          __staticSelector={__staticSelector}
-        />
+                  <Month
+                    month={monthToRender}
+                    range={value}
+                    value={pickedDate}
+                    onChange={setRangeDate}
+                    dayClassName={dayClassName}
+                    dayStyle={(date, modifiers) => dayStyles(date, modifiers, monthToRender)}
+                    disableOutsideDayStyle={hasMultipleMonths}
+                    disableOutsideEvents={disableOutsideEvents}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    excludeDate={excludeDate}
+                    classNames={classNames}
+                    styles={styles}
+                    fullWidth={fullWidth}
+                    size={size}
+                    onDayMouseEnter={(date) => setHoveredDay(date)}
+                    firstDayOfWeek={firstDayOfWeek}
+                    __staticSelector={
+                      isFirstMonth ? __staticSelector : `${__staticSelector}-month-${monthIndex}`
+                    }
+                  />
+                </div>
+              );
+            })}
+        </Group>
       </CalendarWrapper>
     );
   }

@@ -1,4 +1,4 @@
-import { getFontStyles, createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface MonthStyles {
   fullWidth: boolean;
@@ -10,7 +10,7 @@ export default createStyles((theme, { fullWidth }: MonthStyles) => ({
   },
 
   root: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     borderCollapse: 'collapse',
     width: fullWidth ? '100%' : 'auto',
     tableLayout: 'fixed',

@@ -1,10 +1,13 @@
+import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import dayjs from 'dayjs';
+import { useMantineTheme } from '@mantine/core';
+import { FirstDayOfWeek } from '../../types';
 import { CalendarSettings } from '../Calendar/Calendar';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
+// @ts-ignore
 export interface DateRangePickerProps
   extends DatePickerBaseSharedProps,
     Omit<CalendarSettings, 'size'> {
@@ -32,8 +35,14 @@ export interface DateRangePickerProps
   /** Separator between dates */
   labelSeparator?: string;
 
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
+
   /** Allow one date to be selected as range */
   allowSingleDateInRange?: boolean;
+
+  /** Allows to show multiple months */
+  amountOfMonths?: number;
 }
 
 const validationRule = (val: any) =>
@@ -49,7 +58,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       styles,
       shadow = 'sm',
       locale = 'en',
-      inputFormat = 'MMMM D, YYYY',
+      inputFormat,
       transitionDuration = 200,
       transitionTimingFunction,
       nextMonthLabel,
@@ -72,15 +81,21 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       labelSeparator = '–',
       clearable = true,
       clearButtonLabel,
+      firstDayOfWeek = 'monday',
       allowSingleDateInRange = false,
+      amountOfMonths = 1,
+      withinPortal = true,
       ...others
     }: DateRangePickerProps,
     ref
   ) => {
+    const theme = useMantineTheme();
+    const finalLocale = locale || theme.datesLocale;
+    const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
-    const [_value, setValue] = useUncontrolled({
+    const [_value, setValue] = useUncontrolled<[Date, Date]>({
       value,
       defaultValue,
       finalValue: [null, null],
@@ -90,13 +105,17 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const handleValueChange = (range: [Date, Date]) => {
       setValue(range);
-      closeCalendarOnChange && validationRule(range) && setDropdownOpened(false);
+      if (closeCalendarOnChange && validationRule(range)) {
+        setDropdownOpened(false);
+        window.setTimeout(() => inputRef.current?.focus(), 0);
+      }
     };
 
     const valueValid = validationRule(_value);
 
     const handleClear = () => {
       setValue([null, null]);
+      setDropdownOpened(true);
       inputRef.current?.focus();
     };
 
@@ -114,23 +133,24 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           inputLabel={
             valueValid
               ? `${upperFirst(
-                  dayjs(_value[0]).locale(locale).format(inputFormat)
+                  dayjs(_value[0]).locale(finalLocale).format(dateFormat)
                 )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(locale).format(inputFormat)
+                  dayjs(_value[1]).locale(finalLocale).format(dateFormat)
                 )}`
-              : null
+              : ''
           }
-          __staticSelector="date-range-picker"
+          __staticSelector="DateRangePicker"
           dropdownType={dropdownType}
           clearable={clearable && valueValid}
           clearButtonLabel={clearButtonLabel}
           onClear={handleClear}
+          withinPortal={withinPortal}
           {...others}
         >
           <RangeCalendar
             classNames={classNames}
             styles={styles}
-            locale={locale}
+            locale={finalLocale}
             nextMonthLabel={nextMonthLabel}
             previousMonthLabel={previousMonthLabel}
             initialMonth={valueValid ? _value[0] : initialMonth}
@@ -145,10 +165,12 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             minDate={minDate}
             maxDate={maxDate}
             excludeDate={excludeDate}
-            __staticSelector="date-range-picker"
+            __staticSelector="DateRangePicker"
             fullWidth={dropdownType === 'modal'}
+            firstDayOfWeek={firstDayOfWeek}
             size={dropdownType === 'modal' ? 'lg' : calendarSize}
             allowSingleDateInRange={allowSingleDateInRange}
+            amountOfMonths={amountOfMonths}
           />
         </DatePickerBase>
 

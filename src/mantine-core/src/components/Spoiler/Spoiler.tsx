@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Button } from '../Button/Button';
+import { Anchor } from '../Anchor';
 import useStyles from './Spoiler.styles';
 
 export type SpoilerStylesNames = ClassNames<typeof useStyles>;
@@ -73,14 +73,14 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
         </div>
 
         {spoiler && (
-          <Button
-            variant="link"
+          <Anchor
+            component="button"
             ref={controlRef}
             onClick={() => setShowState((opened) => !opened)}
             className={classes.control}
           >
             {spoilerMoreContent}
-          </Button>
+          </Anchor>
         )}
       </div>
     );

@@ -14,7 +14,7 @@ function Demo() {
     dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
   ]);
 
-  return <RangeCalendar value={value} onChange={setValue} month={new Date()} />;
+  return <RangeCalendar value={value} onChange={setValue} />;
 }
 `;
 
@@ -26,7 +26,7 @@ function Demo() {
 
   return (
     <Group position="center">
-      <RangeCalendar value={value} onChange={setValue} month={new Date()} />
+      <RangeCalendar value={value} onChange={setValue} />
     </Group>
   );
 }

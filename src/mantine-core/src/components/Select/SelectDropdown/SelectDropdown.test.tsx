@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsRef } from '@mantine/tests';
-import { Transition } from '../../Transition';
 import { SelectDropdown } from './SelectDropdown';
+import { Paper } from '../../Paper';
 
 const defaultProps = {
   mounted: true,
@@ -18,21 +17,9 @@ const defaultProps = {
 };
 
 describe('@mantine/core/SelectDropdown', () => {
-  itSupportsRef(SelectDropdown, defaultProps, HTMLDivElement);
-
-  it('passes mounted transition, duration and timingFunction props to Transition component', () => {
-    const props = shallow(<SelectDropdown {...defaultProps} />)
-      .find(Transition)
-      .props();
-    expect(props.mounted).toBe(true);
-    expect(props.duration).toBe(0);
-    expect(props.timingFunction).toBe('ease');
-    expect(props.transition).toBe('rotate-left');
-  });
-
   it('sets correct id and aria-labelledby props on listbox', () => {
     const props = shallow(<SelectDropdown {...defaultProps} />)
-      .find(Transition)
+      .find(Paper)
       .dive()
       .find('[role="listbox"]')
       .props();

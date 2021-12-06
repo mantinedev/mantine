@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, getFontStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface AvatarsGroupStyles {
   spacing: MantineNumberSize;
@@ -7,17 +7,17 @@ interface AvatarsGroupStyles {
 export default createStyles((theme, { spacing }: AvatarsGroupStyles) => ({
   root: {
     display: 'flex',
-    paddingLeft: getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+    paddingLeft: theme.fn.size({ size: spacing, sizes: theme.spacing }) / 2,
   },
 
   child: {
-    marginLeft: -getSizeValue({ size: spacing, sizes: theme.spacing }) / 2,
+    marginLeft: -theme.fn.size({ size: spacing, sizes: theme.spacing }) / 2,
     background: `${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
     border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
   },
 
   truncated: {
-    ...getFontStyles(theme),
+    ...theme.fn.fontStyles(),
     lineHeight: 1,
     fontSize: `${theme.fontSizes.sm}px !important`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

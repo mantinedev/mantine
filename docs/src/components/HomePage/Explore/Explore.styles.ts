@@ -20,9 +20,9 @@ export default createStyles((theme) => ({
   },
 
   wavesBottom: {
-    height: 34,
+    height: 38,
     transform: 'rotate(180deg)',
-    marginBottom: -5,
+    marginBottom: -10,
     filter: 'none',
     fill: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },

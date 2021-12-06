@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  MantineProvider,
-  NormalizeCSS,
-  GlobalStyles,
-  ColorSchemeProvider,
-  ColorScheme,
-} from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 import { LayoutInner, LayoutProps } from './LayoutInner';
-import '../../fonts/GreycfifCF/styles.css';
+import '../../fonts/GreycliffCF/styles.css';
 
 const THEME_KEY = 'mantine-color-scheme';
 
@@ -26,11 +20,13 @@ export default function Layout({ children, location }: LayoutProps) {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider
-        theme={{ colorScheme, headings: { fontFamily: 'Greycliff CF, sans serif' } }}
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme,
+          headings: { fontFamily: 'Greycliff CF, sans serif' },
+        }}
       >
-        <GlobalStyles />
-        <NormalizeCSS />
-
         <LayoutInner location={location}>{children}</LayoutInner>
       </MantineProvider>
     </ColorSchemeProvider>

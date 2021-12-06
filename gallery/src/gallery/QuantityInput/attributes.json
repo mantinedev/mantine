@@ -1,0 +1,10 @@
+{
+  "title": "Number input with custom controls",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 140
+  }
+}

@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue, keyframes } from '@mantine/styles';
+import { createStyles, MantineNumberSize, keyframes } from '@mantine/styles';
 
 interface SkeletonStylesProps {
   height: number | string;
@@ -16,7 +16,7 @@ export default createStyles((theme, { height, width, radius, circle }: SkeletonS
   root: {
     height,
     width: circle ? height : width,
-    borderRadius: circle ? height : getSizeValue({ size: radius, sizes: theme.radius }),
+    borderRadius: circle ? height : theme.fn.size({ size: radius, sizes: theme.radius }),
     position: 'relative',
     overflow: 'hidden',
   },

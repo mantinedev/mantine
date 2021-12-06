@@ -1,0 +1,10 @@
+{
+  "title": "Input with floating label",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/text-input/", "/core/select/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

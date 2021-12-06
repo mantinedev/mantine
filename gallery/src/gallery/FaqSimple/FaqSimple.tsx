@@ -18,6 +18,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     control: {
       ref: control,
+
       '&:hover': {
         backgroundColor: 'transparent',
       },

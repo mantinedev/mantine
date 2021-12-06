@@ -1,6 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
-import { TabProps } from '../Tab/Tab';
+import { DefaultProps, MantineColor, ClassNames, useSx } from '@mantine/styles';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
@@ -8,30 +7,41 @@ export type TabControlStylesNames = Exclude<ClassNames<typeof useStyles>, TabsVa
 
 export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,
-    React.ComponentPropsWithoutRef<'button'> {
-  active: boolean;
-  tabProps: TabProps;
+    React.ComponentPropsWithRef<'button'> {
+  active?: boolean;
   color?: MantineColor;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
   icon?: React.ReactNode;
   buttonRef?: React.ForwardedRef<HTMLButtonElement>;
+  label?: React.ReactNode;
+  children?: React.ReactNode;
+  ref?: React.ForwardedRef<HTMLButtonElement>;
+}
+
+export interface TabType {
+  type: any;
+  props: TabControlProps;
+  ref: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export function TabControl({
   className,
   active,
   buttonRef,
-  tabProps,
   color,
   variant = 'default',
   classNames,
   styles,
   orientation = 'horizontal',
   icon: __,
+  sx,
+  label,
+  icon,
+  color: overrideColor,
   ...others
 }: TabControlProps) {
-  const { label, icon, color: overrideColor, ...props } = tabProps;
+  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
     { color: overrideColor || color, orientation },
     { classNames, styles, name: 'Tabs' }
@@ -40,12 +50,12 @@ export function TabControl({
   return (
     <button
       {...others}
-      {...props}
       tabIndex={active ? 0 : -1}
       className={cx(
         classes.tabControl,
         classes[variant],
         { [classes.tabActive]: active },
+        sxClassName,
         className
       )}
       type="button"

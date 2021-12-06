@@ -116,7 +116,6 @@ describe('@mantine/dates/Calendar', () => {
     const maxDate = new Date();
     const onChange = jest.fn();
     const dayClassName = jest.fn();
-    const dayStyle = jest.fn();
     const excludeDate = jest.fn();
 
     const props = shallow(
@@ -125,7 +124,6 @@ describe('@mantine/dates/Calendar', () => {
         value={value}
         onChange={onChange}
         dayClassName={dayClassName}
-        dayStyle={dayStyle}
         disableOutsideEvents
         minDate={minDate}
         maxDate={maxDate}
@@ -140,7 +138,6 @@ describe('@mantine/dates/Calendar', () => {
     expect(props.value).toBe(value);
     expect(props.onChange).toBe(onChange);
     expect(props.dayClassName).toBe(dayClassName);
-    expect(props.dayStyle).toBe(dayStyle);
     expect(props.minDate).toBe(minDate);
     expect(props.maxDate).toBe(maxDate);
     expect(props.excludeDate).toBe(excludeDate);

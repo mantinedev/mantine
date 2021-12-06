@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSizeValue } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface ListItemStyles {
   spacing: MantineNumberSize;
@@ -18,7 +18,7 @@ export default createStyles((theme, { spacing, center }: ListItemStyles, getRef)
       lineHeight: center ? 1 : theme.lineHeight,
 
       '&:not(:first-of-type)': {
-        marginTop: getSizeValue({ size: spacing, sizes: theme.spacing }),
+        marginTop: theme.fn.size({ size: spacing, sizes: theme.spacing }),
       },
     },
 

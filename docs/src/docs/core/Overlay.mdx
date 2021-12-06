@@ -20,13 +20,11 @@ import { OverlayDemos, CardDemos } from '@demos/core';
 Overlay had absolute position and will take 100% of width and height of parent container.
 It is used to build components like [Modal](/core/modal/) and [LoadingOverlay](/core/loading-overlay/).
 
-You can change overlay opacity (from 0 to 1), color (css color value, not connected to mantine theme) and z-index (number).
+You can change overlay opacity (from 0 to 1), color (CSS color value, not connected to Mantine theme) and z-index (number).
 
 <Demo data={OverlayDemos.usage} />
 
 ## With gradient
-
-You can replace background color with gradient, to do so, set `gradient` prop:
 
 <Demo data={OverlayDemos.gradient} />
 
@@ -40,50 +38,3 @@ import { Link } from 'react-router-dom';
 <Overlay component="a" href="https://mantine.dev" />
 <Overlay component={Link} to="/mantine" />
 ```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
-
-```tsx
-// With element
-<Overlay<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-// With component
-<Overlay<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { OverlayProps } from '@mantine/core';
-```
-
-`OverlayProps` is a generic type, it accepts either a string or component type as single type argument:
-
-```tsx
-// OverlayProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorOverlayProps = OverlayProps<'a'>;
-
-// OverlayProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomOverlayProps = OverlayProps<typeof MyOtherComponent>;
-```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

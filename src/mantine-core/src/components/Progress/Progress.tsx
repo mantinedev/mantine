@@ -1,9 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  getThemeColor,
   MantineColor,
   ClassNames,
   useExtractedMargins,
@@ -66,8 +64,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     }: ProgressProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { color, size, radius, striped },
       { sx, classNames, styles, name: 'Progress' }
     );
@@ -81,7 +78,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             style={{
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
-              backgroundColor: getThemeColor({ theme, color: section.color, shade: 7 }),
+              backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
           />
         ))

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Group,
-  ActionIcon,
-  getSizeValue,
-  DefaultProps,
-  MantineSize,
-  useMantineTheme,
-} from '@mantine/core';
+import { Group, ActionIcon, DefaultProps, MantineSize, useMantineTheme } from '@mantine/core';
 import { ArrowIcon } from '../ArrowIcon';
 import { CalendarLabel } from '../CalendarLabel/CalendarLabel';
 import { sizes as DAY_SIZES } from '../../Month/Day/Day.styles';
@@ -38,6 +31,8 @@ interface CalendarHeaderProps extends DefaultProps {
   __staticSelector: string;
   monthLabel?: string;
   yearLabel?: string;
+  preventFocus?: boolean;
+  hiddenMonth?: 'next' | 'prev' | 'both';
 }
 
 export function CalendarHeader({
@@ -59,19 +54,32 @@ export function CalendarHeader({
   __staticSelector,
   monthLabel,
   yearLabel,
+  preventFocus = false,
+  hiddenMonth,
 }: CalendarHeaderProps) {
   const theme = useMantineTheme();
-  const iconSize = getSizeValue({ size, sizes: iconSizes });
-  const iconButtonSize = getSizeValue({ size, sizes: DAY_SIZES });
+  const iconSize = theme.fn.size({ size, sizes: iconSizes });
+  const iconButtonSize = theme.fn.size({ size, sizes: DAY_SIZES });
+  const controlStyles = {
+    '&:disabled': {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      opacity: 0.4,
+    },
+  };
 
   return (
     <Group position="apart" noWrap style={{ marginBottom: theme.spacing.xs / 2 }}>
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={previousMonthLabel}
         onClick={onPreviousMonth}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
+        tabIndex={preventFocus ? -1 : 0}
         disabled={previousMonthDisabled}
         size={iconButtonSize}
+        style={{ visibility: ['prev', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
         data-mantine-stop-propagation
+        sx={controlStyles}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -89,14 +97,19 @@ export function CalendarHeader({
         __staticSelector={__staticSelector}
         monthLabel={monthLabel}
         yearLabel={yearLabel}
+        preventFocus={preventFocus}
       />
 
-      <ActionIcon
+      <ActionIcon<'button'>
         aria-label={nextMonthLabel}
         onClick={onNextMonth}
+        tabIndex={preventFocus ? -1 : 0}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
         disabled={nextMonthDisabled}
         size={iconButtonSize}
+        style={{ visibility: ['next', 'both'].includes(hiddenMonth) ? 'hidden' : 'visible' }}
         data-mantine-stop-propagation
+        sx={controlStyles}
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>

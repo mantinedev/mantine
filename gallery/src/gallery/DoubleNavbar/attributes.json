@@ -1,0 +1,10 @@
+{
+  "title": "Navbar with 2 sections",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [],
+  "canvas": {
+    "center": false
+  }
+}

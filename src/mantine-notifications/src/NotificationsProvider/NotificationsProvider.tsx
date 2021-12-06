@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import { DefaultProps, useMantineTheme, Portal, MantineMargin } from '@mantine/core';
+import { DefaultProps, Portal, MantineMargin, getDefaultZIndex } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
@@ -58,7 +58,7 @@ export function NotificationsProvider({
   containerWidth = 440,
   notificationMaxHeight = 200,
   limit = 5,
-  zIndex = 5000,
+  zIndex = getDefaultZIndex('overlay'),
   style,
   children,
   ...others
@@ -72,10 +72,9 @@ export function NotificationsProvider({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
-  const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 1 : transitionDuration;
-  const { classes, cx } = useStyles();
+  const { classes, cx, theme } = useStyles();
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;

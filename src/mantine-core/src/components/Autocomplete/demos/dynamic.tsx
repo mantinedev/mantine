@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
+import { useState } from 'react';
+import { Autocomplete } from '@mantine/core';
+
 function Demo() {
   const [value, setValue] = useState('');
   const data =

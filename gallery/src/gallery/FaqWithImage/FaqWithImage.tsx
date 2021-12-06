@@ -11,12 +11,18 @@ const useStyles = createStyles((theme) => ({
   title: {
     marginBottom: theme.spacing.md,
     paddingLeft: theme.spacing.md,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+  },
+
+  item: {
+    fontSize: theme.fontSizes.sm,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
   },
 }));
 
 const placeholder =
-  'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.It was born from sludge on the ocean floor. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. It checks its surroundings via the ultrasonic waves it emits from its mouth.';
+  'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.';
 
 export function FaqWithImage() {
   const { classes } = useStyles();
@@ -24,26 +30,37 @@ export function FaqWithImage() {
     <div className={classes.wrapper}>
       <Container size="lg">
         <Grid id="faq-grid" gutter={50}>
-          <Col span={12} sm={6}>
+          <Col span={12} md={6}>
             <Image src={image} alt="Frequently Asked Questions" />
           </Col>
-          <Col span={12} sm={6}>
+          <Col span={12} md={6}>
             <Title order={2} align="left" className={classes.title}>
               Frequently Asked Questions
             </Title>
 
-            <Accordion iconPosition="right">
-              <Accordion.Item label="How can I reset my password?">{placeholder}</Accordion.Item>
-              <Accordion.Item label="Can I create more that one account?">
+            <Accordion iconPosition="right" initialItem={0}>
+              <Accordion.Item label="How can I reset my password?" className={classes.item}>
                 {placeholder}
               </Accordion.Item>
-              <Accordion.Item label="How can I subscribe to monthly newsletter?">
+              <Accordion.Item label="Can I create more that one account?" className={classes.item}>
                 {placeholder}
               </Accordion.Item>
-              <Accordion.Item label="Do you store credit card information securely?">
+              <Accordion.Item
+                label="How can I subscribe to monthly newsletter?"
+                className={classes.item}
+              >
                 {placeholder}
               </Accordion.Item>
-              <Accordion.Item label="What payment systems to you work with?">
+              <Accordion.Item
+                label="Do you store credit card information securely?"
+                className={classes.item}
+              >
+                {placeholder}
+              </Accordion.Item>
+              <Accordion.Item
+                label="What payment systems to you work with?"
+                className={classes.item}
+              >
                 {placeholder}
               </Accordion.Item>
             </Accordion>
