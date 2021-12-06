@@ -6,7 +6,10 @@ interface ColorSchemeContextProps {
   toggleColorScheme(colorScheme?: ColorScheme): void;
 }
 
-const ColorSchemeContext = createContext<ColorSchemeContextProps>(null);
+const ColorSchemeContext = createContext<ColorSchemeContextProps>({
+  colorScheme: 'light',
+  toggleColorScheme: () => {},
+});
 
 export function useMantineColorScheme() {
   const ctx = useContext(ColorSchemeContext);
