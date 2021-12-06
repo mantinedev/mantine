@@ -171,4 +171,19 @@ storiesOf('@mantine/core/Select/stories', module)
       <Select label="Dropdown flip" data={data} placeholder="Select items" />
       {content}
     </div>
+  ))
+  .add('Uncontrolled with name', () => (
+    <div style={{ padding: 40 }}>
+      <Select
+        name="test"
+        label="Your favorite framework/library"
+        placeholder="Pick one"
+        data={[
+          { value: 'react', label: 'React' },
+          { value: 'ng', label: 'Angular' },
+          { value: 'svelte', label: 'Svelte' },
+          { value: 'vue', label: 'Vue' },
+        ]}
+      />
+    </div>
   ));

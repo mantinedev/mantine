@@ -545,7 +545,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           </SelectDropdown>
         </div>
 
-        {name && <input type="hidden" name={name} value={_value} />}
+        {name && <input type="hidden" name={name} value={_value || ''} />}
       </InputWrapper>
     );
   }
