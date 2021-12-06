@@ -89,18 +89,17 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-    const [calendarMonth, setCalendarMonth] = useState(initialMonth || new Date());
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
-
     const [lastValidValue, setLastValidValue] = useState(defaultValue ?? null);
-    const [_value, setValue] = useUncontrolled<Date | string>({
+    const [_value, setValue] = useUncontrolled<Date>({
       value,
       defaultValue,
       finalValue: null,
       onChange,
       rule: (val) => val === null || val instanceof Date,
     });
+    const [calendarMonth, setCalendarMonth] = useState(_value || initialMonth || new Date());
 
     const [focused, setFocused] = useState(false);
     const [inputState, setInputState] = useState(
