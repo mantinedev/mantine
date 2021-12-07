@@ -25,9 +25,10 @@ export default createStyles((theme) => ({
     borderRadius: theme.radius.sm,
     flex: 1,
     textAlign: 'center',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     },
   },
 }));

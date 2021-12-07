@@ -3,10 +3,11 @@ import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { MonthHeader } from './MonthHeader/MonthHeader';
-import { Month } from '../Month';
+import { Month, MonthSettings } from '../Month';
+import { DayModifiers } from '../Month/get-day-props/get-day-props';
 import useStyles from './CalendarBase.styles';
 
-interface CalendarProps {
+interface CalendarProps extends MonthSettings {
   /** Month for controlled calendar */
   month?: Date;
 
@@ -33,6 +34,7 @@ export function CalendarBase({
   locale,
   labelFormat = 'MMMM YYYY',
   amountOfMonths = 3,
+  dayStyle,
 }: CalendarProps) {
   const theme = useMantineTheme();
   const finalLocale = locale || theme.datesLocale;
@@ -47,6 +49,12 @@ export function CalendarBase({
     rule: (val) => val instanceof Date,
   });
 
+  const dayStyles = (date: Date, modifiers: DayModifiers) => {
+    const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
+    const outsideStyles = modifiers.outside && amountOfMonths > 1 ? { display: 'none' } : null;
+    return { ...initialStyles, ...outsideStyles };
+  };
+
   const months = Array(amountOfMonths)
     .fill(0)
     .map((_, index) => (
@@ -60,7 +68,12 @@ export function CalendarBase({
           onNextMonth={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
           onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
         />
-        <Month month={dayjs(_month).add(index, 'months').toDate()} daysRefs={daysRefs} />
+        <Month
+          month={dayjs(_month).add(index, 'months').toDate()}
+          daysRefs={daysRefs}
+          disableOutsideDayStyle={false}
+          dayStyle={dayStyles}
+        />
       </div>
     ));
 
