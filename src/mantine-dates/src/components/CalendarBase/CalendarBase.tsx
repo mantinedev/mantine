@@ -4,7 +4,7 @@ import { useUncontrolled } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { MonthHeader } from './MonthHeader/MonthHeader';
 import { Month, MonthSettings } from '../Month';
-import { DayModifiers } from '../Month/get-day-props/get-day-props';
+import { getNextRowDate, isSameMonth } from '../../utils';
 import useStyles from './CalendarBase.styles';
 
 interface CalendarProps extends MonthSettings {
@@ -33,8 +33,7 @@ export function CalendarBase({
   onMonthChange,
   locale,
   labelFormat = 'MMMM YYYY',
-  amountOfMonths = 3,
-  dayStyle,
+  amountOfMonths = 1,
 }: CalendarProps) {
   const theme = useMantineTheme();
   const finalLocale = locale || theme.datesLocale;
@@ -49,10 +48,42 @@ export function CalendarBase({
     rule: (val) => val instanceof Date,
   });
 
-  const dayStyles = (date: Date, modifiers: DayModifiers) => {
-    const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
-    const outsideStyles = modifiers.outside && amountOfMonths > 1 ? { display: 'none' } : null;
-    return { ...initialStyles, ...outsideStyles };
+  const onDayKeyDown = (date: Date, event: React.KeyboardEvent<HTMLButtonElement>) => {
+    switch (event.code) {
+      case 'ArrowRight': {
+        const { shouldFocus, nextDate } = getNextRowDate(
+          date,
+          isSameMonth(
+            dayjs(_month)
+              .add(amountOfMonths - 1, 'months')
+              .toDate(),
+            date
+          ),
+          'monday'
+        );
+        const nextDateId = nextDate.toISOString();
+
+        if (nextDateId in daysRefs.current && shouldFocus) {
+          daysRefs.current[nextDateId].focus();
+        }
+        break;
+      }
+
+      case 'ArrowDown': {
+        const nextDateId = dayjs(date).add(1, 'week').toISOString();
+        if (nextDateId in daysRefs.current) {
+          daysRefs.current[nextDateId].focus();
+        }
+        break;
+      }
+      case 'ArrowUp': {
+        const nextDateId = dayjs(date).subtract(1, 'week').toISOString();
+        if (nextDateId in daysRefs.current) {
+          daysRefs.current[nextDateId].focus();
+        }
+        break;
+      }
+    }
   };
 
   const months = Array(amountOfMonths)
@@ -72,7 +103,7 @@ export function CalendarBase({
           month={dayjs(_month).add(index, 'months').toDate()}
           daysRefs={daysRefs}
           disableOutsideDayStyle={false}
-          dayStyle={dayStyles}
+          onDayKeyDown={onDayKeyDown}
         />
       </div>
     ));
