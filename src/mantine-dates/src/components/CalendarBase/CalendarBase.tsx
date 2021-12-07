@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
 import { MantineSize } from '@mantine/core';
-import { MonthHeader } from './MonthHeader/MonthHeader';
+import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker } from './YearPicker/YearPicker';
 import useStyles from './CalendarBase.styles';
@@ -114,16 +114,17 @@ export function CalendarBase({
     .fill(0)
     .map((_, index) => (
       <div key={index}>
-        <MonthHeader
+        <CalendarHeader
           hasNext={index + 1 === amountOfMonths}
           hasPrevious={index === 0}
           month={dayjs(_month).add(index, 'months').toDate()}
           locale={finalLocale}
           labelFormat={labelFormat}
-          onNextMonth={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
-          onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
-          onUpperOrderSelect={() => setSelectionState('year')}
+          onNext={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
+          onPrevious={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
+          onNextOrder={() => setSelectionState('year')}
         />
+
         <Month
           month={dayjs(_month).add(index, 'months').toDate()}
           daysRefs={daysRefs.current[index]}

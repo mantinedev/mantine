@@ -3,21 +3,21 @@ import { createStyles } from '@mantine/core';
 const SIZE = 40;
 
 export default createStyles((theme) => ({
-  monthHeader: {
+  calendarHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     align: 'center',
     marginBottom: theme.spacing.sm,
   },
 
-  monthHeaderControl: {
+  calendarHeaderControl: {
     '&:disabled': {
       opacity: 0,
       cursor: 'default',
     },
   },
 
-  monthHeaderSelect: {
+  calendarHeaderSelect: {
     fontSize: theme.fontSizes.sm,
     display: 'block',
     height: SIZE,
