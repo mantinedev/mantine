@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/core';
+import { MantineSize } from '@mantine/core';
 import { MonthHeader } from './MonthHeader/MonthHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import useStyles from './CalendarBase.styles';
@@ -30,6 +30,9 @@ interface CalendarProps extends MonthSettings {
 
   /** Called when day is selected */
   onChange?(value: Date): void;
+
+  /** Calendar size */
+  size?: MantineSize;
 }
 
 export function CalendarBase({
@@ -39,11 +42,11 @@ export function CalendarBase({
   locale,
   labelFormat = 'MMMM YYYY',
   amountOfMonths = 1,
+  size = 'sm',
   ...others
 }: CalendarProps) {
-  const theme = useMantineTheme();
+  const { classes, theme } = useStyles({ size, amountOfMonths }, { name: 'CalendarBase' });
   const finalLocale = locale || theme.datesLocale;
-  const { classes } = useStyles();
 
   const daysRefs = useRef<HTMLButtonElement[][][]>(
     Array(amountOfMonths)
@@ -120,6 +123,7 @@ export function CalendarBase({
           daysRefs={daysRefs.current[index]}
           disableOutsideDayStyle={false}
           onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
+          size={size}
           {...others}
         />
       </div>

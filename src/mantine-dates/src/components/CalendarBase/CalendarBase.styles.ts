@@ -1,8 +1,24 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/core';
+import { sizes as DAY_SIZES } from '../Month/Day/Day.styles';
 
-export default createStyles((theme) => ({
-  calendarBase: {
-    display: 'flex',
-    gap: theme.spacing.md,
-  },
-}));
+interface CalendarBaseStyles {
+  size: MantineSize;
+  amountOfMonths: number;
+}
+
+export default createStyles((theme, { size, amountOfMonths }: CalendarBaseStyles) => {
+  const _maxWidth = theme.fn.size({ size, sizes: DAY_SIZES }) * 7;
+  const maxWidth =
+    amountOfMonths > 1
+      ? _maxWidth * amountOfMonths + (amountOfMonths - 1) * theme.spacing.md
+      : _maxWidth;
+
+  return {
+    calendarBase: {
+      boxSizing: 'border-box',
+      display: 'flex',
+      gap: theme.spacing.md,
+      maxWidth,
+    },
+  };
+});
