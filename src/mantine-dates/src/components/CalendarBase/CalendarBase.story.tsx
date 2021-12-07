@@ -17,4 +17,9 @@ storiesOf('@mantine/dates/CalendarBase', module)
     <div style={{ padding: 40 }}>
       <CalendarBase amountOfMonths={3} />
     </div>
+  ))
+  .add('First day of week sunday', () => (
+    <div style={{ padding: 40 }}>
+      <CalendarBase amountOfMonths={3} firstDayOfWeek="sunday" />
+    </div>
   ));

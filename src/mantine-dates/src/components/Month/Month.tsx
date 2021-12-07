@@ -55,8 +55,8 @@ export interface MonthSettings {
   /** Prevent focusing upon clicking */
   preventFocus?: boolean;
 
-  /** Called when keydown event is registered on day */
-  onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -89,11 +89,11 @@ export interface MonthProps
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
 
-  /** Set first day of the week */
-  firstDayOfWeek?: FirstDayOfWeek;
-
   /** Get days buttons refs */
   daysRefs?: HTMLButtonElement[][];
+
+  /** Called when keydown event is registered on day */
+  onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
 
 const noop = () => {};

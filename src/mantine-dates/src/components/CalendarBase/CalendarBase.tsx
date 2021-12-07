@@ -24,6 +24,12 @@ interface CalendarProps extends MonthSettings {
 
   /** Amount of months */
   amountOfMonths?: number;
+
+  /** Selected value */
+  value?: Date;
+
+  /** Called when day is selected */
+  onChange?(value: Date): void;
 }
 
 export function CalendarBase({
@@ -33,6 +39,7 @@ export function CalendarBase({
   locale,
   labelFormat = 'MMMM YYYY',
   amountOfMonths = 1,
+  ...others
 }: CalendarProps) {
   const theme = useMantineTheme();
   const finalLocale = locale || theme.datesLocale;
@@ -113,6 +120,7 @@ export function CalendarBase({
           daysRefs={daysRefs.current[index]}
           disableOutsideDayStyle={false}
           onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
+          {...others}
         />
       </div>
     ));
