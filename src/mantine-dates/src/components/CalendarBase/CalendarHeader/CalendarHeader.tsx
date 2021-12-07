@@ -10,7 +10,6 @@ interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   month: Date;
   onNext?(): void;
   onPrevious?(): void;
-  labelFormat?: string;
   locale?: string;
   onNextOrder?(): void;
 }
@@ -22,7 +21,6 @@ export function CalendarHeader({
   onNext,
   onPrevious,
   onNextOrder,
-  labelFormat,
   locale,
   className,
   ...others
@@ -40,7 +38,7 @@ export function CalendarHeader({
       </ActionIcon>
 
       <UnstyledButton className={classes.calendarHeaderSelect} onClick={onNextOrder}>
-        {formatMonthLabel({ month, locale, format: labelFormat })}
+        {formatMonthLabel({ month, locale })}
       </UnstyledButton>
 
       <ActionIcon

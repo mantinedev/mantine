@@ -41,7 +41,6 @@ export function CalendarBase({
   initialMonth,
   onMonthChange,
   locale,
-  labelFormat = 'MMMM YYYY',
   amountOfMonths = 1,
   size = 'sm',
   ...others
@@ -119,7 +118,6 @@ export function CalendarBase({
           hasPrevious={index === 0}
           month={dayjs(_month).add(index, 'months').toDate()}
           locale={finalLocale}
-          labelFormat={labelFormat}
           onNext={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
           onPrevious={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
           onNextOrder={() => setSelectionState('year')}
