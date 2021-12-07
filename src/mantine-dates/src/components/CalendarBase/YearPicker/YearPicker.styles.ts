@@ -12,10 +12,10 @@ export default createStyles((theme) => {
     yearPickerControl: {
       flex: '0 0 25%',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      height: 46,
+      height: 42,
       textAlign: 'center',
       borderRadius: theme.radius.sm,
-      fontSize: theme.fontSizes.md,
+      fontSize: theme.fontSizes.sm,
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],

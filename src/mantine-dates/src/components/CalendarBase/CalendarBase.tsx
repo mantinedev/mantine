@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
 import { MantineSize } from '@mantine/core';
 import { MonthHeader } from './MonthHeader/MonthHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
+import { YearPicker } from './YearPicker/YearPicker';
 import useStyles from './CalendarBase.styles';
 
 interface CalendarProps extends MonthSettings {
@@ -53,6 +54,7 @@ export function CalendarBase({
       .fill(0)
       .map(() => [])
   );
+
   const [_month, setMonth] = useUncontrolled({
     value: month,
     defaultValue: initialMonth,
@@ -60,6 +62,9 @@ export function CalendarBase({
     onChange: onMonthChange,
     rule: (val) => val instanceof Date,
   });
+
+  const [selectionState, setSelectionState] = useState<'date' | 'month' | 'year'>('date');
+  const [yearSelection, setYearSelection] = useState(_month.getFullYear());
 
   const onDayKeyDown = (
     monthIndex: number,
@@ -117,6 +122,7 @@ export function CalendarBase({
           labelFormat={labelFormat}
           onNextMonth={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
           onPreviousMonth={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
+          onUpperOrderSelect={() => setSelectionState('year')}
         />
         <Month
           month={dayjs(_month).add(index, 'months').toDate()}
@@ -129,5 +135,19 @@ export function CalendarBase({
       </div>
     ));
 
-  return <div className={classes.calendarBase}>{months}</div>;
+  return (
+    <div className={classes.calendarBase}>
+      {selectionState === 'year' && (
+        <YearPicker
+          decade={_month.getFullYear()}
+          value={yearSelection}
+          onChange={(year) => {
+            setYearSelection(year);
+            setSelectionState('month');
+          }}
+        />
+      )}
+      {selectionState === 'date' && months}
+    </div>
+  );
 }

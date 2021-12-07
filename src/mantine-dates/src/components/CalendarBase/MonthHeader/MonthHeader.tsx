@@ -25,6 +25,9 @@ interface MonthHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
 
   /** dayjs locale to format month label */
   locale?: string;
+
+  /** Called when upper order button is clicked */
+  onUpperOrderSelect?(): void;
 }
 
 export function MonthHeader({
@@ -33,6 +36,7 @@ export function MonthHeader({
   month,
   onNextMonth,
   onPreviousMonth,
+  onUpperOrderSelect,
   labelFormat,
   locale,
   className,
@@ -50,7 +54,7 @@ export function MonthHeader({
         <ArrowIcon direction="left" width={12} height={12} />
       </ActionIcon>
 
-      <UnstyledButton className={classes.monthHeaderSelect}>
+      <UnstyledButton className={classes.monthHeaderSelect} onClick={onUpperOrderSelect}>
         {formatMonthLabel({ month, locale, format: labelFormat })}
       </UnstyledButton>
 
