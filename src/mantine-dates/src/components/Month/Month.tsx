@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   DefaultProps,
   Text,
@@ -14,6 +14,12 @@ import { getMonthDays, getWeekdaysNames } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
 import useStyles from './Month.styles';
+
+export interface DayKeydownPayload {
+  rowIndex: number;
+  cellIndex: number;
+  date: Date;
+}
 
 export interface MonthSettings {
   /** Adds className to day button based on date and modifiers */
@@ -50,7 +56,7 @@ export interface MonthSettings {
   preventFocus?: boolean;
 
   /** Called when keydown event is registered on day */
-  onDayKeyDown?(date: Date, event: React.KeyboardEvent): void;
+  onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -87,7 +93,7 @@ export interface MonthProps
   firstDayOfWeek?: FirstDayOfWeek;
 
   /** Get days buttons refs */
-  daysRefs?: React.RefObject<Record<string, HTMLButtonElement>>;
+  daysRefs?: HTMLButtonElement[][];
 }
 
 const noop = () => {};
@@ -98,7 +104,7 @@ export function Month({
   month,
   value,
   onChange,
-  autoFocus = false,
+  // autoFocus = false,
   disableOutsideEvents = false,
   locale,
   dayClassName,
@@ -131,19 +137,19 @@ export function Month({
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
 
-  useEffect(() => {
-    if (autoFocus) {
-      const date = new Date(
-        month.getFullYear(),
-        month.getMonth(),
-        value ? value.getDate() : 1
-      ).toISOString();
+  // useEffect(() => {
+  //   if (autoFocus) {
+  //     const date = new Date(
+  //       month.getFullYear(),
+  //       month.getMonth(),
+  //       value ? value.getDate() : 1
+  //     ).toISOString();
 
-      if (date in daysRefs.current) {
-        daysRefs.current[date].focus();
-      }
-    }
-  }, []);
+  //     if (date in daysRefs.current) {
+  //       daysRefs.current[date].focus();
+  //     }
+  //   }
+  // }, []);
 
   const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
     <th className={classes.weekdayCell} key={weekday}>
@@ -174,14 +180,20 @@ export function Month({
       });
 
       const withoutStylesOutsideMonth = disableOutsideDayStyle && dayProps.outside;
+      const onKeyDownPayload = { rowIndex, cellIndex, date };
 
       return (
         <td className={classes.cell} key={cellIndex}>
           <Day
             ref={(button) => {
-              if (daysRefs?.current) {
+              if (daysRefs) {
+                if (!Array.isArray(daysRefs[rowIndex])) {
+                  // eslint-disable-next-line no-param-reassign
+                  daysRefs[rowIndex] = [];
+                }
+
                 // eslint-disable-next-line no-param-reassign
-                daysRefs.current[date.toISOString()] = button;
+                daysRefs[rowIndex][cellIndex] = button;
               }
             }}
             onClick={() => typeof onChange === 'function' && onChange(date)}
@@ -195,7 +207,7 @@ export function Month({
             firstInMonth={cellIndex === 0 && rowIndex === 0}
             selected={(dayProps.selected || dayProps.selectedInRange) && !withoutStylesOutsideMonth}
             hasValue={hasValueInMonthRange}
-            onKeyDown={onDayKeyDown}
+            onKeyDown={(event) => onDayKeyDown(onKeyDownPayload, event)}
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             styles={styles}

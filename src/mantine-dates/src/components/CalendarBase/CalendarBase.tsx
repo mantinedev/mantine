@@ -3,8 +3,7 @@ import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { MonthHeader } from './MonthHeader/MonthHeader';
-import { Month, MonthSettings } from '../Month';
-import { getNextRowDate, isSameMonth } from '../../utils';
+import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import useStyles from './CalendarBase.styles';
 
 interface CalendarProps extends MonthSettings {
@@ -39,7 +38,11 @@ export function CalendarBase({
   const finalLocale = locale || theme.datesLocale;
   const { classes } = useStyles();
 
-  const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
+  const daysRefs = useRef<HTMLButtonElement[][][]>(
+    Array(amountOfMonths)
+      .fill(0)
+      .map(() => [])
+  );
   const [_month, setMonth] = useUncontrolled({
     value: month,
     defaultValue: initialMonth,
@@ -48,40 +51,46 @@ export function CalendarBase({
     rule: (val) => val instanceof Date,
   });
 
-  const onDayKeyDown = (date: Date, event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const onDayKeyDown = (
+    monthIndex: number,
+    payload: DayKeydownPayload,
+    event: React.KeyboardEvent<HTMLButtonElement>
+  ) => {
     switch (event.code) {
-      case 'ArrowRight': {
-        const { shouldFocus, nextDate } = getNextRowDate(
-          date,
-          isSameMonth(
-            dayjs(_month)
-              .add(amountOfMonths - 1, 'months')
-              .toDate(),
-            date
-          ),
-          'monday'
-        );
-        const nextDateId = nextDate.toISOString();
-
-        if (nextDateId in daysRefs.current && shouldFocus) {
-          daysRefs.current[nextDateId].focus();
-        }
-        break;
-      }
-
       case 'ArrowDown': {
-        const nextDateId = dayjs(date).add(1, 'week').toISOString();
-        if (nextDateId in daysRefs.current) {
-          daysRefs.current[nextDateId].focus();
+        if (payload.rowIndex + 1 < daysRefs.current[monthIndex].length) {
+          daysRefs.current[monthIndex][payload.rowIndex + 1][payload.cellIndex].focus();
         }
         break;
       }
+
       case 'ArrowUp': {
-        const nextDateId = dayjs(date).subtract(1, 'week').toISOString();
-        if (nextDateId in daysRefs.current) {
-          daysRefs.current[nextDateId].focus();
+        if (payload.rowIndex > 0) {
+          daysRefs.current[monthIndex][payload.rowIndex - 1][payload.cellIndex].focus();
         }
         break;
+      }
+
+      case 'ArrowRight': {
+        if (payload.cellIndex !== 6) {
+          daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex + 1].focus();
+        } else if (monthIndex + 1 < amountOfMonths) {
+          if (daysRefs.current[monthIndex + 1][payload.rowIndex]) {
+            daysRefs.current[monthIndex + 1][payload.rowIndex][0]?.focus();
+          }
+        }
+
+        break;
+      }
+
+      case 'ArrowLeft': {
+        if (payload.cellIndex !== 0) {
+          daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex - 1].focus();
+        } else if (monthIndex > 0) {
+          if (daysRefs.current[monthIndex - 1][payload.rowIndex]) {
+            daysRefs.current[monthIndex - 1][payload.rowIndex][6].focus();
+          }
+        }
       }
     }
   };
@@ -101,9 +110,9 @@ export function CalendarBase({
         />
         <Month
           month={dayjs(_month).add(index, 'months').toDate()}
-          daysRefs={daysRefs}
+          daysRefs={daysRefs.current[index]}
           disableOutsideDayStyle={false}
-          onDayKeyDown={onDayKeyDown}
+          onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
         />
       </div>
     ));
