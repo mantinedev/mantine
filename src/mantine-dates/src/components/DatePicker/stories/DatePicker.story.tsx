@@ -5,7 +5,7 @@ import { WithinOverlays, SubmitForm } from '@mantine/ds/src';
 import { DatePicker } from '../DatePicker';
 
 function Controlled() {
-  const [value, onChange] = useState(new Date());
+  const [value, onChange] = useState(new Date(2021, 7, 5));
 
   return (
     <DatePicker
@@ -13,7 +13,7 @@ function Controlled() {
       onChange={onChange}
       placeholder="With month and year"
       label="Date picker"
-      withSelect
+      allowFreeInput
     />
   );
 }
