@@ -30,6 +30,12 @@ storiesOf('@mantine/dates/CalendarBase', module)
   .add('Sizes: month', () => (
     <div style={{ padding: 40 }}>{getSizes({ initialLevel: 'month' })}</div>
   ))
-  .add('Sizes: year', () => (
-    <div style={{ padding: 40 }}>{getSizes({ initialLevel: 'year' })}</div>
+  .add('Sizes: year', () => <div style={{ padding: 40 }}>{getSizes({ initialLevel: 'year' })}</div>)
+  .add('Min/max date: year', () => (
+    <Wrapper
+      amountOfMonths={2}
+      minDate={new Date(1994, 0)}
+      maxDate={new Date(2038, 0)}
+      initialLevel="year"
+    />
   ));

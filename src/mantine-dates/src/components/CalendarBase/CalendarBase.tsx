@@ -53,6 +53,8 @@ export function CalendarBase({
   size = 'sm',
   allowLevelChange = true,
   initialLevel = 'date',
+  minDate,
+  maxDate,
   ...others
 }: CalendarProps) {
   const [selectionState, setSelectionState] = useState(initialLevel);
@@ -77,6 +79,8 @@ export function CalendarBase({
   });
 
   const [yearSelection, setYearSelection] = useState(_month.getFullYear());
+  const minYear = minDate instanceof Date ? minDate.getFullYear() : 0;
+  const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000;
 
   const onDayKeyDown = (
     monthIndex: number,
@@ -156,6 +160,8 @@ export function CalendarBase({
         <YearPicker
           size={size}
           value={yearSelection}
+          minYear={minYear}
+          maxYear={maxYear}
           onChange={(year) => {
             setYearSelection(year);
             setSelectionState('month');

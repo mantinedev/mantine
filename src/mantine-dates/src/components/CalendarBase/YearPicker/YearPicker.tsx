@@ -11,6 +11,8 @@ export interface YearPickerProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   value: number;
   onChange(value: number): void;
+  minYear?: number;
+  maxYear?: number;
   size?: MantineSize;
 }
 
@@ -21,11 +23,13 @@ export function YearPicker({
   value,
   onChange,
   size,
+  minYear,
+  maxYear,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles({ size });
   const [decade, setDecade] = useState(value);
-  const range = getDecadeRange(decade);
+  const range = getDecadeRange(decade, { min: minYear, max: maxYear });
 
   const years = range.map((year) => (
     <UnstyledButton
@@ -43,8 +47,8 @@ export function YearPicker({
     <div className={cx(classes.yearPicker, className)} {...others}>
       <CalendarHeader
         label={`${range[0]} – ${range[range.length - 1]}`}
-        hasNext
-        hasPrevious
+        hasPrevious={minYear < range[0]}
+        hasNext={maxYear > range[range.length - 1]}
         onNext={() => setDecade((current) => current + 10)}
         onPrevious={() => setDecade((current) => current - 10)}
         nextLevelDisabled

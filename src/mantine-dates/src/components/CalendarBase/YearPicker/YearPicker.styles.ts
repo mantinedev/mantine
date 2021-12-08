@@ -16,7 +16,9 @@ export default createStyles((theme, { size }: YearPickerStyles) => {
   const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
 
   return {
-    yearPicker: {},
+    yearPicker: {
+      width: '100%',
+    },
 
     yearPickerControls: {
       display: 'flex',
