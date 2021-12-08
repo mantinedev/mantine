@@ -154,6 +154,7 @@ export function CalendarBase({
     <div className={classes.calendarBase}>
       {selectionState === 'year' && (
         <YearPicker
+          size={size}
           value={yearSelection}
           onChange={(year) => {
             setYearSelection(year);
