@@ -19,7 +19,9 @@ export default createStyles((theme) => ({
 
   calendarHeaderSelect: {
     fontSize: theme.fontSizes.sm,
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: SIZE,
     padding: `0 ${theme.spacing.md}px`,
     borderRadius: theme.radius.sm,
@@ -38,5 +40,9 @@ export default createStyles((theme) => ({
         cursor: 'default',
       },
     },
+  },
+
+  calendarHeaderLabelIcon: {
+    marginLeft: 4,
   },
 }));

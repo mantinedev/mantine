@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionIcon, UnstyledButton } from '@mantine/core';
+import { ActionIcon, UnstyledButton, SelectChevronIcon } from '@mantine/core';
 import { ArrowIcon } from './ArrowIcon';
 import useStyles from './CalendarHeader.styles';
 
@@ -41,7 +41,10 @@ export function CalendarHeader({
         disabled={nextOrderDisabled}
         onClick={onNextOrder}
       >
-        {label}
+        <div>{label}</div>
+        {!nextOrderDisabled && (
+          <SelectChevronIcon error={false} size="sm" className={classes.calendarHeaderLabelIcon} />
+        )}
       </UnstyledButton>
 
       <ActionIcon
