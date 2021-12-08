@@ -6,22 +6,22 @@ import useStyles from './CalendarHeader.styles';
 interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   hasPrevious: boolean;
   hasNext: boolean;
-  month: Date;
   onNext?(): void;
   onPrevious?(): void;
   onNextOrder?(): void;
   label?: string;
+  nextOrderDisabled?: boolean;
 }
 
 export function CalendarHeader({
   hasNext,
   hasPrevious,
-  month,
   onNext,
   onPrevious,
   onNextOrder,
   className,
   label,
+  nextOrderDisabled,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx } = useStyles();
@@ -36,7 +36,11 @@ export function CalendarHeader({
         <ArrowIcon direction="left" width={12} height={12} />
       </ActionIcon>
 
-      <UnstyledButton className={classes.calendarHeaderSelect} onClick={onNextOrder}>
+      <UnstyledButton
+        className={classes.calendarHeaderSelect}
+        disabled={nextOrderDisabled}
+        onClick={onNextOrder}
+      >
         {label}
       </UnstyledButton>
 

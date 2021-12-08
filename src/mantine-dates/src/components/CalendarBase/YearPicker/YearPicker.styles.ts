@@ -3,7 +3,9 @@ import { createStyles, getSharedColorScheme } from '@mantine/core';
 export default createStyles((theme) => {
   const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
   return {
-    yearPicker: {
+    yearPicker: {},
+
+    yearPickerControls: {
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',

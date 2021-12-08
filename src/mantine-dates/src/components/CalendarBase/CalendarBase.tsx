@@ -119,7 +119,6 @@ export function CalendarBase({
           <CalendarHeader
             hasNext={index + 1 === amountOfMonths}
             hasPrevious={index === 0}
-            month={monthDate}
             label={formatMonthLabel({ month: monthDate, locale: finalLocale })}
             onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
             onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
@@ -141,7 +140,6 @@ export function CalendarBase({
     <div className={classes.calendarBase}>
       {selectionState === 'year' && (
         <YearPicker
-          decade={_month.getFullYear()}
           value={yearSelection}
           onChange={(year) => {
             setYearSelection(year);

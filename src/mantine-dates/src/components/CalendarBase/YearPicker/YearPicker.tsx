@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DefaultProps, ClassNames, UnstyledButton } from '@mantine/core';
 import { getDecadeRange } from './get-decade-range/get-decade-range';
+import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import useStyles from './YearPicker.styles';
 
 export type YearPickerStylesNames = ClassNames<typeof useStyles>;
@@ -13,9 +14,6 @@ export interface YearPickerProps
 
   /** Called when year changes */
   onChange(value: number): void;
-
-  /** Active decade */
-  decade: number;
 }
 
 export function YearPicker({
@@ -24,10 +22,10 @@ export function YearPicker({
   classNames,
   value,
   onChange,
-  decade,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles();
+  const [decade, setDecade] = useState(value);
   const range = getDecadeRange(decade);
 
   const years = range.map((year) => (
@@ -44,7 +42,15 @@ export function YearPicker({
 
   return (
     <div className={cx(classes.yearPicker, className)} {...others}>
-      {years}
+      <CalendarHeader
+        label={`${range[0]} – ${range[range.length - 1]}`}
+        hasNext
+        hasPrevious
+        onNext={() => setDecade((current) => current + 10)}
+        onPrevious={() => setDecade((current) => current - 10)}
+        nextOrderDisabled
+      />
+      <div className={classes.yearPickerControls}>{years}</div>
     </div>
   );
 }
