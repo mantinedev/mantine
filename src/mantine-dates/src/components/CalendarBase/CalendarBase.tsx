@@ -13,7 +13,10 @@ export type CalendarBaseStylesNames =
   | MonthPickerStylesNames
   | MonthsListStylesNames;
 
-export interface CalendarBaseProps extends DefaultProps<CalendarBaseStylesNames>, MonthSettings {
+export interface CalendarBaseProps
+  extends DefaultProps<CalendarBaseStylesNames>,
+    MonthSettings,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Month for controlled calendar */
   month?: Date;
 
