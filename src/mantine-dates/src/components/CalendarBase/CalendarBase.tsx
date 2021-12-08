@@ -36,6 +36,9 @@ interface CalendarProps extends MonthSettings {
 
   /** Calendar size */
   size?: MantineSize;
+
+  /** Allow to change level (date – month – year) */
+  allowLevelChange?: boolean;
 }
 
 export function CalendarBase({
@@ -45,6 +48,7 @@ export function CalendarBase({
   locale,
   amountOfMonths = 1,
   size = 'sm',
+  allowLevelChange = true,
   ...others
 }: CalendarProps) {
   const { classes, theme } = useStyles({ size, amountOfMonths }, { name: 'CalendarBase' });
@@ -124,6 +128,7 @@ export function CalendarBase({
             onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
             onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
             onNextOrder={() => setSelectionState('year')}
+            nextOrderDisabled={!allowLevelChange}
           />
 
           <Month

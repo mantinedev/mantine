@@ -8,7 +8,7 @@ function YearPickerWrapper() {
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <YearPicker value={year} onChange={setYear} decade={2021} />
+      <YearPicker value={year} onChange={setYear} />
     </div>
   );
 }
@@ -32,6 +32,11 @@ storiesOf('@mantine/dates/CalendarBase', module)
   .add('First day of week sunday', () => (
     <div style={{ padding: 40 }}>
       <CalendarBase amountOfMonths={3} firstDayOfWeek="sunday" />
+    </div>
+  ))
+  .add('Disallow level change', () => (
+    <div style={{ padding: 40 }}>
+      <CalendarBase amountOfMonths={2} allowLevelChange={false} />
     </div>
   ))
   .add('YearPicker', () => <YearPickerWrapper />);
