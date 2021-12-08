@@ -29,9 +29,6 @@ export interface CalendarBaseProps
   /** Locale used for labels formatting, defaults to theme.datesLocale */
   locale?: string;
 
-  /** dayjs label format */
-  labelFormat?: string;
-
   /** Amount of months */
   amountOfMonths?: number;
 
