@@ -25,7 +25,7 @@ export interface MonthPickerProps
   onYearChange(year: number): void;
 
   /** Called when year is pressed */
-  onNextOrder(): void;
+  onNextLevel(): void;
 }
 
 export function MonthPicker({
@@ -37,7 +37,7 @@ export function MonthPicker({
   locale,
   year,
   onYearChange,
-  onNextOrder,
+  onNextLevel,
   ...others
 }: MonthPickerProps) {
   const { classes, cx } = useStyles();
@@ -63,7 +63,7 @@ export function MonthPicker({
         hasPrevious
         onNext={() => onYearChange(year + 1)}
         onPrevious={() => onYearChange(year - 1)}
-        onNextOrder={onNextOrder}
+        onNextLevel={onNextLevel}
       />
       <div className={classes.monthPickerControls}>{years}</div>
     </div>

@@ -134,8 +134,8 @@ export function CalendarBase({
             label={formatMonthLabel({ month: monthDate, locale: finalLocale })}
             onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
             onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
-            onNextOrder={() => setSelectionState('year')}
-            nextOrderDisabled={!allowLevelChange}
+            onNextLevel={() => setSelectionState('year')}
+            nextLevelDisabled={!allowLevelChange}
           />
 
           <Month
@@ -166,7 +166,7 @@ export function CalendarBase({
           value={{ month: _month.getMonth(), year: _month.getFullYear() }}
           year={yearSelection}
           onYearChange={setYearSelection}
-          onNextOrder={() => setSelectionState('year')}
+          onNextLevel={() => setSelectionState('year')}
           locale={finalLocale}
           onChange={(monthValue) => {
             setMonth(new Date(yearSelection, monthValue, 1));

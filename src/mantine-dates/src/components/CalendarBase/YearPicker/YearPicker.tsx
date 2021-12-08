@@ -48,7 +48,7 @@ export function YearPicker({
         hasPrevious
         onNext={() => setDecade((current) => current + 10)}
         onPrevious={() => setDecade((current) => current - 10)}
-        nextOrderDisabled
+        nextLevelDisabled
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>

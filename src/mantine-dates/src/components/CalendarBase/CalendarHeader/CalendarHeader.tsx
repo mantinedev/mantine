@@ -8,9 +8,9 @@ interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   hasNext: boolean;
   onNext?(): void;
   onPrevious?(): void;
-  onNextOrder?(): void;
+  onNextLevel?(): void;
   label?: string;
-  nextOrderDisabled?: boolean;
+  nextLevelDisabled?: boolean;
 }
 
 export function CalendarHeader({
@@ -18,10 +18,10 @@ export function CalendarHeader({
   hasPrevious,
   onNext,
   onPrevious,
-  onNextOrder,
+  onNextLevel,
   className,
   label,
-  nextOrderDisabled,
+  nextLevelDisabled,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx } = useStyles();
@@ -38,11 +38,11 @@ export function CalendarHeader({
 
       <UnstyledButton
         className={classes.calendarHeaderSelect}
-        disabled={nextOrderDisabled}
-        onClick={onNextOrder}
+        disabled={nextLevelDisabled}
+        onClick={onNextLevel}
       >
         <div>{label}</div>
-        {!nextOrderDisabled && (
+        {!nextLevelDisabled && (
           <SelectChevronIcon error={false} size="sm" className={classes.calendarHeaderLabelIcon} />
         )}
       </UnstyledButton>
