@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { formatMonthLabel } from '../format-month-label/format-month-label';
+import { formatMonthLabel } from './format-month-label/format-month-label';
 import { isMonthInRange } from '../MonthPicker/is-month-in-range/is-month-in-range';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../../Month';
