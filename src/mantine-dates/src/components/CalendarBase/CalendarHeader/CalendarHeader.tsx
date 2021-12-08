@@ -14,6 +14,14 @@ interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   size?: MantineSize;
 }
 
+const iconSizes = {
+  xs: 12,
+  sm: 14,
+  md: 18,
+  lg: 22,
+  xl: 28,
+};
+
 export function CalendarHeader({
   hasNext,
   hasPrevious,
@@ -26,7 +34,8 @@ export function CalendarHeader({
   size,
   ...others
 }: CalendarHeaderProps) {
-  const { classes, cx } = useStyles({ size });
+  const { classes, cx, theme } = useStyles({ size });
+  const iconSize = theme.fn.size({ size, sizes: iconSizes });
   return (
     <div className={cx(classes.calendarHeader, className)} {...others}>
       <ActionIcon
@@ -34,7 +43,7 @@ export function CalendarHeader({
         disabled={!hasPrevious}
         onClick={onPrevious}
       >
-        <ArrowIcon direction="left" width={12} height={12} />
+        <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
 
       <UnstyledButton
@@ -53,7 +62,7 @@ export function CalendarHeader({
       </UnstyledButton>
 
       <ActionIcon className={classes.calendarHeaderControl} disabled={!hasNext} onClick={onNext}>
-        <ArrowIcon direction="right" width={12} height={12} />
+        <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>
     </div>
   );
