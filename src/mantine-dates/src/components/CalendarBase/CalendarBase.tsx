@@ -76,6 +76,9 @@ export interface CalendarBaseProps
 
   /** Previous decade control aria-label */
   previousDecadeLabel?: string;
+
+  /** dayjs label format */
+  labelFormat?: string;
 }
 
 export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
@@ -114,6 +117,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       previousDecadeLabel,
       previousMonthLabel,
       previousYearLabel,
+      labelFormat = 'MMMM YYYY',
       ...others
     }: CalendarBaseProps,
     ref
@@ -261,6 +265,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             onChange={onChange}
             nextMonthLabel={nextMonthLabel}
             previousMonthLabel={previousMonthLabel}
+            labelFormat={labelFormat}
           />
         )}
       </Box>

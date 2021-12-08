@@ -26,6 +26,7 @@ export interface MonthsListProps
   __staticSelector?: string;
   nextMonthLabel?: string;
   previousMonthLabel?: string;
+  labelFormat?: string;
 }
 
 export function MonthsList({
@@ -45,6 +46,7 @@ export function MonthsList({
   __staticSelector = 'MonthsList',
   nextMonthLabel,
   previousMonthLabel,
+  labelFormat,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -61,7 +63,7 @@ export function MonthsList({
               index + 1 === amountOfMonths && isMonthInRange({ date: nextMonth, minDate, maxDate })
             }
             hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
-            label={formatMonthLabel({ month: monthDate, locale })}
+            label={formatMonthLabel({ month: monthDate, locale, format: labelFormat })}
             onNext={() => onMonthChange(dayjs(month).add(amountOfMonths, 'months').toDate())}
             onPrevious={() =>
               onMonthChange(dayjs(month).subtract(amountOfMonths, 'months').toDate())
@@ -86,6 +88,7 @@ export function MonthsList({
             classNames={classNames}
             styles={styles}
             __staticSelector={__staticSelector}
+            locale={locale}
             {...others}
           />
         </div>
