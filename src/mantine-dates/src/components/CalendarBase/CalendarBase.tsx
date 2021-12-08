@@ -55,7 +55,11 @@ export function CalendarBase({
   initialLevel = 'date',
   ...others
 }: CalendarProps) {
-  const { classes, theme } = useStyles({ size, amountOfMonths }, { name: 'CalendarBase' });
+  const [selectionState, setSelectionState] = useState(initialLevel);
+  const { classes, theme } = useStyles(
+    { size, amountOfMonths: selectionState === 'date' ? amountOfMonths : 1 },
+    { name: 'CalendarBase' }
+  );
   const finalLocale = locale || theme.datesLocale;
 
   const daysRefs = useRef<HTMLButtonElement[][][]>(
@@ -72,7 +76,6 @@ export function CalendarBase({
     rule: (val) => val instanceof Date,
   });
 
-  const [selectionState, setSelectionState] = useState(initialLevel);
   const [yearSelection, setYearSelection] = useState(_month.getFullYear());
 
   const onDayKeyDown = (
