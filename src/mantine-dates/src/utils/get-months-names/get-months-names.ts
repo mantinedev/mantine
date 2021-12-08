@@ -5,7 +5,7 @@ export function getMonthsNames(locale: string) {
   const date = new Date(2021, 0, 1);
 
   for (let i = 0; i < 12; i += 1) {
-    names.push(dayjs(date).locale(locale).format('MMMM'));
+    names.push(dayjs(date).locale(locale).format('MMM'));
     date.setMonth(date.getMonth() + 1);
   }
 

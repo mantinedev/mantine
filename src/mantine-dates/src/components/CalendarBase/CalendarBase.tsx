@@ -5,6 +5,7 @@ import { MantineSize } from '@mantine/core';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker } from './YearPicker/YearPicker';
+import { MonthPicker } from './MonthPicker/MonthPicker';
 import { formatMonthLabel } from './format-month-label/format-month-label';
 import useStyles from './CalendarBase.styles';
 
@@ -147,6 +148,21 @@ export function CalendarBase({
           }}
         />
       )}
+
+      {selectionState === 'month' && (
+        <MonthPicker
+          value={{ month: _month.getMonth(), year: _month.getFullYear() }}
+          year={yearSelection}
+          onYearChange={setYearSelection}
+          onNextOrder={() => setSelectionState('year')}
+          locale={finalLocale}
+          onChange={(monthValue) => {
+            setMonth(new Date(yearSelection, monthValue, 1));
+            setSelectionState('date');
+          }}
+        />
+      )}
+
       {selectionState === 'date' && months}
     </div>
   );
