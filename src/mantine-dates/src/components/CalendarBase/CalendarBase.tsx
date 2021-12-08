@@ -61,6 +61,24 @@ export interface CalendarBaseProps
 
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
+
+  /** Next month control aria-label */
+  nextMonthLabel?: string;
+
+  /** Previous month control aria-label */
+  previousMonthLabel?: string;
+
+  /** Next year control aria-label */
+  nextYearLabel?: string;
+
+  /** Previous year control aria-label */
+  previousYearLabel?: string;
+
+  /** Next decade control aria-label */
+  nextDecadeLabel?: string;
+
+  /** Previous decade control aria-label */
+  previousDecadeLabel?: string;
 }
 
 export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
@@ -93,6 +111,12 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       onChange,
       onDayMouseEnter,
       range,
+      nextDecadeLabel,
+      nextMonthLabel,
+      nextYearLabel,
+      previousDecadeLabel,
+      previousMonthLabel,
+      previousYearLabel,
       ...others
     }: CalendarBaseProps,
     ref
@@ -181,6 +205,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             classNames={classNames}
             styles={styles}
             __staticSelector={__staticSelector}
+            nextDecadeLabel={nextDecadeLabel}
+            previousDecadeLabel={previousDecadeLabel}
           />
         )}
 
@@ -203,6 +229,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             classNames={classNames}
             styles={styles}
             __staticSelector={__staticSelector}
+            nextYearLabel={nextYearLabel}
+            previousYearLabel={previousYearLabel}
           />
         )}
 
@@ -234,6 +262,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             value={value}
             range={range}
             onChange={onChange}
+            nextMonthLabel={nextMonthLabel}
+            previousMonthLabel={previousMonthLabel}
           />
         )}
       </Box>

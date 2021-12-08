@@ -22,6 +22,8 @@ export interface MonthPickerProps
   minDate?: Date;
   maxDate?: Date;
   __staticSelector?: string;
+  nextYearLabel?: string;
+  previousYearLabel?: string;
 }
 
 export function MonthPicker({
@@ -40,6 +42,8 @@ export function MonthPicker({
   minDate,
   maxDate,
   __staticSelector = 'MonthPicker',
+  nextYearLabel,
+  previousYearLabel,
   ...others
 }: MonthPickerProps) {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
@@ -71,6 +75,8 @@ export function MonthPicker({
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}
+        nextLabel={nextYearLabel}
+        previousLabel={previousYearLabel}
       />
       <div className={classes.monthPickerControls}>{months}</div>
     </div>

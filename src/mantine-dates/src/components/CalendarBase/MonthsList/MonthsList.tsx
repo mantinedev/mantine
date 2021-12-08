@@ -24,6 +24,8 @@ export interface MonthsListProps
     event: React.KeyboardEvent<HTMLButtonElement>
   ): void;
   __staticSelector?: string;
+  nextMonthLabel?: string;
+  previousMonthLabel?: string;
 }
 
 export function MonthsList({
@@ -41,6 +43,8 @@ export function MonthsList({
   classNames,
   styles,
   __staticSelector = 'MonthsList',
+  nextMonthLabel,
+  previousMonthLabel,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -68,6 +72,8 @@ export function MonthsList({
             classNames={classNames}
             styles={styles}
             __staticSelector={__staticSelector}
+            nextLabel={nextMonthLabel}
+            previousLabel={previousMonthLabel}
           />
 
           <Month

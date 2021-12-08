@@ -24,6 +24,8 @@ interface CalendarHeaderProps
   nextLevelDisabled?: boolean;
   size?: MantineSize;
   __staticSelector?: string;
+  nextLabel?: string;
+  previousLabel?: string;
 }
 
 const iconSizes = {
@@ -47,6 +49,8 @@ export function CalendarHeader({
   classNames,
   styles,
   __staticSelector = 'CalendarHeader',
+  nextLabel,
+  previousLabel,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx, theme } = useStyles(
@@ -62,6 +66,7 @@ export function CalendarHeader({
         className={classes.calendarHeaderControl}
         disabled={!hasPrevious}
         onClick={onPrevious}
+        aria-label={previousLabel}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -81,7 +86,12 @@ export function CalendarHeader({
         )}
       </UnstyledButton>
 
-      <ActionIcon className={classes.calendarHeaderControl} disabled={!hasNext} onClick={onNext}>
+      <ActionIcon
+        className={classes.calendarHeaderControl}
+        disabled={!hasNext}
+        onClick={onNext}
+        aria-label={nextLabel}
+      >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>
     </div>

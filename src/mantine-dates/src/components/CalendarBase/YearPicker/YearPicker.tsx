@@ -15,6 +15,8 @@ export interface YearPickerProps
   maxYear?: number;
   size?: MantineSize;
   __staticSelector?: string;
+  nextDecadeLabel?: string;
+  previousDecadeLabel?: string;
 }
 
 export function YearPicker({
@@ -27,6 +29,8 @@ export function YearPicker({
   minYear,
   maxYear,
   __staticSelector = 'YearPicker',
+  nextDecadeLabel,
+  previousDecadeLabel,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
@@ -56,6 +60,8 @@ export function YearPicker({
         onPrevious={() => setDecade((current) => current - 10)}
         nextLevelDisabled
         size={size}
+        nextLabel={nextDecadeLabel}
+        previousLabel={previousDecadeLabel}
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>
