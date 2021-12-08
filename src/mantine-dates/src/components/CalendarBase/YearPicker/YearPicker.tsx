@@ -9,10 +9,7 @@ export type YearPickerStylesNames = ClassNames<typeof useStyles>;
 export interface YearPickerProps
   extends DefaultProps<YearPickerStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** Selected year */
   value: number;
-
-  /** Called when year changes */
   onChange(value: number): void;
 }
 

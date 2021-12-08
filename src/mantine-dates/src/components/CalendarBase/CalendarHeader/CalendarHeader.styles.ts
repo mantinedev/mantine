@@ -1,16 +1,29 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, MantineSize } from '@mantine/core';
 
-const SIZE = 40;
+interface CalendarHeaderStyles {
+  size: MantineSize;
+}
 
-export default createStyles((theme) => ({
+export const sizes = {
+  xs: 32,
+  sm: 40,
+  md: 44,
+  lg: 50,
+  xl: 54,
+};
+
+export default createStyles((theme, { size }: CalendarHeaderStyles) => ({
   calendarHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     align: 'center',
-    marginBottom: theme.spacing.sm,
+    marginBottom: theme.fn.size({ size, sizes: theme.spacing }),
   },
 
   calendarHeaderControl: {
+    width: theme.fn.size({ size, sizes }),
+    height: theme.fn.size({ size, sizes }),
+
     '&:disabled': {
       opacity: 0,
       cursor: 'default',
@@ -18,12 +31,12 @@ export default createStyles((theme) => ({
   },
 
   calendarHeaderSelect: {
-    fontSize: theme.fontSizes.sm,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: SIZE,
-    padding: `0 ${theme.spacing.md}px`,
+    height: theme.fn.size({ size, sizes }),
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+    padding: `0 ${theme.fn.size({ size, sizes: theme.spacing })}px`,
     borderRadius: theme.radius.sm,
     fontWeight: 500,
     flex: 1,

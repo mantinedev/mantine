@@ -136,6 +136,7 @@ export function CalendarBase({
             onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
             onNextLevel={() => setSelectionState('year')}
             nextLevelDisabled={!allowLevelChange}
+            size={size}
           />
 
           <Month
