@@ -29,12 +29,13 @@ export function YearPicker({
 }: YearPickerProps) {
   const { classes, cx } = useStyles({ size });
   const [decade, setDecade] = useState(value);
-  const range = getDecadeRange(decade, { min: minYear, max: maxYear });
+  const range = getDecadeRange(decade);
 
   const years = range.map((year) => (
     <UnstyledButton
       key={year}
       onClick={() => onChange(year)}
+      disabled={year < minYear || year > maxYear}
       className={cx(classes.yearPickerControl, {
         [classes.yearPickerControlActive]: year === value,
       })}
