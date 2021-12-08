@@ -6,6 +6,7 @@ import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker } from './YearPicker/YearPicker';
 import { MonthPicker } from './MonthPicker/MonthPicker';
+import { isMonthInRange } from './MonthPicker/is-month-in-range/is-month-in-range';
 import { formatMonthLabel } from './format-month-label/format-month-label';
 import useStyles from './CalendarBase.styles';
 
@@ -81,6 +82,8 @@ export function CalendarBase({
   const [yearSelection, setYearSelection] = useState(_month.getFullYear());
   const minYear = minDate instanceof Date ? minDate.getFullYear() : 0;
   const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000;
+  const nextMonth = dayjs(_month).add(amountOfMonths, 'months').toDate();
+  const previousMonth = dayjs(_month).subtract(1, 'months').toDate();
 
   const onDayKeyDown = (
     monthIndex: number,
@@ -133,8 +136,10 @@ export function CalendarBase({
       return (
         <div key={index}>
           <CalendarHeader
-            hasNext={index + 1 === amountOfMonths}
-            hasPrevious={index === 0}
+            hasNext={
+              index + 1 === amountOfMonths && isMonthInRange({ date: nextMonth, minDate, maxDate })
+            }
+            hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
             label={formatMonthLabel({ month: monthDate, locale: finalLocale })}
             onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
             onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}

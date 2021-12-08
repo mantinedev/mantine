@@ -18,6 +18,8 @@ const getSizes = (props: Partial<CalendarProps>) =>
     </div>
   ));
 
+const today = new Date();
+
 storiesOf('@mantine/dates/CalendarBase', module)
   .add('Single month', () => <Wrapper />)
   .add('2 months', () => <Wrapper amountOfMonths={2} />)
@@ -45,5 +47,14 @@ storiesOf('@mantine/dates/CalendarBase', module)
       minDate={new Date(2020, 2, 13)}
       maxDate={new Date(2022, 4, 9)}
       initialLevel="month"
+    />
+  ))
+  .add('Min/max date: date', () => (
+    <Wrapper
+      amountOfMonths={2}
+      initialMonth={today}
+      minDate={new Date(today.getFullYear(), today.getMonth() - 3, 13)}
+      maxDate={new Date(today.getFullYear(), today.getMonth() + 3, 9)}
+      initialLevel="date"
     />
   ));
