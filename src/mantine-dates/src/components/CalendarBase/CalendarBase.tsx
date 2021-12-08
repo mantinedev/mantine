@@ -9,7 +9,7 @@ import { MonthPicker } from './MonthPicker/MonthPicker';
 import { formatMonthLabel } from './format-month-label/format-month-label';
 import useStyles from './CalendarBase.styles';
 
-interface CalendarProps extends MonthSettings {
+export interface CalendarProps extends MonthSettings {
   /** Month for controlled calendar */
   month?: Date;
 
@@ -39,6 +39,9 @@ interface CalendarProps extends MonthSettings {
 
   /** Allow to change level (date – month – year) */
   allowLevelChange?: boolean;
+
+  /** Initial date selection level */
+  initialLevel?: 'date' | 'month' | 'year';
 }
 
 export function CalendarBase({
@@ -49,6 +52,7 @@ export function CalendarBase({
   amountOfMonths = 1,
   size = 'sm',
   allowLevelChange = true,
+  initialLevel = 'date',
   ...others
 }: CalendarProps) {
   const { classes, theme } = useStyles({ size, amountOfMonths }, { name: 'CalendarBase' });
@@ -68,7 +72,7 @@ export function CalendarBase({
     rule: (val) => val instanceof Date,
   });
 
-  const [selectionState, setSelectionState] = useState<'date' | 'month' | 'year'>('date');
+  const [selectionState, setSelectionState] = useState(initialLevel);
   const [yearSelection, setYearSelection] = useState(_month.getFullYear());
 
   const onDayKeyDown = (

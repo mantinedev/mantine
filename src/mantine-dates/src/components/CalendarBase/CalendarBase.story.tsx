@@ -1,42 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { CalendarBase } from './CalendarBase';
-import { YearPicker } from './YearPicker/YearPicker';
+import { CalendarBase, CalendarProps } from './CalendarBase';
 
-function YearPickerWrapper() {
-  const [year, setYear] = useState(2021);
-
+function Wrapper(props: Partial<CalendarProps>) {
   return (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <YearPicker value={year} onChange={setYear} />
+    <div style={{ padding: 40 }}>
+      <CalendarBase {...props} />
     </div>
   );
 }
 
 storiesOf('@mantine/dates/CalendarBase', module)
-  .add('Single month', () => (
-    <div style={{ padding: 40 }}>
-      <CalendarBase />
-    </div>
-  ))
-  .add('2 months', () => (
-    <div style={{ padding: 40 }}>
-      <CalendarBase amountOfMonths={2} />
-    </div>
-  ))
-  .add('3 months', () => (
-    <div style={{ padding: 40 }}>
-      <CalendarBase amountOfMonths={3} />
-    </div>
-  ))
-  .add('First day of week sunday', () => (
-    <div style={{ padding: 40 }}>
-      <CalendarBase amountOfMonths={3} firstDayOfWeek="sunday" />
-    </div>
-  ))
-  .add('Disallow level change', () => (
-    <div style={{ padding: 40 }}>
-      <CalendarBase amountOfMonths={2} allowLevelChange={false} />
-    </div>
-  ))
-  .add('YearPicker', () => <YearPickerWrapper />);
+  .add('Single month', () => <Wrapper />)
+  .add('2 months', () => <Wrapper amountOfMonths={2} />)
+  .add('3 months', () => <Wrapper amountOfMonths={3} />)
+  .add('First day of week sunday', () => <Wrapper amountOfMonths={2} firstDayOfWeek="sunday" />)
+  .add('Disallow level change', () => <Wrapper amountOfMonths={2} allowLevelChange={false} />)
+  .add('Initial level: month', () => <Wrapper amountOfMonths={2} initialLevel="month" />)
+  .add('Initial level: year', () => <Wrapper amountOfMonths={2} initialLevel="year" />);
