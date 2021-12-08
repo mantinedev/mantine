@@ -1,13 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { MantineSize } from '@mantine/core';
+import { Box, MantineSize, ClassNames, DefaultProps } from '@mantine/core';
 import { MonthSettings, DayKeydownPayload } from '../Month';
-import { YearPicker } from './YearPicker/YearPicker';
-import { MonthPicker } from './MonthPicker/MonthPicker';
-import { MonthsList } from './MonthsList/MonthsList';
+import { YearPicker, YearPickerStylesNames } from './YearPicker/YearPicker';
+import { MonthPicker, MonthPickerStylesNames } from './MonthPicker/MonthPicker';
+import { MonthsList, MonthsListStylesNames } from './MonthsList/MonthsList';
 import useStyles from './CalendarBase.styles';
 
-export interface CalendarProps extends MonthSettings {
+export type CalendarBaseStylesNames =
+  | ClassNames<typeof useStyles>
+  | YearPickerStylesNames
+  | MonthPickerStylesNames
+  | MonthsListStylesNames;
+
+export interface CalendarBaseProps extends DefaultProps<CalendarBaseStylesNames>, MonthSettings {
   /** Month for controlled calendar */
   month?: Date;
 
@@ -40,9 +46,24 @@ export interface CalendarProps extends MonthSettings {
 
   /** Initial date selection level */
   initialLevel?: 'date' | 'month' | 'year';
+
+  /** Static selector base */
+  __staticSelector?: string;
+
+  /** Selected range */
+  range?: [Date, Date];
+
+  /** Called when day is selected */
+  onChange?(value: Date): void;
+
+  /** Called when onMouseEnter event fired on day button */
+  onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
 }
 
 export function CalendarBase({
+  className,
+  classNames,
+  styles,
   month,
   initialMonth,
   onMonthChange,
@@ -53,12 +74,26 @@ export function CalendarBase({
   initialLevel = 'date',
   minDate,
   maxDate,
+  __staticSelector = 'CalendarBase',
+  dayClassName,
+  dayStyle,
+  disableOutsideDayStyle,
+  disableOutsideEvents,
+  excludeDate,
+  hideWeekdays,
+  fullWidth,
+  preventFocus,
+  firstDayOfWeek = 'monday',
+  value,
+  onChange,
+  onDayMouseEnter,
+  range,
   ...others
-}: CalendarProps) {
+}: CalendarBaseProps) {
   const [selectionState, setSelectionState] = useState(initialLevel);
-  const { classes, theme } = useStyles(
-    { size, amountOfMonths: selectionState === 'date' ? amountOfMonths : 1 },
-    { name: 'CalendarBase' }
+  const { classes, cx, theme } = useStyles(
+    { size, fullWidth, amountOfMonths: selectionState === 'date' ? amountOfMonths : 1 },
+    { name: __staticSelector, styles, classNames }
   );
   const finalLocale = locale || theme.datesLocale;
 
@@ -125,7 +160,7 @@ export function CalendarBase({
   };
 
   return (
-    <div className={classes.calendarBase}>
+    <Box className={cx(classes.calendarBase, className)} {...others}>
       {selectionState === 'year' && (
         <YearPicker
           size={size}
@@ -136,6 +171,9 @@ export function CalendarBase({
             setYearSelection(year);
             setSelectionState('month');
           }}
+          classNames={classNames}
+          styles={styles}
+          __staticSelector={__staticSelector}
         />
       )}
 
@@ -155,6 +193,9 @@ export function CalendarBase({
             setMonth(new Date(yearSelection, monthValue, 1));
             setSelectionState('date');
           }}
+          classNames={classNames}
+          styles={styles}
+          __staticSelector={__staticSelector}
         />
       )}
 
@@ -171,9 +212,23 @@ export function CalendarBase({
           onMonthChange={setMonth}
           onNextLevel={() => setSelectionState('year')}
           onDayKeyDown={handleDayKeyDown}
-          {...others}
+          classNames={classNames}
+          styles={styles}
+          __staticSelector={__staticSelector}
+          dayClassName={dayClassName}
+          dayStyle={dayStyle}
+          disableOutsideDayStyle={disableOutsideDayStyle}
+          disableOutsideEvents={disableOutsideEvents}
+          excludeDate={excludeDate}
+          hideWeekdays={hideWeekdays}
+          fullWidth={fullWidth}
+          preventFocus={preventFocus}
+          firstDayOfWeek={firstDayOfWeek}
+          value={value}
+          range={range}
+          onChange={onChange}
         />
       )}
-    </div>
+    </Box>
   );
 }

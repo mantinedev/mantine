@@ -1,9 +1,20 @@
 import React from 'react';
-import { ActionIcon, UnstyledButton, SelectChevronIcon, MantineSize } from '@mantine/core';
+import {
+  ActionIcon,
+  UnstyledButton,
+  SelectChevronIcon,
+  MantineSize,
+  ClassNames,
+  DefaultProps,
+} from '@mantine/core';
 import { ArrowIcon } from './ArrowIcon';
 import useStyles from './CalendarHeader.styles';
 
-interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
+export type CalendarHeaderStylesNames = ClassNames<typeof useStyles>;
+
+interface CalendarHeaderProps
+  extends DefaultProps<CalendarHeaderStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   hasPrevious: boolean;
   hasNext: boolean;
   onNext?(): void;
@@ -12,6 +23,7 @@ interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   label?: string;
   nextLevelDisabled?: boolean;
   size?: MantineSize;
+  __staticSelector?: string;
 }
 
 const iconSizes = {
@@ -32,10 +44,18 @@ export function CalendarHeader({
   label,
   nextLevelDisabled,
   size,
+  classNames,
+  styles,
+  __staticSelector = 'CalendarHeader',
   ...others
 }: CalendarHeaderProps) {
-  const { classes, cx, theme } = useStyles({ size });
+  const { classes, cx, theme } = useStyles(
+    { size },
+    { classNames, styles, name: __staticSelector }
+  );
+
   const iconSize = theme.fn.size({ size, sizes: iconSizes });
+
   return (
     <div className={cx(classes.calendarHeader, className)} {...others}>
       <ActionIcon
@@ -47,7 +67,7 @@ export function CalendarHeader({
       </ActionIcon>
 
       <UnstyledButton
-        className={classes.calendarHeaderSelect}
+        className={classes.calendarHeaderLevel}
         disabled={nextLevelDisabled}
         onClick={onNextLevel}
       >
@@ -56,7 +76,7 @@ export function CalendarHeader({
           <SelectChevronIcon
             error={false}
             size={size}
-            className={classes.calendarHeaderLabelIcon}
+            className={classes.calendarHeaderLevelIcon}
           />
         )}
       </UnstyledButton>

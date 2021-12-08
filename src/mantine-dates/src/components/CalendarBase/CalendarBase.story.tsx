@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/core';
-import { CalendarBase, CalendarProps } from './CalendarBase';
+import { CalendarBase, CalendarBaseProps } from './CalendarBase';
 
-function Wrapper(props: Partial<CalendarProps>) {
+function Wrapper(props: Partial<CalendarBaseProps>) {
   return (
     <div style={{ padding: 40 }}>
       <CalendarBase {...props} />
@@ -11,7 +11,7 @@ function Wrapper(props: Partial<CalendarProps>) {
   );
 }
 
-const getSizes = (props: Partial<CalendarProps>) =>
+const getSizes = (props: Partial<CalendarBaseProps>) =>
   MANTINE_SIZES.map((size) => (
     <div style={{ marginTop: 30 }} key={size}>
       <CalendarBase size={size} {...props} />
@@ -20,7 +20,7 @@ const getSizes = (props: Partial<CalendarProps>) =>
 
 const today = new Date();
 
-storiesOf('@mantine/dates/CalendarBase', module)
+storiesOf('@mantine/dates/CalendarBase/stories', module)
   .add('Single month', () => <Wrapper />)
   .add('2 months', () => <Wrapper amountOfMonths={2} />)
   .add('3 months', () => <Wrapper amountOfMonths={3} />)

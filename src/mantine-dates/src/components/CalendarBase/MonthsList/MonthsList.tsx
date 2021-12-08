@@ -1,11 +1,16 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import { DefaultProps } from '@mantine/core';
 import { formatMonthLabel } from './format-month-label/format-month-label';
 import { isMonthInRange } from '../MonthPicker/is-month-in-range/is-month-in-range';
-import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
-import { Month, MonthSettings, DayKeydownPayload } from '../../Month';
+import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
+import { Month, MonthProps, DayKeydownPayload, MonthStylesNames } from '../../Month';
 
-export interface MonthsListProps extends MonthSettings {
+export type MonthsListStylesNames = CalendarHeaderStylesNames | MonthStylesNames;
+
+export interface MonthsListProps
+  extends DefaultProps<MonthsListStylesNames>,
+    Omit<MonthProps, 'styles' | 'classNames' | 'daysRefs' | 'onDayKeyDown'> {
   amountOfMonths: number;
   month: Date;
   locale: string;
@@ -18,6 +23,7 @@ export interface MonthsListProps extends MonthSettings {
     payload: DayKeydownPayload,
     event: React.KeyboardEvent<HTMLButtonElement>
   ): void;
+  __staticSelector?: string;
 }
 
 export function MonthsList({
@@ -32,6 +38,9 @@ export function MonthsList({
   onMonthChange,
   onNextLevel,
   onDayKeyDown,
+  classNames,
+  styles,
+  __staticSelector = 'MonthsList',
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -56,6 +65,9 @@ export function MonthsList({
             onNextLevel={onNextLevel}
             nextLevelDisabled={!allowLevelChange}
             size={size}
+            classNames={classNames}
+            styles={styles}
+            __staticSelector={__staticSelector}
           />
 
           <Month
@@ -65,6 +77,9 @@ export function MonthsList({
             size={size}
             minDate={minDate}
             maxDate={maxDate}
+            classNames={classNames}
+            styles={styles}
+            __staticSelector={__staticSelector}
             {...others}
           />
         </div>

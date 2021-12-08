@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { DefaultProps, ClassNames, UnstyledButton, MantineSize } from '@mantine/core';
 import { getDecadeRange } from './get-decade-range/get-decade-range';
-import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
+import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
 import useStyles from './YearPicker.styles';
 
-export type YearPickerStylesNames = ClassNames<typeof useStyles>;
+export type YearPickerStylesNames = ClassNames<typeof useStyles> | CalendarHeaderStylesNames;
 
 export interface YearPickerProps
   extends DefaultProps<YearPickerStylesNames>,
@@ -14,6 +14,7 @@ export interface YearPickerProps
   minYear?: number;
   maxYear?: number;
   size?: MantineSize;
+  __staticSelector?: string;
 }
 
 export function YearPicker({
@@ -25,9 +26,10 @@ export function YearPicker({
   size,
   minYear,
   maxYear,
+  __staticSelector = 'YearPicker',
   ...others
 }: YearPickerProps) {
-  const { classes, cx } = useStyles({ size });
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
   const [decade, setDecade] = useState(value);
   const range = getDecadeRange(decade);
 

@@ -30,7 +30,7 @@ export default createStyles((theme, { size }: CalendarHeaderStyles) => ({
     },
   },
 
-  calendarHeaderSelect: {
+  calendarHeaderLevel: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -55,7 +55,7 @@ export default createStyles((theme, { size }: CalendarHeaderStyles) => ({
     },
   },
 
-  calendarHeaderLabelIcon: {
+  calendarHeaderLevelIcon: {
     marginLeft: 4,
   },
 }));
