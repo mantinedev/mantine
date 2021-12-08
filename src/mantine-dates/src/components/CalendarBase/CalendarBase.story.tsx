@@ -38,4 +38,12 @@ storiesOf('@mantine/dates/CalendarBase', module)
       maxDate={new Date(2038, 0)}
       initialLevel="year"
     />
+  ))
+  .add('Min/max date: month', () => (
+    <Wrapper
+      amountOfMonths={2}
+      minDate={new Date(2020, 2, 13)}
+      maxDate={new Date(2022, 4, 9)}
+      initialLevel="month"
+    />
   ));

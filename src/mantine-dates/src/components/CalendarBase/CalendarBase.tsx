@@ -148,6 +148,8 @@ export function CalendarBase({
             daysRefs={daysRefs.current[index]}
             onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
             size={size}
+            minDate={minDate}
+            maxDate={maxDate}
             {...others}
           />
         </div>
@@ -177,6 +179,10 @@ export function CalendarBase({
           onYearChange={setYearSelection}
           onNextLevel={() => setSelectionState('year')}
           locale={finalLocale}
+          minYear={minYear}
+          maxYear={maxYear}
+          minDate={minDate}
+          maxDate={maxDate}
           onChange={(monthValue) => {
             setMonth(new Date(yearSelection, monthValue, 1));
             setSelectionState('date');

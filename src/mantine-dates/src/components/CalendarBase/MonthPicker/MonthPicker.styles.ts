@@ -34,6 +34,15 @@ export default createStyles((theme, { size }: MonthPickerStyles) => {
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       },
+
+      '&:disabled': {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+        cursor: 'not-allowed',
+
+        '&:hover': {
+          backgroundColor: 'transparent',
+        },
+      },
     },
 
     monthPickerControlActive: {
