@@ -1,13 +1,10 @@
 import React, { useRef, useState } from 'react';
-import dayjs from 'dayjs';
 import { useUncontrolled } from '@mantine/hooks';
 import { MantineSize } from '@mantine/core';
-import { CalendarHeader } from './CalendarHeader/CalendarHeader';
-import { Month, MonthSettings, DayKeydownPayload } from '../Month';
+import { MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker } from './YearPicker/YearPicker';
 import { MonthPicker } from './MonthPicker/MonthPicker';
-import { isMonthInRange } from './MonthPicker/is-month-in-range/is-month-in-range';
-import { formatMonthLabel } from './format-month-label/format-month-label';
+import { MonthsList } from './MonthsList/MonthsList';
 import useStyles from './CalendarBase.styles';
 
 export interface CalendarProps extends MonthSettings {
@@ -82,10 +79,8 @@ export function CalendarBase({
   const [yearSelection, setYearSelection] = useState(_month.getFullYear());
   const minYear = minDate instanceof Date ? minDate.getFullYear() : 0;
   const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000;
-  const nextMonth = dayjs(_month).add(amountOfMonths, 'months').toDate();
-  const previousMonth = dayjs(_month).subtract(1, 'months').toDate();
 
-  const onDayKeyDown = (
+  const handleDayKeyDown = (
     monthIndex: number,
     payload: DayKeydownPayload,
     event: React.KeyboardEvent<HTMLButtonElement>
@@ -129,38 +124,6 @@ export function CalendarBase({
     }
   };
 
-  const months = Array(amountOfMonths)
-    .fill(0)
-    .map((_, index) => {
-      const monthDate = dayjs(_month).add(index, 'months').toDate();
-      return (
-        <div key={index}>
-          <CalendarHeader
-            hasNext={
-              index + 1 === amountOfMonths && isMonthInRange({ date: nextMonth, minDate, maxDate })
-            }
-            hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
-            label={formatMonthLabel({ month: monthDate, locale: finalLocale })}
-            onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
-            onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
-            onNextLevel={() => setSelectionState('year')}
-            nextLevelDisabled={!allowLevelChange}
-            size={size}
-          />
-
-          <Month
-            month={monthDate}
-            daysRefs={daysRefs.current[index]}
-            onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
-            size={size}
-            minDate={minDate}
-            maxDate={maxDate}
-            {...others}
-          />
-        </div>
-      );
-    });
-
   return (
     <div className={classes.calendarBase}>
       {selectionState === 'year' && (
@@ -195,7 +158,22 @@ export function CalendarBase({
         />
       )}
 
-      {selectionState === 'date' && months}
+      {selectionState === 'date' && (
+        <MonthsList
+          amountOfMonths={amountOfMonths}
+          month={_month}
+          locale={finalLocale}
+          minDate={minDate}
+          maxDate={maxDate}
+          allowLevelChange={allowLevelChange}
+          size={size}
+          daysRefs={daysRefs}
+          onMonthChange={setMonth}
+          onNextLevel={() => setSelectionState('year')}
+          onDayKeyDown={handleDayKeyDown}
+          {...others}
+        />
+      )}
     </div>
   );
 }
