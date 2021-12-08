@@ -1,7 +1,6 @@
 import React from 'react';
 import { ActionIcon, UnstyledButton } from '@mantine/core';
 import { ArrowIcon } from './ArrowIcon';
-import { formatMonthLabel } from './format-month-label/format-month-label';
 import useStyles from './CalendarHeader.styles';
 
 interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
@@ -10,8 +9,8 @@ interface CalendarHeaderProps extends React.ComponentPropsWithoutRef<'div'> {
   month: Date;
   onNext?(): void;
   onPrevious?(): void;
-  locale?: string;
   onNextOrder?(): void;
+  label?: string;
 }
 
 export function CalendarHeader({
@@ -21,8 +20,8 @@ export function CalendarHeader({
   onNext,
   onPrevious,
   onNextOrder,
-  locale,
   className,
+  label,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx } = useStyles();
@@ -38,7 +37,7 @@ export function CalendarHeader({
       </ActionIcon>
 
       <UnstyledButton className={classes.calendarHeaderSelect} onClick={onNextOrder}>
-        {formatMonthLabel({ month, locale })}
+        {label}
       </UnstyledButton>
 
       <ActionIcon

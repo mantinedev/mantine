@@ -5,6 +5,7 @@ import { MantineSize } from '@mantine/core';
 import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { Month, MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker } from './YearPicker/YearPicker';
+import { formatMonthLabel } from './format-month-label/format-month-label';
 import useStyles from './CalendarBase.styles';
 
 interface CalendarProps extends MonthSettings {
@@ -111,28 +112,30 @@ export function CalendarBase({
 
   const months = Array(amountOfMonths)
     .fill(0)
-    .map((_, index) => (
-      <div key={index}>
-        <CalendarHeader
-          hasNext={index + 1 === amountOfMonths}
-          hasPrevious={index === 0}
-          month={dayjs(_month).add(index, 'months').toDate()}
-          locale={finalLocale}
-          onNext={() => setMonth(dayjs(_month).add(1, 'months').toDate())}
-          onPrevious={() => setMonth(dayjs(_month).subtract(1, 'months').toDate())}
-          onNextOrder={() => setSelectionState('year')}
-        />
+    .map((_, index) => {
+      const monthDate = dayjs(_month).add(index, 'months').toDate();
+      return (
+        <div key={index}>
+          <CalendarHeader
+            hasNext={index + 1 === amountOfMonths}
+            hasPrevious={index === 0}
+            month={monthDate}
+            label={formatMonthLabel({ month: monthDate, locale: finalLocale })}
+            onNext={() => setMonth(dayjs(_month).add(amountOfMonths, 'months').toDate())}
+            onPrevious={() => setMonth(dayjs(_month).subtract(amountOfMonths, 'months').toDate())}
+            onNextOrder={() => setSelectionState('year')}
+          />
 
-        <Month
-          month={dayjs(_month).add(index, 'months').toDate()}
-          daysRefs={daysRefs.current[index]}
-          disableOutsideDayStyle={false}
-          onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
-          size={size}
-          {...others}
-        />
-      </div>
-    ));
+          <Month
+            month={monthDate}
+            daysRefs={daysRefs.current[index]}
+            onDayKeyDown={(...args) => onDayKeyDown(index, ...args)}
+            size={size}
+            {...others}
+          />
+        </div>
+      );
+    });
 
   return (
     <div className={classes.calendarBase}>
