@@ -1,6 +1,18 @@
-import { createStyles, getSharedColorScheme } from '@mantine/core';
+import { createStyles, getSharedColorScheme, MantineSize } from '@mantine/core';
 
-export default createStyles((theme) => {
+interface MonthPickerStyles {
+  size: MantineSize;
+}
+
+const sizes = {
+  xs: 32,
+  sm: 40,
+  md: 46,
+  lg: 52,
+  xl: 56,
+};
+
+export default createStyles((theme, { size }: MonthPickerStyles) => {
   const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
   return {
     monthPicker: {},
@@ -14,10 +26,10 @@ export default createStyles((theme) => {
     monthPickerControl: {
       flex: '0 0 33.3333%',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      height: 42,
+      height: theme.fn.size({ size, sizes }),
       textAlign: 'center',
       borderRadius: theme.radius.sm,
-      fontSize: theme.fontSizes.sm,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],

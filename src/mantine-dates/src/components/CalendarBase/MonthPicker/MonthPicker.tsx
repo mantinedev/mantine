@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, ClassNames, UnstyledButton } from '@mantine/core';
+import { DefaultProps, ClassNames, UnstyledButton, MantineSize } from '@mantine/core';
 import { getMonthsNames } from '../../../utils';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import useStyles from './MonthPicker.styles';
@@ -9,23 +9,13 @@ export type MonthPickerStylesNames = ClassNames<typeof useStyles>;
 export interface MonthPickerProps
   extends DefaultProps<MonthPickerStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** Selected month */
   value: { year: number; month: number };
-
-  /** Called when year changes */
   onChange(value: number): void;
-
-  /** Locale */
   locale: string;
-
-  /** Selected year */
   year: number;
-
-  /** Called when next/previous year is selected */
   onYearChange(year: number): void;
-
-  /** Called when year is pressed */
   onNextLevel(): void;
+  size?: MantineSize;
 }
 
 export function MonthPicker({
@@ -38,9 +28,10 @@ export function MonthPicker({
   year,
   onYearChange,
   onNextLevel,
+  size,
   ...others
 }: MonthPickerProps) {
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles({ size });
   const range = getMonthsNames(locale);
 
   const years = range.map((month, index) => (
@@ -64,6 +55,7 @@ export function MonthPicker({
         onNext={() => onYearChange(year + 1)}
         onPrevious={() => onYearChange(year - 1)}
         onNextLevel={onNextLevel}
+        size={size}
       />
       <div className={classes.monthPickerControls}>{years}</div>
     </div>

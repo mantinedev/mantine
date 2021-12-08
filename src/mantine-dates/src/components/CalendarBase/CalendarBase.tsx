@@ -165,6 +165,7 @@ export function CalendarBase({
 
       {selectionState === 'month' && (
         <MonthPicker
+          size={size}
           value={{ month: _month.getMonth(), year: _month.getFullYear() }}
           year={yearSelection}
           onYearChange={setYearSelection}
