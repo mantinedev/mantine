@@ -13,10 +13,7 @@ export type CalendarBaseStylesNames =
   | MonthPickerStylesNames
   | MonthsListStylesNames;
 
-export interface CalendarBaseProps
-  extends DefaultProps<CalendarBaseStylesNames>,
-    MonthSettings,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
+export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesNames>, MonthSettings {
   /** Month for controlled calendar */
   month?: Date;
 
@@ -80,6 +77,10 @@ export interface CalendarBaseProps
   /** dayjs label format */
   labelFormat?: string;
 }
+
+export interface CalendarBaseProps
+  extends CalendarSharedProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {}
 
 export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
   (

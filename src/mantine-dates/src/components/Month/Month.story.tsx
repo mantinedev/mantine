@@ -17,11 +17,6 @@ const sizes = MANTINE_SIZES.map((size) => (
 ));
 
 storiesOf('@mantine/dates/Month', module)
-  .add('General usage', () => (
-    <div style={{ maxWidth: 240, padding: 40 }}>
-      <WrappedMonth autoFocus locale="ru" />
-    </div>
-  ))
   .add('First day of the week - Sunday', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
       <Month
@@ -47,15 +42,12 @@ storiesOf('@mantine/dates/Month', module)
   ))
   .add('Sizes', () => <div style={{ maxWidth: 440, padding: 40 }}>{sizes}</div>)
   .add('Day style', () => (
-    <div>
-      <WrappedMonth
-        autoFocus
-        locale="ru"
-        dayStyle={(date) =>
-          date.getDate() === new Date().getDate()
-            ? { backgroundColor: DEFAULT_THEME.colors.red[0] }
-            : {}
-        }
-      />
-    </div>
+    <WrappedMonth
+      locale="ru"
+      dayStyle={(date) =>
+        date.getDate() === new Date().getDate()
+          ? { backgroundColor: DEFAULT_THEME.colors.red[0] }
+          : {}
+      }
+    />
   ));

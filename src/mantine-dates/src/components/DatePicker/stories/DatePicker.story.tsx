@@ -46,7 +46,6 @@ const sizes = MANTINE_SIZES.map((size) => (
     key={size}
     style={{ marginTop: 30 }}
     defaultValue={new Date()}
-    withSelect
     label="This is label"
     description="This is description"
   />
@@ -85,14 +84,7 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput />
 
-      <DatePicker
-        placeholder="Pick date"
-        label="Date picker"
-        allowFreeInput
-        withSelect
-        mt={20}
-        mb={40}
-      />
+      <DatePicker placeholder="Pick date" label="Date picker" allowFreeInput mt={20} mb={40} />
 
       <button type="button">Focus test</button>
 

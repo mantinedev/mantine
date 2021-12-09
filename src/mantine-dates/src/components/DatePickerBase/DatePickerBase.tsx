@@ -25,12 +25,12 @@ import {
   useWindowEvent,
   useUuid,
 } from '@mantine/hooks';
-import { CalendarStylesNames } from '../Calendar/Calendar';
+import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
   | ClassNames<typeof useStyles>
-  | CalendarStylesNames
+  | CalendarBaseStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
 

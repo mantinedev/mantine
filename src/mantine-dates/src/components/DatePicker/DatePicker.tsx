@@ -3,12 +3,13 @@ import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
-import { Calendar, CalendarSettings } from '../Calendar/Calendar';
+import { Calendar } from '../Calendar/Calendar';
+import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
 export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
-    Omit<CalendarSettings, 'size'> {
+    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles'> {
   /** Selected date, required with controlled input */
   value?: Date;
 
@@ -57,8 +58,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       previousMonthLabel,
       closeCalendarOnChange = true,
       labelFormat = 'MMMM YYYY',
-      withSelect = false,
-      yearsRange,
       dayClassName,
       dayStyle,
       disableOutsideEvents,
@@ -204,8 +203,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           value={_value instanceof Date ? _value : dayjs(_value).toDate()}
           onChange={handleValueChange}
           labelFormat={labelFormat}
-          withSelect={withSelect && !allowFreeInput}
-          yearsRange={yearsRange}
           dayClassName={dayClassName}
           dayStyle={dayStyle}
           disableOutsideEvents={disableOutsideEvents}

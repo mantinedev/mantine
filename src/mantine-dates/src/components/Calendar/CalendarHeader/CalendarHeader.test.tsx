@@ -15,7 +15,6 @@ const defaultProps = {
   onPreviousMonth: () => {},
   onNextMonth: () => {},
   locale: 'en',
-  withSelect: false,
   yearsRange: { from: 2020, to: 2021 },
   month: new Date(),
   setMonth: () => {},
@@ -38,7 +37,7 @@ describe('@mantine/dates/CalendarHeader', () => {
     expect(onPrev).toHaveBeenCalledTimes(2);
   });
 
-  it('passes withSelect, yearsRange, value, onChange, labelFormat, size, __staticSelector props to CalendarLabel component', () => {
+  it('passes, yearsRange, value, onChange, labelFormat, size, __staticSelector props to CalendarLabel component', () => {
     const value = new Date();
     const onChange = jest.fn();
     const props = shallow(

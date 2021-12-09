@@ -3,14 +3,13 @@ import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
-import { CalendarSettings } from '../Calendar/Calendar';
+import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
-// @ts-ignore
 export interface DateRangePickerProps
-  extends DatePickerBaseSharedProps,
-    Omit<CalendarSettings, 'size'> {
+  extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange'>,
+    Omit<CalendarSharedProps, 'size' | 'styles' | 'classNames' | 'value' | 'onChange'> {
   /** Selected date, required with controlled input */
   value?: [Date, Date];
 
@@ -65,8 +64,6 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       previousMonthLabel,
       closeCalendarOnChange = true,
       labelFormat = 'MMMM YYYY',
-      withSelect = false,
-      yearsRange,
       dayClassName,
       dayStyle,
       disableOutsideEvents,
@@ -157,8 +154,6 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
             value={_value}
             onChange={handleValueChange}
             labelFormat={labelFormat}
-            withSelect={withSelect}
-            yearsRange={yearsRange}
             dayClassName={dayClassName}
             dayStyle={dayStyle}
             disableOutsideEvents={disableOutsideEvents}
