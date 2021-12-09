@@ -70,3 +70,5 @@ export function YearPicker({
     </div>
   );
 }
+
+YearPicker.displayName = '@mantine/dates/YearPicker';
