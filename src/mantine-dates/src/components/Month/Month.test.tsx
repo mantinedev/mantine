@@ -169,6 +169,19 @@ describe('@mantine/core/Month', () => {
     expect(withoutWeekdays.render().find('thead')).toHaveLength(0);
   });
 
+  it('passes classNames and styles to Day component', () => {
+    const element = shallow(
+      <Month
+        {...defaultProps}
+        classNames={{ day: 'test-className' }}
+        styles={{ firstInRange: { color: 'red' } }}
+      />
+    );
+    const props = element.find(Day).at(0).props();
+    expect(props.classNames).toEqual({ day: 'test-className' });
+    expect(props.styles).toEqual({ firstInRange: { color: 'red' } });
+  });
+
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');
   });

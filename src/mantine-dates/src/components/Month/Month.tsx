@@ -110,7 +110,6 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
       fullWidth = false,
       preventFocus = false,
       focusable = true,
-      sx,
       firstDayOfWeek = 'monday',
       onDayKeyDown,
       daysRefs,
@@ -121,7 +120,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
   ) => {
     const { classes, cx, theme } = useStyles(
       { fullWidth },
-      { sx, classNames, styles, name: __staticSelector }
+      { classNames, styles, name: __staticSelector }
     );
     const finalLocale = locale || theme.datesLocale;
     const days = getMonthDays(month, firstDayOfWeek);
