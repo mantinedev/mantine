@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, ClassNames } from '@mantine/core';
+import { getDayTabIndex } from './get-day-tab-index/get-day-tab-index';
 import useStyles from './Day.styles';
 
 export type DayStylesNames = ClassNames<typeof useStyles>;
@@ -65,7 +66,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         onClick={onClick}
         ref={ref}
         onMouseEnter={(event) => onMouseEnter(value, event)}
-        tabIndex={focusable ? (hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1) : -1}
+        tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
         data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}
         data-mantine-stop-propagation
         disabled={disabled}
