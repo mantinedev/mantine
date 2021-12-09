@@ -13,7 +13,6 @@ export interface DayProps
   selected: boolean;
   weekend: boolean;
   outside: boolean;
-  onClick?(): void;
   onMouseEnter(date: Date, event: React.MouseEvent): void;
   disabled: boolean;
   hasValue: boolean;
@@ -36,15 +35,13 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       selected,
       weekend,
       outside,
-      onClick,
       onMouseEnter,
       classNames,
-      disabled,
       styles,
       hasValue,
       firstInRange,
       lastInRange,
-      __staticSelector = 'month',
+      __staticSelector = 'Month',
       inRange,
       size,
       fullWidth,
@@ -64,13 +61,11 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       <button
         {...others}
         type="button"
-        onClick={onClick}
         ref={ref}
         onMouseEnter={(event) => onMouseEnter(value, event)}
         tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
         data-autofocus={getDayAutofocus({ hasValue, selected, firstInMonth })}
         data-mantine-stop-propagation
-        disabled={disabled}
         className={cx(
           classes.day,
           {
