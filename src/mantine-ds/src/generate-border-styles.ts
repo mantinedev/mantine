@@ -1,4 +1,4 @@
-const colors = [
+const _colors = [
   '#00FFFF',
   '#A52A2A',
   '#0000FF',
@@ -21,6 +21,8 @@ const colors = [
   '#FF6347',
   '#FFFF00',
 ];
+
+const colors = [..._colors, ..._colors, ..._colors];
 
 export function generateBorderStyles(stylesApi: Record<string, any>) {
   return Object.keys(stylesApi).reduce((acc, key, index) => {
