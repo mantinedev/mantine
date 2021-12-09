@@ -1,12 +1,5 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  Text,
-  MantineSize,
-  ClassNames,
-  useExtractedMargins,
-  useMantineTheme,
-} from '@mantine/core';
+import { DefaultProps, Text, Box, MantineSize, ClassNames, useMantineTheme } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
@@ -105,7 +98,6 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
   (
     {
       className,
-      style,
       month,
       value,
       onChange,
@@ -140,7 +132,6 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
       { fullWidth },
       { sx, classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
     const days = getMonthDays(month, firstDayOfWeek);
@@ -228,14 +219,14 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
     });
 
     return (
-      <table className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box<'table'> component="table" className={cx(classes.root, className)} ref={ref} {...others}>
         {!hideWeekdays && (
           <thead>
             <tr>{weekdays}</tr>
           </thead>
         )}
         <tbody>{rows}</tbody>
-      </table>
+      </Box>
     );
   }
 );
