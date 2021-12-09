@@ -1,4 +1,5 @@
 import { isSameDate } from '../../../utils';
+import { DayModifiers } from '../types';
 import { isWeekend } from './is-weekend/is-weekend';
 import { isOutside } from './is-outside/is-outside';
 import { isDisabled } from './is-disabled/is-disabled';
@@ -31,30 +32,6 @@ interface GetDayProps {
   range: [Date, Date];
 }
 
-export interface DayModifiers {
-  /** Is date selected and is first or last in range? */
-  selectedInRange: boolean;
-
-  /** Is date equal to value? */
-  selected: boolean;
-
-  /** Based on minDate, maxDate, excludeDate and disableOutsideEvents props */
-  disabled: boolean;
-
-  /** Is date is range? */
-  inRange: boolean;
-
-  /** Is date first or last in given range? */
-  firstInRange: boolean;
-  lastInRange: boolean;
-
-  /** Is date Saturday or Sunday? */
-  weekend: boolean;
-
-  /** Is date outside of given month? */
-  outside: boolean;
-}
-
 export function getDayProps({
   date,
   month,
@@ -65,7 +42,7 @@ export function getDayProps({
   excludeDate,
   disableOutsideEvents,
   range,
-}: GetDayProps) {
+}: GetDayProps): DayModifiers {
   const outside = isOutside(date, month);
   const selected = hasValue && isSameDate(date, value);
   const { inRange, lastInRange, firstInRange, selectedInRange } = getRangeProps(date, range);

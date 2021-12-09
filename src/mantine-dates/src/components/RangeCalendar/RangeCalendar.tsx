@@ -2,7 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
-import { DayModifiers } from '../Month/get-day-props/get-day-props';
+import { DayModifiers } from '../Month';
 import { CalendarBase, CalendarBaseProps } from '../CalendarBase/CalendarBase';
 
 export interface RangeCalendarProps extends Omit<CalendarBaseProps, 'value' | 'onChange'> {

@@ -1,18 +1,13 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, Text, Box, MantineSize, ClassNames, useMantineTheme } from '@mantine/core';
+import { DefaultProps, Text, Box, MantineSize, ClassNames } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
 import { getMonthDays, getWeekdaysNames, isSameDate } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
-import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
+import { getDayProps } from './get-day-props/get-day-props';
+import { DayKeydownPayload, DayModifiers } from './types';
 import useStyles from './Month.styles';
-
-export interface DayKeydownPayload {
-  rowIndex: number;
-  cellIndex: number;
-  date: Date;
-}
 
 export interface MonthSettings {
   /** Adds className to day button based on date and modifiers */
@@ -128,11 +123,10 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
     }: MonthProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { fullWidth },
       { sx, classNames, styles, name: __staticSelector }
     );
-    const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
     const days = getMonthDays(month, firstDayOfWeek);
 
