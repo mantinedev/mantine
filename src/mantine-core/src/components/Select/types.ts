@@ -4,7 +4,7 @@ import type { SelectDropdownStylesNames } from './SelectDropdown/SelectDropdown'
 import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 
 export interface SelectItem {
-  value: string;
+  value: string | number;
   label?: string;
   disabled?: boolean;
   group?: string;
