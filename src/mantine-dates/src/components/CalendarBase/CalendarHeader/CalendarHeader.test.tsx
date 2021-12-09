@@ -1,6 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { itSupportsClassName } from '@mantine/tests';
+import { shallow, mount } from 'enzyme';
+import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from './CalendarHeader';
 
 const defaultProps = {
@@ -14,6 +14,16 @@ const LEVEL_ICON_SELECTOR = '.mantine-CalendarHeader-calendarHeaderLevelIcon';
 
 describe('@mantine/dates/CalendarHeader', () => {
   itSupportsClassName(CalendarHeader, defaultProps);
+  checkAccessibility([
+    mount(
+      <CalendarHeader
+        {...defaultProps}
+        nextLabel="Next"
+        previousLabel="Previous"
+        label="February 2021"
+      />
+    ),
+  ]);
 
   it('calls onNext/onPrevious functions when buttons are clicked', () => {
     const onNext = jest.fn();
@@ -79,6 +89,13 @@ describe('@mantine/dates/CalendarHeader', () => {
     const enabled = shallow(<CalendarHeader {...defaultProps} nextLevelDisabled={false} />);
     expect(disabled.find(LEVEL_ICON_SELECTOR)).toHaveLength(0);
     expect(enabled.find(LEVEL_ICON_SELECTOR)).toHaveLength(1);
+  });
+
+  it('renders given label at level control', () => {
+    const element = shallow(
+      <CalendarHeader {...defaultProps} label="test-label" nextLevelDisabled />
+    );
+    expect(element.find(LEVEL_SELECTOR).text()).toBe('test-label');
   });
 
   it('has correct displayName', () => {
