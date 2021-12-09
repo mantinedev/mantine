@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itSupportsStylesApi,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Month } from './Month';
 import { Month as MonthStylesApi } from './styles.api';
@@ -17,6 +18,7 @@ describe('@mantine/core/Month', () => {
   itSupportsClassName(Month, defaultProps);
   itSupportsOthers(Month, defaultProps);
   itSupportsMargins(Month, defaultProps);
+  itSupportsRef(Month, defaultProps, HTMLTableElement);
   itSupportsStylesApi(
     Month,
     defaultProps,
@@ -25,10 +27,6 @@ describe('@mantine/core/Month', () => {
     ),
     'Month'
   );
-
-  it('has correct displayName', () => {
-    expect(Month.displayName).toEqual('@mantine/core/Month');
-  });
 
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);
@@ -40,8 +38,14 @@ describe('@mantine/core/Month', () => {
     expect(element.render().find('tbody tr')).toHaveLength(4);
     expect(element.render().find('tbody td')).toHaveLength(28);
 
-    const elementfDW = shallow(<Month month={new Date(2021, 1, 2)} firstDayOfWeek="sunday" />);
-    expect(elementfDW.render().find('tbody tr')).toHaveLength(5);
-    expect(elementfDW.render().find('tbody td')).toHaveLength(35);
+    const firstDayOfWeekSunday = shallow(
+      <Month month={new Date(2021, 1, 2)} firstDayOfWeek="sunday" />
+    );
+    expect(firstDayOfWeekSunday.render().find('tbody tr')).toHaveLength(5);
+    expect(firstDayOfWeekSunday.render().find('tbody td')).toHaveLength(35);
+  });
+
+  it('has correct displayName', () => {
+    expect(Month.displayName).toEqual('@mantine/core/Month');
   });
 });
