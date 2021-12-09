@@ -130,19 +130,19 @@ getMonthDays(new Date()); // -> [[7xDate objects] x amount of weeks in current m
 
 **get-months-names**
 
-Returns full months names for given locale, used in [Calendar](/dates/calendar/) component to render month select
+Returns months names for given locale and format, used in [Calendar](/dates/calendar/) component to render month select
 
 ```tsx
 import { getMonthsNames } from '@mantine/dates';
 
-getMonthsNames('en');
+getMonthsNames('en', 'MMMM');
 // -> [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 // to localize import locale from dayjs package
 import 'dayjs/locale/ru';
 import { getMonthsNames } from '@mantine/dates';
 
-getMonthsNames('ru');
+getMonthsNames('ru', 'MMMM');
 // -> ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь']
 ```
 
