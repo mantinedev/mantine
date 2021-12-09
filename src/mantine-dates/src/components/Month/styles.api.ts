@@ -1,7 +1,7 @@
 import { MonthStylesNames } from './Month';
 
 export const Month: Record<MonthStylesNames, string> = {
-  root: 'Root element',
+  month: 'Root element',
   weekdayCell: 'Table th element, wraps weekday',
   weekday: 'Weekday title',
   cell: 'Table cell, wraps day',

@@ -13,7 +13,7 @@ import { Month } from './Month';
 import { Day } from './Day/Day';
 import { Month as MonthStylesApi } from './styles.api';
 
-const defaultProps = { month: new Date(), value: new Date() };
+const defaultProps = { month: new Date(2021, 11, 1), value: new Date(2021, 11, 5) };
 
 describe('@mantine/core/Month', () => {
   itSupportsStyle(Month, defaultProps);
@@ -23,10 +23,8 @@ describe('@mantine/core/Month', () => {
   itSupportsRef(Month, defaultProps, HTMLTableElement);
   itSupportsStylesApi(
     Month,
-    defaultProps,
-    Object.keys(MonthStylesApi).filter(
-      (key) => key !== 'inRange' && key !== 'firstInRange' && key !== 'lastInRange'
-    ),
+    { ...defaultProps, range: [new Date(2021, 11, 5), new Date(2021, 11, 15)] },
+    Object.keys(MonthStylesApi).filter((key) => key !== 'month'),
     'Month'
   );
 

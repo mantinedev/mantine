@@ -207,7 +207,12 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
     });
 
     return (
-      <Box<'table'> component="table" className={cx(classes.root, className)} ref={ref} {...others}>
+      <Box<'table'>
+        component="table"
+        className={cx(classes.month, className)}
+        ref={ref}
+        {...others}
+      >
         {!hideWeekdays && (
           <thead>
             <tr>{weekdays}</tr>
