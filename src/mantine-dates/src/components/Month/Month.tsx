@@ -10,7 +10,7 @@ import {
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
-import { getMonthDays, getWeekdaysNames } from '../../utils';
+import { getMonthDays, getWeekdaysNames, isSameDate } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
 import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
 import useStyles from './Month.styles';
@@ -60,6 +60,9 @@ export interface MonthSettings {
 
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeek;
+
+  /** Remove outside dates */
+  hideOutsideDates?: boolean;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -126,6 +129,7 @@ export function Month({
   firstDayOfWeek = 'monday',
   onDayKeyDown,
   daysRefs,
+  hideOutsideDates = false,
   ...others
 }: MonthProps) {
   const { classes, cx } = useStyles(
@@ -190,7 +194,11 @@ export function Month({
             inRange={dayProps.inRange && !withoutStylesOutsideMonth}
             firstInRange={dayProps.firstInRange}
             lastInRange={dayProps.lastInRange}
-            firstInMonth={cellIndex === 0 && rowIndex === 0}
+            firstInMonth={
+              hideOutsideDates
+                ? isSameDate(date, dayjs(month).startOf('month').toDate())
+                : cellIndex === 0 && rowIndex === 0
+            }
             selected={(dayProps.selected || dayProps.selectedInRange) && !withoutStylesOutsideMonth}
             hasValue={hasValueInMonthRange}
             onKeyDown={(event) => onDayKeyDown(onKeyDownPayload, event)}
@@ -204,6 +212,7 @@ export function Month({
             size={size}
             fullWidth={fullWidth}
             focusable={focusable}
+            hideOutsideDates={hideOutsideDates}
           />
         </td>
       );

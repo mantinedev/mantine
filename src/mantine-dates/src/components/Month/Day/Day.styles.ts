@@ -3,6 +3,7 @@ import { createStyles, MantineSize } from '@mantine/core';
 interface DayStyles {
   size: MantineSize;
   fullWidth: boolean;
+  hideOutsideDates: boolean;
 }
 
 export const sizes = {
@@ -13,7 +14,7 @@ export const sizes = {
   xl: 66,
 };
 
-export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
+export default createStyles((theme, { size, fullWidth, hideOutsideDates }: DayStyles, getRef) => {
   const weekend = { ref: getRef('weekend') } as const;
   const outside = { ref: getRef('outside') } as const;
   const selected = { ref: getRef('selected') } as const;
@@ -60,6 +61,7 @@ export default createStyles((theme, { size, fullWidth }: DayStyles, getRef) => {
       },
 
       [`&.${outside.ref}`]: {
+        display: hideOutsideDates ? 'none' : undefined,
         color: `${
           theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
         } !important`,

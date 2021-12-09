@@ -25,6 +25,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       onMouseLeave,
       __staticSelector = 'RangeCalendar',
       allowSingleDateInRange = false,
+      amountOfMonths = 1,
       ...others
     }: RangeCalendarProps,
     ref
@@ -99,6 +100,8 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         range={value}
         ref={ref}
         __staticSelector={__staticSelector}
+        amountOfMonths={amountOfMonths}
+        hideOutsideDates={amountOfMonths > 1}
         {...others}
       />
     );

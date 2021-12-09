@@ -23,6 +23,7 @@ export interface DayProps
   __staticSelector?: string;
   firstInMonth: boolean;
   focusable?: boolean;
+  hideOutsideDates?: boolean;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -47,12 +48,13 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       fullWidth,
       firstInMonth,
       focusable,
+      hideOutsideDates,
       ...others
     }: DayProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { size, fullWidth },
+      { size, fullWidth, hideOutsideDates },
       { classNames, styles, name: __staticSelector }
     );
 

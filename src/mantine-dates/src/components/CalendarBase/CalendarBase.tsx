@@ -118,6 +118,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       previousMonthLabel,
       previousYearLabel,
       labelFormat = 'MMMM YYYY',
+      hideOutsideDates,
       ...others
     }: CalendarBaseProps,
     ref
@@ -267,6 +268,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             previousMonthLabel={previousMonthLabel}
             labelFormat={labelFormat}
             onDayMouseEnter={onDayMouseEnter}
+            hideOutsideDates={hideOutsideDates}
           />
         )}
       </Box>
