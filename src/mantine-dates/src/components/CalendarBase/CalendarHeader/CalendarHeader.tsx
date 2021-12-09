@@ -100,3 +100,5 @@ export function CalendarHeader({
     </div>
   );
 }
+
+CalendarHeader.displayName = '@mantine/dates/CalendarHeader';
