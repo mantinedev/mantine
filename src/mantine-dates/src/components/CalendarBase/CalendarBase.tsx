@@ -101,7 +101,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       __staticSelector = 'CalendarBase',
       dayClassName,
       dayStyle,
-      disableOutsideDayStyle,
       disableOutsideEvents,
       excludeDate,
       hideWeekdays,
@@ -255,7 +254,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             __staticSelector={__staticSelector}
             dayClassName={dayClassName}
             dayStyle={dayStyle}
-            disableOutsideDayStyle={disableOutsideDayStyle}
             disableOutsideEvents={disableOutsideEvents}
             excludeDate={excludeDate}
             hideWeekdays={hideWeekdays}

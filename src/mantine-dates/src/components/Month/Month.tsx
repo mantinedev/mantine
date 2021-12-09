@@ -16,9 +16,6 @@ export interface MonthSettings {
   /** Adds style to day button based on date and modifiers */
   dayStyle?(date: Date, modifiers: DayModifiers): React.CSSProperties;
 
-  /** When true dates that are outside of given month are not styled */
-  disableOutsideDayStyle?: boolean;
-
   /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
 
@@ -100,7 +97,6 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
       locale,
       dayClassName,
       dayStyle,
-      disableOutsideDayStyle = false,
       classNames,
       styles,
       minDate,
@@ -158,7 +154,6 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
           range,
         });
 
-        const withoutStylesOutsideMonth = disableOutsideDayStyle && dayProps.outside;
         const onKeyDownPayload = { rowIndex, cellIndex, date };
 
         return (
@@ -180,7 +175,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
               value={date}
               outside={dayProps.outside}
               weekend={dayProps.weekend}
-              inRange={dayProps.inRange && !withoutStylesOutsideMonth}
+              inRange={dayProps.inRange}
               firstInRange={dayProps.firstInRange}
               lastInRange={dayProps.lastInRange}
               firstInMonth={
@@ -188,22 +183,22 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
                   ? isSameDate(date, dayjs(month).startOf('month').toDate())
                   : cellIndex === 0 && rowIndex === 0
               }
-              selected={
-                (dayProps.selected || dayProps.selectedInRange) && !withoutStylesOutsideMonth
-              }
+              selected={dayProps.selected || dayProps.selectedInRange}
               hasValue={hasValueInMonthRange}
-              onKeyDown={(event) => onDayKeyDown(onKeyDownPayload, event)}
+              onKeyDown={(event) =>
+                typeof onDayKeyDown === 'function' && onDayKeyDown(onKeyDownPayload, event)
+              }
               className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
               style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
-              styles={styles}
-              classNames={classNames}
               disabled={dayProps.disabled}
-              __staticSelector={__staticSelector}
               onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
               size={size}
               fullWidth={fullWidth}
               focusable={focusable}
               hideOutsideDates={hideOutsideDates}
+              __staticSelector={__staticSelector}
+              styles={styles}
+              classNames={classNames}
             />
           </td>
         );
