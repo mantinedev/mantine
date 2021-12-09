@@ -1,3 +1,5 @@
+import { isSameMonth } from '../../../../utils';
+
 export function isOutside(date: Date, month: Date) {
-  return date.getMonth() !== month.getMonth();
+  return !isSameMonth(date, month);
 }
