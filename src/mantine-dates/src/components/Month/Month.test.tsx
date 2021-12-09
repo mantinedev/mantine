@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import 'dayjs/locale/ru';
 import {
   itSupportsClassName,
   itSupportsOthers,
@@ -180,6 +181,14 @@ describe('@mantine/core/Month', () => {
     const props = element.find(Day).at(0).props();
     expect(props.classNames).toEqual({ day: 'test-className' });
     expect(props.styles).toEqual({ firstInRange: { color: 'red' } });
+  });
+
+  it('renders weekday names with given locale', () => {
+    const en = shallow(<Month {...defaultProps} locale="en" />);
+    const ru = shallow(<Month {...defaultProps} locale="ru" />);
+
+    expect(en.find('th').at(0).text()).toBe('Mo');
+    expect(ru.find('th').at(0).text()).toBe('Пн');
   });
 
   it('has correct displayName', () => {
