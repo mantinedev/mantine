@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { isSameDate } from '../../../utils';
 import { isWeekend } from './is-weekend/is-weekend';
 import { isOutside } from './is-outside/is-outside';
+import { getRangeProps } from './get-range-props/get-range-props';
 
 interface GetDayProps {
   /** Date associated with Day component */
@@ -72,20 +73,7 @@ export function getDayProps({
   const shouldExclude = typeof excludeDate === 'function' && excludeDate(date);
   const disabledOutside = disableOutsideEvents && outside;
   const disabled = isAfterMax || isBeforeMin || shouldExclude || disabledOutside;
-  const hasRange = Array.isArray(range) && range.every((val) => val instanceof Date);
-  const inclusiveRange = hasRange && [
-    dayjs(range[0]).subtract(1, 'day'),
-    dayjs(range[1]).add(1, 'day'),
-  ];
-
-  const firstInRange = hasRange && isSameDate(date, range[0]);
-  const lastInRange = hasRange && isSameDate(date, range[1]);
-  const inRange =
-    hasRange &&
-    dayjs(date).isAfter(inclusiveRange[0], 'day') &&
-    dayjs(date).isBefore(inclusiveRange[1], 'day');
-
-  const selectedInRange = firstInRange || lastInRange;
+  const { inRange, lastInRange, firstInRange, selectedInRange } = getRangeProps(date, range);
 
   return {
     selectedInRange,
