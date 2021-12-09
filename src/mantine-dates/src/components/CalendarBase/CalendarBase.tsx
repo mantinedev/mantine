@@ -266,6 +266,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             nextMonthLabel={nextMonthLabel}
             previousMonthLabel={previousMonthLabel}
             labelFormat={labelFormat}
+            onDayMouseEnter={onDayMouseEnter}
           />
         )}
       </Box>
