@@ -76,6 +76,7 @@ export function MonthsList({
             __staticSelector={__staticSelector}
             nextLabel={nextMonthLabel}
             previousLabel={previousMonthLabel}
+            preventLevelFocus={index > 0}
           />
 
           <Month

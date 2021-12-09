@@ -26,6 +26,7 @@ interface CalendarHeaderProps
   __staticSelector?: string;
   nextLabel?: string;
   previousLabel?: string;
+  preventLevelFocus?: boolean;
 }
 
 const iconSizes = {
@@ -51,6 +52,7 @@ export function CalendarHeader({
   __staticSelector = 'CalendarHeader',
   nextLabel,
   previousLabel,
+  preventLevelFocus = false,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx, theme } = useStyles(
@@ -75,6 +77,7 @@ export function CalendarHeader({
         className={classes.calendarHeaderLevel}
         disabled={nextLevelDisabled}
         onClick={onNextLevel}
+        tabIndex={preventLevelFocus ? -1 : 0}
       >
         <div>{label}</div>
         {!nextLevelDisabled && (
