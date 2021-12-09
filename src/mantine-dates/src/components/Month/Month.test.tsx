@@ -114,6 +114,13 @@ describe('@mantine/core/Month', () => {
     expect(defaultFocusSpy).toHaveBeenCalledTimes(0);
   });
 
+  it('calls onChange with Date object when Day is clicked', () => {
+    const spy = jest.fn();
+    const element = shallow(<Month month={new Date(2021, 11, 1)} onChange={spy} />);
+    element.find(Day).at(0).simulate('click');
+    expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29));
+  });
+
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');
   });
