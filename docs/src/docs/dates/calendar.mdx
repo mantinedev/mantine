@@ -41,16 +41,6 @@ Alternatively you can set `initialMonth` prop to set initial month in uncontroll
 <Calendar initialMonth={new Date()} />
 ```
 
-## Year and month picker
-
-You can replace calendar label with year and month selects.
-To use this option provide props:
-
-- `withSelect` – replace label with month and year select
-- `yearsRange` – years range that should be used to generate years select options
-
-<Demo data={CalendarDemos.withSelect} />
-
 ## Localization
 
 All @mantine/dates components are built with [dayjs](https://day.js.org/) library.
@@ -156,25 +146,3 @@ In this example we will hide all outside dates and change color of weekends base
 You can customize any part of the calendar with [Styles API](/theming/styles-api/):
 
 <Demo data={CalendarDemos.stylesApi} />
-
-## Accessibility and usability
-
-To make all component controls visible to screen reader set following props:
-
-```tsx
-// When withSelect prop set to false
-<Calendar
-  withSelect={false}
-  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
-  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
-/>
-
-// When withSelect prop set to true
-<Calendar
-  withSelect
-  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
-  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
-  yearLabel="Select year" // -> year select aria-label
-  monthLabel="Select month" // -> month select aria-label
-/>
-```

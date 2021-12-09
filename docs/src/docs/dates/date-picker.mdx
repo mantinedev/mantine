@@ -71,16 +71,6 @@ function Demo() {
 }
 ```
 
-## Year and month picker
-
-You can replace calendar label with year and month selects.
-To use this option provide props:
-
-- `withSelect` – replace label with month and year select
-- `yearsRange` – years range that should be used to generate years select options
-
-<Demo data={DatePickerDemos.withSelect} />
-
 ## Min and max dates
 
 Set `minDate` and `maxDate` props to define minimum and maximum possible dates.
@@ -229,27 +219,4 @@ provide static `id` prop to prevent props mismatch:
 ```tsx
 <DatePicker /> // -> random id generated both on client and server, props mismatch warning
 <DatePicker id="my-date-picker" /> // -> id is static, no mismatches
-```
-
-## Accessibility and usability
-
-To make all component controls visible to screen reader set following props:
-
-```tsx
-// When withSelect prop set to false
-<DatePicker
-  withSelect={false}
-  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
-  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
-  clearButtonLabel="Clear field" // -> aria-label for clear button, use when clearable prop is true
-/>
-
-// When withSelect prop set to true
-<DatePicker
-  withSelect
-  nextMonthLabel="Next month" // -> aria-label for button that switches to next month
-  previousMonthLabel="Previous month" // -> aria-label for button that switches to previous month
-  yearLabel="Select year" // -> year select aria-label
-  monthLabel="Select month" // -> month select aria-label
-/>
 ```
