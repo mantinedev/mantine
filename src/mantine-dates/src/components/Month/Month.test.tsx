@@ -121,6 +121,46 @@ describe('@mantine/core/Month', () => {
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29));
   });
 
+  it('handles mouseenter events correctly on Day', () => {
+    const spy = jest.fn();
+    const element = shallow(<Month month={new Date(2021, 11, 1)} onDayMouseEnter={spy} />);
+    element.find(Day).at(0).dive().simulate('mouseenter', { event: 'test-event' });
+    expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29), { event: 'test-event' });
+  });
+
+  it('sets Day style based on dayStyle function', () => {
+    const element = shallow(<Month {...defaultProps} dayStyle={() => ({ background: 'red' })} />);
+    expect(element.find(Day).at(0).prop('style')).toEqual({ background: 'red' });
+  });
+
+  it('sets Day className based on dayClassName function', () => {
+    const element = shallow(<Month {...defaultProps} dayClassName={() => 'test-class'} />);
+    expect(element.find(Day).at(0).prop('className')).toBe('test-class');
+  });
+
+  it('passes __staticSelector to Day components', () => {
+    const element = shallow(<Month {...defaultProps} __staticSelector="Test" />);
+    expect(element.find(Day).at(0).prop('__staticSelector')).toBe('Test');
+  });
+
+  it('displays selected date', () => {
+    const element = shallow(<Month month={new Date(2021, 11, 1)} value={new Date(2021, 11, 5)} />);
+    expect(element.find(Day).at(6).prop('selected')).toBe(true);
+    expect(element.find(Day).at(7).prop('selected')).toBe(false);
+    expect(element.find(Day).at(5).prop('selected')).toBe(false);
+  });
+
+  it('changes first day of week based on prop', () => {
+    const sunday = shallow(<Month {...defaultProps} firstDayOfWeek="sunday" locale="en" />);
+    const monday = shallow(<Month {...defaultProps} firstDayOfWeek="monday" locale="en" />);
+
+    expect(sunday.find('.mantine-Month-weekdayCell').at(0).text()).toBe('Su');
+    expect(sunday.find('.mantine-Month-weekdayCell').at(6).text()).toBe('Sa');
+
+    expect(monday.find('.mantine-Month-weekdayCell').at(0).text()).toBe('Mo');
+    expect(monday.find('.mantine-Month-weekdayCell').at(6).text()).toBe('Su');
+  });
+
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');
   });
