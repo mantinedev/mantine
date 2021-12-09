@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/core';
-import { TimeInput } from './TimeInput';
+import { TimeInput } from '../TimeInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
   <TimeInput label={size} size={size} key={size} style={{ marginTop: 30 }} />
@@ -20,12 +20,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/dates/TimeInput', module)
-  .add('General usage', () => (
-    <div style={{ width: 400, padding: 40 }}>
-      <TimeInput label="Time input" disabled />
-    </div>
-  ))
+storiesOf('@mantine/dates/TimeInput/stories', module)
   .add('Controlled', () => (
     <div style={{ width: 400, padding: 40 }}>
       <Controlled />
