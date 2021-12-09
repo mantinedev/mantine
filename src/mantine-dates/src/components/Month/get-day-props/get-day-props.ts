@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 import { isSameDate } from '../../../utils';
+import { isWeekend } from './is-weekend/is-weekend';
+import { isOutside } from './is-outside/is-outside';
 
 interface GetDayProps {
   /** Date associated with Day component */
@@ -63,9 +65,7 @@ export function getDayProps({
   disableOutsideEvents,
   range,
 }: GetDayProps) {
-  const weekday = date.getDay();
-  const weekend = weekday === 6 || weekday === 0;
-  const outside = date.getMonth() !== month.getMonth();
+  const outside = isOutside(date, month);
   const selected = hasValue && isSameDate(date, value);
   const isAfterMax = maxDate instanceof Date && dayjs(maxDate).isBefore(date, 'day');
   const isBeforeMin = minDate instanceof Date && dayjs(minDate).isAfter(date, 'day');
@@ -94,7 +94,7 @@ export function getDayProps({
     inRange,
     firstInRange,
     lastInRange,
-    weekend,
+    weekend: isWeekend(date),
     outside,
   };
 }
