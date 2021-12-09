@@ -161,6 +161,14 @@ describe('@mantine/core/Month', () => {
     expect(monday.find('.mantine-Month-weekdayCell').at(6).text()).toBe('Su');
   });
 
+  it('does not render weekdays if hideWeekdays is true', () => {
+    const withWeekdays = shallow(<Month {...defaultProps} hideWeekdays={false} />);
+    const withoutWeekdays = shallow(<Month {...defaultProps} hideWeekdays />);
+
+    expect(withWeekdays.render().find('thead')).toHaveLength(1);
+    expect(withoutWeekdays.render().find('thead')).toHaveLength(0);
+  });
+
   it('has correct displayName', () => {
     expect(Month.displayName).toEqual('@mantine/core/Month');
   });

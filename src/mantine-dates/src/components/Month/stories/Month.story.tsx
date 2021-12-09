@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import 'dayjs/locale/ru';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/core';
 import dayjs from 'dayjs';
-import { Month } from './Month';
+import { Month } from '../Month';
 
 function WrappedMonth(
   props: Omit<React.ComponentPropsWithoutRef<typeof Month>, 'selected' | 'onDayClick' | 'month'>
@@ -16,7 +16,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   <WrappedMonth size={size} key={size} style={{ marginTop: 30 }} />
 ));
 
-storiesOf('@mantine/dates/Month', module)
+storiesOf('@mantine/dates/Month/stories', module)
   .add('First day of the week - Sunday', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
       <Month
