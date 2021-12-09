@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MANTINE_SIZES } from '@mantine/core';
 import { storiesOf } from '@storybook/react';
-import { Calendar } from './Calendar';
+import { Calendar } from '../Calendar';
 
 function WrappedCalendar(props: React.ComponentPropsWithoutRef<typeof Calendar>) {
   const [value, onChange] = useState(new Date());

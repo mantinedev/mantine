@@ -62,6 +62,9 @@ export function YearPicker({
         size={size}
         nextLabel={nextDecadeLabel}
         previousLabel={previousDecadeLabel}
+        styles={styles}
+        classNames={classNames}
+        __staticSelector={__staticSelector}
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>
