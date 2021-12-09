@@ -22,6 +22,7 @@ export interface DayProps
   fullWidth: boolean;
   __staticSelector?: string;
   firstInMonth: boolean;
+  focusable?: boolean;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -45,6 +46,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       size,
       fullWidth,
       firstInMonth,
+      focusable,
       ...others
     }: DayProps,
     ref
@@ -61,7 +63,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         onClick={onClick}
         ref={ref}
         onMouseEnter={(event) => onMouseEnter(value, event)}
-        tabIndex={hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1}
+        tabIndex={focusable ? (hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1) : -1}
         data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}
         data-mantine-stop-propagation
         disabled={disabled}

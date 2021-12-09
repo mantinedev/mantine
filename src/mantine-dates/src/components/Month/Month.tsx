@@ -55,6 +55,9 @@ export interface MonthSettings {
   /** Prevent focusing upon clicking */
   preventFocus?: boolean;
 
+  /** Should focusable days have tabIndex={0}? */
+  focusable?: boolean;
+
   /** Set first day of the week */
   firstDayOfWeek?: FirstDayOfWeek;
 }
@@ -76,9 +79,6 @@ export interface MonthProps
 
   /** Selected range */
   range?: [Date, Date];
-
-  /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
-  autoFocus?: boolean;
 
   /** Called when day is selected */
   onChange?(value: Date): void;
@@ -104,7 +104,6 @@ export function Month({
   month,
   value,
   onChange,
-  // autoFocus = false,
   disableOutsideEvents = false,
   locale,
   dayClassName,
@@ -122,6 +121,7 @@ export function Month({
   size = 'sm',
   fullWidth = false,
   preventFocus = false,
+  focusable = true,
   sx,
   firstDayOfWeek = 'monday',
   onDayKeyDown,
@@ -136,20 +136,6 @@ export function Month({
   const theme = useMantineTheme();
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
-
-  // useEffect(() => {
-  //   if (autoFocus) {
-  //     const date = new Date(
-  //       month.getFullYear(),
-  //       month.getMonth(),
-  //       value ? value.getDate() : 1
-  //     ).toISOString();
-
-  //     if (date in daysRefs.current) {
-  //       daysRefs.current[date].focus();
-  //     }
-  //   }
-  // }, []);
 
   const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
     <th className={classes.weekdayCell} key={weekday}>
@@ -217,6 +203,7 @@ export function Month({
             onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
             fullWidth={fullWidth}
+            focusable={focusable}
           />
         </td>
       );

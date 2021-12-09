@@ -89,6 +89,7 @@ export function MonthsList({
             styles={styles}
             __staticSelector={__staticSelector}
             locale={locale}
+            focusable={index === 0}
             {...others}
           />
         </div>
