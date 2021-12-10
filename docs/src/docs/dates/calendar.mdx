@@ -38,6 +38,13 @@ Alternatively, set `initialMonth` prop to set initial month in uncontrolled comp
 <Calendar initialMonth={new Date()} />
 ```
 
+## Level change
+
+Calendar supports three levels: date, month and year. User can access next level by clicking label between next/previous controls.
+To disable that, set `allowLevelChange` prop to false:
+
+<Demo data={CalendarDemos.noLevel} />
+
 ## Localization
 
 All @mantine/dates components are built with [dayjs](https://day.js.org/) library.

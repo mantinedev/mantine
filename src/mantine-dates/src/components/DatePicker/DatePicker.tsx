@@ -80,6 +80,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       onFocus,
       onBlur,
       amountOfMonths,
+      allowLevelChange,
+      initialLevel,
       ...others
     }: DatePickerProps,
     ref
@@ -215,6 +217,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}
           amountOfMonths={amountOfMonths}
+          allowLevelChange={allowLevelChange}
+          initialLevel={initialLevel}
         />
       </DatePickerBase>
     );

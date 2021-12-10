@@ -44,6 +44,13 @@ Then set `locale` prop in component:
 
 <Demo data={DatePickerDemos.localization} />
 
+## Level change
+
+DatePicker supports three levels: date, month and year. User can access next level by clicking label between next/previous controls.
+To disable that, set `allowLevelChange` prop to false:
+
+<Demo data={DatePickerDemos.noLevel} />
+
 ## First day of the week
 
 Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` or `monday` as values:
