@@ -155,6 +155,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
     ) => {
       switch (event.code) {
         case 'ArrowDown': {
+          event.preventDefault();
+
           if (payload.rowIndex + 1 < daysRefs.current[monthIndex].length) {
             daysRefs.current[monthIndex][payload.rowIndex + 1][payload.cellIndex].focus();
           }
@@ -162,6 +164,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         }
 
         case 'ArrowUp': {
+          event.preventDefault();
+
           if (payload.rowIndex > 0) {
             daysRefs.current[monthIndex][payload.rowIndex - 1][payload.cellIndex].focus();
           }
@@ -169,6 +173,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         }
 
         case 'ArrowRight': {
+          event.preventDefault();
+
           if (payload.cellIndex !== 6) {
             daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex + 1].focus();
           } else if (monthIndex + 1 < amountOfMonths) {
@@ -181,6 +187,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         }
 
         case 'ArrowLeft': {
+          event.preventDefault();
+
           if (payload.cellIndex !== 0) {
             daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex - 1].focus();
           } else if (monthIndex > 0) {
