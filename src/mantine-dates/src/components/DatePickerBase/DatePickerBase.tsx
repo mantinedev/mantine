@@ -142,7 +142,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       size = 'sm',
       children,
       inputLabel,
-      __staticSelector = 'date-picker',
+      __staticSelector = 'DatePickerBase',
       dropdownOpened,
       setDropdownOpened,
       dropdownType = 'popover',

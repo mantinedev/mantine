@@ -34,11 +34,6 @@ describe('@mantine/dates/DatePickerBase', () => {
     expect(element.find(InputWrapper).prop('__staticSelector')).toBe('test-selector');
   });
 
-  it('does not render dropdown if dropdownOpened is set to false', () => {
-    const element = shallow(<DatePickerBase {...defaultProps} dropdownOpened={false} />);
-    expect(element.render().find('.mantine-date-picker-dropdownWrapper')).toHaveLength(0);
-  });
-
   it('passes required, id, label, error and description props to InputWrapper component', () => {
     const element = shallow(
       <DatePickerBase
