@@ -54,8 +54,8 @@ export function YearPicker({
     <div className={cx(classes.yearPicker, className)} {...others}>
       <CalendarHeader
         label={`${range[0]} – ${range[range.length - 1]}`}
-        hasPrevious={minYear < range[0]}
-        hasNext={maxYear > range[range.length - 1]}
+        hasPrevious={typeof minYear === 'number' ? minYear < range[0] : true}
+        hasNext={typeof maxYear === 'number' ? maxYear > range[range.length - 1] : true}
         onNext={() => setDecade((current) => current + 10)}
         onPrevious={() => setDecade((current) => current - 10)}
         nextLevelDisabled
