@@ -45,6 +45,9 @@ export interface ModalProps
   /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
   overlayColor?: string;
 
+  /** Modal radius */
+  radius?: MantineNumberSize;
+
   /** Modal body width */
   size?: string | number;
 
@@ -92,6 +95,7 @@ export function MantineModal({
   transition = 'pop',
   padding = 'lg',
   shadow = 'lg',
+  radius = 'sm',
   id,
   classNames,
   styles,
@@ -125,7 +129,11 @@ export function MantineModal({
       mounted={opened}
       transitions={{
         modal: { duration: transitionDuration, transition },
-        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
+        overlay: {
+          duration: transitionDuration / 2,
+          transition: 'fade',
+          timingFunction: 'ease',
+        },
       }}
     >
       {(transitionStyles) => (
@@ -148,6 +156,7 @@ export function MantineModal({
               className={classes.modal}
               shadow={shadow}
               padding={padding}
+              radius={radius}
               role="dialog"
               aria-labelledby={titleId}
               aria-describedby={bodyId}
