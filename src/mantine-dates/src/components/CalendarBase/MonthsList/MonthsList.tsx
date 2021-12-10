@@ -99,3 +99,5 @@ export function MonthsList({
 
   return <>{months}</>;
 }
+
+MonthsList.displayName = '@mantine/dates/MonthsList';
