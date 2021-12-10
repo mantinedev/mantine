@@ -245,7 +245,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             size={size}
             daysRefs={daysRefs}
             onMonthChange={setMonth}
-            onNextLevel={() => setSelectionState('year')}
+            onNextLevel={() => setSelectionState('month')}
             onDayKeyDown={handleDayKeyDown}
             classNames={classNames}
             styles={styles}
