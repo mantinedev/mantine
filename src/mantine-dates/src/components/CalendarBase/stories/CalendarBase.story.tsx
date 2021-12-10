@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/core';
-import { CalendarBase, CalendarBaseProps } from './CalendarBase';
+import { CalendarBase, CalendarBaseProps } from '../CalendarBase';
 
 function Wrapper(props: Partial<CalendarBaseProps>) {
   return (
