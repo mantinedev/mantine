@@ -15,7 +15,6 @@ import { CalendarHeader } from './CalendarHeader/CalendarHeader';
 import { CalendarBase, CalendarBaseProps } from './CalendarBase';
 
 const HEADER_CONTROL_SELECTOR = '.mantine-CalendarBase-calendarHeaderControl';
-const LEVEL_SELECTOR = '.mantine-CalendarBase-calendarHeaderLevel';
 
 const labelsProps = {
   nextMonthLabel: 'next month',
