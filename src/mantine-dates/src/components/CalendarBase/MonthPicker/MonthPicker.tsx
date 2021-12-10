@@ -16,8 +16,6 @@ export interface MonthPickerProps
   year: number;
   onYearChange(year: number): void;
   onNextLevel(): void;
-  minYear?: number;
-  maxYear?: number;
   size?: MantineSize;
   minDate?: Date;
   maxDate?: Date;
@@ -37,8 +35,6 @@ export function MonthPicker({
   onYearChange,
   onNextLevel,
   size,
-  maxYear,
-  minYear,
   minDate,
   maxDate,
   __staticSelector = 'MonthPicker',
@@ -48,6 +44,8 @@ export function MonthPicker({
 }: MonthPickerProps) {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
   const range = getMonthsNames(locale);
+  const minYear = minDate instanceof Date ? minDate.getFullYear() : undefined;
+  const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : undefined;
 
   const months = range.map((month, index) => (
     <UnstyledButton
@@ -66,8 +64,8 @@ export function MonthPicker({
     <div className={cx(classes.monthPicker, className)} {...others}>
       <CalendarHeader
         label={year.toString()}
-        hasNext={year < maxYear}
-        hasPrevious={year > minYear}
+        hasNext={typeof maxYear === 'number' ? year < maxYear : true}
+        hasPrevious={typeof minYear === 'number' ? year > minYear : true}
         onNext={() => onYearChange(year + 1)}
         onPrevious={() => onYearChange(year - 1)}
         onNextLevel={onNextLevel}
@@ -82,3 +80,5 @@ export function MonthPicker({
     </div>
   );
 }
+
+MonthPicker.displayName = '@mantine/dates/MonthPicker';

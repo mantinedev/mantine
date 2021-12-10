@@ -220,8 +220,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             onYearChange={setYearSelection}
             onNextLevel={() => setSelectionState('year')}
             locale={finalLocale}
-            minYear={minYear}
-            maxYear={maxYear}
             minDate={minDate}
             maxDate={maxDate}
             onChange={(monthValue) => {
