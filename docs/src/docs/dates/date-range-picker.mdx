@@ -26,13 +26,3 @@ import { DateRangePickerDemos } from '@demos/dates';
 
 DateRangePicker component uses the same props as [DatePicker](/dates/date-picker/) component.
 The only difference is in `value`, `onChange` and `amountOfMonths` props shown in previous examples.
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<DateRangePicker /> // -> random id generated both on client and server, props mismatch warning
-<DateRangePicker id="my-date-range" /> // -> id is static, no mismatches
-```

@@ -46,8 +46,7 @@ Then set `locale` prop in component:
 
 ## First day of the week
 
-Set the first day of the week using `firstDayOfWeek` prop.
-Accepts either `sunday` or `monday` as values.
+Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` or `monday` as values:
 
 <Demo data={DatePickerDemos.firstDaySunday} />
 
@@ -58,7 +57,7 @@ Default variant is `popover`, set it to `modal` to display calendar in modal:
 
 <Demo data={DatePickerDemos.modal} />
 
-In most cases you would want to switch to modal when certain breakpoint is reached.
+In most cases, you would want to switch to modal when a certain breakpoint is reached.
 To implement this use [use-media-query](/hooks/use-media-query/) hook:
 
 ```tsx
@@ -85,7 +84,7 @@ With this option user is allowed to type date manually:
 
 <Demo data={DatePickerDemos.freeInput} />
 
-By default DatePicker will try to parse date using dayjs with given `inputFormat`,
+By default, DatePicker will try to parse date using dayjs with given `inputFormat`,
 to change that provide `dateParser` function:
 
 ```tsx
@@ -99,7 +98,7 @@ If parsed date is invalid when input is blurred value will be restored to last v
 ## Exclude dates
 
 To exclude dates set `excludeDates` prop with function that receives date as an argument and returns
-`true` if date should be disabled. For example, to disable weekends check if date day is 0 or 6:
+`true` if date should be disabled. For example, to disable weekends, check if date day is 0 or 6:
 
 <Demo data={DatePickerDemos.exclude} />
 
@@ -108,8 +107,8 @@ To exclude dates set `excludeDates` prop with function that receives date as an 
 You can apply styles to any day with `dayStyle` or `dayClassName` callbacks.
 Both functions receive two arguments:
 
-- `date` – date object which is used to render day
-- `modifiers` – modifiers that are applied to day
+- `date` – date object which is used to render the day component
+- `modifiers` – modifiers that are applied to the day component
 
 ### Modifiers
 
@@ -141,35 +140,31 @@ interface DayModifiers {
 
 ### Styles based on date
 
-`dayStyle` callback allows you to add inline styles to days.
-Function must return either styles object or null.
-
-In this example we will add red background to each Friday 13th based on date (first argument):
+`dayStyle` callback allows you to add inline styles to days. Function must return either styles object or null.
+In this example, we will add red background to each Friday 13th based on date (first argument):
 
 <Demo data={DatePickerDemos.styles} />
 
 ### Styles based on modifiers
 
-`dayClassName` callback allows you to add className to days.
-Function must return either className string or null.
-
-In this example we will hide all outside dates and change color of weekends based on modifiers (second argument):
+`dayClassName` callback allows you to add className to days. Function must return either className string or null.
+In this example, we will hide all outside dates and change color of weekends based on modifiers (second argument):
 
 <Demo data={DatePickerDemos.modifiers} />
 
 ## Format labels
 
-By default DatePicker will display dates in human readable format.
-To change that you can provide [dayjs](https://day.js.org/docs/en/display/format) format string to the following props:
+By default, DatePicker will display dates in human readable format.
+To change that provide [dayjs](https://day.js.org/docs/en/display/format) format string to the following props:
 
-- `inputFormat` – set input value date format
-- `labelFormat` – set calendar month label format
+- `inputFormat` – input value date format
+- `labelFormat` – calendar month label format
 
 <Demo data={DatePickerDemos.format} />
 
 ## Disallow clear
 
-By default date picker can be cleared, to disable this, set `clearable` prop to `false`:
+By default, date picker can be cleared, to disable this, set `clearable` prop to `false`:
 
 <Demo data={DatePickerDemos.notClearable} />
 
@@ -185,8 +180,6 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 ## Icon and right section
 
-You can use any React node as icon:
-
 <Demo data={DatePickerDemos.icon} demoProps={{ zIndex: 4 }} />
 
 ## Invalid state and error
@@ -199,24 +192,12 @@ You can use any React node as icon:
 
 ## Get input ref
 
-You can get input ref with `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef();
   return <DatePicker ref={ref} />;
 }
-```
-
-## Server side rendering
-
-Component uses [use-id](/hooks/use-id/) hook to generate unique ids and aria- attributes,
-provide static `id` prop to prevent props mismatch:
-
-```tsx
-<DatePicker /> // -> random id generated both on client and server, props mismatch warning
-<DatePicker id="my-date-picker" /> // -> id is static, no mismatches
 ```

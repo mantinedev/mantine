@@ -16,14 +16,11 @@ import { CalendarDemos } from '@demos/dates';
 
 ## Usage
 
-Calendar component allows you either to show static calendar or to capture date input from user.
-If you need to capture date range use [RangeCalendar](/dates/range-calendar/) component.
-
 <Demo data={CalendarDemos.usage} />
 
 ## Controlled month
 
-You can control month that is currently displayed with `month` and `onMonthChange` props:
+Control month that is currently displayed with `month` and `onMonthChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -35,7 +32,7 @@ function Demo() {
 }
 ```
 
-Alternatively you can set `initialMonth` prop to set initial month in uncontrolled component:
+Alternatively, set `initialMonth` prop to set initial month in uncontrolled component:
 
 ```tsx
 <Calendar initialMonth={new Date()} />
@@ -57,8 +54,7 @@ Then set `locale` prop in component:
 
 ## First day of the week
 
-Set the first day of the week using `firstDayOfWeek` prop.
-Accepts either `sunday` or `monday` as values.
+Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` or `monday` as values:
 
 <Demo data={CalendarDemos.firstDaySunday} />
 
@@ -68,8 +64,8 @@ Accepts either `sunday` or `monday` as values.
 
 ## Label format
 
-By default Calendar will display dates in human readable format.
-To change that you can provide [dayjs](https://day.js.org/docs/en/display/format) format string to the `labelFormat` prop:
+By default, Calendar will display dates in human-readable format.
+To change that, provide [dayjs](https://day.js.org/docs/en/display/format) format string to the `labelFormat` prop:
 
 <Demo data={CalendarDemos.format} />
 
@@ -83,7 +79,7 @@ Dates which are not included in available interval will be disabled:
 ## Exclude dates
 
 To exclude dates set `excludeDates` prop with function that receives date as an argument and returns
-`true` if date should be disabled. For example, to disable weekends check if date day is 0 or 6:
+`true` if date should be disabled. For example, to disable weekends, check if date day is 0 or 6:
 
 <Demo data={CalendarDemos.exclude} />
 
@@ -92,8 +88,8 @@ To exclude dates set `excludeDates` prop with function that receives date as an 
 You can apply styles to any day with `dayStyle` or `dayClassName` callbacks.
 Both functions receive two arguments:
 
-- `date` – date object which is used to render day
-- `modifiers` – modifiers that are applied to day
+- `date` – date object which is used to render day component
+- `modifiers` – modifiers that are applied to the day component
 
 ### Modifiers
 
@@ -125,24 +121,20 @@ interface DayModifiers {
 
 ### Styles based on date
 
-`dayStyle` callback allows you to add inline styles to days.
-Function must return either styles object or null.
-
-In this example we will add red background to each Friday 13th based on date (first argument):
+`dayStyle` callback allows you to add inline styles to days. Function must return either styles object or null.
+In this example, we will add red background to each Friday 13th based on date (first argument):
 
 <Demo data={CalendarDemos.styles} />
 
 ### Styles based on modifiers
 
-`dayClassName` callback allows you to add className to days.
-Function must return either className string or null.
-
-In this example we will hide all outside dates and change color of weekends based on modifiers (second argument):
+`dayClassName` callback allows you to add className to days. Function must return either className string or null.
+In this example, we will hide all outside dates and change color of weekends based on modifiers (second argument):
 
 <Demo data={CalendarDemos.modifiers} />
 
 ## Customize with styles API
 
-You can customize any part of the calendar with [Styles API](/theming/styles-api/):
+To customize any part of the calendar use [Styles API](/theming/styles-api/):
 
 <Demo data={CalendarDemos.stylesApi} />
