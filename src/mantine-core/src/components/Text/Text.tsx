@@ -4,10 +4,10 @@ import {
   MantineSize,
   MantineGradient,
   MantineColor,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -53,7 +53,6 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
     {
       className,
       component,
-      children,
       size = 'md',
       weight,
       transform,
@@ -65,7 +64,8 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,
-      sx,
+      classNames,
+      styles,
       ...others
     }: TextProps<C>,
     ref: PolymorphicRef<C>
@@ -82,25 +82,22 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { sx, name: 'Text' }
+      { classNames, styles, name: 'Text' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const Element = component || 'div';
 
-    return React.createElement(
-      Element,
-      {
-        ref,
-        className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
-        style: {
+    return (
+      <Box<any>
+        ref={ref}
+        component={component || 'div'}
+        className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
+        style={{
           fontWeight: inherit ? 'inherit' : weight,
           textTransform: transform,
           textAlign: align,
-          ...mergedStyles,
-        },
-        ...rest,
-      },
-      children
+          ...style,
+        }}
+        {...others}
+      />
     );
   }
 );
