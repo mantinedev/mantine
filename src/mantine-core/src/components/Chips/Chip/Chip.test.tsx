@@ -5,6 +5,7 @@ import {
   itSupportsRef,
   itRendersChildren,
   itSupportsStylesApi,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Chip } from './Chip';
 import { CheckboxIcon } from '../../Checkbox';
@@ -20,6 +21,7 @@ const defaultProps = {
 describe('@mantine/core/Chip', () => {
   itSupportsClassName(Chip, defaultProps);
   itRendersChildren(Chip, defaultProps);
+  itSupportsMargins(Chip, defaultProps);
   itSupportsRef(Chip, defaultProps, HTMLInputElement);
   itSupportsStylesApi(
     Chip,
