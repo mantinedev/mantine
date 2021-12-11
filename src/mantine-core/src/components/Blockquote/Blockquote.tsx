@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
@@ -24,23 +25,20 @@ export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
   (
     {
       className,
-      style,
       color = 'gray',
       icon = defaultIcon,
       cite,
       children,
       classNames,
       styles,
-      sx,
       ...others
     }: BlockquoteProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Blockquote' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Blockquote' });
 
     return (
-      <blockquote className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box component="blockquote" className={cx(classes.root, className)} ref={ref} {...others}>
         <div className={classes.inner}>
           {icon && <div className={classes.icon}>{icon}</div>}
           <div className={classes.body}>
@@ -48,7 +46,7 @@ export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
             {cite && <cite className={classes.cite}>{cite}</cite>}
           </div>
         </div>
-      </blockquote>
+      </Box>
     );
   }
 );
