@@ -20,7 +20,7 @@ describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, {});
   itSupportsStyle(Badge, {});
   itSupportsMargins(Badge, {});
-  itIsPolymorphic(Badge, {});
+  itIsPolymorphic(Badge, {}, { dive: 1 });
   itSupportsRef(Badge, {}, HTMLDivElement);
   itSupportsStylesApi(
     Badge,
