@@ -20,5 +20,9 @@ export default createStyles((theme, { size }: PinInputStyles) => ({
     minHeight: 'auto',
     paddingRight: '0px !important',
     paddingLeft: '0px !important',
+
+    '&::selection': {
+      background: 'transparent',
+    },
   },
 }));
