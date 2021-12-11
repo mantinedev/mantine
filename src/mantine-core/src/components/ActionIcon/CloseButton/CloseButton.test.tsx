@@ -6,6 +6,8 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itIsPolymorphic,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { CloseButton } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
@@ -19,7 +21,9 @@ describe('@mantine/core/CloseButton', () => {
   itSupportsClassName(CloseButton, {});
   itSupportsOthers(CloseButton, {});
   itSupportsStyle(CloseButton, {});
+  itSupportsMargins(CloseButton, {});
   itSupportsRef(CloseButton, {}, HTMLButtonElement);
+  itIsPolymorphic(CloseButton, {}, { dive: 2 });
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {
     const element = shallow(<CloseButton iconSize={45} />);
