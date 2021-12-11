@@ -22,8 +22,8 @@ describe('@mantine/core/Code', () => {
     const inline = shallow(<Code block={false}>Code</Code>);
     const block = shallow(<Code block>Code</Code>);
 
-    expect(inline.type()).toBe('code');
-    expect(block.type()).toBe('pre');
+    expect(inline.dive().type()).toBe('code');
+    expect(block.dive().type()).toBe('pre');
   });
 
   it('has correct displayName', () => {
