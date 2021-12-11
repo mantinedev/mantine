@@ -9,6 +9,7 @@ import {
   itSupportsOthers,
   itSupportsStylesApi,
   itSupportsMargins,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Button } from './Button';
 
@@ -16,6 +17,7 @@ describe('@mantine/core/Button', () => {
   checkAccessibility([mount(<Button>Mantine button</Button>)]);
   itSupportsOthers(Button, {});
   itRendersChildren(Button, {});
+  itIsPolymorphic(Button, {}, { dive: 1 });
   itSupportsStyle(Button, {});
   itSupportsRef(Button, {}, HTMLButtonElement);
   itSupportsClassName(Button, {});
@@ -27,10 +29,6 @@ describe('@mantine/core/Button', () => {
     ['root', 'icon', 'leftIcon', 'rightIcon', 'inner', 'label'],
     'Button'
   );
-
-  it('has correct displayName', () => {
-    expect(Button.displayName).toEqual('@mantine/core/Button');
-  });
 
   it('passes type to button component', () => {
     const element = shallow(<Button type="submit" />);
@@ -62,5 +60,9 @@ describe('@mantine/core/Button', () => {
 
     expect(disabled.render().attr('disabled')).toBe('disabled');
     expect(notDisabled.render().attr('disabled')).toBe(undefined);
+  });
+
+  it('has correct displayName', () => {
+    expect(Button.displayName).toEqual('@mantine/core/Button');
   });
 });
