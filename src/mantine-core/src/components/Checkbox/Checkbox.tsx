@@ -4,9 +4,10 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
 } from '@mantine/styles';
 import { useUuid } from '@mantine/hooks';
+import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles from './Checkbox.styles';
 
@@ -45,6 +46,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     {
       className,
       style,
+      sx,
       checked,
       onChange,
       color,
@@ -59,20 +61,25 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       styles,
       transitionDuration = 100,
       icon: Icon = CheckboxIcon,
-      sx,
       ...others
     }: CheckboxProps,
     ref
   ) => {
     const uuid = useUuid(id);
+    const { margins, rest } = extractMargins(others);
     const { classes, cx } = useStyles(
       { size, color, transitionDuration },
-      { classNames, styles, sx, name: 'Checkbox' }
+      { classNames, styles, name: 'Checkbox' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...margins}
+        {...wrapperProps}
+      >
         <div className={classes.inner}>
           <input
             id={uuid}
@@ -93,7 +100,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {label}
           </label>
         )}
-      </div>
+      </Box>
     );
   }
 );
