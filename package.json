@@ -97,7 +97,7 @@
     "jest": "^27.2.5",
     "jest-axe": "^4.1.0",
     "new-github-release-url": "^1.0.0",
-    "next": "^11.1.2",
+    "next": "^12.0.7",
     "open": "^8.2.0",
     "prettier": "^2.4.1",
     "react-docgen-typescript": "2.1.0",
