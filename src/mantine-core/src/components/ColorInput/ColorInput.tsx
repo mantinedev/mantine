@@ -1,16 +1,12 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
-import { Popper } from '../Popper/Popper';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input';
+import { ColorSwatch } from '../ColorSwatch';
+import { Popper } from '../Popper';
 import { MantineTransition } from '../Transition';
-import { Paper } from '../Paper/Paper';
+import { Paper } from '../Paper';
 import {
   ColorPicker,
   ColorPickerBaseProps,
@@ -113,7 +109,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -160,9 +156,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         size={size}
         id={uuid}
         className={className}
-        style={mergedStyles}
+        style={style}
         __staticSelector="ColorInput"
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>

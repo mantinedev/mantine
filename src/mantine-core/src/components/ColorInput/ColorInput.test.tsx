@@ -10,8 +10,8 @@ import {
   defaultInputProps,
   getInputStylesApiKeys,
 } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
 import { ColorInput } from './ColorInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
