@@ -15,7 +15,7 @@ describe('@mantine/core/ColorSwatch', () => {
   itSupportsClassName(ColorSwatch, { color: '#fff' });
   itSupportsStyle(ColorSwatch, { color: '#fff' });
   itSupportsMargins(ColorSwatch, { color: '#fff' });
-  itIsPolymorphic(ColorSwatch, { color: '#fff' });
+  itIsPolymorphic(ColorSwatch, { color: '#fff' }, { dive: 1 });
   itSupportsRef(ColorSwatch, { color: '#fff' }, HTMLDivElement);
 
   it('sets correct background-color based on color property', () => {
@@ -23,20 +23,6 @@ describe('@mantine/core/ColorSwatch', () => {
     expect(
       element.find('.mantine-ColorSwatch-overlay').at(2).render().css('background-color')
     ).toBe('red');
-  });
-
-  it('allows size and color props override with style property', () => {
-    const element = shallow(
-      <ColorSwatch
-        color="red"
-        size={51}
-        style={{ width: 41, height: 41, backgroundColor: 'blue' }}
-      />
-    ).render();
-
-    expect(element.css('width')).toBe('41px');
-    expect(element.css('height')).toBe('41px');
-    expect(element.css('background-color')).toBe('blue');
   });
 
   it('has correct displayName', () => {
