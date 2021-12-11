@@ -4,10 +4,10 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import useStyles from './Avatar.styles';
 
@@ -41,7 +41,6 @@ export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
     {
       component,
       className,
-      style,
       size = 'md',
       src,
       alt,
@@ -50,25 +49,27 @@ export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
       color = 'gray',
       classNames,
       styles,
-      sx,
       ...others
     }: AvatarProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const { classes, cx } = useStyles(
       { color, radius, size },
-      { classNames, styles, sx, name: 'Avatar' }
+      { classNames, styles, name: 'Avatar' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [error, setError] = useState(!src);
-    const Element = component || 'div';
 
     useEffect(() => {
       !src ? setError(true) : setError(false);
     }, [src]);
 
     return (
-      <Element {...rest} className={cx(classes.root, className)} style={mergedStyles} ref={ref}>
+      <Box<any>
+        component={component || 'div'}
+        className={cx(classes.root, className)}
+        ref={ref}
+        {...others}
+      >
         {error ? (
           <div className={classes.placeholder} title={alt}>
             {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
@@ -76,7 +77,7 @@ export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
         ) : (
           <img className={classes.image} src={src} alt={alt} onError={() => setError(true)} />
         )}
-      </Element>
+      </Box>
     );
   }
 );
