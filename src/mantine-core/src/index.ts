@@ -50,6 +50,7 @@ export * from './components/Overlay';
 export * from './components/Pagination';
 export * from './components/Paper';
 export * from './components/PasswordInput';
+export * from './components/PinInput';
 export * from './components/Popover';
 export * from './components/Popper';
 export * from './components/Portal';

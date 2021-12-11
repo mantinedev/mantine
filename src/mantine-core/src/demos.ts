@@ -46,6 +46,7 @@ export * as NotificationDemos from './components/Notification/demos';
 export * as NumberInputDemos from './components/NumberInput/demos';
 export * as OverlayDemos from './components/Overlay/demos';
 export * as PaginationDemos from './components/Pagination/demos';
+export * as PinInputDemos from './components/PinInput/demos';
 export * as PaperDemos from './components/Paper/demos';
 export * as PasswordInputDemos from './components/PasswordInput/demos';
 export * as PopoverDemos from './components/Popover/demos';
