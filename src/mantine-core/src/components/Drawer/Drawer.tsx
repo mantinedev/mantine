@@ -8,11 +8,12 @@ import {
   MantineMargin,
   getDefaultZIndex,
 } from '@mantine/styles';
-import { Paper } from '../Paper/Paper';
-import { Overlay } from '../Overlay/Overlay';
-import { Portal } from '../Portal/Portal';
-import { Text } from '../Text/Text';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { Paper } from '../Paper';
+import { Overlay } from '../Overlay';
+import { Portal } from '../Portal';
+import { Text } from '../Text';
+import { Box } from '../Box';
+import { CloseButton } from '../ActionIcon';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
@@ -94,7 +95,6 @@ const transitions: Record<DrawerPosition, MantineTransition> = {
 
 export function MantineDrawer({
   className,
-  style,
   opened,
   onClose,
   position = 'left',
@@ -118,12 +118,11 @@ export function MantineDrawer({
   closeButtonLabel,
   classNames,
   styles,
-  sx,
   ...others
 }: DrawerProps) {
   const { classes, cx, theme } = useStyles(
     { size, position },
-    { sx, classNames, styles, name: 'Drawer' }
+    { classNames, styles, name: 'Drawer' }
   );
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
@@ -169,11 +168,10 @@ export function MantineDrawer({
       }}
     >
       {(transitionStyles) => (
-        <div
+        <Box
           className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
-          style={style}
           {...others}
         >
           {!noCloseOnClickOutside && (
@@ -225,7 +223,7 @@ export function MantineDrawer({
               />
             </div>
           )}
-        </div>
+        </Box>
       )}
     </GroupedTransition>
   );

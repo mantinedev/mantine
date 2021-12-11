@@ -9,9 +9,9 @@ import {
   itSupportsStylesApi,
 } from '@mantine/tests';
 import { GroupedTransition } from '../Transition';
-import { Paper } from '../Paper/Paper';
-import { Overlay } from '../Overlay/Overlay';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { Paper } from '../Paper';
+import { Overlay } from '../Overlay';
+import { CloseButton } from '../ActionIcon';
 import { MantineDrawer, Drawer } from './Drawer';
 import { Drawer as DrawerStylesApi } from './styles.api';
 
