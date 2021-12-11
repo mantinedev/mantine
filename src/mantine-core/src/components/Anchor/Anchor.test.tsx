@@ -17,7 +17,7 @@ describe('@mantine/core/Anchor', () => {
   itSupportsOthers(Anchor, {});
   itSupportsStyle(Anchor, {});
   itSupportsMargins(Anchor, {});
-  itIsPolymorphic(Anchor, {}, { dive: true });
+  itIsPolymorphic(Anchor, {}, { dive: 2 });
   itSupportsRef(Anchor, {}, HTMLAnchorElement);
 
   it('adds type="button" attribute if component prop is button', () => {
