@@ -6,8 +6,8 @@ import {
   itSupportsStyle,
   itSupportsMargins,
 } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
 import { Autocomplete } from './Autocomplete';
 
 const defaultProps = {

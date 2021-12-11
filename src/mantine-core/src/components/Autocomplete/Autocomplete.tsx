@@ -8,12 +8,8 @@ import {
   useExtractedMargins,
   getDefaultZIndex,
 } from '@mantine/styles';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { MantineTransition } from '../Transition';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
