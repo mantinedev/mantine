@@ -8,6 +8,7 @@ import {
   MantineMargin,
   getDefaultZIndex,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import { getSortedBreakpoints } from './get-sorted-breakpoints';
 import useStyles from './AppShell.styles';
 
@@ -69,7 +70,6 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       className,
       styles,
       classNames,
-      sx,
       ...others
     }: AppShellProps,
     ref
@@ -88,7 +88,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
         navbarBreakpoints,
         navbarOffsetBreakpoint,
       },
-      { styles, classNames, sx, name: 'AppShell' }
+      { styles, classNames, name: 'AppShell' }
     );
     const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
     const _navbar = navbar
@@ -101,14 +101,14 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
       : null;
 
     return (
-      <div className={cx(classes.root, className)} ref={ref} {...others}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {_header}
 
         <div className={classes.body}>
           {_navbar}
           <main className={classes.main}>{children}</main>
         </div>
-      </div>
+      </Box>
     );
   }
 );
