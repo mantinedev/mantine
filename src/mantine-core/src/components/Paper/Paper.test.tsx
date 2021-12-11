@@ -16,7 +16,7 @@ describe('@mantine/core/Paper', () => {
   itSupportsRef(Paper, {}, HTMLDivElement);
   itSupportsOthers(Paper, {});
   itSupportsMargins(Paper, {});
-  itIsPolymorphic(Paper, {});
+  itIsPolymorphic(Paper, {}, { dive: 1 });
 
   it('has correct displayName', () => {
     expect(Paper.displayName).toEqual('@mantine/core/Paper');
