@@ -3,12 +3,13 @@ import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
-import { Calendar, CalendarSettings } from '../Calendar/Calendar';
+import { Calendar } from '../Calendar/Calendar';
+import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
 export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
-    Omit<CalendarSettings, 'size'> {
+    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles'> {
   /** Selected date, required with controlled input */
   value?: Date;
 
@@ -57,8 +58,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       previousMonthLabel,
       closeCalendarOnChange = true,
       labelFormat = 'MMMM YYYY',
-      withSelect = false,
-      yearsRange,
       dayClassName,
       dayStyle,
       disableOutsideEvents,
@@ -81,6 +80,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       onFocus,
       onBlur,
       amountOfMonths,
+      allowLevelChange,
+      initialLevel,
       ...others
     }: DatePickerProps,
     ref
@@ -89,18 +90,17 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
-    const [calendarMonth, setCalendarMonth] = useState(initialMonth || new Date());
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
-
     const [lastValidValue, setLastValidValue] = useState(defaultValue ?? null);
-    const [_value, setValue] = useUncontrolled<Date | string>({
+    const [_value, setValue] = useUncontrolled<Date>({
       value,
       defaultValue,
       finalValue: null,
       onChange,
       rule: (val) => val === null || val instanceof Date,
     });
+    const [calendarMonth, setCalendarMonth] = useState(_value || initialMonth || new Date());
 
     const [focused, setFocused] = useState(false);
     const [inputState, setInputState] = useState(
@@ -205,8 +205,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           value={_value instanceof Date ? _value : dayjs(_value).toDate()}
           onChange={handleValueChange}
           labelFormat={labelFormat}
-          withSelect={withSelect && !allowFreeInput}
-          yearsRange={yearsRange}
           dayClassName={dayClassName}
           dayStyle={dayStyle}
           disableOutsideEvents={disableOutsideEvents}
@@ -219,6 +217,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}
           amountOfMonths={amountOfMonths}
+          allowLevelChange={allowLevelChange}
+          initialLevel={initialLevel}
         />
       </DatePickerBase>
     );

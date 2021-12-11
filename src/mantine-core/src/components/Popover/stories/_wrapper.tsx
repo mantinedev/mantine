@@ -10,6 +10,7 @@ export function Wrapper(props: Partial<PopoverProps>) {
   return (
     <Popover
       {...props}
+      title="Hello!"
       opened={opened}
       onClose={() => setOpened(false)}
       target={<Button onClick={() => setOpened(true)}>Popover</Button>}

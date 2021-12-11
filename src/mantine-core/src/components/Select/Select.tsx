@@ -83,6 +83,9 @@ export interface SelectSharedProps<Item, Value> {
 
   /** Dropdown positioning behavior */
   dropdownPosition?: 'bottom' | 'top' | 'flip';
+
+  /** Whether to switch item order and keyboard navigation on dropdown position flip */
+  switchDirectionOnFlip?: boolean;
 }
 
 export interface SelectProps
@@ -175,6 +178,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
+      switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,
@@ -189,7 +193,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const inputRef = useRef<HTMLInputElement>();
     const dropdownRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-    const [creatableDataValue, setCreatableDataValue] = useState<string | undefined>(undefined);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const isColumn = direction === 'column';
     const uuid = useUuid(id);
@@ -253,10 +256,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     const handleItemSelect = (item: SelectItem) => {
       handleChange(item.value);
+
       if (item.creatable) {
-        setCreatableDataValue(item.value);
         typeof onCreate === 'function' && onCreate(item.value);
       }
+
       if (inputMode === 'uncontrolled') {
         handleSearchChange(item.label);
       }
@@ -270,7 +274,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       searchable,
       limit,
       searchValue: inputValue,
-      creatable: !!creatableDataValue && creatableDataValue === inputValue,
       filter,
     });
 
@@ -422,14 +425,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      handleSearchChange(event.currentTarget.value);
+
       if (clearable && event.currentTarget.value === '') {
         handleChange(null);
-        if (inputMode === 'uncontrolled') {
-          handleSearchChange('');
-        }
-      } else {
-        handleSearchChange(event.currentTarget.value);
       }
+
       setHovered(0);
       setDropdownOpened(true);
     };
@@ -531,6 +532,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             dropdownComponent={dropdownComponent || SelectScrollArea}
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
             withinPortal={withinPortal}
             zIndex={zIndex}
             dropdownPosition={dropdownPosition}
@@ -555,7 +557,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           </SelectDropdown>
         </div>
 
-        {name && <input type="hidden" name={name} value={_value} />}
+        {name && <input type="hidden" name={name} value={_value || ''} />}
       </InputWrapper>
     );
   }

@@ -17,7 +17,8 @@ function Demo() {
       noFocusTrap
       noEscape
       transition="pop-top-left"
-      styles={{ body: { width: 260, pointerEvents: 'none' } }}
+      width={260}
+      styles={{ body: { pointerEvents: 'none' } }}
       target={
         <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
           Hover badge to see popover
@@ -51,7 +52,8 @@ function Demo() {
           withArrow
           noFocusTrap
           noEscape
-          styles={{ body: { width: 260, pointerEvents: 'none' } }}
+          width={260}
+          styles={{ body: { pointerEvents: 'none' } }}
           transition="pop-top-left"
           target={
             <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>

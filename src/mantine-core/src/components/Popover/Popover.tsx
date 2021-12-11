@@ -71,6 +71,9 @@ export interface PopoverProps
 
   /** Whether to render the popover in a Portal */
   withinPortal?: boolean;
+
+  /** Popover body width */
+  width?: number | string;
 }
 
 export function Popover({
@@ -104,6 +107,7 @@ export function Popover({
   classNames,
   styles,
   sx,
+  width,
   ...others
 }: PopoverProps) {
   const { classes, cx } = useStyles(null, { sx, classNames, styles, name: 'Popover' });
@@ -154,6 +158,7 @@ export function Popover({
           radius={radius}
           spacing={spacing}
           withCloseButton={withCloseButton}
+          title={title}
           titleId={titleId}
           bodyId={bodyId}
           closeButtonLabel={closeButtonLabel}
@@ -162,6 +167,7 @@ export function Popover({
           onKeyDownCapture={handleKeydown}
           classNames={classNames}
           styles={styles}
+          width={width}
         >
           {children}
         </PopoverBody>

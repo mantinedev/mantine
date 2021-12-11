@@ -17,9 +17,6 @@ import { AutocompleteDemos } from '@demos/core';
 
 ## Usage
 
-Autocomplete is an input with which you can suggest user to select one of the given values
-(if you need to force specific values without free input use [Select](/core/select/)):
-
 <Demo data={AutocompleteDemos.usage} />
 
 ## Controlled
@@ -38,7 +35,7 @@ function Demo() {
 
 Autocomplete support two different data formats:
 
-1. An array of strings – use when you do not need to customize item component
+1. An array of strings
 2. An array of objects with required `value` property and any other additional properties
 
 ```tsx
@@ -73,8 +70,7 @@ Autocomplete support two different data formats:
 
 ## Custom item component
 
-You can change autocomplete item component and filtering logic that is used in search.
-To do so, you will need to:
+Autocomplete item component and filtering logic can be changed. To do so:
 
 - Add extra props to `data` objects
 - Create `filter` function which determines whether item should be added to the search results
@@ -90,7 +86,7 @@ To do so, you will need to:
 ];
 ```
 
-Based on this data shape you can create custom `filter` function and `itemComponent`:
+Then define custom `filter` function and `itemComponent` which will consume data:
 
 <Demo data={AutocompleteDemos.itemComponent} />
 
@@ -103,7 +99,7 @@ By default, Autocomplete will render 5 items at a time, to change that set `limi
 ## Animations
 
 By default, dropdown animations are turned off to increase responsiveness.
-You can enable them by setting optional props:
+To enable animations set the following optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
 - `transitionDuration` – transition duration in ms, defaults to 0
@@ -138,8 +134,6 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 ## Get input ref
 
-You can get input ref with `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { Autocomplete } from '@mantine/core';
@@ -152,7 +146,7 @@ function Demo() {
 
 ## Accessibility
 
-Provide `aria-label` in case you use component without label for screen reader support:
+Provide `aria-label` in case component does not have a label for screen reader support:
 
 ```tsx
 <Autocomplete /> // -> not ok, input is not labeled

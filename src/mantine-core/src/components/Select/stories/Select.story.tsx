@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
 import { SubmitForm } from '@mantine/ds/src';
-import { Select } from '../Select';
+import { Select, SelectProps } from '../Select';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
 
@@ -30,19 +30,19 @@ const largeData = Array(50)
     label: `Item ${index}`,
   }));
 
-function Controlled({ clearable = false }: { clearable?: boolean }) {
+function Controlled(props: Partial<SelectProps>) {
   const [value, setValue] = useState(null);
 
   return (
     <div>
       <Select
-        clearable={clearable}
         label="Controlled"
         placeholder="Controlled"
         value={value}
         onChange={setValue}
         data={data}
-        style={{ marginTop: 20 }}
+        mt="md"
+        {...props}
       />
       <Group mt="md">
         <Button variant="outline" onClick={() => setValue(null)}>
@@ -170,5 +170,62 @@ storiesOf('@mantine/core/Select/stories', module)
       {content}
       <Select label="Dropdown flip" data={data} placeholder="Select items" />
       {content}
+    </div>
+  ))
+  .add('Popper flip (no direction switch)', () => (
+    <div style={{ maxWidth: 600, margin: 'auto' }}>
+      {content}
+      <Select
+        label="Dropdown flip"
+        data={data}
+        placeholder="Select items"
+        switchDirectionOnFlip={false}
+      />
+      {content}
+    </div>
+  ))
+  .add('Searchable value clear', () => (
+    <div style={{ padding: 40 }}>
+      <Controlled
+        label="ControlledSearchable value clear"
+        placeholder="Searchable value clear"
+        searchable
+        clearable
+        data={[
+          { value: 'react', label: 'React' },
+          { value: 'ng', label: 'Angular' },
+          { value: 'svelte', label: 'Svelte' },
+          { value: 'vue', label: 'Vue' },
+        ]}
+      />
+
+      <Select
+        label="Searchable value clear"
+        placeholder="Searchable value clear"
+        searchable
+        clearable
+        mt="xl"
+        data={[
+          { value: 'react', label: 'React' },
+          { value: 'ng', label: 'Angular' },
+          { value: 'svelte', label: 'Svelte' },
+          { value: 'vue', label: 'Vue' },
+        ]}
+      />
+    </div>
+  ))
+  .add('Uncontrolled with name', () => (
+    <div style={{ padding: 40 }}>
+      <Select
+        name="test"
+        label="Your favorite framework/library"
+        placeholder="Pick one"
+        data={[
+          { value: 'react', label: 'React' },
+          { value: 'ng', label: 'Angular' },
+          { value: 'svelte', label: 'Svelte' },
+          { value: 'vue', label: 'Vue' },
+        ]}
+      />
     </div>
   ));

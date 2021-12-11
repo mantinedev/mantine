@@ -15,7 +15,8 @@ function Wrapper(
       placement={props.placement}
       position={props.position}
       transitionDuration={0}
-      styles={{ body: { minWidth: 140, textAlign: 'center', pointerEvents: 'none' } }}
+      width={140}
+      styles={{ body: { textAlign: 'center', pointerEvents: 'none' } }}
       spacing="xs"
       noFocusTrap
       noClickOutside

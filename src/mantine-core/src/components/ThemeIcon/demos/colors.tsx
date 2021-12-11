@@ -11,7 +11,9 @@ function Demo() {
   return (
     <>
       <Group position="center">{getThemes({ children: <MixIcon />, variant: 'light' })}</Group>
-      <Group position="center">{getThemes({ children: <RocketIcon />, variant: 'filled' })}</Group>
+      <Group position="center" mt="md">
+        {getThemes({ children: <RocketIcon />, variant: 'filled' })}
+      </Group>
     </>
   );
 }

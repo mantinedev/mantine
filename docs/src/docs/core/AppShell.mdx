@@ -64,7 +64,7 @@ function Demo() {
       }
       header={
         <Header height={70} padding="md">
-          {/* You can handle other responsive styles with MediaQuery component or createStyles function */}
+          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -137,15 +137,14 @@ To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
 
 ### Navbar with custom scrollbars
 
-You can use [ScrollArea](/core/scroll-area/) component with `Navbar.Section`,
-set `grow` property and replace root element with `ScrollArea` component:
+`Navbar.Section` can be used with [ScrollArea](/core/scroll-area/) component:
 
 <Demo data={AppShellDemos.scrollbars} />
 
 ## Wrapping Navbar and Header components
 
 AppShell component requires Navbar and Header components to be direct children at `navbar` and `header` props.
-If you want to wrap Navbar component with your own custom component you will need to pass props to navbar and header:
+To use custom components instead of Navbar or Header:
 
 ```tsx
 import { AppShell, Navbar, NavbarProps } from '@mantine/core';

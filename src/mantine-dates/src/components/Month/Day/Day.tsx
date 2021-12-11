@@ -1,18 +1,18 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, ClassNames } from '@mantine/core';
+import { getDayTabIndex } from './get-day-tab-index/get-day-tab-index';
+import { getDayAutofocus } from './get-day-autofocus/get-day-autofocus';
 import useStyles from './Day.styles';
 
 export type DayStylesNames = ClassNames<typeof useStyles>;
 
 export interface DayProps
   extends DefaultProps<DayStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'button'>, 'value' | 'onKeyDown' | 'onMouseEnter'> {
+    Omit<React.ComponentPropsWithoutRef<'button'>, 'value' | 'onMouseEnter'> {
   value: Date;
   selected: boolean;
   weekend: boolean;
   outside: boolean;
-  onClick?(): void;
-  onKeyDown(date: Date, event: React.KeyboardEvent): void;
   onMouseEnter(date: Date, event: React.MouseEvent): void;
   disabled: boolean;
   hasValue: boolean;
@@ -23,6 +23,8 @@ export interface DayProps
   fullWidth: boolean;
   __staticSelector?: string;
   firstInMonth: boolean;
+  focusable?: boolean;
+  hideOutsideDates?: boolean;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -33,26 +35,25 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       selected,
       weekend,
       outside,
-      onClick,
-      onKeyDown,
       onMouseEnter,
       classNames,
-      disabled,
       styles,
       hasValue,
       firstInRange,
       lastInRange,
-      __staticSelector = 'month',
+      __staticSelector = 'Month',
       inRange,
       size,
       fullWidth,
       firstInMonth,
+      focusable,
+      hideOutsideDates,
       ...others
     }: DayProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { size, fullWidth },
+      { size, fullWidth, hideOutsideDates },
       { classNames, styles, name: __staticSelector }
     );
 
@@ -60,14 +61,11 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       <button
         {...others}
         type="button"
-        onClick={onClick}
         ref={ref}
-        onKeyDown={(event) => onKeyDown(value, event)}
         onMouseEnter={(event) => onMouseEnter(value, event)}
-        tabIndex={hasValue ? (selected ? 0 : -1) : firstInMonth ? 0 : -1}
-        data-autofocus={hasValue ? (selected ? true : undefined) : firstInMonth ? true : undefined}
+        tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
+        data-autofocus={getDayAutofocus({ hasValue, selected, firstInMonth })}
         data-mantine-stop-propagation
-        disabled={disabled}
         className={cx(
           classes.day,
           {

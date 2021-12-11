@@ -1,18 +1,12 @@
-import React, { useRef, useEffect } from 'react';
-import {
-  DefaultProps,
-  Text,
-  MantineSize,
-  ClassNames,
-  useExtractedMargins,
-  useMantineTheme,
-} from '@mantine/core';
+import React, { forwardRef } from 'react';
+import { DefaultProps, Text, Box, MantineSize, ClassNames } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
-import { getMonthDays, isSameMonth, getWeekdaysNames } from '../../utils';
+import { getMonthDays, getWeekdaysNames, isSameDate } from '../../utils';
 import { Day, DayStylesNames } from './Day/Day';
-import { getDayProps, DayModifiers } from './get-day-props/get-day-props';
+import { getDayProps } from './get-day-props/get-day-props';
+import { DayKeydownPayload, DayModifiers } from './types';
 import useStyles from './Month.styles';
 
 export interface MonthSettings {
@@ -21,9 +15,6 @@ export interface MonthSettings {
 
   /** Adds style to day button based on date and modifiers */
   dayStyle?(date: Date, modifiers: DayModifiers): React.CSSProperties;
-
-  /** When true dates that are outside of given month are not styled */
-  disableOutsideDayStyle?: boolean;
 
   /** When true dates that are outside of given month cannot be clicked or focused */
   disableOutsideEvents?: boolean;
@@ -48,6 +39,15 @@ export interface MonthSettings {
 
   /** Prevent focusing upon clicking */
   preventFocus?: boolean;
+
+  /** Should focusable days have tabIndex={0}? */
+  focusable?: boolean;
+
+  /** Set first day of the week */
+  firstDayOfWeek?: FirstDayOfWeek;
+
+  /** Remove outside dates */
+  hideOutsideDates?: boolean;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -68,9 +68,6 @@ export interface MonthProps
   /** Selected range */
   range?: [Date, Date];
 
-  /** Autofocus selected date on mount, if no date is selected autofocus is applied to first month day */
-  autoFocus?: boolean;
-
   /** Called when day is selected */
   onChange?(value: Date): void;
 
@@ -80,174 +77,151 @@ export interface MonthProps
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;
 
-  /** Set first day of the week */
-  firstDayOfWeek?: FirstDayOfWeek;
+  /** Get days buttons refs */
+  daysRefs?: HTMLButtonElement[][];
+
+  /** Called when keydown event is registered on day */
+  onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
 
 const noop = () => {};
 
-export function Month({
-  className,
-  style,
-  month,
-  value,
-  onChange,
-  autoFocus = false,
-  disableOutsideEvents = false,
-  locale,
-  dayClassName,
-  dayStyle,
-  disableOutsideDayStyle = false,
-  classNames,
-  styles,
-  minDate,
-  maxDate,
-  excludeDate,
-  onDayMouseEnter,
-  range,
-  hideWeekdays = false,
-  __staticSelector = 'Month',
-  size = 'sm',
-  fullWidth = false,
-  preventFocus = false,
-  sx,
-  firstDayOfWeek = 'monday',
-  ...others
-}: MonthProps) {
-  const { classes, cx } = useStyles(
-    { fullWidth },
-    { sx, classNames, styles, name: __staticSelector }
-  );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const theme = useMantineTheme();
-  const finalLocale = locale || theme.datesLocale;
-  const daysRefs = useRef<Record<string, HTMLButtonElement>>({});
-  const days = getMonthDays(month, firstDayOfWeek);
+export const Month = forwardRef<HTMLTableElement, MonthProps>(
+  (
+    {
+      className,
+      month,
+      value,
+      onChange,
+      disableOutsideEvents = false,
+      locale,
+      dayClassName,
+      dayStyle,
+      classNames,
+      styles,
+      minDate,
+      maxDate,
+      excludeDate,
+      onDayMouseEnter,
+      range,
+      hideWeekdays = false,
+      __staticSelector = 'Month',
+      size = 'sm',
+      fullWidth = false,
+      preventFocus = false,
+      focusable = true,
+      firstDayOfWeek = 'monday',
+      onDayKeyDown,
+      daysRefs,
+      hideOutsideDates = false,
+      ...others
+    }: MonthProps,
+    ref
+  ) => {
+    const { classes, cx, theme } = useStyles(
+      { fullWidth },
+      { classNames, styles, name: __staticSelector }
+    );
+    const finalLocale = locale || theme.datesLocale;
+    const days = getMonthDays(month, firstDayOfWeek);
 
-  const focusDay = (date: Date, diff: number) => {
-    const offset = new Date(date);
-    offset.setDate(date.getDate() + diff);
+    const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
+      <th className={classes.weekdayCell} key={weekday}>
+        <Text size={size} className={classes.weekday}>
+          {upperFirst(weekday)}
+        </Text>
+      </th>
+    ));
 
-    if (offset.toISOString() in daysRefs.current) {
-      if (!(!isSameMonth(month, offset) && disableOutsideEvents)) {
-        daysRefs.current[offset.toISOString()].focus();
-      }
-    }
-  };
+    const hasValue = value instanceof Date;
+    const hasValueInMonthRange =
+      hasValue &&
+      dayjs(value).isAfter(dayjs(month).startOf('month')) &&
+      dayjs(value).isBefore(dayjs(month).endOf('month'));
 
-  const handleKeyDown = (currentDate: Date, event: React.KeyboardEvent) => {
-    const { code } = event.nativeEvent;
+    const rows = days.map((row, rowIndex) => {
+      const cells = row.map((date, cellIndex) => {
+        const dayProps = getDayProps({
+          date,
+          month,
+          hasValue,
+          minDate,
+          maxDate,
+          value,
+          excludeDate,
+          disableOutsideEvents,
+          range,
+        });
 
-    if (code === 'ArrowUp') {
-      event.preventDefault();
-      focusDay(currentDate, -7);
-    }
+        const onKeyDownPayload = { rowIndex, cellIndex, date };
 
-    if (code === 'ArrowDown') {
-      event.preventDefault();
-      focusDay(currentDate, 7);
-    }
+        return (
+          <td className={classes.cell} key={cellIndex}>
+            <Day
+              ref={(button) => {
+                if (daysRefs) {
+                  if (!Array.isArray(daysRefs[rowIndex])) {
+                    // eslint-disable-next-line no-param-reassign
+                    daysRefs[rowIndex] = [];
+                  }
 
-    if (code === 'ArrowRight') {
-      event.preventDefault();
-      currentDate.getDay() !== 0 && focusDay(currentDate, 1);
-    }
-
-    if (code === 'ArrowLeft') {
-      event.preventDefault();
-      currentDate.getDay() !== 1 && focusDay(currentDate, -1);
-    }
-  };
-
-  useEffect(() => {
-    if (autoFocus) {
-      const date = new Date(
-        month.getFullYear(),
-        month.getMonth(),
-        value ? value.getDate() : 1
-      ).toISOString();
-
-      if (date in daysRefs.current) {
-        daysRefs.current[date].focus();
-      }
-    }
-  }, []);
-
-  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
-    <th className={classes.weekdayCell} key={weekday}>
-      <Text size={size} className={classes.weekday}>
-        {upperFirst(weekday)}
-      </Text>
-    </th>
-  ));
-
-  const hasValue = value instanceof Date;
-  const hasValueInMonthRange =
-    hasValue &&
-    dayjs(value).isAfter(dayjs(month).startOf('month')) &&
-    dayjs(value).isBefore(dayjs(month).endOf('month'));
-
-  const rows = days.map((row, rowIndex) => {
-    const cells = row.map((date, cellIndex) => {
-      const dayProps = getDayProps({
-        date,
-        month,
-        hasValue,
-        minDate,
-        maxDate,
-        value,
-        excludeDate,
-        disableOutsideEvents,
-        range,
+                  // eslint-disable-next-line no-param-reassign
+                  daysRefs[rowIndex][cellIndex] = button;
+                }
+              }}
+              onClick={() => typeof onChange === 'function' && onChange(date)}
+              onMouseDown={(event) => preventFocus && event.preventDefault()}
+              value={date}
+              outside={dayProps.outside}
+              weekend={dayProps.weekend}
+              inRange={dayProps.inRange}
+              firstInRange={dayProps.firstInRange}
+              lastInRange={dayProps.lastInRange}
+              firstInMonth={
+                hideOutsideDates
+                  ? isSameDate(date, dayjs(month).startOf('month').toDate())
+                  : cellIndex === 0 && rowIndex === 0
+              }
+              selected={dayProps.selected || dayProps.selectedInRange}
+              hasValue={hasValueInMonthRange}
+              onKeyDown={(event) =>
+                typeof onDayKeyDown === 'function' && onDayKeyDown(onKeyDownPayload, event)
+              }
+              className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
+              style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
+              disabled={dayProps.disabled}
+              onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
+              size={size}
+              fullWidth={fullWidth}
+              focusable={focusable}
+              hideOutsideDates={hideOutsideDates}
+              __staticSelector={__staticSelector}
+              styles={styles}
+              classNames={classNames}
+            />
+          </td>
+        );
       });
 
-      const withoutStylesOutsideMonth = disableOutsideDayStyle && dayProps.outside;
-
-      return (
-        <td className={classes.cell} key={cellIndex}>
-          <Day
-            ref={(button) => {
-              daysRefs.current[date.toISOString()] = button;
-            }}
-            onClick={() => typeof onChange === 'function' && onChange(date)}
-            onMouseDown={(event) => preventFocus && event.preventDefault()}
-            value={date}
-            outside={dayProps.outside}
-            weekend={dayProps.weekend}
-            inRange={dayProps.inRange && !withoutStylesOutsideMonth}
-            firstInRange={dayProps.firstInRange}
-            lastInRange={dayProps.lastInRange}
-            firstInMonth={cellIndex === 0 && rowIndex === 0}
-            selected={(dayProps.selected || dayProps.selectedInRange) && !withoutStylesOutsideMonth}
-            hasValue={hasValueInMonthRange}
-            onKeyDown={handleKeyDown}
-            className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
-            style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
-            styles={styles}
-            classNames={classNames}
-            disabled={dayProps.disabled}
-            __staticSelector={__staticSelector}
-            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
-            size={size}
-            fullWidth={fullWidth}
-          />
-        </td>
-      );
+      return <tr key={rowIndex}>{cells}</tr>;
     });
 
-    return <tr key={rowIndex}>{cells}</tr>;
-  });
-
-  return (
-    <table className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      {!hideWeekdays && (
-        <thead>
-          <tr>{weekdays}</tr>
-        </thead>
-      )}
-      <tbody>{rows}</tbody>
-    </table>
-  );
-}
+    return (
+      <Box<'table'>
+        component="table"
+        className={cx(classes.month, className)}
+        ref={ref}
+        {...others}
+      >
+        {!hideWeekdays && (
+          <thead>
+            <tr>{weekdays}</tr>
+          </thead>
+        )}
+        <tbody>{rows}</tbody>
+      </Box>
+    );
+  }
+);
 
 Month.displayName = '@mantine/core/Month';
