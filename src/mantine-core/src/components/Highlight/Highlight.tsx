@@ -30,11 +30,9 @@ export const Highlight: HighlightComponent & { displayName?: string } = forwardR
     ref: PolymorphicRef<C>
   ) => {
     const highlightChunks = highlighter(children, highlight);
-    const _Text = Text as any;
 
     return (
-      // eslint-disable-next-line react/jsx-pascal-case
-      <_Text component={component} ref={ref} {...others}>
+      <Text component={component as any} ref={ref} {...others}>
         {highlightChunks.map(({ chunk, highlighted }, i) =>
           highlighted ? (
             <Mark key={i} color={highlightColor}>
@@ -44,7 +42,7 @@ export const Highlight: HighlightComponent & { displayName?: string } = forwardR
             <span key={i}>{chunk}</span>
           )
         )}
-      </_Text>
+      </Text>
     );
   }
 );
