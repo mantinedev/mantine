@@ -43,10 +43,6 @@ describe('@mantine/core/Image', () => {
     'with image'
   );
 
-  it('has correct displayName', () => {
-    expect(Image.displayName).toEqual('@mantine/core/Image');
-  });
-
   it('sets src, alt and object fit on img element', () => {
     const element = shallow(<Image src="test-src" alt="test-alt" fit="contain" />);
     expect(element.find('img').prop('src')).toBe('test-src');
@@ -84,5 +80,9 @@ describe('@mantine/core/Image', () => {
     );
 
     expect(element.find('.mantine-Image-placeholder').text()).toBe('test-placeholder');
+  });
+
+  it('has correct displayName', () => {
+    expect(Image.displayName).toEqual('@mantine/core/Image');
   });
 });
