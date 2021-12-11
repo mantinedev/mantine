@@ -1,5 +1,6 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -30,31 +31,28 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       grow = false,
       justify = 'flex-start',
       align = 'stretch',
-      style,
       columns = 12,
       className,
       classNames,
       styles,
       id,
-      sx,
       ...others
     }: GridProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { gutter, justify, align },
-      { sx, classNames, styles, name: 'Grid' }
+      { classNames, styles, name: 'Grid' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
       React.cloneElement(col, { gutter, grow, columns, key: index })
     );
 
     return (
-      <div style={mergedStyles} className={cx(classes.root, className)} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {cols}
-      </div>
+      </Box>
     );
   }
 );

@@ -1,5 +1,10 @@
 import React from 'react';
-import { itRendersChildren, itSupportsClassName, itSupportsStyle } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsClassName,
+  itSupportsStyle,
+  itSupportsMargins,
+} from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { Col, isValidSpan } from './Col';
 
@@ -15,6 +20,7 @@ describe('@mantine/core/Col', () => {
   itRendersChildren(Col, defaultProps);
   itSupportsClassName(Col, defaultProps);
   itSupportsStyle(Col, defaultProps);
+  itSupportsMargins(Col, defaultProps);
 
   it('correctly detects invalid spans', () => {
     expect(isValidSpan(2)).toBe(true);
@@ -31,7 +37,7 @@ describe('@mantine/core/Col', () => {
     const overflow = shallow(<Col {...defaultProps} span={500} />);
     const regular = shallow(<Col {...defaultProps} span={2} />);
 
-    expect(regular.type()).toBe('div');
+    expect(regular.dive().type()).toBe('div');
     expect(negative.type()).toBe(null);
     expect(zero.type()).toBe(null);
     expect(float.type()).toBe(null);
