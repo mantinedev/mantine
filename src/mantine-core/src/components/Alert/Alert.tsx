@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
@@ -37,22 +38,19 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       title,
       children,
       color,
-      style,
       classNames,
       icon,
       styles,
-      sx,
       onClose,
       withCloseButton,
       ...others
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Alert' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Alert' });
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <div className={classes.wrapper}>
           {icon && <div className={classes.icon}>{icon}</div>}
 
@@ -76,7 +74,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
             <div className={classes.message}>{children}</div>
           </div>
         </div>
-      </div>
+      </Box>
     );
   }
 );

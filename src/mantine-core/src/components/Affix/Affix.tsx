@@ -28,7 +28,6 @@ export const Affix = forwardRef<HTMLDivElement, AffixProps>(
       position = { bottom: 0, right: 0 },
       zIndex = getDefaultZIndex('modal'),
       className,
-      sx,
       ...others
     }: AffixProps,
     ref
