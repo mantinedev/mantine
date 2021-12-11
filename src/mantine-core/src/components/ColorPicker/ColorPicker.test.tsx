@@ -16,7 +16,7 @@ import { Swatches } from './Swatches/Swatches';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation } from './Saturation/Saturation';
 
-const swatches = [...DEFAULT_THEME.colors.red];
+const swatches = DEFAULT_THEME.colors.red;
 
 describe('@mantine/core/ColorPicker', () => {
   itSupportsClassName(ColorPicker, {});
