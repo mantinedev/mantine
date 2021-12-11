@@ -5,9 +5,9 @@ import {
   MantineNumberSize,
   MantineSize,
   ClassNames,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
+  extractMargins,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { InputVariant } from './Input.styles';
@@ -93,16 +93,17 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
       { radius, size, multiline, variant: _variant, invalid },
-      { sx, classNames, styles, name: __staticSelector }
+      { classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const Element: any = component || 'input';
 
     return (
       <Box
         className={cx(classes.wrapper, className)}
-        style={mergedStyles}
         sx={sx}
+        style={style}
+        {...margins}
         {...wrapperProps}
       >
         {icon && <div className={classes.icon}>{icon}</div>}
