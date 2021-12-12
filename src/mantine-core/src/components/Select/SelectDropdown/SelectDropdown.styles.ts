@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/styles';
 
-export default createStyles((theme) => ({
+interface SelectDropdownProps {
+  native: boolean;
+}
+
+export default createStyles((theme, { native }: SelectDropdownProps) => ({
   dropdown: {
     ...theme.fn.fontStyles(),
     boxSizing: 'border-box',
@@ -10,7 +14,7 @@ export default createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     padding: 4,
-    overflowY: 'auto',
+    overflowY: native ? 'auto' : 'hidden',
     width: '100%',
   },
 }));

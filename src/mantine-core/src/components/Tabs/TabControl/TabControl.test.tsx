@@ -1,6 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsStyle, itSupportsRef, itSupportsOthers } from '@mantine/tests';
+import {
+  itSupportsStyle,
+  itSupportsRef,
+  itSupportsOthers,
+  itSupportsClassName,
+  itSupportsMargins,
+  itSupportsSx,
+} from '@mantine/tests';
 import { TabControl } from './TabControl';
 
 const defaultProps = { active: true };
@@ -8,6 +15,9 @@ const defaultProps = { active: true };
 describe('@mantine/core/TabControl', () => {
   itSupportsStyle(TabControl, defaultProps);
   itSupportsOthers(TabControl, defaultProps);
+  itSupportsSx(TabControl, defaultProps);
+  itSupportsMargins(TabControl, defaultProps);
+  itSupportsClassName(TabControl, defaultProps);
   itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'buttonRef');
 
   it('sets correct accessibility attributes based on active prop', () => {

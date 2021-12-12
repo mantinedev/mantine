@@ -10,18 +10,22 @@ import {
   itSupportsMargins,
   itSupportsRef,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Badge } from './Badge';
 
+const defaultProps = {};
+
 describe('@mantine/core/Badge', () => {
   checkAccessibility([mount(<Badge>this is badge</Badge>)]);
-  itSupportsOthers(Badge, {});
-  itSupportsClassName(Badge, {});
-  itRendersChildren(Badge, {});
-  itSupportsStyle(Badge, {});
-  itSupportsMargins(Badge, {});
-  itIsPolymorphic(Badge, {});
-  itSupportsRef(Badge, {}, HTMLDivElement);
+  itSupportsOthers(Badge, defaultProps);
+  itSupportsClassName(Badge, defaultProps);
+  itRendersChildren(Badge, defaultProps);
+  itSupportsStyle(Badge, defaultProps);
+  itSupportsSx(Badge, defaultProps);
+  itSupportsMargins(Badge, defaultProps);
+  itIsPolymorphic(Badge, defaultProps, { dive: 1 });
+  itSupportsRef(Badge, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     Badge,
     { children: 'test', leftSection: 'l', rightSection: 'r' },

@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { AlphaSlider } from './AlphaSlider';
 
@@ -21,6 +22,7 @@ describe('@mantine/core/AlphaSlider', () => {
   itSupportsClassName(AlphaSlider, defaultProps);
   itSupportsOthers(AlphaSlider, defaultProps);
   itSupportsStyle(AlphaSlider, defaultProps);
+  itSupportsSx(AlphaSlider, defaultProps, { dive: 1 });
   itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

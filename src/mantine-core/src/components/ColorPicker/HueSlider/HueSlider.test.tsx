@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { ColorSlider } from '../ColorSlider/ColorSlider';
 import { HueSlider } from './HueSlider';
@@ -21,6 +22,7 @@ describe('@mantine/core/HueSlider', () => {
   itSupportsClassName(HueSlider, defaultProps);
   itSupportsOthers(HueSlider, defaultProps);
   itSupportsStyle(HueSlider, defaultProps);
+  itSupportsSx(HueSlider, defaultProps, { dive: 1 });
   itSupportsRef(HueSlider, defaultProps, HTMLDivElement);
 
   it('sets thumb color based on given hue value', () => {

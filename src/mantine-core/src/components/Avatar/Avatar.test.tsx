@@ -9,26 +9,27 @@ import {
   itSupportsRef,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Avatar } from './Avatar';
 
-const img =
-  'https://avatars0.githubusercontent.com/u/10353856?s=460&u=88394dfd67727327c1f7670a1764dc38a8a24831&v=4';
+const defaultProps = { src: './test-image' };
 
 describe('@mantine/core/Avatar', () => {
   checkAccessibility([
-    mount(<Avatar src={img} alt="It's me!" />),
+    mount(<Avatar {...defaultProps} alt="It's me!" />),
     mount(<Avatar src={null} alt="It's me!" />),
   ]);
 
-  itSupportsClassName(Avatar, { src: img });
-  itSupportsMargins(Avatar, { src: img });
-  itSupportsOthers(Avatar, { src: img });
-  itSupportsStyle(Avatar, { src: img });
-  itIsPolymorphic(Avatar, { src: img });
-  itSupportsRef(Avatar, { src: img }, HTMLDivElement);
+  itSupportsClassName(Avatar, defaultProps);
+  itSupportsMargins(Avatar, defaultProps);
+  itSupportsOthers(Avatar, defaultProps);
+  itSupportsStyle(Avatar, defaultProps);
+  itSupportsSx(Avatar, defaultProps);
+  itIsPolymorphic(Avatar, defaultProps, { dive: 1 });
+  itSupportsRef(Avatar, defaultProps, HTMLDivElement);
 
-  itSupportsStylesApi(Avatar, { src: img }, ['root', 'image'], 'Avatar', 'with-image');
+  itSupportsStylesApi(Avatar, defaultProps, ['root', 'image'], 'Avatar', 'with-image');
   itSupportsStylesApi(
     Avatar,
     { src: null },
@@ -38,10 +39,10 @@ describe('@mantine/core/Avatar', () => {
   );
 
   it('passes src and alt to image', () => {
-    const element = shallow(<Avatar src={img} alt="test-alt" />)
+    const element = shallow(<Avatar {...defaultProps} alt="test-alt" />)
       .render()
       .find('img');
-    expect(element.attr('src')).toBe(img);
+    expect(element.attr('src')).toBe(defaultProps.src);
     expect(element.attr('alt')).toBe('test-alt');
   });
 

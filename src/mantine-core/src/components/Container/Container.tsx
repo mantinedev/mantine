@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Container.styles';
 
 export interface ContainerProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -15,25 +16,14 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   (
-    {
-      className,
-      padding = 'md',
-      fluid,
-      size,
-      style,
-      sx,
-      styles,
-      classNames,
-      ...others
-    }: ContainerProps,
+    { className, padding = 'md', fluid, size, styles, classNames, ...others }: ContainerProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { padding, fluid, size },
-      { sx, styles, classNames, name: 'Container' }
+      { styles, classNames, name: 'Container' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    return <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest} />;
+    return <Box className={cx(classes.root, className)} ref={ref} {...others} />;
   }
 );
 

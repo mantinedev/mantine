@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsSx,
 } from '@mantine/tests';
 import { ColorSlider } from './ColorSlider';
 import { Thumb } from '../Thumb/Thumb';
@@ -22,6 +23,7 @@ describe('@mantine/core/ColorSlider', () => {
   itSupportsClassName(ColorSlider, defaultProps);
   itSupportsOthers(ColorSlider, defaultProps);
   itSupportsStyle(ColorSlider, defaultProps);
+  itSupportsSx(ColorSlider, defaultProps);
   itSupportsRef(ColorSlider, defaultProps, HTMLDivElement);
 
   it('provides thumbColor and size to Thumb component', () => {

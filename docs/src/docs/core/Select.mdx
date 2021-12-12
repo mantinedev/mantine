@@ -189,6 +189,13 @@ Based on this data shape you can create custom `filter` function and `itemCompon
 
 <Demo data={SelectDemos.itemComponent} />
 
+## Dropdown position
+
+By default, dropdown is placed below the input and when there is not enough space, it flips to be above the input.
+To change this behavior, set `dropdownPosition` prop:
+
+<Demo data={SelectDemos.flip} />
+
 ## Animations
 
 By default dropdown animations are turned off to increase responsiveness.
@@ -227,13 +234,6 @@ You can replace icon in right section with `rightSection` prop.
 Note that in this case `clearable` option will not work and will need to handle it yourself:
 
 <Demo data={SelectDemos.rightSection} />
-
-## Dropdown position
-
-By default Select is placed at the bottom of the input and when there is not enough space for it flips to the top but.
-If that behavior is unwanted to can lock it to 1 position.
-
-<Demo data={SelectDemos.flip} />
 
 ## Input props
 

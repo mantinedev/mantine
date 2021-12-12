@@ -96,6 +96,13 @@ By default, Autocomplete will render 5 items at a time, to change that set `limi
 
 <Demo data={AutocompleteDemos.limit} />
 
+## Dropdown position
+
+By default, dropdown is placed below the input and when there is not enough space, it flips to be above the input.
+To change this behavior, set `dropdownPosition` prop:
+
+<Demo data={AutocompleteDemos.flip} />
+
 ## Animations
 
 By default, dropdown animations are turned off to increase responsiveness.
@@ -118,13 +125,6 @@ To enable animations set the following optional props:
 ## Disabled state
 
 <Demo data={AutocompleteDemos.disabled} />
-
-## Dropdown position
-
-By default Autocomplete is placed at the bottom of the input and _doesn't_ flip in contrast to Select component.
-If you want to enable it change `dropdownPosition` to `flip`
-
-<Demo data={AutocompleteDemos.flip} />
 
 ## Input props
 

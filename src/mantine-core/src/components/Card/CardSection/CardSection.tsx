@@ -1,15 +1,15 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../../Box';
 import useStyles from './CardSection.styles';
 
 export interface CardSectionProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   padding?: MantineNumberSize;
 }
 
-export function CardSection({ className, padding = 0, style, ...others }: CardSectionProps) {
+export function CardSection({ className, padding = 0, ...others }: CardSectionProps) {
   const { classes, cx } = useStyles({ padding }, { name: 'Card' });
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  return <div className={cx(classes.cardSection, className)} style={mergedStyles} {...rest} />;
+  return <Box className={cx(classes.cardSection, className)} {...others} />;
 }
 
 CardSection.displayName = '@mantine/core/CardSection';

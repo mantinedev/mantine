@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Switch } from './Switch';
 import { Switch as SwitchStylesApi } from './styles.api';
@@ -27,6 +28,7 @@ describe('@mantine/core/Switch', () => {
   itSupportsClassName(Switch, defaultProps);
   itSupportsStyle(Switch, defaultProps);
   itSupportsMargins(Switch, defaultProps);
+  itSupportsSx(Switch, defaultProps);
   itSupportsRef(Switch, defaultProps, HTMLInputElement);
   itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'Switch');
 

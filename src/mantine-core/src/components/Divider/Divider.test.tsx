@@ -7,15 +7,19 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Divider } from './Divider';
 
+const defaultProps = {};
+
 describe('@mantine/core/Divider', () => {
-  itSupportsClassName(Divider, {});
-  itSupportsStyle(Divider, {});
-  itSupportsOthers(Divider, {});
-  itSupportsMargins(Divider, {});
-  itSupportsRef(Divider, {}, HTMLDivElement);
+  itSupportsClassName(Divider, defaultProps);
+  itSupportsStyle(Divider, defaultProps);
+  itSupportsOthers(Divider, defaultProps);
+  itSupportsMargins(Divider, defaultProps);
+  itSupportsSx(Divider, defaultProps);
+  itSupportsRef(Divider, defaultProps, HTMLDivElement);
   itSupportsStylesApi(Divider, { label: 'test' }, ['label'], 'Divider');
 
   it('renders given label in horizontal orientation', () => {

@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { RangeCalendar } from './RangeCalendar';
 import { CalendarBase } from '../CalendarBase/CalendarBase';
@@ -21,6 +22,7 @@ describe('@mantine/dates/RangeCalendar', () => {
   itSupportsOthers(RangeCalendar, defaultProps);
   itSupportsStyle(RangeCalendar, defaultProps);
   itSupportsMargins(RangeCalendar, defaultProps);
+  itSupportsSx(RangeCalendar, defaultProps, { dive: 1 });
   itSupportsRef(RangeCalendar, defaultProps, HTMLDivElement);
 
   it('passes __staticSelector to CalendarBase', () => {

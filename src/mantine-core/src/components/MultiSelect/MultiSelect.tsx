@@ -6,7 +6,7 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
@@ -144,7 +144,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,
@@ -156,7 +156,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
@@ -446,11 +446,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         description={description}
         size={size}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         __staticSelector="MultiSelect"
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <div

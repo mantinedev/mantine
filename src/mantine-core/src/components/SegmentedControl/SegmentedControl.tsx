@@ -6,8 +6,8 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
 export interface SegmentedControlItem<T extends string> {
@@ -56,7 +56,6 @@ export interface SegmentedControlProps<T extends string>
 
 export function SegmentedControl<T extends string = string>({
   className,
-  style,
   data: _data,
   name,
   value,
@@ -70,7 +69,6 @@ export function SegmentedControl<T extends string = string>({
   classNames,
   styles,
   defaultValue,
-  sx,
   ...others
 }: SegmentedControlProps<T>) {
   const reduceMotion = useReducedMotion();
@@ -97,10 +95,9 @@ export function SegmentedControl<T extends string = string>({
       transitionDuration,
       transitionTimingFunction,
     },
-    { sx, classNames, styles, name: 'SegmentedControl' }
+    { classNames, styles, name: 'SegmentedControl' }
   );
 
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
@@ -155,7 +152,7 @@ export function SegmentedControl<T extends string = string>({
   ));
 
   return (
-    <div className={cx(classes.root, className)} ref={wrapperRef} style={mergedStyles} {...rest}>
+    <Box className={cx(classes.root, className)} ref={wrapperRef} {...others}>
       {!!_value && (
         <span
           className={classes.active}
@@ -167,7 +164,7 @@ export function SegmentedControl<T extends string = string>({
       )}
 
       {controls}
-    </div>
+    </Box>
   );
 }
 

@@ -11,14 +11,14 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  useExtractedMargins,
   getDefaultZIndex,
 } from '@mantine/styles';
-import { Divider } from '../Divider/Divider';
-import { Paper } from '../Paper/Paper';
-import { Text } from '../Text/Text';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { Popper, SharedPopperProps } from '../Popper/Popper';
+import { Box } from '../Box';
+import { Divider } from '../Divider';
+import { Paper } from '../Paper';
+import { Text } from '../Text';
+import { ActionIcon } from '../ActionIcon';
+import { Popper, SharedPopperProps } from '../Popper';
 import { MenuIcon } from './MenuIcon';
 import {
   MenuItem,
@@ -144,7 +144,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onClose,
       onOpen,
       opened,
-      style,
       menuId,
       closeOnItemClick = true,
       transitionDuration = 250,
@@ -178,13 +177,12 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
   ) => {
     const [hovered, setHovered] = useState(-1);
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const { classes, cx, theme } = useStyles({ size }, { sx, classNames, styles, name: 'Menu' });
+    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(menuId);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
 
@@ -336,13 +334,13 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     });
 
     return (
-      <div
+      <Box
         ref={setWrapperElement}
-        style={mergedStyles}
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleMouseEnter}
         className={cx(classes.root, className)}
-        {...rest}
+        sx={sx}
+        {...others}
       >
         {menuControl}
 
@@ -374,7 +372,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
             {content}
           </Paper>
         </Popper>
-      </div>
+      </Box>
     );
   }
 ) as any;

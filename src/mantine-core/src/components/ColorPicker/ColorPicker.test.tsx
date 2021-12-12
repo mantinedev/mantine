@@ -8,6 +8,7 @@ import {
   checkAccessibility,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
@@ -16,14 +17,16 @@ import { Swatches } from './Swatches/Swatches';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation } from './Saturation/Saturation';
 
-const swatches = [...DEFAULT_THEME.colors.red];
+const swatches = DEFAULT_THEME.colors.red;
+const defaultProps = {};
 
 describe('@mantine/core/ColorPicker', () => {
-  itSupportsClassName(ColorPicker, {});
-  itSupportsStyle(ColorPicker, {});
-  itSupportsOthers(ColorPicker, {});
-  itSupportsMargins(ColorPicker, {});
-  itSupportsRef(ColorPicker, {}, HTMLDivElement);
+  itSupportsClassName(ColorPicker, defaultProps);
+  itSupportsStyle(ColorPicker, defaultProps);
+  itSupportsOthers(ColorPicker, defaultProps);
+  itSupportsMargins(ColorPicker, defaultProps);
+  itSupportsSx(ColorPicker, defaultProps);
+  itSupportsRef(ColorPicker, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     ColorPicker,
     { swatches, format: 'rgba' },

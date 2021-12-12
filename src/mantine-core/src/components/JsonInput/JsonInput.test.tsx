@@ -6,16 +6,20 @@ import {
   itSupportsRef,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { JsonInput } from './JsonInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
+const defaultProps = {};
+
 describe('@mantine/core/JsonInput', () => {
-  itSupportsStyle(JsonInput, {});
-  itSupportsClassName(JsonInput, {});
-  itSupportsMargins(JsonInput, {});
-  itSupportsRef(JsonInput, {}, HTMLTextAreaElement);
+  itSupportsStyle(JsonInput, defaultProps);
+  itSupportsClassName(JsonInput, defaultProps);
+  itSupportsMargins(JsonInput, defaultProps);
+  itSupportsSx(JsonInput, defaultProps, { dive: 2 });
+  itSupportsRef(JsonInput, defaultProps, HTMLTextAreaElement);
   itSupportsStylesApi(
     JsonInput,
     defaultInputProps,

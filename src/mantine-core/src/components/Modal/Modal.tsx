@@ -8,11 +8,12 @@ import {
   MantineMargin,
   getDefaultZIndex,
 } from '@mantine/styles';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Text } from '../Text/Text';
-import { Paper } from '../Paper/Paper';
-import { Overlay } from '../Overlay/Overlay';
-import { Portal } from '../Portal/Portal';
+import { CloseButton } from '../ActionIcon';
+import { Text } from '../Text';
+import { Paper } from '../Paper';
+import { Overlay } from '../Overlay';
+import { Portal } from '../Portal';
+import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles from './Modal.styles';
 
@@ -99,7 +100,6 @@ export function MantineModal({
   id,
   classNames,
   styles,
-  sx,
   closeOnClickOutside = true,
   centered = false,
   ...others
@@ -109,7 +109,7 @@ export function MantineModal({
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
     { size, overflow, centered },
-    { sx, classNames, styles, name: 'Modal' }
+    { classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(opened);
   const _overlayOpacity =
@@ -137,7 +137,7 @@ export function MantineModal({
       }}
     >
       {(transitionStyles) => (
-        <div className={cx(classes.root, className)} {...others}>
+        <Box className={cx(classes.root, className)} {...others}>
           {closeOnClickOutside && (
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
             <div onClick={onClose} className={classes.clickOutsideOverlay} style={{ zIndex: 2 }} />
@@ -195,7 +195,7 @@ export function MantineModal({
               opacity={_overlayOpacity}
             />
           </div>
-        </div>
+        </Box>
       )}
     </GroupedTransition>
   );

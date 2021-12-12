@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -8,6 +8,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Burger } from './Burger';
 import { Burger as BurgerStylesApi } from './styles.api';
@@ -23,8 +24,16 @@ describe('@mantine/core/Burger', () => {
   itSupportsClassName(Burger, defaultProps);
   itSupportsStyle(Burger, defaultProps);
   itSupportsMargins(Burger, defaultProps);
+  itSupportsSx(Burger, defaultProps);
   itSupportsRef(Burger, defaultProps, HTMLButtonElement);
   itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'Burger');
+
+  it('renders cross when opened prop is true', () => {
+    const opened = shallow(<Burger opened />);
+    const closed = shallow(<Burger opened={false} />);
+    expect(opened.find('.mantine-Burger-opened')).toHaveLength(1);
+    expect(closed.find('.mantine-Burger-opened')).toHaveLength(0);
+  });
 
   it('has correct displayName', () => {
     expect(Burger.displayName).toEqual('@mantine/core/Burger');

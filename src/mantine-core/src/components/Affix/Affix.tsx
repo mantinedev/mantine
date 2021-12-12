@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { useSx, DefaultProps, MantineMargin, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, MantineMargin, getDefaultZIndex } from '@mantine/styles';
+import { Box } from '../Box';
 import { Portal } from '../Portal/Portal';
 
 export interface AffixProps
@@ -31,19 +32,11 @@ export const Affix = forwardRef<HTMLDivElement, AffixProps>(
       ...others
     }: AffixProps,
     ref
-  ) => {
-    const { sxClassName, css, cx } = useSx({ className, sx });
-
-    return (
-      <Portal zIndex={zIndex} target={target}>
-        <div
-          className={cx(css({ position: 'fixed', ...position }), sxClassName)}
-          ref={ref}
-          {...others}
-        />
-      </Portal>
-    );
-  }
+  ) => (
+    <Portal zIndex={zIndex} target={target}>
+      <Box sx={[{ position: 'fixed', ...position }, sx]} ref={ref} {...others} />
+    </Portal>
+  )
 );
 
 Affix.displayName = '@mantine/core/Affix';

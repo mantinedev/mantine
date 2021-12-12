@@ -4,10 +4,10 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
-  useSx,
   DefaultProps,
   MantineColor,
 } from '@mantine/styles';
+import { Box } from '../../Box';
 import useStyles from './MenuItem.styles';
 
 export type MenuItemStylesNames = ClassNames<typeof useStyles>;
@@ -68,20 +68,18 @@ export const MenuItem: MenuItemComponent & { displayName?: string } = forwardRef
       classNames,
       styles,
       radius,
-      sx,
       ...others
     }: MenuItemProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { sxClassName } = useSx({ sx });
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
-    const Element = component || 'button';
 
     return (
-      <Element
+      <Box<any>
+        component={component || 'button'}
         type="button"
         role="menuitem"
-        className={cx(classes.item, { [classes.itemHovered]: hovered }, sxClassName, className)}
+        className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
         onMouseEnter={() => !disabled && onHover()}
         ref={ref}
         disabled={disabled}
@@ -95,7 +93,7 @@ export const MenuItem: MenuItemComponent & { displayName?: string } = forwardRef
             {rightSection}
           </div>
         </div>
-      </Element>
+      </Box>
     );
   }
 ) as any;

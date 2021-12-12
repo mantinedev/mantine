@@ -8,17 +8,21 @@ import {
   checkAccessibility,
   itSupportsMargins,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from './TimeField/TimeField';
 import { TimeInput } from './TimeInput';
 import { TimeInput as TimeInputStylesApi } from './styles.api';
 
+const defaultProps = {};
+
 describe('@mantine/dates/TimeInput', () => {
-  itSupportsClassName(TimeInput, {});
-  itSupportsStyle(TimeInput, {});
-  itSupportsMargins(TimeInput, {});
-  itSupportsRef(TimeInput, {}, HTMLInputElement);
+  itSupportsClassName(TimeInput, defaultProps);
+  itSupportsStyle(TimeInput, defaultProps);
+  itSupportsMargins(TimeInput, defaultProps);
+  itSupportsSx(TimeInput, defaultProps, { dive: 1 });
+  itSupportsRef(TimeInput, defaultProps, HTMLInputElement);
 
   checkAccessibility([
     mount(

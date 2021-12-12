@@ -5,6 +5,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Input, InputWrapper, Modal } from '@mantine/core';
 import { DatePickerBase } from './DatePickerBase';
@@ -26,6 +27,7 @@ describe('@mantine/dates/DatePickerBase', () => {
   itSupportsClassName(DatePickerBase, defaultProps);
   itSupportsStyle(DatePickerBase, defaultProps);
   itSupportsMargins(DatePickerBase, defaultProps);
+  itSupportsSx(DatePickerBase, defaultProps, { dive: 1 });
   itSupportsRef(DatePickerBase, defaultProps, HTMLInputElement);
 
   it('passes __staticSelector prop to InputWrapper and Input components', () => {

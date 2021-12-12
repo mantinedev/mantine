@@ -14,10 +14,10 @@ type AnchorComponent = <C extends React.ElementType = 'a'>(
 
 export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'a'>(
-    { component, className, sx, classNames, styles, ...others }: AnchorProps<C>,
+    { component, className, classNames, styles, ...others }: AnchorProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles(null, { name: 'Anchor', sx, classNames, styles });
+    const { classes, cx } = useStyles(null, { name: 'Anchor', classNames, styles });
     const buttonProps = component === 'button' ? { type: 'button' } : null;
 
     return (

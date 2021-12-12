@@ -1,17 +1,7 @@
 import React from 'react';
 import { MultiSelect } from '../MultiSelect';
 
-const codeTemplate = (props: string) => `<MultiSelect
-  placeholder="Pick one"
-  label="Your favorite framework/library"
-  data={[
-    { value: 'react', label: 'React' },
-    { value: 'ng', label: 'Angular' },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue' },
-  ]}
-  ${props}
-/>`;
+const codeTemplate = (props: string) => `<MultiSelect${props} />`;
 
 export const flip: MantineDemo = {
   type: 'configurator',
@@ -33,7 +23,7 @@ export const flip: MantineDemo = {
   configurator: [
     {
       name: 'dropdownPosition',
-      type: 'select',
+      type: 'segmented',
       data: [
         { label: 'top', value: 'top' },
         { label: 'bottom', value: 'bottom' },

@@ -9,12 +9,15 @@ import {
   itSupportsMargins,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
 import { ColorInput } from './ColorInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
+
+const defaultProps = {};
 
 describe('@mantine/core/ColorInput', () => {
   beforeAll(() => {
@@ -23,10 +26,11 @@ describe('@mantine/core/ColorInput', () => {
     window.getComputedStyle = jest.fn();
   });
 
-  itSupportsClassName(ColorInput, {});
-  itSupportsMargins(ColorInput, {});
-  itSupportsStyle(ColorInput, {});
-  itSupportsRef(ColorInput, {}, HTMLInputElement);
+  itSupportsClassName(ColorInput, defaultProps);
+  itSupportsMargins(ColorInput, defaultProps);
+  itSupportsStyle(ColorInput, defaultProps);
+  itSupportsSx(ColorInput, defaultProps, { dive: 1 });
+  itSupportsRef(ColorInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     ColorInput,

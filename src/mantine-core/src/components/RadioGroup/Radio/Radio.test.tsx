@@ -6,6 +6,8 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Radio } from './Radio';
 
@@ -18,6 +20,8 @@ describe('@mantine/core/Radio', () => {
   checkAccessibility([mount(<Radio {...defaultProps} />)]);
   itSupportsClassName(Radio, defaultProps);
   itSupportsStyle(Radio, defaultProps);
+  itSupportsSx(Radio, defaultProps);
+  itSupportsMargins(Radio, defaultProps);
   itRendersChildren(Radio, defaultProps);
   itSupportsRef(Radio, defaultProps, HTMLInputElement);
 

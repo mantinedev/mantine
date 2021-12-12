@@ -41,15 +41,11 @@ export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
       styles,
       spacing = 'lg',
       total,
-      sx,
       ...others
     }: AvatarsGroupProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
-      { spacing },
-      { classNames, styles, sx, name: 'AvatarsGroup' }
-    );
+    const { classes, cx } = useStyles({ spacing }, { classNames, styles, name: 'AvatarsGroup' });
 
     const avatars = React.Children.toArray(children)
       .filter((child: React.ReactElement) => child.type === Avatar)

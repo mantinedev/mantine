@@ -6,10 +6,10 @@ import {
   MantineGradient,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Badge.styles';
 
 export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
@@ -52,7 +52,6 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
     {
       component,
       className,
-      style,
       color,
       variant = 'light',
       fullWidth,
@@ -64,7 +63,6 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       classNames,
       styles,
-      sx,
       ...others
     }: BadgeProps<C>,
     ref: PolymorphicRef<C>
@@ -79,22 +77,20 @@ export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { classNames, styles, sx, name: 'Badge' }
+      { classNames, styles, name: 'Badge' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const Element = component || 'div';
 
     return (
-      <Element
-        {...rest}
+      <Box<any>
+        component={component || 'div'}
         className={cx(classes[variant], classes.root, className)}
-        style={mergedStyles}
         ref={ref}
+        {...others}
       >
         {leftSection && <span className={classes.leftSection}>{leftSection}</span>}
         <span className={classes.inner}>{children}</span>
         {rightSection && <span className={classes.rightSection}>{rightSection}</span>}
-      </Element>
+      </Box>
     );
   }
 );

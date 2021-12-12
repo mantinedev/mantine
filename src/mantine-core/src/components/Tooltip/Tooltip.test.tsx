@@ -4,6 +4,8 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsSx,
+  itSupportsMargins,
 } from '@mantine/tests';
 import { Tooltip } from './Tooltip';
 
@@ -20,6 +22,8 @@ describe('@mantine/core/Tooltip', () => {
   itSupportsClassName(Tooltip, defaultProps);
   itSupportsOthers(Tooltip, defaultProps);
   itSupportsStyle(Tooltip, defaultProps);
+  itSupportsSx(Tooltip, defaultProps);
+  itSupportsMargins(Tooltip, defaultProps);
   itSupportsRef(Tooltip, defaultProps, HTMLDivElement, 'tooltipRef');
 
   it('has correct displayName', () => {

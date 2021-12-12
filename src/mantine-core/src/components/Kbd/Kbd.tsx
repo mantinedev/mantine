@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Kbd.styles';
 
 export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'kbd'> {
@@ -8,14 +9,13 @@ export interface KbdProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 }
 
 export const Kbd = forwardRef<HTMLElement, KbdProps>(
-  ({ className, children, style, sx, ...others }: KbdProps, ref) => {
-    const { classes, cx } = useStyles(null, { sx, name: 'Kbd' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+  ({ className, children, ...others }: KbdProps, ref) => {
+    const { classes, cx } = useStyles(null, { name: 'Kbd' });
 
     return (
-      <kbd className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box component="kbd" className={cx(classes.root, className)} ref={ref} {...others}>
         {children}
-      </kbd>
+      </Box>
     );
   }
 );

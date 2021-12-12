@@ -1,5 +1,6 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -26,7 +27,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
   (
     {
       className,
-      style,
       position = 'left',
       align,
       children,
@@ -36,7 +36,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
       direction = 'row',
       classNames,
       styles,
-      sx,
       ...others
     }: GroupProps,
     ref
@@ -52,10 +51,8 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
         direction,
         count,
       },
-      { sx, classNames, styles, name: 'Group' }
+      { classNames, styles, name: 'Group' }
     );
-
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
       React.cloneElement(child, {
@@ -64,9 +61,9 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {items}
-      </div>
+      </Box>
     );
   }
 );

@@ -10,11 +10,13 @@ import { DateRangePicker } from './DateRangePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 
+const defaultProps = {};
+
 describe('@mantine/dates/DateRangePicker', () => {
-  itSupportsClassName(DateRangePicker, {});
-  itSupportsStyle(DateRangePicker, {});
-  itSupportsMargins(DateRangePicker, {});
-  itSupportsRef(DateRangePicker, {}, HTMLInputElement);
+  itSupportsClassName(DateRangePicker, defaultProps);
+  itSupportsStyle(DateRangePicker, defaultProps);
+  itSupportsMargins(DateRangePicker, defaultProps);
+  itSupportsRef(DateRangePicker, defaultProps, HTMLInputElement);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DateRangePicker initiallyOpened />);

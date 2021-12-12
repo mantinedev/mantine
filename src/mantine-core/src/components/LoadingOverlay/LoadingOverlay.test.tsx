@@ -1,18 +1,22 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { itSupportsClassName, itSupportsStyle, itSupportsOthers } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsStyle,
+  itSupportsOthers,
+  itSupportsRef,
+} from '@mantine/tests';
 import { Loader } from '../Loader/Loader';
 import { Overlay } from '../Overlay/Overlay';
 import { LoadingOverlay } from './LoadingOverlay';
 
-describe('@mantine/core/LoadingOverlay', () => {
-  itSupportsClassName(LoadingOverlay, { visible: true });
-  itSupportsStyle(LoadingOverlay, { visible: true });
-  itSupportsOthers(LoadingOverlay, { visible: true });
+const defaultProps = { visible: true };
 
-  it('has correct displayName', () => {
-    expect(LoadingOverlay.displayName).toEqual('@mantine/core/LoadingOverlay');
-  });
+describe('@mantine/core/LoadingOverlay', () => {
+  itSupportsClassName(LoadingOverlay, defaultProps);
+  itSupportsStyle(LoadingOverlay, defaultProps);
+  itSupportsOthers(LoadingOverlay, defaultProps);
+  itSupportsRef(LoadingOverlay, defaultProps, HTMLDivElement);
 
   it('does not render anything if visible is false', () => {
     const element = shallow(<LoadingOverlay visible={false} />);
@@ -35,5 +39,9 @@ describe('@mantine/core/LoadingOverlay', () => {
     const element = mount(<LoadingOverlay visible zIndex={347} />);
     expect(element.find(Loader).prop('style').zIndex).toBe(348);
     expect(element.find(Overlay).prop('zIndex')).toBe(347);
+  });
+
+  it('has correct displayName', () => {
+    expect(LoadingOverlay.displayName).toEqual('@mantine/core/LoadingOverlay');
   });
 });

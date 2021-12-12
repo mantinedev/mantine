@@ -9,12 +9,15 @@ import {
   itSupportsMargins,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { TextInput } from './TextInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
+
+const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
   beforeAll(() => {
@@ -28,20 +31,17 @@ describe('@mantine/core/Input', () => {
     mount(<TextInput aria-label="test-input" />),
   ]);
 
-  itSupportsClassName(TextInput, {});
-  itSupportsMargins(TextInput, {});
-  itSupportsRef(TextInput, {}, HTMLInputElement);
-  itSupportsStyle(TextInput, {});
+  itSupportsClassName(TextInput, defaultProps);
+  itSupportsSx(TextInput, defaultProps, { dive: 1 });
+  itSupportsMargins(TextInput, defaultProps);
+  itSupportsRef(TextInput, defaultProps, HTMLInputElement);
+  itSupportsStyle(TextInput, defaultProps);
   itSupportsStylesApi(
     TextInput,
     defaultInputProps,
     getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
     'TextInput'
   );
-
-  it('has correct displayName', () => {
-    expect(TextInput.displayName).toEqual('@mantine/core/TextInput');
-  });
 
   it('passes wrapperProps to InputWrapper', () => {
     const element = shallow(<TextInput wrapperProps={{ 'aria-label': 'test' }} />);
@@ -77,5 +77,9 @@ describe('@mantine/core/Input', () => {
     expect(element.find(Input).prop('invalid')).toBe(true);
     expect(element.find(Input).prop('icon')).toBe('$');
     expect(element.find(Input).prop('radius')).toBe('sm');
+  });
+
+  it('has correct displayName', () => {
+    expect(TextInput.displayName).toEqual('@mantine/core/TextInput');
   });
 });

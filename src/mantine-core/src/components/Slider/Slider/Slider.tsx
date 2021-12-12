@@ -177,10 +177,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
           max={max}
           value={_value}
           onChange={setValue}
-          styles={styles}
           onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
           onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
           classNames={classNames}
+          styles={styles}
         >
           <Thumb
             max={max}

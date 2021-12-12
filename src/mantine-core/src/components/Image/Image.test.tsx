@@ -8,6 +8,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Image } from './Image';
 
@@ -24,6 +25,7 @@ describe('@mantine/core/Image', () => {
   ]);
 
   itSupportsClassName(Image, defaultProps);
+  itSupportsSx(Image, defaultProps);
   itSupportsMargins(Image, defaultProps);
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);
@@ -42,10 +44,6 @@ describe('@mantine/core/Image', () => {
     'Image',
     'with image'
   );
-
-  it('has correct displayName', () => {
-    expect(Image.displayName).toEqual('@mantine/core/Image');
-  });
 
   it('sets src, alt and object fit on img element', () => {
     const element = shallow(<Image src="test-src" alt="test-alt" fit="contain" />);
@@ -84,5 +82,9 @@ describe('@mantine/core/Image', () => {
     );
 
     expect(element.find('.mantine-Image-placeholder').text()).toBe('test-placeholder');
+  });
+
+  it('has correct displayName', () => {
+    expect(Image.displayName).toEqual('@mantine/core/Image');
   });
 });

@@ -7,10 +7,10 @@ import {
   MantineGradient,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
@@ -73,7 +73,6 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'button'>(
     {
       className,
-      style,
       size = 'sm',
       color,
       type = 'button',
@@ -93,7 +92,6 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       classNames,
       styles,
-      sx,
       ...others
     }: ButtonProps<C>,
     ref: PolymorphicRef<C>
@@ -109,11 +107,9 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { classNames, styles, sx, name: 'Button' }
+      { classNames, styles, name: 'Button' }
     );
     const colors = getSharedColorScheme({ color, theme, variant });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const Element = component || 'button';
     const loader = (
       <Loader
         color={colors.color}
@@ -123,14 +119,14 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
     );
 
     return (
-      <Element
-        {...rest}
+      <Box<any>
+        component={component || 'button'}
         className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
         disabled={disabled || loading}
         ref={ref}
         onTouchStart={() => {}}
-        style={mergedStyles}
+        {...others}
       >
         <div className={classes.inner}>
           {(leftIcon || (loading && loaderPosition === 'left')) && (
@@ -152,7 +148,7 @@ export const Button: ButtonComponent & { displayName?: string } = forwardRef(
             </span>
           )}
         </div>
-      </Element>
+      </Box>
     );
   }
 );

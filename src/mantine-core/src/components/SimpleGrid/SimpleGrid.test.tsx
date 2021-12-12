@@ -4,6 +4,9 @@ import {
   itRendersChildren,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
+  itSupportsStyle,
+  itSupportsOthers,
 } from '@mantine/tests';
 import { SimpleGrid } from './SimpleGrid';
 
@@ -15,7 +18,10 @@ const defaultProps = {
 describe('@mantine/core/SimpleGrid', () => {
   itSupportsClassName(SimpleGrid, defaultProps);
   itSupportsMargins(SimpleGrid, defaultProps);
+  itSupportsOthers(SimpleGrid, defaultProps);
+  itSupportsStyle(SimpleGrid, defaultProps);
   itRendersChildren(SimpleGrid, defaultProps);
+  itSupportsSx(SimpleGrid, defaultProps);
   itSupportsRef(SimpleGrid, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

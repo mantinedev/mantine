@@ -8,6 +8,7 @@ import {
   itSupportsMargins,
   itSupportsStylesApi,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Month } from './Month';
 import { Day } from './Day/Day';
@@ -20,6 +21,7 @@ describe('@mantine/core/Month', () => {
   itSupportsClassName(Month, defaultProps);
   itSupportsOthers(Month, defaultProps);
   itSupportsMargins(Month, defaultProps);
+  itSupportsSx(Month, defaultProps);
   itSupportsRef(Month, defaultProps, HTMLTableElement);
   itSupportsStylesApi(
     Month,

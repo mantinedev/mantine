@@ -15,7 +15,7 @@ import {
   CloseButton,
   MantineShadow,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
   getDefaultZIndex,
 } from '@mantine/core';
 import {
@@ -166,7 +166,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
@@ -232,13 +232,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         error={error}
         description={description}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
         ref={setReferenceElement}
+        {...margins}
         {...wrapperProps}
       >
         <div ref={setRootElement}>

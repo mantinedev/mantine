@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/core';
+import { DefaultProps, ClassNames, Box } from '@mantine/core';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -69,11 +69,9 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       labels = DEFAULT_LABELS,
       controls = DEFAULT_CONTROLS,
       id,
-      style,
       className,
       classNames,
       styles,
-      sx,
       ...others
     }: RichTextEditorProps,
     ref
@@ -82,9 +80,8 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
       { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
-      { sx, classNames, styles, name: 'RichTextEditor' }
+      { classNames, styles, name: 'RichTextEditor' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const modules = useMemo(
       () => ({
@@ -103,7 +100,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
     }, []);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+      <Box className={cx(classes.root, className)} {...others}>
         <Toolbar
           controls={controls}
           labels={labels}
@@ -121,7 +118,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
         />
-      </div>
+      </Box>
     );
   }
 );

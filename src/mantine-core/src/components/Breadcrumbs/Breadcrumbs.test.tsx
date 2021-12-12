@@ -8,6 +8,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Breadcrumbs } from './Breadcrumbs';
@@ -32,6 +33,7 @@ describe('@mantine/core/Breadcrumbs', () => {
   itSupportsOthers(Breadcrumbs, defaultProps);
   itSupportsStyle(Breadcrumbs, defaultProps);
   itSupportsMargins(Breadcrumbs, defaultProps);
+  itSupportsSx(Breadcrumbs, defaultProps);
   itSupportsRef(Breadcrumbs, defaultProps, HTMLDivElement);
 
   it('renders correct amount of children and separators', () => {

@@ -5,9 +5,10 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
+import { InputWrapper } from '../InputWrapper';
+import { Input } from '../Input';
 import { Autocomplete } from './Autocomplete';
 
 const defaultProps = {
@@ -23,6 +24,7 @@ const data = Array(50)
 describe('@mantine/core/Autocomplete', () => {
   itSupportsClassName(Autocomplete, defaultProps);
   itSupportsStyle(Autocomplete, defaultProps);
+  itSupportsSx(Autocomplete, defaultProps, { dive: 1 });
   itSupportsMargins(Autocomplete, defaultProps);
   itSupportsRef(Autocomplete, defaultProps, HTMLInputElement);
 

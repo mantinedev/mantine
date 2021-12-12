@@ -8,6 +8,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper';
 import { InputWrapper as InputWrapperStylesApi } from './styles.api';
@@ -26,6 +27,7 @@ describe('@mantine/core/InputWrapper', () => {
   itSupportsMargins(InputWrapper, defaultProps);
   itSupportsStyle(InputWrapper, defaultProps);
   itSupportsClassName(InputWrapper, defaultProps);
+  itSupportsSx(InputWrapper, defaultProps);
   itSupportsRef(InputWrapper, defaultProps, HTMLDivElement);
   itRendersChildren(InputWrapper, { id: 'test-id' });
   itSupportsStylesApi(

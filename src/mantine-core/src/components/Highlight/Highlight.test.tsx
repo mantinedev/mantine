@@ -7,6 +7,7 @@ import {
   itSupportsMargins,
   itSupportsRef,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Highlight } from './Highlight';
 
@@ -17,7 +18,8 @@ describe('@mantine/core/Highlight', () => {
   itSupportsClassName(Highlight, defaultProps);
   itSupportsOthers(Highlight, defaultProps);
   itSupportsMargins(Highlight, defaultProps);
-  itIsPolymorphic(Highlight, defaultProps, { dive: true });
+  itSupportsSx(Highlight, defaultProps, { dive: 1 });
+  itIsPolymorphic(Highlight, defaultProps, { dive: 2 });
   itSupportsRef(Highlight, defaultProps, HTMLDivElement);
 
   it('highlights correct value', () => {

@@ -5,6 +5,7 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsClassName,
+  itSupportsSx,
   itSupportsStylesApi,
   checkAccessibility,
 } from '@mantine/tests';
@@ -23,6 +24,7 @@ describe('@mantine/core/AccordionItem', () => {
   itSupportsOthers(AccordionItem, defaultProps);
   itRendersChildren(AccordionItem, defaultProps);
   itSupportsStyle(AccordionItem, defaultProps);
+  itSupportsSx(AccordionItem, defaultProps);
   itSupportsClassName(AccordionItem, defaultProps);
   checkAccessibility([mount(<AccordionItem {...defaultProps} />)]);
   itSupportsStylesApi(

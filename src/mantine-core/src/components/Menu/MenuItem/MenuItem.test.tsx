@@ -6,6 +6,7 @@ import {
   itSupportsRef,
   itRendersChildren,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { MenuItem } from './MenuItem';
@@ -19,7 +20,8 @@ describe('@mantine/core/MenuItem', () => {
   itSupportsClassName(MenuItem, defaultProps);
   itSupportsStyle(MenuItem, defaultProps);
   itSupportsOthers(MenuItem, defaultProps);
-  itIsPolymorphic(MenuItem, defaultProps);
+  itIsPolymorphic(MenuItem, defaultProps, { dive: 1 });
+  itSupportsSx(MenuItem, defaultProps);
   itSupportsRef(MenuItem, defaultProps, HTMLButtonElement);
   itRendersChildren(MenuItem, defaultProps);
 

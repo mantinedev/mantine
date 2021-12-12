@@ -5,6 +5,7 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Mark } from './Mark';
 
@@ -18,6 +19,7 @@ describe('@mantine/core/Mark', () => {
   itSupportsOthers(Mark, defaultProps);
   itSupportsStyle(Mark, defaultProps);
   itSupportsMargins(Mark, defaultProps);
+  itSupportsSx(Mark, defaultProps);
   itSupportsRef(Mark, defaultProps, HTMLElement);
 
   it('has correct displayName', () => {

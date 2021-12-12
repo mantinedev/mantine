@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { ListItem } from './ListItem';
 
@@ -20,6 +21,7 @@ describe('@mantine/core/ListItem', () => {
   itSupportsOthers(ListItem, defaultProps);
   itSupportsStyle(ListItem, defaultProps);
   itSupportsMargins(ListItem, defaultProps);
+  itSupportsSx(ListItem, defaultProps);
 
   it('renders icon based on prop', () => {
     const withIcon = shallow(<ListItem icon="$">test-item</ListItem>);

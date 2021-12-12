@@ -8,17 +8,21 @@ import {
   itSupportsRef,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Anchor } from './Anchor';
 
+const defaultProps = {};
+
 describe('@mantine/core/Anchor', () => {
-  itSupportsClassName(Anchor, {});
-  itRendersChildren(Anchor, {});
-  itSupportsOthers(Anchor, {});
-  itSupportsStyle(Anchor, {});
-  itSupportsMargins(Anchor, {});
-  itIsPolymorphic(Anchor, {}, { dive: true });
-  itSupportsRef(Anchor, {}, HTMLAnchorElement);
+  itSupportsClassName(Anchor, defaultProps);
+  itRendersChildren(Anchor, defaultProps);
+  itSupportsOthers(Anchor, defaultProps);
+  itSupportsStyle(Anchor, defaultProps);
+  itSupportsMargins(Anchor, defaultProps);
+  itSupportsSx(Anchor, defaultProps, { dive: 1 });
+  itIsPolymorphic(Anchor, defaultProps, { dive: 2 });
+  itSupportsRef(Anchor, defaultProps, HTMLAnchorElement);
 
   it('adds type="button" attribute if component prop is button', () => {
     const link = shallow(<Anchor component="a" />);

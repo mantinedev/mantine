@@ -34,7 +34,6 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       padding = 0,
       fixed = false,
       position = { top: 0, left: 0, right: 0 },
-      sx,
       zIndex = getDefaultZIndex('app'),
       ...others
     }: HeaderProps,
@@ -42,7 +41,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
   ) => {
     const { classes, cx } = useStyles(
       { height, padding, fixed, position, zIndex },
-      { name: 'Header', sx, classNames, styles }
+      { name: 'Header', classNames, styles }
     );
 
     return (

@@ -8,6 +8,7 @@ import {
   checkAccessibility,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Slider } from './Slider';
 import { Slider as SliderStylesApi } from '../styles.api';
@@ -22,6 +23,7 @@ describe('@mantine/core/Slider', () => {
   itSupportsMargins(Slider, defaultProps);
   itSupportsClassName(Slider, defaultProps);
   itSupportsOthers(Slider, defaultProps);
+  itSupportsSx(Slider, defaultProps, { dive: 1 });
   itSupportsRef(Slider, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     Slider,

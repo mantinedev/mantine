@@ -1,12 +1,8 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -75,7 +71,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'bottom',
       ...others

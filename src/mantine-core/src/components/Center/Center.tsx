@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { useExtractedMargins, useSx, DefaultProps } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
+import { Box } from '../Box';
 
 export interface CenterProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Content that should be centered vertically and horizontally */
@@ -10,26 +11,20 @@ export interface CenterProps extends DefaultProps, React.ComponentPropsWithoutRe
 }
 
 export const Center = forwardRef<HTMLDivElement, CenterProps>(
-  ({ style, className, inline = false, sx, ...others }: CenterProps, ref) => {
-    const { sxClassName, css, cx } = useSx({ sx, className });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-
-    return (
-      <div
-        {...rest}
-        ref={ref}
-        style={mergedStyles}
-        className={cx(
-          css({
-            display: inline ? 'inline-flex' : 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }),
-          sxClassName
-        )}
-      />
-    );
-  }
+  ({ inline = false, sx, ...others }: CenterProps, ref) => (
+    <Box
+      ref={ref}
+      sx={[
+        {
+          display: inline ? 'inline-flex' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        sx,
+      ]}
+      {...others}
+    />
+  )
 );
 
 Center.displayName = '@mantine/core/Center';

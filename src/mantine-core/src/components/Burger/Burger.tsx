@@ -5,8 +5,8 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Burger.styles';
 
 export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
@@ -25,38 +25,24 @@ export interface BurgerProps
 }
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
-  (
-    {
-      className,
-      style,
-      opened,
-      color,
-      size = 'md',
-      classNames,
-      styles,
-      sx,
-      ...others
-    }: BurgerProps,
-    ref
-  ) => {
+  ({ className, opened, color, size = 'md', classNames, styles, ...others }: BurgerProps, ref) => {
     const theme = useMantineTheme();
     const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { color: _color, size },
-      { classNames, styles, sx, name: 'Burger' }
+      { classNames, styles, name: 'Burger' }
     );
 
     return (
-      <button
+      <Box
+        component="button"
         type="button"
         className={cx(classes.root, className)}
         ref={ref}
-        style={mergedStyles}
-        {...rest}
+        {...others}
       >
         <div className={cx(classes.burger, { [classes.opened]: opened })} />
-      </button>
+      </Box>
     );
   }
 );

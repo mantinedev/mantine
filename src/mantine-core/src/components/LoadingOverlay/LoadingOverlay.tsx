@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineMargin, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
-import { Overlay } from '../Overlay/Overlay';
+import { Overlay } from '../Overlay';
 import { Transition } from '../Transition';
-import { Loader, LoaderProps } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader';
+import { Box } from '../Box';
 import useStyles from './LoadingOverlay.styles';
 
 export interface LoadingOverlayProps
@@ -33,48 +34,53 @@ export interface LoadingOverlayProps
   radius?: MantineNumberSize;
 }
 
-export function LoadingOverlay({
-  className,
-  visible,
-  loaderProps = {},
-  overlayOpacity = 0.75,
-  overlayColor,
-  transitionDuration = 200,
-  zIndex = getDefaultZIndex('overlay'),
-  style,
-  loader,
-  radius,
-  sx,
-  ...others
-}: LoadingOverlayProps) {
-  const { classes, cx, theme } = useStyles(null, { sx, name: 'LoadingOverlay' });
+export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>(
+  (
+    {
+      className,
+      visible,
+      loaderProps = {},
+      overlayOpacity = 0.75,
+      overlayColor,
+      transitionDuration = 200,
+      zIndex = getDefaultZIndex('overlay'),
+      style,
+      loader,
+      radius,
+      ...others
+    }: LoadingOverlayProps,
+    ref
+  ) => {
+    const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay' });
 
-  return (
-    <Transition duration={transitionDuration} mounted={visible} transition="fade">
-      {(transitionStyles) => (
-        <div
-          className={cx(classes.root, className)}
-          style={{ ...transitionStyles, ...style, zIndex }}
-          {...others}
-        >
-          {loader ? (
-            <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
-          ) : (
-            <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
-          )}
+    return (
+      <Transition duration={transitionDuration} mounted={visible} transition="fade">
+        {(transitionStyles) => (
+          <Box
+            className={cx(classes.root, className)}
+            style={{ ...transitionStyles, ...style, zIndex }}
+            ref={ref}
+            {...others}
+          >
+            {loader ? (
+              <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
+            ) : (
+              <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+            )}
 
-          <Overlay
-            opacity={overlayOpacity}
-            zIndex={zIndex}
-            radius={radius}
-            color={
-              overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
-            }
-          />
-        </div>
-      )}
-    </Transition>
-  );
-}
+            <Overlay
+              opacity={overlayOpacity}
+              zIndex={zIndex}
+              radius={radius}
+              color={
+                overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
+              }
+            />
+          </Box>
+        )}
+      </Transition>
+    );
+  }
+);
 
 LoadingOverlay.displayName = '@mantine/core/LoadingOverlay';

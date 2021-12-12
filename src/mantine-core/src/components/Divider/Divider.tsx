@@ -1,13 +1,8 @@
 import React, { forwardRef } from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { useMantineTheme, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import useStyles from './Divider.styles';
-import { Text } from '../Text/Text';
+import { Text } from '../Text';
+import { Box } from '../Box';
 
 export type DividerStylesNames = 'label';
 
@@ -40,7 +35,6 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
   (
     {
       className,
-      style,
       color,
       orientation = 'horizontal',
       size = 'xs',
@@ -50,7 +44,6 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
       variant = 'solid',
       styles,
       classNames,
-      sx,
       ...others
     }: DividerProps,
     ref
@@ -59,16 +52,15 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
     const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
     const { classes, cx } = useStyles(
       { color: _color, size, variant },
-      { classNames, styles, sx, name: 'Divider' }
+      { classNames, styles, name: 'Divider' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const vertical = orientation === 'vertical';
     const horizontal = !vertical;
     const withLabel = !!label && horizontal;
 
     return (
-      <div
+      <Box
         ref={ref}
         className={cx(
           {
@@ -78,21 +70,20 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
           },
           className
         )}
-        style={mergedStyles}
-        {...rest}
+        {...others}
       >
         {!!label && horizontal && (
           <Text
             {...labelProps}
             color={_color}
             size={labelProps?.size || 'xs'}
-            style={{ marginTop: 2 }}
+            sx={{ marginTop: 2 }}
             className={cx(classes.label, classes[labelPosition])}
           >
             {label}
           </Text>
         )}
-      </div>
+      </Box>
     );
   }
 );

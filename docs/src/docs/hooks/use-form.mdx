@@ -208,7 +208,7 @@ form.values; // -> { name: 'Bob', age: 35 }
 
 ### form.validate
 
-`validate` function runs all validation rules on corresponding `value's` key:
+`validate` function runs all validation rules on corresponding `value's` key, it returns `true` if all fields are valid:
 
 ```tsx
 const form = useForm({
@@ -220,11 +220,11 @@ const form = useForm({
 
 form.errors; // -> { name: null, age: null }
 
-form.validate();
+form.validate(); // -> false
 form.errors; // -> { name: true, age: null }
 
 form.setFieldValue('name', 'Bob');
-form.validate();
+form.validate(); // -> true
 form.errors; // -> { name: null, age: null }
 ```
 

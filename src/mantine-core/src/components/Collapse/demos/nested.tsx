@@ -3,7 +3,7 @@ import { Button } from '../../Button';
 import { Text } from '../../Text';
 import { Collapse } from '../Collapse';
 
-function CollapsedDemo({ children, buttonProps }: any) {
+export function CollapsedDemo({ children, buttonProps }: any) {
   const [opened, setOpen] = useState(false);
 
   return (

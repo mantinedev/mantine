@@ -1,10 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  useExtractedMargins,
-  useMantineTheme,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/styles';
+import { Box } from '../Box';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
@@ -27,8 +23,6 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
       cols = 1,
       spacing = 'md',
       children,
-      style,
-      sx,
       classNames,
       styles,
       ...others
@@ -36,17 +30,16 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     ref
   ) => {
     const theme = useMantineTheme();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const sortedBreakpoints = getSortedBreakpoints(theme, breakpoints);
     const { classes, cx } = useStyles(
       { breakpoints: sortedBreakpoints, cols, spacing },
-      { sx, classNames, styles, name: 'SimpleGrid' }
+      { classNames, styles, name: 'SimpleGrid' }
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {children}
-      </div>
+      </Box>
     );
   }
 );

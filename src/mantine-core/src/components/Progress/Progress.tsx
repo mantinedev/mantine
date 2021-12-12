@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Progress.styles';
 
 export type ProgressStylesNames = ClassNames<typeof useStyles>;
@@ -49,7 +44,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   (
     {
       className,
-      style,
       value,
       color,
       size = 'md',
@@ -59,16 +53,14 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       classNames,
       styles,
       sections,
-      sx,
       ...others
     }: ProgressProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
       { color, size, radius, striped },
-      { sx, classNames, styles, name: 'Progress' }
+      { classNames, styles, name: 'Progress' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const segments = Array.isArray(sections)
       ? getCumulativeSections(sections).map((section, index) => (
@@ -85,7 +77,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       : null;
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {segments || (
           <div
             role="progressbar"
@@ -97,7 +89,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             style={{ width: `${value}%` }}
           />
         )}
-      </div>
+      </Box>
     );
   }
 );

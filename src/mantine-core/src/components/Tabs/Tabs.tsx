@@ -1,12 +1,7 @@
 import React, { useRef, forwardRef } from 'react';
 import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
 import { TabControl, TabControlStylesNames, TabType } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
@@ -90,7 +85,6 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     {
       className,
       children,
-      style,
       initialTab,
       active,
       position = 'left',
@@ -102,16 +96,14 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       styles,
       tabPadding = 'xs',
       orientation = 'horizontal',
-      sx,
       ...others
     }: TabsProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { tabPadding, orientation },
-      { sx, classNames, styles, name: 'Tabs' }
+      { classNames, styles, name: 'Tabs' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -169,7 +161,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     const content = tabs[activeTab].props.children;
 
     return (
-      <div {...rest} ref={ref} className={cx(classes.root, className)} style={mergedStyles}>
+      <Box ref={ref} className={cx(classes.root, className)} {...others}>
         <div className={cx(classes.tabsListWrapper, classes[variant])}>
           <Group
             className={classes.tabsList}
@@ -189,7 +181,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
             {content}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 ) as any;

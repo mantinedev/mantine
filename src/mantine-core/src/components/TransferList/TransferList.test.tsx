@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   mockResizeObserver,
+  itSupportsSx,
 } from '@mantine/tests';
 import { TransferList, TransferListProps } from './TransferList';
 import { TransferList as TransferListStylesApi } from './styles.api';
@@ -33,6 +34,7 @@ describe('@mantine/core/TransferList', () => {
   itSupportsMargins(TransferList, defaultProps);
   itSupportsOthers(TransferList, defaultProps);
   itSupportsStyle(TransferList, defaultProps);
+  itSupportsSx(TransferList, defaultProps, { dive: 1 });
   itSupportsRef(TransferList, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     TransferList,

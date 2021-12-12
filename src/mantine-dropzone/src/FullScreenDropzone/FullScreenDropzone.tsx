@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Portal, Transition, MantineNumberSize, ClassNames, DefaultProps } from '@mantine/core';
+import {
+  Portal,
+  Transition,
+  MantineNumberSize,
+  ClassNames,
+  DefaultProps,
+  Box,
+} from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { DropzoneStatus } from '../Dropzone';
 import useStyles from './FullscreenDropzone.styles';
@@ -73,12 +80,11 @@ export function FullScreenDropzone({
   zIndex = 1000,
   onDrop,
   children,
-  sx,
   ...others
 }: FullScreenDropzoneProps) {
   const { classes, cx } = useStyles(
     { offset, padding, radius },
-    { sx, classNames, styles, name: 'FullScreenDropzone' }
+    { classNames, styles, name: 'FullScreenDropzone' }
   );
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
@@ -128,7 +134,7 @@ export function FullScreenDropzone({
         mounted={visible && !disabled}
       >
         {(transitionStyles) => (
-          <div
+          <Box
             style={{ ...style, ...transitionStyles }}
             className={cx(classes.root, className)}
             {...others}
@@ -145,7 +151,7 @@ export function FullScreenDropzone({
             >
               {children({ accepted: visible && !error, rejected: error })}
             </div>
-          </div>
+          </Box>
         )}
       </Transition>
     </Portal>

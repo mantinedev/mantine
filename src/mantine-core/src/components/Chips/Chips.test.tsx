@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Chips } from './Chips';
 import { Chip } from './Chip/Chip';
@@ -28,6 +29,7 @@ describe('@mantine/core/Chips', () => {
   itSupportsMargins(Chips, defaultProps);
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
+  itSupportsSx(Chips, defaultProps, { dive: 1 });
   itSupportsStylesApi(
     Chips,
     defaultProps,

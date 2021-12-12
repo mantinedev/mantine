@@ -6,8 +6,9 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Switch.styles';
 
 export type SwitchStylesNames = ClassNames<typeof useStyles>;
@@ -55,13 +56,19 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
   ) => {
     const { classes, cx } = useStyles(
       { size, color, radius },
-      { classNames, styles, sx, name: 'Switch' }
+      { classNames, styles, name: 'Switch' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...margins}
+        {...wrapperProps}
+      >
         <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
 
         {label && (
@@ -69,7 +76,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             {label}
           </label>
         )}
-      </div>
+      </Box>
     );
   }
 );

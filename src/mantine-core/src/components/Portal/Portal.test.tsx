@@ -8,10 +8,6 @@ describe('@mantine/core/Portal', () => {
     document.getElementsByTagName('body')[0].innerHTML = '';
   });
 
-  it('has correct displayName', () => {
-    expect(Portal.displayName).toEqual('@mantine/core/Portal');
-  });
-
   it('renders content inside portal', () => {
     mount(<Portal className="test-portal">test-portal</Portal>);
     const portal = document.querySelector('.test-portal');
@@ -66,5 +62,9 @@ describe('@mantine/core/Portal', () => {
 
     expect(element.querySelectorAll('.test-portal')).toHaveLength(3);
     expect(document.querySelectorAll('.test-portal')).toHaveLength(0);
+  });
+
+  it('has correct displayName', () => {
+    expect(Portal.displayName).toEqual('@mantine/core/Portal');
   });
 });

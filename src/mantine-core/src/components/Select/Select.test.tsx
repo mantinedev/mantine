@@ -5,6 +5,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
   mockResizeObserver,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
@@ -32,6 +33,7 @@ describe('@mantine/core/Select', () => {
   itSupportsClassName(Select, defaultProps);
   itSupportsStyle(Select, defaultProps);
   itSupportsMargins(Select, defaultProps);
+  itSupportsSx(Select, defaultProps, { dive: 1 });
   itSupportsRef(Select, defaultProps, HTMLInputElement);
 
   it('renders correct amount of items based on data prop', async () => {

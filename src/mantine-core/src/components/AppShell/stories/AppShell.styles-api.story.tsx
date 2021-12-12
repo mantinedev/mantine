@@ -15,7 +15,7 @@ function Wrapper(props: any) {
       {...props}
       navbar={
         <Navbar width={{ base: 300 }} {...props}>
-          Navbar
+          <Navbar.Section {...props}>Navbar Section</Navbar.Section>
         </Navbar>
       }
       header={

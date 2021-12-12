@@ -5,6 +5,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { RadioGroup, Radio } from './index';
 import { RadioGroup as RadioGroupStylesApi } from './styles.api';
@@ -20,6 +21,7 @@ const defaultProps = {
 describe('@mantine/core/RadioGroup', () => {
   itSupportsRef(RadioGroup, defaultProps, HTMLDivElement);
   itSupportsMargins(RadioGroup, defaultProps);
+  itSupportsSx(RadioGroup, defaultProps, { dive: 1 });
 
   checkAccessibility([
     mount(
@@ -43,10 +45,6 @@ describe('@mantine/core/RadioGroup', () => {
     Object.keys(RadioGroupStylesApi),
     'RadioGroup'
   );
-
-  it('has correct displayName', () => {
-    expect(RadioGroup.displayName).toEqual('@mantine/core/RadioGroup');
-  });
 
   it('renders correct children', () => {
     const element = shallow(
@@ -95,5 +93,9 @@ describe('@mantine/core/RadioGroup', () => {
     expect(element.find(Radio).at(0).prop('checked')).toBe(false);
     expect(element.find(Radio).at(1).prop('checked')).toBe(true);
     expect(element.find(Radio).at(2).prop('checked')).toBe(false);
+  });
+
+  it('has correct displayName', () => {
+    expect(RadioGroup.displayName).toEqual('@mantine/core/RadioGroup');
   });
 });

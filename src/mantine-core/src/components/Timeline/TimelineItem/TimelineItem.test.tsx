@@ -5,6 +5,8 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itRendersChildren,
+  itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { TimelineItem } from './TimelineItem';
 
@@ -15,6 +17,8 @@ describe('@mantine/core/TimelineItem', () => {
   itSupportsOthers(TimelineItem, defaultProps);
   itRendersChildren(TimelineItem, defaultProps);
   itSupportsStyle(TimelineItem, defaultProps);
+  itSupportsMargins(TimelineItem, defaultProps);
+  itSupportsSx(TimelineItem, defaultProps);
 
   it('renders given bullet', () => {
     const element = shallow(<TimelineItem bullet="test-bullet" />);

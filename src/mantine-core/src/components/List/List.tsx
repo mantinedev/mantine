@@ -1,5 +1,6 @@
-import React, { Children } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
+import React, { Children, forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 
@@ -33,47 +34,58 @@ export interface ListProps
   listStyleType?: React.CSSProperties['listStyleType'];
 }
 
-export function List({
-  children,
-  type = 'unordered',
-  size = 'md',
-  listStyleType,
-  withPadding = false,
-  center = false,
-  spacing = 0,
-  icon,
-  className,
-  style,
-  styles,
-  classNames,
-  sx,
-  ...others
-}: ListProps) {
-  const { classes, cx } = useStyles(
-    { withPadding, size, listStyleType },
-    { sx, classNames, styles, name: 'List' }
-  );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const Element = type === 'unordered' ? 'ul' : 'ol';
+type ListComponent = ((props: ListProps) => React.ReactElement) & {
+  displayName: string;
+  Item: typeof ListItem;
+};
 
-  const items = Children.toArray(children)
-    .filter((item: React.ReactElement) => item.type === ListItem)
-    .map((item: React.ReactElement) =>
-      React.cloneElement(item, {
-        classNames,
-        styles,
-        spacing,
-        center,
-        icon: item.props?.icon || icon,
-      })
+export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
+  (
+    {
+      children,
+      type = 'unordered',
+      size = 'md',
+      listStyleType,
+      withPadding = false,
+      center = false,
+      spacing = 0,
+      icon,
+      className,
+      styles,
+      classNames,
+      ...others
+    }: ListProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { withPadding, size, listStyleType },
+      { classNames, styles, name: 'List' }
     );
 
-  return (
-    <Element className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      {items}
-    </Element>
-  );
-}
+    const items = Children.toArray(children)
+      .filter((item: React.ReactElement) => item.type === ListItem)
+      .map((item: React.ReactElement) =>
+        React.cloneElement(item, {
+          classNames,
+          styles,
+          spacing,
+          center,
+          icon: item.props?.icon || icon,
+        })
+      );
+
+    return (
+      <Box
+        component={type === 'unordered' ? 'ul' : 'ol'}
+        className={cx(classes.root, className)}
+        ref={ref}
+        {...others}
+      >
+        {items}
+      </Box>
+    );
+  }
+) as any;
 
 List.Item = ListItem;
 List.displayName = '@mantine/core/List';

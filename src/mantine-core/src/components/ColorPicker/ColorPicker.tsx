@@ -97,7 +97,6 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       className,
       styles,
       classNames,
-      sx,
       ...others
     }: ColorPickerProps,
     ref
@@ -148,7 +147,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     }, [format]);
 
     return (
-      <Box className={cx(classes.wrapper, className)} sx={sx} ref={ref} {...others}>
+      <Box className={cx(classes.wrapper, className)} ref={ref} {...others}>
         {withPicker && (
           <>
             <Saturation

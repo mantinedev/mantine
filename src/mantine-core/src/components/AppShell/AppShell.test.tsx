@@ -7,6 +7,8 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStylesApi,
+  itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
@@ -19,7 +21,9 @@ describe('@mantine/core/AppShell', () => {
   itRendersChildren(AppShell, defaultProps);
   itSupportsClassName(AppShell, defaultProps);
   itSupportsStyle(AppShell, defaultProps);
+  itSupportsMargins(AppShell, defaultProps);
   itSupportsOthers(AppShell, defaultProps);
+  itSupportsSx(AppShell, defaultProps);
   itSupportsRef(AppShell, defaultProps, HTMLDivElement);
   itSupportsStylesApi(AppShell, defaultProps, Object.keys(AppShellStylesAPi), 'AppShell');
 

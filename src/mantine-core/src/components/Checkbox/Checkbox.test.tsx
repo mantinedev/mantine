@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Checkbox } from './Checkbox';
 import { Checkbox as CheckboxStylesApi } from './styles.api';
@@ -19,6 +20,7 @@ const defaultProps = {
 
 describe('@mantine/core/Checkbox', () => {
   itSupportsStyle(Checkbox, defaultProps);
+  itSupportsSx(Checkbox, defaultProps);
   itSupportsClassName(Checkbox, defaultProps);
   itSupportsMargins(Checkbox, defaultProps);
   itSupportsRef(Checkbox, defaultProps, HTMLInputElement);

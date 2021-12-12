@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
+import React, { useState, forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { useDidUpdate } from '@mantine/hooks';
+import { Text } from '../Text';
+import { Box } from '../Box';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
@@ -47,7 +49,6 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
   (
     {
       className,
-      style,
       alt,
       src,
       fit = 'cover',
@@ -61,29 +62,22 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
       classNames,
       styles,
       caption,
-      sx,
       ...others
     }: ImageProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius }, { sx, classNames, styles, name: 'Image' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(!src);
     const isPlaceholder = withPlaceholder && (!loaded || error);
-    const firstUpdate = useRef(true);
 
-    useEffect(() => {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-      } else {
-        setLoaded(false);
-        setError(false);
-      }
+    useDidUpdate(() => {
+      setLoaded(false);
+      setError(false);
     }, [src]);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <figure className={classes.figure}>
           <div className={classes.imageWrapper}>
             <img
@@ -116,7 +110,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
             </Text>
           )}
         </figure>
-      </div>
+      </Box>
     );
   }
 );
