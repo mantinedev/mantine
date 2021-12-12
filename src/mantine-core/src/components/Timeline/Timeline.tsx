@@ -1,5 +1,6 @@
 import React, { Children } from 'react';
-import { DefaultProps, MantineColor, useExtractedMargins, useSx } from '@mantine/styles';
+import { DefaultProps, MantineColor } from '@mantine/styles';
+import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
 export interface TimelineProps
@@ -34,13 +35,9 @@ export function Timeline({
   lineWidth = 4,
   classNames,
   styles,
-  className,
-  sx,
   ...others
 }: TimelineProps) {
-  const { sxClassName } = useSx({ sx, className });
   const hasActive = typeof active === 'number';
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
   const items = Children.toArray(children)
     .filter((child: React.ReactElement) => child.type === TimelineItem)
@@ -63,9 +60,9 @@ export function Timeline({
       : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
   return (
-    <div className={sxClassName} style={{ ...offset, ...mergedStyles }} {...rest}>
+    <Box style={{ ...offset, ...style }} {...others}>
       {items}
-    </div>
+    </Box>
   );
 }
 
