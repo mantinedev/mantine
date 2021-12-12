@@ -1,6 +1,7 @@
 import React, { forwardRef, useRef } from 'react';
 import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
+import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
@@ -51,7 +52,10 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
     }: SelectDropdownProps,
     ref
   ) => {
-    const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
+    const { classes } = useStyles(
+      { native: dropdownComponent !== SelectScrollArea },
+      { classNames, styles, name: __staticSelector }
+    );
 
     const previousPlacement = useRef<Placement>('bottom');
 
