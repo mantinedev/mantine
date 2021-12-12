@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itRendersChildren,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Collapse } from './Collapse';
 
@@ -19,6 +20,7 @@ describe('@mantine/core/Collapse', () => {
   itSupportsClassName(Collapse, defaultProps);
   itSupportsOthers(Collapse, defaultProps);
   itSupportsStyle(Collapse, defaultProps);
+  itSupportsSx(Collapse, defaultProps);
   itSupportsMargins(Collapse, defaultProps);
 
   it('transitionend event bubbling does not run onTransitionEnd twice', () => {

@@ -7,16 +7,20 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Code } from './Code';
 
+const defaultProps = {};
+
 describe('@mantine/core/Code', () => {
-  itRendersChildren(Code, {});
-  itSupportsClassName(Code, {});
-  itSupportsOthers(Code, {});
-  itSupportsStyle(Code, {});
-  itSupportsMargins(Code, {});
-  itSupportsRef(Code, {}, HTMLElement);
+  itRendersChildren(Code, defaultProps);
+  itSupportsSx(Code, defaultProps);
+  itSupportsClassName(Code, defaultProps);
+  itSupportsOthers(Code, defaultProps);
+  itSupportsStyle(Code, defaultProps);
+  itSupportsMargins(Code, defaultProps);
+  itSupportsRef(Code, defaultProps, HTMLElement);
 
   it('renders code element for inline code and pre element for block', () => {
     const inline = shallow(<Code block={false}>Code</Code>);

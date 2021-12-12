@@ -8,19 +8,23 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Paper } from '../Paper/Paper';
 import { Card } from './Card';
 import { CardSection } from './CardSection/CardSection';
 
+const defaultProps = {};
+
 describe('@mantine/core/Card', () => {
-  itSupportsOthers(Card, {});
-  itSupportsClassName(Card, {});
-  itSupportsRef(Card, {}, HTMLDivElement);
-  itRendersChildren(Card, {});
-  itSupportsStyle(Card, {});
-  itSupportsMargins(Card, {});
-  itIsPolymorphic(Card, {}, { dive: 1 });
+  itSupportsOthers(Card, defaultProps);
+  itSupportsSx(Card, defaultProps, { dive: 1 });
+  itSupportsClassName(Card, defaultProps);
+  itSupportsRef(Card, defaultProps, HTMLDivElement);
+  itRendersChildren(Card, defaultProps);
+  itSupportsStyle(Card, defaultProps);
+  itSupportsMargins(Card, defaultProps);
+  itIsPolymorphic(Card, defaultProps, { dive: 2 });
 
   it('passes padding and radius to Paper component', () => {
     const element = shallow(

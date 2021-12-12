@@ -8,6 +8,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Image } from './Image';
 
@@ -24,6 +25,7 @@ describe('@mantine/core/Image', () => {
   ]);
 
   itSupportsClassName(Image, defaultProps);
+  itSupportsSx(Image, defaultProps);
   itSupportsMargins(Image, defaultProps);
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);

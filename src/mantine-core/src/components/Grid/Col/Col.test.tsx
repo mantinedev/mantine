@@ -4,6 +4,7 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { Col, isValidSpan } from './Col';
@@ -21,6 +22,7 @@ describe('@mantine/core/Col', () => {
   itSupportsClassName(Col, defaultProps);
   itSupportsStyle(Col, defaultProps);
   itSupportsMargins(Col, defaultProps);
+  itSupportsSx(Col, defaultProps);
 
   it('correctly detects invalid spans', () => {
     expect(isValidSpan(2)).toBe(true);

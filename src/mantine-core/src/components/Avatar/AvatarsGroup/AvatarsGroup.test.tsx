@@ -7,6 +7,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { AvatarsGroup } from './AvatarsGroup';
 import { Avatar } from '../Avatar';
@@ -17,11 +18,12 @@ const defaultProps = {
 };
 
 describe('@mantine/core/AvatarsGroup', () => {
-  itSupportsOthers(AvatarsGroup, {});
-  itSupportsClassName(AvatarsGroup, {});
-  itSupportsStyle(AvatarsGroup, {});
-  itSupportsMargins(AvatarsGroup, {});
-  itSupportsRef(AvatarsGroup, {}, HTMLDivElement);
+  itSupportsOthers(AvatarsGroup, defaultProps);
+  itSupportsClassName(AvatarsGroup, defaultProps);
+  itSupportsStyle(AvatarsGroup, defaultProps);
+  itSupportsMargins(AvatarsGroup, defaultProps);
+  itSupportsSx(AvatarsGroup, defaultProps);
+  itSupportsRef(AvatarsGroup, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     AvatarsGroup,
     defaultProps,

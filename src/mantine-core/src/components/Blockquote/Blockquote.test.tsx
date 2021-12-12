@@ -9,17 +9,21 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
 import { Blockquote as BlockquoteStylesApi } from './styles.api';
 
+const defaultProps = {};
+
 describe('@mantine/core/Blockquote', () => {
-  itRendersChildren(Blockquote, {});
-  itSupportsClassName(Blockquote, {});
-  itSupportsOthers(Blockquote, {});
-  itSupportsStyle(Blockquote, {});
-  itSupportsMargins(Blockquote, {});
-  itSupportsRef(Blockquote, {}, HTMLQuoteElement);
+  itRendersChildren(Blockquote, defaultProps);
+  itSupportsClassName(Blockquote, defaultProps);
+  itSupportsOthers(Blockquote, defaultProps);
+  itSupportsStyle(Blockquote, defaultProps);
+  itSupportsMargins(Blockquote, defaultProps);
+  itSupportsSx(Blockquote, defaultProps);
+  itSupportsRef(Blockquote, defaultProps, HTMLQuoteElement);
   itSupportsStylesApi(
     Blockquote,
     { cite: 'test-cite', children: 'test-quote' },

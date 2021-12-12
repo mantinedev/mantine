@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Header } from './Header';
 
@@ -16,6 +17,7 @@ describe('@mantine/core/Header', () => {
   itSupportsMargins(Header, defaultProps);
   itSupportsOthers(Header, defaultProps);
   itSupportsStyle(Header, defaultProps);
+  itSupportsSx(Header, defaultProps);
   itSupportsRef(Header, defaultProps, HTMLElement);
 
   it('has correct displayName', () => {

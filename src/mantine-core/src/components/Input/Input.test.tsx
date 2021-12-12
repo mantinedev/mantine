@@ -6,9 +6,12 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Input } from './Input';
+
+const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
   beforeAll(() => {
@@ -23,10 +26,11 @@ describe('@mantine/core/Input', () => {
     mount(<Input placeholder="test-input" invalid />),
   ]);
 
-  itSupportsClassName(Input, {});
-  itSupportsMargins(Input, {});
-  itSupportsStyle(Input, {});
-  itSupportsRef(Input, {}, HTMLInputElement);
+  itSupportsClassName(Input, defaultProps);
+  itSupportsMargins(Input, defaultProps);
+  itSupportsSx(Input, defaultProps);
+  itSupportsStyle(Input, defaultProps);
+  itSupportsRef(Input, defaultProps, HTMLInputElement);
 
   it('spread wrapperProps to root element', () => {
     const element = shallow(<Input wrapperProps={{ 'aria-label': 'test-input' }} />);

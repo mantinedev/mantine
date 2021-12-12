@@ -10,18 +10,22 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Button } from './Button';
 
+const defaultProps = {};
+
 describe('@mantine/core/Button', () => {
   checkAccessibility([mount(<Button>Mantine button</Button>)]);
-  itSupportsOthers(Button, {});
-  itRendersChildren(Button, {});
-  itIsPolymorphic(Button, {}, { dive: 1 });
-  itSupportsStyle(Button, {});
-  itSupportsRef(Button, {}, HTMLButtonElement);
-  itSupportsClassName(Button, {});
-  itSupportsMargins(Button, {});
+  itSupportsOthers(Button, defaultProps);
+  itRendersChildren(Button, defaultProps);
+  itIsPolymorphic(Button, defaultProps, { dive: 1 });
+  itSupportsStyle(Button, defaultProps);
+  itSupportsSx(Button, defaultProps);
+  itSupportsRef(Button, defaultProps, HTMLButtonElement);
+  itSupportsClassName(Button, defaultProps);
+  itSupportsMargins(Button, defaultProps);
 
   itSupportsStylesApi(
     Button,

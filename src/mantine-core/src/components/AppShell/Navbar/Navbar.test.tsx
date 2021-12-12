@@ -5,6 +5,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Navbar } from './Navbar';
 import { NavbarSection } from './NavbarSection/NavbarSection';
@@ -17,6 +18,7 @@ describe('@mantine/core/Navbar', () => {
   itSupportsMargins(Navbar, defaultProps);
   itSupportsOthers(Navbar, defaultProps);
   itSupportsStyle(Navbar, defaultProps);
+  itSupportsSx(Navbar, defaultProps);
   itSupportsRef(Navbar, defaultProps, HTMLElement);
 
   it('exposes NavbarSection as Navbar.Section', () => {

@@ -7,16 +7,20 @@ import {
   itSupportsMargins,
   itSupportsRef,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { ColorSwatch } from './ColorSwatch';
 
+const defaultProps = { color: '#fff' };
+
 describe('@mantine/core/ColorSwatch', () => {
-  itSupportsOthers(ColorSwatch, { color: '#fff' });
-  itSupportsClassName(ColorSwatch, { color: '#fff' });
-  itSupportsStyle(ColorSwatch, { color: '#fff' });
-  itSupportsMargins(ColorSwatch, { color: '#fff' });
-  itIsPolymorphic(ColorSwatch, { color: '#fff' }, { dive: 1 });
-  itSupportsRef(ColorSwatch, { color: '#fff' }, HTMLDivElement);
+  itSupportsOthers(ColorSwatch, defaultProps);
+  itSupportsClassName(ColorSwatch, defaultProps);
+  itSupportsStyle(ColorSwatch, defaultProps);
+  itSupportsSx(ColorSwatch, defaultProps);
+  itSupportsMargins(ColorSwatch, defaultProps);
+  itIsPolymorphic(ColorSwatch, defaultProps, { dive: 1 });
+  itSupportsRef(ColorSwatch, defaultProps, HTMLDivElement);
 
   it('sets correct background-color based on color property', () => {
     const element = shallow(<ColorSwatch color="red" />);

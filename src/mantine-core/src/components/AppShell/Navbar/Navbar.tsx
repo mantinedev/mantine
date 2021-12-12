@@ -56,7 +56,6 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       className,
       classNames,
       styles,
-      sx,
       children,
       ...others
     }: NavbarProps,
@@ -64,7 +63,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   ) => {
     const { classes, cx } = useStyles(
       { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
-      { classNames, styles, sx, name: 'Navbar' }
+      { classNames, styles, name: 'Navbar' }
     );
 
     return (

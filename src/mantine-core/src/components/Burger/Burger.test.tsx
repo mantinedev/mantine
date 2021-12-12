@@ -8,6 +8,7 @@ import {
   itSupportsRef,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Burger } from './Burger';
 import { Burger as BurgerStylesApi } from './styles.api';
@@ -23,6 +24,7 @@ describe('@mantine/core/Burger', () => {
   itSupportsClassName(Burger, defaultProps);
   itSupportsStyle(Burger, defaultProps);
   itSupportsMargins(Burger, defaultProps);
+  itSupportsSx(Burger, defaultProps);
   itSupportsRef(Burger, defaultProps, HTMLButtonElement);
   itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'Burger');
 

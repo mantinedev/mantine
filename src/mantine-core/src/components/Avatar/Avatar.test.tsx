@@ -9,6 +9,7 @@ import {
   itSupportsRef,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Avatar } from './Avatar';
 
@@ -24,6 +25,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsMargins(Avatar, defaultProps);
   itSupportsOthers(Avatar, defaultProps);
   itSupportsStyle(Avatar, defaultProps);
+  itSupportsSx(Avatar, defaultProps);
   itIsPolymorphic(Avatar, defaultProps, { dive: 1 });
   itSupportsRef(Avatar, defaultProps, HTMLDivElement);
 
