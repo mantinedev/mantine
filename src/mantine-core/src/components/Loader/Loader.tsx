@@ -4,9 +4,9 @@ import {
   MantineNumberSize,
   MantineColor,
   MantineTheme,
-  useExtractedMargins,
-  useSx,
+  useMantineTheme,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import { Bars } from './loaders/Bars';
 import { Oval } from './loaders/Oval';
 import { Dots } from './loaders/Dots';
@@ -36,33 +36,22 @@ export interface LoaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   variant?: MantineTheme['loader'];
 }
 
-export function Loader({
-  size = 'md',
-  color,
-  className,
-  variant,
-  style,
-  sx,
-  ...others
-}: LoaderProps) {
-  const { sxClassName, theme } = useSx({ sx, className });
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+export function Loader({ size = 'md', color, variant, ...others }: LoaderProps) {
+  const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
-  const Component = LOADERS[defaultLoader] || LOADERS.bars;
   const _color = color || theme.primaryColor;
 
   return (
-    <Component
+    <Box
+      role="presentation"
+      component={LOADERS[defaultLoader] || LOADERS.bars}
       size={theme.fn.size({ size, sizes: LOADER_SIZES })}
-      style={mergedStyles}
       color={
         _color in theme.colors
           ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : 6)
           : color
       }
-      role="presentation"
-      className={sxClassName}
-      {...rest}
+      {...others}
     />
   );
 }
