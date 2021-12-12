@@ -28,12 +28,13 @@ export const Affix = forwardRef<HTMLDivElement, AffixProps>(
       position = { bottom: 0, right: 0 },
       zIndex = getDefaultZIndex('modal'),
       className,
+      sx,
       ...others
     }: AffixProps,
     ref
   ) => (
     <Portal zIndex={zIndex} target={target}>
-      <Box sx={{ position: 'fixed', ...position }} ref={ref} {...others} />
+      <Box sx={[{ position: 'fixed', ...position }, sx]} ref={ref} {...others} />
     </Portal>
   )
 );
