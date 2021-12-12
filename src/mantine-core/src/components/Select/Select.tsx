@@ -178,7 +178,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,

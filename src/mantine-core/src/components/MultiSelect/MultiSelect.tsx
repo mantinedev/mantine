@@ -144,7 +144,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,

@@ -172,15 +172,10 @@ storiesOf('@mantine/core/Select/stories', module)
       {content}
     </div>
   ))
-  .add('Popper flip (no direction switch)', () => (
+  .add('Popper flip (with direction switch)', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
-      <Select
-        label="Dropdown flip"
-        data={data}
-        placeholder="Select items"
-        switchDirectionOnFlip={false}
-      />
+      <Select label="Dropdown flip" data={data} placeholder="Select items" switchDirectionOnFlip />
       {content}
     </div>
   ))

@@ -47,7 +47,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'flip',
       __staticSelector,

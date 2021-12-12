@@ -71,7 +71,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      switchDirectionOnFlip = true,
+      switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'bottom',
       ...others
