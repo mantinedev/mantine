@@ -8,6 +8,7 @@ import {
   mockResizeObserver,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { SegmentedControl } from './SegmentedControl';
 import { SegmentedControl as SegmentedControlStylesApi } from './styles.api';
@@ -31,6 +32,7 @@ describe('@mantine/core/SegmentedControl', () => {
   itSupportsOthers(SegmentedControl, defaultProps);
   itSupportsMargins(SegmentedControl, defaultProps);
   itSupportsStyle(SegmentedControl, defaultProps);
+  itSupportsSx(SegmentedControl, defaultProps);
   itSupportsStylesApi(
     SegmentedControl,
     defaultProps,
