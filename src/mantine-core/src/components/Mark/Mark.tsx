@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineColor } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Mark.styles';
 
 export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<'mark'> {
@@ -8,12 +9,9 @@ export interface MarkProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Mark = forwardRef<HTMLElement, MarkProps>(
-  ({ color = 'yellow', style, sx, className, classNames, styles, ...others }: MarkProps, ref) => {
-    const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Mark' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    return (
-      <mark ref={ref} style={mergedStyles} className={cx(classes.root, className)} {...rest} />
-    );
+  ({ color = 'yellow', className, classNames, styles, ...others }: MarkProps, ref) => {
+    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Mark' });
+    return <Box component="mark" ref={ref} className={cx(classes.root, className)} {...others} />;
   }
 );
 
