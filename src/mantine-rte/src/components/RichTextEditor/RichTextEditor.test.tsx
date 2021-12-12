@@ -4,6 +4,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { RichTextEditor } from './RichTextEditor';
 import { RichTextEditor as RichTextEditorStylesApi } from '../../styles.api';
@@ -15,6 +16,7 @@ const defaultProps = {
 
 describe('@mantine/core/RichTextEditor', () => {
   itSupportsClassName(RichTextEditor, defaultProps);
+  itSupportsSx(RichTextEditor, defaultProps);
   itSupportsOthers(RichTextEditor, defaultProps);
   itSupportsStyle(RichTextEditor, defaultProps);
   itSupportsMargins(RichTextEditor, defaultProps);
