@@ -1,5 +1,4 @@
 import React from 'react';
-import { RocketIcon } from '@modulz/radix-icons';
 import { shallow, mount } from 'enzyme';
 import {
   checkAccessibility,
@@ -10,24 +9,25 @@ import {
   itRendersChildren,
   itSupportsMargins,
   itIsPolymorphic,
+  itSupportsSx,
 } from '@mantine/tests';
-import { Loader } from '../Loader/Loader';
+import { Loader } from '../Loader';
 import { ActionIcon } from './ActionIcon';
 
+const defaultProps = { children: '$' };
+
 describe('@mantine/core/ActionIcon', () => {
-  itSupportsClassName(ActionIcon, {});
-  itSupportsOthers(ActionIcon, {});
-  itSupportsStyle(ActionIcon, {});
-  itSupportsMargins(ActionIcon, {});
-  itIsPolymorphic(ActionIcon, {}, { dive: 1 });
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement);
-  itRendersChildren(ActionIcon, {});
+  itSupportsClassName(ActionIcon, defaultProps);
+  itSupportsOthers(ActionIcon, defaultProps);
+  itSupportsSx(ActionIcon, defaultProps);
+  itSupportsStyle(ActionIcon, defaultProps);
+  itSupportsMargins(ActionIcon, defaultProps);
+  itIsPolymorphic(ActionIcon, defaultProps, { dive: 1 });
+  itSupportsRef(ActionIcon, defaultProps, HTMLButtonElement);
+  itRendersChildren(ActionIcon, defaultProps);
   checkAccessibility([
-    mount(
-      <ActionIcon title="Action icon">
-        <RocketIcon />
-      </ActionIcon>
-    ),
+    mount(<ActionIcon {...defaultProps} title="Action icon" />),
+    mount(<ActionIcon {...defaultProps} aria-label="Action icon" />),
   ]);
 
   it('replaces icon with Loader when loading is set to true', () => {

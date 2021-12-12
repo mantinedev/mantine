@@ -19,6 +19,6 @@ describe('@mantine/core/Box', () => {
   itSupportsRef(Box, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
-    expect(Box.displayName).toEqual('@mantine/core/Box');
+    expect(Box.displayName).toEqual('MantineBox');
   });
 });
