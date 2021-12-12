@@ -1,5 +1,6 @@
 import React, { Children } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
 
@@ -43,18 +44,14 @@ export function List({
   spacing = 0,
   icon,
   className,
-  style,
   styles,
   classNames,
-  sx,
   ...others
 }: ListProps) {
   const { classes, cx } = useStyles(
     { withPadding, size, listStyleType },
-    { sx, classNames, styles, name: 'List' }
+    { classNames, styles, name: 'List' }
   );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const Element = type === 'unordered' ? 'ul' : 'ol';
 
   const items = Children.toArray(children)
     .filter((item: React.ReactElement) => item.type === ListItem)
@@ -69,9 +66,13 @@ export function List({
     );
 
   return (
-    <Element className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+    <Box
+      component={type === 'unordered' ? 'ul' : 'ol'}
+      className={cx(classes.root, className)}
+      {...others}
+    >
       {items}
-    </Element>
+    </Box>
   );
 }
 
