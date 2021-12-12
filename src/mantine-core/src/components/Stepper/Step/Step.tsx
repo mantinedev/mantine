@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineSize, useSx } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineSize } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
@@ -83,7 +83,6 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       __staticSelector = 'Step',
       classNames,
       styles,
-      sx,
       ...others
     }: StepProps,
     ref
@@ -93,14 +92,12 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       { name: __staticSelector, classNames, styles }
     );
 
-    const { sxClassName } = useSx({ sx });
-
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
     const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
 
     return (
       <UnstyledButton
-        className={cx(classes.step, classes[state], sxClassName, className)}
+        className={cx(classes.step, classes[state], className)}
         tabIndex={allowStepClick ? 0 : -1}
         ref={ref}
         {...others}

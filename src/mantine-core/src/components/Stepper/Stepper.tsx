@@ -4,9 +4,9 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  useExtractedMargins,
   ClassNames,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
 import useStyles from './Stepper.styles';
 
@@ -68,7 +68,6 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       progressIcon,
       color,
       iconSize,
-      style,
       contentPadding = 'md',
       size = 'md',
       orientation = 'horizontal',
@@ -76,15 +75,13 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       iconPosition = 'left',
       classNames,
       styles,
-      sx,
       ...others
     }: StepperProps,
     ref
   ) => {
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-      { classNames, styles, sx, name: 'Stepper' }
+      { classNames, styles, name: 'Stepper' }
     );
     const filteredChildren = Children.toArray(children).filter(
       (item: React.ReactElement) => item.type === Step
@@ -128,10 +125,10 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     const content = filteredChildren[active]?.props?.children;
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <div className={classes.steps}>{items}</div>
         {content && <div className={classes.content}>{content}</div>}
-      </div>
+      </Box>
     );
   }
 ) as any;

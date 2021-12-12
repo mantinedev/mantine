@@ -5,16 +5,20 @@ import {
   itSupportsRef,
   itSupportsStyle,
   checkAccessibility,
+  itSupportsSx,
 } from '@mantine/tests';
 import { mount, shallow } from 'enzyme';
 import { Loader } from '../../Loader';
 import { Step } from './Step';
 
+const defaultProps = {};
+
 describe('@mantine/core/Step', () => {
-  itSupportsClassName(Step, {});
-  itSupportsOthers(Step, {});
-  itSupportsStyle(Step, {});
-  itSupportsRef(Step, {}, HTMLButtonElement);
+  itSupportsClassName(Step, defaultProps);
+  itSupportsOthers(Step, defaultProps);
+  itSupportsStyle(Step, defaultProps);
+  itSupportsSx(Step, defaultProps, { dive: 1 });
+  itSupportsRef(Step, defaultProps, HTMLButtonElement);
   checkAccessibility([
     mount(<Step aria-label="Test" />),
     mount(<Step title="Test" />),

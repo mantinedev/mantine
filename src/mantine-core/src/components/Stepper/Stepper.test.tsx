@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsSx,
 } from '@mantine/tests';
 import { mount } from 'enzyme';
 import { Stepper } from './Stepper';
@@ -32,6 +33,7 @@ describe('@mantine/core/Stepper', () => {
   itSupportsMargins(Stepper, defaultProps);
   itSupportsOthers(Stepper, defaultProps);
   itSupportsStyle(Stepper, defaultProps);
+  itSupportsSx(Stepper, defaultProps);
   itSupportsRef(Stepper, defaultProps, HTMLDivElement);
   checkAccessibility([mount(<Stepper {...defaultProps} />)]);
   itSupportsStylesApi(Stepper, defaultProps, Object.keys(StepperStylesApi), 'Stepper');
