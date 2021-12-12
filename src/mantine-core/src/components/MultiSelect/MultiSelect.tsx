@@ -6,32 +6,20 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  ClassNames,
-  useExtractedMargins,
-  getDefaultZIndex,
-} from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
-import { MantineTransition } from '../Transition';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
-import {
-  SelectItem,
-  SelectDataItem,
-  BaseSelectProps,
-  BaseSelectStylesNames,
-} from '../Select/types';
+import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import { groupSortData } from '../Select/group-sort-data/group-sort-data';
 import useStyles from './MultiSelect.styles';
+import { SelectSharedProps } from '../Select/Select';
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
@@ -41,57 +29,21 @@ export type MultiSelectStylesNames =
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;
 
-export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, BaseSelectProps {
-  /** Input size */
-  size?: MantineSize;
-
-  /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
-
-  /** Data for select options */
-  data: SelectDataItem[];
-
-  /** Value for controlled component */
-  value?: string[];
-
-  /** Default value for uncontrolled component */
-  defaultValue?: string[];
-
-  /** Called each time value changes */
-  onChange?(value: string[]): void;
-
+export interface MultiSelectProps
+  extends DefaultProps<MultiSelectStylesNames>,
+    BaseSelectProps,
+    Omit<SelectSharedProps<SelectItem, string[]>, 'filter'> {
   /** Component used to render values */
   valueComponent?: React.FC<any>;
 
-  /** Component used to render item */
-  itemComponent?: React.FC<any>;
-
-  /** Dropdown body appear/disappear transition */
-  transition?: MantineTransition;
-
-  /** Dropdown body transition duration */
-  transitionDuration?: number;
-
-  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: MantineShadow;
-
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;
-
-  /** Nothing found label */
-  nothingFound?: React.ReactNode;
 
   /** Enable items searching */
   searchable?: boolean;
 
   /** Function based on which items in dropdown are filtered */
   filter?(value: string, selected: boolean, item: SelectItem): boolean;
-
-  /** Limit amount of items displayed at a time for searchable select */
-  limit?: number;
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
@@ -108,12 +60,6 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   /** Called each time search query changes */
   onSearchChange?(query: string): void;
 
-  /** Initial dropdown opened state */
-  initiallyOpened?: boolean;
-
-  /** Get input ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
-
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -129,23 +75,8 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: any;
 
-  /** Called when dropdown is opened */
-  onDropdownOpen?(): void;
-
-  /** Called when dropdown is closed */
-  onDropdownClose?(): void;
-
   /** Limit amount of items selected */
   maxSelectedValues?: number;
-
-  /** Whether to render the dropdown in a Portal */
-  withinPortal?: boolean;
-
-  /** Whether to switch item order and keyboard navigation on dropdown position flip */
-  switchDirectionOnFlip?: boolean;
-
-  /** Dropdown z-index */
-  zIndex?: number;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -216,6 +147,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
       name,
+      dropdownPosition,
       ...others
     }: MultiSelectProps,
     ref
@@ -612,6 +544,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             switchDirectionOnFlip={switchDirectionOnFlip}
             withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}

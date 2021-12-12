@@ -3,6 +3,7 @@ export { usage } from './usage';
 export { searchable } from './searchable';
 export { clearable } from './clearable';
 export { configurator } from './configurator';
+export { flip } from './flip';
 export { creatable } from './creatable';
 export { groups } from './groups';
 export { disabledItems } from './disabledItems';

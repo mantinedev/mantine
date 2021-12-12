@@ -2,6 +2,7 @@ export { usage } from './usage';
 export { searchable } from './searchable';
 export { large } from './large';
 export { configurator } from './configurator';
+export { flip } from './flip';
 export { itemComponent } from './itemComponent';
 export { clearable } from './clearable';
 export { creatable } from './creatable';
