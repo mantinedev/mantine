@@ -5,6 +5,7 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
@@ -19,6 +20,7 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsClassName(MultiSelect, defaultProps);
   itSupportsStyle(MultiSelect, defaultProps);
   itSupportsMargins(MultiSelect, defaultProps);
+  itSupportsSx(MultiSelect, defaultProps, { dive: 1 });
   itSupportsRef(MultiSelect, defaultProps, HTMLInputElement);
 
   it('passes required, invalid, icon and radius props to Input component', () => {
