@@ -8,10 +8,12 @@ import { Tabs as TabsStylesApi } from '../styles.api';
 const styles = generateBorderStyles(TabsStylesApi);
 const useStyles = createStyles(() => styles);
 
-function Wrapper(props: Partial<TabsProps>) {
+function Wrapper({ tabProps, ...props }: Partial<TabsProps> & { tabProps?: any }) {
   return (
     <Tabs mt="xl" mx="auto" style={{ maxWidth: 800 }} {...props}>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
+      <Tabs.Tab label="First" {...tabProps}>
+        First tab content
+      </Tabs.Tab>
       <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
       <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
     </Tabs>
@@ -23,7 +25,9 @@ function WithClassNames() {
 }
 
 storiesOf('@mantine/core/Tabs/styles-api', module)
-  .add('With sx', () => <Wrapper sx={{ border: '1px solid red', backgroundColor: 'blue' }} />)
+  .add('With sx', () => (
+    <Wrapper sx={{ border: '1px solid red' }} tabProps={{ sx: { border: '1px solid blue' } }} />
+  ))
   .add('With styles as object', () => <Wrapper styles={styles} />)
   .add('With styles as function', () => <Wrapper styles={() => styles} />)
   .add('With styles as classNames', () => <WithClassNames />)

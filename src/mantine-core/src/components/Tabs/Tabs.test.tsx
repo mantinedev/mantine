@@ -8,6 +8,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs } from './Tabs';
@@ -37,6 +38,7 @@ describe('@mantine/core/Tabs', () => {
   itSupportsStyle(Tabs, defaultProps);
   itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
+  itSupportsSx(Tabs, defaultProps);
   itSupportsRef(Tabs, defaultProps, HTMLDivElement);
   itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'Tabs');
 
