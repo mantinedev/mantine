@@ -1,12 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useDropzone } from 'react-dropzone';
-import {
-  DefaultProps,
-  ClassNames,
-  MantineNumberSize,
-  useExtractedMargins,
-  LoadingOverlay,
-} from '@mantine/core';
+import { DefaultProps, ClassNames, MantineNumberSize, LoadingOverlay, Box } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
 
@@ -57,7 +51,6 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       radius = 'sm',
       disabled,
       classNames,
-      style,
       styles,
       loading = false,
       multiple = true,
@@ -66,16 +59,14 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       children,
       onDrop,
       openRef,
-      sx,
       ...others
     }: DropzoneProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { radius, padding },
-      { sx, classNames, styles, name: 'Dropzone' }
+      { classNames, styles, name: 'Dropzone' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
       onDropAccepted: (files) => onDrop(files),
@@ -88,10 +79,9 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
     assignRef(openRef, open);
 
     return (
-      <div
-        {...rest}
+      <Box
+        {...others}
         {...getRootProps({ ref })}
-        style={mergedStyles}
         className={cx(
           classes.root,
           {
@@ -105,7 +95,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
         <LoadingOverlay visible={loading} radius={radius} />
         <input {...getInputProps()} />
         {children({ accepted: isDragAccept, rejected: isDragReject })}
-      </div>
+      </Box>
     );
   }
 );

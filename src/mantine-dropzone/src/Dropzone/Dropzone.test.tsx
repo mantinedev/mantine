@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
+  itSupportsSx,
 } from '@mantine/tests';
 import { LoadingOverlay } from '@mantine/core';
 import { Dropzone } from './Dropzone';
@@ -20,6 +21,7 @@ describe('@mantine/core/Dropzone', () => {
   itSupportsMargins(Dropzone, defaultProps);
   itSupportsOthers(Dropzone, defaultProps);
   itSupportsStyle(Dropzone, defaultProps);
+  itSupportsSx(Dropzone, defaultProps);
   itSupportsRef(Dropzone, defaultProps, HTMLDivElement);
 
   it('displays LoadingOverlay based on loading prop', () => {
