@@ -1,6 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
+import {
+  itSupportsClassName,
+  itSupportsOthers,
+  itSupportsStyle,
+  itSupportsMargins,
+  itSupportsSx,
+} from '@mantine/tests';
 import { Popover } from './Popover';
 import { PopoverBody } from './PopoverBody/PopoverBody';
 
@@ -19,6 +25,8 @@ describe('@mantine/core/Popover', () => {
   itSupportsClassName(Popover, defaultProps);
   itSupportsOthers(Popover, defaultProps);
   itSupportsStyle(Popover, defaultProps);
+  itSupportsMargins(Popover, defaultProps);
+  itSupportsSx(Popover, defaultProps);
 
   it('passes props to PopoverBody', () => {
     const element = shallow(
