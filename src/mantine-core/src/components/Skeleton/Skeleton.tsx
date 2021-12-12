@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Skeleton.styles';
 
 export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -25,9 +26,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       height = 'auto',
       width = '100%',
       visible = true,
-      sx,
       className,
-      style,
       circle,
       radius = 'sm',
       classNames,
@@ -36,18 +35,16 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     }: SkeletonProps,
     ref
   ) => {
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { height, width, circle, radius },
-      { classNames, styles, name: 'Skeleton', sx }
+      { classNames, styles, name: 'Skeleton' }
     );
 
     return (
-      <div
+      <Box
         className={cx(classes.root, { [classes.visible]: visible }, className)}
-        style={mergedStyles}
         ref={ref}
-        {...rest}
+        {...others}
       />
     );
   }
