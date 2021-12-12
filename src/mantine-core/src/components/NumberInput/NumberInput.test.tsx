@@ -10,6 +10,7 @@ import {
   itSupportsMargins,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
@@ -35,6 +36,7 @@ describe('@mantine/core/NumberInput', () => {
   itSupportsClassName(NumberInput, defaultProps);
   itSupportsMargins(NumberInput, defaultProps);
   itSupportsStyle(NumberInput, defaultProps);
+  itSupportsSx(NumberInput, defaultProps, { dive: 2 });
   itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
   itSupportsStylesApi(
     NumberInput,
