@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
+  itSupportsSx,
   itSupportsClassName,
   itSupportsOthers,
   itSupportsRef,
@@ -20,6 +21,7 @@ describe('@mantine/core/CloseButton', () => {
 
   itSupportsClassName(CloseButton, {});
   itSupportsOthers(CloseButton, {});
+  itSupportsSx(CloseButton, {}, { dive: 1 });
   itSupportsStyle(CloseButton, {});
   itSupportsMargins(CloseButton, {});
   itSupportsRef(CloseButton, {}, HTMLButtonElement);

@@ -8,6 +8,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   checkAccessibility,
+  itSupportsSx,
   waitForComponentToPaint,
 } from '@mantine/tests';
 import { Button } from '../Button';
@@ -28,6 +29,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsClassName(Accordion, defaultProps);
   itSupportsOthers(Accordion, defaultProps);
   itSupportsStyle(Accordion, defaultProps);
+  itSupportsSx(Accordion, defaultProps);
   itSupportsMargins(Accordion, defaultProps);
   itSupportsRef(Accordion, defaultProps, HTMLDivElement);
   checkAccessibility([mount(<Accordion {...defaultProps} />)]);
