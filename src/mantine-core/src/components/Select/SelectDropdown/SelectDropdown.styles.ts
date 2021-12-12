@@ -10,7 +10,7 @@ export default createStyles((theme) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
     }`,
     padding: 4,
-    overflowY: 'auto',
+    overflow: 'hidden',
     width: '100%',
   },
 }));
