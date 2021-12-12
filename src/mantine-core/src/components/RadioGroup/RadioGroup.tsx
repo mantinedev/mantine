@@ -58,7 +58,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       size,
       classNames,
       styles,
-      sx,
       ...others
     }: RadioGroupProps,
     ref
@@ -83,6 +82,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           size,
           classNames,
           styles,
+          __staticSelector: 'RadioGroup',
           onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
             setValue(event.currentTarget.value),
         })
@@ -96,7 +96,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         classNames={classNames}
         styles={styles}
         ref={ref}
-        sx={sx}
         {...others}
       >
         <Group
