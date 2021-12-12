@@ -6,6 +6,7 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
+  itSupportsSx,
   checkAccessibility,
 } from '@mantine/tests';
 import { YearPicker } from './YearPicker/YearPicker';
@@ -25,12 +26,15 @@ const labelsProps = {
   previousDecadeLabel: 'previous decade',
 };
 
+const defaultProps = {};
+
 describe('@mantine/core/CalendarBase', () => {
-  itSupportsClassName(CalendarBase, {});
-  itSupportsMargins(CalendarBase, {});
-  itSupportsOthers(CalendarBase, {});
-  itSupportsStyle(CalendarBase, {});
-  itSupportsRef(CalendarBase, {}, HTMLDivElement);
+  itSupportsClassName(CalendarBase, defaultProps);
+  itSupportsMargins(CalendarBase, defaultProps);
+  itSupportsOthers(CalendarBase, defaultProps);
+  itSupportsStyle(CalendarBase, defaultProps);
+  itSupportsSx(CalendarBase, defaultProps);
+  itSupportsRef(CalendarBase, defaultProps, HTMLDivElement);
 
   checkAccessibility([
     mount(<CalendarBase {...labelsProps} initialLevel="date" />),

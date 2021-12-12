@@ -9,17 +9,21 @@ import {
   itSupportsMargins,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { TimeRangeInput } from './TimeRangeInput';
 import { TimeRangeInput as TimeRangeInputStylesApi } from './styles.api';
 
+const defaultProps = {};
+
 describe('@mantine/dates/TimeRangeInput', () => {
-  itSupportsClassName(TimeRangeInput, {});
-  itSupportsStyle(TimeRangeInput, {});
-  itSupportsMargins(TimeRangeInput, {});
-  itSupportsRef(TimeRangeInput, {}, HTMLInputElement);
+  itSupportsClassName(TimeRangeInput, defaultProps);
+  itSupportsStyle(TimeRangeInput, defaultProps);
+  itSupportsMargins(TimeRangeInput, defaultProps);
+  itSupportsSx(TimeRangeInput, defaultProps, { dive: 1 });
+  itSupportsRef(TimeRangeInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     TimeRangeInput,

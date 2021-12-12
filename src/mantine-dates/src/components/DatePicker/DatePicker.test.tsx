@@ -6,16 +6,20 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   checkAccessibility,
+  itSupportsSx,
 } from '@mantine/tests';
 import { DatePicker } from './DatePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
 import { Calendar } from '../Calendar/Calendar';
 
+const defaultProps = {};
+
 describe('@mantine/dates/DatePicker', () => {
-  itSupportsClassName(DatePicker, {});
-  itSupportsStyle(DatePicker, {});
-  itSupportsMargins(DatePicker, {});
-  itSupportsRef(DatePicker, {}, HTMLInputElement);
+  itSupportsClassName(DatePicker, defaultProps);
+  itSupportsStyle(DatePicker, defaultProps);
+  itSupportsMargins(DatePicker, defaultProps);
+  itSupportsSx(DatePicker, defaultProps, { dive: 2 });
+  itSupportsRef(DatePicker, defaultProps, HTMLInputElement);
   checkAccessibility([mount(<DatePicker label="date picker" />)]);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
