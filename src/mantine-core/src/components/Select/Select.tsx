@@ -10,7 +10,7 @@ import {
   DefaultProps,
   MantineSize,
   MantineShadow,
-  useExtractedMargins,
+  extractMargins,
   getDefaultZIndex,
 } from '@mantine/styles';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
@@ -187,7 +187,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const inputRef = useRef<HTMLInputElement>();
@@ -461,11 +461,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         description={description}
         size={size}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         __staticSelector="Select"
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <div
