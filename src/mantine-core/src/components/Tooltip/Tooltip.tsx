@@ -1,18 +1,13 @@
 import React, { useState, useRef } from 'react';
-import {
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  MantineMargin,
-  getDefaultZIndex,
-} from '@mantine/styles';
-import { Popper, SharedPopperProps } from '../Popper/Popper';
+import { DefaultProps, MantineColor, ClassNames, getDefaultZIndex } from '@mantine/styles';
+import { Box } from '../Box';
+import { Popper, SharedPopperProps } from '../Popper';
 import useStyles from './Tooltip.styles';
 
 export type TooltipStylesNames = ClassNames<typeof useStyles>;
 
 export interface TooltipProps
-  extends Omit<DefaultProps<TooltipStylesNames>, MantineMargin>,
+  extends DefaultProps<TooltipStylesNames>,
     SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
@@ -84,10 +79,9 @@ export function Tooltip({
   tooltipId,
   classNames,
   styles,
-  sx,
   ...others
 }: TooltipProps) {
-  const { classes, cx } = useStyles({ color }, { sx, classNames, styles, name: 'Tooltip' });
+  const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Tooltip' });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -109,7 +103,7 @@ export function Tooltip({
   };
 
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <Box className={cx(classes.root, className)} {...others}>
       <Popper
         referenceElement={referenceElement}
         transitionDuration={transitionDuration}
@@ -147,7 +141,7 @@ export function Tooltip({
       >
         {children}
       </div>
-    </div>
+    </Box>
   );
 }
 
