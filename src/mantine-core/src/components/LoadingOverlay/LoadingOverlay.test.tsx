@@ -10,10 +10,6 @@ describe('@mantine/core/LoadingOverlay', () => {
   itSupportsStyle(LoadingOverlay, { visible: true });
   itSupportsOthers(LoadingOverlay, { visible: true });
 
-  it('has correct displayName', () => {
-    expect(LoadingOverlay.displayName).toEqual('@mantine/core/LoadingOverlay');
-  });
-
   it('does not render anything if visible is false', () => {
     const element = shallow(<LoadingOverlay visible={false} />);
     expect(element.render().html()).toBe(null);
@@ -35,5 +31,9 @@ describe('@mantine/core/LoadingOverlay', () => {
     const element = mount(<LoadingOverlay visible zIndex={347} />);
     expect(element.find(Loader).prop('style').zIndex).toBe(348);
     expect(element.find(Overlay).prop('zIndex')).toBe(347);
+  });
+
+  it('has correct displayName', () => {
+    expect(LoadingOverlay.displayName).toEqual('@mantine/core/LoadingOverlay');
   });
 });

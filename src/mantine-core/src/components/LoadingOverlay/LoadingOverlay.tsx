@@ -1,8 +1,9 @@
 import React from 'react';
 import { DefaultProps, MantineMargin, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
-import { Overlay } from '../Overlay/Overlay';
+import { Overlay } from '../Overlay';
 import { Transition } from '../Transition';
-import { Loader, LoaderProps } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader';
+import { Box } from '../Box';
 import useStyles from './LoadingOverlay.styles';
 
 export interface LoadingOverlayProps
@@ -44,15 +45,14 @@ export function LoadingOverlay({
   style,
   loader,
   radius,
-  sx,
   ...others
 }: LoadingOverlayProps) {
-  const { classes, cx, theme } = useStyles(null, { sx, name: 'LoadingOverlay' });
+  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay' });
 
   return (
     <Transition duration={transitionDuration} mounted={visible} transition="fade">
       {(transitionStyles) => (
-        <div
+        <Box
           className={cx(classes.root, className)}
           style={{ ...transitionStyles, ...style, zIndex }}
           {...others}
@@ -71,7 +71,7 @@ export function LoadingOverlay({
               overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
             }
           />
-        </div>
+        </Box>
       )}
     </Transition>
   );
