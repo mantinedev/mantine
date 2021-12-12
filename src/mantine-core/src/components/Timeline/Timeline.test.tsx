@@ -6,6 +6,7 @@ import {
   itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
+  itSupportsRef,
 } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
@@ -27,6 +28,7 @@ describe('@mantine/core/Timeline', () => {
   itSupportsOthers(Timeline, defaultProps);
   itSupportsSx(Timeline, defaultProps);
   itSupportsMargins(Timeline, defaultProps);
+  itSupportsRef(Timeline, defaultProps, HTMLDivElement);
 
   itSupportsStylesApi(
     Timeline,
