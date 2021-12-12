@@ -9,9 +9,10 @@ import {
   itSupportsMargins,
   defaultInputProps,
   getInputStylesApiKeys,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
+import { ActionIcon } from '../ActionIcon';
 import { PasswordInput } from './PasswordInput';
 import { Input as InputStylesApi } from '../Input/styles.api';
 import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
@@ -22,13 +23,15 @@ const getInput = (element: any) => element.find(Input);
 // retrieves ActionIcon node from nested TextInput and Input components
 const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon);
 
+const defaultProps = {};
+
 describe('@mantine/core/PasswordInput', () => {
   checkAccessibility([mount(<PasswordInput label="test" />)]);
-
-  itSupportsClassName(PasswordInput, {});
-  itSupportsStyle(PasswordInput, {});
-  itSupportsMargins(PasswordInput, {});
-  itSupportsRef(PasswordInput, {}, HTMLInputElement);
+  itSupportsClassName(PasswordInput, defaultProps);
+  itSupportsStyle(PasswordInput, defaultProps);
+  itSupportsMargins(PasswordInput, defaultProps);
+  itSupportsSx(PasswordInput, defaultProps, { dive: 1 });
+  itSupportsRef(PasswordInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(
     PasswordInput,
@@ -36,10 +39,6 @@ describe('@mantine/core/PasswordInput', () => {
     getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
     'PasswordInput'
   );
-
-  it('has correct displayName', () => {
-    expect(PasswordInput.displayName).toEqual('@mantine/core/PasswordInput');
-  });
 
   it('sets input type based on password visibility state', () => {
     const element = shallow(<PasswordInput />);
@@ -54,5 +53,9 @@ describe('@mantine/core/PasswordInput', () => {
 
     expect(getActionIcon(focusable).prop('tabIndex')).toBe(0);
     expect(getActionIcon(notFocusable).prop('tabIndex')).toBe(-1);
+  });
+
+  it('has correct displayName', () => {
+    expect(PasswordInput.displayName).toEqual('@mantine/core/PasswordInput');
   });
 });
