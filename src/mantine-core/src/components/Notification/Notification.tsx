@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
-import { Loader } from '../Loader/Loader';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { Text } from '../Text';
+import { Loader } from '../Loader';
+import { CloseButton } from '../ActionIcon';
+import { Box } from '../Box';
 import useStyles from './Notification.styles';
 
 export type NotificationStylesNames = Exclude<ClassNames<typeof useStyles>, 'withIcon'>;
@@ -39,7 +40,6 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
   (
     {
       className,
-      style,
       color = 'blue',
       loading = false,
       disallowClose = false,
@@ -50,28 +50,24 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
       closeButtonProps,
       classNames,
       styles,
-      sx,
       ...others
     }: NotificationProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { color, disallowClose },
-      { sx, classNames, styles, name: 'Notification' }
+      { classNames, styles, name: 'Notification' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const withIcon = icon || loading;
 
     return (
-      <div
+      <Box
         className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
         role="alert"
-        style={mergedStyles}
         ref={ref}
-        {...rest}
+        {...others}
       >
         {icon && !loading && <div className={classes.icon}>{icon}</div>}
-
         {loading && <Loader size={28} color={color} className={classes.loader} />}
 
         <div className={classes.body}>
@@ -96,7 +92,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             className={classes.closeButton}
           />
         )}
-      </div>
+      </Box>
     );
   }
 );
