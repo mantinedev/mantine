@@ -6,6 +6,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsRef,
 } from '@mantine/tests';
 import { List } from './List';
 import { List as ListStylesApi } from './styles.api';
@@ -24,6 +25,7 @@ describe('@mantine/core/List', () => {
   itSupportsMargins(List, defaultProps);
   itSupportsOthers(List, defaultProps);
   itSupportsStyle(List, defaultProps);
+  itSupportsRef(List, defaultProps, HTMLUListElement);
   itSupportsStylesApi(List, defaultProps, Object.keys(ListStylesApi), 'List');
 
   it('changes root element based on type prop', () => {
