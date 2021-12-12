@@ -7,6 +7,7 @@ import {
   itSupportsStyle,
   itSupportsStylesApi,
   itSupportsMargins,
+  itSupportsSx,
 } from '@mantine/tests';
 import { Prism } from './Prism';
 import { Prism as PrismStylesApi } from './styles.api';
@@ -29,6 +30,7 @@ describe('@mantine/prism/Prism', () => {
   itSupportsMargins(Prism, defaultProps);
   itSupportsOthers(Prism, defaultProps);
   itSupportsStyle(Prism, defaultProps);
+  itSupportsSx(Prism, defaultProps);
   itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'Prism');
 
   it('renders tooltip based on noCopy prop', () => {

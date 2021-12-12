@@ -7,7 +7,7 @@ import {
   DefaultProps,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  Box,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -46,7 +46,6 @@ export interface PrismProps
 
 export function Prism({
   className,
-  style,
   children,
   language,
   noCopy = false,
@@ -57,19 +56,17 @@ export function Prism({
   withLineNumbers = false,
   highlightLines = {},
   colorScheme,
-  sx,
   ...others
 }: PrismProps) {
   const theme = useMantineTheme();
+  const clipboard = useClipboard();
   const { classes, cx } = useStyles(
     { colorScheme: colorScheme || theme.colorScheme },
-    { sx, classNames, styles, name: 'Prism' }
+    { classNames, styles, name: 'Prism' }
   );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const clipboard = useClipboard();
 
   return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
+    <Box className={cx(classes.root, className)} {...others}>
       {!noCopy && (
         <Tooltip
           data-mantine-copy
@@ -169,7 +166,7 @@ export function Prism({
           </pre>
         )}
       </Highlight>
-    </div>
+    </Box>
   );
 }
 
