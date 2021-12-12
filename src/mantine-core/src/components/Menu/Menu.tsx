@@ -170,6 +170,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onMouseEnter,
       onChange,
       className,
+      sx,
       ...others
     }: MenuProps,
     ref
@@ -338,6 +339,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
         onMouseLeave={handleMouseLeave}
         onMouseEnter={handleMouseEnter}
         className={cx(classes.root, className)}
+        sx={sx}
         {...others}
       >
         {menuControl}
