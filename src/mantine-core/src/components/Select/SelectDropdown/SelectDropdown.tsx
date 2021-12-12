@@ -26,6 +26,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
   switchDirectionOnFlip?: boolean;
   zIndex?: number;
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -48,6 +49,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       onDirectionChange,
       switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
+      dropdownPosition = 'flip',
       __staticSelector,
     }: SelectDropdownProps,
     ref
@@ -66,14 +68,17 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transition={transition}
         transitionDuration={transitionDuration}
         transitionTimingFunction={transitionTimingFunction}
-        position="bottom"
+        position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
         withinPortal={withinPortal}
-        placementFallbacks={['top']}
         zIndex={zIndex}
         modifiers={[
           {
             name: 'preventOverflow',
             enabled: false,
+          },
+          {
+            name: 'flip',
+            enabled: dropdownPosition === 'flip',
           },
           {
             // @ts-ignore
@@ -120,7 +125,9 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
             ref={ref}
             onMouseDown={(event) => event.preventDefault()}
           >
-            <div style={{ display: 'flex', flexDirection: direction }}>{children}</div>
+            <div style={{ display: 'flex', flexDirection: direction, width: '100%' }}>
+              {children}
+            </div>
           </Paper>
         </div>
       </Popper>

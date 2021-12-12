@@ -1,21 +1,14 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  ClassNames,
-  useExtractedMargins,
-  getDefaultZIndex,
-} from '@mantine/styles';
+import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input';
-import { MantineTransition } from '../Transition';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
+import { SelectSharedProps } from '../Select/Select';
 
 export type AutocompleteStylesNames =
   | InputStylesNames
@@ -32,66 +25,10 @@ export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
-  /** Input size */
-  size?: MantineSize;
-
-  /** Autocomplete data used to renderer items in dropdown */
-  data: (string | AutocompleteItem)[];
-
-  /** Change item renderer */
-  itemComponent?: React.FC<any>;
-
-  /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: MantineShadow;
-
-  /** Limit amount of items rendered in dropdown */
-  limit?: number;
-
+    SelectSharedProps<AutocompleteItem, string>,
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
-
-  /** Controlled input value */
-  value?: string;
-
-  /** Uncontrolled input defaultValue */
-  defaultValue?: string;
-
-  /** Controlled input onChange handler */
-  onChange?(value: string): void;
-
-  /** Dropdown body appear/disappear transition */
-  transition?: MantineTransition;
-
-  /** Dropdown body transition duration */
-  transitionDuration?: number;
-
-  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Initial dropdown opened state */
-  initiallyOpened?: boolean;
-
-  /** Function based on which items in dropdown are filtered */
-  filter?(value: string, item: AutocompleteItem): boolean;
-
-  /** Message that will be displayed on zero search results  */
-  nothingFound?: string;
-
-  /** Called when dropdown is opened */
-  onDropdownOpen?(): void;
-
-  /** Called when dropdown is closed */
-  onDropdownClose?(): void;
-
-  /** Whether to render the dropdown in a Portal */
-  withinPortal?: boolean;
-
-  /** Whether to switch item order and keyboard navigation on dropdown position flip */
-  switchDirectionOnFlip?: boolean;
-
-  /** Dropdown z-index */
-  zIndex?: number;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -136,6 +73,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       withinPortal,
       switchDirectionOnFlip = true,
       zIndex = getDefaultZIndex('popover'),
+      dropdownPosition = 'bottom',
       ...others
     }: AutocompleteProps,
     ref
@@ -310,6 +248,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             referenceElement={inputRef.current}
             withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}
