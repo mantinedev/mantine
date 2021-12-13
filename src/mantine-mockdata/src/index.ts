@@ -5,3 +5,4 @@ export * from './components/Accordion';
 export * from './shared/characters-list';
 export * from './shared/images';
 export * from './shared/text';
+export * from './shared/countries-data';
