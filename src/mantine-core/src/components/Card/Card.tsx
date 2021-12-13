@@ -1,7 +1,7 @@
 import React, { Children, cloneElement, forwardRef } from 'react';
 import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Paper, SharedPaperProps } from '../Paper/Paper';
-import { CardSection, CardSectionProps } from './CardSection/CardSection';
+import { CardSection } from './CardSection/CardSection';
 import useStyles from './Card.styles';
 
 interface _CardProps extends SharedPaperProps {
@@ -15,7 +15,7 @@ type CardComponent = <C extends React.ElementType = 'div'>(
   props: CardProps<C>
 ) => React.ReactElement;
 
-export const Card: CardComponent & { displayName?: string; Section: React.FC<CardSectionProps> } =
+export const Card: CardComponent & { displayName?: string; Section: typeof CardSection } =
   forwardRef(
     <C extends React.ElementType = 'div'>(
       {
@@ -31,10 +31,15 @@ export const Card: CardComponent & { displayName?: string; Section: React.FC<Car
       ref: PolymorphicRef<C>
     ) => {
       const { classes, cx } = useStyles(null, { name: 'Card', classNames, styles });
+      const _children = Children.toArray(children);
 
-      const content = Children.map(children, (child) => {
+      const content = _children.map((child, index) => {
         if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
-          return cloneElement(child, { padding });
+          return cloneElement(child, {
+            padding,
+            first: index === 0,
+            last: index === _children.length - 1,
+          });
         }
 
         return child;
