@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { ModalProps } from '@mantine/core';
 import type { ConfirmModalProps } from './ConfirmModal';
 
-export type ModalSettings = Omit<ModalProps, 'opened' | 'onClose'>;
+export type ModalSettings = Partial<Omit<ModalProps, 'opened'>>;
 
 export type ConfirmLabels = Record<'confirm' | 'cancel', string>;
 
