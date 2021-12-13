@@ -2,6 +2,7 @@ import React, { useRef, forwardRef } from 'react';
 import { useMergedRef, clamp } from '@mantine/hooks';
 import { Text, MantineSize } from '@mantine/core';
 import { padTime } from '../pad-time/pad-time';
+import useStyles from './TimeField.styles';
 
 interface TimeFieldProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
@@ -24,6 +25,7 @@ interface TimeFieldProps
 export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
   (
     {
+      className,
       onFocus,
       onBlur,
       onChange,
@@ -36,6 +38,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
     }: TimeFieldProps,
     ref
   ) => {
+    const { classes, cx } = useStyles({ size });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -89,6 +92,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           value={value}
+          className={cx(classes.timeInput, className)}
           {...others}
         />
 
