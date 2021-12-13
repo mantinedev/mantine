@@ -74,14 +74,6 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
       outline: 0,
     },
 
-    clickOutsideOverlay: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-
     title: {
       marginRight: theme.spacing.md,
       textOverflow: 'ellipsis',

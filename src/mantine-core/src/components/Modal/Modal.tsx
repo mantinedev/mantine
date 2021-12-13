@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
 import {
@@ -17,7 +18,7 @@ import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles from './Modal.styles';
 
-export type ModalStylesNames = Exclude<ClassNames<typeof useStyles>, 'clickOutsideOverlay'>;
+export type ModalStylesNames = ClassNames<typeof useStyles>;
 
 export interface ModalProps
   extends Omit<DefaultProps<ModalStylesNames>, MantineMargin>,
@@ -138,13 +139,9 @@ export function MantineModal({
     >
       {(transitionStyles) => (
         <Box className={cx(classes.root, className)} {...others}>
-          {closeOnClickOutside && (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-            <div onClick={onClose} className={classes.clickOutsideOverlay} style={{ zIndex: 2 }} />
-          )}
-
           <div
             className={classes.inner}
+            onClick={() => closeOnClickOutside && onClose()}
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
@@ -153,6 +150,7 @@ export function MantineModal({
             ref={focusTrapRef}
           >
             <Paper<'div'>
+              onClick={(event) => event.stopPropagation()}
               className={classes.modal}
               shadow={shadow}
               padding={padding}

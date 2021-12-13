@@ -17,10 +17,7 @@ import { CloseButton } from '../ActionIcon';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
-export type DrawerStylesNames = Exclude<
-  ClassNames<typeof useStyles>,
-  'noOverlay' | 'clickOutsideOverlay'
->;
+export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'noOverlay'>;
 
 export interface DrawerProps
   extends Omit<DefaultProps<DrawerStylesNames>, MantineMargin>,
@@ -172,18 +169,11 @@ export function MantineDrawer({
           className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
+          onClick={() => !noCloseOnClickOutside && onClose()}
           {...others}
         >
-          {!noCloseOnClickOutside && (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-            <div
-              onClick={onClose}
-              className={classes.clickOutsideOverlay}
-              style={{ zIndex: zIndex + 1 }}
-            />
-          )}
-
           <Paper<'div'>
+            onClick={(event) => event.stopPropagation()}
             className={cx(classes.drawer, className)}
             ref={focusTrapRef}
             style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}

@@ -30,19 +30,12 @@ export default createStyles((theme, { overflow, size, centered }: ModalStyles) =
     left: 0,
     right: 0,
     bottom: 0,
+    zIndex: 4,
     overflowY: 'auto',
     padding: `${theme.spacing.xl * 2}px ${theme.spacing.md}px`,
     display: 'flex',
     justifyContent: 'center',
     alignItems: centered ? 'center' : 'flex-start',
-  },
-
-  clickOutsideOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
 
   title: {
@@ -53,6 +46,8 @@ export default createStyles((theme, { overflow, size, centered }: ModalStyles) =
   },
 
   modal: {
+    position: 'relative',
+    zIndex: 5,
     width: theme.fn.size({ sizes, size }),
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
