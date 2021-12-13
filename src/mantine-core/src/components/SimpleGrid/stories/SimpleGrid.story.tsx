@@ -9,8 +9,8 @@ storiesOf('@mantine/core/SimpleGrid/stories', module)
         <SimpleGrid
           cols={3}
           breakpoints={[
-            { maxWidth: 980, cols: 2 },
             { maxWidth: 680, cols: 1, spacing: 'xs' },
+            { maxWidth: 980, cols: 2 },
           ]}
         >
           <div style={{ backgroundColor: 'red' }}>first</div>

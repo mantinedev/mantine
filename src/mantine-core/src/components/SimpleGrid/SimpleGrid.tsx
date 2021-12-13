@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineTheme } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Box } from '../Box';
-import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -29,10 +28,8 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
     }: SimpleGridProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const sortedBreakpoints = getSortedBreakpoints(theme, breakpoints);
     const { classes, cx } = useStyles(
-      { breakpoints: sortedBreakpoints, cols, spacing },
+      { breakpoints, cols, spacing },
       { classNames, styles, name: 'SimpleGrid' }
     );
 
