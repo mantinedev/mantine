@@ -26,6 +26,7 @@ export default createStyles((theme, { size }: TimeInputStyles) => ({
   },
 
   timeInput: {
+    ...theme.fn.fontStyles(),
     width: theme.fn.size({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',

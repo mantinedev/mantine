@@ -20,6 +20,7 @@ export default createStyles((theme, { size }: TimeRangeInputStyles) => ({
   },
 
   timeField: {
+    ...theme.fn.fontStyles(),
     width: theme.fn.size({ size, sizes: inputSizes }),
     appearance: 'none',
     backgroundColor: 'transparent',
@@ -41,6 +42,5 @@ export default createStyles((theme, { size }: TimeRangeInputStyles) => ({
     paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 2,
     paddingRight: theme.fn.size({ size, sizes: theme.spacing }) / 2,
     lineHeight: 1,
-    marginBottom: 3,
   },
 }));
