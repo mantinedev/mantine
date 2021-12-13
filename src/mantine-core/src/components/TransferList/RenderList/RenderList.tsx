@@ -159,7 +159,7 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={selection.length === 0}
             onClick={onMove}
-            sx={{flex: showSearch ? 0 : 1}}
+            sx={{ flex: showSearch ? 0 : 1 }}
           >
             {reversed ? <PrevIcon /> : <NextIcon />}
           </ActionIcon>
@@ -171,7 +171,7 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={data.length === 0}
             onClick={onMoveAll}
-            sx={{flex: showSearch ? 0 : 1}}
+            sx={{ flex: showSearch ? 0 : 1 }}
           >
             {reversed ? <FirstIcon /> : <LastIcon />}
           </ActionIcon>
