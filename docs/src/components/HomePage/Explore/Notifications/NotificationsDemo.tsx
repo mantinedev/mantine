@@ -42,7 +42,7 @@ export function NotificationsDemo() {
   return (
     <Paper shadow="md" padding={30} radius="md">
       <Demo data={NotificationDemos.root} demoProps={{ inline: true }} />
-      <Prism noCopy language="tsx" className={classes.prism}>
+      <Prism noCopy language="tsx" className={classes.prism} mt="xl">
         {code}
       </Prism>
     </Paper>
