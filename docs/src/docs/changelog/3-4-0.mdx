@@ -24,11 +24,31 @@ There are several **breaking changes** associated with this improvement:
 - All @mantine/dates components that use Calendar no longer support `withSelect` and `yearsRange` props
 - Styles API names were changed to include new calendar header
 
-## New components and hooks
+## New hooks
 
 [use-page-leave](https://mantine.dev/hooks/use-page-leave/) hook calls given function when mouse leaves page:
 
 <Demo data={usePageLeaveDemo} />
+
+[use-input-state](https://mantine.dev/hooks/use-input-state/) hook lets you handle state of native inputs (with event in `onChange` handler) and custom inputs (with value in `onChange` handler):
+
+```tsx
+import { useInputState } from '@mantine/hooks';
+import { TextInput, NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [stringValue, setStringValue] = useInputState('');
+  const [numberValue, setNumberValue] = useInputState(0);
+
+  return (
+    <>
+      <input type="text" value={stringValue} onChange={setStringValue} />
+      <TextInput value={stringValue} onChange={setStringValue} />
+      <NumberInput value={numberValue} onChange={setNumberValue} />
+    </>
+  );
+}
+```
 
 ## New features
 

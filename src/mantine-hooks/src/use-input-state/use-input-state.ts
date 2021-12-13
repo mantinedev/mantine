@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export function getInputOnChange<T>(
   setValue: (value: null | undefined | T | ((current: T) => T)) => void
 ) {
-  return (val: T | React.ChangeEvent<any> | ((current: T) => T)) => {
+  return (val: null | undefined | T | React.ChangeEvent<any> | ((current: T) => T)) => {
     if (!val) {
       setValue(val as T);
     } else if (typeof val === 'function') {
@@ -24,5 +24,8 @@ export function getInputOnChange<T>(
 
 export function useInputState<T>(initialState: T) {
   const [value, setValue] = useState(initialState);
-  return [value, getInputOnChange<T>(setValue)] as const;
+  return [value, getInputOnChange<T>(setValue)] as [
+    T,
+    (value: null | undefined | T | React.ChangeEvent<any>) => void
+  ];
 }
