@@ -15,6 +15,7 @@ export default createStyles((theme, { native }: SelectDropdownProps) => ({
     }`,
     padding: 4,
     overflowY: native ? 'auto' : 'hidden',
+    overscrollBehaviorY: 'contain',
     width: '100%',
   },
 }));
