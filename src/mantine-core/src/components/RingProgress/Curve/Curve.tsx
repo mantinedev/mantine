@@ -8,11 +8,21 @@ interface CurveProps {
   offset: number;
   sum: number;
   thickness: number;
+  lineCapIsRound: boolean;
   root?: boolean;
   color?: MantineColor;
 }
 
-export function Curve({ size, value, offset, sum, thickness, root, color }: CurveProps) {
+export function Curve({
+  size,
+  value,
+  offset,
+  sum,
+  thickness,
+  root,
+  color,
+  lineCapIsRound,
+}: CurveProps) {
   const theme = useMantineTheme();
   const stroke = theme.fn.themeColor(
     color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
@@ -22,6 +32,7 @@ export function Curve({ size, value, offset, sum, thickness, root, color }: Curv
   return (
     <circle
       fill="none"
+      strokeLinecap={lineCapIsRound ? 'round' : 'butt'}
       stroke={stroke}
       {...getCurveProps({ sum, size, thickness, value, offset, root })}
     />
