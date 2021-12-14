@@ -44,6 +44,9 @@ export interface TransferListProps
 
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
+
+  /** Whether to show the search input field */
+  showSearch?: boolean;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -63,6 +66,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       initialSelection,
       listHeight = 150,
       listComponent = SelectScrollArea,
+      showSearch = true,
       breakpoint,
       classNames,
       styles,
@@ -118,6 +122,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           title={titles[0]}
           height={listHeight}
           listComponent={listComponent}
+          showSearch={showSearch}
           classNames={classNames}
           styles={styles}
         />
@@ -135,6 +140,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           title={titles[1]}
           height={listHeight}
           listComponent={listComponent}
+          showSearch={showSearch}
           classNames={classNames}
           styles={styles}
           reversed

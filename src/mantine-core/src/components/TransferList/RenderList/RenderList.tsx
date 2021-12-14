@@ -21,6 +21,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   nothingFound?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
+  showSearch?: boolean;
   onMoveAll(): void;
   onMove(): void;
   height: number;
@@ -38,6 +39,7 @@ export function RenderList({
   filter,
   nothingFound,
   title,
+  showSearch,
   reversed,
   onMoveAll,
   onMove,
@@ -133,20 +135,22 @@ export function RenderList({
 
       <div className={classes.transferListBody}>
         <div className={classes.transferListHeader}>
-          <TextInput
-            value={query}
-            onChange={(event) => {
-              setQuery(event.currentTarget.value);
-              setHovered(0);
-            }}
-            onFocus={() => setHovered(0)}
-            onBlur={() => setHovered(-1)}
-            placeholder={searchPlaceholder}
-            radius={0}
-            onKeyDown={handleSearchKeydown}
-            sx={{ flex: 1 }}
-            classNames={{ input: classes.transferListSearch }}
-          />
+          {showSearch && (
+            <TextInput
+              value={query}
+              onChange={(event) => {
+                setQuery(event.currentTarget.value);
+                setHovered(0);
+              }}
+              onFocus={() => setHovered(0)}
+              onBlur={() => setHovered(-1)}
+              placeholder={searchPlaceholder}
+              radius={0}
+              onKeyDown={handleSearchKeydown}
+              sx={{ flex: 1 }}
+              classNames={{ input: classes.transferListSearch }}
+            />
+          )}
 
           <ActionIcon
             variant="default"
@@ -155,6 +159,7 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={selection.length === 0}
             onClick={onMove}
+            sx={{ flex: showSearch ? 0 : 1 }}
           >
             {reversed ? <PrevIcon /> : <NextIcon />}
           </ActionIcon>
@@ -166,6 +171,7 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={data.length === 0}
             onClick={onMoveAll}
+            sx={{ flex: showSearch ? 0 : 1 }}
           >
             {reversed ? <FirstIcon /> : <LastIcon />}
           </ActionIcon>
