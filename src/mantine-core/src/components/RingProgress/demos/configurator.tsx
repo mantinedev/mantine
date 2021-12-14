@@ -34,5 +34,6 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'size', type: 'number', initialValue: 120, step: 10, min: 60, max: 400 },
     { name: 'thickness', type: 'number', initialValue: 12, step: 1, min: 1, max: 40 },
+    { name: 'capIsRound', type: 'boolean', initialValue: false },
   ],
 };
