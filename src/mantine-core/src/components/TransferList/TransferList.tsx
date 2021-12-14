@@ -66,7 +66,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       initialSelection,
       listHeight = 150,
       listComponent = SelectScrollArea,
-      showSearch = false,
+      showSearch = true,
       breakpoint,
       classNames,
       styles,
