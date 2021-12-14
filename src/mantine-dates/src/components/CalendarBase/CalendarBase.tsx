@@ -30,7 +30,7 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   amountOfMonths?: number;
 
   /** Selected value */
-  value?: Date;
+  value?: Date | null;
 
   /** Called when day is selected */
   onChange?(value: Date): void;

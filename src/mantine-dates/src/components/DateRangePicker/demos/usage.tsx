@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import dayjs from 'dayjs';
 import { DateRangePicker } from '../DateRangePicker';
 
 const code = `
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import { DateRangePicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-  ]);
-
+  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
   return (
     <DateRangePicker
       label="Book hotel"
@@ -25,11 +19,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-  ]);
-
+  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
       <DateRangePicker

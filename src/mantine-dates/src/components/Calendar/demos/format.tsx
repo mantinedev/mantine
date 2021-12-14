@@ -7,7 +7,7 @@ const code = `
 `;
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
   return (
     <Group position="center">
       <Calendar value={value} onChange={setValue} labelFormat="MM/YYYY" />

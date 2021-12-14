@@ -6,7 +6,7 @@ import { Calendar } from '../Calendar';
 const code = '<Calendar locale="ru" />';
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
   return (
     <Group position="center">
       <Calendar value={value} onChange={setValue} locale="ru" />

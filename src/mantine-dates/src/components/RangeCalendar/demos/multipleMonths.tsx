@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import dayjs from 'dayjs';
 import { Group, MediaQuery, Text } from '@mantine/core';
 import { RangeCalendar } from '../RangeCalendar';
 
@@ -8,16 +7,18 @@ const code = `
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(45, 'days').toDate(),
-  ]);
+  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2022, 0, 15)]);
 
   return (
     <>
       <MediaQuery largerThan="md" styles={{ display: 'none' }}>
         <Group position="center">
-          <RangeCalendar amountOfMonths={2} value={value} onChange={setValue} />
+          <RangeCalendar
+            amountOfMonths={2}
+            value={value}
+            onChange={setValue}
+            initialMonth={new Date(2021, 11, 1)}
+          />
         </Group>
       </MediaQuery>
       <MediaQuery smallerThan="md" styles={{ display: 'none' }}>

@@ -7,7 +7,7 @@ const code = `
 `;
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
   return (
     <>
       <MediaQuery largerThan="md" styles={{ display: 'none' }}>

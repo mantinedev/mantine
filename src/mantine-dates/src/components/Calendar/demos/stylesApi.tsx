@@ -40,13 +40,12 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
   return (
     <Group position="center">
       <Calendar
         value={value}
         onChange={setValue}
-        month={value}
         fullWidth
         size="xl"
         styles={(theme) => ({
