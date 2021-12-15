@@ -37,6 +37,7 @@ export { QuantityInput } from './QuantityInput/QuantityInput';
 export { TagPicker } from './TagPicker/TagPicker';
 
 // Hero
+export { HeroContentLeft } from './HeroContentLeft/HeroContentLeft';
 export { HeroImageBackground } from './HeroImageBackground/HeroImageBackground';
 export { HeroText } from './HeroText/HeroText';
 export { HeroTitle } from './HeroTitle/HeroTitle';

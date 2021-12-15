@@ -1,0 +1,10 @@
+{
+  "title": "Hero with content on left",
+  "category": "hero",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [],
+  "canvas": {
+    "center": false
+  }
+}
