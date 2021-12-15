@@ -155,6 +155,21 @@ describe('@mantine/core/NumberInput', () => {
     expect(input.getDOMNode().getAttribute('value')).toBe('');
   });
 
+  it('precision on blur', () => {
+    const spy = jest.fn();
+    const element = mount(
+      <NumberInput value={undefined} max={10} min={0} step={6} precision={2} onChange={spy} />
+    );
+
+    const input = element.find('input').at(0);
+    //change value to 6.123, blur and that should be result in a rounded result of 6.12
+    input.simulate('change', { target: { value: '6.123' } });
+    expect(spy).toHaveBeenLastCalledWith(6.123);
+    input.simulate('blur', { target: { value: '6.123' } });
+    expect(input.getDOMNode().getAttribute('value')).toBe('6.12');
+    expect(spy).toHaveBeenLastCalledWith(6.12);
+  });
+
   it('sets state to min or 0 if input is empty and is incremented/decremented', () => {
     const spy = jest.fn();
     const element = mount(
