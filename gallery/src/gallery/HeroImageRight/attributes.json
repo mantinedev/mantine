@@ -8,7 +8,8 @@
     "/core/container/",
     "/core/button/",
     "/core/image/",
-    "/core/title/"
+    "/core/title/",
+    "https://www.freepik.com/"
   ],
   "canvas": {
     "center": false
