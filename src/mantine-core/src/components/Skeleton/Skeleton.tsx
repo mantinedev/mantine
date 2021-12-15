@@ -18,6 +18,9 @@ export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** The number of skeleton elements to render */
+  count?: number;
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
@@ -29,6 +32,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       className,
       circle,
       radius = 'sm',
+      count = 1,
       classNames,
       styles,
       ...others
@@ -40,13 +44,20 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       { classNames, styles, name: 'Skeleton' }
     );
 
-    return (
-      <Box
-        className={cx(classes.root, { [classes.visible]: visible }, className)}
-        ref={ref}
-        {...others}
-      />
-    );
+    const skeletonElements = [];
+
+    for (let i = 0; i < count; i += 1) {
+      skeletonElements.push(
+        <Box
+          className={cx(classes.root, { [classes.visible]: visible }, className)}
+          ref={ref}
+          key={i}
+          {...others}
+        />
+      );
+    }
+
+    return <>{skeletonElements.map((element) => element)}</>;
   }
 );
 
