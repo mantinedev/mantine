@@ -5,7 +5,11 @@ import { useOs } from './use-os';
 const Demo = () => {
   const os = useOs();
 
-  return <>Your os is <b>{os}</b></>;
+  return (
+    <>
+      Your os is <b>{os}</b>
+    </>
+  );
 };
 
 storiesOf('@mantine/hooks/use-os', module).add('Usage', () => (
