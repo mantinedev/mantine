@@ -8,7 +8,10 @@ function ThemeWrapper(props: any) {
   return (
     <ColorSchemeProvider colorScheme="light" toggleColorScheme={() => {}}>
       <MantineProvider
-        theme={{ colorScheme: useDarkMode() ? 'dark' : 'light' }}
+        theme={{
+          colorScheme: useDarkMode() ? 'dark' : 'light',
+          headings: { fontFamily: 'Greycliff CF, sans-serif' },
+        }}
         withGlobalStyles
         withNormalizeCSS
       >
