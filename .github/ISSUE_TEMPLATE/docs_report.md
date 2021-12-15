@@ -9,5 +9,5 @@ Thanks for reaching out!
 Please provide following information:
 - Link to the page where something nasty is located
 - Exact quote of what is wrong
-- Are you willing to create pull request with the fix (it's totally fine if not)?
+- Are you willing to create pull request with the fix?
 -->

@@ -3,6 +3,6 @@ contact_links:
   - name: Ask a question, give feedback, share your project
     url: https://github.com/mantinedev/mantine/discussions
     about: Connect with other community members with Github discussions
-  - name: Sign up for updates newsletter
-    url: https://buttondown.email/mantine
-    about: Receive monthly Mantine updates in your mail
+  - name: Get help on Discord
+    url: https://discord.gg/eUZpPbpxb4
+    about: Get help from maintainers on Discord
