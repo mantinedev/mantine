@@ -52,7 +52,7 @@ export function UsersTable({ data }: UsersTableProps) {
 
   return (
     <Box sx={{ maxWidth: 800, overflowX: 'auto' }}>
-      <Table sx={{ minWidth: 800 }}>
+      <Table sx={{ minWidth: 800 }} striped highlightOnHover>
         <thead>
           <tr>
             <th>Employee</th>
