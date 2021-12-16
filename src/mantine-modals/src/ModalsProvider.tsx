@@ -84,16 +84,20 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeModal = (id: string) => {
     const index = state.findIndex((item) => item.id === id);
-    const modal = state.find((item) => item.id === id);
-    modal?.props?.onClose?.();
-    index !== -1 && handlers.remove(index);
-    setCurrentModal(
-      state[state.length - 2] || {
-        id: null,
-        props: null,
-        type: 'content',
-      }
-    );
+    if (index !== -1 && state.length === 1) {
+      closeAll();
+    } else {
+      const modal = state.find((item) => item.id === id);
+      modal?.props?.onClose?.();
+      index !== -1 && handlers.remove(index);
+      setCurrentModal(
+        state[state.length - 2] || {
+          id: null,
+          props: null,
+          type: 'content',
+        }
+      );
+    }
   };
 
   const ContextModal = currentModal?.type === 'context' ? modals[currentModal?.ctx] : () => null;
