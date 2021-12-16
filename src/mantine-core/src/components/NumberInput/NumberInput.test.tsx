@@ -183,7 +183,7 @@ describe('@mantine/core/NumberInput', () => {
     expect(input.getDOMNode().getAttribute('value')).toBe('6');
     expect(spy).toHaveBeenLastCalledWith(5.55);
   });
-    
+
   it('precision on blur', () => {
     const spy = jest.fn();
     const element = mount(
