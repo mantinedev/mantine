@@ -11,7 +11,7 @@ const code = `
 <Avatar src={null} alt="no image here" color="indigo" />
 
 // Placeholder with initials
-<Avatar src={null} alt="Vitaly Rtishchev color="red">VR</Avatar>
+<Avatar src={null} alt="Vitaly Rtishchev" color="red">VR</Avatar>
 
 // Placeholder with custom icon
 <Avatar color="blue" radius="xl">
