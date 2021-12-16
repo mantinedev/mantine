@@ -41,12 +41,20 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1.15,
     maxWidth: 500,
     fontSize: 42,
+
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
+    },
   },
 
   description: {
     color: theme.white,
     opacity: 0.75,
     maxWidth: 500,
+
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
+    },
   },
 
   control: {
@@ -65,7 +73,7 @@ export function HeroImageRight() {
   const { classes } = useStyles();
   return (
     <div className={classes.root}>
-      <Container>
+      <Container size="lg">
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
