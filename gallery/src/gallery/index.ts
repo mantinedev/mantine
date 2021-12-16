@@ -69,6 +69,7 @@ export { UserButton } from './UserButton/UserButton';
 export { UserInfoAction } from './UserInfoAction/UserInfoAction';
 export { UserInfoIcons } from './UserInfoIcons/UserInfoIcons';
 export { UserMenu } from './UserMenu/UserMenu';
+export { UsersRolesTable } from './UsersRolesTable/UsersRolesTable';
 export { UsersStack } from './UsersStack/UsersStack';
 export { UsersTable } from './UsersTable/UsersTable';
 
