@@ -227,7 +227,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         if (!Number.isNaN(val)) {
           if (!noClampOnBlur) {
             setTempValue(val.toFixed(precision));
-            handleValueChange(val);
+            handleValueChange(parseFloat(val.toFixed(precision)));
           }
         } else {
           setTempValue(finalValue?.toFixed(precision) ?? '');
