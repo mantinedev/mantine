@@ -66,6 +66,7 @@ export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
 
 // Users
 export { UserButton } from './UserButton/UserButton';
+export { UserInfoAction } from './UserInfoAction/UserInfoAction';
 export { UserMenu } from './UserMenu/UserMenu';
 
 // Dropzones
