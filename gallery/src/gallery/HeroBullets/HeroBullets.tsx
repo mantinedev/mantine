@@ -24,6 +24,11 @@ const useStyles = createStyles((theme) => ({
   content: {
     maxWidth: 480,
     marginRight: theme.spacing.xl * 3,
+
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
+      marginRight: 0,
+    },
   },
 
   title: {
@@ -32,10 +37,24 @@ const useStyles = createStyles((theme) => ({
     fontSize: 44,
     lineHeight: 1.2,
     fontWeight: 900,
+
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: 28,
+    },
+  },
+
+  control: {
+    [theme.fn.smallerThan('xs')]: {
+      flex: 1,
+    },
   },
 
   image: {
     flex: 1,
+
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
+    },
   },
 
   highlight: {
@@ -89,10 +108,10 @@ export function HeroBullets() {
             </List>
 
             <Group mt={30}>
-              <Button radius="xl" size="md">
+              <Button radius="xl" size="md" className={classes.control}>
                 Get started
               </Button>
-              <Button variant="default" radius="xl" size="md">
+              <Button variant="default" radius="xl" size="md" className={classes.control}>
                 Source code
               </Button>
             </Group>

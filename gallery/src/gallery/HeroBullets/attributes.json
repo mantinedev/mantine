@@ -4,7 +4,18 @@
   "author": "rtivital",
   "withColor": true,
   "responsive": true,
-  "dependencies": [],
+  "dependencies": [
+    "/core/container/",
+    "/core/image/",
+    "/core/list/",
+    "/core/title/",
+    "/core/theme-icon/",
+    "/core/button/",
+    "/core/group/",
+    "/core/text/",
+    "tabler-icons-react",
+    "https://www.freepik.com/"
+  ],
   "canvas": {
     "center": false
   }
