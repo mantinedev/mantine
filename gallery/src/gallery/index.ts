@@ -69,6 +69,7 @@ export { UserButton } from './UserButton/UserButton';
 export { UserInfoAction } from './UserInfoAction/UserInfoAction';
 export { UserInfoIcons } from './UserInfoIcons/UserInfoIcons';
 export { UserMenu } from './UserMenu/UserMenu';
+export { UsersTable } from './UsersTable/UsersTable';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
