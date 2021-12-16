@@ -84,7 +84,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const closeModal = (id: string) => {
     const index = state.findIndex((item) => item.id === id);
-    if (index !== -1 && state.length === 1) {
+    if (state.length <= 1) {
       closeAll();
     } else {
       const modal = state.find((item) => item.id === id);
