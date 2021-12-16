@@ -1,0 +1,21 @@
+name: Request a feature
+description: Suggest an idea for this project
+body:
+  - type: markdown
+    attributes: 
+      value: "## Thanks for reaching out!"
+  - type: textarea
+    id: example
+    attributes:
+      label: Usage example, including component/hook API
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Possible implementation – describe how the feature can be implemented
+  - type: dropdown
+    id: participate
+    attributes:
+      label: Do you want to contribute this feature and create a pull request
+      options:
+        - 'Yes'
+        - 'No'
