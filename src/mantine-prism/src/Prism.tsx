@@ -1,50 +1,36 @@
-import React, { forwardRef } from 'react';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+import React, { forwardRef, Children } from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import {
   ActionIcon,
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  MantineColor,
   ClassNames,
   Box,
+  Tabs,
+  TabProps,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
+import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
+import useTabsStyles from './PrismTabs.styles';
 
 export type PrismStylesNames = ClassNames<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
-  /** Code which will be highlighted */
-  children: string;
+    PrismSharedProps,
+    Omit<React.ComponentPropsWithRef<'div'>, 'children'> {}
 
-  /** Programming language that should be highlighted */
-  language: Language;
+type PrismComponent = ((props: PrismProps) => React.ReactElement) & {
+  displayName: string;
+  Tab: typeof PrismTab;
+  Tabs: typeof PrismTabs;
+};
 
-  /** True to remove copy to clipboard button */
-  noCopy?: boolean;
-
-  /** Copy button tooltip */
-  copyLabel?: string;
-
-  /** Copy button tooltip in copied state */
-  copiedLabel?: string;
-
-  /** Display line numbers */
-  withLineNumbers?: boolean;
-
-  /** Highlight line at given line number with color from theme.colors */
-  highlightLines?: Record<string, { color: MantineColor; label?: string }>;
-
-  /** Force color scheme, defaults to theme.colorScheme */
-  colorScheme?: 'dark' | 'light';
-}
-
-export const Prism = forwardRef<HTMLDivElement, PrismProps>(
+export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
   (
     {
       className,
@@ -106,7 +92,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <pre className={cx(classes.code, inheritedClassName, className)} style={inheritedStyle}>
+            <pre className={cx(classes.code, inheritedClassName)} style={inheritedStyle}>
               {tokens
                 .map((line, index) => {
                   if (
@@ -179,6 +165,46 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>(
       </Box>
     );
   }
+) as any;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function PrismTab(_props: PrismSharedProps & TabProps) {
+  return null;
+}
+
+export interface PrismTabsProps extends DefaultProps {
+  /** <Prism.Tab /> components only */
+  children: any;
+}
+
+export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
+  ({ children }: PrismTabsProps) => {
+    const { classes } = useTabsStyles();
+
+    const tabs = (Children.toArray(children) as React.ReactElement[])
+      .filter((child) => child.type === PrismTab)
+      .map((child) => (
+        <Tabs.Tab label={child.props.label}>
+          <Prism {...child.props} classNames={{ code: classes.code }} />
+        </Tabs.Tab>
+      ));
+
+    return (
+      <Tabs
+        variant="unstyled"
+        tabPadding={0}
+        classNames={{
+          tabsList: classes.tabs,
+          tabActive: classes.tabActive,
+          tabControl: classes.tab,
+        }}
+      >
+        {tabs}
+      </Tabs>
+    );
+  }
 );
 
+Prism.Tabs = PrismTabs;
+Prism.Tab = PrismTab;
 Prism.displayName = '@mantine/prism/Prism';
