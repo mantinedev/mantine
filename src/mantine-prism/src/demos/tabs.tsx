@@ -45,6 +45,19 @@ function TsIcon(props: React.ComponentProps<'svg'>) {
 }
 
 const code = `
+<Prism.Tabs>
+  <Prism.Tab label="styles.css" language="css" icon={<CSSIcon />}>
+    {cssCode}
+  </Prism.Tab>
+
+  <Prism.Tab label="decorator.py" language="python" icon={<PythonIcon />}>
+    {pythonCode}
+  </Prism.Tab>
+
+  <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon />}>
+    {tsCode}
+  </Prism.Tab>
+</Prism.Tabs>
 `;
 
 function Demo() {
