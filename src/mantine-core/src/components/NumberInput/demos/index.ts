@@ -6,3 +6,4 @@ export { validation } from './validation';
 export { disabled } from './disabled';
 export { icon } from './icon';
 export { decimal } from './decimal';
+export { decimalSeparator } from './decimalSeparator';
