@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
 import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
@@ -29,6 +29,9 @@ export interface AlertProps
 
   /** Close button aria-label */
   closeButtonLabel?: string;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
@@ -42,12 +45,13 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       icon,
       styles,
       onClose,
+      radius = 'sm',
       withCloseButton,
       ...others
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Alert' });
+    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Alert' });
 
     return (
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
