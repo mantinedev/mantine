@@ -137,7 +137,6 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>(
                       {withLineNumbers && (
                         <div
                           className={classes.lineNumber}
-                          data-mantine-line-number
                           style={{
                             color: shouldHighlight
                               ? theme.fn.themeColor(

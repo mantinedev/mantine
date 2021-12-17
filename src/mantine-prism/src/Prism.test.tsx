@@ -46,10 +46,10 @@ describe('@mantine/prism/Prism', () => {
   it('renders line numbers based on withLineNumbers prop', () => {
     const withLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers />);
     const withoutLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers={false} />);
-    expect(withLineNumbers.render().find('[data-mantine-line-number]')).toHaveLength(
+    expect(withLineNumbers.render().find('.mantine-Prism-lineNumber')).toHaveLength(
       defaultProps.children.split('\n').length
     );
-    expect(withoutLineNumbers.render().find('[data-mantine-line-number]')).toHaveLength(0);
+    expect(withoutLineNumbers.render().find('.mantine-Prism-lineNumber')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {
