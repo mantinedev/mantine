@@ -1,7 +1,7 @@
 import React from 'react';
 import { Prism } from '../Prism';
 
-const demoCode = `
+export const demoCode = `
 import React from 'react';
 import { Button } from '@mantine/core';
 

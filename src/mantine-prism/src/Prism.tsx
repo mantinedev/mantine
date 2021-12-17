@@ -184,7 +184,7 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
     const tabs = (Children.toArray(children) as React.ReactElement[])
       .filter((child) => child.type === PrismTab)
       .map((child) => (
-        <Tabs.Tab label={child.props.label}>
+        <Tabs.Tab label={child.props.label} icon={child.props.icon}>
           <Prism {...child.props} classNames={{ code: classes.code }} />
         </Tabs.Tab>
       ));
