@@ -1,16 +1,17 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
 interface AlertStyles {
   color: MantineColor;
+  radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { color }: AlertStyles) => ({
+export default createStyles((theme, { color, radius }: AlertStyles) => ({
   root: {
     ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
   },
