@@ -30,7 +30,7 @@ export interface AlertProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
-  /** Alert Radius */
+  /** Radius from theme.radius, or number to set border-radius in px */
   radius?: MantineNumberSize;
 }
 

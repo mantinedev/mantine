@@ -11,7 +11,7 @@ export default createStyles((theme, { color, radius }: AlertStyles) => ({
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-    borderRadius: typeof radius === 'number' ? radius : theme.radius[radius],
+    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
   },
