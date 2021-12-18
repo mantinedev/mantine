@@ -29,11 +29,12 @@ const GALLERY_CATEGORIES = [
       { slug: 'inputs', name: 'Inputs' },
       { slug: 'sliders', name: 'Sliders' },
       { slug: 'dropzones', name: 'Dropzones' },
+      { slug: 'app-cards', name: 'Application cards' },
     ],
   },
   {
     name: 'Blog',
-    categories: [{ slug: 'cards', name: 'Blog cards' }],
+    categories: [{ slug: 'article-cards', name: 'Article cards' }],
   },
 ];
 
