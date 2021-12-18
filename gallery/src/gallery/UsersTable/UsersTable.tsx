@@ -28,12 +28,12 @@ export function UsersTable({ data }: UsersTableProps) {
         <Badge color={jobColors[item.job.toLowerCase()]}>{item.job}</Badge>
       </td>
       <td>
-        <Anchor size="sm" href="#" onClick={(event) => event.preventDefault()}>
+        <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
           {item.email}
         </Anchor>
       </td>
       <td>
-        <Anchor size="sm" href="#" onClick={(event) => event.preventDefault()}>
+        <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
           {item.phone}
         </Anchor>
       </td>
@@ -52,7 +52,7 @@ export function UsersTable({ data }: UsersTableProps) {
 
   return (
     <Box sx={{ maxWidth: 800, overflowX: 'auto' }}>
-      <Table sx={{ minWidth: 800 }} striped highlightOnHover>
+      <Table sx={{ minWidth: 800 }}>
         <thead>
           <tr>
             <th>Employee</th>
