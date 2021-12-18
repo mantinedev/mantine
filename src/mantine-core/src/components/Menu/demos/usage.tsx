@@ -6,6 +6,7 @@ import { menuItems } from './_menu-items';
 const code = `
 import React from 'react';
 import { Menu, Divider, Text } from '@mantine/core';
+import { GearIcon, ChatBubbleIcon, ImageIcon, MagnifyingGlassIcon, TrashIcon, PinRightIcon } from '@modulz/radix-icons';
 
 function Demo() {
   return (
