@@ -25,6 +25,7 @@ const defaultProps = {
     <Stepper.Step label="3" key="3" description="3">
       3
     </Stepper.Step>,
+    <Stepper.Completed key="4">4</Stepper.Completed>,
   ],
 };
 
