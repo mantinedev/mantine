@@ -8,6 +8,7 @@ import {
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
+import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
 export type StepperStylesNames = ClassNames<typeof useStyles> | StepStylesNames;
@@ -55,6 +56,7 @@ export interface StepperProps
 type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
   displayName: string;
   Step: typeof Step;
+  Completed: typeof StepCompleted;
 };
 
 export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
@@ -86,6 +88,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     const filteredChildren = Children.toArray(children).filter(
       (item: React.ReactElement) => item.type === Step
     ) as React.ReactElement[];
+    const completedStep = Children.toArray(children).find(
+      (item: React.ReactElement) => item.type === StepCompleted
+    ) as React.ReactElement;
 
     const items = filteredChildren.reduce((acc, item, index, array) => {
       acc.push(
@@ -122,7 +127,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       return acc;
     }, [] as React.ReactNode[]);
 
-    const content = filteredChildren[active]?.props?.children;
+    const stepContent = filteredChildren[active]?.props?.children;
+    const completedContent = completedStep?.props?.children;
+    const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
 
     return (
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
@@ -134,4 +141,5 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
 ) as any;
 
 Stepper.Step = Step;
+Stepper.Completed = StepCompleted;
 Stepper.displayName = '@mantine/core/Stepper';

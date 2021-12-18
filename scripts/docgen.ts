@@ -12,6 +12,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
+  '../src/mantine-core/src/components/Stepper/Step/Step.tsx',
   '../src/mantine-core/src/components/Avatar/AvatarsGroup/AvatarsGroup.tsx',
   '../src/mantine-core/src/components/AppShell/Navbar/Navbar.tsx',
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',

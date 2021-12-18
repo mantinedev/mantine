@@ -2,7 +2,7 @@ name: Report an issue with @mantine/ scoped package
 description: Tell us if something is not working as expected
 body:
   - type: markdown
-    attributes: 
+    attributes:
       value: |
         ## Thanks for reaching out!
         Before submitting an issue please make sure that you use latest version of all @mantine/ packages.
@@ -36,22 +36,22 @@ body:
   - type: input
     id: link
     attributes:
-      label: If possible, please include a link to a codesandbox with the reproduced problem 
+      label: If possible, please include a link to a codesandbox with the reproduced problem
       description: Codesandbox template – https://codesandbox.io/s/mantine-template-9ze89
   - type: dropdown
     id: fix
     attributes:
       label: Do you know how to fix the issue
       options:
-      - 'Yes'
-      - 'No'
+        - 'Yes'
+        - 'No'
   - type: dropdown
     id: participate
     attributes:
       label: Are you willing to participate in fixing this issue and create a pull request with the fix
       options:
-      - 'Yes'
-      - 'No'      
+        - 'Yes'
+        - 'No'
   - type: textarea
     id: possibleFix
     attributes:

@@ -24,9 +24,11 @@ function Demo() {
         <Stepper.Step label="Final step" description="Get full access">
           Step 3 content: Get full access
         </Stepper.Step>
-      </Stepper>
 
-      {active === 3 && <div>Form completed, click back button to get to previous step</div>}
+        <Stepper.Completed>
+          Form completed, click back button to get to previous step
+        </Stepper.Completed>
+      </Stepper>
 
       <Group position="center" mt="xl">
         <Button variant="default" onClick={prevStep}>Back</Button>
@@ -54,11 +56,11 @@ function Demo() {
         <Stepper.Step label="Final step" description="Get full access">
           <Content>Step 3 content: Get full access</Content>
         </Stepper.Step>
-      </Stepper>
 
-      {active === 3 && (
-        <Content mt="md">Form completed, click back button to get to previous step</Content>
-      )}
+        <Stepper.Completed>
+          Form completed, click back button to get to previous step
+        </Stepper.Completed>
+      </Stepper>
 
       <Group position="center" mt="xl">
         <Button variant="default" onClick={prevStep}>
