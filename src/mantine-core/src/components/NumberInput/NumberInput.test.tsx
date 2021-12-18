@@ -155,6 +155,35 @@ describe('@mantine/core/NumberInput', () => {
     expect(input.getDOMNode().getAttribute('value')).toBe('');
   });
 
+  it('check decimalSeparator', () => {
+    const spy = jest.fn();
+    const element = mount(
+      <NumberInput
+        value={undefined}
+        max={10}
+        min={0}
+        step={6}
+        onChange={spy}
+        decimalSeparator=","
+      />
+    );
+
+    const input = element.find('input').at(0);
+    // change value to 6,54 and blur with a string as if a user typed 7 and then selected the value and typed a string
+    // and then blurred
+    input.simulate('change', { target: { value: '6,54' } });
+    expect(spy).toHaveBeenLastCalledWith(6.54);
+    input.simulate('blur', { target: { value: 'abc' } });
+    expect(input.getDOMNode().getAttribute('value')).toBe('7');
+    expect(spy).toHaveBeenLastCalledWith(6.54);
+
+    input.simulate('change', { target: { value: '5,55,55' } });
+    expect(spy).toHaveBeenLastCalledWith(5.55);
+    input.simulate('blur', { target: { value: 'abc' } });
+    expect(input.getDOMNode().getAttribute('value')).toBe('6');
+    expect(spy).toHaveBeenLastCalledWith(5.55);
+  });
+
   it('precision on blur', () => {
     const spy = jest.fn();
     const element = mount(

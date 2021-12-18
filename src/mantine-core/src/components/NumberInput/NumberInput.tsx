@@ -35,6 +35,9 @@ export interface NumberInputProps
   /** Input value for controlled variant */
   value?: number | undefined;
 
+  /** The decimal separator */
+  decimalSeparator?: string;
+
   /** Maximum possible value */
   max?: number;
 
@@ -66,6 +69,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       disabled,
       value,
       onChange,
+      decimalSeparator,
       min,
       max,
       step = 1,
@@ -105,6 +109,32 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleValueChange = (val: number | undefined) => {
       typeof onChange === 'function' && onChange(val);
       setValue(val);
+    };
+
+    const formatNum = (val: string | number) => {
+      let parsedStr = String(val);
+
+      if (decimalSeparator) {
+        parsedStr = parsedStr.replace(/\./g, decimalSeparator);
+      }
+
+      return parsedStr;
+    };
+
+    const parseNum = (val: string) => {
+      let num = val;
+
+      if (decimalSeparator) {
+        num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
+      }
+
+      const parsedNum = parseFloat(num);
+
+      if (Number.isNaN(parsedNum)) {
+        return undefined;
+      }
+
+      return parsedNum;
     };
 
     const _min = typeof min === 'number' ? min : -Infinity;
@@ -181,7 +211,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       if (val === '') {
         handleValueChange(undefined);
       } else {
-        const parsed = Number(val);
+        const parsed = parseNum(val);
         val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parsed);
       }
     };
@@ -191,7 +221,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setTempValue('');
         handleValueChange(undefined);
       } else {
-        const parsedVal = parseFloat(event.target.value);
+        const parsedVal = parseNum(event.target.value);
         const val = clamp({ value: parsedVal, min: _min, max: _max });
 
         if (!Number.isNaN(val)) {
@@ -226,7 +256,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       <TextInput
         {...others}
         variant={variant}
-        value={tempValue}
+        value={formatNum(tempValue)}
         disabled={disabled}
         ref={useMergedRef(inputRef, ref)}
         type="text"
