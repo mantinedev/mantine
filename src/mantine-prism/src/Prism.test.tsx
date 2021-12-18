@@ -10,7 +10,7 @@ import {
   itSupportsSx,
   itSupportsRef,
 } from '@mantine/tests';
-import { Prism } from './Prism';
+import { Prism, PrismTab, PrismTabs } from './Prism';
 import { Prism as PrismStylesApi } from './styles.api';
 
 const code = `import React from 'react';
@@ -50,6 +50,11 @@ describe('@mantine/prism/Prism', () => {
       defaultProps.children.split('\n').length
     );
     expect(withoutLineNumbers.render().find('.mantine-Prism-lineNumber')).toHaveLength(0);
+  });
+
+  it('exposes PrismTabs and PrismTab components', () => {
+    expect(Prism.Tabs).toBe(PrismTabs);
+    expect(Prism.Tab).toBe(PrismTab);
   });
 
   it('has correct displayName', () => {

@@ -167,8 +167,10 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
   }
 ) as any;
 
+export interface PrismTabProps extends PrismSharedProps, Omit<TabProps, 'children'> {}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function PrismTab(_props: PrismSharedProps & TabProps) {
+export function PrismTab(_props: PrismTabProps) {
   return null;
 }
 
