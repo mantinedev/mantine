@@ -9,6 +9,7 @@ import {
   Box,
   Tabs,
   TabProps,
+  TabsProps,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -172,22 +173,22 @@ export function PrismTab(_props: PrismSharedProps & TabProps) {
   return null;
 }
 
-export interface PrismTabsProps extends DefaultProps {
-  /** <Prism.Tab /> components only */
-  children: any;
-}
+export interface PrismTabsProps extends DefaultProps, TabsProps {}
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  ({ children }: PrismTabsProps) => {
+  ({ children, ...others }: PrismTabsProps) => {
     const { classes } = useTabsStyles();
 
     const tabs = (Children.toArray(children) as React.ReactElement[])
       .filter((child) => child.type === PrismTab)
-      .map((child) => (
-        <Tabs.Tab label={child.props.label} icon={child.props.icon}>
-          <Prism {...child.props} classNames={{ code: classes.code }} />
-        </Tabs.Tab>
-      ));
+      .map((child, index) => {
+        const { label, icon, ...prismProps } = child.props;
+        return (
+          <Tabs.Tab label={label} icon={icon} key={index}>
+            <Prism {...prismProps} classNames={{ code: classes.code }} />
+          </Tabs.Tab>
+        );
+      });
 
     return (
       <Tabs
@@ -198,6 +199,7 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
           tabActive: classes.tabActive,
           tabControl: classes.tab,
         }}
+        {...others}
       >
         {tabs}
       </Tabs>
@@ -208,3 +210,5 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
 Prism.Tabs = PrismTabs;
 Prism.Tab = PrismTab;
 Prism.displayName = '@mantine/prism/Prism';
+PrismTabs.displayName = '@mantine/prism/Tabs';
+PrismTab.displayName = '@mantine/prism/Tab';
