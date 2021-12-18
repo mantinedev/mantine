@@ -1,7 +1,14 @@
 import React from 'react';
-import { createStyles, Title, Container, Text } from '@mantine/core';
+import {
+  createStyles,
+  Title,
+  Container,
+  Text,
+  UnstyledButton,
+  Overlay,
+  SimpleGrid,
+} from '@mantine/core';
 import { ContactIconsList } from '../ContactIcons/ContactIcons';
-import { ImageButtonCards } from '../ImageButtonCards/ImageButtonCards';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -82,10 +89,49 @@ const useStyles = createStyles((theme) => ({
     marginBottom: theme.spacing.xl,
     lineHeight: 1,
   },
+
+  categoryCard: {
+    height: 160,
+    position: 'relative',
+    backgroundSize: '100%',
+    backgroundPosition: 'center',
+    color: theme.white,
+    borderRadius: theme.radius.lg,
+    padding: theme.spacing.xl,
+    overflow: 'hidden',
+    transition: 'background-size 300ms ease',
+
+    '&:hover': {
+      backgroundSize: '105%',
+    },
+  },
+
+  categoryLabel: {
+    color: theme.white,
+    zIndex: 2,
+    position: 'relative',
+  },
 }));
 
-export function FaqWithHeader() {
+interface FaqWithHeaderProps {
+  categories: { image: string; label: string }[];
+}
+
+export function FaqWithHeader({ categories }: FaqWithHeaderProps) {
   const { classes } = useStyles();
+
+  const items = categories.map((category) => (
+    <UnstyledButton
+      style={{ backgroundImage: `url(${category.image})` }}
+      className={classes.categoryCard}
+      key={category.label}
+    >
+      <Overlay color="#000" opacity={0.6} zIndex={1} />
+      <Text size="xl" align="center" weight={700} className={classes.categoryLabel}>
+        {category.label}
+      </Text>
+    </UnstyledButton>
+  ));
 
   return (
     <Container className={classes.wrapper} size="lg">
@@ -104,7 +150,9 @@ export function FaqWithHeader() {
         </div>
       </div>
 
-      <ImageButtonCards />
+      <SimpleGrid cols={3} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+        {items}
+      </SimpleGrid>
     </Container>
   );
 }
