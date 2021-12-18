@@ -8,7 +8,7 @@ const code = `
 import { Stepper, Button, Group } from '@mantine/core';
 
 function Demo() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(3);
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
@@ -40,7 +40,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(3);
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
@@ -72,7 +72,7 @@ function Demo() {
   );
 }
 
-export const usage: MantineDemo = {
+export const completedStep: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

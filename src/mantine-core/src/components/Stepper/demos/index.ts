@@ -7,5 +7,6 @@ export { orientation } from './orientation';
 export { iconPosition } from './iconPosition';
 export { loading } from './loading';
 export { stepColor } from './stepColor';
+export { completedStep } from './completed-step';
 export { stylesApi } from './stylesApi';
 export { stylesApi2 } from './stylesApi2';

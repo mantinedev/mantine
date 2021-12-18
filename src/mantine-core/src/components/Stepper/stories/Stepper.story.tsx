@@ -20,14 +20,15 @@ function Wrapper(props: Partial<StepperProps>) {
         <Stepper.Step label="Last" description="Last description">
           Last step content here
         </Stepper.Step>
+        <Stepper.Completed>Completed content here</Stepper.Completed>
       </Stepper>
 
       <Group mt={40}>
-        <Button variant="default" onClick={() => setActive(active - 1)}>
+        <Button variant="default" onClick={() => setActive(Math.max(0, active - 1))}>
           Previous
         </Button>
 
-        <Button onClick={() => setActive(active + 1)}>Next</Button>
+        <Button onClick={() => setActive(Math.min(3, active + 1))}>Next</Button>
       </Group>
     </>
   );
@@ -48,11 +49,11 @@ function DynamicChildren() {
       </Stepper>
 
       <Group mt={40}>
-        <Button variant="default" onClick={() => setActive(active - 1)}>
+        <Button variant="default" onClick={() => setActive(Math.max(0, active - 1))}>
           Previous
         </Button>
 
-        <Button onClick={() => setActive(active + 1)}>Next</Button>
+        <Button onClick={() => setActive(Math.min(count, active + 1))}>Next</Button>
         <Button
           variant="outline"
           color="red"
