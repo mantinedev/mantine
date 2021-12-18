@@ -20,7 +20,7 @@ export interface RingProgressProps
   size?: number;
 
   /** Sets whether the edges of the progress circle are rounded */
-  capIsRound?: boolean;
+  roundCaps?: boolean;
 
   /** Ring sections */
   sections: { value: number; color: MantineColor }[];
@@ -37,7 +37,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
       thickness = size / 10,
       classNames,
       styles,
-      capIsRound,
+      roundCaps,
       ...others
     }: RingProgressProps,
     ref
@@ -48,7 +48,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
       size,
       thickness,
       sections,
-      renderRoundedLineCaps: capIsRound,
+      renderRoundedLineCaps: roundCaps,
     }).map((curve, index) => (
       <Curve
         key={index}
@@ -59,7 +59,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
         offset={curve.offset}
         color={curve.data?.color}
         root={curve.root}
-        lineCapIsRound={curve.lineCapIsRound}
+        lineRoundCaps={curve.lineRoundCaps}
       />
     ));
 

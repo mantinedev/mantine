@@ -17,7 +17,7 @@ interface Curve {
   offset: number;
   root: boolean;
   data: CurveData;
-  lineCapIsRound?: boolean;
+  lineRoundCaps?: boolean;
 }
 
 export function getCurves({ size, thickness, sections, renderRoundedLineCaps }: GetCurves) {
@@ -36,15 +36,15 @@ export function getCurves({ size, thickness, sections, renderRoundedLineCaps }: 
 
   // Reorder curves to layer appropriately and selectively set caps to round
 
-  curvesInOrder.push({ ...curves[curves.length - 1], lineCapIsRound: false });
+  curvesInOrder.push({ ...curves[curves.length - 1], lineRoundCaps: false });
   if (curves.length > 2) {
-    curvesInOrder.push({ ...curves[0], lineCapIsRound: renderRoundedLineCaps });
-    curvesInOrder.push({ ...curves[curves.length - 2], lineCapIsRound: renderRoundedLineCaps });
+    curvesInOrder.push({ ...curves[0], lineRoundCaps: renderRoundedLineCaps });
+    curvesInOrder.push({ ...curves[curves.length - 2], lineRoundCaps: renderRoundedLineCaps });
     for (let i = 1; i <= curves.length - 3; i += 1) {
-      curvesInOrder.push({ ...curves[i], lineCapIsRound: false });
+      curvesInOrder.push({ ...curves[i], lineRoundCaps: false });
     }
   } else {
-    curvesInOrder.push({ ...curves[0], lineCapIsRound: renderRoundedLineCaps });
+    curvesInOrder.push({ ...curves[0], lineRoundCaps: renderRoundedLineCaps });
   }
 
   return curvesInOrder;
