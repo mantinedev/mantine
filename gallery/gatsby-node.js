@@ -11,16 +11,6 @@ const convertCase = (string) => {
 
 const GALLERY_CATEGORIES = [
   {
-    name: 'Landing page sections',
-    categories: [
-      { slug: 'hero', name: 'Hero headers' },
-      { slug: 'features', name: 'Features section' },
-      { slug: 'banners', name: 'Banners' },
-      { slug: 'faq', name: 'Frequently asked questions' },
-      { slug: 'contact', name: 'Contact us section' },
-    ],
-  },
-  {
     name: 'Application UI',
     categories: [
       { slug: 'navbars', name: 'Navbars' },
@@ -33,7 +23,17 @@ const GALLERY_CATEGORIES = [
     ],
   },
   {
-    name: 'Blog',
+    name: 'Page sections',
+    categories: [
+      { slug: 'hero', name: 'Hero headers' },
+      { slug: 'features', name: 'Features section' },
+      { slug: 'banners', name: 'Banners' },
+      { slug: 'faq', name: 'Frequently asked questions' },
+      { slug: 'contact', name: 'Contact us section' },
+    ],
+  },
+  {
+    name: 'Blog UI',
     categories: [{ slug: 'article-cards', name: 'Article cards' }],
   },
 ];
