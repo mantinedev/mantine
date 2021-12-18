@@ -1,0 +1,19 @@
+{
+  "title": "Simple header",
+  "category": "headers",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [],
+  "props": {
+    "links": [
+      { "link": "/about", "label": "Features" },
+      { "link": "/pricing", "label": "Pricing" },
+      { "link": "/learn", "label": "Learn" },
+      { "link": "/community", "label": "Community" }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

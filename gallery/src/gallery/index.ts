@@ -83,3 +83,6 @@ export { SliderHover } from './SliderHover/SliderHover';
 
 // Footers
 export { FooterSimple } from './FooterSimple/FooterSimple';
+
+// Headers
+export { HeaderSimple } from './HeaderSimple/HeaderSimple';
