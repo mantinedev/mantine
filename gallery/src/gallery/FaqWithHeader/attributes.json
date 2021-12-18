@@ -1,5 +1,5 @@
 {
-  "title": "Faq with image",
+  "title": "Faq page header",
   "category": "faq",
   "author": "rtivital",
   "responsive": true,
@@ -7,6 +7,9 @@
     "/core/container/",
     "/core/title/",
     "/core/text/",
+    "/core/overlay",
+    "/core/simple-grid/",
+    "/core/button/#unstyled-button",
     "/gallery/component/contact-icons/"
   ],
   "props": {

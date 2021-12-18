@@ -12,7 +12,6 @@ export { ImageBanner } from './ImageBanner/ImageBanner';
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
-export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
 // Contact us
