@@ -80,3 +80,6 @@ export { SliderIcon } from './SliderIcon/SliderIcon';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SliderLabel } from './SliderLabel/SliderLabel';
 export { SliderHover } from './SliderHover/SliderHover';
+
+// Footers
+export { FooterSimple } from './FooterSimple/FooterSimple';
