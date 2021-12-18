@@ -39,8 +39,8 @@ describe('@mantine/prism/Prism', () => {
     const withCopy = shallow(<Prism {...defaultProps} noCopy={false} />);
     const withoutCopy = shallow(<Prism {...defaultProps} noCopy />);
 
-    expect(withCopy.render().find('[data-mantine-copy]')).toHaveLength(1);
-    expect(withoutCopy.render().find('[data-mantine-copy]')).toHaveLength(0);
+    expect(withCopy.render().find('.mantine-Prism-copy')).toHaveLength(1);
+    expect(withoutCopy.render().find('.mantine-Prism-copy')).toHaveLength(0);
   });
 
   it('renders line numbers based on withLineNumbers prop', () => {

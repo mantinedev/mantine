@@ -60,7 +60,6 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {!noCopy && (
           <Tooltip
-            data-mantine-copy
             className={classes.copy}
             label={clipboard.copied ? copiedLabel : copyLabel}
             position="left"
