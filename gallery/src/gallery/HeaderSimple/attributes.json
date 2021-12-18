@@ -4,7 +4,7 @@
   "author": "rtivital",
   "withColor": true,
   "responsive": true,
-  "dependencies": [],
+  "dependencies": ["/core/app-shell/", "/core/container/", "/core/group/", "/core/burger/"],
   "props": {
     "links": [
       { "link": "/about", "label": "Features" },
