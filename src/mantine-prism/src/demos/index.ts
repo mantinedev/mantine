@@ -1,7 +1,7 @@
-export * from './languages';
-export * from './copyLabel';
-export * from './themeOverride';
-export * from './linesHighlight';
-export * from './lineNumbers';
-export * from './usage';
-export * from './tabs';
+export { languages } from './languages';
+export { copyLabel } from './copyLabel';
+export { themeOverride } from './themeOverride';
+export { linesHighlight } from './linesHighlight';
+export { lineNumbers } from './lineNumbers';
+export { usage } from './usage';
+export { tabs } from './tabs';
