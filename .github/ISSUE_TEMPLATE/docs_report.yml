@@ -2,8 +2,8 @@ name: Report an issue with mantine.dev website
 description: Nothing is perfect, especially our docs, help us find and fix mistakes, bad wording, etc.
 body:
   - type: markdown
-    attributes: 
-      value: "## Thanks for reaching out!"
+    attributes:
+      value: '## Thanks for reaching out!'
   - type: input
     id: link
     attributes:

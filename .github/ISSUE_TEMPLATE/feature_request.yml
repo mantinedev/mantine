@@ -1,9 +1,10 @@
 name: Request a feature
 description: Suggest an idea for this project
+title: '[Feature Request] '
 body:
   - type: markdown
-    attributes: 
-      value: "## Thanks for reaching out!"
+    attributes:
+      value: '## Thanks for reaching out!'
   - type: textarea
     id: example
     attributes:
