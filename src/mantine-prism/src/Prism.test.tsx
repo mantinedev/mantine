@@ -56,3 +56,24 @@ describe('@mantine/prism/Prism', () => {
     expect(Prism.displayName).toEqual('@mantine/prism/Prism');
   });
 });
+
+const defaultTabsProps = {
+  children: [
+    <Prism.Tab language="tsx" key="1">
+      code
+    </Prism.Tab>,
+  ],
+};
+
+describe('@mantine/prism/Prism.Tabs', () => {
+  itSupportsClassName(Prism.Tabs, defaultTabsProps);
+  itSupportsMargins(Prism.Tabs, defaultTabsProps);
+  itSupportsOthers(Prism.Tabs, defaultTabsProps);
+  itSupportsStyle(Prism.Tabs, defaultTabsProps);
+  itSupportsSx(Prism.Tabs, defaultTabsProps, { dive: 1 });
+  itSupportsRef(Prism.Tabs, defaultTabsProps, HTMLDivElement);
+
+  it('has correct displayName', () => {
+    expect(Prism.Tabs.displayName).toEqual('@mantine/prism/Tabs');
+  });
+});

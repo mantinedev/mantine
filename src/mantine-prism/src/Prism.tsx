@@ -176,7 +176,7 @@ export function PrismTab(_props: PrismSharedProps & TabProps) {
 export interface PrismTabsProps extends DefaultProps, TabsProps {}
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  ({ children, ...others }: PrismTabsProps) => {
+  ({ children, ...others }: PrismTabsProps, ref) => {
     const { classes } = useTabsStyles();
 
     const tabs = (Children.toArray(children) as React.ReactElement[])
@@ -192,6 +192,7 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
 
     return (
       <Tabs
+        ref={ref}
         variant="unstyled"
         tabPadding={0}
         classNames={{
