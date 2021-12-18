@@ -37,6 +37,9 @@ import slidersDark from './sliders-dark.svg';
 import footersLight from './footers-light.svg';
 import footersDark from './footers-dark.svg';
 
+import headersLight from './headers-light.svg';
+import headersDark from './headers-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   'article-cards': { light: cardsLight, dark: cardsDark },
@@ -52,4 +55,5 @@ export default {
   dropzones: { light: dropzonesLight, dark: dropzonesDark },
   sliders: { light: slidersLight, dark: slidersDark },
   footers: { light: footersLight, dark: footersDark },
+  headers: { light: headersLight, dark: headersDark },
 };

@@ -14,6 +14,7 @@ const GALLERY_CATEGORIES = [
     name: 'Application UI',
     categories: [
       { slug: 'navbars', name: 'Navbars' },
+      { slug: 'headers', name: 'Headers' },
       { slug: 'footers', name: 'Footers' },
       { slug: 'users', name: 'User info and controls' },
       { slug: 'authentication', name: 'Authentication' },
