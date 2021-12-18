@@ -6,7 +6,6 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 // Banners
 export { EmailBanner } from './EmailBanner/EmailBanner';
 export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
-export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
