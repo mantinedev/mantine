@@ -174,11 +174,14 @@ export function PrismTab(_props: PrismTabProps) {
   return null;
 }
 
-export interface PrismTabsProps extends DefaultProps, TabsProps {}
+export type PrismTabsStylesNames = ClassNames<typeof useTabsStyles> | PrismStylesNames;
+export interface PrismTabsProps
+  extends DefaultProps<PrismTabsStylesNames>,
+    Omit<TabsProps, 'classNames' | 'styles'> {}
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  ({ children, ...others }: PrismTabsProps, ref) => {
-    const { classes } = useTabsStyles();
+  ({ children, classNames, styles, ...others }: PrismTabsProps, ref) => {
+    const { classes, cx } = useTabsStyles(null, { name: 'PrismTabs', classNames, styles });
 
     const tabs = (Children.toArray(children) as React.ReactElement[])
       .filter((child) => child.type === PrismTab)
@@ -186,7 +189,11 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
         const { label, icon, ...prismProps } = child.props;
         return (
           <Tabs.Tab label={label} icon={icon} key={index}>
-            <Prism {...prismProps} classNames={{ code: classes.code }} />
+            <Prism
+              {...prismProps}
+              styles={styles}
+              classNames={{ ...classNames, code: cx(classes.code, classNames?.code) }}
+            />
           </Tabs.Tab>
         );
       });
@@ -197,9 +204,9 @@ export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
         variant="unstyled"
         tabPadding={0}
         classNames={{
-          tabsList: classes.tabs,
-          tabActive: classes.tabActive,
-          tabControl: classes.tab,
+          tabsList: cx(classes.tabs, classNames?.tabs),
+          tabActive: cx(classes.tabActive, classNames?.tabActive),
+          tabControl: cx(classes.tab, classNames?.tab),
         }}
         {...others}
       >

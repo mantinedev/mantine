@@ -1,4 +1,4 @@
-import type { PrismStylesNames } from './Prism';
+import type { PrismStylesNames, PrismTabsStylesNames } from './Prism';
 
 export const Prism: Record<PrismStylesNames, string> = {
   root: 'Root element',
@@ -7,4 +7,12 @@ export const Prism: Record<PrismStylesNames, string> = {
   line: 'Line wrapper, contains line number and content',
   lineNumber: 'Line number',
   lineContent: 'Line content',
+};
+
+export const PrismTabs: Record<PrismTabsStylesNames, string> = {
+  tabs: 'Tabs list',
+  tab: 'Tab control',
+  tabActive: 'Active tab control',
+  code: 'Code wrapper',
+  ...Prism,
 };
