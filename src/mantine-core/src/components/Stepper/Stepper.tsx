@@ -127,7 +127,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       return acc;
     }, [] as React.ReactNode[]);
 
-    const content = filteredChildren[active]?.props?.children ?? completedStep?.props?.children;
+    const stepContent = filteredChildren[active]?.props?.children;
+    const completedContent = completedStep?.props?.children;
+    const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
 
     return (
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
