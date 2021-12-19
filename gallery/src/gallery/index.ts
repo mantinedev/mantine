@@ -82,6 +82,7 @@ export { SliderLabel } from './SliderLabel/SliderLabel';
 export { SliderHover } from './SliderHover/SliderHover';
 
 // Footers
+export { FooterCentered } from './FooterCentered/FooterCentered';
 export { FooterSimple } from './FooterSimple/FooterSimple';
 
 // Headers
