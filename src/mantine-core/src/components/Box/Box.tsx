@@ -19,7 +19,9 @@ interface _BoxProps extends Omit<DefaultProps, 'sx'> {
 
 export type BoxProps<C extends React.ElementType> = PolymorphicComponentProps<C, _BoxProps>;
 
-type BoxComponent = <C extends React.ElementType = 'div'>(props: BoxProps<C>) => React.ReactElement;
+type BoxComponent = (<C extends React.ElementType = 'div'>(
+  props: BoxProps<C>
+) => React.ReactElement) & { displayName?: string };
 
 function extractSx(sx: Sx, theme: MantineTheme) {
   return typeof sx === 'function' ? sx(theme) : sx;
@@ -37,7 +39,7 @@ function useBoxSx(sx: BoxSx, className: string) {
   return cx(className, css(extractSx(sx, theme)));
 }
 
-export const Box: BoxComponent & { displayName?: string } = forwardRef(
+export const Box: BoxComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     { className, component, style, sx, ...others }: BoxProps<C>,
     ref: PolymorphicRef<C>
