@@ -188,15 +188,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const shouldUseStepInterval =
       stepIncrementInitialDelay !== undefined && stepIncrementInterval !== undefined;
 
-    if (
-      !shouldUseStepInterval &&
-      (stepIncrementInterval !== undefined || stepIncrementInitialDelay !== undefined)
-    ) {
-      console.warn(
-        'stepIncrementInitialDelay and stepIncrementInterval should both be supplied when using either value.'
-      );
-    }
-
     const onStepTimeoutRef = useRef<NodeJS.Timeout>(null);
 
     const onStepDone = () => {
