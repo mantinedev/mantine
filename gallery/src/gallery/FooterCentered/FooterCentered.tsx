@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   socialButton: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
     borderRadius: theme.radius.sm,
     padding: 5,
 
