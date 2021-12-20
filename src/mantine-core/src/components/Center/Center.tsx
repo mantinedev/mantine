@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Box } from '../Box';
 
-export interface CenterProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface _CenterProps extends DefaultProps {
   /** Content that should be centered vertically and horizontally */
   children: React.ReactNode;
 
@@ -10,9 +10,18 @@ export interface CenterProps extends DefaultProps, React.ComponentPropsWithoutRe
   inline?: boolean;
 }
 
-export const Center = forwardRef<HTMLDivElement, CenterProps>(
-  ({ inline = false, sx, ...others }: CenterProps, ref) => (
-    <Box
+export type CenterProps<C extends React.ElementType> = PolymorphicComponentProps<C, _CenterProps>;
+
+type CenterComponent = (<C extends React.ElementType = 'div'>(
+  props: CenterProps<C>
+) => React.ReactElement) & { displayName?: string };
+
+export const Center: CenterComponent = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    { inline = false, sx, ...others }: CenterProps<C>,
+    ref: PolymorphicRef<C>
+  ) => (
+    <Box<any>
       ref={ref}
       sx={[
         {
