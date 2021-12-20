@@ -1,6 +1,7 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ForwardRefWithStaticComponents } from '@mantine/styles';
 import { Box } from '../Box';
+import { Col } from './Col/Col';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -23,7 +24,9 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
   columns?: number;
 }
 
-export const Grid = forwardRef<HTMLDivElement, GridProps>(
+type GridComponent = ForwardRefWithStaticComponents<GridProps, { Col: typeof Col }>;
+
+export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
   (
     {
       gutter = 'md',
@@ -55,6 +58,7 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       </Box>
     );
   }
-);
+) as any;
 
+Grid.Col = Col;
 Grid.displayName = '@mantine/core/Grid';
