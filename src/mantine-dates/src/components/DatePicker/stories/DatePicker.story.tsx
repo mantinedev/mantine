@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
@@ -10,10 +11,12 @@ function Controlled() {
   return (
     <DatePicker
       value={value}
-      onChange={onChange}
+      onChange={(val) => {
+        console.log(val);
+        onChange(val);
+      }}
       placeholder="With month and year"
       label="Date picker"
-      allowFreeInput
     />
   );
 }
@@ -27,7 +30,10 @@ function ControlledFreeInput() {
         mt={20}
         mb={10}
         value={value}
-        onChange={onChange}
+        onChange={(val) => {
+          console.log(val);
+          onChange(val);
+        }}
         placeholder="Controlled with free input"
         label="Date picker"
         allowFreeInput
@@ -71,7 +77,7 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
   ))
   .add('Controlled with free input', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Controlled />
+      <ControlledFreeInput />
     </div>
   ))
   .add('Restricted input focus', () => (

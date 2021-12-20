@@ -138,14 +138,17 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
       setFocused(false);
-      const date = typeof _value === 'string' ? parseDate(_value) : _value;
 
-      if (dayjs(date).isValid()) {
-        setValue(date);
-        setLastValidValue(date);
-        setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
-      } else if (fixOnBlur) {
-        setValue(lastValidValue);
+      if (allowFreeInput) {
+        const date = typeof _value === 'string' ? parseDate(_value) : _value;
+
+        if (dayjs(date).isValid()) {
+          setValue(date);
+          setLastValidValue(date);
+          setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
+        } else if (fixOnBlur) {
+          setValue(lastValidValue);
+        }
       }
     };
 

@@ -11,13 +11,13 @@ export interface DateRangePickerProps
   extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange'>,
     Omit<CalendarSharedProps, 'size' | 'styles' | 'classNames' | 'value' | 'onChange'> {
   /** Selected date, required with controlled input */
-  value?: [Date, Date];
+  value?: [Date | null, Date | null];
 
   /** Called when date range changes */
   onChange?(value: [Date | null, Date | null]): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: [Date, Date];
+  defaultValue?: [Date | null, Date | null];
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
