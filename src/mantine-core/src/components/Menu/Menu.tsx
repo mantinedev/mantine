@@ -21,13 +21,8 @@ import { Text } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper';
 import { MenuIcon } from './MenuIcon';
-import {
-  MenuItem,
-  MenuItemComponent,
-  MenuItemType,
-  MenuItemStylesNames,
-} from './MenuItem/MenuItem';
-import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuItem, MenuItemType, MenuItemStylesNames } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
 export type MenuStylesNames = ClassNames<typeof useStyles> | MenuItemStylesNames;
@@ -99,7 +94,7 @@ const defaultControl = (
 
 type MenuComponent = ForwardRefWithStaticComponents<
   MenuProps,
-  { Item: MenuItemComponent; Label: React.FC<MenuLabelProps> }
+  { Item: typeof MenuItem; Label: typeof MenuLabel }
 >;
 
 function getNextItem(active: number, items: MenuItemType[]) {
