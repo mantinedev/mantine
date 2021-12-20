@@ -1,5 +1,5 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineColor } from '@mantine/styles';
+import { DefaultProps, MantineColor, ForwardRefWithStaticComponents } from '@mantine/styles';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
@@ -25,10 +25,10 @@ export interface TimelineProps
   lineWidth?: number;
 }
 
-type TimelineComponent = ((props: TimelineProps) => React.ReactElement) & {
-  displayName: string;
-  Item: typeof TimelineItem;
-};
+type TimelineComponent = ForwardRefWithStaticComponents<
+  TimelineProps,
+  { Item: typeof TimelineItem }
+>;
 
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
   (

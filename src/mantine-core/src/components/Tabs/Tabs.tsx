@@ -1,6 +1,12 @@
 import React, { useRef, forwardRef } from 'react';
 import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+  ForwardRefWithStaticComponents,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
 import { TabControl, TabControlStylesNames, TabType } from './TabControl/TabControl';
@@ -75,10 +81,7 @@ function findInitialTab(tabs: TabType[]) {
   return -1;
 }
 
-type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
-  displayName: string;
-  Tab: typeof TabControl;
-};
+type TabsComponent = ForwardRefWithStaticComponents<TabsProps, { Tab: typeof TabControl }>;
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
   (
