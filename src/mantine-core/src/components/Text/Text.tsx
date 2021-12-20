@@ -44,11 +44,11 @@ export interface SharedTextProps extends DefaultProps {
 
 export type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, SharedTextProps>;
 
-type TextComponent = <C extends React.ElementType = 'div'>(
+type TextComponent = (<C extends React.ElementType = 'div'>(
   props: TextProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Text: TextComponent & { displayName?: string } = forwardRef(
+export const Text: TextComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
