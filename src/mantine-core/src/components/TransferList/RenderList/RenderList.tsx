@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
+import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../Button';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
@@ -47,7 +48,10 @@ export function RenderList({
   classNames,
   styles,
 }: RenderListProps) {
-  const { classes, cx } = useStyles({ reversed }, { name: 'TransferList', classNames, styles });
+  const { classes, cx } = useStyles(
+    { reversed, native: listComponent !== SelectScrollArea },
+    { name: 'TransferList', classNames, styles }
+  );
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));

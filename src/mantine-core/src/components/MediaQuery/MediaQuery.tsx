@@ -8,10 +8,10 @@ export interface MediaQueryProps {
   /** Child that should be shown at given breakpoint, it must accept className prop */
   children: React.ReactNode;
 
-  /** Smaller than given breakpoint or value in px, will be hidden on larger viewport */
+  /** Styles applied to child when viewport is smaller than given breakpoint */
   smallerThan?: MantineNumberSize;
 
-  /** Larger than given breakpoint or value in px, will be hidden on smaller viewport */
+  /** Styles applied to child when viewport is larger than given breakpoint */
   largerThan?: MantineNumberSize;
 
   /** Any other media query */

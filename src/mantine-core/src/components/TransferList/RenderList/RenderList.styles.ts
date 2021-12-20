@@ -2,11 +2,12 @@ import { createStyles } from '@mantine/styles';
 
 interface RenderListStyles {
   reversed: boolean;
+  native: boolean;
 }
 
 const ITEM_PADDING = 7;
 
-export default createStyles((theme, { reversed }: RenderListStyles) => ({
+export default createStyles((theme, { reversed, native }: RenderListStyles) => ({
   transferList: {
     flex: 1,
     display: 'flex',
@@ -35,7 +36,7 @@ export default createStyles((theme, { reversed }: RenderListStyles) => ({
   },
 
   transferListItems: {
-    overflow: 'auto',
+    overflow: native ? 'auto' : 'hidden',
   },
 
   transferListHeader: {
