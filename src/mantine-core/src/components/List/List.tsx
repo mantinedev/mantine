@@ -1,5 +1,10 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  ForwardRefWithStaticComponents,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import useStyles from './List.styles';
@@ -34,10 +39,7 @@ export interface ListProps
   listStyleType?: React.CSSProperties['listStyleType'];
 }
 
-type ListComponent = ((props: ListProps) => React.ReactElement) & {
-  displayName: string;
-  Item: typeof ListItem;
-};
+type ListComponent = ForwardRefWithStaticComponents<ListProps, { Item: typeof ListItem }>;
 
 export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
   (
