@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { Button } from '../../Button';
 import { Text } from '../../Text';
-import { Collapse } from '../Collapse';
+import { Collapse, CollapseProps } from '../Collapse';
 
-export function CollapsedDemo({ children, buttonProps }: any) {
+export function CollapsedDemo({
+  children,
+  buttonProps,
+  ...others
+}: Partial<CollapseProps> & { buttonProps?: any }) {
   const [opened, setOpen] = useState(false);
 
   return (
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto', marginTop: 15 }}>
       <Button onClick={() => setOpen((o) => !o)} mb={5} {...buttonProps} />
-      <Collapse in={opened}>{children}</Collapse>
+      <Collapse in={opened} {...others}>
+        {children}
+      </Collapse>
     </div>
   );
 }
