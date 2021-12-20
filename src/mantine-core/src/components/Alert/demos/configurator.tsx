@@ -30,6 +30,7 @@ export const configurator: MantineDemo = {
         'Something terrible happened! You made a mistake and there is no going back, your data was lost forever!',
     },
     { name: 'color', type: 'color', initialValue: 'red', defaultValue: 'blue' },
+    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'withCloseButton', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };
