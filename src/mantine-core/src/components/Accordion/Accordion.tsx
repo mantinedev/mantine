@@ -82,12 +82,11 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ref
   ) => {
     const uuid = useUuid(id);
-    const items = React.Children.toArray(children).filter(
-      (item: AccordionItemType) => item.type === AccordionItem
-    ) as AccordionItemType[];
+    const items = (React.Children.toArray(children) as AccordionItemType[]).filter(
+      (item) => item.type === AccordionItem
+    );
 
     const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
-
     const [value, handlers] = useAccordionState({
       multiple,
       total: items.length,
