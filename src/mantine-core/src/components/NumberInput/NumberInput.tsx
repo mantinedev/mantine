@@ -188,11 +188,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const shouldUseStepInterval =
       stepIncrementInitialDelay !== undefined && stepIncrementInterval !== undefined;
 
-    const onStepTimeoutRef = useRef<NodeJS.Timeout>(null);
+    const onStepTimeoutRef = useRef<number>(null);
 
     const onStepDone = () => {
       if (onStepTimeoutRef.current) {
-        clearTimeout(onStepTimeoutRef.current);
+        window.clearTimeout(onStepTimeoutRef.current);
         onStepTimeoutRef.current = null;
       }
     };
@@ -209,7 +209,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       onStepHandleChange(isIncrement);
 
       if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = setTimeout(() => onStepLoop(isIncrement), stepIncrementInterval);
+        onStepTimeoutRef.current = window.setTimeout(
+          () => onStepLoop(isIncrement),
+          stepIncrementInterval
+        );
       }
     };
 
@@ -217,7 +220,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       event.preventDefault();
       onStepHandleChange(isIncrement);
       if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = setTimeout(
+        onStepTimeoutRef.current = window.setTimeout(
           () => onStepLoop(isIncrement),
           stepIncrementInitialDelay
         );
