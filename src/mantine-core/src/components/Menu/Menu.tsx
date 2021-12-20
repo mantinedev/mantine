@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   getDefaultZIndex,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Divider } from '../Divider';
@@ -96,11 +97,10 @@ const defaultControl = (
   </ActionIcon>
 );
 
-type MenuComponent = {
-  displayName?: string;
-  Item: MenuItemComponent;
-  Label: React.FC<MenuLabelProps>;
-} & ((props: MenuProps) => React.ReactElement);
+type MenuComponent = ForwardRefWithStaticComponents<
+  MenuProps,
+  { Item: MenuItemComponent; Label: React.FC<MenuLabelProps> }
+>;
 
 function getNextItem(active: number, items: MenuItemType[]) {
   for (let i = active + 1; i < items.length; i += 1) {
