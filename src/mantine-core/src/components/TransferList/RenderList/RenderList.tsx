@@ -22,7 +22,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   title?: React.ReactNode;
   reversed?: boolean;
   showSearch?: boolean;
-  hideTransferAll?: boolean;
+  showTransferAll?: boolean;
   onMoveAll(): void;
   onMove(): void;
   height: number;
@@ -41,7 +41,7 @@ export function RenderList({
   nothingFound,
   title,
   showSearch,
-  hideTransferAll,
+  showTransferAll,
   reversed,
   onMoveAll,
   onMove,
@@ -166,7 +166,7 @@ export function RenderList({
             {reversed ? <PrevIcon /> : <NextIcon />}
           </ActionIcon>
 
-          {!hideTransferAll && (
+          {showTransferAll && (
             <ActionIcon
               variant="default"
               size={36}

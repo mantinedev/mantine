@@ -49,7 +49,7 @@ export interface TransferListProps
   showSearch?: boolean;
 
   /** Whether to hide the transfer all button */
-  hideTransferAll?: boolean;
+  showTransferAll?: boolean;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -70,7 +70,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       listHeight = 150,
       listComponent = SelectScrollArea,
       showSearch = true,
-      hideTransferAll = false,
+      showTransferAll = true,
       breakpoint,
       classNames,
       styles,
@@ -127,7 +127,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           height={listHeight}
           listComponent={listComponent}
           showSearch={showSearch}
-          hideTransferAll={hideTransferAll}
+          showTransferAll={showTransferAll}
           classNames={classNames}
           styles={styles}
         />
@@ -146,7 +146,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           height={listHeight}
           listComponent={listComponent}
           showSearch={showSearch}
-          hideTransferAll={hideTransferAll}
+          showTransferAll={showTransferAll}
           classNames={classNames}
           styles={styles}
           reversed
