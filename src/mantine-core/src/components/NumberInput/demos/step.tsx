@@ -18,6 +18,13 @@ const code = `
   step={5}
   min={0}
 />
+<NumberInput
+  style={{ marginTop: 15 }}
+  label="Increment on hold"
+  description="Increment the value when clicking and holding the arrows"
+  stepIncrementInitialDelay={750}
+  stepIncrementInterval={100}
+/>
 `;
 
 function Demo() {
@@ -38,6 +45,13 @@ function Demo() {
         defaultValue={80}
         step={5}
         min={0}
+      />
+      <NumberInput
+        style={{ marginTop: 15 }}
+        label="Increment on hold"
+        description="Increment the value when clicking and holding the arrows"
+        stepIncrementInitialDelay={750}
+        stepIncrementInterval={100}
       />
     </div>
   );

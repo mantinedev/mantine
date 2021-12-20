@@ -229,4 +229,31 @@ describe('@mantine/core/NumberInput', () => {
     expect(input.getDOMNode().getAttribute('value')).toBe('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
+
+  it('increments and decrements value with controls on hold mousedown', async () => {
+    const spy = jest.fn();
+    const element = mount(
+      <NumberInput
+        value={0}
+        step={10}
+        onChange={spy}
+        stepIncrementInitialDelay={100}
+        stepIncrementInterval={100}
+      />
+    );
+
+    await act(async () => {
+      element.find('.mantine-NumberInput-controlUp');
+      element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
+
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          element.find('.mantine-NumberInput-controlUp').simulate('mouseup');
+          resolve(null);
+        }, 350);
+      });
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(40);
+  });
 });

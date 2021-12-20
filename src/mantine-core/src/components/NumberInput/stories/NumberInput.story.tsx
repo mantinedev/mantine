@@ -28,4 +28,18 @@ storiesOf('@mantine/core/NumberInput/stories', module)
         <Controlled />
       </div>
     </RtlProvider>
+  ))
+  .add('Incrementing', () => (
+    <>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput
+          label="Increment on hold"
+          stepIncrementInitialDelay={750}
+          stepIncrementInterval={100}
+        />
+      </div>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput label="Don't increment on hold" />
+      </div>
+    </>
   ));

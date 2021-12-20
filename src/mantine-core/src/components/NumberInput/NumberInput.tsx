@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import React, { MouseEvent, useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
 import { DefaultProps, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
@@ -47,6 +47,12 @@ export interface NumberInputProps
   /** Number by which value will be incremented/decremented with controls and up/down arrows */
   step?: number;
 
+  /** Delay in milliseconds before incrementing the value on holding the up/down arrows. */
+  stepIncrementInterval?: number;
+
+  /** Initial delay in milliseconds before incrementing the value on holding the up/down arrows. */
+  stepIncrementInitialDelay?: number;
+
   /** Removes increment/decrement controls */
   hideControls?: boolean;
 
@@ -73,6 +79,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       min,
       max,
       step = 1,
+      stepIncrementInterval,
+      stepIncrementInitialDelay,
       onBlur,
       onFocus,
       hideControls = false,
@@ -140,7 +148,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const _min = typeof min === 'number' ? min : -Infinity;
     const _max = typeof max === 'number' ? max : Infinity;
 
-    const increment = () => {
+    const incrementRef = useRef<() => void>();
+    incrementRef.current = () => {
       if (_value === undefined) {
         handleValueChange(min ?? 0);
         setTempValue(min?.toFixed(precision) ?? '0');
@@ -151,7 +160,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
-    const decrement = () => {
+    const decrementRef = useRef<() => void>();
+    decrementRef.current = () => {
       if (_value === undefined) {
         handleValueChange(min ?? 0);
         setTempValue(min?.toFixed(precision) ?? '0');
@@ -162,7 +172,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
-    assignRef(handlersRef, { increment, decrement });
+    assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
     useEffect(() => {
       if (typeof value === 'number' && !focused) {
@@ -175,6 +185,61 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     }, [value]);
 
+    const shouldUseStepInterval =
+      stepIncrementInitialDelay !== undefined && stepIncrementInterval !== undefined;
+
+    if (
+      !shouldUseStepInterval &&
+      (stepIncrementInterval !== undefined || stepIncrementInitialDelay !== undefined)
+    ) {
+      console.warn(
+        'stepIncrementInitialDelay and stepIncrementInterval should both be supplied when using either value.'
+      );
+    }
+
+    const onStepTimeoutRef = useRef<NodeJS.Timeout>(null);
+
+    const onStepDone = () => {
+      if (onStepTimeoutRef.current) {
+        clearTimeout(onStepTimeoutRef.current);
+        onStepTimeoutRef.current = null;
+      }
+    };
+
+    const onStepHandleChange = (isIncrement: boolean) => {
+      if (isIncrement) {
+        incrementRef.current();
+      } else {
+        decrementRef.current();
+      }
+    };
+
+    const onStepLoop = (isIncrement: boolean) => {
+      onStepHandleChange(isIncrement);
+
+      if (shouldUseStepInterval) {
+        onStepTimeoutRef.current = setTimeout(() => onStepLoop(isIncrement), stepIncrementInterval);
+      }
+    };
+
+    const onStep = (event: MouseEvent<HTMLButtonElement>, isIncrement: boolean) => {
+      event.preventDefault();
+      onStepHandleChange(isIncrement);
+      if (shouldUseStepInterval) {
+        onStepTimeoutRef.current = setTimeout(
+          () => onStepLoop(isIncrement),
+          stepIncrementInitialDelay
+        );
+      }
+      inputRef.current.focus();
+    };
+
+    useEffect(() => {
+      onStepDone();
+
+      return () => onStepDone();
+    }, []);
+
     const rightSection = (
       <div className={classes.rightSection}>
         <button
@@ -184,10 +249,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           disabled={finalValue >= max}
           className={cx(classes.control, classes.controlUp)}
           onMouseDown={(event) => {
-            event.preventDefault();
-            increment();
-            inputRef.current.focus();
+            onStep(event, true);
           }}
+          onMouseUp={onStepDone}
+          onMouseLeave={onStepDone}
         />
         <button
           type="button"
@@ -196,10 +261,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           disabled={finalValue <= min}
           className={cx(classes.control, classes.controlDown)}
           onMouseDown={(event) => {
-            event.preventDefault();
-            decrement();
-            inputRef.current.focus();
+            onStep(event, false);
           }}
+          onMouseUp={onStepDone}
+          onMouseLeave={onStepDone}
         />
       </div>
     );
@@ -246,9 +311,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'ArrowUp') {
         event.preventDefault();
-        increment();
+        incrementRef.current();
       } else if (event.key === 'ArrowDown') {
-        decrement();
+        decrementRef.current();
       }
     };
 
