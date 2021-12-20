@@ -8,11 +8,11 @@ export type AnchorProps<C extends React.ElementType> = PolymorphicComponentProps
   SharedTextProps
 >;
 
-type AnchorComponent = <C extends React.ElementType = 'a'>(
+type AnchorComponent = (<C extends React.ElementType = 'a'>(
   props: AnchorProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
+export const Anchor: AnchorComponent = forwardRef(
   <C extends React.ElementType = 'a'>(
     { component, className, classNames, styles, ...others }: AnchorProps<C>,
     ref: PolymorphicRef<C>
