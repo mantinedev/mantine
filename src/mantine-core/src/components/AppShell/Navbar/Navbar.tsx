@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { ClassNames, DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import {
+  ClassNames,
+  DefaultProps,
+  MantineNumberSize,
+  getDefaultZIndex,
+  ForwardRefWithStaticComponents,
+} from '@mantine/styles';
 import { Box } from '../../Box';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
@@ -37,10 +43,10 @@ export interface NavbarProps
   zIndex?: number;
 }
 
-type NavbarComponent = ((props: NavbarProps) => React.ReactElement) & {
-  displayName: string;
-  Section: typeof NavbarSection;
-};
+type NavbarComponent = ForwardRefWithStaticComponents<
+  NavbarProps,
+  { Section: typeof NavbarSection }
+>;
 
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   (
