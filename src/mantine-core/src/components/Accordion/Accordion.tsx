@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, ForwardRefWithStaticComponents } from '@mantine/styles';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
 import {
@@ -54,10 +54,10 @@ export interface AccordionProps
   iconSize?: number;
 }
 
-type AccordionComponent = ((props: AccordionProps) => React.ReactElement) & {
-  displayName: string;
-  Item: typeof AccordionItem;
-};
+type AccordionComponent = ForwardRefWithStaticComponents<
+  AccordionProps,
+  { Item: typeof AccordionItem }
+>;
 
 export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, AccordionProps>(
   (
