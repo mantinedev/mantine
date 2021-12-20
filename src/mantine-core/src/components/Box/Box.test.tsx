@@ -9,14 +9,16 @@ import {
 } from '@mantine/tests';
 import { Box } from './Box';
 
+const defaultProps = {};
+
 describe('@mantine/core/Box', () => {
-  itSupportsClassName(Box, {});
-  itRendersChildren(Box, {});
-  itSupportsMargins(Box, {});
-  itSupportsOthers(Box, {});
-  itSupportsStyle(Box, {});
-  itIsPolymorphic(Box, {});
-  itSupportsRef(Box, {}, HTMLDivElement);
+  itSupportsClassName(Box, defaultProps);
+  itRendersChildren(Box, defaultProps);
+  itSupportsMargins(Box, defaultProps);
+  itSupportsOthers(Box, defaultProps);
+  itSupportsStyle(Box, defaultProps);
+  itIsPolymorphic(Box, defaultProps);
+  itSupportsRef(Box, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {
     expect(Box.displayName).toEqual('MantineBox');
