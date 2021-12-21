@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState, useEffect, useRef, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
 import { DefaultProps, ClassNames } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
@@ -218,7 +218,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
-    const onStep = (event: MouseEvent<HTMLButtonElement>, isIncrement: boolean) => {
+    const onStep = (
+      event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+      isIncrement: boolean
+    ) => {
       event.preventDefault();
       onStepHandleChange(isIncrement);
       if (shouldUseStepInterval) {
@@ -302,11 +305,25 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'ArrowUp') {
+      // If it is a repeat keydown and the stepInterval is being used,
+      // then the onStep function should not be called again.
+      // If the stepInterval is not being used, then onStep should be
+      // called again to retain the previous behavior of updating on each repeat.
+      if (event.repeat && shouldUseStepInterval) {
         event.preventDefault();
-        incrementRef.current();
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        onStep(event, true);
       } else if (event.key === 'ArrowDown') {
-        decrementRef.current();
+        onStep(event, false);
+      }
+    };
+
+    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        onStepDone();
       }
     };
 
@@ -322,6 +339,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         onBlur={handleBlur}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
         rightSectionWidth={theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}

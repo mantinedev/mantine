@@ -259,7 +259,7 @@ describe('@mantine/core/NumberInput', () => {
         step={10}
         onChange={spy}
         stepHoldDelay={100}
-        stepHoldInterval={(count) => count > 3 ? 200 : 100}
+        stepHoldInterval={(count) => (count > 3 ? 200 : 100)}
       />
     );
 
@@ -276,5 +276,50 @@ describe('@mantine/core/NumberInput', () => {
     });
 
     expect(spy).toHaveBeenLastCalledWith(50);
+  });
+
+  it('steps value with controls on hold keydown and stepHoldInterval', async () => {
+    const spy = jest.fn();
+    const element = mount(
+      <NumberInput value={0} step={10} onChange={spy} stepHoldDelay={100} stepHoldInterval={100} />
+    );
+
+    await act(async () => {
+      const input = element.find('input').at(0);
+      input.simulate('keydown', { key: 'ArrowUp' });
+
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          input.simulate('keyup', { key: 'ArrowUp' });
+          resolve(null);
+        }, 350);
+      });
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(40);
+  });
+
+  it('steps value with controls on hold keydown without stepHoldInterval', async () => {
+    const spy = jest.fn();
+    const element = mount(<NumberInput value={0} step={10} onChange={spy} />);
+
+    const input = element.find('input').at(0);
+    act(() => {
+      input.simulate('keydown', { key: 'ArrowUp' });
+    });
+    act(() => {
+      input.simulate('keydown', { key: 'ArrowUp' });
+    });
+    act(() => {
+      input.simulate('keydown', { key: 'ArrowUp' });
+    });
+    act(() => {
+      input.simulate('keydown', { key: 'ArrowUp' });
+    });
+    act(() => {
+      input.simulate('keyup', { key: 'ArrowUp' });
+    });
+
+    expect(spy).toHaveBeenLastCalledWith(40);
   });
 });
