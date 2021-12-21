@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, ForwardRefWithStaticComponents } from '@mantine/styles';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
+import { filterChildrenByType } from '../../utils';
 import {
   AccordionItem,
   AccordionItemStylesNames,
@@ -82,9 +83,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ref
   ) => {
     const uuid = useUuid(id);
-    const items = (React.Children.toArray(children) as AccordionItemType[]).filter(
-      (item) => item.type === AccordionItem
-    );
+    const items = filterChildrenByType<AccordionItemType>(children, AccordionItem);
 
     const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
     const [value, handlers] = useAccordionState({
