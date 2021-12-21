@@ -67,7 +67,7 @@ export function Chips<T extends boolean>({
     rule: (val) => (multiple ? Array.isArray(val) : typeof val === 'string'),
   });
 
-  const chips = filterChildrenByType<React.ReactElement>(children, Chip).map((child, index) =>
+  const chips = filterChildrenByType(children, Chip).map((child, index) =>
     React.cloneElement(child, {
       variant,
       radius,

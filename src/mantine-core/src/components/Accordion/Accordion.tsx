@@ -6,7 +6,6 @@ import { filterChildrenByType } from '../../utils';
 import {
   AccordionItem,
   AccordionItemStylesNames,
-  AccordionItemType,
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
 import { useAccordionState, AccordionState } from './use-accordion-state/use-accordion-state';
@@ -83,7 +82,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
     ref
   ) => {
     const uuid = useUuid(id);
-    const items = filterChildrenByType<AccordionItemType>(children, AccordionItem);
+    const items = filterChildrenByType(children, AccordionItem);
 
     const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
     const [value, handlers] = useAccordionState({
