@@ -1,5 +1,6 @@
-import React, { Children, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineColor, ForwardRefWithStaticComponents } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
@@ -48,9 +49,8 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
   ) => {
     const hasActive = typeof active === 'number';
 
-    const items = Children.toArray(children)
-      .filter((child: React.ReactElement) => child.type === TimelineItem)
-      .map((item: React.ReactElement, index) =>
+    const items = filterChildrenByType(children, TimelineItem).map(
+      (item: React.ReactElement, index) =>
         React.cloneElement(item, {
           classNames,
           styles,
@@ -61,7 +61,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
           active: item.props.active || (hasActive && active >= index),
           lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
         })
-      );
+    );
 
     const offset: React.CSSProperties =
       align === 'left'
