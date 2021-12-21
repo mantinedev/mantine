@@ -24,7 +24,7 @@ export interface SharedTextProps extends DefaultProps {
   transform?: 'capitalize' | 'uppercase' | 'lowercase';
 
   /** Sets text-align css property */
-  align?: 'left' | 'center' | 'right';
+  align?: 'left' | 'center' | 'right' | 'justify';
 
   /** Link or text variant */
   variant?: 'text' | 'link' | 'gradient';
