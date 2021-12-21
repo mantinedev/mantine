@@ -2,9 +2,12 @@ import { createStyles } from '@mantine/core';
 
 interface PrismStyles {
   colorScheme: 'light' | 'dark';
+  native: boolean;
 }
 
-export default createStyles((theme, { colorScheme }: PrismStyles) => ({
+export default createStyles((theme, { colorScheme, native }: PrismStyles) => ({
+  scrollArea: {},
+
   root: {
     position: 'relative',
   },
@@ -15,7 +18,7 @@ export default createStyles((theme, { colorScheme }: PrismStyles) => ({
     fontFamily: theme.fontFamilyMonospace,
     lineHeight: 1.7,
     fontSize: 13,
-    overflowX: 'auto',
+    overflowX: native ? 'auto' : undefined,
     borderRadius: theme.radius.sm,
     padding: `${theme.spacing.sm}px 0`,
     marginTop: 0,

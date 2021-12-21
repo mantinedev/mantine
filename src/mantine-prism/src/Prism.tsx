@@ -10,6 +10,7 @@ import {
   Tabs,
   TabProps,
   TabsProps,
+  ScrollArea,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -44,6 +45,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       copiedLabel = 'Copied',
       withLineNumbers = false,
       highlightLines = {},
+      scrollAreaComponent: ScrollAreaComponent = ScrollArea,
       colorScheme,
       ...others
     }: PrismProps,
@@ -52,7 +54,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
     const theme = useMantineTheme();
     const clipboard = useClipboard();
     const { classes, cx } = useStyles(
-      { colorScheme: colorScheme || theme.colorScheme },
+      { colorScheme: colorScheme || theme.colorScheme, native: ScrollAreaComponent !== ScrollArea },
       { classNames, styles, name: 'Prism' }
     );
 
@@ -92,74 +94,76 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <pre className={cx(classes.code, inheritedClassName)} style={inheritedStyle}>
-              {tokens
-                .map((line, index) => {
-                  if (
-                    index === tokens.length - 1 &&
-                    line.length === 1 &&
-                    line[0].content === '\n'
-                  ) {
-                    return null;
-                  }
+            <ScrollAreaComponent className={classes.scrollArea}>
+              <pre className={cx(classes.code, inheritedClassName)} style={inheritedStyle}>
+                {tokens
+                  .map((line, index) => {
+                    if (
+                      index === tokens.length - 1 &&
+                      line.length === 1 &&
+                      line[0].content === '\n'
+                    ) {
+                      return null;
+                    }
 
-                  const lineNumber = index + 1;
-                  const lineProps = getLineProps({ line, key: index });
-                  const shouldHighlight = lineNumber in highlightLines;
-                  const lineColor =
-                    theme.colorScheme === 'dark'
-                      ? theme.fn.rgba(
-                          theme.fn.themeColor(highlightLines[lineNumber]?.color, 9),
-                          0.25
-                        )
-                      : theme.fn.themeColor(highlightLines[lineNumber]?.color, 0);
+                    const lineNumber = index + 1;
+                    const lineProps = getLineProps({ line, key: index });
+                    const shouldHighlight = lineNumber in highlightLines;
+                    const lineColor =
+                      theme.colorScheme === 'dark'
+                        ? theme.fn.rgba(
+                            theme.fn.themeColor(highlightLines[lineNumber]?.color, 9),
+                            0.25
+                          )
+                        : theme.fn.themeColor(highlightLines[lineNumber]?.color, 0);
 
-                  return (
-                    <div
-                      {...lineProps}
-                      className={cx(classes.line, lineProps.className)}
-                      style={{ ...(shouldHighlight ? { backgroundColor: lineColor } : null) }}
-                    >
-                      {withLineNumbers && (
-                        <div
-                          className={classes.lineNumber}
-                          style={{
-                            color: shouldHighlight
-                              ? theme.fn.themeColor(
-                                  highlightLines[lineNumber]?.color,
-                                  theme.colorScheme === 'dark' ? 5 : 8
-                                )
-                              : undefined,
-                          }}
-                        >
-                          {highlightLines[lineNumber]?.label || lineNumber}
+                    return (
+                      <div
+                        {...lineProps}
+                        className={cx(classes.line, lineProps.className)}
+                        style={{ ...(shouldHighlight ? { backgroundColor: lineColor } : null) }}
+                      >
+                        {withLineNumbers && (
+                          <div
+                            className={classes.lineNumber}
+                            style={{
+                              color: shouldHighlight
+                                ? theme.fn.themeColor(
+                                    highlightLines[lineNumber]?.color,
+                                    theme.colorScheme === 'dark' ? 5 : 8
+                                  )
+                                : undefined,
+                            }}
+                          >
+                            {highlightLines[lineNumber]?.label || lineNumber}
+                          </div>
+                        )}
+
+                        <div className={classes.lineContent}>
+                          {line.map((token, key) => {
+                            const tokenProps = getTokenProps({ token, key });
+                            return (
+                              <span
+                                {...tokenProps}
+                                style={{
+                                  ...tokenProps.style,
+                                  color: shouldHighlight
+                                    ? theme.fn.themeColor(
+                                        highlightLines[lineNumber]?.color,
+                                        theme.colorScheme === 'dark' ? 5 : 8
+                                      )
+                                    : (tokenProps?.style?.color as string),
+                                }}
+                              />
+                            );
+                          })}
                         </div>
-                      )}
-
-                      <div className={classes.lineContent}>
-                        {line.map((token, key) => {
-                          const tokenProps = getTokenProps({ token, key });
-                          return (
-                            <span
-                              {...tokenProps}
-                              style={{
-                                ...tokenProps.style,
-                                color: shouldHighlight
-                                  ? theme.fn.themeColor(
-                                      highlightLines[lineNumber]?.color,
-                                      theme.colorScheme === 'dark' ? 5 : 8
-                                    )
-                                  : (tokenProps?.style?.color as string),
-                              }}
-                            />
-                          );
-                        })}
                       </div>
-                    </div>
-                  );
-                })
-                .filter(Boolean)}
-            </pre>
+                    );
+                  })
+                  .filter(Boolean)}
+              </pre>
+            </ScrollAreaComponent>
           )}
         </Highlight>
       </Box>
