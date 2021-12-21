@@ -28,7 +28,7 @@ const code = `
 <NumberInput
   label="Step the value with interval function"
   stepHoldDelay={750}
-  stepHoldInterval={(count) => 1000 - count * count}
+  stepHoldInterval={(count) => 1000 - count ** 4}
 />
 `;
 
