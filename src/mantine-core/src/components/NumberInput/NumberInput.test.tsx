@@ -230,16 +230,10 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 
-  it('increments and decrements value with controls on hold mousedown', async () => {
+  it('steps value with controls on hold mousedown', async () => {
     const spy = jest.fn();
     const element = mount(
-      <NumberInput
-        value={0}
-        step={10}
-        onChange={spy}
-        stepIncrementInitialDelay={100}
-        stepIncrementInterval={100}
-      />
+      <NumberInput value={0} step={10} onChange={spy} stepHoldDelay={100} stepHoldInterval={100} />
     );
 
     await act(async () => {

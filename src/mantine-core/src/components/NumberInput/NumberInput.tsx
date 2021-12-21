@@ -48,10 +48,10 @@ export interface NumberInputProps
   step?: number;
 
   /** Delay in milliseconds before incrementing the value on holding the up/down arrows. */
-  stepIncrementInterval?: number;
+  stepHoldInterval?: number;
 
   /** Initial delay in milliseconds before incrementing the value on holding the up/down arrows. */
-  stepIncrementInitialDelay?: number;
+  stepHoldDelay?: number;
 
   /** Removes increment/decrement controls */
   hideControls?: boolean;
@@ -79,8 +79,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       min,
       max,
       step = 1,
-      stepIncrementInterval,
-      stepIncrementInitialDelay,
+      stepHoldInterval,
+      stepHoldDelay,
       onBlur,
       onFocus,
       hideControls = false,
@@ -185,8 +185,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     }, [value]);
 
-    const shouldUseStepInterval =
-      stepIncrementInitialDelay !== undefined && stepIncrementInterval !== undefined;
+    const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
 
     const onStepTimeoutRef = useRef<number>(null);
 
@@ -211,7 +210,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       if (shouldUseStepInterval) {
         onStepTimeoutRef.current = window.setTimeout(
           () => onStepLoop(isIncrement),
-          stepIncrementInterval
+          stepHoldInterval
         );
       }
     };
@@ -220,10 +219,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       event.preventDefault();
       onStepHandleChange(isIncrement);
       if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = window.setTimeout(
-          () => onStepLoop(isIncrement),
-          stepIncrementInitialDelay
-        );
+        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
       }
       inputRef.current.focus();
     };
