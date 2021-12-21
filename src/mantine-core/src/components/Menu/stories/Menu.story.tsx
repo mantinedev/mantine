@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
-import { WithinOverlays, RtlProvider } from '@mantine/ds/src';
+import { WithinOverlays } from '@mantine/ds/src';
 import { menuItems } from '../demos/_menu-items';
 import { TextInput } from '../../TextInput';
 import { Container } from '../../Container';
@@ -65,9 +65,4 @@ storiesOf('@mantine/core/Menu/stories', module)
       <Divider />
       <Menu.Item>Last Item</Menu.Item>
     </Menu>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <Menu>{menuItems}</Menu>
-    </RtlProvider>
   ));
