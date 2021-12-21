@@ -47,10 +47,10 @@ export interface NumberInputProps
   /** Number by which value will be incremented/decremented with controls and up/down arrows */
   step?: number;
 
-  /** Delay in milliseconds before incrementing the value on holding the up/down arrows. */
-  stepHoldInterval?: number;
+  /** Delay before stepping the value. Can be a number of milliseconds or a function that receives the current step count and returns the delay in milliseconds. */
+  stepHoldInterval?: number | ((stepCount: number) => number);
 
-  /** Initial delay in milliseconds before incrementing the value on holding the up/down arrows. */
+  /** Initial delay in milliseconds before stepping the value. */
   stepHoldDelay?: number;
 
   /** Removes increment/decrement controls */
@@ -186,14 +186,15 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     }, [value]);
 
     const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
-
     const onStepTimeoutRef = useRef<number>(null);
+    const stepCountRef = useRef<number>(0);
 
     const onStepDone = () => {
       if (onStepTimeoutRef.current) {
         window.clearTimeout(onStepTimeoutRef.current);
-        onStepTimeoutRef.current = null;
       }
+      onStepTimeoutRef.current = null;
+      stepCountRef.current = 0;
     };
 
     const onStepHandleChange = (isIncrement: boolean) => {
@@ -202,16 +203,18 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       } else {
         decrementRef.current();
       }
+      stepCountRef.current += 1;
     };
 
     const onStepLoop = (isIncrement: boolean) => {
       onStepHandleChange(isIncrement);
 
       if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = window.setTimeout(
-          () => onStepLoop(isIncrement),
-          stepHoldInterval
-        );
+        const interval =
+          typeof stepHoldInterval === 'number'
+            ? stepHoldInterval
+            : stepHoldInterval(stepCountRef.current);
+        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
       }
     };
 

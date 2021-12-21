@@ -25,6 +25,11 @@ const code = `
   stepHoldDelay={750}
   stepHoldInterval={100}
 />
+<NumberInput
+  label="Step the value with interval function"
+  stepHoldDelay={750}
+  stepHoldInterval={(count) => 1000 - count * count}
+/>
 `;
 
 function Demo() {
@@ -52,6 +57,11 @@ function Demo() {
         description="Step the value when clicking and holding the arrows"
         stepHoldDelay={750}
         stepHoldInterval={100}
+      />
+      <NumberInput
+        label="Step the value with interval function"
+        stepHoldDelay={750}
+        stepHoldInterval={(count) => 1000 - count ** 4}
       />
     </div>
   );
