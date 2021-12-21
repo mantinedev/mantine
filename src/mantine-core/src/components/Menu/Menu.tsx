@@ -14,6 +14,7 @@ import {
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Divider } from '../Divider';
 import { Paper } from '../Paper';
@@ -177,6 +178,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+    const items = filterChildrenByType(children, [MenuItem, MenuLabel, Divider]);
     const uuid = useUuid(menuId);
 
     const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
@@ -235,11 +237,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       typeof onMouseEnter === 'function' && onMouseEnter(event);
       window.clearTimeout(delayTimeout.current);
     };
-
-    const items = React.Children.toArray(children).filter(
-      (item: MenuItemType) =>
-        item.type === MenuItem || item.type === Divider || item.type === MenuLabel
-    ) as MenuItemType[];
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (_opened) {
