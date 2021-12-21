@@ -23,6 +23,9 @@ export interface ProgressProps
   /** Adds stripes */
   striped?: boolean;
 
+  /** Whether to animate striped progress bars */
+  animated?: boolean;
+
   /** Replaces value if present, renders multiple sections instead of single one */
   sections?: { value: number; color: MantineColor }[];
 }
@@ -49,6 +52,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       size = 'md',
       radius = 'sm',
       striped = false,
+      animated = false,
       'aria-label': ariaLabel,
       classNames,
       styles,
@@ -58,7 +62,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped },
+      { color, size, radius, striped, animated },
       { classNames, styles, name: 'Progress' }
     );
 
