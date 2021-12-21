@@ -56,7 +56,6 @@ export const Text: TextComponent = forwardRef(
       size = 'md',
       weight,
       transform,
-      style,
       color,
       align,
       variant = 'text',
@@ -78,6 +77,9 @@ export const Text: TextComponent = forwardRef(
         lineClamp,
         inline,
         inherit,
+        weight,
+        transform,
+        align,
         gradientFrom: gradient.from,
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
@@ -90,12 +92,6 @@ export const Text: TextComponent = forwardRef(
         ref={ref}
         component={component || 'div'}
         className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
-        style={{
-          fontWeight: inherit ? 'inherit' : weight,
-          textTransform: transform,
-          textAlign: align,
-          ...style,
-        }}
         {...others}
       />
     );

@@ -17,6 +17,9 @@ interface TextStyles {
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
+  transform: 'capitalize' | 'uppercase' | 'lowercase';
+  align: 'left' | 'center' | 'right';
+  weight: React.CSSProperties['fontWeight'];
 }
 
 interface GetTextColor {
@@ -66,6 +69,9 @@ export default createStyles(
       gradientDeg,
       gradientTo,
       gradientFrom,
+      weight,
+      transform,
+      align,
     }: TextStyles
   ) => {
     const colors = getSharedColorScheme({
@@ -85,6 +91,9 @@ export default createStyles(
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: 'none',
         WebkitTapHighlightColor: 'transparent',
+        fontWeight: inherit ? 'inherit' : weight,
+        textTransform: transform,
+        textAlign: align,
 
         '&:hover': {
           textDecoration: variant === 'link' ? 'underline' : 'none',
