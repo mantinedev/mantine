@@ -9,6 +9,7 @@ import {
   itSupportsMargins,
   itSupportsSx,
   itSupportsRef,
+  mockResizeObserver,
 } from '@mantine/tests';
 import { Prism, PrismTab, PrismTabs } from './Prism';
 import { Prism as PrismStylesApi } from './styles.api';
@@ -25,6 +26,8 @@ const defaultProps = {
   withLineNumbers: true,
   language: 'tsx' as Language,
 };
+
+mockResizeObserver();
 
 describe('@mantine/prism/Prism', () => {
   itSupportsClassName(Prism, defaultProps);
