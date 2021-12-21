@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.5.0
 date: 'December 13th, 2021'
 ---
 
-import { RingProgressDemos, NumberInputDemos } from '@demos/core';
+import { RingProgressDemos, NumberInputDemos, StepperDemos } from '@demos/core';
 import * as PrismDemos from '@demos/prism';
 
 ## New features
@@ -16,13 +16,17 @@ import * as PrismDemos from '@demos/prism';
 
 <Demo data={RingProgressDemos.configurator} />
 
-[Prism](https://mantine.dev/others/prism/) now supports organizing code with tabs:
+[Prism](https://mantine.dev/others/prism/) component now supports organizing code with tabs:
 
 <Demo data={PrismDemos.tabs} />
 
-[NumberInput](https://mantine.dev/core/number-input/) now supports changing decimal separator:
+[NumberInput](https://mantine.dev/core/number-input/) component now supports changing decimal separator:
 
 <Demo data={NumberInputDemos.decimalSeparator} />
+
+[Stepper](https://mantine.dev/core/stepper/) component now supports `Stepper.Completed` to display content after final step is completed:
+
+<Demo data={StepperDemos.usage} />
 
 ## Other changes
 
