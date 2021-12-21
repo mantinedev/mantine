@@ -1,5 +1,6 @@
 {
   "extends": "../tsconfig.json",
   "include": ["src", "../configuration/types"],
+  "exclude": ["node_modules"],
   "compilerOptions": {}
 }
