@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Table, Group, Text, ActionIcon, Box, Menu } from '@mantine/core';
+import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea } from '@mantine/core';
 import { Pencil, Messages, Note, ReportAnalytics, Trash } from 'tabler-icons-react';
 
 interface UsersStackProps {
@@ -53,10 +53,10 @@ export function UsersStack({ data }: UsersStackProps) {
   ));
 
   return (
-    <Box sx={{ maxWidth: 800, overflowX: 'auto' }}>
+    <ScrollArea>
       <Table sx={{ minWidth: 800 }}>
         <tbody>{rows}</tbody>
       </Table>
-    </Box>
+    </ScrollArea>
   );
 }

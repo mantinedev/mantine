@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Badge, Table, Group, Text, ActionIcon, Box, Anchor } from '@mantine/core';
+import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, ScrollArea } from '@mantine/core';
 import { Pencil, Trash } from 'tabler-icons-react';
 
 interface UsersTableProps {
@@ -51,7 +51,7 @@ export function UsersTable({ data }: UsersTableProps) {
   ));
 
   return (
-    <Box sx={{ maxWidth: 800, overflowX: 'auto' }}>
+    <ScrollArea>
       <Table sx={{ minWidth: 800 }}>
         <thead>
           <tr>
@@ -64,6 +64,6 @@ export function UsersTable({ data }: UsersTableProps) {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </Box>
+    </ScrollArea>
   );
 }
