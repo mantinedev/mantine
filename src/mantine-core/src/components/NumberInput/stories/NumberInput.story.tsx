@@ -38,7 +38,7 @@ storiesOf('@mantine/core/NumberInput/stories', module)
         <NumberInput
           label="Step on hold with interval function"
           stepHoldDelay={750}
-          stepHoldInterval={(count) => 1000 - count * count}
+          stepHoldInterval={(count) => Math.max(1000 - count * count, 0)}
         />
       </div>
       <div style={{ padding: 40, maxWidth: 400 }}>

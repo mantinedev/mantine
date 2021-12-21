@@ -28,7 +28,7 @@ const code = `
 <NumberInput
   label="Step the value with interval function"
   stepHoldDelay={750}
-  stepHoldInterval={(count) => 1000 - count ** 4}
+  stepHoldInterval={(count) => Math.max(1000 - count ** 4, 0)}
 />
 `;
 
@@ -61,7 +61,7 @@ function Demo() {
       <NumberInput
         label="Step the value with interval function"
         stepHoldDelay={750}
-        stepHoldInterval={(count) => 1000 - count ** 4}
+        stepHoldInterval={(count) => Math.max(1000 - count ** 4, 0)}
       />
     </div>
   );
