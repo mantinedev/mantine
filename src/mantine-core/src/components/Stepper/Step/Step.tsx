@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineColor, ClassNames, MantineSize } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
@@ -51,9 +51,6 @@ export interface StepProps
   /** Set to false to disable clicks on step */
   allowStepClick?: boolean;
 
-  /** Called when step is clicked. Will break preventClickAhead if overridden */
-  onStepReached?(): void;
-
   /** Static selector base */
   __staticSelector?: string;
 }
@@ -82,7 +79,6 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       size = 'md',
       loading,
       allowStepClick = true,
-      onStepReached,
       iconPosition = 'left',
       __staticSelector = 'Step',
       classNames,
@@ -98,12 +94,6 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
     const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
-
-    useEffect(() => {
-      if (['stepProgress', 'stepCompleted'].includes(state)) {
-        onStepReached && onStepReached();
-      }
-    }, [state]);
 
     return (
       <UnstyledButton

@@ -1,4 +1,4 @@
-import React, { Children, forwardRef, useState } from 'react';
+import React, { Children, forwardRef, useEffect, useState } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -85,6 +85,10 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
   ) => {
     const [maxStepReached, setMaxStepReached] = useState<number>(0);
 
+    useEffect(() => {
+      setMaxStepReached((step) => Math.max(step, active));
+    }, [active]);
+
     const { classes, cx } = useStyles(
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
       { classNames, styles, name: 'Stepper' }
@@ -107,7 +111,6 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           }
           onClick={() => shouldAllowClick && onStepClick(index)}
           allowStepClick={shouldAllowClick}
-          onStepReached={() => setMaxStepReached((step) => Math.max(step, index))}
           completedIcon={item.props.completedIcon || completedIcon}
           progressIcon={item.props.progressIcon || progressIcon}
           color={item.props.color || color}
