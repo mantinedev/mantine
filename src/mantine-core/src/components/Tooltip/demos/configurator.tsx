@@ -39,6 +39,7 @@ export const configurator: MantineDemo = {
       initialValue: 'gray',
       defaultValue: 'gray',
     },
+    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
       name: 'position',
       type: 'select',
