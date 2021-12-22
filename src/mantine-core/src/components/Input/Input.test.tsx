@@ -8,7 +8,6 @@ import {
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
-import { DEFAULT_THEME } from '@mantine/styles';
 import { Input } from './Input';
 
 const defaultProps = {};
@@ -76,18 +75,6 @@ describe('@mantine/core/Input', () => {
     expect(withoutRightSection.render().find('.mantine-Input-rightSection')).toHaveLength(0);
     expect(withRightSection.render().find('.mantine-Input-rightSection').text()).toBe(
       'test-right-section'
-    );
-  });
-
-  it('sets input paddingRight based on given rightSectionWidth value', () => {
-    const withRightSection = shallow(
-      <Input rightSection="test-right-section" rightSectionWidth={47} />
-    );
-    const withoutRightSection = shallow(<Input />);
-
-    expect(withRightSection.render().find('input').css('padding-right')).toBe('47px');
-    expect(withoutRightSection.render().find('input').css('padding-right')).toBe(
-      `${DEFAULT_THEME.spacing.md}px`
     );
   });
 
