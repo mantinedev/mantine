@@ -18,7 +18,6 @@ function Demo() {
         leftIcon={<EnvelopeClosedIcon />}
         onClick={() => {
           const id = notifications.showNotification({
-            autoClose: false,
             disallowClose: true,
             title: 'Subscribe to email newsletter',
             message: (
@@ -60,7 +59,6 @@ function Demo() {
         leftIcon={<EnvelopeClosedIcon />}
         onClick={() => {
           const id = notifications.showNotification({
-            autoClose: false,
             disallowClose: true,
             title: 'Subscribe to email newsletter',
             message: (

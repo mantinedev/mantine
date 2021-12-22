@@ -113,7 +113,6 @@ function Demo() {
         variant="outline"
         onClick={() => {
           const id = notifications.showNotification({
-            autoClose: false,
             disallowClose: true,
             title: 'Subscribe to email newsletter',
             message: (
