@@ -10,21 +10,32 @@ date: 'December 13th, 2021'
 import { RingProgressDemos, NumberInputDemos, StepperDemos } from '@demos/core';
 import * as PrismDemos from '@demos/prism';
 
+## @mantine/prism changes
+
+[Prism](https://mantine.dev/others/prism/) component now uses [ScrollArea](https://mantine.dev/core/scroll-area/) instead of native browser scrollbars:
+
+<Demo data={PrismDemos.scrollbars} demoProps={{ toggle: true }} />
+
+[Prism](https://mantine.dev/others/prism/) now supports organizing code with tabs:
+
+<Demo data={PrismDemos.tabs} demoProps={{ toggle: true }} />
+
+## NumberInput component improvements
+
+[NumberInput](https://mantine.dev/core/number-input/) component now supports the following new features:
+
+- decimal separator configuration
+- value increment/decrement when user clicks and holds up/down controls
+
+<Demo data={NumberInputDemos.decimalSeparator} />
+
+<Demo data={NumberInputDemos.hold} />
+
 ## New features
 
 [RingProgress](https://mantine.dev/core/ring-progress/) component now supports round caps:
 
 <Demo data={RingProgressDemos.configurator} />
-
-[Prism](https://mantine.dev/others/prism/) component now uses [ScrollArea](https://mantine.dev/core/scroll-area/) instead of native browser scrollbars and supports organizing code with tabs:
-
-<Demo data={PrismDemos.tabs} />
-
-<Demo data={PrismDemos.scrollbars} />
-
-[NumberInput](https://mantine.dev/core/number-input/) component now supports changing decimal separator:
-
-<Demo data={NumberInputDemos.decimalSeparator} />
 
 [Stepper](https://mantine.dev/core/stepper/) component now supports `Stepper.Completed` to display content after final step is completed:
 
