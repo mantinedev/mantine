@@ -18,6 +18,18 @@ const code = `
   step={5}
   min={0}
 />
+<NumberInput
+  style={{ marginTop: 15 }}
+  label="Step on hold"
+  description="Step the value when clicking and holding the arrows"
+  stepHoldDelay={750}
+  stepHoldInterval={100}
+/>
+<NumberInput
+  label="Step the value with interval function"
+  stepHoldDelay={750}
+  stepHoldInterval={(count) => Math.max(1000 - count ** 4, 0)}
+/>
 `;
 
 function Demo() {
@@ -38,6 +50,18 @@ function Demo() {
         defaultValue={80}
         step={5}
         min={0}
+      />
+      <NumberInput
+        style={{ marginTop: 15 }}
+        label="Step on hold"
+        description="Step the value when clicking and holding the arrows"
+        stepHoldDelay={750}
+        stepHoldInterval={100}
+      />
+      <NumberInput
+        label="Step the value with interval function"
+        stepHoldDelay={750}
+        stepHoldInterval={(count) => Math.max(1000 - count ** 4, 0)}
       />
     </div>
   );

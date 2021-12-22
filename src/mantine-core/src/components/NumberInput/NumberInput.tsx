@@ -47,6 +47,12 @@ export interface NumberInputProps
   /** Number by which value will be incremented/decremented with controls and up/down arrows */
   step?: number;
 
+  /** Delay before stepping the value. Can be a number of milliseconds or a function that receives the current step count and returns the delay in milliseconds. */
+  stepHoldInterval?: number | ((stepCount: number) => number);
+
+  /** Initial delay in milliseconds before stepping the value. */
+  stepHoldDelay?: number;
+
   /** Removes increment/decrement controls */
   hideControls?: boolean;
 
@@ -73,6 +79,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       min,
       max,
       step = 1,
+      stepHoldInterval,
+      stepHoldDelay,
       onBlur,
       onFocus,
       hideControls = false,
@@ -140,7 +148,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const _min = typeof min === 'number' ? min : -Infinity;
     const _max = typeof max === 'number' ? max : Infinity;
 
-    const increment = () => {
+    const incrementRef = useRef<() => void>();
+    incrementRef.current = () => {
       if (_value === undefined) {
         handleValueChange(min ?? 0);
         setTempValue(min?.toFixed(precision) ?? '0');
@@ -151,7 +160,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
-    const decrement = () => {
+    const decrementRef = useRef<() => void>();
+    decrementRef.current = () => {
       if (_value === undefined) {
         handleValueChange(min ?? 0);
         setTempValue(min?.toFixed(precision) ?? '0');
@@ -162,7 +172,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
-    assignRef(handlersRef, { increment, decrement });
+    assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
     useEffect(() => {
       if (typeof value === 'number' && !focused) {
@@ -175,6 +185,57 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     }, [value]);
 
+    const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
+    const onStepTimeoutRef = useRef<number>(null);
+    const stepCountRef = useRef<number>(0);
+
+    const onStepDone = () => {
+      if (onStepTimeoutRef.current) {
+        window.clearTimeout(onStepTimeoutRef.current);
+      }
+      onStepTimeoutRef.current = null;
+      stepCountRef.current = 0;
+    };
+
+    const onStepHandleChange = (isIncrement: boolean) => {
+      if (isIncrement) {
+        incrementRef.current();
+      } else {
+        decrementRef.current();
+      }
+      stepCountRef.current += 1;
+    };
+
+    const onStepLoop = (isIncrement: boolean) => {
+      onStepHandleChange(isIncrement);
+
+      if (shouldUseStepInterval) {
+        const interval =
+          typeof stepHoldInterval === 'number'
+            ? stepHoldInterval
+            : stepHoldInterval(stepCountRef.current);
+        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
+      }
+    };
+
+    const onStep = (
+      event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+      isIncrement: boolean
+    ) => {
+      event.preventDefault();
+      onStepHandleChange(isIncrement);
+      if (shouldUseStepInterval) {
+        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
+      }
+      inputRef.current.focus();
+    };
+
+    useEffect(() => {
+      onStepDone();
+
+      return () => onStepDone();
+    }, []);
+
     const rightSection = (
       <div className={classes.rightSection}>
         <button
@@ -184,10 +245,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           disabled={finalValue >= max}
           className={cx(classes.control, classes.controlUp)}
           onMouseDown={(event) => {
-            event.preventDefault();
-            increment();
-            inputRef.current.focus();
+            onStep(event, true);
           }}
+          onMouseUp={onStepDone}
+          onMouseLeave={onStepDone}
         />
         <button
           type="button"
@@ -196,10 +257,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           disabled={finalValue <= min}
           className={cx(classes.control, classes.controlDown)}
           onMouseDown={(event) => {
-            event.preventDefault();
-            decrement();
-            inputRef.current.focus();
+            onStep(event, false);
           }}
+          onMouseUp={onStepDone}
+          onMouseLeave={onStepDone}
         />
       </div>
     );
@@ -244,11 +305,25 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'ArrowUp') {
+      // If it is a repeat keydown and the stepInterval is being used,
+      // then the onStep function should not be called again.
+      // If the stepInterval is not being used, then onStep should be
+      // called again to retain the previous behavior of updating on each repeat.
+      if (event.repeat && shouldUseStepInterval) {
         event.preventDefault();
-        increment();
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        onStep(event, true);
       } else if (event.key === 'ArrowDown') {
-        decrement();
+        onStep(event, false);
+      }
+    };
+
+    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        onStepDone();
       }
     };
 
@@ -264,6 +339,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         onBlur={handleBlur}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
         rightSectionWidth={theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}
