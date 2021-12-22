@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
 import { Text } from '../Text';
 import { Loader } from '../Loader';
 import { CloseButton } from '../ActionIcon';
@@ -16,6 +16,9 @@ export interface NotificationProps
 
   /** Notification line or icon color */
   color?: MantineColor;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;
@@ -41,6 +44,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     {
       className,
       color = 'blue',
+      radius = 'sm',
       loading = false,
       disallowClose = false,
       title,
@@ -55,7 +59,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { color, disallowClose },
+      { color, radius, disallowClose },
       { classNames, styles, name: 'Notification' }
     );
     const withIcon = icon || loading;
