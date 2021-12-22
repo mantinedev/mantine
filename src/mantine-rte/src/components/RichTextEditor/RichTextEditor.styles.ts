@@ -148,6 +148,45 @@ export default createStyles(
         textAlign: 'right',
       },
 
+      '& .ql-mention-list-container': {
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        borderRadius: theme.radius.sm,
+
+        '& .ql-mention-list': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+          paddingLeft: '0px',
+          marginTop: '0px',
+          margin: 0,
+          listStyleType: 'none',
+
+          '& .ql-mention-list-item': {
+            padding: theme.spacing.xs,
+            textDecoration: 'none',
+            cursor: 'pointer',
+          },
+
+          '& .selected': {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+            textDecoration: 'none',
+          },
+        },
+      },
+
+      '& .mention': {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+        padding: '3px 5px',
+        height: '24px',
+        width: '65px',
+        marginRight: '2px',
+        borderRadius: theme.radius.sm,
+        userSelect: 'all',
+      },
+
       '& iframe.ql-video': {
         width: '100%',
         height: 400,
