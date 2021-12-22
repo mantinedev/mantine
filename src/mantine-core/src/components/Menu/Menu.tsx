@@ -12,7 +12,9 @@ import {
   MantineShadow,
   ClassNames,
   getDefaultZIndex,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Divider } from '../Divider';
 import { Paper } from '../Paper';
@@ -20,13 +22,8 @@ import { Text } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper';
 import { MenuIcon } from './MenuIcon';
-import {
-  MenuItem,
-  MenuItemComponent,
-  MenuItemType,
-  MenuItemStylesNames,
-} from './MenuItem/MenuItem';
-import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuItem, MenuItemType, MenuItemStylesNames } from './MenuItem/MenuItem';
+import { MenuLabel } from './MenuLabel/MenuLabel';
 import useStyles from './Menu.styles';
 
 export type MenuStylesNames = ClassNames<typeof useStyles> | MenuItemStylesNames;
@@ -96,11 +93,10 @@ const defaultControl = (
   </ActionIcon>
 );
 
-type MenuComponent = {
-  displayName?: string;
-  Item: MenuItemComponent;
-  Label: React.FC<MenuLabelProps>;
-} & ((props: MenuProps) => React.ReactElement);
+type MenuComponent = ForwardRefWithStaticComponents<
+  MenuProps,
+  { Item: typeof MenuItem; Label: typeof MenuLabel }
+>;
 
 function getNextItem(active: number, items: MenuItemType[]) {
   for (let i = active + 1; i < items.length; i += 1) {
@@ -182,6 +178,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
+    const items = filterChildrenByType(children, [MenuItem, MenuLabel, Divider]);
     const uuid = useUuid(menuId);
 
     const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
@@ -240,11 +237,6 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       typeof onMouseEnter === 'function' && onMouseEnter(event);
       window.clearTimeout(delayTimeout.current);
     };
-
-    const items = React.Children.toArray(children).filter(
-      (item: MenuItemType) =>
-        item.type === MenuItem || item.type === Divider || item.type === MenuLabel
-    ) as MenuItemType[];
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (_opened) {

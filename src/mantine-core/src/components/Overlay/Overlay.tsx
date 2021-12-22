@@ -27,11 +27,11 @@ interface _OverlayProps extends DefaultProps {
 
 export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProps<C, _OverlayProps>;
 
-type OverlayComponent = <C extends React.ElementType = 'div'>(
+type OverlayComponent = (<C extends React.ElementType = 'div'>(
   props: OverlayProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
+export const Overlay: OverlayComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       opacity = 0.6,

@@ -6,13 +6,11 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 // Banners
 export { EmailBanner } from './EmailBanner/EmailBanner';
 export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
-export { ImageBanner } from './ImageBanner/ImageBanner';
 
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
-export { ImageButtonCards } from './ImageButtonCards/ImageButtonCards';
 export { ImageCard } from './ImageCard/ImageCard';
 
 // Contact us
@@ -82,3 +80,10 @@ export { SliderIcon } from './SliderIcon/SliderIcon';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SliderLabel } from './SliderLabel/SliderLabel';
 export { SliderHover } from './SliderHover/SliderHover';
+
+// Footers
+export { FooterCentered } from './FooterCentered/FooterCentered';
+export { FooterSimple } from './FooterSimple/FooterSimple';
+
+// Headers
+export { HeaderSimple } from './HeaderSimple/HeaderSimple';

@@ -20,12 +20,6 @@ export interface TabControlProps
   ref?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export interface TabType {
-  type: any;
-  props: TabControlProps;
-  ref: React.ForwardedRef<HTMLButtonElement>;
-}
-
 export function TabControl({
   className,
   active,

@@ -24,9 +24,8 @@ function Demo() {
         <Stepper.Step label="Final step" description="Get full access">
           Step 3 content: Get full access
         </Stepper.Step>
-
         <Stepper.Completed>
-          Form completed, click back button to get to previous step
+          Completed, click back button to get to previous step
         </Stepper.Completed>
       </Stepper>
 
@@ -58,7 +57,7 @@ function Demo() {
         </Stepper.Step>
 
         <Stepper.Completed>
-          Form completed, click back button to get to previous step
+          <Content>Completed, click back button to get to previous step</Content>
         </Stepper.Completed>
       </Stepper>
 

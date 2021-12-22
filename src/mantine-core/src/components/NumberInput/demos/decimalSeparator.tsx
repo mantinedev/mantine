@@ -4,7 +4,7 @@ import { NumberInput } from '../NumberInput';
 const code = `
 <NumberInput
   decimalSeparator=","
-  label="Number input with decimal steps"
+  label="Number input with a custom decimal separator"
   defaultValue={0.5}
   precision={2}
   step={0.5}
@@ -17,7 +17,7 @@ function Demo() {
       <NumberInput
         decimalSeparator=","
         label="Number input with a custom decimal separator"
-        placeholder="Decimal steps"
+        placeholder="Decimal separator"
         defaultValue={0.5}
         precision={2}
         step={0.5}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { RtlProvider } from '@mantine/ds/src';
 import { NumberInput } from '../NumberInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -21,13 +20,6 @@ storiesOf('@mantine/core/NumberInput/stories', module)
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
     </div>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <div style={{ padding: 40, maxWidth: 400 }}>
-        <Controlled />
-      </div>
-    </RtlProvider>
   ))
   .add('Step On Hold', () => (
     <>

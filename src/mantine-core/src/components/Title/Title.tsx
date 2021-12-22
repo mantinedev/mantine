@@ -10,7 +10,7 @@ export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef
   order?: TitleOrder;
 
   /** Defined text-align */
-  align?: 'right' | 'left' | 'center';
+  align?: 'right' | 'left' | 'center' | 'justify';
 }
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>(

@@ -43,11 +43,11 @@ export type ActionIconProps<C extends React.ElementType> = PolymorphicComponentP
   _ActionIconProps
 >;
 
-type ActionIconComponent = <C extends React.ElementType = 'button'>(
+type ActionIconComponent = (<C extends React.ElementType = 'button'>(
   props: ActionIconProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const ActionIcon: ActionIconComponent & { displayName?: string } = forwardRef(
+export const ActionIcon: ActionIconComponent = forwardRef(
   <C extends React.ElementType = 'button'>(
     {
       className,

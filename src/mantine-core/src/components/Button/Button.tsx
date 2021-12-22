@@ -65,11 +65,11 @@ export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps
   SharedButtonProps
 >;
 
-type ButtonComponent = <C extends React.ElementType = 'button'>(
+type ButtonComponent = (<C extends React.ElementType = 'button'>(
   props: ButtonProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Button: ButtonComponent & { displayName?: string } = forwardRef(
+export const Button: ButtonComponent = forwardRef(
   <C extends React.ElementType = 'button'>(
     {
       className,

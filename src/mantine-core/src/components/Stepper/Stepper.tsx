@@ -1,4 +1,4 @@
-import React, { Children, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -6,6 +6,7 @@ import {
   MantineSize,
   ClassNames,
 } from '@mantine/styles';
+import { findChildByType, filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
@@ -49,6 +50,9 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Breakpoint at which orientation will change from horizontal to vertical */
   breakpoint?: MantineNumberSize;
 }
@@ -72,6 +76,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       iconSize,
       contentPadding = 'md',
       size = 'md',
+      radius = 'xl',
       orientation = 'horizontal',
       breakpoint,
       iconPosition = 'left',
@@ -85,14 +90,10 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
       { classNames, styles, name: 'Stepper' }
     );
-    const filteredChildren = Children.toArray(children).filter(
-      (item: React.ReactElement) => item.type === Step
-    ) as React.ReactElement[];
-    const completedStep = Children.toArray(children).find(
-      (item: React.ReactElement) => item.type === StepCompleted
-    ) as React.ReactElement;
+    const filteredChildren = filterChildrenByType(children, Step);
+    const completedStep = findChildByType(children, StepCompleted);
 
-    const items = filteredChildren.reduce((acc, item, index, array) => {
+    const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
       acc.push(
         <Step
           {...item.props}
@@ -109,6 +110,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           color={item.props.color || color}
           iconSize={iconSize}
           size={size}
+          radius={radius}
           classNames={classNames}
           styles={styles}
           iconPosition={item.props.iconPosition || iconPosition}
@@ -125,7 +127,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       }
 
       return acc;
-    }, [] as React.ReactNode[]);
+    }, []);
 
     const stepContent = filteredChildren[active]?.props?.children;
     const completedContent = completedStep?.props?.children;

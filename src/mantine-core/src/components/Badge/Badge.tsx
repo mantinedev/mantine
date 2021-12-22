@@ -43,11 +43,11 @@ interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
 
 export type BadgeProps<C extends React.ElementType> = PolymorphicComponentProps<C, _BadgeProps>;
 
-type BadgeComponent = <C extends React.ElementType = 'div'>(
+type BadgeComponent = (<C extends React.ElementType = 'div'>(
   props: BadgeProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Badge: BadgeComponent & { displayName?: string } = forwardRef(
+export const Badge: BadgeComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       component,

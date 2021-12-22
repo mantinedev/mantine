@@ -52,7 +52,7 @@ export function Collapse({
     <Box {...getCollapseProps({ style: mergedStyles, ...rest })}>
       <div
         style={{
-          opacity: opened ? 1 : 0,
+          opacity: opened || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
         }}
       >

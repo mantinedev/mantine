@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import attributes from './attributes.json';
 import { GalleryStory } from '../../components/GalleryStory/GalleryStory';
-import { ImageBanner } from './ImageBanner';
+import { FooterSimple } from './FooterSimple';
 
-storiesOf('Gallery/ImageBanner', module).add('ImageBanner', () => (
-  <GalleryStory attributes={attributes} component={ImageBanner} />
+storiesOf('Gallery/FooterSimple', module).add('FooterSimple', () => (
+  <GalleryStory attributes={attributes} component={FooterSimple} />
 ));

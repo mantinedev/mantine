@@ -2,6 +2,7 @@ import type { PrismStylesNames, PrismTabsStylesNames } from './Prism';
 
 export const Prism: Record<PrismStylesNames, string> = {
   root: 'Root element',
+  scrollArea: 'ScrollArea component wrapping pre element',
   code: 'Pre element which contains code',
   copy: 'Copy button wrapper',
   line: 'Line wrapper, contains line number and content',

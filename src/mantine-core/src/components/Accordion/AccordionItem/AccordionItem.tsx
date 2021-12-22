@@ -22,11 +22,6 @@ export interface PublicAccordionItemProps
   controlRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export interface AccordionItemType {
-  type: any;
-  props: PublicAccordionItemProps;
-}
-
 interface AccordionItemProps extends PublicAccordionItemProps {
   opened?: boolean;
   onToggle?(): void;

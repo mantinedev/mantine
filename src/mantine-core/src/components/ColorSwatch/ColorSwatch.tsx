@@ -24,11 +24,11 @@ export type ColorSwatchProps<C extends React.ElementType> = PolymorphicComponent
   _ColorSwatchProps
 >;
 
-type ColorSwatchComponent = <C extends React.ElementType = 'div'>(
+type ColorSwatchComponent = (<C extends React.ElementType = 'div'>(
   props: ColorSwatchProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const ColorSwatch: ColorSwatchComponent & { displayName?: string } = forwardRef(
+export const ColorSwatch: ColorSwatchComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       component,

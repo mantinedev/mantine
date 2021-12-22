@@ -11,7 +11,21 @@ const convertCase = (string) => {
 
 const GALLERY_CATEGORIES = [
   {
-    name: 'Landing page sections',
+    name: 'Application UI',
+    categories: [
+      { slug: 'navbars', name: 'Navbars' },
+      { slug: 'headers', name: 'Headers' },
+      { slug: 'footers', name: 'Footers' },
+      { slug: 'users', name: 'User info and controls' },
+      { slug: 'authentication', name: 'Authentication' },
+      { slug: 'inputs', name: 'Inputs' },
+      { slug: 'sliders', name: 'Sliders' },
+      { slug: 'dropzones', name: 'Dropzones' },
+      { slug: 'app-cards', name: 'Application cards' },
+    ],
+  },
+  {
+    name: 'Page sections',
     categories: [
       { slug: 'hero', name: 'Hero headers' },
       { slug: 'features', name: 'Features section' },
@@ -21,19 +35,8 @@ const GALLERY_CATEGORIES = [
     ],
   },
   {
-    name: 'Application UI',
-    categories: [
-      { slug: 'navbars', name: 'Navbars' },
-      { slug: 'users', name: 'User info and controls' },
-      { slug: 'authentication', name: 'Authentication' },
-      { slug: 'inputs', name: 'Inputs' },
-      { slug: 'sliders', name: 'Sliders' },
-      { slug: 'dropzones', name: 'Dropzones' },
-    ],
-  },
-  {
-    name: 'Blog',
-    categories: [{ slug: 'cards', name: 'Blog cards' }],
+    name: 'Blog UI',
+    categories: [{ slug: 'article-cards', name: 'Article cards' }],
   },
 ];
 

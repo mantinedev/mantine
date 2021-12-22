@@ -28,11 +28,11 @@ export type PaperProps<C extends React.ElementType> = PolymorphicComponentProps<
   SharedPaperProps
 >;
 
-type PaperComponent = <C extends React.ElementType = 'div'>(
+type PaperComponent = (<C extends React.ElementType = 'div'>(
   props: PaperProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Paper: PaperComponent & { displayName?: string } = forwardRef(
+export const Paper: PaperComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       component,

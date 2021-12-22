@@ -86,7 +86,7 @@ help you set up color scheme context:
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
 export default function Demo() {
-  const [colorScheme, setColorScheme] = useState('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
@@ -115,7 +115,7 @@ import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core
 import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
 
 export default function Demo() {
-  const [colorScheme, setColorScheme] = useLocalStorageValue({
+  const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
   });
@@ -157,7 +157,7 @@ export default function Demo() {
   // hook will return either 'dark' or 'light' on client
   // and always 'light' during ssr as window.matchMedia is not available
   const preferredColorScheme = useColorScheme();
-  const [colorScheme, setColorScheme] = useState(preferredColorScheme);
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(preferredColorScheme);
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 

@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "include": ["src", "../configuration/types", "../gallery/src"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "paths": {
       "@docs/demos": ["./docs/src/demos"],

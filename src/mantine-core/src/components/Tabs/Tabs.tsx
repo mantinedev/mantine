@@ -1,9 +1,16 @@
 import React, { useRef, forwardRef } from 'react';
 import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+  ForwardRefWithStaticComponents,
+} from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
-import { TabControl, TabControlStylesNames, TabType } from './TabControl/TabControl';
+import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
 export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
@@ -45,7 +52,7 @@ export interface TabsProps
   orientation?: 'horizontal' | 'vertical';
 }
 
-function getPreviousTab(active: number, tabs: TabType[]) {
+function getPreviousTab(active: number, tabs: React.ReactElement[]) {
   for (let i = active - 1; i >= 0; i -= 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -55,7 +62,7 @@ function getPreviousTab(active: number, tabs: TabType[]) {
   return active;
 }
 
-function getNextTab(active: number, tabs: TabType[]) {
+function getNextTab(active: number, tabs: React.ReactElement[]) {
   for (let i = active + 1; i < tabs.length; i += 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -65,7 +72,7 @@ function getNextTab(active: number, tabs: TabType[]) {
   return active;
 }
 
-function findInitialTab(tabs: TabType[]) {
+function findInitialTab(tabs: React.ReactElement[]) {
   for (let i = 0; i < tabs.length; i += 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -75,10 +82,7 @@ function findInitialTab(tabs: TabType[]) {
   return -1;
 }
 
-type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
-  displayName: string;
-  Tab: typeof TabControl;
-};
+type TabsComponent = ForwardRefWithStaticComponents<TabsProps, { Tab: typeof TabControl }>;
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
   (
@@ -106,10 +110,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     );
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
-
-    const tabs = React.Children.toArray(children).filter(
-      (item: TabType) => item.type === TabControl
-    ) as TabType[];
+    const tabs = filterChildrenByType(children, TabControl);
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
       value: active,
@@ -151,7 +152,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         orientation={orientation}
         buttonRef={mergeRefs((node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
-        }, tab.ref)}
+        }, (tab as any).ref)}
         onClick={() => activeTab !== index && handleActiveTabChange(index)}
         classNames={classNames}
         styles={styles}

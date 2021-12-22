@@ -6,6 +6,7 @@ import {
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
+  itIsPolymorphic,
 } from '@mantine/tests';
 import { Center } from './Center';
 
@@ -18,6 +19,7 @@ describe('@mantine/core/Center', () => {
   itSupportsSx(Center, defaultProps);
   itSupportsOthers(Center, defaultProps);
   itSupportsMargins(Center, defaultProps);
+  itIsPolymorphic(Center, defaultProps, { dive: 1 });
   itSupportsRef(Center, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

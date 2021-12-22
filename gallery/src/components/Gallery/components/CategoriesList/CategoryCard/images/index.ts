@@ -34,9 +34,16 @@ import dropzonesDark from './dropzones-dark.svg';
 import slidersLight from './sliders-light.svg';
 import slidersDark from './sliders-dark.svg';
 
+import footersLight from './footers-light.svg';
+import footersDark from './footers-dark.svg';
+
+import headersLight from './headers-light.svg';
+import headersDark from './headers-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
-  cards: { light: cardsLight, dark: cardsDark },
+  'article-cards': { light: cardsLight, dark: cardsDark },
+  'app-cards': { light: cardsLight, dark: cardsDark },
   hero: { light: heroLight, dark: heroDark },
   features: { light: featuresLight, dark: featuresDark },
   faq: { light: faqLight, dark: faqDark },
@@ -47,4 +54,6 @@ export default {
   users: { light: usersLight, dark: usersDark },
   dropzones: { light: dropzonesLight, dark: dropzonesDark },
   sliders: { light: slidersLight, dark: slidersDark },
+  footers: { light: footersLight, dark: footersDark },
+  headers: { light: headersLight, dark: headersDark },
 };

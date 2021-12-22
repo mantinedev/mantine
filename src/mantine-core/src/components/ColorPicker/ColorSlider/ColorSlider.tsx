@@ -20,7 +20,7 @@ export interface BaseColorSliderProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
-  size: MantineSize;
+  size?: MantineSize;
   focusable?: boolean;
   __staticSelector?: string;
 }
@@ -39,7 +39,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       onChange,
       maxValue,
       round,
-      size,
+      size = 'md',
       thumbColor = 'transparent',
       __staticSelector = 'ColorSlider',
       focusable = true,
