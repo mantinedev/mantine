@@ -21,6 +21,9 @@ export interface SharedPopperProps {
   /** Arrow size in px */
   arrowSize?: number;
 
+  /** Arrow distance to the left/right * arrowSize */
+  arrowDistance?: number;
+
   /** Renders arrow if true */
   withArrow?: boolean;
 
@@ -71,6 +74,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   placement = 'center',
   gutter = 5,
   arrowSize = 2,
+  arrowDistance = 2,
   withArrow = false,
   referenceElement,
   children,
@@ -87,7 +91,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   withinPortal = true,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
-  const { classes, cx } = useStyles({ arrowSize }, { name: 'Popper' });
+  const { classes, cx } = useStyles({ arrowSize, arrowDistance }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
 
   const initialPlacement: Placement =

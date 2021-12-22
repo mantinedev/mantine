@@ -124,9 +124,10 @@ export function Tooltip({
         gutter={gutter}
         withArrow={withArrow}
         arrowSize={arrowSize}
+        arrowDistance={7}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
-        forceUpdateDependencies={[color, ...positionDependencies]}
+        forceUpdateDependencies={[color, radius, ...positionDependencies]}
         withinPortal={withinPortal}
       >
         <div
