@@ -50,6 +50,9 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Breakpoint at which orientation will change from horizontal to vertical */
   breakpoint?: MantineNumberSize;
 }
@@ -73,6 +76,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       iconSize,
       contentPadding = 'md',
       size = 'md',
+      radius = 'xl',
       orientation = 'horizontal',
       breakpoint,
       iconPosition = 'left',
@@ -106,6 +110,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           color={item.props.color || color}
           iconSize={iconSize}
           size={size}
+          radius={radius}
           classNames={classNames}
           styles={styles}
           iconPosition={item.props.iconPosition || iconPosition}
