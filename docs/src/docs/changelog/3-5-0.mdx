@@ -47,9 +47,16 @@ import * as PrismDemos from '@demos/prism';
 - [Center](https://mantine.dev/core/center/) component is now polymorphic, it supports `component` prop
 - [Grid](https://mantine.dev/core/grid/) component now exposes `Col` component as `Grid.Col`
 - `@mantine/core` package now exports `MantineProviderProps` type
+- `@mantine/hooks` package now exports `UseForm` type
 
 ## 3.4.0 - 3.5.0 bug fixes
 
 - Fix incorrect animations applied to [Collapse](https://mantine.dev/core/collapse/) component with `animateOpacity` prop set to false
 - Fix [HueSlider and AlphaSlider](https://mantine.dev/core/color-picker/) components breaking when used without `size` prop
 - Fix `size` prop not applied to [Divider](https://mantine.dev/core/divider/) with label
+- Fix `onChange` function called with incorrect precision in [NumberInput](https://mantine.dev/core/number-input/) component
+- Fix Linux detected as undetermined is [use-os](https://mantine.dev/hooks/use-os/) hook
+- Fix incorrect [MediaQuery](https://mantine.dev/core/media-query/) component `largerThan` and `smallerThan` props handling (**breaking bug fix**)
+- Fix incorrect [DateRangePicker](https://mantine.dev/dates/date-range-picker/) types for strict TypeScript mode
+- Fix unexpected vertical scrollbars in [TransferList](https://mantine.dev/core/transfer-list/) component
+- Fix unexpected onChange function called onBlur in [DatePicker](https://mantine.dev/dates/date-picker/) component
