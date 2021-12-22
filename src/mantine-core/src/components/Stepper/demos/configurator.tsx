@@ -21,7 +21,7 @@ export const configurator: MantineDemo = {
   codeTemplate,
   configurator: [
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
-    { name: 'size', type: 'size', initialValue: 'md' },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
+    { name: 'size', type: 'size', initialValue: 'md' },
   ],
 };
