@@ -1,4 +1,4 @@
-import React, { Children, forwardRef } from 'react';
+import React, { Children, forwardRef, useState } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -20,6 +20,9 @@ export interface StepperProps
 
   /** Called when step is clicked */
   onStepClick?(stepIndex: number): void;
+
+  /** Prevents clicking to steps beyond the ones already reached */
+  preventClickAhead?: boolean;
 
   /** Active step index */
   active: number;
@@ -63,6 +66,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       className,
       children,
       onStepClick,
+      preventClickAhead,
       active,
       completedIcon,
       progressIcon,
@@ -79,6 +83,8 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     }: StepperProps,
     ref
   ) => {
+    const [maxStepReached, setMaxStepReached] = useState<number>(0);
+
     const { classes, cx } = useStyles(
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
       { classNames, styles, name: 'Stepper' }
@@ -88,6 +94,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     ) as React.ReactElement[];
 
     const items = filteredChildren.reduce((acc, item, index, array) => {
+      const shouldAllowClick = typeof onStepClick === 'function' && (
+        preventClickAhead ? index <= maxStepReached : true
+      );
       acc.push(
         <Step
           {...item.props}
@@ -97,8 +106,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           state={
             active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
           }
-          onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
-          allowStepClick={typeof onStepClick === 'function'}
+          onClick={() => shouldAllowClick && onStepClick(index)}
+          allowStepClick={shouldAllowClick}
+          onStepReached={() => setMaxStepReached((step) => Math.max(step, index))}
           completedIcon={item.props.completedIcon || completedIcon}
           progressIcon={item.props.progressIcon || progressIcon}
           color={item.props.color || color}
