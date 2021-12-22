@@ -18,8 +18,8 @@ export const configurator: MantineDemo = {
   component: Wrapper,
   codeTemplate,
   configurator: [
-    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     {
       name: 'src',
       type: 'string',
