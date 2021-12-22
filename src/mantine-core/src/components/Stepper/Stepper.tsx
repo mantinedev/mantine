@@ -94,9 +94,8 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     ) as React.ReactElement[];
 
     const items = filteredChildren.reduce((acc, item, index, array) => {
-      const shouldAllowClick = typeof onStepClick === 'function' && (
-        preventClickAhead ? index <= maxStepReached : true
-      );
+      const shouldAllowClick =
+        typeof onStepClick === 'function' && (preventClickAhead ? index <= maxStepReached : true);
       acc.push(
         <Step
           {...item.props}
