@@ -18,7 +18,7 @@ interface TextStyles {
   gradientTo: string;
   gradientDeg: number;
   transform: 'capitalize' | 'uppercase' | 'lowercase';
-  align: 'left' | 'center' | 'right';
+  align: 'left' | 'center' | 'right' | 'justify';
   weight: React.CSSProperties['fontWeight'];
 }
 
