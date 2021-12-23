@@ -10,12 +10,12 @@ function Demo() {
   const [value, setValue] = useState(null);
   return (
     <>
-      <MediaQuery largerThan="md" styles={{ display: 'none' }}>
+      <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
         <Group position="center">
           <Calendar amountOfMonths={2} value={value} onChange={setValue} />
         </Group>
       </MediaQuery>
-      <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
+      <MediaQuery largerThan="md" styles={{ display: 'none' }}>
         <Text align="center">Demo is not available, increase viewport size to see it</Text>
       </MediaQuery>
     </>
