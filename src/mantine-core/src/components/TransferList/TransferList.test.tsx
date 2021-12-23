@@ -39,7 +39,9 @@ describe('@mantine/core/TransferList', () => {
   itSupportsStylesApi(
     TransferList,
     defaultProps,
-    Object.keys(TransferListStylesApi).filter((key) => key !== 'transferListItemHovered'),
+    Object.keys(TransferListStylesApi).filter(
+      (key) => key !== 'transferListItemHovered' && key !== 'separator' && key !== 'separatorLabel'
+    ),
     'TransferList'
   );
 
