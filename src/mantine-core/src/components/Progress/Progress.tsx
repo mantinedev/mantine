@@ -26,6 +26,9 @@ export interface ProgressProps
   /** Whether to animate striped progress bars */
   animated?: boolean;
 
+  /** Whether to show an indeterminate progress bar */
+  isIndeterminate?: boolean
+
   /** Replaces value if present, renders multiple sections instead of single one */
   sections?: { value: number; color: MantineColor }[];
 }
@@ -53,6 +56,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       radius = 'sm',
       striped = false,
       animated = false,
+      isIndeterminate = false,
       'aria-label': ariaLabel,
       classNames,
       styles,
@@ -62,7 +66,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped, animated },
+      { color, size, radius, striped, animated, isIndeterminate },
       { classNames, styles, name: 'Progress' }
     );
 
@@ -72,7 +76,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             key={index}
             className={classes.bar}
             style={{
-              width: `${section.value}%`,
+              width: `${isIndeterminate ? 100 : section.value}%`,
               left: `${section.accumulated}%`,
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
@@ -87,11 +91,12 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             role="progressbar"
             aria-valuemax={100}
             aria-valuemin={0}
-            aria-valuenow={value}
+            aria-valuenow={isIndeterminate ? 100 : value}
             aria-label={ariaLabel}
             className={classes.bar}
-            style={{ width: `${value}%` }}
-          />
+            style={{
+              width: `${isIndeterminate ? 100 : value}%`,
+            }}
         )}
       </Box>
     );
