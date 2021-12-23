@@ -1,3 +1,5 @@
+import React from 'react';
+import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsStyle,
@@ -22,5 +24,11 @@ describe('@mantine/core/Group', () => {
 
   it('has correct displayName', () => {
     expect(Group.displayName).toEqual('@mantine/core/Group');
+  });
+
+  it('has no falsy children', () => {
+    const children = [undefined, null, <div key="1" />];
+    const wrapper = shallow(<Group>{children}</Group>);
+    expect(wrapper.find('.mantine-Group-child').length).toBe(1);
   });
 });
