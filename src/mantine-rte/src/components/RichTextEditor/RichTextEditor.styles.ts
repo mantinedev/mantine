@@ -150,15 +150,15 @@ export default createStyles(
 
       '& .ql-mention-list-container': {
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
         }`,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         borderRadius: theme.radius.sm,
 
         '& .ql-mention-list': {
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          paddingLeft: '0px',
-          marginTop: '0px',
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+          paddingLeft: 0,
+          marginTop: 0,
           margin: 0,
           listStyleType: 'none',
 
@@ -170,7 +170,8 @@ export default createStyles(
 
           '& .selected': {
             backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+              theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+            color: theme.colorScheme === 'dark' ? theme.white : theme.black,
             textDecoration: 'none',
           },
         },
@@ -178,13 +179,15 @@ export default createStyles(
 
       '& .mention': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+        backgroundColor:
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
         padding: '3px 5px',
-        height: '24px',
-        width: '65px',
-        marginRight: '2px',
+        height: 24,
+        width: 65,
+        marginRight: 2,
         borderRadius: theme.radius.sm,
         userSelect: 'all',
+        pointerEvents: 'none',
       },
 
       '& iframe.ql-video': {

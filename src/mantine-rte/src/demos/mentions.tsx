@@ -5,33 +5,23 @@ const code = `
 import { useState } from 'react;
 import { RichTextEditor } from '@mantine/rte';
 
-const initialValue =
-  '<p>Type @ to mention a person,&nbsp;or # to mention a tag. </p>';
+const allPeople = [
+  { id: 1, value: 'Bill Horsefighter' },
+  { id: 2, value: 'Amanda Hijacker' },
+  { id: 3, value: 'Leo Summerhalter' },
+  { id: 4, value: 'Jane Sinkspitter' },
+];
 
-  const allPeople = [
-    {
-      id: 1,
-      value: 'Fredrik Sundqvist',
-    },
-    {
-      id: 2,
-      value: 'Patrik Sjölin',
-    },
-  ];
-
-  const allTags = [
-    {
-      id: 1,
-      value: 'User',
-    },
-    {
-      id: 2,
-      value: 'Organisation',
-    },
-  ];
+const allTags = [
+  { id: 1, value: 'JavaScript' },
+  { id: 2, value: 'TypeScript' },
+  { id: 3, value: 'Ruby' },
+  { id: 3, value: 'Python' },
+];
 
 function Demo() {
-  const [value, onChange] = useState(initialValue);
+  const [value, onChange] = useState('<p>Type @ or # to see mentions autocomplete</p>');
+
   return (
     <RichTextEditor
       value={value}
@@ -40,40 +30,32 @@ function Demo() {
         { denotationChar: '@', items: allPeople, onMention: handlePeopleMention },
         { denotationChar: '#', items: allTags },
       ]}
-    />)
+    />
+  );
 }
 `;
 
-const initialValue = '<p>Type @ to mention a person,&nbsp;or # to mention a tag. </p>';
-
 const allPeople = [
-  {
-    id: 1,
-    value: 'Fredrik Sundqvist',
-  },
-  {
-    id: 2,
-    value: 'Patrik Sjölin',
-  },
+  { id: 1, value: 'Bill Horsefighter' },
+  { id: 2, value: 'Amanda Hijacker' },
+  { id: 3, value: 'Leo Summerhalter' },
+  { id: 4, value: 'Jane Sinkspitter' },
 ];
 
 const allTags = [
-  {
-    id: 1,
-    value: 'User',
-  },
-  {
-    id: 2,
-    value: 'Organisation',
-  },
+  { id: 1, value: 'JavaScript' },
+  { id: 2, value: 'TypeScript' },
+  { id: 3, value: 'Ruby' },
+  { id: 3, value: 'Python' },
 ];
 
 function Demo() {
-  const [value, onChange] = useState(initialValue);
+  const [value, onChange] = useState('<p>Type @ or # to see mentions autocomplete</p>');
   return (
     <SSRWrapper
       value={value}
       onChange={onChange}
+      placeholder="Type @ or # to see mentions autocomplete"
       mentionGroups={[
         { denotationChar: '@', items: allPeople },
         { denotationChar: '#', items: allTags },

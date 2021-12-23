@@ -98,6 +98,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       classNames,
       mentionGroups = [],
       styles,
+      placeholder,
       ...others
     }: RichTextEditorProps,
     ref
@@ -163,6 +164,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           value={value}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
+          placeholder={placeholder}
         />
       </Box>
     );
