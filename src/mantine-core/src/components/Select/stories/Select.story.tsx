@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
 import { SubmitForm } from '@mantine/ds/src';
@@ -77,6 +77,46 @@ function Creatable() {
   );
 }
 
+function DynamicLabels(props: Partial<SelectProps>) {
+  const [value, setValue] = useState(null);
+  const [dynamicData, setDynamicData] = useState(data);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDynamicData(
+        data.map((d) => ({
+          value: d.value,
+          label: `${d.label}-${Math.floor(Math.random() * 100)}`,
+        }))
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
+  return (
+    <div>
+      <Select
+        label="Controlled"
+        placeholder="Controlled"
+        value={value}
+        onChange={setValue}
+        data={dynamicData}
+        mt="md"
+        {...props}
+      />
+      <Group mt="md">
+        <Button variant="outline" onClick={() => setValue(null)}>
+          Set null
+        </Button>
+        <Button variant="outline" onClick={() => setValue('react')}>
+          Set value
+        </Button>
+      </Group>
+    </div>
+  );
+}
+
 storiesOf('@mantine/core/Select/stories', module)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -93,6 +133,16 @@ storiesOf('@mantine/core/Select/stories', module)
         data={data}
         style={{ marginTop: 20 }}
       />
+    </div>
+  ))
+  .add('Dynamic Labels', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DynamicLabels />
+    </div>
+  ))
+  .add('Dynamic Labels (searchable)', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DynamicLabels searchable />
     </div>
   ))
   .add('Disabled items', () => (
