@@ -28,7 +28,7 @@ export interface ProgressProps
   animated?: boolean;
 
   /** Whether to show an indeterminate progress bar */
-  isIndeterminate?: boolean
+  isIndeterminate?: boolean;
 
   /** Text to be placed inside the progress bar */
   label?: string;
@@ -37,12 +37,12 @@ export interface ProgressProps
   showLabel?: boolean;
 
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: MantineColor, label?: string }[];
+  sections?: { value: number; color: MantineColor; label?: string }[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: MantineColor, label?: string }[]
-): { value: number; color: MantineColor; accumulated: number, label?: string }[] {
+  sections: { value: number; color: MantineColor; label?: string }[]
+): { value: number; color: MantineColor; accumulated: number; label?: string }[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });
@@ -90,14 +90,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
           >
-            { showLabel ? (
-                <Text
-                  className={classes.label}
-                >
-                  { section.label }
-                </Text>
-              ) : ''
-            }
+            {showLabel ? <Text className={classes.label}>{section.label}</Text> : ''}
           </div>
         ))
       : null;
@@ -116,14 +109,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               width: `${isIndeterminate ? 100 : value}%`,
             }}
           >
-            { showLabel ? (
-                <Text
-                  className={classes.label}
-                >
-                  { label }
-                </Text>
-              ) : ''
-            }
+            {showLabel ? <Text className={classes.label}>{label}</Text> : ''}
           </div>
         )}
       </Box>
