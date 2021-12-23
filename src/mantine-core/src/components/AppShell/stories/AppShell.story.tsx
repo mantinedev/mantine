@@ -29,7 +29,7 @@ function NavbarToggle() {
       header={
         <Header height={50} padding="md">
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
