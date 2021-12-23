@@ -92,7 +92,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           >
             { showLabel ? (
                 <Text
-                  inline
                   className={classes.label}
                 >
                   { section.label }
@@ -119,7 +118,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           >
             { showLabel ? (
                 <Text
-                  inline
                   className={classes.label}
                 >
                   { label }
