@@ -40,7 +40,7 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
     }: GroupProps,
     ref
   ) => {
-    const count = Children.count(children);
+    const filteredChildren = (Children.toArray(children) as React.ReactElement[]).filter(Boolean);
     const { classes, cx } = useStyles(
       {
         align,
@@ -49,12 +49,12 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
         spacing,
         position,
         direction,
-        count,
+        count: filteredChildren.length,
       },
       { classNames, styles, name: 'Group' }
     );
 
-    const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
+    const items = filteredChildren.map((child) =>
       React.cloneElement(child, {
         className: cx(classes.child, child.props.className),
       })
