@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ForwardRefWithStaticComponents } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ForwardRefWithStaticComponents,
+  MantineNumberSize,
+} from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
@@ -15,6 +20,9 @@ export interface TimelineProps
 
   /** Active color from theme */
   color?: MantineColor;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** Bullet size in px */
   bulletSize?: number;
@@ -38,6 +46,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       style,
       active,
       color,
+      radius = 'xl',
       bulletSize = 20,
       align = 'left',
       lineWidth = 4,
@@ -56,6 +65,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
           styles,
           align,
           lineWidth,
+          radius: item.props.radius || radius,
           color: item.props.color || color,
           bulletSize: item.props.bulletSize || bulletSize,
           active: item.props.active || (hasActive && active >= index),

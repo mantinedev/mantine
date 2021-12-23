@@ -1,15 +1,20 @@
-import { createStyles, MantineColor } from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
 interface TimelineItemStyles {
   bulletSize: number;
   color: MantineColor;
+  radius: MantineNumberSize;
   align: 'right' | 'left';
   lineVariant: 'solid' | 'dashed' | 'dotted';
   lineWidth: number;
 }
 
 export default createStyles(
-  (theme, { bulletSize, color, align, lineVariant, lineWidth }: TimelineItemStyles, getRef) => {
+  (
+    theme,
+    { bulletSize, color, radius, align, lineVariant, lineWidth }: TimelineItemStyles,
+    getRef
+  ) => {
     const itemBulletWithChild = getRef('itemBulletWithChild');
     const itemBullet = getRef('itemBullet');
 
@@ -29,7 +34,7 @@ export default createStyles(
         boxSizing: 'border-box',
         width: bulletSize,
         height: bulletSize,
-        borderRadius: bulletSize,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         border: `${lineWidth}px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
