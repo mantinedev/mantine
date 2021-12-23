@@ -45,9 +45,6 @@ export interface TransferListProps
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
 
-  /** Whether to show the search input field */
-  showSearch?: boolean;
-
   /** Whether to hide the transfer all button */
   showTransferAll?: boolean;
 }
@@ -69,7 +66,6 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       initialSelection,
       listHeight = 150,
       listComponent = SelectScrollArea,
-      showSearch = true,
       showTransferAll = true,
       breakpoint,
       classNames,
@@ -126,7 +122,6 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           title={titles[0]}
           height={listHeight}
           listComponent={listComponent}
-          showSearch={showSearch}
           showTransferAll={showTransferAll}
           classNames={classNames}
           styles={styles}
@@ -145,7 +140,6 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           title={titles[1]}
           height={listHeight}
           listComponent={listComponent}
-          showSearch={showSearch}
           showTransferAll={showTransferAll}
           classNames={classNames}
           styles={styles}
