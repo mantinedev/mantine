@@ -80,7 +80,7 @@ export function SelectItems({
     );
   };
 
-  const createSeparator = (label?: string) => (
+  const constructSeparator = (label?: string) => (
     <div className={classes.separator} key={label}>
       <Divider classNames={{ label: classes.separatorLabel }} label={label} />
     </div>
@@ -93,7 +93,7 @@ export function SelectItems({
     else {
       if (groupName !== item.group) {
         groupName = item.group;
-        groupedItems.push(createSeparator(groupName));
+        groupedItems.push(constructSeparator(groupName));
       }
       groupedItems.push(constructItemComponent(item, index));
     }
@@ -130,7 +130,7 @@ export function SelectItems({
   }
 
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
-    unGroupedItems.unshift(createSeparator());
+    unGroupedItems.unshift(constructSeparator());
   }
 
   return groupedItems.length > 0 || unGroupedItems.length > 0 ? (
