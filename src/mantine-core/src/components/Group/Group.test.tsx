@@ -26,7 +26,7 @@ describe('@mantine/core/Group', () => {
     expect(Group.displayName).toEqual('@mantine/core/Group');
   });
 
-  it('remove undefined items', () => {
+  it('has no falsy children', () => {
     const children = [undefined, null, <div key="1" />];
     const wrapper = shallow(<Group>{children}</Group>);
     expect(wrapper.find('.mantine-Group-child').length).toBe(1);
