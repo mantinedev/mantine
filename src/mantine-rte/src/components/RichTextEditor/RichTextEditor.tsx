@@ -76,7 +76,7 @@ export interface RichTextEditorProps
   /** Make toolbar sticky */
   sticky?: boolean;
 
-  /** list of mentionGroupss divided into groups */
+  /** List of mentionGroups */
   mentionGroups?: MentionGroup[];
 
   /** Top toolbar position in any valid css value */
@@ -117,7 +117,6 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         },
         mention: {
           allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-          //spaceAfterInsert: false,
           mentionDenotationChars: mentionGroups.map(({ denotationChar }) => denotationChar),
           source: (searchTerm, renderList, mentionChar) => {
             const list = mentionGroups
