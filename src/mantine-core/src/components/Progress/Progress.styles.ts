@@ -37,6 +37,7 @@ export default createStyles(
       bottom: 0,
       left: 0,
       height: '100%',
+      textAlign: 'center',
       backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
       transition: `width 200ms ${theme.transitionTimingFunction}`,
       backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
@@ -58,6 +59,11 @@ export default createStyles(
       '@media (prefers-reduced-motion)': {
         transitionDuration: '0ms',
       },
+    },
+
+    label: {
+      height: '100%',
+      fontSize: theme.fn.size({ size, sizes }),
     },
   })
 );

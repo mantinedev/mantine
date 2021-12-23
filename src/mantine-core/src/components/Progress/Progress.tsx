@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Progress.styles';
+import { Text } from '../Text';
 
 export type ProgressStylesNames = ClassNames<typeof useStyles>;
 
@@ -29,13 +30,19 @@ export interface ProgressProps
   /** Whether to show an indeterminate progress bar */
   isIndeterminate?: boolean
 
+  /** Text to be placed inside the progress bar */
+  label?: string;
+
+  /** Whether to show the label, if present */
+  showLabel?: boolean;
+
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: MantineColor }[];
+  sections?: { value: number; color: MantineColor, label?: string }[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: MantineColor }[]
-): { value: number; color: MantineColor; accumulated: number }[] {
+  sections: { value: number; color: MantineColor, label?: string }[]
+): { value: number; color: MantineColor; accumulated: number, label?: string }[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });
@@ -57,6 +64,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       striped = false,
       animated = false,
       isIndeterminate = false,
+      showLabel = false,
+      label = '',
       'aria-label': ariaLabel,
       classNames,
       styles,
@@ -80,7 +89,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               left: `${section.accumulated}%`,
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
-          />
+          >
+            { showLabel ? (
+                <Text
+                  inline
+                  className={classes.label}
+                >
+                  { section.label }
+                </Text>
+              ) : ''
+            }
+          </div>
         ))
       : null;
 
@@ -97,6 +116,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             style={{
               width: `${isIndeterminate ? 100 : value}%`,
             }}
+          >
+            { showLabel ? (
+                <Text
+                  inline
+                  className={classes.label}
+                >
+                  { label }
+                </Text>
+              ) : ''
+            }
+          </div>
         )}
       </Box>
     );
