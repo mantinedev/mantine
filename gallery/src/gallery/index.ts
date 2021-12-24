@@ -86,4 +86,5 @@ export { FooterCentered } from './FooterCentered/FooterCentered';
 export { FooterSimple } from './FooterSimple/FooterSimple';
 
 // Headers
+export { HeaderSearch } from './HeaderSearch/HeaderSearch';
 export { HeaderSimple } from './HeaderSimple/HeaderSimple';
