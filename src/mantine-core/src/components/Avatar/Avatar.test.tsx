@@ -6,7 +6,6 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsRef,
   itSupportsMargins,
   itIsPolymorphic,
@@ -29,15 +28,6 @@ describe('@mantine/core/Avatar', () => {
   itSupportsSx(Avatar, defaultProps);
   itIsPolymorphic(Avatar, defaultProps);
   itSupportsRef(Avatar, defaultProps, HTMLDivElement);
-
-  itSupportsStylesApi(Avatar, defaultProps, ['root', 'image'], 'Avatar', 'with-image');
-  itSupportsStylesApi(
-    Avatar,
-    { src: null },
-    ['root', 'placeholder', 'placeholderIcon'],
-    'Avatar',
-    'with-placeholder'
-  );
 
   it('passes src and alt to image', () => {
     const element = shallow(<Avatar {...defaultProps} alt="test-alt" />)

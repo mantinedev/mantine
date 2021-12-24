@@ -5,13 +5,11 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsSx,
 } from '@mantine/tests';
 import { render } from '@testing-library/react';
 import { Stepper } from './Stepper';
-import { Stepper as StepperStylesApi } from './styles.api';
 
 const defaultProps = {
   active: 1,
@@ -37,7 +35,6 @@ describe('@mantine/core/Stepper', () => {
   itSupportsSx(Stepper, defaultProps);
   itSupportsRef(Stepper, defaultProps, HTMLDivElement);
   checkAccessibility([render(<Stepper {...defaultProps} />)]);
-  itSupportsStylesApi(Stepper, defaultProps, Object.keys(StepperStylesApi), 'Stepper');
 
   it('has correct displayName', () => {
     expect(Stepper.displayName).toEqual('@mantine/core/Stepper');

@@ -7,16 +7,11 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { Textarea } from './Textarea';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const getInput = (element: any, input: any) => element.find(Input).dive().find(input);
 
@@ -31,13 +26,6 @@ describe('@mantine/core/Textarea', () => {
   itSupportsClassName(Textarea, {});
   itSupportsMargins(Textarea, {});
   itSupportsRef(Textarea, {}, HTMLTextAreaElement);
-
-  itSupportsStylesApi(
-    Textarea,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'Textarea'
-  );
 
   it('renders correct component based on autosize prop', () => {
     const autosize = shallow(<Textarea autosize />);

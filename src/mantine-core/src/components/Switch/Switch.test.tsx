@@ -6,12 +6,10 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Switch } from './Switch';
-import { Switch as SwitchStylesApi } from './styles.api';
 
 const defaultProps = {
   checked: true,
@@ -31,7 +29,6 @@ describe('@mantine/core/Switch', () => {
   itSupportsMargins(Switch, defaultProps);
   itSupportsSx(Switch, defaultProps);
   itSupportsRef(Switch, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'Switch');
 
   it('has correct displayName', () => {
     expect(Switch.displayName).toEqual('@mantine/core/Switch');

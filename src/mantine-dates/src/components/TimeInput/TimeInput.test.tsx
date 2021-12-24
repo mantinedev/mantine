@@ -5,16 +5,13 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from './TimeField/TimeField';
 import { TimeInput } from './TimeInput';
-import { TimeInput as TimeInputStylesApi } from './styles.api';
 
 const defaultProps = {};
 
@@ -39,21 +36,6 @@ describe('@mantine/dates/TimeInput', () => {
       <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />
     ),
   ]);
-
-  itSupportsStylesApi(
-    TimeInput,
-    {
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-      disabled: true,
-    },
-    getInputStylesApiKeys(Object.keys(TimeInputStylesApi).filter((key) => key !== 'invalid')),
-    'TimeInput'
-  );
 
   it('passes correct __staticSelector to Image and InputWrapper components', () => {
     const element = shallow(<TimeInput />);

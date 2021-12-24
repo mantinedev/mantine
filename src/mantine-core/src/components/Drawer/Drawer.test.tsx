@@ -7,14 +7,12 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { GroupedTransition } from '../Transition';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
 import { CloseButton } from '../ActionIcon';
 import { MantineDrawer, Drawer } from './Drawer';
-import { Drawer as DrawerStylesApi } from './styles.api';
 
 const defaultProps = {
   title: 'Test',
@@ -42,7 +40,6 @@ describe('@mantine/core/Drawer', () => {
   itRendersChildren(MantineDrawer, defaultProps);
   itSupportsOthers(MantineDrawer, defaultProps);
   itSupportsStyle(MantineDrawer, defaultProps);
-  itSupportsStylesApi(MantineDrawer, defaultProps, Object.keys(DrawerStylesApi), 'Drawer');
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(

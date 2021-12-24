@@ -6,12 +6,10 @@ import {
   itSupportsRef,
   itSupportsClassName,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Checkbox } from './Checkbox';
-import { Checkbox as CheckboxStylesApi } from './styles.api';
 
 const defaultProps = {
   checked: true,
@@ -25,7 +23,6 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsClassName(Checkbox, defaultProps);
   itSupportsMargins(Checkbox, defaultProps);
   itSupportsRef(Checkbox, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(Checkbox, defaultProps, Object.keys(CheckboxStylesApi), 'Checkbox');
   checkAccessibility([
     render(<Checkbox aria-label="Checkbox without label" />),
     render(<Checkbox label="With label" />),

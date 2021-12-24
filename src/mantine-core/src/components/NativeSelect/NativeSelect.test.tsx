@@ -6,15 +6,11 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { NativeSelect } from './NativeSelect';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const TEST_DATA = [
   { label: 'test-data-1', value: 'test-data-1' },
@@ -37,21 +33,6 @@ describe('@mantine/core/NativeSelect', () => {
   itSupportsSx(NativeSelect, defaultProps);
   itSupportsMargins(NativeSelect, defaultProps);
   itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement);
-
-  itSupportsStylesApi(
-    NativeSelect,
-    {
-      data: [],
-      icon: '$',
-      rightSection: '$',
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'NativeSelect'
-  );
 
   it('passes required and id props to select element', () => {
     const element = shallow(<NativeSelect data={TEST_DATA} required id="test-id" />);

@@ -4,7 +4,6 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
@@ -22,7 +21,6 @@ describe('@mantine/core/SliderRoot', () => {
   itSupportsMargins(SliderRoot, defaultProps);
   itSupportsSx(SliderRoot, defaultProps);
   itSupportsRef(SliderRoot, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(SliderRoot, defaultProps, ['root'], 'Slider');
 
   it('has correct displayName', () => {
     expect(SliderRoot.displayName).toEqual('@mantine/core/SliderRoot');

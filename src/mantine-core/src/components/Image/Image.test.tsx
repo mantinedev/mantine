@@ -7,7 +7,6 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
@@ -31,20 +30,6 @@ describe('@mantine/core/Image', () => {
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);
   itSupportsRef(Image, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    Image,
-    { src: null, withPlaceholder: true },
-    ['root', 'placeholder'],
-    'Image',
-    'with placeholder'
-  );
-  itSupportsStylesApi(
-    Image,
-    { src: 'test.png', caption: 'test-caption' },
-    ['root', 'image', 'caption'],
-    'Image',
-    'with image'
-  );
 
   it('sets src, alt and object fit on img element', () => {
     const element = shallow(<Image src="test-src" alt="test-alt" fit="contain" />);

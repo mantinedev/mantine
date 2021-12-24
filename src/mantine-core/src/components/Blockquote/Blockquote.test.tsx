@@ -7,13 +7,11 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
-import { Blockquote as BlockquoteStylesApi } from './styles.api';
 
 const defaultProps = {};
 
@@ -25,12 +23,6 @@ describe('@mantine/core/Blockquote', () => {
   itSupportsMargins(Blockquote, defaultProps);
   itSupportsSx(Blockquote, defaultProps);
   itSupportsRef(Blockquote, defaultProps, HTMLQuoteElement);
-  itSupportsStylesApi(
-    Blockquote,
-    { cite: 'test-cite', children: 'test-quote' },
-    Object.keys(BlockquoteStylesApi),
-    'Blockquote'
-  );
 
   checkAccessibility([
     render(<Blockquote>test-quote</Blockquote>),

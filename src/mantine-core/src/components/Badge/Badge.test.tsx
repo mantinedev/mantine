@@ -7,7 +7,6 @@ import {
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itIsPolymorphic,
@@ -27,12 +26,6 @@ describe('@mantine/core/Badge', () => {
   itSupportsMargins(Badge, defaultProps);
   itIsPolymorphic(Badge, defaultProps);
   itSupportsRef(Badge, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    Badge,
-    { children: 'test', leftSection: 'l', rightSection: 'r' },
-    ['root', 'inner', 'leftSection', 'rightSection'],
-    'Badge'
-  );
 
   it('renders given left and right section', () => {
     const element = shallow(

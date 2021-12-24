@@ -4,12 +4,10 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   mockResizeObserver,
   itSupportsSx,
 } from '@mantine/tests';
 import { TransferList, TransferListProps } from './TransferList';
-import { TransferList as TransferListStylesApi } from './styles.api';
 
 const defaultProps: Partial<TransferListProps> = {
   onChange: () => {},
@@ -36,12 +34,6 @@ describe('@mantine/core/TransferList', () => {
   itSupportsStyle(TransferList, defaultProps);
   itSupportsSx(TransferList, defaultProps);
   itSupportsRef(TransferList, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    TransferList,
-    defaultProps,
-    Object.keys(TransferListStylesApi).filter((key) => key !== 'transferListItemHovered'),
-    'TransferList'
-  );
 
   it('has correct displayName', () => {
     expect(TransferList.displayName).toEqual('@mantine/core/TransferList');

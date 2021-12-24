@@ -2,13 +2,11 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Pagination } from './Pagination';
-import { Pagination as PaginationStylesApi } from './styles.api';
 
 const defaultProps = {
   total: 10,
@@ -21,7 +19,6 @@ describe('@mantine/core/Pagination', () => {
   itSupportsStyle(Pagination, defaultProps);
   itSupportsSx(Pagination, defaultProps);
   itSupportsRef(Pagination, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'Pagination');
 
   it('has correct displayName', () => {
     expect(Pagination.displayName).toEqual('@mantine/core/Pagination');

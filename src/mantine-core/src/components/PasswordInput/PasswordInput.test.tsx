@@ -6,17 +6,12 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { ActionIcon } from '../ActionIcon';
 import { PasswordInput } from './PasswordInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 // retrieves Input component from nested TextInput component
 const getInput = (element: any) => element.find(Input);
@@ -33,13 +28,6 @@ describe('@mantine/core/PasswordInput', () => {
   itSupportsMargins(PasswordInput, defaultProps);
   itSupportsSx(PasswordInput, defaultProps);
   itSupportsRef(PasswordInput, defaultProps, HTMLInputElement);
-
-  itSupportsStylesApi(
-    PasswordInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'PasswordInput'
-  );
 
   it('sets input type based on password visibility state', () => {
     const element = shallow(<PasswordInput />);

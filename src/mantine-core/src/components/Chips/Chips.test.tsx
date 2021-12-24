@@ -5,14 +5,12 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Chips } from './Chips';
 import { Chip } from './Chip/Chip';
-import { Chips as ChipsStylesApi } from './styles.api';
 
 const defaultProps = {
   value: '1',
@@ -31,12 +29,6 @@ describe('@mantine/core/Chips', () => {
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
   itSupportsSx(Chips, defaultProps);
-  itSupportsStylesApi(
-    Chips,
-    defaultProps,
-    Object.keys(ChipsStylesApi).filter((key) => key !== 'outline' && key !== 'filled'),
-    'Chips'
-  );
   checkAccessibility([render(<Chips {...defaultProps} />)]);
 
   it('sets chip type based on multiple prop', () => {

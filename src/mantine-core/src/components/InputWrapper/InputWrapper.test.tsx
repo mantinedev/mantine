@@ -5,13 +5,11 @@ import {
   itSupportsClassName,
   itRendersChildren,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from './InputWrapper';
-import { InputWrapper as InputWrapperStylesApi } from './styles.api';
 
 const defaultProps = {
   id: 'test-id',
@@ -30,20 +28,6 @@ describe('@mantine/core/InputWrapper', () => {
   itSupportsSx(InputWrapper, defaultProps);
   itSupportsRef(InputWrapper, defaultProps, HTMLDivElement);
   itRendersChildren(InputWrapper, { id: 'test-id' });
-  itSupportsStylesApi(
-    InputWrapper,
-    defaultProps,
-    Object.keys(InputWrapperStylesApi),
-    'InputWrapper'
-  );
-
-  itSupportsStylesApi(
-    InputWrapper,
-    { ...defaultProps, __staticSelector: 'test-input-wrapper' },
-    Object.keys(InputWrapperStylesApi),
-    'test-input-wrapper',
-    'static selector'
-  );
 
   it('renders correct error, description and label', () => {
     const withProps = shallow(

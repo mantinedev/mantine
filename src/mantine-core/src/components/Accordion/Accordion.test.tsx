@@ -7,14 +7,12 @@ import {
   itSupportsRef,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsSx,
 } from '@mantine/tests';
 import { Button } from '../Button';
 import { Accordion } from './Accordion';
 import { AccordionItem } from './AccordionItem/AccordionItem';
-import { Accordion as AccordionStylesApi } from './styles.api';
 
 const defaultProps = {
   initialItem: 1,
@@ -33,7 +31,6 @@ describe('@mantine/core/Accordion', () => {
   itSupportsMargins(Accordion, defaultProps);
   itSupportsRef(Accordion, defaultProps, HTMLDivElement);
   checkAccessibility([render(<Accordion {...defaultProps} />)]);
-  itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'Accordion');
 
   it('renders correct amount of items', () => {
     const element = shallow(<Accordion {...defaultProps} />);

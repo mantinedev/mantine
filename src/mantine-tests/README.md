@@ -4,7 +4,7 @@
 
 ## checkAccessibility
 
-checkAccessibility test checks markup of given component with axe. It allows to find ~30% of accessibility issues. It takes an array of mounted enzyme wrappers as single argument.
+checkAccessibility test checks markup of given component with axe. It allows to find ~30% of accessibility issues.
 
 ```tsx
 import { render } from '@testing-library/react';

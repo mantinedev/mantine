@@ -5,18 +5,13 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { ColorInput } from './ColorInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const defaultProps = {};
 
@@ -26,13 +21,6 @@ describe('@mantine/core/ColorInput', () => {
   itSupportsStyle(ColorInput, defaultProps);
   itSupportsSx(ColorInput, defaultProps);
   itSupportsRef(ColorInput, defaultProps, HTMLInputElement);
-
-  itSupportsStylesApi(
-    ColorInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'ColorInput'
-  );
 
   checkAccessibility([
     render(<ColorInput label="Color input" />),

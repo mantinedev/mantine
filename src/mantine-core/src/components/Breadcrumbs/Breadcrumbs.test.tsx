@@ -6,14 +6,12 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Text } from '../Text/Text';
 import { Breadcrumbs } from './Breadcrumbs';
-import { Breadcrumbs as BreadcrumbsStylesApi } from './styles.api';
 
 const defaultProps = {
   children: [
@@ -29,7 +27,6 @@ const defaultProps = {
 
 describe('@mantine/core/Breadcrumbs', () => {
   checkAccessibility([render(<Breadcrumbs {...defaultProps} />)]);
-  itSupportsStylesApi(Breadcrumbs, defaultProps, Object.keys(BreadcrumbsStylesApi), 'Breadcrumbs');
   itSupportsClassName(Breadcrumbs, defaultProps);
   itSupportsOthers(Breadcrumbs, defaultProps);
   itSupportsStyle(Breadcrumbs, defaultProps);

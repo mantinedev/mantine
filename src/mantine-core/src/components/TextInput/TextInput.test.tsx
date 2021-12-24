@@ -6,17 +6,12 @@ import {
   itSupportsRef,
   itSupportsStyle,
   checkAccessibility,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { TextInput } from './TextInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const defaultProps = {};
 
@@ -31,12 +26,6 @@ describe('@mantine/core/Input', () => {
   itSupportsMargins(TextInput, defaultProps);
   itSupportsRef(TextInput, defaultProps, HTMLInputElement);
   itSupportsStyle(TextInput, defaultProps);
-  itSupportsStylesApi(
-    TextInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'TextInput'
-  );
 
   it('passes wrapperProps to InputWrapper', () => {
     const element = shallow(<TextInput wrapperProps={{ 'aria-label': 'test' }} />);

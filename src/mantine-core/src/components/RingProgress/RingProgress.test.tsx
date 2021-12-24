@@ -3,7 +3,6 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsClassName,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
@@ -11,7 +10,6 @@ import {
 import { shallow } from 'enzyme';
 import { Curve } from './Curve/Curve';
 import { RingProgress } from './RingProgress';
-import { RingProgress as RingProgressStylesApi } from './styles.api';
 
 const defaultProps = {
   sections: [{ value: 50, color: 'blue' }],
@@ -25,12 +23,6 @@ describe('@mantine/core/RingProgress', () => {
   itSupportsOthers(RingProgress, defaultProps);
   itSupportsSx(RingProgress, defaultProps);
   itSupportsRef(RingProgress, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    RingProgress,
-    defaultProps,
-    Object.keys(RingProgressStylesApi),
-    'RingProgress'
-  );
 
   it('renders given amount of curves', () => {
     const element = shallow(

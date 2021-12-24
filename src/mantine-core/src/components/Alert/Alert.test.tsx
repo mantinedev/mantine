@@ -7,7 +7,6 @@ import {
   itSupportsOthers,
   itSupportsClassName,
   itRendersChildren,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
@@ -15,7 +14,6 @@ import {
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon';
 import { Alert } from './Alert';
-import { Alert as AlertStylesApi } from './styles.api';
 
 const defaultProps = {
   title: 'test-title',
@@ -25,7 +23,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Alert', () => {
-  itSupportsStylesApi(Alert, defaultProps, Object.keys(AlertStylesApi), 'Alert');
   itSupportsClassName(Alert, defaultProps);
   itSupportsOthers(Alert, defaultProps);
   itSupportsStyle(Alert, defaultProps);

@@ -7,15 +7,11 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
-import { NumberInput as NumberInputStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 0,
@@ -33,12 +29,6 @@ describe('@mantine/core/NumberInput', () => {
   itSupportsStyle(NumberInput, defaultProps);
   itSupportsSx(NumberInput, defaultProps);
   itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(
-    NumberInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys(NumberInputStylesApi)),
-    'NumberInput'
-  );
 
   it('has correct displayName', () => {
     expect(NumberInput.displayName).toEqual('@mantine/core/NumberInput');

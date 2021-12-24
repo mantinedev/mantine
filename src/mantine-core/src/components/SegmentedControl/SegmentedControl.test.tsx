@@ -7,12 +7,10 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   mockResizeObserver,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { SegmentedControl } from './SegmentedControl';
-import { SegmentedControl as SegmentedControlStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 'test-value-1',
@@ -34,12 +32,6 @@ describe('@mantine/core/SegmentedControl', () => {
   itSupportsMargins(SegmentedControl, defaultProps);
   itSupportsStyle(SegmentedControl, defaultProps);
   itSupportsSx(SegmentedControl, defaultProps);
-  itSupportsStylesApi(
-    SegmentedControl,
-    defaultProps,
-    Object.keys(SegmentedControlStylesApi),
-    'SegmentedControl'
-  );
 
   it('renders radio inputs and labels based on data and name prop', () => {
     const element = shallow(<SegmentedControl {...defaultProps} name="mnt" value="test-value-2" />);

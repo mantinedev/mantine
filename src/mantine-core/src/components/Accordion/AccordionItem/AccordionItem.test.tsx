@@ -7,11 +7,9 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsSx,
-  itSupportsStylesApi,
   checkAccessibility,
 } from '@mantine/tests';
 import { AccordionItem } from './AccordionItem';
-import { Accordion as AccordionStylesApi } from '../styles.api';
 
 const defaultProps = {
   label: 'test-label',
@@ -28,12 +26,6 @@ describe('@mantine/core/AccordionItem', () => {
   itSupportsSx(AccordionItem, defaultProps);
   itSupportsClassName(AccordionItem, defaultProps);
   checkAccessibility([render(<AccordionItem {...defaultProps} />)]);
-  itSupportsStylesApi(
-    AccordionItem,
-    defaultProps,
-    Object.keys(AccordionStylesApi).filter((key) => key !== 'item' && key !== 'itemOpened'),
-    'Accordion'
-  );
 
   it('renders given label', () => {
     const element = shallow(<AccordionItem {...defaultProps} label="test-label" />);

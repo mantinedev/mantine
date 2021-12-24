@@ -6,14 +6,12 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs } from './Tabs';
-import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
   <Tabs.Tab label="tab-1" key="tab-1" icon="test-icon">
@@ -44,7 +42,6 @@ describe('@mantine/core/Tabs', () => {
   itSupportsClassName(Tabs, defaultProps);
   itSupportsSx(Tabs, defaultProps);
   itSupportsRef(Tabs, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'Tabs');
 
   it('has correct displayName', () => {
     expect(Tabs.displayName).toEqual('@mantine/core/Tabs');

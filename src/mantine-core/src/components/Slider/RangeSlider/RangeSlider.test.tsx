@@ -5,14 +5,12 @@ import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsOthers,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
-import { RangeSlider as RangeSliderStylesApi } from '../styles.api';
 
 const defaultProps = {
   thumbFromLabel: 'test-label',
@@ -27,12 +25,6 @@ describe('@mantine/core/RangeSlider', () => {
   itSupportsMargins(RangeSlider, defaultProps);
   itSupportsSx(RangeSlider, defaultProps);
   itSupportsRef(RangeSlider, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    RangeSlider,
-    { label: 'test-label', labelAlwaysOn: true, marks: [{ value: 10, label: 'test' }], value: 50 },
-    Object.keys(RangeSliderStylesApi).filter((item) => item !== 'dragging'),
-    'Slider'
-  );
 
   it('provides name and value to hidden inputs', () => {
     const element = shallow(<RangeSlider name="test-input" value={[10, 20]} />);

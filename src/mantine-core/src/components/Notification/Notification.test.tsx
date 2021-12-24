@@ -8,7 +8,6 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itRendersChildren,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
@@ -16,7 +15,6 @@ import {
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { Loader } from '../Loader/Loader';
 import { Notification } from './Notification';
-import { Notification as NotificationStylesApi } from './styles.api';
 
 const defaultProps = {
   color: 'blue',
@@ -37,26 +35,6 @@ describe('@mantine/core/Notification', () => {
   itSupportsSx(Notification, defaultProps);
   itSupportsRef(Notification, defaultProps, HTMLDivElement);
   checkAccessibility([render(<Notification {...defaultProps} />)]);
-
-  itSupportsStylesApi(
-    Notification,
-    defaultProps,
-    Object.keys(NotificationStylesApi).filter((item) => item !== 'loader'),
-    'Notification',
-    'with-icon'
-  );
-
-  itSupportsStylesApi(
-    Notification,
-    { ...defaultProps, loading: true },
-    Object.keys(NotificationStylesApi).filter((item) => item !== 'icon'),
-    'Notification',
-    'with-loader'
-  );
-
-  it('has correct displayName', () => {
-    expect(Notification.displayName).toEqual('@mantine/core/Notification');
-  });
 
   it('does not render close button if disallowClose is true', () => {
     const allowClose = shallow(<Notification {...defaultProps} disallowClose={false} />);
@@ -103,5 +81,9 @@ describe('@mantine/core/Notification', () => {
     );
     expect(element.find(CloseButton).prop('data-test-prop')).toBe(true);
     expect(element.find(CloseButton).prop('style')).toEqual({ color: 'red' });
+  });
+
+  it('has correct displayName', () => {
+    expect(Notification.displayName).toEqual('@mantine/core/Notification');
   });
 });

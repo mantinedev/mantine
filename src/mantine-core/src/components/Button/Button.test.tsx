@@ -8,7 +8,6 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itIsPolymorphic,
   itSupportsSx,
@@ -27,13 +26,6 @@ describe('@mantine/core/Button', () => {
   itSupportsRef(Button, defaultProps, HTMLButtonElement);
   itSupportsClassName(Button, defaultProps);
   itSupportsMargins(Button, defaultProps);
-
-  itSupportsStylesApi(
-    Button,
-    { children: 'test', leftIcon: 'l', rightIcon: 'r' },
-    ['root', 'icon', 'leftIcon', 'rightIcon', 'inner', 'label'],
-    'Button'
-  );
 
   it('passes type to button component', () => {
     const element = shallow(<Button type="submit" />);
