@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { itSupportsStylesApi, itSupportsRef, checkAccessibility } from '@mantine/tests';
 import { Transition } from '../../Transition';
 import { Thumb } from './Thumb';
@@ -22,7 +23,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Thumb', () => {
-  checkAccessibility([mount(<Thumb {...defaultProps} />)]);
+  checkAccessibility([render(<Thumb {...defaultProps} />)]);
   itSupportsStylesApi(Thumb, defaultProps, ['label'], 'Slider');
   itSupportsRef(Thumb, defaultProps, HTMLDivElement);
 

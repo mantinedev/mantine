@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -23,7 +24,7 @@ const defaultProps = {
 
 describe('@mantine/core/Drawer', () => {
   checkAccessibility([
-    mount(
+    render(
       <MantineDrawer
         opened
         onClose={() => {}}

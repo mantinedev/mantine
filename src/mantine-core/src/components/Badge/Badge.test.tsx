@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -17,7 +18,7 @@ import { Badge } from './Badge';
 const defaultProps = {};
 
 describe('@mantine/core/Badge', () => {
-  checkAccessibility([mount(<Badge>this is badge</Badge>)]);
+  checkAccessibility([render(<Badge>this is badge</Badge>)]);
   itSupportsOthers(Badge, defaultProps);
   itSupportsClassName(Badge, defaultProps);
   itRendersChildren(Badge, defaultProps);

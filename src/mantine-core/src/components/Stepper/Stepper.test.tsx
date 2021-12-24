@@ -9,7 +9,7 @@ import {
   checkAccessibility,
   itSupportsSx,
 } from '@mantine/tests';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { Stepper } from './Stepper';
 import { Stepper as StepperStylesApi } from './styles.api';
 
@@ -36,7 +36,7 @@ describe('@mantine/core/Stepper', () => {
   itSupportsStyle(Stepper, defaultProps);
   itSupportsSx(Stepper, defaultProps);
   itSupportsRef(Stepper, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Stepper {...defaultProps} />)]);
+  checkAccessibility([render(<Stepper {...defaultProps} />)]);
   itSupportsStylesApi(Stepper, defaultProps, Object.keys(StepperStylesApi), 'Stepper');
 
   it('has correct displayName', () => {

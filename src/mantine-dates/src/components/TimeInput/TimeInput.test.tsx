@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsStyle,
@@ -25,7 +26,7 @@ describe('@mantine/dates/TimeInput', () => {
   itSupportsRef(TimeInput, defaultProps, HTMLInputElement);
 
   checkAccessibility([
-    mount(
+    render(
       <TimeInput
         label="test-label"
         withSeconds
@@ -34,7 +35,7 @@ describe('@mantine/dates/TimeInput', () => {
         secondsLabel="Seconds"
       />
     ),
-    mount(
+    render(
       <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />
     ),
   ]);

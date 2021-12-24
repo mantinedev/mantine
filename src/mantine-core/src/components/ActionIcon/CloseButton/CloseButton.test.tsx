@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsSx,
@@ -17,8 +18,8 @@ const defaultProps = {};
 
 describe('@mantine/core/CloseButton', () => {
   checkAccessibility([
-    mount(<CloseButton aria-label="test" />),
-    mount(<CloseButton title="test" />),
+    render(<CloseButton aria-label="test" />),
+    render(<CloseButton title="test" />),
   ]);
 
   itSupportsClassName(CloseButton, defaultProps);

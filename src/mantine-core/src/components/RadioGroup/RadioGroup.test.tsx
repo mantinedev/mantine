@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStylesApi,
@@ -24,7 +25,7 @@ describe('@mantine/core/RadioGroup', () => {
   itSupportsSx(RadioGroup, defaultProps);
 
   checkAccessibility([
-    mount(
+    render(
       <RadioGroup>
         <Radio value="test-1">test-1</Radio>
         <Radio value="test-2">test-2</Radio>

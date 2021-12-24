@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -27,8 +28,8 @@ const defaultProps = {
 
 describe('@mantine/core/NativeSelect', () => {
   checkAccessibility([
-    mount(<NativeSelect data={TEST_DATA} label="test-label" />),
-    mount(<NativeSelect data={TEST_DATA} aria-label="test-label" />),
+    render(<NativeSelect data={TEST_DATA} label="test-label" />),
+    render(<NativeSelect data={TEST_DATA} aria-label="test-label" />),
   ]);
 
   itSupportsClassName(NativeSelect, defaultProps);

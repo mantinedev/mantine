@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
@@ -34,8 +35,8 @@ describe('@mantine/core/ColorInput', () => {
   );
 
   checkAccessibility([
-    mount(<ColorInput label="Color input" />),
-    mount(<ColorInput aria-label="Color input" />),
+    render(<ColorInput label="Color input" />),
+    render(<ColorInput aria-label="Color input" />),
   ]);
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {

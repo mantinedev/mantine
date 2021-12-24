@@ -1,6 +1,7 @@
 import React from 'react';
 import { Cross1Icon } from '@modulz/radix-icons';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -35,7 +36,7 @@ describe('@mantine/core/Notification', () => {
   itRendersChildren(Notification, defaultProps);
   itSupportsSx(Notification, defaultProps);
   itSupportsRef(Notification, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Notification {...defaultProps} />)]);
+  checkAccessibility([render(<Notification {...defaultProps} />)]);
 
   itSupportsStylesApi(
     Notification,

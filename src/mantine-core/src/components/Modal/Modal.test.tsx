@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -26,7 +27,7 @@ describe('@mantine/core/Modal', () => {
   });
 
   checkAccessibility([
-    mount(
+    render(
       <MantineModal opened onClose={() => {}} closeButtonLabel="Close modal" title="test-title">
         test-modal
       </MantineModal>

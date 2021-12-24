@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -26,7 +27,7 @@ const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon
 const defaultProps = {};
 
 describe('@mantine/core/PasswordInput', () => {
-  checkAccessibility([mount(<PasswordInput label="test" />)]);
+  checkAccessibility([render(<PasswordInput label="test" />)]);
   itSupportsClassName(PasswordInput, defaultProps);
   itSupportsStyle(PasswordInput, defaultProps);
   itSupportsMargins(PasswordInput, defaultProps);

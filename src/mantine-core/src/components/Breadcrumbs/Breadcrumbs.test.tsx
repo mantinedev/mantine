@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -27,7 +28,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Breadcrumbs', () => {
-  checkAccessibility([mount(<Breadcrumbs {...defaultProps} />)]);
+  checkAccessibility([render(<Breadcrumbs {...defaultProps} />)]);
   itSupportsStylesApi(Breadcrumbs, defaultProps, Object.keys(BreadcrumbsStylesApi), 'Breadcrumbs');
   itSupportsClassName(Breadcrumbs, defaultProps);
   itSupportsOthers(Breadcrumbs, defaultProps);

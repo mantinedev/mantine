@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
@@ -20,7 +21,7 @@ describe('@mantine/dates/DatePicker', () => {
   itSupportsMargins(DatePicker, defaultProps);
   itSupportsSx(DatePicker, defaultProps);
   itSupportsRef(DatePicker, defaultProps, HTMLInputElement);
-  checkAccessibility([mount(<DatePicker label="date picker" />)]);
+  checkAccessibility([render(<DatePicker label="date picker" />)]);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DatePicker initiallyOpened />);

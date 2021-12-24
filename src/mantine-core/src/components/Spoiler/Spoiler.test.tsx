@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -18,7 +18,7 @@ const defaultProps = { maxHeight: 100, showLabel: 'show', hideLabel: 'hide' };
 
 describe('@mantine/core/Spoiler', () => {
   checkAccessibility([
-    mount(
+    render(
       <Spoiler {...defaultProps}>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa ea eum quis officia dolor
         esse inventore ex consequatur magni minima voluptatem, cumque, commodi, voluptatum mollitia

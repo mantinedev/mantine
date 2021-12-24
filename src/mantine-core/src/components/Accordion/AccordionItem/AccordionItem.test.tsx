@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsOthers,
   itRendersChildren,
@@ -26,7 +27,7 @@ describe('@mantine/core/AccordionItem', () => {
   itSupportsStyle(AccordionItem, defaultProps);
   itSupportsSx(AccordionItem, defaultProps);
   itSupportsClassName(AccordionItem, defaultProps);
-  checkAccessibility([mount(<AccordionItem {...defaultProps} />)]);
+  checkAccessibility([render(<AccordionItem {...defaultProps} />)]);
   itSupportsStylesApi(
     AccordionItem,
     defaultProps,

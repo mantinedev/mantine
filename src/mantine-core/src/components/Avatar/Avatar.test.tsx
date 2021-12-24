@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -17,8 +18,8 @@ const defaultProps = { src: './test-image' };
 
 describe('@mantine/core/Avatar', () => {
   checkAccessibility([
-    mount(<Avatar {...defaultProps} alt="It's me!" />),
-    mount(<Avatar src={null} alt="It's me!" />),
+    render(<Avatar {...defaultProps} alt="It's me!" />),
+    render(<Avatar src={null} alt="It's me!" />),
   ]);
 
   itSupportsClassName(Avatar, defaultProps);

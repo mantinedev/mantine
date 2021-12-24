@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -33,7 +34,10 @@ const activateTab = (element: any, position: number) =>
   element.find(TabControl).at(position).simulate('click');
 
 describe('@mantine/core/Tabs', () => {
-  checkAccessibility([mount(<Tabs>{content}</Tabs>), mount(<Tabs initialTab={2}>{content}</Tabs>)]);
+  checkAccessibility([
+    render(<Tabs>{content}</Tabs>),
+    render(<Tabs initialTab={2}>{content}</Tabs>),
+  ]);
   itSupportsOthers(Tabs, defaultProps);
   itSupportsStyle(Tabs, defaultProps);
   itSupportsMargins(Tabs, defaultProps);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -18,7 +18,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/AlphaSlider', () => {
-  checkAccessibility([mount(<AlphaSlider {...defaultProps} aria-label="test-label" />)]);
+  checkAccessibility([render(<AlphaSlider {...defaultProps} aria-label="test-label" />)]);
   itSupportsClassName(AlphaSlider, defaultProps);
   itSupportsOthers(AlphaSlider, defaultProps);
   itSupportsStyle(AlphaSlider, defaultProps);

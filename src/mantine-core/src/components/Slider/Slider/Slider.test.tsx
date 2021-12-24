@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsStyle,
   itSupportsClassName,
@@ -18,7 +19,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Slider', () => {
-  checkAccessibility([mount(<Slider {...defaultProps} />)]);
+  checkAccessibility([render(<Slider {...defaultProps} />)]);
   itSupportsStyle(Slider, defaultProps);
   itSupportsMargins(Slider, defaultProps);
   itSupportsClassName(Slider, defaultProps);

@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -18,7 +19,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/HueSlider', () => {
-  checkAccessibility([mount(<HueSlider {...defaultProps} aria-label="test-label" />)]);
+  checkAccessibility([render(<HueSlider {...defaultProps} aria-label="test-label" />)]);
   itSupportsClassName(HueSlider, defaultProps);
   itSupportsOthers(HueSlider, defaultProps);
   itSupportsStyle(HueSlider, defaultProps);

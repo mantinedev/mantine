@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsOthers,
@@ -36,7 +37,7 @@ describe('@mantine/core/Chips', () => {
     Object.keys(ChipsStylesApi).filter((key) => key !== 'outline' && key !== 'filled'),
     'Chips'
   );
-  checkAccessibility([mount(<Chips {...defaultProps} />)]);
+  checkAccessibility([render(<Chips {...defaultProps} />)]);
 
   it('sets chip type based on multiple prop', () => {
     const multiple = shallow(<Chips multiple {...defaultProps} value={['1']} />);

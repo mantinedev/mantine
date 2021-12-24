@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -23,7 +24,7 @@ const defaultProps = {
 
 describe('@mantine/core/Menu', () => {
   checkAccessibility([
-    mount(
+    render(
       <Menu menuButtonLabel="test menu">
         <Menu.Item>test-1</Menu.Item>
         <Menu.Item>test-2</Menu.Item>

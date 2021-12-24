@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -19,7 +20,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Burger', () => {
-  checkAccessibility([mount(<Burger {...defaultProps} />)]);
+  checkAccessibility([render(<Burger {...defaultProps} />)]);
   itSupportsOthers(Burger, defaultProps);
   itSupportsClassName(Burger, defaultProps);
   itSupportsStyle(Burger, defaultProps);

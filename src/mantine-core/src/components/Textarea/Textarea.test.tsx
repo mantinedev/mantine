@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {
   checkAccessibility,
@@ -21,9 +22,9 @@ const getInput = (element: any, input: any) => element.find(Input).dive().find(i
 
 describe('@mantine/core/Textarea', () => {
   checkAccessibility([
-    mount(<Textarea label="test-label" />),
-    mount(<Textarea aria-label="test-label" />),
-    mount(<Textarea label="test-label" autosize />),
+    render(<Textarea label="test-label" />),
+    render(<Textarea aria-label="test-label" />),
+    render(<Textarea label="test-label" autosize />),
   ]);
 
   itSupportsStyle(Textarea, {});

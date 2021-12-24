@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -34,12 +35,12 @@ describe('@mantine/core/Alert', () => {
   itSupportsRef(Alert, {}, HTMLDivElement);
 
   checkAccessibility([
-    mount(
+    render(
       <Alert title="Error happened" color="red">
         <Text>Something bad happened</Text>
       </Alert>
     ),
-    mount(
+    render(
       <Alert color="red">
         <Text>Something bad happened</Text>
       </Alert>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import {
   checkAccessibility,
@@ -23,8 +24,8 @@ const defaultProps = {
 
 describe('@mantine/core/NumberInput', () => {
   checkAccessibility([
-    mount(<NumberInput {...defaultProps} label="test" />),
-    mount(<NumberInput {...defaultProps} aria-label="test" />),
+    render(<NumberInput {...defaultProps} label="test" />),
+    render(<NumberInput {...defaultProps} aria-label="test" />),
   ]);
 
   itSupportsClassName(NumberInput, defaultProps);

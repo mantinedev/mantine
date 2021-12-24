@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
@@ -21,8 +22,8 @@ const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
   checkAccessibility([
-    mount(<TextInput label="test-input" />),
-    mount(<TextInput aria-label="test-input" />),
+    render(<TextInput label="test-input" />),
+    render(<TextInput aria-label="test-input" />),
   ]);
 
   itSupportsClassName(TextInput, defaultProps);

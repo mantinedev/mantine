@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsMargins,
@@ -32,7 +32,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsSx(Accordion, defaultProps);
   itSupportsMargins(Accordion, defaultProps);
   itSupportsRef(Accordion, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Accordion {...defaultProps} />)]);
+  checkAccessibility([render(<Accordion {...defaultProps} />)]);
   itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'Accordion');
 
   it('renders correct amount of items', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -22,7 +23,7 @@ describe('@mantine/core/Progress', () => {
   itSupportsOthers(Progress, defaultProps);
   itSupportsSx(Progress, defaultProps);
   itSupportsRef(Progress, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
+  checkAccessibility([render(<Progress value={80} aria-label="test-progress" />)]);
   itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'Progress');
 
   it('has correct displayName', () => {
