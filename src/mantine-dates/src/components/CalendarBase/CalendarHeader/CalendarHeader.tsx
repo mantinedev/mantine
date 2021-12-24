@@ -12,7 +12,7 @@ import useStyles from './CalendarHeader.styles';
 
 export type CalendarHeaderStylesNames = ClassNames<typeof useStyles>;
 
-interface CalendarHeaderProps
+export interface CalendarHeaderProps
   extends DefaultProps<CalendarHeaderStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   hasPrevious: boolean;
@@ -79,7 +79,7 @@ export function CalendarHeader({
         onClick={onNextLevel}
         tabIndex={preventLevelFocus ? -1 : 0}
       >
-        <div>{label}</div>
+        {label}
         {!nextLevelDisabled && (
           <SelectChevronIcon
             error={false}
