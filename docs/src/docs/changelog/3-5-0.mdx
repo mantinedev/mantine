@@ -43,7 +43,8 @@ import * as PrismDemos from '@demos/prism';
 
 ## Other changes
 
-- [Alert](https://mantine.dev/core/alert/) component now supports `radius` prop
+- [Skeleton](https://mantine.dev/core/skeleton/) component now supports animations disabling
+- [Alert](https://mantine.dev/core/alert/), [Tooltip](https://mantine.dev/core/tooltip) and [Notification](https://mantine.dev/core/notification/) components now support `radius` prop
 - [Center](https://mantine.dev/core/center/) component is now polymorphic, it supports `component` prop
 - [Grid](https://mantine.dev/core/grid/) component now exposes `Col` component as `Grid.Col`
 - `@mantine/core` package now exports `MantineProviderProps` type
@@ -51,6 +52,7 @@ import * as PrismDemos from '@demos/prism';
 
 ## 3.4.0 - 3.5.0 bug fixes
 
+- Fix incorrect max-width calculated for [Group](https://mantine.dev/core/group/) with falsy children
 - Fix incorrect animations applied to [Collapse](https://mantine.dev/core/collapse/) component with `animateOpacity` prop set to false
 - Fix [HueSlider and AlphaSlider](https://mantine.dev/core/color-picker/) components breaking when used without `size` prop
 - Fix `size` prop not applied to [Divider](https://mantine.dev/core/divider/) with label
