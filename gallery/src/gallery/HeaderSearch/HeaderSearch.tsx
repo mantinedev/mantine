@@ -8,6 +8,7 @@ const useStyles = createStyles((theme) => ({
   header: {
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
+    marginBottom: theme.spacing.xl * 2,
   },
 
   inner: {

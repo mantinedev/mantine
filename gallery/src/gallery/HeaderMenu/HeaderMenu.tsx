@@ -5,16 +5,17 @@ import { ChevronDownIcon } from '@modulz/radix-icons';
 import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
+  header: {
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
+    marginBottom: theme.spacing.xl * 2,
+  },
+
   inner: {
     height: 56,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  header: {
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
   },
 
   links: {
