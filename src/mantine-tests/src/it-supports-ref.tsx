@@ -10,6 +10,6 @@ export function itSupportsRef(
   it('supports ref', async () => {
     const ref = React.createRef<typeof refType>();
     render(<Component {...requiredProps} {...{ [refProp]: ref }} />);
-    expect(ref.current?.constructor).toBe(refType);
+    expect(ref.current).toBeInstanceOf(refType);
   });
 }
