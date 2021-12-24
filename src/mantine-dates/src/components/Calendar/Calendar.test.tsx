@@ -1,24 +1,12 @@
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Calendar } from './Calendar';
+import { itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
+import { Calendar, CalendarProps } from './Calendar';
 
-const defaultProps = { month: new Date(), value: new Date() };
+const defaultProps: CalendarProps = {
+  month: new Date(),
+  value: new Date(),
+};
 
 describe('@mantine/dates/Calendar', () => {
-  itSupportsClassName(Calendar, defaultProps);
-  itSupportsOthers(Calendar, defaultProps);
-  itSupportsMargins(Calendar, defaultProps);
-  itSupportsStyle(Calendar, defaultProps);
-  itSupportsSx(Calendar, defaultProps);
+  itSupportsSystemProps(Calendar, defaultProps, '@mantine/dates/Calendar');
   itSupportsRef(Calendar, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Calendar.displayName).toEqual('@mantine/dates/Calendar');
-  });
 });
