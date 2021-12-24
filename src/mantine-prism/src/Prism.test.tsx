@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { Language } from 'prism-react-renderer';
 import {
   itSupportsClassName,
@@ -36,20 +36,22 @@ describe('@mantine/prism/Prism', () => {
   itSupportsRef(Prism, defaultProps, HTMLDivElement);
 
   it('renders tooltip based on noCopy prop', () => {
-    const withCopy = shallow(<Prism {...defaultProps} noCopy={false} />);
-    const withoutCopy = shallow(<Prism {...defaultProps} noCopy />);
+    const { container: withCopy } = render(<Prism {...defaultProps} noCopy={false} />);
+    const { container: withoutCopy } = render(<Prism {...defaultProps} noCopy />);
 
-    expect(withCopy.render().find('.mantine-Prism-copy')).toHaveLength(1);
-    expect(withoutCopy.render().find('.mantine-Prism-copy')).toHaveLength(0);
+    expect(withCopy.querySelectorAll('.mantine-Prism-copy')).toHaveLength(1);
+    expect(withoutCopy.querySelectorAll('.mantine-Prism-copy')).toHaveLength(0);
   });
 
   it('renders line numbers based on withLineNumbers prop', () => {
-    const withLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers />);
-    const withoutLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers={false} />);
-    expect(withLineNumbers.render().find('.mantine-Prism-lineNumber')).toHaveLength(
+    const { container: withLineNumbers } = render(<Prism {...defaultProps} withLineNumbers />);
+    const { container: withoutLineNumbers } = render(
+      <Prism {...defaultProps} withLineNumbers={false} />
+    );
+    expect(withLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(
       defaultProps.children.split('\n').length
     );
-    expect(withoutLineNumbers.render().find('.mantine-Prism-lineNumber')).toHaveLength(0);
+    expect(withoutLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(0);
   });
 
   it('exposes PrismTabs and PrismTab components', () => {
