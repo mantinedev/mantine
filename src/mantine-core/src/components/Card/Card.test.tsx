@@ -18,7 +18,7 @@ const defaultProps = {};
 
 describe('@mantine/core/Card', () => {
   itSupportsOthers(Card, defaultProps);
-  itSupportsSx(Card, defaultProps, { dive: 1 });
+  itSupportsSx(Card, defaultProps);
   itSupportsClassName(Card, defaultProps);
   itSupportsRef(Card, defaultProps, HTMLDivElement);
   itRendersChildren(Card, defaultProps);

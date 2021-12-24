@@ -17,7 +17,7 @@ describe('@mantine/core/Step', () => {
   itSupportsClassName(Step, defaultProps);
   itSupportsOthers(Step, defaultProps);
   itSupportsStyle(Step, defaultProps);
-  itSupportsSx(Step, defaultProps, { dive: 1 });
+  itSupportsSx(Step, defaultProps);
   itSupportsRef(Step, defaultProps, HTMLButtonElement);
   checkAccessibility([
     mount(<Step aria-label="Test" />),

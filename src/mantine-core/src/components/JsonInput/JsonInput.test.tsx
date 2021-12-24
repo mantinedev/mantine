@@ -18,7 +18,7 @@ describe('@mantine/core/JsonInput', () => {
   itSupportsStyle(JsonInput, defaultProps);
   itSupportsClassName(JsonInput, defaultProps);
   itSupportsMargins(JsonInput, defaultProps);
-  itSupportsSx(JsonInput, defaultProps, { dive: 2 });
+  itSupportsSx(JsonInput, defaultProps);
   itSupportsRef(JsonInput, defaultProps, HTMLTextAreaElement);
   itSupportsStylesApi(
     JsonInput,

@@ -18,7 +18,7 @@ describe('@mantine/dates/DatePicker', () => {
   itSupportsClassName(DatePicker, defaultProps);
   itSupportsStyle(DatePicker, defaultProps);
   itSupportsMargins(DatePicker, defaultProps);
-  itSupportsSx(DatePicker, defaultProps, { dive: 2 });
+  itSupportsSx(DatePicker, defaultProps);
   itSupportsRef(DatePicker, defaultProps, HTMLInputElement);
   checkAccessibility([mount(<DatePicker label="date picker" />)]);
 

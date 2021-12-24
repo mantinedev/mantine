@@ -30,7 +30,7 @@ describe('@mantine/core/PasswordInput', () => {
   itSupportsClassName(PasswordInput, defaultProps);
   itSupportsStyle(PasswordInput, defaultProps);
   itSupportsMargins(PasswordInput, defaultProps);
-  itSupportsSx(PasswordInput, defaultProps, { dive: 1 });
+  itSupportsSx(PasswordInput, defaultProps);
   itSupportsRef(PasswordInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(

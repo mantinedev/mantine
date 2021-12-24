@@ -23,7 +23,7 @@ describe('@mantine/core/CloseButton', () => {
 
   itSupportsClassName(CloseButton, defaultProps);
   itSupportsOthers(CloseButton, defaultProps);
-  itSupportsSx(CloseButton, defaultProps, { dive: 1 });
+  itSupportsSx(CloseButton, defaultProps);
   itSupportsStyle(CloseButton, defaultProps);
   itSupportsMargins(CloseButton, defaultProps);
   itSupportsRef(CloseButton, defaultProps, HTMLButtonElement);

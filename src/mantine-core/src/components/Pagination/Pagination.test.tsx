@@ -19,7 +19,7 @@ describe('@mantine/core/Pagination', () => {
   itSupportsMargins(Pagination, defaultProps);
   itSupportsOthers(Pagination, defaultProps);
   itSupportsStyle(Pagination, defaultProps);
-  itSupportsSx(Pagination, defaultProps, { dive: 1 });
+  itSupportsSx(Pagination, defaultProps);
   itSupportsRef(Pagination, defaultProps, HTMLDivElement);
   itSupportsStylesApi(Pagination, defaultProps, Object.keys(PaginationStylesApi), 'Pagination');
 

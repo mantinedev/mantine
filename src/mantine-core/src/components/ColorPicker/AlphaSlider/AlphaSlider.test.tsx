@@ -22,7 +22,7 @@ describe('@mantine/core/AlphaSlider', () => {
   itSupportsClassName(AlphaSlider, defaultProps);
   itSupportsOthers(AlphaSlider, defaultProps);
   itSupportsStyle(AlphaSlider, defaultProps);
-  itSupportsSx(AlphaSlider, defaultProps, { dive: 1 });
+  itSupportsSx(AlphaSlider, defaultProps);
   itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

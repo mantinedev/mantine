@@ -23,7 +23,7 @@ describe('@mantine/core/ColorInput', () => {
   itSupportsClassName(ColorInput, defaultProps);
   itSupportsMargins(ColorInput, defaultProps);
   itSupportsStyle(ColorInput, defaultProps);
-  itSupportsSx(ColorInput, defaultProps, { dive: 1 });
+  itSupportsSx(ColorInput, defaultProps);
   itSupportsRef(ColorInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(

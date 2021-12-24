@@ -21,7 +21,7 @@ describe('@mantine/dates/TimeInput', () => {
   itSupportsClassName(TimeInput, defaultProps);
   itSupportsStyle(TimeInput, defaultProps);
   itSupportsMargins(TimeInput, defaultProps);
-  itSupportsSx(TimeInput, defaultProps, { dive: 1 });
+  itSupportsSx(TimeInput, defaultProps);
   itSupportsRef(TimeInput, defaultProps, HTMLInputElement);
 
   checkAccessibility([

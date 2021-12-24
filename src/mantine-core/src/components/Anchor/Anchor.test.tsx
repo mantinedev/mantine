@@ -20,7 +20,7 @@ describe('@mantine/core/Anchor', () => {
   itSupportsOthers(Anchor, defaultProps);
   itSupportsStyle(Anchor, defaultProps);
   itSupportsMargins(Anchor, defaultProps);
-  itSupportsSx(Anchor, defaultProps, { dive: 1 });
+  itSupportsSx(Anchor, defaultProps);
   itIsPolymorphic(Anchor, defaultProps);
   itSupportsRef(Anchor, defaultProps, HTMLAnchorElement);
 

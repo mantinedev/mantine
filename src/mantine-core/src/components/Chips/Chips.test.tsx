@@ -29,7 +29,7 @@ describe('@mantine/core/Chips', () => {
   itSupportsMargins(Chips, defaultProps);
   itSupportsOthers(Chips, defaultProps);
   itSupportsStyle(Chips, defaultProps);
-  itSupportsSx(Chips, defaultProps, { dive: 1 });
+  itSupportsSx(Chips, defaultProps);
   itSupportsStylesApi(
     Chips,
     defaultProps,

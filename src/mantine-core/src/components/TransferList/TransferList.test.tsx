@@ -34,7 +34,7 @@ describe('@mantine/core/TransferList', () => {
   itSupportsMargins(TransferList, defaultProps);
   itSupportsOthers(TransferList, defaultProps);
   itSupportsStyle(TransferList, defaultProps);
-  itSupportsSx(TransferList, defaultProps, { dive: 1 });
+  itSupportsSx(TransferList, defaultProps);
   itSupportsRef(TransferList, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     TransferList,

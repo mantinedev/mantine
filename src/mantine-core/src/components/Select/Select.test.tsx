@@ -33,7 +33,7 @@ describe('@mantine/core/Select', () => {
   itSupportsClassName(Select, defaultProps);
   itSupportsStyle(Select, defaultProps);
   itSupportsMargins(Select, defaultProps);
-  itSupportsSx(Select, defaultProps, { dive: 1 });
+  itSupportsSx(Select, defaultProps);
   itSupportsRef(Select, defaultProps, HTMLInputElement);
 
   it('renders correct amount of items based on data prop', async () => {

@@ -18,7 +18,7 @@ describe('@mantine/core/Highlight', () => {
   itSupportsClassName(Highlight, defaultProps);
   itSupportsOthers(Highlight, defaultProps);
   itSupportsMargins(Highlight, defaultProps);
-  itSupportsSx(Highlight, defaultProps, { dive: 1 });
+  itSupportsSx(Highlight, defaultProps);
   itIsPolymorphic(Highlight, defaultProps);
   itSupportsRef(Highlight, defaultProps, HTMLDivElement);
 

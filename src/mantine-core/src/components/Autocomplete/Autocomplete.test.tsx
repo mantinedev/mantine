@@ -24,7 +24,7 @@ const data = Array(50)
 describe('@mantine/core/Autocomplete', () => {
   itSupportsClassName(Autocomplete, defaultProps);
   itSupportsStyle(Autocomplete, defaultProps);
-  itSupportsSx(Autocomplete, defaultProps, { dive: 1 });
+  itSupportsSx(Autocomplete, defaultProps);
   itSupportsMargins(Autocomplete, defaultProps);
   itSupportsRef(Autocomplete, defaultProps, HTMLInputElement);
 

@@ -26,7 +26,7 @@ describe('@mantine/core/Input', () => {
   ]);
 
   itSupportsClassName(TextInput, defaultProps);
-  itSupportsSx(TextInput, defaultProps, { dive: 1 });
+  itSupportsSx(TextInput, defaultProps);
   itSupportsMargins(TextInput, defaultProps);
   itSupportsRef(TextInput, defaultProps, HTMLInputElement);
   itSupportsStyle(TextInput, defaultProps);

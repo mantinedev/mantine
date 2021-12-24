@@ -22,7 +22,7 @@ describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsClassName(TimeRangeInput, defaultProps);
   itSupportsStyle(TimeRangeInput, defaultProps);
   itSupportsMargins(TimeRangeInput, defaultProps);
-  itSupportsSx(TimeRangeInput, defaultProps, { dive: 1 });
+  itSupportsSx(TimeRangeInput, defaultProps);
   itSupportsRef(TimeRangeInput, defaultProps, HTMLInputElement);
 
   itSupportsStylesApi(

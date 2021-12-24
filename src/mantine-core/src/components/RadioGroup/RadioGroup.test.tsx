@@ -21,7 +21,7 @@ const defaultProps = {
 describe('@mantine/core/RadioGroup', () => {
   itSupportsRef(RadioGroup, defaultProps, HTMLDivElement);
   itSupportsMargins(RadioGroup, defaultProps);
-  itSupportsSx(RadioGroup, defaultProps, { dive: 1 });
+  itSupportsSx(RadioGroup, defaultProps);
 
   checkAccessibility([
     mount(

@@ -33,7 +33,7 @@ describe('@mantine/core/NativeSelect', () => {
 
   itSupportsClassName(NativeSelect, defaultProps);
   itSupportsStyle(NativeSelect, defaultProps);
-  itSupportsSx(NativeSelect, defaultProps, { dive: 1 });
+  itSupportsSx(NativeSelect, defaultProps);
   itSupportsMargins(NativeSelect, defaultProps);
   itSupportsRef(NativeSelect, defaultProps, HTMLSelectElement);
 

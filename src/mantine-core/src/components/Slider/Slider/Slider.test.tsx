@@ -23,7 +23,7 @@ describe('@mantine/core/Slider', () => {
   itSupportsMargins(Slider, defaultProps);
   itSupportsClassName(Slider, defaultProps);
   itSupportsOthers(Slider, defaultProps);
-  itSupportsSx(Slider, defaultProps, { dive: 1 });
+  itSupportsSx(Slider, defaultProps);
   itSupportsRef(Slider, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     Slider,

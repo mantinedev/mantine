@@ -78,7 +78,7 @@ describe('@mantine/prism/Prism.Tabs', () => {
   itSupportsMargins(Prism.Tabs, defaultTabsProps);
   itSupportsOthers(Prism.Tabs, defaultTabsProps);
   itSupportsStyle(Prism.Tabs, defaultTabsProps);
-  itSupportsSx(Prism.Tabs, defaultTabsProps, { dive: 1 });
+  itSupportsSx(Prism.Tabs, defaultTabsProps);
   itSupportsRef(Prism.Tabs, defaultTabsProps, HTMLDivElement);
 
   it('has correct displayName', () => {
