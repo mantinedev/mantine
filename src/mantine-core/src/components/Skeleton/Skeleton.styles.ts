@@ -5,7 +5,7 @@ interface SkeletonStylesProps {
   width: number | string;
   circle: boolean;
   radius: MantineNumberSize;
-  showAnimation: boolean;
+  animate: boolean;
 }
 
 export const fade = keyframes({
@@ -14,7 +14,7 @@ export const fade = keyframes({
 });
 
 export default createStyles(
-  (theme, { height, width, radius, circle, showAnimation }: SkeletonStylesProps) => ({
+  (theme, { height, width, radius, circle, animate }: SkeletonStylesProps) => ({
     root: {
       height,
       width: circle ? height : width,
@@ -43,7 +43,7 @@ export default createStyles(
         bottom: 0,
         left: 0,
         right: 0,
-        animation: showAnimation ? `${fade} 1500ms linear infinite` : 'none',
+        animation: animate ? `${fade} 1500ms linear infinite` : 'none',
         zIndex: 11,
       },
     },

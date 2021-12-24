@@ -20,7 +20,7 @@ export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithout
   radius?: MantineNumberSize;
 
   /** Whether to show the animation effect */
-  showAnimation?: boolean;
+  animate?: boolean;
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
@@ -29,7 +29,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       height = 'auto',
       width = '100%',
       visible = true,
-      showAnimation = true,
+      animate = true,
       className,
       circle,
       radius = 'sm',
@@ -40,7 +40,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { height, width, circle, radius, showAnimation },
+      { height, width, circle, radius, animate },
       { classNames, styles, name: 'Skeleton' }
     );
 
