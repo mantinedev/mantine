@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   transform: {
     // https://github.com/aelbore/esbuild-jest/issues/21
     '^.+\\.tsx?$': '@sucrase/jest-plugin',

@@ -1,16 +1,15 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Switch } from './Switch';
-import { Switch as SwitchStylesApi } from './styles.api';
 
 const defaultProps = {
   checked: true,
@@ -20,9 +19,9 @@ const defaultProps = {
 
 describe('@mantine/core/Switch', () => {
   checkAccessibility([
-    mount(<Switch aria-label="Switch without label" />),
-    mount(<Switch label="With label" />),
-    mount(<Switch id="with-id" label="With id" />),
+    render(<Switch aria-label="Switch without label" />),
+    render(<Switch label="With label" />),
+    render(<Switch id="with-id" label="With id" />),
   ]);
 
   itSupportsClassName(Switch, defaultProps);
@@ -30,7 +29,6 @@ describe('@mantine/core/Switch', () => {
   itSupportsMargins(Switch, defaultProps);
   itSupportsSx(Switch, defaultProps);
   itSupportsRef(Switch, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(Switch, defaultProps, Object.keys(SwitchStylesApi), 'Switch');
 
   it('has correct displayName', () => {
     expect(Switch.displayName).toEqual('@mantine/core/Switch');

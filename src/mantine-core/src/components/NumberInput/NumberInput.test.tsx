@@ -1,20 +1,17 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { TextInput } from '../TextInput/TextInput';
 import { NumberInput, NumberInputHandlers } from './NumberInput';
-import { NumberInput as NumberInputStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 0,
@@ -22,28 +19,16 @@ const defaultProps = {
 };
 
 describe('@mantine/core/NumberInput', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
-    mount(<NumberInput {...defaultProps} label="test" />),
-    mount(<NumberInput {...defaultProps} aria-label="test" />),
+    render(<NumberInput {...defaultProps} label="test" />),
+    render(<NumberInput {...defaultProps} aria-label="test" />),
   ]);
 
   itSupportsClassName(NumberInput, defaultProps);
   itSupportsMargins(NumberInput, defaultProps);
   itSupportsStyle(NumberInput, defaultProps);
-  itSupportsSx(NumberInput, defaultProps, { dive: 2 });
+  itSupportsSx(NumberInput, defaultProps);
   itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(
-    NumberInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys(NumberInputStylesApi)),
-    'NumberInput'
-  );
 
   it('has correct displayName', () => {
     expect(NumberInput.displayName).toEqual('@mantine/core/NumberInput');

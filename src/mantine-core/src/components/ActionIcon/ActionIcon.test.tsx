@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
@@ -22,12 +23,12 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsSx(ActionIcon, defaultProps);
   itSupportsStyle(ActionIcon, defaultProps);
   itSupportsMargins(ActionIcon, defaultProps);
-  itIsPolymorphic(ActionIcon, defaultProps, { dive: 1 });
+  itIsPolymorphic(ActionIcon, defaultProps);
   itSupportsRef(ActionIcon, defaultProps, HTMLButtonElement);
   itRendersChildren(ActionIcon, defaultProps);
   checkAccessibility([
-    mount(<ActionIcon {...defaultProps} title="Action icon" />),
-    mount(<ActionIcon {...defaultProps} aria-label="Action icon" />),
+    render(<ActionIcon {...defaultProps} title="Action icon" />),
+    render(<ActionIcon {...defaultProps} aria-label="Action icon" />),
   ]);
 
   it('replaces icon with Loader when loading is set to true', () => {

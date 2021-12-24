@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsSx,
@@ -13,19 +14,21 @@ import {
 import { CloseButton } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
 
+const defaultProps = {};
+
 describe('@mantine/core/CloseButton', () => {
   checkAccessibility([
-    mount(<CloseButton aria-label="test" />),
-    mount(<CloseButton title="test" />),
+    render(<CloseButton aria-label="test" />),
+    render(<CloseButton title="test" />),
   ]);
 
-  itSupportsClassName(CloseButton, {});
-  itSupportsOthers(CloseButton, {});
-  itSupportsSx(CloseButton, {}, { dive: 1 });
-  itSupportsStyle(CloseButton, {});
-  itSupportsMargins(CloseButton, {});
-  itSupportsRef(CloseButton, {}, HTMLButtonElement);
-  itIsPolymorphic(CloseButton, {}, { dive: 2 });
+  itSupportsClassName(CloseButton, defaultProps);
+  itSupportsOthers(CloseButton, defaultProps);
+  itSupportsSx(CloseButton, defaultProps);
+  itSupportsStyle(CloseButton, defaultProps);
+  itSupportsMargins(CloseButton, defaultProps);
+  itSupportsRef(CloseButton, defaultProps, HTMLButtonElement);
+  itIsPolymorphic(CloseButton, defaultProps);
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {
     const element = shallow(<CloseButton iconSize={45} />);

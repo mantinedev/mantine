@@ -1,18 +1,17 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { TabControl } from './TabControl/TabControl';
 import { Tabs } from './Tabs';
-import { Tabs as TabsStylesApi } from './styles.api';
 
 const content = [
   <Tabs.Tab label="tab-1" key="tab-1" icon="test-icon">
@@ -33,14 +32,16 @@ const activateTab = (element: any, position: number) =>
   element.find(TabControl).at(position).simulate('click');
 
 describe('@mantine/core/Tabs', () => {
-  checkAccessibility([mount(<Tabs>{content}</Tabs>), mount(<Tabs initialTab={2}>{content}</Tabs>)]);
+  checkAccessibility([
+    render(<Tabs>{content}</Tabs>),
+    render(<Tabs initialTab={2}>{content}</Tabs>),
+  ]);
   itSupportsOthers(Tabs, defaultProps);
   itSupportsStyle(Tabs, defaultProps);
   itSupportsMargins(Tabs, defaultProps);
   itSupportsClassName(Tabs, defaultProps);
   itSupportsSx(Tabs, defaultProps);
   itSupportsRef(Tabs, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Tabs, defaultProps, Object.keys(TabsStylesApi), 'Tabs');
 
   it('has correct displayName', () => {
     expect(Tabs.displayName).toEqual('@mantine/core/Tabs');

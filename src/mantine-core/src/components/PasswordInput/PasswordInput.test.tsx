@@ -1,21 +1,17 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { Input } from '../Input/Input';
 import { ActionIcon } from '../ActionIcon';
 import { PasswordInput } from './PasswordInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 // retrieves Input component from nested TextInput component
 const getInput = (element: any) => element.find(Input);
@@ -26,19 +22,12 @@ const getActionIcon = (element: any) => getInput(element).dive().find(ActionIcon
 const defaultProps = {};
 
 describe('@mantine/core/PasswordInput', () => {
-  checkAccessibility([mount(<PasswordInput label="test" />)]);
+  checkAccessibility([render(<PasswordInput label="test" />)]);
   itSupportsClassName(PasswordInput, defaultProps);
   itSupportsStyle(PasswordInput, defaultProps);
   itSupportsMargins(PasswordInput, defaultProps);
-  itSupportsSx(PasswordInput, defaultProps, { dive: 1 });
+  itSupportsSx(PasswordInput, defaultProps);
   itSupportsRef(PasswordInput, defaultProps, HTMLInputElement);
-
-  itSupportsStylesApi(
-    PasswordInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'PasswordInput'
-  );
 
   it('sets input type based on password visibility state', () => {
     const element = shallow(<PasswordInput />);

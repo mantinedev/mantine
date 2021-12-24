@@ -1,5 +1,4 @@
 import React from 'react';
-import { itSupportsStylesApi } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { Marks } from './Marks';
 
@@ -14,13 +13,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Slider/Marks', () => {
-  itSupportsStylesApi(
-    Marks,
-    defaultProps,
-    ['markWrapper', 'mark', 'markFilled', 'markLabel'],
-    'Slider'
-  );
-
   it('renders correct marks labels', () => {
     const element = shallow(
       <Marks

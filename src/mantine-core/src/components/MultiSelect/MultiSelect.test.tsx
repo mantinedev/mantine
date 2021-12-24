@@ -20,7 +20,7 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsClassName(MultiSelect, defaultProps);
   itSupportsStyle(MultiSelect, defaultProps);
   itSupportsMargins(MultiSelect, defaultProps);
-  itSupportsSx(MultiSelect, defaultProps, { dive: 1 });
+  itSupportsSx(MultiSelect, defaultProps);
   itSupportsRef(MultiSelect, defaultProps, HTMLInputElement);
 
   it('passes required, invalid, icon and radius props to Input component', () => {

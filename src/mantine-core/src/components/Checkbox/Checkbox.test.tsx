@@ -1,16 +1,15 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsRef,
   itSupportsClassName,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Checkbox } from './Checkbox';
-import { Checkbox as CheckboxStylesApi } from './styles.api';
 
 const defaultProps = {
   checked: true,
@@ -24,11 +23,10 @@ describe('@mantine/core/Checkbox', () => {
   itSupportsClassName(Checkbox, defaultProps);
   itSupportsMargins(Checkbox, defaultProps);
   itSupportsRef(Checkbox, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(Checkbox, defaultProps, Object.keys(CheckboxStylesApi), 'Checkbox');
   checkAccessibility([
-    mount(<Checkbox aria-label="Checkbox without label" />),
-    mount(<Checkbox label="With label" />),
-    mount(<Checkbox id="with-id" label="With id" />),
+    render(<Checkbox aria-label="Checkbox without label" />),
+    render(<Checkbox label="With label" />),
+    render(<Checkbox id="with-id" label="With id" />),
   ]);
 
   it('renders label based on label prop', () => {

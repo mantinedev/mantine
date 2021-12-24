@@ -22,7 +22,7 @@ describe('@mantine/dates/RangeCalendar', () => {
   itSupportsOthers(RangeCalendar, defaultProps);
   itSupportsStyle(RangeCalendar, defaultProps);
   itSupportsMargins(RangeCalendar, defaultProps);
-  itSupportsSx(RangeCalendar, defaultProps, { dive: 1 });
+  itSupportsSx(RangeCalendar, defaultProps);
   itSupportsRef(RangeCalendar, defaultProps, HTMLDivElement);
 
   it('passes __staticSelector to CalendarBase', () => {

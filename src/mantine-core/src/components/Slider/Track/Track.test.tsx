@@ -1,5 +1,4 @@
 import React from 'react';
-import { itSupportsStylesApi } from '@mantine/tests';
 import { shallow } from 'enzyme';
 import { Track } from './Track';
 
@@ -18,8 +17,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Slider/Track', () => {
-  itSupportsStylesApi(Track, defaultProps, ['bar'], 'Slider');
-
   it('sets left and width bar styles based on filled and offset props', () => {
     const element = shallow(<Track {...defaultProps} filled={34} offset={12} />);
     const bar = element.find('.mantine-Slider-bar');

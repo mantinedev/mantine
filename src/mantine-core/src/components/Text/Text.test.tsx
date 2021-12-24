@@ -17,7 +17,7 @@ describe('@mantine/core/Text', () => {
   itSupportsClassName(Text, defaultProps);
   itSupportsOthers(Text, defaultProps);
   itSupportsMargins(Text, defaultProps);
-  itIsPolymorphic(Text, defaultProps, { dive: 1 });
+  itIsPolymorphic(Text, defaultProps);
   itSupportsRef(Text, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

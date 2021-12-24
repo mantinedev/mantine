@@ -1,16 +1,15 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsOthers,
   itRendersChildren,
   itSupportsStyle,
   itSupportsClassName,
   itSupportsSx,
-  itSupportsStylesApi,
   checkAccessibility,
 } from '@mantine/tests';
 import { AccordionItem } from './AccordionItem';
-import { Accordion as AccordionStylesApi } from '../styles.api';
 
 const defaultProps = {
   label: 'test-label',
@@ -26,13 +25,7 @@ describe('@mantine/core/AccordionItem', () => {
   itSupportsStyle(AccordionItem, defaultProps);
   itSupportsSx(AccordionItem, defaultProps);
   itSupportsClassName(AccordionItem, defaultProps);
-  checkAccessibility([mount(<AccordionItem {...defaultProps} />)]);
-  itSupportsStylesApi(
-    AccordionItem,
-    defaultProps,
-    Object.keys(AccordionStylesApi).filter((key) => key !== 'item' && key !== 'itemOpened'),
-    'Accordion'
-  );
+  checkAccessibility([render(<AccordionItem {...defaultProps} />)]);
 
   it('renders given label', () => {
     const element = shallow(<AccordionItem {...defaultProps} label="test-label" />);

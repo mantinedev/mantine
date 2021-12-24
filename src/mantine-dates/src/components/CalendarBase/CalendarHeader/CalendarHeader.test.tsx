@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from './CalendarHeader';
 
@@ -15,7 +16,7 @@ const LEVEL_ICON_SELECTOR = '.mantine-CalendarHeader-calendarHeaderLevelIcon';
 describe('@mantine/dates/CalendarHeader', () => {
   itSupportsClassName(CalendarHeader, defaultProps);
   checkAccessibility([
-    mount(
+    render(
       <CalendarHeader
         {...defaultProps}
         nextLabel="Next"

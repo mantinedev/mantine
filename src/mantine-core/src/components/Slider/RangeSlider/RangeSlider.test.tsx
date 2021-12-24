@@ -1,17 +1,16 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsStyle,
   itSupportsClassName,
   itSupportsOthers,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
-import { RangeSlider as RangeSliderStylesApi } from '../styles.api';
 
 const defaultProps = {
   thumbFromLabel: 'test-label',
@@ -19,19 +18,13 @@ const defaultProps = {
 };
 
 describe('@mantine/core/RangeSlider', () => {
-  checkAccessibility([mount(<RangeSlider {...defaultProps} />)]);
+  checkAccessibility([render(<RangeSlider {...defaultProps} />)]);
   itSupportsStyle(RangeSlider, defaultProps);
   itSupportsClassName(RangeSlider, defaultProps);
   itSupportsOthers(RangeSlider, defaultProps);
   itSupportsMargins(RangeSlider, defaultProps);
-  itSupportsSx(RangeSlider, defaultProps, { dive: 1 });
+  itSupportsSx(RangeSlider, defaultProps);
   itSupportsRef(RangeSlider, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    RangeSlider,
-    { label: 'test-label', labelAlwaysOn: true, marks: [{ value: 10, label: 'test' }], value: 50 },
-    Object.keys(RangeSliderStylesApi).filter((item) => item !== 'dragging'),
-    'Slider'
-  );
 
   it('provides name and value to hidden inputs', () => {
     const element = shallow(<RangeSlider name="test-input" value={[10, 20]} />);

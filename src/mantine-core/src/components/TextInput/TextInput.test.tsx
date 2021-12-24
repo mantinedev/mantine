@@ -1,47 +1,31 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
   checkAccessibility,
-  itSupportsStylesApi,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
 import { Input } from '../Input/Input';
 import { TextInput } from './TextInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
-    mount(<TextInput label="test-input" />),
-    mount(<TextInput aria-label="test-input" />),
+    render(<TextInput label="test-input" />),
+    render(<TextInput aria-label="test-input" />),
   ]);
 
   itSupportsClassName(TextInput, defaultProps);
-  itSupportsSx(TextInput, defaultProps, { dive: 1 });
+  itSupportsSx(TextInput, defaultProps);
   itSupportsMargins(TextInput, defaultProps);
   itSupportsRef(TextInput, defaultProps, HTMLInputElement);
   itSupportsStyle(TextInput, defaultProps);
-  itSupportsStylesApi(
-    TextInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'TextInput'
-  );
 
   it('passes wrapperProps to InputWrapper', () => {
     const element = shallow(<TextInput wrapperProps={{ 'aria-label': 'test' }} />);

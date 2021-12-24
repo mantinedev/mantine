@@ -1,13 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-
-export const waitForComponentToPaint = async (wrapper: any) => {
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve));
-    wrapper.update();
-  });
-};
+import { render } from '@testing-library/react';
 
 export function itSupportsRef(
   Component: React.ElementType,
@@ -17,8 +9,7 @@ export function itSupportsRef(
 ) {
   it('supports ref', async () => {
     const ref = React.createRef<typeof refType>();
-    const element = mount(<Component {...requiredProps} {...{ [refProp]: ref }} />);
-    await waitForComponentToPaint(element);
+    render(<Component {...requiredProps} {...{ [refProp]: ref }} />);
     expect(ref.current?.constructor).toBe(refType);
   });
 }

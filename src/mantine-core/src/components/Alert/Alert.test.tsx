@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
   itSupportsOthers,
   itSupportsClassName,
   itRendersChildren,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
@@ -14,7 +14,6 @@ import {
 import { Text } from '../Text/Text';
 import { CloseButton } from '../ActionIcon';
 import { Alert } from './Alert';
-import { Alert as AlertStylesApi } from './styles.api';
 
 const defaultProps = {
   title: 'test-title',
@@ -24,7 +23,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Alert', () => {
-  itSupportsStylesApi(Alert, defaultProps, Object.keys(AlertStylesApi), 'Alert');
   itSupportsClassName(Alert, defaultProps);
   itSupportsOthers(Alert, defaultProps);
   itSupportsStyle(Alert, defaultProps);
@@ -34,12 +32,12 @@ describe('@mantine/core/Alert', () => {
   itSupportsRef(Alert, {}, HTMLDivElement);
 
   checkAccessibility([
-    mount(
+    render(
       <Alert title="Error happened" color="red">
         <Text>Something bad happened</Text>
       </Alert>
     ),
-    mount(
+    render(
       <Alert color="red">
         <Text>Something bad happened</Text>
       </Alert>

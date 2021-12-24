@@ -1,14 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsMargins, itSupportsRef, itSupportsSx } from '@mantine/tests';
 import { RadioGroup, Radio } from './index';
-import { RadioGroup as RadioGroupStylesApi } from './styles.api';
 
 const defaultProps = {
   children: <Radio value="test-1">test-1</Radio>,
@@ -21,10 +15,10 @@ const defaultProps = {
 describe('@mantine/core/RadioGroup', () => {
   itSupportsRef(RadioGroup, defaultProps, HTMLDivElement);
   itSupportsMargins(RadioGroup, defaultProps);
-  itSupportsSx(RadioGroup, defaultProps, { dive: 1 });
+  itSupportsSx(RadioGroup, defaultProps);
 
   checkAccessibility([
-    mount(
+    render(
       <RadioGroup>
         <Radio value="test-1">test-1</Radio>
         <Radio value="test-2">test-2</Radio>
@@ -32,19 +26,6 @@ describe('@mantine/core/RadioGroup', () => {
       </RadioGroup>
     ),
   ]);
-
-  itSupportsStylesApi(
-    RadioGroup,
-    {
-      children: <Radio value="test-1">test-1</Radio>,
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
-    Object.keys(RadioGroupStylesApi),
-    'RadioGroup'
-  );
 
   it('renders correct children', () => {
     const element = shallow(

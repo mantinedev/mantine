@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Box } from '../../Box';
 import useStyles from './TimelineItem.styles';
@@ -17,6 +17,9 @@ export interface TimelineItemProps
 
   /** Bullet width, height and border-radius in px, controlled by Timeline component */
   bulletSize?: number;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** React node that will be rendered after title */
   children?: React.ReactNode;
@@ -45,6 +48,7 @@ export function TimelineItem({
   bullet,
   title,
   bulletSize = 20,
+  radius = 'xl',
   lineWidth = 4,
   active,
   lineActive,
@@ -57,7 +61,7 @@ export function TimelineItem({
   ...others
 }: TimelineItemProps) {
   const { classes, cx } = useStyles(
-    { bulletSize, color, align, lineVariant, lineWidth },
+    { bulletSize, color, radius, align, lineVariant, lineWidth },
     { classNames, styles, name: 'Timeline' }
   );
 

@@ -5,11 +5,9 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsRef,
 } from '@mantine/tests';
 import { PopoverBody } from './PopoverBody';
-import { Popover as PopoverBodyStylesApi } from '../styles.api';
 
 const defaultProps = {
   onClose: () => {},
@@ -25,20 +23,12 @@ const defaultProps = {
   bodyId: 'test-body-id',
 };
 
-const excludedNames = ['root', 'wrapper', 'arrow', 'target'];
-
 describe('@mantine/core/PopoverBody', () => {
   itRendersChildren(PopoverBody, defaultProps);
   itSupportsClassName(PopoverBody, defaultProps);
   itSupportsOthers(PopoverBody, defaultProps);
   itSupportsStyle(PopoverBody, defaultProps);
   itSupportsRef(PopoverBody, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    PopoverBody,
-    defaultProps,
-    Object.keys(PopoverBodyStylesApi).filter((key) => !excludedNames.includes(key)),
-    'Popover'
-  );
 
   it('correctly handles id prop', () => {
     const element = shallow(

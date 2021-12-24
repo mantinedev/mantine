@@ -14,7 +14,7 @@ describe('@mantine/core/Overlay', () => {
   itSupportsStyle(Overlay, defaultProps);
   itSupportsClassName(Overlay, defaultProps);
   itSupportsOthers(Overlay, defaultProps);
-  itIsPolymorphic(Overlay, defaultProps, { dive: 1 });
+  itIsPolymorphic(Overlay, defaultProps);
   itSupportsSx(Overlay, defaultProps);
   itSupportsRef(Overlay, defaultProps, HTMLDivElement);
 

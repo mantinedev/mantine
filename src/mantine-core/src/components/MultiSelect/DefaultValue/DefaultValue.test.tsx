@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsStyle,
@@ -23,8 +24,8 @@ describe('@mantine/core/MultiSelect/DefaultValue', () => {
   itSupportsOthers(DefaultValue, defaultProps);
 
   checkAccessibility([
-    mount(<DefaultValue {...defaultProps} disabled />),
-    mount(<DefaultValue {...defaultProps} disabled={false} />),
+    render(<DefaultValue {...defaultProps} disabled />),
+    render(<DefaultValue {...defaultProps} disabled={false} />),
   ]);
 
   it('renders given label', () => {

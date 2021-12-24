@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { checkAccessibility } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
@@ -12,7 +13,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Swatches', () => {
-  checkAccessibility([mount(<Swatches {...defaultProps} />)]);
+  checkAccessibility([render(<Swatches {...defaultProps} />)]);
 
   it('calls onSelect when color is clicked', () => {
     const spy = jest.fn();

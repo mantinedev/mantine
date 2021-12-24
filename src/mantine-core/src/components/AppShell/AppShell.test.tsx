@@ -6,14 +6,12 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { AppShell } from './AppShell';
-import { AppShell as AppShellStylesAPi } from './styles.api';
 
 const defaultProps = { children: 'test' };
 
@@ -25,7 +23,6 @@ describe('@mantine/core/AppShell', () => {
   itSupportsOthers(AppShell, defaultProps);
   itSupportsSx(AppShell, defaultProps);
   itSupportsRef(AppShell, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(AppShell, defaultProps, Object.keys(AppShellStylesAPi), 'AppShell');
 
   it('passes fixed and zIndex props to Header', () => {
     const fixed = shallow(

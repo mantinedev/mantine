@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { MonthsList } from './MonthsList';
@@ -20,7 +21,7 @@ const defaultProps = {
 
 describe('@mantine/dates/MonthsList', () => {
   checkAccessibility([
-    mount(
+    render(
       <MonthsList
         {...defaultProps}
         amountOfMonths={1}
@@ -28,7 +29,7 @@ describe('@mantine/dates/MonthsList', () => {
         previousMonthLabel="Previous"
       />
     ),
-    mount(
+    render(
       <div>
         <MonthsList
           {...defaultProps}
@@ -38,7 +39,7 @@ describe('@mantine/dates/MonthsList', () => {
         />
       </div>
     ),
-    mount(
+    render(
       <div>
         <MonthsList
           {...defaultProps}

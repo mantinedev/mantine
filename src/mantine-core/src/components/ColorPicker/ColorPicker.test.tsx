@@ -1,10 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
   itSupportsRef,
@@ -12,7 +12,6 @@ import {
 } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
-import { ColorPicker as ColorPickerStylesApi } from './styles.api';
 import { Swatches } from './Swatches/Swatches';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { Saturation } from './Saturation/Saturation';
@@ -27,15 +26,8 @@ describe('@mantine/core/ColorPicker', () => {
   itSupportsMargins(ColorPicker, defaultProps);
   itSupportsSx(ColorPicker, defaultProps);
   itSupportsRef(ColorPicker, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    ColorPicker,
-    { swatches, format: 'rgba' },
-    Object.keys(ColorPickerStylesApi).filter((key) => key !== 'wrapper'),
-    'ColorPicker'
-  );
-
   checkAccessibility([
-    mount(
+    render(
       <ColorPicker
         swatches={swatches}
         format="rgba"

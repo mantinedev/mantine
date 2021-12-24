@@ -16,7 +16,7 @@ export function UserMenu() {
   const theme = useMantineTheme();
   return (
     <Group position="center">
-      <Menu withArrow size={300} placement="center">
+      <Menu withArrow size={300} placement="center" transition="pop">
         <Menu.Item rightSection={<ChevronRightIcon />}>
           <Group>
             <Avatar

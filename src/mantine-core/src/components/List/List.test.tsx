@@ -4,13 +4,11 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { List } from './List';
-import { List as ListStylesApi } from './styles.api';
 
 const defaultProps = {
   icon: '$',
@@ -28,7 +26,6 @@ describe('@mantine/core/List', () => {
   itSupportsStyle(List, defaultProps);
   itSupportsSx(List, defaultProps);
   itSupportsRef(List, defaultProps, HTMLUListElement);
-  itSupportsStylesApi(List, defaultProps, Object.keys(ListStylesApi), 'List');
 
   it('changes root element based on type prop', () => {
     const ordered = shallow(<List {...defaultProps} type="order" />);

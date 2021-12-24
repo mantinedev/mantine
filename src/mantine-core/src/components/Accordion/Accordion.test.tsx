@@ -1,20 +1,18 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import { shallow } from 'enzyme';
 import {
   itSupportsClassName,
   itSupportsMargins,
   itSupportsRef,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsSx,
-  waitForComponentToPaint,
 } from '@mantine/tests';
 import { Button } from '../Button';
 import { Accordion } from './Accordion';
 import { AccordionItem } from './AccordionItem/AccordionItem';
-import { Accordion as AccordionStylesApi } from './styles.api';
 
 const defaultProps = {
   initialItem: 1,
@@ -32,8 +30,7 @@ describe('@mantine/core/Accordion', () => {
   itSupportsSx(Accordion, defaultProps);
   itSupportsMargins(Accordion, defaultProps);
   itSupportsRef(Accordion, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Accordion {...defaultProps} />)]);
-  itSupportsStylesApi(Accordion, defaultProps, Object.keys(AccordionStylesApi), 'Accordion');
+  checkAccessibility([render(<Accordion {...defaultProps} />)]);
 
   it('renders correct amount of items', () => {
     const element = shallow(<Accordion {...defaultProps} />);
@@ -57,12 +54,11 @@ describe('@mantine/core/Accordion', () => {
 
   it('supports controlRef on Accordion.Item', async () => {
     const ref = React.createRef<HTMLButtonElement>();
-    const element = mount(
+    render(
       <Accordion>
         <Accordion.Item controlRef={ref} />
       </Accordion>
     );
-    await waitForComponentToPaint(element);
     expect(ref.current instanceof HTMLButtonElement).toBe(true);
   });
 

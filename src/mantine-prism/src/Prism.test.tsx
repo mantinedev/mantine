@@ -5,14 +5,12 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
   itSupportsRef,
   mockResizeObserver,
 } from '@mantine/tests';
 import { Prism, PrismTab, PrismTabs } from './Prism';
-import { Prism as PrismStylesApi } from './styles.api';
 
 const code = `import React from 'react';
 import { Button } from '@mantine/core';
@@ -36,7 +34,6 @@ describe('@mantine/prism/Prism', () => {
   itSupportsStyle(Prism, defaultProps);
   itSupportsSx(Prism, defaultProps);
   itSupportsRef(Prism, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'Prism');
 
   it('renders tooltip based on noCopy prop', () => {
     const withCopy = shallow(<Prism {...defaultProps} noCopy={false} />);
@@ -78,7 +75,7 @@ describe('@mantine/prism/Prism.Tabs', () => {
   itSupportsMargins(Prism.Tabs, defaultTabsProps);
   itSupportsOthers(Prism.Tabs, defaultTabsProps);
   itSupportsStyle(Prism.Tabs, defaultTabsProps);
-  itSupportsSx(Prism.Tabs, defaultTabsProps, { dive: 1 });
+  itSupportsSx(Prism.Tabs, defaultTabsProps);
   itSupportsRef(Prism.Tabs, defaultTabsProps, HTMLDivElement);
 
   it('has correct displayName', () => {

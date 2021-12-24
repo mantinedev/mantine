@@ -18,13 +18,13 @@ const defaultProps = {};
 
 describe('@mantine/core/Card', () => {
   itSupportsOthers(Card, defaultProps);
-  itSupportsSx(Card, defaultProps, { dive: 1 });
+  itSupportsSx(Card, defaultProps);
   itSupportsClassName(Card, defaultProps);
   itSupportsRef(Card, defaultProps, HTMLDivElement);
   itRendersChildren(Card, defaultProps);
   itSupportsStyle(Card, defaultProps);
   itSupportsMargins(Card, defaultProps);
-  itIsPolymorphic(Card, defaultProps, { dive: 2 });
+  itIsPolymorphic(Card, defaultProps);
 
   it('passes padding and radius to Paper component', () => {
     const element = shallow(

@@ -1,18 +1,17 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itRendersChildren,
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Blockquote } from './Blockquote';
-import { Blockquote as BlockquoteStylesApi } from './styles.api';
 
 const defaultProps = {};
 
@@ -24,16 +23,10 @@ describe('@mantine/core/Blockquote', () => {
   itSupportsMargins(Blockquote, defaultProps);
   itSupportsSx(Blockquote, defaultProps);
   itSupportsRef(Blockquote, defaultProps, HTMLQuoteElement);
-  itSupportsStylesApi(
-    Blockquote,
-    { cite: 'test-cite', children: 'test-quote' },
-    Object.keys(BlockquoteStylesApi),
-    'Blockquote'
-  );
 
   checkAccessibility([
-    mount(<Blockquote>test-quote</Blockquote>),
-    mount(<Blockquote cite="test-cite">test-quote</Blockquote>),
+    render(<Blockquote>test-quote</Blockquote>),
+    render(<Blockquote cite="test-cite">test-quote</Blockquote>),
   ]);
 
   it('renders given icon based on icon prop', () => {
