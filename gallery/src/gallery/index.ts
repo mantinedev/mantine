@@ -89,3 +89,4 @@ export { FooterSimple } from './FooterSimple/FooterSimple';
 export { HeaderMenu } from './HeaderMenu/HeaderMenu';
 export { HeaderSearch } from './HeaderSearch/HeaderSearch';
 export { HeaderSimple } from './HeaderSimple/HeaderSimple';
+export { HeaderTabs } from './HeaderTabs/HeaderTabs';
