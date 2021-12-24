@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsMargins,
@@ -8,7 +8,6 @@ import {
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
-import { LoadingOverlay } from '@mantine/core';
 import { Dropzone } from './Dropzone';
 
 const defaultProps = {
@@ -16,7 +15,7 @@ const defaultProps = {
   children: () => null,
 };
 
-describe('@mantine/core/Dropzone', () => {
+describe('@mantine/dropzone/Dropzone', () => {
   itSupportsClassName(Dropzone, defaultProps);
   itSupportsMargins(Dropzone, defaultProps);
   itSupportsOthers(Dropzone, defaultProps);
@@ -25,25 +24,17 @@ describe('@mantine/core/Dropzone', () => {
   itSupportsRef(Dropzone, defaultProps, HTMLDivElement);
 
   it('displays LoadingOverlay based on loading prop', () => {
-    const loading = shallow(<Dropzone {...defaultProps} loading />);
-    const notLoading = shallow(<Dropzone {...defaultProps} loading={false} />);
+    const { container: loading } = render(<Dropzone {...defaultProps} loading />);
+    const { container: notLoading } = render(<Dropzone {...defaultProps} loading={false} />);
 
-    expect(loading.find(LoadingOverlay).prop('visible')).toBe(true);
-    expect(notLoading.find(LoadingOverlay).prop('visible')).toBe(false);
+    expect(loading.querySelectorAll('.mantine-LoadingOverlay-root')).toHaveLength(1);
+    expect(notLoading.querySelectorAll('.mantine-LoadingOverlay-root')).toHaveLength(0);
   });
 
   it('assigns open function to given openRef', () => {
-    let ref = null;
-    mount(
-      <Dropzone
-        {...defaultProps}
-        openRef={(openFn) => {
-          ref = openFn;
-        }}
-      />
-    );
-
-    expect(typeof ref).toBe('function');
+    const ref = React.createRef<any>();
+    render(<Dropzone {...defaultProps} openRef={ref} />);
+    expect(ref.current).toBeInstanceOf(Function);
   });
 
   it('has correct displayName', () => {
