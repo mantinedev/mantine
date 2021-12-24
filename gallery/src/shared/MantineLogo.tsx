@@ -4,7 +4,7 @@ import { useMantineTheme } from '@mantine/core';
 export function MantineLogo(props: React.ComponentPropsWithoutRef<'svg'>) {
   const theme = useMantineTheme();
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" width={120}>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" width={110}>
       <g fill="none" fillRule="evenodd">
         <path
           fill="#339AF0"

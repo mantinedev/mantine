@@ -72,7 +72,7 @@ export function HeaderSimple({ links }: HeaderSimpleProps) {
   ));
 
   return (
-    <Header height={64}>
+    <Header height={60}>
       <Container className={classes.header}>
         <MantineLogo />
         <Group spacing={5} className={classes.links}>
