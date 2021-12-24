@@ -254,6 +254,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       }
     }, [_value]);
 
+    useEffect(() => {
+      if (selectedValue && (!searchable || !dropdownOpened)) {
+        handleSearchChange(selectedValue.label);
+      }
+    }, [selectedValue?.label]);
+
     const handleItemSelect = (item: SelectItem) => {
       handleChange(item.value);
 

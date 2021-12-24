@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { WithinOverlays, SubmitForm } from '@mantine/ds/src';
@@ -46,6 +46,41 @@ function Controlled() {
       <MultiSelect
         label="Multi select"
         data={data}
+        value={value}
+        onChange={setValue}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+      />
+      <button type="button" onClick={() => setValue(['react', 'ng'])}>
+        Set value
+      </button>
+    </div>
+  );
+}
+
+function DynamicLabels() {
+  const [value, setValue] = useState([]);
+  const [dynamicData, setDynamicData] = useState(data);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDynamicData(
+        data.map((d) => ({
+          value: d.value,
+          label: `${d.label}-${Math.floor(Math.random() * 100)}`,
+        }))
+      );
+    }, 1000);
+
+    return () => clearInterval(interval);
+  });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={dynamicData}
         value={value}
         onChange={setValue}
         placeholder="Select items"
@@ -158,6 +193,7 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
     </div>
   ))
   .add('Controlled', () => <Controlled />)
+  .add('Dynamic Labels', () => <DynamicLabels />)
   .add('Searchable', () => (
     <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
       <MultiSelect
