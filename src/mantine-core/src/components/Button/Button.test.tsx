@@ -20,7 +20,7 @@ describe('@mantine/core/Button', () => {
   checkAccessibility([mount(<Button>Mantine button</Button>)]);
   itSupportsOthers(Button, defaultProps);
   itRendersChildren(Button, defaultProps);
-  itIsPolymorphic(Button, defaultProps, { dive: 1 });
+  itIsPolymorphic(Button, defaultProps);
   itSupportsStyle(Button, defaultProps);
   itSupportsSx(Button, defaultProps);
   itSupportsRef(Button, defaultProps, HTMLButtonElement);

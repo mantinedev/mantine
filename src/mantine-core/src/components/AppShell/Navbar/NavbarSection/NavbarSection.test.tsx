@@ -17,7 +17,7 @@ describe('@mantine/core/NavbarSection', () => {
   itRendersChildren(NavbarSection, defaultProps);
   itSupportsOthers(NavbarSection, defaultProps);
   itSupportsStyle(NavbarSection, defaultProps);
-  itIsPolymorphic(NavbarSection, defaultProps, { dive: 1 });
+  itIsPolymorphic(NavbarSection, defaultProps);
   itSupportsRef(NavbarSection, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

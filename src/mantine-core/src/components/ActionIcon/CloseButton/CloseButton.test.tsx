@@ -13,19 +13,21 @@ import {
 import { CloseButton } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
 
+const defaultProps = {};
+
 describe('@mantine/core/CloseButton', () => {
   checkAccessibility([
     mount(<CloseButton aria-label="test" />),
     mount(<CloseButton title="test" />),
   ]);
 
-  itSupportsClassName(CloseButton, {});
-  itSupportsOthers(CloseButton, {});
-  itSupportsSx(CloseButton, {}, { dive: 1 });
-  itSupportsStyle(CloseButton, {});
-  itSupportsMargins(CloseButton, {});
-  itSupportsRef(CloseButton, {}, HTMLButtonElement);
-  itIsPolymorphic(CloseButton, {}, { dive: 2 });
+  itSupportsClassName(CloseButton, defaultProps);
+  itSupportsOthers(CloseButton, defaultProps);
+  itSupportsSx(CloseButton, defaultProps, { dive: 1 });
+  itSupportsStyle(CloseButton, defaultProps);
+  itSupportsMargins(CloseButton, defaultProps);
+  itSupportsRef(CloseButton, defaultProps, HTMLButtonElement);
+  itIsPolymorphic(CloseButton, defaultProps);
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {
     const element = shallow(<CloseButton iconSize={45} />);

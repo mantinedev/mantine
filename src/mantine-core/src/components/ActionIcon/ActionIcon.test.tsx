@@ -22,7 +22,7 @@ describe('@mantine/core/ActionIcon', () => {
   itSupportsSx(ActionIcon, defaultProps);
   itSupportsStyle(ActionIcon, defaultProps);
   itSupportsMargins(ActionIcon, defaultProps);
-  itIsPolymorphic(ActionIcon, defaultProps, { dive: 1 });
+  itIsPolymorphic(ActionIcon, defaultProps);
   itSupportsRef(ActionIcon, defaultProps, HTMLButtonElement);
   itRendersChildren(ActionIcon, defaultProps);
   checkAccessibility([

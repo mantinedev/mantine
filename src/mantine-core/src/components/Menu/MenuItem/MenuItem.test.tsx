@@ -20,7 +20,7 @@ describe('@mantine/core/MenuItem', () => {
   itSupportsClassName(MenuItem, defaultProps);
   itSupportsStyle(MenuItem, defaultProps);
   itSupportsOthers(MenuItem, defaultProps);
-  itIsPolymorphic(MenuItem, defaultProps, { dive: 1 });
+  itIsPolymorphic(MenuItem, defaultProps);
   itSupportsSx(MenuItem, defaultProps);
   itSupportsRef(MenuItem, defaultProps, HTMLButtonElement);
   itRendersChildren(MenuItem, defaultProps);

@@ -26,7 +26,7 @@ describe('@mantine/core/Avatar', () => {
   itSupportsOthers(Avatar, defaultProps);
   itSupportsStyle(Avatar, defaultProps);
   itSupportsSx(Avatar, defaultProps);
-  itIsPolymorphic(Avatar, defaultProps, { dive: 1 });
+  itIsPolymorphic(Avatar, defaultProps);
   itSupportsRef(Avatar, defaultProps, HTMLDivElement);
 
   itSupportsStylesApi(Avatar, defaultProps, ['root', 'image'], 'Avatar', 'with-image');

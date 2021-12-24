@@ -24,7 +24,7 @@ describe('@mantine/core/Badge', () => {
   itSupportsStyle(Badge, defaultProps);
   itSupportsSx(Badge, defaultProps);
   itSupportsMargins(Badge, defaultProps);
-  itIsPolymorphic(Badge, defaultProps, { dive: 1 });
+  itIsPolymorphic(Badge, defaultProps);
   itSupportsRef(Badge, defaultProps, HTMLDivElement);
   itSupportsStylesApi(
     Badge,

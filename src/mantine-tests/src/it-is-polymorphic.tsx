@@ -1,25 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { dive } from './dive';
+import { render } from '@testing-library/react';
 
-export function itIsPolymorphic(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>,
-  options?: { dive: number }
-) {
+export function itIsPolymorphic(Component: React.ElementType, requiredProps: Record<string, any>) {
   it('accepts component from component prop', () => {
-    const TestComponent = (props: any) => <span data-test-prop {...props} />;
-    const withTag = shallow(
+    const TestComponent = (props: any) => <mark data-test-prop {...props} />;
+    const { container: withTag } = render(
       <Component component="a" href="https://mantine.dev" {...requiredProps} />
     );
-    const withComponent = shallow(<Component component={TestComponent} {...requiredProps} />);
-
-    const _withTag = dive(withTag, options?.dive);
-    const _withComponent = dive(withComponent, options?.dive);
-
-    expect(_withTag.type()).toBe('a');
-    expect(_withTag.render().attr('href')).toBe('https://mantine.dev');
-    expect(_withComponent.type()).toBe(TestComponent);
-    expect(_withComponent.render().attr('data-test-prop')).toBe('true');
+    const { container: withComponent } = render(
+      <Component component={TestComponent} {...requiredProps} />
+    );
+    expect((withTag.firstChild as HTMLElement).tagName).toBe('A');
+    expect((withComponent.firstChild as HTMLElement).tagName).toBe('MARK');
   });
 }

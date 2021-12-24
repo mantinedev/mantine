@@ -24,7 +24,7 @@ describe('@mantine/core/Card', () => {
   itRendersChildren(Card, defaultProps);
   itSupportsStyle(Card, defaultProps);
   itSupportsMargins(Card, defaultProps);
-  itIsPolymorphic(Card, defaultProps, { dive: 2 });
+  itIsPolymorphic(Card, defaultProps);
 
   it('passes padding and radius to Paper component', () => {
     const element = shallow(
