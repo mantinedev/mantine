@@ -25,7 +25,7 @@ function Demo() {
   return (
     <>
       <Text align="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
-        Resize textarea by moving its left bottom corner
+        Resize textarea by moving its right bottom corner
       </Text>
 
       <Group position="center">
