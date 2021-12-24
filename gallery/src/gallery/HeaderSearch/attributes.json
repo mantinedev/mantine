@@ -3,7 +3,14 @@
   "category": "headers",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [],
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/autocomplete/",
+    "/core/group/",
+    "/core/burger/",
+    "/hooks/use-toggle/",
+    "@modulz/radix-icons"
+  ],
   "props": {
     "links": [
       { "link": "/about", "label": "Features" },
