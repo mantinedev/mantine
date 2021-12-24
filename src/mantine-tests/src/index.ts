@@ -8,3 +8,4 @@ export { mockResizeObserver } from './mock-resize-observer';
 export { itSupportsMargins } from './it-supports-margins';
 export { itIsPolymorphic } from './it-is-polymorphic';
 export { itSupportsSx } from './it-supports-sx';
+export { itSupportsSystemProps } from './it-supports-system-props';
