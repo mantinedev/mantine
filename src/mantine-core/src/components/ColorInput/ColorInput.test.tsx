@@ -20,12 +20,6 @@ import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.ap
 const defaultProps = {};
 
 describe('@mantine/core/ColorInput', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   itSupportsClassName(ColorInput, defaultProps);
   itSupportsMargins(ColorInput, defaultProps);
   itSupportsStyle(ColorInput, defaultProps);

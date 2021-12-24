@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import {
   itSupportsClassName,
@@ -9,7 +10,6 @@ import {
   itSupportsStylesApi,
   checkAccessibility,
   itSupportsSx,
-  waitForComponentToPaint,
 } from '@mantine/tests';
 import { Button } from '../Button';
 import { Accordion } from './Accordion';
@@ -57,12 +57,11 @@ describe('@mantine/core/Accordion', () => {
 
   it('supports controlRef on Accordion.Item', async () => {
     const ref = React.createRef<HTMLButtonElement>();
-    const element = mount(
+    render(
       <Accordion>
         <Accordion.Item controlRef={ref} />
       </Accordion>
     );
-    await waitForComponentToPaint(element);
     expect(ref.current instanceof HTMLButtonElement).toBe(true);
   });
 

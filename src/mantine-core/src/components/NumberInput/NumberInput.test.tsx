@@ -22,12 +22,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/NumberInput', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
     mount(<NumberInput {...defaultProps} label="test" />),
     mount(<NumberInput {...defaultProps} aria-label="test" />),

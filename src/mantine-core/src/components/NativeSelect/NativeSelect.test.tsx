@@ -26,12 +26,6 @@ const defaultProps = {
 };
 
 describe('@mantine/core/NativeSelect', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
     mount(<NativeSelect data={TEST_DATA} label="test-label" />),
     mount(<NativeSelect data={TEST_DATA} aria-label="test-label" />),
