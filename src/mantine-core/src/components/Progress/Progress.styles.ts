@@ -64,9 +64,9 @@ export default createStyles(
 
     label: {
       height: '100%',
-      lineHeight: 1.15,
+      lineHeight: 1.2,
       color: '#ffffff',
-      fontSize: theme.fn.size({ size, sizes }) / 1.2,
+      fontSize: theme.fn.size({ size, sizes }) * 0.8,
     },
   })
 );
