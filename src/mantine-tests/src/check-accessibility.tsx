@@ -1,5 +1,5 @@
-import { ReactWrapper } from 'enzyme';
 import { axe, toHaveNoViolations } from 'jest-axe';
+import { RenderResult } from '@testing-library/react';
 
 const config = {
   rules: {
@@ -9,14 +9,14 @@ const config = {
   },
 };
 
-export function checkAccessibility(elements: ReactWrapper[]) {
+export function checkAccessibility(elements: RenderResult[]) {
   expect.extend(toHaveNoViolations);
 
   it('has no accessibility violations', async () => {
     // it does not work any other way
     /* eslint-disable no-restricted-syntax, no-await-in-loop */
     for (const element of elements) {
-      const result = await axe(element.getDOMNode(), config);
+      const result = await axe(element.container, config);
       expect(result).toHaveNoViolations();
     }
     /* eslint-enable no-restricted-syntax, no-await-in-loop */

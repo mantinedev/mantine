@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsRef,
   itSupportsMargins,
   itIsPolymorphic,
@@ -17,8 +17,8 @@ const defaultProps = { src: './test-image' };
 
 describe('@mantine/core/Avatar', () => {
   checkAccessibility([
-    mount(<Avatar {...defaultProps} alt="It's me!" />),
-    mount(<Avatar src={null} alt="It's me!" />),
+    render(<Avatar {...defaultProps} alt="It's me!" />),
+    render(<Avatar src={null} alt="It's me!" />),
   ]);
 
   itSupportsClassName(Avatar, defaultProps);
@@ -26,17 +26,8 @@ describe('@mantine/core/Avatar', () => {
   itSupportsOthers(Avatar, defaultProps);
   itSupportsStyle(Avatar, defaultProps);
   itSupportsSx(Avatar, defaultProps);
-  itIsPolymorphic(Avatar, defaultProps, { dive: 1 });
+  itIsPolymorphic(Avatar, defaultProps);
   itSupportsRef(Avatar, defaultProps, HTMLDivElement);
-
-  itSupportsStylesApi(Avatar, defaultProps, ['root', 'image'], 'Avatar', 'with-image');
-  itSupportsStylesApi(
-    Avatar,
-    { src: null },
-    ['root', 'placeholder', 'placeholderIcon'],
-    'Avatar',
-    'with-placeholder'
-  );
 
   it('passes src and alt to image', () => {
     const element = shallow(<Avatar {...defaultProps} alt="test-alt" />)

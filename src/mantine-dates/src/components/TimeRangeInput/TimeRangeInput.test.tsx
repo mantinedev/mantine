@@ -1,20 +1,17 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { TimeRangeInput } from './TimeRangeInput';
-import { TimeRangeInput as TimeRangeInputStylesApi } from './styles.api';
 
 const defaultProps = {};
 
@@ -22,18 +19,11 @@ describe('@mantine/dates/TimeRangeInput', () => {
   itSupportsClassName(TimeRangeInput, defaultProps);
   itSupportsStyle(TimeRangeInput, defaultProps);
   itSupportsMargins(TimeRangeInput, defaultProps);
-  itSupportsSx(TimeRangeInput, defaultProps, { dive: 1 });
+  itSupportsSx(TimeRangeInput, defaultProps);
   itSupportsRef(TimeRangeInput, defaultProps, HTMLInputElement);
 
-  itSupportsStylesApi(
-    TimeRangeInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys(TimeRangeInputStylesApi)),
-    'TimeRangeInput'
-  );
-
   checkAccessibility([
-    mount(
+    render(
       <TimeRangeInput
         label="test-label"
         withSeconds
@@ -42,7 +32,7 @@ describe('@mantine/dates/TimeRangeInput', () => {
         secondsLabel="Seconds"
       />
     ),
-    mount(
+    render(
       <TimeRangeInput
         label="test-label"
         withSeconds={false}

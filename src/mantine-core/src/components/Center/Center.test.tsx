@@ -19,7 +19,7 @@ describe('@mantine/core/Center', () => {
   itSupportsSx(Center, defaultProps);
   itSupportsOthers(Center, defaultProps);
   itSupportsMargins(Center, defaultProps);
-  itIsPolymorphic(Center, defaultProps, { dive: 1 });
+  itIsPolymorphic(Center, defaultProps);
   itSupportsRef(Center, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

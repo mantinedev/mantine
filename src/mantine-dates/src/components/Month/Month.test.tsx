@@ -6,13 +6,11 @@ import {
   itSupportsOthers,
   itSupportsStyle,
   itSupportsMargins,
-  itSupportsStylesApi,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Month } from './Month';
 import { Day } from './Day/Day';
-import { Month as MonthStylesApi } from './styles.api';
 
 const defaultProps = { month: new Date(2021, 11, 1), value: new Date(2021, 11, 5) };
 
@@ -23,12 +21,6 @@ describe('@mantine/core/Month', () => {
   itSupportsMargins(Month, defaultProps);
   itSupportsSx(Month, defaultProps);
   itSupportsRef(Month, defaultProps, HTMLTableElement);
-  itSupportsStylesApi(
-    Month,
-    { ...defaultProps, range: [new Date(2021, 11, 5), new Date(2021, 11, 15)] },
-    Object.keys(MonthStylesApi).filter((key) => key !== 'month'),
-    'Month'
-  );
 
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);

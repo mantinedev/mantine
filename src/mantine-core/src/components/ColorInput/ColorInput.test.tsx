@@ -1,47 +1,30 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
   itSupportsStyle,
-  itSupportsStylesApi,
   checkAccessibility,
   itSupportsMargins,
-  defaultInputProps,
-  getInputStylesApiKeys,
   itSupportsSx,
 } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { ColorInput } from './ColorInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
 
 const defaultProps = {};
 
 describe('@mantine/core/ColorInput', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   itSupportsClassName(ColorInput, defaultProps);
   itSupportsMargins(ColorInput, defaultProps);
   itSupportsStyle(ColorInput, defaultProps);
-  itSupportsSx(ColorInput, defaultProps, { dive: 1 });
+  itSupportsSx(ColorInput, defaultProps);
   itSupportsRef(ColorInput, defaultProps, HTMLInputElement);
 
-  itSupportsStylesApi(
-    ColorInput,
-    defaultInputProps,
-    getInputStylesApiKeys(Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi })),
-    'ColorInput'
-  );
-
   checkAccessibility([
-    mount(<ColorInput label="Color input" />),
-    mount(<ColorInput aria-label="Color input" />),
+    render(<ColorInput label="Color input" />),
+    render(<ColorInput aria-label="Color input" />),
   ]);
 
   it('passes required, id, label, error and description props to InputWrapper component', () => {

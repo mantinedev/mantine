@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsMargins,
@@ -37,9 +38,9 @@ describe('@mantine/core/CalendarBase', () => {
   itSupportsRef(CalendarBase, defaultProps, HTMLDivElement);
 
   checkAccessibility([
-    mount(<CalendarBase {...labelsProps} initialLevel="date" />),
-    mount(<CalendarBase {...labelsProps} initialLevel="month" />),
-    mount(<CalendarBase {...labelsProps} initialLevel="year" />),
+    render(<CalendarBase {...labelsProps} initialLevel="date" />),
+    render(<CalendarBase {...labelsProps} initialLevel="month" />),
+    render(<CalendarBase {...labelsProps} initialLevel="year" />),
   ]);
 
   it('renders correct views based on initialLevel', () => {

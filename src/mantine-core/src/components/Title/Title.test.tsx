@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itRendersChildren,
@@ -16,8 +17,8 @@ const defaultProps = {};
 
 describe('@mantine/core/Title', () => {
   checkAccessibility([
-    mount(<Title>default title</Title>),
-    mount(<Title order={2}>h2 title</Title>),
+    render(<Title>default title</Title>),
+    render(<Title order={2}>h2 title</Title>),
   ]);
 
   itRendersChildren(Title, defaultProps);

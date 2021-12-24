@@ -4,7 +4,6 @@ import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
@@ -20,7 +19,6 @@ describe('@mantine/core/Divider', () => {
   itSupportsMargins(Divider, defaultProps);
   itSupportsSx(Divider, defaultProps);
   itSupportsRef(Divider, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(Divider, { label: 'test' }, ['label'], 'Divider');
 
   it('renders given label in horizontal orientation', () => {
     const withSubheader = shallow(<Divider label="test-label" />);

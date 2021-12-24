@@ -9,14 +9,16 @@ import {
 } from '@mantine/tests';
 import { Paper } from './Paper';
 
+const defaultProps = {};
+
 describe('@mantine/core/Paper', () => {
-  itRendersChildren(Paper, {});
-  itSupportsClassName(Paper, {});
-  itSupportsStyle(Paper, {});
-  itSupportsRef(Paper, {}, HTMLDivElement);
-  itSupportsOthers(Paper, {});
-  itSupportsMargins(Paper, {});
-  itIsPolymorphic(Paper, {}, { dive: 1 });
+  itRendersChildren(Paper, defaultProps);
+  itSupportsClassName(Paper, defaultProps);
+  itSupportsStyle(Paper, defaultProps);
+  itSupportsRef(Paper, defaultProps, HTMLDivElement);
+  itSupportsOthers(Paper, defaultProps);
+  itSupportsMargins(Paper, defaultProps);
+  itIsPolymorphic(Paper, defaultProps);
 
   it('has correct displayName', () => {
     expect(Paper.displayName).toEqual('@mantine/core/Paper');

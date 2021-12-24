@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -13,16 +14,10 @@ import { Input } from './Input';
 const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
-    mount(<Input aria-label="test-input" />),
-    mount(<Input placeholder="test-input" />),
-    mount(<Input placeholder="test-input" invalid />),
+    render(<Input aria-label="test-input" />),
+    render(<Input placeholder="test-input" />),
+    render(<Input placeholder="test-input" invalid />),
   ]);
 
   itSupportsClassName(Input, defaultProps);

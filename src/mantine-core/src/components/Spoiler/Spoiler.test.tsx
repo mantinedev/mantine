@@ -1,24 +1,22 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsStyle,
   itRendersChildren,
   itSupportsClassName,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Spoiler } from './Spoiler';
-import { Spoiler as SpoilerStylesApi } from './styles.api';
 
 const defaultProps = { maxHeight: 100, showLabel: 'show', hideLabel: 'hide' };
 
 describe('@mantine/core/Spoiler', () => {
   checkAccessibility([
-    mount(
+    render(
       <Spoiler {...defaultProps}>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa ea eum quis officia dolor
         esse inventore ex consequatur magni minima voluptatem, cumque, commodi, voluptatum mollitia
@@ -34,12 +32,6 @@ describe('@mantine/core/Spoiler', () => {
   itSupportsStyle(Spoiler, defaultProps);
   itSupportsSx(Spoiler, defaultProps);
   itSupportsRef(Spoiler, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    Spoiler,
-    { ...defaultProps, initialState: true },
-    Object.keys(SpoilerStylesApi),
-    'Spoiler'
-  );
 
   it('has correct displayName', () => {
     expect(Spoiler.displayName).toEqual('@mantine/core/Spoiler');

@@ -19,7 +19,7 @@ describe('@mantine/core/CardSection', () => {
   itSupportsStyle(CardSection, defaultProps);
   itSupportsMargins(CardSection, defaultProps);
   itSupportsSx(CardSection, defaultProps);
-  itIsPolymorphic(CardSection, defaultProps, { dive: 1 });
+  itIsPolymorphic(CardSection, defaultProps);
   itSupportsRef(CardSection, defaultProps, HTMLDivElement);
 
   it('has correct displayName', () => {

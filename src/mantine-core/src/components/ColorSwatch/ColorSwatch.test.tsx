@@ -19,7 +19,7 @@ describe('@mantine/core/ColorSwatch', () => {
   itSupportsStyle(ColorSwatch, defaultProps);
   itSupportsSx(ColorSwatch, defaultProps);
   itSupportsMargins(ColorSwatch, defaultProps);
-  itIsPolymorphic(ColorSwatch, defaultProps, { dive: 1 });
+  itIsPolymorphic(ColorSwatch, defaultProps);
   itSupportsRef(ColorSwatch, defaultProps, HTMLDivElement);
 
   it('sets correct background-color based on color property', () => {

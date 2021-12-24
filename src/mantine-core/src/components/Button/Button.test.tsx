@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -7,7 +8,6 @@ import {
   itSupportsRef,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itIsPolymorphic,
   itSupportsSx,
@@ -17,22 +17,15 @@ import { Button } from './Button';
 const defaultProps = {};
 
 describe('@mantine/core/Button', () => {
-  checkAccessibility([mount(<Button>Mantine button</Button>)]);
+  checkAccessibility([render(<Button>Mantine button</Button>)]);
   itSupportsOthers(Button, defaultProps);
   itRendersChildren(Button, defaultProps);
-  itIsPolymorphic(Button, defaultProps, { dive: 1 });
+  itIsPolymorphic(Button, defaultProps);
   itSupportsStyle(Button, defaultProps);
   itSupportsSx(Button, defaultProps);
   itSupportsRef(Button, defaultProps, HTMLButtonElement);
   itSupportsClassName(Button, defaultProps);
   itSupportsMargins(Button, defaultProps);
-
-  itSupportsStylesApi(
-    Button,
-    { children: 'test', leftIcon: 'l', rightIcon: 'r' },
-    ['root', 'icon', 'leftIcon', 'rightIcon', 'inner', 'label'],
-    'Button'
-  );
 
   it('passes type to button component', () => {
     const element = shallow(<Button type="submit" />);

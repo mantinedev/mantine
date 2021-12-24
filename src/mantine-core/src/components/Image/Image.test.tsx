@@ -1,12 +1,12 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
@@ -19,9 +19,9 @@ const defaultProps = {
 
 describe('@mantine/core/Image', () => {
   checkAccessibility([
-    mount(<Image {...defaultProps} />),
-    mount(<Image {...defaultProps} src={null} />),
-    mount(<Image {...defaultProps} src={null} withPlaceholder />),
+    render(<Image {...defaultProps} />),
+    render(<Image {...defaultProps} src={null} />),
+    render(<Image {...defaultProps} src={null} withPlaceholder />),
   ]);
 
   itSupportsClassName(Image, defaultProps);
@@ -30,20 +30,6 @@ describe('@mantine/core/Image', () => {
   itSupportsOthers(Image, defaultProps);
   itSupportsStyle(Image, defaultProps);
   itSupportsRef(Image, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    Image,
-    { src: null, withPlaceholder: true },
-    ['root', 'placeholder'],
-    'Image',
-    'with placeholder'
-  );
-  itSupportsStylesApi(
-    Image,
-    { src: 'test.png', caption: 'test-caption' },
-    ['root', 'image', 'caption'],
-    'Image',
-    'with image'
-  );
 
   it('sets src, alt and object fit on img element', () => {
     const element = shallow(<Image src="test-src" alt="test-alt" fit="contain" />);

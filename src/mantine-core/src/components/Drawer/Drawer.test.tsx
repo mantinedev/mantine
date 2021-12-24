@@ -1,19 +1,18 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { GroupedTransition } from '../Transition';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
 import { CloseButton } from '../ActionIcon';
 import { MantineDrawer, Drawer } from './Drawer';
-import { Drawer as DrawerStylesApi } from './styles.api';
 
 const defaultProps = {
   title: 'Test',
@@ -23,7 +22,7 @@ const defaultProps = {
 
 describe('@mantine/core/Drawer', () => {
   checkAccessibility([
-    mount(
+    render(
       <MantineDrawer
         opened
         onClose={() => {}}
@@ -41,7 +40,6 @@ describe('@mantine/core/Drawer', () => {
   itRendersChildren(MantineDrawer, defaultProps);
   itSupportsOthers(MantineDrawer, defaultProps);
   itSupportsStyle(MantineDrawer, defaultProps);
-  itSupportsStylesApi(MantineDrawer, defaultProps, Object.keys(DrawerStylesApi), 'Drawer');
 
   it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
     const element = shallow(

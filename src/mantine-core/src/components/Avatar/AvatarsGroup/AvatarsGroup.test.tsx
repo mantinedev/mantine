@@ -4,14 +4,12 @@ import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { AvatarsGroup } from './AvatarsGroup';
 import { Avatar } from '../Avatar';
-import { AvatarsGroup as AvatarsGroupStylesApi } from './styles.api';
 
 const defaultProps = {
   children: [<Avatar>M</Avatar>, <Avatar>K</Avatar>, <Avatar>L</Avatar>, <Avatar>L</Avatar>],
@@ -24,12 +22,6 @@ describe('@mantine/core/AvatarsGroup', () => {
   itSupportsMargins(AvatarsGroup, defaultProps);
   itSupportsSx(AvatarsGroup, defaultProps);
   itSupportsRef(AvatarsGroup, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    AvatarsGroup,
-    defaultProps,
-    Object.keys(AvatarsGroupStylesApi),
-    'AvatarsGroup'
-  );
 
   it('renders avatars based on limit prop', () => {
     const limit2 = shallow(<AvatarsGroup {...defaultProps} limit={2} />);

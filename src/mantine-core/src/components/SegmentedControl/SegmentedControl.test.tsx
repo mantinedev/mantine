@@ -1,17 +1,16 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   mockResizeObserver,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { SegmentedControl } from './SegmentedControl';
-import { SegmentedControl as SegmentedControlStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 'test-value-1',
@@ -27,18 +26,12 @@ const defaultProps = {
 mockResizeObserver();
 
 describe('@mantine/core/SegmentedControl', () => {
-  checkAccessibility([mount(<SegmentedControl {...defaultProps} />)]);
+  checkAccessibility([render(<SegmentedControl {...defaultProps} />)]);
   itSupportsClassName(SegmentedControl, defaultProps);
   itSupportsOthers(SegmentedControl, defaultProps);
   itSupportsMargins(SegmentedControl, defaultProps);
   itSupportsStyle(SegmentedControl, defaultProps);
   itSupportsSx(SegmentedControl, defaultProps);
-  itSupportsStylesApi(
-    SegmentedControl,
-    defaultProps,
-    Object.keys(SegmentedControlStylesApi),
-    'SegmentedControl'
-  );
 
   it('renders radio inputs and labels based on data and name prop', () => {
     const element = shallow(<SegmentedControl {...defaultProps} name="mnt" value="test-value-2" />);

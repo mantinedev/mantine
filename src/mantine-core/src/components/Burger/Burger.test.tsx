@@ -1,17 +1,16 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Burger } from './Burger';
-import { Burger as BurgerStylesApi } from './styles.api';
 
 const defaultProps = {
   opened: true,
@@ -19,14 +18,13 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Burger', () => {
-  checkAccessibility([mount(<Burger {...defaultProps} />)]);
+  checkAccessibility([render(<Burger {...defaultProps} />)]);
   itSupportsOthers(Burger, defaultProps);
   itSupportsClassName(Burger, defaultProps);
   itSupportsStyle(Burger, defaultProps);
   itSupportsMargins(Burger, defaultProps);
   itSupportsSx(Burger, defaultProps);
   itSupportsRef(Burger, defaultProps, HTMLButtonElement);
-  itSupportsStylesApi(Burger, defaultProps, Object.keys(BurgerStylesApi), 'Burger');
 
   it('renders cross when opened prop is true', () => {
     const opened = shallow(<Burger opened />);

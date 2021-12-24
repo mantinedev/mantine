@@ -1,16 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 export function itRendersChildren(
   Component: React.ElementType,
   requiredProps: Record<string, any>
 ) {
   it('renders children', () => {
-    const element = shallow(
+    const { queryAllByText } = render(
       <Component {...requiredProps}>
         <span className="test-children">test-children</span>
       </Component>
     );
-    expect(element.render().find('.test-children')).toHaveLength(1);
+    expect(queryAllByText('test-children')).toHaveLength(1);
   });
 }

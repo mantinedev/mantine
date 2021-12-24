@@ -1,17 +1,16 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
   itRendersChildren,
   itSupportsStyle,
   itSupportsOthers,
-  itSupportsStylesApi,
 } from '@mantine/tests';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Overlay } from '../Overlay/Overlay';
 import { MantineModal, Modal } from './Modal';
-import { Modal as ModalStylesApi } from './styles.api';
 
 const defaultProps = {
   opened: true,
@@ -26,7 +25,7 @@ describe('@mantine/core/Modal', () => {
   });
 
   checkAccessibility([
-    mount(
+    render(
       <MantineModal opened onClose={() => {}} closeButtonLabel="Close modal" title="test-title">
         test-modal
       </MantineModal>
@@ -37,11 +36,6 @@ describe('@mantine/core/Modal', () => {
   itSupportsClassName(MantineModal, defaultProps);
   itRendersChildren(MantineModal, defaultProps);
   itSupportsStyle(MantineModal, defaultProps);
-  itSupportsStylesApi(MantineModal, defaultProps, Object.keys(ModalStylesApi), 'Modal');
-
-  it('has correct displayName', () => {
-    expect(Modal.displayName).toEqual('@mantine/core/Modal');
-  });
 
   it('sets document.body overflow to hidden when opened', () => {
     // reset overflow from previous tests
@@ -110,5 +104,9 @@ describe('@mantine/core/Modal', () => {
     setTimeout(() => {
       expect(document.body.style.overflow).toBe('hidden');
     }, 0);
+  });
+
+  it('has correct displayName', () => {
+    expect(Modal.displayName).toEqual('@mantine/core/Modal');
   });
 });

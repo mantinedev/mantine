@@ -7,7 +7,8 @@ import {
   checkAccessibility,
   itSupportsSx,
 } from '@mantine/tests';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { Loader } from '../../Loader';
 import { Step } from './Step';
 
@@ -17,12 +18,12 @@ describe('@mantine/core/Step', () => {
   itSupportsClassName(Step, defaultProps);
   itSupportsOthers(Step, defaultProps);
   itSupportsStyle(Step, defaultProps);
-  itSupportsSx(Step, defaultProps, { dive: 1 });
+  itSupportsSx(Step, defaultProps);
   itSupportsRef(Step, defaultProps, HTMLButtonElement);
   checkAccessibility([
-    mount(<Step aria-label="Test" />),
-    mount(<Step title="Test" />),
-    mount(<Step label="Test" />),
+    render(<Step aria-label="Test" />),
+    render(<Step title="Test" />),
+    render(<Step label="Test" />),
   ]);
 
   it('renders icon when withIcon is true', () => {

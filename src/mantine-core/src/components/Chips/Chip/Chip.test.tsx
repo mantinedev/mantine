@@ -4,13 +4,11 @@ import {
   itSupportsClassName,
   itSupportsRef,
   itRendersChildren,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsSx,
 } from '@mantine/tests';
 import { Chip } from './Chip';
 import { CheckboxIcon } from '../../Checkbox';
-import { Chip as ChipStylesApi } from './styles.api';
 
 const defaultProps = {
   value: 'test-value',
@@ -25,14 +23,6 @@ describe('@mantine/core/Chip', () => {
   itSupportsMargins(Chip, defaultProps);
   itSupportsSx(Chip, defaultProps);
   itSupportsRef(Chip, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(
-    Chip,
-    defaultProps,
-    Object.keys(ChipStylesApi).filter(
-      (key) => key !== 'outline' && key !== 'filled' && key !== 'disabled'
-    ),
-    'Chip'
-  );
 
   it('displays checked icon based on checked prop', () => {
     const checked = shallow(<Chip {...defaultProps} checked />);
