@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  getDefaultZIndex,
+  MantineNumberSize,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
 import useStyles from './Tooltip.styles';
@@ -24,6 +30,9 @@ export interface TooltipProps
 
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
   color?: MantineColor;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** True to disable tooltip */
   disabled?: boolean;
@@ -61,6 +70,7 @@ export function Tooltip({
   delay = 0,
   gutter = 5,
   color = 'gray',
+  radius = 'sm',
   disabled = false,
   withArrow = false,
   arrowSize = 2,
@@ -81,7 +91,7 @@ export function Tooltip({
   styles,
   ...others
 }: TooltipProps) {
-  const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Tooltip' });
+  const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
   const timeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
@@ -114,9 +124,10 @@ export function Tooltip({
         gutter={gutter}
         withArrow={withArrow}
         arrowSize={arrowSize}
+        arrowDistance={7}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
-        forceUpdateDependencies={[color, ...positionDependencies]}
+        forceUpdateDependencies={[color, radius, ...positionDependencies]}
         withinPortal={withinPortal}
       >
         <div

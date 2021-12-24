@@ -75,7 +75,7 @@ export default function CodeDemo({
       </Paper>
 
       {code && visible && (
-        <Prism language={language} classNames={{ code: classes.code }}>
+        <Prism language={language} className={classes.prism} classNames={{ code: classes.code }}>
           {code}
         </Prism>
       )}

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
+import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../Button';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
@@ -21,7 +22,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   nothingFound?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
-  showSearch?: boolean;
+  showTransferAll?: boolean;
   onMoveAll(): void;
   onMove(): void;
   height: number;
@@ -39,7 +40,7 @@ export function RenderList({
   filter,
   nothingFound,
   title,
-  showSearch,
+  showTransferAll,
   reversed,
   onMoveAll,
   onMove,
@@ -47,7 +48,10 @@ export function RenderList({
   classNames,
   styles,
 }: RenderListProps) {
-  const { classes, cx } = useStyles({ reversed }, { name: 'TransferList', classNames, styles });
+  const { classes, cx } = useStyles(
+    { reversed, native: listComponent !== SelectScrollArea },
+    { name: 'TransferList', classNames, styles }
+  );
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));
@@ -135,22 +139,20 @@ export function RenderList({
 
       <div className={classes.transferListBody}>
         <div className={classes.transferListHeader}>
-          {showSearch && (
-            <TextInput
-              value={query}
-              onChange={(event) => {
-                setQuery(event.currentTarget.value);
-                setHovered(0);
-              }}
-              onFocus={() => setHovered(0)}
-              onBlur={() => setHovered(-1)}
-              placeholder={searchPlaceholder}
-              radius={0}
-              onKeyDown={handleSearchKeydown}
-              sx={{ flex: 1 }}
-              classNames={{ input: classes.transferListSearch }}
-            />
-          )}
+          <TextInput
+            value={query}
+            onChange={(event) => {
+              setQuery(event.currentTarget.value);
+              setHovered(0);
+            }}
+            onFocus={() => setHovered(0)}
+            onBlur={() => setHovered(-1)}
+            placeholder={searchPlaceholder}
+            radius={0}
+            onKeyDown={handleSearchKeydown}
+            sx={{ flex: 1 }}
+            classNames={{ input: classes.transferListSearch }}
+          />
 
           <ActionIcon
             variant="default"
@@ -159,22 +161,22 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={selection.length === 0}
             onClick={onMove}
-            sx={{ flex: showSearch ? 0 : 1 }}
           >
             {reversed ? <PrevIcon /> : <NextIcon />}
           </ActionIcon>
 
-          <ActionIcon
-            variant="default"
-            size={36}
-            radius={0}
-            className={classes.transferListControl}
-            disabled={data.length === 0}
-            onClick={onMoveAll}
-            sx={{ flex: showSearch ? 0 : 1 }}
-          >
-            {reversed ? <FirstIcon /> : <LastIcon />}
-          </ActionIcon>
+          {showTransferAll && (
+            <ActionIcon
+              variant="default"
+              size={36}
+              radius={0}
+              className={classes.transferListControl}
+              disabled={data.length === 0}
+              onClick={onMoveAll}
+            >
+              {reversed ? <FirstIcon /> : <LastIcon />}
+            </ActionIcon>
+          )}
         </div>
 
         <ListComponent

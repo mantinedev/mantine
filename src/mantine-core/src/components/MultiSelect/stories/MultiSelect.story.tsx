@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { RtlProvider, WithinOverlays, SubmitForm } from '@mantine/ds/src';
+import { WithinOverlays, SubmitForm } from '@mantine/ds/src';
 import { Group } from '../../Group/Group';
 import { TextInput } from '../../TextInput/TextInput';
 import { SegmentedControl } from '../../SegmentedControl/SegmentedControl';
@@ -244,15 +244,4 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         searchable
       />
     </SubmitForm>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <MultiSelect
-        label="Multi select"
-        data={data}
-        defaultValue={['react', 'ng']}
-        placeholder="Select items"
-        searchable
-      />
-    </RtlProvider>
   ));

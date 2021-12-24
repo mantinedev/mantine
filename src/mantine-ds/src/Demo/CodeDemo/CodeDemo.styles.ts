@@ -15,13 +15,18 @@ export default createStyles((theme: MantineTheme) => ({
     },
   },
 
-  code: {
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
+  prism: {
+    borderBottomRightRadius: theme.radius.sm,
+    borderBottomLeftRadius: theme.radius.sm,
     marginTop: 0,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1]
     }`,
+  },
+
+  code: {
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
   },
 
   controls: {

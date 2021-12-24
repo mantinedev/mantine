@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider } from '@mantine/ds/src';
 import { Group } from '../../Group/Group';
 import { Button } from '../../Button/Button';
 import { Chip } from '../Chip/Chip';
@@ -74,9 +73,4 @@ storiesOf('@mantine/core/Chips/stories', module)
     </Group>
   ))
   .add('Dynamic chips', () => <Dynamic />)
-  .add('Controlled', () => <Controlled />)
-  .add('RTL', () => (
-    <RtlProvider>
-      <Controlled />
-    </RtlProvider>
-  ));
+  .add('Controlled', () => <Controlled />);

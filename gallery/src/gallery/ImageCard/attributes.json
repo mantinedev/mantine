@@ -1,6 +1,6 @@
 {
   "title": "Card with image as background",
-  "category": "cards",
+  "category": "article-cards",
   "author": "rtivital",
   "dependencies": [
     "/core/card/",

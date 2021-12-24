@@ -7,7 +7,7 @@ slug: /core/grid/
 category: 'layout'
 description: 'Flexbox grid system with variable amount of columns'
 props: ['Grid']
-import: "import { Grid, Col } from '@mantine/core';"
+import: "import { Grid } from '@mantine/core';"
 source: 'mantine-core/src/components/Grid/Grid.tsx'
 docs: 'core/Grid.mdx'
 styles: ['Grid', 'single-node']
@@ -40,7 +40,7 @@ Set `grow` prop on Grid component to force last row take 100% of container width
 
 ## Column offset
 
-Set `offset` prop on Col component to create gaps in grid.
+Set `offset` prop on Grid.Col component to create gaps in grid.
 `offset` adds left margin to target column and has the same units as `span`:
 
 <Demo data={GridDemos.offset} />
@@ -76,21 +76,21 @@ In this example, first column takes 50% with 12 span (12/24), second and third t
 
 <Demo data={GridDemos.columns} />
 
-## Wrap Col component
+## Wrap Grid.Col component
 
-Col component depends on context props from Grid component.
-If you want to enhance it with additional logic – pass all props to child Col:
+Grid.Col component depends on context props from Grid component.
+If you want to enhance it with additional logic – pass all props to child Gird.Col:
 
 ```tsx
-// Example Col component wrapper, used in all demos
-import { Col, Text, useMantineTheme } from '@mantine/core';
+// Example Grid.Col component wrapper, used in all demos
+import { Grid, Text, useMantineTheme } from '@mantine/core';
 
-function ColWrapper(props: React.ComponentProps<typeof Col>) {
+function ColWrapper(props: React.ComponentProps<typeof Grid.Col>) {
   const theme = useMantineTheme();
   const background = theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0];
 
   return (
-    <Col {...props} style={{ background, padding: theme.spacing.md, ...props.style }}>
+    <Grid.Col {...props} style={{ background, padding: theme.spacing.md, ...props.style }}>
       <Text
         color={theme.colorScheme === 'dark' ? 'gray' : 'blue'}
         size="xl"
@@ -99,7 +99,7 @@ function ColWrapper(props: React.ComponentProps<typeof Col>) {
       >
         {props.children}
       </Text>
-    </Col>
+    </Grid.Col>
   );
 }
 

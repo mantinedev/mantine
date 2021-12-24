@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider } from '@mantine/ds/src';
 import { paragraph } from '@mantine/mockdata';
-import { BaseDemo, baseDemoItems } from '../demos/_base';
+import { baseDemoItems } from '../demos/_base';
 import { TextInput } from '../../TextInput';
 import { Button } from '../../Button';
 import { Group } from '../../Group';
@@ -103,9 +102,4 @@ storiesOf('@mantine/core/Accordion/stories', module)
         SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere
       </Accordion.Item>
     </Accordion>
-  ))
-  .add('Rtl', () => (
-    <RtlProvider>
-      <BaseDemo mx="auto" sx={{ maxWidth: 400 }} mt="xl" />
-    </RtlProvider>
   ));

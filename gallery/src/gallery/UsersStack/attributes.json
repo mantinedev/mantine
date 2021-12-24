@@ -9,6 +9,7 @@
     "/core/group/",
     "/core/action-icon/",
     "/core/avatar/",
+    "/core/scroll-area/",
     "tabler-icons-react"
   ],
   "props": {

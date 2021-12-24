@@ -24,7 +24,7 @@ export interface SharedTextProps extends DefaultProps {
   transform?: 'capitalize' | 'uppercase' | 'lowercase';
 
   /** Sets text-align css property */
-  align?: 'left' | 'center' | 'right';
+  align?: 'left' | 'center' | 'right' | 'justify';
 
   /** Link or text variant */
   variant?: 'text' | 'link' | 'gradient';
@@ -44,11 +44,11 @@ export interface SharedTextProps extends DefaultProps {
 
 export type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, SharedTextProps>;
 
-type TextComponent = <C extends React.ElementType = 'div'>(
+type TextComponent = (<C extends React.ElementType = 'div'>(
   props: TextProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Text: TextComponent & { displayName?: string } = forwardRef(
+export const Text: TextComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
@@ -56,7 +56,6 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
       size = 'md',
       weight,
       transform,
-      style,
       color,
       align,
       variant = 'text',
@@ -78,6 +77,9 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         lineClamp,
         inline,
         inherit,
+        weight,
+        transform,
+        align,
         gradientFrom: gradient.from,
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
@@ -90,12 +92,6 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         ref={ref}
         component={component || 'div'}
         className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
-        style={{
-          fontWeight: inherit ? 'inherit' : weight,
-          textTransform: transform,
-          textAlign: align,
-          ...style,
-        }}
         {...others}
       />
     );

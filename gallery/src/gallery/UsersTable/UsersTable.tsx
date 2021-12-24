@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Badge, Table, Group, Text, ActionIcon, Box, Anchor } from '@mantine/core';
+import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, ScrollArea } from '@mantine/core';
 import { Pencil, Trash } from 'tabler-icons-react';
 
 interface UsersTableProps {
@@ -28,12 +28,12 @@ export function UsersTable({ data }: UsersTableProps) {
         <Badge color={jobColors[item.job.toLowerCase()]}>{item.job}</Badge>
       </td>
       <td>
-        <Anchor size="sm" href="#" onClick={(event) => event.preventDefault()}>
+        <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
           {item.email}
         </Anchor>
       </td>
       <td>
-        <Anchor size="sm" href="#" onClick={(event) => event.preventDefault()}>
+        <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
           {item.phone}
         </Anchor>
       </td>
@@ -51,8 +51,8 @@ export function UsersTable({ data }: UsersTableProps) {
   ));
 
   return (
-    <Box sx={{ maxWidth: 800, overflowX: 'auto' }}>
-      <Table sx={{ minWidth: 800 }} striped highlightOnHover>
+    <ScrollArea>
+      <Table sx={{ minWidth: 800 }}>
         <thead>
           <tr>
             <th>Employee</th>
@@ -64,6 +64,6 @@ export function UsersTable({ data }: UsersTableProps) {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </Box>
+    </ScrollArea>
   );
 }

@@ -1,7 +1,6 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
 
-export interface StepCompletedProps extends DefaultProps {
+export interface StepCompletedProps {
   /** Label content */
   children: React.ReactNode;
 }

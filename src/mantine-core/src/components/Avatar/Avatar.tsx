@@ -32,11 +32,11 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
 
 export type AvatarProps<C extends React.ElementType> = PolymorphicComponentProps<C, _AvatarProps>;
 
-type AvatarComponent = <C extends React.ElementType = 'div'>(
+type AvatarComponent = (<C extends React.ElementType = 'div'>(
   props: AvatarProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Avatar: AvatarComponent & { displayName?: string } = forwardRef(
+export const Avatar: AvatarComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       component,

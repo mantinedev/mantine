@@ -29,11 +29,11 @@ export type HighlightProps<C extends React.ElementType> = PolymorphicComponentPr
   _HighlightProps
 >;
 
-type HighlightComponent = <C extends React.ElementType = 'div'>(
+type HighlightComponent = (<C extends React.ElementType = 'div'>(
   props: HighlightProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Highlight: HighlightComponent & { displayName?: string } = forwardRef(
+export const Highlight: HighlightComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       children,

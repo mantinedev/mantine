@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { RtlProvider } from '@mantine/ds/src';
 import { NumberInput } from '../NumberInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -22,10 +21,20 @@ storiesOf('@mantine/core/NumberInput/stories', module)
       <Controlled />
     </div>
   ))
-  .add('RTL', () => (
-    <RtlProvider>
+  .add('Step On Hold', () => (
+    <>
       <div style={{ padding: 40, maxWidth: 400 }}>
-        <Controlled />
+        <NumberInput label="Step on hold" stepHoldDelay={750} stepHoldInterval={100} />
       </div>
-    </RtlProvider>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput
+          label="Step on hold with interval function"
+          stepHoldDelay={750}
+          stepHoldInterval={(count) => Math.max(1000 - count * count, 0)}
+        />
+      </div>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput label="Don't step on hold" />
+      </div>
+    </>
   ));

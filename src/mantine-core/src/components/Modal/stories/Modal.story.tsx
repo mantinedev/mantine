@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider } from '@mantine/ds/src';
 import { Button } from '../../Button/Button';
 import { Text } from '../../Text/Text';
 import { Select } from '../../Select/Select';
@@ -68,9 +67,4 @@ storiesOf('@mantine/core/Modal/stories', module)
         <Menu.Item>Hello</Menu.Item>
       </Menu>
     </WrappedModal>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <WrappedModal title="Rtl modal">Modal content</WrappedModal>
-    </RtlProvider>
   ));

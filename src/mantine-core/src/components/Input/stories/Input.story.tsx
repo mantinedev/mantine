@@ -3,7 +3,6 @@ import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { RtlProvider } from '@mantine/ds/src';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../../ActionIcon/ActionIcon';
 import { Input } from '../Input';
@@ -105,5 +104,4 @@ storiesOf('@mantine/core/Input/stories', module)
       })}
     </>
   ))
-  .add('Invalid toggle', () => <ValidInvalid />)
-  .add('RTL', () => <RtlProvider>{getStates({ variant: 'default' })}</RtlProvider>);
+  .add('Invalid toggle', () => <ValidInvalid />);

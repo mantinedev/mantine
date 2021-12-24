@@ -7,16 +7,21 @@ import {
   itSupportsSx,
 } from '@mantine/tests';
 import { Grid } from './Grid';
+import { Col } from './Col/Col';
 
-const defualtProps = {};
+const defaultProps = {};
 
 describe('@mantine/core/Grid', () => {
-  itSupportsClassName(Grid, defualtProps);
-  itSupportsSx(Grid, defualtProps);
-  itSupportsOthers(Grid, defualtProps);
-  itSupportsStyle(Grid, defualtProps);
-  itSupportsMargins(Grid, defualtProps);
-  itSupportsRef(Grid, defualtProps, HTMLDivElement);
+  itSupportsClassName(Grid, defaultProps);
+  itSupportsSx(Grid, defaultProps);
+  itSupportsOthers(Grid, defaultProps);
+  itSupportsStyle(Grid, defaultProps);
+  itSupportsMargins(Grid, defaultProps);
+  itSupportsRef(Grid, defaultProps, HTMLDivElement);
+
+  it('exposes Col as Grid.Col', () => {
+    expect(Grid.Col).toBe(Col);
+  });
 
   it('has correct displayName', () => {
     expect(Grid.displayName).toEqual('@mantine/core/Grid');

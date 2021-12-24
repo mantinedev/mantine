@@ -2,7 +2,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { paragraph } from '@mantine/mockdata';
-import { RtlProvider } from '@mantine/ds/src';
 import { InputWrapper } from '../InputWrapper';
 import { Text } from '../../Text/Text';
 
@@ -57,11 +56,4 @@ storiesOf('@mantine/core/InputWrapper/stories', module)
         <Text>Input is located here</Text>
       </InputWrapper>
     </div>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <InputWrapper label="Label" description="description" error="error">
-        Test
-      </InputWrapper>
-    </RtlProvider>
   ));

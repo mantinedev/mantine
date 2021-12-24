@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineSize } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineSize,
+  MantineNumberSize,
+} from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
@@ -45,6 +51,9 @@ export interface StepProps
   /** Component size */
   size?: MantineSize;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Indicates loading state on step */
   loading?: boolean;
 
@@ -77,6 +86,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       withIcon = true,
       iconSize,
       size = 'md',
+      radius = 'xl',
       loading,
       allowStepClick = true,
       iconPosition = 'left',
@@ -88,7 +98,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, iconSize, size, allowStepClick, iconPosition },
+      { color, iconSize, size, radius, allowStepClick, iconPosition },
       { name: __staticSelector, classNames, styles }
     );
 

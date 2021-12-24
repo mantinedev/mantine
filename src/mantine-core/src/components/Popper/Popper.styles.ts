@@ -2,6 +2,7 @@ import { createStyles } from '@mantine/styles';
 
 interface PopperStyles {
   arrowSize: number;
+  arrowDistance: number;
 }
 
 interface PlacementClasses {
@@ -10,35 +11,35 @@ interface PlacementClasses {
   start: string;
 }
 
-const horizontalPlacement = (arrowSize: number, classes: PlacementClasses) => ({
+const horizontalPlacement = (arrowSize: number, distance: number, classes: PlacementClasses) => ({
   [`&.${classes.center}`]: {
     top: `calc(50% - ${arrowSize}px)`,
   },
 
   [`&.${classes.end}`]: {
-    bottom: arrowSize * 2,
+    bottom: arrowSize * distance,
   },
 
   [`&.${classes.start}`]: {
-    top: arrowSize * 2,
+    top: arrowSize * distance,
   },
 });
 
-const verticalPlacement = (arrowSize: number, classes: PlacementClasses) => ({
+const verticalPlacement = (arrowSize: number, distance: number, classes: PlacementClasses) => ({
   [`&.${classes.center}`]: {
     left: `calc(50% - ${arrowSize}px)`,
   },
 
   [`&.${classes.end}`]: {
-    right: arrowSize * 2,
+    right: arrowSize * distance,
   },
 
   [`&.${classes.start}`]: {
-    left: arrowSize * 2,
+    left: arrowSize * distance,
   },
 });
 
-export default createStyles((_theme, { arrowSize }: PopperStyles, getRef) => {
+export default createStyles((_theme, { arrowSize, arrowDistance }: PopperStyles, getRef) => {
   const center = { ref: getRef('center') } as const;
   const start = { ref: getRef('start') } as const;
   const end = { ref: getRef('end') } as const;
@@ -64,28 +65,28 @@ export default createStyles((_theme, { arrowSize }: PopperStyles, getRef) => {
     },
 
     left: {
-      ...horizontalPlacement(arrowSize, placementClasses),
+      ...horizontalPlacement(arrowSize, arrowDistance, placementClasses),
       right: -arrowSize,
       borderLeft: 0,
       borderBottom: 0,
     },
 
     right: {
-      ...horizontalPlacement(arrowSize, placementClasses),
+      ...horizontalPlacement(arrowSize, arrowDistance, placementClasses),
       left: -arrowSize,
       borderRight: 0,
       borderTop: 0,
     },
 
     top: {
-      ...verticalPlacement(arrowSize, placementClasses),
+      ...verticalPlacement(arrowSize, arrowDistance, placementClasses),
       bottom: -arrowSize,
       borderLeft: 0,
       borderTop: 0,
     },
 
     bottom: {
-      ...verticalPlacement(arrowSize, placementClasses),
+      ...verticalPlacement(arrowSize, arrowDistance, placementClasses),
       top: -arrowSize,
       borderRight: 0,
       borderBottom: 0,

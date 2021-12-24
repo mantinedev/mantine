@@ -148,6 +148,48 @@ export default createStyles(
         textAlign: 'right',
       },
 
+      '& .ql-mention-list-container': {
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        borderRadius: theme.radius.sm,
+
+        '& .ql-mention-list': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+          paddingLeft: 0,
+          marginTop: 0,
+          margin: 0,
+          listStyleType: 'none',
+
+          '& .ql-mention-list-item': {
+            padding: theme.spacing.xs,
+            textDecoration: 'none',
+            cursor: 'pointer',
+          },
+
+          '& .selected': {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+            color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+            textDecoration: 'none',
+          },
+        },
+      },
+
+      '& .mention': {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor:
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
+        padding: '3px 5px',
+        height: 24,
+        width: 65,
+        marginRight: 2,
+        borderRadius: theme.radius.sm,
+        userSelect: 'all',
+        pointerEvents: 'none',
+      },
+
       '& iframe.ql-video': {
         width: '100%',
         height: 400,

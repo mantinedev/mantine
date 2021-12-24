@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { RtlProvider } from '@mantine/ds/src';
 import { SegmentedControl, SegmentedControlProps } from '../SegmentedControl';
 
 const stringData = ['React', 'Angular', 'Vue', 'Very long label'];
@@ -28,11 +27,4 @@ storiesOf('@mantine/core/SegmentedControl/stories', module)
     <div style={{ padding: 40 }}>
       <SegmentedControl data={stringData} defaultValue="Vue" />
     </div>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <div style={{ padding: 40 }}>
-        <SegmentedControl data={stringData} defaultValue="Vue" />
-      </div>
-    </RtlProvider>
   ));

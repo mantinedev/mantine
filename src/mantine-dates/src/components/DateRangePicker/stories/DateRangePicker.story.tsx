@@ -1,7 +1,22 @@
-import React from 'react';
+/* eslint-disable no-console */
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, TextInput } from '@mantine/core';
 import { DateRangePicker } from '../DateRangePicker';
+
+function Controlled() {
+  // const [range, setRange] = useState<[Date, Date]>([null, null]);
+  const [range, setRange] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
+  return (
+    <DateRangePicker
+      value={range}
+      onChange={(value) => {
+        console.log(value);
+        setRange(value);
+      }}
+    />
+  );
+}
 
 storiesOf('@mantine/dates/DateRangePicker/stories', module)
   .add('First day of week sunday', () => (
@@ -35,4 +50,5 @@ storiesOf('@mantine/dates/DateRangePicker/stories', module)
     <MantineProvider theme={{ dateFormat: 'MM YYYY DD' }}>
       <DateRangePicker label="First" />
     </MantineProvider>
-  ));
+  ))
+  .add('Controlled', () => <Controlled />);

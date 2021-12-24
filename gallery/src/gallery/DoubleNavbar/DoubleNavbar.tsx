@@ -72,6 +72,8 @@ const useStyles = createStyles((theme) => ({
   logo: {
     boxSizing: 'border-box',
     width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     height: 60,
     paddingTop: theme.spacing.md,
     borderBottom: `1px solid ${

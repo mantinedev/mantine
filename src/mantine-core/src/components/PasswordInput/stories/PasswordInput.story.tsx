@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { RtlProvider } from '@mantine/ds/src';
 import { PasswordInput, PasswordInputProps } from '../PasswordInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -26,9 +25,4 @@ function Controlled(props: Partial<PasswordInputProps>) {
 storiesOf('@mantine/core/PasswordInput/stories', module)
   .add('Controlled', () => <Controlled />)
   .add('Sizes', () => <div style={{ width: 400, padding: 20 }}>{sizes}</div>)
-  .add('Invalid', () => <Controlled error="error" />)
-  .add('RTL', () => (
-    <RtlProvider>
-      <Controlled />
-    </RtlProvider>
-  ));
+  .add('Invalid', () => <Controlled error="error" />);

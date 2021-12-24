@@ -4,9 +4,10 @@ type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 interface TitleStyles {
   element: HeadingElement;
+  align: 'right' | 'left' | 'center' | 'justify';
 }
 
-export default createStyles((theme, { element }: TitleStyles) => ({
+export default createStyles((theme, { element, align }: TitleStyles) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,
@@ -15,5 +16,6 @@ export default createStyles((theme, { element }: TitleStyles) => ({
     lineHeight: theme.headings.sizes[element].lineHeight,
     margin: 0,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    textAlign: align,
   },
 }));

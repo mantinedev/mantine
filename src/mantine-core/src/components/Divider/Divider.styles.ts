@@ -40,7 +40,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
       content: '""',
       flex: 1,
       height: 1,
-      borderTop: `1px ${variant} ${theme.fn.themeColor(
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
         color,
         theme.colorScheme === 'dark' ? 3 : 4
       )}`,
@@ -50,7 +50,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `1px ${variant} ${theme.fn.themeColor(
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
         color,
         theme.colorScheme === 'dark' ? 3 : 4
       )}`,

@@ -85,6 +85,7 @@ function useNotifications(): {
 interface NotificationProps {
   id?: string;
   color?: string;
+  radius?: MantineNumberSize;
   className?: string;
   style?: React.CSSProperties;
   icon?: React.ReactNode;
@@ -108,7 +109,7 @@ Notification state item can have these properties:
 - **onOpen** – calls when notification is mounted
 - **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
 - **message** – required notification body
-- **color, icon, title, className, style, loading** – props spread to [Notification](/core/notification/) component
+- **color, icon, title, radius, className, style, loading** – props spread to [Notification](/core/notification/) component
 
 All properties except **message** are optional.
 

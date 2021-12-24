@@ -59,11 +59,11 @@ interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
 
 export type InputProps<C extends React.ElementType> = PolymorphicComponentProps<C, _InputProps>;
 
-type InputComponent = <C extends React.ElementType = 'input'>(
+type InputComponent = (<C extends React.ElementType = 'input'>(
   props: InputProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Input: InputComponent & { displayName?: string } = forwardRef(
+export const Input: InputComponent = forwardRef(
   <C extends React.ElementType = 'input'>(
     {
       component,
@@ -92,7 +92,15 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const theme = useMantineTheme();
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
-      { radius, size, multiline, variant: _variant, invalid },
+      {
+        radius,
+        size,
+        multiline,
+        variant: _variant,
+        invalid,
+        rightSectionWidth,
+        withRightSection: !!rightSection,
+      },
       { classNames, styles, name: __staticSelector }
     );
     const { margins, rest } = extractMargins(others);
@@ -113,21 +121,16 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={invalid}
+          disabled={disabled}
           className={cx(classes[`${_variant}Variant`], classes.input, {
             [classes.withIcon]: icon,
             [classes.invalid]: invalid,
             [classes.disabled]: disabled,
           })}
-          disabled={disabled}
-          style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
         />
 
         {rightSection && (
-          <div
-            {...rightSectionProps}
-            style={{ width: rightSectionWidth }}
-            className={classes.rightSection}
-          >
+          <div {...rightSectionProps} className={classes.rightSection}>
             {rightSection}
           </div>
         )}

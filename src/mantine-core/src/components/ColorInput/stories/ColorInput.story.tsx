@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
-import { RtlProvider, WithinOverlays } from '@mantine/ds/src';
+import { WithinOverlays } from '@mantine/ds/src';
 import { ColorInput } from '../ColorInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
@@ -54,9 +54,4 @@ storiesOf('@mantine/core/ColorInput/stories', module)
         withinPortal={false}
       />
     </WithinOverlays>
-  ))
-  .add('RTL', () => (
-    <RtlProvider>
-      <ControlledInput />
-    </RtlProvider>
   ));

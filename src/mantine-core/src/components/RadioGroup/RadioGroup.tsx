@@ -1,6 +1,7 @@
-import React, { Children, cloneElement, forwardRef } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 import { useUncontrolled, useUuid } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import {
   InputWrapper,
   InputWrapperBaseProps,
@@ -71,22 +72,20 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       rule: (val) => typeof val === 'string',
     });
 
-    const radios: any = (Children.toArray(children) as React.ReactElement[])
-      .filter((item) => item.type === Radio)
-      .map((radio, index) =>
-        cloneElement(radio, {
-          key: index,
-          checked: _value === radio.props.value,
-          name: uuid,
-          color,
-          size,
-          classNames,
-          styles,
-          __staticSelector: 'RadioGroup',
-          onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-            setValue(event.currentTarget.value),
-        })
-      );
+    const radios = filterChildrenByType(children, Radio).map((radio, index) =>
+      cloneElement(radio, {
+        key: index,
+        checked: _value === radio.props.value,
+        name: uuid,
+        color,
+        size,
+        classNames,
+        styles,
+        __staticSelector: 'RadioGroup',
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(event.currentTarget.value),
+      })
+    );
 
     return (
       <InputWrapper

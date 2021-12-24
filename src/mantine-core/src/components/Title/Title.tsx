@@ -10,30 +10,19 @@ export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef
   order?: TitleOrder;
 
   /** Defined text-align */
-  align?: 'right' | 'left' | 'center';
+  align?: 'right' | 'left' | 'center' | 'justify';
 }
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
-  ({ className, order = 1, children, align, style, ...others }: TitleProps, ref) => {
+  ({ className, order = 1, children, align, ...others }: TitleProps, ref) => {
+    const { classes, cx } = useStyles({ element: `h${order}`, align }, { name: 'Title' });
+
     if (![1, 2, 3, 4, 5, 6].includes(order)) {
       return null;
     }
 
-    const { classes, cx } = useStyles({ element: `h${order}` }, { name: 'Title' });
-    const styles: React.CSSProperties = { ...style };
-
-    if (align) {
-      styles.textAlign = align;
-    }
-
     return (
-      <Box
-        component={`h${order}`}
-        ref={ref}
-        className={cx(classes.root, className)}
-        style={styles}
-        {...others}
-      >
+      <Box component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
         {children}
       </Box>
     );

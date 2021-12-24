@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput } from '../../../index';
+import { NumberInput } from '../NumberInput';
 
 const code = `
 <NumberInput label="By default controls are visible" />

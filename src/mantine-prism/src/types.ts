@@ -25,4 +25,7 @@ export interface PrismSharedProps {
 
   /** Force color scheme, defaults to theme.colorScheme */
   colorScheme?: 'dark' | 'light';
+
+  /** Change scroll area component */
+  scrollAreaComponent?: any;
 }
