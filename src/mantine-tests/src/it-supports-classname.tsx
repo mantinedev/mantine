@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-// import { shallow } from 'enzyme';
 
 export function itSupportsClassName(
   Component: React.ElementType,
