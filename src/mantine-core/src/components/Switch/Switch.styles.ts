@@ -91,7 +91,7 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
         position: 'absolute',
         top: '30%',
         right: '10%',
-        content: offLabel ? `'${offLabel}'` : '',
+        content: offLabel ? `'${offLabel}'` : "''",
         color: theme.white,
       },
 
@@ -112,7 +112,7 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
           position: 'absolute',
           top: '30%',
           left: '10%',
-          content: onLabel ? `'${onLabel}'` : '',
+          content: onLabel ? `'${onLabel}'` : "''",
           color: theme.white,
         },
       },
