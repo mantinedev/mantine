@@ -1,22 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
+import { itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper, Modal } from '@mantine/core';
-import { DatePickerBase } from './DatePickerBase';
+import { DatePickerBase, DatePickerBaseProps } from './DatePickerBase';
 
-const defaultProps = {
-  icon: '$',
-  rightSection: '$',
+const defaultProps: DatePickerBaseProps = {
   label: 'test-label',
-  error: 'test-error',
-  description: 'test-description',
-  required: true,
   placeholder: 'test-placeholder',
   dropdownOpened: true,
   setDropdownOpened: () => {},
@@ -24,10 +13,9 @@ const defaultProps = {
 };
 
 describe('@mantine/dates/DatePickerBase', () => {
-  itSupportsClassName(DatePickerBase, defaultProps);
-  itSupportsStyle(DatePickerBase, defaultProps);
-  itSupportsMargins(DatePickerBase, defaultProps);
-  itSupportsSx(DatePickerBase, defaultProps);
+  itSupportsSystemProps(DatePickerBase, defaultProps, '@mantine/dates/DatePickerBase', {
+    excludeOthers: true,
+  });
   itSupportsRef(DatePickerBase, defaultProps, HTMLInputElement);
 
   it('passes __staticSelector prop to InputWrapper and Input components', () => {

@@ -8,11 +8,12 @@ import { itSupportsMargins } from './it-supports-margins';
 export function itSupportsSystemProps<T extends React.FC>(
   Component: T,
   defaultProps: React.ComponentProps<T>,
-  displayName: string
+  displayName: string,
+  options = { excludeOthers: false }
 ) {
   describe('it supports system props', () => {
     itSupportsClassName(Component, defaultProps);
-    itSupportsOthers(Component, defaultProps);
+    !options.excludeOthers && itSupportsOthers(Component, defaultProps);
     itSupportsMargins(Component, defaultProps);
     itSupportsStyle(Component, defaultProps);
     itSupportsSx(Component, defaultProps);

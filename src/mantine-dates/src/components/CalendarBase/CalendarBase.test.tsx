@@ -1,15 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import {
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsSx,
-  checkAccessibility,
-} from '@mantine/tests';
+import { itSupportsRef, itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
 import { YearPicker } from './YearPicker/YearPicker';
 import { MonthPicker } from './MonthPicker/MonthPicker';
 import { MonthsList } from './MonthsList/MonthsList';
@@ -27,14 +19,10 @@ const labelsProps = {
   previousDecadeLabel: 'previous decade',
 };
 
-const defaultProps = {};
+const defaultProps: CalendarBaseProps = {};
 
 describe('@mantine/core/CalendarBase', () => {
-  itSupportsClassName(CalendarBase, defaultProps);
-  itSupportsMargins(CalendarBase, defaultProps);
-  itSupportsOthers(CalendarBase, defaultProps);
-  itSupportsStyle(CalendarBase, defaultProps);
-  itSupportsSx(CalendarBase, defaultProps);
+  itSupportsSystemProps(CalendarBase, defaultProps, '@mantine/dates/CalendarBase');
   itSupportsRef(CalendarBase, defaultProps, HTMLDivElement);
 
   checkAccessibility([
@@ -140,9 +128,5 @@ describe('@mantine/core/CalendarBase', () => {
       .at(1)
       .simulate('click');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 0, 1));
-  });
-
-  it('has correct displayName', () => {
-    expect(CalendarBase.displayName).toEqual('@mantine/dates/CalendarBase');
   });
 });
