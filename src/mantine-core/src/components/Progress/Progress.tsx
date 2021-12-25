@@ -71,7 +71,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped, animate, indeterminate },
+      { color, size, radius, striped: striped || animate, animate, indeterminate },
       { classNames, styles, name: 'Progress' }
     );
 
