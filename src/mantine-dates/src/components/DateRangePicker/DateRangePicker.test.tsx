@@ -1,22 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsMargins,
-} from '@mantine/tests';
-import { DateRangePicker } from './DateRangePicker';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { DateRangePicker, DateRangePickerProps } from './DateRangePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 
-const defaultProps = {};
+const defaultProps: DateRangePickerProps = {};
 
 describe('@mantine/dates/DateRangePicker', () => {
-  itSupportsClassName(DateRangePicker, defaultProps);
-  itSupportsStyle(DateRangePicker, defaultProps);
-  itSupportsMargins(DateRangePicker, defaultProps);
-  itSupportsRef(DateRangePicker, defaultProps, HTMLInputElement);
+  itSupportsSystemProps({
+    component: DateRangePicker,
+    props: defaultProps,
+    displayName: '@mantine/dates/DateRangePicker',
+    excludeOthers: true,
+    refType: HTMLInputElement,
+  });
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {
     const element = shallow(<DateRangePicker initiallyOpened />);
@@ -29,9 +27,5 @@ describe('@mantine/dates/DateRangePicker', () => {
       <DateRangePicker value={[new Date(2021, 6, 13), new Date(2021, 7, 13)]} inputFormat="MM/YY" />
     );
     expect(element.find(DatePickerBase).prop('inputLabel')).toBe('07/21 – 08/21');
-  });
-
-  it('has correct displayName', () => {
-    expect(DateRangePicker.displayName).toEqual('@mantine/dates/DateRangePicker');
   });
 });

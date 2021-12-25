@@ -1,26 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsRef,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from './TimeField/TimeField';
-import { TimeInput } from './TimeInput';
+import { TimeInput, TimeInputProps } from './TimeInput';
 
-const defaultProps = {};
+const defaultProps: TimeInputProps = {};
 
 describe('@mantine/dates/TimeInput', () => {
-  itSupportsClassName(TimeInput, defaultProps);
-  itSupportsStyle(TimeInput, defaultProps);
-  itSupportsMargins(TimeInput, defaultProps);
-  itSupportsSx(TimeInput, defaultProps);
-  itSupportsRef(TimeInput, defaultProps, HTMLInputElement);
+  itSupportsSystemProps({
+    component: TimeInput,
+    props: defaultProps,
+    displayName: '@mantine/dates/TimeInput',
+    refType: HTMLInputElement,
+    excludeOthers: true,
+  });
 
   checkAccessibility([
     render(
@@ -87,9 +82,5 @@ describe('@mantine/dates/TimeInput', () => {
 
     expect(withSeconds.find(TimeField)).toHaveLength(3);
     expect(withoutSeconds.find(TimeField)).toHaveLength(2);
-  });
-
-  it('has correct displayName', () => {
-    expect(TimeInput.displayName).toEqual('@mantine/dates/TimeInput');
   });
 });

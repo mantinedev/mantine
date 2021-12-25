@@ -1,26 +1,22 @@
+import 'dayjs/locale/ru';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import 'dayjs/locale/ru';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Month } from './Month';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Month, MonthProps } from './Month';
 import { Day } from './Day/Day';
 
-const defaultProps = { month: new Date(2021, 11, 1), value: new Date(2021, 11, 5) };
+const defaultProps: MonthProps = {
+  month: new Date(2021, 11, 1),
+  value: new Date(2021, 11, 5),
+};
 
-describe('@mantine/core/Month', () => {
-  itSupportsStyle(Month, defaultProps);
-  itSupportsClassName(Month, defaultProps);
-  itSupportsOthers(Month, defaultProps);
-  itSupportsMargins(Month, defaultProps);
-  itSupportsSx(Month, defaultProps);
-  itSupportsRef(Month, defaultProps, HTMLTableElement);
+describe('@mantine/dates/Month', () => {
+  itSupportsSystemProps({
+    component: Month,
+    props: defaultProps,
+    displayName: '@mantine/dates/Month',
+    refType: HTMLTableElement,
+  });
 
   it('renders correct amount of weekdays', () => {
     const element = shallow(<Month month={new Date()} />);
@@ -181,9 +177,5 @@ describe('@mantine/core/Month', () => {
 
     expect(en.find('th').at(0).text()).toBe('Mo');
     expect(ru.find('th').at(0).text()).toBe('Пн');
-  });
-
-  it('has correct displayName', () => {
-    expect(Month.displayName).toEqual('@mantine/core/Month');
   });
 });

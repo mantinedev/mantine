@@ -219,4 +219,4 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
   }
 );
 
-Month.displayName = '@mantine/core/Month';
+Month.displayName = '@mantine/dates/Month';

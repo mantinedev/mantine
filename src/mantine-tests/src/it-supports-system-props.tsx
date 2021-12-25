@@ -15,15 +15,14 @@ interface Options<T extends React.FC> {
 }
 
 export function itSupportsSystemProps<T extends React.FC>(options: Options<T>) {
-  describe('it supports system props', () => {
-    const shouldExcludeOthers = options.excludeOthers || false;
-    options.refType && itSupportsRef(options.component, options.props, options.refType);
-    !shouldExcludeOthers && itSupportsOthers(options.component, options.props);
-    itSupportsClassName(options.component, options.props);
-    itSupportsMargins(options.component, options.props);
-    itSupportsStyle(options.component, options.props);
-    itSupportsSx(options.component, options.props);
-  });
+  const shouldExcludeOthers = options.excludeOthers || false;
+
+  options.refType && itSupportsRef(options.component, options.props, options.refType);
+  !shouldExcludeOthers && itSupportsOthers(options.component, options.props);
+  itSupportsClassName(options.component, options.props);
+  itSupportsMargins(options.component, options.props);
+  itSupportsStyle(options.component, options.props);
+  itSupportsSx(options.component, options.props);
 
   it('has correct displayName', () => {
     expect(options.component.displayName).toBe(options.displayName);

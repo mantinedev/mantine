@@ -71,8 +71,4 @@ describe('@mantine/dates/DatePickerBase', () => {
     expect(modal.find(Modal)).toHaveLength(1);
     expect(popover.find(Modal)).toHaveLength(0);
   });
-
-  it('has correct displayName', () => {
-    expect(DatePickerBase.displayName).toEqual('@mantine/dates/DatePickerBase');
-  });
 });
