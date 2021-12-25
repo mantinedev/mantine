@@ -25,7 +25,7 @@ export interface ProgressProps
   striped?: boolean;
 
   /** Whether to animate striped progress bars */
-  animated?: boolean;
+  animate?: boolean;
 
   /** Whether to show an indeterminate progress bar */
   indeterminate?: boolean;
@@ -59,7 +59,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       size = 'md',
       radius = 'sm',
       striped = false,
-      animated = false,
+      animate = false,
       indeterminate = false,
       label = '',
       'aria-label': ariaLabel,
@@ -71,7 +71,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped, animated, indeterminate },
+      { color, size, radius, striped, animate, indeterminate },
       { classNames, styles, name: 'Progress' }
     );
 

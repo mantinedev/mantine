@@ -13,7 +13,7 @@ interface ProgressStyles {
   radius: MantineNumberSize;
   size: MantineNumberSize;
   striped: boolean;
-  animated: boolean;
+  animate: boolean;
   indeterminate: boolean;
 }
 
@@ -22,7 +22,7 @@ export const move = keyframes({
 });
 
 export default createStyles(
-  (theme, { color, radius, size, striped, animated, indeterminate }: ProgressStyles) => ({
+  (theme, { color, radius, size, striped, animate, indeterminate }: ProgressStyles) => ({
     root: {
       position: 'relative',
       height: theme.fn.size({ size, sizes }),
@@ -41,7 +41,7 @@ export default createStyles(
       backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
       transition: `width 200ms ${theme.transitionTimingFunction}`,
       backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
-      animation: animated || indeterminate ? `${move} 1500ms linear infinite` : 'none',
+      animation: animate || indeterminate ? `${move} 1500ms linear infinite` : 'none',
       backgroundImage:
         striped || indeterminate
           ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
