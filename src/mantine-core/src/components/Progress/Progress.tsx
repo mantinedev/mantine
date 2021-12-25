@@ -86,7 +86,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
           >
-            {label ? <Text className={classes.label}>{section.label}</Text> : ''}
+            {section.label && <Text className={classes.label}>{section.label}</Text>}
           </div>
         ))
       : null;

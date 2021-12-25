@@ -37,8 +37,10 @@ export default createStyles(
       bottom: 0,
       left: 0,
       height: '100%',
-      textAlign: 'center',
-      backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.fn.themeColor(color, 6),
       transition: `width 200ms ${theme.transitionTimingFunction}`,
       backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
       animation: animate || indeterminate ? `${move} 1500ms linear infinite` : 'none',
@@ -63,10 +65,10 @@ export default createStyles(
     },
 
     label: {
-      height: '100%',
-      lineHeight: 1.2,
-      color: '#ffffff',
-      fontSize: theme.fn.size({ size, sizes }) * 0.8,
+      color: theme.white,
+      fontSize: theme.fn.size({ size, sizes }) * 0.65,
+      fontWeight: 700,
+      userSelect: 'none',
     },
   })
 );

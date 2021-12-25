@@ -12,7 +12,7 @@ function SetDemo() {
   return (
     <div style={{ maxWidth: 500, padding: 50 }}>
       <Progress value={value} />
-      <Group style={{ marginTop: 20 }} position="center">
+      <Group mt="md" position="center">
         <Button onClick={setValueToRandom}>Set random value</Button>
       </Group>
     </div>
@@ -20,12 +20,12 @@ function SetDemo() {
 }
 
 const sizes = ([2, 'xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-  <Progress size={size} value={50} key={size} style={{ marginTop: 20 }} />
+  <Progress size={size} value={50} key={size} mt="md" label="40%" />
 ));
 
 const getThemes = (props?: any) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
-    <Progress key={color} color={color} value={50} style={{ marginTop: 20 }} {...props} />
+    <Progress key={color} color={color} value={50} mt="md" {...props} />
   ));
 
 storiesOf('@mantine/core/Progress/stories', module)
