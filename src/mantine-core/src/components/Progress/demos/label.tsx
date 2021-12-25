@@ -6,9 +6,7 @@ const code = `
 `;
 
 function Label() {
-  return (
-    <Progress value={75} label="75%" size="xl" />
-  );
+  return <Progress value={75} label="75%" size="xl" />;
 }
 
 export const label: MantineDemo = {
