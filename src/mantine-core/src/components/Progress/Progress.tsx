@@ -28,7 +28,7 @@ export interface ProgressProps
   animated?: boolean;
 
   /** Whether to show an indeterminate progress bar */
-  isIndeterminate?: boolean;
+  indeterminate?: boolean;
 
   /** Text to be placed inside the progress bar */
   label?: string;
@@ -60,7 +60,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       radius = 'sm',
       striped = false,
       animated = false,
-      isIndeterminate = false,
+      indeterminate = false,
       label = '',
       'aria-label': ariaLabel,
       classNames,
@@ -71,7 +71,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped, animated, isIndeterminate },
+      { color, size, radius, striped, animated, indeterminate },
       { classNames, styles, name: 'Progress' }
     );
 
@@ -81,7 +81,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             key={index}
             className={classes.bar}
             style={{
-              width: `${isIndeterminate ? 100 : section.value}%`,
+              width: `${indeterminate ? 100 : section.value}%`,
               left: `${section.accumulated}%`,
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
@@ -98,11 +98,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             role="progressbar"
             aria-valuemax={100}
             aria-valuemin={0}
-            aria-valuenow={isIndeterminate ? 100 : value}
+            aria-valuenow={indeterminate ? 100 : value}
             aria-label={ariaLabel}
             className={classes.bar}
             style={{
-              width: `${isIndeterminate ? 100 : value}%`,
+              width: `${indeterminate ? 100 : value}%`,
             }}
           >
             {label ? <Text className={classes.label}>{label}</Text> : ''}
