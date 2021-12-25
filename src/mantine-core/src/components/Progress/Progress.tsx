@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Progress.styles';
+import { Text } from '../Text';
 
 export type ProgressStylesNames = ClassNames<typeof useStyles>;
 
@@ -23,13 +24,22 @@ export interface ProgressProps
   /** Adds stripes */
   striped?: boolean;
 
+  /** Whether to animate striped progress bars */
+  animate?: boolean;
+
+  /** Whether to show an indeterminate progress bar */
+  indeterminate?: boolean;
+
+  /** Text to be placed inside the progress bar */
+  label?: string;
+
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: MantineColor }[];
+  sections?: { value: number; color: MantineColor; label?: string }[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: MantineColor }[]
-): { value: number; color: MantineColor; accumulated: number }[] {
+  sections: { value: number; color: MantineColor; label?: string }[]
+): { value: number; color: MantineColor; accumulated: number; label?: string }[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });
@@ -49,6 +59,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       size = 'md',
       radius = 'sm',
       striped = false,
+      animate = false,
+      indeterminate = false,
+      label = '',
       'aria-label': ariaLabel,
       classNames,
       styles,
@@ -58,7 +71,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped },
+      { color, size, radius, striped: striped || animate, animate, indeterminate },
       { classNames, styles, name: 'Progress' }
     );
 
@@ -68,11 +81,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             key={index}
             className={classes.bar}
             style={{
-              width: `${section.value}%`,
+              width: `${indeterminate ? 100 : section.value}%`,
               left: `${section.accumulated}%`,
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
-          />
+          >
+            {section.label && <Text className={classes.label}>{section.label}</Text>}
+          </div>
         ))
       : null;
 
@@ -83,11 +98,15 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             role="progressbar"
             aria-valuemax={100}
             aria-valuemin={0}
-            aria-valuenow={value}
+            aria-valuenow={indeterminate ? 100 : value}
             aria-label={ariaLabel}
             className={classes.bar}
-            style={{ width: `${value}%` }}
-          />
+            style={{
+              width: `${indeterminate ? 100 : value}%`,
+            }}
+          >
+            {label ? <Text className={classes.label}>{label}</Text> : ''}
+          </div>
         )}
       </Box>
     );

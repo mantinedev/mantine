@@ -7,8 +7,9 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.5.0
 date: 'December 13th, 2021'
 ---
 
-import { RingProgressDemos, NumberInputDemos, StepperDemos } from '@demos/core';
+import { RingProgressDemos, NumberInputDemos, StepperDemos, ProgressDemos } from '@demos/core';
 import * as PrismDemos from '@demos/prism';
+import * as RichTextDemos from '@demos/rte';
 
 ## @mantine/prism changes
 
@@ -40,6 +41,14 @@ import * as PrismDemos from '@demos/prism';
 [Stepper](https://mantine.dev/core/stepper/) component now supports `Stepper.Completed` to display content after final step is completed:
 
 <Demo data={StepperDemos.usage} />
+
+[Progress](https://mantine.dev/core/progress/) component now supports labels and animations:
+
+<Demo data={ProgressDemos.label} demoProps={{ toggle: true }} />
+
+[RichTextEditor](https://mantine.dev/others/rte/) now supports mentions:
+
+<Demo data={RichTextDemos.mentions} demoProps={{ toggle: true }} />
 
 ## Other changes
 

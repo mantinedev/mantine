@@ -18,6 +18,29 @@ const defaultProps = {
   onChange: () => {},
 };
 
+// Jest timer mocking is global.  setup\clearFakeTimers must always
+// be called at the start and end of a test, so that it
+// doesn't impact any other tests.
+let timeoutSpy: null | jest.SpyInstance = null;
+const setupFakeTimers = () => {
+  jest.useFakeTimers();
+  timeoutSpy = jest.spyOn(global, 'setTimeout');
+};
+const clearFakeTimers = () => {
+  jest.useRealTimers();
+  if (timeoutSpy != null) {
+    timeoutSpy.mockClear();
+    timeoutSpy = null;
+  }
+};
+// Run the pending timers inside `act` to catch all
+// events that might be user simulated.
+const runPending = () => {
+  act(() => {
+    jest.runOnlyPendingTimers();
+  });
+};
+
 describe('@mantine/core/NumberInput', () => {
   checkAccessibility([
     render(<NumberInput {...defaultProps} label="test" />),
@@ -216,27 +239,31 @@ describe('@mantine/core/NumberInput', () => {
   });
 
   it('steps value with controls on hold mousedown with a millisecond delay value', async () => {
+    setupFakeTimers();
+
     const spy = jest.fn();
     const element = mount(
       <NumberInput value={0} step={10} onChange={spy} stepHoldDelay={100} stepHoldInterval={100} />
     );
 
-    await act(async () => {
-      element.find('.mantine-NumberInput-controlUp');
-      element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
-
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          element.find('.mantine-NumberInput-controlUp').simulate('mouseup');
-          resolve(null);
-        }, 350);
-      });
+    const control = element.find('.mantine-NumberInput-controlUp');
+    act(() => {
+      control.simulate('mousedown');
     });
-
+    runPending();
+    runPending();
+    runPending();
+    act(() => {
+      control.simulate('mouseup');
+    });
     expect(spy).toHaveBeenLastCalledWith(40);
+
+    clearFakeTimers();
   });
 
   it('steps value with controls on hold mousedown with a function delay', async () => {
+    setupFakeTimers();
+
     const spy = jest.fn();
     const element = mount(
       <NumberInput
@@ -248,40 +275,47 @@ describe('@mantine/core/NumberInput', () => {
       />
     );
 
-    await act(async () => {
-      element.find('.mantine-NumberInput-controlUp');
-      element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
-
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          element.find('.mantine-NumberInput-controlUp').simulate('mouseup');
-          resolve(null);
-        }, 550);
-      });
+    const control = element.find('.mantine-NumberInput-controlUp');
+    act(() => {
+      control.simulate('mousedown');
+      jest.runOnlyPendingTimers();
+    });
+    runPending();
+    runPending();
+    runPending();
+    runPending();
+    act(() => {
+      control.simulate('mouseup');
     });
 
     expect(spy).toHaveBeenLastCalledWith(50);
+
+    clearFakeTimers();
   });
 
   it('steps value with controls on hold keydown and stepHoldInterval', async () => {
+    setupFakeTimers();
+
     const spy = jest.fn();
     const element = mount(
       <NumberInput value={0} step={10} onChange={spy} stepHoldDelay={100} stepHoldInterval={100} />
     );
 
-    await act(async () => {
-      const input = element.find('input').at(0);
+    const input = element.find('input').at(0);
+    act(() => {
       input.simulate('keydown', { key: 'ArrowUp' });
-
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          input.simulate('keyup', { key: 'ArrowUp' });
-          resolve(null);
-        }, 350);
-      });
+      jest.runOnlyPendingTimers();
+    });
+    runPending();
+    runPending();
+    runPending();
+    act(() => {
+      input.simulate('keyup', { key: 'ArrowUp' });
     });
 
     expect(spy).toHaveBeenLastCalledWith(40);
+
+    clearFakeTimers();
   });
 
   it('steps value with controls on hold keydown without stepHoldInterval', async () => {
