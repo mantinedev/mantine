@@ -5,13 +5,11 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsClassName,
-  itSupportsStylesApi,
   itSupportsMargins,
   itSupportsRef,
   itSupportsSx,
 } from '@mantine/tests';
 import { Progress } from './Progress';
-import { Progress as ProgressStylesApi } from './styles.api';
 
 const defaultProps = { value: 80 };
 
@@ -23,7 +21,6 @@ describe('@mantine/core/Progress', () => {
   itSupportsSx(Progress, defaultProps);
   itSupportsRef(Progress, defaultProps, HTMLDivElement);
   checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
-  itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'Progress');
 
   it('has correct displayName', () => {
     expect(Progress.displayName).toEqual('@mantine/core/Progress');
