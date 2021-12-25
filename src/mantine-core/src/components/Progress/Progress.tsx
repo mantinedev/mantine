@@ -33,9 +33,6 @@ export interface ProgressProps
   /** Text to be placed inside the progress bar */
   label?: string;
 
-  /** Whether to show the label, if present */
-  showLabel?: boolean;
-
   /** Replaces value if present, renders multiple sections instead of single one */
   sections?: { value: number; color: MantineColor; label?: string }[];
 }
@@ -64,7 +61,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       striped = false,
       animated = false,
       isIndeterminate = false,
-      showLabel = false,
       label = '',
       'aria-label': ariaLabel,
       classNames,
@@ -90,7 +86,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               backgroundColor: theme.fn.themeColor(section.color, 7),
             }}
           >
-            {showLabel ? <Text className={classes.label}>{section.label}</Text> : ''}
+            {label ? <Text className={classes.label}>{section.label}</Text> : ''}
           </div>
         ))
       : null;
@@ -109,7 +105,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               width: `${isIndeterminate ? 100 : value}%`,
             }}
           >
-            {showLabel ? <Text className={classes.label}>{label}</Text> : ''}
+            {label ? <Text className={classes.label}>{label}</Text> : ''}
           </div>
         )}
       </Box>
