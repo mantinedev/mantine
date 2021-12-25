@@ -4,22 +4,28 @@ import { itSupportsStyle } from './it-supports-style';
 import { itSupportsOthers } from './it-supports-others';
 import { itSupportsSx } from './it-supports-sx';
 import { itSupportsMargins } from './it-supports-margins';
+import { itSupportsRef } from './it-supports-ref';
 
-export function itSupportsSystemProps<T extends React.FC>(
-  Component: T,
-  defaultProps: React.ComponentProps<T>,
-  displayName: string,
-  options = { excludeOthers: false }
-) {
+interface Options<T extends React.FC> {
+  component: T;
+  props: React.ComponentProps<T>;
+  displayName: string;
+  excludeOthers?: boolean;
+  refType?: any;
+}
+
+export function itSupportsSystemProps<T extends React.FC>(options: Options<T>) {
   describe('it supports system props', () => {
-    itSupportsClassName(Component, defaultProps);
-    !options.excludeOthers && itSupportsOthers(Component, defaultProps);
-    itSupportsMargins(Component, defaultProps);
-    itSupportsStyle(Component, defaultProps);
-    itSupportsSx(Component, defaultProps);
+    const shouldExcludeOthers = options.excludeOthers || false;
+    options.refType && itSupportsRef(options.component, options.props, options.refType);
+    !shouldExcludeOthers && itSupportsOthers(options.component, options.props);
+    itSupportsClassName(options.component, options.props);
+    itSupportsMargins(options.component, options.props);
+    itSupportsStyle(options.component, options.props);
+    itSupportsSx(options.component, options.props);
   });
 
   it('has correct displayName', () => {
-    expect(Component.displayName).toBe(displayName);
+    expect(options.component.displayName).toBe(options.displayName);
   });
 }

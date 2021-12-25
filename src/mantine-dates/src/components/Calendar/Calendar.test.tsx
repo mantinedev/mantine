@@ -1,4 +1,4 @@
-import { itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { Calendar, CalendarProps } from './Calendar';
 
 const defaultProps: CalendarProps = {
@@ -7,6 +7,10 @@ const defaultProps: CalendarProps = {
 };
 
 describe('@mantine/dates/Calendar', () => {
-  itSupportsSystemProps(Calendar, defaultProps, '@mantine/dates/Calendar');
-  itSupportsRef(Calendar, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Calendar,
+    props: defaultProps,
+    displayName: '@mantine/dates/Calendar',
+    refType: HTMLInputElement,
+  });
 });

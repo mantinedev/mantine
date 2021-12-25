@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import { itSupportsRef, itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
+import { itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
 import { YearPicker } from './YearPicker/YearPicker';
 import { MonthPicker } from './MonthPicker/MonthPicker';
 import { MonthsList } from './MonthsList/MonthsList';
@@ -22,8 +22,12 @@ const labelsProps = {
 const defaultProps: CalendarBaseProps = {};
 
 describe('@mantine/core/CalendarBase', () => {
-  itSupportsSystemProps(CalendarBase, defaultProps, '@mantine/dates/CalendarBase');
-  itSupportsRef(CalendarBase, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: CalendarBase,
+    props: defaultProps,
+    displayName: '@mantine/dates/CalendarBase',
+    refType: HTMLDivElement,
+  });
 
   checkAccessibility([
     render(<CalendarBase {...labelsProps} initialLevel="date" />),
