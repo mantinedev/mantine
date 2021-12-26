@@ -56,7 +56,7 @@ export interface PinInputProps
    * If `true`, the pin input component signals to its fields that they should
    * use `autocomplete="one-time-code"`.
    */
-  otp?: boolean;
+  oneTimeCode?: boolean;
 
   /** The top-level id string that will be applied to the input fields */
   id?: string;
@@ -100,7 +100,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       invalid,
       radius = 'md',
       disabled,
-      otp,
+      oneTimeCode,
       placeholder = '●',
       type = 'alphanumeric',
       mask,
@@ -249,6 +249,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
         role="group"
         spacing={spacing}
         ref={ref}
+        className={className}
         direction={direction === 'horizontal' ? 'row' : 'column'}
         {...others}
       >
@@ -273,7 +274,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
             ref={(el: HTMLInputElement) => {
               inputsRef.current[i] = el;
             }}
-            autoComplete={otp ? 'one-time-code' : 'off'}
+            autoComplete={oneTimeCode ? 'one-time-code' : 'off'}
             // maxLength={1}
             placeholder={focusedIndex === i ? '' : placeholder}
             classNames={classes}
