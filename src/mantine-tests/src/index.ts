@@ -9,3 +9,4 @@ export { itIsPolymorphic } from './it-is-polymorphic';
 export { itSupportsSx } from './it-supports-sx';
 export { itSupportsFocusEvents } from './it-supports-focus-events';
 export { itSupportsSystemProps } from './it-supports-system-props';
+export { itSupportsInputProps } from './is-supports-input-props';
