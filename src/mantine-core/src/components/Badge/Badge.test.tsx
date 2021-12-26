@@ -1,43 +1,33 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
 import {
   checkAccessibility,
-  itSupportsClassName,
   itRendersChildren,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
   itIsPolymorphic,
-  itSupportsSx,
+  itSupportsSystemProps,
 } from '@mantine/tests';
-import { Badge } from './Badge';
+import { Badge, BadgeProps } from './Badge';
 
-const defaultProps = {};
+const defaultProps: BadgeProps<'div'> = {};
 
 describe('@mantine/core/Badge', () => {
   checkAccessibility([render(<Badge>this is badge</Badge>)]);
-  itSupportsOthers(Badge, defaultProps);
-  itSupportsClassName(Badge, defaultProps);
   itRendersChildren(Badge, defaultProps);
-  itSupportsStyle(Badge, defaultProps);
-  itSupportsSx(Badge, defaultProps);
-  itSupportsMargins(Badge, defaultProps);
   itIsPolymorphic(Badge, defaultProps);
-  itSupportsRef(Badge, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Badge,
+    props: defaultProps,
+    displayName: '@mantine/core/Badge',
+    refType: HTMLDivElement,
+  });
 
   it('renders given left and right section', () => {
-    const element = shallow(
+    const { container } = render(
       <Badge rightSection="test-right" leftSection="test-left">
         test
       </Badge>
     );
-    expect(element.render().find('.mantine-Badge-rightSection').text()).toBe('test-right');
-    expect(element.render().find('.mantine-Badge-leftSection').text()).toBe('test-left');
-  });
-
-  it('has correct displayName', () => {
-    expect(Badge.displayName).toEqual('@mantine/core/Badge');
+    expect(container.querySelector('.mantine-Badge-rightSection').textContent).toBe('test-right');
+    expect(container.querySelector('.mantine-Badge-leftSection').textContent).toBe('test-left');
   });
 });
