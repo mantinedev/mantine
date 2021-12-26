@@ -81,6 +81,39 @@ describe('@mantine/core/Accordion', () => {
     expect(screen.getAllByRole('button')[2]).toHaveFocus();
   });
 
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(
+      <Accordion
+        {...defaultProps}
+        onChange={spy}
+        state={{ 0: false, 1: true, 2: false }}
+        transitionDuration={0}
+      />
+    );
+
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+
+    userEvent.click(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith({ 0: true, 1: false, 2: false });
+  });
+
+  it('supports multiple controlled state', () => {
+    const spy = jest.fn();
+    render(
+      <Accordion
+        {...defaultProps}
+        multiple
+        onChange={spy}
+        state={{ 0: false, 1: true, 2: false }}
+      />
+    );
+
+    userEvent.click(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith({ 0: true, 1: true, 2: false });
+  });
+
   it('exposes AccordionItem component as Accordion.Item', () => {
     expect(Accordion.Item).toBe(AccordionItem);
   });
