@@ -1,57 +1,47 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
 import {
   checkAccessibility,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsRef,
   itRendersChildren,
-  itSupportsMargins,
   itIsPolymorphic,
-  itSupportsSx,
+  itSupportsSystemProps,
 } from '@mantine/tests';
-import { Loader } from '../Loader';
-import { ActionIcon } from './ActionIcon';
+import { ActionIcon, ActionIconProps } from './ActionIcon';
 
-const defaultProps = { children: '$' };
+const defaultProps: ActionIconProps<'button'> = { children: '$' };
 
 describe('@mantine/core/ActionIcon', () => {
-  itSupportsClassName(ActionIcon, defaultProps);
-  itSupportsOthers(ActionIcon, defaultProps);
-  itSupportsSx(ActionIcon, defaultProps);
-  itSupportsStyle(ActionIcon, defaultProps);
-  itSupportsMargins(ActionIcon, defaultProps);
   itIsPolymorphic(ActionIcon, defaultProps);
-  itSupportsRef(ActionIcon, defaultProps, HTMLButtonElement);
   itRendersChildren(ActionIcon, defaultProps);
+  itSupportsSystemProps({
+    component: ActionIcon,
+    props: defaultProps,
+    displayName: '@mantine/core/ActionIcon',
+    refType: HTMLButtonElement,
+  });
+
   checkAccessibility([
     render(<ActionIcon {...defaultProps} title="Action icon" />),
     render(<ActionIcon {...defaultProps} aria-label="Action icon" />),
   ]);
 
   it('replaces icon with Loader when loading is set to true', () => {
-    const loading = shallow(
+    const { container: loading } = render(
       <ActionIcon loading>
         <span className="test-icon" />
       </ActionIcon>
     );
 
-    const notLoading = shallow(
+    const { container: notLoading } = render(
       <ActionIcon loading={false}>
         <span className="test-icon" />
       </ActionIcon>
     );
 
-    expect(notLoading.find('.test-icon')).toHaveLength(1);
-    expect(notLoading.find(Loader)).toHaveLength(0);
+    expect(notLoading.querySelectorAll('.test-icon')).toHaveLength(1);
+    expect(notLoading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(0);
 
-    expect(loading.find('.test-icon')).toHaveLength(0);
-    expect(loading.find(Loader)).toHaveLength(1);
-  });
-
-  it('has correct displayName', () => {
-    expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
+    expect(loading.querySelectorAll('.test-icon')).toHaveLength(0);
+    expect(loading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(1);
   });
 });
