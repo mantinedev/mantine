@@ -1,27 +1,20 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Dropzone } from './Dropzone';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Dropzone, DropzoneProps } from './Dropzone';
 
-const defaultProps = {
+const defaultProps: DropzoneProps = {
   onDrop: () => {},
   children: () => null,
 };
 
 describe('@mantine/dropzone/Dropzone', () => {
-  itSupportsClassName(Dropzone, defaultProps);
-  itSupportsMargins(Dropzone, defaultProps);
-  itSupportsOthers(Dropzone, defaultProps);
-  itSupportsStyle(Dropzone, defaultProps);
-  itSupportsSx(Dropzone, defaultProps);
-  itSupportsRef(Dropzone, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Dropzone,
+    props: defaultProps,
+    displayName: '@mantine/dropzone/Dropzone',
+    refType: HTMLDivElement,
+  });
 
   it('displays LoadingOverlay based on loading prop', () => {
     const { container: loading } = render(<Dropzone {...defaultProps} loading />);
@@ -35,9 +28,5 @@ describe('@mantine/dropzone/Dropzone', () => {
     const ref = React.createRef<any>();
     render(<Dropzone {...defaultProps} openRef={ref} />);
     expect(ref.current).toBeInstanceOf(Function);
-  });
-
-  it('has correct displayName', () => {
-    expect(Dropzone.displayName).toEqual('@mantine/dropzone/Dropzone');
   });
 });
