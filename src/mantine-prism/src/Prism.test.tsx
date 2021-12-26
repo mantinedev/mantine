@@ -1,36 +1,21 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Language } from 'prism-react-renderer';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Prism, PrismTab, PrismTabs } from './Prism';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Prism, PrismTab, PrismTabs, PrismProps, PrismTabsProps } from './Prism';
 
-const code = `import React from 'react';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return <Button>Hello</Button>
-}`;
-
-const defaultProps = {
-  children: code,
+const defaultProps: PrismProps = {
+  children: 'test',
   withLineNumbers: true,
-  language: 'tsx' as Language,
+  language: 'tsx',
 };
 
 describe('@mantine/prism/Prism', () => {
-  itSupportsClassName(Prism, defaultProps);
-  itSupportsMargins(Prism, defaultProps);
-  itSupportsOthers(Prism, defaultProps);
-  itSupportsStyle(Prism, defaultProps);
-  itSupportsSx(Prism, defaultProps);
-  itSupportsRef(Prism, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Prism,
+    props: defaultProps,
+    displayName: '@mantine/prism/Prism',
+    refType: HTMLDivElement,
+  });
 
   it('renders tooltip based on noCopy prop', () => {
     const { container: withCopy } = render(<Prism {...defaultProps} noCopy={false} />);
@@ -55,13 +40,9 @@ describe('@mantine/prism/Prism', () => {
     expect(Prism.Tabs).toBe(PrismTabs);
     expect(Prism.Tab).toBe(PrismTab);
   });
-
-  it('has correct displayName', () => {
-    expect(Prism.displayName).toEqual('@mantine/prism/Prism');
-  });
 });
 
-const defaultTabsProps = {
+const defaultTabsProps: PrismTabsProps = {
   children: [
     <Prism.Tab language="tsx" key="1">
       code
@@ -70,14 +51,10 @@ const defaultTabsProps = {
 };
 
 describe('@mantine/prism/Prism.Tabs', () => {
-  itSupportsClassName(Prism.Tabs, defaultTabsProps);
-  itSupportsMargins(Prism.Tabs, defaultTabsProps);
-  itSupportsOthers(Prism.Tabs, defaultTabsProps);
-  itSupportsStyle(Prism.Tabs, defaultTabsProps);
-  itSupportsSx(Prism.Tabs, defaultTabsProps);
-  itSupportsRef(Prism.Tabs, defaultTabsProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Prism.Tabs.displayName).toEqual('@mantine/prism/Tabs');
+  itSupportsSystemProps({
+    component: Prism.Tabs,
+    props: defaultTabsProps,
+    displayName: '@mantine/prism/Tabs',
+    refType: HTMLDivElement,
   });
 });
