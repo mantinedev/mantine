@@ -2,7 +2,10 @@ import { MantineSize, MantineTheme } from '@mantine/styles';
 
 type Breakpoints<T> = Partial<Record<MantineSize | (string & {}), T>>;
 
-export function getSortedBreakpoints<T>(breakpoints: Breakpoints<T>, theme: MantineTheme) {
+export function getSortedBreakpoints<T>(
+  breakpoints: Breakpoints<T>,
+  theme: MantineTheme
+): [number, T][] {
   if (!breakpoints) {
     return [];
   }
@@ -14,6 +17,6 @@ export function getSortedBreakpoints<T>(breakpoints: Breakpoints<T>, theme: Mant
       breakpoints[breakpoint],
     ]);
 
-  values.sort((a, b) => b[0] - a[0]);
-  return values.reverse() as [number, T][];
+  values.sort((a, b) => a[0] - b[0]);
+  return values as [number, T][];
 }

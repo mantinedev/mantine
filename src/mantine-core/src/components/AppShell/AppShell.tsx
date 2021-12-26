@@ -8,7 +8,7 @@ import {
   getDefaultZIndex,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import { getElementHeight, getNavbarBreakpoints, getNavbarWidth } from './utils';
+import { getElementHeight, getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
@@ -55,7 +55,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
   ) => {
     const theme = useMantineTheme();
     const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
-    const navbarWidth = getNavbarWidth(navbar);
+    const navbarWidth = getNavbarBaseWidth(navbar);
     const headerHeight = getElementHeight(header);
     const navbarHeight = getElementHeight(navbar);
     const { classes, cx } = useStyles(
