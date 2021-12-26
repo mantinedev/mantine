@@ -1,73 +1,73 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
+import { itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
-import { Autocomplete } from './Autocomplete';
+import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
-const defaultProps = {
+const defaultProps: AutocompleteProps = {
+  withinPortal: false,
   initiallyOpened: true,
   label: 'Test',
   data: [{ value: 'test-1' }, { value: 'test-2' }],
 };
 
-const data = Array(50)
+const largeDataSet: AutocompleteProps['data'] = Array(50)
   .fill(0)
   .map((_, index) => ({ value: index.toString() }));
 
+const queries = {
+  getDropdown: (container: HTMLElement) =>
+    container.querySelector('.mantine-Autocomplete-dropdown'),
+  getItems: (container: HTMLElement) => container.querySelectorAll('.mantine-Autocomplete-item'),
+};
+
 describe('@mantine/core/Autocomplete', () => {
-  itSupportsClassName(Autocomplete, defaultProps);
-  itSupportsStyle(Autocomplete, defaultProps);
-  itSupportsSx(Autocomplete, defaultProps);
-  itSupportsMargins(Autocomplete, defaultProps);
-  itSupportsRef(Autocomplete, defaultProps, HTMLInputElement);
+  checkAccessibility([render(<Autocomplete {...defaultProps} />)]);
+  itSupportsSystemProps({
+    component: Autocomplete,
+    props: defaultProps,
+    displayName: '@mantine/core/Autocomplete',
+    refType: HTMLInputElement,
+    excludeOthers: true,
+  });
 
   it('renders dropdown when value has both full match and partial match', () => {
-    const element = shallow(
-      <Autocomplete data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" initiallyOpened />
+    const { container } = render(
+      <Autocomplete {...defaultProps} data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" />
     );
 
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Autocomplete-dropdown')).toHaveLength(1);
-    });
+    expect(queries.getDropdown(container)).toBeInTheDocument();
   });
 
   it('renders correct amount of items based on data prop', () => {
-    const element = shallow(<Autocomplete data={data.slice(0, 5)} initiallyOpened limit={10} />);
+    const { container } = render(
+      <Autocomplete {...defaultProps} data={largeDataSet.slice(0, 5)} limit={10} />
+    );
 
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(5);
-    });
+    expect(queries.getItems(container)).toHaveLength(5);
   });
 
   it('renders correct amount of items based on filter prop', () => {
-    const element = shallow(
+    const { container } = render(
       <Autocomplete
-        data={data}
-        initiallyOpened
+        {...defaultProps}
+        data={largeDataSet}
         limit={10}
-        filter={(query, item) => item.value.includes('2')}
+        filter={(_query, item) => item.value.includes('2')}
       />
     );
 
-    // Numbers 0-50 which include 2
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(10);
-    });
+    // Numbers 0-50 which include 2, e.g. 12, 22, 42
+    expect(queries.getItems(container)).toHaveLength(10);
   });
 
   it('limits amount of shown items based on limit prop', () => {
-    const element = shallow(<Autocomplete data={data} initiallyOpened limit={10} />);
-
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Autocomplete-item')).toHaveLength(10);
-    });
+    const { container } = render(
+      <Autocomplete {...defaultProps} data={largeDataSet} initiallyOpened limit={10} />
+    );
+    expect(queries.getItems(container)).toHaveLength(10);
   });
 
   it('passes wrapperProps to InputWrapper', () => {
