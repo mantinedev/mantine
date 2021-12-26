@@ -7,4 +7,5 @@ export { itSupportsStyle } from './it-supports-style';
 export { itSupportsMargins } from './it-supports-margins';
 export { itIsPolymorphic } from './it-is-polymorphic';
 export { itSupportsSx } from './it-supports-sx';
+export { itSupportsFocusEvents } from './it-supports-focus-events';
 export { itSupportsSystemProps } from './it-supports-system-props';
