@@ -1,5 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Button } from '../Button';
 import { Accordion, AccordionProps } from './Accordion';
@@ -8,9 +9,9 @@ import { AccordionItem } from './AccordionItem/AccordionItem';
 const defaultProps: AccordionProps = {
   initialItem: 1,
   children: [
-    <Accordion.Item label="Test 1">Test 1</Accordion.Item>,
-    <Accordion.Item label="Test 2">Test 2</Accordion.Item>,
-    <Accordion.Item label="Test 3">Test 3</Accordion.Item>,
+    <Accordion.Item label="test-label-1">test-item-1</Accordion.Item>,
+    <Accordion.Item label="test-label-2">test-item-2</Accordion.Item>,
+    <Accordion.Item label="test-label-3">test-item-3</Accordion.Item>,
   ],
 };
 
@@ -52,6 +53,32 @@ describe('@mantine/core/Accordion', () => {
       </Accordion>
     );
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+  });
+
+  it('opens item on control click', () => {
+    render(<Accordion {...defaultProps} initialItem={1} transitionDuration={0} />);
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+
+    userEvent.click(screen.getAllByRole('button')[0]);
+    expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+  });
+
+  it('supports navigating between items with up and down arrows', () => {
+    render(<Accordion {...defaultProps} initialItem={0} />);
+
+    userEvent.type(screen.getAllByRole('button')[0], '{arrowdown}');
+    expect(screen.getAllByRole('button')[1]).toHaveFocus();
+
+    userEvent.type(screen.getAllByRole('button')[2], '{arrowup}');
+    expect(screen.getAllByRole('button')[1]).toHaveFocus();
+
+    userEvent.type(screen.getAllByRole('button')[2], '{arrowdown}');
+    expect(screen.getAllByRole('button')[0]).toHaveFocus();
+
+    userEvent.type(screen.getAllByRole('button')[0], '{arrowup}');
+    expect(screen.getAllByRole('button')[2]).toHaveFocus();
   });
 
   it('exposes AccordionItem component as Accordion.Item', () => {
