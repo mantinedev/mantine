@@ -114,6 +114,27 @@ describe('@mantine/core/Accordion', () => {
     expect(spy).toHaveBeenCalledWith({ 0: true, 1: true, 2: false });
   });
 
+  it('sets initial opened item based on initialItem prop', () => {
+    render(<Accordion {...defaultProps} initialItem={2} transitionDuration={0} />);
+    expect(screen.getByText('test-item-3')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
+    expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
+  });
+
+  it('sets initial opened items with initialState for multiple variant', () => {
+    render(
+      <Accordion
+        {...defaultProps}
+        multiple
+        initialState={{ 0: true, 1: true, 2: false }}
+        transitionDuration={0}
+      />
+    );
+    expect(screen.getByText('test-item-1')).toBeInTheDocument();
+    expect(screen.getByText('test-item-2')).toBeInTheDocument();
+    expect(screen.queryAllByText('test-item-3')).toHaveLength(0);
+  });
+
   it('exposes AccordionItem component as Accordion.Item', () => {
     expect(Accordion.Item).toBe(AccordionItem);
   });
