@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps, itSupportsInputProps, checkAccessibility } from '@mantine/tests';
+import {
+  itSupportsSystemProps,
+  itSupportsInputProps,
+  checkAccessibility,
+  itSupportsFocusEvents,
+} from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
 const defaultProps: AutocompleteProps = {
@@ -23,6 +28,7 @@ const queries = {
 describe('@mantine/core/Autocomplete', () => {
   checkAccessibility([render(<Autocomplete {...defaultProps} />)]);
   itSupportsInputProps(Autocomplete, defaultProps, 'Autocomplete');
+  itSupportsFocusEvents(Autocomplete, defaultProps, '.mantine-Autocomplete-input');
   itSupportsSystemProps({
     component: Autocomplete,
     props: defaultProps,
