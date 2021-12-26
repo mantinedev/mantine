@@ -1,26 +1,17 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Header } from './Header';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Header, HeaderProps } from './Header';
 
-const defaultProps = { children: 'test-header' };
+const defaultProps: HeaderProps = {
+  height: 60,
+  children: 'test-header',
+};
 
 describe('@mantine/core/Header', () => {
   itRendersChildren(Header, defaultProps);
-  itSupportsClassName(Header, defaultProps);
-  itSupportsMargins(Header, defaultProps);
-  itSupportsOthers(Header, defaultProps);
-  itSupportsStyle(Header, defaultProps);
-  itSupportsSx(Header, defaultProps);
-  itSupportsRef(Header, defaultProps, HTMLElement);
-
-  it('has correct displayName', () => {
-    expect(Header.displayName).toEqual('@mantine/core/Header');
+  itSupportsSystemProps({
+    component: Header,
+    props: defaultProps,
+    displayName: '@mantine/core/Header',
+    refType: HTMLElement,
   });
 });

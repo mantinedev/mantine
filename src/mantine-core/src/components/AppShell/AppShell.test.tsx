@@ -1,67 +1,60 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
-import { AppShell } from './AppShell';
+import { AppShell, AppShellProps } from './AppShell';
 
-const defaultProps = { children: 'test' };
+const defaultProps: AppShellProps = {
+  children: 'test-app-shell',
+};
 
 describe('@mantine/core/AppShell', () => {
   itRendersChildren(AppShell, defaultProps);
-  itSupportsClassName(AppShell, defaultProps);
-  itSupportsStyle(AppShell, defaultProps);
-  itSupportsMargins(AppShell, defaultProps);
-  itSupportsOthers(AppShell, defaultProps);
-  itSupportsSx(AppShell, defaultProps);
-  itSupportsRef(AppShell, defaultProps, HTMLDivElement);
-
-  it('passes fixed and zIndex props to Header', () => {
-    const fixed = shallow(
-      <AppShell fixed zIndex={476} header={<Header height={60}>test-header</Header>}>
-        test-shell
-      </AppShell>
-    );
-
-    const _static = shallow(
-      <AppShell fixed={false} header={<Header height={60}>test-header</Header>}>
-        test-shell
-      </AppShell>
-    );
-
-    expect(fixed.find(Header).prop('zIndex')).toBe(476);
-    expect(fixed.find(Header).prop('fixed')).toBe(true);
-    expect(_static.find(Header).prop('fixed')).toBe(false);
+  itSupportsSystemProps({
+    component: AppShell,
+    props: defaultProps,
+    displayName: '@mantine/core/AppShell',
+    refType: HTMLDivElement,
   });
 
-  it('passes fixed and zIndex props to Navbar', () => {
-    const fixed = shallow(
-      <AppShell fixed zIndex={476} navbar={<Navbar>test-navbar</Navbar>}>
+  it('sets fixed position and z-index on Header and Navbar components based on props', () => {
+    const { container: fixed } = render(
+      <AppShell
+        fixed
+        zIndex={476}
+        header={<Header height={60}>test-header</Header>}
+        navbar={<Navbar>test-navbar</Navbar>}
+      >
         test-shell
       </AppShell>
     );
 
-    const _static = shallow(
-      <AppShell fixed={false} navbar={<Navbar>test-navbar</Navbar>}>
+    const { container: _static } = render(
+      <AppShell
+        fixed={false}
+        header={<Header height={60}>test-header</Header>}
+        navbar={<Navbar>test-navbar</Navbar>}
+      >
         test-shell
       </AppShell>
     );
 
-    expect(fixed.find(Navbar).prop('zIndex')).toBe(476);
-    expect(fixed.find(Navbar).prop('fixed')).toBe(true);
-    expect(_static.find(Navbar).prop('fixed')).toBe(false);
+    expect(_static.querySelector('.mantine-Header-root')).toHaveStyle({ position: 'static' });
+    expect(fixed.querySelector('.mantine-Header-root')).toHaveStyle({
+      zIndex: 476,
+      position: 'fixed',
+    });
+
+    expect(_static.querySelector('.mantine-Navbar-root')).toHaveStyle({ position: 'static' });
+    expect(fixed.querySelector('.mantine-Navbar-root')).toHaveStyle({
+      zIndex: 476,
+      position: 'fixed',
+    });
   });
 
   it('sets Navbar height and position based on Header height', () => {
-    const element = shallow(
+    const { container } = render(
       <AppShell
         header={<Header height={87}>test-header</Header>}
         navbar={<Navbar width={{ base: 200 }}>test-navbar</Navbar>}
@@ -70,11 +63,10 @@ describe('@mantine/core/AppShell', () => {
       </AppShell>
     );
 
-    expect(element.find(Navbar).prop('height')).toBe('calc(100vh - 87px)');
-    expect(element.find(Navbar).prop('position')).toEqual({ top: '87px', left: 0 });
-  });
-
-  it('has correct displayName', () => {
-    expect(AppShell.displayName).toEqual('@mantine/core/AppShell');
+    expect(container.querySelector('.mantine-Navbar-root')).toHaveStyle({
+      height: 'calc(100vh - 87px)',
+      top: '87px',
+      left: 0,
+    });
   });
 });
