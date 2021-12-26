@@ -6,7 +6,6 @@ import {
   itSupportsStyle,
   itSupportsMargins,
   itSupportsSx,
-  mockResizeObserver,
 } from '@mantine/tests';
 import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
 import { InputWrapper } from '../InputWrapper/InputWrapper';
@@ -26,8 +25,6 @@ const defaultProps = {
 const data = Array(50)
   .fill(0)
   .map((_, index) => ({ value: index.toString(), label: index.toString() }));
-
-mockResizeObserver();
 
 describe('@mantine/core/Select', () => {
   itSupportsClassName(Select, defaultProps);

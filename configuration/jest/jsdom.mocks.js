@@ -16,3 +16,10 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+}
+
+window.ResizeObserver = ResizeObserver;

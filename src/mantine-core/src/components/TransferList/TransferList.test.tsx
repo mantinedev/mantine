@@ -4,7 +4,6 @@ import {
   itSupportsOthers,
   itSupportsRef,
   itSupportsStyle,
-  mockResizeObserver,
   itSupportsSx,
 } from '@mantine/tests';
 import { TransferList, TransferListProps } from './TransferList';
@@ -24,8 +23,6 @@ const defaultProps: Partial<TransferListProps> = {
     ],
   ],
 };
-
-mockResizeObserver();
 
 describe('@mantine/core/TransferList', () => {
   itSupportsClassName(TransferList, defaultProps);

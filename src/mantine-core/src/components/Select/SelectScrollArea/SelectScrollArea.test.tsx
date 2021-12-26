@@ -3,11 +3,8 @@ import {
   itSupportsStyle,
   itSupportsOthers,
   itSupportsRef,
-  mockResizeObserver,
 } from '@mantine/tests';
 import { SelectScrollArea } from './SelectScrollArea';
-
-mockResizeObserver();
 
 describe('@mantine/core/SelectScrollArea', () => {
   itRendersChildren(SelectScrollArea, {});

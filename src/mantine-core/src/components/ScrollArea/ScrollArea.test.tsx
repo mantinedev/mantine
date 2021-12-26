@@ -6,11 +6,8 @@ import {
   itSupportsStyle,
   itSupportsRef,
   itSupportsSx,
-  mockResizeObserver,
 } from '@mantine/tests';
 import { ScrollArea } from './ScrollArea';
-
-mockResizeObserver();
 
 const defaultProps = {};
 

@@ -8,7 +8,6 @@ import {
   itSupportsMargins,
   itSupportsSx,
   itSupportsRef,
-  mockResizeObserver,
 } from '@mantine/tests';
 import { Prism, PrismTab, PrismTabs } from './Prism';
 
@@ -24,8 +23,6 @@ const defaultProps = {
   withLineNumbers: true,
   language: 'tsx' as Language,
 };
-
-mockResizeObserver();
 
 describe('@mantine/prism/Prism', () => {
   itSupportsClassName(Prism, defaultProps);
