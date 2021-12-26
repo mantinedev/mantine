@@ -55,6 +55,12 @@ export default createStyles(
         },
       },
 
+      itemTitle: {
+        margin: 0,
+        padding: 0,
+        fontWeight: 'normal',
+      },
+
       control: {
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),

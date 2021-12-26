@@ -44,7 +44,7 @@ describe('@mantine/core/Accordion', () => {
     expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
-  it('supports controlRef on Accordion.Item', async () => {
+  it('supports controlRef on Accordion.Item', () => {
     const ref = React.createRef<HTMLButtonElement>();
     render(
       <Accordion>

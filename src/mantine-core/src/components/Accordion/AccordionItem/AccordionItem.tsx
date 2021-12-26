@@ -60,7 +60,7 @@ export function AccordionItem({
 
   return (
     <Box className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
-      <h3 style={{ margin: 0, fontWeight: 'normal' }}>
+      <h3 className={classes.itemTitle}>
         <UnstyledButton
           className={classes.control}
           onClick={onToggle}
