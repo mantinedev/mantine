@@ -5,7 +5,6 @@ import { TextInput } from '../../TextInput';
 import { Textarea } from '../../Textarea';
 import { Group } from '../../Group';
 import { Button } from '../../Button';
-import { ThemeIcon } from '../../ThemeIcon';
 import { Text } from '../../Text';
 import { SimpleGrid } from '../../SimpleGrid';
 import { Accordion, useAccordionState } from '../index';
@@ -33,7 +32,7 @@ function Demo() {
           minRows={2}
           autosize
         />
-        <Group position="center" mt="xl">
+        <Group position="right" mt="xl">
           <Button onClick={() => handlers.toggle(1)}>Next step</Button>
         </Group>
       </Accordion.Item>
@@ -52,7 +51,7 @@ function Demo() {
           minRows={2}
         />
 
-        <Group position="center" mt="xl">
+        <Group position="apart" mt="xl">
           <Button variant="default" onClick={() => handlers.toggle(0)}>
             Previous step
           </Button>
@@ -60,16 +59,11 @@ function Demo() {
         </Group>
       </Accordion.Item>
       <Accordion.Item label="Confirmation" icon={<CircleCheck color={theme.colors.teal[6]} />}>
-        <Group position="center" direction="column">
-          <ThemeIcon size={80} color="teal" variant="light" radius={80}>
-            <CircleCheck size={50} />
-          </ThemeIcon>
-
-          <Text size="xl" weight={500} align="center">
-            All done!
-          </Text>
-        </Group>
-        <Group position="center" mt="xl">
+        <Text>All done!</Text>
+        <Text color="dimmed" size="sm">
+          We will start processing your order soon
+        </Text>
+        <Group position="left" mt="xl">
           <Button variant="default" onClick={() => handlers.toggle(1)}>
             Previous step
           </Button>
@@ -99,7 +93,7 @@ function Demo() {
           minRows={2}
           autosize
         />
-        <Group position="center" mt="xl">
+        <Group position="right" mt="xl">
           <Button onClick={() => handlers.toggle(1)}>Next step</Button>
         </Group>
       </Accordion.Item>
@@ -118,7 +112,7 @@ function Demo() {
           minRows={2}
         />
 
-        <Group position="center" mt="xl">
+        <Group position="apart" mt="xl">
           <Button variant="default" onClick={() => handlers.toggle(0)}>
             Previous step
           </Button>
@@ -126,16 +120,11 @@ function Demo() {
         </Group>
       </Accordion.Item>
       <Accordion.Item label="Confirmation" icon={<CircleCheck color={theme.colors.teal[6]} />}>
-        <Group position="center" direction="column">
-          <ThemeIcon size={80} color="teal" variant="light" radius={80}>
-            <CircleCheck size={50} />
-          </ThemeIcon>
-
-          <Text size="xl" weight={500} align="center">
-            All done!
-          </Text>
-        </Group>
-        <Group position="center" mt="xl">
+        <Text>All done!</Text>
+        <Text color="dimmed" size="sm">
+          We will start processing your order soon
+        </Text>
+        <Group position="left" mt="xl">
           <Button variant="default" onClick={() => handlers.toggle(1)}>
             Previous step
           </Button>
