@@ -11,6 +11,6 @@ describe('@mantine/dates/Calendar', () => {
     component: Calendar,
     props: defaultProps,
     displayName: '@mantine/dates/Calendar',
-    refType: HTMLInputElement,
+    refType: HTMLDivElement,
   });
 });
