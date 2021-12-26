@@ -2,14 +2,13 @@ import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
-  MantineTheme,
   useMantineTheme,
   ClassNames,
   MantineMargin,
   getDefaultZIndex,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import { getSortedBreakpoints } from './get-sorted-breakpoints';
+import { getElementHeight, getNavbarBreakpoints, getNavbarWidth } from './utils';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
@@ -35,26 +34,6 @@ export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, M
 
   /** Breakpoint at which Navbar component should no longer be offset with padding-left, applicable only for fixed position */
   navbarOffsetBreakpoint?: MantineNumberSize;
-}
-
-function getElementHeight(element: React.ReactElement) {
-  const height = element?.props?.height;
-  return typeof height === 'number' ? `${height}px` : typeof height === 'string' ? height : '0px';
-}
-
-function getNavbarWidth(element: React.ReactElement) {
-  const width = element?.props?.width?.base;
-  return typeof width === 'number' ? `${width}px` : typeof width === 'string' ? width : '0px';
-}
-
-function getNavbarBreakpoints(element: React.ReactElement, theme: MantineTheme) {
-  const breakpoints = element?.props?.width;
-  return breakpoints != null
-    ? getSortedBreakpoints<{ width: number | string; height: number | string }>(
-        breakpoints as any,
-        theme
-      )
-    : [];
 }
 
 export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
