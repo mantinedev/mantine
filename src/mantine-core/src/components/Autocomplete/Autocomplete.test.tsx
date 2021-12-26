@@ -1,9 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
-import { itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper';
-import { Input } from '../Input';
+import { itSupportsSystemProps, itSupportsInputProps, checkAccessibility } from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
 const defaultProps: AutocompleteProps = {
@@ -25,6 +22,7 @@ const queries = {
 
 describe('@mantine/core/Autocomplete', () => {
   checkAccessibility([render(<Autocomplete {...defaultProps} />)]);
+  itSupportsInputProps(Autocomplete, defaultProps, 'Autocomplete');
   itSupportsSystemProps({
     component: Autocomplete,
     props: defaultProps,
@@ -68,55 +66,5 @@ describe('@mantine/core/Autocomplete', () => {
       <Autocomplete {...defaultProps} data={largeDataSet} initiallyOpened limit={10} />
     );
     expect(queries.getItems(container)).toHaveLength(10);
-  });
-
-  it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(
-      <Autocomplete {...defaultProps} wrapperProps={{ 'aria-label': 'test' }} />
-    );
-    expect(element.render().attr('aria-label')).toBe('test');
-  });
-
-  it('passes required, id, label, error and description props to InputWrapper component', () => {
-    const element = shallow(
-      <Autocomplete
-        {...defaultProps}
-        id="test-id"
-        required
-        label="test-label"
-        error="test-error"
-        description="test-description"
-      />
-    );
-
-    expect(element.find(InputWrapper).prop('id')).toBe('test-id');
-    expect(element.find(InputWrapper).prop('required')).toBe(true);
-    expect(element.find(InputWrapper).prop('label')).toBe('test-label');
-    expect(element.find(InputWrapper).prop('error')).toBe('test-error');
-    expect(element.find(InputWrapper).prop('description')).toBe('test-description');
-  });
-
-  it('passes required, id, invalid, icon and radius props to Input component', () => {
-    const element = shallow(
-      <Autocomplete
-        {...defaultProps}
-        required
-        id="test-id"
-        type="number"
-        error="test-error"
-        icon="$"
-        radius="sm"
-      />
-    );
-
-    expect(element.find(Input).prop('id')).toBe('test-id');
-    expect(element.find(Input).prop('required')).toBe(true);
-    expect(element.find(Input).prop('invalid')).toBe(true);
-    expect(element.find(Input).prop('icon')).toBe('$');
-    expect(element.find(Input).prop('radius')).toBe('sm');
-  });
-
-  it('has correct displayName', () => {
-    expect(Autocomplete.displayName).toEqual('@mantine/core/Autocomplete');
   });
 });
