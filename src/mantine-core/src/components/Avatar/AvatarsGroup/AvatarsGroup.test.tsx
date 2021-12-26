@@ -1,50 +1,36 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { AvatarsGroup } from './AvatarsGroup';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { AvatarsGroup, AvatarsGroupProps } from './AvatarsGroup';
 import { Avatar } from '../Avatar';
 
-const defaultProps = {
+const defaultProps: AvatarsGroupProps = {
   children: [<Avatar>M</Avatar>, <Avatar>K</Avatar>, <Avatar>L</Avatar>, <Avatar>L</Avatar>],
 };
 
 describe('@mantine/core/AvatarsGroup', () => {
-  itSupportsOthers(AvatarsGroup, defaultProps);
-  itSupportsClassName(AvatarsGroup, defaultProps);
-  itSupportsStyle(AvatarsGroup, defaultProps);
-  itSupportsMargins(AvatarsGroup, defaultProps);
-  itSupportsSx(AvatarsGroup, defaultProps);
-  itSupportsRef(AvatarsGroup, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: AvatarsGroup,
+    props: defaultProps,
+    displayName: '@mantine/core/AvatarsGroup',
+    refType: HTMLDivElement,
+  });
 
   it('renders avatars based on limit prop', () => {
-    const limit2 = shallow(<AvatarsGroup {...defaultProps} limit={2} />);
-    const limit3 = shallow(<AvatarsGroup {...defaultProps} limit={3} />);
-    const limit10 = shallow(<AvatarsGroup {...defaultProps} limit={10} />);
+    const { container: limit2 } = render(<AvatarsGroup {...defaultProps} limit={2} />);
+    const { container: limit3 } = render(<AvatarsGroup {...defaultProps} limit={3} />);
+    const { container: limit10 } = render(<AvatarsGroup {...defaultProps} limit={10} />);
 
-    expect(limit2.find(Avatar)).toHaveLength(3);
-    expect(limit3.find(Avatar)).toHaveLength(4);
-    expect(limit10.find(Avatar)).toHaveLength(4);
+    expect(limit2.querySelectorAll('.mantine-Avatar-root')).toHaveLength(3);
+    expect(limit3.querySelectorAll('.mantine-Avatar-root')).toHaveLength(4);
+    expect(limit10.querySelectorAll('.mantine-Avatar-root')).toHaveLength(4);
   });
 
   it('renders the truncated length properly', () => {
-    const total = mount(<AvatarsGroup {...defaultProps} limit={4} total={50} />);
-    const limit = mount(<AvatarsGroup {...defaultProps} limit={3} />);
+    const totalView = render(<AvatarsGroup {...defaultProps} limit={4} total={50} />);
+    const limitView = render(<AvatarsGroup {...defaultProps} limit={3} />);
 
-    let elementsArray = total.find(Avatar);
-    expect(elementsArray.at(elementsArray.length - 1).text()).toBe('+46');
-
-    elementsArray = limit.find(Avatar);
-    expect(elementsArray.at(elementsArray.length - 1).text()).toBe('+1');
-  });
-
-  it('has correct displayName', () => {
-    expect(AvatarsGroup.displayName).toEqual('@mantine/core/AvatarsGroup');
+    expect(totalView.getByText('+46')).toBeInTheDocument();
+    expect(limitView.getByText('+1')).toBeInTheDocument();
   });
 });

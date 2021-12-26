@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { filterChildrenByType } from '../../../utils';
 import { Avatar } from '../Avatar';
 import { Box } from '../../Box';
 import { Center } from '../../Center';
@@ -47,20 +48,18 @@ export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
   ) => {
     const { classes, cx } = useStyles({ spacing }, { classNames, styles, name: 'AvatarsGroup' });
 
-    const avatars = React.Children.toArray(children)
-      .filter((child: React.ReactElement) => child.type === Avatar)
-      .map((child: React.ReactElement, index) =>
-        React.cloneElement(child, {
-          size,
-          radius,
-          key: index,
-          className: cx(classes.child, child.props.className),
-          style: {
-            ...child.props.style,
-            zIndex: index + 1,
-          },
-        })
-      );
+    const avatars = filterChildrenByType(children, Avatar).map((child, index) =>
+      React.cloneElement(child, {
+        size,
+        radius,
+        key: index,
+        className: cx(classes.child, child.props.className),
+        style: {
+          ...child.props.style,
+          zIndex: index + 1,
+        },
+      })
+    );
 
     const clampedMax = limit < 2 ? 2 : limit;
     const extraAvatars = avatars.length > clampedMax ? avatars.length - clampedMax : 0;
