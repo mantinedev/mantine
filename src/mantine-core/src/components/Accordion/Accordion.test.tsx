@@ -1,20 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsOthers,
-  itSupportsStyle,
-  checkAccessibility,
-  itSupportsSx,
-} from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Button } from '../Button';
-import { Accordion } from './Accordion';
+import { Accordion, AccordionProps } from './Accordion';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 
-const defaultProps = {
+const defaultProps: AccordionProps = {
   initialItem: 1,
   children: [
     <Accordion.Item label="Test 1">Test 1</Accordion.Item>,
@@ -24,32 +15,33 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Accordion', () => {
-  itSupportsClassName(Accordion, defaultProps);
-  itSupportsOthers(Accordion, defaultProps);
-  itSupportsStyle(Accordion, defaultProps);
-  itSupportsSx(Accordion, defaultProps);
-  itSupportsMargins(Accordion, defaultProps);
-  itSupportsRef(Accordion, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Accordion,
+    props: defaultProps,
+    displayName: '@mantine/core/Accordion',
+    refType: HTMLDivElement,
+  });
   checkAccessibility([render(<Accordion {...defaultProps} />)]);
 
   it('renders correct amount of items', () => {
-    const element = shallow(<Accordion {...defaultProps} />);
-    expect(element.find(Accordion.Item)).toHaveLength(defaultProps.children.length);
+    const { container } = render(<Accordion {...defaultProps} />);
+    expect(container.querySelectorAll('.mantine-Accordion-item')).toHaveLength(3);
   });
 
   it('filters out unexpected children', () => {
-    const element = shallow(
+    const { container } = render(
       <Accordion>
         <Accordion.Item label="Child 1 label">Child 1</Accordion.Item>
-        <p>Unexpected child 1</p>
-        <div>Unexpected child 1</div>
+        <p className="unexpected">Unexpected child 1</p>
+        <div className="unexpected">Unexpected child 1</div>
         <Accordion.Item label="Child 2 label">Child 2</Accordion.Item>
         <Button>Unexpected component</Button>
       </Accordion>
     );
 
-    expect(element.find(Accordion.Item)).toHaveLength(2);
-    expect(element.children()).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Accordion-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
+    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
   it('supports controlRef on Accordion.Item', async () => {
@@ -59,14 +51,10 @@ describe('@mantine/core/Accordion', () => {
         <Accordion.Item controlRef={ref} />
       </Accordion>
     );
-    expect(ref.current instanceof HTMLButtonElement).toBe(true);
+    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
   });
 
   it('exposes AccordionItem component as Accordion.Item', () => {
-    expect(Accordion.Item).toEqual(AccordionItem);
-  });
-
-  it('has correct displayName', () => {
-    expect(Accordion.displayName).toEqual('@mantine/core/Accordion');
+    expect(Accordion.Item).toBe(AccordionItem);
   });
 });

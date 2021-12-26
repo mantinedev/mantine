@@ -1,17 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
-import {
-  itSupportsOthers,
-  itRendersChildren,
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsSx,
-  checkAccessibility,
-} from '@mantine/tests';
-import { AccordionItem } from './AccordionItem';
+import { render, screen } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { AccordionItem, AccordionItemProps } from './AccordionItem';
 
-const defaultProps = {
+const defaultProps: AccordionItemProps = {
   label: 'test-label',
   opened: true,
   onToggle: () => {},
@@ -20,19 +12,15 @@ const defaultProps = {
 };
 
 describe('@mantine/core/AccordionItem', () => {
-  itSupportsOthers(AccordionItem, defaultProps);
-  itRendersChildren(AccordionItem, defaultProps);
-  itSupportsStyle(AccordionItem, defaultProps);
-  itSupportsSx(AccordionItem, defaultProps);
-  itSupportsClassName(AccordionItem, defaultProps);
   checkAccessibility([render(<AccordionItem {...defaultProps} />)]);
-
-  it('renders given label', () => {
-    const element = shallow(<AccordionItem {...defaultProps} label="test-label" />);
-    expect(element.find('.mantine-Accordion-label').text()).toBe('test-label');
+  itSupportsSystemProps({
+    component: AccordionItem,
+    props: defaultProps,
+    displayName: '@mantine/core/AccordionItem',
   });
 
-  it('has correct displayName', () => {
-    expect(AccordionItem.displayName).toEqual('@mantine/core/AccordionItem');
+  it('renders given label', () => {
+    render(<AccordionItem {...defaultProps} label="test-label" />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
   });
 });

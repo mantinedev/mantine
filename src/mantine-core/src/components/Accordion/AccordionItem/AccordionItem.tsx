@@ -22,7 +22,7 @@ export interface PublicAccordionItemProps
   controlRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-interface AccordionItemProps extends PublicAccordionItemProps {
+export interface AccordionItemProps extends PublicAccordionItemProps {
   opened?: boolean;
   onToggle?(): void;
   transitionDuration?: number;
@@ -72,7 +72,6 @@ export function AccordionItem({
           onKeyDown={onControlKeyDown}
         >
           <Center className={classes.icon}>{icon}</Center>
-
           <div className={classes.label}>{label}</div>
         </UnstyledButton>
       </h3>
