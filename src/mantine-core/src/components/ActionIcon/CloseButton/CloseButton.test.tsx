@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps, itSupportsFocusEvents } from '@mantine/tests';
 import { CloseButton, CloseButtonProps } from './CloseButton';
 
 const defaultProps: CloseButtonProps = {};
 
 describe('@mantine/core/CloseButton', () => {
+  itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: CloseButton as any,
     props: defaultProps,

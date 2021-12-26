@@ -4,6 +4,7 @@ import {
   checkAccessibility,
   itRendersChildren,
   itIsPolymorphic,
+  itSupportsFocusEvents,
   itSupportsSystemProps,
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
@@ -13,6 +14,7 @@ const defaultProps: ActionIconProps<'button'> = { children: '$' };
 describe('@mantine/core/ActionIcon', () => {
   itIsPolymorphic(ActionIcon, defaultProps);
   itRendersChildren(ActionIcon, defaultProps);
+  itSupportsFocusEvents(ActionIcon, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: ActionIcon,
     props: defaultProps,
