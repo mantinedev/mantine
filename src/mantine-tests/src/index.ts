@@ -10,3 +10,4 @@ export { itSupportsSx } from './it-supports-sx';
 export { itSupportsFocusEvents } from './it-supports-focus-events';
 export { itSupportsSystemProps } from './it-supports-system-props';
 export { itSupportsInputProps } from './is-supports-input-props';
+export { itSupportsWrapperProps } from './it-supports-wrapper-props';

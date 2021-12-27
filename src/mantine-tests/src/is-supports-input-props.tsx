@@ -1,17 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { itSupportsWrapperProps } from './it-supports-wrapper-props';
 
 export function itSupportsInputProps(
   Component: React.ElementType,
   requiredProps: Record<string, any>,
   name: string
 ) {
-  it('supports wrapperProps prop', () => {
-    const { container } = render(
-      <Component {...requiredProps} wrapperProps={{ 'data-test-prop': 'test-prop' }} />
-    );
-    expect(container.firstChild).toHaveAttribute('data-test-prop', 'test-prop');
-  });
+  itSupportsWrapperProps(Component, requiredProps);
 
   it('connects label and input with given id', () => {
     const { container } = render(<Component {...requiredProps} id="secret-test-id" />);
