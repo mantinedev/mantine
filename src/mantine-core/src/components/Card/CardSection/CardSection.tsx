@@ -19,11 +19,11 @@ export type CardSectionProps<C extends React.ElementType> = PolymorphicComponent
   _CardSectionProps
 >;
 
-type CardSectionComponent = <C extends React.ElementType = 'div'>(
+type CardSectionComponent = (<C extends React.ElementType = 'div'>(
   props: CardSectionProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const CardSection: CardSectionComponent & { displayName?: string } = forwardRef(
+export const CardSection: CardSectionComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     { className, padding = 0, component, first, last, ...others }: CardSectionProps<C>,
     ref: PolymorphicRef<C>
