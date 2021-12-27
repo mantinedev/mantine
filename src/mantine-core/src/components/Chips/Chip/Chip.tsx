@@ -50,9 +50,6 @@ export interface ChipProps
   /** Static selector base */
   __staticSelector?: string;
 
-  /** Input value */
-  value: string;
-
   /** Props spread to wrapper element */
   wrapperProps?: { [key: string]: any };
 }
