@@ -9,7 +9,7 @@ import {
   InputWrapper,
   MantineSize,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
@@ -92,7 +92,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     ref
   ) => {
     const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeRangeInput' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
     const fromDate = new Date();
     const toDate = new Date(new Date().valueOf() + 1000);
@@ -179,13 +179,14 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         error={error}
         description={description}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         size={size}
         __staticSelector="TimeRangeInput"
         id={uuid}
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <Input

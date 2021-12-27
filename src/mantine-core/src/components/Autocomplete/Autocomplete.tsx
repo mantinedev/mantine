@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useExtractedMargins, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
@@ -79,7 +79,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     ref
   ) => {
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
@@ -189,9 +189,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         className={className}
         classNames={classNames}
         styles={styles}
-        style={mergedStyles}
         __staticSelector="Autocomplete"
         sx={sx}
+        style={style}
+        {...margins}
         {...wrapperProps}
       >
         <div
