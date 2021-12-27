@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
+import { itConnectsLabelAndInput } from './it-connects-label-and-input';
 
 export function itSupportsInputProps(
   Component: React.ElementType,
@@ -8,12 +9,7 @@ export function itSupportsInputProps(
   name: string
 ) {
   itSupportsWrapperProps(Component, requiredProps);
-
-  it('connects label and input with given id', () => {
-    const { container } = render(<Component {...requiredProps} id="secret-test-id" />);
-    expect(container.querySelector('[for="secret-test-id"]')).toBeInTheDocument();
-    expect(container.querySelector('#secret-test-id')).toBeInTheDocument();
-  });
+  itConnectsLabelAndInput(Component, requiredProps);
 
   it('handles required attribute correctly', () => {
     const { container } = render(<Component {...requiredProps} required id="secret-test-id" />);
