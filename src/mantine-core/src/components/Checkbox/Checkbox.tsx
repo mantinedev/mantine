@@ -48,10 +48,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       style,
       sx,
       checked,
-      onChange,
       color,
       label,
-      disabled,
       indeterminate,
       id,
       size = 'sm',
@@ -87,8 +85,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             className={classes.input}
             checked={indeterminate || checked}
-            onChange={onChange}
-            disabled={disabled}
             {...rest}
           />
 
