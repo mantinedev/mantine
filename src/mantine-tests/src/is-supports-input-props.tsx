@@ -12,7 +12,9 @@ export function itSupportsInputProps(
   itConnectsLabelAndInput(Component, requiredProps);
 
   it('handles required attribute correctly', () => {
-    const { container } = render(<Component {...requiredProps} required id="secret-test-id" />);
+    const { container } = render(
+      <Component {...requiredProps} required id="secret-test-id" label="Test label" />
+    );
     expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
     expect(container.querySelector('#secret-test-id')).toHaveAttribute('aria-required', 'true');
   });
