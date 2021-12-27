@@ -1,39 +1,27 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Burger } from './Burger';
+import { checkAccessibility, itSupportsFocusEvents, itSupportsSystemProps } from '@mantine/tests';
+import { Burger, BurgerProps } from './Burger';
 
-const defaultProps = {
+const defaultProps: BurgerProps = {
   opened: true,
   title: 'Close navigation',
 };
 
 describe('@mantine/core/Burger', () => {
   checkAccessibility([render(<Burger {...defaultProps} />)]);
-  itSupportsOthers(Burger, defaultProps);
-  itSupportsClassName(Burger, defaultProps);
-  itSupportsStyle(Burger, defaultProps);
-  itSupportsMargins(Burger, defaultProps);
-  itSupportsSx(Burger, defaultProps);
-  itSupportsRef(Burger, defaultProps, HTMLButtonElement);
-
-  it('renders cross when opened prop is true', () => {
-    const opened = shallow(<Burger opened />);
-    const closed = shallow(<Burger opened={false} />);
-    expect(opened.find('.mantine-Burger-opened')).toHaveLength(1);
-    expect(closed.find('.mantine-Burger-opened')).toHaveLength(0);
+  itSupportsFocusEvents(Burger, defaultProps, '.mantine-Burger-root');
+  itSupportsSystemProps({
+    component: Burger,
+    props: defaultProps,
+    displayName: '@mantine/core/Burger',
+    refType: HTMLButtonElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Burger.displayName).toEqual('@mantine/core/Burger');
+  it('renders cross when opened prop is true', () => {
+    const { container: opened } = render(<Burger opened />);
+    const { container: closed } = render(<Burger opened={false} />);
+    expect(opened.querySelectorAll('.mantine-Burger-opened')).toHaveLength(1);
+    expect(closed.querySelectorAll('.mantine-Burger-opened')).toHaveLength(0);
   });
 });
