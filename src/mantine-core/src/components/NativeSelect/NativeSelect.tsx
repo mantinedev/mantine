@@ -30,7 +30,7 @@ export interface NativeSelectProps
   inputStyle?: React.CSSProperties;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Input size */
   size?: MantineSize;

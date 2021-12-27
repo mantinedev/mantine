@@ -25,7 +25,7 @@ export interface TextareaProps
   minRows?: number;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Input size */
   size?: MantineSize;
