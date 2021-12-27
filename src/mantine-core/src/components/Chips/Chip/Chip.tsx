@@ -52,6 +52,9 @@ export interface ChipProps
 
   /** Input value */
   value: string;
+
+  /** Props spread to wrapper element */
+  wrapperProps?: { [key: string]: any };
 }
 
 export const Chip = forwardRef<HTMLInputElement, ChipProps>(
@@ -74,6 +77,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
       defaultChecked,
       onChange,
       sx,
+      wrapperProps,
       ...others
     }: ChipProps,
     ref
@@ -96,7 +100,13 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
     const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
 
     return (
-      <Box className={cx(classes.root, className)} style={style} sx={sx} {...margins}>
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...margins}
+        {...wrapperProps}
+      >
         <input
           type={type}
           className={classes.input}
