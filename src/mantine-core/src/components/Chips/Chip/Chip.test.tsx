@@ -7,6 +7,7 @@ import {
   itConnectsLabelAndInput,
   itSupportsWrapperProps,
   itHandlesBooleanState,
+  itSupportsFocusEvents,
 } from '@mantine/tests';
 import { Chip, ChipProps } from './Chip';
 
@@ -21,6 +22,7 @@ describe('@mantine/core/Chip', () => {
   itConnectsLabelAndInput(Chip, defaultProps);
   itSupportsWrapperProps(Chip, defaultProps);
   itHandlesBooleanState(Chip, defaultProps);
+  itSupportsFocusEvents(Chip, defaultProps, 'input');
   itSupportsSystemProps({
     component: Chip,
     props: defaultProps,
