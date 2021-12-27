@@ -29,5 +29,4 @@ export const Box: BoxComponent = forwardRef(
   }
 );
 
-// displayName is different to support sx tests
-Box.displayName = 'MantineBox';
+Box.displayName = '@mantine/core/Box';
