@@ -1,31 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { ColorPicker } from './ColorPicker';
-import { Swatches } from './Swatches/Swatches';
-import { AlphaSlider } from './AlphaSlider/AlphaSlider';
-import { Saturation } from './Saturation/Saturation';
+import { ColorPicker, ColorPickerProps } from './ColorPicker';
 
 const swatches = DEFAULT_THEME.colors.red;
-const defaultProps = {};
+const defaultProps: ColorPickerProps = {};
 
 describe('@mantine/core/ColorPicker', () => {
-  itSupportsClassName(ColorPicker, defaultProps);
-  itSupportsStyle(ColorPicker, defaultProps);
-  itSupportsOthers(ColorPicker, defaultProps);
-  itSupportsMargins(ColorPicker, defaultProps);
-  itSupportsSx(ColorPicker, defaultProps);
-  itSupportsRef(ColorPicker, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: ColorPicker,
+    props: defaultProps,
+    displayName: '@mantine/core/ColorPicker',
+    refType: HTMLDivElement,
+  });
   checkAccessibility([
     render(
       <ColorPicker
@@ -39,27 +27,23 @@ describe('@mantine/core/ColorPicker', () => {
   ]);
 
   it('renders swatches list based on prop', () => {
-    const withSwatches = shallow(<ColorPicker swatches={swatches} />);
-    const withoutSwatches = shallow(<ColorPicker swatches={swatches} />);
-    expect(withSwatches.find(Swatches)).toHaveLength(1);
-    expect(withoutSwatches.find(Swatches)).toHaveLength(1);
+    const { container: withSwatches } = render(<ColorPicker swatches={swatches} />);
+    const { container: withoutSwatches } = render(<ColorPicker />);
+    expect(withSwatches.querySelectorAll('.mantine-ColorPicker-swatches')).toHaveLength(1);
+    expect(withoutSwatches.querySelectorAll('.mantine-ColorPicker-swatches')).toHaveLength(0);
   });
 
   it('renders AlphaSlider based on color format', () => {
-    const hex = shallow(<ColorPicker format="hex" />);
-    const rgba = shallow(<ColorPicker format="hex" />);
-    expect(hex.find(AlphaSlider)).toHaveLength(0);
-    expect(rgba.find(AlphaSlider)).toHaveLength(0);
+    const { container: hex } = render(<ColorPicker format="hex" />);
+    const { container: rgba } = render(<ColorPicker format="rgba" />);
+    expect(hex.querySelectorAll('.mantine-ColorPicker-slider')).toHaveLength(1);
+    expect(rgba.querySelectorAll('.mantine-ColorPicker-slider')).toHaveLength(2);
   });
 
   it('renders picker based on withPicker prop', () => {
-    const withPicker = shallow(<ColorPicker withPicker />);
-    const withoutPicker = shallow(<ColorPicker withPicker={false} />);
-    expect(withPicker.find(Saturation)).toHaveLength(1);
-    expect(withoutPicker.find(Saturation)).toHaveLength(0);
-  });
-
-  it('has correct displayName', () => {
-    expect(ColorPicker.displayName).toEqual('@mantine/core/ColorPicker');
+    const { container: withPicker } = render(<ColorPicker withPicker />);
+    const { container: withoutPicker } = render(<ColorPicker withPicker={false} />);
+    expect(withPicker.querySelectorAll('.mantine-ColorPicker-saturation')).toHaveLength(1);
+    expect(withoutPicker.querySelectorAll('.mantine-ColorPicker-saturation')).toHaveLength(0);
   });
 });

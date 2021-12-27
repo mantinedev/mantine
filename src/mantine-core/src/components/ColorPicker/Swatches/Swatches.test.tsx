@@ -1,13 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { checkAccessibility } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
-import { Swatches } from './Swatches';
+import { Swatches, SwatchesProps } from './Swatches';
 import { parseColor } from '../converters';
 
-const defaultProps = {
+const defaultProps: SwatchesProps = {
   data: [...DEFAULT_THEME.colors.red],
   onSelect: () => {},
 };
@@ -17,16 +16,16 @@ describe('@mantine/core/Swatches', () => {
 
   it('calls onSelect when color is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<Swatches {...defaultProps} onSelect={spy} />);
-    element.find(ColorSwatch).at(4).simulate('click');
+    render(<Swatches {...defaultProps} onSelect={spy} />);
+    userEvent.click(screen.getAllByRole('button')[4]);
     expect(spy).toHaveBeenCalledWith(parseColor(defaultProps.data[4]));
   });
 
   it('sets swatch tabIndex to -1 if component is not focusable', () => {
-    const focusable = shallow(<Swatches {...defaultProps} focusable />);
-    const notFocusable = shallow(<Swatches {...defaultProps} focusable={false} />);
-    expect(focusable.find(ColorSwatch).at(0).prop('tabIndex')).toBe(0);
-    expect(notFocusable.find(ColorSwatch).at(0).prop('tabIndex')).toBe(-1);
+    const { container: focusable } = render(<Swatches {...defaultProps} focusable />);
+    const { container: notFocusable } = render(<Swatches {...defaultProps} focusable={false} />);
+    expect(focusable.querySelector('button')).toHaveAttribute('tabindex', '0');
+    expect(notFocusable.querySelector('button')).toHaveAttribute('tabindex', '-1');
   });
 
   it('has correct displayName', () => {

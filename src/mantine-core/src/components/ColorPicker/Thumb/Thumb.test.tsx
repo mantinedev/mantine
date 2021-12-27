@@ -1,9 +1,10 @@
 import { itSupportsClassName, itSupportsStyle } from '@mantine/tests';
-import { Thumb } from './Thumb';
+import { Thumb, ThumbProps } from './Thumb';
 
-const defaultProps = {
+const defaultProps: ThumbProps = {
+  __staticSelector: 'Test',
   position: { x: 0.4, y: 0.5 },
-  size: 'sm' as const,
+  size: 'sm',
 };
 
 describe('@mantine/core/Thumb', () => {
