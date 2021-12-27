@@ -92,7 +92,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>(
     const [value, setValue] = useUncontrolled({
       value: checked,
       defaultValue: defaultChecked,
-      finalValue: true,
+      finalValue: false,
       onChange,
       rule: (val) => typeof val === 'boolean',
     });

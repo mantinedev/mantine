@@ -6,12 +6,12 @@ import {
   checkAccessibility,
   itConnectsLabelAndInput,
   itSupportsWrapperProps,
+  itHandlesBooleanState,
 } from '@mantine/tests';
 import { Chip, ChipProps } from './Chip';
 
 const defaultProps: ChipProps = {
   value: 'test-value',
-  checked: true,
   children: 'test-chip',
 };
 
@@ -20,6 +20,7 @@ describe('@mantine/core/Chip', () => {
   itRendersChildren(Chip, defaultProps);
   itConnectsLabelAndInput(Chip, defaultProps);
   itSupportsWrapperProps(Chip, defaultProps);
+  itHandlesBooleanState(Chip, defaultProps);
   itSupportsSystemProps({
     component: Chip,
     props: defaultProps,
@@ -28,7 +29,7 @@ describe('@mantine/core/Chip', () => {
     excludeOthers: true,
   });
 
-  it('displays checked icon based on checked prop', () => {
+  it('displays checked icon when input is checked', () => {
     const { container: checked } = render(<Chip {...defaultProps} checked />);
     const { container: notChecked } = render(<Chip {...defaultProps} checked={false} />);
     expect(checked.querySelectorAll('.mantine-Chip-checkIcon')).toHaveLength(1);
