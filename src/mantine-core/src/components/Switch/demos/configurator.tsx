@@ -20,5 +20,7 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
+    { name: 'onLabel', type: 'string', initialValue: '', defaultValue: '' },
+    { name: 'offLabel', type: 'string', initialValue: '', defaultValue: '' },
   ],
 };
