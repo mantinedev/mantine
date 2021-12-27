@@ -1,18 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Chips } from './Chips';
+import { render, screen } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Chips, ChipsProps } from './Chips';
 import { Chip } from './Chip/Chip';
 
-const defaultProps = {
+const defaultProps: ChipsProps<false> = {
   value: '1',
   children: [
     <Chip value="1">test-1</Chip>,
@@ -24,29 +16,25 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Chips', () => {
-  itSupportsClassName(Chips, defaultProps);
-  itSupportsMargins(Chips, defaultProps);
-  itSupportsOthers(Chips, defaultProps);
-  itSupportsStyle(Chips, defaultProps);
-  itSupportsSx(Chips, defaultProps);
   checkAccessibility([render(<Chips {...defaultProps} />)]);
+  itSupportsSystemProps({
+    component: Chips,
+    props: defaultProps,
+    displayName: '@mantine/core/Chips',
+    excludeOthers: true,
+  });
 
   it('sets chip type based on multiple prop', () => {
-    const multiple = shallow(<Chips multiple {...defaultProps} value={['1']} />);
-    const single = shallow(<Chips multiple={false} {...defaultProps} />);
-
-    expect(multiple.find(Chip).at(0).prop('type')).toBe('checkbox');
-    expect(single.find(Chip).at(0).prop('type')).toBe('radio');
+    const { container: multiple } = render(<Chips multiple {...defaultProps} value={['1']} />);
+    const { container: single } = render(<Chips multiple={false} {...defaultProps} />);
+    expect(multiple.querySelector('input')).toHaveAttribute('type', 'checkbox');
+    expect(single.querySelector('input')).toHaveAttribute('type', 'radio');
   });
 
-  it('provides static name and id to Chip based on id prop', () => {
-    const element = shallow(<Chips id="test-id" {...defaultProps} />);
-    const chip = element.find(Chip).at(1);
-    expect(chip.prop('id')).toBe('test-id-1');
-    expect(chip.prop('name')).toBe('test-id');
-  });
-
-  it('has correct displayName', () => {
-    expect(Chips.displayName).toEqual('@mantine/core/Chips');
+  it('sets name on all inputs', () => {
+    render(<Chips multiple {...defaultProps} name="test-name" />);
+    expect(
+      screen.getAllByRole('checkbox').every((chip) => chip.getAttribute('name') === 'test-name')
+    ).toBe(true);
   });
 });

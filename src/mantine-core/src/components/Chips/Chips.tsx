@@ -40,6 +40,9 @@ export interface ChipsProps<T extends boolean = false>
 
   /** Active chip color, defaults to theme.primaryColor */
   color?: MantineColor;
+
+  /** Inputs name attribute */
+  name?: string;
 }
 
 export function Chips<T extends boolean>({
@@ -50,6 +53,7 @@ export function Chips<T extends boolean>({
   spacing = 'xs',
   radius = 'xl',
   size = 'sm',
+  name,
   variant,
   multiple,
   children,
@@ -75,7 +79,7 @@ export function Chips<T extends boolean>({
       __staticSelector: 'Chips',
       classNames,
       styles,
-      name: uuid,
+      name,
       size,
       id: `${uuid}-${index}`,
       type: multiple ? 'checkbox' : 'radio',
