@@ -7,6 +7,10 @@ interface TimeInputStyles {
 export default createStyles((theme, { size }: TimeInputStyles) => ({
   timeInput: {},
 
+  timeSelect: {
+    width: theme.fn.size({ size, sizes: INPUT_SIZES }) * 1.7,
+  },
+
   disabled: {
     opacity: 0.6,
     cursor: 'not-allowed',

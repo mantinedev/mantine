@@ -10,6 +10,7 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
+  Select,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
@@ -17,6 +18,7 @@ import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
 import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
+import { padTime } from '../TimeInput/pad-time/pad-time';
 
 export type TimeRangeInputStylesNames =
   | Exclude<ClassNames<typeof useStyles>, 'disabled'>
@@ -43,6 +45,9 @@ export interface TimeRangeInputProps
   /** Display seconds input */
   withSeconds?: boolean;
 
+  /** The time format */
+  format?: '12' | '24';
+
   /** Uncontrolled input name */
   name?: string;
 
@@ -54,6 +59,12 @@ export interface TimeRangeInputProps
 
   /** aria-label for seconds input */
   secondsLabel?: string;
+
+  /** label for am select */
+  amLabel?: string;
+
+  /** label for pm select */
+  pmLabel?: string;
 
   /** Disable field */
   disabled?: boolean;
@@ -80,10 +91,13 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       defaultValue,
       onChange,
       withSeconds = false,
+      format = '24',
       name,
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      amLabel = 'AM',
+      pmLabel = 'PM',
       labelSeparator = '–',
       disabled = false,
       sx,
@@ -108,14 +122,24 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const hoursRef = useRef<HTMLInputElement[]>([]);
     const minutesRef = useRef<HTMLInputElement[]>([]);
     const secondsRef = useRef<HTMLInputElement[]>([]);
+    const formatsRef = useRef<HTMLInputElement[]>([]);
     const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
     const [toTime, setToTime] = useState(getTimeValues(_value[1]));
+    const [fromAmPm, setFromAmPm] = useState('am');
+    const [toAmPm, setToAmPm] = useState('am');
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
 
     useDidUpdate(() => {
       setFromTime(getTimeValues(_value[0]));
       setToTime(getTimeValues(_value[1]));
     }, [_value]);
+
+    useDidUpdate(() => {
+      if (format === '12') {
+        setFromAmPm(parseInt(fromTime.hours, 10) >= 12 ? 'pm' : 'am');
+        setToAmPm(parseInt(toTime.hours, 10) >= 12 ? 'pm' : 'am');
+      }
+    }, [format]);
 
     const setTime = (
       cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
@@ -132,12 +156,19 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, hours: val }));
-        handleChange(constructDayjsValue('hours', val));
+        let newVal = parseInt(val, 10);
+        const amPm = selectedFieldIndex === 0 ? fromAmPm : toAmPm;
+
+        if (format === '12' && amPm === 'pm') {
+          newVal += 12;
+        }
+
+        setTime((current) => ({ ...current, hours: newVal.toString() }));
+        handleChange(constructDayjsValue('hours', newVal.toString()));
       },
       min: 0,
-      max: 23,
-      maxValue: 2,
+      max: format === '12' ? 11 : 23,
+      maxValue: format === '12' ? 1 : 2,
       nextRef: {
         current: minutesRef.current[selectedFieldIndex],
       },
@@ -168,7 +199,12 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       max: 59,
       maxValue: 5,
       nextRef: {
-        current: selectedFieldIndex === 0 ? hoursRef.current[1] : undefined,
+        current:
+          format === '12'
+            ? formatsRef[selectedFieldIndex]
+            : selectedFieldIndex === 0
+            ? hoursRef.current[1]
+            : undefined,
       },
     });
 
@@ -194,8 +230,10 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           required={required}
           invalid={!!error}
           onClick={() => {
-            setSelectedFieldIndex(0);
-            hoursRef.current[selectedFieldIndex].focus();
+            if (format === '24') {
+              setSelectedFieldIndex(0);
+              hoursRef.current[selectedFieldIndex].focus();
+            }
           }}
           size={size}
           className={cx({ [classes.disabled]: disabled })}
@@ -209,14 +247,18 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               ref={useMergedRef((node: HTMLInputElement) => {
                 hoursRef.current[0] = node;
               }, ref)}
-              value={fromTime.hours}
+              value={
+                format === '12' && fromAmPm === 'pm'
+                  ? padTime(parseInt(fromTime.hours, 10) - 12)
+                  : fromTime.hours
+              }
               onChange={handleHoursChange}
               setValue={(val) => handleHoursChange(val, false)}
               id={uuid}
               className={classes.timeField}
               withSeparator
               size={size}
-              max={23}
+              max={format === '12' ? 11 : 23}
               aria-label={`from ${hoursLabel}`}
               disabled={disabled}
               onFocus={() => setSelectedFieldIndex(0)}
@@ -255,6 +297,34 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               />
             )}
 
+            {format === '12' && (
+              <Select
+                ref={(node) => {
+                  formatsRef.current[0] = node;
+                }}
+                value={fromAmPm}
+                onChange={(val) => {
+                  setFromAmPm(val);
+
+                  const hour = parseInt(fromTime.hours, 10);
+
+                  handleChange(
+                    constructDayjsValue('hours', (val === 'pm' ? hour + 12 : hour - 12).toString())
+                  );
+                }}
+                variant="unstyled"
+                className={classes.timeSelect}
+                size={size}
+                disabled={disabled}
+                error={!!error}
+                data={[
+                  { value: 'am', label: amLabel },
+                  { value: 'pm', label: pmLabel },
+                ]}
+                onFocus={() => setSelectedFieldIndex(0)}
+              />
+            )}
+
             <span className={classes.separator}>{labelSeparator}</span>
 
             <div className={classes.inputWrapper}>
@@ -262,13 +332,17 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 ref={(node) => {
                   hoursRef.current[1] = node;
                 }}
-                value={toTime.hours}
+                value={
+                  format === '12' && toAmPm === 'pm'
+                    ? padTime(parseInt(toTime.hours, 10) - 12)
+                    : toTime.hours
+                }
                 onChange={handleHoursChange}
                 setValue={(val) => handleHoursChange(val, false)}
                 className={classes.timeField}
                 withSeparator
                 size={size}
-                max={23}
+                max={format === '12' ? 11 : 23}
                 aria-label={`to ${hoursLabel}`}
                 disabled={disabled}
                 onFocus={() => setSelectedFieldIndex(1)}
@@ -303,6 +377,37 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   max={59}
                   aria-label={`to ${secondsLabel}`}
                   disabled={disabled}
+                  onFocus={() => setSelectedFieldIndex(1)}
+                />
+              )}
+
+              {format === '12' && (
+                <Select
+                  ref={(node) => {
+                    formatsRef.current[1] = node;
+                  }}
+                  value={toAmPm}
+                  onChange={(val) => {
+                    setToAmPm(val);
+
+                    const hour = parseInt(toTime.hours, 10);
+
+                    handleChange(
+                      constructDayjsValue(
+                        'hours',
+                        (val === 'pm' ? hour + 12 : hour - 12).toString()
+                      )
+                    );
+                  }}
+                  variant="unstyled"
+                  className={classes.timeSelect}
+                  size={size}
+                  disabled={disabled}
+                  error={!!error}
+                  data={[
+                    { value: 'am', label: amLabel },
+                    { value: 'pm', label: pmLabel },
+                  ]}
                   onFocus={() => setSelectedFieldIndex(1)}
                 />
               )}

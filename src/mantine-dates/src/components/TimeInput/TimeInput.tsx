@@ -10,6 +10,7 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
+  Select,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -17,6 +18,7 @@ import { TimeField } from './TimeField/TimeField';
 import { createTimeHandler } from './create-time-handler/create-time-handler';
 import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
+import { padTime } from './pad-time/pad-time';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -43,6 +45,9 @@ export interface TimeInputProps
   /** Display seconds input */
   withSeconds?: boolean;
 
+  /** The time format */
+  format?: '12' | '24';
+
   /** Uncontrolled input name */
   name?: string;
 
@@ -54,6 +59,12 @@ export interface TimeInputProps
 
   /** aria-label for seconds input */
   secondsLabel?: string;
+
+  /** label for am select */
+  amLabel?: string;
+
+  /** label for pm select */
+  pmLabel?: string;
 
   /** Disable field */
   disabled?: boolean;
@@ -77,10 +88,13 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       defaultValue,
       onChange,
       withSeconds = false,
+      format = '24',
       name,
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      amLabel = 'AM',
+      pmLabel = 'PM',
       disabled = false,
       sx,
       ...others
@@ -102,20 +116,34 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
+    const formatRef = useRef<HTMLInputElement>();
+    const [amPm, setAmPm] = useState('am');
     const [time, setTime] = useState(getTimeValues(_value));
 
     useDidUpdate(() => {
       setTime(getTimeValues(_value));
     }, [_value]);
 
+    useDidUpdate(() => {
+      if (format === '12') {
+        setAmPm(parseInt(time.hours, 10) >= 12 ? 'pm' : 'am');
+      }
+    }, [format]);
+
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((c) => ({ ...c, hours: val }));
-        handleChange(dayjs(_value).set('hours', parseInt(val, 10)).toDate());
+        let newVal = parseInt(val, 10);
+
+        if (format === '12' && amPm === 'pm') {
+          newVal += 12;
+        }
+
+        setTime((c) => ({ ...c, hours: newVal.toString() }));
+        handleChange(dayjs(_value).set('hours', newVal).toDate());
       },
       min: 0,
-      max: 23,
-      maxValue: 2,
+      max: format === '12' ? 11 : 23,
+      maxValue: format === '12' ? 1 : 2,
       nextRef: minutesRef,
     });
 
@@ -138,6 +166,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
+      nextRef: formatRef,
     });
 
     return (
@@ -161,7 +190,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           __staticSelector="TimeInput"
           required={required}
           invalid={!!error}
-          onClick={() => hoursRef.current.focus()}
+          onClick={() => format === '24' && hoursRef.current.focus()}
           size={size}
           className={cx({ [classes.disabled]: disabled })}
           classNames={classNames}
@@ -172,14 +201,18 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           <div className={classes.controls}>
             <TimeField
               ref={useMergedRef(hoursRef, ref)}
-              value={time.hours}
+              value={
+                format === '12' && amPm === 'pm'
+                  ? padTime(parseInt(time.hours, 10) - 12)
+                  : time.hours
+              }
               onChange={handleHoursChange}
               setValue={(val) => setTime((c) => ({ ...c, hours: val }))}
               id={uuid}
               className={classes.timeInput}
               withSeparator
               size={size}
-              max={23}
+              max={format === '12' ? 11 : 23}
               aria-label={hoursLabel}
               disabled={disabled}
             />
@@ -208,6 +241,33 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 max={59}
                 aria-label={secondsLabel}
                 disabled={disabled}
+              />
+            )}
+
+            {format === '12' && (
+              <Select
+                ref={formatRef}
+                value={amPm}
+                onChange={(val) => {
+                  setAmPm(val);
+
+                  const hour = parseInt(time.hours, 10);
+
+                  handleChange(
+                    dayjs(_value)
+                      .set('hours', val === 'pm' ? hour + 12 : hour - 12)
+                      .toDate()
+                  );
+                }}
+                variant="unstyled"
+                className={classes.timeSelect}
+                size={size}
+                disabled={disabled}
+                error={!!error}
+                data={[
+                  { value: 'am', label: amLabel },
+                  { value: 'pm', label: pmLabel },
+                ]}
               />
             )}
 
