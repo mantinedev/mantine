@@ -6,6 +6,5 @@ export const TimeRangeInput: Record<TimeRangeInputStylesNames, string> = {
   ...InputWrapper,
   inputWrapper: 'Wraps singe time input (hours, minutes, seconds)',
   timeField: 'Time input field (hour, minute and second)',
-  timeSelect: 'Format select',
   separator: 'Separator between inputs',
 };

@@ -10,7 +10,6 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
-  Select,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
@@ -19,6 +18,7 @@ import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-
 import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
 import { padTime } from '../TimeInput/pad-time/pad-time';
+import { AmPmSelect } from '../TimeInput/AmPmSelect/AmPmSelect';
 
 export type TimeRangeInputStylesNames =
   | Exclude<ClassNames<typeof useStyles>, 'disabled'>
@@ -122,7 +122,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const hoursRef = useRef<HTMLInputElement[]>([]);
     const minutesRef = useRef<HTMLInputElement[]>([]);
     const secondsRef = useRef<HTMLInputElement[]>([]);
-    const formatsRef = useRef<HTMLInputElement[]>([]);
+    const formatsRef = useRef<HTMLSelectElement[]>([]);
     const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
     const [toTime, setToTime] = useState(getTimeValues(_value[1]));
     const [fromAmPm, setFromAmPm] = useState('am');
@@ -184,9 +184,15 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       maxValue: 5,
       nextRef: {
         current:
-          !withSeconds && selectedFieldIndex === 0
+          !withSeconds && selectedFieldIndex === 0 && format === '24'
             ? hoursRef.current[1]
             : secondsRef.current[selectedFieldIndex],
+      },
+      nextSelectRef: {
+        current:
+          !withSeconds && selectedFieldIndex === 0 && format === '12'
+            ? formatsRef.current[0]
+            : undefined,
       },
     });
 
@@ -199,12 +205,10 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       max: 59,
       maxValue: 5,
       nextRef: {
-        current:
-          format === '12'
-            ? formatsRef[selectedFieldIndex]
-            : selectedFieldIndex === 0
-            ? hoursRef.current[1]
-            : undefined,
+        current: format === '24' && selectedFieldIndex === 0 ? hoursRef.current[1] : undefined,
+      },
+      nextSelectRef: {
+        current: format === '12' ? formatsRef.current[selectedFieldIndex] : undefined,
       },
     });
 
@@ -298,30 +302,32 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
             )}
 
             {format === '12' && (
-              <Select
+              <AmPmSelect
                 ref={(node) => {
                   formatsRef.current[0] = node;
                 }}
                 value={fromAmPm}
                 onChange={(val) => {
-                  setFromAmPm(val);
+                  setFromAmPm(val.target.value);
 
                   const hour = parseInt(fromTime.hours, 10);
 
                   handleChange(
-                    constructDayjsValue('hours', (val === 'pm' ? hour + 12 : hour - 12).toString())
+                    constructDayjsValue(
+                      'hours',
+                      (val.target.value === 'pm' ? hour + 12 : hour - 12).toString()
+                    )
                   );
                 }}
-                variant="unstyled"
-                className={classes.timeSelect}
+                setValue={(val) => {
+                  setFromAmPm(val);
+                }}
+                onFocus={() => setSelectedFieldIndex(0)}
+                amLabel={amLabel}
+                pmLabel={pmLabel}
                 size={size}
                 disabled={disabled}
                 error={!!error}
-                data={[
-                  { value: 'am', label: amLabel },
-                  { value: 'pm', label: pmLabel },
-                ]}
-                onFocus={() => setSelectedFieldIndex(0)}
               />
             )}
 
@@ -382,33 +388,32 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               )}
 
               {format === '12' && (
-                <Select
+                <AmPmSelect
                   ref={(node) => {
                     formatsRef.current[1] = node;
                   }}
                   value={toAmPm}
                   onChange={(val) => {
-                    setToAmPm(val);
+                    setToAmPm(val.target.value);
 
                     const hour = parseInt(toTime.hours, 10);
 
                     handleChange(
                       constructDayjsValue(
                         'hours',
-                        (val === 'pm' ? hour + 12 : hour - 12).toString()
+                        (val.target.value === 'pm' ? hour + 12 : hour - 12).toString()
                       )
                     );
                   }}
-                  variant="unstyled"
-                  className={classes.timeSelect}
+                  setValue={(val) => {
+                    setToAmPm(val);
+                  }}
+                  onFocus={() => setSelectedFieldIndex(1)}
+                  amLabel={amLabel}
+                  pmLabel={pmLabel}
                   size={size}
                   disabled={disabled}
                   error={!!error}
-                  data={[
-                    { value: 'am', label: amLabel },
-                    { value: 'pm', label: pmLabel },
-                  ]}
-                  onFocus={() => setSelectedFieldIndex(1)}
                 />
               )}
             </div>

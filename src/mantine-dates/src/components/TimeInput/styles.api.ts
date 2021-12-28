@@ -4,7 +4,6 @@ import { TimeInputStylesNames } from './TimeInput';
 export const TimeInput: Record<TimeInputStylesNames, string> = {
   controls: 'Wrapper around hours, minutes and seconds inputs',
   timeInput: 'Hours, minutes and seconds inputs',
-  timeSelect: 'Format select',
   disabled: 'Disabled modifier',
   ...Input,
   ...InputWrapper,

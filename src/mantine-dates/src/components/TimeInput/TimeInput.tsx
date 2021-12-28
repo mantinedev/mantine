@@ -10,7 +10,6 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
-  Select,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -19,6 +18,7 @@ import { createTimeHandler } from './create-time-handler/create-time-handler';
 import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 import { padTime } from './pad-time/pad-time';
+import { AmPmSelect } from './AmPmSelect/AmPmSelect';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -116,7 +116,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
-    const formatRef = useRef<HTMLInputElement>();
+    const amPmRef = useRef<HTMLSelectElement>();
     const [amPm, setAmPm] = useState('am');
     const [time, setTime] = useState(getTimeValues(_value));
 
@@ -166,7 +166,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: formatRef,
+      nextSelectRef: amPmRef,
     });
 
     return (
@@ -245,29 +245,28 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             )}
 
             {format === '12' && (
-              <Select
-                ref={formatRef}
+              <AmPmSelect
+                ref={amPmRef}
                 value={amPm}
                 onChange={(val) => {
-                  setAmPm(val);
+                  setAmPm(val.target.value);
 
                   const hour = parseInt(time.hours, 10);
 
                   handleChange(
                     dayjs(_value)
-                      .set('hours', val === 'pm' ? hour + 12 : hour - 12)
+                      .set('hours', val.target.value === 'pm' ? hour + 12 : hour - 12)
                       .toDate()
                   );
                 }}
-                variant="unstyled"
-                className={classes.timeSelect}
+                setValue={(val) => {
+                  setAmPm(val);
+                }}
+                amLabel={amLabel}
+                pmLabel={pmLabel}
                 size={size}
                 disabled={disabled}
                 error={!!error}
-                data={[
-                  { value: 'am', label: amLabel },
-                  { value: 'pm', label: pmLabel },
-                ]}
               />
             )}
 
