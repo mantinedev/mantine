@@ -6,9 +6,11 @@ import { UnstyledButton } from '../../Button';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
+import { Divider } from '../../Divider/Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
+import { groupSortData } from '../../../utils/group-sort-data/group-sort-data';
 
 export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
@@ -52,12 +54,16 @@ export function RenderList({
     { reversed, native: listComponent !== SelectScrollArea },
     { name: 'TransferList', classNames, styles }
   );
+  const unGroupedItems: React.ReactElement<any>[] = [];
+  const groupedItems: React.ReactElement<any>[] = [];
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item));
   const ListComponent = listComponent || 'div';
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+
+  const sortedData: TransferListItem[] = groupSortData({ data: filteredData });
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -66,7 +72,7 @@ export function RenderList({
     isList: true,
   });
 
-  const items = filteredData.map((item, index) => (
+  const constructItemComponent = (item: TransferListItem, index: number) => (
     <UnstyledButton
       tabIndex={-1}
       onClick={() => onSelect(item.value)}
@@ -84,7 +90,29 @@ export function RenderList({
     >
       <ItemComponent data={item} selected={selection.includes(item.value)} />
     </UnstyledButton>
-  ));
+  );
+
+  const constructSeparator = (label?: string) => (
+    <div className={classes.separator} key={label}>
+      <Divider classNames={{ label: classes.separatorLabel }} label={label} />
+    </div>
+  );
+
+  let groupName = null;
+  sortedData.forEach((item, index) => {
+    if (!item.group) unGroupedItems.push(constructItemComponent(item, index));
+    else {
+      if (groupName !== item.group) {
+        groupName = item.group;
+        groupedItems.push(constructSeparator(groupName));
+      }
+      groupedItems.push(constructItemComponent(item, index));
+    }
+  });
+
+  if (groupedItems.length > 0 && unGroupedItems.length > 0) {
+    unGroupedItems.unshift(constructSeparator());
+  }
 
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
@@ -185,8 +213,11 @@ export function RenderList({
           className={classes.transferListItems}
           style={{ height, position: 'relative', overflowX: 'hidden' }}
         >
-          {items.length > 0 ? (
-            items
+          {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
+            <>
+              {groupedItems}
+              {unGroupedItems}
+            </>
           ) : (
             <Text color="dimmed" size="sm" align="center" mt="sm">
               {nothingFound}
