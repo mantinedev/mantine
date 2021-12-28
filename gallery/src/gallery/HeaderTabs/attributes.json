@@ -2,7 +2,6 @@
   "title": "Header with tabs",
   "category": "headers",
   "author": "rtivital",
-  "withColor": true,
   "responsive": true,
   "dependencies": [
     "/core/container/",
