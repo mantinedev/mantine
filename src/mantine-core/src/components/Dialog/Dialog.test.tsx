@@ -1,40 +1,24 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsOthers,
-  itSupportsRef,
-} from '@mantine/tests';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Dialog, MantineDialog } from './Dialog';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { itRendersChildren, itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
+import { Dialog, MantineDialog, DialogProps } from './Dialog';
 
-const defaultProps = {
+const defaultProps: DialogProps = {
   opened: true,
   transitionDuration: 0,
   withCloseButton: true,
 };
 
 describe('@mantine/core/Dialog', () => {
-  itSupportsStyle(MantineDialog, defaultProps);
-  itSupportsClassName(MantineDialog, defaultProps);
   itRendersChildren(MantineDialog, defaultProps);
-  itSupportsOthers(MantineDialog, defaultProps);
   itSupportsRef(Dialog, defaultProps, HTMLDivElement);
-
-  it('renders close button based on withCloseButton prop', () => {
-    const withButton = shallow(<MantineDialog opened withCloseButton />);
-    const withoutButton = shallow(<MantineDialog opened withCloseButton={false} />);
-
-    expect(withButton.dive().find(CloseButton)).toHaveLength(1);
-    expect(withoutButton.dive().find(CloseButton)).toHaveLength(0);
-  });
+  itSupportsSystemProps({ component: MantineDialog, props: defaultProps });
 
   it('calls onClose when close button is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<MantineDialog opened withCloseButton onClose={spy} />);
-    element.dive().find(CloseButton).simulate('click');
+    render(<MantineDialog opened withCloseButton onClose={spy} />);
+    userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
