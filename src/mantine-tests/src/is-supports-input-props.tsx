@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
 import { itConnectsLabelAndInput } from './it-connects-label-and-input';
+import { itSupportsInputIcon } from './it-supports-input-icon';
+import { itSupportsInputRightSection } from './it-supports-input-right-section';
 
 export function itSupportsInputProps(
   Component: React.ElementType,
@@ -10,6 +12,8 @@ export function itSupportsInputProps(
 ) {
   itSupportsWrapperProps(Component, requiredProps);
   itConnectsLabelAndInput(Component, requiredProps);
+  itSupportsInputIcon(Component, requiredProps);
+  itSupportsInputRightSection(Component, requiredProps);
 
   it('handles required attribute correctly', () => {
     const { container } = render(
@@ -42,15 +46,5 @@ export function itSupportsInputProps(
   it('sets border-radius on input', () => {
     const { container } = render(<Component {...requiredProps} radius={43} id="secret-test-id" />);
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
-  });
-
-  it('renders input icon', () => {
-    const { getByText } = render(<Component {...requiredProps} icon="Test icon" />);
-    expect(getByText('Test icon')).toBeInTheDocument();
-  });
-
-  it('renders input rightSection', () => {
-    const { getByText } = render(<Component {...requiredProps} icon="Test right section" />);
-    expect(getByText('Test right section')).toBeInTheDocument();
   });
 }
