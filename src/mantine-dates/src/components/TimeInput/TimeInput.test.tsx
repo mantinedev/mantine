@@ -83,4 +83,12 @@ describe('@mantine/dates/TimeInput', () => {
     expect(withSeconds.find(TimeField)).toHaveLength(3);
     expect(withoutSeconds.find(TimeField)).toHaveLength(2);
   });
+
+  it('shows the correct value based on format prop', () => {
+    const format12 = shallow(<TimeInput format="12" value={new Date(0, 0, 0, 15, 1)} />);
+    const format24 = shallow(<TimeInput format="24" value={new Date(0, 0, 0, 15, 1)} />);
+
+    expect(format12.find(TimeField).at(0).prop('value')).toBe('03');
+    expect(format24.find(TimeField).at(0).prop('value')).toBe('15');
+  });
 });
