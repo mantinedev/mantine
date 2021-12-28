@@ -1,34 +1,22 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itRendersChildren,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Group } from './Group';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Group, GroupProps } from './Group';
 
-const defaultProps = {};
+const defaultProps: GroupProps = {};
 
 describe('@mantine/core/Group', () => {
-  itSupportsOthers(Group, defaultProps);
-  itSupportsClassName(Group, defaultProps);
-  itSupportsStyle(Group, defaultProps);
   itRendersChildren(Group, defaultProps);
-  itSupportsMargins(Group, defaultProps);
-  itSupportsSx(Group, defaultProps);
-  itSupportsRef(Group, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Group.displayName).toEqual('@mantine/core/Group');
+  itSupportsSystemProps({
+    component: Group,
+    props: defaultProps,
+    displayName: '@mantine/core/Group',
+    refType: HTMLDivElement,
   });
 
   it('has no falsy children', () => {
     const children = [undefined, null, <div key="1" />];
-    const wrapper = shallow(<Group>{children}</Group>);
-    expect(wrapper.find('.mantine-Group-child').length).toBe(1);
+    const { container } = render(<Group>{children}</Group>);
+    expect(container.querySelectorAll('.mantine-Group-child')).toHaveLength(1);
   });
 });
