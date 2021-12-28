@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -18,7 +18,8 @@ import { createTimeHandler } from './create-time-handler/create-time-handler';
 import { getTimeValues } from './get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 import { padTime } from './pad-time/pad-time';
-import { AmPmSelect } from './AmPmSelect/AmPmSelect';
+import { AmPmInput } from './AmPmInput/AmPmInput';
+import { createAmPmHandler } from './create-amPm-handler/create-amPm-handler';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -60,12 +61,6 @@ export interface TimeInputProps
   /** aria-label for seconds input */
   secondsLabel?: string;
 
-  /** label for am select */
-  amLabel?: string;
-
-  /** label for pm select */
-  pmLabel?: string;
-
   /** Disable field */
   disabled?: boolean;
 }
@@ -93,8 +88,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       hoursLabel,
       minutesLabel,
       secondsLabel,
-      amLabel = 'AM',
-      pmLabel = 'PM',
       disabled = false,
       sx,
       ...others
@@ -116,7 +109,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
-    const amPmRef = useRef<HTMLSelectElement>();
+    const amPmRef = useRef<HTMLInputElement>();
     const [amPm, setAmPm] = useState('am');
     const [time, setTime] = useState(getTimeValues(_value));
 
@@ -124,7 +117,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       setTime(getTimeValues(_value));
     }, [_value]);
 
-    useDidUpdate(() => {
+    useEffect(() => {
       if (format === '12') {
         setAmPm(parseInt(time.hours, 10) >= 12 ? 'pm' : 'am');
       }
@@ -155,7 +148,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: secondsRef,
+      nextRef: !withSeconds ? amPmRef : secondsRef,
     });
 
     const handleSecondsChange = createTimeHandler({
@@ -166,7 +159,23 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
-      nextSelectRef: amPmRef,
+      nextRef: amPmRef,
+    });
+
+    const handleAmPmChange = createAmPmHandler({
+      onChange: (val) => {
+        setAmPm(val);
+
+        if (val === 'am' || val === 'pm') {
+          const hour = parseInt(time.hours, 10);
+
+          handleChange(
+            dayjs(_value)
+              .set('hours', val === 'pm' ? hour + 12 : hour - 12)
+              .toDate()
+          );
+        }
+      },
     });
 
     return (
@@ -190,7 +199,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           __staticSelector="TimeInput"
           required={required}
           invalid={!!error}
-          onClick={() => format === '24' && hoursRef.current.focus()}
+          onClick={() => hoursRef.current.focus()}
           size={size}
           className={cx({ [classes.disabled]: disabled })}
           classNames={classNames}
@@ -202,7 +211,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             <TimeField
               ref={useMergedRef(hoursRef, ref)}
               value={
-                format === '12' && amPm === 'pm'
+                format === '12' && parseInt(time.hours, 10) >= 12
                   ? padTime(parseInt(time.hours, 10) - 12)
                   : time.hours
               }
@@ -245,25 +254,13 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             )}
 
             {format === '12' && (
-              <AmPmSelect
+              <AmPmInput
                 ref={amPmRef}
                 value={amPm}
-                onChange={(val) => {
-                  setAmPm(val.target.value);
-
-                  const hour = parseInt(time.hours, 10);
-
-                  handleChange(
-                    dayjs(_value)
-                      .set('hours', val.target.value === 'pm' ? hour + 12 : hour - 12)
-                      .toDate()
-                  );
-                }}
+                onChange={handleAmPmChange}
                 setValue={(val) => {
                   setAmPm(val);
                 }}
-                amLabel={amLabel}
-                pmLabel={pmLabel}
                 size={size}
                 disabled={disabled}
                 error={!!error}
