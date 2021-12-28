@@ -1,31 +1,20 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { render } from '@testing-library/react';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsStyle,
-  itSupportsOthers,
-} from '@mantine/tests';
-import { GroupedTransition } from '../Transition';
-import { Paper } from '../Paper';
-import { Overlay } from '../Overlay';
-import { CloseButton } from '../ActionIcon';
-import { MantineDrawer, Drawer } from './Drawer';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { MantineDrawer, Drawer, DrawerProps } from './Drawer';
 
-const defaultProps = {
-  title: 'Test',
+const defaultProps: DrawerProps = {
   opened: true,
   onClose: () => {},
 };
 
 describe('@mantine/core/Drawer', () => {
+  itSupportsSystemProps({ component: MantineDrawer, props: defaultProps });
   checkAccessibility([
     render(
       <MantineDrawer
-        opened
-        onClose={() => {}}
+        {...defaultProps}
         aria-labelledby="drawer-title"
         aria-describedby="drawer-body"
         closeButtonLabel="Close drawer"
@@ -36,79 +25,26 @@ describe('@mantine/core/Drawer', () => {
     ),
   ]);
 
-  itSupportsClassName(MantineDrawer, defaultProps);
-  itRendersChildren(MantineDrawer, defaultProps);
-  itSupportsOthers(MantineDrawer, defaultProps);
-  itSupportsStyle(MantineDrawer, defaultProps);
-
-  it('passes transition, transitionDuration and transitionTimingFunction to GropedTransition component', () => {
-    const element = shallow(
-      <MantineDrawer
-        {...defaultProps}
-        transition="fade"
-        transitionTimingFunction="linear"
-        transitionDuration={500}
-      />
-    );
-    expect(element.find(GroupedTransition).prop('transitions').drawer.transition).toBe('fade');
-    expect(element.find(GroupedTransition).prop('transitions').drawer.duration).toBe(500);
-    expect(element.find(GroupedTransition).prop('transitions').drawer.timingFunction).toBe(
-      'linear'
-    );
-  });
-
-  it('closes modal on close button click', () => {
+  it('calls onClose when close button is clicked', () => {
     const spy = jest.fn();
-    const element = mount(
-      <MantineDrawer opened onClose={spy}>
-        test-modal
-      </MantineDrawer>
-    );
-    element.find(CloseButton).simulate('click');
+    render(<MantineDrawer {...defaultProps} onClose={spy} />);
+    userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalled();
   });
 
   it('renders correct title', () => {
-    const element = mount(
-      <MantineDrawer opened onClose={() => {}} title="test-title">
-        test-modal
-      </MantineDrawer>
-    );
-
-    expect(element.render().find('.mantine-Drawer-title').text()).toBe('test-title');
+    render(<MantineDrawer {...defaultProps} title="test-title" />);
+    expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
   it('allows to hide close button with hideCloseButton prop', () => {
-    const withButton = mount(<MantineDrawer opened onClose={() => {}} />);
-    const withoutButton = mount(<MantineDrawer opened onClose={() => {}} hideCloseButton />);
-
-    expect(withButton.find(CloseButton)).toHaveLength(1);
-    expect(withoutButton.find(CloseButton)).toHaveLength(0);
-  });
-
-  it('passes shadow and padding to Paper component', () => {
-    const element = mount(<MantineDrawer {...defaultProps} padding="xs" shadow="xl" />);
-    expect(element.find(Paper).prop('shadow')).toBe('xl');
-    expect(element.find(Paper).prop('padding')).toBe('xs');
-  });
-
-  it('passes color and opacity to Overlay component', () => {
-    const element = mount(
-      <MantineDrawer {...defaultProps} overlayColor="red" overlayOpacity={0.99} />
+    const { container: withCloseButton } = render(<MantineDrawer {...defaultProps} />);
+    const { container: withoutCloseButton } = render(
+      <MantineDrawer {...defaultProps} hideCloseButton />
     );
-    expect(element.find(Overlay).prop('color')).toBe('red');
-    expect(element.find(Overlay).prop('opacity')).toBe(0.99);
-  });
 
-  it('sets correct z-index on drawer and overlay', () => {
-    const element = mount(<MantineDrawer {...defaultProps} zIndex={547} />);
-    expect((element.find(Paper).prop('style') as any).zIndex).toBe(549);
-    expect(element.find(Overlay).prop('zIndex')).toBe(547);
-  });
-
-  it('does not render overlay if noOverlay prop is set to true', () => {
-    const element = mount(<MantineDrawer {...defaultProps} noOverlay />);
-    expect(element.find(Overlay)).toHaveLength(0);
+    expect(withoutCloseButton.querySelectorAll('.mantine-Drawer-closeButton')).toHaveLength(0);
+    expect(withCloseButton.querySelectorAll('.mantine-Drawer-closeButton')).toHaveLength(1);
   });
 
   it('has correct displayName', () => {
