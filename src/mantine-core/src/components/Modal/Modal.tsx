@@ -109,7 +109,7 @@ export function MantineModal({
   styles,
   closeOnClickOutside = true,
   noFocusTrap = false,
-  closeOnEscape = false,
+  closeOnEscape = true,
   centered = false,
   ...others
 }: ModalProps) {
@@ -131,7 +131,7 @@ export function MantineModal({
   const [, lockScroll] = useScrollLock();
 
   const closeOnEscapePress = (event: KeyboardEvent) => {
-    if (noFocusTrap && event.code === 'Escape' && !closeOnEscape) {
+    if (noFocusTrap && event.code === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
@@ -169,7 +169,7 @@ export function MantineModal({
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-              shouldTrigger && event.nativeEvent.code === 'Escape' && !closeOnEscape && onClose();
+              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
             }}
             ref={focusTrapRef}
           >
