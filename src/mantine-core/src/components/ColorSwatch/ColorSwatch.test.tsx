@@ -1,35 +1,16 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itIsPolymorphic,
-  itSupportsSx,
-} from '@mantine/tests';
-import { ColorSwatch } from './ColorSwatch';
+import { itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { ColorSwatch, ColorSwatchProps } from './ColorSwatch';
 
-const defaultProps = { color: '#fff' };
+const defaultProps: ColorSwatchProps<'div'> = {
+  color: '#fff',
+};
 
 describe('@mantine/core/ColorSwatch', () => {
-  itSupportsOthers(ColorSwatch, defaultProps);
-  itSupportsClassName(ColorSwatch, defaultProps);
-  itSupportsStyle(ColorSwatch, defaultProps);
-  itSupportsSx(ColorSwatch, defaultProps);
-  itSupportsMargins(ColorSwatch, defaultProps);
   itIsPolymorphic(ColorSwatch, defaultProps);
-  itSupportsRef(ColorSwatch, defaultProps, HTMLDivElement);
-
-  it('sets correct background-color based on color property', () => {
-    const element = shallow(<ColorSwatch color="red" />);
-    expect(
-      element.find('.mantine-ColorSwatch-overlay').at(2).render().css('background-color')
-    ).toBe('red');
-  });
-
-  it('has correct displayName', () => {
-    expect(ColorSwatch.displayName).toEqual('@mantine/core/ColorSwatch');
+  itSupportsSystemProps({
+    component: ColorSwatch,
+    props: defaultProps,
+    displayName: '@mantine/core/ColorSwatch',
+    refType: HTMLDivElement,
   });
 });
