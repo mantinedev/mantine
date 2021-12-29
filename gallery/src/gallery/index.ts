@@ -96,4 +96,5 @@ export { TableOfContents } from './TableOfContents/TableOfContents';
 export { TableOfContentsFloating } from './TableOfContentsFloating/TableOfContentsFloating';
 
 // Stats
+export { StatsGroup } from './StatsGroup/StatsGroup';
 export { StatsRing } from './StatsRing/StatsRing';
