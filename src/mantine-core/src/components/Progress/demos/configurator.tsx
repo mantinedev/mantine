@@ -20,6 +20,7 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'value', type: 'number', initialValue: 50, max: 100, min: 0, step: 10 },
+    { name: 'label', type: 'string', initialValue: '', defaultValue: '' },
     { name: 'striped', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'animate', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'indeterminate', type: 'boolean', initialValue: false, defaultValue: false },

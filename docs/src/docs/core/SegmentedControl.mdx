@@ -23,7 +23,7 @@ SegmentedControl is usually used as an alternative to:
 - [RadioGroup](/core/radio-group/) to capture user feedback limited to certain
   options
 
-<Demo data={SegmentedControlDemos.usage} />
+<Demo data={SegmentedControlDemos.configurator} />
 
 ## Controlled
 
@@ -79,48 +79,6 @@ SegmentedControl support two different data formats:
 You can use any React node as label in `data` prop:
 
 <Demo data={SegmentedControlDemos.labels} />
-
-## Full width
-
-By default SegmentedControl is inline and will take only the amount of space which is required to render elements.
-Set `fullWidth` prop to make it block and take 100% width of its container:
-
-<Demo data={SegmentedControlDemos.fullWidth} />
-
-## Sizes
-
-Component supports 5 sizes: xs, sm, md, lg, xl.
-Size controls font-size and padding properties.
-
-```tsx
-<SegmentedControl size="sm" />
-```
-
-SegmentedControl sizes from xs to xl:
-
-<Demo data={SegmentedControlDemos.sizes} />
-
-## Radius
-
-xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, you can use a number to set radius in px:
-
-```tsx
-<SegmentedControl radius="lg" /> // -> theme predefined large radius
-<SegmentedControl radius={20} /> // -> { borderRadius: '20px' }
-<SegmentedControl radius={0} /> // -> { borderRadius: 0 }
-```
-
-Default theme radius values from xs to xl with lg size:
-
-<Demo data={SegmentedControlDemos.radius} />
-
-## Color
-
-By default segmented control uses `theme.white` with shadow in light color scheme and `theme.colors.dark[6]` background color for active element.
-You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors) in case you need colored variant:
-
-<Demo data={SegmentedControlDemos.configurator} />
 
 ## Transitions
 

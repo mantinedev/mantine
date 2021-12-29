@@ -1,3 +1,4 @@
+export { configurator } from './configurator';
 export { usage } from './usage';
 export { header } from './header';
 export { sizes } from './sizes';

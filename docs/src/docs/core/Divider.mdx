@@ -20,7 +20,7 @@ import { DividerDemos } from '@demos/core';
 Divider component renders horizontal or vertical line.
 Customize hr border style by setting `variant` prop:
 
-<Demo data={DividerDemos.usage} />
+<Demo data={DividerDemos.configurator} />
 
 ## With label
 
@@ -30,9 +30,8 @@ by setting `label` and control its appearance with `labelPosition` and `labelPro
 
 <Demo data={DividerDemos.labels} />
 
-## Sizes
+## With color
 
-Divider has predefined sizes: xs, sm, md, lg, xl.
-You can pass size as number and it will be set as height in px:
+The default color is `dark` when the colorScheme is `dark` and `gray` when the colorScheme is `light`.
 
-<Demo data={DividerDemos.sizes} />
+<Demo data={DividerDemos.color} />

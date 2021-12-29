@@ -1,3 +1,3 @@
-export { usage } from './usage';
+export { configurator } from './configurator';
 export { labels } from './labels';
-export { sizes } from './sizes';
+export { colors } from './colors';
