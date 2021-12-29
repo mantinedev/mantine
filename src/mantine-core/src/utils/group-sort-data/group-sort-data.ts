@@ -1,7 +1,9 @@
-import type { SelectItem } from '../types';
+interface SelectedItem {
+  group?: string;
+}
 
 interface GroupData {
-  data: SelectItem[];
+  data: SelectedItem[];
 }
 
 export function groupSortData({ data }: GroupData) {

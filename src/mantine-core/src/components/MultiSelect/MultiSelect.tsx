@@ -17,7 +17,7 @@ import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
-import { groupSortData } from '../Select/group-sort-data/group-sort-data';
+import { groupSortData } from '../../utils/group-sort-data/group-sort-data';
 import useStyles from './MultiSelect.styles';
 import { SelectSharedProps } from '../Select/Select';
 
