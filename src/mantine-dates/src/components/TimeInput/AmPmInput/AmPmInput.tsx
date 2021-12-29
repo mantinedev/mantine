@@ -50,32 +50,6 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       inputRef.current.select();
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp') {
-        event.preventDefault();
-        // const padded = padTime(
-        //   clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 })
-        // );
-
-        // if (value !== padded) {
-        //   setValue(padded);
-        //   onChange(padded, false);
-        // }
-      }
-
-      if (event.nativeEvent.code === 'ArrowDown') {
-        event.preventDefault();
-        // const padded = padTime(
-        //   clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 })
-        // );
-
-        // if (value !== padded) {
-        //   setValue(padded);
-        //   onChange(padded, false);
-        // }
-      }
-    };
-
     return (
       <input
         type="text"
@@ -84,25 +58,10 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onClick={handleClick}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onKeyDown={handleKeyDown}
         value={value}
         className={cx(classes.amPmInput, className)}
         {...others}
       />
-      // <input
-      //   ref={useMergedRef(inputRef, ref)}
-      //   onClick={handleClick}
-      //   onFocus={handleFocus}
-      //   onBlur={handleBlur}
-      //   value={value}
-      //   size={size}
-      //   variant="unstyled"
-      //   rightSectionProps={{ style: { display: 'none' } }}
-      //   rightSection={false}
-      //   className={className}
-      //   error={error}
-      //   {...others}
-      // />
     );
   }
 );
