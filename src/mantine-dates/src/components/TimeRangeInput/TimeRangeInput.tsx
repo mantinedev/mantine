@@ -123,7 +123,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
-    const [_value, handleChange] = useUncontrolled<Array<Date | undefined>>({
+    const [_value, handleChange] = useUncontrolled<(Date | undefined)[]>({
       value,
       defaultValue,
       finalValue: [],
