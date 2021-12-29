@@ -10,6 +10,7 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
+  CloseButton,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -20,6 +21,7 @@ import useStyles from './TimeInput.styles';
 import { padTime } from './pad-time/pad-time';
 import { AmPmInput } from './AmPmInput/AmPmInput';
 import { createAmPmHandler } from './create-amPm-handler/create-amPm-handler';
+import { getMidnight } from '../../utils/get-midnight/get-midnight';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -46,6 +48,12 @@ export interface TimeInputProps
   /** Display seconds input */
   withSeconds?: boolean;
 
+  /** Allow to clear item */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
   /** The time format */
   format?: '12' | '24';
 
@@ -65,6 +73,14 @@ export interface TimeInputProps
   disabled?: boolean;
 }
 
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
+};
+
 export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
   (
     {
@@ -83,6 +99,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       defaultValue,
       onChange,
       withSeconds = false,
+      clearable = false,
+      clearButtonLabel,
       format = '24',
       name,
       hoursLabel,
@@ -94,14 +112,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     }: TimeInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
+    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
 
     const [_value, handleChange] = useUncontrolled({
       value,
       defaultValue,
-      finalValue: new Date(),
+      finalValue: value,
       rule: (val) => val instanceof Date,
       onChange,
     });
@@ -132,7 +150,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         }
 
         setTime((c) => ({ ...c, hours: newVal.toString() }));
-        handleChange(dayjs(_value).set('hours', newVal).toDate());
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('hours', newVal)
+            .toDate()
+        );
       },
       min: 0,
       max: format === '12' ? 11 : 23,
@@ -143,7 +165,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
         setTime((c) => ({ ...c, minutes: val }));
-        handleChange(dayjs(_value).set('minutes', parseInt(val, 10)).toDate());
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('minutes', parseInt(val, 10))
+            .toDate()
+        );
       },
       min: 0,
       max: 59,
@@ -154,7 +180,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
         setTime((c) => ({ ...c, seconds: val }));
-        handleChange(dayjs(_value).set('seconds', parseInt(val, 10)).toDate());
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('seconds', parseInt(val, 10))
+            .toDate()
+        );
       },
       min: 0,
       max: 59,
@@ -166,7 +196,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       onChange: (val) => {
         setAmPm(val);
 
-        if (val === 'am' || val === 'pm') {
+        if ((val === 'am' || val === 'pm') && _value) {
           const hour = parseInt(time.hours, 10);
 
           handleChange(
@@ -177,6 +207,21 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         }
       },
     });
+
+    const handleClear = () => {
+      handleChange(undefined);
+      hoursRef.current.focus();
+    };
+
+    const rightSection =
+      clearable && _value ? (
+        <CloseButton
+          variant="transparent"
+          aria-label={clearButtonLabel}
+          onClick={handleClear}
+          size={size}
+        />
+      ) : null;
 
     return (
       <InputWrapper
@@ -205,6 +250,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           classNames={classNames}
           styles={styles}
           disabled={disabled}
+          rightSection={rightSection}
+          rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
           {...rest}
         >
           <div className={classes.controls}>

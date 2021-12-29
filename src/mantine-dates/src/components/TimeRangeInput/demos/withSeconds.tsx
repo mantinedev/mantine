@@ -9,7 +9,11 @@ const code = `
 function Demo() {
   return (
     <Container size={340}>
-      <TimeRangeInput label="Appointment time" withSeconds />
+      <TimeRangeInput
+        label="Appointment time"
+        withSeconds
+        value={[new Date(), new Date(new Date().valueOf() + 1000)]}
+      />
     </Container>
   );
 }

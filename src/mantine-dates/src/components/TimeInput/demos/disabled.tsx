@@ -8,7 +8,7 @@ const code = `
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput label="Pick time" disabled />
+      <TimeInput label="Pick time" disabled defaultValue={new Date()} />
     </div>
   );
 }

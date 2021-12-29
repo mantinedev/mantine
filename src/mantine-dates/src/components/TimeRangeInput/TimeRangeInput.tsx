@@ -10,9 +10,11 @@ import {
   MantineSize,
   ClassNames,
   useExtractedMargins,
+  CloseButton,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
+import { getMidnight } from '../../utils/get-midnight/get-midnight';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
 import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
@@ -46,6 +48,12 @@ export interface TimeRangeInputProps
   /** Display seconds input */
   withSeconds?: boolean;
 
+  /** Allow to clear item */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
   /** The time format */
   format?: '12' | '24';
 
@@ -68,6 +76,14 @@ export interface TimeRangeInputProps
   labelSeparator?: string;
 }
 
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
+};
+
 export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
   (
     {
@@ -86,6 +102,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       defaultValue,
       onChange,
       withSeconds = false,
+      clearable = false,
+      clearButtonLabel,
       format = '24',
       name,
       hoursLabel,
@@ -98,16 +116,17 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     }: TimeRangeInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeRangeInput' });
+    const { classes, cx, theme } = useStyles(
+      { size },
+      { classNames, styles, name: 'TimeRangeInput' }
+    );
     const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const uuid = useUuid(id);
-    const fromDate = new Date();
-    const toDate = new Date(new Date().valueOf() + 1000);
 
-    const [_value, handleChange] = useUncontrolled({
+    const [_value, handleChange] = useUncontrolled<Array<Date | undefined>>({
       value,
       defaultValue,
-      finalValue: [fromDate, toDate],
+      finalValue: [],
       rule: (val) => val && val.length === 2 && val.every((v) => v instanceof Date),
       onChange,
     });
@@ -143,7 +162,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const constructDayjsValue = (fieldName: UnitType, val: string) => {
       const index = selectedFieldIndex;
       const newTime = [..._value];
-      newTime[index] = dayjs(newTime[index]).set(fieldName, parseInt(val, 10)).toDate();
+      newTime[index] = dayjs(newTime[index] ?? getMidnight())
+        .set(fieldName, parseInt(val, 10))
+        .toDate();
       return newTime;
     };
 
@@ -237,6 +258,22 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       },
     });
 
+    const handleClear = () => {
+      handleChange([]);
+      setSelectedFieldIndex(0);
+      hoursRef.current[0]?.focus();
+    };
+
+    const rightSection =
+      clearable && _value.filter((item) => Boolean(item)).length > 0 ? (
+        <CloseButton
+          variant="transparent"
+          aria-label={clearButtonLabel}
+          onClick={handleClear}
+          size={size}
+        />
+      ) : null;
+
     return (
       <InputWrapper
         required={required}
@@ -267,6 +304,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           classNames={classNames}
           styles={styles}
           disabled={disabled}
+          rightSection={rightSection}
+          rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
           {...rest}
         >
           <div className={classes.inputWrapper}>
