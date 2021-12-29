@@ -26,7 +26,7 @@ export function Curve({
   const theme = useMantineTheme();
   const stroke = theme.fn.themeColor(
     color || (theme.colorScheme === 'dark' ? 'dark' : 'gray'),
-    color ? (theme.colorScheme === 'dark' ? 6 : 7) : theme.colorScheme === 'dark' ? 4 : 2
+    color ? (theme.colorScheme === 'dark' ? 5 : 6) : theme.colorScheme === 'dark' ? 4 : 1
   );
 
   return (
