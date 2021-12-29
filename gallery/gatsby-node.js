@@ -36,7 +36,10 @@ const GALLERY_CATEGORIES = [
   },
   {
     name: 'Blog UI',
-    categories: [{ slug: 'article-cards', name: 'Article cards' }],
+    categories: [
+      { slug: 'article-cards', name: 'Article cards' },
+      { slug: 'toc', name: 'Table of contents' },
+    ],
   },
 ];
 
