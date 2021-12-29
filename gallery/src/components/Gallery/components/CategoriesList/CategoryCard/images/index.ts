@@ -43,6 +43,9 @@ import headersDark from './headers-dark.svg';
 import tocLight from './toc-light.svg';
 import tocDark from './toc-dark.svg';
 
+import statsLight from './stats-light.svg';
+import statsDark from './stats-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   'article-cards': { light: cardsLight, dark: cardsDark },
@@ -60,4 +63,5 @@ export default {
   footers: { light: footersLight, dark: footersDark },
   headers: { light: headersLight, dark: headersDark },
   toc: { light: tocLight, dark: tocDark },
+  stats: { light: statsLight, dark: statsDark },
 };
