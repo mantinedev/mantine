@@ -12,7 +12,7 @@ import {
 const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.xl * 1.5,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   value: {
@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
   },
 
   title: {
