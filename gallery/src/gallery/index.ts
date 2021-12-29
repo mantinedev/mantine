@@ -98,5 +98,6 @@ export { TableOfContentsFloating } from './TableOfContentsFloating/TableOfConten
 // Stats
 export { StatsCard } from './StatsCard/StatsCard';
 export { StatsControls } from './StatsControls/StatsControls';
+export { StatsGrid } from './StatsGrid/StatsGrid';
 export { StatsGroup } from './StatsGroup/StatsGroup';
 export { StatsRing } from './StatsRing/StatsRing';
