@@ -93,3 +93,4 @@ export { HeaderTabs } from './HeaderTabs/HeaderTabs';
 
 // Tables of contents
 export { TableOfContents } from './TableOfContents/TableOfContents';
+export { TableOfContentsFloating } from './TableOfContentsFloating/TableOfContentsFloating';
