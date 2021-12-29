@@ -1,5 +1,15 @@
 import React from 'react';
-import { Avatar, Badge, Table, Group, Text, ActionIcon, Anchor, ScrollArea } from '@mantine/core';
+import {
+  Avatar,
+  Badge,
+  Table,
+  Group,
+  Text,
+  ActionIcon,
+  Anchor,
+  ScrollArea,
+  useMantineTheme,
+} from '@mantine/core';
 import { Pencil, Trash } from 'tabler-icons-react';
 
 interface UsersTableProps {
@@ -13,10 +23,11 @@ const jobColors = {
 };
 
 export function UsersTable({ data }: UsersTableProps) {
+  const theme = useMantineTheme();
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
-        <Group spacing="sm">
+        <Group spacing="sm" sx={{ paddingTop: 5, paddingBottom: 5 }}>
           <Avatar size={30} src={item.avatar} radius={30} />
           <Text size="sm" weight={500}>
             {item.name}
@@ -25,7 +36,12 @@ export function UsersTable({ data }: UsersTableProps) {
       </td>
 
       <td>
-        <Badge color={jobColors[item.job.toLowerCase()]}>{item.job}</Badge>
+        <Badge
+          color={jobColors[item.job.toLowerCase()]}
+          variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}
+        >
+          {item.job}
+        </Badge>
       </td>
       <td>
         <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
@@ -33,9 +49,9 @@ export function UsersTable({ data }: UsersTableProps) {
         </Anchor>
       </td>
       <td>
-        <Anchor<'a'> size="sm" href="#" onClick={(event) => event.preventDefault()}>
+        <Text size="sm" color="gray">
           {item.phone}
-        </Anchor>
+        </Text>
       </td>
       <td>
         <Group spacing={0} position="right">

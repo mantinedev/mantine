@@ -1,38 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Divider } from './Divider';
+import { render, screen } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Divider, DividerProps } from './Divider';
 
-const defaultProps = {};
+const defaultProps: DividerProps = {};
 
 describe('@mantine/core/Divider', () => {
-  itSupportsClassName(Divider, defaultProps);
-  itSupportsStyle(Divider, defaultProps);
-  itSupportsOthers(Divider, defaultProps);
-  itSupportsMargins(Divider, defaultProps);
-  itSupportsSx(Divider, defaultProps);
-  itSupportsRef(Divider, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Divider,
+    props: defaultProps,
+    displayName: '@mantine/core/Divider',
+    refType: HTMLDivElement,
+  });
 
   it('renders given label in horizontal orientation', () => {
-    const withSubheader = shallow(<Divider label="test-label" />);
-    expect(withSubheader.find('.mantine-Divider-label').dive().text()).toBe('test-label');
+    render(<Divider label="test-label" />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
   });
 
   it('does not render label if label prop is not set or orientation is set to vertical', () => {
-    const noLabel = shallow(<Divider />);
-    const vertical = shallow(<Divider label="test-label" orientation="vertical" />);
-    expect(noLabel.find('.mantine-Divider-label')).toHaveLength(0);
-    expect(vertical.find('.mantine-Divider-label')).toHaveLength(0);
-  });
-
-  it('has correct displayName', () => {
-    expect(Divider.displayName).toEqual('@mantine/core/Divider');
+    const { container } = render(<Divider label="test-label" orientation="vertical" />);
+    expect(container.querySelectorAll('.mantine-Divider-label')).toHaveLength(0);
   });
 });

@@ -193,7 +193,12 @@ export function MantineDrawer({
                 <Text className={classes.title}>{title}</Text>
 
                 {!hideCloseButton && (
-                  <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
+                  <CloseButton
+                    iconSize={16}
+                    onClick={onClose}
+                    aria-label={closeButtonLabel}
+                    className={classes.closeButton}
+                  />
                 )}
               </div>
             )}

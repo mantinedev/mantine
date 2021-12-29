@@ -1,36 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Code } from './Code';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Code, CodeProps } from './Code';
 
-const defaultProps = {};
+const defaultProps: CodeProps = {
+  children: 'test-code',
+};
 
 describe('@mantine/core/Code', () => {
   itRendersChildren(Code, defaultProps);
-  itSupportsSx(Code, defaultProps);
-  itSupportsClassName(Code, defaultProps);
-  itSupportsOthers(Code, defaultProps);
-  itSupportsStyle(Code, defaultProps);
-  itSupportsMargins(Code, defaultProps);
-  itSupportsRef(Code, defaultProps, HTMLElement);
-
-  it('renders code element for inline code and pre element for block', () => {
-    const inline = shallow(<Code block={false}>Code</Code>);
-    const block = shallow(<Code block>Code</Code>);
-
-    expect(inline.dive().type()).toBe('code');
-    expect(block.dive().type()).toBe('pre');
+  itSupportsSystemProps({
+    component: Code,
+    props: defaultProps,
+    displayName: '@mantine/core/Code',
+    refType: HTMLElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Code.displayName).toEqual('@mantine/core/Code');
+  it('renders code element for inline code and pre element for block', () => {
+    const { container: inline } = render(<Code>Code</Code>);
+    const { container: block } = render(<Code block>Code</Code>);
+    expect(inline.querySelector('code')).toBeInTheDocument();
+    expect(block.querySelector('pre')).toBeInTheDocument();
   });
 });

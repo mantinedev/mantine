@@ -10,3 +10,8 @@ export { itSupportsSx } from './it-supports-sx';
 export { itSupportsFocusEvents } from './it-supports-focus-events';
 export { itSupportsSystemProps } from './it-supports-system-props';
 export { itSupportsInputProps } from './is-supports-input-props';
+export { itSupportsWrapperProps } from './it-supports-wrapper-props';
+export { itConnectsLabelAndInput } from './it-connects-label-and-input';
+export { itHandlesBooleanState } from './it-handles-boolean-state';
+export { itSupportsInputRightSection } from './it-supports-input-right-section';
+export { itSupportsInputIcon } from './it-supports-input-icon';

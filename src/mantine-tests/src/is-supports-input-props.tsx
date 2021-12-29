@@ -1,26 +1,24 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { itSupportsWrapperProps } from './it-supports-wrapper-props';
+import { itConnectsLabelAndInput } from './it-connects-label-and-input';
+import { itSupportsInputIcon } from './it-supports-input-icon';
+import { itSupportsInputRightSection } from './it-supports-input-right-section';
 
 export function itSupportsInputProps(
   Component: React.ElementType,
   requiredProps: Record<string, any>,
   name: string
 ) {
-  it('supports wrapperProps prop', () => {
-    const { container } = render(
-      <Component {...requiredProps} wrapperProps={{ 'data-test-prop': 'test-prop' }} />
-    );
-    expect(container.firstChild).toHaveAttribute('data-test-prop', 'test-prop');
-  });
-
-  it('connects label and input with given id', () => {
-    const { container } = render(<Component {...requiredProps} id="secret-test-id" />);
-    expect(container.querySelector('[for="secret-test-id"]')).toBeInTheDocument();
-    expect(container.querySelector('#secret-test-id')).toBeInTheDocument();
-  });
+  itSupportsWrapperProps(Component, requiredProps);
+  itConnectsLabelAndInput(Component, requiredProps);
+  itSupportsInputIcon(Component, requiredProps);
+  itSupportsInputRightSection(Component, requiredProps);
 
   it('handles required attribute correctly', () => {
-    const { container } = render(<Component {...requiredProps} required id="secret-test-id" />);
+    const { container } = render(
+      <Component {...requiredProps} required id="secret-test-id" label="Test label" />
+    );
     expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
     expect(container.querySelector('#secret-test-id')).toHaveAttribute('aria-required', 'true');
   });
@@ -48,15 +46,5 @@ export function itSupportsInputProps(
   it('sets border-radius on input', () => {
     const { container } = render(<Component {...requiredProps} radius={43} id="secret-test-id" />);
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
-  });
-
-  it('renders input icon', () => {
-    const { getByText } = render(<Component {...requiredProps} icon="Test icon" />);
-    expect(getByText('Test icon')).toBeInTheDocument();
-  });
-
-  it('renders input rightSection', () => {
-    const { getByText } = render(<Component {...requiredProps} icon="Test right section" />);
-    expect(getByText('Test right section')).toBeInTheDocument();
   });
 }

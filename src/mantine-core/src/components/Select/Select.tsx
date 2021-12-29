@@ -23,7 +23,7 @@ import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
-import { groupSortData } from './group-sort-data/group-sort-data';
+import { groupSortData } from '../../utils/group-sort-data/group-sort-data';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {

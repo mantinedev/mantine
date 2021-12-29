@@ -1,29 +1,21 @@
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Grid } from './Grid';
+import React from 'react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Grid, GridProps } from './Grid';
 import { Col } from './Col/Col';
 
-const defaultProps = {};
+const defaultProps: GridProps = {
+  children: [<Col span={1}>1</Col>, <Col span={1}>2</Col>],
+};
 
 describe('@mantine/core/Grid', () => {
-  itSupportsClassName(Grid, defaultProps);
-  itSupportsSx(Grid, defaultProps);
-  itSupportsOthers(Grid, defaultProps);
-  itSupportsStyle(Grid, defaultProps);
-  itSupportsMargins(Grid, defaultProps);
-  itSupportsRef(Grid, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Grid,
+    props: defaultProps,
+    displayName: '@mantine/core/Grid',
+    refType: HTMLDivElement,
+  });
 
   it('exposes Col as Grid.Col', () => {
     expect(Grid.Col).toBe(Col);
-  });
-
-  it('has correct displayName', () => {
-    expect(Grid.displayName).toEqual('@mantine/core/Grid');
   });
 });

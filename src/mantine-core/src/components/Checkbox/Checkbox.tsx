@@ -29,7 +29,7 @@ export interface CheckboxProps
   indeterminate?: boolean;
 
   /** Props spread to wrapper element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -48,10 +48,8 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       style,
       sx,
       checked,
-      onChange,
       color,
       label,
-      disabled,
       indeterminate,
       id,
       size = 'sm',
@@ -87,8 +85,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             className={classes.input}
             checked={indeterminate || checked}
-            onChange={onChange}
-            disabled={disabled}
             {...rest}
           />
 

@@ -25,7 +25,7 @@ export interface BaseColorSliderProps
   __staticSelector?: string;
 }
 
-interface ColorSliderProps extends BaseColorSliderProps {
+export interface ColorSliderProps extends BaseColorSliderProps {
   maxValue: number;
   overlays: React.CSSProperties[];
   round: boolean;

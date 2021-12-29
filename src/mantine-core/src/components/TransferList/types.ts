@@ -1,6 +1,7 @@
 export interface TransferListItem {
   value: string;
   label: string;
+  group?: string;
   [key: string]: any;
 }
 

@@ -9,8 +9,8 @@ import {
   InputWrapper,
   MantineSize,
   ClassNames,
-  useExtractedMargins,
   CloseButton,
+  extractMargins,
 } from '@mantine/core';
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -113,7 +113,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     ref
   ) => {
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
     const [_value, handleChange] = useUncontrolled({
@@ -230,13 +230,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         error={error}
         description={description}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         size={size}
         __staticSelector="TimeInput"
         id={uuid}
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <Input

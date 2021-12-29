@@ -1,33 +1,21 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itIsPolymorphic,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Highlight } from './Highlight';
+import { render } from '@testing-library/react';
+import { itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Highlight, HighlightProps } from './Highlight';
 
-const defaultProps = { children: 'Hello', highlight: 'He' };
+const defaultProps: HighlightProps<'div'> = { children: 'Hello', highlight: 'He' };
 
 describe('@mantine/core/Highlight', () => {
-  itSupportsStyle(Highlight, defaultProps);
-  itSupportsClassName(Highlight, defaultProps);
-  itSupportsOthers(Highlight, defaultProps);
-  itSupportsMargins(Highlight, defaultProps);
-  itSupportsSx(Highlight, defaultProps);
   itIsPolymorphic(Highlight, defaultProps);
-  itSupportsRef(Highlight, defaultProps, HTMLDivElement);
-
-  it('highlights correct value', () => {
-    const element = shallow(<Highlight highlight="he">Hello</Highlight>);
-    expect(element.render().find('mark').text()).toBe('He');
+  itSupportsSystemProps({
+    component: Highlight,
+    props: defaultProps,
+    displayName: '@mantine/core/Highlight',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Highlight.displayName).toEqual('@mantine/core/Highlight');
+  it('highlights correct value', () => {
+    const { container } = render(<Highlight highlight="he">Hello</Highlight>);
+    expect(container.querySelector('mark').textContent).toBe('He');
   });
 });

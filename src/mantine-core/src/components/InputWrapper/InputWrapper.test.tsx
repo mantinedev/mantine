@@ -1,132 +1,80 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { InputWrapper } from './InputWrapper';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { InputWrapper, InputWrapperProps } from './InputWrapper';
 
-const defaultProps = {
+const defaultProps: InputWrapperProps = {
   id: 'test-id',
-  required: true,
   children: 'test',
   label: 'test-label',
   error: 'test-error',
   description: 'test-description',
 };
 
+const queries = {
+  getLabel: (container: HTMLElement) => container.querySelector('.mantine-InputWrapper-label'),
+  getError: (container: HTMLElement) => container.querySelector('.mantine-InputWrapper-error'),
+  getRequired: (container: HTMLElement) =>
+    container.querySelector('.mantine-InputWrapper-required'),
+  getDescription: (container: HTMLElement) =>
+    container.querySelector('.mantine-InputWrapper-description'),
+};
+
 describe('@mantine/core/InputWrapper', () => {
-  itSupportsOthers(InputWrapper, defaultProps);
-  itSupportsMargins(InputWrapper, defaultProps);
-  itSupportsStyle(InputWrapper, defaultProps);
-  itSupportsClassName(InputWrapper, defaultProps);
-  itSupportsSx(InputWrapper, defaultProps);
-  itSupportsRef(InputWrapper, defaultProps, HTMLDivElement);
-  itRendersChildren(InputWrapper, { id: 'test-id' });
+  itRendersChildren(InputWrapper, defaultProps);
+  itSupportsSystemProps({
+    component: InputWrapper,
+    props: defaultProps,
+    displayName: '@mantine/core/InputWrapper',
+    refType: HTMLDivElement,
+  });
 
   it('renders correct error, description and label', () => {
-    const withProps = shallow(
+    const { container } = render(
       <InputWrapper
-        id="test-id"
+        {...defaultProps}
         label="test-label"
         error="test-error"
         description="test-description"
-      >
-        test-children
-      </InputWrapper>
+      />
     );
 
-    const withoutProps = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
-
-    expect(withProps.render().find('label').text()).toBe('test-label');
-    expect(withProps.render().find('.mantine-InputWrapper-description').text()).toBe(
-      'test-description'
-    );
-    expect(withProps.render().find('.mantine-InputWrapper-error').text()).toBe('test-error');
-
-    expect(withoutProps.render().find('label')).toHaveLength(0);
-    expect(withoutProps.render().find('.mantine-InputWrapper-description')).toHaveLength(0);
-    expect(withoutProps.render().find('.mantine-InputWrapper-error')).toHaveLength(0);
+    expect(queries.getLabel(container).textContent).toBe('test-label');
+    expect(queries.getDescription(container).textContent).toBe('test-description');
+    expect(queries.getError(container).textContent).toBe('test-error');
   });
 
   it('does not render error if error prop is boolean', () => {
-    const element = shallow(
-      <InputWrapper id="test-id" error>
-        test-children
-      </InputWrapper>
-    );
-    expect(element.render().find('.mantine-InputWrapper-error')).toHaveLength(0);
+    const { container } = render(<InputWrapper {...defaultProps} error />);
+    expect(queries.getError(container)).toBe(null);
   });
 
   it('renders required asterisk with required prop is true', () => {
-    const required = shallow(
-      <InputWrapper id="test-id" required label="test-label">
-        test-children
-      </InputWrapper>
-    );
-    const notRequired = shallow(<InputWrapper id="test-id">test-children</InputWrapper>);
-
-    expect(required.render().find('.mantine-InputWrapper-required').text()).toBe(' *');
-    expect(notRequired.render().find('.mantine-InputWrapper-required')).toHaveLength(0);
-  });
-
-  it('passes id to label htmlFor prop', () => {
-    const element = shallow(
-      <InputWrapper id="test-id" label="test-label">
-        test-children
-      </InputWrapper>
-    );
-
-    expect(element.render().find('label').attr('for')).toBe('test-id');
+    const { container: required } = render(<InputWrapper {...defaultProps} required />);
+    const { container: notRequired } = render(<InputWrapper {...defaultProps} required={false} />);
+    expect(queries.getRequired(required)).toBeInTheDocument();
+    expect(queries.getRequired(notRequired)).toBe(null);
   });
 
   it('spreads props to label, description and error', () => {
-    const element = shallow(
+    const { container } = render(
       <InputWrapper
-        id="test-id"
-        label="test-label"
-        description="test-description"
-        error="test-error"
+        {...defaultProps}
         labelProps={{ 'data-test-label': true }}
         descriptionProps={{ 'data-test-description': true }}
         errorProps={{ 'data-test-error': true }}
-      >
-        test-children
-      </InputWrapper>
+      />
     );
 
-    expect(element.render().find('.mantine-InputWrapper-label').attr('data-test-label')).toBe(
-      'true'
-    );
-    expect(
-      element.render().find('.mantine-InputWrapper-description').attr('data-test-description')
-    ).toBe('true');
-    expect(element.render().find('.mantine-InputWrapper-error').attr('data-test-error')).toBe(
-      'true'
-    );
+    expect(queries.getLabel(container)).toHaveAttribute('data-test-label');
+    expect(queries.getDescription(container)).toHaveAttribute('data-test-description');
+    expect(queries.getError(container)).toHaveAttribute('data-test-error');
   });
 
   it('sets label element based on labelElement prop', () => {
-    const label = shallow(
-      <InputWrapper id="test-id" label="test-label" labelElement="label">
-        test-children
-      </InputWrapper>
-    );
-
-    const div = shallow(
-      <InputWrapper id="test-id" label="test-label" labelElement="div">
-        test-children
-      </InputWrapper>
-    );
-
-    expect(label.find('.mantine-InputWrapper-label').type()).toBe('label');
-    expect(label.find('.mantine-InputWrapper-label').prop('htmlFor')).toBe('test-id');
-    expect(div.find('.mantine-InputWrapper-label').type()).toBe('div');
-    expect(div.find('.mantine-InputWrapper-label').prop('htmlFor')).toBe(undefined);
+    const { container: label } = render(<InputWrapper {...defaultProps} labelElement="label" />);
+    const { container: div } = render(<InputWrapper {...defaultProps} labelElement="div" />);
+    expect(queries.getLabel(label)).toHaveAttribute('for', 'test-id');
+    expect(queries.getLabel(div)).not.toHaveAttribute('for');
   });
 });

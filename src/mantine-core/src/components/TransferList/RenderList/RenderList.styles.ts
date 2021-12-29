@@ -76,4 +76,15 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     },
   },
+
+  separator: {
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    width: '100%',
+    padding: `${theme.spacing.sm / 1.5}px ${theme.spacing.sm}px`,
+  },
+
+  separatorLabel: {
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+  },
 }));

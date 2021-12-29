@@ -50,6 +50,7 @@ export default createStyles((theme, { position, size }: DrawerStyles, getRef) =>
   const noOverlay = getRef('noOverlay');
 
   return {
+    closeButton: {},
     overlay: {},
 
     noOverlay: {

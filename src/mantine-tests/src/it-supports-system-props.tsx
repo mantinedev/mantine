@@ -9,7 +9,7 @@ import { itSupportsRef } from './it-supports-ref';
 interface Options<T extends React.FC> {
   component: T;
   props: React.ComponentProps<T>;
-  displayName: string;
+  displayName?: string;
   excludeOthers?: boolean;
   refType?: any;
 }
@@ -24,7 +24,9 @@ export function itSupportsSystemProps<T extends React.FC>(options: Options<T>) {
   itSupportsStyle(options.component, options.props);
   itSupportsSx(options.component, options.props);
 
-  it('has correct displayName', () => {
-    expect(options.component.displayName).toBe(options.displayName);
-  });
+  if (options.displayName) {
+    it('has correct displayName', () => {
+      expect(options.component.displayName).toBe(options.displayName);
+    });
+  }
 }

@@ -9,7 +9,7 @@ interface Position {
   y: number;
 }
 
-interface ThumbProps extends DefaultProps<ThumbStylesNames> {
+export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   position: Position;
   size: MantineSize;
   __staticSelector: string;

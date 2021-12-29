@@ -1,18 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Image } from './Image';
+import { render, screen } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Image, ImageProps } from './Image';
 
-const defaultProps = {
+const defaultProps: ImageProps = {
   src: 'test.png',
   alt: 'Test',
 };
@@ -23,54 +14,45 @@ describe('@mantine/core/Image', () => {
     render(<Image {...defaultProps} src={null} />),
     render(<Image {...defaultProps} src={null} withPlaceholder />),
   ]);
-
-  itSupportsClassName(Image, defaultProps);
-  itSupportsSx(Image, defaultProps);
-  itSupportsMargins(Image, defaultProps);
-  itSupportsOthers(Image, defaultProps);
-  itSupportsStyle(Image, defaultProps);
-  itSupportsRef(Image, defaultProps, HTMLDivElement);
-
-  it('sets src, alt and object fit on img element', () => {
-    const element = shallow(<Image src="test-src" alt="test-alt" fit="contain" />);
-    expect(element.find('img').prop('src')).toBe('test-src');
-    expect(element.find('img').prop('alt')).toBe('test-alt');
-    expect(element.find('img').prop('style').objectFit).toBe('contain');
+  itSupportsSystemProps({
+    component: Image,
+    props: defaultProps,
+    displayName: '@mantine/core/Image',
+    refType: HTMLDivElement,
   });
 
-  it('sets given width and height on img element', () => {
-    const element = shallow(<Image {...defaultProps} width={478} height={207} />);
-    const styles = element.find('.mantine-Image-image').prop('style');
-    expect(styles.width).toBe(478);
-    expect(styles.height).toBe(207);
+  it('sets src and alt attributes on img element', () => {
+    render(<Image src="test-src" alt="test-alt" />);
+    const image = screen.getByRole('img');
+    expect(image).toHaveAttribute('src', 'test-src');
+    expect(image).toHaveAttribute('alt', 'test-alt');
+  });
+
+  it('sets given width, height and object-fit on img element', () => {
+    render(<Image {...defaultProps} width={478} height={207} fit="contain" />);
+    expect(screen.getByRole('img')).toHaveStyle({
+      width: '478px',
+      height: '207px',
+      objectFit: 'contain',
+    });
   });
 
   it('renders placeholder based on withPlaceholder prop', () => {
-    const withPlaceholder = shallow(<Image src={null} withPlaceholder />);
-    const withoutPlaceholder = shallow(<Image src={null} withPlaceholder={false} />);
-
-    expect(withPlaceholder.find('.mantine-Image-placeholder')).toHaveLength(1);
-    expect(withoutPlaceholder.find('.mantine-Image-placeholder')).toHaveLength(0);
+    const { container: withPlaceholder } = render(<Image src={null} withPlaceholder />);
+    const { container: withoutPlaceholder } = render(<Image src={null} withPlaceholder={false} />);
+    expect(withPlaceholder.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(1);
+    expect(withoutPlaceholder.querySelectorAll('.mantine-Image-placeholder')).toHaveLength(0);
   });
 
   it('renders given caption', () => {
-    const withoutCaption = shallow(<Image src="test" />);
-    const withCaption = shallow(<Image src="test" caption="test-caption" />);
-
-    expect(withoutCaption.render().find('figcaption')).toHaveLength(0);
-    expect(withCaption.render().find('figcaption')).toHaveLength(1);
-    expect(withCaption.render().find('figcaption').text()).toBe('test-caption');
+    const { container: withoutCaption } = render(<Image src="test" />);
+    const { container: withCaption } = render(<Image src="test" caption="test-caption" />);
+    expect(withoutCaption.querySelectorAll('figcaption')).toHaveLength(0);
+    expect(withCaption.querySelector('figcaption').textContent).toBe('test-caption');
   });
 
   it('renders given placeholder if image was not loaded', () => {
-    const element = shallow(
-      <Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />
-    );
-
-    expect(element.find('.mantine-Image-placeholder').text()).toBe('test-placeholder');
-  });
-
-  it('has correct displayName', () => {
-    expect(Image.displayName).toEqual('@mantine/core/Image');
+    render(<Image {...defaultProps} withPlaceholder placeholder="test-placeholder" />);
+    expect(screen.getByText('test-placeholder')).toBeInTheDocument();
   });
 });

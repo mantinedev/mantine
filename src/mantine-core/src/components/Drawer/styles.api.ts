@@ -6,4 +6,5 @@ export const Drawer: Record<DrawerStylesNames, string> = {
   drawer: 'Drawer body element',
   header: 'Drawer header, contains close button and title',
   title: 'Modal title',
+  closeButton: 'Close button',
 };

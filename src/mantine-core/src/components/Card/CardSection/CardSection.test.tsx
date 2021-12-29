@@ -1,28 +1,15 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-  itIsPolymorphic,
-  itSupportsRef,
-} from '@mantine/tests';
-import { CardSection } from './CardSection';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { CardSection, CardSectionProps } from './CardSection';
 
-const defaultProps = {};
+const defaultProps: CardSectionProps<'div'> = {};
 
 describe('@mantine/core/CardSection', () => {
   itRendersChildren(CardSection, defaultProps);
-  itSupportsClassName(CardSection, defaultProps);
-  itSupportsOthers(CardSection, defaultProps);
-  itSupportsStyle(CardSection, defaultProps);
-  itSupportsMargins(CardSection, defaultProps);
-  itSupportsSx(CardSection, defaultProps);
   itIsPolymorphic(CardSection, defaultProps);
-  itSupportsRef(CardSection, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(CardSection.displayName).toEqual('@mantine/core/CardSection');
+  itSupportsSystemProps({
+    component: CardSection,
+    props: defaultProps,
+    displayName: '@mantine/core/CardSection',
+    refType: HTMLDivElement,
   });
 });

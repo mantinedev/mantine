@@ -3,7 +3,7 @@ import {
   DefaultProps,
   PolymorphicComponentProps,
   PolymorphicRef,
-  useExtractedMargins,
+  extractMargins,
 } from '@mantine/styles';
 import { useSx, BoxSx } from './use-sx/use-sx';
 
@@ -22,12 +22,10 @@ export const Box: BoxComponent = forwardRef(
     { className, component, style, sx, ...others }: BoxProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const Element = component || 'div';
-
-    return <Element ref={ref} className={useSx(sx, className)} style={mergedStyles} {...rest} />;
+    return <Element ref={ref} className={useSx(sx, margins, className)} style={style} {...rest} />;
   }
 );
 
-// displayName is different to support sx tests
-Box.displayName = 'MantineBox';
+Box.displayName = '@mantine/core/Box';
