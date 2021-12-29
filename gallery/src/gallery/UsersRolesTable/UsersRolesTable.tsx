@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Badge, Table, Group, Text, NativeSelect, ScrollArea } from '@mantine/core';
+import { Avatar, Badge, Table, Group, Text, Select, ScrollArea } from '@mantine/core';
 
 interface UsersTableProps {
   data: { avatar: string; name: string; job: string; email: string; role: string }[];
@@ -11,7 +11,7 @@ export function UsersRolesTable({ data }: UsersTableProps) {
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
-        <Group spacing="sm">
+        <Group spacing="sm" sx={{ paddingTop: 5, paddingBottom: 5 }}>
           <Avatar size={40} src={item.avatar} radius={40} />
           <div>
             <Text size="sm" weight={500}>
@@ -25,7 +25,7 @@ export function UsersRolesTable({ data }: UsersTableProps) {
       </td>
 
       <td>
-        <NativeSelect data={rolesData} defaultValue={item.role} variant="unstyled" />
+        <Select data={rolesData} defaultValue={item.role} variant="unstyled" />
       </td>
       <td>{Math.floor(Math.random() * 6 + 5)} days ago</td>
       <td>

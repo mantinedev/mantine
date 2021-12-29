@@ -39,7 +39,7 @@ export function UsersStack({ data }: UsersStackProps) {
           <ActionIcon>
             <Pencil size={16} />
           </ActionIcon>
-          <Menu transition="pop" withArrow>
+          <Menu transition="pop" withArrow placement="end">
             <Menu.Item icon={<Messages size={16} />}>Send message</Menu.Item>
             <Menu.Item icon={<Note size={16} />}>Add note</Menu.Item>
             <Menu.Item icon={<ReportAnalytics size={16} />}>Analytics</Menu.Item>
