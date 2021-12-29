@@ -16,7 +16,7 @@
     "links": [
       { "link": "/about", "label": "Features" },
       {
-        "link": "/learn",
+        "link": "#1",
         "label": "Learn",
         "links": [
           { "link": "/docs", "label": "Documentation" },
@@ -28,7 +28,7 @@
       { "link": "/about", "label": "About" },
       { "link": "/pricing", "label": "Pricing" },
       {
-        "link": "/support",
+        "link": "#2",
         "label": "Support",
         "links": [
           { "link": "/faq", "label": "FAQ" },

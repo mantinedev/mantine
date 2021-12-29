@@ -67,10 +67,10 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
       return (
         <Menu
           trigger="hover"
-          delay={50}
+          delay={0}
           transitionDuration={0}
           placement="end"
-          gutter={3}
+          gutter={1}
           control={
             <a
               key={link.label}
