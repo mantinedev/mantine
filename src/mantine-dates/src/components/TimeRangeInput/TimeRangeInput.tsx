@@ -99,7 +99,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       styles,
       id,
       value,
-      defaultValue,
+      defaultValue = [new Date(), new Date(new Date().valueOf() + 1000)],
       onChange,
       withSeconds = false,
       clearable = false,

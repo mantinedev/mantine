@@ -96,7 +96,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       styles,
       id,
       value,
-      defaultValue,
+      defaultValue = new Date(),
       onChange,
       withSeconds = false,
       clearable = false,
