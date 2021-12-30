@@ -3,7 +3,15 @@
   "category": "stats",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [],
+  "dependencies": [
+    "/core/progress/",
+    "/core/box/",
+    "/core/text/",
+    "/core/group/",
+    "/core/paper/",
+    "/core/simple-grid/",
+    "tabler-icons-react"
+  ],
   "props": {
     "total": "345,765",
     "diff": 18,
