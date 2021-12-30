@@ -35,7 +35,7 @@ export function StatsRing({ data }: StatsRingProps) {
           />
 
           <div>
-            <Text color="dimmed" size="sm" weight={500}>
+            <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
               {stat.label}
             </Text>
             <Text weight={700} size="xl">
