@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
-import { TimeField } from './TimeField/TimeField';
+import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
 const defaultProps: TimeInputProps = {};

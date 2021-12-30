@@ -3,7 +3,7 @@ interface CreateAmPmHandler {
   nextRef?: React.RefObject<HTMLInputElement>;
 }
 
-const testRegex = /^(a|p)?m?$/;
+const testRegex = /(^(a|p)m?$)|(^$)/;
 
 export function createAmPmHandler({ onChange, nextRef }: CreateAmPmHandler) {
   return (value: string, triggerShift: boolean) => {

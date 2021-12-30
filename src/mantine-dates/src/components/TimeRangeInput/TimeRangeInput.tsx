@@ -12,10 +12,16 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
+import {
+  useMergedRef,
+  useUncontrolled,
+  useDidUpdate,
+  useUuid,
+  useValidState,
+} from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
 import { getMidnight } from '../../utils/get-midnight/get-midnight';
-import { TimeField } from '../TimeInput/TimeField/TimeField';
+import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
@@ -137,8 +143,14 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const formatsRef = useRef<HTMLInputElement[]>([]);
     const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
     const [toTime, setToTime] = useState(getTimeValues(_value[1]));
-    const [fromAmPm, setFromAmPm] = useState('am');
-    const [toAmPm, setToAmPm] = useState('am');
+    const [fromAmPmValid, setFromAmPm, fromAmPm] = useValidState(
+      (val) => val === 'am' || val === 'pm',
+      'am'
+    );
+    const [toAmPmValid, setToAmPm, toAmPm] = useValidState(
+      (val) => val === 'am' || val === 'pm',
+      'am'
+    );
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
 
     useDidUpdate(() => {
@@ -371,6 +383,15 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={fromAmPm}
                 onChange={handleAmPmChange}
+                onBlur={() => {
+                  if (fromAmPm !== 'am' && fromAmPm !== 'pm') {
+                    if (fromAmPm === '') {
+                      handleAmPmChange(fromAmPmValid, false);
+                    } else {
+                      handleAmPmChange(fromAmPm[0] === 'p' ? 'pm' : 'am', false);
+                    }
+                  }
+                }}
                 setValue={(val) => {
                   setFromAmPm(val);
                 }}
@@ -441,6 +462,15 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   }}
                   value={toAmPm}
                   onChange={handleAmPmChange}
+                  onBlur={() => {
+                    if (toAmPm !== 'am' && toAmPm !== 'pm') {
+                      if (toAmPm === '') {
+                        handleAmPmChange(toAmPmValid, false);
+                      } else {
+                        handleAmPmChange(toAmPm[0] === 'p' ? 'pm' : 'am', false);
+                      }
+                    }
+                  }}
                   setValue={(val) => {
                     setToAmPm(val);
                   }}

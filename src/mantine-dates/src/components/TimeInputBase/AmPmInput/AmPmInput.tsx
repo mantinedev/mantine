@@ -24,7 +24,6 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       className,
       onChange,
       onFocus,
-      onBlur,
       setValue,
       size = 'sm',
       error,
@@ -41,10 +40,6 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       inputRef.current.select();
     };
 
-    const handleBlur = (event: any) => {
-      typeof onBlur === 'function' && onBlur(event);
-    };
-
     const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
       event.stopPropagation();
       inputRef.current.select();
@@ -57,7 +52,6 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onChange={(event) => onChange(event.currentTarget.value, true)}
         onClick={handleClick}
         onFocus={handleFocus}
-        onBlur={handleBlur}
         value={value}
         className={cx(classes.amPmInput, className)}
         {...others}
