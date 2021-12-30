@@ -6,8 +6,8 @@ const code = `
   size="xl"
   sections={[
     { value: 40, color: 'cyan' },
-    { value: 20, color: 'red' },
-    { value: 15, color: 'lime' },
+    { value: 20, color: 'blue' },
+    { value: 15, color: 'indigo' },
   ]}
 />
 `;
@@ -18,8 +18,8 @@ function Demo() {
       size="xl"
       sections={[
         { value: 40, color: 'cyan' },
-        { value: 20, color: 'red' },
-        { value: 15, color: 'lime' },
+        { value: 20, color: 'blue' },
+        { value: 15, color: 'indigo' },
       ]}
     />
   );
