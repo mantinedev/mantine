@@ -79,7 +79,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             style={{
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
-              backgroundColor: theme.fn.themeColor(section.color, 7),
+              backgroundColor: theme.fn.themeColor(section.color, 6, false),
             }}
           >
             {section.label && <Text className={classes.label}>{section.label}</Text>}

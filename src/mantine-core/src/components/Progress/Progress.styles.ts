@@ -39,7 +39,7 @@ export default createStyles((theme, { color, radius, size, striped, animate }: P
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.fn.themeColor(color, 6),
+    backgroundColor: theme.fn.themeColor(color || theme.primaryColor, 6, false),
     transition: `width 200ms ${theme.transitionTimingFunction}`,
     animation: animate ? `${stripesAnimation} 1000ms linear infinite` : 'none',
     backgroundSize: '20px 20px',
