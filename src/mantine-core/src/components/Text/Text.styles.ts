@@ -38,8 +38,8 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7]
     : theme.colorScheme === 'dark'
-    ? theme.colors.dark[0]
-    : theme.black;
+    ? color || theme.colors.dark[0]
+    : color || theme.black;
 }
 
 function getLineClamp(lineClamp: number): CSSObject {
