@@ -16,12 +16,12 @@ import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/h
 import dayjs, { UnitType } from 'dayjs';
 import { getMidnight } from '../../utils/get-midnight/get-midnight';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
-import { createTimeHandler } from '../TimeInput/create-time-handler/create-time-handler';
-import { getTimeValues } from '../TimeInput/get-time-values/get-time-value';
+import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
+import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 import useStyles from './TimeRangeInput.styles';
-import { padTime } from '../TimeInput/pad-time/pad-time';
-import { AmPmInput } from '../TimeInput/AmPmInput/AmPmInput';
-import { createAmPmHandler } from '../TimeInput/create-amPm-handler/create-amPm-handler';
+import { padTime } from '../TimeInputBase/pad-time/pad-time';
+import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
+import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
 
 export type TimeRangeInputStylesNames =
   | Exclude<ClassNames<typeof useStyles>, 'disabled'>

@@ -1,7 +1,7 @@
 import React, { useRef, forwardRef } from 'react';
 import { useMergedRef, clamp } from '@mantine/hooks';
 import { Text, MantineSize } from '@mantine/core';
-import { padTime } from '../pad-time/pad-time';
+import { padTime } from '../../TimeInputBase/pad-time/pad-time';
 import useStyles from './TimeField.styles';
 
 interface TimeFieldProps

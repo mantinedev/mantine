@@ -15,12 +15,12 @@ import {
 import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { TimeField } from './TimeField/TimeField';
-import { createTimeHandler } from './create-time-handler/create-time-handler';
-import { getTimeValues } from './get-time-values/get-time-value';
+import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
+import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
-import { padTime } from './pad-time/pad-time';
-import { AmPmInput } from './AmPmInput/AmPmInput';
-import { createAmPmHandler } from './create-amPm-handler/create-amPm-handler';
+import { padTime } from '../TimeInputBase/pad-time/pad-time';
+import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
+import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
 import { getMidnight } from '../../utils/get-midnight/get-midnight';
 
 export type TimeInputStylesNames =
