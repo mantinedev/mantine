@@ -1,0 +1,37 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-valid-state'
+category: 'state'
+order: 1
+slug: /hooks/use-valid-state/
+description: 'useValidState is useState with validation'
+import: "import { useValidState } from '@mantine/hooks';"
+docs: 'hooks/use-valid-state.mdx'
+source: 'mantine-hooks/src/use-valid-state/use-valid-state.ts'
+---
+
+## Usage
+
+use-valid-state works similar to `useState` but checks the value if it is valid based on the `rule` function.
+
+```tsx
+const [validValue, setValue, value] = useValidState((value) => value === 'valid', 'valid');
+
+validValue; // -> valid
+value; // -> valid
+
+setValue('invalid');
+
+validValue; // -> valid
+value; // -> invalid
+```
+
+## Definition
+
+```tsx
+function useValidState<T>(
+  rule: (value: T) => boolean,
+  initialValue?: T
+): readonly [validValue: T, setValue: (value: T) => void, value: T];
+```

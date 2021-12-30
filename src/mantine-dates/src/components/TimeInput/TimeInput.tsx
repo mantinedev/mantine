@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -9,14 +9,25 @@ import {
   InputWrapper,
   MantineSize,
   ClassNames,
+  CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
+import {
+  useMergedRef,
+  useUncontrolled,
+  useDidUpdate,
+  useUuid,
+  useValidState,
+} from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { TimeField } from './TimeField/TimeField';
-import { createTimeHandler } from './create-time-handler/create-time-handler';
-import { getTimeValues } from './get-time-values/get-time-value';
+import { TimeField } from '../TimeInputBase/TimeField/TimeField';
+import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
+import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
+import { padTime } from '../TimeInputBase/pad-time/pad-time';
+import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
+import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
+import { getMidnight } from '../../utils/get-midnight/get-midnight';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -43,6 +54,15 @@ export interface TimeInputProps
   /** Display seconds input */
   withSeconds?: boolean;
 
+  /** Allow to clear item */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
+  /** The time format */
+  format?: '12' | '24';
+
   /** Uncontrolled input name */
   name?: string;
 
@@ -59,6 +79,14 @@ export interface TimeInputProps
   disabled?: boolean;
 }
 
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
+};
+
 export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
   (
     {
@@ -74,9 +102,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       styles,
       id,
       value,
-      defaultValue,
+      defaultValue = new Date(),
       onChange,
       withSeconds = false,
+      clearable = false,
+      clearButtonLabel,
+      format = '24',
       name,
       hoursLabel,
       minutesLabel,
@@ -87,14 +118,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     }: TimeInputProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
+    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
     const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
     const [_value, handleChange] = useUncontrolled({
       value,
       defaultValue,
-      finalValue: new Date(),
+      finalValue: value,
       rule: (val) => val instanceof Date,
       onChange,
     });
@@ -102,43 +133,101 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
+    const amPmRef = useRef<HTMLInputElement>();
+    const [amPmValid, setAmPm, amPm] = useValidState((val) => val === 'am' || val === 'pm', 'am');
     const [time, setTime] = useState(getTimeValues(_value));
 
     useDidUpdate(() => {
       setTime(getTimeValues(_value));
     }, [_value]);
 
+    useEffect(() => {
+      if (format === '12') {
+        setAmPm(parseInt(time.hours, 10) >= 12 ? 'pm' : 'am');
+      }
+    }, [format]);
+
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((c) => ({ ...c, hours: val }));
-        handleChange(dayjs(_value).set('hours', parseInt(val, 10)).toDate());
+        let newVal = parseInt(val, 10);
+
+        if (format === '12' && amPm === 'pm') {
+          newVal += 12;
+        }
+
+        setTime((c) => ({ ...c, hours: newVal.toString() }));
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('hours', newVal)
+            .toDate()
+        );
       },
       min: 0,
-      max: 23,
-      maxValue: 2,
+      max: format === '12' ? 11 : 23,
+      maxValue: format === '12' ? 1 : 2,
       nextRef: minutesRef,
     });
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
         setTime((c) => ({ ...c, minutes: val }));
-        handleChange(dayjs(_value).set('minutes', parseInt(val, 10)).toDate());
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('minutes', parseInt(val, 10))
+            .toDate()
+        );
       },
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: secondsRef,
+      nextRef: !withSeconds ? amPmRef : secondsRef,
     });
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
         setTime((c) => ({ ...c, seconds: val }));
-        handleChange(dayjs(_value).set('seconds', parseInt(val, 10)).toDate());
+        handleChange(
+          dayjs(_value ?? getMidnight())
+            .set('seconds', parseInt(val, 10))
+            .toDate()
+        );
       },
       min: 0,
       max: 59,
       maxValue: 5,
+      nextRef: amPmRef,
     });
+
+    const handleAmPmChange = createAmPmHandler({
+      onChange: (val) => {
+        setAmPm(val);
+
+        if ((val === 'am' || val === 'pm') && _value) {
+          const hour = parseInt(time.hours, 10);
+
+          handleChange(
+            dayjs(_value)
+              .set('hours', val === 'pm' ? hour + 12 : hour - 12)
+              .toDate()
+          );
+        }
+      },
+    });
+
+    const handleClear = () => {
+      handleChange(undefined);
+      hoursRef.current.focus();
+    };
+
+    const rightSection =
+      clearable && _value ? (
+        <CloseButton
+          variant="transparent"
+          aria-label={clearButtonLabel}
+          onClick={handleClear}
+          size={size}
+        />
+      ) : null;
 
     return (
       <InputWrapper
@@ -168,19 +257,25 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           classNames={classNames}
           styles={styles}
           disabled={disabled}
+          rightSection={rightSection}
+          rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
           {...rest}
         >
           <div className={classes.controls}>
             <TimeField
               ref={useMergedRef(hoursRef, ref)}
-              value={time.hours}
+              value={
+                format === '12' && parseInt(time.hours, 10) >= 12
+                  ? padTime(parseInt(time.hours, 10) - 12)
+                  : time.hours
+              }
               onChange={handleHoursChange}
               setValue={(val) => setTime((c) => ({ ...c, hours: val }))}
               id={uuid}
               className={classes.timeInput}
               withSeparator
               size={size}
-              max={23}
+              max={format === '12' ? 11 : 23}
               aria-label={hoursLabel}
               disabled={disabled}
             />
@@ -209,6 +304,29 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 max={59}
                 aria-label={secondsLabel}
                 disabled={disabled}
+              />
+            )}
+
+            {format === '12' && (
+              <AmPmInput
+                ref={amPmRef}
+                value={amPm}
+                onChange={handleAmPmChange}
+                onBlur={() => {
+                  if (amPm !== 'am' && amPm !== 'pm') {
+                    if (amPm === '') {
+                      handleAmPmChange(amPmValid, false);
+                    } else {
+                      handleAmPmChange(amPm[0] === 'p' ? 'pm' : 'am', false);
+                    }
+                  }
+                }}
+                setValue={(val) => {
+                  setAmPm(val);
+                }}
+                size={size}
+                disabled={disabled}
+                error={!!error}
               />
             )}
 

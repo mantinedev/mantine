@@ -1,4 +1,4 @@
-import { TimeInput } from '../TimeInput';
+import { TimeRangeInput } from '../TimeRangeInput';
 
 const codeTemplate = (props: string) => `<TimeInput
  ${props}
@@ -6,7 +6,7 @@ const codeTemplate = (props: string) => `<TimeInput
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: TimeInput,
+  component: TimeRangeInput,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
@@ -49,13 +49,13 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
-      name: 'withSeconds',
+      name: 'clearable',
       type: 'boolean',
       initialValue: false,
       defaultValue: false,
     },
     {
-      name: 'clearable',
+      name: 'withSeconds',
       type: 'boolean',
       initialValue: false,
       defaultValue: false,
