@@ -18,7 +18,8 @@ interface ProgressStyles {
 }
 
 export const move = keyframes({
-  '100%': { backgroundPosition: '40px 100%' },
+  to: { backgroundPosition: '40px 0' },
+  from: { backgroundPosition: '0 0' },
 });
 
 export default createStyles(
@@ -42,8 +43,8 @@ export default createStyles(
       alignItems: 'center',
       backgroundColor: theme.fn.themeColor(color, 6),
       transition: `width 200ms ${theme.transitionTimingFunction}`,
-      backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
-      animation: animate || indeterminate ? `${move} 1500ms linear infinite` : 'none',
+      animation: animate || indeterminate ? `${move} 1000ms linear infinite` : 'none',
+      backgroundSize: '20px 20px',
       backgroundImage:
         striped || indeterminate
           ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
