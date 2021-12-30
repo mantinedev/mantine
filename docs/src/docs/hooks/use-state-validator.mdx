@@ -1,0 +1,45 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-state-validator'
+category: 'state'
+order: 1
+slug: /hooks/use-state-validator/
+description: 'useState with validation'
+import: "import { useStateValidator } from '@mantine/hooks';"
+docs: 'hooks/use-state-validator.mdx'
+source: 'mantine-hooks/src/use-state-validator/use-state-validator.ts'
+---
+
+## Usage
+
+use-state-validator hook is a `useState` wrapper with validation for the state.
+
+```tsx
+const [value, setValue, isValid] = useStateValidator('initialValue', (val) => typeof val === 'string');
+
+value // -> initialValue
+isValid // -> true
+
+setValue('nextValue') // -> nextValue
+isValid // -> true
+
+setValue(undefined); // -> undefined
+isValid // => false
+```
+
+You can also pass a callback to `setValue`.
+
+```tsx
+setValue((prevValue) => prevValue + ' Updated');
+```
+
+## Definition
+
+```tsx
+function useStateValidator<T>(
+  initialValue: T | null | undefined,
+  validator: (val: T | null | undefined) => boolean
+): readonly [T, ((T | null | undefined | ((prevValue: T) => T) => void), boolean];
+
+```
