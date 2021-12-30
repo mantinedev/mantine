@@ -101,3 +101,4 @@ export { StatsControls } from './StatsControls/StatsControls';
 export { StatsGrid } from './StatsGrid/StatsGrid';
 export { StatsGroup } from './StatsGroup/StatsGroup';
 export { StatsRing } from './StatsRing/StatsRing';
+export { StatsSegments } from './StatsSegments/StatsSegments';
