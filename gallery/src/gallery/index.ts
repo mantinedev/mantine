@@ -99,6 +99,7 @@ export { TableOfContentsFloating } from './TableOfContentsFloating/TableOfConten
 export { StatsCard } from './StatsCard/StatsCard';
 export { StatsControls } from './StatsControls/StatsControls';
 export { StatsGrid } from './StatsGrid/StatsGrid';
+export { StatsGridIcons } from './StatsGridIcons/StatsGridIcons';
 export { StatsGroup } from './StatsGroup/StatsGroup';
 export { StatsRing } from './StatsRing/StatsRing';
 export { StatsSegments } from './StatsSegments/StatsSegments';
