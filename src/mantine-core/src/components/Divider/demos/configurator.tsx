@@ -30,12 +30,6 @@ export const configurator: MantineDemo = {
       initialValue: 'horizontal',
       defaultValue: 'horizontal',
     },
-    // {
-    //   name: 'color',
-    //   type: 'color',
-    //   defaultValue: 'gray',
-    //   initialValue: 'gray',
-    // },
     { name: 'size', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'label', type: 'string', initialValue: '', defaultValue: '' },
     {
