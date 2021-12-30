@@ -31,7 +31,7 @@ export const configurator: MantineDemo = {
       defaultValue: 'horizontal',
     },
     { name: 'size', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
-    { name: 'label', type: 'string', initialValue: '', defaultValue: '' },
+    { name: 'label', type: 'string', initialValue: '' },
     {
       name: 'labelPosition',
       type: 'select',
