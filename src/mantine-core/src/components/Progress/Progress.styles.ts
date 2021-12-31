@@ -67,5 +67,6 @@ export default createStyles((theme, { color, radius, size, striped, animate }: P
     fontSize: theme.fn.size({ size, sizes }) * 0.65,
     fontWeight: 700,
     userSelect: 'none',
+    overflow: 'hidden',
   },
 }));
