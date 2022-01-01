@@ -5,6 +5,7 @@ import {
   MantineColor,
   ClassNames,
   extractMargins,
+  MantineNumberSize,
 } from '@mantine/styles';
 import { useUuid } from '@mantine/hooks';
 import { Box } from '../Box';
@@ -18,6 +19,9 @@ export interface CheckboxProps
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
   color?: MantineColor;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** Predefined label font-size and checkbox width and height in px */
   size?: MantineSize;
@@ -53,6 +57,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       indeterminate,
       id,
       size = 'sm',
+      radius = 'sm',
       wrapperProps,
       children,
       classNames,
@@ -66,7 +71,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const uuid = useUuid(id);
     const { margins, rest } = extractMargins(others);
     const { classes, cx } = useStyles(
-      { size, color, transitionDuration },
+      { size, radius, color, transitionDuration },
       { classNames, styles, name: 'Checkbox' }
     );
 

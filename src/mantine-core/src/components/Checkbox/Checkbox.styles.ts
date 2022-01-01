@@ -1,4 +1,4 @@
-import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineSize, MantineColor, MantineNumberSize } from '@mantine/styles';
 
 export const sizes = {
   xs: 16,
@@ -18,12 +18,13 @@ const iconSizes = {
 
 interface CheckboxStyles {
   size: MantineSize;
+  radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
 }
 
 export default createStyles(
-  (theme, { size, color, transitionDuration }: CheckboxStyles, getRef) => {
+  (theme, { size, radius, color, transitionDuration }: CheckboxStyles, getRef) => {
     const _size = theme.fn.size({ size, sizes });
 
     const icon = getRef('icon');
@@ -81,7 +82,7 @@ export default createStyles(
         }`,
         width: _size,
         height: _size,
-        borderRadius: theme.radius.sm,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         padding: 0,
         outline: 0,
         display: 'block',
