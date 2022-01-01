@@ -1,26 +1,26 @@
 import React from 'react';
 import { useMantineTheme, Text, Group, Code } from '@mantine/core';
-import { useResizeObserver } from '@mantine/hooks';
+import { useElementSize } from '@mantine/hooks';
 
 const code = `
 import { useMantineTheme, Text, Code } from '@mantine/core';
-import { useResizeObserver } from '@mantine/hooks';
+import { useElementSize } from '@mantine/hooks';
 
 function Demo() {
   const theme = useMantineTheme();
-  const [ref, rect] = useResizeObserver();
+  const { ref, ...resolution } = useElementSize();
 
   return (
     <>
       <textarea ref={ref} style={{ pointerEvents: 'none', width: 400, height: 120 }} />
-      <Text align="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
+      <Text align="center">Rect: <Code>{JSON.stringify(resolution)}</Code></Text>
     </>
   );
 }`;
 
 function Demo() {
   const theme = useMantineTheme();
-  const [ref, rect] = useResizeObserver();
+  const { ref, ...resolution } = useElementSize();
 
   return (
     <>
@@ -43,13 +43,13 @@ function Demo() {
         />
       </Group>
       <Text align="center" style={{ marginTop: theme.spacing.sm }}>
-        Rect: <Code>{JSON.stringify(rect, null, 2)}</Code>
+        Rect: <Code>{JSON.stringify(resolution, null, 2)}</Code>
       </Text>
     </>
   );
 }
 
-export const useResizeObserverDemo: MantineDemo = {
+export const useElementSizeDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
