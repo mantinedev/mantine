@@ -1,13 +1,14 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, MantineNumberSize } from '@mantine/core';
 
 interface RichTextEditorStyles {
   saveLabel: string;
   editLabel: string;
   removeLabel: string;
+  radius: MantineNumberSize;
 }
 
 export default createStyles(
-  (theme, { saveLabel, removeLabel, editLabel }: RichTextEditorStyles) => ({
+  (theme, { saveLabel, removeLabel, editLabel, radius }: RichTextEditorStyles) => ({
     root: {
       ...theme.fn.fontStyles(),
       fontSize: theme.fontSizes.sm,
@@ -15,9 +16,14 @@ export default createStyles(
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-      borderRadius: theme.radius.sm,
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       position: 'relative',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+      '& .ql-toolbar': {
+        borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderTopLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      },
 
       '& .ql-container': {
         position: 'relative',

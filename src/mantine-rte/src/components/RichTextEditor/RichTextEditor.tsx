@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
 import 'quill-mention';
-import { DefaultProps, ClassNames, Box } from '@mantine/core';
+import { DefaultProps, ClassNames, Box, MantineNumberSize } from '@mantine/core';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -81,6 +81,9 @@ export interface RichTextEditorProps
 
   /** Top toolbar position in any valid css value */
   stickyOffset?: number | string;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
@@ -91,6 +94,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       onImageUpload = defaultImageUpload,
       sticky = true,
       stickyOffset = 0,
+      radius = 'sm',
       labels = DEFAULT_LABELS,
       controls = DEFAULT_CONTROLS,
       id,
@@ -106,7 +110,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
     const uuid = useUuid(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
-      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
+      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove, radius },
       { classNames, styles, name: 'RichTextEditor' }
     );
 
