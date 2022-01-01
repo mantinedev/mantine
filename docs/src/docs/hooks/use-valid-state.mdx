@@ -31,7 +31,7 @@ value; // -> invalid
 
 ```tsx
 function useValidState<T>(
-  rule: (value: T) => boolean,
+  validation: (value: T) => boolean,
   initialValue?: T
 ): readonly [validValue: T, setValue: (value: T) => void, value: T];
 ```
