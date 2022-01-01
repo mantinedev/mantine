@@ -59,7 +59,10 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     props: null,
     type: 'content',
   });
-  const closeAll = () => handlers.setState([]);
+  const closeAll = () => {
+    state.forEach((modal) => modal.props?.onClose?.());
+    handlers.setState([]);
+  };
 
   const openModal = (props: ModalSettings) => {
     const id = props.id || randomId();
