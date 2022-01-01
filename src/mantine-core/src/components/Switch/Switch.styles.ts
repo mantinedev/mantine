@@ -100,10 +100,13 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
       '&::after': {
         position: 'absolute',
         zIndex: 0,
+        display: 'flex',
+        height: '100%',
+        alignItems: 'center',
+        lineHeight: 0,
         right: '10%',
         transform: 'translateX(0)',
         content: offLabel ? `'${offLabel}'` : "''",
-        lineHeight: 1,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
       },
 
