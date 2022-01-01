@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -77,6 +77,12 @@ export interface ModalProps
   /** Should modal be closed when outside click was registered? */
   closeOnClickOutside?: boolean;
 
+  /** Should modal be closed when escape is pressed? */
+  closeOnEscape?: boolean;
+
+  /** Disables focus trap */
+  noFocusTrap?: boolean;
+
   /** Controls if modal should be centered */
   centered?: boolean;
 }
@@ -102,6 +108,8 @@ export function MantineModal({
   classNames,
   styles,
   closeOnClickOutside = true,
+  noFocusTrap = false,
+  closeOnEscape = true,
   centered = false,
   ...others
 }: ModalProps) {
@@ -112,7 +120,7 @@ export function MantineModal({
     { size, overflow, centered },
     { classNames, styles, name: 'Modal' }
   );
-  const focusTrapRef = useFocusTrap(opened);
+  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -121,6 +129,22 @@ export function MantineModal({
       : 0.75;
 
   const [, lockScroll] = useScrollLock();
+
+  const closeOnEscapePress = (event: KeyboardEvent) => {
+    if (noFocusTrap && event.code === 'Escape' && closeOnEscape) {
+      onClose();
+    }
+  };
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    // onKeyDownCapture event will not fire when focus trap is not active
+    if (noFocusTrap) {
+      window.addEventListener('keydown', closeOnEscapePress);
+      return () => window.removeEventListener('keydown', closeOnEscapePress);
+    }
+  }, [noFocusTrap]);
+
   useFocusReturn({ opened, transitionDuration });
 
   return (
@@ -145,7 +169,7 @@ export function MantineModal({
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-              shouldTrigger && event.nativeEvent.code === 'Escape' && onClose();
+              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
             }}
             ref={focusTrapRef}
           >
