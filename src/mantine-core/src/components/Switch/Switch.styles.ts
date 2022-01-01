@@ -19,7 +19,7 @@ const switchHeight = {
 const switchWidth = {
   xs: 30,
   sm: 38,
-  md: 44,
+  md: 46,
   lg: 56,
   xl: 68,
 };
@@ -30,6 +30,14 @@ const handleSizes = {
   md: 18,
   lg: 22,
   xl: 28,
+};
+
+const labelFontSizes = {
+  xs: 5,
+  sm: 6,
+  md: 7,
+  lg: 9,
+  xl: 11,
 };
 
 export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
@@ -49,6 +57,7 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
 
     input: {
       ...theme.fn.focusStyles(),
+      overflow: 'hidden',
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
       borderRadius,
@@ -67,10 +76,11 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
       appearance: 'none',
       display: 'flex',
       alignItems: 'center',
-      fontSize: handleSize * 0.55,
+      fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
       fontWeight: 600,
 
       '&::before': {
+        zIndex: 1,
         borderRadius,
         boxSizing: 'border-box',
         content: "''",
@@ -89,10 +99,12 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
 
       '&::after': {
         position: 'absolute',
-        top: '30%',
+        zIndex: 0,
         right: '10%',
+        transform: 'translateX(0)',
         content: offLabel ? `'${offLabel}'` : "''",
-        color: theme.white,
+        lineHeight: 1,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
       },
 
       '&:checked': {
@@ -109,9 +121,7 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
         },
 
         '&::after': {
-          position: 'absolute',
-          top: '30%',
-          left: '10%',
+          transform: 'translateX(-200%)',
           content: onLabel ? `'${onLabel}'` : "''",
           color: theme.white,
         },
