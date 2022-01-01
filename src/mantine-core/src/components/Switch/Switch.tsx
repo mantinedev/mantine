@@ -22,6 +22,12 @@ export interface SwitchProps
   /** Switch label */
   label?: React.ReactNode;
 
+  /** The inner label to be set when Switch is in an unchecked state */
+  offLabel?: string;
+
+  /** The inner label to be set when Switch is in the checked state */
+  onLabel?: string;
+
   /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
   color?: MantineColor;
 
@@ -41,6 +47,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       className,
       color,
       label,
+      offLabel = '',
+      onLabel = '',
       id,
       style,
       size = 'sm',
@@ -55,7 +63,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { size, color, radius },
+      { size, color, radius, offLabel, onLabel },
       { classNames, styles, name: 'Switch' }
     );
     const { margins, rest } = extractMargins(others);

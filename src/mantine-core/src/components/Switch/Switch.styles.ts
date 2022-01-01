@@ -4,6 +4,8 @@ interface SwitchStyles {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
+  offLabel: string;
+  onLabel: string;
 }
 
 const switchHeight = {
@@ -35,7 +37,7 @@ export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
   return acc;
 }, {} as Record<MantineSize, { width: number; height: number }>);
 
-export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
+export default createStyles((theme, { size, radius, color, offLabel, onLabel }: SwitchStyles) => {
   const handleSize = theme.fn.size({ size, sizes: handleSizes });
   const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
 
@@ -65,6 +67,8 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
       appearance: 'none',
       display: 'flex',
       alignItems: 'center',
+      fontSize: handleSize * 0.55,
+      fontWeight: 600,
 
       '&::before': {
         borderRadius,
@@ -83,6 +87,14 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
         },
       },
 
+      '&::after': {
+        position: 'absolute',
+        top: '30%',
+        right: '10%',
+        content: offLabel ? `'${offLabel}'` : "''",
+        color: theme.white,
+      },
+
       '&:checked': {
         backgroundColor: theme.fn.themeColor(color, 6),
         borderColor: theme.fn.themeColor(color, 6),
@@ -94,6 +106,14 @@ export default createStyles((theme, { size, radius, color }: SwitchStyles) => {
             (size === 'xs' ? 3 : 4) // borderWidth: 2 + padding: 2 * 2
           }px)`,
           borderColor: theme.white,
+        },
+
+        '&::after': {
+          position: 'absolute',
+          top: '30%',
+          left: '10%',
+          content: onLabel ? `'${onLabel}'` : "''",
+          color: theme.white,
         },
       },
 
