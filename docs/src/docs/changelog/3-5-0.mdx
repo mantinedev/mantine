@@ -7,7 +7,13 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.5.0
 date: 'December 13th, 2021'
 ---
 
-import { RingProgressDemos, NumberInputDemos, StepperDemos, ProgressDemos } from '@demos/core';
+import {
+  RingProgressDemos,
+  NumberInputDemos,
+  StepperDemos,
+  ProgressDemos,
+  SwitchDemos,
+} from '@demos/core';
 import * as PrismDemos from '@demos/prism';
 import * as RichTextDemos from '@demos/rte';
 
@@ -47,6 +53,10 @@ import * as RichTextDemos from '@demos/rte';
 <Demo data={ProgressDemos.label} demoProps={{ toggle: true }} />
 
 <Demo data={ProgressDemos.animations} />
+
+[Switch](https://mantine.dev/core/switch/) component now supports inner labels:
+
+<Demo data={SwitchDemos.labels} />
 
 [RichTextEditor](https://mantine.dev/others/rte/) now supports mentions:
 
