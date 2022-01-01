@@ -108,6 +108,7 @@ export default createStyles((theme, { size, radius, color, offLabel, onLabel }: 
         transform: 'translateX(0)',
         content: offLabel ? `'${offLabel}'` : "''",
         color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+        transition: `color 150ms ${theme.transitionTimingFunction}`,
       },
 
       '&:checked': {
