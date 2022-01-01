@@ -1,26 +1,25 @@
 import React from 'react';
-import { useMantineTheme, Text, Group, Code } from '@mantine/core';
+import { useMantineTheme, Text, Group } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme, Text, Code } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 
 function Demo() {
   const theme = useMantineTheme();
-  const { ref, ...resolution } = useElementSize();
+  const { ref, width, height } = useElementSize();
 
   return (
     <>
-      <textarea ref={ref} style={{ pointerEvents: 'none', width: 400, height: 120 }} />
-      <Text align="center">Rect: <Code>{JSON.stringify(resolution)}</Code></Text>
+      <textarea ref={ref} style={{ width: 400, height: 120 }} />
+      <div>Width: {width}px, height: {height}px</div>
     </>
   );
 }`;
 
 function Demo() {
   const theme = useMantineTheme();
-  const { ref, ...resolution } = useElementSize();
+  const { ref, width, height } = useElementSize();
 
   return (
     <>
@@ -32,7 +31,6 @@ function Demo() {
         <textarea
           ref={ref}
           style={{
-            pointerEvents: 'none',
             width: 400,
             height: 120,
             border: 'none',
@@ -42,8 +40,8 @@ function Demo() {
           }}
         />
       </Group>
-      <Text align="center" style={{ marginTop: theme.spacing.sm }}>
-        Rect: <Code>{JSON.stringify(resolution, null, 2)}</Code>
+      <Text align="center" mt="sm">
+        Width: {width}px, height: {height}px
       </Text>
     </>
   );

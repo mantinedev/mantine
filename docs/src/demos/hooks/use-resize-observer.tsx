@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <>
-      <textarea ref={ref} style={{ pointerEvents: 'none', width: 400, height: 120 }} />
+      <textarea ref={ref} style={{ width: 400, height: 120 }} />
       <Text align="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
     </>
   );
@@ -32,7 +32,6 @@ function Demo() {
         <textarea
           ref={ref}
           style={{
-            pointerEvents: 'none',
             width: 400,
             height: 120,
             border: 'none',

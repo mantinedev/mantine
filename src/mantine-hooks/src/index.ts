@@ -25,7 +25,7 @@ export { useQueue } from './use-queue/use-queue';
 export { usePageLeave } from './use-page-leave/use-page-leave';
 export { useReducedMotion } from './use-reduced-motion/use-reduced-motion';
 export { useScrollIntoView } from './use-scroll-into-view/use-scroll-into-view';
-export { useResizeObserver } from './use-resize-observer/use-resize-observer';
+export { useResizeObserver, useElementSize } from './use-resize-observer/use-resize-observer';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useShallowEffect } from './use-shallow-effect/use-shallow-effect';
 export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';
@@ -43,7 +43,6 @@ export { useUuid } from './use-uuid/use-uuid';
 export { useOs } from './use-os/use-os';
 export { useSetState } from './use-set-state/use-set-state';
 export { useInputState } from './use-input-state/use-input-state';
-export { useElementSize } from './use-element-size/use-element-size';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
