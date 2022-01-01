@@ -181,6 +181,18 @@ storiesOf('@mantine/core/Select/stories', module)
       <Creatable />
     </div>
   ))
+  .add('Deselect item', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Disabled Elements"
+        placeholder="Choose value"
+        data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
+        style={{ marginTop: 20 }}
+        allowDeselect
+        searchable
+      />
+    </div>
+  ))
   .add('String as data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
@@ -271,6 +283,9 @@ storiesOf('@mantine/core/Select/stories', module)
           { value: 'svelte', label: 'Svelte' },
           { value: 'vue', label: 'Vue' },
         ]}
+        allowDeselect
+        searchable
+        clearable
       />
     </div>
   ));
