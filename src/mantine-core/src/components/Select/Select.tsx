@@ -121,6 +121,9 @@ export interface SelectProps
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
+
+  /** Allow deselecting items on click */
+  allowDeselect?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -182,6 +185,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,
+      allowDeselect = false,
       ...others
     }: SelectProps,
     ref
@@ -202,6 +206,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       cancelable: false,
       isList: true,
     });
+    const isDeselectedValue = useRef<boolean>(false);
 
     const setDropdownOpened = (opened: boolean) => {
       _setDropdownOpened(opened);
@@ -261,18 +266,23 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }, [selectedValue?.label]);
 
     const handleItemSelect = (item: SelectItem) => {
-      handleChange(item.value);
+      if (allowDeselect && selectedValue?.value === item.value) {
+        handleChange(null);
+        isDeselectedValue.current = true;
+      } else {
+        handleChange(item.value);
 
-      if (item.creatable) {
-        typeof onCreate === 'function' && onCreate(item.value);
-      }
+        if (item.creatable) {
+          typeof onCreate === 'function' && onCreate(item.value);
+        }
 
-      if (inputMode === 'uncontrolled') {
-        handleSearchChange(item.label);
+        if (inputMode === 'uncontrolled') {
+          handleSearchChange(item.label);
+        }
+        setHovered(-1);
+        setTimeout(() => setDropdownOpened(false));
+        inputRef.current.focus();
       }
-      setHovered(-1);
-      setTimeout(() => setDropdownOpened(false));
-      inputRef.current.focus();
     };
 
     const filteredData = filterData({
@@ -302,13 +312,15 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     useDidUpdate(() => {
-      setHovered(
-        getNextIndex(
-          -1,
-          (index) => index + 1,
-          (index) => index < filteredData.length - 1
-        )
-      );
+      if (!isDeselectedValue) {
+        setHovered(
+          getNextIndex(
+            -1,
+            (index) => index + 1,
+            (index) => index < filteredData.length - 1
+          )
+        );
+      } else isDeselectedValue.current = false;
     }, [inputValue]);
 
     const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
