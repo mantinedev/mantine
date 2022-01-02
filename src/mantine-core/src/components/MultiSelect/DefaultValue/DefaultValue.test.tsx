@@ -1,49 +1,44 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   itSupportsClassName,
   itSupportsStyle,
   itSupportsOthers,
   checkAccessibility,
 } from '@mantine/tests';
-import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
-import { DefaultValue } from './DefaultValue';
+import { DefaultValue, MultiSelectValueProps } from './DefaultValue';
 
-const defaultProps = {
+const defaultProps: MultiSelectValueProps = {
   label: 'test-label',
   onRemove: () => {},
   disabled: false,
-  size: 'sm' as const,
-  radius: 'sm' as const,
+  size: 'sm',
+  radius: 'sm',
 };
 
 describe('@mantine/core/MultiSelect/DefaultValue', () => {
+  checkAccessibility([render(<DefaultValue {...defaultProps} />)]);
   itSupportsClassName(DefaultValue, defaultProps);
   itSupportsStyle(DefaultValue, defaultProps);
   itSupportsOthers(DefaultValue, defaultProps);
 
-  checkAccessibility([
-    render(<DefaultValue {...defaultProps} disabled />),
-    render(<DefaultValue {...defaultProps} disabled={false} />),
-  ]);
-
   it('renders given label', () => {
-    const element = shallow(<DefaultValue {...defaultProps} label="test-label-2" />);
-    expect(element.find('span').text()).toBe('test-label-2');
+    render(<DefaultValue {...defaultProps} />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
   });
 
   it('does not render delete button if disabled', () => {
-    const disabled = shallow(<DefaultValue {...defaultProps} disabled />);
-    const notDisabled = shallow(<DefaultValue {...defaultProps} disabled={false} />);
-    expect(disabled.find(CloseButton)).toHaveLength(0);
-    expect(notDisabled.find(CloseButton)).toHaveLength(1);
+    const { container: disabled } = render(<DefaultValue {...defaultProps} disabled />);
+    const { container: notDisabled } = render(<DefaultValue {...defaultProps} disabled={false} />);
+    expect(disabled.querySelectorAll('button')).toHaveLength(0);
+    expect(notDisabled.querySelectorAll('button')).toHaveLength(1);
   });
 
   it('calls onRemove when CloseButton is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<DefaultValue {...defaultProps} onRemove={spy} />);
-    element.find(CloseButton).simulate('mousedown');
+    render(<DefaultValue {...defaultProps} onRemove={spy} />);
+    userEvent.click(screen.getByRole('button', { hidden: true }));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
