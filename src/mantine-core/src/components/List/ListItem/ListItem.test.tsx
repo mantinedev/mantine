@@ -1,13 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { ListItem } from './ListItem';
 
 const defaultProps = {
@@ -16,22 +9,16 @@ const defaultProps = {
 };
 
 describe('@mantine/core/ListItem', () => {
-  itSupportsClassName(ListItem, defaultProps);
-  itRendersChildren(ListItem, defaultProps);
-  itSupportsOthers(ListItem, defaultProps);
-  itSupportsStyle(ListItem, defaultProps);
-  itSupportsMargins(ListItem, defaultProps);
-  itSupportsSx(ListItem, defaultProps);
-
-  it('renders icon based on prop', () => {
-    const withIcon = shallow(<ListItem icon="$">test-item</ListItem>);
-    const withoutIcon = shallow(<ListItem>test-item</ListItem>);
-
-    expect(withIcon.find('.mantine-List-itemIcon')).toHaveLength(1);
-    expect(withoutIcon.find('.mantine-List-itemIcon')).toHaveLength(0);
+  itSupportsSystemProps({
+    component: ListItem,
+    props: defaultProps,
+    displayName: '@mantine/core/ListItem',
   });
 
-  it('has correct displayName', () => {
-    expect(ListItem.displayName).toEqual('@mantine/core/ListItem');
+  it('renders icon based on prop', () => {
+    const { container: withIcon } = render(<ListItem icon="$">test-item</ListItem>);
+    const { container: withoutIcon } = render(<ListItem>test-item</ListItem>);
+    expect(withIcon.querySelectorAll('.mantine-List-itemIcon')).toHaveLength(1);
+    expect(withoutIcon.querySelectorAll('.mantine-List-itemIcon')).toHaveLength(0);
   });
 });

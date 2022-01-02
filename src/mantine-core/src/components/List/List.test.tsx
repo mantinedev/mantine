@@ -1,17 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { List } from './List';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Button } from '../Button';
+import { ListItem } from './ListItem/ListItem';
+import { List, ListProps } from './List';
 
-const defaultProps = {
-  icon: '$',
+const defaultProps: ListProps = {
   children: [
     <List.Item key="1">1</List.Item>,
     <List.Item key="2">2</List.Item>,
@@ -20,22 +14,38 @@ const defaultProps = {
 };
 
 describe('@mantine/core/List', () => {
-  itSupportsClassName(List, defaultProps);
-  itSupportsMargins(List, defaultProps);
-  itSupportsOthers(List, defaultProps);
-  itSupportsStyle(List, defaultProps);
-  itSupportsSx(List, defaultProps);
-  itSupportsRef(List, defaultProps, HTMLUListElement);
-
-  it('changes root element based on type prop', () => {
-    const ordered = shallow(<List {...defaultProps} type="order" />);
-    const unordered = shallow(<List {...defaultProps} type="unordered" />);
-
-    expect(ordered.dive().type()).toBe('ol');
-    expect(unordered.dive().type()).toBe('ul');
+  itSupportsSystemProps({
+    component: List,
+    props: defaultProps,
+    displayName: '@mantine/core/List',
+    refType: HTMLUListElement,
   });
 
-  it('has correct displayName', () => {
-    expect(List.displayName).toEqual('@mantine/core/List');
+  it('changes root element based on type prop', () => {
+    const { container: ordered } = render(<List {...defaultProps} type="order" />);
+    const { container: unordered } = render(<List {...defaultProps} type="unordered" />);
+
+    expect(ordered.querySelector('ol')).toBeInTheDocument();
+    expect(unordered.querySelector('ul')).toBeInTheDocument();
+  });
+
+  it('filters out unexpected children', () => {
+    const { container } = render(
+      <List>
+        <List.Item>Child 1</List.Item>
+        <p className="unexpected">Unexpected child 1</p>
+        <div className="unexpected">Unexpected child 1</div>
+        <List.Item>Child 2</List.Item>
+        <Button>Unexpected component</Button>
+      </List>
+    );
+
+    expect(container.querySelectorAll('.mantine-List-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
+    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
+  });
+
+  it('exposes ListItem as List.Item', () => {
+    expect(List.Item).toBe(ListItem);
   });
 });
