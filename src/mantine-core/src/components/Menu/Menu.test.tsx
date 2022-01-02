@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps, itSupportsFocusEvents } from '@mantine/tests';
 import { Divider } from '../Divider';
 import { Button } from '../Button';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -23,6 +23,7 @@ const defaultProps: MenuProps = {
 
 describe('@mantine/core/Menu', () => {
   checkAccessibility([render(<Menu opened {...defaultProps} />)]);
+  itSupportsFocusEvents(Menu, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: Menu,
     props: defaultProps,
