@@ -12,7 +12,7 @@ const defaultProps: NotificationProps = {
 
 describe('@mantine/core/Notification', () => {
   itRendersChildren(Notification, defaultProps);
-  checkAccessibility([render(<Notification {...defaultProps} />)]);
+  checkAccessibility([<Notification {...defaultProps} />]);
   itSupportsSystemProps({
     component: Notification,
     props: defaultProps,

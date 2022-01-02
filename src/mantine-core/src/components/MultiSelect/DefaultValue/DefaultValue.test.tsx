@@ -18,7 +18,7 @@ const defaultProps: MultiSelectValueProps = {
 };
 
 describe('@mantine/core/MultiSelect/DefaultValue', () => {
-  checkAccessibility([render(<DefaultValue {...defaultProps} />)]);
+  checkAccessibility([<DefaultValue {...defaultProps} />]);
   itSupportsClassName(DefaultValue, defaultProps);
   itSupportsStyle(DefaultValue, defaultProps);
   itSupportsOthers(DefaultValue, defaultProps);

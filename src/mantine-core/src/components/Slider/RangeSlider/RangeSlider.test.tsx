@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   itSupportsStyle,
   itSupportsClassName,
@@ -18,7 +17,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/RangeSlider', () => {
-  checkAccessibility([render(<RangeSlider {...defaultProps} />)]);
+  checkAccessibility([<RangeSlider {...defaultProps} />]);
   itSupportsStyle(RangeSlider, defaultProps);
   itSupportsClassName(RangeSlider, defaultProps);
   itSupportsOthers(RangeSlider, defaultProps);

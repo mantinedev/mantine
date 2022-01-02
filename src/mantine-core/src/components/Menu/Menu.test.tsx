@@ -22,7 +22,7 @@ const defaultProps: MenuProps = {
 };
 
 describe('@mantine/core/Menu', () => {
-  checkAccessibility([render(<Menu opened {...defaultProps} />)]);
+  checkAccessibility([<Menu opened {...defaultProps} />]);
   itSupportsFocusEvents(Menu, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: Menu,

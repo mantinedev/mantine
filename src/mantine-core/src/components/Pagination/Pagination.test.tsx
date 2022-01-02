@@ -1,6 +1,5 @@
 import React from 'react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
-import { render } from '@testing-library/react';
 import { Pagination, PaginationProps } from './Pagination';
 
 const defaultProps: PaginationProps = {
@@ -9,7 +8,7 @@ const defaultProps: PaginationProps = {
 };
 
 describe('@mantine/core/Pagination', () => {
-  checkAccessibility([render(<Pagination {...defaultProps} />)]);
+  checkAccessibility([<Pagination {...defaultProps} />]);
   itSupportsSystemProps({
     component: Pagination,
     props: defaultProps,

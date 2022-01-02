@@ -1,5 +1,6 @@
+import React from 'react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import { RenderResult } from '@testing-library/react';
+import { renderWithAct } from './render-with-act';
 
 const config = {
   rules: {
@@ -9,13 +10,14 @@ const config = {
   },
 };
 
-export function checkAccessibility(elements: RenderResult[]) {
+export function checkAccessibility(elements: React.ReactElement[]) {
   expect.extend(toHaveNoViolations);
 
   it('has no accessibility violations', async () => {
     /* eslint-disable no-restricted-syntax, no-await-in-loop */
     for (const element of elements) {
-      const result = await axe(element.container, config);
+      const { container } = await renderWithAct(element);
+      const result = await axe(container, config);
       expect(result).toHaveNoViolations();
     }
   }, 30000);

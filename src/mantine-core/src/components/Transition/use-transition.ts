@@ -42,16 +42,22 @@ export function useTransition({
     setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
     window.clearTimeout(timeoutRef.current);
 
-    const preStateTimeout = window.setTimeout(() => {
+    if (duration === 0) {
       typeof preHandler === 'function' && preHandler();
-      setStatus(shouldMount ? 'entering' : 'exiting');
-    }, 10);
-
-    timeoutRef.current = window.setTimeout(() => {
-      window.clearTimeout(preStateTimeout);
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
-    }, transitionDuration);
+    } else {
+      const preStateTimeout = window.setTimeout(() => {
+        typeof preHandler === 'function' && preHandler();
+        setStatus(shouldMount ? 'entering' : 'exiting');
+      }, 10);
+
+      timeoutRef.current = window.setTimeout(() => {
+        window.clearTimeout(preStateTimeout);
+        typeof handler === 'function' && handler();
+        setStatus(shouldMount ? 'entered' : 'exited');
+      }, transitionDuration);
+    }
   };
 
   useDidUpdate(() => {

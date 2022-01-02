@@ -47,6 +47,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       onClose,
       radius = 'sm',
       withCloseButton,
+      closeButtonLabel,
       ...others
     }: AlertProps,
     ref
@@ -70,6 +71,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
                     variant="transparent"
                     size={16}
                     iconSize={16}
+                    aria-label={closeButtonLabel}
                   />
                 )}
               </div>

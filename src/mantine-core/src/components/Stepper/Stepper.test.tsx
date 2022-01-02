@@ -8,7 +8,6 @@ import {
   checkAccessibility,
   itSupportsSx,
 } from '@mantine/tests';
-import { render } from '@testing-library/react';
 import { Stepper } from './Stepper';
 
 const defaultProps = {
@@ -34,7 +33,7 @@ describe('@mantine/core/Stepper', () => {
   itSupportsStyle(Stepper, defaultProps);
   itSupportsSx(Stepper, defaultProps);
   itSupportsRef(Stepper, defaultProps, HTMLDivElement);
-  checkAccessibility([render(<Stepper {...defaultProps} />)]);
+  checkAccessibility([<Stepper {...defaultProps} />]);
 
   it('has correct displayName', () => {
     expect(Stepper.displayName).toEqual('@mantine/core/Stepper');

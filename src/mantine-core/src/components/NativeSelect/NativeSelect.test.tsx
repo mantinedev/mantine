@@ -24,8 +24,8 @@ describe('@mantine/core/NativeSelect', () => {
   });
 
   checkAccessibility([
-    render(<NativeSelect {...defaultProps} label="test-label" />),
-    render(<NativeSelect {...defaultProps} aria-label="test-label" />),
+    <NativeSelect {...defaultProps} label="test-label" />,
+    <NativeSelect {...defaultProps} aria-label="test-label" />,
   ]);
 
   it('renders correct amount of options', () => {

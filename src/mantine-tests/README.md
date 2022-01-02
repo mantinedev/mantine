@@ -24,10 +24,7 @@ const content = [
 ];
 
 describe('@mantine/core/Tabs', () => {
-  checkAccessibility([
-    render(<Tabs>{content}</Tabs>),
-    render(<Tabs initialTab={2}>{content}</Tabs>),
-  ]);
+  checkAccessibility([<Tabs>{content}</Tabs>, <Tabs initialTab={2}>{content}</Tabs>]);
 });
 ```
 

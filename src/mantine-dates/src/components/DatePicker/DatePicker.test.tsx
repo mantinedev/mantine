@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { DatePicker, DatePickerProps } from './DatePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
@@ -9,7 +8,7 @@ import { Calendar } from '../Calendar/Calendar';
 const defaultProps: DatePickerProps = {};
 
 describe('@mantine/dates/DatePicker', () => {
-  checkAccessibility([render(<DatePicker label="date picker" />)]);
+  checkAccessibility([<DatePicker label="date picker" />]);
 
   itSupportsSystemProps({
     component: DatePicker,

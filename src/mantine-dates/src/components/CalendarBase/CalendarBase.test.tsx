@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { itSupportsSystemProps, checkAccessibility } from '@mantine/tests';
 import { YearPicker } from './YearPicker/YearPicker';
 import { MonthPicker } from './MonthPicker/MonthPicker';
@@ -30,9 +29,9 @@ describe('@mantine/core/CalendarBase', () => {
   });
 
   checkAccessibility([
-    render(<CalendarBase {...labelsProps} initialLevel="date" />),
-    render(<CalendarBase {...labelsProps} initialLevel="month" />),
-    render(<CalendarBase {...labelsProps} initialLevel="year" />),
+    <CalendarBase {...labelsProps} initialLevel="date" />,
+    <CalendarBase {...labelsProps} initialLevel="month" />,
+    <CalendarBase {...labelsProps} initialLevel="year" />,
   ]);
 
   it('renders correct views based on initialLevel', () => {

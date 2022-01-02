@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { MonthPicker } from './MonthPicker';
@@ -22,7 +21,7 @@ const defaultProps = {
 describe('@mantine/core/MonthPicker', () => {
   itSupportsClassName(MonthPicker, defaultProps);
   checkAccessibility([
-    render(<MonthPicker {...defaultProps} nextYearLabel="Next" previousYearLabel="Previous" />),
+    <MonthPicker {...defaultProps} nextYearLabel="Next" previousYearLabel="Previous" />,
   ]);
 
   it('renders correct amount of controls', () => {

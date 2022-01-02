@@ -13,7 +13,7 @@ const defaultProps: ModalProps = {
 };
 
 describe('@mantine/core/Modal', () => {
-  checkAccessibility([render(<MantineModal {...defaultProps} />)]);
+  checkAccessibility([<MantineModal {...defaultProps} />]);
   itSupportsSystemProps({ component: MantineModal, props: defaultProps });
   itRendersChildren(MantineModal, defaultProps);
 

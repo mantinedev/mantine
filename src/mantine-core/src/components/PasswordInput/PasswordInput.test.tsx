@@ -18,10 +18,7 @@ describe('@mantine/core/PasswordInput', () => {
   itSupportsWrapperProps(PasswordInput, defaultProps);
   itSupportsInputIcon(PasswordInput, defaultProps);
   itConnectsLabelAndInput(PasswordInput, defaultProps);
-  checkAccessibility([
-    render(<PasswordInput label="test" />),
-    render(<PasswordInput aria-label="test" />),
-  ]);
+  checkAccessibility([<PasswordInput label="test" />, <PasswordInput aria-label="test" />]);
 
   itSupportsSystemProps({
     component: PasswordInput,

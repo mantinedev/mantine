@@ -21,7 +21,7 @@ const defaultProps: MultiSelectProps = {
 };
 
 describe('@mantine/core/MultiSelect', () => {
-  checkAccessibility([render(<MultiSelect {...defaultProps} initiallyOpened />)]);
+  checkAccessibility([<MultiSelect {...defaultProps} initiallyOpened />]);
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);
   itSupportsInputRightSection(MultiSelect, defaultProps);

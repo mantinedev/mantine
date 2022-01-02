@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -18,7 +17,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Radio', () => {
-  checkAccessibility([render(<Radio {...defaultProps} />)]);
+  checkAccessibility([<Radio {...defaultProps} />]);
   itSupportsClassName(Radio, defaultProps);
   itSupportsStyle(Radio, defaultProps);
   itSupportsSx(Radio, defaultProps);

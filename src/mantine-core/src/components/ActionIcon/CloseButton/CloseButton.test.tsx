@@ -6,6 +6,7 @@ import { CloseButton, CloseButtonProps } from './CloseButton';
 const defaultProps: CloseButtonProps = {};
 
 describe('@mantine/core/CloseButton', () => {
+  checkAccessibility([<CloseButton aria-label="test" />, <CloseButton title="test" />]);
   itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: CloseButton as any,
@@ -13,11 +14,6 @@ describe('@mantine/core/CloseButton', () => {
     displayName: '@mantine/core/CloseButton',
     refType: HTMLButtonElement,
   });
-
-  checkAccessibility([
-    render(<CloseButton aria-label="test" />),
-    render(<CloseButton title="test" />),
-  ]);
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {
     const { container } = render(<CloseButton iconSize={45} />);

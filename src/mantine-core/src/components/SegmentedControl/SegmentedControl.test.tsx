@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -22,7 +21,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/SegmentedControl', () => {
-  checkAccessibility([render(<SegmentedControl {...defaultProps} />)]);
+  checkAccessibility([<SegmentedControl {...defaultProps} />]);
   itSupportsClassName(SegmentedControl, defaultProps);
   itSupportsOthers(SegmentedControl, defaultProps);
   itSupportsMargins(SegmentedControl, defaultProps);

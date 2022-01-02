@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsMargins, itSupportsRef, itSupportsSx } from '@mantine/tests';
 import { RadioGroup, Radio } from './index';
 
@@ -18,13 +17,11 @@ describe('@mantine/core/RadioGroup', () => {
   itSupportsSx(RadioGroup, defaultProps);
 
   checkAccessibility([
-    render(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    ),
+    <RadioGroup>
+      <Radio value="test-1">test-1</Radio>
+      <Radio value="test-2">test-2</Radio>
+      <Radio value="test-3">test-3</Radio>
+    </RadioGroup>,
   ]);
 
   it('renders correct children', () => {

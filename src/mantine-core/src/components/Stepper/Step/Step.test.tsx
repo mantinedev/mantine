@@ -8,7 +8,6 @@ import {
   itSupportsSx,
 } from '@mantine/tests';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { Loader } from '../../Loader';
 import { Step } from './Step';
 
@@ -20,11 +19,7 @@ describe('@mantine/core/Step', () => {
   itSupportsStyle(Step, defaultProps);
   itSupportsSx(Step, defaultProps);
   itSupportsRef(Step, defaultProps, HTMLButtonElement);
-  checkAccessibility([
-    render(<Step aria-label="Test" />),
-    render(<Step title="Test" />),
-    render(<Step label="Test" />),
-  ]);
+  checkAccessibility([<Step aria-label="Test" />, <Step title="Test" />, <Step label="Test" />]);
 
   it('renders icon when withIcon is true', () => {
     const withIcon = shallow(<Step withIcon />);

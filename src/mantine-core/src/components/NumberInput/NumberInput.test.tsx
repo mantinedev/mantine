@@ -28,8 +28,8 @@ const blurInput = () => fireEvent.blur(getInput());
 
 describe('@mantine/core/NumberInput', () => {
   checkAccessibility([
-    render(<NumberInput {...defaultProps} label="test" />),
-    render(<NumberInput {...defaultProps} aria-label="test" />),
+    <NumberInput {...defaultProps} label="test" />,
+    <NumberInput {...defaultProps} aria-label="test" />,
   ]);
 
   itSupportsSystemProps({

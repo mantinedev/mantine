@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -19,9 +18,9 @@ const defaultProps = {
 
 describe('@mantine/core/Switch', () => {
   checkAccessibility([
-    render(<Switch aria-label="Switch without label" />),
-    render(<Switch label="With label" />),
-    render(<Switch id="with-id" label="With id" />),
+    <Switch aria-label="Switch without label" />,
+    <Switch label="With label" />,
+    <Switch id="with-id" label="With id" />,
   ]);
 
   itSupportsClassName(Switch, defaultProps);

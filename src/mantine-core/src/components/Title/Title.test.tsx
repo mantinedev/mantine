@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
-  checkAccessibility,
   itRendersChildren,
   itSupportsOthers,
   itSupportsStyle,
@@ -16,11 +14,6 @@ import { Title } from './Title';
 const defaultProps = {};
 
 describe('@mantine/core/Title', () => {
-  checkAccessibility([
-    render(<Title>default title</Title>),
-    render(<Title order={2}>h2 title</Title>),
-  ]);
-
   itRendersChildren(Title, defaultProps);
   itSupportsOthers(Title, defaultProps);
   itSupportsStyle(Title, defaultProps);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsRef,
@@ -16,11 +15,7 @@ import { TextInput } from './TextInput';
 const defaultProps = {};
 
 describe('@mantine/core/Input', () => {
-  checkAccessibility([
-    render(<TextInput label="test-input" />),
-    render(<TextInput aria-label="test-input" />),
-  ]);
-
+  checkAccessibility([<TextInput label="test-input" />, <TextInput aria-label="test-input" />]);
   itSupportsClassName(TextInput, defaultProps);
   itSupportsSx(TextInput, defaultProps);
   itSupportsMargins(TextInput, defaultProps);

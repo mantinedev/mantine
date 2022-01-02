@@ -10,10 +10,11 @@ const defaultProps: ImageProps = {
 
 describe('@mantine/core/Image', () => {
   checkAccessibility([
-    render(<Image {...defaultProps} />),
-    render(<Image {...defaultProps} src={null} />),
-    render(<Image {...defaultProps} src={null} withPlaceholder />),
+    <Image {...defaultProps} />,
+    <Image {...defaultProps} src={null} />,
+    <Image {...defaultProps} src={null} withPlaceholder />,
   ]);
+
   itSupportsSystemProps({
     component: Image,
     props: defaultProps,
