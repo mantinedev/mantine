@@ -1,89 +1,53 @@
 import React from 'react';
-import { Cross1Icon } from '@modulz/radix-icons';
-import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itRendersChildren,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { Loader } from '../Loader/Loader';
-import { Notification } from './Notification';
+import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Notification, NotificationProps } from './Notification';
 
-const defaultProps = {
-  color: 'blue',
-  icon: <Cross1Icon />,
-  title: 'Test notification',
-  loading: false,
-  disallowClose: false,
+const defaultProps: NotificationProps = {
+  icon: 'test-icon',
+  title: 'test-notification',
   onClose: () => {},
-  closeButtonProps: { title: 'Close notification' },
+  closeButtonProps: { title: 'test-close' },
 };
 
 describe('@mantine/core/Notification', () => {
-  itSupportsOthers(Notification, defaultProps);
-  itSupportsStyle(Notification, defaultProps);
-  itSupportsClassName(Notification, defaultProps);
-  itSupportsMargins(Notification, defaultProps);
   itRendersChildren(Notification, defaultProps);
-  itSupportsSx(Notification, defaultProps);
-  itSupportsRef(Notification, defaultProps, HTMLDivElement);
   checkAccessibility([render(<Notification {...defaultProps} />)]);
+  itSupportsSystemProps({
+    component: Notification,
+    props: defaultProps,
+    displayName: '@mantine/core/Notification',
+    refType: HTMLDivElement,
+  });
 
   it('does not render close button if disallowClose is true', () => {
-    const allowClose = shallow(<Notification {...defaultProps} disallowClose={false} />);
-    const disallowClose = shallow(<Notification {...defaultProps} disallowClose />);
-
-    expect(allowClose.find(CloseButton)).toHaveLength(1);
-    expect(disallowClose.find(CloseButton)).toHaveLength(0);
+    const { container: allowClose } = render(<Notification {...defaultProps} />);
+    const { container: disallowClose } = render(<Notification {...defaultProps} disallowClose />);
+    expect(allowClose.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(1);
+    expect(disallowClose.querySelectorAll('.mantine-Notification-closeButton')).toHaveLength(0);
   });
 
   it('renders given icon', () => {
-    const withIcon = shallow(<Notification {...defaultProps} icon="$$$" />);
-    const withoutIcon = shallow(<Notification {...defaultProps} icon={null} />);
-
-    expect(withIcon.find('.mantine-Notification-icon').text()).toBe('$$$');
-    expect(withoutIcon.find('.mantine-Notification-icon')).toHaveLength(0);
+    const { container: withIcon } = render(<Notification {...defaultProps} icon="test-icon" />);
+    const { container: withoutIcon } = render(<Notification {...defaultProps} icon={null} />);
+    expect(withIcon.querySelector('.mantine-Notification-icon').textContent).toBe('test-icon');
+    expect(withoutIcon.querySelector('.mantine-Notification-icon')).toBe(null);
   });
 
   it('displays loader when loading prop is true', () => {
-    const loading = shallow(<Notification {...defaultProps} loading icon="$$$" />);
-    const notLoading = shallow(<Notification {...defaultProps} loading={false} icon="$$$" />);
-
-    expect(loading.find(Loader)).toHaveLength(1);
-    expect(loading.find('.mantine-Notification-icon')).toHaveLength(0);
-
-    expect(notLoading.find(Loader)).toHaveLength(0);
-    expect(notLoading.find('.mantine-Notification-icon')).toHaveLength(1);
-    expect(notLoading.find('.mantine-Notification-icon').text()).toBe('$$$');
+    const { container: loading } = render(<Notification {...defaultProps} loading />);
+    const { container: notLoading } = render(<Notification {...defaultProps} loading={false} />);
+    expect(loading.querySelector('.mantine-Notification-loader')).toBeInTheDocument();
+    expect(loading.querySelector('.mantine-Notification-icon')).toBe(null);
+    expect(notLoading.querySelector('.mantine-Notification-loader')).toBe(null);
+    expect(notLoading.querySelector('.mantine-Notification-icon')).toBeInTheDocument();
+    expect(notLoading.querySelector('.mantine-Notification-icon').textContent).toBe('test-icon');
   });
 
   it('renders given title', () => {
-    const withTitle = shallow(<Notification {...defaultProps} title="test-title" />);
-    const withoutTitle = shallow(<Notification {...defaultProps} title={null} />);
-
-    expect(withTitle.find('.mantine-Notification-title').prop('children')).toBe('test-title');
-    expect(withoutTitle.find('.mantine-Notification-title')).toHaveLength(0);
-  });
-
-  it('spreads closeButtonProps to close button', () => {
-    const element = shallow(
-      <Notification
-        {...defaultProps}
-        closeButtonProps={{ 'data-test-prop': true, style: { color: 'red' } }}
-      />
-    );
-    expect(element.find(CloseButton).prop('data-test-prop')).toBe(true);
-    expect(element.find(CloseButton).prop('style')).toEqual({ color: 'red' });
-  });
-
-  it('has correct displayName', () => {
-    expect(Notification.displayName).toEqual('@mantine/core/Notification');
+    const { container: withTitle } = render(<Notification {...defaultProps} title="test-title" />);
+    const { container: withoutTitle } = render(<Notification {...defaultProps} title={null} />);
+    expect(withTitle.querySelector('.mantine-Notification-title').textContent).toBe('test-title');
+    expect(withoutTitle.querySelectorAll('.mantine-Notification-title')).toHaveLength(0);
   });
 });
