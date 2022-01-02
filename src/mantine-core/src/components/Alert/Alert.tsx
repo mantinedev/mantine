@@ -5,6 +5,7 @@ import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
 export type AlertStylesNames = ClassNames<typeof useStyles>;
+export type AlertVariant = 'filled' | 'outline' | 'light';
 
 export interface AlertProps
   extends DefaultProps<AlertStylesNames>,
