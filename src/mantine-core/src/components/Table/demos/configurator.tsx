@@ -57,5 +57,6 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'striped', type: 'boolean', defaultValue: false },
     { name: 'highlightOnHover', type: 'boolean', defaultValue: false },
+    { name: 'border', type: 'boolean', defaultValue: false },
   ],
 };
