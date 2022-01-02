@@ -1,69 +1,94 @@
-import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  MantineColor,
+  MantineNumberSize,
+  getSharedColorScheme,
+} from '@mantine/styles';
 
 interface AlertStyles {
   color: MantineColor;
   radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { color, radius }: AlertStyles) => ({
-  root: {
-    ...theme.fn.fontStyles(),
-    position: 'relative',
-    overflow: 'hidden',
-    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
-  },
+export default createStyles((theme, { color, radius }: AlertStyles) => {
+  const lightColors = getSharedColorScheme({ color, theme, variant: 'light' });
+  const filledColors = getSharedColorScheme({ theme, color, variant: 'filled' });
+  const outlineColors = getSharedColorScheme({ theme, color, variant: 'outline' });
 
-  wrapper: {
-    display: 'flex',
-  },
+  return {
+    root: {
+      ...theme.fn.fontStyles(),
+      position: 'relative',
+      overflow: 'hidden',
+      padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    },
 
-  body: {
-    flex: 1,
-  },
+    wrapper: {
+      display: 'flex',
+    },
 
-  title: {
-    boxSizing: 'border-box',
-    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
-    margin: 0,
-    marginBottom: 7,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    lineHeight: theme.lineHeight,
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 700,
-  },
+    body: {
+      flex: 1,
+    },
 
-  label: {
-    display: 'block',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
+    title: {
+      boxSizing: 'border-box',
+      margin: 0,
+      marginBottom: 7,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      lineHeight: theme.lineHeight,
+      fontSize: theme.fontSizes.sm,
+      fontWeight: 700,
+    },
 
-  icon: {
-    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
-    lineHeight: 1,
-    width: 20,
-    height: 20,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginRight: theme.spacing.md,
-    marginTop: 1,
-  },
+    label: {
+      display: 'block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
 
-  message: {
-    ...theme.fn.fontStyles(),
-    lineHeight: theme.lineHeight,
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    fontSize: theme.fontSizes.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-  },
+    light: {
+      backgroundColor: lightColors.background,
+      color: lightColors.color,
+      border: '1px solid transparent',
+    },
 
-  closeButton: {
-    marginTop: 2,
-  },
-}));
+    filled: {
+      backgroundColor: filledColors.background,
+      color: filledColors.color,
+      border: '1px solid transparent',
+    },
+
+    outline: {
+      backgroundColor: outlineColors.background,
+      color: outlineColors.color,
+      border: `1px solid ${outlineColors.border}`,
+    },
+
+    icon: {
+      lineHeight: 1,
+      width: 20,
+      height: 20,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginRight: theme.spacing.md,
+      marginTop: 1,
+    },
+
+    message: {
+      ...theme.fn.fontStyles(),
+      lineHeight: theme.lineHeight,
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      fontSize: theme.fontSizes.sm,
+    },
+
+    closeButton: {
+      marginTop: 2,
+    },
+  };
+});

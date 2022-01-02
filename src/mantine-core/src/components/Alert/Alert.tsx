@@ -13,6 +13,9 @@ export interface AlertProps
   /** Alert title */
   title?: React.ReactNode;
 
+  /** Controls Alert background, color and border styles */
+  variant?: AlertVariant;
+
   /** Alert message */
   children: React.ReactNode;
 
@@ -40,6 +43,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     {
       className,
       title,
+      variant = 'light',
       children,
       color,
       classNames,
@@ -52,13 +56,10 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
-      { color, radius },
-      { classNames, styles, name: 'Alert' }
-    );
+    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Alert' });
 
     return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <Box className={cx(classes[variant], classes.root, className)} ref={ref} {...others}>
         <div className={classes.wrapper}>
           {icon && <div className={classes.icon}>{icon}</div>}
 
