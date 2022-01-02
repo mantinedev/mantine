@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
-import { ListItem } from './ListItem';
+import { ListItem, ListItemProps } from './ListItem';
 
-const defaultProps = {
+const defaultProps: ListItemProps = {
   icon: '$',
   children: 'test-list-item',
 };
