@@ -1,26 +1,19 @@
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Pagination } from './Pagination';
+import React from 'react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { Pagination, PaginationProps } from './Pagination';
 
-const defaultProps = {
+const defaultProps: PaginationProps = {
   total: 10,
+  getItemAriaLabel: () => 'test-label',
 };
 
 describe('@mantine/core/Pagination', () => {
-  itSupportsClassName(Pagination, defaultProps);
-  itSupportsMargins(Pagination, defaultProps);
-  itSupportsOthers(Pagination, defaultProps);
-  itSupportsStyle(Pagination, defaultProps);
-  itSupportsSx(Pagination, defaultProps);
-  itSupportsRef(Pagination, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Pagination.displayName).toEqual('@mantine/core/Pagination');
+  checkAccessibility([render(<Pagination {...defaultProps} />)]);
+  itSupportsSystemProps({
+    component: Pagination,
+    props: defaultProps,
+    displayName: '@mantine/core/Pagination',
+    refType: HTMLDivElement,
   });
 });
