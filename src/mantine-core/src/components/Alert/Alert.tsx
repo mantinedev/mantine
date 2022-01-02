@@ -4,8 +4,8 @@ import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
-export type AlertStylesNames = ClassNames<typeof useStyles>;
 export type AlertVariant = 'filled' | 'outline' | 'light';
+export type AlertStylesNames = ClassNames<typeof useStyles>;
 
 export interface AlertProps
   extends DefaultProps<AlertStylesNames>,
@@ -56,7 +56,10 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Alert' });
+    const { classes, cx } = useStyles(
+      { color, radius, variant },
+      { classNames, styles, name: 'Alert' }
+    );
 
     return (
       <Box className={cx(classes[variant], classes.root, className)} ref={ref} {...others}>

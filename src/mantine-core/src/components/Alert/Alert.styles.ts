@@ -8,12 +8,13 @@ import {
 interface AlertStyles {
   color: MantineColor;
   radius: MantineNumberSize;
+  variant: 'filled' | 'outline' | 'light';
 }
 
-export default createStyles((theme, { color, radius }: AlertStyles) => {
-  const lightColors = getSharedColorScheme({ color, theme, variant: 'light' });
-  const filledColors = getSharedColorScheme({ theme, color, variant: 'filled' });
-  const outlineColors = getSharedColorScheme({ theme, color, variant: 'outline' });
+export default createStyles((theme, { color, radius, variant }: AlertStyles) => {
+  const lightColors = getSharedColorScheme({ color, theme, variant });
+  const filledColors = getSharedColorScheme({ theme, color, variant });
+  const outlineColors = getSharedColorScheme({ theme, color, variant });
 
   return {
     root: {
@@ -51,8 +52,8 @@ export default createStyles((theme, { color, radius }: AlertStyles) => {
     },
 
     light: {
-      backgroundColor: lightColors.background,
-      color: lightColors.color,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : lightColors.background,
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
       border: '1px solid transparent',
     },
 
@@ -85,6 +86,12 @@ export default createStyles((theme, { color, radius }: AlertStyles) => {
       textOverflow: 'ellipsis',
       overflow: 'hidden',
       fontSize: theme.fontSizes.sm,
+      color:
+        variant === 'filled'
+          ? filledColors.color
+          : theme.colorScheme === 'dark'
+          ? theme.colors.dark[0]
+          : theme.black,
     },
 
     closeButton: {
