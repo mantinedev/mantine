@@ -45,6 +45,26 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       inputRef.current.select();
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      if (
+        event.nativeEvent.code === 'ArrowUp' ||
+        event.nativeEvent.code === 'ArrowDown' ||
+        event.nativeEvent.code === 'ArrowLeft' ||
+        event.nativeEvent.code === 'ArrowRight'
+      ) {
+        onChange(value === 'am' ? 'pm' : 'am', false);
+      }
+
+      if (event.nativeEvent.code === 'KeyP') {
+        onChange('pm', true);
+      }
+
+      if (event.nativeEvent.code === 'KeyA') {
+        onChange('am', true);
+      }
+    };
+
     return (
       <input
         type="text"
@@ -52,6 +72,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onChange={(event) => onChange(event.currentTarget.value, true)}
         onClick={handleClick}
         onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
         value={value}
         className={cx(classes.amPmInput, className)}
         {...others}

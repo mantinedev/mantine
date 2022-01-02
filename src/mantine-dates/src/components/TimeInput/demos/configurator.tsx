@@ -26,16 +26,6 @@ export const configurator: MantineDemo = {
       initialValue: '',
     },
     {
-      name: 'format',
-      type: 'select',
-      data: [
-        { label: '24', value: '24' },
-        { label: '12', value: '12' },
-      ],
-      initialValue: '24',
-      defaultValue: '24',
-    },
-    {
       name: 'variant',
       type: 'select',
       data: [

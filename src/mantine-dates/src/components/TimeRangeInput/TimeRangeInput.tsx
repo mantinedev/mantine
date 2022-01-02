@@ -12,13 +12,7 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import {
-  useMergedRef,
-  useUncontrolled,
-  useDidUpdate,
-  useUuid,
-  useValidState,
-} from '@mantine/hooks';
+import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs, { UnitType } from 'dayjs';
 import { getMidnight } from '../../utils/get-midnight/get-midnight';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
@@ -75,6 +69,12 @@ export interface TimeRangeInputProps
   /** aria-label for seconds input */
   secondsLabel?: string;
 
+  /** placeholder for time input */
+  timePlaceholder?: string;
+
+  /** placeholder for am/pm input */
+  amPmPlaceholder?: string;
+
   /** Disable field */
   disabled?: boolean;
 
@@ -115,6 +115,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      timePlaceholder = '--',
+      amPmPlaceholder = '--',
       labelSeparator = '–',
       disabled = false,
       sx,
@@ -143,14 +145,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const formatsRef = useRef<HTMLInputElement[]>([]);
     const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
     const [toTime, setToTime] = useState(getTimeValues(_value[1]));
-    const [fromAmPmValid, setFromAmPm, fromAmPm] = useValidState(
-      (val) => val === 'am' || val === 'pm',
-      'am'
-    );
-    const [toAmPmValid, setToAmPm, toAmPm] = useValidState(
-      (val) => val === 'am' || val === 'pm',
-      'am'
-    );
+    const [fromAmPm, setFromAmPm] = useState('am');
+    const [toAmPm, setToAmPm] = useState('am');
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
 
     useDidUpdate(() => {
@@ -273,6 +269,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const handleClear = () => {
       handleChange([]);
       setSelectedFieldIndex(0);
+      setFromAmPm('');
+      setToAmPm('');
       hoursRef.current[0]?.focus();
     };
 
@@ -338,6 +336,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               withSeparator
               size={size}
               max={format === '12' ? 11 : 23}
+              placeholder={timePlaceholder}
               aria-label={`from ${hoursLabel}`}
               disabled={disabled}
               onFocus={() => setSelectedFieldIndex(0)}
@@ -354,6 +353,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               withSeparator={withSeconds}
               size={size}
               max={59}
+              placeholder={timePlaceholder}
               aria-label={`from ${minutesLabel}`}
               disabled={disabled}
               onFocus={() => setSelectedFieldIndex(0)}
@@ -370,6 +370,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 className={classes.timeField}
                 size={size}
                 max={59}
+                placeholder={timePlaceholder}
                 aria-label={`from ${secondsLabel}`}
                 disabled={disabled}
                 onFocus={() => setSelectedFieldIndex(0)}
@@ -383,23 +384,26 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={fromAmPm}
                 onChange={handleAmPmChange}
-                onBlur={() => {
-                  if (fromAmPm !== 'am' && fromAmPm !== 'pm') {
-                    if (fromAmPm === '') {
-                      handleAmPmChange(fromAmPmValid, false);
-                    } else {
-                      handleAmPmChange(fromAmPm[0] === 'p' ? 'pm' : 'am', false);
-                    }
-                  }
-                }}
                 setValue={(val) => {
                   setFromAmPm(val);
                 }}
+                placeholder={amPmPlaceholder}
                 onFocus={() => setSelectedFieldIndex(0)}
               />
             )}
 
-            <span className={classes.separator}>{labelSeparator}</span>
+            <span
+              className={classes.separator}
+              style={{
+                color: toTime?.hours
+                  ? 'inherit'
+                  : theme.colorScheme === 'dark'
+                  ? theme.colors.dark[2]
+                  : theme.colors.gray[7],
+              }}
+            >
+              {labelSeparator}
+            </span>
 
             <div className={classes.inputWrapper}>
               <TimeField
@@ -417,6 +421,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 withSeparator
                 size={size}
                 max={format === '12' ? 11 : 23}
+                placeholder={timePlaceholder}
                 aria-label={`to ${hoursLabel}`}
                 disabled={disabled}
                 onFocus={() => setSelectedFieldIndex(1)}
@@ -433,6 +438,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 withSeparator={withSeconds}
                 size={size}
                 max={59}
+                placeholder={timePlaceholder}
                 aria-label={`to ${minutesLabel}`}
                 disabled={disabled}
                 onFocus={() => setSelectedFieldIndex(1)}
@@ -449,6 +455,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   className={classes.timeField}
                   size={size}
                   max={59}
+                  placeholder={timePlaceholder}
                   aria-label={`to ${secondsLabel}`}
                   disabled={disabled}
                   onFocus={() => setSelectedFieldIndex(1)}
@@ -462,18 +469,10 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   }}
                   value={toAmPm}
                   onChange={handleAmPmChange}
-                  onBlur={() => {
-                    if (toAmPm !== 'am' && toAmPm !== 'pm') {
-                      if (toAmPm === '') {
-                        handleAmPmChange(toAmPmValid, false);
-                      } else {
-                        handleAmPmChange(toAmPm[0] === 'p' ? 'pm' : 'am', false);
-                      }
-                    }
-                  }}
                   setValue={(val) => {
                     setToAmPm(val);
                   }}
+                  placeholder={amPmPlaceholder}
                   onFocus={() => setSelectedFieldIndex(1)}
                 />
               )}

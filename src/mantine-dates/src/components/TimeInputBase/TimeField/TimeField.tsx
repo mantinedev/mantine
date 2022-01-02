@@ -38,7 +38,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
     }: TimeFieldProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size });
+    const { classes, cx, theme } = useStyles({ size });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -97,7 +97,17 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         />
 
         {withSeparator && (
-          <Text size={size} style={{ lineHeight: 1, color: 'inherit' }}>
+          <Text
+            size={size}
+            style={{
+              lineHeight: 1,
+              color: value
+                ? 'inherit'
+                : theme.colorScheme === 'dark'
+                ? theme.colors.dark[2]
+                : theme.colors.gray[7],
+            }}
+          >
             :
           </Text>
         )}

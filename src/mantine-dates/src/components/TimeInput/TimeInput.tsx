@@ -12,13 +12,7 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import {
-  useMergedRef,
-  useUncontrolled,
-  useDidUpdate,
-  useUuid,
-  useValidState,
-} from '@mantine/hooks';
+import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
@@ -75,6 +69,12 @@ export interface TimeInputProps
   /** aria-label for seconds input */
   secondsLabel?: string;
 
+  /** placeholder for time input */
+  timePlaceholder?: string;
+
+  /** placeholder for am/pm input */
+  amPmPlaceholder?: string;
+
   /** Disable field */
   disabled?: boolean;
 }
@@ -112,6 +112,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      timePlaceholder = '--',
+      amPmPlaceholder = '--',
       disabled = false,
       sx,
       ...others
@@ -134,7 +136,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
     const amPmRef = useRef<HTMLInputElement>();
-    const [amPmValid, setAmPm, amPm] = useValidState((val) => val === 'am' || val === 'pm', 'am');
+    const [amPm, setAmPm] = useState('am');
     const [time, setTime] = useState(getTimeValues(_value));
 
     useDidUpdate(() => {
@@ -142,7 +144,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     }, [_value]);
 
     useEffect(() => {
-      if (format === '12') {
+      if (format === '12' && _value) {
         setAmPm(parseInt(time.hours, 10) >= 12 ? 'pm' : 'am');
       }
     }, [format]);
@@ -216,6 +218,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleClear = () => {
       handleChange(undefined);
+      setAmPm('');
       hoursRef.current.focus();
     };
 
@@ -276,6 +279,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               withSeparator
               size={size}
               max={format === '12' ? 11 : 23}
+              placeholder={timePlaceholder}
               aria-label={hoursLabel}
               disabled={disabled}
             />
@@ -289,6 +293,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               withSeparator={withSeconds}
               size={size}
               max={59}
+              placeholder={timePlaceholder}
               aria-label={minutesLabel}
               disabled={disabled}
             />
@@ -302,6 +307,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 className={classes.timeInput}
                 size={size}
                 max={59}
+                placeholder={timePlaceholder}
                 aria-label={secondsLabel}
                 disabled={disabled}
               />
@@ -312,18 +318,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 ref={amPmRef}
                 value={amPm}
                 onChange={handleAmPmChange}
-                onBlur={() => {
-                  if (amPm !== 'am' && amPm !== 'pm') {
-                    if (amPm === '') {
-                      handleAmPmChange(amPmValid, false);
-                    } else {
-                      handleAmPmChange(amPm[0] === 'p' ? 'pm' : 'am', false);
-                    }
-                  }
-                }}
                 setValue={(val) => {
                   setAmPm(val);
                 }}
+                placeholder={amPmPlaceholder}
                 size={size}
                 disabled={disabled}
                 error={!!error}
