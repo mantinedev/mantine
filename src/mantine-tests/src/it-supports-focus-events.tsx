@@ -1,15 +1,16 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
+import { renderWithAct } from './render-with-act';
 
 export function itSupportsFocusEvents(
   Component: React.ElementType,
   requiredProps: Record<string, any>,
   selector: string
 ) {
-  it('supports focus events', () => {
+  it('supports focus events', async () => {
     const onFocusSpy = jest.fn();
     const onBlurSpy = jest.fn();
-    const { container } = render(
+    const { container } = await renderWithAct(
       <Component {...requiredProps} onFocus={onFocusSpy} onBlur={onBlurSpy} />
     );
 

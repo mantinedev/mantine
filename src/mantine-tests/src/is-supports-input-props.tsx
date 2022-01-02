@@ -1,9 +1,9 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
 import { itConnectsLabelAndInput } from './it-connects-label-and-input';
 import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
+import { renderWithAct } from './render-with-act';
 
 export function itSupportsInputProps(
   Component: React.ElementType,
@@ -15,19 +15,19 @@ export function itSupportsInputProps(
   itSupportsInputIcon(Component, requiredProps);
   itSupportsInputRightSection(Component, requiredProps);
 
-  it('handles required attribute correctly', () => {
-    const { container } = render(
+  it('handles required attribute correctly', async () => {
+    const { container } = await renderWithAct(
       <Component {...requiredProps} required id="secret-test-id" label="Test label" />
     );
     expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
     expect(container.querySelector('#secret-test-id')).toHaveAttribute('aria-required', 'true');
   });
 
-  it('handles error and invalid state', () => {
-    const { container: invalid } = render(
+  it('handles error and invalid state', async () => {
+    const { container: invalid } = await renderWithAct(
       <Component {...requiredProps} required id="invalid-test-id" error />
     );
-    const { container: withError } = render(
+    const { container: withError } = await renderWithAct(
       <Component {...requiredProps} required id="error-test-id" error="Test error" />
     );
 
@@ -38,13 +38,17 @@ export function itSupportsInputProps(
     expect(withError.querySelector(`.mantine-${name}-error`).textContent).toBe('Test error');
   });
 
-  it('renders input description', () => {
-    const { getByText } = render(<Component {...requiredProps} description="Test description" />);
+  it('renders input description', async () => {
+    const { getByText } = await renderWithAct(
+      <Component {...requiredProps} description="Test description" />
+    );
     expect(getByText('Test description')).toBeInTheDocument();
   });
 
-  it('sets border-radius on input', () => {
-    const { container } = render(<Component {...requiredProps} radius={43} id="secret-test-id" />);
+  it('sets border-radius on input', async () => {
+    const { container } = await renderWithAct(
+      <Component {...requiredProps} radius={43} id="secret-test-id" />
+    );
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
   });
 }

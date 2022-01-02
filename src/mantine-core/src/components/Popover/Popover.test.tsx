@@ -1,58 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Popover } from './Popover';
-import { PopoverBody } from './PopoverBody/PopoverBody';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Popover, PopoverProps } from './Popover';
 
-const defaultProps = {
+const defaultProps: PopoverProps = {
   opened: true,
   onClose: () => {},
-  withArrow: true,
-  withCloseButton: true,
   withinPortal: false,
-  target: 'test-control',
+  target: <div>target</div>,
   children: 'test-content',
   title: 'test-title',
 };
 
 describe('@mantine/core/Popover', () => {
-  itSupportsClassName(Popover, defaultProps);
-  itSupportsOthers(Popover, defaultProps);
-  itSupportsStyle(Popover, defaultProps);
-  itSupportsMargins(Popover, defaultProps);
-  itSupportsSx(Popover, defaultProps);
-
-  it('passes props to PopoverBody', () => {
-    const element = shallow(
-      <Popover
-        {...defaultProps}
-        shadow="xl"
-        radius="sm"
-        spacing="lg"
-        withCloseButton
-        title="test-popover"
-        closeButtonLabel="test-close-label"
-        width={234}
-      />
-    );
-
-    const props = element.find(PopoverBody).props();
-    expect(props.shadow).toBe('xl');
-    expect(props.radius).toBe('sm');
-    expect(props.spacing).toBe('lg');
-    expect(props.withCloseButton).toBe(true);
-    expect(props.title).toBe('test-popover');
-    expect(props.closeButtonLabel).toBe('test-close-label');
-    expect(props.width).toBe(234);
-  });
-
-  it('has correct displayName', () => {
-    expect(Popover.displayName).toEqual('@mantine/core/Popover');
+  itSupportsSystemProps({
+    component: Popover,
+    props: defaultProps,
+    displayName: '@mantine/core/Popover',
   });
 });

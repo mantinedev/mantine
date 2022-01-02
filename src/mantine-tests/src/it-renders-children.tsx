@@ -1,12 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderWithAct } from './render-with-act';
 
 export function itRendersChildren(
   Component: React.ElementType,
   requiredProps: Record<string, any>
 ) {
-  it('renders children', () => {
-    const { queryAllByText } = render(
+  it('renders children', async () => {
+    const { queryAllByText } = await renderWithAct(
       <Component {...requiredProps}>
         <span className="test-children">test-children</span>
       </Component>
