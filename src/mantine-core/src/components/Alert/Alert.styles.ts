@@ -13,12 +13,21 @@ export default createStyles((theme, { color, radius, outline }: AlertStyles) => 
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-    backgroundColor: outline ?
-      'transparent' : theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
-    borderColor: outline ?
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0) : 'initial',
-    border: outline ?
-      `3px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0)}` : 'initial',
+    backgroundColor: outline
+      ? 'transparent'
+      : theme.colorScheme === 'dark'
+      ? theme.colors.dark[5]
+      : theme.fn.themeColor(color, 0),
+    borderColor: outline
+      ? theme.colorScheme === 'dark'
+        ? theme.colors.dark[5]
+        : theme.fn.themeColor(color, 0)
+      : 'initial',
+    border: outline
+      ? `3px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0)
+        }`
+      : 'initial',
   },
 
   wrapper: {

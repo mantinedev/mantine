@@ -55,7 +55,10 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color, radius, outline }, { classNames, styles, name: 'Alert' });
+    const { classes, cx } = useStyles(
+      { color, radius, outline },
+      { classNames, styles, name: 'Alert' }
+    );
 
     return (
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
