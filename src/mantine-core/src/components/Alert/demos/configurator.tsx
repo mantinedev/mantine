@@ -32,6 +32,5 @@ export const configurator: MantineDemo = {
     { name: 'color', type: 'color', initialValue: 'red', defaultValue: 'blue' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'withCloseButton', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'outline', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

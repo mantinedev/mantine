@@ -33,9 +33,6 @@ export interface AlertProps
 
   /** Radius from theme.radius, or number to set border-radius in px */
   radius?: MantineNumberSize;
-
-  /** Show an outline instead of filling the alert container */
-  outline?: boolean;
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
@@ -50,14 +47,13 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
       styles,
       onClose,
       radius = 'sm',
-      outline = false,
       withCloseButton,
       ...others
     }: AlertProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { color, radius, outline },
+      { color, radius },
       { classNames, styles, name: 'Alert' }
     );
 
