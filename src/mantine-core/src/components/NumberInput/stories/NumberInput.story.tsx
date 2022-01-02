@@ -4,7 +4,7 @@ import { MANTINE_SIZES } from '@mantine/styles';
 import { NumberInput } from '../NumberInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
-  <NumberInput defaultValue={0} label={size} size={size} key={size} style={{ marginTop: 30 }} />
+  <NumberInput defaultValue={0} label={size} size={size} key={size} mt="xl" />
 ));
 
 function Controlled(
