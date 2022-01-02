@@ -3,17 +3,22 @@ import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 interface AlertStyles {
   color: MantineColor;
   radius: MantineNumberSize;
+  outline: boolean;
 }
 
-export default createStyles((theme, { color, radius }: AlertStyles) => ({
+export default createStyles((theme, { color, radius, outline }: AlertStyles) => ({
   root: {
     ...theme.fn.fontStyles(),
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
+    backgroundColor: outline ?
+      'transparent' : theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
+    borderColor: outline ?
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0) : 'initial',
+    border: outline ?
+      `3px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0)}` : 'initial',
   },
 
   wrapper: {
