@@ -7,4 +7,5 @@ export const Modal: Record<ModalStylesNames, string> = {
   header: 'Modal header, contains close button and title',
   title: 'Modal title',
   body: 'Modal body, displayed after header',
+  close: 'Close button',
 };
