@@ -9,6 +9,7 @@ const defaultProps: PopoverProps = {
   target: <div>target</div>,
   children: 'test-content',
   title: 'test-title',
+  transitionDuration: 0,
 };
 
 describe('@mantine/core/Popover', () => {

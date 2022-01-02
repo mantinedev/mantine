@@ -1,7 +1,13 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps, itSupportsFocusEvents } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsFocusEvents,
+  renderWithAct,
+  actAsync,
+} from '@mantine/tests';
 import { Divider } from '../Divider';
 import { Button } from '../Button';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -31,18 +37,18 @@ describe('@mantine/core/Menu', () => {
     refType: HTMLButtonElement,
   });
 
-  it('calls onClose and onOpen function with corresponding events', () => {
+  it('calls onClose and onOpen function with corresponding events', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();
-    render(<Menu onOpen={onOpen} onClose={onClose} {...defaultProps} />);
+    await renderWithAct(<Menu onOpen={onOpen} onClose={onClose} {...defaultProps} />);
     userEvent.click(screen.getByLabelText('test-menu'));
     userEvent.click(screen.getByLabelText('test-menu'));
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('accepts control from props', () => {
-    const { container } = render(
+  it('accepts control from props', async () => {
+    const { container } = await renderWithAct(
       <Menu
         {...defaultProps}
         control={
@@ -56,22 +62,22 @@ describe('@mantine/core/Menu', () => {
     expect(container.querySelector('.test-button')).toBeInTheDocument();
   });
 
-  it('opens menu when controlled is clicked and trigger prop is "click"', () => {
-    const { container } = render(<Menu {...defaultProps} />);
+  it('opens menu when controlled is clicked and trigger prop is "click"', async () => {
+    const { container } = await renderWithAct(<Menu {...defaultProps} />);
     expect(container.querySelector('.mantine-Menu-body')).toBe(null);
-    userEvent.click(screen.getByLabelText('test-menu'));
+    await actAsync(() => userEvent.click(screen.getByLabelText('test-menu')));
     expect(container.querySelector('.mantine-Menu-body')).toBeInTheDocument();
   });
 
-  it('opens menu when controlled is hovered and trigger prop is "hover"', () => {
-    const { container } = render(<Menu {...defaultProps} trigger="hover" />);
+  it('opens menu when controlled is hovered and trigger prop is "hover"', async () => {
+    const { container } = await renderWithAct(<Menu {...defaultProps} trigger="hover" />);
     expect(container.querySelector('.mantine-Menu-body')).toBe(null);
-    userEvent.hover(screen.getByLabelText('test-menu'));
+    await actAsync(() => userEvent.hover(screen.getByLabelText('test-menu')));
     expect(container.querySelector('.mantine-Menu-body')).toBeInTheDocument();
   });
 
-  it('filters out unexpected children', () => {
-    const { container } = render(
+  it('filters out unexpected children', async () => {
+    const { container } = await renderWithAct(
       <Menu withinPortal={false} opened>
         <Menu.Item>Child 1</Menu.Item>
         <Menu.Label>Label 1</Menu.Label>
@@ -92,9 +98,9 @@ describe('@mantine/core/Menu', () => {
     expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
-  it('preserves control onClick event', () => {
+  it('preserves control onClick event', async () => {
     const spy = jest.fn();
-    render(
+    await renderWithAct(
       <Menu
         {...defaultProps}
         control={
@@ -105,7 +111,7 @@ describe('@mantine/core/Menu', () => {
       />
     );
 
-    userEvent.click(screen.getByLabelText('test-menu'));
+    await actAsync(() => userEvent.click(screen.getByLabelText('test-menu')));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

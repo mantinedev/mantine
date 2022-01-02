@@ -8,3 +8,7 @@ export async function renderWithAct(element: React.ReactElement) {
   });
   return result;
 }
+
+export async function actAsync(callback: () => void) {
+  await act(async () => callback());
+}
