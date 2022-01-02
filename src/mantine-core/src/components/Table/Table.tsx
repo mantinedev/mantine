@@ -12,6 +12,9 @@ export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Table caption position */
   captionSide?: 'top' | 'bottom';
+
+  /** If true, render border on all cells */
+  border?: boolean;
 }
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
@@ -21,12 +24,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
       children,
       striped = false,
       highlightOnHover = false,
+      border = false,
       captionSide = 'top',
       ...others
     }: TableProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ captionSide }, { name: 'Table' });
+    const { classes, cx } = useStyles({ captionSide, border }, { name: 'Table' });
 
     return (
       <Box

@@ -2,9 +2,10 @@ import { createStyles } from '@mantine/styles';
 
 interface TableStyles {
   captionSide: 'top' | 'bottom';
+  border: boolean;
 }
 
-export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
+export default createStyles((theme, { captionSide, border }: TableStyles, getRef) => {
   const striped = { ref: getRef('striped') };
   const hover = { ref: getRef('hover') };
 
@@ -19,6 +20,14 @@ export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
       captionSide,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       lineHeight: theme.lineHeight,
+
+      '& thead th, & tbody td, & tfoot td': {
+        border: border
+          ? `1px solid ${
+              theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+            }`
+          : 'initial',
+      },
 
       '& caption': {
         marginTop: captionSide === 'top' ? 0 : theme.spacing.xs,
@@ -56,7 +65,11 @@ export default createStyles((theme, { captionSide }: TableStyles, getRef) => {
       },
 
       '& tbody tr:last-of-type td': {
-        borderBottom: 'none',
+        borderBottom: border
+          ? `1px solid ${
+              theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+            }`
+          : 'none',
       },
 
       [`&.${striped.ref} tbody tr:nth-of-type(odd)`]: {
