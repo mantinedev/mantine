@@ -7,6 +7,8 @@ interface PasswordInputStyles {
 }
 
 export default createStyles((theme, { size, rightSectionWidth }: PasswordInputStyles) => ({
+  visibilityToggle: {},
+
   input: {
     position: 'relative',
     overflow: 'hidden',
