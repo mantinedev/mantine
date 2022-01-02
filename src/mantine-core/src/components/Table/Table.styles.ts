@@ -21,7 +21,7 @@ export default createStyles((theme, { captionSide, border }: TableStyles, getRef
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       lineHeight: theme.lineHeight,
 
-      '& thead th, & tbody td, & tfoot td': {
+      '& thead th, & tbody td, & tfoot th': {
         border: border
           ? `1px solid ${
               theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
