@@ -9,8 +9,8 @@ const code = `
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput label="Pick time" format="12" />
-      <TimeInput label="Pick time" format="24" />
+      <TimeInput label="Pick time" format="12" defaultValue={new Date()} />
+      <TimeInput label="Pick time" format="24" defaultValue={new Date()} />
     </div>
   );
 }

@@ -12,16 +12,15 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import dayjs from 'dayjs';
+import { useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
-import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 import useStyles from './TimeInput.styles';
 import { padTime } from '../TimeInputBase/pad-time/pad-time';
 import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
 import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
-import { getMidnight } from '../../utils/get-midnight/get-midnight';
+import { getDate } from '../TimeInputBase/get-date/get-date';
+import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 
 export type TimeInputStylesNames =
   | ClassNames<typeof useStyles>
@@ -102,7 +101,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       styles,
       id,
       value,
-      defaultValue = new Date(),
+      defaultValue,
       onChange,
       withSeconds = false,
       clearable = false,
@@ -113,7 +112,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minutesLabel,
       secondsLabel,
       timePlaceholder = '--',
-      amPmPlaceholder = '--',
+      amPmPlaceholder = 'am',
       disabled = false,
       sx,
       ...others
@@ -124,45 +123,34 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
-    const [_value, handleChange] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: value,
-      rule: (val) => val instanceof Date,
-      onChange,
-    });
-
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
     const amPmRef = useRef<HTMLInputElement>();
     const [amPm, setAmPm] = useState('am');
-    const [time, setTime] = useState(getTimeValues(_value));
+    const [time, setTime] = useState<{ hours: string; minutes: string; seconds: string }>(
+      getTimeValues(value || defaultValue)
+    );
+    const [_value, setValue] = useState<Date>(value ?? defaultValue);
 
-    useDidUpdate(() => {
-      setTime(getTimeValues(_value));
-    }, [_value]);
+    useEffect(() => {
+      setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
+    }, [time, format, amPm]);
 
     useEffect(() => {
       if (format === '12' && _value) {
-        setAmPm(parseInt(time.hours, 10) >= 12 ? 'pm' : 'am');
+        const _hours = parseInt(time.hours, 10);
+        setAmPm(_hours >= 12 ? 'pm' : 'am');
+
+        if (_hours >= 12) {
+          setTime({ ...time, hours: padTime((_hours - 12).toString()) });
+        }
       }
     }, [format]);
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        let newVal = parseInt(val, 10);
-
-        if (format === '12' && amPm === 'pm') {
-          newVal += 12;
-        }
-
-        setTime((c) => ({ ...c, hours: newVal.toString() }));
-        handleChange(
-          dayjs(_value ?? getMidnight())
-            .set('hours', newVal)
-            .toDate()
-        );
+        setTime((current) => ({ ...current, hours: padTime(val) }));
       },
       min: 0,
       max: format === '12' ? 11 : 23,
@@ -172,12 +160,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        setTime((c) => ({ ...c, minutes: val }));
-        handleChange(
-          dayjs(_value ?? getMidnight())
-            .set('minutes', parseInt(val, 10))
-            .toDate()
-        );
+        setTime((current) => ({ ...current, minutes: padTime(val) }));
       },
       min: 0,
       max: 59,
@@ -187,12 +170,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        setTime((c) => ({ ...c, seconds: val }));
-        handleChange(
-          dayjs(_value ?? getMidnight())
-            .set('seconds', parseInt(val, 10))
-            .toDate()
-        );
+        setTime((current) => ({ ...current, seconds: padTime(val) }));
       },
       min: 0,
       max: 59,
@@ -203,21 +181,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleAmPmChange = createAmPmHandler({
       onChange: (val) => {
         setAmPm(val);
-
-        if ((val === 'am' || val === 'pm') && _value) {
-          const hour = parseInt(time.hours, 10);
-
-          handleChange(
-            dayjs(_value)
-              .set('hours', val === 'pm' ? hour + 12 : hour - 12)
-              .toDate()
-          );
-        }
       },
     });
 
     const handleClear = () => {
-      handleChange(undefined);
+      setTime({ hours: '', minutes: '', seconds: '' });
       setAmPm('');
       hoursRef.current.focus();
     };
@@ -267,13 +235,9 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           <div className={classes.controls}>
             <TimeField
               ref={useMergedRef(hoursRef, ref)}
-              value={
-                format === '12' && parseInt(time.hours, 10) >= 12
-                  ? padTime(parseInt(time.hours, 10) - 12)
-                  : time.hours
-              }
+              value={time.hours}
               onChange={handleHoursChange}
-              setValue={(val) => setTime((c) => ({ ...c, hours: val }))}
+              setValue={(val) => setTime((current) => ({ ...current, hours: val }))}
               id={uuid}
               className={classes.timeInput}
               withSeparator
@@ -283,12 +247,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               aria-label={hoursLabel}
               disabled={disabled}
             />
-
             <TimeField
               ref={minutesRef}
               value={time.minutes}
               onChange={handleMinutesChange}
-              setValue={(val) => setTime((c) => ({ ...c, minutes: val }))}
+              setValue={(val) => setTime((current) => ({ ...current, minutes: val }))}
               className={classes.timeInput}
               withSeparator={withSeconds}
               size={size}
@@ -297,13 +260,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               aria-label={minutesLabel}
               disabled={disabled}
             />
-
             {withSeconds && (
               <TimeField
                 ref={secondsRef}
                 value={time.seconds}
                 onChange={handleSecondsChange}
-                setValue={(val) => setTime((c) => ({ ...c, seconds: val }))}
+                setValue={(val) => setTime((current) => ({ ...current, seconds: val }))}
                 className={classes.timeInput}
                 size={size}
                 max={59}
@@ -312,7 +274,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 disabled={disabled}
               />
             )}
-
             {format === '12' && (
               <AmPmInput
                 ref={amPmRef}
@@ -327,7 +288,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 error={!!error}
               />
             )}
-
             {name && <input type="hidden" name={name} value={_value.toISOString()} />}
           </div>
         </Input>

@@ -1,7 +1,7 @@
 import React, { useRef, forwardRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { MantineSize } from '@mantine/core';
-import useStyles from './AmPmInput.styles';
+import useStyles from '../TimeInputBase.styles';
 
 interface AmPmSelectProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
@@ -32,7 +32,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     }: AmPmSelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size });
+    const { classes, cx } = useStyles({ size, hasValue: !!value });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -46,13 +46,8 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      event.preventDefault();
-      if (
-        event.nativeEvent.code === 'ArrowUp' ||
-        event.nativeEvent.code === 'ArrowDown' ||
-        event.nativeEvent.code === 'ArrowLeft' ||
-        event.nativeEvent.code === 'ArrowRight'
-      ) {
+      if (event.nativeEvent.code === 'ArrowUp' || event.nativeEvent.code === 'ArrowDown') {
+        event.preventDefault();
         onChange(value === 'am' ? 'pm' : 'am', false);
       }
 
@@ -69,12 +64,12 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       <input
         type="text"
         ref={useMergedRef(inputRef, ref)}
-        onChange={(event) => onChange(event.currentTarget.value, true)}
         onClick={handleClick}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
+        readOnly
         value={value}
-        className={cx(classes.amPmInput, className)}
+        className={cx(classes.input, className)}
         {...others}
       />
     );

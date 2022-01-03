@@ -6,8 +6,8 @@ export function getTimeValues(value: Date) {
   }
 
   return {
-    hours: padTime(value.getHours()),
-    minutes: padTime(value.getMinutes()),
-    seconds: padTime(value.getSeconds()),
+    hours: padTime(value.getHours().toString()),
+    minutes: padTime(value.getMinutes().toString()),
+    seconds: padTime(value.getSeconds().toString()),
   };
 }

@@ -9,7 +9,7 @@ const code = `
 function Demo() {
   return (
     <Container size={340}>
-      <TimeInput label="What time is it now?" />
+      <TimeInput label="What time is it now?" defaultValue={new Date()} />
     </Container>
   );
 }

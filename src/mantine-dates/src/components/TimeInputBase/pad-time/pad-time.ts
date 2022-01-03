@@ -1,3 +1,5 @@
-export function padTime(value: number) {
-  return value >= 10 ? value.toString() : `0${value}`;
+export function padTime(value: string) {
+  const _val = parseInt(value, 10);
+
+  return _val >= 10 ? _val.toString() : `0${_val}`;
 }

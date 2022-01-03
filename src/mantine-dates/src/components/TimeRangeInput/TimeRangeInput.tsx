@@ -12,9 +12,7 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import dayjs, { UnitType } from 'dayjs';
-import { getMidnight } from '../../utils/get-midnight/get-midnight';
+import { useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
@@ -22,6 +20,7 @@ import useStyles from './TimeRangeInput.styles';
 import { padTime } from '../TimeInputBase/pad-time/pad-time';
 import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
 import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
+import { getDate } from '../TimeInputBase/get-date/get-date';
 
 export type TimeRangeInputStylesNames =
   | Exclude<ClassNames<typeof useStyles>, 'disabled'>
@@ -105,7 +104,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       styles,
       id,
       value,
-      defaultValue = [new Date(), new Date(new Date().valueOf() + 1000)],
+      defaultValue,
       onChange,
       withSeconds = false,
       clearable = false,
@@ -116,7 +115,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       minutesLabel,
       secondsLabel,
       timePlaceholder = '--',
-      amPmPlaceholder = '--',
+      amPmPlaceholder = 'am',
       labelSeparator = '–',
       disabled = false,
       sx,
@@ -131,31 +130,40 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
-    const [_value, handleChange] = useUncontrolled<(Date | undefined)[]>({
-      value,
-      defaultValue,
-      finalValue: [],
-      rule: (val) => val && val.length === 2 && val.every((v) => v instanceof Date),
-      onChange,
-    });
-
     const hoursRef = useRef<HTMLInputElement[]>([]);
     const minutesRef = useRef<HTMLInputElement[]>([]);
     const secondsRef = useRef<HTMLInputElement[]>([]);
     const formatsRef = useRef<HTMLInputElement[]>([]);
-    const [fromTime, setFromTime] = useState(getTimeValues(_value[0]));
-    const [toTime, setToTime] = useState(getTimeValues(_value[1]));
+    const [fromTime, setFromTime] = useState<{ hours: string; minutes: string; seconds: string }>(
+      getTimeValues(value ? value[0] : undefined || defaultValue ? defaultValue[0] : undefined)
+    );
+    const [toTime, setToTime] = useState<{ hours: string; minutes: string; seconds: string }>(
+      getTimeValues(value ? value[1] : undefined || defaultValue ? defaultValue[1] : undefined)
+    );
     const [fromAmPm, setFromAmPm] = useState('am');
     const [toAmPm, setToAmPm] = useState('am');
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
-
-    useDidUpdate(() => {
-      setFromTime(getTimeValues(_value[0]));
-      setToTime(getTimeValues(_value[1]));
-    }, [_value]);
+    const [_value, setValue] = useState<[Date, Date]>(value ?? defaultValue);
 
     useEffect(() => {
-      if (format === '12') {
+      setValue([
+        getDate(fromTime.hours, fromTime.minutes, fromTime.seconds, format, fromAmPm),
+        getDate(toTime.hours, toTime.minutes, toTime.seconds, format, toAmPm),
+      ]);
+    }, [
+      fromTime.hours,
+      fromTime.minutes,
+      fromTime.seconds,
+      toTime.hours,
+      toTime.minutes,
+      toTime.seconds,
+      format,
+      fromAmPm,
+      toAmPm,
+    ]);
+
+    useEffect(() => {
+      if (format === '12' && (_value[0] || _value[1])) {
         setFromAmPm(parseInt(fromTime.hours, 10) >= 12 ? 'pm' : 'am');
         setToAmPm(parseInt(toTime.hours, 10) >= 12 ? 'pm' : 'am');
       }
@@ -165,15 +173,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
     ) => {
       selectedFieldIndex === 0 ? setFromTime(cb) : setToTime(cb);
-    };
-
-    const constructDayjsValue = (fieldName: UnitType, val: string) => {
-      const index = selectedFieldIndex;
-      const newTime = [..._value];
-      newTime[index] = dayjs(newTime[index] ?? getMidnight())
-        .set(fieldName, parseInt(val, 10))
-        .toDate();
-      return newTime;
     };
 
     const nextMinuteRef = () => {
@@ -194,15 +193,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        let newVal = parseInt(val, 10);
-        const amPm = selectedFieldIndex === 0 ? fromAmPm : toAmPm;
-
-        if (format === '12' && amPm === 'pm') {
-          newVal += 12;
-        }
-
-        setTime((current) => ({ ...current, hours: newVal.toString() }));
-        handleChange(constructDayjsValue('hours', newVal.toString()));
+        setTime((current) => ({ ...current, hours: padTime(val) }));
       },
       min: 0,
       max: format === '12' ? 11 : 23,
@@ -214,8 +205,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, minutes: val }));
-        handleChange(constructDayjsValue('minutes', val));
+        setTime((current) => ({ ...current, minutes: padTime(val) }));
       },
       min: 0,
       max: 59,
@@ -227,8 +217,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, seconds: val }));
-        handleChange(constructDayjsValue('seconds', val));
+        setTime((current) => ({ ...current, seconds: padTime(val) }));
       },
       min: 0,
       max: 59,
@@ -245,20 +234,10 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleAmPmChange = createAmPmHandler({
       onChange: (val) => {
-        let hour: number = 0;
-
         if (selectedFieldIndex === 0) {
           setFromAmPm(val);
-          hour = parseInt(fromTime.hours, 10);
         } else {
           setToAmPm(val);
-          hour = parseInt(toTime.hours, 10);
-        }
-
-        if (val === 'am' || val === 'pm') {
-          handleChange(
-            constructDayjsValue('hours', (val === 'pm' ? hour + 12 : hour - 12).toString())
-          );
         }
       },
       nextRef: {
@@ -267,7 +246,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     });
 
     const handleClear = () => {
-      handleChange([]);
+      setFromTime({ hours: '', minutes: '', seconds: '' });
+      setToTime({ hours: '', minutes: '', seconds: '' });
       setSelectedFieldIndex(0);
       setFromAmPm('');
       setToAmPm('');
@@ -324,13 +304,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               ref={useMergedRef((node: HTMLInputElement) => {
                 hoursRef.current[0] = node;
               }, ref)}
-              value={
-                format === '12' && parseInt(fromTime.hours, 10) >= 12
-                  ? padTime(parseInt(fromTime.hours, 10) - 12)
-                  : fromTime.hours
-              }
+              value={fromTime.hours}
               onChange={handleHoursChange}
-              setValue={(val) => handleHoursChange(val, false)}
+              setValue={(val) => setTime((current) => ({ ...current, hours: val }))}
               id={uuid}
               className={classes.timeField}
               withSeparator
@@ -348,7 +324,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               }}
               value={fromTime.minutes}
               onChange={handleMinutesChange}
-              setValue={(val) => setFromTime((c) => ({ ...c, minutes: val }))}
+              setValue={(val) => setTime((current) => ({ ...current, minutes: val }))}
               className={classes.timeField}
               withSeparator={withSeconds}
               size={size}
@@ -366,7 +342,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={fromTime.seconds}
                 onChange={handleSecondsChange}
-                setValue={(val) => setFromTime((c) => ({ ...c, seconds: val }))}
+                setValue={(val) => setTime((current) => ({ ...current, seconds: val }))}
                 className={classes.timeField}
                 size={size}
                 max={59}
@@ -412,11 +388,11 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={
                   format === '12' && parseInt(toTime.hours, 10) >= 12
-                    ? padTime(parseInt(toTime.hours, 10) - 12)
+                    ? padTime((parseInt(toTime.hours, 10) - 12).toString())
                     : toTime.hours
                 }
                 onChange={handleHoursChange}
-                setValue={(val) => handleHoursChange(val, false)}
+                setValue={(val) => setTime((current) => ({ ...current, hours: val }))}
                 className={classes.timeField}
                 withSeparator
                 size={size}
@@ -433,7 +409,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={toTime.minutes}
                 onChange={handleMinutesChange}
-                setValue={(val) => setToTime((c) => ({ ...c, minutes: val }))}
+                setValue={(val) => setTime((current) => ({ ...current, minutes: val }))}
                 className={classes.timeField}
                 withSeparator={withSeconds}
                 size={size}
@@ -451,7 +427,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   }}
                   value={toTime.seconds}
                   onChange={handleSecondsChange}
-                  setValue={(val) => setToTime((c) => ({ ...c, seconds: val }))}
+                  setValue={(val) => setTime((current) => ({ ...current, seconds: val }))}
                   className={classes.timeField}
                   size={size}
                   max={59}

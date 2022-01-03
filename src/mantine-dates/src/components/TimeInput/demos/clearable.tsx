@@ -2,18 +2,20 @@ import React from 'react';
 import { TimeInput } from '../TimeInput';
 
 const code = `
-<TimeInput disabled />
+<TimeInput clearable />
+<TimeInput />
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput label="Pick time" disabled defaultValue={new Date()} />
+      <TimeInput label="With a clear button" clearable defaultValue={new Date()} />
+      <TimeInput label="Without a clear button" defaultValue={new Date()} />
     </div>
   );
 }
 
-export const disabled: MantineDemo = {
+export const clearable: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
