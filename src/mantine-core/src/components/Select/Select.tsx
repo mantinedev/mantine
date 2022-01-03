@@ -121,6 +121,9 @@ export interface SelectProps
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
+
+  /** Select highlighted item on blur */
+  selectOnBlur?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -172,6 +175,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       creatable = false,
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
+      selectOnBlur = false,
       onCreate,
       sx,
       dropdownComponent,
@@ -419,6 +423,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
       const selected = sortedData.find((item) => item.value === _value);
+      if (selectOnBlur && filteredData[hovered] && dropdownOpened) {
+        handleItemSelect(filteredData[hovered]);
+      }
       handleSearchChange(selected?.label || '');
       setDropdownOpened(false);
     };
