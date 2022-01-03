@@ -22,7 +22,7 @@ describe('@mantine/core/Accordion', () => {
     displayName: '@mantine/core/Accordion',
     refType: HTMLDivElement,
   });
-  checkAccessibility([render(<Accordion {...defaultProps} />)]);
+  checkAccessibility([<Accordion {...defaultProps} />]);
 
   it('renders correct amount of items', () => {
     const { container } = render(<Accordion {...defaultProps} />);

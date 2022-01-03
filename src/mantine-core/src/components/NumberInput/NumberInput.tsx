@@ -21,13 +21,7 @@ export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<typeof TextInput>,
-      | 'rightSection'
-      | 'rightSectionProps'
-      | 'rightSectionWidth'
-      | 'onChange'
-      | 'value'
-      | 'classNames'
-      | 'styles'
+      'onChange' | 'value' | 'classNames' | 'styles'
     > {
   /** onChange input handler for controlled variant, note that input event is not exposed. It will return undefined if the input is empty, otherwise it'll return a number */
   onChange?(value: number | undefined): void;
@@ -93,6 +87,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       classNames,
       styles,
       size,
+      rightSection,
       ...others
     }: NumberInputProps,
     ref
@@ -232,11 +227,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
     useEffect(() => {
       onStepDone();
-
-      return () => onStepDone();
+      return onStepDone;
     }, []);
 
-    const rightSection = (
+    const controls = (
       <div className={classes.rightSection}>
         <button
           type="button"
@@ -268,7 +262,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const val = event.target.value;
       setTempValue(val);
-      // Check if the input is empty. This relies on the input type being "text" and not "number". See #375 for more details.
       if (val === '') {
         handleValueChange(undefined);
       } else {
@@ -305,10 +298,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      // If it is a repeat keydown and the stepInterval is being used,
-      // then the onStep function should not be called again.
-      // If the stepInterval is not being used, then onStep should be
-      // called again to retain the previous behavior of updating on each repeat.
       if (event.repeat && shouldUseStepInterval) {
         event.preventDefault();
         return;
@@ -340,7 +329,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         onKeyUp={handleKeyUp}
-        rightSection={disabled || hideControls || variant === 'unstyled' ? null : rightSection}
+        rightSection={
+          rightSection || (disabled || hideControls || variant === 'unstyled' ? null : controls)
+        }
         rightSectionWidth={theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}
         max={max}

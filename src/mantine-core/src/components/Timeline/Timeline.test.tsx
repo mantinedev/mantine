@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsSx,
-  itSupportsRef,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Button } from '../Button';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -21,18 +16,30 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Timeline', () => {
-  itSupportsClassName(Timeline, defaultProps);
-  itSupportsStyle(Timeline, defaultProps);
-  itSupportsOthers(Timeline, defaultProps);
-  itSupportsSx(Timeline, defaultProps);
-  itSupportsMargins(Timeline, defaultProps);
-  itSupportsRef(Timeline, defaultProps, HTMLDivElement);
-
-  it('exports Timeline.Item', () => {
-    expect(Timeline.Item).toBe(TimelineItem);
+  itSupportsSystemProps({
+    component: Timeline,
+    props: defaultProps,
+    displayName: '@mantine/core/Timeline',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Timeline.displayName).toEqual('@mantine/core/Timeline');
+  it('filters out unexpected children', () => {
+    const { container } = render(
+      <Timeline>
+        <Timeline.Item>Child 1</Timeline.Item>
+        <p className="unexpected">Unexpected child 1</p>
+        <div className="unexpected">Unexpected child 1</div>
+        <Timeline.Item>Child 2</Timeline.Item>
+        <Button>Unexpected component</Button>
+      </Timeline>
+    );
+
+    expect(container.querySelectorAll('.mantine-Timeline-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
+    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
+  });
+
+  it('exposes TimelineItem as Timeline.Item', () => {
+    expect(Timeline.Item).toBe(TimelineItem);
   });
 });

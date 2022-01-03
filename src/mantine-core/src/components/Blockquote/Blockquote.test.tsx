@@ -9,7 +9,7 @@ const defaultProps: BlockquoteProps = {
 };
 
 describe('@mantine/core/Blockquote', () => {
-  checkAccessibility([render(<Blockquote {...defaultProps} />)]);
+  checkAccessibility([<Blockquote {...defaultProps} />]);
   itRendersChildren(Blockquote, defaultProps);
   itSupportsSystemProps({
     component: Blockquote,

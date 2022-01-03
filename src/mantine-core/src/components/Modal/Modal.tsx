@@ -197,7 +197,12 @@ export function MantineModal({
                   </Text>
 
                   {!hideCloseButton && (
-                    <CloseButton iconSize={16} onClick={onClose} aria-label={closeButtonLabel} />
+                    <CloseButton
+                      iconSize={16}
+                      onClick={onClose}
+                      aria-label={closeButtonLabel}
+                      className={classes.close}
+                    />
                   )}
                 </div>
               )}

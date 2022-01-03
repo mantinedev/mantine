@@ -9,7 +9,7 @@ const defaultProps: BurgerProps = {
 };
 
 describe('@mantine/core/Burger', () => {
-  checkAccessibility([render(<Burger {...defaultProps} />)]);
+  checkAccessibility([<Burger {...defaultProps} />]);
   itSupportsFocusEvents(Burger, defaultProps, 'button');
   itSupportsSystemProps({
     component: Burger,

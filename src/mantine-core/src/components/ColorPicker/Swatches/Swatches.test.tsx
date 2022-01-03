@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Swatches, SwatchesProps } from './Swatches';
 import { parseColor } from '../converters';
@@ -12,8 +11,6 @@ const defaultProps: SwatchesProps = {
 };
 
 describe('@mantine/core/Swatches', () => {
-  checkAccessibility([render(<Swatches {...defaultProps} />)]);
-
   it('calls onSelect when color is clicked', () => {
     const spy = jest.fn();
     render(<Swatches {...defaultProps} onSelect={spy} />);

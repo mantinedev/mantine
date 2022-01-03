@@ -1,26 +1,15 @@
-import {
-  itRendersChildren,
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsMargins,
-  itIsPolymorphic,
-} from '@mantine/tests';
-import { Text } from './Text';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Text, TextProps } from './Text';
 
-const defaultProps = {};
+const defaultProps: TextProps<'div'> = {};
 
 describe('@mantine/core/Text', () => {
   itRendersChildren(Text, defaultProps);
-  itSupportsStyle(Text, defaultProps);
-  itSupportsClassName(Text, defaultProps);
-  itSupportsOthers(Text, defaultProps);
-  itSupportsMargins(Text, defaultProps);
   itIsPolymorphic(Text, defaultProps);
-  itSupportsRef(Text, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Text.displayName).toEqual('@mantine/core/Text');
+  itSupportsSystemProps({
+    component: Text,
+    props: defaultProps,
+    displayName: '@mantine/core/Text',
+    refType: HTMLDivElement,
   });
 });

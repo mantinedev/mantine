@@ -42,12 +42,14 @@ export interface RadioGroupProps
 
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
+
+  /** Props spread to InputWrapper */
+  wrapperProps?: { [key: string]: any };
 }
 
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   (
     {
-      className,
       name,
       children,
       value,
@@ -59,6 +61,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       size,
       classNames,
       styles,
+      wrapperProps,
       ...others
     }: RadioGroupProps,
     ref
@@ -95,6 +98,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         classNames={classNames}
         styles={styles}
         ref={ref}
+        {...wrapperProps}
         {...others}
       >
         <Group

@@ -1,30 +1,18 @@
 import React from 'react';
-import {
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-  itSupportsStyle,
-  itSupportsOthers,
-} from '@mantine/tests';
-import { SimpleGrid } from './SimpleGrid';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { SimpleGrid, SimpleGridProps } from './SimpleGrid';
 
-const defaultProps = {
+const defaultProps: SimpleGridProps = {
   cols: 2,
   children: <span>test</span>,
 };
 
 describe('@mantine/core/SimpleGrid', () => {
-  itSupportsClassName(SimpleGrid, defaultProps);
-  itSupportsMargins(SimpleGrid, defaultProps);
-  itSupportsOthers(SimpleGrid, defaultProps);
-  itSupportsStyle(SimpleGrid, defaultProps);
   itRendersChildren(SimpleGrid, defaultProps);
-  itSupportsSx(SimpleGrid, defaultProps);
-  itSupportsRef(SimpleGrid, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(SimpleGrid.displayName).toEqual('@mantine/core/SimpleGrid');
+  itSupportsSystemProps({
+    component: SimpleGrid,
+    props: defaultProps,
+    displayName: '@mantine/core/SimpleGrid',
+    refType: HTMLDivElement,
   });
 });

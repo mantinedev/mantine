@@ -1,14 +1,18 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
-import { extractMargins, useMantineTheme } from '@mantine/styles';
+import { ClassNames, DefaultProps, extractMargins, useMantineTheme } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon';
-import { TextInputProps } from '../TextInput';
+import { TextInputProps, TextInputStylesNames } from '../TextInput';
 import { Input } from '../Input';
 import { InputWrapper } from '../InputWrapper';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import useStyles from './PasswordInput.styles';
 
-export interface PasswordInputProps extends TextInputProps {
+export type PasswordInputStylesNames = ClassNames<typeof useStyles> | TextInputStylesNames;
+
+export interface PasswordInputProps
+  extends DefaultProps<PasswordInputStylesNames>,
+    Omit<TextInputProps, 'classNames' | 'styles'> {
   /** Toggle button tabIndex, set to 0 to make button focusable with tab key */
   toggleTabIndex?: -1 | 0;
 
@@ -78,10 +82,11 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     const rightSection = (
       <ActionIcon<'button'>
+        className={classes.visibilityToggle}
         tabIndex={toggleTabIndex}
         radius={radius}
         size={theme.fn.size({ size, sizes: buttonSizes })}
-        aria-hidden="true"
+        aria-hidden
         onMouseDown={(event) => {
           event.preventDefault();
           toggle();

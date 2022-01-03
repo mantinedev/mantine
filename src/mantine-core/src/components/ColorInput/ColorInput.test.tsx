@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsSystemProps,
@@ -13,6 +12,7 @@ const defaultProps: ColorInputProps = {
 };
 
 describe('@mantine/core/ColorInput', () => {
+  checkAccessibility([<ColorInput label="Color input" />, <ColorInput aria-label="Color input" />]);
   itSupportsWrapperProps(ColorInput, defaultProps);
   itSupportsInputProps(ColorInput, defaultProps, 'ColorInput');
   itSupportsSystemProps({
@@ -22,9 +22,4 @@ describe('@mantine/core/ColorInput', () => {
     refType: HTMLInputElement,
     excludeOthers: true,
   });
-
-  checkAccessibility([
-    render(<ColorInput label="Color input" />),
-    render(<ColorInput aria-label="Color input" />),
-  ]);
 });

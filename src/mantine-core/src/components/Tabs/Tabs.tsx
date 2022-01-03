@@ -150,7 +150,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         color={tab.props.color || color}
         variant={variant}
         orientation={orientation}
-        buttonRef={mergeRefs((node: HTMLButtonElement) => {
+        ref={mergeRefs((node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
         }, (tab as any).ref)}
         onClick={() => activeTab !== index && handleActiveTabChange(index)}

@@ -10,6 +10,7 @@ const defaultProps: DatePickerBaseProps = {
   dropdownOpened: true,
   setDropdownOpened: () => {},
   onClear: () => {},
+  transitionDuration: 0,
 };
 
 describe('@mantine/dates/DatePickerBase', () => {

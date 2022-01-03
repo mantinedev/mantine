@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsClassName,
@@ -28,7 +27,7 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Month/Day', () => {
-  checkAccessibility([render(<Day {...defaultProps} />)]);
+  checkAccessibility([<Day {...defaultProps} />]);
   itSupportsClassName(Day, defaultProps);
   itSupportsStyle(Day, defaultProps);
   itSupportsOthers(Day, defaultProps);

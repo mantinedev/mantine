@@ -18,9 +18,9 @@ describe('@mantine/core/Input', () => {
   itSupportsInputIcon(Input, defaultProps);
   itSupportsInputRightSection(Input, defaultProps);
   checkAccessibility([
-    render(<Input aria-label="test-input" />),
-    render(<Input placeholder="test-input" />),
-    render(<Input placeholder="test-input" invalid />),
+    <Input aria-label="test-input" />,
+    <Input placeholder="test-input" />,
+    <Input placeholder="test-input" invalid />,
   ]);
 
   itSupportsSystemProps({

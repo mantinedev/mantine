@@ -6,7 +6,7 @@ import useStyles from './Marks.styles';
 
 export type MarksStylesNames = ClassNames<typeof useStyles>;
 
-interface MarksProps extends DefaultProps<MarksStylesNames> {
+export interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
   color: MantineColor;

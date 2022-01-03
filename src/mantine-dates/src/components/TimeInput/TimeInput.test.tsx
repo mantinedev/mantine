@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from './TimeField/TimeField';
@@ -18,18 +17,14 @@ describe('@mantine/dates/TimeInput', () => {
   });
 
   checkAccessibility([
-    render(
-      <TimeInput
-        label="test-label"
-        withSeconds
-        hoursLabel="Hours"
-        minutesLabel="Minutes"
-        secondsLabel="Seconds"
-      />
-    ),
-    render(
-      <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />
-    ),
+    <TimeInput
+      label="test-label"
+      withSeconds
+      hoursLabel="Hours"
+      minutesLabel="Minutes"
+      secondsLabel="Seconds"
+    />,
+    <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />,
   ]);
 
   it('passes correct __staticSelector to Image and InputWrapper components', () => {

@@ -1,15 +1,7 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsSx,
-  itSupportsMargins,
-} from '@mantine/tests';
-import { Tooltip } from './Tooltip';
+import { itRendersChildren, itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
+import { Tooltip, TooltipProps } from './Tooltip';
 
-const defaultProps = {
+const defaultProps: TooltipProps = {
   opened: true,
   withArrow: true,
   label: 'tooltip',
@@ -19,14 +11,10 @@ const defaultProps = {
 
 describe('@mantine/core/Tooltip', () => {
   itRendersChildren(Tooltip, defaultProps);
-  itSupportsClassName(Tooltip, defaultProps);
-  itSupportsOthers(Tooltip, defaultProps);
-  itSupportsStyle(Tooltip, defaultProps);
-  itSupportsSx(Tooltip, defaultProps);
-  itSupportsMargins(Tooltip, defaultProps);
   itSupportsRef(Tooltip, defaultProps, HTMLDivElement, 'tooltipRef');
-
-  it('has correct displayName', () => {
-    expect(Tooltip.displayName).toEqual('@mantine/core/Tooltip');
+  itSupportsSystemProps({
+    component: Tooltip,
+    props: defaultProps,
+    displayName: '@mantine/core/Tooltip',
   });
 });

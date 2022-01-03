@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
 import { TimeField } from '../TimeInput/TimeField/TimeField';
@@ -18,23 +17,19 @@ describe('@mantine/dates/TimeRangeInput', () => {
   });
 
   checkAccessibility([
-    render(
-      <TimeRangeInput
-        label="test-label"
-        withSeconds
-        hoursLabel="Hours"
-        minutesLabel="Minutes"
-        secondsLabel="Seconds"
-      />
-    ),
-    render(
-      <TimeRangeInput
-        label="test-label"
-        withSeconds={false}
-        hoursLabel="Hours"
-        minutesLabel="Minutes"
-      />
-    ),
+    <TimeRangeInput
+      label="test-label"
+      withSeconds
+      hoursLabel="Hours"
+      minutesLabel="Minutes"
+      secondsLabel="Seconds"
+    />,
+    <TimeRangeInput
+      label="test-label"
+      withSeconds={false}
+      hoursLabel="Hours"
+      minutesLabel="Minutes"
+    />,
   ]);
 
   it('passes correct __staticSelector to Calendar and DatePickerBase components', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { renderWithAct } from './render-with-act';
 
 export function itSupportsRef(
   Component: React.ElementType,
@@ -9,7 +9,7 @@ export function itSupportsRef(
 ) {
   it('supports ref', async () => {
     const ref = React.createRef<typeof refType>();
-    render(<Component {...requiredProps} {...{ [refProp]: ref }} />);
+    await renderWithAct(<Component {...requiredProps} {...{ [refProp]: ref }} />);
     expect(ref.current).toBeInstanceOf(refType);
   });
 }

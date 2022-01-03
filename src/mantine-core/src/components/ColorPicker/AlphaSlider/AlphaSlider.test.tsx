@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { AlphaSlider, AlphaSliderProps } from './AlphaSlider';
 
@@ -11,7 +10,7 @@ const defaultProps: AlphaSliderProps = {
 };
 
 describe('@mantine/core/AlphaSlider', () => {
-  checkAccessibility([render(<AlphaSlider {...defaultProps} aria-label="test-label" />)]);
+  checkAccessibility([<AlphaSlider {...defaultProps} aria-label="test-label" />]);
   itSupportsSystemProps({
     component: AlphaSlider,
     props: defaultProps,

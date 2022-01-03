@@ -16,7 +16,7 @@ const LEVEL_ICON_SELECTOR = '.mantine-CalendarHeader-calendarHeaderLevelIcon';
 
 describe('@mantine/dates/CalendarHeader', () => {
   itSupportsClassName(CalendarHeader, defaultProps);
-  checkAccessibility([render(<CalendarHeader {...defaultProps} />)]);
+  checkAccessibility([<CalendarHeader {...defaultProps} />]);
 
   it('calls onNext/onPrevious functions when previous/next buttons are clicked', () => {
     const onNext = jest.fn();
