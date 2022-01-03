@@ -160,6 +160,7 @@ export default createStyles(
         }`,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         borderRadius: theme.radius.sm,
+        overflow: 'hidden',
 
         '& .ql-mention-list': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],

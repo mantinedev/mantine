@@ -121,19 +121,10 @@ if you are planning to use images.
 
 ## Mentions
 
-RichTextEditor supports multiple mention groups. Each has an independant callback function. These are passed inside an array into the `mentionGroups` prop.
-
-The structure of a mention group object is:
-
-- `denotationChar` – The string which is used to trigger the mention
-- `items` – An array of items that can be mentioned, items are objects with the structure:
-  - `id` - Unique identifier in this array
-  - `value` - The value of the mention item
-- `onMention({denotationChar, index, id, value})` – An optional callback function for when a mention is selected from this group
+RichTextEditor comes with [quill-mentions plugin](https://github.com/quill-mention/quill-mention).
+To add mentions support, add provide [quill-mentions](https://github.com/quill-mention/quill-mention) configuration to `mentions` prop:
 
 <Demo data={RichTextDemos.mentions} />
-
-**Important!** Each `denotationChar` must be unique within an instance of RichTextEditor, if multiple `denotationChar` share a value the first instance will be used.
 
 ## Keyboard shortcuts
 
