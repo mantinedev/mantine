@@ -1,16 +1,8 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { TabControl } from './TabControl/TabControl';
-import { Tabs } from './Tabs';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Tabs, TabsProps } from './Tabs';
 
 const content = [
   <Tabs.Tab label="tab-1" key="tab-1" icon="test-icon">
@@ -24,101 +16,78 @@ const content = [
   </Tabs.Tab>,
 ];
 
-const defaultProps = { children: content };
+const defaultProps: TabsProps = {
+  children: content,
+};
 
-const tabContent = (element: any) => element.render().find('.mantine-Tabs-body').text();
-const activateTab = (element: any, position: number) =>
-  element.find(TabControl).at(position).simulate('click');
+const tabPanelContent = () => screen.getByRole('tabpanel').textContent;
+const activateTab = (index: number) => userEvent.click(screen.getAllByRole('tab')[index]);
+const tabKeydown = (index: number, payload: string) =>
+  userEvent.type(screen.getAllByRole('tab')[index], payload);
 
 describe('@mantine/core/Tabs', () => {
   checkAccessibility([<Tabs>{content}</Tabs>, <Tabs initialTab={2}>{content}</Tabs>]);
-  itSupportsOthers(Tabs, defaultProps);
-  itSupportsStyle(Tabs, defaultProps);
-  itSupportsMargins(Tabs, defaultProps);
-  itSupportsClassName(Tabs, defaultProps);
-  itSupportsSx(Tabs, defaultProps);
-  itSupportsRef(Tabs, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Tabs.displayName).toEqual('@mantine/core/Tabs');
+  itSupportsSystemProps({
+    component: Tabs,
+    props: defaultProps,
+    displayName: '@mantine/core/Tabs',
+    refType: HTMLDivElement,
   });
 
   it('handles tabs change correctly', () => {
-    const element = shallow(<Tabs initialTab={1}>{content}</Tabs>);
-    expect(tabContent(element)).toBe('tab-2');
-
-    activateTab(element, 0);
-    expect(tabContent(element)).toBe('tab-1');
-
-    activateTab(element, 2);
-    expect(tabContent(element)).toBe('tab-3');
+    render(<Tabs initialTab={1}>{content}</Tabs>);
+    expect(tabPanelContent()).toBe('tab-2');
+    activateTab(0);
+    expect(tabPanelContent()).toBe('tab-1');
+    activateTab(2);
+    expect(tabPanelContent()).toBe('tab-3');
   });
 
   it('calls onTabChange when tab control is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(
-      <Tabs initialTab={1} onTabChange={spy}>
-        {content}
-      </Tabs>
-    );
-
-    activateTab(element, 0);
+    render(<Tabs {...defaultProps} initialTab={1} onTabChange={spy} />);
+    activateTab(0);
     expect(spy).toHaveBeenCalledWith(0);
-
-    activateTab(element, 2);
-    activateTab(element, 2);
+    activateTab(2);
+    activateTab(2);
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
   it.each([
-    ['horizontal' as const, 'ArrowRight', 'ArrowLeft'],
-    ['vertical' as const, 'ArrowDown', 'ArrowUp'],
+    ['horizontal' as const, '{arrowright}', '{arrowleft}'],
+    ['vertical' as const, '{arrowdown}', '{arrowup}'],
   ])('supports keyboard events (%s)', (orientation, next, previous) => {
-    const element = mount(
-      <Tabs initialTab={1} orientation={orientation}>
-        {content}
-      </Tabs>
-    );
-    expect(tabContent(element)).toBe('tab-2');
-
-    const keydown = (position: number, code: string) =>
-      element.find(TabControl).at(position).simulate('keydown', { nativeEvent: { code } });
-
-    keydown(1, next);
-    expect(tabContent(element)).toBe('tab-3');
-
-    keydown(2, next);
-    expect(tabContent(element)).toBe('tab-3');
-
-    keydown(2, previous);
-    expect(tabContent(element)).toBe('tab-2');
-
-    keydown(1, previous);
-    expect(tabContent(element)).toBe('tab-1');
-
-    keydown(0, previous);
-    expect(tabContent(element)).toBe('tab-1');
+    render(<Tabs {...defaultProps} initialTab={1} orientation={orientation} />);
+    expect(tabPanelContent()).toBe('tab-2');
+    tabKeydown(1, next);
+    expect(tabPanelContent()).toBe('tab-3');
+    tabKeydown(2, next);
+    expect(tabPanelContent()).toBe('tab-3');
+    tabKeydown(2, previous);
+    expect(tabPanelContent()).toBe('tab-2');
+    tabKeydown(1, previous);
+    expect(tabPanelContent()).toBe('tab-1');
+    tabKeydown(0, previous);
+    expect(tabPanelContent()).toBe('tab-1');
   });
 
   it('does not render tab content wrapper if tab has no content', () => {
-    const element = shallow(
+    render(
       <Tabs>
         <Tabs.Tab label="With content">test-content</Tabs.Tab>
         <Tabs.Tab label="No content" />
       </Tabs>
     );
 
-    expect(tabContent(element)).toBe('test-content');
-
-    activateTab(element, 0);
-    expect(element.render().find('[role="tabpanel"]')).toHaveLength(1);
-
-    activateTab(element, 1);
-    expect(element.render().find('[role="tabpanel"]')).toHaveLength(0);
+    expect(tabPanelContent()).toBe('test-content');
+    activateTab(0);
+    expect(screen.getAllByRole('tabpanel')).toHaveLength(1);
+    activateTab(1);
+    expect(screen.queryAllByRole('tabpanel')).toHaveLength(0);
   });
 
-  it('correctly handles initial disabled tabs with uncontrolled mode', () => {
-    const firstDisabled = shallow(
+  it('correctly handles initial disabled tab with uncontrolled mode', () => {
+    render(
       <Tabs>
         <Tabs.Tab label="1" disabled>
           test-content-1
@@ -128,25 +97,11 @@ describe('@mantine/core/Tabs', () => {
       </Tabs>
     );
 
-    const first2Disabled = shallow(
-      <Tabs>
-        <Tabs.Tab label="1" disabled>
-          test-content-1
-        </Tabs.Tab>
-        <Tabs.Tab label="2" disabled>
-          test-content-2
-        </Tabs.Tab>
-        <Tabs.Tab label="3">test-content-3</Tabs.Tab>
-        <Tabs.Tab label="4">test-content-4</Tabs.Tab>
-      </Tabs>
-    );
-
-    expect(tabContent(firstDisabled)).toBe('test-content-2');
-    expect(tabContent(first2Disabled)).toBe('test-content-3');
+    expect(tabPanelContent()).toBe('test-content-2');
   });
 
   it('correctly handles disabled tabs keyboard events', () => {
-    const element = mount(
+    render(
       <Tabs>
         <Tabs.Tab label="1">test-content-1</Tabs.Tab>
         <Tabs.Tab label="2" disabled>
@@ -156,19 +111,15 @@ describe('@mantine/core/Tabs', () => {
       </Tabs>
     );
 
-    const keydown = (position: number, code: string) =>
-      element.find(TabControl).at(position).simulate('keydown', { nativeEvent: { code } });
-
-    keydown(0, 'ArrowRight');
-    expect(tabContent(element)).toBe('test-content-3');
-
-    keydown(2, 'ArrowLeft');
-    expect(tabContent(element)).toBe('test-content-1');
+    tabKeydown(0, '{arrowright}');
+    expect(tabPanelContent()).toBe('test-content-3');
+    tabKeydown(2, '{arrowleft}');
+    expect(tabPanelContent()).toBe('test-content-1');
   });
 
   it('supports getting tab ref', () => {
     const ref = React.createRef<HTMLButtonElement>();
-    mount(
+    render(
       <Tabs>
         <Tabs.Tab ref={ref} label="test" />
       </Tabs>

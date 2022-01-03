@@ -1,54 +1,43 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { TabControl } from './TabControl';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { TabControl, TabControlProps } from './TabControl';
 
-const defaultProps = { active: true };
+const defaultProps: TabControlProps = {
+  active: true,
+};
 
 describe('@mantine/core/TabControl', () => {
-  itSupportsStyle(TabControl, defaultProps);
-  itSupportsOthers(TabControl, defaultProps);
-  itSupportsSx(TabControl, defaultProps);
-  itSupportsMargins(TabControl, defaultProps);
-  itSupportsClassName(TabControl, defaultProps);
-  itSupportsRef(TabControl, defaultProps, HTMLButtonElement, 'buttonRef');
+  itSupportsSystemProps({
+    component: TabControl,
+    props: defaultProps,
+    displayName: '@mantine/core/TabControl',
+    refType: HTMLButtonElement,
+  });
 
   it('sets correct accessibility attributes based on active prop', () => {
-    const active = shallow(<TabControl {...defaultProps} active />).render();
-    const inactive = shallow(<TabControl {...defaultProps} active={false} />).render();
-
-    expect(active.attr('tabindex')).toBe('0');
-    expect(active.attr('role')).toBe('tab');
-    expect(active.attr('aria-selected')).toBe('true');
-
-    expect(inactive.attr('tabindex')).toBe('-1');
-    expect(inactive.attr('aria-selected')).toBe('false');
+    const active = render(<TabControl {...defaultProps} active />).container.firstChild;
+    const inactive = render(<TabControl {...defaultProps} active={false} />).container.firstChild;
+    expect(active).toHaveAttribute('tabindex', '0');
+    expect(active).toHaveAttribute('role', 'tab');
+    expect(active).toHaveAttribute('aria-selected', 'true');
+    expect(inactive).toHaveAttribute('tabindex', '-1');
+    expect(inactive).toHaveAttribute('aria-selected', 'false');
   });
 
   it('renders icon', () => {
-    const withIcon = shallow(<TabControl {...defaultProps} icon="$" />).render();
-    const withoutIcon = shallow(<TabControl {...defaultProps} icon={null} label="test" />).render();
-
-    expect(withIcon.find('.mantine-Tabs-tabIcon').text()).toBe('$');
-    expect(withoutIcon.find('.mantine-Tabs-tabIcon')).toHaveLength(0);
+    const { container: withIcon } = render(<TabControl {...defaultProps} icon="test-icon" />);
+    const { container: withoutIcon } = render(
+      <TabControl {...defaultProps} icon={null} label="test" />
+    );
+    expect(withIcon.querySelector('.mantine-Tabs-tabIcon').textContent).toBe('test-icon');
+    expect(withoutIcon.querySelectorAll('.mantine-Tabs-tabIcon')).toHaveLength(0);
   });
 
   it('renders label', () => {
-    const withLabel = shallow(<TabControl {...defaultProps} label="test" />).render();
-    const withoutLabel = shallow(<TabControl {...defaultProps} icon="$" label={null} />).render();
-
-    expect(withLabel.find('.mantine-Tabs-tabLabel').text()).toBe('test');
-    expect(withoutLabel.find('.mantine-Tabs-tabLabel')).toHaveLength(0);
-  });
-
-  it('has correct displayName', () => {
-    expect(TabControl.displayName).toEqual('@mantine/core/TabControl');
+    const { container: withLabel } = render(<TabControl {...defaultProps} label="test" />);
+    const { container: withoutLabel } = render(<TabControl {...defaultProps} label={null} />);
+    expect(withLabel.querySelector('.mantine-Tabs-tabLabel').textContent).toBe('test');
+    expect(withoutLabel.querySelectorAll('.mantine-Tabs-tabLabel')).toHaveLength(0);
   });
 });
