@@ -165,7 +165,7 @@ export function MantineModal({
         <Box className={cx(classes.root, className)} {...others}>
           <div
             className={classes.inner}
-            onClick={() => closeOnClickOutside && onClose()}
+            onMouseDown={() => closeOnClickOutside && onClose()}
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
@@ -174,7 +174,7 @@ export function MantineModal({
             ref={focusTrapRef}
           >
             <Paper<'div'>
-              onClick={(event) => event.stopPropagation()}
+              onMouseDown={(event) => event.stopPropagation()}
               className={classes.modal}
               shadow={shadow}
               padding={padding}
