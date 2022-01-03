@@ -1,17 +1,8 @@
 import React from 'react';
-import {
-  checkAccessibility,
-  itSupportsStyle,
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Spoiler } from './Spoiler';
+import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Spoiler, SpoilerProps } from './Spoiler';
 
-const defaultProps = {
+const defaultProps: SpoilerProps = {
   maxHeight: 100,
   showLabel: 'show',
   hideLabel: 'hide',
@@ -20,15 +11,11 @@ const defaultProps = {
 
 describe('@mantine/core/Spoiler', () => {
   checkAccessibility([<Spoiler {...defaultProps} />]);
-  itSupportsOthers(Spoiler, defaultProps);
-  itSupportsMargins(Spoiler, defaultProps);
-  itSupportsClassName(Spoiler, defaultProps);
   itRendersChildren(Spoiler, defaultProps);
-  itSupportsStyle(Spoiler, defaultProps);
-  itSupportsSx(Spoiler, defaultProps);
-  itSupportsRef(Spoiler, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Spoiler.displayName).toEqual('@mantine/core/Spoiler');
+  itSupportsSystemProps({
+    component: Spoiler,
+    props: defaultProps,
+    displayName: '@mantine/core/Spoiler',
+    refType: HTMLDivElement,
   });
 });
