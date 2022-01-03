@@ -126,8 +126,8 @@
     "yargs": "^17.0.1"
   },
   "dependencies": {
-    "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.1",
+    "@emotion/cache": "^11.7.1",
+    "@emotion/react": "^11.7.1",
     "@emotion/serialize": "^1.0.2",
     "@emotion/server": "^11.4.0",
     "@emotion/utils": "^1.0.0",
