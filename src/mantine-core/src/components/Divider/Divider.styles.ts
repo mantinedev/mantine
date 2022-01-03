@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 interface DividerStyles {
   size: MantineNumberSize;
-  variant: string;
+  variant: 'solid' | 'dashed' | 'dotted';
   color: MantineColor;
 }
 
@@ -62,7 +62,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
     border: 0,
     borderTopWidth: theme.fn.size({ size, sizes }),
     borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4),
-    borderTopStyle: variant as any,
+    borderTopStyle: variant,
     margin: 0,
   },
 
@@ -72,6 +72,6 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
     height: '100%',
     borderLeftWidth: theme.fn.size({ size, sizes }),
     borderLeftColor: theme.fn.themeColor(color, 4),
-    borderLeftStyle: variant as any,
+    borderLeftStyle: variant,
   },
 }));
