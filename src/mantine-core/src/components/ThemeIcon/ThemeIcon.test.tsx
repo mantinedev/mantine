@@ -1,26 +1,16 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { ThemeIcon } from './ThemeIcon';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { ThemeIcon, ThemeIconProps } from './ThemeIcon';
 
-const defaultProps = {};
+const defaultProps: ThemeIconProps = {
+  children: 'test-icon',
+};
 
 describe('@mantine/core/ThemeIcon', () => {
   itRendersChildren(ThemeIcon, defaultProps);
-  itSupportsClassName(ThemeIcon, defaultProps);
-  itSupportsOthers(ThemeIcon, defaultProps);
-  itSupportsStyle(ThemeIcon, defaultProps);
-  itSupportsMargins(ThemeIcon, defaultProps);
-  itSupportsSx(ThemeIcon, defaultProps);
-  itSupportsRef(ThemeIcon, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(ThemeIcon.displayName).toEqual('@mantine/core/ThemeIcon');
+  itSupportsSystemProps({
+    component: ThemeIcon,
+    props: defaultProps,
+    displayName: '@mantine/core/ThemeIcon',
+    refType: HTMLDivElement,
   });
 });
