@@ -77,6 +77,9 @@ export interface MultiSelectProps
 
   /** Limit amount of items selected */
   maxSelectedValues?: number;
+
+  /** Select highlighted item on blur */
+  selectOnBlur?: boolean;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -146,6 +149,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       withinPortal,
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
+      selectOnBlur = false,
       name,
       dropdownPosition,
       ...others
@@ -222,12 +226,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       typeof onFocus === 'function' && onFocus(event);
     };
 
-    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onBlur === 'function' && onBlur(event);
-      clearSearchOnBlur && handleSearchChange('');
-      setDropdownOpened(false);
-    };
-
     const filteredData = filterData({
       data: sortedData,
       searchable,
@@ -284,6 +282,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           typeof onCreate === 'function' && onCreate(item.value);
         }
       });
+    };
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+      if (selectOnBlur && filteredData[hovered] && dropdownOpened) {
+        handleItemSelect(filteredData[hovered]);
+      }
+      clearSearchOnBlur && handleSearchChange('');
+      setDropdownOpened(false);
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
