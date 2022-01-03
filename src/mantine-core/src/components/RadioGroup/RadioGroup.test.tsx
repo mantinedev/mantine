@@ -1,9 +1,10 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { checkAccessibility, itSupportsMargins, itSupportsRef, itSupportsSx } from '@mantine/tests';
-import { RadioGroup, Radio } from './index';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsWrapperProps, itSupportsSystemProps } from '@mantine/tests';
+import { Button } from '../Button';
+import { RadioGroup, Radio, RadioGroupProps } from './index';
 
-const defaultProps = {
+const defaultProps: RadioGroupProps = {
   children: <Radio value="test-1">test-1</Radio>,
   label: 'test-label',
   error: 'test-error',
@@ -12,9 +13,14 @@ const defaultProps = {
 };
 
 describe('@mantine/core/RadioGroup', () => {
-  itSupportsRef(RadioGroup, defaultProps, HTMLDivElement);
-  itSupportsMargins(RadioGroup, defaultProps);
-  itSupportsSx(RadioGroup, defaultProps);
+  itSupportsWrapperProps(RadioGroup, defaultProps);
+  itSupportsSystemProps({
+    component: RadioGroup,
+    props: defaultProps,
+    displayName: '@mantine/core/RadioGroup',
+    excludeOthers: true,
+    refType: HTMLDivElement,
+  });
 
   checkAccessibility([
     <RadioGroup>
@@ -24,53 +30,31 @@ describe('@mantine/core/RadioGroup', () => {
     </RadioGroup>,
   ]);
 
-  it('renders correct children', () => {
-    const element = shallow(
+  it('filters out unexpected children', () => {
+    const { container } = render(
       <RadioGroup>
         <Radio value="test-1">test-1</Radio>
         <Radio value="test-2">test-2</Radio>
+        <p className="unexpected">Unexpected child 1</p>
+        <div className="unexpected">Unexpected child 1</div>
         <Radio value="test-3">test-3</Radio>
-        <div data-imposter>Imposter</div>
+        <Button>Unexpected component</Button>
       </RadioGroup>
     );
 
-    expect(element.find(Radio)).toHaveLength(3);
-    expect(element.render().find('[data-imposter]')).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-RadioGroup-radioWrapper')).toHaveLength(3);
+    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
+    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
   it('passes correct name to Radio components', () => {
-    const withoutName = mount(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
+    const { container: withoutName } = render(<RadioGroup {...defaultProps} />);
+    const { container: withName } = render(<RadioGroup {...defaultProps} name="test-name" />);
 
-    const withName = mount(
-      <RadioGroup name="test-name">
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
-
-    expect(withoutName.find(Radio).at(1).prop('name').includes('mantine-')).toBe(true);
-    expect(withName.find(Radio).at(1).prop('name')).toBe('test-name');
-  });
-
-  it('passes checked prop to Radio components', () => {
-    const element = shallow(
-      <RadioGroup value="test-2">
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
-
-    expect(element.find(Radio).at(0).prop('checked')).toBe(false);
-    expect(element.find(Radio).at(1).prop('checked')).toBe(true);
-    expect(element.find(Radio).at(2).prop('checked')).toBe(false);
+    expect(
+      withoutName.querySelector('input[type="radio"]').getAttribute('name').includes('mantine-')
+    ).toBe(true);
+    expect(withName.querySelector('input[type="radio"]').getAttribute('name')).toBe('test-name');
   });
 
   it('has correct displayName', () => {
