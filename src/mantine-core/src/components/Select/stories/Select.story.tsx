@@ -181,6 +181,17 @@ storiesOf('@mantine/core/Select/stories', module)
       <Creatable />
     </div>
   ))
+  .add('Deselect item', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Disabled Elements"
+        placeholder="Choose value"
+        data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
+        style={{ marginTop: 20 }}
+        allowDeselect={false}
+      />
+    </div>
+  ))
   .add('String as data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Select

@@ -121,6 +121,9 @@ export interface SelectProps
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
+
+  /** Allow deselecting items on click */
+  allowDeselect?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -182,6 +185,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,
+      allowDeselect,
       ...others
     }: SelectProps,
     ref
@@ -202,6 +206,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       cancelable: false,
       isList: true,
     });
+
+    const isDeselectable = allowDeselect === undefined ? clearable : allowDeselect;
 
     const setDropdownOpened = (opened: boolean) => {
       _setDropdownOpened(opened);
@@ -261,18 +267,23 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }, [selectedValue?.label]);
 
     const handleItemSelect = (item: SelectItem) => {
-      handleChange(item.value);
+      if (isDeselectable && selectedValue?.value === item.value) {
+        handleChange(null);
+        setDropdownOpened(false);
+      } else {
+        handleChange(item.value);
 
-      if (item.creatable) {
-        typeof onCreate === 'function' && onCreate(item.value);
-      }
+        if (item.creatable) {
+          typeof onCreate === 'function' && onCreate(item.value);
+        }
 
-      if (inputMode === 'uncontrolled') {
-        handleSearchChange(item.label);
+        if (inputMode === 'uncontrolled') {
+          handleSearchChange(item.label);
+        }
+        setHovered(-1);
+        setTimeout(() => setDropdownOpened(false));
+        inputRef.current.focus();
       }
-      setHovered(-1);
-      setTimeout(() => setDropdownOpened(false));
-      inputRef.current.focus();
     };
 
     const filteredData = filterData({
