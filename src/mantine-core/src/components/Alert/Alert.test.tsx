@@ -2,37 +2,24 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
-import { Text } from '../Text/Text';
 import { Alert, AlertProps } from './Alert';
 
 const defaultProps: AlertProps = {
   title: 'test-title',
   children: 'test-alert',
-  icon: '$',
   withCloseButton: true,
+  closeButtonLabel: 'test-close',
 };
 
 describe('@mantine/core/Alert', () => {
   itRendersChildren(Alert, defaultProps);
+  checkAccessibility([<Alert {...defaultProps} />]);
   itSupportsSystemProps({
     component: Alert,
     props: defaultProps,
     displayName: '@mantine/core/Alert',
     refType: HTMLDivElement,
   });
-
-  checkAccessibility([
-    render(
-      <Alert title="Error happened" color="red">
-        <Text>Something bad happened</Text>
-      </Alert>
-    ),
-    render(
-      <Alert color="red">
-        <Text>Something bad happened</Text>
-      </Alert>
-    ),
-  ]);
 
   it('renders close button based on withCloseButton prop', () => {
     const { container: withCloseButton } = render(<Alert {...defaultProps} withCloseButton />);

@@ -1,9 +1,13 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Marks } from './Marks';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Marks, MarksProps } from './Marks';
 
-const defaultProps = {
-  marks: [{ value: 50, label: 'test' }],
+const defaultProps: MarksProps = {
+  marks: [
+    { value: 50, label: 'test-1' },
+    { value: 80, label: 'test-2' },
+  ],
   size: 10,
   color: 'blue',
   min: 0,
@@ -14,49 +18,24 @@ const defaultProps = {
 
 describe('@mantine/core/Slider/Marks', () => {
   it('renders correct marks labels', () => {
-    const element = shallow(
-      <Marks
-        {...defaultProps}
-        marks={[
-          { value: 50, label: 'test-1' },
-          { value: 80, label: 'test-2' },
-        ]}
-      />
-    );
-
-    expect(element.find('.mantine-Slider-markWrapper')).toHaveLength(2);
-    expect(element.find('.mantine-Slider-markLabel').at(0).text()).toBe('test-1');
-    expect(element.find('.mantine-Slider-markLabel').at(1).text()).toBe('test-2');
+    const { container } = render(<Marks {...defaultProps} />);
+    const labels = container.querySelectorAll('.mantine-Slider-markLabel');
+    expect(container.querySelectorAll('.mantine-Slider-markWrapper')).toHaveLength(2);
+    expect(labels[0].textContent).toBe('test-1');
+    expect(labels[1].textContent).toBe('test-2');
   });
 
   it('calls onChange with mark value when mark label is pressed', () => {
     const spy = jest.fn();
-    const element = shallow(
-      <Marks
-        {...defaultProps}
-        onChange={spy}
-        marks={[
-          { value: 50, label: 'test-1' },
-          { value: 80, label: 'test-2' },
-        ]}
-      />
-    );
-
-    element
-      .find('.mantine-Slider-markLabel')
-      .at(0)
-      .simulate('mousedown', new MouseEvent('mousedown'));
+    const { container } = render(<Marks {...defaultProps} onChange={spy} />);
+    userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[0]);
     expect(spy).toHaveBeenLastCalledWith(50);
-
-    element
-      .find('.mantine-Slider-markLabel')
-      .at(1)
-      .simulate('touchstart', new TouchEvent('touchstart'));
+    userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[1]);
     expect(spy).toHaveBeenLastCalledWith(80);
   });
 
   it('sets mark left property based on mark value', () => {
-    const element = shallow(
+    const { container } = render(
       <Marks
         {...defaultProps}
         min={0}
@@ -68,8 +47,9 @@ describe('@mantine/core/Slider/Marks', () => {
       />
     );
 
-    expect(element.find('.mantine-Slider-markWrapper').at(0).prop('style').left).toBe('25%');
-    expect(element.find('.mantine-Slider-markWrapper').at(1).prop('style').left).toBe('50%');
+    const marks = container.querySelectorAll('.mantine-Slider-markWrapper');
+    expect(marks[0]).toHaveStyle({ left: '25%' });
+    expect(marks[1]).toHaveStyle({ left: '50%' });
   });
 
   it('has correct displayName', () => {

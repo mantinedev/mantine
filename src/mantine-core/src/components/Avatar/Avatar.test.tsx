@@ -10,8 +10,8 @@ const defaultProps: AvatarProps<'div'> = {
 describe('@mantine/core/Avatar', () => {
   itIsPolymorphic(Avatar, defaultProps);
   checkAccessibility([
-    render(<Avatar {...defaultProps} alt="It's me!" />),
-    render(<Avatar src={null} alt="It's me!" />),
+    <Avatar {...defaultProps} alt="It's me!" />,
+    <Avatar src={null} alt="It's me!" />,
   ]);
 
   itSupportsSystemProps({

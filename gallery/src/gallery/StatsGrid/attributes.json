@@ -3,7 +3,13 @@
   "category": "stats",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [],
+  "dependencies": [
+    "/core/group/",
+    "/core/paper/",
+    "/core/simple-grid/",
+    "/core/text/",
+    "tabler-icons-react"
+  ],
   "props": {
     "data": [
       { "title": "Revenue", "icon": "receipt", "value": "13,456", "diff": 34 },

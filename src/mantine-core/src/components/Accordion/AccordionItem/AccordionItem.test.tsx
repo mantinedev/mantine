@@ -13,7 +13,7 @@ const defaultProps: AccordionItemProps = {
 };
 
 describe('@mantine/core/AccordionItem', () => {
-  checkAccessibility([render(<AccordionItem {...defaultProps} />)]);
+  checkAccessibility([<AccordionItem {...defaultProps} />]);
   itRendersChildren(AccordionItem, defaultProps);
   itSupportsSystemProps({
     component: AccordionItem,

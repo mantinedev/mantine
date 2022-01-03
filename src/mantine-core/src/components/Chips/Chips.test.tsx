@@ -20,7 +20,7 @@ const queries = {
 };
 
 describe('@mantine/core/Chips', () => {
-  checkAccessibility([render(<Chips {...defaultProps} />)]);
+  checkAccessibility([<Chips {...defaultProps} />]);
   itSupportsSystemProps({
     component: Chips,
     props: defaultProps,

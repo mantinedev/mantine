@@ -1,14 +1,12 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineMargin, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
 import { Overlay } from '../Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader';
 import { Box } from '../Box';
 import useStyles from './LoadingOverlay.styles';
 
-export interface LoadingOverlayProps
-  extends Omit<DefaultProps, MantineMargin>,
-    React.ComponentPropsWithoutRef<'div'> {
+export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Provide custom loader */
   loader?: React.ReactNode;
 
@@ -47,11 +45,13 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>(
       style,
       loader,
       radius,
+      classNames,
+      styles,
       ...others
     }: LoadingOverlayProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay' });
+    const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
 
     return (
       <Transition duration={transitionDuration} mounted={visible} transition="fade">

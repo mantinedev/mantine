@@ -1,14 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { itRendersChildren, itSupportsClassName } from '@mantine/tests';
 import { PopperContainer } from './PopperContainer';
 
 describe('@mantine/core/PopperContainer', () => {
-  // Clean up dom as jest does not do this automatically
-  afterEach(() => {
-    document.getElementsByTagName('body')[0].innerHTML = '';
-  });
-
   itRendersChildren(PopperContainer, { withinPortal: false });
   itSupportsClassName(PopperContainer, { withinPortal: false });
 
@@ -20,11 +15,11 @@ describe('@mantine/core/PopperContainer', () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
 
-    mount(
+    render(
       <PopperContainer withinPortal={false} className="test-popper-container" zIndex={1543}>
         test-popper-container
       </PopperContainer>,
-      { attachTo: target }
+      { container: target }
     );
 
     const container = document.querySelector('.test-popper-container');
@@ -35,13 +30,13 @@ describe('@mantine/core/PopperContainer', () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
 
-    mount(
+    render(
       <div className="virtual-dom-parent">
         <PopperContainer withinPortal={false} className="test-in-parent">
           test-in-parent
         </PopperContainer>
       </div>,
-      { attachTo: target }
+      { container: target }
     );
 
     const container = document.querySelector('.test-in-parent');
@@ -55,13 +50,13 @@ describe('@mantine/core/PopperContainer', () => {
     const target = document.createElement('div');
     document.body.appendChild(target);
 
-    mount(
+    render(
       <div className="virtual-dom-parent">
         <PopperContainer className="test-in-portal" withinPortal>
           test-in-portal
         </PopperContainer>
       </div>,
-      { attachTo: target }
+      { container: target }
     );
 
     const container = document.querySelector('.test-in-portal');

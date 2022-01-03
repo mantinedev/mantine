@@ -7,7 +7,7 @@ import useStyles from './SelectItems.styles';
 
 export type SelectItemsStylesNames = ClassNames<typeof useStyles>;
 
-interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
+export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];
   hovered: number;
   __staticSelector: string;
@@ -80,20 +80,20 @@ export function SelectItems({
     );
   };
 
-  const constructSeparator = (label?: string) => (
-    <div className={classes.separator} key={label}>
-      <Divider classNames={{ label: classes.separatorLabel }} label={label} />
-    </div>
-  );
-
   let groupName = null;
   data.forEach((item, index) => {
-    if (item.creatable) creatableDataIndex = index;
-    else if (!item.group) unGroupedItems.push(constructItemComponent(item, index));
-    else {
+    if (item.creatable) {
+      creatableDataIndex = index;
+    } else if (!item.group) {
+      unGroupedItems.push(constructItemComponent(item, index));
+    } else {
       if (groupName !== item.group) {
         groupName = item.group;
-        groupedItems.push(constructSeparator(groupName));
+        groupedItems.push(
+          <div className={classes.separator} key={index}>
+            <Divider classNames={{ label: classes.separatorLabel }} label={item.group} />
+          </div>
+        );
       }
       groupedItems.push(constructItemComponent(item, index));
     }
@@ -130,7 +130,11 @@ export function SelectItems({
   }
 
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
-    unGroupedItems.unshift(constructSeparator());
+    unGroupedItems.unshift(
+      <div className={classes.separator}>
+        <Divider />
+      </div>
+    );
   }
 
   return groupedItems.length > 0 || unGroupedItems.length > 0 ? (

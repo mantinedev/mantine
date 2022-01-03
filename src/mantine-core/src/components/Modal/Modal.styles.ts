@@ -16,6 +16,8 @@ interface ModalStyles {
 }
 
 export default createStyles((theme, { overflow, size, centered }: ModalStyles) => ({
+  close: {},
+
   root: {
     position: 'fixed',
     top: 0,

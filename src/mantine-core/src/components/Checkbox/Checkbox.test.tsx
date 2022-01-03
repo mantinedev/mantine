@@ -20,9 +20,9 @@ describe('@mantine/core/Checkbox', () => {
   itHandlesBooleanState(Checkbox, defaultProps);
   itSupportsFocusEvents(Checkbox, defaultProps, 'input');
   checkAccessibility([
-    render(<Checkbox aria-label="Checkbox without label" />),
-    render(<Checkbox label="With label" />),
-    render(<Checkbox id="with-id" label="With id" />),
+    <Checkbox aria-label="Checkbox without label" />,
+    <Checkbox label="With label" />,
+    <Checkbox id="with-id" label="With id" />,
   ]);
 
   itSupportsSystemProps({

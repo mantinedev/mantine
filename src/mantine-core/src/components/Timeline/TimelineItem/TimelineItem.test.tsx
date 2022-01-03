@@ -1,36 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itRendersChildren,
-  itSupportsMargins,
-  itSupportsSx,
-} from '@mantine/tests';
-import { TimelineItem } from './TimelineItem';
+import { render, screen } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { TimelineItem, TimelineItemProps } from './TimelineItem';
 
-const defaultProps = {};
+const defaultProps: TimelineItemProps = {};
 
 describe('@mantine/core/TimelineItem', () => {
-  itSupportsClassName(TimelineItem, defaultProps);
-  itSupportsOthers(TimelineItem, defaultProps);
   itRendersChildren(TimelineItem, defaultProps);
-  itSupportsStyle(TimelineItem, defaultProps);
-  itSupportsMargins(TimelineItem, defaultProps);
-  itSupportsSx(TimelineItem, defaultProps);
+  itSupportsSystemProps({
+    component: TimelineItem,
+    props: defaultProps,
+    displayName: '@mantine/core/TimelineItem',
+  });
 
   it('renders given bullet', () => {
-    const element = shallow(<TimelineItem bullet="test-bullet" />);
-    expect(element.find('.mantine-Timeline-itemBullet').text()).toBe('test-bullet');
+    render(<TimelineItem bullet="test-bullet" />);
+    expect(screen.getByText('test-bullet')).toBeInTheDocument();
   });
 
   it('renders given title', () => {
-    const element = shallow(<TimelineItem title="test-title" />);
-    expect(element.render().find('.mantine-Timeline-itemTitle').text()).toBe('test-title');
-  });
-
-  it('has correct displayName', () => {
-    expect(TimelineItem.displayName).toEqual('@mantine/core/TimelineItem');
+    render(<TimelineItem title="test-title" />);
+    expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 });

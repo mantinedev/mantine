@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { YearPicker } from './YearPicker';
@@ -15,9 +14,7 @@ const HEADER_CONTROL_SELECTOR = '.mantine-YearPicker-calendarHeaderControl';
 describe('@mantine/dates/YearPicker', () => {
   itSupportsClassName(YearPicker, defaultProps);
   checkAccessibility([
-    render(
-      <YearPicker {...defaultProps} nextDecadeLabel="Next" previousDecadeLabel="Previous label" />
-    ),
+    <YearPicker {...defaultProps} nextDecadeLabel="Next" previousDecadeLabel="Previous label" />,
   ]);
 
   it('renders correct amount of controls', () => {

@@ -1,31 +1,23 @@
 import React from 'react';
-import {
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { shallow } from 'enzyme';
-import { Curve } from './Curve/Curve';
-import { RingProgress } from './RingProgress';
+import { render, screen } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { RingProgress, RingProgressProps } from './RingProgress';
 
-const defaultProps = {
+const defaultProps: RingProgressProps = {
   sections: [{ value: 50, color: 'blue' }],
   label: 'test',
 };
 
 describe('@mantine/core/RingProgress', () => {
-  itSupportsClassName(RingProgress, defaultProps);
-  itSupportsMargins(RingProgress, defaultProps);
-  itSupportsStyle(RingProgress, defaultProps);
-  itSupportsOthers(RingProgress, defaultProps);
-  itSupportsSx(RingProgress, defaultProps);
-  itSupportsRef(RingProgress, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: RingProgress,
+    props: defaultProps,
+    displayName: '@mantine/core/RingProgress',
+    refType: HTMLDivElement,
+  });
 
   it('renders given amount of curves', () => {
-    const element = shallow(
+    const { container } = render(
       <RingProgress
         sections={[
           { value: 10, color: 'blue' },
@@ -36,15 +28,11 @@ describe('@mantine/core/RingProgress', () => {
     );
 
     // 3 sections + 1 root element
-    expect(element.find(Curve)).toHaveLength(4);
+    expect(container.querySelectorAll('circle')).toHaveLength(4);
   });
 
   it('renders given label', () => {
-    const element = shallow(<RingProgress {...defaultProps} label="test-label" />);
-    expect(element.render().find('.mantine-RingProgress-label').text()).toBe('test-label');
-  });
-
-  it('has correct displayName', () => {
-    expect(RingProgress.displayName).toEqual('@mantine/core/RingProgress');
+    render(<RingProgress {...defaultProps} label="test-label" />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
   });
 });

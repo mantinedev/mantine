@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { render } from '@testing-library/react';
 import { checkAccessibility } from '@mantine/tests';
 import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
 import { MonthsList } from './MonthsList';
@@ -21,34 +20,24 @@ const defaultProps = {
 
 describe('@mantine/dates/MonthsList', () => {
   checkAccessibility([
-    render(
-      <MonthsList
-        {...defaultProps}
-        amountOfMonths={1}
-        nextMonthLabel="Next"
-        previousMonthLabel="Previous"
-      />
-    ),
-    render(
-      <div>
-        <MonthsList
-          {...defaultProps}
-          amountOfMonths={2}
-          nextMonthLabel="Next"
-          previousMonthLabel="Previous"
-        />
-      </div>
-    ),
-    render(
-      <div>
-        <MonthsList
-          {...defaultProps}
-          amountOfMonths={3}
-          nextMonthLabel="Next"
-          previousMonthLabel="Previous"
-        />
-      </div>
-    ),
+    <MonthsList
+      {...defaultProps}
+      amountOfMonths={1}
+      nextMonthLabel="Next"
+      previousMonthLabel="Previous"
+    />,
+    <MonthsList
+      {...defaultProps}
+      amountOfMonths={2}
+      nextMonthLabel="Next"
+      previousMonthLabel="Previous"
+    />,
+    <MonthsList
+      {...defaultProps}
+      amountOfMonths={3}
+      nextMonthLabel="Next"
+      previousMonthLabel="Previous"
+    />,
   ]);
 
   it('sets nextLevelDisabled on CalendarHeader component based on allowLevelChange prop', () => {

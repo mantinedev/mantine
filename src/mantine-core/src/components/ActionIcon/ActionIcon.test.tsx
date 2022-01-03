@@ -9,7 +9,7 @@ import {
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
-const defaultProps: ActionIconProps<'button'> = { children: '$' };
+const defaultProps: ActionIconProps<'button'> = { children: <div /> };
 
 describe('@mantine/core/ActionIcon', () => {
   itIsPolymorphic(ActionIcon, defaultProps);
@@ -23,8 +23,8 @@ describe('@mantine/core/ActionIcon', () => {
   });
 
   checkAccessibility([
-    render(<ActionIcon {...defaultProps} title="Action icon" />),
-    render(<ActionIcon {...defaultProps} aria-label="Action icon" />),
+    <ActionIcon {...defaultProps} title="Action icon" />,
+    <ActionIcon {...defaultProps} aria-label="Action icon" />,
   ]);
 
   it('replaces icon with Loader when loading is set to true', () => {

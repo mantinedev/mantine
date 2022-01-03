@@ -20,9 +20,15 @@ import { RingProgressDemos } from '@demos/core';
 Set `sections` prop to an array of:
 
 - `value` – number between 0 and 100 – amount of space filled by segment
-- `color` – segment color from theme
+- `color` – segment color from theme or any other css color value
 
 <Demo data={RingProgressDemos.usage} />
+
+## Colors
+
+In previous example colors from `theme.colors` were used, but any other css colors can be used instead:
+
+<Demo data={RingProgressDemos.colors} />
 
 ## Size, thickness & rounded caps
 

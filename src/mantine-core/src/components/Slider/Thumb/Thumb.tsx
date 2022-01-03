@@ -5,7 +5,7 @@ import useStyles from './Thumb.styles';
 
 export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
-interface ThumbProps extends DefaultProps<ThumbStylesNames> {
+export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;
   min: number;
   value: number;

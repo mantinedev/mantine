@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
 import { Box } from '../../Box';
 import type { TabsVariant } from '../Tabs';
@@ -14,54 +14,57 @@ export interface TabControlProps
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
   icon?: React.ReactNode;
-  buttonRef?: React.ForwardedRef<HTMLButtonElement>;
   label?: React.ReactNode;
   children?: React.ReactNode;
   ref?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export function TabControl({
-  className,
-  active,
-  buttonRef,
-  color,
-  variant = 'default',
-  classNames,
-  styles,
-  orientation = 'horizontal',
-  icon: __,
-  label,
-  icon,
-  color: overrideColor,
-  ...others
-}: TabControlProps) {
-  const { classes, cx } = useStyles(
-    { color: overrideColor || color, orientation },
-    { classNames, styles, name: 'Tabs' }
-  );
+export const TabControl = forwardRef<HTMLButtonElement, TabControlProps>(
+  (
+    {
+      className,
+      active,
+      color,
+      variant = 'default',
+      classNames,
+      styles,
+      orientation = 'horizontal',
+      icon: __,
+      label,
+      icon,
+      color: overrideColor,
+      ...others
+    }: TabControlProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { color: overrideColor || color, orientation },
+      { classNames, styles, name: 'Tabs' }
+    );
 
-  return (
-    <Box
-      {...others}
-      component="button"
-      tabIndex={active ? 0 : -1}
-      className={cx(
-        classes.tabControl,
-        classes[variant],
-        { [classes.tabActive]: active },
-        className
-      )}
-      type="button"
-      role="tab"
-      aria-selected={active}
-      ref={buttonRef}
-    >
-      <div className={classes.tabInner}>
-        {icon && <div className={classes.tabIcon}>{icon}</div>}
-        {label && <div className={classes.tabLabel}>{label}</div>}
-      </div>
-    </Box>
-  );
-}
+    return (
+      <Box
+        {...others}
+        component="button"
+        tabIndex={active ? 0 : -1}
+        className={cx(
+          classes.tabControl,
+          classes[variant],
+          { [classes.tabActive]: active },
+          className
+        )}
+        type="button"
+        role="tab"
+        aria-selected={active}
+        ref={ref}
+      >
+        <div className={classes.tabInner}>
+          {icon && <div className={classes.tabIcon}>{icon}</div>}
+          {label && <div className={classes.tabLabel}>{label}</div>}
+        </div>
+      </Box>
+    );
+  }
+);
 
 TabControl.displayName = '@mantine/core/TabControl';

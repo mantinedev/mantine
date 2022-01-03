@@ -5,7 +5,7 @@ import useStyles from './Track.styles';
 
 export type TrackStylesNames = ClassNames<typeof useStyles> | MarksStylesNames;
 
-interface TrackProps extends DefaultProps<TrackStylesNames> {
+export interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;
   offset: number;
   marks: { value: number; label?: React.ReactNode }[];

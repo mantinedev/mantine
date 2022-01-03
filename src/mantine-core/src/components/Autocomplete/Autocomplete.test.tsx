@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
   itSupportsSystemProps,
   itSupportsInputProps,
   checkAccessibility,
   itSupportsFocusEvents,
+  renderWithAct,
 } from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
@@ -13,6 +13,7 @@ const defaultProps: AutocompleteProps = {
   initiallyOpened: true,
   label: 'Test',
   data: [{ value: 'test-1' }, { value: 'test-2' }],
+  transitionDuration: 0,
 };
 
 const largeDataSet: AutocompleteProps['data'] = Array(50)
@@ -26,7 +27,7 @@ const queries = {
 };
 
 describe('@mantine/core/Autocomplete', () => {
-  checkAccessibility([render(<Autocomplete {...defaultProps} />)]);
+  checkAccessibility([<Autocomplete {...defaultProps} />]);
   itSupportsInputProps(Autocomplete, defaultProps, 'Autocomplete');
   itSupportsFocusEvents(Autocomplete, defaultProps, '.mantine-Autocomplete-input');
   itSupportsSystemProps({
@@ -37,24 +38,24 @@ describe('@mantine/core/Autocomplete', () => {
     excludeOthers: true,
   });
 
-  it('renders dropdown when value has both full match and partial match', () => {
-    const { container } = render(
+  it('renders dropdown when value has both full match and partial match', async () => {
+    const { container } = await renderWithAct(
       <Autocomplete {...defaultProps} data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" />
     );
 
     expect(queries.getDropdown(container)).toBeInTheDocument();
   });
 
-  it('renders correct amount of items based on data prop', () => {
-    const { container } = render(
+  it('renders correct amount of items based on data prop', async () => {
+    const { container } = await renderWithAct(
       <Autocomplete {...defaultProps} data={largeDataSet.slice(0, 5)} limit={10} />
     );
 
     expect(queries.getItems(container)).toHaveLength(5);
   });
 
-  it('renders correct amount of items based on filter prop', () => {
-    const { container } = render(
+  it('renders correct amount of items based on filter prop', async () => {
+    const { container } = await renderWithAct(
       <Autocomplete
         {...defaultProps}
         data={largeDataSet}
@@ -67,8 +68,8 @@ describe('@mantine/core/Autocomplete', () => {
     expect(queries.getItems(container)).toHaveLength(10);
   });
 
-  it('limits amount of shown items based on limit prop', () => {
-    const { container } = render(
+  it('limits amount of shown items based on limit prop', async () => {
+    const { container } = await renderWithAct(
       <Autocomplete {...defaultProps} data={largeDataSet} initiallyOpened limit={10} />
     );
     expect(queries.getItems(container)).toHaveLength(10);

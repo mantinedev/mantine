@@ -12,17 +12,15 @@ const defaultProps: DrawerProps = {
 describe('@mantine/core/Drawer', () => {
   itSupportsSystemProps({ component: MantineDrawer, props: defaultProps });
   checkAccessibility([
-    render(
-      <MantineDrawer
-        {...defaultProps}
-        aria-labelledby="drawer-title"
-        aria-describedby="drawer-body"
-        closeButtonLabel="Close drawer"
-      >
-        <h1 id="drawer-title">Title</h1>
-        <div id="drawer-body">Body</div>
-      </MantineDrawer>
-    ),
+    <MantineDrawer
+      {...defaultProps}
+      aria-labelledby="drawer-title"
+      aria-describedby="drawer-body"
+      closeButtonLabel="Close drawer"
+    >
+      <h1 id="drawer-title">Title</h1>
+      <div id="drawer-body">Body</div>
+    </MantineDrawer>,
   ]);
 
   it('calls onClose when close button is clicked', () => {

@@ -17,7 +17,7 @@ const defaultProps: ChipProps = {
 };
 
 describe('@mantine/core/Chip', () => {
-  checkAccessibility([render(<Chip {...defaultProps} />)]);
+  checkAccessibility([<Chip {...defaultProps} />]);
   itRendersChildren(Chip, defaultProps);
   itConnectsLabelAndInput(Chip, defaultProps);
   itSupportsWrapperProps(Chip, defaultProps);

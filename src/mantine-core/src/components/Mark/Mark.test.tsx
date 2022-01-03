@@ -1,28 +1,16 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Mark } from './Mark';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Mark, MarkProps } from './Mark';
 
-const defaultProps = {
+const defaultProps: MarkProps = {
   children: 'test-mark',
 };
 
 describe('@mantine/core/Mark', () => {
   itRendersChildren(Mark, defaultProps);
-  itSupportsClassName(Mark, defaultProps);
-  itSupportsOthers(Mark, defaultProps);
-  itSupportsStyle(Mark, defaultProps);
-  itSupportsMargins(Mark, defaultProps);
-  itSupportsSx(Mark, defaultProps);
-  itSupportsRef(Mark, defaultProps, HTMLElement);
-
-  it('has correct displayName', () => {
-    expect(Mark.displayName).toEqual('@mantine/core/Mark');
+  itSupportsSystemProps({
+    component: Mark,
+    props: defaultProps,
+    displayName: '@mantine/core/Mark',
+    refType: HTMLElement,
   });
 });

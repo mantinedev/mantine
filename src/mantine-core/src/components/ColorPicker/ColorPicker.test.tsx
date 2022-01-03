@@ -15,15 +15,13 @@ describe('@mantine/core/ColorPicker', () => {
     refType: HTMLDivElement,
   });
   checkAccessibility([
-    render(
-      <ColorPicker
-        swatches={swatches}
-        format="rgba"
-        saturationLabel="Saturation"
-        alphaLabel="Alpha"
-        hueLabel="Hue"
-      />
-    ),
+    <ColorPicker
+      swatches={swatches}
+      format="rgba"
+      saturationLabel="Saturation"
+      alphaLabel="Alpha"
+      hueLabel="Hue"
+    />,
   ]);
 
   it('renders swatches list based on prop', () => {

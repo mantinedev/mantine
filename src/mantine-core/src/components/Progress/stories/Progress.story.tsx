@@ -34,4 +34,22 @@ storiesOf('@mantine/core/Progress/stories', module)
   .add('Striped', () => (
     <div style={{ maxWidth: 500, padding: 50 }}>{getThemes({ striped: true })}</div>
   ))
-  .add('Value changes', () => <SetDemo />);
+  .add('Value changes', () => <SetDemo />)
+  .add('Animations', () => (
+    <div style={{ maxWidth: 500, padding: 50 }}>
+      <Progress animate size="xl" value={60} />
+    </div>
+  ))
+  .add('Hex color', () => (
+    <div style={{ maxWidth: 500, padding: 50 }}>
+      <Progress color="#448811" size="xl" value={60} />
+      <Progress
+        size="xl"
+        mt="xl"
+        sections={[
+          { color: '#ee78e8', value: 45 },
+          { color: '#4534f1', value: 45 },
+        ]}
+      />
+    </div>
+  ));

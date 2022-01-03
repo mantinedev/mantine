@@ -267,6 +267,10 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
 
     const menuControl = cloneElement(control, {
       ...controlEventHandlers,
+      onClick: (event: React.MouseEvent<any>) => {
+        controlEventHandlers.onClick();
+        typeof control.props.onClick === 'function' && control.props.onClick(event);
+      },
       role: 'button',
       'aria-haspopup': 'menu',
       'aria-expanded': _opened,
@@ -359,6 +363,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
             radius={radius}
             onMouseLeave={() => setHovered(-1)}
             ref={setDropdownElement}
+            id={uuid}
             {...others}
           >
             {content}

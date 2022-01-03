@@ -1,21 +1,19 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
+  itSupportsFocusEvents,
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsInputProps,
+  renderWithAct,
 } from '@mantine/tests';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { SelectRightSection } from './SelectRightSection/SelectRightSection';
-import { Input } from '../Input/Input';
-import { Select } from './Select';
+import { Select, SelectProps } from './Select';
 
-const defaultProps = {
+const defaultProps: SelectProps = {
   initiallyOpened: true,
-  label: 'Test',
+  label: 'test-label',
+  withinPortal: false,
   data: [
     { value: 'test-1', label: 'Test 1' },
     { value: 'test-2', label: 'Test 2' },
@@ -27,39 +25,40 @@ const data = Array(50)
   .map((_, index) => ({ value: index.toString(), label: index.toString() }));
 
 describe('@mantine/core/Select', () => {
-  itSupportsClassName(Select, defaultProps);
-  itSupportsStyle(Select, defaultProps);
-  itSupportsMargins(Select, defaultProps);
-  itSupportsSx(Select, defaultProps);
-  itSupportsRef(Select, defaultProps, HTMLInputElement);
-
-  it('renders correct amount of items based on data prop', async () => {
-    const element = shallow(<Select {...defaultProps} data={data.slice(0, 5)} initiallyOpened />);
-
-    setTimeout(() => {
-      expect(element.find('.mantine-Select-item')).toHaveLength(5);
-    });
+  checkAccessibility([<Select {...defaultProps} />]);
+  itSupportsFocusEvents(Select, defaultProps, 'input');
+  itSupportsInputProps(Select, defaultProps, 'Select');
+  itSupportsSystemProps({
+    component: Select,
+    props: defaultProps,
+    displayName: '@mantine/core/Select',
+    refType: HTMLInputElement,
+    excludeOthers: true,
   });
 
-  it('renders correct amount of items based on filter prop', () => {
-    const element = shallow(
+  it('renders correct amount of items based on data prop', async () => {
+    const { container } = await renderWithAct(<Select {...defaultProps} data={data.slice(0, 5)} />);
+    expect(container.querySelectorAll('.mantine-Select-item')).toHaveLength(5);
+  });
+
+  it('renders correct amount of items based on filter prop', async () => {
+    const { container } = await renderWithAct(
       <Select
+        {...defaultProps}
         data={data}
-        initiallyOpened
         searchable
-        filter={(query, item) => item.value.includes('2')}
+        filter={(_query, item) => item.value.includes('2')}
       />
     );
 
     // Numbers 0-50 which include 2
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Select-item')).toHaveLength(14);
-    });
+    expect(container.querySelectorAll('.mantine-Select-item')).toHaveLength(14);
   });
 
-  it('renders correct amount of disabled items', () => {
-    const element = shallow(
+  it('renders correct amount of disabled items', async () => {
+    const { container } = await renderWithAct(
       <Select
+        {...defaultProps}
         data={Array(50)
           .fill(0)
           .map((_, index) => ({
@@ -67,105 +66,31 @@ describe('@mantine/core/Select', () => {
             label: index.toString(),
             disabled: index % 2 === 0,
           }))}
-        initiallyOpened
-        searchable
       />
     );
 
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Select-item[disabled]')).toHaveLength(25);
-    });
+    expect(container.querySelectorAll('.mantine-Select-item[disabled]')).toHaveLength(25);
   });
 
-  it('renders correct grouped items', () => {
-    const element = shallow(
-      <Select
-        data={Array(50)
-          .fill(0)
-          .map((_, index) => ({
-            value: index.toString(),
-            label: index.toString(),
-            disabled: index % 2 === 0,
-            group: `${index % 2}`,
-          }))}
-        initiallyOpened
-        searchable
-      />
-    );
-
-    setTimeout(() => {
-      expect(element.render().find('.mantine-Select-item')).toHaveLength(50);
-      expect(element.render().find('.mantine-Select-item[disabled]')).toHaveLength(25);
-      expect(element.render().find('.mantine-Divider-horizontal')).toHaveLength(2);
-    });
-  });
-
-  it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<Select {...defaultProps} wrapperProps={{ 'aria-label': 'test' }} />);
-    expect(element.render().attr('aria-label')).toBe('test');
-  });
-
-  it('passes required, id, label, error and description props to InputWrapper component', () => {
-    const element = shallow(
-      <Select
-        {...defaultProps}
-        id="test-id"
-        required
-        label="test-label"
-        error="test-error"
-        description="test-description"
-      />
-    );
-
-    expect(element.find(InputWrapper).prop('id')).toBe('test-id');
-    expect(element.find(InputWrapper).prop('required')).toBe(true);
-    expect(element.find(InputWrapper).prop('label')).toBe('test-label');
-    expect(element.find(InputWrapper).prop('error')).toBe('test-error');
-    expect(element.find(InputWrapper).prop('description')).toBe('test-description');
-  });
-
-  it('passes required, id, invalid, icon and radius props to Input component', () => {
-    const element = shallow(
-      <Select
-        {...defaultProps}
-        required
-        id="test-id"
-        type="number"
-        error="test-error"
-        icon="$"
-        radius="sm"
-      />
-    );
-
-    expect(element.find(Input).prop('id')).toBe('test-id');
-    expect(element.find(Input).prop('required')).toBe(true);
-    expect(element.find(Input).prop('invalid')).toBe(true);
-    expect(element.find(Input).prop('icon')).toBe('$');
-    expect(element.find(Input).prop('radius')).toBe('sm');
-  });
-
-  it('clears value when clear button is clicked', () => {
+  it('clears value when clear button is clicked', async () => {
     const spy = jest.fn();
-    const element = shallow(
-      <Select {...defaultProps} initiallyOpened clearable value="test-1" onChange={spy} />
+    await renderWithAct(
+      <Select
+        {...defaultProps}
+        clearable
+        value="test-1"
+        clearButtonLabel="test-clear"
+        onChange={spy}
+      />
     );
-    const clearButton = element
-      .find(Input)
-      .dive()
-      .find(SelectRightSection)
-      .dive()
-      .find(CloseButton);
-    expect(clearButton).toHaveLength(1);
-    clearButton.simulate('click');
-    expect(spy).toHaveBeenCalledWith(null);
+    userEvent.click(screen.getByLabelText('test-clear'));
+    expect(spy).toHaveBeenCalled();
   });
 
-  it('renders hidden input with current input value', () => {
-    const element = shallow(<Select {...defaultProps} name="custom-select" value="test-1" />);
-    expect(element.render().find('input[name="custom-select"]').attr('value')).toBe('test-1');
-  });
-
-  it('has correct displayName', () => {
-    expect(Select.displayName).toEqual('@mantine/core/Select');
+  it('renders hidden input with current input value', async () => {
+    const { container } = await renderWithAct(
+      <Select {...defaultProps} name="custom-select" value="test-1" />
+    );
+    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('test-1');
   });
 });

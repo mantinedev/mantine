@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
   itSupportsSystemProps,
   itSupportsInputProps,
@@ -13,7 +12,7 @@ const defaultProps: JsonInputProps = {
 };
 
 describe('@mantine/core/JsonInput', () => {
-  checkAccessibility([render(<JsonInput {...defaultProps} />)]);
+  checkAccessibility([<JsonInput {...defaultProps} />]);
   itSupportsFocusEvents(JsonInput, defaultProps, 'textarea');
   itSupportsInputProps(JsonInput, defaultProps, 'JsonInput');
   itSupportsSystemProps({

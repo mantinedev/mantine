@@ -18,18 +18,14 @@ describe('@mantine/dates/TimeInput', () => {
   });
 
   checkAccessibility([
-    render(
-      <TimeInput
-        label="test-label"
-        withSeconds
-        hoursLabel="Hours"
-        minutesLabel="Minutes"
-        secondsLabel="Seconds"
-      />
-    ),
-    render(
-      <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />
-    ),
+    <TimeInput
+      label="test-label"
+      withSeconds
+      hoursLabel="Hours"
+      minutesLabel="Minutes"
+      secondsLabel="Seconds"
+    />,
+    <TimeInput label="test-label" withSeconds={false} hoursLabel="Hours" minutesLabel="Minutes" />,
   ]);
 
   it('passes correct __staticSelector to Image and InputWrapper components', () => {

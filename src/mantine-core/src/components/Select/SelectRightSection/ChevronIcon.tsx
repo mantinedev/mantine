@@ -26,6 +26,7 @@ export function ChevronIcon({ size, error, style, ...others }: ChevronIconProps)
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={{ color: error ? theme.colors.red[6] : theme.colors.gray[6], ...style }}
+      data-chevron
       {...others}
     >
       <path

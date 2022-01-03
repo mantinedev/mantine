@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
 import 'quill-mention';
-import { DefaultProps, ClassNames, Box } from '@mantine/core';
+import { DefaultProps, ClassNames, Box, MantineNumberSize } from '@mantine/core';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -34,27 +34,6 @@ function defaultImageUpload(file: File): Promise<string> {
   });
 }
 
-interface MentionItem {
-  id: string | number;
-  value: string;
-}
-
-interface MentionGroup {
-  /** Character or string that triggers mention for this group */
-  denotationChar: string;
-
-  /** List of items that can be mentioned */
-  items: MentionItem[];
-
-  /** Called when mention item is added */
-  onMention?(item: {
-    denotationChar: string;
-    index: number;
-    id: string | number;
-    value: string;
-  }): void;
-}
-
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
@@ -76,11 +55,14 @@ export interface RichTextEditorProps
   /** Make toolbar sticky */
   sticky?: boolean;
 
-  /** List of mentionGroups */
-  mentionGroups?: MentionGroup[];
+  /** Quill mentions plugin setting */
+  mentions?: Record<string, any>;
 
   /** Top toolbar position in any valid css value */
   stickyOffset?: number | string;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
@@ -91,14 +73,15 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       onImageUpload = defaultImageUpload,
       sticky = true,
       stickyOffset = 0,
+      radius = 'sm',
       labels = DEFAULT_LABELS,
       controls = DEFAULT_CONTROLS,
       id,
       className,
       classNames,
-      mentionGroups = [],
       styles,
       placeholder,
+      mentions,
       ...others
     }: RichTextEditorProps,
     ref
@@ -106,38 +89,19 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
     const uuid = useUuid(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
-      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
+      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove, radius },
       { classNames, styles, name: 'RichTextEditor' }
     );
 
     const modules = useMemo(
       () => ({
         ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
+        mention: mentions,
         imageUploader: {
           upload: (file: File) => onImageUpload(file),
         },
-        mention: {
-          allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
-          mentionDenotationChars: mentionGroups.map(({ denotationChar }) => denotationChar),
-          source: (searchTerm, renderList, mentionChar) => {
-            const list = mentionGroups
-              .filter(({ denotationChar }) => denotationChar === mentionChar)
-              .map(({ items }) => items)[0];
-            const includesSearchTerm = list.filter((item) =>
-              item.value.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            renderList(includesSearchTerm);
-          },
-          onSelect: (item, insertItem) => {
-            const onMentionFunction = mentionGroups
-              .filter(({ denotationChar }) => denotationChar === item.denotationChar)
-              .map(({ onMention }) => onMention)[0];
-            onMentionFunction && onMentionFunction(item);
-            insertItem(item);
-          },
-        },
       }),
-      [uuid]
+      [uuid, mentions]
     );
 
     useEffect(() => {

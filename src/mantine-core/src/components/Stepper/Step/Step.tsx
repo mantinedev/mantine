@@ -118,7 +118,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
               {(transitionStyles) => (
                 <div className={classes.stepCompletedIcon} style={transitionStyles}>
                   {loading ? (
-                    <Loader color="#fff" size={_iconSize} />
+                    <Loader color="#fff" size={_iconSize} className={classes.stepLoader} />
                   ) : (
                     completedIcon || (
                       <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />

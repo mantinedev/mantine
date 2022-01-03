@@ -12,7 +12,7 @@ import { Button, ButtonProps } from './Button';
 const defaultProps: ButtonProps<'button'> = {};
 
 describe('@mantine/core/Button', () => {
-  checkAccessibility([render(<Button>Mantine button</Button>)]);
+  checkAccessibility([<Button>Mantine button</Button>]);
   itRendersChildren(Button, defaultProps);
   itIsPolymorphic(Button, defaultProps);
   itSupportsFocusEvents(Button, defaultProps, 'button');

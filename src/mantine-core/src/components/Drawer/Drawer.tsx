@@ -169,11 +169,11 @@ export function MantineDrawer({
           className={cx(classes.root, { [classes.noOverlay]: noOverlay }, className)}
           role="dialog"
           aria-modal
-          onClick={() => !noCloseOnClickOutside && onClose()}
+          onMouseDown={() => !noCloseOnClickOutside && onClose()}
           {...others}
         >
           <Paper<'div'>
-            onClick={(event) => event.stopPropagation()}
+            onMouseDown={(event) => event.stopPropagation()}
             className={cx(classes.drawer, className)}
             ref={focusTrapRef}
             style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}

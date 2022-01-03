@@ -1,17 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {
-  checkAccessibility,
-  itRendersChildren,
-  itIsPolymorphic,
-  itSupportsSystemProps,
-} from '@mantine/tests';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Badge, BadgeProps } from './Badge';
 
 const defaultProps: BadgeProps<'div'> = {};
 
 describe('@mantine/core/Badge', () => {
-  checkAccessibility([render(<Badge>this is badge</Badge>)]);
   itRendersChildren(Badge, defaultProps);
   itIsPolymorphic(Badge, defaultProps);
   itSupportsSystemProps({

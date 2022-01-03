@@ -6,7 +6,7 @@ import useStyles from './PopoverBody.styles';
 
 export type PopoverBodyStylesNames = ClassNames<typeof useStyles>;
 
-interface PopoverBodyProps
+export interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   shadow: MantineShadow;
