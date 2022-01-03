@@ -5,13 +5,13 @@ const code = `
 <Select
   label="Your favorite framework/library"
   placeholder="Pick one"
+  allowDeselect
   data={[
     { value: 'react', label: 'React' },
     { value: 'ng', label: 'Angular' },
     { value: 'svelte', label: 'Svelte' },
     { value: 'vue', label: 'Vue' },
   ]}
-  allowDeselect
 />
 `;
 
@@ -21,13 +21,13 @@ function Demo() {
       <Select
         label="Your favorite framework/library"
         placeholder="Pick one"
+        allowDeselect
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
           { value: 'svelte', label: 'Svelte' },
           { value: 'vue', label: 'Vue' },
         ]}
-        allowDeselect
       />
     </div>
   );

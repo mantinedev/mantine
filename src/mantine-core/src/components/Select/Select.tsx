@@ -185,7 +185,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       zIndex = getDefaultZIndex('popover'),
       name,
       dropdownPosition,
-      allowDeselect = false,
+      allowDeselect,
       ...others
     }: SelectProps,
     ref
@@ -206,7 +206,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       cancelable: false,
       isList: true,
     });
-    const isDeselectedValue = useRef<boolean>(false);
+
+    const isDeselectable = allowDeselect === undefined ? clearable : allowDeselect;
 
     const setDropdownOpened = (opened: boolean) => {
       _setDropdownOpened(opened);
@@ -266,9 +267,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     }, [selectedValue?.label]);
 
     const handleItemSelect = (item: SelectItem) => {
-      if (allowDeselect && selectedValue?.value === item.value) {
+      if (isDeselectable && selectedValue?.value === item.value) {
         handleChange(null);
-        isDeselectedValue.current = true;
+        setDropdownOpened(false);
       } else {
         handleChange(item.value);
 
@@ -312,15 +313,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     useDidUpdate(() => {
-      if (!isDeselectedValue) {
-        setHovered(
-          getNextIndex(
-            -1,
-            (index) => index + 1,
-            (index) => index < filteredData.length - 1
-          )
-        );
-      } else isDeselectedValue.current = false;
+      setHovered(
+        getNextIndex(
+          -1,
+          (index) => index + 1,
+          (index) => index < filteredData.length - 1
+        )
+      );
     }, [inputValue]);
 
     const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;

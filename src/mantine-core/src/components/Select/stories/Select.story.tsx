@@ -188,8 +188,7 @@ storiesOf('@mantine/core/Select/stories', module)
         placeholder="Choose value"
         data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
         style={{ marginTop: 20 }}
-        allowDeselect
-        searchable
+        allowDeselect={false}
       />
     </div>
   ))
@@ -283,9 +282,6 @@ storiesOf('@mantine/core/Select/stories', module)
           { value: 'svelte', label: 'Svelte' },
           { value: 'vue', label: 'Vue' },
         ]}
-        allowDeselect
-        searchable
-        clearable
       />
     </div>
   ));
