@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
@@ -81,10 +81,10 @@ describe('@mantine/dates/TimeInput', () => {
   });
 
   it('shows the correct value based on format prop', () => {
-    const format12 = mount(<TimeInput format="12" defaultValue={new Date(0, 0, 0, 15, 1)} />);
-    const format24 = mount(<TimeInput format="24" defaultValue={new Date(0, 0, 0, 15, 1)} />);
+    const format12 = render(<TimeInput format="12" defaultValue={new Date(0, 0, 0, 15, 1)} />);
+    const format24 = render(<TimeInput format="24" defaultValue={new Date(0, 0, 0, 15, 1)} />);
 
-    expect(format12.find(TimeField).at(0).prop('value')).toBe('03');
-    expect(format24.find(TimeField).at(0).prop('value')).toBe('15');
+    expect(format12.container.querySelectorAll('input')[0].value).toBe('03');
+    expect(format24.container.querySelectorAll('input')[0].value).toBe('15');
   });
 });
