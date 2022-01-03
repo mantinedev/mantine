@@ -1,90 +1,43 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsMargins,
-  itSupportsSx,
+  itHandlesBooleanState,
+  itSupportsSystemProps,
+  itConnectsLabelAndInput,
+  itSupportsWrapperProps,
+  itSupportsFocusEvents,
 } from '@mantine/tests';
-import { Switch } from './Switch';
+import { Switch, SwitchProps } from './Switch';
 
-const defaultProps = {
-  checked: true,
-  onChange: () => {},
+const defaultProps: SwitchProps = {
   label: 'test-label',
 };
 
 describe('@mantine/core/Switch', () => {
-  checkAccessibility([
-    <Switch aria-label="Switch without label" />,
-    <Switch label="With label" />,
-    <Switch id="with-id" label="With id" />,
-  ]);
-
-  itSupportsClassName(Switch, defaultProps);
-  itSupportsStyle(Switch, defaultProps);
-  itSupportsMargins(Switch, defaultProps);
-  itSupportsSx(Switch, defaultProps);
-  itSupportsRef(Switch, defaultProps, HTMLInputElement);
-
-  it('has correct displayName', () => {
-    expect(Switch.displayName).toEqual('@mantine/core/Switch');
+  checkAccessibility([<Switch aria-label="Switch without label" />, <Switch label="With label" />]);
+  itHandlesBooleanState(Switch, defaultProps);
+  itConnectsLabelAndInput(Switch, defaultProps);
+  itSupportsWrapperProps(Switch, defaultProps);
+  itSupportsFocusEvents(Switch, defaultProps, 'input');
+  itSupportsSystemProps({
+    component: Switch,
+    props: defaultProps,
+    displayName: '@mantine/core/Switch',
+    refType: HTMLInputElement,
+    excludeOthers: true,
   });
 
   it('renders label based on label prop', () => {
-    const withLabel = shallow(<Switch label="test-label" />);
-    const withoutLabel = shallow(<Switch />);
-
-    expect(withLabel.render().find('label').text()).toBe('test-label');
-    expect(withoutLabel.render().find('label')).toHaveLength(0);
-  });
-
-  it('passes id from props to input and label', () => {
-    const withLabel = shallow(<Switch label="test-label" id="test-id-1" />);
-    const withoutLabel = shallow(<Switch id="test-id-2" />);
-
-    expect(withLabel.render().find('label').attr('for')).toBe('test-id-1');
-    expect(withLabel.render().find('input').attr('id')).toBe('test-id-1');
-    expect(withoutLabel.render().find('input').attr('id')).toBe('test-id-2');
+    const { container: withLabel, getByText } = render(<Switch label="test-label" />);
+    const { container: withoutLabel } = render(<Switch />);
+    expect(withLabel.querySelectorAll('label')).toHaveLength(1);
+    expect(withoutLabel.querySelectorAll('label')).toHaveLength(0);
+    expect(getByText('test-label')).toBeInTheDocument();
   });
 
   it('sets disabled attribute on input based on disabled prop', () => {
-    const disabled = shallow(<Switch disabled />);
-    const notDisabled = shallow(<Switch />);
-
-    expect(disabled.render().find('input').attr('disabled')).toBe('disabled');
-    expect(notDisabled.render().find('input').attr('disabled')).toBe(undefined);
-  });
-
-  it('spreads wrapperProps to root element', () => {
-    const element = shallow(
-      <Switch
-        wrapperProps={{
-          'aria-label': 'test-aria-label',
-          style: { border: '1px solid red', lineHeight: '1px' },
-        }}
-      />
-    ).render();
-
-    expect(element.attr('aria-label')).toBe('test-aria-label');
-    expect(element.css('border')).toBe('1px solid red');
-    expect(element.css('line-height')).toBe('1px');
-  });
-
-  it('sets checked state based on checked prop', () => {
-    const checked = shallow(<Switch checked onChange={() => {}} />);
-    const notChecked = shallow(<Switch checked={false} onChange={() => {}} />);
-
-    expect(checked.render().find('input').attr('checked')).toBe('checked');
-    expect(notChecked.render().find('input').attr('checked')).toBe(undefined);
-  });
-
-  it('spreads ...others to input element', () => {
-    const element = shallow(<Switch aria-checked width="30px" />);
-
-    expect(element.render().find('input').attr('aria-checked')).toBe('true');
-    expect(element.render().find('input').attr('width')).toBe('30px');
+    render(<Switch disabled />);
+    expect(screen.getByRole('checkbox')).toBeDisabled();
   });
 });
