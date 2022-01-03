@@ -69,6 +69,7 @@ export default createStyles((theme, { size, variant, color }: DividerStyles) => 
   vertical: {
     border: 0,
     alignSelf: 'stretch',
+    height: '100%',
     borderLeftWidth: theme.fn.size({ size, sizes }),
     borderLeftColor: theme.fn.themeColor(color, 4),
     borderLeftStyle: variant as any,
