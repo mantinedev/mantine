@@ -145,11 +145,11 @@ to render different components based on media query:
 
 ```tsx
 <>
-  <MediaQuery largerThan="sm">
+  <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
     <TextInput size="xl" />
   </MediaQuery>
 
-  <MediaQuery smallerThan="sm">
+  <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
     <TextInput size="md" />
   </MediaQuery>
 </>
