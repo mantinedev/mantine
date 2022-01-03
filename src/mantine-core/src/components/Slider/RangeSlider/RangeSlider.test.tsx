@@ -1,14 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
 
 const defaultProps = {
@@ -18,22 +10,19 @@ const defaultProps = {
 
 describe('@mantine/core/RangeSlider', () => {
   checkAccessibility([<RangeSlider {...defaultProps} />]);
-  itSupportsStyle(RangeSlider, defaultProps);
-  itSupportsClassName(RangeSlider, defaultProps);
-  itSupportsOthers(RangeSlider, defaultProps);
-  itSupportsMargins(RangeSlider, defaultProps);
-  itSupportsSx(RangeSlider, defaultProps);
-  itSupportsRef(RangeSlider, defaultProps, HTMLDivElement);
-
-  it('provides name and value to hidden inputs', () => {
-    const element = shallow(<RangeSlider name="test-input" value={[10, 20]} />);
-    expect(element.find('input[type="hidden"]').at(0).prop('value')).toBe(10);
-    expect(element.find('input[type="hidden"]').at(1).prop('value')).toBe(20);
-    expect(element.find('input[type="hidden"]').at(0).prop('name')).toBe('test-input_from');
-    expect(element.find('input[type="hidden"]').at(1).prop('name')).toBe('test-input_to');
+  itSupportsSystemProps({
+    component: RangeSlider,
+    props: defaultProps,
+    displayName: '@mantine/core/RangeSlider',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(RangeSlider.displayName).toEqual('@mantine/core/RangeSlider');
+  it('provides name and value to hidden inputs', () => {
+    const { container } = render(<RangeSlider name="test-input" value={[10, 20]} />);
+    const inputs = container.querySelectorAll('input[type="hidden"]');
+    expect(inputs[0]).toHaveValue('10');
+    expect(inputs[1]).toHaveValue('20');
+    expect(inputs[0]).toHaveAttribute('name', 'test-input_from');
+    expect(inputs[1]).toHaveAttribute('name', 'test-input_to');
   });
 });

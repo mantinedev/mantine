@@ -5,7 +5,7 @@ import useStyles from './SliderRoot.styles';
 
 export type SliderRootStylesNames = ClassNames<typeof useStyles>;
 
-interface SliderRootProps
+export interface SliderRootProps
   extends DefaultProps<SliderRootStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   size: MantineNumberSize;

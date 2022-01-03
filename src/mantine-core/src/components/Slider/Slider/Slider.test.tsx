@@ -1,36 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsRef,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Slider } from './Slider';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Slider, SliderProps } from './Slider';
 
-const defaultProps = {
+const defaultProps: SliderProps = {
   thumbLabel: 'test-label',
 };
 
 describe('@mantine/core/Slider', () => {
   checkAccessibility([<Slider {...defaultProps} />]);
-  itSupportsStyle(Slider, defaultProps);
-  itSupportsMargins(Slider, defaultProps);
-  itSupportsClassName(Slider, defaultProps);
-  itSupportsOthers(Slider, defaultProps);
-  itSupportsSx(Slider, defaultProps);
-  itSupportsRef(Slider, defaultProps, HTMLDivElement);
-
-  it('provides name and value to hidden input', () => {
-    const element = shallow(<Slider name="test-input" value={50} />);
-    expect(element.find('input[type="hidden"]').prop('value')).toBe(50);
-    expect(element.find('input[type="hidden"]').prop('name')).toBe('test-input');
+  itSupportsSystemProps({
+    component: Slider,
+    props: defaultProps,
+    displayName: '@mantine/core/Slider',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Slider.displayName).toEqual('@mantine/core/Slider');
+  it('provides name and value to hidden input', () => {
+    const { container } = render(<Slider name="test-input" value={50} />);
+    const input = container.querySelector('input[type="hidden"]');
+    expect(input).toHaveValue('50');
+    expect(input).toHaveAttribute('name', 'test-input');
   });
 });

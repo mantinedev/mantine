@@ -1,10 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { itSupportsRef, checkAccessibility } from '@mantine/tests';
-import { Transition } from '../../Transition';
-import { Thumb } from './Thumb';
+import { Thumb, ThumbProps } from './Thumb';
 
-const defaultProps = {
+const defaultProps: ThumbProps = {
   max: 100,
   min: 0,
   value: 10,
@@ -26,33 +25,24 @@ describe('@mantine/core/Thumb', () => {
   itSupportsRef(Thumb, defaultProps, HTMLDivElement);
 
   it('sets left property based on position prop', () => {
-    const element = shallow(<Thumb {...defaultProps} position={62} />);
-    expect(element.prop('style').left).toBe('62%');
+    const { container } = render(<Thumb {...defaultProps} position={62} />);
+    expect(container.firstChild).toHaveStyle({ left: '62%' });
   });
 
   it('shows label based on dragging and labelAlwaysOn props', () => {
-    const labelAlwaysOn = shallow(<Thumb {...defaultProps} labelAlwaysOn dragging={false} />);
-    const dragging = shallow(<Thumb {...defaultProps} labelAlwaysOn={false} dragging />);
-    const labelOff = shallow(<Thumb {...defaultProps} labelAlwaysOn={false} dragging={false} />);
+    const { container: labelAlwaysOn } = render(
+      <Thumb {...defaultProps} labelAlwaysOn dragging={false} />
+    );
+    const { container: dragging } = render(
+      <Thumb {...defaultProps} labelAlwaysOn={false} dragging />
+    );
+    const { container: labelOff } = render(
+      <Thumb {...defaultProps} labelAlwaysOn={false} dragging={false} />
+    );
 
-    expect(labelAlwaysOn.render().find('.mantine-Slider-label')).toHaveLength(1);
-    expect(dragging.render().find('.mantine-Slider-label')).toHaveLength(1);
-    expect(labelOff.render().find('.mantine-Slider-label')).toHaveLength(0);
-  });
-
-  it('passes duration, transition and timingFunction to Transition component', () => {
-    const transition = shallow(
-      <Thumb
-        {...defaultProps}
-        labelTransition="rotate-left"
-        labelTransitionDuration={892}
-        labelTransitionTimingFunction="linear"
-      />
-    ).find(Transition);
-
-    expect(transition.prop('duration')).toBe(892);
-    expect(transition.prop('timingFunction')).toBe('linear');
-    expect(transition.prop('transition')).toBe('rotate-left');
+    expect(labelAlwaysOn.querySelectorAll('.mantine-Slider-label')).toHaveLength(1);
+    expect(dragging.querySelectorAll('.mantine-Slider-label')).toHaveLength(1);
+    expect(labelOff.querySelectorAll('.mantine-Slider-label')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {

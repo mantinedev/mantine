@@ -1,8 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Track } from './Track';
+import { render } from '@testing-library/react';
+import { Track, TrackProps } from './Track';
 
-const defaultProps = {
+const defaultProps: TrackProps = {
   filled: 30,
   size: 10,
   color: 'blue',
@@ -18,10 +18,11 @@ const defaultProps = {
 
 describe('@mantine/core/Slider/Track', () => {
   it('sets left and width bar styles based on filled and offset props', () => {
-    const element = shallow(<Track {...defaultProps} filled={34} offset={12} />);
-    const bar = element.find('.mantine-Slider-bar');
-    expect(bar.prop('style').left).toBe('12%');
-    expect(bar.prop('style').width).toBe('34%');
+    const { container } = render(<Track {...defaultProps} filled={34} offset={12} />);
+    expect(container.querySelector('.mantine-Slider-bar')).toHaveStyle({
+      left: '12%',
+      width: '34%',
+    });
   });
 
   it('has correct displayName', () => {
