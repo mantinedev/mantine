@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  MantineColor,
-  MantineNumberSize,
-  getSharedColorScheme,
-} from '@mantine/styles';
+import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
 interface AlertStyles {
   color: MantineColor;
@@ -11,10 +6,8 @@ interface AlertStyles {
   variant: 'filled' | 'outline' | 'light';
 }
 
-export default createStyles((theme, { color, radius, variant }: AlertStyles) => {
-  const lightColors = getSharedColorScheme({ color, theme, variant });
-  const filledColors = getSharedColorScheme({ theme, color, variant });
-  const outlineColors = getSharedColorScheme({ theme, color, variant });
+export default createStyles((theme, { color, radius, variant }: AlertStyles, getRef) => {
+  const closeButton = getRef('closeButton');
 
   return {
     root: {
@@ -23,6 +16,7 @@ export default createStyles((theme, { color, radius, variant }: AlertStyles) => 
       overflow: 'hidden',
       padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      border: '1px solid transparent',
     },
 
     wrapper: {
@@ -52,21 +46,26 @@ export default createStyles((theme, { color, radius, variant }: AlertStyles) => 
     },
 
     light: {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : lightColors.background,
+      backgroundColor:
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
-      border: '1px solid transparent',
     },
 
     filled: {
-      backgroundColor: filledColors.background,
-      color: filledColors.color,
-      border: '1px solid transparent',
+      backgroundColor: theme.fn.rgba(
+        theme.fn.themeColor(color, 8),
+        theme.colorScheme === 'dark' ? 0.65 : 1
+      ),
+      color: theme.white,
+
+      [`& .${closeButton}`]: {
+        color: theme.white,
+      },
     },
 
     outline: {
-      backgroundColor: outlineColors.background,
-      color: outlineColors.color,
-      border: `1px solid ${outlineColors.border}`,
+      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 6),
+      borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 6),
     },
 
     icon: {
@@ -88,13 +87,14 @@ export default createStyles((theme, { color, radius, variant }: AlertStyles) => 
       fontSize: theme.fontSizes.sm,
       color:
         variant === 'filled'
-          ? filledColors.color
+          ? theme.white
           : theme.colorScheme === 'dark'
           ? theme.colors.dark[0]
           : theme.black,
     },
 
     closeButton: {
+      ref: closeButton,
       marginTop: 2,
     },
   };
