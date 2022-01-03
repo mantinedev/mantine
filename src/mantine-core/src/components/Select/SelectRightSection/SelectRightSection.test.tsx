@@ -1,36 +1,30 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { SelectRightSection } from './SelectRightSection';
-import { ChevronIcon } from './ChevronIcon';
-import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 
 describe('@mantine/core/SelectRightSection', () => {
   it('renders ChevronIcon when shouldClear is false', () => {
-    const element = shallow(<SelectRightSection shouldClear={false} size="sm" />);
-    expect(element.find(ChevronIcon)).toHaveLength(1);
-    expect(element.find(CloseButton)).toHaveLength(0);
+    const { container } = render(<SelectRightSection shouldClear={false} size="sm" />);
+    expect(container.querySelector('[data-chevron]')).toBeInTheDocument();
+    expect(container.querySelectorAll('button')).toHaveLength(0);
   });
 
   it('renders CloseButton when shouldClear is true', () => {
-    const element = shallow(<SelectRightSection shouldClear size="sm" />);
-    expect(element.find(ChevronIcon)).toHaveLength(0);
-    expect(element.find(CloseButton)).toHaveLength(1);
+    const { container } = render(<SelectRightSection shouldClear size="sm" />);
+    expect(container.querySelectorAll('[data-chevron]')).toHaveLength(0);
+    expect(container.querySelector('button')).toBeInTheDocument();
   });
 
   it('sets aria-label and size on CloseButton', () => {
-    const props = shallow(
-      <SelectRightSection shouldClear size="sm" clearButtonLabel="test-label" />
-    )
-      .find(CloseButton)
-      .props();
-    expect(props.size).toBe('sm');
-    expect(props['aria-label']).toBe('test-label');
+    render(<SelectRightSection shouldClear size="sm" clearButtonLabel="test-label" />);
+    expect(screen.getByLabelText('test-label')).toBeInTheDocument();
   });
 
   it('calls onClear when CloseButton is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<SelectRightSection shouldClear size="sm" onClear={spy} />);
-    element.find(CloseButton).simulate('click');
+    render(<SelectRightSection shouldClear size="sm" onClear={spy} />);
+    userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

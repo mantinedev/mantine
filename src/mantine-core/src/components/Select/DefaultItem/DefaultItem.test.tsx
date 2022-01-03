@@ -1,14 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
 } from '@mantine/tests';
-import { DefaultItem } from './DefaultItem';
+import { DefaultItem, SelectItemProps } from './DefaultItem';
 
-const defaultProps = { label: 'test' };
+const defaultProps: SelectItemProps = {
+  label: 'test',
+};
 
 describe('@mantine/core/Autocomplete/DefaultItem', () => {
   itSupportsClassName(DefaultItem, defaultProps);
@@ -16,14 +18,14 @@ describe('@mantine/core/Autocomplete/DefaultItem', () => {
   itSupportsStyle(DefaultItem, defaultProps);
   itSupportsRef(DefaultItem, defaultProps, HTMLDivElement);
 
-  it('renders given label as children', () => {
-    const element = shallow(<DefaultItem {...defaultProps} label="test" />);
-    expect(element.render().text()).toBe('test');
+  it('renders given label', () => {
+    render(<DefaultItem {...defaultProps} label="test-label" />);
+    expect(screen.getByText('test-label')).toBeInTheDocument();
   });
 
-  it('renders value as children it label was not provided', () => {
-    const element = shallow(<DefaultItem {...defaultProps} value="test-value" label={null} />);
-    expect(element.render().text()).toBe('test-value');
+  it('renders value as children if label was not provided', () => {
+    render(<DefaultItem {...defaultProps} value="test-value" label={null} />);
+    expect(screen.getByText('test-value')).toBeInTheDocument();
   });
 
   it('has correct displayName', () => {
