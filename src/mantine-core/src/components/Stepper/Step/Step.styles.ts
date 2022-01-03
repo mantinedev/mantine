@@ -26,6 +26,8 @@ export default createStyles(
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
 
     return {
+      stepLoader: {},
+
       step: {
         display: 'flex',
         alignItems: 'center',

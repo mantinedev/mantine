@@ -14,4 +14,5 @@ export const Stepper: Record<StepperStylesNames, string> = {
   stepBody: 'Contains stepLabel and stepDescription',
   stepLabel: 'Step label',
   stepDescription: 'Step description',
+  stepLoader: 'Step loader',
 };

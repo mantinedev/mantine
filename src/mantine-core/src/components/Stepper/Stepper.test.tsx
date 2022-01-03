@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  itSupportsClassName,
-  itSupportsMargins,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsStyle,
-  checkAccessibility,
-  itSupportsSx,
-} from '@mantine/tests';
-import { Stepper } from './Stepper';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Stepper, StepperProps } from './Stepper';
 
-const defaultProps = {
+const defaultProps: StepperProps = {
   active: 1,
   children: [
     <Stepper.Step label="1" key="1" description="1">
@@ -27,15 +19,11 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Stepper', () => {
-  itSupportsClassName(Stepper, defaultProps);
-  itSupportsMargins(Stepper, defaultProps);
-  itSupportsOthers(Stepper, defaultProps);
-  itSupportsStyle(Stepper, defaultProps);
-  itSupportsSx(Stepper, defaultProps);
-  itSupportsRef(Stepper, defaultProps, HTMLDivElement);
   checkAccessibility([<Stepper {...defaultProps} />]);
-
-  it('has correct displayName', () => {
-    expect(Stepper.displayName).toEqual('@mantine/core/Stepper');
+  itSupportsSystemProps({
+    component: Stepper,
+    props: defaultProps,
+    displayName: '@mantine/core/Stepper',
+    refType: HTMLDivElement,
   });
 });
