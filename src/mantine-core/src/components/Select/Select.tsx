@@ -131,7 +131,7 @@ export function defaultFilter(value: string, item: SelectItem) {
 }
 
 export function defaultShouldCreate(query: string, data: SelectItem[]) {
-  return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
+  return !!query && !data.some((item) => item.label.toLowerCase() === query.toLowerCase());
 }
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>(
