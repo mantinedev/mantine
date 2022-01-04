@@ -2,6 +2,7 @@ import React from 'react';
 import { TimeInput } from '../TimeInput';
 
 const codeTemplate = (props: string) => `<TimeInput
+  defaultValue={new Date()}
  ${props}
 />`;
 

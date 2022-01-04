@@ -13,23 +13,11 @@ interface AmPmSelectProps
 
   /** Colon text size */
   size?: MantineSize;
-
-  /** Displays error message after input */
-  error?: React.ReactNode;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
   (
-    {
-      className,
-      onChange,
-      onFocus,
-      setValue,
-      size = 'sm',
-      error,
-      value,
-      ...others
-    }: AmPmSelectProps,
+    { className, onChange, onFocus, setValue, size = 'sm', value, ...others }: AmPmSelectProps,
     ref
   ) => {
     const { classes, cx } = useStyles({ size, hasValue: !!value });
@@ -69,7 +57,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onKeyDown={handleKeyDown}
         readOnly
         value={value}
-        className={cx(classes.input, className)}
+        className={cx(classes.timeInput, className)}
         {...others}
       />
     );

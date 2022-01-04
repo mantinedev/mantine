@@ -14,7 +14,7 @@ interface TimeInputBaseStyles {
 }
 
 export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => ({
-  input: {
+  timeInput: {
     ...theme.fn.fontStyles(),
     width: theme.fn.size({ size, sizes: inputSizes }),
     appearance: 'none',
@@ -31,7 +31,7 @@ export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => 
       textAlign: hasValue ? undefined : 'start',
     },
 
-    '::placeholder': {
+    '&::placeholder': {
       textAlign: 'center',
     },
 

@@ -5,7 +5,7 @@ title: 'use-validated-state'
 category: 'state'
 order: 1
 slug: /hooks/use-validated-state/
-description: 'useValidatedState is useState with validation'
+description: 'Validate state and get last valid value'
 import: "import { useValidatedState } from '@mantine/hooks';"
 docs: 'hooks/use-validated-state.mdx'
 source: 'mantine-hooks/src/use-validated-state/use-validated-state.ts'
@@ -13,7 +13,7 @@ source: 'mantine-hooks/src/use-validated-state/use-validated-state.ts'
 
 ## Usage
 
-use-validated-state works similar to `useState` but checks the value if it is valid based on the `rule` function.
+Hook validates state with a given rule each time state is set. It returns an object with current validation state, last valid value and current value:
 
 ```tsx
 const [{ lastValidValue, value, valid }, setValue] = useValidatedState(
@@ -40,9 +40,9 @@ function useValidatedState<T>(
   validation: (value: T) => boolean
 ): readonly [
   {
-    readonly value: T;
-    readonly lastValidValue: T;
-    readonly valid: boolean;
+    value: T;
+    lastValidValue: T;
+    valid: boolean;
   },
   (val: T) => void
 ];

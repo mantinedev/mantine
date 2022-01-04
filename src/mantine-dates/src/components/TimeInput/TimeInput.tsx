@@ -53,7 +53,7 @@ export interface TimeInputProps
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
-  /** The time format */
+  /** Time format */
   format?: '12' | '24';
 
   /** Uncontrolled input name */
@@ -68,10 +68,13 @@ export interface TimeInputProps
   /** aria-label for seconds input */
   secondsLabel?: string;
 
-  /** placeholder for time input */
+  /** aria-label for am/pm input */
+  amPmLabel?: string;
+
+  /** Placeholder for hours/minutes/seconds inputs*/
   timePlaceholder?: string;
 
-  /** placeholder for am/pm input */
+  /** Placeholder for am/pm input */
   amPmPlaceholder?: string;
 
   /** Disable field */
@@ -111,6 +114,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      amPmLabel,
       timePlaceholder = '--',
       amPmPlaceholder = 'am',
       disabled = false,
@@ -284,8 +288,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 }}
                 placeholder={amPmPlaceholder}
                 size={size}
+                aria-label={amPmLabel}
                 disabled={disabled}
-                error={!!error}
               />
             )}
             {name && <input type="hidden" name={name} value={_value.toISOString()} />}

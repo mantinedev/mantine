@@ -9,11 +9,11 @@ describe('@mantine/hooks/use-validated-state', () => {
     expect(hookValid.result.current[0].value).toBe('test');
     expect(typeof hookValid.result.current[1]).toBe('function');
 
-    const hookUnvalid = renderHook(() => useValidatedState('test', (val) => val === 'tests'));
-    expect(hookUnvalid.result.current[0].lastValidValue).toBe(undefined);
-    expect(hookUnvalid.result.current[0].valid).toBe(false);
-    expect(hookUnvalid.result.current[0].value).toBe('test');
-    expect(typeof hookUnvalid.result.current[1]).toBe('function');
+    const hookInvalid = renderHook(() => useValidatedState('test', (val) => val === 'tests'));
+    expect(hookInvalid.result.current[0].lastValidValue).toBe(undefined);
+    expect(hookInvalid.result.current[0].valid).toBe(false);
+    expect(hookInvalid.result.current[0].value).toBe('test');
+    expect(typeof hookInvalid.result.current[1]).toBe('function');
   });
 
   it('returns correct value based on the rule', () => {

@@ -68,6 +68,9 @@ export interface TimeRangeInputProps
   /** aria-label for seconds input */
   secondsLabel?: string;
 
+  /** aria-label for am/pm input */
+  amPmLabel?: string;
+
   /** placeholder for time input */
   timePlaceholder?: string;
 
@@ -114,6 +117,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       hoursLabel,
       minutesLabel,
       secondsLabel,
+      amPmLabel,
       timePlaceholder = '--',
       amPmPlaceholder = 'am',
       labelSeparator = '–',
@@ -365,6 +369,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 placeholder={amPmPlaceholder}
                 onFocus={() => setSelectedFieldIndex(0)}
+                aria-label={`from ${amPmLabel}`}
+                disabled={disabled}
               />
             )}
 
@@ -450,6 +456,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   }}
                   placeholder={amPmPlaceholder}
                   onFocus={() => setSelectedFieldIndex(1)}
+                  aria-label={`to ${amPmLabel}`}
+                  disabled={disabled}
                 />
               )}
             </div>

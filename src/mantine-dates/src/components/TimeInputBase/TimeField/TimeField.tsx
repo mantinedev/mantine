@@ -92,7 +92,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
           value={value}
-          className={cx(classes.input, className)}
+          className={cx(classes.timeInput, className)}
           {...others}
         />
 
