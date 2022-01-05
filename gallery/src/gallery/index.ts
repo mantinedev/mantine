@@ -106,3 +106,4 @@ export { StatsSegments } from './StatsSegments/StatsSegments';
 
 // Grids
 export { GridAsymmetrical } from './GridAsymmetrical/GridAsymmetrical';
+export { Subgrid } from './Subgrid/Subgrid';
