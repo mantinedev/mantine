@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { createStyles, Table, ScrollArea } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
@@ -31,16 +31,7 @@ interface TableScrollAreaProps {
 
 export function TableScrollArea({ data }: TableScrollAreaProps) {
   const { classes, cx } = useStyles();
-  const viewportRef = useRef<HTMLDivElement>();
   const [scrolled, setScrolled] = useState(false);
-
-  const handleScroll = (event: { target: HTMLDivElement }) =>
-    setScrolled(event.target.scrollTop !== 0);
-
-  useEffect(() => {
-    viewportRef.current?.addEventListener('scroll', handleScroll as any);
-    return () => viewportRef.current?.removeEventListener('scroll', handleScroll as any);
-  }, []);
 
   const rows = data.map((row) => (
     <tr key={row.name}>
@@ -51,7 +42,7 @@ export function TableScrollArea({ data }: TableScrollAreaProps) {
   ));
 
   return (
-    <ScrollArea sx={{ height: 300 }} viewportRef={viewportRef}>
+    <ScrollArea sx={{ height: 300 }} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
       <Table sx={{ minWidth: 700 }}>
         <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
           <tr>
