@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useDropzone, FileRejection } from 'react-dropzone';
 import { DefaultProps, ClassNames, MantineNumberSize, LoadingOverlay, Box } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
@@ -26,6 +26,9 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Called when files are dropped into dropzone */
   onDrop(files: File[]): void;
+
+  /** Called when selected files don't meet file restrictions */
+  onReject?(fileRejections: FileRejection[]): void;
 
   /** Display loading overlay over dropzone */
   loading?: boolean;
@@ -58,6 +61,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
       accept,
       children,
       onDrop,
+      onReject,
       openRef,
       ...others
     }: DropzoneProps,
@@ -70,6 +74,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
 
     const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
       onDropAccepted: (files) => onDrop(files),
+      onDropRejected: (fileRejections) => onReject(fileRejections),
       disabled: disabled || loading,
       accept,
       multiple,

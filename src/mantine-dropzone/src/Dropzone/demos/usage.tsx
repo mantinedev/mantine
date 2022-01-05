@@ -32,7 +32,12 @@ function Demo() {
 
   return (
     // See results in console after dropping files to Dropzone
-    <Dropzone onDrop={console.log} maxSize={3 * 1024 ** 2} accept={IMAGE_MIME_TYPE}>
+    <Dropzone 
+      onDrop={(files) => console.log('accepted files', files)}
+      onReject={(files) => console.log('rejected files', files)}
+      maxSize={3 * 1024 ** 2}
+      accept={IMAGE_MIME_TYPE}
+    >
       {(status) => (
         <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
           <ImageUploadIcon
