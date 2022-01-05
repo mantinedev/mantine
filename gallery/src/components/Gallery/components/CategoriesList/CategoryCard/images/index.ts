@@ -46,6 +46,9 @@ import tocDark from './toc-dark.svg';
 import statsLight from './stats-light.svg';
 import statsDark from './stats-dark.svg';
 
+import gridsLight from './grids-light.svg';
+import gridsDark from './grids-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   'article-cards': { light: cardsLight, dark: cardsDark },
@@ -64,4 +67,5 @@ export default {
   headers: { light: headersLight, dark: headersDark },
   toc: { light: tocLight, dark: tocDark },
   stats: { light: statsLight, dark: statsDark },
+  grids: { light: gridsLight, dark: gridsDark },
 };

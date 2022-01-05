@@ -16,6 +16,7 @@ const GALLERY_CATEGORIES = [
       { slug: 'navbars', name: 'Navbars' },
       { slug: 'headers', name: 'Headers' },
       { slug: 'footers', name: 'Footers' },
+      { slug: 'grids', name: 'Grids' },
       { slug: 'users', name: 'User info and controls' },
       { slug: 'authentication', name: 'Authentication' },
       { slug: 'inputs', name: 'Inputs' },
