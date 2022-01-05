@@ -24,6 +24,7 @@ const GALLERY_CATEGORIES = [
       { slug: 'dropzones', name: 'Dropzones' },
       { slug: 'app-cards', name: 'Application cards' },
       { slug: 'stats', name: 'Stats' },
+      { slug: 'tables', name: 'Tables' },
     ],
   },
   {
