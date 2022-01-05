@@ -7,10 +7,10 @@ function Wrapper(props: TableProps) {
     <Table {...props}>
       <thead>
         <tr>
-          <th>Element position</th>
-          <th>Element name</th>
+          <th>Position</th>
+          <th>Name</th>
           <th>Symbol</th>
-          <th>Atomic mass</th>
+          <th>Mass</th>
         </tr>
       </thead>
       <tbody>
@@ -33,12 +33,12 @@ const codeTemplate = (props: string) => `
 </Table>
 `;
 
-export const configurator: MantineDemo = {
+export const spacingConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
   configurator: [
-    { name: 'striped', type: 'boolean', defaultValue: false },
-    { name: 'highlightOnHover', type: 'boolean', defaultValue: false },
+    { name: 'horizontalSpacing', type: 'size', defaultValue: 'xs', initialValue: 'xs' },
+    { name: 'verticalSpacing', type: 'size', initialValue: 'xs' },
   ],
 };
