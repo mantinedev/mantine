@@ -67,9 +67,6 @@ export { UserButton } from './UserButton/UserButton';
 export { UserInfoAction } from './UserInfoAction/UserInfoAction';
 export { UserInfoIcons } from './UserInfoIcons/UserInfoIcons';
 export { UserMenu } from './UserMenu/UserMenu';
-export { UsersRolesTable } from './UsersRolesTable/UsersRolesTable';
-export { UsersStack } from './UsersStack/UsersStack';
-export { UsersTable } from './UsersTable/UsersTable';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
@@ -107,3 +104,9 @@ export { StatsSegments } from './StatsSegments/StatsSegments';
 // Grids
 export { GridAsymmetrical } from './GridAsymmetrical/GridAsymmetrical';
 export { Subgrid } from './Subgrid/Subgrid';
+
+// Tables
+export { TableReviews } from './TableReviews/TableReviews';
+export { UsersRolesTable } from './UsersRolesTable/UsersRolesTable';
+export { UsersStack } from './UsersStack/UsersStack';
+export { UsersTable } from './UsersTable/UsersTable';
