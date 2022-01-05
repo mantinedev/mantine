@@ -27,7 +27,7 @@ export function UsersTable({ data }: UsersTableProps) {
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
-        <Group spacing="sm" sx={{ paddingTop: 5, paddingBottom: 5 }}>
+        <Group spacing="sm">
           <Avatar size={30} src={item.avatar} radius={30} />
           <Text size="sm" weight={500}>
             {item.name}
@@ -68,7 +68,7 @@ export function UsersTable({ data }: UsersTableProps) {
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 800 }}>
+      <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
         <thead>
           <tr>
             <th>Employee</th>

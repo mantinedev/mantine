@@ -10,7 +10,7 @@ export function UsersStack({ data }: UsersStackProps) {
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
-        <Group spacing="sm" sx={{ paddingTop: 7, paddingBottom: 7 }}>
+        <Group spacing="sm">
           <Avatar size={40} src={item.avatar} radius={40} />
           <div>
             <Text size="sm" weight={500}>
@@ -54,7 +54,7 @@ export function UsersStack({ data }: UsersStackProps) {
 
   return (
     <ScrollArea>
-      <Table sx={{ minWidth: 800 }}>
+      <Table sx={{ minWidth: 800 }} verticalSpacing="md">
         <tbody>{rows}</tbody>
       </Table>
     </ScrollArea>
