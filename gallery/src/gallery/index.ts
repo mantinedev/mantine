@@ -108,6 +108,7 @@ export { Subgrid } from './Subgrid/Subgrid';
 // Tables
 export { TableReviews } from './TableReviews/TableReviews';
 export { TableScrollArea } from './TableScrollArea/TableScrollArea';
+export { TableSort } from './TableSort/TableSort';
 export { UsersRolesTable } from './UsersRolesTable/UsersRolesTable';
 export { UsersStack } from './UsersStack/UsersStack';
 export { UsersTable } from './UsersTable/UsersTable';

@@ -1,8 +1,17 @@
 {
-  "title": "Table with sticky header",
+  "title": "Table with search and sort",
   "category": "tables",
   "author": "rtivital",
-  "dependencies": ["/core/table/", "/core/scroll-area/"],
+  "dependencies": [
+    "/core/table/",
+    "/core/scroll-area/",
+    "/core/button/#unstyled-button",
+    "/core/group/",
+    "/core/text/",
+    "/core/center/",
+    "/core/text-input/",
+    "@modulz/radix-icons"
+  ],
   "props": {
     "data": [
       {
@@ -84,76 +93,6 @@
         "name": "Brain Kreiger",
         "company": "Lueilwitz Group",
         "email": "Rico98@hotmail.com"
-      },
-      {
-        "name": "Myrtice McGlynn",
-        "company": "Feest, Beahan and Johnston",
-        "email": "Julius_Tremblay29@hotmail.com"
-      },
-      {
-        "name": "Chester Carter PhD",
-        "company": "Gaylord - Labadie",
-        "email": "Jensen_McKenzie@hotmail.com"
-      },
-      {
-        "name": "Mrs. Ericka Bahringer",
-        "company": "Conn and Sons",
-        "email": "Lisandro56@hotmail.com"
-      },
-      {
-        "name": "Korbin Buckridge Sr.",
-        "company": "Mraz, Rolfson and Predovic",
-        "email": "Leatha9@yahoo.com"
-      },
-      {
-        "name": "Dr. Daisy Becker",
-        "company": "Carter - Mueller",
-        "email": "Keaton_Sanford27@gmail.com"
-      },
-      {
-        "name": "Derrick Buckridge Sr.",
-        "company": "O'Reilly LLC",
-        "email": "Kay83@yahoo.com"
-      },
-      {
-        "name": "Ernie Hickle",
-        "company": "Terry, O'Reilly and Farrell",
-        "email": "Americo.Leffler89@gmail.com"
-      },
-      {
-        "name": "Jewell Littel",
-        "company": "O'Connell Group",
-        "email": "Hester.Hettinger9@hotmail.com"
-      },
-      {
-        "name": "Cyrus Howell",
-        "company": "Windler, Yost and Fadel",
-        "email": "Rick0@gmail.com"
-      },
-      {
-        "name": "Dr. Orie Jast",
-        "company": "Hilll - Pacocha",
-        "email": "Anna56@hotmail.com"
-      },
-      {
-        "name": "Luisa Murphy",
-        "company": "Turner and Sons",
-        "email": "Christine32@yahoo.com"
-      },
-      {
-        "name": "Lea Witting",
-        "company": "Hodkiewicz Inc",
-        "email": "Ford_Kovacek4@yahoo.com"
-      },
-      {
-        "name": "Kelli Runolfsson",
-        "company": "Feest - O'Hara",
-        "email": "Dimitri87@yahoo.com"
-      },
-      {
-        "name": "Brook Gaylord",
-        "company": "Conn, Huel and Nader",
-        "email": "Immanuel77@gmail.com"
       }
     ]
   },
