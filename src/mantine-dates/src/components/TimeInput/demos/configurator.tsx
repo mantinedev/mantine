@@ -1,12 +1,14 @@
+import React from 'react';
 import { TimeInput } from '../TimeInput';
 
 const codeTemplate = (props: string) => `<TimeInput
+  defaultValue={new Date()}
  ${props}
 />`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: TimeInput,
+  component: (props) => <TimeInput defaultValue={new Date()} {...props} />,
   codeTemplate,
   configuratorProps: { multiline: true },
   configurator: [
@@ -38,6 +40,12 @@ export const configurator: MantineDemo = {
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    {
+      name: 'withSeconds',
+      type: 'boolean',
+      initialValue: false,
+      defaultValue: false,
+    },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
       name: 'required',

@@ -2,19 +2,18 @@ import React from 'react';
 import { TimeInput } from '../TimeInput';
 
 const code = `
-<TimeInput disabled />
+<TimeInput format="12" />
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput label="Disabled without value" disabled />
-      <TimeInput label="Disabled with value" disabled defaultValue={new Date()} mt="md" />
+      <TimeInput label="Pick time" format="12" defaultValue={new Date()} />
     </div>
   );
 }
 
-export const disabled: MantineDemo = {
+export const format: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

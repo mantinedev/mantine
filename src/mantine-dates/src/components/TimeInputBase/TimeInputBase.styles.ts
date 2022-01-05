@@ -8,11 +8,12 @@ export const inputSizes = {
   xl: 29,
 };
 
-interface TimeFieldStyles {
+interface TimeInputBaseStyles {
   size: MantineSize;
+  hasValue: boolean;
 }
 
-export default createStyles((theme, { size }: TimeFieldStyles) => ({
+export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => ({
   timeInput: {
     ...theme.fn.fontStyles(),
     width: theme.fn.size({ size, sizes: inputSizes }),
@@ -25,6 +26,14 @@ export default createStyles((theme, { size }: TimeFieldStyles) => ({
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     lineHeight: 1,
     outline: 0,
+
+    '&:focus': {
+      textAlign: hasValue ? undefined : 'start',
+    },
+
+    '&::placeholder': {
+      textAlign: 'center',
+    },
 
     '&[disabled]': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],

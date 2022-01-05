@@ -2,7 +2,7 @@ import React, { useRef, forwardRef } from 'react';
 import { useMergedRef, clamp } from '@mantine/hooks';
 import { Text, MantineSize } from '@mantine/core';
 import { padTime } from '../pad-time/pad-time';
-import useStyles from './TimeField.styles';
+import useStyles from '../TimeInputBase.styles';
 
 interface TimeFieldProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
@@ -38,7 +38,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
     }: TimeFieldProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size });
+    const { classes, cx, theme } = useStyles({ size, hasValue: !!value });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -59,7 +59,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowUp') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 })
+          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 }).toString()
         );
 
         if (value !== padded) {
@@ -71,7 +71,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 })
+          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 }).toString()
         );
 
         if (value !== padded) {
@@ -97,7 +97,17 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         />
 
         {withSeparator && (
-          <Text size={size} style={{ lineHeight: 1, color: 'inherit' }}>
+          <Text
+            size={size}
+            style={{
+              lineHeight: 1,
+              color: value
+                ? 'inherit'
+                : theme.colorScheme === 'dark'
+                ? theme.colors.dark[2]
+                : theme.colors.gray[7],
+            }}
+          >
             :
           </Text>
         )}

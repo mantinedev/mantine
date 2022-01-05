@@ -9,7 +9,12 @@ const code = `
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeInput label="Pick time" placeholder="Pick time" icon={<ClockIcon />} />
+      <TimeInput
+        label="Pick time"
+        placeholder="Pick time"
+        icon={<ClockIcon />}
+        defaultValue={new Date()}
+      />
     </div>
   );
 }

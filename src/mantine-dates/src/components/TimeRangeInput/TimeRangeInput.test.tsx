@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
-import { TimeField } from '../TimeInput/TimeField/TimeField';
+import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { TimeRangeInput } from './TimeRangeInput';
 
 const defaultProps = {};

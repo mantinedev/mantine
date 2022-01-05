@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Input, InputWrapper } from '@mantine/core';
-import { TimeField } from './TimeField/TimeField';
+import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
 const defaultProps: TimeInputProps = {};
@@ -77,5 +78,13 @@ describe('@mantine/dates/TimeInput', () => {
 
     expect(withSeconds.find(TimeField)).toHaveLength(3);
     expect(withoutSeconds.find(TimeField)).toHaveLength(2);
+  });
+
+  it('shows the correct value based on format prop', () => {
+    const format12 = render(<TimeInput format="12" defaultValue={new Date(0, 0, 0, 15, 1)} />);
+    const format24 = render(<TimeInput format="24" defaultValue={new Date(0, 0, 0, 15, 1)} />);
+
+    expect(format12.container.querySelectorAll('input')[0].value).toBe('03');
+    expect(format24.container.querySelectorAll('input')[0].value).toBe('15');
   });
 });
