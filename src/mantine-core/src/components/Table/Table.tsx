@@ -14,10 +14,10 @@ export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef
   captionSide?: 'top' | 'bottom';
 
   /** Horizontal cells spacing from theme.spacing or number to set value in px */
-  horizontalSpacing: MantineNumberSize;
+  horizontalSpacing?: MantineNumberSize;
 
   /** Vertical cells spacing from theme.spacing or number to set value in px */
-  verticalSpacing: MantineNumberSize;
+  verticalSpacing?: MantineNumberSize;
 }
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
