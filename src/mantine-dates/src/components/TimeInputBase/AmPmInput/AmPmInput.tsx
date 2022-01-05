@@ -55,7 +55,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onClick={handleClick}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        readOnly
+        onChange={() => {}}
         value={value}
         className={cx(classes.timeInput, className)}
         {...others}
