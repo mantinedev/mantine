@@ -1,8 +1,8 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { useValidatedState } from './use-validated-state';
 
 describe('@mantine/hooks/use-validated-state', () => {
-  it('returns inital value', () => {
+  it('returns initial value', () => {
     const hookValid = renderHook(() => useValidatedState('test', (val) => val === 'test'));
     expect(hookValid.result.current[0].lastValidValue).toBe('test');
     expect(hookValid.result.current[0].valid).toBe(true);
@@ -21,7 +21,9 @@ describe('@mantine/hooks/use-validated-state', () => {
     expect(hook.result.current[0].lastValidValue).toBe('test');
     expect(hook.result.current[0].valid).toBe(true);
     expect(hook.result.current[0].value).toBe('test');
-    hook.result.current[1]('tests');
+    act(() => {
+      hook.result.current[1]('tests');
+    });
     expect(hook.result.current[0].lastValidValue).toBe('test');
     expect(hook.result.current[0].valid).toBe(false);
     expect(hook.result.current[0].value).toBe('tests');
