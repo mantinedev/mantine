@@ -7,27 +7,13 @@ export function GridAsymmetrical() {
   return (
     <Container my="md">
       <Grid>
-        <Grid.Col xs={4} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={8} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={8} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={4} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={3} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={3} span={12}>
-          {child}
-        </Grid.Col>
-        <Grid.Col xs={6} span={12}>
-          {child}
-        </Grid.Col>
+        <Grid.Col xs={4}>{child}</Grid.Col>
+        <Grid.Col xs={8}>{child}</Grid.Col>
+        <Grid.Col xs={8}>{child}</Grid.Col>
+        <Grid.Col xs={4}>{child}</Grid.Col>
+        <Grid.Col xs={3}>{child}</Grid.Col>
+        <Grid.Col xs={3}>{child}</Grid.Col>
+        <Grid.Col xs={6}>{child}</Grid.Col>
       </Grid>
     </Container>
   );
