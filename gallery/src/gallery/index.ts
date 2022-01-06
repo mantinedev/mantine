@@ -113,3 +113,6 @@ export { TableReviews } from './TableReviews/TableReviews';
 export { TableScrollArea } from './TableScrollArea/TableScrollArea';
 export { TableSelection } from './TableSelection/TableSelection';
 export { TableSort } from './TableSort/TableSort';
+
+// Buttons
+export { ButtonMenu } from './ButtonMenu/ButtonMenu';
