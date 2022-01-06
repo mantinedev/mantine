@@ -11,6 +11,7 @@ export function ButtonMenu() {
           Create new
         </Button>
       }
+      transition="pop-top-right"
       placement="end"
       size="lg"
     >
