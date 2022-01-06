@@ -16,7 +16,7 @@ export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Radio value */
   value: string;
