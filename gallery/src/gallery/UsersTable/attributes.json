@@ -1,6 +1,6 @@
 {
   "title": "Table with users",
-  "category": "tables",
+  "category": "users",
   "author": "rtivital",
   "dependencies": [
     "/core/table/",

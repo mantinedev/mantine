@@ -1,6 +1,6 @@
 {
   "title": "Table with roles select",
-  "category": "tables",
+  "category": "users",
   "author": "rtivital",
   "dependencies": [
     "/core/table/",

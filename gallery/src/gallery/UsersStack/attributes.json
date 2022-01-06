@@ -1,6 +1,6 @@
 {
   "title": "Users stack",
-  "category": "tables",
+  "category": "users",
   "author": "rtivital",
   "dependencies": [
     "/core/table/",
