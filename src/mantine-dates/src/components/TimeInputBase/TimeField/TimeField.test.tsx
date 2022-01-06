@@ -1,12 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import {
   itSupportsClassName,
   itSupportsOthers,
   itSupportsStyle,
   itSupportsRef,
 } from '@mantine/tests';
-import { Text } from '@mantine/core';
 import { TimeField } from './TimeField';
 
 const defaultProps = {
@@ -21,11 +20,10 @@ describe('@mantine/dates/TimeField', () => {
   itSupportsRef(TimeField, defaultProps, HTMLInputElement);
 
   it('renders separator when withSeparator prop set to true', () => {
-    const withSeparator = shallow(<TimeField {...defaultProps} withSeparator />);
-    const withoutSeparator = shallow(<TimeField {...defaultProps} withSeparator={false} />);
-
-    expect(withSeparator.find(Text)).toHaveLength(1);
-    expect(withoutSeparator.find(Text)).toHaveLength(0);
+    const view = render(<TimeField {...defaultProps} withSeparator />);
+    expect(screen.getByText(':')).toBeInTheDocument();
+    view.rerender(<TimeField {...defaultProps} withSeparator={false} />);
+    expect(screen.queryAllByText(':')).toHaveLength(0);
   });
 
   it('has correct displayName', () => {
