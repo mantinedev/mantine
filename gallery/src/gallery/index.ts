@@ -116,3 +116,4 @@ export { TableSort } from './TableSort/TableSort';
 
 // Buttons
 export { ButtonMenu } from './ButtonMenu/ButtonMenu';
+export { ButtonProgress } from './ButtonProgress/ButtonProgress';

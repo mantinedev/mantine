@@ -1,0 +1,11 @@
+{
+  "title": "Button with loading progress",
+  "category": "buttons",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/button", "/core/progress"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 220
+  }
+}
