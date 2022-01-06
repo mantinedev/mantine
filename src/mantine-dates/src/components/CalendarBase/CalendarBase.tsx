@@ -217,6 +217,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             __staticSelector={__staticSelector}
             nextDecadeLabel={nextDecadeLabel}
             previousDecadeLabel={previousDecadeLabel}
+            preventFocus={preventFocus}
           />
         )}
 
@@ -239,6 +240,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             __staticSelector={__staticSelector}
             nextYearLabel={nextYearLabel}
             previousYearLabel={previousYearLabel}
+            preventFocus={preventFocus}
           />
         )}
 

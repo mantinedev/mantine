@@ -22,6 +22,7 @@ export interface MonthPickerProps
   __staticSelector?: string;
   nextYearLabel?: string;
   previousYearLabel?: string;
+  preventFocus?: boolean;
 }
 
 export function MonthPicker({
@@ -40,6 +41,7 @@ export function MonthPicker({
   __staticSelector = 'MonthPicker',
   nextYearLabel,
   previousYearLabel,
+  preventFocus,
   ...others
 }: MonthPickerProps) {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
@@ -55,6 +57,7 @@ export function MonthPicker({
         [classes.monthPickerControlActive]: index === value.month && year === value.year,
       })}
       disabled={!isMonthInRange({ date: new Date(year, index), minDate, maxDate })}
+      onMouseDown={(event) => preventFocus && event.preventDefault()}
     >
       {month}
     </UnstyledButton>
@@ -75,6 +78,7 @@ export function MonthPicker({
         __staticSelector={__staticSelector}
         nextLabel={nextYearLabel}
         previousLabel={previousYearLabel}
+        preventFocus={preventFocus}
       />
       <div className={classes.monthPickerControls}>{months}</div>
     </div>
