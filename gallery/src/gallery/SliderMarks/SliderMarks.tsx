@@ -29,6 +29,7 @@ export function SliderMarks() {
   return (
     <RangeSlider
       mt="xl"
+      mb="xl"
       classNames={classes}
       defaultValue={[30, 60]}
       thumbChildren={<GripVertical />}
