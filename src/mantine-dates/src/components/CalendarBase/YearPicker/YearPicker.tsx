@@ -17,6 +17,7 @@ export interface YearPickerProps
   __staticSelector?: string;
   nextDecadeLabel?: string;
   previousDecadeLabel?: string;
+  preventFocus?: boolean;
 }
 
 export function YearPicker({
@@ -31,6 +32,7 @@ export function YearPicker({
   __staticSelector = 'YearPicker',
   nextDecadeLabel,
   previousDecadeLabel,
+  preventFocus,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
@@ -42,6 +44,7 @@ export function YearPicker({
       key={year}
       onClick={() => onChange(year)}
       disabled={year < minYear || year > maxYear}
+      onMouseDown={(event) => preventFocus && event.preventDefault()}
       className={cx(classes.yearPickerControl, {
         [classes.yearPickerControlActive]: year === value,
       })}
@@ -65,6 +68,7 @@ export function YearPicker({
         styles={styles}
         classNames={classNames}
         __staticSelector={__staticSelector}
+        preventFocus={preventFocus}
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>

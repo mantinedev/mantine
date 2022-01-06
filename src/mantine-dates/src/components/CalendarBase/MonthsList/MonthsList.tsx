@@ -47,6 +47,7 @@ export function MonthsList({
   nextMonthLabel,
   previousMonthLabel,
   labelFormat,
+  preventFocus,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -77,6 +78,7 @@ export function MonthsList({
             nextLabel={nextMonthLabel}
             previousLabel={previousMonthLabel}
             preventLevelFocus={index > 0}
+            preventFocus={preventFocus}
           />
 
           <Month
@@ -91,6 +93,7 @@ export function MonthsList({
             __staticSelector={__staticSelector}
             locale={locale}
             focusable={index === 0}
+            preventFocus={preventFocus}
             {...others}
           />
         </div>

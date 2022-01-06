@@ -27,6 +27,7 @@ export interface CalendarHeaderProps
   nextLabel?: string;
   previousLabel?: string;
   preventLevelFocus?: boolean;
+  preventFocus?: boolean;
 }
 
 const iconSizes = {
@@ -53,6 +54,7 @@ export function CalendarHeader({
   nextLabel,
   previousLabel,
   preventLevelFocus = false,
+  preventFocus,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx, theme } = useStyles(
@@ -64,11 +66,12 @@ export function CalendarHeader({
 
   return (
     <div className={cx(classes.calendarHeader, className)} {...others}>
-      <ActionIcon
+      <ActionIcon<'button'>
         className={classes.calendarHeaderControl}
         disabled={!hasPrevious}
         onClick={onPrevious}
         aria-label={previousLabel}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -78,6 +81,7 @@ export function CalendarHeader({
         disabled={nextLevelDisabled}
         onClick={onNextLevel}
         tabIndex={preventLevelFocus ? -1 : 0}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
       >
         {label}
         {!nextLevelDisabled && (
@@ -89,11 +93,12 @@ export function CalendarHeader({
         )}
       </UnstyledButton>
 
-      <ActionIcon
+      <ActionIcon<'button'>
         className={classes.calendarHeaderControl}
         disabled={!hasNext}
         onClick={onNext}
         aria-label={nextLabel}
+        onMouseDown={(event) => preventFocus && event.preventDefault()}
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>
