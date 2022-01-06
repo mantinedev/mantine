@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsInputProps, itSupportsFocusEvents } from '@mantine/tests';
 import { DateRangePicker, DateRangePickerProps } from './DateRangePicker';
 import { DatePickerBase } from '../DatePickerBase/DatePickerBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -8,6 +8,8 @@ import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 const defaultProps: DateRangePickerProps = {};
 
 describe('@mantine/dates/DateRangePicker', () => {
+  itSupportsInputProps(DateRangePicker, defaultProps, 'DateRangePicker');
+  itSupportsFocusEvents(DateRangePicker, defaultProps, 'input');
   itSupportsSystemProps({
     component: DateRangePicker,
     props: defaultProps,

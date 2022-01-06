@@ -1,13 +1,19 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import {
+  checkAccessibility,
+  itSupportsSystemProps,
+  itSupportsInputProps,
+  itSupportsFocusEvents,
+} from '@mantine/tests';
 import { DatePicker, DatePickerProps } from './DatePicker';
 
 const defaultProps: DatePickerProps = {};
 
 describe('@mantine/dates/DatePicker', () => {
+  itSupportsInputProps(DatePicker, defaultProps, 'DatePicker');
+  itSupportsFocusEvents(DatePicker, defaultProps, 'input');
   checkAccessibility([<DatePicker label="date picker" />]);
-
   itSupportsSystemProps({
     component: DatePicker,
     props: defaultProps,

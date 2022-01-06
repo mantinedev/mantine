@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps, itSupportsInputProps, itSupportsFocusEvents } from '@mantine/tests';
 import { Input, InputWrapper, Modal } from '@mantine/core';
 import { DatePickerBase, DatePickerBaseProps } from './DatePickerBase';
 
@@ -14,6 +14,8 @@ const defaultProps: DatePickerBaseProps = {
 };
 
 describe('@mantine/dates/DatePickerBase', () => {
+  itSupportsInputProps(DatePickerBase, defaultProps, 'DatePickerBase');
+  itSupportsFocusEvents(DatePickerBase, defaultProps, 'input');
   itSupportsSystemProps({
     component: DatePickerBase,
     props: defaultProps,
