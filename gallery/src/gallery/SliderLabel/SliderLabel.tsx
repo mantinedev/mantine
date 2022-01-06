@@ -3,22 +3,26 @@ import { createStyles, RangeSlider } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   label: {
-    backgroundColor: theme.colors[theme.primaryColor][6],
-    top: -9,
-    paddingLeft: 8,
-    paddingRight: 8,
+    top: 0,
+    height: 28,
+    width: 34,
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontWeight: 700,
+    backgroundColor: 'transparent',
+  },
+
+  thumb: {
+    backgroundColor: theme.colors[theme.primaryColor][6],
+    height: 28,
+    width: 34,
+    border: 'none',
   },
 
   dragging: {
     transform: 'translate(-50%, -50%)',
-  },
-
-  bar: {
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.65)
-        : theme.colors[theme.primaryColor][3],
   },
 }));
 
