@@ -115,6 +115,7 @@ export { TableSelection } from './TableSelection/TableSelection';
 export { TableSort } from './TableSort/TableSort';
 
 // Buttons
+export { ButtonCopy } from './ButtonCopy/ButtonCopy';
 export { ButtonMenu } from './ButtonMenu/ButtonMenu';
 export { ButtonProgress } from './ButtonProgress/ButtonProgress';
 export { ButtonsGroup } from './ButtonsGroup/ButtonsGroup';
