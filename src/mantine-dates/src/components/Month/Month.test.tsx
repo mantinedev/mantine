@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Month, MonthProps } from './Month';
-import { Day } from './Day/Day';
+import userEvent from '@testing-library/user-event';
 
 const defaultProps: MonthProps = {
   month: new Date(2021, 11, 1),
@@ -19,25 +19,25 @@ describe('@mantine/dates/Month', () => {
   });
 
   it('renders correct amount of weekdays', () => {
-    const element = shallow(<Month month={new Date()} />);
-    expect(element.render().find('.mantine-Month-weekdayCell')).toHaveLength(7);
+    const { container } = render(<Month month={new Date()} />);
+    expect(container.querySelectorAll('.mantine-Month-weekdayCell')).toHaveLength(7);
   });
 
   it('renders correct amount of days', () => {
-    const element = shallow(<Month month={new Date(2021, 1, 2)} />);
-    expect(element.render().find('tbody tr')).toHaveLength(4);
-    expect(element.render().find('tbody td')).toHaveLength(28);
+    const { container } = render(<Month month={new Date(2021, 1, 2)} />);
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(4);
+    expect(container.querySelectorAll('tbody td')).toHaveLength(28);
 
-    const firstDayOfWeekSunday = shallow(
+    const { container: firstDayOfWeekSunday } = render(
       <Month month={new Date(2021, 1, 2)} firstDayOfWeek="sunday" />
     );
-    expect(firstDayOfWeekSunday.render().find('tbody tr')).toHaveLength(5);
-    expect(firstDayOfWeekSunday.render().find('tbody td')).toHaveLength(35);
+    expect(firstDayOfWeekSunday.querySelectorAll('tbody tr')).toHaveLength(5);
+    expect(firstDayOfWeekSunday.querySelectorAll('tbody td')).toHaveLength(35);
   });
 
   it('assigns values to given daysRefs', () => {
     const daysRefs: HTMLButtonElement[][] = [];
-    mount(<Month {...defaultProps} month={new Date(2021, 11, 1)} daysRefs={daysRefs} />);
+    render(<Month {...defaultProps} month={new Date(2021, 11, 1)} daysRefs={daysRefs} />);
     expect(daysRefs.length).toBe(5);
     expect(daysRefs.every((list) => list.length === 7)).toBe(true);
     expect(daysRefs.every((list) => list.every((date) => date instanceof HTMLButtonElement))).toBe(
@@ -46,136 +46,108 @@ describe('@mantine/dates/Month', () => {
   });
 
   it('adds styles when month days are within range', () => {
-    const withoutRange = shallow(<Month month={new Date(2021, 11, 1)} />);
-    const withRange = shallow(
+    const { container: withoutRange } = render(<Month month={new Date(2021, 11, 1)} />);
+    const { container: withRange } = render(
       <Month
         month={new Date(2021, 11, 1)}
         range={[new Date(2021, 11, 5), new Date(2021, 11, 15)]}
       />
     );
 
-    expect(withRange.render().find('.mantine-Month-firstInRange')).toHaveLength(1);
-    expect(withRange.render().find('.mantine-Month-lastInRange')).toHaveLength(1);
-    expect(withRange.render().find('.mantine-Month-inRange')).toHaveLength(11);
+    expect(withRange.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(1);
+    expect(withRange.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(1);
+    expect(withRange.querySelectorAll('.mantine-Month-inRange')).toHaveLength(11);
 
-    expect(withoutRange.render().find('.mantine-Month-firstInRange')).toHaveLength(0);
-    expect(withoutRange.render().find('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(withoutRange.render().find('.mantine-Month-inRange')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('.mantine-Month-inRange')).toHaveLength(0);
   });
 
   it('does not add styles when month days outside of range', () => {
-    const element = shallow(
+    const { container } = render(
       <Month
         month={new Date(2021, 11, 1)}
         range={[new Date(2021, 10, 5), new Date(2021, 10, 15)]}
       />
     );
 
-    expect(element.render().find('.mantine-Month-firstInRange')).toHaveLength(0);
-    expect(element.render().find('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(element.render().find('.mantine-Month-inRange')).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Month-inRange')).toHaveLength(0);
   });
 
   it('adds partial range styles', () => {
-    const element = shallow(
+    const { container } = render(
       <Month
         month={new Date(2021, 11, 1)}
         range={[new Date(2021, 11, 25), new Date(2021, 12, 15)]}
       />
     );
 
-    expect(element.render().find('.mantine-Month-firstInRange')).toHaveLength(1);
-    expect(element.render().find('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(element.render().find('.mantine-Month-inRange')).toHaveLength(9);
-  });
-
-  it('prevents day focus when preventFocus is true', () => {
-    const preventFocusSpy = jest.fn();
-    const defaultFocusSpy = jest.fn();
-
-    const preventFocus = shallow(<Month {...defaultProps} preventFocus />);
-    const defaultFocus = shallow(<Month {...defaultProps} preventFocus={false} />);
-
-    preventFocus.find(Day).at(0).simulate('mousedown', { preventDefault: preventFocusSpy });
-    defaultFocus.find(Day).at(0).simulate('mousedown', { preventDefault: defaultFocusSpy });
-
-    expect(preventFocusSpy).toHaveBeenCalledTimes(1);
-    expect(defaultFocusSpy).toHaveBeenCalledTimes(0);
+    expect(container.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(1);
+    expect(container.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
+    expect(container.querySelectorAll('.mantine-Month-inRange')).toHaveLength(9);
   });
 
   it('calls onChange with Date object when Day is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<Month month={new Date(2021, 11, 1)} onChange={spy} />);
-    element.find(Day).at(0).simulate('click');
+    render(<Month month={new Date(2021, 11, 1)} onChange={spy} />);
+    userEvent.click(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29));
   });
 
   it('handles mouseenter events correctly on Day', () => {
     const spy = jest.fn();
-    const element = shallow(<Month month={new Date(2021, 11, 1)} onDayMouseEnter={spy} />);
-    element.find(Day).at(0).dive().simulate('mouseenter', { event: 'test-event' });
-    expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29), { event: 'test-event' });
+    render(<Month month={new Date(2021, 11, 1)} onDayMouseEnter={spy} />);
+    userEvent.hover(screen.getAllByRole('button')[0]);
+    expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29), expect.anything());
   });
 
   it('sets Day style based on dayStyle function', () => {
-    const element = shallow(<Month {...defaultProps} dayStyle={() => ({ background: 'red' })} />);
-    expect(element.find(Day).at(0).prop('style')).toEqual({ background: 'red' });
+    render(<Month {...defaultProps} dayStyle={() => ({ background: 'red' })} />);
+    expect(screen.getAllByRole('button')[0]).toHaveStyle({ background: 'red' });
   });
 
   it('sets Day className based on dayClassName function', () => {
-    const element = shallow(<Month {...defaultProps} dayClassName={() => 'test-class'} />);
-    expect(element.find(Day).at(0).prop('className')).toBe('test-class');
-  });
-
-  it('passes __staticSelector to Day components', () => {
-    const element = shallow(<Month {...defaultProps} __staticSelector="Test" />);
-    expect(element.find(Day).at(0).prop('__staticSelector')).toBe('Test');
+    render(<Month {...defaultProps} dayClassName={() => 'test-class'} />);
+    expect(screen.getAllByRole('button')[0]).toHaveClass('test-class');
   });
 
   it('displays selected date', () => {
-    const element = shallow(<Month month={new Date(2021, 11, 1)} value={new Date(2021, 11, 5)} />);
-    expect(element.find(Day).at(6).prop('selected')).toBe(true);
-    expect(element.find(Day).at(7).prop('selected')).toBe(false);
-    expect(element.find(Day).at(5).prop('selected')).toBe(false);
+    render(<Month month={new Date(2021, 11, 1)} value={new Date(2021, 11, 5)} />);
+    const days = screen.getAllByRole('button');
+    expect(days[6]).toHaveClass('mantine-Month-selected');
+    expect(days[7]).not.toHaveClass('mantine-Month-selected');
+    expect(days[5]).not.toHaveClass('mantine-Month-selected');
   });
 
   it('changes first day of week based on prop', () => {
-    const sunday = shallow(<Month {...defaultProps} firstDayOfWeek="sunday" locale="en" />);
-    const monday = shallow(<Month {...defaultProps} firstDayOfWeek="monday" locale="en" />);
+    const { container: sunday } = render(
+      <Month {...defaultProps} firstDayOfWeek="sunday" locale="en" />
+    );
+    const { container: monday } = render(
+      <Month {...defaultProps} firstDayOfWeek="monday" locale="en" />
+    );
 
-    expect(sunday.find('.mantine-Month-weekdayCell').at(0).text()).toBe('Su');
-    expect(sunday.find('.mantine-Month-weekdayCell').at(6).text()).toBe('Sa');
+    expect(sunday.querySelectorAll('.mantine-Month-weekdayCell')[0].textContent).toBe('Su');
+    expect(sunday.querySelectorAll('.mantine-Month-weekdayCell')[6].textContent).toBe('Sa');
 
-    expect(monday.find('.mantine-Month-weekdayCell').at(0).text()).toBe('Mo');
-    expect(monday.find('.mantine-Month-weekdayCell').at(6).text()).toBe('Su');
+    expect(monday.querySelectorAll('.mantine-Month-weekdayCell')[0].textContent).toBe('Mo');
+    expect(monday.querySelectorAll('.mantine-Month-weekdayCell')[6].textContent).toBe('Su');
   });
 
   it('does not render weekdays if hideWeekdays is true', () => {
-    const withWeekdays = shallow(<Month {...defaultProps} hideWeekdays={false} />);
-    const withoutWeekdays = shallow(<Month {...defaultProps} hideWeekdays />);
-
-    expect(withWeekdays.render().find('thead')).toHaveLength(1);
-    expect(withoutWeekdays.render().find('thead')).toHaveLength(0);
-  });
-
-  it('passes classNames and styles to Day component', () => {
-    const element = shallow(
-      <Month
-        {...defaultProps}
-        classNames={{ day: 'test-className' }}
-        styles={{ firstInRange: { color: 'red' } }}
-      />
-    );
-    const props = element.find(Day).at(0).props();
-    expect(props.classNames).toEqual({ day: 'test-className' });
-    expect(props.styles).toEqual({ firstInRange: { color: 'red' } });
+    const { container: withWeekdays } = render(<Month {...defaultProps} hideWeekdays={false} />);
+    const { container: withoutWeekdays } = render(<Month {...defaultProps} hideWeekdays />);
+    expect(withWeekdays.querySelectorAll('thead')).toHaveLength(1);
+    expect(withoutWeekdays.querySelectorAll('thead')).toHaveLength(0);
   });
 
   it('renders weekday names with given locale', () => {
-    const en = shallow(<Month {...defaultProps} locale="en" />);
-    const ru = shallow(<Month {...defaultProps} locale="ru" />);
+    const { container: en } = render(<Month {...defaultProps} locale="en" />);
+    const { container: ru } = render(<Month {...defaultProps} locale="ru" />);
 
-    expect(en.find('th').at(0).text()).toBe('Mo');
-    expect(ru.find('th').at(0).text()).toBe('Пн');
+    expect(en.querySelector('th').textContent).toBe('Mo');
+    expect(ru.querySelector('th').textContent).toBe('Пн');
   });
 });
