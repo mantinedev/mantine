@@ -74,7 +74,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             disabled={disabled}
             {...rest}
           />
-          <span>{children}</span>
+          {children && <span>{children}</span>}
         </label>
       </Box>
     );
