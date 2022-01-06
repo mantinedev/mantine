@@ -20,6 +20,7 @@ const GALLERY_CATEGORIES = [
       { slug: 'users', name: 'User info and controls' },
       { slug: 'authentication', name: 'Authentication' },
       { slug: 'inputs', name: 'Inputs' },
+      { slug: 'buttons', name: 'Buttons' },
       { slug: 'sliders', name: 'Sliders' },
       { slug: 'dropzones', name: 'Dropzones' },
       { slug: 'app-cards', name: 'Application cards' },
