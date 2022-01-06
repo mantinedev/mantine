@@ -55,7 +55,7 @@ export function AuthenticationImage() {
 
         <TextInput label="Email address" placeholder="hello@gmail.com" size="md" />
         <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" />
-        <Checkbox label="Keep me logged it" mt="xl" size="md" />
+        <Checkbox label="Keep me logged in" mt="xl" size="md" />
         <Button fullWidth mt="xl" size="md">
           Login
         </Button>
