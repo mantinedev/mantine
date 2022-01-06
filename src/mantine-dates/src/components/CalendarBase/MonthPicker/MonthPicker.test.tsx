@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
-import { MonthPicker } from './MonthPicker';
+import { MonthPicker, MonthPickerProps } from './MonthPicker';
 import userEvent from '@testing-library/user-event';
 
 const CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControl';
@@ -9,7 +9,7 @@ const ACTIVE_CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControlActive';
 const LEVEL_SELECTOR = '.mantine-MonthPicker-calendarHeaderLevel';
 const HEADER_CONTROL_SELECTOR = '.mantine-MonthPicker-calendarHeaderControl';
 
-const defaultProps = {
+const defaultProps: MonthPickerProps = {
   value: { year: 2021, month: 11 },
   onChange: () => {},
   locale: 'en',
