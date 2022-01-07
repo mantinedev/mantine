@@ -1,7 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
-import { Button } from '../Button';
+import { itFiltersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -23,21 +21,10 @@ describe('@mantine/core/Timeline', () => {
     refType: HTMLDivElement,
   });
 
-  it('filters out unexpected children', () => {
-    const { container } = render(
-      <Timeline>
-        <Timeline.Item>Child 1</Timeline.Item>
-        <p className="unexpected">Unexpected child 1</p>
-        <div className="unexpected">Unexpected child 1</div>
-        <Timeline.Item>Child 2</Timeline.Item>
-        <Button>Unexpected component</Button>
-      </Timeline>
-    );
-
-    expect(container.querySelectorAll('.mantine-Timeline-item')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
-    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
-  });
+  itFiltersChildren(Timeline, defaultProps, '.mantine-Timeline-item', [
+    <Timeline.Item>Child 1</Timeline.Item>,
+    <Timeline.Item>Child 2</Timeline.Item>,
+  ]);
 
   it('exposes TimelineItem as Timeline.Item', () => {
     expect(Timeline.Item).toBe(TimelineItem);
