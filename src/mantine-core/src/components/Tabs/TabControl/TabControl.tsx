@@ -10,10 +10,12 @@ export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,
     React.ComponentPropsWithRef<'button'> {
   active?: boolean;
+
   color?: MantineColor;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';
   icon?: React.ReactNode;
+  tabKey?: string;
   label?: React.ReactNode;
   children?: React.ReactNode;
   ref?: React.ForwardedRef<HTMLButtonElement>;
@@ -32,6 +34,7 @@ export const TabControl = forwardRef<HTMLButtonElement, TabControlProps>(
       icon: __,
       label,
       icon,
+      tabKey,
       color: overrideColor,
       ...others
     }: TabControlProps,
