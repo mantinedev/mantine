@@ -11,7 +11,7 @@ export interface SpaceProps extends DefaultProps {
 }
 
 export const Space = forwardRef<HTMLDivElement, SpaceProps>(
-  ({ w, h, sx, ...others }: SpaceProps, ref) => (
+  ({ w = 0, h = 0, sx, ...others }: SpaceProps, ref) => (
     <Box
       ref={ref}
       sx={[
