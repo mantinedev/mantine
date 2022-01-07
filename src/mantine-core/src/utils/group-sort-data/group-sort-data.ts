@@ -1,9 +1,5 @@
-interface SelectedItem {
-  group?: string;
-}
-
 interface GroupData {
-  data: SelectedItem[];
+  data: { group?: string }[];
 }
 
 export function groupSortData({ data }: GroupData) {
@@ -22,6 +18,7 @@ export function groupSortData({ data }: GroupData) {
   Object.keys(groupedData).forEach((groupName) => {
     sortedData.push(...groupedData[groupName].map((index) => data[index]));
   });
+
   sortedData.push(...unGroupedData.map((itemIndex) => data[itemIndex]));
 
   return sortedData;
