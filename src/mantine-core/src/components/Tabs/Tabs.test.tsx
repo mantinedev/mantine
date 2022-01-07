@@ -16,8 +16,24 @@ const content = [
   </Tabs.Tab>,
 ];
 
+const contentWithTabKeys = [
+  <Tabs.Tab label="tab-1" key="tab-1" icon="test-icon" tabKey="tab-1">
+    tab-1
+  </Tabs.Tab>,
+  <Tabs.Tab label="tab-2" key="tab-2">
+    tab-2
+  </Tabs.Tab>,
+  <Tabs.Tab label="tab-3" key="tab-3" tabKey="tab-3">
+    tab-3
+  </Tabs.Tab>,
+];
+
 const defaultProps: TabsProps = {
   children: content,
+};
+
+const tabKeyProps: TabsProps = {
+  children: contentWithTabKeys,
 };
 
 const tabPanelContent = () => screen.getByRole('tabpanel').textContent;
@@ -51,6 +67,15 @@ describe('@mantine/core/Tabs', () => {
     activateTab(2);
     activateTab(2);
     expect(spy).toHaveBeenCalledTimes(2);
+  });
+
+  it('calls onTabChange when tab control is clicked, with mixed tabKey props', () => {
+    const spy = jest.fn();
+    render(<Tabs {...tabKeyProps} initialTab={1} onTabChange={spy} />);
+    activateTab(0);
+    expect(spy).toHaveBeenCalledWith(0, 'tab-1');
+    activateTab(1);
+    expect(spy).toHaveBeenCalledWith(1, undefined);
   });
 
   it.each([
