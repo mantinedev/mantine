@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
@@ -6,6 +6,7 @@ import {
   getDefaultZIndex,
   MantineNumberSize,
 } from '@mantine/styles';
+import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
 import useStyles from './Tooltip.styles';
@@ -62,106 +63,111 @@ export interface TooltipProps
   withinPortal?: boolean;
 }
 
-export function Tooltip({
-  className,
-  label,
-  children,
-  opened,
-  delay = 0,
-  gutter = 5,
-  color = 'gray',
-  radius = 'sm',
-  disabled = false,
-  withArrow = false,
-  arrowSize = 2,
-  position = 'top',
-  placement = 'center',
-  transition = 'pop-top-left',
-  transitionDuration = 100,
-  zIndex = getDefaultZIndex('popover'),
-  transitionTimingFunction,
-  width = 'auto',
-  wrapLines = false,
-  allowPointerEvents = false,
-  positionDependencies = [],
-  withinPortal = true,
-  tooltipRef,
-  tooltipId,
-  classNames,
-  styles,
-  onMouseLeave,
-  onMouseEnter,
-  ...others
-}: TooltipProps) {
-  const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
-  const timeoutRef = useRef<number>();
-  const [_opened, setOpened] = useState(false);
-  const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
-  const [referenceElement, setReferenceElement] = useState(null);
+export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
+  (
+    {
+      className,
+      label,
+      children,
+      opened,
+      delay = 0,
+      gutter = 5,
+      color = 'gray',
+      radius = 'sm',
+      disabled = false,
+      withArrow = false,
+      arrowSize = 2,
+      position = 'top',
+      placement = 'center',
+      transition = 'pop-top-left',
+      transitionDuration = 100,
+      zIndex = getDefaultZIndex('popover'),
+      transitionTimingFunction,
+      width = 'auto',
+      wrapLines = false,
+      allowPointerEvents = false,
+      positionDependencies = [],
+      withinPortal = true,
+      tooltipRef,
+      tooltipId,
+      classNames,
+      styles,
+      onMouseLeave,
+      onMouseEnter,
+      ...others
+    }: TooltipProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
+    const timeoutRef = useRef<number>();
+    const [_opened, setOpened] = useState(false);
+    const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
+    const [referenceElement, setReferenceElement] = useState(null);
 
-  const handleOpen = () => {
-    window.clearTimeout(timeoutRef.current);
-    setOpened(true);
-  };
+    const handleOpen = () => {
+      window.clearTimeout(timeoutRef.current);
+      setOpened(true);
+    };
 
-  const handleClose = () => {
-    if (delay !== 0) {
-      timeoutRef.current = window.setTimeout(() => {
+    const handleClose = () => {
+      if (delay !== 0) {
+        timeoutRef.current = window.setTimeout(() => {
+          setOpened(false);
+        }, delay);
+      } else {
         setOpened(false);
-      }, delay);
-    } else {
-      setOpened(false);
-    }
-  };
+      }
+    };
 
-  return (
-    <Box<'div'>
-      className={cx(classes.root, className)}
-      onMouseEnter={(event) => {
-        handleOpen();
-        typeof onMouseEnter === 'function' && onMouseEnter(event);
-      }}
-      onMouseLeave={(event) => {
-        handleClose();
-        typeof onMouseLeave === 'function' && onMouseLeave(event);
-      }}
-      onFocusCapture={handleOpen}
-      onBlurCapture={handleClose}
-      ref={setReferenceElement}
-      {...others}
-    >
-      <Popper
-        referenceElement={referenceElement}
-        transitionDuration={transitionDuration}
-        transition={transition}
-        mounted={visible}
-        position={position}
-        placement={placement}
-        gutter={gutter}
-        withArrow={withArrow}
-        arrowSize={arrowSize}
-        arrowDistance={7}
-        zIndex={zIndex}
-        arrowClassName={classes.arrow}
-        forceUpdateDependencies={[color, radius, ...positionDependencies]}
-        withinPortal={withinPortal}
+    return (
+      <Box<'div'>
+        className={cx(classes.root, className)}
+        onMouseEnter={(event) => {
+          handleOpen();
+          typeof onMouseEnter === 'function' && onMouseEnter(event);
+        }}
+        onMouseLeave={(event) => {
+          handleClose();
+          typeof onMouseLeave === 'function' && onMouseLeave(event);
+        }}
+        onFocusCapture={handleOpen}
+        onBlurCapture={handleClose}
+        ref={mergeRefs(setReferenceElement, ref)}
+        {...others}
       >
-        <div
-          className={classes.body}
-          ref={tooltipRef}
-          style={{
-            pointerEvents: allowPointerEvents ? 'all' : 'none',
-            whiteSpace: wrapLines ? 'normal' : 'nowrap',
-            width,
-          }}
+        <Popper
+          referenceElement={referenceElement}
+          transitionDuration={transitionDuration}
+          transition={transition}
+          mounted={visible}
+          position={position}
+          placement={placement}
+          gutter={gutter}
+          withArrow={withArrow}
+          arrowSize={arrowSize}
+          arrowDistance={7}
+          zIndex={zIndex}
+          arrowClassName={classes.arrow}
+          forceUpdateDependencies={[color, radius, ...positionDependencies]}
+          withinPortal={withinPortal}
         >
-          {label}
-        </div>
-      </Popper>
+          <div
+            className={classes.body}
+            ref={tooltipRef}
+            style={{
+              pointerEvents: allowPointerEvents ? 'all' : 'none',
+              whiteSpace: wrapLines ? 'normal' : 'nowrap',
+              width,
+            }}
+          >
+            {label}
+          </div>
+        </Popper>
 
-      {children}
-    </Box>
-  );
-}
+        {children}
+      </Box>
+    );
+  }
+);
 
 Tooltip.displayName = '@mantine/core/Tooltip';

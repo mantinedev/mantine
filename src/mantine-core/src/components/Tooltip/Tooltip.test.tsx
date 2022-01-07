@@ -24,6 +24,7 @@ describe('@mantine/core/Tooltip', () => {
     component: Tooltip,
     props: defaultProps,
     displayName: '@mantine/core/Tooltip',
+    refType: HTMLDivElement,
   });
 
   it('renders given label', async () => {
