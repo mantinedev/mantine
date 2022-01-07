@@ -44,7 +44,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
   (
     {
       children,
-      active,
+      active = -1,
       color,
       radius = 'xl',
       bulletSize = 20,
@@ -57,8 +57,6 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
     }: TimelineProps,
     ref
   ) => {
-    const hasActive = typeof active === 'number';
-
     const items = filterChildrenByType(children, TimelineItem).map(
       (item: React.ReactElement, index) =>
         React.cloneElement(item, {
@@ -69,8 +67,8 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
           radius: item.props.radius || radius,
           color: item.props.color || color,
           bulletSize: item.props.bulletSize || bulletSize,
-          active: item.props.active || (hasActive && active >= index),
-          lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
+          active: item.props.active || active >= index,
+          lineActive: item.props.lineActive || active - 1 >= index,
         })
     );
 
