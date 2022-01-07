@@ -9,3 +9,4 @@ export { loading } from './loading';
 export { stepColor } from './stepColor';
 export { stylesApi } from './stylesApi';
 export { stylesApi2 } from './stylesApi2';
+export { allowStepSelect } from './allowStepSelect';
