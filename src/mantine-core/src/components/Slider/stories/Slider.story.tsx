@@ -13,7 +13,14 @@ function RangeWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeSlider>, 'value' | 'onChange'>
 ) {
   const [value, setValue] = useState<[number, number]>([50, 100]);
-  return <RangeSlider value={value} onChange={setValue} {...props} />;
+  return (
+    <>
+      <RangeSlider value={value} onChange={setValue} mb={30} {...props} />
+      <button type="button" onClick={() => setValue([25, 50])}>
+        Set range
+      </button>
+    </>
+  );
 }
 
 storiesOf('@mantine/core/Slider/stories', module)

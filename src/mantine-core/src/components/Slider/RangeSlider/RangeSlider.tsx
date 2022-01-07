@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import { useMove, useUncontrolled, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
@@ -136,6 +136,15 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       setValue(val);
       _valueRef.current = val;
     };
+
+    useEffect(
+      () => {
+        if (Array.isArray(value)) {
+          _valueRef.current = value;
+        }
+      },
+      Array.isArray(value) ? [value[0], value[1]] : [null, null]
+    );
 
     const setRangedValue = (val: number, index: number) => {
       const clone: Value = [..._valueRef.current];

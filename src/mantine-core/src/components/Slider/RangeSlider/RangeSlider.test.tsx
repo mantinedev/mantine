@@ -8,6 +8,12 @@ const defaultProps = {
   thumbToLabel: 'test-label',
 };
 
+const getInput = (container: HTMLElement, index: 0 | 1) =>
+  container.querySelectorAll('input[type="hidden"]')[index];
+
+const expectInputValue = (value: string, container: HTMLElement, index: 0 | 1) =>
+  expect(getInput(container, index)).toHaveValue(value);
+
 describe('@mantine/core/RangeSlider', () => {
   checkAccessibility([<RangeSlider {...defaultProps} />]);
   itSupportsSystemProps({
@@ -19,10 +25,9 @@ describe('@mantine/core/RangeSlider', () => {
 
   it('provides name and value to hidden inputs', () => {
     const { container } = render(<RangeSlider name="test-input" value={[10, 20]} />);
-    const inputs = container.querySelectorAll('input[type="hidden"]');
-    expect(inputs[0]).toHaveValue('10');
-    expect(inputs[1]).toHaveValue('20');
-    expect(inputs[0]).toHaveAttribute('name', 'test-input_from');
-    expect(inputs[1]).toHaveAttribute('name', 'test-input_to');
+    expectInputValue('10', container, 0);
+    expectInputValue('20', container, 1);
+    expect(getInput(container, 0)).toHaveAttribute('name', 'test-input_from');
+    expect(getInput(container, 1)).toHaveAttribute('name', 'test-input_to');
   });
 });
