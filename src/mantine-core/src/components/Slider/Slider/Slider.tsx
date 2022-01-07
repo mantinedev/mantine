@@ -1,5 +1,5 @@
 import React, { useRef, useState, forwardRef } from 'react';
-import { useUncontrolled, useMove, useMergedRef } from '@mantine/hooks';
+import { useUncontrolled, useMove, useMergedRef, clamp } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getPosition } from '../utils/get-position/get-position';
@@ -94,7 +94,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       marks = [],
       label = (f) => f,
       labelTransition = 'skew-down',
-      labelTransitionDuration = 150,
+      labelTransitionDuration = 0,
       labelTransitionTimingFunction,
       labelAlwaysOn = false,
       thumbLabel = '',
@@ -106,9 +106,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
   ) => {
     const [hovered, setHovered] = useState(false);
     const [_value, setValue] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: 0,
+      value: typeof value === 'number' ? clamp({ value, min, max }) : value,
+      defaultValue:
+        typeof defaultValue === 'number' ? clamp({ value: defaultValue, min, max }) : defaultValue,
+      finalValue: clamp({ value: 0, min, max }),
       rule: (val) => typeof val === 'number',
       onChange,
     });
