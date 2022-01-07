@@ -89,6 +89,8 @@ export function Tooltip({
   tooltipId,
   classNames,
   styles,
+  onMouseLeave,
+  onMouseEnter,
   ...others
 }: TooltipProps) {
   const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
@@ -113,10 +115,16 @@ export function Tooltip({
   };
 
   return (
-    <Box
+    <Box<'div'>
       className={cx(classes.root, className)}
-      onMouseEnter={handleOpen}
-      onMouseLeave={handleClose}
+      onMouseEnter={(event) => {
+        handleOpen();
+        typeof onMouseEnter === 'function' && onMouseEnter(event);
+      }}
+      onMouseLeave={(event) => {
+        handleClose();
+        typeof onMouseLeave === 'function' && onMouseLeave(event);
+      }}
       onFocusCapture={handleOpen}
       onBlurCapture={handleClose}
       ref={setReferenceElement}
