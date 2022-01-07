@@ -4,6 +4,7 @@ import {
   MantineColor,
   ForwardRefWithStaticComponents,
   MantineNumberSize,
+  CSSObject,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -43,7 +44,6 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
   (
     {
       children,
-      style,
       active,
       color,
       radius = 'xl',
@@ -52,6 +52,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       lineWidth = 4,
       classNames,
       styles,
+      sx,
       ...others
     }: TimelineProps,
     ref
@@ -73,13 +74,13 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         })
     );
 
-    const offset: React.CSSProperties =
+    const offset: CSSObject =
       align === 'left'
         ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
         : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
     return (
-      <Box ref={ref} style={{ ...offset, ...style }} {...others}>
+      <Box ref={ref} sx={[offset, sx]} {...others}>
         {items}
       </Box>
     );
