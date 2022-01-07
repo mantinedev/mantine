@@ -49,7 +49,13 @@ export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
     );
 
     const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-      React.cloneElement(col, { gutter, grow, columns, key: index })
+      React.cloneElement(col, {
+        gutter,
+        grow,
+        columns,
+        span: col.props.span || columns,
+        key: index,
+      })
     );
 
     return (

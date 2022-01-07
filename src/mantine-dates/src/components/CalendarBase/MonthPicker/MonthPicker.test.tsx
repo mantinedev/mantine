@@ -1,15 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
-import { CalendarHeader } from '../CalendarHeader/CalendarHeader';
-import { MonthPicker } from './MonthPicker';
+import { MonthPicker, MonthPickerProps } from './MonthPicker';
+import userEvent from '@testing-library/user-event';
 
 const CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControl';
 const ACTIVE_CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControlActive';
 const LEVEL_SELECTOR = '.mantine-MonthPicker-calendarHeaderLevel';
 const HEADER_CONTROL_SELECTOR = '.mantine-MonthPicker-calendarHeaderControl';
 
-const defaultProps = {
+const defaultProps: MonthPickerProps = {
   value: { year: 2021, month: 11 },
   onChange: () => {},
   locale: 'en',
@@ -25,102 +25,87 @@ describe('@mantine/core/MonthPicker', () => {
   ]);
 
   it('renders correct amount of controls', () => {
-    const notDisabled = shallow(<MonthPicker {...defaultProps} />);
-    const disabled = shallow(
+    const { container: notDisabled } = render(<MonthPicker {...defaultProps} />);
+    const { container: disabled } = render(
       <MonthPicker
         {...defaultProps}
         minDate={new Date(2021, 1, 1)}
         maxDate={new Date(2021, 5, 1)}
       />
     );
-    expect(notDisabled.find(CONTROL_SELECTOR)).toHaveLength(12);
-    expect(disabled.find(CONTROL_SELECTOR)).toHaveLength(12);
+    expect(notDisabled.querySelectorAll(CONTROL_SELECTOR)).toHaveLength(12);
+    expect(disabled.querySelectorAll(CONTROL_SELECTOR)).toHaveLength(12);
   });
 
   it('sets CalendarHeader label based on current selected year', () => {
-    const element = shallow(<MonthPicker {...defaultProps} year={2031} />);
-    expect(element.render().find(LEVEL_SELECTOR).text()).toBe('2031');
+    render(<MonthPicker {...defaultProps} year={2031} />);
+    expect(screen.getByText('2031')).toBeInTheDocument();
   });
 
   it('calls onYearChange when next/previous buttons are clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<MonthPicker {...defaultProps} year={2031} onYearChange={spy} />);
-    const header = element.find(CalendarHeader).dive();
-    const nextControl = header.find(HEADER_CONTROL_SELECTOR).at(1);
-    const previousControl = header.find(HEADER_CONTROL_SELECTOR).at(0);
-
-    nextControl.simulate('click');
+    const { container } = render(<MonthPicker {...defaultProps} year={2031} onYearChange={spy} />);
+    const controls = container.querySelectorAll(HEADER_CONTROL_SELECTOR);
+    userEvent.click(controls[1]);
     expect(spy).toHaveBeenLastCalledWith(2032);
-
-    previousControl.simulate('click');
+    userEvent.click(controls[0]);
     expect(spy).toHaveBeenLastCalledWith(2030);
   });
 
   it('sets disabled prop on month controls that are out of range', () => {
-    const element = shallow(
+    const { container } = render(
       <MonthPicker
         {...defaultProps}
         minDate={new Date(2021, 1, 1)}
         maxDate={new Date(2021, 5, 1)}
       />
     );
-    expect(element.find(CONTROL_SELECTOR).at(0).prop('disabled')).toBe(true);
-    expect(element.find(CONTROL_SELECTOR).at(3).prop('disabled')).toBe(false);
-    expect(element.find(CONTROL_SELECTOR).at(11).prop('disabled')).toBe(true);
+    const controls = container.querySelectorAll(CONTROL_SELECTOR);
+    expect(controls[0]).toBeDisabled();
+    expect(controls[3]).not.toBeDisabled();
+    expect(controls[11]).toBeDisabled();
   });
 
   it('adds active styles to selected month', () => {
-    const element = shallow(<MonthPicker {...defaultProps} value={{ year: 2021, month: 11 }} />);
-    expect(element.find(ACTIVE_CONTROL_SELECTOR).text()).toBe('Dec');
+    const { container } = render(
+      <MonthPicker {...defaultProps} value={{ year: 2021, month: 11 }} />
+    );
+    expect(container.querySelector(ACTIVE_CONTROL_SELECTOR).textContent).toBe('Dec');
   });
 
   it('calls onChange when month control button is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<MonthPicker {...defaultProps} onChange={spy} />);
-    element.find(CONTROL_SELECTOR).at(3).simulate('click');
+    const { container } = render(<MonthPicker {...defaultProps} onChange={spy} />);
+    userEvent.click(container.querySelectorAll(CONTROL_SELECTOR)[3]);
     expect(spy).toHaveBeenCalledWith(3);
   });
 
-  it('passes __staticSelector, classNames and styles to CalendarHeader', () => {
-    const element = shallow(
-      <MonthPicker
-        {...defaultProps}
-        __staticSelector="Test"
-        classNames={{ calendarHeader: 'test-header' }}
-        styles={{ calendarHeaderControl: { background: 'red' } }}
-      />
+  it('sets hasNext/hasPrevious CalendarHeader props based on minDate/maxDate props', () => {
+    const { container: withMaxYear } = render(
+      <MonthPicker {...defaultProps} maxDate={new Date(2021, 11, 1)} />
+    );
+    const { container: withMinYear } = render(
+      <MonthPicker {...defaultProps} minDate={new Date(2021, 11, 1)} />
     );
 
-    const props = element.find(CalendarHeader).props();
-    expect(props.__staticSelector).toBe('Test');
-    expect(props.styles).toEqual({ calendarHeaderControl: { background: 'red' } });
-    expect(props.classNames).toEqual({ calendarHeader: 'test-header' });
-  });
-
-  it('sets hasNext/hasPrevious CalendarHeader props based on minDate/maxDate props', () => {
-    const withMaxYear = shallow(<MonthPicker {...defaultProps} maxDate={new Date(2021, 11, 1)} />);
-    const withMinYear = shallow(<MonthPicker {...defaultProps} minDate={new Date(2021, 11, 1)} />);
-
-    expect(withMaxYear.find(CalendarHeader).prop('hasNext')).toBe(false);
-    expect(withMaxYear.find(CalendarHeader).prop('hasPrevious')).toBe(true);
-
-    expect(withMinYear.find(CalendarHeader).prop('hasNext')).toBe(true);
-    expect(withMinYear.find(CalendarHeader).prop('hasPrevious')).toBe(false);
+    expect(withMaxYear.querySelectorAll(HEADER_CONTROL_SELECTOR)[0]).not.toBeDisabled();
+    expect(withMaxYear.querySelectorAll(HEADER_CONTROL_SELECTOR)[1]).toBeDisabled();
+    expect(withMinYear.querySelectorAll(HEADER_CONTROL_SELECTOR)[0]).toBeDisabled();
+    expect(withMinYear.querySelectorAll(HEADER_CONTROL_SELECTOR)[1]).not.toBeDisabled();
   });
 
   it('passes nextLabel/previousLabel props to CalendarHeader component', () => {
-    const element = shallow(
+    render(
       <MonthPicker {...defaultProps} nextYearLabel="next-test" previousYearLabel="previous-test" />
     );
-
-    expect(element.find(CalendarHeader).prop('nextLabel')).toBe('next-test');
-    expect(element.find(CalendarHeader).prop('previousLabel')).toBe('previous-test');
+    expect(screen.getByLabelText('next-test')).toBeInTheDocument();
+    expect(screen.getByLabelText('previous-test')).toBeInTheDocument();
   });
 
   it('calls onNextLevel when level label is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(<MonthPicker {...defaultProps} onNextLevel={spy} />);
-    element.find(CalendarHeader).dive().find(LEVEL_SELECTOR).simulate('click');
+    const { container } = render(<MonthPicker {...defaultProps} onNextLevel={spy} />);
+    userEvent.click(container.querySelector(LEVEL_SELECTOR));
     expect(spy).toHaveBeenCalled();
   });
 

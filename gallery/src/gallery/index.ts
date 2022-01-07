@@ -80,6 +80,8 @@ export { SliderIcon } from './SliderIcon/SliderIcon';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SliderLabel } from './SliderLabel/SliderLabel';
 export { SliderHover } from './SliderHover/SliderHover';
+export { SliderMarks } from './SliderMarks/SliderMarks';
+export { SliderWhite } from './SliderWhite/SliderWhite';
 
 // Footers
 export { FooterCentered } from './FooterCentered/FooterCentered';
@@ -103,3 +105,19 @@ export { StatsGridIcons } from './StatsGridIcons/StatsGridIcons';
 export { StatsGroup } from './StatsGroup/StatsGroup';
 export { StatsRing } from './StatsRing/StatsRing';
 export { StatsSegments } from './StatsSegments/StatsSegments';
+
+// Grids
+export { GridAsymmetrical } from './GridAsymmetrical/GridAsymmetrical';
+export { Subgrid } from './Subgrid/Subgrid';
+
+// Tables
+export { TableReviews } from './TableReviews/TableReviews';
+export { TableScrollArea } from './TableScrollArea/TableScrollArea';
+export { TableSelection } from './TableSelection/TableSelection';
+export { TableSort } from './TableSort/TableSort';
+
+// Buttons
+export { ButtonCopy } from './ButtonCopy/ButtonCopy';
+export { ButtonMenu } from './ButtonMenu/ButtonMenu';
+export { ButtonProgress } from './ButtonProgress/ButtonProgress';
+export { ButtonsGroup } from './ButtonsGroup/ButtonsGroup';

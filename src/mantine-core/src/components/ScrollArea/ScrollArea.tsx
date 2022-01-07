@@ -26,6 +26,9 @@ export interface ScrollAreaProps
 
   /** Get viewport ref */
   viewportRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Subscribe to scroll position changes */
+  onScrollPositionChange?(position: { x: number; y: number }): void;
 }
 
 export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
@@ -41,6 +44,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       dir = 'ltr',
       offsetScrollbars = false,
       viewportRef,
+      onScrollPositionChange,
       ...others
     }: ScrollAreaProps,
     ref
@@ -60,7 +64,19 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         asChild
       >
         <Box className={cx(classes.root, className)} {...others}>
-          <RadixScrollArea.Viewport className={classes.viewport} ref={viewportRef}>
+          <RadixScrollArea.Viewport
+            className={classes.viewport}
+            ref={viewportRef}
+            onScroll={
+              typeof onScrollPositionChange === 'function'
+                ? ({ currentTarget }) =>
+                    onScrollPositionChange({
+                      x: currentTarget.scrollLeft,
+                      y: currentTarget.scrollTop,
+                    })
+                : undefined
+            }
+          >
             {children}
           </RadixScrollArea.Viewport>
           <RadixScrollArea.Scrollbar

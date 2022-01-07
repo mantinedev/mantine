@@ -5,7 +5,7 @@ import useStyles from './Col.styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Default col span */
-  span: number;
+  span?: number;
 
   /** Total amount of columns, controlled by Grid component */
   columns?: number;

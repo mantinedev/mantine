@@ -1,5 +1,5 @@
 import React, { useRef, createRef } from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { useMergedRef } from './use-merged-ref';
 
 function TestComponent({ refs }: { refs: React.ForwardedRef<HTMLButtonElement>[] }) {
@@ -15,8 +15,7 @@ describe('@mantine/hook/use-merged-ref', () => {
       fnRefValue = node;
     };
 
-    mount(<TestComponent refs={[objectRef, fnRef]} />);
-
+    render(<TestComponent refs={[objectRef, fnRef]} />);
     expect(fnRefValue instanceof HTMLButtonElement).toBe(true);
     expect(objectRef.current instanceof HTMLButtonElement).toBe(true);
   });

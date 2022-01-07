@@ -8,14 +8,23 @@ date: 'January 3rd, 2022'
 ---
 
 import { TimeInputDemos } from '@demos/dates';
+import { TableDemos, ScrollAreaDemos } from '@demos/core';
 
 ## New features
 
-[TimeInput](https://mantine.dev/dates/time-input/) now supports 12h format and empty initial state:
+[TimeInput](https://mantine.dev/dates/time-input/) component now supports 12h format and empty initial state:
 
 <Demo data={TimeInputDemos.usage} />
 
 <Demo data={TimeInputDemos.format} />
+
+[Table](https://mantine.dev/core/table/) component now supports setting vertical and horizontal spacing:
+
+<Demo data={TableDemos.spacingConfigurator} />
+
+[ScrollArea](https://mantine.dev/core/scroll-area/) component now supports subscribing to scroll position with `onScrollPositionChange` handler:
+
+<Demo data={ScrollAreaDemos.scrollPosition} demoProps={{ toggle: true }} />
 
 ## New hooks
 
@@ -23,7 +32,12 @@ import { TimeInputDemos } from '@demos/dates';
 
 ## Other changes
 
+- [Grid.Col](https://mantine.dev/core/grid/) component no longer requires to set `span`, it is set to Grid `columns` by default
+- [Dropzone](https://mantine.dev/others/dropzone/) component now supports `onReject` callback which is called when user tries to drop files that do not meet size or mime type requirements
+
 ## Bug fixes
 
 - Fix incorrect default `shouldCreate` logic in creatable [Select](https://mantine.dev/core/select/)
 - Fix incorrect border-radius in [TransferList](https://mantine.dev/core/transfer-list/) component
+- Add color style to [UnstyledButton](https://mantine.dev/core/button/#unstyled-button) in dark theme
+- Fix incorrect [Menu](https://mantine.dev/core/menu/) body background color in dark theme

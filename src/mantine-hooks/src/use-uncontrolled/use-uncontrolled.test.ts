@@ -1,5 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-test-renderer';
+import { renderHook, act } from '@testing-library/react-hooks';
 import { UncontrolledOptions, useUncontrolled } from './use-uncontrolled';
 
 describe('@mantine/hooks/use-uncontrolled', () => {
