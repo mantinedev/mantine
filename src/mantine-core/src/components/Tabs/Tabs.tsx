@@ -40,7 +40,7 @@ export interface TabsProps
   position?: GroupPosition;
 
   /** Called when tab control is clicked with tab index */
-  onTabChange?(tabIndex: number): void;
+  onTabChange?(tabIndex: number, tabKey?: string): void;
 
   /** Controls appearance */
   variant?: TabsVariant;
@@ -117,7 +117,13 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       defaultValue: initialTab,
       finalValue: findInitialTab(tabs),
       rule: (value) => typeof value === 'number',
-      onChange: onTabChange,
+      onChange: (value) => {
+        if (onTabChange) {
+          tabs.some((tab) => tab.props.tabKey)
+            ? onTabChange(value, tabs[value].props.tabKey)
+            : onTabChange(value);
+        }
+      },
     });
 
     const activeTab = clamp({ value: _activeTab, min: 0, max: tabs.length - 1 });
