@@ -5,3 +5,4 @@ export { radius } from './radius';
 export { configurator } from './configurator';
 export { transitions } from './transitions';
 export { labels } from './labels';
+export { scaled } from './scaled';
