@@ -151,17 +151,17 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           forceUpdateDependencies={[color, radius, ...positionDependencies]}
           withinPortal={withinPortal}
         >
-          <div
+          <Box
             className={classes.body}
             ref={tooltipRef}
-            style={{
+            sx={{
               pointerEvents: allowPointerEvents ? 'all' : 'none',
               whiteSpace: wrapLines ? 'normal' : 'nowrap',
               width,
             }}
           >
             {label}
-          </div>
+          </Box>
         </Popper>
 
         {children}
