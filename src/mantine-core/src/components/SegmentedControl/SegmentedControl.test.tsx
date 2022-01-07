@@ -5,6 +5,7 @@ import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 const defaultProps: SegmentedControlProps<string> = {
   value: 'test-value-1',
   onChange: () => {},
+  transitionDuration: 0,
   data: [
     { label: 'test-label-1', value: 'test-value-1' },
     { label: 'test-label-2', value: 'test-value-2' },

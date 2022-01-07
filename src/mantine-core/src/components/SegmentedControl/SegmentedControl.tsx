@@ -107,21 +107,18 @@ export function SegmentedControl<T extends string = string>({
     if (_value in refs.current && ref.current) {
       const element = refs.current[_value];
       const elementRect = element.getBoundingClientRect();
-
-      // Scaled value to undo transforms applied
       const scaledValue = element.offsetWidth / elementRect.width;
+
       setActivePosition({
-        width: elementRect.width * scaledValue,
+        width: elementRect.width * scaledValue || 0,
         translate: element.parentElement.offsetLeft - WRAPPER_PADDING,
       });
-
-      if (!shouldAnimate) {
-        setTimeout(() => {
-          setShouldAnimate(true);
-        }, 4);
-      }
     }
   }, [_value, containerRect]);
+
+  useEffect(() => {
+    setShouldAnimate(true);
+  }, []);
 
   const controls = data.map((item) => (
     <div
