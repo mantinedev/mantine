@@ -77,4 +77,31 @@ describe('@mantine/core/Tooltip', () => {
     expect(onMouseLeave).toHaveBeenCalled();
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
+
+  it('sets body width based on prop', async () => {
+    const { container } = await renderWithAct(<Tooltip {...defaultProps} opened width={164} />);
+    expect(container.querySelector('.mantine-Tooltip-body')).toHaveStyle({ width: '164px' });
+  });
+
+  it('sets body pointer-events style based on allowPointerEvents prop', async () => {
+    const { container: allow } = await renderWithAct(
+      <Tooltip {...defaultProps} opened allowPointerEvents />
+    );
+    const { container: disallow } = await renderWithAct(
+      <Tooltip {...defaultProps} opened allowPointerEvents={false} />
+    );
+
+    expect(allow.querySelector('.mantine-Tooltip-body')).toHaveStyle({ pointerEvents: 'all' });
+    expect(disallow.querySelector('.mantine-Tooltip-body')).toHaveStyle({ pointerEvents: 'none' });
+  });
+
+  it('sets body white-space style based on wrapLines prop', async () => {
+    const { container: wrap } = await renderWithAct(<Tooltip {...defaultProps} opened wrapLines />);
+    const { container: noWrap } = await renderWithAct(
+      <Tooltip {...defaultProps} opened wrapLines={false} />
+    );
+
+    expect(wrap.querySelector('.mantine-Tooltip-body')).toHaveStyle({ whiteSpace: 'normal' });
+    expect(noWrap.querySelector('.mantine-Tooltip-body')).toHaveStyle({ whiteSpace: 'nowrap' });
+  });
 });
