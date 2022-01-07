@@ -101,7 +101,7 @@ export function SegmentedControl<T extends string = string>({
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
-  const [ref] = useResizeObserver();
+  const [ref, containerRect] = useResizeObserver();
 
   useEffect(() => {
     if (_value in refs.current && ref.current) {
@@ -121,7 +121,7 @@ export function SegmentedControl<T extends string = string>({
         }, 4);
       }
     }
-  }, [_value]);
+  }, [_value, containerRect]);
 
   const controls = data.map((item) => (
     <div
