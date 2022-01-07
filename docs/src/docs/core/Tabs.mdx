@@ -38,30 +38,33 @@ function Demo() {
 }
 ```
 
-`Tabs.Tab` accepts an optional `tabKey` prop; if included the `tabKey` will be included in the onTabChange function
+`Tabs.Tab` accepts an optional `tabKey` prop, if included the `tabKey` will be included as second argument in the `onTabChange` callback:
 
 ```tsx
-  import { useState } from 'react';
-  import { Tabs } from '@mantine/core';
-  function Demo() {
-    const [activeTab, setActiveTab] = useState(1);
-    const onChange = (active: number, tabKey: string) => {
-      setActiveTab(active);
-      console.log('tabKey', tabKey);
-    };
-    return (
-      <Tabs active={activeTab} onTabChange={onChange}>
-        <Tabs.Tab label="First" tabKey="First">
-          First tab content
-        </Tabs.Tab>
-        <Tabs.Tab label="Second" tabKey="Second">
-          Second tab content
-        </Tabs.Tab>
-        <Tabs.Tab label="Third" tabKey="Third">
-          Third tab content
-        </Tabs.Tab>
-      </Tabs>
-  }
+import { useState } from 'react';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const [activeTab, setActiveTab] = useState(1);
+  const onChange = (active: number, tabKey: string) => {
+    setActiveTab(active);
+    console.log('tabKey', tabKey);
+  };
+
+  return (
+    <Tabs active={activeTab} onTabChange={onChange}>
+      <Tabs.Tab label="First" tabKey="First">
+        First tab content
+      </Tabs.Tab>
+      <Tabs.Tab label="Second" tabKey="Second">
+        Second tab content
+      </Tabs.Tab>
+      <Tabs.Tab label="Third" tabKey="Third">
+        Third tab content
+      </Tabs.Tab>
+    </Tabs>
+  );
+}
 ```
 
 ## Tabs with icons
