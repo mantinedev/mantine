@@ -30,6 +30,7 @@ export interface AccordionItemProps extends PublicAccordionItemProps {
   onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
   offsetIcon?: boolean;
   iconSize?: number;
+  order?: 2 | 3 | 4 | 5 | 6;
 }
 
 export function AccordionItem({
@@ -46,6 +47,7 @@ export function AccordionItem({
   offsetIcon = true,
   iconSize = 24,
   iconPosition = 'left',
+  order = 3,
   id,
   controlRef,
   onControlKeyDown,
@@ -58,9 +60,12 @@ export function AccordionItem({
     { classNames, styles, name: 'Accordion' }
   );
 
+  const cappedOrder = Math.min(6, Math.max(2, order)) as 2 | 3 | 4 | 5 | 6;
+  const Heading = `h${cappedOrder}` as const;
+
   return (
     <Box className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
-      <h3 className={classes.itemTitle}>
+      <Heading className={classes.itemTitle}>
         <UnstyledButton
           className={classes.control}
           onClick={onToggle}
@@ -74,7 +79,7 @@ export function AccordionItem({
           <Center className={classes.icon}>{icon}</Center>
           <div className={classes.label}>{label}</div>
         </UnstyledButton>
-      </h3>
+      </Heading>
 
       <Collapse in={opened} transitionDuration={duration}>
         <div className={classes.content} role="region" id={`${id}-body`} aria-labelledby={id}>
