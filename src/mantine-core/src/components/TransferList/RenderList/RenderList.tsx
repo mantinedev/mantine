@@ -10,7 +10,7 @@ import { Divider } from '../../Divider/Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
-import { groupSortData } from '../../../utils/group-sort-data/group-sort-data';
+import { groupOptions } from '../../../utils';
 
 export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
@@ -63,7 +63,7 @@ export function RenderList({
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
 
-  const sortedData: TransferListItem[] = groupSortData({ data: filteredData });
+  const sortedData: TransferListItem[] = groupOptions({ data: filteredData });
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,

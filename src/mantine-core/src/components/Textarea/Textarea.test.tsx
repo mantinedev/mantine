@@ -1,4 +1,6 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
   itSupportsFocusEvents,
@@ -19,5 +21,21 @@ describe('@mantine/core/Textarea', () => {
     displayName: '@mantine/core/Textarea',
     refType: HTMLTextAreaElement,
     excludeOthers: true,
+  });
+
+  it('supports uncontrolled state', () => {
+    render(<Textarea {...defaultProps} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(screen.getByRole('textbox')).toHaveValue('test-value');
+  });
+
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<Textarea {...defaultProps} value="" onChange={spy} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(spy).toHaveBeenCalled();
+    expect(screen.getByRole('textbox')).toHaveValue('');
   });
 });

@@ -1,4 +1,6 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
   itSupportsSystemProps,
@@ -19,5 +21,21 @@ describe('@mantine/core/Input', () => {
     displayName: '@mantine/core/TextInput',
     refType: HTMLInputElement,
     excludeOthers: true,
+  });
+
+  it('supports uncontrolled state', () => {
+    render(<TextInput {...defaultProps} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(screen.getByRole('textbox')).toHaveValue('test-value');
+  });
+
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<TextInput {...defaultProps} value="" onChange={spy} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(spy).toHaveBeenCalled();
+    expect(screen.getByRole('textbox')).toHaveValue('');
   });
 });

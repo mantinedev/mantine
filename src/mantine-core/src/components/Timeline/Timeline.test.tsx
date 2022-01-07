@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itSupportsSystemProps } from '@mantine/tests';
-import { Button } from '../Button';
+import { itFiltersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -23,20 +22,20 @@ describe('@mantine/core/Timeline', () => {
     refType: HTMLDivElement,
   });
 
-  it('filters out unexpected children', () => {
-    const { container } = render(
-      <Timeline>
-        <Timeline.Item>Child 1</Timeline.Item>
-        <p className="unexpected">Unexpected child 1</p>
-        <div className="unexpected">Unexpected child 1</div>
-        <Timeline.Item>Child 2</Timeline.Item>
-        <Button>Unexpected component</Button>
-      </Timeline>
-    );
+  itFiltersChildren(Timeline, defaultProps, '.mantine-Timeline-item', [
+    <Timeline.Item>Child 1</Timeline.Item>,
+    <Timeline.Item>Child 2</Timeline.Item>,
+  ]);
 
-    expect(container.querySelectorAll('.mantine-Timeline-item')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
-    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
+  it('handles active item correctly', () => {
+    const { container: secondActive } = render(<Timeline {...defaultProps} active={1} />);
+    const { container: thirdActive } = render(<Timeline {...defaultProps} active={2} />);
+
+    expect(secondActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(2);
+    expect(secondActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(1);
+
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(2);
   });
 
   it('exposes TimelineItem as Timeline.Item', () => {

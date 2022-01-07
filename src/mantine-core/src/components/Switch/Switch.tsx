@@ -22,10 +22,10 @@ export interface SwitchProps
   /** Switch label */
   label?: React.ReactNode;
 
-  /** The inner label to be set when Switch is in an unchecked state */
+  /** Inner label when Switch is in unchecked state */
   offLabel?: string;
 
-  /** The inner label to be set when Switch is in the checked state */
+  /** Inner label when Switch is in checked state */
   onLabel?: string;
 
   /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
@@ -34,7 +34,7 @@ export interface SwitchProps
   /** Predefined size value */
   size?: MantineSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */

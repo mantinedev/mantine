@@ -60,6 +60,9 @@ export interface StepProps
   /** Set to false to disable clicks on step */
   allowStepClick?: boolean;
 
+  /** Should step selection be allowed */
+  allowStepSelect?: boolean;
+
   /** Static selector base */
   __staticSelector?: string;
 }
@@ -89,6 +92,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       radius = 'xl',
       loading,
       allowStepClick = true,
+      allowStepSelect,
       iconPosition = 'left',
       __staticSelector = 'Step',
       classNames,

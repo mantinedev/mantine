@@ -15,4 +15,5 @@ export { itConnectsLabelAndInput } from './it-connects-label-and-input';
 export { itHandlesBooleanState } from './it-handles-boolean-state';
 export { itSupportsInputRightSection } from './it-supports-input-right-section';
 export { itSupportsInputIcon } from './it-supports-input-icon';
+export { itFiltersChildren } from './it-filters-children';
 export { renderWithAct, actAsync } from './render-with-act';

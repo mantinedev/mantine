@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { checkAccessibility } from '@mantine/tests';
 import { MonthsList, MonthsListProps } from './MonthsList';
-import userEvent from '@testing-library/user-event';
 
 const defaultProps: MonthsListProps = {
   amountOfMonths: 1,
