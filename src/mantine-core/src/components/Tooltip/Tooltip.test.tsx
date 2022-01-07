@@ -18,6 +18,8 @@ const defaultProps: TooltipProps = {
 };
 
 describe('@mantine/core/Tooltip', () => {
+  afterEach(() => jest.useRealTimers());
+
   itRendersChildren(Tooltip, defaultProps);
   itSupportsRef(Tooltip, { ...defaultProps, opened: true }, HTMLDivElement, 'tooltipRef');
   itSupportsSystemProps({
@@ -75,6 +77,23 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.getByText('test-tooltip')).toBeInTheDocument();
     await actAsync(() => userEvent.unhover(screen.getByRole('button')));
     expect(onMouseLeave).toHaveBeenCalled();
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+  });
+
+  it('supports close delay', async () => {
+    jest.useFakeTimers();
+
+    await renderWithAct(
+      <Tooltip {...defaultProps} delay={500}>
+        <button type="button">test-target</button>
+      </Tooltip>
+    );
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    await actAsync(() => userEvent.hover(screen.getByRole('button')));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+    await actAsync(() => jest.runAllTimers());
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
 
