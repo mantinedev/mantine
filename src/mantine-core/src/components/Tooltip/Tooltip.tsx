@@ -113,7 +113,15 @@ export function Tooltip({
   };
 
   return (
-    <Box className={cx(classes.root, className)} {...others}>
+    <Box
+      className={cx(classes.root, className)}
+      onMouseEnter={handleOpen}
+      onMouseLeave={handleClose}
+      onFocusCapture={handleOpen}
+      onBlurCapture={handleClose}
+      ref={setReferenceElement}
+      {...others}
+    >
       <Popper
         referenceElement={referenceElement}
         transitionDuration={transitionDuration}
@@ -143,15 +151,7 @@ export function Tooltip({
         </div>
       </Popper>
 
-      <div
-        onMouseEnter={handleOpen}
-        onMouseLeave={handleClose}
-        onFocusCapture={handleOpen}
-        onBlurCapture={handleClose}
-        ref={setReferenceElement}
-      >
-        {children}
-      </div>
+      {children}
     </Box>
   );
 }
