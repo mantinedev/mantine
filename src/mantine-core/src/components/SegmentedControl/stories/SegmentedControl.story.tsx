@@ -15,9 +15,30 @@ function Controlled(props: Partial<SegmentedControlProps<string>>) {
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }
 
+function Scaled() {
+  const [isSmall, setIsSmall] = useState(false);
+  const [selected, setSelected] = useState(data[0].value);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <button type="button" onClick={() => setIsSmall(!isSmall)}>
+        Transform scale
+      </button>
+      <div style={{ transform: `scale(${isSmall ? 0.75 : 1})` }}>
+        <SegmentedControl
+          mt="md"
+          data={data}
+          value={selected}
+          onChange={(value) => setSelected(value)}
+        />
+      </div>
+    </div>
+  );
+}
+
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <div key={size}>
-    <Controlled size={size} style={{ marginTop: 20 }} />
+    <Controlled size={size} mt="md" />
   </div>
 ));
 
@@ -27,4 +48,5 @@ storiesOf('@mantine/core/SegmentedControl/stories', module)
     <div style={{ padding: 40 }}>
       <SegmentedControl data={stringData} defaultValue="Vue" />
     </div>
-  ));
+  ))
+  .add('Scaled', () => <Scaled />);
