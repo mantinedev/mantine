@@ -2,7 +2,7 @@ interface GroupData {
   data: { group?: string }[];
 }
 
-export function groupSortData({ data }: GroupData) {
+export function groupOptions({ data }: GroupData) {
   const sortedData = [];
   const unGroupedData = [];
   const groupedData = data.reduce((acc, item, index) => {

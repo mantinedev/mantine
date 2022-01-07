@@ -23,7 +23,7 @@ import { SelectItems } from './SelectItems/SelectItems';
 import { SelectDropdown } from './SelectDropdown/SelectDropdown';
 import { SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
-import { groupSortData } from '../../utils/group-sort-data/group-sort-data';
+import { groupOptions } from '../../utils';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {
@@ -222,7 +222,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       typeof item === 'string' ? { label: item, value: item } : item
     );
 
-    const sortedData = groupSortData({ data: formattedData });
+    const sortedData = groupOptions({ data: formattedData });
 
     const [_value, handleChange, inputMode] = useUncontrolled({
       value,
