@@ -38,9 +38,11 @@ import { TableDemos, ScrollAreaDemos } from '@demos/core';
 - [Accordion](https://mantine.dev/core/accordion/) component now supports changing headings level with `order` prop
 - [Tabs](https://mantine.dev/core/tabs/) component now supports getting tab keys in `onTabChange` handler
 
-## Bug fixes
+## 3.5.0 – 3.6.0 bug fixes
 
 - Fix incorrect default `shouldCreate` logic in creatable [Select](https://mantine.dev/core/select/)
 - Fix incorrect border-radius in [TransferList](https://mantine.dev/core/transfer-list/) component
 - Add color style to [UnstyledButton](https://mantine.dev/core/button/#unstyled-button) in dark theme
 - Fix incorrect [Menu](https://mantine.dev/core/menu/) body background color in dark theme
+- Fix incorrect focus management in [DatePicker](https://mantine.dev/dates/date-picker/) which resulted in closing dropdown when anything inside was clicked
+- Fix incorrect position calculation for [SegmentedControl](https://mantine.dev/core/segmented-control/) when scale transform is applied to parent node
