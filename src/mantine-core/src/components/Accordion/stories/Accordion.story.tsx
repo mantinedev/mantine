@@ -83,6 +83,12 @@ storiesOf('@mantine/core/Accordion/stories', module)
       <Accordion.Item label="Second tab">{form}</Accordion.Item>
     </Accordion>
   ))
+  .add('With different heading level', () => (
+    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }} order={2}>
+      <Accordion.Item label="First tab">First tab content</Accordion.Item>
+      <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
+    </Accordion>
+  ))
   .add('Dynamic children', () => <Dynamic />)
   .add('Controlled single', () => <Controlled />)
   .add('Controlled multiple', () => <Controlled multiple />)
