@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
 import { YearPicker, YearPickerProps } from './YearPicker';
-import userEvent from '@testing-library/user-event';
 
 const defaultProps: YearPickerProps = {
   value: 2021,

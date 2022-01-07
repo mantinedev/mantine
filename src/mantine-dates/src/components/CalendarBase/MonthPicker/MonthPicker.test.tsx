@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { itSupportsClassName, checkAccessibility } from '@mantine/tests';
-import { MonthPicker, MonthPickerProps } from './MonthPicker';
 import userEvent from '@testing-library/user-event';
+import { MonthPicker, MonthPickerProps } from './MonthPicker';
 
 const CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControl';
 const ACTIVE_CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControlActive';

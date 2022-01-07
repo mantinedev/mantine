@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['eslint-config-airbnb-typescript', 'plugin:jest/recommended'],
+  extends: ['airbnb-typescript', 'plugin:jest/recommended'],
   plugins: ['jest', 'import', 'react', 'jsx-a11y'],
 
   rules: {
@@ -23,6 +23,8 @@ module.exports = {
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
     '@typescript-eslint/no-redeclare': 'off',
+    'react/prop-types': 'off',
+    'react/jsx-no-bind': 'off',
 
     // @mantine/tests require jest exports
     'jest/no-export': 'off',

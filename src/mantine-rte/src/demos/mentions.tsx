@@ -24,7 +24,7 @@ function Demo() {
   const [value, onChange] = useState('<p>Type @ or # to see mentions autocomplete</p>');
   const mentions = useMemo(
     () => ({
-      allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+      allowedChars: /^[A-Za-z\\sÅÄÖåäö]*$/,
       mentionDenotationChars: ['@', '#'],
       source: (searchTerm, renderList, mentionChar) => {
         const list = mentionChar === '@' ? people : tags;
