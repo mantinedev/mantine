@@ -38,6 +38,8 @@ import { TableDemos, ScrollAreaDemos } from '@demos/core';
 - [Accordion](https://mantine.dev/core/accordion/) component now supports changing headings level with `order` prop
 - [Tabs](https://mantine.dev/core/tabs/) component now supports getting tab keys in `onTabChange` handler
 - [Slider](https://mantine.dev/core/slider/) default label transition is now set to `0` to make component feel more responsive
+- [Portal](https://mantine.dev/core/portal/) now supports setting `target` with selector instead of element
+- [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components now support `target` prop to specify [Portal](https://mantine.dev/core/portal/) target container
 
 ## 3.5.0 – 3.6.0 bug fixes
 
@@ -49,3 +51,4 @@ import { TableDemos, ScrollAreaDemos } from '@demos/core';
 - Fix incorrect position calculation for [SegmentedControl](https://mantine.dev/core/segmented-control/) when scale transform is applied to parent node
 - Fix [Slider](https://mantine.dev/core/slider/) initial value not being clamped with min/max
 - Fix incorrect value set in [RangeSlider](https://mantine.dev/core/slider/) when user interacted with slider after value was force updated
+- Fix possible permanent placeholder after hydration in [Image](https://mantine.dev/core/image/) component
