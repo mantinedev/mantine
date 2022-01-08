@@ -53,7 +53,7 @@ export default createStyles((theme, props: AppShellStyles) => ({
 
   main: {
     flex: 1,
-    width: 100vw,
+    width: '100vw',
     boxSizing: 'border-box',
     ...getPositionStyles(props, theme),
   },
