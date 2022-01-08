@@ -37,12 +37,12 @@ describe('@mantine/core/Select', () => {
   });
 
   it('renders correct amount of items based on data prop', async () => {
-    const { container } = await renderWithAct(<Select {...defaultProps} data={data.slice(0, 5)} />);
-    expect(container.querySelectorAll('.mantine-Select-item')).toHaveLength(5);
+    await renderWithAct(<Select {...defaultProps} data={data.slice(0, 5)} />);
+    expect(screen.getAllByRole('option')).toHaveLength(5);
   });
 
   it('renders correct amount of items based on filter prop', async () => {
-    const { container } = await renderWithAct(
+    await renderWithAct(
       <Select
         {...defaultProps}
         data={data}
@@ -52,7 +52,7 @@ describe('@mantine/core/Select', () => {
     );
 
     // Numbers 0-50 which include 2
-    expect(container.querySelectorAll('.mantine-Select-item')).toHaveLength(14);
+    expect(screen.getAllByRole('option')).toHaveLength(14);
   });
 
   it('renders correct amount of disabled items', async () => {
