@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '../../Button/Button';
 import { Text } from '../../Text/Text';
@@ -67,4 +67,22 @@ storiesOf('@mantine/core/Modal/stories', module)
         <Menu.Item>Hello</Menu.Item>
       </Menu>
     </WrappedModal>
-  ));
+  ))
+  .add('Custom target', () => {
+    const ref = useRef<HTMLDivElement>();
+    const [mount, setMount] = useState(false);
+    useEffect(() => {
+      console.log(ref);
+      setMount(true);
+    }, []);
+    return (
+      <>
+        <div ref={ref}>target</div>
+        {mount && (
+          <WrappedModal title="Modal with overlay items" target="#docs-root">
+            targeted
+          </WrappedModal>
+        )}
+      </>
+    );
+  });

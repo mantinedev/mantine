@@ -57,6 +57,12 @@ document.body.appendChild(container);
 <Portal target={container} />;
 ```
 
+Alternatively, you can specify selector to render portal in existing element:
+
+```tsx
+<Portal target="#my-portal-container" />
+```
+
 If you don't specify the target element, new one will be created and appended to the `document.body` for each Portal component.
 
 ## Server side rendering
