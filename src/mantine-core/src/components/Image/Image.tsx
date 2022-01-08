@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useEffect, useRef } from 'react';
 import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
-import { useDidUpdate, useMergedRef } from '@mantine/hooks';
+import { useMergedRef } from '@mantine/hooks';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import { ImageIcon } from './ImageIcon';
@@ -71,7 +71,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     const [error, setError] = useState(!src);
     const isPlaceholder = withPlaceholder && (!loaded || error);
     const internalImgRef = useRef<HTMLImageElement>(null);
-    const mergedImgRef = useMergedRef(...[...(imageRef ? [imageRef] : []), internalImgRef]);
+    const mergedImgRef = useMergedRef(imageRef, internalImgRef);
 
     useEffect(() => {
       const { current } = internalImgRef;
@@ -79,11 +79,6 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
         setError(current.naturalHeight === 0);
         setLoaded(current.naturalHeight !== 0);
       }
-    }, [src]);
-
-    useDidUpdate(() => {
-      setLoaded(false);
-      setError(false);
     }, [src]);
 
     return (
