@@ -91,12 +91,9 @@ You can define any amount of modals in ModalsProvider context:
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 import { Text, Button } from '@mantine/core';
 
-const TestModal = ({ context, id }: ContextModalProps) => (
+const TestModal = ({ context, id, modalBody }: ContextModalProps & { modalBody: string }) => (
   <>
-    <Text size="sm">
-      This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals
-      hook
-    </Text>
+    <Text size="sm">{modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
       Close modal
     </Button>
@@ -119,7 +116,7 @@ And then open one of these modals with `openContextModal` function.
 
 ## Content modals
 
-With `modals.openContentModal` function you can open a modal with any content:
+With `modals.openModal` function you can open a modal with any content:
 
 <Demo data={ModalsDemos.content} />
 
