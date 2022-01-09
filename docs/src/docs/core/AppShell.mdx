@@ -144,18 +144,26 @@ To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
 ## Wrapping Navbar and Header components
 
 AppShell component requires Navbar and Header components to be direct children at `navbar` and `header` props.
+In addition, `width` and `height` need to be explicitly set on the wrapping `Navbar` or `Header` element respectively.
 To use custom components instead of Navbar or Header:
 
 ```tsx
-import { AppShell, Navbar, NavbarProps } from '@mantine/core';
+import { AppShell, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
 
 function CustomNavbar(props: NavbarProps) {
   return <Navbar {...props}>Custom navbar</Navbar>;
 }
 
+function CustomHeader(props: HeaderProps) {
+  return <Header {...props}>Custom header</Header>;
+}
+
 function App() {
   return (
-    <AppShell navbar={<CustomNavbar width={{ base: 300 }} height={500} padding="xs" />}>
+    <AppShell
+      navbar={<CustomNavbar width={{ base: 300 }} height={500} padding="xs" />}
+      header={<CustomHeader height={70} padding="xs" />}
+    >
       App content
     </AppShell>
   );

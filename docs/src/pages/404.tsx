@@ -44,7 +44,7 @@ export default function PageNotFound() {
           </Li>
         </Ul>
         <P>
-          And since you are here, what about following Mantine on Twitter and a star on Github 😉?
+          And since you are here, what about following Mantine on Twitter and a star on GitHub 😉?
         </P>
 
         <Group>
@@ -55,7 +55,7 @@ export default function PageNotFound() {
             color="gray"
             variant="outline"
           >
-            Star mantine on Github
+            Star mantine on GitHub
           </Button>
           <Button
             component="a"

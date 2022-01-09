@@ -18,7 +18,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
       { type: 'link', label: 'Email newsletter', link: 'https://buttondown.email/mantine' },
       {
         type: 'link',
-        label: 'Github discussions',
+        label: 'GitHub discussions',
         link: 'https://github.com/mantinedev/mantine/discussions',
       },
     ],

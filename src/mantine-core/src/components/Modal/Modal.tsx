@@ -237,7 +237,6 @@ export function Modal({
   target,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MantineModal>) {
-  console.log(target);
   return (
     <Portal zIndex={zIndex} target={target}>
       <MantineModal {...props} />
