@@ -90,7 +90,7 @@ function GithubButton({ style, ...others }: SocialButtonProps) {
       }}
       {...others}
     >
-      Github Discussions
+      GitHub Discussions
     </Button>
   );
 }
