@@ -72,7 +72,6 @@ storiesOf('@mantine/core/Modal/stories', module)
     const ref = useRef<HTMLDivElement>();
     const [mount, setMount] = useState(false);
     useEffect(() => {
-      console.log(ref);
       setMount(true);
     }, []);
     return (

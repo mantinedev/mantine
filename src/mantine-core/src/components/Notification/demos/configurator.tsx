@@ -40,7 +40,7 @@ export const configurator: MantineDemo = {
     {
       name: 'children',
       type: 'string',
-      initialValue: 'You are now obligated to give a star to Mantine project on Github',
+      initialValue: 'You are now obligated to give a star to Mantine project on GitHub',
     },
   ],
 };
