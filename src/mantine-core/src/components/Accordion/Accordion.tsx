@@ -52,6 +52,9 @@ export interface AccordionProps
 
   /** Icon width in px */
   iconSize?: number;
+
+  /** Heading level used for items */
+  order?: 2 | 3 | 4 | 5 | 6;
 }
 
 type AccordionComponent = ForwardRefWithStaticComponents<
@@ -73,6 +76,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       iconPosition = 'left',
       offsetIcon = true,
       iconSize = 24,
+      order = 3,
       icon,
       classNames,
       styles,
@@ -111,6 +115,7 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         controlRef={mergeRefs(assignControlRef(index), item.props?.controlRef)}
         offsetIcon={offsetIcon}
         iconSize={iconSize}
+        order={order}
       />
     ));
 

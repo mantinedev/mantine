@@ -4,6 +4,7 @@ import {
   MantineColor,
   ForwardRefWithStaticComponents,
   MantineNumberSize,
+  CSSObject,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -43,8 +44,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
   (
     {
       children,
-      style,
-      active,
+      active = -1,
       color,
       radius = 'xl',
       bulletSize = 20,
@@ -52,12 +52,11 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       lineWidth = 4,
       classNames,
       styles,
+      sx,
       ...others
     }: TimelineProps,
     ref
   ) => {
-    const hasActive = typeof active === 'number';
-
     const items = filterChildrenByType(children, TimelineItem).map(
       (item: React.ReactElement, index) =>
         React.cloneElement(item, {
@@ -68,18 +67,18 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
           radius: item.props.radius || radius,
           color: item.props.color || color,
           bulletSize: item.props.bulletSize || bulletSize,
-          active: item.props.active || (hasActive && active >= index),
-          lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
+          active: item.props.active || active >= index,
+          lineActive: item.props.lineActive || active - 1 >= index,
         })
     );
 
-    const offset: React.CSSProperties =
+    const offset: CSSObject =
       align === 'left'
         ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
         : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
     return (
-      <Box ref={ref} style={{ ...offset, ...style }} {...others}>
+      <Box ref={ref} sx={[offset, sx]} {...others}>
         {items}
       </Box>
     );

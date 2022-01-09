@@ -7,7 +7,8 @@ export function itSupportsRef(
   refType: any,
   refProp: string = 'ref'
 ) {
-  it('supports ref', async () => {
+  // eslint-disable-next-line jest/valid-title
+  it(refProp ? `supports getting ref with ${refProp} prop` : 'supports ref', async () => {
     const ref = React.createRef<typeof refType>();
     await renderWithAct(<Component {...requiredProps} {...{ [refProp]: ref }} />);
     expect(ref.current).toBeInstanceOf(refType);

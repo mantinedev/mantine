@@ -94,6 +94,11 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     const completedStep = findChildByType(children, StepCompleted);
 
     const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
+      const shouldAllowSelect =
+        typeof item.props.allowStepSelect === 'boolean'
+          ? item.props.allowStepSelect
+          : typeof onStepClick === 'function';
+
       acc.push(
         <Step
           {...item.props}
@@ -103,8 +108,10 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           state={
             active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
           }
-          onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
-          allowStepClick={typeof onStepClick === 'function'}
+          onClick={() =>
+            shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)
+          }
+          allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
           completedIcon={item.props.completedIcon || completedIcon}
           progressIcon={item.props.progressIcon || progressIcon}
           color={item.props.color || color}

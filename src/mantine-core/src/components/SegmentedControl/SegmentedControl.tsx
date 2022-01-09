@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useReducedMotion, useUncontrolled, useUuid } from '@mantine/hooks';
+import { useReducedMotion, useResizeObserver, useUncontrolled, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -101,28 +101,27 @@ export function SegmentedControl<T extends string = string>({
   const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
   const uuid = useUuid(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [ref, containerRect] = useResizeObserver();
 
   useEffect(() => {
-    const observer = new ResizeObserver(() => {
-      if (_value in refs.current && wrapperRef.current) {
-        const element = refs.current[_value];
-        const rect = element.getBoundingClientRect();
-        setActivePosition({
-          width: rect.width,
-          translate: rect.x - wrapperRef.current.getBoundingClientRect().x - WRAPPER_PADDING,
-        });
+    if (_value in refs.current && ref.current) {
+      const element = refs.current[_value];
+      const elementRect = element.getBoundingClientRect();
 
-        if (!shouldAnimate) {
-          setTimeout(() => {
-            setShouldAnimate(true);
-          }, 4);
-        }
+      // Scaled value to undo transforms applied
+      const scaledValue = element.offsetWidth / elementRect.width;
+      setActivePosition({
+        width: elementRect.width * scaledValue,
+        translate: element.parentElement.offsetLeft - WRAPPER_PADDING,
+      });
+
+      if (!shouldAnimate) {
+        setTimeout(() => {
+          setShouldAnimate(true);
+        }, 4);
       }
-    });
-    observer.observe(wrapperRef.current);
-    return () => observer.disconnect();
-  }, [_value]);
+    }
+  }, [_value, containerRect]);
 
   const controls = data.map((item) => (
     <div
@@ -152,7 +151,7 @@ export function SegmentedControl<T extends string = string>({
   ));
 
   return (
-    <Box className={cx(classes.root, className)} ref={wrapperRef} {...others}>
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
       {!!_value && (
         <span
           className={classes.active}

@@ -1,7 +1,7 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { Container } from '@mantine/core';
 import { TimeRangeInput } from '../TimeRangeInput';
-import dayjs from 'dayjs';
 
 const code = `
 <TimeRangeInput withSeconds />

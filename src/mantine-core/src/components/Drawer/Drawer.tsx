@@ -81,6 +81,9 @@ export interface DrawerProps
 
   /** Close button aria-label */
   closeButtonLabel?: string;
+
+  /** Target element or selector where drawer portal should be rendered */
+  target?: HTMLElement | string;
 }
 
 const transitions: Record<DrawerPosition, MantineTransition> = {
@@ -115,6 +118,7 @@ export function MantineDrawer({
   closeButtonLabel,
   classNames,
   styles,
+  target,
   ...others
 }: DrawerProps) {
   const { classes, cx, theme } = useStyles(
@@ -226,10 +230,11 @@ export function MantineDrawer({
 
 export function Drawer({
   zIndex = getDefaultZIndex('modal'),
+  target,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
   return (
-    <Portal zIndex={zIndex}>
+    <Portal zIndex={zIndex} target={target}>
       <MantineDrawer {...props} />
     </Portal>
   );

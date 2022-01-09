@@ -85,6 +85,9 @@ export interface ModalProps
 
   /** Controls if modal should be centered */
   centered?: boolean;
+
+  /** Target element or selector where modal portal should be rendered */
+  target?: HTMLElement | string;
 }
 
 export function MantineModal({
@@ -111,6 +114,7 @@ export function MantineModal({
   noFocusTrap = false,
   closeOnEscape = true,
   centered = false,
+  target,
   ...others
 }: ModalProps) {
   const baseId = useUuid(id);
@@ -230,10 +234,12 @@ export function MantineModal({
 
 export function Modal({
   zIndex = getDefaultZIndex('modal'),
+  target,
   ...props
 }: React.ComponentPropsWithoutRef<typeof MantineModal>) {
+  console.log(target);
   return (
-    <Portal zIndex={zIndex}>
+    <Portal zIndex={zIndex} target={target}>
       <MantineModal {...props} />
     </Portal>
   );

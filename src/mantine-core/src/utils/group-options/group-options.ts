@@ -1,20 +1,16 @@
-interface SelectedItem {
-  group?: string;
-}
-
 interface GroupData {
-  data: SelectedItem[];
+  data: { group?: string }[];
 }
 
-export function groupSortData({ data }: GroupData) {
+export function groupOptions({ data }: GroupData) {
   const sortedData = [];
-  const ungroupedData = [];
+  const unGroupedData = [];
   const groupedData = data.reduce((acc, item, index) => {
     if (item.group) {
       if (acc[item.group]) acc[item.group].push(index);
       else acc[item.group] = [index];
     } else {
-      ungroupedData.push(index);
+      unGroupedData.push(index);
     }
     return acc;
   }, {});
@@ -22,7 +18,8 @@ export function groupSortData({ data }: GroupData) {
   Object.keys(groupedData).forEach((groupName) => {
     sortedData.push(...groupedData[groupName].map((index) => data[index]));
   });
-  sortedData.push(...ungroupedData.map((itemIndex) => data[itemIndex]));
+
+  sortedData.push(...unGroupedData.map((itemIndex) => data[itemIndex]));
 
   return sortedData;
 }

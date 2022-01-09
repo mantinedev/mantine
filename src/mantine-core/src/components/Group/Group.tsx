@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
-import { filterFalsyChildren } from '../../utils/filter-falsy-children/filter-falsy-children';
+import { filterFalsyChildren } from '../../utils';
 import { Box } from '../Box';
 import useStyles, { GroupPosition } from './Group.styles';
 

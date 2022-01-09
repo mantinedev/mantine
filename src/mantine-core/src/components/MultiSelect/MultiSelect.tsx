@@ -17,7 +17,7 @@ import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
-import { groupSortData } from '../../utils/group-sort-data/group-sort-data';
+import { groupOptions } from '../../utils';
 import useStyles from './MultiSelect.styles';
 import { SelectSharedProps } from '../Select/Select';
 
@@ -192,7 +192,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       typeof item === 'string' ? { label: item, value: item } : item
     );
 
-    const sortedData = groupSortData({ data: formattedData });
+    const sortedData = groupOptions({ data: formattedData });
 
     const [_value, setValue] = useUncontrolled({
       value,

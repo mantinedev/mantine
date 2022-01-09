@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Month, MonthProps } from './Month';
-import userEvent from '@testing-library/user-event';
 
 const defaultProps: MonthProps = {
   month: new Date(2021, 11, 1),
