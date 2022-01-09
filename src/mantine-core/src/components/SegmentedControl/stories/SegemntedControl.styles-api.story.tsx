@@ -8,7 +8,7 @@ import { SegmentedControl as SegmentedControlStylesApi } from '../styles.api';
 const styles = generateBorderStyles(SegmentedControlStylesApi);
 const useStyles = createStyles(() => styles);
 
-function Wrapper(props: Partial<SegmentedControlProps<string>>) {
+function Wrapper(props: Partial<SegmentedControlProps>) {
   return <SegmentedControl data={['React', 'Angular', 'Vue']} {...props} />;
 }
 

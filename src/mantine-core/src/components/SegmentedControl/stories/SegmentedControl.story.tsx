@@ -10,7 +10,7 @@ const data = [
   { label: 'Very long label', value: 'svelte' },
 ];
 
-function Controlled(props: Partial<SegmentedControlProps<string>>) {
+function Controlled(props: Partial<SegmentedControlProps>) {
   const [value, onChange] = useState<string>('ng');
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }

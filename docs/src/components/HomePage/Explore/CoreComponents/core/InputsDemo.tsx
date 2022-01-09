@@ -68,9 +68,9 @@ const data = [
 ];
 
 export function SegmentedControlWrapper(
-  props: Omit<SegmentedControlProps<string>, 'value' | 'onChange' | 'data'>
+  props: Omit<SegmentedControlProps, 'value' | 'onChange' | 'data'>
 ) {
-  const [value, onChange] = useState<string>('react');
+  const [value, onChange] = useState('react');
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }
 
