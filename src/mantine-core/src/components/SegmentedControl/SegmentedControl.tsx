@@ -1,5 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useReducedMotion, useResizeObserver, useUncontrolled, useUuid } from '@mantine/hooks';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
+import {
+  useReducedMotion,
+  useResizeObserver,
+  useUncontrolled,
+  useUuid,
+  useMergedRef,
+} from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -10,24 +16,24 @@ import {
 import { Box } from '../Box';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 
-export interface SegmentedControlItem<T extends string> {
-  value: T;
+export interface SegmentedControlItem {
+  value: string;
   label: React.ReactNode;
 }
 
 export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
 
-export interface SegmentedControlProps<T extends string>
+export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
-  data: T[] | SegmentedControlItem<T>[];
+  data: string[] | SegmentedControlItem[];
 
   /** Current selected value */
-  value?: T;
+  value?: string;
 
   /** Called when value changes */
-  onChange?(value: T): void;
+  onChange?(value: string): void;
 
   /** Name of the radio group, default to random id */
   name?: string;
@@ -54,114 +60,119 @@ export interface SegmentedControlProps<T extends string>
   defaultValue?: string;
 }
 
-export function SegmentedControl<T extends string = string>({
-  className,
-  data: _data,
-  name,
-  value,
-  onChange,
-  color,
-  fullWidth,
-  radius = 'sm',
-  size = 'sm',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  classNames,
-  styles,
-  defaultValue,
-  ...others
-}: SegmentedControlProps<T>) {
-  const reduceMotion = useReducedMotion();
-  const data = _data.map((item: any) =>
-    typeof item === 'string' ? { label: item, value: item } : item
-  );
-
-  const [shouldAnimate, setShouldAnimate] = useState(false);
-  const [_value, handleValueChange] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: Array.isArray(data) ? data[0].value : null,
-    onChange,
-    rule: (val) => !!val,
-  });
-
-  const { classes, cx } = useStyles(
+export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(
+  (
     {
-      size,
-      fullWidth,
+      className,
+      data: _data,
+      name,
+      value,
+      onChange,
       color,
-      radius,
-      shouldAnimate: reduceMotion || !shouldAnimate,
-      transitionDuration,
+      fullWidth,
+      radius = 'sm',
+      size = 'sm',
+      transitionDuration = 200,
       transitionTimingFunction,
+      classNames,
+      styles,
+      defaultValue,
+      ...others
     },
-    { classNames, styles, name: 'SegmentedControl' }
-  );
+    ref
+  ) => {
+    const reduceMotion = useReducedMotion();
+    const data = _data.map((item: any) =>
+      typeof item === 'string' ? { label: item, value: item } : item
+    );
 
-  const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
-  const uuid = useUuid(name);
-  const refs = useRef<Record<string, HTMLLabelElement>>({});
-  const [ref, containerRect] = useResizeObserver();
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+    const [_value, handleValueChange] = useUncontrolled({
+      value,
+      defaultValue,
+      finalValue: Array.isArray(data) ? data[0].value : null,
+      onChange,
+      rule: (val) => !!val,
+    });
 
-  useEffect(() => {
-    if (_value in refs.current && ref.current) {
-      const element = refs.current[_value];
-      const elementRect = element.getBoundingClientRect();
-      const scaledValue = element.offsetWidth / elementRect.width;
+    const { classes, cx } = useStyles(
+      {
+        size,
+        fullWidth,
+        color,
+        radius,
+        shouldAnimate: reduceMotion || !shouldAnimate,
+        transitionDuration,
+        transitionTimingFunction,
+      },
+      { classNames, styles, name: 'SegmentedControl' }
+    );
 
-      setActivePosition({
-        width: elementRect.width * scaledValue || 0,
-        translate: element.parentElement.offsetLeft - WRAPPER_PADDING,
-      });
-    }
-  }, [_value, containerRect]);
+    const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
+    const uuid = useUuid(name);
+    const refs = useRef<Record<string, HTMLLabelElement>>({});
+    const [observerRef, containerRect] = useResizeObserver();
 
-  useEffect(() => {
-    setShouldAnimate(true);
-  }, []);
+    useEffect(() => {
+      if (_value in refs.current && observerRef.current) {
+        const element = refs.current[_value];
+        const elementRect = element.getBoundingClientRect();
+        const scaledValue = element.offsetWidth / elementRect.width;
 
-  const controls = data.map((item) => (
-    <div
-      className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
-      key={item.value}
-    >
-      <input
-        className={classes.input}
-        type="radio"
-        name={uuid}
-        value={item.value}
-        id={`${uuid}-${item.value}`}
-        checked={_value === item.value}
-        onChange={() => handleValueChange(item.value)}
-      />
+        setActivePosition({
+          width: elementRect.width * scaledValue || 0,
+          translate: element.parentElement.offsetLeft - WRAPPER_PADDING,
+        });
+      }
+    }, [_value, containerRect]);
 
-      <label
-        className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
-        htmlFor={`${uuid}-${item.value}`}
-        ref={(node) => {
-          refs.current[item.value] = node;
-        }}
+    useEffect(() => {
+      setShouldAnimate(true);
+    }, []);
+
+    const controls = data.map((item) => (
+      <div
+        className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
+        key={item.value}
       >
-        {item.label}
-      </label>
-    </div>
-  ));
-
-  return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
-      {!!_value && (
-        <span
-          className={classes.active}
-          style={{
-            width: activePosition.width,
-            transform: `translateX(${activePosition.translate}px)`,
-          }}
+        <input
+          className={classes.input}
+          type="radio"
+          name={uuid}
+          value={item.value}
+          id={`${uuid}-${item.value}`}
+          checked={_value === item.value}
+          onChange={() => handleValueChange(item.value)}
         />
-      )}
 
-      {controls}
-    </Box>
-  );
-}
+        <label
+          className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
+          htmlFor={`${uuid}-${item.value}`}
+          ref={(node) => {
+            refs.current[item.value] = node;
+          }}
+        >
+          {item.label}
+        </label>
+      </div>
+    ));
+
+    return (
+      <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
+        {!!_value && (
+          <span
+            className={classes.active}
+            style={{
+              width: activePosition.width,
+              transform: `translateX(${activePosition.translate}px)`,
+            }}
+          />
+        )}
+
+        {controls}
+      </Box>
+    );
+  }
+);
 
 SegmentedControl.displayName = '@mantine/core/SegmentedControl';

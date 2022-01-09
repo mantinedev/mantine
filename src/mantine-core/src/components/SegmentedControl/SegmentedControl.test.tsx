@@ -2,7 +2,7 @@ import React from 'react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
-const defaultProps: SegmentedControlProps<string> = {
+const defaultProps: SegmentedControlProps = {
   value: 'test-value-1',
   onChange: () => {},
   transitionDuration: 0,
@@ -19,5 +19,6 @@ describe('@mantine/core/SegmentedControl', () => {
     component: SegmentedControl,
     props: defaultProps,
     displayName: '@mantine/core/SegmentedControl',
+    refType: HTMLDivElement,
   });
 });
