@@ -8,8 +8,6 @@
 [![Discord](https://img.shields.io/badge/Chat%20on-Discord-%235865f2)](https://discord.gg/eUZpPbpxb4)
 [![Twitter Follow](https://img.shields.io/twitter/follow/mantinedev?style=social)](https://twitter.com/mantinedev)
 
-Mantine is a MIT licensed open source react components and hooks library with focus on usability, accessibility and developer experience.
-
 ## Links
 
 - [Documentation](https://mantine.dev/)
