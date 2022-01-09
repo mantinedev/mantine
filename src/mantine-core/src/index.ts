@@ -6,6 +6,7 @@ export * from './components/Affix';
 export * from './components/Alert';
 export * from './components/Anchor';
 export * from './components/AppShell';
+export * from './components/AspectRation';
 export * from './components/Autocomplete';
 export * from './components/Avatar';
 export * from './components/Badge';
