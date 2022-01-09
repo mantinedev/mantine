@@ -1,10 +1,10 @@
 import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
 const defaultProps: SegmentedControlProps = {
-  value: 'test-value-1',
-  onChange: () => {},
   transitionDuration: 0,
   data: [
     { label: 'test-label-1', value: 'test-value-1' },
@@ -20,5 +20,22 @@ describe('@mantine/core/SegmentedControl', () => {
     props: defaultProps,
     displayName: '@mantine/core/SegmentedControl',
     refType: HTMLDivElement,
+  });
+
+  it('supports uncontrolled state', () => {
+    render(<SegmentedControl {...defaultProps} />);
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[1]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+  });
+
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<SegmentedControl {...defaultProps} value="test-value-2" onChange={spy} />);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[0]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
+    expect(spy).toHaveBeenCalledWith('test-value-1');
   });
 });
