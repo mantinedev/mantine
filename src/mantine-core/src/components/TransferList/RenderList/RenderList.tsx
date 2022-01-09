@@ -72,46 +72,49 @@ export function RenderList({
     isList: true,
   });
 
-  const constructItemComponent = (item: TransferListItem, index: number) => (
-    <UnstyledButton
-      tabIndex={-1}
-      onClick={() => onSelect(item.value)}
-      key={item.value}
-      onMouseEnter={() => setHovered(index)}
-      className={cx(classes.transferListItem, {
-        [classes.transferListItemHovered]: index === hovered,
-      })}
-      ref={(node: HTMLButtonElement) => {
-        if (itemsRefs && itemsRefs.current) {
-          // eslint-disable-next-line no-param-reassign
-          itemsRefs.current[item.value] = node;
-        }
-      }}
-    >
-      <ItemComponent data={item} selected={selection.includes(item.value)} />
-    </UnstyledButton>
-  );
-
-  const constructSeparator = (label?: string) => (
-    <div className={classes.separator} key={label}>
-      <Divider classNames={{ label: classes.separatorLabel }} label={label} />
-    </div>
-  );
-
   let groupName = null;
+
   sortedData.forEach((item, index) => {
-    if (!item.group) unGroupedItems.push(constructItemComponent(item, index));
-    else {
+    const itemComponent = (
+      <UnstyledButton
+        tabIndex={-1}
+        onClick={() => onSelect(item.value)}
+        key={item.value}
+        onMouseEnter={() => setHovered(index)}
+        className={cx(classes.transferListItem, {
+          [classes.transferListItemHovered]: index === hovered,
+        })}
+        ref={(node: HTMLButtonElement) => {
+          if (itemsRefs && itemsRefs.current) {
+            itemsRefs.current[item.value] = node;
+          }
+        }}
+      >
+        <ItemComponent data={item} selected={selection.includes(item.value)} />
+      </UnstyledButton>
+    );
+
+    if (!item.group) {
+      unGroupedItems.push(itemComponent);
+    } else {
       if (groupName !== item.group) {
         groupName = item.group;
-        groupedItems.push(constructSeparator(groupName));
+        groupedItems.push(
+          <div className={classes.separator} key={groupName}>
+            <Divider classNames={{ label: classes.separatorLabel }} label={groupName} />
+          </div>
+        );
       }
-      groupedItems.push(constructItemComponent(item, index));
+      groupedItems.push(itemComponent);
     }
   });
 
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
-    unGroupedItems.unshift(constructSeparator());
+    unGroupedItems.unshift(
+      <div className={classes.separator}>
+        <Divider classNames={{ label: classes.separatorLabel }} />
+      </div>
+    );
   }
 
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {

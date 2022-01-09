@@ -16,7 +16,7 @@ function Wrapper({ count = 1000, ...props }: Partial<TransferListProps> & { coun
 storiesOf('@mantine/core/TransferList/stories', module)
   .add('Large data set', () => (
     <div style={{ padding: 40 }}>
-      <Wrapper />
+      <Wrapper count={500} />
     </div>
   ))
   .add('Show transfer all: false', () => (

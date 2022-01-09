@@ -90,7 +90,7 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${theme.spacing.sm / 1.5}px ${theme.spacing.sm}px`,
+    padding: '7px 12px',
   },
 
   separatorLabel: {
