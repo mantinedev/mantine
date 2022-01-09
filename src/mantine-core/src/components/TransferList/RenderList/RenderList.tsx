@@ -14,7 +14,7 @@ import { groupOptions } from '../../../utils';
 
 export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
-interface RenderListProps extends DefaultProps<RenderListStylesNames> {
+export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   data: TransferListItem[];
   onSelect(value: string): void;
   selection: string[];
@@ -29,6 +29,7 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   onMove(): void;
   height: number;
   listComponent?: React.FC<any>;
+  limit?: number;
 }
 
 export function RenderList({
@@ -49,6 +50,7 @@ export function RenderList({
   height,
   classNames,
   styles,
+  limit,
 }: RenderListProps) {
   const { classes, cx } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea },
@@ -58,7 +60,7 @@ export function RenderList({
   const groupedItems: React.ReactElement<any>[] = [];
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
-  const filteredData = data.filter((item) => filter(query, item));
+  const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
