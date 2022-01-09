@@ -16,9 +16,9 @@ const sizes = {
 export default createStyles((theme, { ratio, maxWidth }: AspectRationStyles) => {
   return {
     root: {
-      position:'relative',
+      position: 'relative',
       maxWidth: theme.fn.size({ size: maxWidth, sizes }),
-      
+
       '&::before': {
         content: '""',
         height: 0,
@@ -45,7 +45,7 @@ export default createStyles((theme, { ratio, maxWidth }: AspectRationStyles) => 
         width: '100%',
         height: '100%',
       },
-      
+
       '& > img, & > video': {
         objectFit: 'cover',
       },
