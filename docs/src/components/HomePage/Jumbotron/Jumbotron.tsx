@@ -70,7 +70,7 @@ export function Jumbotron() {
             leftIcon={<MarkGithubIcon size={20} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
-            Github
+            GitHub
           </Button>
         </Group>
       </Container>
