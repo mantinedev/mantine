@@ -264,24 +264,22 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
-      setTimeout(() => {
-        clearSearchOnChange && handleSearchChange('');
-        if (_value.includes(item.value)) {
-          handleValueRemove(item.value);
-        } else {
-          setValue([..._value, item.value]);
-          if (_value.length === maxSelectedValues - 1) {
-            valuesOverflow.current = true;
-            setDropdownOpened(false);
-          }
-          if (hovered === filteredData.length - 1) {
-            setHovered(filteredData.length - 2);
-          }
+      clearSearchOnChange && handleSearchChange('');
+      if (_value.includes(item.value)) {
+        handleValueRemove(item.value);
+      } else {
+        setValue([..._value, item.value]);
+        if (_value.length === maxSelectedValues - 1) {
+          valuesOverflow.current = true;
+          setDropdownOpened(false);
         }
-        if (item.creatable) {
-          typeof onCreate === 'function' && onCreate(item.value);
+        if (hovered === filteredData.length - 1) {
+          setHovered(filteredData.length - 2);
         }
-      });
+      }
+      if (item.creatable) {
+        typeof onCreate === 'function' && onCreate(item.value);
+      }
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
