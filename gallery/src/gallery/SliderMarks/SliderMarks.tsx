@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   thumb: {
-    width: 14,
+    width: 16,
     height: 28,
     backgroundColor: theme.white,
     color: theme.colors.gray[5],

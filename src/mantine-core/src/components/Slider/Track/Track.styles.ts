@@ -12,7 +12,6 @@ export default createStyles((theme, { radius, size, color }: TrackStyles) => ({
     position: 'relative',
     height: theme.fn.size({ sizes, size }),
     width: '100%',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
     marginRight: theme.fn.size({ size, sizes }),
     marginLeft: theme.fn.size({ size, sizes }),
 
