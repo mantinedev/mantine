@@ -285,7 +285,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           handleSearchChange(item.label);
         }
         setHovered(-1);
-        setTimeout(() => setDropdownOpened(false));
+        setDropdownOpened(false);
         inputRef.current.focus();
       }
     };
