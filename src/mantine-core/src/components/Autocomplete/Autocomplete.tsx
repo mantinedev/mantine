@@ -106,7 +106,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const handleItemClick = (item: AutocompleteItem) => {
       handleChange(item.value);
       typeof onItemSubmit === 'function' && onItemSubmit(item);
-      setTimeout(() => setDropdownOpened(false));
+      setDropdownOpened(false);
     };
 
     const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
