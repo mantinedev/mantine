@@ -51,7 +51,7 @@ export interface MenuProps
   menuButtonLabel?: string;
 
   /** Predefined menu width or number for width in px */
-  size?: MantineNumberSize;
+  size?: MantineNumberSize | 'auto';
 
   /** Predefined shadow from theme or box-shadow value */
   shadow?: MantineShadow;
