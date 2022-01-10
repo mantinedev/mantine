@@ -22,6 +22,7 @@ export const configurator: MantineDemo = {
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
     { name: 'active', type: 'number', initialValue: 1, defaultValue: null, min: -1, max: 3 },
+    { name: 'reverseActive', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'lineWidth', type: 'number', initialValue: 4, defaultValue: 4, min: 1, max: 8 },
     {
       name: 'bulletSize',

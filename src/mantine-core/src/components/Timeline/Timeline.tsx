@@ -33,6 +33,9 @@ export interface TimelineProps
 
   /** Line width in px */
   lineWidth?: number;
+
+  /** Reverse active direction without reversing items */
+  reverseActive?: boolean;
 }
 
 type TimelineComponent = ForwardRefWithStaticComponents<
@@ -53,23 +56,28 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       classNames,
       styles,
       sx,
+      reverseActive = false,
       ...others
     }: TimelineProps,
     ref
   ) => {
-    const items = filterChildrenByType(children, TimelineItem).map(
-      (item: React.ReactElement, index) =>
-        React.cloneElement(item, {
-          classNames,
-          styles,
-          align,
-          lineWidth,
-          radius: item.props.radius || radius,
-          color: item.props.color || color,
-          bulletSize: item.props.bulletSize || bulletSize,
-          active: item.props.active || active >= index,
-          lineActive: item.props.lineActive || active - 1 >= index,
-        })
+    const _children = filterChildrenByType(children, TimelineItem);
+    const items = _children.map((item: React.ReactElement, index) =>
+      React.cloneElement(item, {
+        classNames,
+        styles,
+        align,
+        lineWidth,
+        radius: item.props.radius || radius,
+        color: item.props.color || color,
+        bulletSize: item.props.bulletSize || bulletSize,
+        active:
+          item.props.active ||
+          (reverseActive ? active >= _children.length - index - 1 : active >= index),
+        lineActive:
+          item.props.lineActive ||
+          (reverseActive ? active >= _children.length - index - 1 : active - 1 >= index),
+      })
     );
 
     const offset: CSSObject =
