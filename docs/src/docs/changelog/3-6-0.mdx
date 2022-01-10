@@ -43,6 +43,7 @@ import { TableDemos, ScrollAreaDemos } from '@demos/core';
 - [TransferList](https://mantine.dev/core/transfer-list/) component now supports `limit` prop that can be used to improve performance of large data sets
 - [Modals manager](https://mantine.dev/others/modals/) now supports `...others` props in `modals.openContextModal` handler
 - [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components now support new `selectOnBlur` prop
+- [Transition](https://mantine.dev/core/transition/) now supports `exitDuration` prop to specify unmount transition duration
 
 ## 3.5.0 – 3.6.0 bug fixes
 
@@ -55,3 +56,4 @@ import { TableDemos, ScrollAreaDemos } from '@demos/core';
 - Fix [Slider](https://mantine.dev/core/slider/) initial value not being clamped with min/max
 - Fix incorrect value set in [RangeSlider](https://mantine.dev/core/slider/) when user interacted with slider after value was force updated
 - Fix possible permanent placeholder after hydration in [Image](https://mantine.dev/core/image/) component
+- Fix jumping items in dropdown when item is selected in [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/) and [Autocomplete](https://mantine.dev/core/autocomplete/) components, this fix is also applied to dropdowns with transitions
