@@ -67,6 +67,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         mounted={mounted}
         transition={transition}
         transitionDuration={transitionDuration}
+        exitTransitionDuration={0}
         transitionTimingFunction={transitionTimingFunction}
         position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
         withinPortal={withinPortal}

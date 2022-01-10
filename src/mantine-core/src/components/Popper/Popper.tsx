@@ -33,8 +33,11 @@ export interface SharedPopperProps {
   /** Customize mount/unmount transition */
   transition?: MantineTransition;
 
-  /** Mount/unmount transition duration in ms */
+  /** Mount transition duration in ms */
   transitionDuration?: number;
+
+  /** Unmount transition duration in ms */
+  exitTransitionDuration?: number;
 
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
@@ -81,6 +84,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   mounted,
   transition = 'pop-top-left',
   transitionDuration,
+  exitTransitionDuration = transitionDuration,
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
@@ -120,6 +124,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
     <Transition
       mounted={mounted && !!referenceElement}
       duration={transitionDuration}
+      exitDuration={exitTransitionDuration}
       transition={transition}
       timingFunction={transitionTimingFunction}
       onExited={onTransitionEnd}
