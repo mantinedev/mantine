@@ -23,17 +23,14 @@ export function SizeControl({ label, value, onChange, step = 25, ...others }: Si
 
   return (
     <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
-      <div style={{ paddingLeft: 4, paddingRight: 4 }}>
-        <Slider
-          value={_value}
-          onChange={handleChange}
-          label={(val) => MARKS.find((mark) => mark.value === val).label}
-          step={step}
-          radius={0}
-          marks={MARKS}
-          styles={{ markLabel: { display: 'none' } }}
-        />
-      </div>
+      <Slider
+        value={_value}
+        onChange={handleChange}
+        label={(val) => MARKS.find((mark) => mark.value === val).label}
+        step={step}
+        marks={MARKS}
+        styles={{ markLabel: { display: 'none' } }}
+      />
     </InputWrapper>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
@@ -32,9 +33,9 @@ export function Marks({
   const { classes, cx } = useStyles({ size, color }, { classNames, styles, name: 'Slider' });
 
   const items = marks.map((mark, index) => (
-    <div
+    <Box
       className={classes.markWrapper}
-      style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
+      sx={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
       key={index}
     >
       <div
@@ -58,7 +59,7 @@ export function Marks({
           {mark.label}
         </div>
       )}
-    </div>
+    </Box>
   ));
 
   return <div>{items}</div>;

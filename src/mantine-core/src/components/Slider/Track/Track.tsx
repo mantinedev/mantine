@@ -1,6 +1,8 @@
 import React from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { Marks, MarksStylesNames } from '../Marks/Marks';
+import { sizes } from '../SliderRoot/SliderRoot.styles';
 import useStyles from './Track.styles';
 
 export type TrackStylesNames = ClassNames<typeof useStyles> | MarksStylesNames;
@@ -38,7 +40,13 @@ export function Track({
 
   return (
     <div className={classes.track} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
-      <div className={classes.bar} style={{ left: `${offset}%`, width: `${filled}%` }} />
+      <Box
+        className={classes.bar}
+        sx={(theme) => ({
+          left: `calc(${offset}% - ${theme.fn.size({ size, sizes })}px)`,
+          width: `calc(${filled}% + ${theme.fn.size({ size, sizes })}px)`,
+        })}
+      />
 
       {children}
 

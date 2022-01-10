@@ -70,4 +70,23 @@ storiesOf('@mantine/core/Slider/stories', module)
         styles={{ thumb: { borderWidth: 2, height: 26, width: 26, padding: 3 } }}
       />
     </div>
+  ))
+  .add('Boundaries', () => (
+    <div style={{ width: 380, padding: 40 }}>
+      <div style={{ backgroundColor: '#b8d2fc', height: 30, marginBottom: 5 }} />
+
+      <div style={{ backgroundColor: '#b8d2fc' }}>
+        <Slider
+          color="red"
+          defaultValue={40}
+          marks={[
+            { value: 0, label: 'xs' },
+            { value: 25, label: 'sm' },
+            { value: 50, label: 'md' },
+            { value: 75, label: 'lg' },
+            { value: 100, label: 'xl' },
+          ]}
+        />
+      </div>
+    </div>
   ));
