@@ -36,3 +36,31 @@ function Demo() {
 You can apply rtl plugin based on locale. Note that you will have to manage popovers positions in some
 components ([Menu](/core/menu/), [Popover](/core/popover/), etc.) on your side as `position` and `placement`
 props are not flipped based on text direction.
+
+## Dynamic direction changes
+
+To make rtl dynamic, change cache key when cache changes:
+
+```tsx
+import { useState } from 'react';
+import { MantineProvider, Button } from '@mantine/core';
+import rtlPlugin from 'stylis-plugin-rtl';
+
+function Demo() {
+  const [rtl, setRtl] = useState(false);
+  return (
+    <MantineProvider
+      emotionOptions={
+        rtl
+          ? // rtl cache
+            { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] }
+          : // ltr cache
+            { key: 'mantine' }
+      }
+    >
+      <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
+      <App />
+    </MantineProvider>
+  );
+}
+```
