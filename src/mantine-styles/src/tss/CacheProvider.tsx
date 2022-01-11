@@ -2,25 +2,11 @@ import React, { createContext, useContext } from 'react';
 import createCache, { EmotionCache, Options } from '@emotion/cache';
 import { useMantineEmotionOptions } from '../theme/MantineProvider';
 
-export const { getCache } = (() => {
-  let cache: EmotionCache;
-
-  function _getCache(options?: Options) {
-    if (cache === undefined) {
-      cache = createCache(options || { key: 'mantine', prepend: true });
-    }
-
-    return cache;
-  }
-
-  return { getCache: _getCache };
-})();
-
 const context = createContext<EmotionCache>(undefined);
 
 export function useCache() {
   const options = useMantineEmotionOptions();
-  return useContext(context) || getCache(options);
+  return useContext(context) || createCache(options);
 }
 
 interface CacheProviderProps {
