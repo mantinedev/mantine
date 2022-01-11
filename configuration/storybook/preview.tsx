@@ -14,7 +14,9 @@ function ThemeWrapper(props: any) {
           headings: { fontFamily: 'Greycliff CF, sans-serif' },
         }}
         emotionOptions={
-          process.env.RTL ? { key: 'mantine', stylisPlugins: [rtlPlugin as any] } : undefined
+          process.env.RTL
+            ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin as any] }
+            : { key: 'mantine' }
         }
         withGlobalStyles
         withNormalizeCSS
