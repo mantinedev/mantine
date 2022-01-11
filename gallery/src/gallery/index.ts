@@ -75,7 +75,6 @@ export { UsersTable } from './UsersTable/UsersTable';
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
 
 // Sliders
-export { SliderFilled } from './SliderFilled/SliderFilled';
 export { SliderIcon } from './SliderIcon/SliderIcon';
 export { SliderInput } from './SliderInput/SliderInput';
 export { SliderLabel } from './SliderLabel/SliderLabel';
