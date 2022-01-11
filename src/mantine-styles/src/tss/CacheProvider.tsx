@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import createCache, { EmotionCache, Options } from '@emotion/cache';
+import createCache, { EmotionCache } from '@emotion/cache';
 import { useMantineEmotionOptions } from '../theme/MantineProvider';
 
 const context = createContext<EmotionCache>(undefined);
