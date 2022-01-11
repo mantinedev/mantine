@@ -68,6 +68,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
         paddingLeft: theme.spacing.sm,
+        paddingRight: theme.spacing.sm,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
