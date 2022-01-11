@@ -5,3 +5,4 @@ export { keyframes } from '@emotion/react';
 export { createStyles } from './create-styles';
 export { Global } from './Global';
 export { useCss } from './use-css';
+export { getCache, useEmotionCache } from './use-emotion-cache';
