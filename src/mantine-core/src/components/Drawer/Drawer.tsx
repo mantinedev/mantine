@@ -93,6 +93,13 @@ const transitions: Record<DrawerPosition, MantineTransition> = {
   right: 'slide-left',
 };
 
+const rtlTransitions: Record<DrawerPosition, MantineTransition> = {
+  top: 'slide-down',
+  bottom: 'slide-up',
+  right: 'slide-right',
+  left: 'slide-left',
+};
+
 export function MantineDrawer({
   className,
   opened,
@@ -129,7 +136,8 @@ export function MantineDrawer({
 
   const [, lockScroll] = useScrollLock();
 
-  const drawerTransition = transition || transitions[position];
+  const drawerTransition =
+    transition || (theme.dir === 'rtl' ? rtlTransitions : transitions)[position];
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
