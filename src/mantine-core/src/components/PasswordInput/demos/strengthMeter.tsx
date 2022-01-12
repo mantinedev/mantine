@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover } from '../../../index';
+import { useMantineTheme } from '@mantine/styles';
+import { PasswordInput, Progress, Text, Popover, Box } from '../../../index';
 
 const code = `
 import { useState } from 'react';
@@ -82,10 +83,11 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
   return (
     <Text
       color={meets ? 'teal' : 'red'}
-      style={{ display: 'flex', alignItems: 'center', marginTop: 7 }}
+      sx={{ display: 'flex', alignItems: 'center' }}
+      mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <span style={{ marginLeft: 10 }}>{label}</span>
+      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -110,6 +112,7 @@ function getStrength(password: string) {
 }
 
 function Demo() {
+  const theme = useMantineTheme();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState('');
   const checks = requirements.map((requirement, index) => (
@@ -124,8 +127,7 @@ function Demo() {
       <Popover
         opened={popoverOpened}
         position="bottom"
-        placement="start"
-        withArrow
+        placement={theme.dir === 'ltr' ? 'start' : 'end'}
         noFocusTrap
         transition="pop-top-left"
         onFocusCapture={() => setPopoverOpened(true)}
