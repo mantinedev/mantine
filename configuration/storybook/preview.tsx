@@ -15,6 +15,7 @@ function ThemeWrapper(props: any) {
     <ColorSchemeProvider colorScheme="light" toggleColorScheme={() => {}}>
       <MantineProvider
         theme={{
+          dir: rtl ? 'rtl' : 'ltr',
           colorScheme: useDarkMode() ? 'dark' : 'light',
           headings: { fontFamily: 'Greycliff CF, sans-serif' },
         }}
