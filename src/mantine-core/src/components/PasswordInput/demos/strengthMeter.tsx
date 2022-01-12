@@ -12,10 +12,11 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
   return (
     <Text
       color={meets ? 'teal' : 'red'}
-      style={{ display: 'flex', alignItems: 'center', marginTop: 7 }}
+      sx={{ display: 'flex', alignItems: 'center' }}
+      mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <span style={{ marginLeft: 10 }}>{label}</span>
+      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
