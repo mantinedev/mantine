@@ -160,9 +160,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     return (
       <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
         {!!_value && (
-          <span
+          <Box
+            component="span"
             className={classes.active}
-            style={{
+            sx={{
               width: activePosition.width,
               transform: `translateX(${activePosition.translate}px)`,
             }}
