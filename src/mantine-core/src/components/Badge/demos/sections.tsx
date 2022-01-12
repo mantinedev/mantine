@@ -6,7 +6,6 @@ import { ActionIcon } from '../../ActionIcon/ActionIcon';
 import { Avatar } from '../../Avatar/Avatar';
 
 const code = `
-import React from 'react';
 import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
 
 function Demo() {

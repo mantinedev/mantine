@@ -6,7 +6,6 @@ import { Prism, PrismProps } from '../Prism';
 import { Prism as PrismStylesApi } from '../styles.api';
 
 const demoCode = `
-import React from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {
