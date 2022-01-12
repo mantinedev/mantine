@@ -1,6 +1,6 @@
 import React, { useRef, useState, forwardRef } from 'react';
 import { useUncontrolled, useMove, useMergedRef, clamp } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, useMantineTheme } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
@@ -104,6 +104,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     }: SliderProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const [hovered, setHovered] = useState(false);
     const [_value, setValue] = useUncontrolled({
       value: typeof value === 'number' ? clamp({ value, min, max }) : value,
@@ -122,7 +123,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       setValue(nextValue);
     };
 
-    const { ref: container, active } = useMove(({ x }) => handleChange(x));
+    const { ref: container, active } = useMove(({ x }) => handleChange(x), undefined, theme.dir);
 
     function handleThumbMouseDown(
       event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>

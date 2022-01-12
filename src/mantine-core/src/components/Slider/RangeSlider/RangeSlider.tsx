@@ -1,6 +1,6 @@
 import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import { useMove, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, useMantineTheme } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
@@ -115,6 +115,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     }: RangeSliderProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const [focused, setFocused] = useState(-1);
     const [hovered, setHovered] = useState(false);
     const [_value, setValue] = useUncontrolled<Value>({
@@ -177,7 +178,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       setRangedValue(nextValue, thumbIndex.current);
     };
 
-    const { ref: container, active } = useMove(({ x }) => handleChange(x));
+    const { ref: container, active } = useMove(({ x }) => handleChange(x), undefined, theme.dir);
 
     function handleThumbMouseDown(
       event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -211,8 +212,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
       const nearestHandle =
         Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
+      const _nearestHandle = theme.dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
 
-      thumbIndex.current = nearestHandle;
+      thumbIndex.current = _nearestHandle;
     };
 
     const getFocusedThumbIndex = () => {
