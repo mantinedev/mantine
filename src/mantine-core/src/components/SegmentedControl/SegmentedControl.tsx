@@ -95,7 +95,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       rule: (val) => !!val,
     });
 
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       {
         size,
         fullWidth,
@@ -118,10 +118,15 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         const element = refs.current[_value];
         const elementRect = element.getBoundingClientRect();
         const scaledValue = element.offsetWidth / elementRect.width;
+        const width = elementRect.width * scaledValue || 0;
+
+        const offsetRight =
+          containerRect.width - element.parentElement.offsetLeft + WRAPPER_PADDING - width;
+        const offsetLeft = element.parentElement.offsetLeft - WRAPPER_PADDING;
 
         setActivePosition({
-          width: elementRect.width * scaledValue || 0,
-          translate: element.parentElement.offsetLeft - WRAPPER_PADDING,
+          width,
+          translate: theme.dir === 'rtl' ? offsetRight : offsetLeft,
         });
       }
     }, [_value, containerRect]);
