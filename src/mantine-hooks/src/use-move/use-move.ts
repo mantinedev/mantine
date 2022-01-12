@@ -19,7 +19,8 @@ interface useMoveHandlers {
 
 export function useMove<T extends HTMLElement = HTMLDivElement>(
   onChange: (value: UseMovePosition) => void,
-  handlers?: useMoveHandlers
+  handlers?: useMoveHandlers,
+  dir: 'ltr' | 'rtl' = 'ltr'
 ) {
   const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
@@ -41,8 +42,9 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
           const rect = ref.current.getBoundingClientRect();
 
           if (rect.width && rect.height) {
+            const _x = clamp({ value: (x - rect.left) / rect.width, min: 0, max: 1 });
             onChange({
-              x: clamp({ value: (x - rect.left) / rect.width, min: 0, max: 1 }),
+              x: dir === 'ltr' ? _x : 1 - _x,
               y: clamp({ value: (y - rect.top) / rect.height, min: 0, max: 1 }),
             });
           }
