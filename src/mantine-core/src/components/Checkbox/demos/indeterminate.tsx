@@ -1,11 +1,11 @@
 import React from 'react';
 import { useListState, randomId } from '@mantine/hooks';
-import { useMantineTheme, Checkbox } from '../../../index';
+import { Checkbox } from '../../../index';
 
 const code = `
 import React from 'react';
 import { useListState, randomId } from '@mantine/hooks';
-import { useMantineTheme, Checkbox } from '@mantine/core';
+import { Checkbox } from '@mantine/core';
 
 const initialValues = [
   { label: 'Receive email notifications', checked: false, key: randomId() },
@@ -14,7 +14,6 @@ const initialValues = [
 ];
 
 export function IndeterminateCheckbox() {
-  const theme = useMantineTheme();
   const [values, handlers] = useListState(initialValues);
 
   const allChecked = values.every((value) => value.checked);
@@ -22,7 +21,8 @@ export function IndeterminateCheckbox() {
 
   const items = values.map((value, index) => (
     <Checkbox
-      style={{ marginTop: theme.spacing.xs, marginLeft: 33 }}
+      mt="xs"
+      ml={33}
       label={value.label}
       key={value.key}
       checked={value.checked}
@@ -56,15 +56,14 @@ const initialValues = [
 ];
 
 export function Demo() {
-  const theme = useMantineTheme();
   const [values, handlers] = useListState(initialValues);
-
   const allChecked = values.every((value) => value.checked);
   const indeterminate = values.some((value) => value.checked) && !allChecked;
 
   const items = values.map((value, index) => (
     <Checkbox
-      style={{ marginTop: theme.spacing.xs, marginLeft: 33 }}
+      mt="xs"
+      ml={33}
       label={value.label}
       key={value.key}
       checked={value.checked}
