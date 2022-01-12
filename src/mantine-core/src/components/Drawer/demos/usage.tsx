@@ -3,7 +3,7 @@ import { Drawer, Button, Group } from '../../../index';
 import { AuthenticationForm } from '../../../../demos/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Drawer, Button, Group } from '@mantine/core';
 
 function Demo() {

@@ -3,7 +3,7 @@ import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 import { PasswordInput, Progress, Text, Popover } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
 

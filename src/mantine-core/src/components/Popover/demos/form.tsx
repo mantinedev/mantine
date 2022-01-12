@@ -14,7 +14,7 @@ import {
 } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Popover,
   Button,

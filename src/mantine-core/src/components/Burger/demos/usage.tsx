@@ -3,7 +3,7 @@ import { WrappedBurger } from './WrappedBurger';
 import { Group } from '../../Group/Group';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {

@@ -3,7 +3,6 @@ import { Table } from '../Table';
 import { elements } from './data';
 
 const code = `
-import React from 'react';
 import { Table } from '@mantine/core';
 
 function Demo() {

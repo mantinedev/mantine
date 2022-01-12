@@ -4,7 +4,6 @@ import { Input } from '../Input';
 import { Tooltip } from '../../Tooltip/Tooltip';
 
 const code = `
-import React from 'react';
 import { Input, Tooltip } from '@mantine/core';
 import { InfoCircledIcon } from '@modulz/radix-icons';
 

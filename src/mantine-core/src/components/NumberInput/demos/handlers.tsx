@@ -8,7 +8,7 @@ import {
 } from '../../../index';
 
 const code = `
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { NumberInput, Group, ActionIcon, NumberInputHandlers } from '@mantine/core';
 
 function HandlersWrapper() {

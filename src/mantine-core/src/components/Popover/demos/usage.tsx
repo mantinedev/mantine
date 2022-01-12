@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Popover, Text, Button, Group, Image } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Popover, Text, Button, Image } from '@mantine/core';
 
 function Demo() {

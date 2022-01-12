@@ -2,7 +2,6 @@ import React from 'react';
 import { Prism } from '../Prism';
 
 export const demoCode = `
-import React from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {
@@ -11,11 +10,9 @@ function Demo() {
 `;
 
 const code = `
-import React from 'react';
 import { Prism } from '@mantine/prism';
 
-const demoCode = \`import React from 'react';
-import { Button } from '@mantine/core';
+const demoCode = \`import { Button } from '@mantine/core';
 
 function Demo() {
   return <Button>Hello</Button>

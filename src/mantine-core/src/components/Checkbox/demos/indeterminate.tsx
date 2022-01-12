@@ -3,7 +3,6 @@ import { useListState, randomId } from '@mantine/hooks';
 import { Checkbox } from '../../../index';
 
 const code = `
-import React from 'react';
 import { useListState, randomId } from '@mantine/hooks';
 import { Checkbox } from '@mantine/core';
 
