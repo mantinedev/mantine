@@ -1,5 +1,4 @@
 import React, { useState, forwardRef } from 'react';
-import { useMantineTheme } from '@mantine/core';
 import dayjs from 'dayjs';
 import { isSameDate } from '../../utils';
 import { DayModifiers } from '../Month';
@@ -30,7 +29,6 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
     }: RangeCalendarProps,
     ref
   ) => {
-    const theme = useMantineTheme();
     const [hoveredDay, setHoveredDay] = useState<Date>(null);
     const [pickedDate, setPickedDate] = useState<Date>(null);
 
@@ -73,26 +71,29 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       return false;
     };
 
-    const dayStyles = (date: Date, modifiers: DayModifiers) => {
-      const initialStyles = typeof dayStyle === 'function' ? dayStyle(date, modifiers) : null;
-
-      if (shouldHighlightDate(date, modifiers)) {
-        return {
-          ...initialStyles,
-          backgroundColor:
-            theme.colorScheme === 'dark'
-              ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
-              : theme.colors[theme.primaryColor][0],
-          borderRadius: 0,
-        };
+    const isPickedDateFirstInRange = (date: Date, modifiers: DayModifiers) => {
+      if (pickedDate instanceof Date && hoveredDay instanceof Date) {
+        const result: [Date, Date] = [hoveredDay, pickedDate];
+        result.sort((a, b) => a.getTime() - b.getTime());
+        return modifiers.selected && dayjs(date).isBefore(result[1]);
       }
 
-      return { ...initialStyles };
+      return false;
+    };
+
+    const isPickedDateLastInRange = (date: Date, modifiers: DayModifiers) => {
+      if (pickedDate instanceof Date && hoveredDay instanceof Date) {
+        const result: [Date, Date] = [hoveredDay, pickedDate];
+        result.sort((a, b) => a.getTime() - b.getTime());
+        return modifiers.selected && dayjs(date).isAfter(result[0]);
+      }
+
+      return false;
     };
 
     return (
       <CalendarBase
-        dayStyle={dayStyles}
+        dayStyle={dayStyle}
         onMouseLeave={handleMouseLeave}
         onDayMouseEnter={(date) => setHoveredDay(date)}
         onChange={setRangeDate}
@@ -102,6 +103,9 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         __staticSelector={__staticSelector}
         amountOfMonths={amountOfMonths}
         hideOutsideDates={amountOfMonths > 1}
+        isDateInRange={shouldHighlightDate}
+        isDateFirstInRange={isPickedDateFirstInRange}
+        isDateLastInRange={isPickedDateLastInRange}
         {...others}
       />
     );
