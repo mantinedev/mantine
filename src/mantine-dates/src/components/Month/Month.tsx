@@ -48,6 +48,15 @@ export interface MonthSettings {
 
   /** Remove outside dates */
   hideOutsideDates?: boolean;
+
+  /** Should date be displayed as in range */
+  isDateInRange?(date: Date, modifiers: DayModifiers): boolean;
+
+  /** Should date be displayed as first in range */
+  isDateFirstInRange?(date: Date, modifiers: DayModifiers): boolean;
+
+  /** Should date be displayed as last in range */
+  isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
 }
 
 export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
@@ -84,7 +93,7 @@ export interface MonthProps
   onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
 
-const noop = () => {};
+const no = () => false;
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>(
   (
@@ -114,6 +123,9 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
       onDayKeyDown,
       daysRefs,
       hideOutsideDates = false,
+      isDateInRange = no,
+      isDateFirstInRange = no,
+      isDateLastInRange = no,
       ...others
     }: MonthProps,
     ref
@@ -174,9 +186,9 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
               value={date}
               outside={dayProps.outside}
               weekend={dayProps.weekend}
-              inRange={dayProps.inRange}
-              firstInRange={dayProps.firstInRange}
-              lastInRange={dayProps.lastInRange}
+              inRange={dayProps.inRange || isDateInRange(date, dayProps)}
+              firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
+              lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
               firstInMonth={
                 hideOutsideDates
                   ? isSameDate(date, dayjs(month).startOf('month').toDate())
@@ -190,7 +202,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>(
               className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
               style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
               disabled={dayProps.disabled}
-              onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
+              onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
               size={size}
               fullWidth={fullWidth}
               focusable={focusable}
