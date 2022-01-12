@@ -199,12 +199,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           transition={transition}
           mounted={dropdownOpened}
           position="bottom"
-          placement="start"
+          placement={theme.dir === 'ltr' ? 'start' : 'end'}
           gutter={5}
-          withArrow
           arrowSize={3}
           zIndex={dropdownZIndex}
-          arrowClassName={classes.arrow}
           arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
           withinPortal={withinPortal}
         >
