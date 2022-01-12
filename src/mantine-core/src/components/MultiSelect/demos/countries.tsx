@@ -1,47 +1,45 @@
 import React, { forwardRef } from 'react';
 import Flag from 'react-flagpack';
-import { useMantineTheme } from '@mantine/styles';
 import { countriesData } from '@mantine/mockdata';
-import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
+import { CloseButton } from '../../ActionIcon';
+import { Box } from '../../Box';
 import { MultiSelect, MultiSelectProps } from '../MultiSelect';
 
 const code = `
 import Flag from 'react-flagpack';
-import { CloseButton, MultiSelect } from '@mantine/core';
+import { CloseButton, MultiSelect, Box } from '@mantine/core';
 
 function Value({ value, label, onRemove, classNames, ...others }) {
-  const theme = useMantineTheme();
-
   return (
     <div {...others}>
-      <div
-        style={{
+      <Box
+        sx={(theme) => ({
           display: 'flex',
           cursor: 'default',
           alignItems: 'center',
           border: \`1px solid \${theme.colors.gray[4]}\`,
           paddingLeft: 10,
           borderRadius: 4,
-        }}
+        })}
       >
         <div style={{ marginRight: 10 }}>
           <Flag code={value} size="S" />
         </div>
         <div style={{ lineHeight: 1, fontSize: 12 }}>{label}</div>
         <CloseButton onMouseDown={onRemove} variant="transparent" size={22} iconSize={14} tabIndex={-1} />
-      </div>
+      </Box>
     </div>
   );
 }
 
 const Item = forwardRef(({ label, value, ...others }, ref) => (
   <div ref={ref} {...others}>
-    <div style={{ display: 'flex' }}>
-      <div style={{ marginRight: 10 }}>
+    <Box sx={{ display: 'flex' }}>
+      <Box mr={10}>
         <Flag code={value} size="S" />
-      </div>
+      </Box>
       <div>{label}</div>
-    </div>
+    </Box>
   </div>
 ));
 
@@ -62,12 +60,10 @@ export function CountriesSelect() {
 `;
 
 function Value({ value, label, onRemove, classNames, ...others }: any) {
-  const theme = useMantineTheme();
-
   return (
     <div {...others}>
-      <div
-        style={{
+      <Box
+        sx={(theme) => ({
           display: 'flex',
           cursor: 'default',
           alignItems: 'center',
@@ -77,12 +73,12 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
           }`,
           paddingLeft: 10,
           borderRadius: 4,
-        }}
+        })}
       >
-        <div style={{ marginRight: 10 }}>
+        <Box mr={10}>
           <Flag code={value} size="S" />
-        </div>
-        <div style={{ lineHeight: 1, fontSize: 12 }}>{label}</div>
+        </Box>
+        <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
         <CloseButton
           onMouseDown={onRemove}
           variant="transparent"
@@ -90,19 +86,19 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
           iconSize={14}
           tabIndex={-1}
         />
-      </div>
+      </Box>
     </div>
   );
 }
 
 const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => (
   <div ref={ref} {...others}>
-    <div style={{ display: 'flex' }}>
-      <div style={{ marginRight: 10 }}>
+    <Box sx={{ display: 'flex' }}>
+      <Box mr={10}>
         <Flag code={value} size="S" />
-      </div>
+      </Box>
       <div>{label}</div>
-    </div>
+    </Box>
   </div>
 ));
 
