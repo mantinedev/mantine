@@ -11,7 +11,7 @@ const code = `
 />
 
 <NumberInput
-  style={{ marginTop: 15 }}
+  mt="md"
   label="Your weight in kg"
   description="From 0 to Infinity, step is 5"
   defaultValue={80}
