@@ -27,6 +27,7 @@ export const Code = forwardRef<HTMLElement, CodeProps>(
       return (
         <Box
           component="pre"
+          dir="ltr"
           className={cx(classes.root, classes.block, className)}
           ref={ref as any}
           {...others}
@@ -37,7 +38,7 @@ export const Code = forwardRef<HTMLElement, CodeProps>(
     }
 
     return (
-      <Box component="code" className={cx(classes.root, className)} ref={ref} {...others}>
+      <Box component="code" className={cx(classes.root, className)} ref={ref} dir="ltr" {...others}>
         {children}
       </Box>
     );
