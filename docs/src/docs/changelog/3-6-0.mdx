@@ -12,32 +12,8 @@ import { TableDemos, ScrollAreaDemos, ButtonDemos } from '@demos/core';
 
 ## RTL support improvements
 
-Emotion options on [MantineProvider](https://mantine.dev/theming/rtl/) now supports dynamic values.
-This feature allows to create dynamic direction changes:
-
-```tsx
-import { useState } from 'react';
-import { MantineProvider, Button } from '@mantine/core';
-import rtlPlugin from 'stylis-plugin-rtl';
-
-function Demo() {
-  const [rtl, setRtl] = useState(false);
-  return (
-    <MantineProvider
-      emotionOptions={
-        rtl
-          ? // rtl cache
-            { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] }
-          : // ltr cache
-            { key: 'mantine' }
-      }
-    >
-      <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
-      <App />
-    </MantineProvider>
-  );
-}
-```
+- Emotion options on [MantineProvider](https://mantine.dev/theming/rtl/) now supports dynamic values. This feature allows to create dynamic direction changes.
+- `@mantine/ssr` package now supports RTL with Next.js and any other ssr environment
 
 ## New features
 
