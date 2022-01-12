@@ -27,6 +27,7 @@ interface MantineThemeFunctions {
 }
 
 export interface MantineTheme {
+  dir: 'ltr' | 'rtl';
   loader: LoaderType;
   dateFormat: string;
   colorScheme: 'light' | 'dark';
