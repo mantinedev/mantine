@@ -2,13 +2,12 @@ import { createStyles } from '@mantine/styles';
 
 interface ScrollAreaStyles {
   scrollbarSize: number;
-  dir: 'ltr' | 'rtl';
   offsetScrollbars: boolean;
   scrollbarHovered: boolean;
 }
 
 export default createStyles(
-  (theme, { scrollbarSize, dir, offsetScrollbars, scrollbarHovered }: ScrollAreaStyles, getRef) => {
+  (theme, { scrollbarSize, offsetScrollbars, scrollbarHovered }: ScrollAreaStyles, getRef) => {
     const thumb = getRef('thumb');
     return {
       root: {
@@ -18,8 +17,7 @@ export default createStyles(
       viewport: {
         width: '100%',
         height: '100%',
-        paddingRight: dir === 'ltr' && offsetScrollbars ? scrollbarSize : undefined,
-        paddingLeft: dir === 'rtl' && offsetScrollbars ? scrollbarSize : undefined,
+        paddingRight: offsetScrollbars ? scrollbarSize : undefined,
       },
 
       scrollbar: {

@@ -18,9 +18,6 @@ export interface ScrollAreaProps
   /** Scroll hide delay in ms, for scroll and hover types only */
   scrollHideDelay?: number;
 
-  /** Reading direction of the scroll area */
-  dir?: 'ltr' | 'rtl';
-
   /** Should scrollbars be offset with padding */
   offsetScrollbars?: boolean;
 
@@ -41,7 +38,6 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       scrollbarSize = 12,
       scrollHideDelay = 1000,
       type = 'hover',
-      dir = 'ltr',
       offsetScrollbars = false,
       viewportRef,
       onScrollPositionChange,
@@ -50,8 +46,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     ref
   ) => {
     const [scrollbarHovered, setScrollbarHovered] = useState(false);
-    const { classes, cx } = useStyles(
-      { scrollbarSize, offsetScrollbars, dir, scrollbarHovered },
+    const { classes, cx, theme } = useStyles(
+      { scrollbarSize, offsetScrollbars, scrollbarHovered },
       { name: 'ScrollArea', classNames, styles }
     );
 
@@ -59,7 +55,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       <RadixScrollArea.Root
         type={type}
         scrollHideDelay={scrollHideDelay}
-        dir={dir}
+        dir={theme.dir}
         ref={ref}
         asChild
       >
