@@ -26,9 +26,10 @@ export default createStyles((theme, { colorScheme, native }: PrismStyles) => ({
   },
 
   copy: {
-    position: 'absolute' as any,
+    position: 'absolute',
     top: theme.spacing.xs,
-    right: theme.spacing.xs,
+    right: theme.dir === 'ltr' ? theme.spacing.xs : 'unset',
+    left: theme.dir === 'rtl' ? theme.spacing.xs : 'unset',
     zIndex: 2,
   },
 
