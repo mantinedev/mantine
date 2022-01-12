@@ -5,11 +5,6 @@ interface ColorInputStyles {
 }
 
 export default createStyles((theme, { disallowInput }: ColorInputStyles) => ({
-  arrow: {
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-  },
-
   dropdownBody: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     border: `1px solid ${
