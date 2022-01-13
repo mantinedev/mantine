@@ -105,7 +105,7 @@ export const configurator: MantineDemo = {
     },
     {
       name: 'placement',
-      type: 'select',
+      type: 'segmented',
       initialValue: 'start',
       defaultValue: 'start',
       data: [
