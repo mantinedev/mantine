@@ -140,7 +140,15 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setFocused(false);
 
       if (allowFreeInput) {
-        const date = typeof _value === 'string' ? parseDate(_value) : _value;
+        let date = typeof _value === 'string' ? parseDate(_value) : _value;
+
+        if (maxDate && dayjs(date).isAfter(maxDate)) {
+          date = maxDate;
+        }
+
+        if (minDate && dayjs(date).isBefore(minDate)) {
+          date = minDate;
+        }
 
         if (dayjs(date).isValid()) {
           setValue(date);
