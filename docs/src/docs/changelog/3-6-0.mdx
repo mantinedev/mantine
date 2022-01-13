@@ -14,6 +14,8 @@ import { TableDemos, ScrollAreaDemos, ButtonDemos } from '@demos/core';
 
 - Emotion options on [MantineProvider](https://mantine.dev/theming/rtl/) now supports dynamic values. This feature allows to create dynamic direction changes.
 - `@mantine/ssr` package now supports RTL with Next.js and any other ssr environment
+- All components were tested to work correctly with [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl)
+- Mantine theme object now includes `dir` property which must be set to `rtl` to support all features
 
 ## New features
 
@@ -72,3 +74,4 @@ import { TableDemos, ScrollAreaDemos, ButtonDemos } from '@demos/core';
 - Fix possible permanent placeholder after hydration in [Image](https://mantine.dev/core/image/) component
 - Fix jumping items in dropdown when item is selected in [Select](https://mantine.dev/core/select/), [MultiSelect](https://mantine.dev/core/multi-select/) and [Autocomplete](https://mantine.dev/core/autocomplete/) components, this fix is also applied to dropdowns with transitions
 - Fix [Slider and RangeSlider](https://mantine.dev/core/slider/) components thumbs and marks overflowing parent element when is the same as min/max
+- Fix value not being clamped in [DatePicker](https://mantine.dev/dates/date-picker/) with allowed free input, now value is clamped on blur
