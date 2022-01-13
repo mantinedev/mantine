@@ -154,6 +154,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           setValue(date);
           setLastValidValue(date);
           setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
+          setCalendarMonth(date);
         } else if (fixOnBlur) {
           setValue(lastValidValue);
         }
