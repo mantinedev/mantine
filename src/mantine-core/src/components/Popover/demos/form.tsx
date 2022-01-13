@@ -242,7 +242,7 @@ export function Demo() {
         opened={opened}
         onClose={() => setOpened(false)}
         position="bottom"
-        placement={isMobile ? 'center' : theme.dir === 'ltr' ? 'end' : 'start'}
+        placement={isMobile ? 'center' : 'end'}
         withCloseButton
         title="Edit user"
         transition="pop-top-right"

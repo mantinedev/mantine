@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { useMantineTheme } from '@mantine/styles';
 import { PasswordInput, Progress, Text, Popover, Box } from '../../../index';
 
 const code = `
@@ -113,7 +112,6 @@ function getStrength(password: string) {
 }
 
 function Demo() {
-  const theme = useMantineTheme();
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState('');
   const checks = requirements.map((requirement, index) => (
@@ -128,7 +126,7 @@ function Demo() {
       <Popover
         opened={popoverOpened}
         position="bottom"
-        placement={theme.dir === 'ltr' ? 'start' : 'end'}
+        placement="start"
         noFocusTrap
         transition="pop-top-left"
         onFocusCapture={() => setPopoverOpened(true)}
