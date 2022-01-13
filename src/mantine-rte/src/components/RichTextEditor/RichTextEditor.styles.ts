@@ -263,6 +263,36 @@ export default createStyles(
         marginBottom: theme.spacing.sm,
       },
 
+      '& pre': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: theme.spacing.xs,
+        margin: 0,
+        overflowX: 'auto',
+      },
+
+      '& code': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: `2px ${theme.spacing.xs / 2}px`,
+      },
+
       '& blockquote': {
         marginTop: 0,
         marginLeft: 0,

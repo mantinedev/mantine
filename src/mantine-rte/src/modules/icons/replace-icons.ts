@@ -12,6 +12,8 @@ const CLEANUP = [
   'header',
   'script',
   'blockquote',
+  'code',
+  'code-block',
 ];
 
 export function replaceIcons(quillIconsModule: any) {
