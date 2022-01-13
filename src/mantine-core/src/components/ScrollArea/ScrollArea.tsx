@@ -51,9 +51,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
   ) => {
     const [scrollbarHovered, setScrollbarHovered] = useState(false);
     const theme = useMantineTheme();
-    const _dir = dir || theme.dir;
     const { classes, cx } = useStyles(
-      { scrollbarSize, offsetScrollbars, dir: _dir, scrollbarHovered },
+      { scrollbarSize, offsetScrollbars, scrollbarHovered },
       { name: 'ScrollArea', classNames, styles }
     );
 
@@ -61,7 +60,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       <RadixScrollArea.Root
         type={type}
         scrollHideDelay={scrollHideDelay}
-        dir={_dir}
+        dir={dir || theme.dir}
         ref={ref}
         asChild
       >
