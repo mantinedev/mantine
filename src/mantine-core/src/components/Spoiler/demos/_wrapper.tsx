@@ -1,11 +1,13 @@
 import React from 'react';
 import { Text } from '../../Text';
+import { Box } from '../../Box';
 import { Spoiler, SpoilerProps } from '../Spoiler';
 
 const content = (
   <div>
-    <img
-      style={{
+    <Box
+      component="img"
+      sx={{
         maxWidth: '100%',
         height: 150,
         marginLeft: 20,
