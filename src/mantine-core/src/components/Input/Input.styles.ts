@@ -10,6 +10,7 @@ interface InputStyles {
   invalid: boolean;
   rightSectionWidth: number;
   withRightSection: boolean;
+  iconWidth: number;
 }
 
 export const sizes = {
@@ -23,7 +24,16 @@ export const sizes = {
 export default createStyles(
   (
     theme,
-    { size, multiline, radius, variant, invalid, rightSectionWidth, withRightSection }: InputStyles
+    {
+      size,
+      multiline,
+      radius,
+      variant,
+      invalid,
+      rightSectionWidth,
+      withRightSection,
+      iconWidth,
+    }: InputStyles
   ) => {
     const invalidColor = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
     const sizeStyles =
@@ -139,7 +149,7 @@ export default createStyles(
       },
 
       withIcon: {
-        paddingLeft: `${theme.fn.size({ size, sizes })}px !important`,
+        paddingLeft: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
       },
 
       invalid: {

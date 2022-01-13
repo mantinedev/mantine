@@ -21,6 +21,9 @@ export interface InputBaseProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
+  /** Width of icon section in px */
+  iconWidth?: number;
+
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
@@ -75,6 +78,7 @@ export const Input: InputComponent = forwardRef(
       icon,
       style,
       rightSectionWidth = 36,
+      iconWidth,
       rightSection,
       rightSectionProps = {},
       radius = 'sm',
@@ -99,6 +103,7 @@ export const Input: InputComponent = forwardRef(
         variant: _variant,
         invalid,
         rightSectionWidth,
+        iconWidth,
         withRightSection: !!rightSection,
       },
       { classNames, styles, name: __staticSelector }
