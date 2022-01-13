@@ -32,6 +32,20 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   limit?: number;
 }
 
+const icons = {
+  Prev: PrevIcon,
+  Next: NextIcon,
+  First: FirstIcon,
+  Last: LastIcon,
+};
+
+const rtlIons = {
+  Next: PrevIcon,
+  Prev: NextIcon,
+  Last: FirstIcon,
+  First: LastIcon,
+};
+
 export function RenderList({
   className,
   data,
@@ -52,7 +66,7 @@ export function RenderList({
   styles,
   limit,
 }: RenderListProps) {
-  const { classes, cx } = useStyles(
+  const { classes, cx, theme } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea },
     { name: 'TransferList', classNames, styles }
   );
@@ -62,6 +76,7 @@ export function RenderList({
   const [hovered, setHovered] = useState(-1);
   const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
+  const Icons = theme.dir === 'rtl' ? rtlIons : icons;
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -195,7 +210,7 @@ export function RenderList({
             disabled={selection.length === 0}
             onClick={onMove}
           >
-            {reversed ? <PrevIcon /> : <NextIcon />}
+            {reversed ? <Icons.Prev /> : <Icons.Next />}
           </ActionIcon>
 
           {showTransferAll && (
@@ -207,7 +222,7 @@ export function RenderList({
               disabled={data.length === 0}
               onClick={onMoveAll}
             >
-              {reversed ? <FirstIcon /> : <LastIcon />}
+              {reversed ? <Icons.First /> : <Icons.Last />}
             </ActionIcon>
           )}
         </div>
