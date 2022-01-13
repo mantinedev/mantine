@@ -3,7 +3,10 @@ import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Select } from '../Select';
 
 const code = `
-<Select rightSection={<ChevronDownIcon />} />
+<Select
+  rightSection={<ChevronDownIcon />}
+  styles={{ rightSection: { pointerEvents: 'none' } }}
+/>
 `;
 
 function Demo() {
@@ -13,6 +16,7 @@ function Demo() {
         label="Your favorite framework/library"
         placeholder="Pick one"
         rightSection={<ChevronDownIcon />}
+        styles={{ rightSection: { pointerEvents: 'none' } }}
         data={[
           { value: 'react', label: 'React' },
           { value: 'ng', label: 'Angular' },
