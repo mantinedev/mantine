@@ -12,7 +12,7 @@ function Demo() {
       opened={opened}
       onClose={() => setOpened(false)}
       position="bottom"
-      placement="start"
+      placement="center"
       withArrow
       noFocusTrap
       noEscape
@@ -30,7 +30,8 @@ function Demo() {
           src="./logo.svg"
           width={30}
           height={30}
-          style={{ minWidth: 30, marginRight: 15 }}
+          sx={{ minWidth: 30 }}
+          mr="md"
         />
         <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
       </div>
@@ -48,7 +49,7 @@ function Demo() {
           opened={opened}
           onClose={() => setOpened(false)}
           position="bottom"
-          placement="start"
+          placement="center"
           withArrow
           noFocusTrap
           noEscape
@@ -66,7 +67,8 @@ function Demo() {
               src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
               width={30}
               height={30}
-              style={{ minWidth: 30, marginRight: 15 }}
+              sx={{ minWidth: 30 }}
+              mr="md"
             />
             <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
           </div>
