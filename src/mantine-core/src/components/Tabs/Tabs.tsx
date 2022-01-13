@@ -104,7 +104,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     }: TabsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { tabPadding, orientation },
       { classNames, styles, name: 'Tabs' }
     );
@@ -128,8 +128,14 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
 
     const activeTab = clamp({ value: _activeTab, min: 0, max: tabs.length - 1 });
 
-    const nextTabCode = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
-    const previousTabCode = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
+    const nextTabCode =
+      orientation === 'horizontal'
+        ? theme.dir === 'ltr'
+          ? 'ArrowRight'
+          : 'ArrowLeft'
+        : 'ArrowDown';
+    const previousTabCode =
+      orientation === 'horizontal' ? (theme.dir === 'ltr' ? 'ArrowLeft' : 'ArrowRight') : 'ArrowUp';
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.nativeEvent.code === nextTabCode) {
