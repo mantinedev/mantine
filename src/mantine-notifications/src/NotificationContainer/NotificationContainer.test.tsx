@@ -1,4 +1,4 @@
-import { itSupportsClassName, itSupportsStyle } from '@mantine/tests';
+import { itSupportsClassName, itSupportsSx } from '@mantine/tests';
 import NotificationContainer from './NotificationContainer';
 
 const defaultProps = {
@@ -8,7 +8,7 @@ const defaultProps = {
 } as const;
 
 describe('@mantine/notifications/NotificationContainer', () => {
-  itSupportsStyle(NotificationContainer, defaultProps);
+  itSupportsSx(NotificationContainer, defaultProps);
   itSupportsClassName(NotificationContainer, defaultProps);
 
   it('has correct displayName', () => {
