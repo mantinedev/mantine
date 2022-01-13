@@ -5,10 +5,15 @@ interface RichTextEditorStyles {
   editLabel: string;
   removeLabel: string;
   radius: MantineNumberSize;
+  readOnly: boolean;
 }
 
 export default createStyles(
-  (theme, { saveLabel, removeLabel, editLabel, radius }: RichTextEditorStyles) => ({
+  (theme, { saveLabel, removeLabel, editLabel, radius, readOnly }: RichTextEditorStyles) => ({
+    toolbar: {
+      display: readOnly ? 'none' : undefined,
+    },
+
     root: {
       ...theme.fn.fontStyles(),
       fontSize: theme.fontSizes.sm,

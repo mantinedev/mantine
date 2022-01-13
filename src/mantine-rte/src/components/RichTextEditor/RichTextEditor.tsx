@@ -63,6 +63,9 @@ export interface RichTextEditorProps
 
   /** Radius from theme.radius, or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Make quill editor read only */
+  readOnly?: boolean;
 }
 
 export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
@@ -82,6 +85,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       styles,
       placeholder,
       mentions,
+      readOnly = false,
       ...others
     }: RichTextEditorProps,
     ref
@@ -89,7 +93,13 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
     const uuid = useUuid(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
-      { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove, radius },
+      {
+        saveLabel: labels.save,
+        editLabel: labels.edit,
+        removeLabel: labels.remove,
+        radius,
+        readOnly,
+      },
       { classNames, styles, name: 'RichTextEditor' }
     );
 
@@ -120,6 +130,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           classNames={classNames}
           styles={styles}
           id={uuid}
+          className={classes.toolbar}
         />
 
         <Editor
@@ -129,6 +140,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
+          readOnly={readOnly}
         />
       </Box>
     );
