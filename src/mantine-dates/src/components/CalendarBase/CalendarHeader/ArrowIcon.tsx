@@ -1,16 +1,25 @@
 import React from 'react';
+import { useMantineTheme } from '@mantine/core';
 
 interface ArrowIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   direction: 'left' | 'right';
 }
 
 export function ArrowIcon({ direction, style, ...others }: ArrowIconProps) {
+  const theme = useMantineTheme();
   return (
     <svg
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ ...style, transform: direction === 'right' ? 'rotate(180deg)' : 'none' }}
+      style={{
+        ...style,
+        transform:
+          (direction === 'right' && theme.dir === 'ltr') ||
+          (direction === 'left' && theme.dir === 'rtl')
+            ? 'rotate(180deg)'
+            : 'none',
+      }}
       {...others}
     >
       <path
