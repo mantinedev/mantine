@@ -199,7 +199,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           transition={transition}
           mounted={dropdownOpened}
           position="bottom"
-          placement={theme.dir === 'ltr' ? 'start' : 'end'}
+          placement="start"
           gutter={5}
           arrowSize={3}
           zIndex={dropdownZIndex}
