@@ -73,17 +73,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
     const segments = Array.isArray(sections)
       ? getCumulativeSections(sections).map((section, index) => (
-          <div
+          <Box
             key={index}
             className={classes.bar}
-            style={{
+            sx={{
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
               backgroundColor: theme.fn.themeColor(section.color, 6, false),
             }}
           >
             {section.label && <Text className={classes.label}>{section.label}</Text>}
-          </div>
+          </Box>
         ))
       : null;
 
