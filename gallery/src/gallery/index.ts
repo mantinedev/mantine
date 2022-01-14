@@ -108,6 +108,7 @@ export { StatsSegments } from './StatsSegments/StatsSegments';
 // Grids
 export { GridAsymmetrical } from './GridAsymmetrical/GridAsymmetrical';
 export { Subgrid } from './Subgrid/Subgrid';
+export { LeadGrid } from './LeadGrid/LeadGrid';
 
 // Tables
 export { TableReviews } from './TableReviews/TableReviews';
