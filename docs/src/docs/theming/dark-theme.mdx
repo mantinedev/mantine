@@ -112,7 +112,7 @@ to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 
 ```tsx
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
-import { useWindowEvent, useLocalStorageValue } from '@mantine/hooks';
+import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 
 export default function Demo() {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
