@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Box } from '../Box/Box';
-import useStyles from './AspectRation.styles';
+import useStyles from './AspectRatio.styles';
 
-export interface AspectRationProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface AspectRatioProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** aspect ratio of the container */
   ratio?: number;
 
@@ -11,8 +11,8 @@ export interface AspectRationProps extends DefaultProps, React.ComponentPropsWit
   maxWidth?: MantineNumberSize;
 }
 
-export const AspectRation = forwardRef<HTMLDivElement, AspectRationProps>(
-  ({ className, ratio = 1, maxWidth, children, ...others }: AspectRationProps, ref) => {
+export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>(
+  ({ className, ratio = 1, maxWidth, children, ...others }: AspectRatioProps, ref) => {
     const { classes, cx } = useStyles({ ratio, maxWidth });
     return (
       <Box ref={ref} className={cx(classes.root, className)} {...others}>
@@ -22,4 +22,4 @@ export const AspectRation = forwardRef<HTMLDivElement, AspectRationProps>(
   }
 );
 
-AspectRation.displayName = '@mantine/core/AspectRation';
+AspectRatio.displayName = '@mantine/core/AspectRatio';

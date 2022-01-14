@@ -4,7 +4,7 @@ export * as AffixDemos from './components/Affix/demos';
 export * as AlertDemos from './components/Alert/demos';
 export * as AnchorDemos from './components/Anchor/demos';
 export * as AppShellDemos from './components/AppShell/demos';
-export * as AspectRationDemos from './components/AspectRation/demos';
+export * as AspectRatioDemos from './components/AspectRatio/demos';
 export * as AutocompleteDemos from './components/Autocomplete/demos';
 export * as AvatarDemos from './components/Avatar/demos';
 export * as BadgeDemos from './components/Badge/demos';

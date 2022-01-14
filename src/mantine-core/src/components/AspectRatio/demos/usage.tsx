@@ -1,18 +1,18 @@
 import React from 'react';
-import { AspectRation } from '../AspectRation';
+import { AspectRatio } from '../AspectRatio';
 import { Image } from '../../Image/Image';
 
 const code = `
-<AspectRation maxWidth="200" ratio={1}>
+<AspectRatio maxWidth="200" ratio={1}>
   <Image src="https://mantine.dev/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" />
-</AspectRation>
+</AspectRatio>
 `;
 
 function Demo() {
   return (
-    <AspectRation maxWidth={200} ratio={1}>
+    <AspectRatio maxWidth={200} ratio={1}>
       <Image src="https://mantine.dev/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" />
-    </AspectRation>
+    </AspectRatio>
   );
 }
 
