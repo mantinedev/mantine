@@ -445,6 +445,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       typeof onFocus === 'function' && onFocus(event);
       if (searchable) {
         setDropdownOpened(true);
+        scrollSelectedItemIntoView();
       }
     };
 
