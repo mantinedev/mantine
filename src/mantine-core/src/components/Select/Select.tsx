@@ -460,13 +460,15 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     const handleInputClick = () => {
+      let dropdownOpen = true;
+
       if (!searchable) {
-        setDropdownOpened(!dropdownOpened);
-      } else {
-        setDropdownOpened(true);
+        dropdownOpen = !dropdownOpened;
       }
 
-      if (_value && !dropdownOpened) {
+      setDropdownOpened(dropdownOpen);
+
+      if (_value && dropdownOpen) {
         setHovered(selectedItemIndex);
         scrollSelectedItemIntoView();
       }
