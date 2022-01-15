@@ -26,6 +26,7 @@ const GALLERY_CATEGORIES = [
       { slug: 'app-cards', name: 'Application cards' },
       { slug: 'stats', name: 'Stats' },
       { slug: 'tables', name: 'Tables' },
+      { slug: 'dnd', name: "Drag'n'Drop" },
     ],
   },
   {

@@ -55,6 +55,9 @@ import tablesDark from './tables-dark.svg';
 import buttonsLight from './buttons-light.svg';
 import buttonsDark from './buttons-dark.svg';
 
+import dndLight from './dnd-light.svg';
+import dndDark from './dnd-dark.svg';
+
 export default {
   inputs: { light: inputsLight, dark: inputsDark },
   'article-cards': { light: cardsLight, dark: cardsDark },
@@ -76,4 +79,5 @@ export default {
   grids: { light: gridsLight, dark: gridsDark },
   tables: { light: tablesLight, dark: tablesDark },
   buttons: { light: buttonsLight, dark: buttonsDark },
+  dnd: { light: dndLight, dark: dndDark },
 };
