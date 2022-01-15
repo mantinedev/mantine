@@ -1,5 +1,5 @@
 {
-  "title": "Drag'n'drop list",
+  "title": "Drag'n'drop list with handle",
   "category": "dnd",
   "author": "rtivital",
   "dependencies": ["/core/text/", "/hooks/use-list-state/", "react-beautiful-dnd"],

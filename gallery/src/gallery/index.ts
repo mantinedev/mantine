@@ -126,3 +126,4 @@ export { ButtonsGroup } from './ButtonsGroup/ButtonsGroup';
 
 // DND
 export { DndList } from './DndList/DndList';
+export { DndListHandle } from './DndListHandle/DndListHandle';
