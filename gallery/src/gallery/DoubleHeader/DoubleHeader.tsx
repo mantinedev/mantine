@@ -3,7 +3,7 @@ import { createStyles, Header, Container, Anchor, Group, Burger } from '@mantine
 import { useBooleanToggle } from '@mantine/hooks';
 import { MantineLogo } from '../../shared/MantineLogo';
 
-const HEADER_HEIGHT = 80;
+const HEADER_HEIGHT = 84;
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -38,33 +38,33 @@ const useStyles = createStyles((theme) => ({
   mainLink: {
     textTransform: 'uppercase',
     fontSize: 13,
-    color: theme.colors.gray[6],
-    padding: `${theme.spacing.xs / 2}px ${theme.spacing.sm}px`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
+    padding: `7px ${theme.spacing.sm}px`,
     fontWeight: 700,
     borderBottom: '2px solid transparent',
     transition: 'border-color 100ms ease, color 100ms ease',
 
     '&:hover': {
-      color: theme.black,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       textDecoration: 'none',
     },
   },
 
   secondaryLink: {
-    color: theme.colors.gray[6],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     fontSize: theme.fontSizes.xs,
     textTransform: 'uppercase',
     transition: 'color 100ms ease',
 
     '&:hover': {
-      color: theme.black,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       textDecoration: 'none',
     },
   },
 
   mainLinkActive: {
-    color: theme.black,
-    borderBottomColor: theme.colors[theme.primaryColor][6],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    borderBottomColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 6],
   },
 }));
 
@@ -109,7 +109,7 @@ export function DoubleHeader({ mainLinks, userLinks }: DoubleHeaderProps) {
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={40}>
+    <Header height={HEADER_HEIGHT} mb={120}>
       <Container className={classes.inner}>
         <MantineLogo width={130} />
         <div className={classes.links}>
