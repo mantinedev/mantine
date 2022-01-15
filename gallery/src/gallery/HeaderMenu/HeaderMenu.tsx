@@ -8,7 +8,6 @@ const useStyles = createStyles((theme) => ({
   header: {
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    marginBottom: theme.spacing.xl * 2,
   },
 
   inner: {
@@ -103,7 +102,7 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
   });
 
   return (
-    <Header height={56} className={classes.header}>
+    <Header height={56} className={classes.header} mb={120}>
       <div className={classes.inner}>
         <MantineLogo />
         <Group spacing={5} className={classes.links}>
