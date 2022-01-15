@@ -123,3 +123,6 @@ export { ButtonCopy } from './ButtonCopy/ButtonCopy';
 export { ButtonMenu } from './ButtonMenu/ButtonMenu';
 export { ButtonProgress } from './ButtonProgress/ButtonProgress';
 export { ButtonsGroup } from './ButtonsGroup/ButtonsGroup';
+
+// DND
+export { DndList } from './DndList/DndList';
