@@ -20,7 +20,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   links: {
-    paddingTop: theme.spacing.md,
+    paddingTop: theme.spacing.lg,
     height: HEADER_HEIGHT,
     display: 'flex',
     flexDirection: 'column',
@@ -37,7 +37,7 @@ const useStyles = createStyles((theme) => ({
 
   mainLink: {
     textTransform: 'uppercase',
-    fontSize: theme.fontSizes.sm,
+    fontSize: 13,
     color: theme.colors.gray[6],
     padding: `${theme.spacing.xs / 2}px ${theme.spacing.sm}px`,
     fontWeight: 700,
@@ -111,7 +111,7 @@ export function DoubleHeader({ mainLinks, userLinks }: DoubleHeaderProps) {
   return (
     <Header height={HEADER_HEIGHT} mb={40}>
       <Container className={classes.inner}>
-        <MantineLogo />
+        <MantineLogo width={130} />
         <div className={classes.links}>
           <Group position="right">{secondaryItems}</Group>
           <Group spacing={0} position="right" className={classes.mainLinks}>
