@@ -25,7 +25,7 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   title?: React.ReactNode;
   reversed?: boolean;
   showTransferAll?: boolean;
-  onMoveAll(): void;
+  onMoveAll(query: string): void;
   onMove(): void;
   height: number;
   listComponent?: React.FC<any>;
@@ -220,7 +220,7 @@ export function RenderList({
               radius={0}
               className={classes.transferListControl}
               disabled={data.length === 0}
-              onClick={onMoveAll}
+              onClick={() => onMoveAll(query)}
             >
               {reversed ? <Icons.First /> : <Icons.Last />}
             </ActionIcon>

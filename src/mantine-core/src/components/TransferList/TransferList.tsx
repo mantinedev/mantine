@@ -50,6 +50,9 @@ export interface TransferListProps
 
   /** Limit amount of items showed at a time */
   limit?: number;
+
+  /** Whether to transfer only the filtered items */
+  filterOnTransferAll?: boolean;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -74,17 +77,32 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       classNames,
       styles,
       limit = Infinity,
+      filterOnTransferAll = true,
       ...others
     }: TransferListProps,
     ref
   ) => {
     const [selection, handlers] = useSelectionState(initialSelection);
 
-    const handleMoveAll = (listIndex: 0 | 1) => {
+    const handleMoveAll = (listIndex: 0 | 1, query: string) => {
       const items: TransferListData = Array(2) as any;
       const moveToIndex = listIndex === 0 ? 1 : 0;
-      items[listIndex] = [];
-      items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
+
+      if (filterOnTransferAll && query) {
+        const [filtered, current] = value[listIndex].reduce(
+          (acc, item) => {
+            const index = filter(query, item) ? 0 : 1;
+            acc[index].push(item);
+            return acc;
+          },
+          [[], []] as TransferListData
+        );
+        items[listIndex] = current;
+        items[moveToIndex] = [...value[moveToIndex], ...filtered];
+      } else {
+        items[listIndex] = [];
+        items[moveToIndex] = [...value[moveToIndex], ...value[listIndex]];
+      }
       onChange(items);
       handlers.deselectAll(listIndex);
     };
@@ -130,7 +148,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           data={value[0]}
           selection={selection[0]}
           onSelect={(val) => handlers.select(0, val)}
-          onMoveAll={() => handleMoveAll(0)}
+          onMoveAll={(query) => handleMoveAll(0, query)}
           onMove={() => handleMove(0)}
           title={titles[0]}
         />
@@ -140,7 +158,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
           data={value[1]}
           selection={selection[1]}
           onSelect={(val) => handlers.select(1, val)}
-          onMoveAll={() => handleMoveAll(1)}
+          onMoveAll={(query) => handleMoveAll(1, query)}
           onMove={() => handleMove(1)}
           title={titles[1]}
           reversed
