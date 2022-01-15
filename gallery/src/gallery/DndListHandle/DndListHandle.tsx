@@ -6,7 +6,6 @@ import { GripVertical } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   item: {
-    ...theme.fn.focusStyles(),
     display: 'flex',
     alignItems: 'center',
     borderRadius: theme.radius.md,
@@ -30,6 +29,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   dragHandle: {
+    ...theme.fn.focusStyles(),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
