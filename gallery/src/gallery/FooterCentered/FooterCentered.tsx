@@ -5,6 +5,13 @@ import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
   footer: {
+    marginTop: 120,
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+    }`,
+  },
+
+  inner: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -61,18 +68,20 @@ export function FooterCentered({ links }: FooterCenteredProps) {
 
   return (
     <div className={classes.footer}>
-      <MantineLogo />
+      <div className={classes.inner}>
+        <MantineLogo />
 
-      <Group className={classes.links}>{items}</Group>
+        <Group className={classes.links}>{items}</Group>
 
-      <Group spacing={5}>
-        <UnstyledButton color="dimmed" className={classes.socialButton}>
-          <GitHubLogoIcon />
-        </UnstyledButton>
-        <UnstyledButton color="dimmed" className={classes.socialButton}>
-          <TwitterLogoIcon />
-        </UnstyledButton>
-      </Group>
+        <Group spacing={5}>
+          <UnstyledButton color="dimmed" className={classes.socialButton}>
+            <GitHubLogoIcon />
+          </UnstyledButton>
+          <UnstyledButton color="dimmed" className={classes.socialButton}>
+            <TwitterLogoIcon />
+          </UnstyledButton>
+        </Group>
+      </div>
     </div>
   );
 }
