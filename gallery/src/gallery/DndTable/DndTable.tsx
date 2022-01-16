@@ -60,7 +60,11 @@ export function DndTable({ data }: DndTableProps) {
       >
         <Droppable droppableId="dnd-list" direction="vertical">
           {(provided) => (
-            <Table {...provided.droppableProps} ref={provided.innerRef} sx={{ minWidth: 420 }}>
+            <Table
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              sx={{ minWidth: 420, '& tbody tr td': { borderBottom: 0 } }}
+            >
               <thead>
                 <tr>
                   <th style={{ width: 40 }} />
