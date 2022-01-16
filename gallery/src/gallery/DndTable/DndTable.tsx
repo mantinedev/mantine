@@ -37,8 +37,8 @@ export function DndTable({ data }: DndTableProps) {
     <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
       {(provided) => (
         <tr className={classes.item} ref={provided.innerRef} {...provided.draggableProps}>
-          <td {...provided.dragHandleProps}>
-            <div className={classes.dragHandle}>
+          <td>
+            <div className={classes.dragHandle} {...provided.dragHandleProps}>
               <GripVertical size={18} />
             </div>
           </td>
