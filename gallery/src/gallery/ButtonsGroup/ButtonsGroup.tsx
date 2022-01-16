@@ -6,7 +6,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 0,
 
     '&:not(:first-of-type)': {
-      borderLeftColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 6 : 8],
+      borderLeftColor: 'transparent',
     },
 
     '&:first-of-type': {
@@ -25,9 +25,15 @@ export function ButtonsGroup() {
   const { classes } = useStyles();
   return (
     <Group grow spacing={0}>
-      <Button className={classes.button}>First</Button>
-      <Button className={classes.button}>Second</Button>
-      <Button className={classes.button}>Third</Button>
+      <Button variant="default" className={classes.button}>
+        First
+      </Button>
+      <Button variant="default" className={classes.button}>
+        Second
+      </Button>
+      <Button variant="default" className={classes.button}>
+        Third
+      </Button>
     </Group>
   );
 }
