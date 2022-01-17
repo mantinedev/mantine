@@ -150,11 +150,11 @@ To use custom components instead of Navbar or Header:
 ```tsx
 import { AppShell, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
 
-function CustomNavbar(props: NavbarProps) {
+function CustomNavbar(props: Omit<NavbarProps, 'children'>) {
   return <Navbar {...props}>Custom navbar</Navbar>;
 }
 
-function CustomHeader(props: HeaderProps) {
+function CustomHeader(props: Omit<HeaderProps, 'children'>) {
   return <Header {...props}>Custom header</Header>;
 }
 
