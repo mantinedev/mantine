@@ -7,7 +7,14 @@ import { RangeSlider } from '../RangeSlider/RangeSlider';
 
 function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(50);
-  return <Slider value={value} onChange={setValue} {...props} />;
+  return (
+    <>
+      <Slider value={value} onChange={setValue} mb={30} {...props} />
+      <button type="button" onClick={() => setValue(25)}>
+        Set value
+      </button>
+    </>
+  );
 }
 function RangeWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeSlider>, 'value' | 'onChange'>
@@ -28,7 +35,6 @@ storiesOf('@mantine/core/Slider/stories', module)
     <div style={{ width: 380, padding: 40 }}>
       <Wrapper
         step={25}
-        radius={0}
         color="red"
         marks={[
           { value: 0, label: 'xs' },
@@ -43,7 +49,6 @@ storiesOf('@mantine/core/Slider/stories', module)
         styles={{ root: { marginTop: 25 } }}
         step={25}
         minRange={25}
-        radius={0}
         color="red"
         marks={[
           { value: 0, label: 'xs' },
