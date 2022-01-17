@@ -7,7 +7,7 @@ import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 function Demo() {
-  const idleStatus = useIdle(2000);
+  const idle = useIdle(2000);
   return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
 };`;
 
@@ -16,7 +16,7 @@ import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 function Demo() {
-  const idleStatus = useIdle(2000, { events: ['click', 'touchstart'] });
+  const idle = useIdle(2000, { events: ['click', 'touchstart'] });
   return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
 };`;
 
@@ -25,7 +25,7 @@ import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 
 function Demo() {
-  const idleStatus = useIdle(2000, { initialState: false });
+  const idle = useIdle(2000, { initialState: false });
   return <Badge color={idle ? 'blue' : 'teal'}>Current state: {idle ? 'idle' : 'not idle'}</Badge>;
 };`;
 
