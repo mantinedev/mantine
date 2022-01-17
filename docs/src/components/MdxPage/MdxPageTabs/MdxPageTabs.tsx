@@ -3,6 +3,7 @@ import { Tabs, Tab, Title, TextInput } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { MdxSiblings } from '../MdxSiblings/MdxSiblings';
 import TableOfContents from '../TableOfContents/TableOfContents';
 import { MdxPageBase } from '../MdxPageBase/MdxPageBase';
 import PropsTable from './PropsTable/PropsTable';
@@ -10,7 +11,7 @@ import { StylesApi } from './StylesApi/StylesApi';
 import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageTabs.styles';
 
-export function MdxPageTabs({ body, frontmatter, headings }: MdxPageProps) {
+export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPageProps) {
   const [query, setQuery] = useState('');
   const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
@@ -49,6 +50,7 @@ export function MdxPageTabs({ body, frontmatter, headings }: MdxPageProps) {
           >
             <div className={classes.main}>
               <MDXRenderer>{body}</MDXRenderer>
+              <MdxSiblings siblings={siblings} />
             </div>
 
             <div className={classes.tableOfContents}>
