@@ -1,11 +1,10 @@
 import React from 'react';
-import { CheckIcon, EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
-import { Group, Button, TextInput, ActionIcon, useMantineTheme } from '@mantine/core';
+import { CheckIcon } from '@modulz/radix-icons';
+import { Group, Button } from '@mantine/core';
 import { useNotifications } from '../index';
 
 function Demo() {
   const notifications = useNotifications();
-  const theme = useMantineTheme();
 
   return (
     <Group position="center">
@@ -107,43 +106,6 @@ function Demo() {
         }}
       >
         Loading state and update
-      </Button>
-
-      <Button
-        variant="outline"
-        onClick={() => {
-          const id = notifications.showNotification({
-            disallowClose: true,
-            title: 'Subscribe to email newsletter',
-            message: (
-              <>
-                <div style={{ display: 'flex', paddingTop: 5 }}>
-                  <TextInput
-                    icon={<EnvelopeClosedIcon />}
-                    placeholder="Enter your email"
-                    style={{ flex: 1, marginRight: 15 }}
-                    variant={theme.colorScheme === 'dark' ? 'filled' : 'default'}
-                    styles={{
-                      input: {
-                        backgroundColor: theme.colorScheme === 'dark' && theme.colors.dark[7],
-                      },
-                    }}
-                  />
-                  <ActionIcon
-                    onClick={() => notifications.hideNotification(id)}
-                    size={36}
-                    color="blue"
-                    variant="filled"
-                  >
-                    <PaperPlaneIcon />
-                  </ActionIcon>
-                </div>
-              </>
-            ),
-          });
-        }}
-      >
-        With input and button
       </Button>
     </Group>
   );
