@@ -79,12 +79,12 @@ export const ActionIcon: ActionIconComponent = forwardRef(
 
     return (
       <Box<any>
-        {...others}
         component={component || 'button'}
         className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
         type="button"
         ref={ref}
         disabled={disabled || loading}
+        {...others}
       >
         {loading ? loader : children}
       </Box>
