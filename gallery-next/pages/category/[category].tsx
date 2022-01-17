@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { GALLERY_CATEGORIES_SLUGS } from '../../data';
+import { GALLERY_CATEGORIES_SLUGS, getCategoryData, GalleryCategory } from '../../data';
 import { CategoryPage } from '../../components/CategoryPage/CategoryPage';
 
 export default CategoryPage;
@@ -9,4 +9,8 @@ export const getStaticPaths: GetStaticPaths = () => ({
   fallback: false,
 });
 
-export const getStaticProps: GetStaticProps = (context) => ({ props: {} });
+export const getStaticProps: GetStaticProps<{ category: GalleryCategory }, { category: string }> = (
+  context
+) => ({
+  props: { category: getCategoryData(context.params.category) },
+});

@@ -1,4 +1,4 @@
-import { GalleryCategoriesGroup } from './types';
+import { GalleryCategoriesGroup, GalleryCategory } from './types';
 
 export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
   {
@@ -39,7 +39,12 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
   },
 ];
 
-export const GALLERY_CATEGORIES_SLUGS = GALLERY_CATEGORIES.reduce((acc, group) => {
-  acc.push(...group.categories.map((item) => item.slug));
+const ALL_CATEGORIES = GALLERY_CATEGORIES.reduce((acc, group) => {
+  acc.push(...group.categories);
   return acc;
-}, [] as string[]);
+}, [] as GalleryCategory[]);
+
+export const GALLERY_CATEGORIES_SLUGS = ALL_CATEGORIES.map((item) => item.slug);
+
+export const getCategoryData = (category: string) =>
+  ALL_CATEGORIES.find((item) => item.slug === category);
