@@ -52,7 +52,7 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
         <div className={classes.body}>
           <Text className={classes.supTitle}>Mantine gallery</Text>
           <Title className={classes.title}>
-            <span className={classes.highlight}>{componentsCount}+ responsive components</span>
+            <span className={classes.highlight}>{componentsCount} responsive components</span>
             <br /> built with Mantine
           </Title>
 

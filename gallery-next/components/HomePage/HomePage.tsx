@@ -9,12 +9,17 @@ interface HomePageProps {
 }
 
 export function HomePage({ componentsCountByCategory }: HomePageProps) {
+  const allComponentsCount = Object.keys(componentsCountByCategory).reduce(
+    (acc, category) => acc + componentsCountByCategory[category],
+    0
+  );
+
   return (
     <>
       <Head>
         <title>Mantine gallery</title>
       </Head>
-      <GalleryBanner componentsCount={90} />
+      <GalleryBanner componentsCount={allComponentsCount} />
       <CategoriesList
         groups={GALLERY_CATEGORIES}
         componentsCountByCategory={componentsCountByCategory}
