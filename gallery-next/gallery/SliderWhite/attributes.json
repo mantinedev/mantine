@@ -1,0 +1,11 @@
+{
+  "title": "Slider with white thumb",
+  "category": "sliders",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/slider/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

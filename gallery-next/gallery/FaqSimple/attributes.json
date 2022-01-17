@@ -1,0 +1,10 @@
+{
+  "title": "FAQ simple",
+  "category": "faq",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/accordion/", "/core/title/", "/core/container/"],
+  "canvas": {
+    "center": false
+  }
+}

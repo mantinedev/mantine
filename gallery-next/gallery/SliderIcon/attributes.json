@@ -1,0 +1,10 @@
+{
+  "title": "Slider with icon thumb",
+  "category": "sliders",
+  "author": "rtivital",
+  "dependencies": ["/core/slider/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

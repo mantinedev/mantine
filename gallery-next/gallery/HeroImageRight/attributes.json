@@ -1,0 +1,18 @@
+{
+  "title": "Hero with image on the right",
+  "category": "hero",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/text/",
+    "/core/container/",
+    "/core/button/",
+    "/core/image/",
+    "/core/title/",
+    "https://www.freepik.com/",
+    "https://heropatterns.com/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

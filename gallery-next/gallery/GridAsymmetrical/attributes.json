@@ -1,0 +1,10 @@
+{
+  "title": "Grid with asymmetrical columns",
+  "category": "grids",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": ["/core/grid/", "/core/skeleton/", "/core/container/"],
+  "canvas": {
+    "center": false
+  }
+}

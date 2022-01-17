@@ -1,0 +1,18 @@
+{
+  "title": "Stats with controls",
+  "category": "stats",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/button/#unstyled-button",
+    "/core/text/",
+    "/core/paper/",
+    "/core/group/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 500
+  }
+}

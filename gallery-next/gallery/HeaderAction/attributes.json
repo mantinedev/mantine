@@ -1,0 +1,45 @@
+{
+  "title": "Header with primary action",
+  "category": "headers",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/menu/",
+    "/core/button/",
+    "/core/container/",
+    "/core/center/",
+    "/core/burger/",
+    "/core/group/"
+  ],
+  "props": {
+    "links": [
+      { "link": "/about", "label": "Features" },
+      {
+        "link": "#1",
+        "label": "Learn",
+        "links": [
+          { "link": "/docs", "label": "Documentation" },
+          { "link": "/resources", "label": "Resources" },
+          { "link": "/community", "label": "Community" },
+          { "link": "/blog", "label": "Blog" }
+        ]
+      },
+      { "link": "/about", "label": "About" },
+      { "link": "/pricing", "label": "Pricing" },
+      {
+        "link": "#2",
+        "label": "Support",
+        "links": [
+          { "link": "/faq", "label": "FAQ" },
+          { "link": "/demo", "label": "Book a demo" },
+          { "link": "/forums", "label": "Forums" }
+        ]
+      }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

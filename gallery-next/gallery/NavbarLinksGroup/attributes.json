@@ -1,0 +1,17 @@
+{
+  "title": "Collapsible links group",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/text/",
+    "/core/box/",
+    "/core/collapse/",
+    "/core/theme-icon/",
+    "/core/button/#unstyled-button"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Autocomplete async data",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": ["/core/autocomplete/", "/core/loader/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

@@ -4,7 +4,7 @@ import { CategoryPage } from '../../components/CategoryPage/CategoryPage';
 
 export default CategoryPage;
 
-export const getStaticPaths: GetStaticPaths = () => ({
+export const getStaticPaths: GetStaticPaths = async () => ({
   paths: GALLERY_CATEGORIES_SLUGS.map((slug) => ({ params: { category: slug } })),
   fallback: false,
 });

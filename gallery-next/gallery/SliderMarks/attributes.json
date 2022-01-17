@@ -1,0 +1,11 @@
+{
+  "title": "Slider with marks",
+  "category": "sliders",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/slider/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
