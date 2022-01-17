@@ -14,6 +14,14 @@ const useStyles = createStyles((theme) => ({
       padding: 14,
       paddingTop: 30,
       paddingBottom: 30,
+    },
+
+    '& .mantine-ScrollArea-viewport': {
+      borderRadius: theme.radius.md,
+    },
+
+    '& .mantine-ScrollArea-root': {
+      borderRadius: theme.radius.md,
       boxShadow: theme.shadows.md,
     },
   },
@@ -30,7 +38,7 @@ function Demo() {
 }
 `.trim();
 
-const clickOutsideCode = ` 
+const clickOutsideCode = `
 import { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
