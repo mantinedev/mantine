@@ -36,3 +36,4 @@ gallery/.cache
 docs/public
 gallery/public
 storybook-static
+.next

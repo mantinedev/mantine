@@ -1,0 +1,21 @@
+{
+  "name": "mantine-gallery",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "analyze": "ANALYZE=true next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "export": "next build && next export",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.0.7"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^12.0.7",
+    "typescript": "4.5.2"
+  }
+}
