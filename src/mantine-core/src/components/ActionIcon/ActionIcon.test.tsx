@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
   itRendersChildren,
@@ -26,6 +26,11 @@ describe('@mantine/core/ActionIcon', () => {
     <ActionIcon {...defaultProps} title="Action icon" />,
     <ActionIcon {...defaultProps} aria-label="Action icon" />,
   ]);
+
+  it('supports changing button type', () => {
+    render(<ActionIcon type="submit">$</ActionIcon>);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
+  });
 
   it('replaces icon with Loader when loading is set to true', () => {
     const { container: loading } = render(

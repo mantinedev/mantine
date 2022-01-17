@@ -39,7 +39,7 @@ export default createStyles(
 
     return {
       label: {
-        ref: getRef('label'),
+        ref: label,
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
@@ -65,7 +65,7 @@ export default createStyles(
       },
 
       control: {
-        ref: getRef('control'),
+        ref: control,
         position: 'relative',
         boxSizing: 'border-box',
         flex: 1,

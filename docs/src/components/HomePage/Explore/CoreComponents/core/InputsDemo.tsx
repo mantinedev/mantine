@@ -142,7 +142,6 @@ export function InputsDemo() {
               step={25}
               defaultValue={[25, 75]}
               minRange={25}
-              radius={0}
               marks={[
                 { value: 0, label: 'xs' },
                 { value: 25, label: 'sm' },
