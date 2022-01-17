@@ -1,17 +1,24 @@
 import React from 'react';
-// import Head from '../Head/Head';
-// import { Layout } from '../Layout/Layout';
-// import { GalleryPage } from './components/GalleryPage/GalleryPage';
-// import { CategoriesList, CategoriesListItem } from './components/CategoriesList/CategoriesList';
+import Head from 'next/head';
+import { GALLERY_CATEGORIES } from '../../data';
 import { GalleryBanner } from './GalleryBanner/GalleryBanner';
+import { CategoriesList } from './CategoriesList/CategoriesList';
 
-// interface GalleryProps {
-//   pageContext: {
-//     componentsCount: number;
-//     categories: CategoriesListItem[];
-//   };
-// }
+interface HomePageProps {
+  componentsCountByCategory: Record<string, number>;
+}
 
-export function HomePage({ pageContext }) {
-  return <GalleryBanner componentsCount={90} />;
+export function HomePage({ componentsCountByCategory }: HomePageProps) {
+  return (
+    <>
+      <Head>
+        <title>Mantine gallery</title>
+      </Head>
+      <GalleryBanner componentsCount={90} />
+      <CategoriesList
+        groups={GALLERY_CATEGORIES}
+        componentsCountByCategory={componentsCountByCategory}
+      />
+    </>
+  );
 }

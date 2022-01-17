@@ -24,14 +24,15 @@ export function getAllComponents() {
         const galleryCategory = getCategoryData(attributes.category);
         const category = {
           name: galleryCategory.name,
-          path: `/category/${attributes.category}/`,
+          slug: attributes.category,
+          url: `/category/${attributes.category}/`,
         };
 
         return {
-          _component: componentName,
+          component: componentName,
+          url: `/component/${convertCase(componentName)}`,
           code,
           category,
-          url: `/component/${convertCase(componentName)}`,
           attributes,
         };
       }
@@ -41,4 +42,15 @@ export function getAllComponents() {
     .filter((c) => c);
 
   return components;
+}
+
+export function countComponentsByCategory() {
+  const components = getAllComponents();
+  return components.reduce<Record<string, number>>((acc, component) => {
+    if (!(component.category.slug in acc)) {
+      acc[component.category.slug] = 0;
+    }
+    acc[component.category.slug] += 1;
+    return acc;
+  }, {});
 }

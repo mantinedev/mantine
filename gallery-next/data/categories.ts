@@ -1,48 +1,49 @@
 import { GalleryCategoriesGroup, GalleryCategory } from './types';
+import images from './images';
 
 export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
   {
     name: 'Application UI',
     categories: [
-      { slug: 'navbars', name: 'Navbars' },
-      { slug: 'headers', name: 'Headers' },
-      { slug: 'footers', name: 'Footers' },
-      { slug: 'grids', name: 'Grids' },
-      { slug: 'users', name: 'User info and controls' },
-      { slug: 'authentication', name: 'Authentication' },
-      { slug: 'inputs', name: 'Inputs' },
-      { slug: 'buttons', name: 'Buttons' },
-      { slug: 'sliders', name: 'Sliders' },
-      { slug: 'dropzones', name: 'Dropzones' },
-      { slug: 'app-cards', name: 'Application cards' },
-      { slug: 'stats', name: 'Stats' },
-      { slug: 'tables', name: 'Tables' },
-      { slug: 'dnd', name: "Drag'n'Drop" },
+      { slug: 'navbars', name: 'Navbars', images: images.navbars },
+      { slug: 'headers', name: 'Headers', images: images.headers },
+      { slug: 'footers', name: 'Footers', images: images.footers },
+      { slug: 'grids', name: 'Grids', images: images.grids },
+      { slug: 'users', name: 'User info and controls', images: images.users },
+      { slug: 'authentication', name: 'Authentication', images: images.authentication },
+      { slug: 'inputs', name: 'Inputs', images: images.inputs },
+      { slug: 'buttons', name: 'Buttons', images: images.buttons },
+      { slug: 'sliders', name: 'Sliders', images: images.sliders },
+      { slug: 'dropzones', name: 'Dropzones', images: images.dropzones },
+      { slug: 'app-cards', name: 'Application cards', images: images['app-cards'] },
+      { slug: 'stats', name: 'Stats', images: images.stats },
+      { slug: 'tables', name: 'Tables', images: images.tables },
+      { slug: 'dnd', name: "Drag'n'Drop", images: images.dnd },
     ],
   },
   {
     name: 'Page sections',
     categories: [
-      { slug: 'hero', name: 'Hero headers' },
-      { slug: 'features', name: 'Features section' },
-      { slug: 'banners', name: 'Banners' },
-      { slug: 'faq', name: 'Frequently asked questions' },
-      { slug: 'contact', name: 'Contact us section' },
+      { slug: 'hero', name: 'Hero headers', images: images.hero },
+      { slug: 'features', name: 'Features section', images: images.features },
+      { slug: 'banners', name: 'Banners', images: images.banners },
+      { slug: 'faq', name: 'Frequently asked questions', images: images.faq },
+      { slug: 'contact', name: 'Contact us section', images: images.contact },
     ],
   },
   {
     name: 'Blog UI',
     categories: [
-      { slug: 'article-cards', name: 'Article cards' },
-      { slug: 'toc', name: 'Table of contents' },
+      { slug: 'article-cards', name: 'Article cards', images: images['article-cards'] },
+      { slug: 'toc', name: 'Table of contents', images: images.toc },
     ],
   },
 ];
 
-const ALL_CATEGORIES = GALLERY_CATEGORIES.reduce((acc, group) => {
+const ALL_CATEGORIES = GALLERY_CATEGORIES.reduce<GalleryCategory[]>((acc, group) => {
   acc.push(...group.categories);
   return acc;
-}, [] as GalleryCategory[]);
+}, []);
 
 export const GALLERY_CATEGORIES_SLUGS = ALL_CATEGORIES.map((item) => item.slug);
 
