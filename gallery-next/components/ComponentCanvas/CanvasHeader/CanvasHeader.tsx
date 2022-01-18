@@ -32,7 +32,7 @@ export interface CanvasHeaderProps extends GalleryComponent, React.ComponentProp
 
 export function CanvasHeader({
   attributes,
-  url,
+  slug,
   component,
   state,
   onStateChange,
@@ -69,7 +69,7 @@ export function CanvasHeader({
               className={classes.action}
               title="View component in isolation"
               component="a"
-              href={url}
+              href={`/component/${slug}`}
               target="_blank"
             >
               <ExternalLinkIcon style={{ width: 14, height: 14 }} />

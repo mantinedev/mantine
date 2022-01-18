@@ -23,7 +23,7 @@ const components = paths
       const attributes = JSON.parse(fs.readFileSync(componentAttributes, 'utf8'));
       return {
         component: componentName,
-        url: `/component/${convertCase(componentName)}`,
+        slug: convertCase(componentName),
         code,
         attributes,
       };

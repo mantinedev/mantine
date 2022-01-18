@@ -22,7 +22,7 @@ export interface CanvasAttributes {
 
 export interface GalleryComponent {
   component: string;
-  url: string;
+  slug: string;
   code: string;
   category: GalleryCategory;
   attributes: CanvasAttributes;
