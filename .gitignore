@@ -35,5 +35,7 @@ docs/.cache
 gallery/.cache
 docs/public
 gallery/public
+gallery/out
+gallery-next/out
 storybook-static
 .next

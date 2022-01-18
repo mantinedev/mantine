@@ -107,7 +107,7 @@ export function HeroImageRight() {
             </Button>
           </div>
           <Image
-            src={image}
+            src={image.src}
             role="presentation"
             height={400}
             width={400}
