@@ -170,7 +170,7 @@ export function DoubleNavbar() {
       <Navbar.Section grow className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
-            <Image src={logo} alt="Mantine logo" width={30} mx="auto" />
+            <Image src={logo.src} alt="Mantine logo" width={30} mx="auto" />
           </div>
           {mainLinks}
         </div>

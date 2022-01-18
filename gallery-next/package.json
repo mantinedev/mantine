@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "start": "next dev -p 7522",
+    "build": "next build && next export",
     "analyze": "ANALYZE=true next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "export": "next build && next export",
-    "lint": "next lint"
+    "serve": "next start -p 9522",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "next": "12.0.7"
