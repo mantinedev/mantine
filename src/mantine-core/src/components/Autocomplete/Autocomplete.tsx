@@ -230,7 +230,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             aria-autocomplete="list"
             aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
-            style={{ backgroundColor: 'red' }}
           />
 
           <SelectDropdown
