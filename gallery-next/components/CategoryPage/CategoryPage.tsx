@@ -13,7 +13,7 @@ interface CategoryPageProps {
 
 export function CategoryPage({ category, components }: CategoryPageProps) {
   const canvases = components.map((component, index) => (
-    <ComponentCanvas {...component} key={component.url} zIndex={components.length - index} />
+    <ComponentCanvas {...component} key={component.slug} zIndex={components.length - index} />
   ));
 
   return (
