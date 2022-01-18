@@ -44,15 +44,15 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
         Welcome to Mantine, {type} with
       </Text>
 
-      <Group grow mb="md" mt="sm">
+      <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group>
 
-      <Divider label="Or continue with email" labelPosition="center" />
+      <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
       <form onSubmit={form.onSubmit(() => {})}>
-        <Group direction="column" grow mt={5}>
+        <Group direction="column" grow>
           {type === 'register' && (
             <TextInput
               label="Name"
@@ -89,7 +89,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
           )}
         </Group>
 
-        <Group position="apart" mt="lg">
+        <Group position="apart" mt="xl">
           <Anchor component="button" type="button" color="gray" onClick={() => toggle()} size="xs">
             {type === 'register'
               ? 'Already have an account? Login'
