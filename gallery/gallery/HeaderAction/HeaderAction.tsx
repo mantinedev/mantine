@@ -70,6 +70,7 @@ export function HeaderAction({ links }: HeaderActionProps) {
     if (menuItems) {
       return (
         <Menu
+          key={link.label}
           trigger="hover"
           delay={0}
           transitionDuration={0}
@@ -77,7 +78,6 @@ export function HeaderAction({ links }: HeaderActionProps) {
           gutter={1}
           control={
             <a
-              key={link.label}
               href={link.link}
               className={classes.link}
               onClick={(event) => event.preventDefault()}

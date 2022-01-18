@@ -4,8 +4,8 @@ import lawyers from './lawyers.svg';
 import others from './others.svg';
 
 export default {
-  accountants,
-  auditors,
-  lawyers,
-  others,
+  accountants: accountants.src,
+  auditors: auditors.src,
+  lawyers: lawyers.src,
+  others: others.src,
 };

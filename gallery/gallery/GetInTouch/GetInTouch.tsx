@@ -72,7 +72,7 @@ const useStyles = createStyles((theme) => {
       boxSizing: 'border-box',
       position: 'relative',
       borderRadius: theme.radius.lg - 2,
-      backgroundImage: `url(${bg})`,
+      backgroundImage: `url(${bg.src})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       border: '1px solid transparent',

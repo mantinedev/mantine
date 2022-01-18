@@ -87,7 +87,7 @@ export function EmailBanner() {
           <Button className={classes.control}>Subscribe</Button>
         </div>
       </div>
-      <Image src={image} className={classes.image} />
+      <Image src={image.src} className={classes.image} />
     </div>
   );
 }

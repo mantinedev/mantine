@@ -19,7 +19,7 @@ export function InputValidation() {
     <TextInput
       label="Custom validation styles"
       error="Invalid email"
-      value="hello!gmail.com"
+      defaultValue="hello!gmail.com"
       classNames={{ input: classes.invalid }}
       rightSection={<XCircleFillIcon className={classes.icon} />}
     />

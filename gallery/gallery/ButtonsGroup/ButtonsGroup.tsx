@@ -6,7 +6,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: 0,
 
     '&:not(:first-of-type)': {
-      borderLeftColor: 'transparent',
+      borderLeftWidth: 0,
     },
 
     '&:first-of-type': {

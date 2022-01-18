@@ -58,27 +58,25 @@ export function DndTable({ data }: DndTableProps) {
           handlers.reorder({ from: source.index, to: destination.index })
         }
       >
-        <Droppable droppableId="dnd-list" direction="vertical">
-          {(provided) => (
-            <Table
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              sx={{ minWidth: 420, '& tbody tr td': { borderBottom: 0 } }}
-            >
-              <thead>
-                <tr>
-                  <th style={{ width: 40 }} />
-                  <th style={{ width: 80 }}>Position</th>
-                  <th style={{ width: 120 }}>Name</th>
-                  <th style={{ width: 40 }}>Symbol</th>
-                  <th>Mass</th>
-                </tr>
-              </thead>
-              <tbody>{items}</tbody>
-              {provided.placeholder}
-            </Table>
-          )}
-        </Droppable>
+        <Table sx={{ minWidth: 420, '& tbody tr td': { borderBottom: 0 } }}>
+          <thead>
+            <tr>
+              <th style={{ width: 40 }} />
+              <th style={{ width: 80 }}>Position</th>
+              <th style={{ width: 120 }}>Name</th>
+              <th style={{ width: 40 }}>Symbol</th>
+              <th>Mass</th>
+            </tr>
+          </thead>
+          <Droppable droppableId="dnd-list" direction="vertical">
+            {(provided) => (
+              <tbody {...provided.droppableProps} ref={provided.innerRef}>
+                {items}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </Table>
       </DragDropContext>
     </ScrollArea>
   );
