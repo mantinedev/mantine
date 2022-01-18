@@ -1,17 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { GalleryComponent } from '../../data';
-import ALL_COMPONENTS from '../../data/components.json';
+import { getAllComponents } from '../../data/components';
 import { ComponentPage } from '../../components/ComponentPage/ComponentPage';
 
 export default ComponentPage;
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: Object.keys(ALL_COMPONENTS).reduce((acc, category) => {
-    acc.push(
-      ...ALL_COMPONENTS[category].map((component) => ({ params: { component: component.slug } }))
-    );
-    return acc;
-  }, []),
+  paths: getAllComponents().map((component) => ({ params: { component: component.slug } })),
   fallback: false,
 });
 
@@ -19,11 +14,6 @@ export const getStaticProps: GetStaticProps<{ data: GalleryComponent }, { compon
   context
 ) => ({
   props: {
-    data: Object.keys(ALL_COMPONENTS)
-      .reduce((acc, category) => {
-        acc.push(...ALL_COMPONENTS[category]);
-        return acc;
-      }, [])
-      .find((component) => component.slug === context.params.component),
+    data: getAllComponents().find((component) => component.slug === context.params.component),
   },
 });

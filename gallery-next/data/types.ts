@@ -24,6 +24,5 @@ export interface GalleryComponent {
   component: string;
   slug: string;
   code: string;
-  category: GalleryCategory;
   attributes: CanvasAttributes;
 }
