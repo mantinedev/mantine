@@ -2,6 +2,7 @@ import React from 'react';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
 import { Header } from './Header/Header';
+import { Footer } from './Footer/Footer';
 import { HEADER_HEIGHT } from './Header/Header.styles';
 
 interface LayoutProps {
@@ -27,6 +28,7 @@ export function Layout({ children, noHeader = false }: LayoutProps) {
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         {!noHeader && <Header />}
         <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
+        {!noHeader && <Footer />}
       </MantineProvider>
     </ColorSchemeProvider>
   );

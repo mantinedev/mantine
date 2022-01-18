@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { MantineProvider, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import Head from 'next/head';
-import { Layout } from '../Layout/Layout';
 import * as GalleryComponents from '../../gallery';
 import { GalleryPreview } from '../GalleryPreview/GalleryPreview';
 import { ComponentPreviewControls } from '../ComponentPreviewControls/ComponentPreviewControls';
@@ -39,7 +38,7 @@ export function ComponentPage({ data }: ComponentPageProps) {
   const [primaryColor, setPrimaryColor] = useState('blue');
 
   return (
-    <Layout noHeader>
+    <>
       <Head>
         <title>{`${data.attributes.title} | Mantine Gallery`}</title>
       </Head>
@@ -61,6 +60,6 @@ export function ComponentPage({ data }: ComponentPageProps) {
       ) : (
         <Prism language="tsx">{data.code}</Prism>
       )}
-    </Layout>
+    </>
   );
 }

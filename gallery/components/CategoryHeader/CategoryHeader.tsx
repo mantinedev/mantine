@@ -12,7 +12,7 @@ interface CategoryHeaderProps {
 export function CategoryHeader({ category }: CategoryHeaderProps) {
   const { classes } = useStyles();
   return (
-    <div>
+    <>
       <Link href="/">
         <Anchor href="/">
           <Center style={{ display: 'inline-flex' }}>
@@ -23,6 +23,6 @@ export function CategoryHeader({ category }: CategoryHeaderProps) {
       </Link>
 
       <Title className={classes.title}>{category.name}</Title>
-    </div>
+    </>
   );
 }

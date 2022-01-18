@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from '@mantine/core';
 import Head from 'next/head';
-import { Layout } from '../Layout/Layout';
 import { ComponentCanvas } from '../ComponentCanvas/ComponentCanvas';
 import { CategoryHeader } from '../CategoryHeader/CategoryHeader';
 import { GalleryCategory, GalleryComponent } from '../../data';
@@ -17,7 +16,7 @@ export function CategoryPage({ category, components }: CategoryPageProps) {
   ));
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>{`${category.name} | Mantine Gallery`}</title>
       </Head>
@@ -25,6 +24,6 @@ export function CategoryPage({ category, components }: CategoryPageProps) {
         <CategoryHeader category={category} />
         {canvases}
       </Container>
-    </Layout>
+    </>
   );
 }
