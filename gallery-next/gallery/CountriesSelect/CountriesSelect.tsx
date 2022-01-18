@@ -7,7 +7,7 @@ import {
   MultiSelectValueProps,
   SelectItemProps,
 } from '@mantine/core';
-import { countriesData } from '@mantine/mockdata';
+import { countriesData } from '@mantine/mockdata/src';
 
 function Value({
   value,

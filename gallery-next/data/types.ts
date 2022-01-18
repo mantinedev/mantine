@@ -8,3 +8,22 @@ export interface GalleryCategoriesGroup {
   name: string;
   categories: GalleryCategory[];
 }
+
+export interface CanvasAttributes {
+  responsive?: boolean;
+  withColor?: boolean;
+  author: string;
+  canvas: { center: boolean; maxWidth?: number };
+  category: string;
+  dependencies: string[];
+  title: string;
+  props?: Record<string, any>;
+}
+
+export interface GalleryComponent {
+  component: string;
+  url: string;
+  code: string;
+  category: GalleryCategory;
+  attributes: CanvasAttributes;
+}

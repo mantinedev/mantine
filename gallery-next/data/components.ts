@@ -54,3 +54,8 @@ export function countComponentsByCategory() {
     return acc;
   }, {});
 }
+
+export function getComponentsByCategory(category: string) {
+  const components = getAllComponents();
+  return components.filter((component) => component.category.slug === category);
+}
