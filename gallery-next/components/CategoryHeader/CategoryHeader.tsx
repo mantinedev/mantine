@@ -13,12 +13,14 @@ export function CategoryHeader({ category }: CategoryHeaderProps) {
   const { classes } = useStyles();
   return (
     <div>
-      <Anchor component={Link} href="/">
-        <Center style={{ display: 'inline-flex' }}>
-          <ArrowLeftIcon style={{ marginRight: 5 }} />
-          <span>Back to all categories</span>
-        </Center>
-      </Anchor>
+      <Link href="/">
+        <Anchor href="/">
+          <Center style={{ display: 'inline-flex' }}>
+            <ArrowLeftIcon style={{ marginRight: 5 }} />
+            <span>Back to all categories</span>
+          </Center>
+        </Anchor>
+      </Link>
 
       <Title className={classes.title}>{category.name}</Title>
     </div>
