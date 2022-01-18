@@ -54,7 +54,7 @@ export function FloatingLabelInput() {
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       mt="md"
-      autoComplete="off"
+      autoComplete="nope"
     />
   );
 }

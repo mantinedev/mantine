@@ -79,7 +79,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>(
         error={valid ? error : validationError || true}
         __staticSelector="JsonInput"
         classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-        autoComplete="off"
+        autoComplete="nope"
         ref={ref}
         {...others}
       />
