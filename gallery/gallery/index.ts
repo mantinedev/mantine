@@ -92,6 +92,7 @@ export { HeaderTabs } from './HeaderTabs/HeaderTabs';
 export { DoubleHeader } from './DoubleHeader/DoubleHeader';
 export { HeaderAction } from './HeaderAction/HeaderAction';
 export { HeaderMiddle } from './HeaderMiddle/HeaderMiddle';
+export { HeaderResponsive } from './HeaderResponsive/HeaderResponsive';
 
 // Tables of contents
 export { TableOfContents } from './TableOfContents/TableOfContents';
