@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
+import rtlPlugin from 'stylis-plugin-rtl';
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { HEADER_HEIGHT } from './Header/Header.styles';
@@ -18,15 +19,33 @@ export function Layout({ children, noHeader = false }: LayoutProps) {
     defaultValue: 'light',
   });
 
+  const [dir, setDir] = useState<'rtl' | 'ltr'>('ltr');
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-  useHotkeys([['mod+J', () => toggleColorScheme()]]);
+  const toggleDir = () => {
+    const nextDir = dir === 'ltr' ? 'rtl' : 'ltr';
+    setDir(nextDir);
+    document.querySelector('html').setAttribute('dir', nextDir);
+  };
+
+  useHotkeys([
+    ['mod+J', () => toggleColorScheme()],
+    ['mod+L', toggleDir],
+  ]);
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        {!noHeader && <Header />}
+      <MantineProvider
+        theme={{ colorScheme, dir }}
+        withGlobalStyles
+        withNormalizeCSS
+        emotionOptions={
+          dir === 'rtl' ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] } : { key: 'mantine' }
+        }
+      >
+        {!noHeader && <Header toggleDir={toggleDir} dir={dir} />}
         <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
         {!noHeader && <Footer />}
       </MantineProvider>

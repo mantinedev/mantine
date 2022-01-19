@@ -4,9 +4,15 @@ import { Logo } from './Logo/Logo';
 import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
 import { Discord } from './Discord/Discord';
 import { SourceCode } from './SourceCode/SourceCode';
+import { DirToggle } from './DirToggle/DirToggle';
 import useStyles from './Header.styles';
 
-export function Header() {
+interface HeaderProps {
+  toggleDir(): void;
+  dir: 'rtl' | 'ltr';
+}
+
+export function Header({ toggleDir, dir }: HeaderProps) {
   const { classes } = useStyles();
   return (
     <div className={classes.header}>
@@ -15,6 +21,7 @@ export function Header() {
         <Group mr={-8}>
           <Discord />
           <SourceCode />
+          <DirToggle dir={dir} onClick={toggleDir} />
           <ColorSchemeToggle />
         </Group>
       </Container>
