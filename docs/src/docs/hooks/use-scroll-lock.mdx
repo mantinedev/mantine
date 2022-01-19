@@ -28,8 +28,12 @@ However if you use elements with fixed position you will need to add right paddi
 ## Definition
 
 ```tsx
-function useScrollLock<T extends HTMLElement = HTMLDivElement>(
+interface useScrollLockOptions {
+  disableBodyPadding: boolean;
+}
+
+function useScrollLock(
   lock?: boolean,
-  options?: { disableBodyPadding?: boolean }
+  options?: useScrollLockOptions
 ): readonly [boolean, Dispatch<SetStateAction<boolean>>];
 ```

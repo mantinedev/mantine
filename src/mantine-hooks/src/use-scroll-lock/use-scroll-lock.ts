@@ -1,69 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { usePreventScroll } from './use-prevent-scroll';
 import { getLockStyles } from './utils/get-lock-styles';
 import { injectStyles } from './utils/inject-style-tag';
 import { insertStyleTag } from './utils/insert-style-tag';
 import { makeStyleTag } from './utils/make-style-tag';
 
+interface useScrollLockOptions {
+  disableBodyPadding: boolean;
+}
+
 export function useScrollLock(
-  lock?: boolean,
-  options = {
-    disableBodyPadding: false,
-  }
+  lock: boolean = false,
+  options: useScrollLockOptions = { disableBodyPadding: false }
 ) {
-  const [scrollLocked, setScrollLocked] = useState(lock || false);
-  const scrollTop = useRef(0);
+  const styleTagRef = useRef<HTMLStyleElement | null>(null);
+  const [scrollLocked, setScrollLocked] = useState(lock);
 
   const { disableBodyPadding } = options;
 
-  const stylesheet = useRef<CSSStyleSheet | any | null>(null);
-
-  const lockScroll = () => {
-    scrollTop.current = window.scrollY;
-
+  const applyLockStyles = () => {
     const styles = getLockStyles({ disableBodyPadding });
 
     /**
-     * by applying styles via style tag
-     * we dont care about previous styles due to inheritance
-     * when scroll gets unlocked we delete that style tag
+     * By applying styles via style tag we dont care about previous styles due
+     * to inheritance when scroll gets unlocked we delete that style tag.
      */
-    const sheet = makeStyleTag();
+    const styleTag = makeStyleTag();
+    styleTagRef.current = styleTag;
 
-    injectStyles(sheet, styles);
-    insertStyleTag(sheet);
-
-    stylesheet.current = sheet;
+    injectStyles(styleTag, styles);
+    insertStyleTag(styleTag);
   };
 
-  const unlockScroll = () => {
-    if (!stylesheet?.current) return;
+  const removeLockStyles = () => {
+    if (!styleTagRef?.current) return;
 
-    stylesheet.current.parentNode.removeChild(stylesheet.current);
-    stylesheet.current = null;
+    styleTagRef.current.parentNode?.removeChild(styleTagRef.current);
+    styleTagRef.current = null;
   };
 
-  useEffect(() => {
+  // Mainly used for backwards compatibility
+  useIsomorphicEffect(() => {
     if (scrollLocked) {
-      lockScroll();
+      applyLockStyles();
     } else {
-      unlockScroll();
+      removeLockStyles();
     }
 
-    return unlockScroll;
+    return removeLockStyles;
   }, [scrollLocked]);
 
-  useEffect(() => {
-    if (lock !== undefined) {
-      setScrollLocked(lock);
-    }
-  }, [lock]);
-
-  useEffect(() => {
-    if (lock === undefined && typeof window !== 'undefined') {
-      window.document.body.style.overflow === 'hidden' && setScrollLocked(true);
-    }
-  }, [setScrollLocked]);
+  // The actual scroll prevention code
+  usePreventScroll({ isDisabled: !scrollLocked });
 
   return [scrollLocked, setScrollLocked] as const;
 }
