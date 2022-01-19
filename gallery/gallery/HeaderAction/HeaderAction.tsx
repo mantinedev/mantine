@@ -13,7 +13,7 @@ import { useBooleanToggle } from '@mantine/hooks';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { MantineLogo } from '../../shared/MantineLogo';
 
-const HEADER_HEIGHT = 70;
+const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -121,7 +121,9 @@ export function HeaderAction({ links }: HeaderActionProps) {
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
-        <Button radius="xl">Get early access</Button>
+        <Button radius="xl" sx={{ height: 30 }}>
+          Get early access
+        </Button>
       </Container>
     </Header>
   );
