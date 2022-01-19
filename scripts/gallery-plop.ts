@@ -5,7 +5,7 @@ import { argv } from 'yargs';
 
 const name = (argv as any)._[0];
 
-const componentPath = path.join(__dirname, '../gallery/src/gallery', name);
+const componentPath = path.join(__dirname, '../gallery/gallery', name);
 
 if (!name) {
   process.stdout.write(chalk.red`Component name is required\n`);
