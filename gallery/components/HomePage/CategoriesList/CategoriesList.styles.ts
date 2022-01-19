@@ -8,7 +8,7 @@ export default createStyles((theme) => ({
   header: {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
 
     '@media (max-width: 755px)': {
       display: 'block',
@@ -18,6 +18,7 @@ export default createStyles((theme) => ({
   title: {
     fontWeight: 500,
     lineHeight: 1,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   count: {
@@ -32,7 +33,7 @@ export default createStyles((theme) => ({
 
   group: {
     '& + &': {
-      marginTop: theme.spacing.xl * 2,
+      marginTop: theme.spacing.xl * 4,
     },
   },
 }));
