@@ -135,29 +135,40 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const parseDate = (date: string) =>
       dateParser ? dateParser(date) : dayjs(date, dateFormat, finalLocale).toDate();
 
+    const setDateFromInput = () => {
+      let date = typeof _value === 'string' ? parseDate(_value) : _value;
+
+      if (maxDate && dayjs(date).isAfter(maxDate)) {
+        date = maxDate;
+      }
+
+      if (minDate && dayjs(date).isBefore(minDate)) {
+        date = minDate;
+      }
+
+      if (dayjs(date).isValid()) {
+        setValue(date);
+        setLastValidValue(date);
+        setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
+        setCalendarMonth(date);
+      } else if (fixOnBlur) {
+        setValue(lastValidValue);
+      }
+    };
+
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
       setFocused(false);
 
       if (allowFreeInput) {
-        let date = typeof _value === 'string' ? parseDate(_value) : _value;
+        setDateFromInput();
+      }
+    };
 
-        if (maxDate && dayjs(date).isAfter(maxDate)) {
-          date = maxDate;
-        }
-
-        if (minDate && dayjs(date).isBefore(minDate)) {
-          date = minDate;
-        }
-
-        if (dayjs(date).isValid()) {
-          setValue(date);
-          setLastValidValue(date);
-          setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
-          setCalendarMonth(date);
-        } else if (fixOnBlur) {
-          setValue(lastValidValue);
-        }
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.code === 'Enter' && allowFreeInput) {
+        setDropdownOpened(false);
+        setDateFromInput();
       }
     };
 
@@ -194,6 +205,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         onChange={handleChange}
         onBlur={handleInputBlur}
         onFocus={handleInputFocus}
+        onKeyDown={handleKeyDown}
         name={name}
         inputLabel={inputState}
         __staticSelector="DatePicker"
