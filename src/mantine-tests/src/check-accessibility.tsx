@@ -7,6 +7,10 @@ const config = {
     region: {
       enabled: false,
     },
+
+    'autocomplete-valid': {
+      enabled: false,
+    },
   },
 };
 

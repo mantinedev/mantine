@@ -526,7 +526,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             readOnly={!searchable}
             disabled={disabled}
             data-mantine-stop-propagation={shouldShowDropdown}
-            autoComplete="off"
+            autoComplete="nope"
             classNames={{
               ...classNames,
               input: cx({ [classes.input]: !searchable }, classNames?.input),

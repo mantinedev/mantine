@@ -1,33 +1,19 @@
 {
   "name": "mantine-gallery",
-  "private": true,
-  "description": "Mantine gallery",
   "version": "1.0.0",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "next dev -p 7522",
+    "build": "next build && next export",
+    "analyze": "ANALYZE=true next build",
+    "serve": "next start -p 9522",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
-    "@types/react-helmet": "^6.1.1",
-    "gatsby": "^4.2.0",
-    "gatsby-plugin-cname": "^1.0.0",
-    "gatsby-plugin-manifest": "^4.2.0",
-    "gatsby-plugin-nprogress": "^4.2.0",
-    "gatsby-plugin-react-helmet": "^5.2.0",
-    "gatsby-plugin-tsconfig-paths": "^1.0.3",
-    "gatsby-source-filesystem": "^4.2.0",
-    "react-helmet": "^6.1.0"
+    "next": "12.0.7"
   },
   "devDependencies": {
-    "@types/react": "17.0.8",
-    "@babel/core": "^7.14.3",
-    "lmdb-store": "^1.6.8",
+    "@next/bundle-analyzer": "^12.0.7",
     "typescript": "4.5.2"
-  },
-  "license": "MIT",
-  "scripts": {
-    "build": "gatsby build",
-    "start": "gatsby develop -H 0.0.0.0 -p 7522",
-    "serve": "gatsby serve -H 0.0.0.0 -p 9522",
-    "clean": "gatsby clean",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx"
   }
 }
