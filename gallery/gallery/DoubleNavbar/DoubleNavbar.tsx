@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createStyles, Navbar, UnstyledButton, Tooltip, Title, Image } from '@mantine/core';
+import { createStyles, Navbar, UnstyledButton, Tooltip, Title } from '@mantine/core';
 import {
   Home2,
   Gauge,
@@ -9,7 +9,7 @@ import {
   User,
   Settings,
 } from 'tabler-icons-react';
-import logo from '../NavbarMinimal/logo.svg';
+import { MantineLogoSmall } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -170,7 +170,7 @@ export function DoubleNavbar() {
       <Navbar.Section grow className={classes.wrapper}>
         <div className={classes.aside}>
           <div className={classes.logo}>
-            <Image src={logo.src} alt="Mantine logo" width={30} mx="auto" />
+            <MantineLogoSmall />
           </div>
           {mainLinks}
         </div>

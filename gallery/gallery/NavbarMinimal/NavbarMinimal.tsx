@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Image, Tooltip, UnstyledButton, createStyles, Group } from '@mantine/core';
+import { Navbar, Center, Tooltip, UnstyledButton, createStyles, Group } from '@mantine/core';
 import {
   Icon as TablerIcon,
   Home2,
@@ -12,7 +12,7 @@ import {
   Logout,
   SwitchHorizontal,
 } from 'tabler-icons-react';
-import logo from './logo.svg';
+import { MantineLogoSmall } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -82,7 +82,9 @@ export function NavbarMinimal() {
 
   return (
     <Navbar height={750} width={{ base: 80 }} padding="md">
-      <Image src={logo.src} alt="Mantine logo" width={40} mx="auto" />
+      <Center>
+        <MantineLogoSmall />
+      </Center>
       <Navbar.Section grow mt={50}>
         <Group direction="column" align="center" spacing={0}>
           {links}

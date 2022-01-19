@@ -61,10 +61,6 @@ const useStyles = createStyles((theme) => ({
       textAlign: 'left',
     },
   },
-
-  features: {
-    marginTop: `${theme.spacing.xl}px !important`,
-  },
 }));
 
 interface FeaturesGridProps {
@@ -89,7 +85,7 @@ export function FeaturesGrid({ title, description, data = MOCKDATA }: FeaturesGr
       </Container>
 
       <SimpleGrid
-        className={classes.features}
+        mt={60}
         cols={3}
         spacing={theme.spacing.xl * 2}
         breakpoints={[

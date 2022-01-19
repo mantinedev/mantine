@@ -7,6 +7,9 @@ const useStyles = createStyles((theme) => ({
     paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   label: {
@@ -49,7 +52,7 @@ export function FeaturesCard() {
   return (
     <Card shadow="sm" radius="md">
       <Card.Section className={classes.imageSection}>
-        <Image width="80%" mx="auto" src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
+        <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
       </Card.Section>
 
       <Group position="apart" mt="xs">

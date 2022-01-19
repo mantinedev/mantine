@@ -33,15 +33,18 @@ export function MantineLogo({ variant = 'default', width = 110, ...others }: Man
   );
 }
 
-export function MantineLogoSmall(props: React.ComponentPropsWithoutRef<'svg'>) {
+export function MantineLogoSmall({
+  size = 30,
+  ...others
+}: React.ComponentPropsWithoutRef<'svg'> & { size?: number }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 163 163"
-      width={34}
-      height={34}
-      {...props}
+      width={size}
+      height={size}
+      {...others}
     >
       <path
         fill="#339AF0"
