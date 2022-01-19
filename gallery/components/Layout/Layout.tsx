@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { useLocalStorageValue, useHotkeys } from '@mantine/hooks';
 import rtlPlugin from 'stylis-plugin-rtl';
+import { DirectionContext } from '../DirectionContext/DirectionContext';
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { HEADER_HEIGHT } from './Header/Header.styles';
@@ -36,19 +37,21 @@ export function Layout({ children, noHeader = false }: LayoutProps) {
   ]);
 
   return (
-    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider
-        theme={{ colorScheme, dir }}
-        withGlobalStyles
-        withNormalizeCSS
-        emotionOptions={
-          dir === 'rtl' ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] } : { key: 'mantine' }
-        }
-      >
-        {!noHeader && <Header toggleDir={toggleDir} dir={dir} />}
-        <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
-        {!noHeader && <Footer />}
-      </MantineProvider>
-    </ColorSchemeProvider>
+    <DirectionContext.Provider value={dir}>
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <MantineProvider
+          theme={{ colorScheme, dir }}
+          withGlobalStyles
+          withNormalizeCSS
+          emotionOptions={
+            dir === 'rtl' ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] } : { key: 'mantine' }
+          }
+        >
+          {!noHeader && <Header toggleDir={toggleDir} dir={dir} />}
+          <main style={{ paddingTop: !noHeader ? HEADER_HEIGHT : 0 }}>{children}</main>
+          {!noHeader && <Footer />}
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </DirectionContext.Provider>
   );
 }
