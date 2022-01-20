@@ -56,6 +56,7 @@ export default createStyles((theme) => ({
     bottom: 0,
     right: 0,
     zIndex: 0,
+    display: theme.dir === 'rtl' ? 'none' : undefined,
 
     '@media (max-width: 1230px)': {
       display: 'none',
