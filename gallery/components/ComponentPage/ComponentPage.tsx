@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 import { MantineProvider, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import Head from 'next/head';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { useGalleryDirection } from '../DirectionContext/DirectionContext';
 import * as GalleryComponents from '../../gallery';
 import { GalleryPreview } from '../GalleryPreview/GalleryPreview';
 import { ComponentPreviewControls } from '../ComponentPreviewControls/ComponentPreviewControls';
@@ -15,13 +17,19 @@ interface ComponentPreviewProps {
 
 function ComponentPreview({ data, primaryColor, component: Component }: ComponentPreviewProps) {
   const theme = useMantineTheme();
+  const dir = useGalleryDirection();
   return (
     <div style={{ padding: data.attributes.canvas.maxWidth ? theme.spacing.sm : 0 }}>
       <GalleryPreview
         canvas={data.attributes.canvas}
         withSpacing={!!data.attributes.canvas.maxWidth}
       >
-        <MantineProvider theme={{ colorScheme: theme.colorScheme, primaryColor }}>
+        <MantineProvider
+          theme={{ colorScheme: theme.colorScheme, primaryColor }}
+          emotionOptions={
+            dir === 'rtl' ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] } : { key: 'mantine' }
+          }
+        >
           <Component {...data.attributes.props} />
         </MantineProvider>
       </GalleryPreview>
