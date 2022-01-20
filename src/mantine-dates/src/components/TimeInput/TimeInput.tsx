@@ -135,13 +135,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const [time, setTime] = useState<{ hours: string; minutes: string; seconds: string }>(
       getTimeValues(value || defaultValue)
     );
-    const [_value, setValue] = useState<Date>(value ?? defaultValue);
-
-    useEffect(() => {
-      setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
-    }, [time, format, amPm]);
+    const [_value, setValue] = useState<Date>(value || defaultValue);
 
     useDidUpdate(() => {
+      setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
       typeof onChange === 'function' &&
         onChange(getDate(time.hours, time.minutes, time.seconds, format, amPm));
     }, [time, format, amPm, onChange]);

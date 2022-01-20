@@ -13,7 +13,7 @@ function Controlled() {
   return (
     <>
       <TimeInput value={value} onChange={onChange} label="Controlled" />
-      <button type="button" onClick={() => onChange(dayjs(new Date()).add(15, 'minutes').toDate())}>
+      <button type="button" onClick={() => onChange(dayjs(new Date()).add(30, 'minutes').toDate())}>
         set date
       </button>
     </>
