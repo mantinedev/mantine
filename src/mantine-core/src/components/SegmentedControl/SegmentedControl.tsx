@@ -59,8 +59,8 @@ export interface SegmentedControlProps
   /** Default value for uncontrolled component */
   defaultValue?: string;
 
-  /** display vertically */
-  vertical?: boolean;
+  /** Display Vertically */
+  orientation?: 'vertical' | 'horizontal';
 }
 
 export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(
@@ -80,7 +80,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       classNames,
       styles,
       defaultValue,
-      vertical,
+      orientation,
       ...others
     },
     ref
@@ -108,7 +108,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         shouldAnimate: reduceMotion || !shouldAnimate,
         transitionDuration,
         transitionTimingFunction,
-        vertical,
+        orientation,
       },
       { classNames, styles, name: 'SegmentedControl' }
     );

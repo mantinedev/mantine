@@ -10,7 +10,7 @@ interface SegmentedControlStyles {
   transitionDuration: number;
   transitionTimingFunction: string;
   size: MantineSize;
-  vertical: boolean;
+  orientation: 'vertical' | 'horizontal';
 }
 
 const sizes = {
@@ -32,12 +32,13 @@ export default createStyles(
       transitionDuration,
       transitionTimingFunction,
       size,
-      vertical,
+      orientation,
     }: SegmentedControlStyles,
     getRef
   ) => {
     const label = getRef('label');
     const control = getRef('control');
+    const vertical = orientation === 'vertical';
 
     return {
       label: {
@@ -77,8 +78,8 @@ export default createStyles(
         }`,
 
         '&:not(:first-of-type)': {
-          border: 'solid',
-          borderWidth: vertical ? '1px 0 0 0' : '0 0 0 1px',
+          borderStyle: 'solid',
+          borderWidth: orientation === 'vertical' ? '1px 0 0 0' : '0 0 0 1px',
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },
