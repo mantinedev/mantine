@@ -12,7 +12,7 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -140,6 +140,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     useEffect(() => {
       setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
     }, [time, format, amPm]);
+
+    useDidUpdate(() => {
+      typeof onChange === 'function' &&
+        onChange(getDate(time.hours, time.minutes, time.seconds, format, amPm));
+    }, [time, format, amPm, onChange]);
 
     useEffect(() => {
       if (format === '12' && _value) {
