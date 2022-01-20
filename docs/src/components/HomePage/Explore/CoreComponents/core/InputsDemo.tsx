@@ -136,21 +136,19 @@ export function InputsDemo() {
 
         <InputWrapper labelElement="div" label="Slider and RangeSlider" style={{ marginTop: 15 }}>
           <Slider defaultValue={40} style={{ marginTop: 10 }} />
-          <div style={{ paddingLeft: 4, paddingRight: 4 }}>
-            <RangeSlider
-              style={{ marginTop: 10 }}
-              step={25}
-              defaultValue={[25, 75]}
-              minRange={25}
-              marks={[
-                { value: 0, label: 'xs' },
-                { value: 25, label: 'sm' },
-                { value: 50, label: 'md' },
-                { value: 75, label: 'lg' },
-                { value: 100, label: 'xl' },
-              ]}
-            />
-          </div>
+          <RangeSlider
+            mt={10}
+            step={25}
+            defaultValue={[25, 75]}
+            minRange={25}
+            marks={[
+              { value: 0, label: 'xs' },
+              { value: 25, label: 'sm' },
+              { value: 50, label: 'md' },
+              { value: 75, label: 'lg' },
+              { value: 100, label: 'xl' },
+            ]}
+          />
         </InputWrapper>
       </div>
     </Paper>
