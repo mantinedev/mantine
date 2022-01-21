@@ -118,8 +118,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     const position = getPosition({ value: _value, min, max });
     const _label = typeof label === 'function' ? label(_value) : label;
 
+    const minMaxStepRef = useRef<{ min: number; max: number; step: number }>({ min, max, step });
+    minMaxStepRef.current = { min, max, step };
+
     const handleChange = (val: number) => {
-      const nextValue = getChangeValue({ value: val, min, max, step });
+      const nextValue = getChangeValue({
+        value: val,
+        ...minMaxStepRef.current,
+      });
       setValue(nextValue);
     };
 
