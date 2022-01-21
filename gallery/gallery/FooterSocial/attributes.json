@@ -3,7 +3,7 @@
   "category": "footers",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [],
+  "dependencies": ["/core/container/", "/core/group/", "/core/action-icon/", "tabler-icons-react"],
   "canvas": {
     "center": false
   }
