@@ -1,0 +1,10 @@
+{
+  "title": "Footer with social icons",
+  "category": "footers",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [],
+  "canvas": {
+    "center": false
+  }
+}
