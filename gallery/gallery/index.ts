@@ -84,6 +84,7 @@ export { SliderWhite } from './SliderWhite/SliderWhite';
 export { FooterCentered } from './FooterCentered/FooterCentered';
 export { FooterSimple } from './FooterSimple/FooterSimple';
 export { FooterSocial } from './FooterSocial/FooterSocial';
+export { FooterLinks } from './FooterLinks/FooterLinks';
 
 // Headers
 export { HeaderMenu } from './HeaderMenu/HeaderMenu';
