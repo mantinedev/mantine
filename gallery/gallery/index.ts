@@ -10,6 +10,7 @@ export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
 // Cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ArticleCardFooter } from './ArticleCardFooter/ArticleCardFooter';
+export { ArticleCardVertical } from './ArticleCardVertical/ArticleCardVertical';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
 export { ImageCard } from './ImageCard/ImageCard';

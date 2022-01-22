@@ -2,6 +2,7 @@
   "title": "Article card with footer",
   "category": "article-cards",
   "author": "rtivital",
+  "withColor": true,
   "dependencies": [
     "/core/card/",
     "/core/image/",
