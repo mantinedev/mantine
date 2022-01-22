@@ -68,6 +68,7 @@ export { UserMenu } from './UserMenu/UserMenu';
 export { UsersRolesTable } from './UsersRolesTable/UsersRolesTable';
 export { UsersStack } from './UsersStack/UsersStack';
 export { UsersTable } from './UsersTable/UsersTable';
+export { UserCardImage } from './UserCardImage/UserCardImage';
 
 // Dropzones
 export { DropzoneButton } from './DropzoneButton/DropzoneButton';
