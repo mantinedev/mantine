@@ -7,14 +7,16 @@ export { SocialButtons } from './SocialButtons/SocialButtons';
 export { EmailBanner } from './EmailBanner/EmailBanner';
 export { ImageActionBanner } from './ImageActionBanner/ImageActionBanner';
 
-// Cards
+// Article cards
 export { ArticleCard } from './ArticleCard/ArticleCard';
 export { ArticleCardFooter } from './ArticleCardFooter/ArticleCardFooter';
 export { ArticleCardVertical } from './ArticleCardVertical/ArticleCardVertical';
 export { ArticleCardImage } from './ArticleCardImage/ArticleCardImage';
+export { ImageCard } from './ImageCard/ImageCard';
+
+// App cards
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
-export { ImageCard } from './ImageCard/ImageCard';
 
 // Contact us
 export { ContactIcons } from './ContactIcons/ContactIcons';
