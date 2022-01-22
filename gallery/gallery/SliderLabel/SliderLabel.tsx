@@ -5,6 +5,7 @@ const useStyles = createStyles((theme) => ({
   label: {
     top: 0,
     height: 28,
+    lineHeight: '28px',
     width: 34,
     padding: 0,
     display: 'flex',
