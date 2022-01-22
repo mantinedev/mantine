@@ -1,5 +1,6 @@
 import React from 'react';
-import { createStyles, Text, Container } from '@mantine/core';
+import { createStyles, Text, Container, ActionIcon, Group } from '@mantine/core';
+import { BrandTwitter, BrandYoutube, BrandInstagram } from 'tabler-icons-react';
 import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
@@ -74,6 +75,28 @@ const useStyles = createStyles((theme) => ({
     marginBottom: theme.spacing.xs / 2,
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
+
+  afterFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: theme.spacing.xl,
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing.xl,
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
+
+    [theme.fn.smallerThan('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+
+  social: {
+    [theme.fn.smallerThan('sm')]: {
+      marginTop: theme.spacing.xs,
+    },
+  },
 }));
 
 interface FooterLinksProps {
@@ -87,7 +110,7 @@ export function FooterLinks({ data }: FooterLinksProps) {
   const { classes } = useStyles();
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <Text
+      <Text<'a'>
         key={index}
         className={classes.link}
         component="a"
@@ -115,6 +138,23 @@ export function FooterLinks({ data }: FooterLinksProps) {
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
+      </Container>
+      <Container className={classes.afterFooter}>
+        <Text color="dimmed" size="sm">
+          © 2020 mantine.dev. All rights reserved.
+        </Text>
+
+        <Group spacing={0} className={classes.social} position="right" noWrap>
+          <ActionIcon size="lg">
+            <BrandTwitter size={18} />
+          </ActionIcon>
+          <ActionIcon size="lg">
+            <BrandYoutube size={18} />
+          </ActionIcon>
+          <ActionIcon size="lg">
+            <BrandInstagram size={18} />
+          </ActionIcon>
+        </Group>
       </Container>
     </footer>
   );
