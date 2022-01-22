@@ -17,6 +17,7 @@ export { ImageCard } from './ImageCard/ImageCard';
 // App cards
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
+export { SwitchesCard } from './SwitchesCard/SwitchesCard';
 
 // Contact us
 export { ContactIcons } from './ContactIcons/ContactIcons';
