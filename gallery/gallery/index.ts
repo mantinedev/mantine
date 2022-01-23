@@ -144,3 +144,4 @@ export { DndTable } from './DndTable/DndTable';
 
 // Color scheme toggles
 export { SwitchToggle } from './SwitchToggle/SwitchToggle';
+export { SegmentedToggle } from './SegmentedToggle/SegmentedToggle';
