@@ -141,3 +141,6 @@ export { SplitButton } from './SplitButton/SplitButton';
 export { DndList } from './DndList/DndList';
 export { DndListHandle } from './DndListHandle/DndListHandle';
 export { DndTable } from './DndTable/DndTable';
+
+// Color scheme toggles
+export { SwitchToggle } from './SwitchToggle/SwitchToggle';
