@@ -13,6 +13,7 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
       { slug: 'authentication', name: 'Authentication', images: images.authentication },
       { slug: 'inputs', name: 'Inputs', images: images.inputs },
       { slug: 'buttons', name: 'Buttons', images: images.buttons },
+      { slug: 'color-scheme', name: 'Color scheme toggles', images: images['color-scheme'] },
       { slug: 'sliders', name: 'Sliders', images: images.sliders },
       { slug: 'dropzones', name: 'Dropzones', images: images.dropzones },
       { slug: 'app-cards', name: 'Application cards', images: images['app-cards'] },

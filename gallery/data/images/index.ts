@@ -58,6 +58,9 @@ import buttonsDark from './buttons-dark.svg';
 import dndLight from './dnd-light.svg';
 import dndDark from './dnd-dark.svg';
 
+import colorSchemeLight from './color-scheme-light.svg';
+import colorSchemeDark from './color-scheme-dark.svg';
+
 export default {
   inputs: { light: inputsLight.src, dark: inputsDark.src },
   'article-cards': { light: cardsLight.src, dark: cardsDark.src },
@@ -80,4 +83,5 @@ export default {
   tables: { light: tablesLight.src, dark: tablesDark.src },
   buttons: { light: buttonsLight.src, dark: buttonsDark.src },
   dnd: { light: dndLight.src, dark: dndDark.src },
+  'color-scheme': { light: colorSchemeLight.src, dark: colorSchemeDark.src },
 };
