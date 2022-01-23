@@ -146,3 +146,4 @@ export { DndTable } from './DndTable/DndTable';
 export { SwitchToggle } from './SwitchToggle/SwitchToggle';
 export { SegmentedToggle } from './SegmentedToggle/SegmentedToggle';
 export { ButtonToggle } from './ButtonToggle/ButtonToggle';
+export { ActionToggle } from './ActionToggle/ActionToggle';
