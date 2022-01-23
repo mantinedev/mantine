@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, Title, Container, Accordion, ThemeIcon, Button } from '@mantine/core';
-import { PlusIcon } from '@primer/octicons-react';
+import { Plus } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('control');
@@ -101,7 +101,7 @@ export function FaqWithBg() {
           }}
           icon={
             <ThemeIcon radius="xl" className={classes.gradient} size={32}>
-              <PlusIcon size={18} />
+              <Plus size={18} />
             </ThemeIcon>
           }
         >

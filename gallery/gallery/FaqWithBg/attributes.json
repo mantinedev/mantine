@@ -11,7 +11,7 @@
     "/core/accordion/",
     "/core/theme-icon/",
     "/core/button/",
-    "@primer/octicons-react"
+    "tabler-icons-react"
   ],
   "canvas": {
     "center": false

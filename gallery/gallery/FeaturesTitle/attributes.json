@@ -10,7 +10,7 @@
     "/core/button/",
     "/core/text/",
     "/core/theme-icon/",
-    "@primer/octicons-react"
+    "tabler-icons-react"
   ],
   "canvas": {
     "center": true,

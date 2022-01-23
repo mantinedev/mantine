@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, createStyles } from '@mantine/core';
-import { XCircleFillIcon } from '@primer/octicons-react';
+import { AlertTriangle } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   invalid: {
@@ -21,7 +21,7 @@ export function InputValidation() {
       error="Invalid email"
       defaultValue="hello!gmail.com"
       classNames={{ input: classes.invalid }}
-      rightSection={<XCircleFillIcon className={classes.icon} />}
+      rightSection={<AlertTriangle size={16} className={classes.icon} />}
     />
   );
 }

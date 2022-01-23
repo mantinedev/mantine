@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, Title, SimpleGrid, Text, Button, ThemeIcon, Grid, Col } from '@mantine/core';
-import { IssueDraftIcon, FileCodeIcon, LawIcon, FlameIcon } from '@primer/octicons-react';
+import { ReceiptOff, Flame, CircleDotted, FileCode } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -19,23 +19,23 @@ const useStyles = createStyles((theme) => ({
 
 const features = [
   {
-    icon: LawIcon,
+    icon: ReceiptOff,
     title: 'Free and open source',
     description: 'All packages are published under MIT license, you can use Mantine in any project',
   },
   {
-    icon: FileCodeIcon,
+    icon: FileCode,
     title: 'TypeScript based',
     description: 'Build type safe applications, all components and hooks export types',
   },
   {
-    icon: IssueDraftIcon,
+    icon: CircleDotted,
     title: 'No annoying focus ring',
     description:
       'With new :focus-visible selector focus ring will appear only when user navigates with keyboard',
   },
   {
-    icon: FlameIcon,
+    icon: Flame,
     title: 'Flexible',
     description:
       'Customize colors, spacing, shadows, fonts and many other settings with global theme object',

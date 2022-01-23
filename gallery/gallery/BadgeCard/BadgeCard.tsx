@@ -1,6 +1,5 @@
 import React from 'react';
-import { HeartFillIcon } from '@primer/octicons-react';
-import { MapPin } from 'react-feather';
+import { Heart } from 'tabler-icons-react';
 import {
   Card,
   Image,
@@ -70,9 +69,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
           <Text size="lg" weight={500}>
             {title}
           </Text>
-          <Badge size="sm" leftSection={<MapPin size={8} />}>
-            {country}
-          </Badge>
+          <Badge size="sm">{country}</Badge>
         </Group>
         <Text size="sm" mt="xs">
           {description}
@@ -93,7 +90,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
           Show details
         </Button>
         <ActionIcon variant="default" radius="md" size={36}>
-          <HeartFillIcon size={14} className={classes.like} />
+          <Heart size={18} className={classes.like} />
         </ActionIcon>
       </Group>
     </Card>

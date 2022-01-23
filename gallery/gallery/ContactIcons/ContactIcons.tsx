@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, ThemeIcon, Text, Group, SimpleGrid, Box } from '@mantine/core';
-import { Sun, Phone, MapPin, AtSign } from 'react-feather';
+import { Sun, Phone, MapPin, At } from 'tabler-icons-react';
 
 type ContactIconVariant = 'white' | 'gradient';
 
@@ -55,10 +55,12 @@ function ContactIcon({
     <div className={cx(classes.wrapper, className)} {...others}>
       {variant === 'gradient' ? (
         <ThemeIcon size={40} radius="md" className={classes.icon}>
-          <Icon size={22} />
+          <Icon size={24} />
         </ThemeIcon>
       ) : (
-        <Icon size={22} style={{ marginRight: 15 }} />
+        <Box mr="md">
+          <Icon size={24} />
+        </Box>
       )}
 
       <div>
@@ -77,7 +79,7 @@ interface ContactIconsListProps {
 }
 
 const MOCKDATA = [
-  { title: 'Email', description: 'hello@mantine.dev', icon: AtSign },
+  { title: 'Email', description: 'hello@mantine.dev', icon: At },
   { title: 'Phone', description: '+49 (800) 335 35 35', icon: Phone },
   { title: 'Address', description: '844 Morris Park avenue', icon: MapPin },
   { title: 'Working hours', description: '8 a.m. – 11 p.m.', icon: Sun },

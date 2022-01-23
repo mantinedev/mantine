@@ -8,8 +8,6 @@ import {
   Textarea,
   Button,
   Group,
-  MantineProvider,
-  useMantineTheme,
   ActionIcon,
 } from '@mantine/core';
 import { BrandTwitter, BrandFacebook, BrandInstagram } from 'tabler-icons-react';
@@ -65,7 +63,6 @@ const social = [BrandTwitter, BrandFacebook, BrandInstagram];
 
 export function ContactUs() {
   const { classes } = useStyles();
-  const theme = useMantineTheme();
 
   const icons = social.map((Icon, index) => (
     <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
@@ -74,35 +71,33 @@ export function ContactUs() {
   ));
 
   return (
-    <MantineProvider theme={{ colorScheme: 'light', primaryColor: theme.primaryColor }}>
-      <div className={classes.wrapper}>
-        <SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
-          <div>
-            <Title className={classes.title}>Contact us</Title>
-            <Text className={classes.description} mt="sm" mb={30}>
-              Leave your email and we will get back to you within 24 hours
-            </Text>
+    <div className={classes.wrapper}>
+      <SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+        <div>
+          <Title className={classes.title}>Contact us</Title>
+          <Text className={classes.description} mt="sm" mb={30}>
+            Leave your email and we will get back to you within 24 hours
+          </Text>
 
-            <ContactIconsList variant="white" />
+          <ContactIconsList variant="white" />
 
-            <Group mt="xl">{icons}</Group>
-          </div>
-          <div className={classes.form}>
-            <TextInput label="Email" placeholder="your@email.com" required />
-            <TextInput label="Name" placeholder="John Doe" mt="md" />
-            <Textarea
-              required
-              label="Your message"
-              placeholder="I want to order your goods"
-              minRows={4}
-              mt="md"
-            />
-            <Group position="right" mt="md">
-              <Button>Send message</Button>
-            </Group>
-          </div>
-        </SimpleGrid>
-      </div>
-    </MantineProvider>
+          <Group mt="xl">{icons}</Group>
+        </div>
+        <div className={classes.form}>
+          <TextInput label="Email" placeholder="your@email.com" required />
+          <TextInput label="Name" placeholder="John Doe" mt="md" />
+          <Textarea
+            required
+            label="Your message"
+            placeholder="I want to order your goods"
+            minRows={4}
+            mt="md"
+          />
+          <Group position="right" mt="md">
+            <Button>Send message</Button>
+          </Group>
+        </div>
+      </SimpleGrid>
+    </div>
   );
 }

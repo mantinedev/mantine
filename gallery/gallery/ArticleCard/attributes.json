@@ -11,7 +11,7 @@
     "/core/badge/",
     "/core/image/",
     "/core/action-icon/",
-    "@primer/octicons-react"
+    "tabler-icons-react"
   ],
   "props": {
     "image": "https://i.imgur.com/Cij5vdL.png",

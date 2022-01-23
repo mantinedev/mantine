@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookmarkIcon, HeartIcon, ShareIcon } from '@primer/octicons-react';
+import { Bookmark, Heart, Share } from 'tabler-icons-react';
 import {
   Card,
   Image,
@@ -96,13 +96,13 @@ export function ArticleCard({
 
         <Group spacing={8} mr={0}>
           <ActionIcon className={classes.action} style={{ color: theme.colors.red[6] }}>
-            <HeartIcon />
+            <Heart size={16} />
           </ActionIcon>
           <ActionIcon className={classes.action} style={{ color: theme.colors.yellow[7] }}>
-            <BookmarkIcon />
+            <Bookmark size={16} />
           </ActionIcon>
           <ActionIcon className={classes.action}>
-            <ShareIcon />
+            <Share size={16} />
           </ActionIcon>
         </Group>
       </Group>
