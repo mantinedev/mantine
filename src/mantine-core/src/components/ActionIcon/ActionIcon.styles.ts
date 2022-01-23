@@ -46,7 +46,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
           ? {}
           : {
               backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.fn.themeColor(color, 0),
+                theme.colorScheme === 'dark' ? theme.fn.rgba(theme.fn.themeColor(color, 8), 0.15) : theme.fn.themeColor(color, 0),
             },
     };
   }
