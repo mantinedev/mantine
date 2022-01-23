@@ -1,6 +1,6 @@
 import React from 'react';
-import { createStyles, Anchor, Group, UnstyledButton } from '@mantine/core';
-import { GitHubLogoIcon, TwitterLogoIcon } from '@modulz/radix-icons';
+import { createStyles, Anchor, Group, ActionIcon } from '@mantine/core';
+import { BrandTwitter, BrandYoutube, BrandInstagram } from 'tabler-icons-react';
 import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
@@ -19,23 +19,6 @@ const useStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column',
-    },
-  },
-
-  socialButton: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
-    borderRadius: theme.radius.sm,
-    padding: 5,
-
-    '&:hover': {
-      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
-
-    '& > svg': {
-      display: 'block',
-      width: 18,
-      height: 18,
     },
   },
 
@@ -73,13 +56,16 @@ export function FooterCentered({ links }: FooterCenteredProps) {
 
         <Group className={classes.links}>{items}</Group>
 
-        <Group spacing={5}>
-          <UnstyledButton color="dimmed" className={classes.socialButton}>
-            <GitHubLogoIcon />
-          </UnstyledButton>
-          <UnstyledButton color="dimmed" className={classes.socialButton}>
-            <TwitterLogoIcon />
-          </UnstyledButton>
+        <Group spacing={0} position="right" noWrap>
+          <ActionIcon size="lg">
+            <BrandTwitter size={18} />
+          </ActionIcon>
+          <ActionIcon size="lg">
+            <BrandYoutube size={18} />
+          </ActionIcon>
+          <ActionIcon size="lg">
+            <BrandInstagram size={18} />
+          </ActionIcon>
         </Group>
       </div>
     </div>
