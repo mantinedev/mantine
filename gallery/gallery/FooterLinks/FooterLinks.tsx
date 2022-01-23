@@ -122,7 +122,7 @@ export function FooterLinks({ data }: FooterLinksProps) {
     ));
 
     return (
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper} key={group.title}>
         <Text className={classes.title}>{group.title}</Text>
         {links}
       </div>
