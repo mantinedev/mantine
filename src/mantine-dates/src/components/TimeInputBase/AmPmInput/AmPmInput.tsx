@@ -34,16 +34,16 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp' || event.nativeEvent.code === 'ArrowDown') {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
         onChange(value === 'am' ? 'pm' : 'am', false);
       }
 
-      if (event.nativeEvent.code === 'KeyP') {
+      if (event.key === 'p') {
         onChange('pm', true);
       }
 
-      if (event.nativeEvent.code === 'KeyA') {
+      if (event.key === 'a') {
         onChange('am', true);
       }
     };
