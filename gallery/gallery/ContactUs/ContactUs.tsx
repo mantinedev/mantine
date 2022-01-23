@@ -10,7 +10,7 @@ import {
   Group,
   ActionIcon,
 } from '@mantine/core';
-import { BrandTwitter, BrandFacebook, BrandInstagram } from 'tabler-icons-react';
+import { BrandTwitter, BrandYoutube, BrandInstagram } from 'tabler-icons-react';
 import { ContactIconsList } from '../ContactIcons/ContactIcons';
 
 const useStyles = createStyles((theme) => ({
@@ -57,16 +57,34 @@ const useStyles = createStyles((theme) => ({
       color: theme.colors[theme.primaryColor][1],
     },
   },
+
+  input: {
+    backgroundColor: theme.white,
+    borderColor: theme.colors.gray[4],
+    color: theme.black,
+
+    '&::placeholder': {
+      color: theme.colors.gray[5],
+    },
+  },
+
+  inputLabel: {
+    color: theme.black,
+  },
+
+  control: {
+    backgroundColor: theme.colors[theme.primaryColor][6],
+  },
 }));
 
-const social = [BrandTwitter, BrandFacebook, BrandInstagram];
+const social = [BrandTwitter, BrandYoutube, BrandInstagram];
 
 export function ContactUs() {
   const { classes } = useStyles();
 
   const icons = social.map((Icon, index) => (
     <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-      <Icon size={28} />
+      <Icon size={22} />
     </ActionIcon>
   ));
 
@@ -84,17 +102,29 @@ export function ContactUs() {
           <Group mt="xl">{icons}</Group>
         </div>
         <div className={classes.form}>
-          <TextInput label="Email" placeholder="your@email.com" required />
-          <TextInput label="Name" placeholder="John Doe" mt="md" />
+          <TextInput
+            label="Email"
+            placeholder="your@email.com"
+            required
+            classNames={{ input: classes.input, label: classes.inputLabel }}
+          />
+          <TextInput
+            label="Name"
+            placeholder="John Doe"
+            mt="md"
+            classNames={{ input: classes.input, label: classes.inputLabel }}
+          />
           <Textarea
             required
             label="Your message"
             placeholder="I want to order your goods"
             minRows={4}
             mt="md"
+            classNames={{ input: classes.input, label: classes.inputLabel }}
           />
+
           <Group position="right" mt="md">
-            <Button>Send message</Button>
+            <Button className={classes.control}>Send message</Button>
           </Group>
         </div>
       </SimpleGrid>
