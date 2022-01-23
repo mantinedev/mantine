@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu, Group, Text, Avatar, Divider, useMantineTheme } from '@mantine/core';
-import { ChevronRightIcon } from '@modulz/radix-icons';
 import {
   Logout,
   Heart,
@@ -10,6 +9,7 @@ import {
   PlayerPause,
   Trash,
   SwitchHorizontal,
+  ChevronRight,
 } from 'tabler-icons-react';
 
 export function UserMenu() {
@@ -17,7 +17,7 @@ export function UserMenu() {
   return (
     <Group position="center">
       <Menu withArrow size={300} placement="center" transition="pop">
-        <Menu.Item rightSection={<ChevronRightIcon />}>
+        <Menu.Item rightSection={<ChevronRight size={14} />}>
           <Group>
             <Avatar
               radius="xl"

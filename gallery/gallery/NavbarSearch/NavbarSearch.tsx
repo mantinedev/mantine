@@ -11,8 +11,7 @@ import {
   ActionIcon,
   Tooltip,
 } from '@mantine/core';
-import { CaretSortIcon, MagnifyingGlassIcon, PlusIcon } from '@modulz/radix-icons';
-import { Bulb, User, Checkbox } from 'tabler-icons-react';
+import { Bulb, User, Checkbox, Search, Plus, Selector } from 'tabler-icons-react';
 import { UserButton } from '../UserButton/UserButton';
 
 const useStyles = createStyles((theme) => ({
@@ -163,14 +162,14 @@ export function NavbarSearch() {
           image="https://i.imgur.com/fGxgcDF.png"
           name="Bob Rulebreaker"
           email="Product owner"
-          icon={<CaretSortIcon />}
+          icon={<Selector size={14} />}
         />
       </Navbar.Section>
 
       <TextInput
         placeholder="Search"
         size="xs"
-        icon={<MagnifyingGlassIcon />}
+        icon={<Search size={12} />}
         rightSectionWidth={70}
         rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
         styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -188,7 +187,7 @@ export function NavbarSearch() {
           </Text>
           <Tooltip label="Create collection" withArrow position="right">
             <ActionIcon variant="default" size={18}>
-              <PlusIcon style={{ width: 12, height: 12 }} />
+              <Plus size={12} />
             </ActionIcon>
           </Tooltip>
         </Group>

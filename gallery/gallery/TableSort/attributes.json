@@ -10,7 +10,7 @@
     "/core/text/",
     "/core/center/",
     "/core/text-input/",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "data": [

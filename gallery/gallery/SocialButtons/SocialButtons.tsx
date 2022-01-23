@@ -1,6 +1,6 @@
 import React from 'react';
-import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { Button, ButtonProps, Group } from '@mantine/core';
+import { MarkGithubIcon } from '@primer/octicons-react';
 import { GoogleIcon } from './GoogleIcon';
 import { TwitterIcon } from './TwitterIcon';
 
@@ -21,7 +21,7 @@ export function GithubButton(props: ButtonProps<'button'>) {
   return (
     <Button
       {...props}
-      leftIcon={<GitHubLogoIcon />}
+      leftIcon={<MarkGithubIcon />}
       style={{ backgroundColor: '#000', color: '#fff' }}
     />
   );

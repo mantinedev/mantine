@@ -15,7 +15,7 @@
     "/core/burger/",
     "/hooks/use-toggle/",
     "tabler-icons-react",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "user": {

@@ -10,7 +10,7 @@
     "/core/center/",
     "/core/burger/",
     "/hooks/use-toggle/",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "links": [

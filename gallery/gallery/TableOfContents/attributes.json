@@ -3,7 +3,7 @@
   "category": "toc",
   "author": "rtivital",
   "withColor": true,
-  "dependencies": ["/core/box/", "/core/text/", "/core/text/", "@modulz/radix-icons"],
+  "dependencies": ["/core/box/", "/core/text/", "/core/text/", "tabler-icons-react"],
   "props": {
     "active": "#overlays",
     "links": [

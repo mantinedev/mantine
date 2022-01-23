@@ -1,5 +1,4 @@
 import React from 'react';
-import { GitHubLogoIcon } from '@modulz/radix-icons';
 import { createStyles, Container, Text, Button, Group, useMantineTheme } from '@mantine/core';
 
 const BREAKPOINT = '@media (max-width: 755px)';
@@ -117,8 +116,6 @@ export function HeroTitle() {
             variant="outline"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<GitHubLogoIcon style={{ width: 20, height: 20 }} />}
-            styles={{ leftIcon: { marginRight: 12 } }}
           >
             GitHub
           </Button>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createStyles, Box, Text, Group } from '@mantine/core';
-import { ActivityLogIcon } from '@modulz/radix-icons';
+import { ListSearch } from 'tabler-icons-react';
 
 const LINK_HEIGHT = 38;
 const INDICATOR_SIZE = 10;
@@ -74,7 +74,7 @@ export function TableOfContentsFloating({ links }: TableOfContentsFloatingProps)
   return (
     <div>
       <Group mb="md">
-        <ActivityLogIcon />
+        <ListSearch size={18} />
         <Text>Table of contents</Text>
       </Group>
       <div className={classes.links}>

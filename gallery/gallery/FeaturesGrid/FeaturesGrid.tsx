@@ -8,23 +8,19 @@ import {
   useMantineTheme,
   createStyles,
 } from '@mantine/core';
+import { Icon as TablerIcon } from 'tabler-icons-react';
 import { MOCKDATA } from './mockdata';
 
 interface FeatureProps {
-  icon: React.FC<any>;
+  icon: TablerIcon;
   title: React.ReactNode;
   description: React.ReactNode;
 }
 
-export function Feature({
-  icon: Icon,
-  title,
-  description,
-  ...others
-}: FeatureProps & Omit<React.ComponentPropsWithoutRef<'div'>, keyof FeatureProps>) {
+export function Feature({ icon: Icon, title, description }: FeatureProps) {
   const theme = useMantineTheme();
   return (
-    <div {...others}>
+    <div>
       <ThemeIcon variant="light" size={40} radius={40}>
         <Icon style={{ width: 20, height: 20 }} />
       </ThemeIcon>
@@ -48,7 +44,7 @@ const useStyles = createStyles((theme) => ({
     marginBottom: theme.spacing.md,
     textAlign: 'center',
 
-    '@media (max-width: 755px)': {
+    [theme.fn.smallerThan('sm')]: {
       fontSize: 28,
       textAlign: 'left',
     },
@@ -57,7 +53,7 @@ const useStyles = createStyles((theme) => ({
   description: {
     textAlign: 'center',
 
-    '@media (max-width: 755px)': {
+    [theme.fn.smallerThan('sm')]: {
       textAlign: 'left',
     },
   },

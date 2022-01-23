@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Group, Box, Collapse, ThemeIcon, Text, UnstyledButton, createStyles } from '@mantine/core';
-import { ChevronRightIcon } from '@modulz/radix-icons';
-import { Icon as TablerIcon, CalendarStats } from 'tabler-icons-react';
+import { Icon as TablerIcon, CalendarStats, ChevronLeft, ChevronRight } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -50,9 +49,10 @@ interface LinksGroupProps {
 }
 
 export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksGroupProps) {
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
+  const ChevronIcon = theme.dir === 'ltr' ? ChevronRight : ChevronLeft;
   const items = (hasLinks ? links : []).map((link) => (
     <Text<'a'>
       component="a"
@@ -76,9 +76,12 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksG
             <Box ml="md">{label}</Box>
           </Box>
           {hasLinks && (
-            <ChevronRightIcon
+            <ChevronIcon
               className={classes.chevron}
-              style={{ transform: opened ? 'rotate(90deg)' : 'none' }}
+              size={14}
+              style={{
+                transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
+              }}
             />
           )}
         </Group>

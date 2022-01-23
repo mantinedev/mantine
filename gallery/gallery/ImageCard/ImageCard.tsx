@@ -1,5 +1,5 @@
 import React from 'react';
-import { EyeOpenIcon, ChatBubbleIcon } from '@modulz/radix-icons';
+import { Eye, MessageCircle } from 'tabler-icons-react';
 import { Card, Text, Group, Center, createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme, _params, getRef) => {
@@ -50,11 +50,12 @@ const useStyles = createStyles((theme, _params, getRef) => {
       marginBottom: 5,
     },
 
-    body: {
-      color: theme.colors.gray[3],
+    bodyText: {
+      color: theme.colors.dark[2],
+      marginLeft: 7,
     },
 
-    bodyText: {
+    author: {
       color: theme.colors.dark[2],
     },
   };
@@ -70,8 +71,7 @@ interface ImageCardProps {
 }
 
 export function ImageCard({ image, title, author, views, comments, link }: ImageCardProps) {
-  const { classes } = useStyles();
-  const iconStyle = { marginRight: 7, width: 12, height: 12 };
+  const { classes, theme } = useStyles();
 
   return (
     <Card
@@ -92,20 +92,20 @@ export function ImageCard({ image, title, author, views, comments, link }: Image
             {title}
           </Text>
 
-          <Group className={classes.body} position="apart" spacing="xs">
-            <Text size="sm" className={classes.bodyText}>
+          <Group position="apart" spacing="xs">
+            <Text size="sm" className={classes.author}>
               {author}
             </Text>
 
             <Group spacing="lg">
               <Center>
-                <EyeOpenIcon style={iconStyle} />
+                <Eye size={16} color={theme.colors.dark[2]} />
                 <Text size="sm" className={classes.bodyText}>
                   {views}
                 </Text>
               </Center>
               <Center>
-                <ChatBubbleIcon style={iconStyle} />
+                <MessageCircle size={16} color={theme.colors.dark[2]} />
                 <Text size="sm" className={classes.bodyText}>
                   {comments}
                 </Text>

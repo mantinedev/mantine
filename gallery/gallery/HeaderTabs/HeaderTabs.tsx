@@ -21,8 +21,8 @@ import {
   PlayerPause,
   Trash,
   SwitchHorizontal,
+  ChevronDown,
 } from 'tabler-icons-react';
-import { ChevronDownIcon } from '@modulz/radix-icons';
 import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
@@ -133,7 +133,7 @@ export function HeaderTabs({ user, tabs }: HeaderTabsProps) {
                   <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
                     {user.name}
                   </Text>
-                  <ChevronDownIcon width={12} height={12} />
+                  <ChevronDown size={12} />
                 </Group>
               </UnstyledButton>
             }

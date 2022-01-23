@@ -10,7 +10,7 @@
     "/core/text/",
     "/core/container/",
     "/core/simple-grid/",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "title": "Integrate effortlessly with any technology stack",

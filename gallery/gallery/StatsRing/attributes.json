@@ -11,7 +11,7 @@
     "/core/group",
     "/core/paper/",
     "/core/simple-grid/",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "data": [

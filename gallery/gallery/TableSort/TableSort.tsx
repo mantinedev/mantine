@@ -9,12 +9,7 @@ import {
   Center,
   TextInput,
 } from '@mantine/core';
-import {
-  CaretUpIcon,
-  CaretDownIcon,
-  CaretSortIcon,
-  MagnifyingGlassIcon,
-} from '@modulz/radix-icons';
+import { Selector, ChevronDown, ChevronUp, Search } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   th: {
@@ -34,14 +29,6 @@ const useStyles = createStyles((theme) => ({
     width: 21,
     height: 21,
     borderRadius: 21,
-  },
-
-  sorted: {
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.35)
-        : theme.colors[theme.primaryColor][0],
-    color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
   },
 }));
 
@@ -63,8 +50,8 @@ interface ThProps {
 }
 
 function Th({ children, reversed, sorted, onSort }: ThProps) {
-  const { classes, cx } = useStyles();
-  const Icon = sorted ? (reversed ? CaretUpIcon : CaretDownIcon) : CaretSortIcon;
+  const { classes } = useStyles();
+  const Icon = sorted ? (reversed ? ChevronUp : ChevronDown) : Selector;
   return (
     <th className={classes.th}>
       <UnstyledButton onClick={onSort} className={classes.control}>
@@ -72,8 +59,8 @@ function Th({ children, reversed, sorted, onSort }: ThProps) {
           <Text weight={500} size="sm">
             {children}
           </Text>
-          <Center className={cx(classes.icon, { [classes.sorted]: sorted })}>
-            <Icon />
+          <Center className={classes.icon}>
+            <Icon size={14} />
           </Center>
         </Group>
       </UnstyledButton>
@@ -121,7 +108,7 @@ export function TableSort({ data }: TableSortProps) {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
+    const { value } = event.currentTarget;
     setSearch(value);
     setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }));
   };
@@ -139,7 +126,7 @@ export function TableSort({ data }: TableSortProps) {
       <TextInput
         placeholder="Search by any field"
         mb="md"
-        icon={<MagnifyingGlassIcon />}
+        icon={<Search size={14} />}
         value={search}
         onChange={handleSearchChange}
       />

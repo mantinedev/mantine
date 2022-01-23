@@ -8,7 +8,8 @@
     "/core/box/",
     "/core/collapse/",
     "/core/theme-icon/",
-    "/core/button/#unstyled-button"
+    "/core/button/#unstyled-button",
+    "tabler-icons-react"
   ],
   "canvas": {
     "center": true,

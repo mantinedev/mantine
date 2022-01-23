@@ -3,13 +3,7 @@
   "category": "hero",
   "author": "rtivital",
   "responsive": true,
-  "dependencies": [
-    "/core/text/",
-    "/core/button/",
-    "/core/container/",
-    "/core/group/",
-    "@modulz/radix-icons"
-  ],
+  "dependencies": ["/core/text/", "/core/button/", "/core/container/", "/core/group/"],
   "canvas": {
     "center": false
   }

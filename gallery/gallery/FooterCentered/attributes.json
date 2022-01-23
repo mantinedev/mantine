@@ -7,7 +7,7 @@
     "/core/group/",
     "/core/anchor/",
     "/core/button/#unstyled-button",
-    "@modulz/radix-icons"
+    "tabler-icons-react"
   ],
   "props": {
     "links": [

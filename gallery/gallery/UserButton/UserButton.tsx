@@ -7,7 +7,7 @@ import {
   Text,
   createStyles,
 } from '@mantine/core';
-import { ChevronRightIcon } from '@modulz/radix-icons';
+import { ChevronRight } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -47,7 +47,7 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
           </Text>
         </div>
 
-        {icon || <ChevronRightIcon />}
+        {icon || <ChevronRight size={14} />}
       </Group>
     </UnstyledButton>
   );
