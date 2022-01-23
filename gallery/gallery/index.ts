@@ -19,6 +19,7 @@ export { CardGradient } from './CardGradient/CardGradient';
 export { BadgeCard } from './BadgeCard/BadgeCard';
 export { FeaturesCard } from './FeaturesCard/FeaturesCard';
 export { SwitchesCard } from './SwitchesCard/SwitchesCard';
+export { CardWithStats } from './CardWithStats/CardWithStats';
 
 // Contact us
 export { ContactIcons } from './ContactIcons/ContactIcons';
