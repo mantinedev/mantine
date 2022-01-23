@@ -1,0 +1,17 @@
+{
+  "title": "Card with actions grid",
+  "category": "app-cards",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/card/",
+    "/core/text/",
+    "/core/simple-grid/",
+    "/core/button/#unstyled-button",
+    "/core/anchor/",
+    "/core/group/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}
