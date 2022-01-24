@@ -148,3 +148,6 @@ export { SwitchToggle } from './SwitchToggle/SwitchToggle';
 export { SegmentedToggle } from './SegmentedToggle/SegmentedToggle';
 export { ButtonToggle } from './ButtonToggle/ButtonToggle';
 export { ActionToggle } from './ActionToggle/ActionToggle';
+
+// Error pages
+export { NotFoundTitle } from './NotFoundTitle/NotFoundTitle';
