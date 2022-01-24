@@ -14,6 +14,7 @@ interface TextStyles {
   lineClamp: number;
   inline: boolean;
   inherit: boolean;
+  underline: boolean;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
@@ -66,6 +67,7 @@ export default createStyles(
       lineClamp,
       inline,
       inherit,
+      underline,
       gradientDeg,
       gradientTo,
       gradientFrom,
@@ -96,7 +98,13 @@ export default createStyles(
         textAlign: align,
 
         '&:hover': {
-          textDecoration: variant === 'link' ? 'underline' : 'none',
+          textDecoration: underline
+            ? 'underline'
+            : underline === false
+            ? 'none'
+            : variant === 'link'
+            ? 'underline'
+            : 'none',
         },
       },
 
