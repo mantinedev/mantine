@@ -30,6 +30,7 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
       { slug: 'banners', name: 'Banners', images: images.banners },
       { slug: 'faq', name: 'Frequently asked questions', images: images.faq },
       { slug: 'contact', name: 'Contact us section', images: images.contact },
+      { slug: 'error-pages', name: 'Error pages', images: images['error-pages'] },
     ],
   },
   {
