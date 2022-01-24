@@ -45,9 +45,11 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
         variant === 'transparent'
           ? {}
           : {
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.fn.rgba(theme.fn.themeColor(color, 8), 0.15) : theme.fn.themeColor(color, 0),
-            },
+            backgroundColor:
+              theme.colorScheme === 'dark'
+                ? theme.fn.rgba(theme.fn.themeColor(color, 8), 0.15)
+                : theme.fn.themeColor(color, 0),
+          },
     };
   }
 
