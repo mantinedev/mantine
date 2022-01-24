@@ -35,7 +35,7 @@ export interface SharedTextProps extends DefaultProps {
   /** Sets line-height to 1 for centering */
   inline?: boolean;
 
-  /** Underline the text on hover */
+  /** Underline the text */
   underline?: boolean;
 
   /** Inherit font properties from parent element */

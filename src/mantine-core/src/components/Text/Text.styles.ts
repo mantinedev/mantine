@@ -91,21 +91,18 @@ export default createStyles(
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize: inherit ? 'inherit' : theme.fontSizes[size],
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-        textDecoration: 'none',
+        textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
 
-        '&:hover': {
-          textDecoration: underline
-            ? 'underline'
-            : underline === false
-            ? 'none'
-            : variant === 'link'
-            ? 'underline'
-            : 'none',
-        },
+        '&:hover':
+          variant === 'link' && underline === undefined
+            ? {
+                textDecoration: 'underline',
+              }
+            : undefined,
       },
 
       gradient: {
