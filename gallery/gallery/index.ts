@@ -152,3 +152,4 @@ export { ActionToggle } from './ActionToggle/ActionToggle';
 // Error pages
 export { NotFoundTitle } from './NotFoundTitle/NotFoundTitle';
 export { NotFoundImage } from './NotFoundImage/NotFoundImage';
+export { NothingFoundBackground } from './NothingFoundBackground/NothingFoundBackground';
