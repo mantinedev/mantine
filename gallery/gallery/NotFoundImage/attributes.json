@@ -1,0 +1,18 @@
+{
+  "title": "404 page with image",
+  "category": "error-pages",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/image/",
+    "/core/simple-grid/",
+    "/core/text/",
+    "/core/title/",
+    "/core/container/",
+    "/core/button/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}
