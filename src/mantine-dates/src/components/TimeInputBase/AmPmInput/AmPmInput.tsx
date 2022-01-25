@@ -39,11 +39,11 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onChange(value === 'am' ? 'pm' : 'am', false);
       }
 
-      if (event.key === 'p') {
+      if (event.key === 'p' || event.nativeEvent.code === 'KeyP') {
         onChange('pm', true);
       }
 
-      if (event.key === 'a') {
+      if (event.key === 'a' || event.nativeEvent.code === 'KeyA') {
         onChange('am', true);
       }
     };
