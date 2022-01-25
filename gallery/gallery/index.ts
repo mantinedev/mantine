@@ -154,3 +154,4 @@ export { NotFoundTitle } from './NotFoundTitle/NotFoundTitle';
 export { NotFoundImage } from './NotFoundImage/NotFoundImage';
 export { NothingFoundBackground } from './NothingFoundBackground/NothingFoundBackground';
 export { ServerError } from './ServerError/ServerError';
+export { ServerOverload } from './ServerOverload/ServerOverload';

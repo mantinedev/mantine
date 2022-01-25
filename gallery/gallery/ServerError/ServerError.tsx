@@ -50,7 +50,7 @@ export function ServerError() {
       <Container>
         <div className={classes.label}>500</div>
         <Title className={classes.title}>Something bad just happened...</Title>
-        <Text color="dimmed" size="lg" align="center" className={classes.description}>
+        <Text size="lg" align="center" className={classes.description}>
           Our servers could not handle your request. Don&apos;t worry, our development team was
           already notified. Try refreshing the page.
         </Text>
