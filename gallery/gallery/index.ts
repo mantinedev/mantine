@@ -158,3 +158,4 @@ export { ServerOverload } from './ServerOverload/ServerOverload';
 
 // Comments
 export { CommentSimple } from './CommentSimple/CommentSimple';
+export { CommentHtml } from './CommentHtml/CommentHtml';

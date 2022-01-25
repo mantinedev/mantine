@@ -3,7 +3,7 @@ import { createStyles, Text, Avatar, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   body: {
-    paddingLeft: 52,
+    paddingLeft: 54,
     paddingTop: theme.spacing.sm,
   },
 }));
