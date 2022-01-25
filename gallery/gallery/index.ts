@@ -155,3 +155,6 @@ export { NotFoundImage } from './NotFoundImage/NotFoundImage';
 export { NothingFoundBackground } from './NothingFoundBackground/NothingFoundBackground';
 export { ServerError } from './ServerError/ServerError';
 export { ServerOverload } from './ServerOverload/ServerOverload';
+
+// Comments
+export { CommentSimple } from './CommentSimple/CommentSimple';
