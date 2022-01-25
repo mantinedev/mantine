@@ -107,6 +107,7 @@ export { DoubleHeader } from './DoubleHeader/DoubleHeader';
 export { HeaderAction } from './HeaderAction/HeaderAction';
 export { HeaderMiddle } from './HeaderMiddle/HeaderMiddle';
 export { HeaderResponsive } from './HeaderResponsive/HeaderResponsive';
+export { HeaderTabsColored } from './HeaderTabsColored/HeaderTabsColored';
 
 // Tables of contents
 export { TableOfContents } from './TableOfContents/TableOfContents';
