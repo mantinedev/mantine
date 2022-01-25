@@ -176,3 +176,12 @@ theme.fn.darken('rgb(245, 159, 0)', 0.5); // darken by 50%
 theme.fn.darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
 // -> rgba(123, 80, 0, 1, .3)
 ```
+
+## rgba
+
+`rgba` function converts color to rgba format with given alpha channel:
+
+```tsx
+theme.fn.rgba('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
+theme.fn.rgba(theme.colors.gray[1], 0.25); // rgba(241, 243, 245, 0.25)
+```
