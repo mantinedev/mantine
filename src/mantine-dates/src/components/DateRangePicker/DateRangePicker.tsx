@@ -100,7 +100,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: validationRule,
+      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {
@@ -112,14 +112,15 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     };
 
     const valueValid = validationRule(_value);
+    const firstValueValid = isFirstDateSet(_value);
 
-    const firstDateLabel = _value[0] ? upperFirst(dayjs(_value[0])
-      .locale(finalLocale)
-      .format(dateFormat)) : '';
+    const firstDateLabel = _value[0]
+      ? upperFirst(dayjs(_value[0]).locale(finalLocale).format(dateFormat))
+      : '';
 
-    const secondDateLabel = _value[1] ? upperFirst(dayjs(_value[1])
-      .locale(finalLocale)
-      .format(dateFormat)) : '';
+    const secondDateLabel = _value[1]
+      ? upperFirst(dayjs(_value[1]).locale(finalLocale).format(dateFormat))
+      : '';
 
     const handleClear = () => {
       setValue([null, null]);
@@ -127,21 +128,30 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       inputRef.current?.focus();
     };
 
+    const handleDropdownToggle = (isOpen) => {
+      if (!isOpen && firstValueValid && _value[1] === null) {
+        handleClear();
+      }
+      setDropdownOpened(!dropdownOpened);
+    };
+
     return (
       <>
         <DatePickerBase
           dropdownOpened={dropdownOpened}
-          setDropdownOpened={setDropdownOpened}
+          setDropdownOpened={handleDropdownToggle}
           shadow={shadow}
           transitionDuration={transitionDuration}
           ref={useMergedRef(ref, inputRef)}
           size={size}
           styles={styles}
           classNames={classNames}
-          inputLabel={isFirstDateSet(_value) ? `${firstDateLabel} ${labelSeparator} ${secondDateLabel}` : ''}
+          inputLabel={
+            firstValueValid ? `${firstDateLabel} ${labelSeparator} ${secondDateLabel}` : ''
+          }
           __staticSelector="DateRangePicker"
           dropdownType={dropdownType}
-          clearable={clearable && valueValid}
+          clearable={clearable && firstValueValid}
           clearButtonLabel={clearButtonLabel}
           onClear={handleClear}
           withinPortal={withinPortal}
