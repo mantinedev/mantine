@@ -32,6 +32,9 @@ export interface SegmentedControlProps
   /** Current selected value */
   value?: string;
 
+  /** Disabled input state */
+  disabled?: boolean;
+
   /** Called when value changes */
   onChange?(value: string): void;
 
@@ -67,6 +70,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   (
     {
       className,
+      disabled = false,
       data: _data,
       name,
       value,
@@ -156,6 +160,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       >
         <input
           className={classes.input}
+          disabled={disabled}
           type="radio"
           name={uuid}
           value={item.value}
@@ -165,7 +170,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         />
 
         <label
-          className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
+          className={cx(classes.label, {
+            [classes.labelActive]: _value === item.value,
+            [classes.disabled]: disabled,
+          })}
           htmlFor={`${uuid}-${item.value}`}
           ref={(node) => {
             refs.current[item.value] = node;

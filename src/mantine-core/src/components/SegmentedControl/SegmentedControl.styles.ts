@@ -138,6 +138,12 @@ export default createStyles(
         },
       },
 
+      disabled: {
+        '&, &:hover': {
+          color: theme.colors.gray[5],
+        },
+      },
+
       active: {
         boxSizing: 'border-box',
         borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
