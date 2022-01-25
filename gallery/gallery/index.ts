@@ -153,3 +153,4 @@ export { ActionToggle } from './ActionToggle/ActionToggle';
 export { NotFoundTitle } from './NotFoundTitle/NotFoundTitle';
 export { NotFoundImage } from './NotFoundImage/NotFoundImage';
 export { NothingFoundBackground } from './NothingFoundBackground/NothingFoundBackground';
+export { ServerError } from './ServerError/ServerError';

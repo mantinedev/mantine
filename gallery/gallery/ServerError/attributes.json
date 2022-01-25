@@ -1,0 +1,17 @@
+{
+  "title": "500 page",
+  "category": "error-pages",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/title/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "/core/container/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}
