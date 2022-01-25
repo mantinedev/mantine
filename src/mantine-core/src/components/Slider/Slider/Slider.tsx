@@ -1,6 +1,6 @@
-import React, { useRef, useState, forwardRef } from 'react';
-import { useUncontrolled, useMove, useMergedRef, clamp } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor, useMantineTheme } from '@mantine/styles';
+import React, { forwardRef, useRef, useState } from 'react';
+import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { DefaultProps, MantineColor, MantineNumberSize, useMantineTheme } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getPosition } from '../utils/get-position/get-position';
 import { getChangeValue } from '../utils/get-change-value/get-change-value';
@@ -136,19 +136,34 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
     const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
       switch (event.nativeEvent.code) {
-        case 'ArrowUp':
-        case 'ArrowRight': {
+        case 'ArrowUp': {
           event.preventDefault();
           thumb.current.focus();
           setValue(Math.min(Math.max(_value + step, min), max));
           break;
         }
+        case 'ArrowRight': {
+          event.preventDefault();
+          thumb.current.focus();
+          setValue(
+            Math.min(Math.max(theme.dir === 'rtl' ? _value - step : _value + step, min), max)
+          );
+          break;
+        }
 
-        case 'ArrowDown':
-        case 'ArrowLeft': {
+        case 'ArrowDown': {
           event.preventDefault();
           thumb.current.focus();
           setValue(Math.min(Math.max(_value - step, min), max));
+          break;
+        }
+
+        case 'ArrowLeft': {
+          event.preventDefault();
+          thumb.current.focus();
+          setValue(
+            Math.min(Math.max(theme.dir === 'rtl' ? _value + step : _value - step, min), max)
+          );
           break;
         }
 
