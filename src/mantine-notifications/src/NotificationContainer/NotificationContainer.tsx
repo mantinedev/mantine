@@ -52,6 +52,7 @@ export default function NotificationContainer({
       title={notification.title}
       onClose={handleHide}
       color={notification.color}
+      radius={notification.radius}
       icon={notification.icon}
       loading={notification.loading}
       disallowClose={notification.disallowClose}
