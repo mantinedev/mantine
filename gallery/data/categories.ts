@@ -38,6 +38,7 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
     categories: [
       { slug: 'article-cards', name: 'Article cards', images: images['article-cards'] },
       { slug: 'toc', name: 'Table of contents', images: images.toc },
+      { slug: 'comments', name: 'Comments', images: images.comments },
     ],
   },
 ];
