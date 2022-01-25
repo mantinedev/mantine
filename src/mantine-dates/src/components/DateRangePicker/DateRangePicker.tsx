@@ -47,6 +47,9 @@ export interface DateRangePickerProps
 const validationRule = (val: any) =>
   Array.isArray(val) && val.length === 2 && val.every((v) => v instanceof Date);
 
+const isFirstDateSet = (val: any) =>
+  Array.isArray(val) && val.length === 2 && val[0] instanceof Date;
+
 export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
   (
     {
@@ -110,6 +113,14 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
 
     const valueValid = validationRule(_value);
 
+    const firstDateLabel = _value[0] ? upperFirst(dayjs(_value[0])
+      .locale(finalLocale)
+      .format(dateFormat)) : '';
+
+    const secondDateLabel = _value[1] ? upperFirst(dayjs(_value[1])
+      .locale(finalLocale)
+      .format(dateFormat)) : '';
+
     const handleClear = () => {
       setValue([null, null]);
       setDropdownOpened(true);
@@ -127,15 +138,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           size={size}
           styles={styles}
           classNames={classNames}
-          inputLabel={
-            valueValid
-              ? `${upperFirst(
-                  dayjs(_value[0]).locale(finalLocale).format(dateFormat)
-                )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(finalLocale).format(dateFormat)
-                )}`
-              : ''
-          }
+          inputLabel={isFirstDateSet(_value) ? `${firstDateLabel} ${labelSeparator} ${secondDateLabel}` : ''}
           __staticSelector="DateRangePicker"
           dropdownType={dropdownType}
           clearable={clearable && valueValid}
