@@ -10,8 +10,9 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     fontWeight: 900,
-    fontSize: 38,
+    fontSize: 34,
     marginBottom: theme.spacing.md,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: 32,
@@ -54,7 +55,7 @@ export function NotFoundImage() {
             Get back to home page
           </Button>
         </div>
-        <Image src={image} className={classes.desktopImage} />
+        <Image src={image.src} className={classes.desktopImage} />
       </SimpleGrid>
     </Container>
   );
