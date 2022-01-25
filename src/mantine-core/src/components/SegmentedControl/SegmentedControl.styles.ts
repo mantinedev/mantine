@@ -140,7 +140,7 @@ export default createStyles(
 
       disabled: {
         '&, &:hover': {
-          color: theme.colors.gray[5],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },
 
