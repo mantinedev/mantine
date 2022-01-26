@@ -3,6 +3,7 @@
   "category": "headers",
   "author": "rtivital",
   "responsive": true,
+  "withColor": true,
   "dependencies": [
     "/core/container/",
     "/core/avatar/",
