@@ -60,7 +60,7 @@ export interface NumberInputProps
   noClampOnBlur?: boolean;
 
   /** Get increment/decrement handlers */
-  handlersRef?: React.ForwardedRef<NumberInputHandlers>;
+  handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(

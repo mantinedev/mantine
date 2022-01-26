@@ -228,8 +228,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
       switch (event.nativeEvent.code) {
-        case 'ArrowUp':
-        case 'ArrowRight': {
+        case 'ArrowUp': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
@@ -239,14 +238,49 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           );
           break;
         }
+        case 'ArrowRight': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          setRangedValue(
+            Math.min(
+              Math.max(
+                theme.dir === 'rtl'
+                  ? _valueRef.current[focusedIndex] - step
+                  : _valueRef.current[focusedIndex] + step,
+                min
+              ),
+              max
+            ),
+            focusedIndex
+          );
+          break;
+        }
 
-        case 'ArrowDown':
-        case 'ArrowLeft': {
+        case 'ArrowDown': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
             Math.min(Math.max(_valueRef.current[focusedIndex] - step, min), max),
+            focusedIndex
+          );
+          break;
+        }
+        case 'ArrowLeft': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          setRangedValue(
+            Math.min(
+              Math.max(
+                theme.dir === 'rtl'
+                  ? _valueRef.current[focusedIndex] + step
+                  : _valueRef.current[focusedIndex] - step,
+                min
+              ),
+              max
+            ),
             focusedIndex
           );
           break;

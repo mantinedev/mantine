@@ -190,7 +190,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         </div>
 
         {content && (
-          <div role="tabpanel" className={classes.body}>
+          <div role="tabpanel" className={classes.body} key={activeTab}>
             {content}
           </div>
         )}

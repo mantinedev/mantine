@@ -32,6 +32,9 @@ export interface SegmentedControlProps
   /** Current selected value */
   value?: string;
 
+  /** Disabled input state */
+  disabled?: boolean;
+
   /** Called when value changes */
   onChange?(value: string): void;
 
@@ -58,12 +61,16 @@ export interface SegmentedControlProps
 
   /** Default value for uncontrolled component */
   defaultValue?: string;
+
+  /** Display Vertically */
+  orientation?: 'vertical' | 'horizontal';
 }
 
 export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(
   (
     {
       className,
+      disabled = false,
       data: _data,
       name,
       value,
@@ -77,6 +84,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       classNames,
       styles,
       defaultValue,
+      orientation,
       ...others
     },
     ref
@@ -104,11 +112,16 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         shouldAnimate: reduceMotion || !shouldAnimate,
         transitionDuration,
         transitionTimingFunction,
+        orientation,
       },
       { classNames, styles, name: 'SegmentedControl' }
     );
 
-    const [activePosition, setActivePosition] = useState({ width: 0, translate: 0 });
+    const [activePosition, setActivePosition] = useState({
+      width: 0,
+      height: 0,
+      translate: [0, 0],
+    });
     const uuid = useUuid(name);
     const refs = useRef<Record<string, HTMLLabelElement>>({});
     const [observerRef, containerRect] = useResizeObserver();
@@ -119,6 +132,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         const elementRect = element.getBoundingClientRect();
         const scaledValue = element.offsetWidth / elementRect.width;
         const width = elementRect.width * scaledValue || 0;
+        const height = elementRect.height * scaledValue || 0;
 
         const offsetRight =
           containerRect.width - element.parentElement.offsetLeft + WRAPPER_PADDING - width;
@@ -126,7 +140,11 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
 
         setActivePosition({
           width,
-          translate: theme.dir === 'rtl' ? offsetRight : offsetLeft,
+          height,
+          translate: [
+            theme.dir === 'rtl' ? offsetRight : offsetLeft,
+            element.parentElement.offsetTop - WRAPPER_PADDING,
+          ],
         });
       }
     }, [_value, containerRect]);
@@ -142,6 +160,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       >
         <input
           className={classes.input}
+          disabled={disabled}
           type="radio"
           name={uuid}
           value={item.value}
@@ -151,7 +170,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         />
 
         <label
-          className={cx(classes.label, { [classes.labelActive]: _value === item.value })}
+          className={cx(classes.label, {
+            [classes.labelActive]: _value === item.value,
+            [classes.disabled]: disabled,
+          })}
           htmlFor={`${uuid}-${item.value}`}
           ref={(node) => {
             refs.current[item.value] = node;
@@ -170,7 +192,8 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
             className={classes.active}
             sx={{
               width: activePosition.width,
-              transform: `translateX(${activePosition.translate}px)`,
+              height: activePosition.height,
+              transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px )`,
             }}
           />
         )}

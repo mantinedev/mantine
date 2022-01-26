@@ -12,7 +12,7 @@ function Wrapper(props: PopperProps<HTMLDivElement>) {
   const theme = useMantineTheme();
 
   return (
-    <Group position="center">
+    <Group position="center" spacing={0}>
       <Button ref={setReferenceElement} onClick={() => setVisible((m) => !m)}>
         Reference element
       </Button>

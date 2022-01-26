@@ -38,7 +38,7 @@ function Scaled() {
 
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <div key={size}>
-    <Controlled size={size} mt="md" />
+    <Controlled size={size} mt="md" disabled />
   </div>
 ));
 

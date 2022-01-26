@@ -47,7 +47,14 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         return null;
       }
 
-      onChange([null, null]);
+      if (value[0] && isSameDate(date, value[0]) && !allowSingleDateInRange) {
+        setPickedDate(null);
+        setHoveredDay(null);
+        onChange([null, null]);
+        return null;
+      }
+
+      onChange([date, null]);
       setPickedDate(date);
       return null;
     };

@@ -12,7 +12,7 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
+import { useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -137,10 +137,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     );
     const [_value, setValue] = useState<Date>(value || defaultValue);
 
-    useDidUpdate(() => {
+    useEffect(() => {
       setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
-      typeof onChange === 'function' &&
-        onChange(getDate(time.hours, time.minutes, time.seconds, format, amPm));
     }, [time, format, amPm, onChange]);
 
     useEffect(() => {
@@ -156,7 +154,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, hours: padTime(val) }));
+        const newTime = { ...time, hours: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: format === '12' ? 11 : 23,
@@ -166,7 +167,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, minutes: padTime(val) }));
+        const newTime = { ...time, minutes: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: 59,
@@ -176,7 +180,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, seconds: padTime(val) }));
+        const newTime = { ...time, seconds: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: 59,

@@ -1,25 +1,34 @@
 import React from 'react';
 import { SegmentedControlWrapper } from './Wrapper';
+import { SegmentedControlProps } from '..';
 
-const code = `
-// By default component is inline
-<SegmentedControl />
-
-// Set fullWidth to make it block and take 100% of width
-<SegmentedControl fullWidth />
-`;
-
-function Demo() {
+function Demo(props: SegmentedControlProps) {
   return (
     <>
-      <SegmentedControlWrapper />
-      <SegmentedControlWrapper fullWidth style={{ marginTop: 15 }} />
+      <SegmentedControlWrapper {...props} />
     </>
   );
 }
 
+const codeTemplate = (props: string) => `
+  <SegmentedControl ${props} />
+`;
+
 export const fullWidth: MantineDemo = {
-  type: 'demo',
-  code,
+  type: 'configurator',
   component: Demo,
+  codeTemplate,
+  configurator: [
+    { name: 'fullWidth', type: 'boolean', defaultValue: false },
+    {
+      name: 'orientation',
+      type: 'segmented',
+      initialValue: 'horizontal',
+      defaultValue: 'horizontal',
+      data: [
+        { label: 'horizontal', value: 'horizontal' },
+        { label: 'vertical', value: 'vertical' },
+      ],
+    },
+  ],
 };

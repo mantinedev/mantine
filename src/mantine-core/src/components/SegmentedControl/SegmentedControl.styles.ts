@@ -10,6 +10,7 @@ interface SegmentedControlStyles {
   transitionDuration: number;
   transitionTimingFunction: string;
   size: MantineSize;
+  orientation: 'vertical' | 'horizontal';
 }
 
 const sizes = {
@@ -31,11 +32,13 @@ export default createStyles(
       transitionDuration,
       transitionTimingFunction,
       size,
+      orientation,
     }: SegmentedControlStyles,
     getRef
   ) => {
     const label = getRef('label');
     const control = getRef('control');
+    const vertical = orientation === 'vertical';
 
     return {
       label: {
@@ -75,9 +78,9 @@ export default createStyles(
         }`,
 
         '&:not(:first-of-type)': {
-          borderLeft: `1px solid ${
-            theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-          }`,
+          borderStyle: 'solid',
+          borderWidth: orientation === 'vertical' ? '1px 0 0 0' : '0 0 0 1px',
+          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },
 
@@ -110,7 +113,9 @@ export default createStyles(
 
       root: {
         position: 'relative',
-        display: fullWidth ? 'flex' : 'inline-flex',
+        display: fullWidth || vertical ? 'flex' : 'inline-flex',
+        width: vertical && !fullWidth ? 'max-content' : 'inherit',
+        flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
         borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         overflow: 'hidden',
@@ -119,9 +124,11 @@ export default createStyles(
 
       controlActive: {
         borderLeftColor: 'transparent !important',
+        borderTopColor: 'transparent !important',
 
         [`& + .${control}`]: {
           borderLeftColor: 'transparent !important',
+          borderTopColor: 'transparent !important',
         },
       },
 
@@ -131,12 +138,16 @@ export default createStyles(
         },
       },
 
+      disabled: {
+        '&, &:hover': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
+      },
+
       active: {
         boxSizing: 'border-box',
         borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         position: 'absolute',
-        top: 4,
-        bottom: 4,
         zIndex: 1,
         boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,
         transition: `transform ${shouldAnimate ? 0 : transitionDuration}ms ${

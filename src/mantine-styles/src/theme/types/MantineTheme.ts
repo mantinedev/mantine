@@ -3,8 +3,10 @@ import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize
 import type { Tuple } from './Tuple';
 import type { DeepPartial } from './DeepPartial';
 import { CSSObject } from '../../tss';
+import { MantineColor } from './MantineColor';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
+export type MantineThemeOther = Record<string, any>;
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
@@ -33,7 +35,7 @@ export interface MantineTheme {
   colorScheme: 'light' | 'dark';
   white: string;
   black: string;
-  colors: Record<string, Tuple<string, 10>>;
+  colors: Record<MantineColor, Tuple<string, 10>>;
   fontFamily: CSSProperties['fontFamily'];
   lineHeight: CSSProperties['lineHeight'];
   transitionTimingFunction: CSSProperties['transitionTimingFunction'];
@@ -60,12 +62,12 @@ export interface MantineTheme {
   };
 
   fn: MantineThemeFunctions;
-  other: Record<string, any>;
+  other: MantineThemeOther;
 
   datesLocale: string;
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
 export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn' | 'other'>> & {
-  other?: Record<string, any>;
+  other?: MantineThemeOther;
 };

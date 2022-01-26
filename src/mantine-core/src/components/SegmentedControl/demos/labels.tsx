@@ -1,11 +1,12 @@
 import React from 'react';
 import { EyeOpenIcon, CodeIcon, ExternalLinkIcon } from '@modulz/radix-icons';
 import { Group } from '../../Group/Group';
+import { Box } from '../../Box/Box';
 import { Center } from '../../Center/Center';
 import { SegmentedControl } from '../SegmentedControl';
 
 const code = `
-import { Center, SegmentedControl } from '@mantine/core';
+import { Center, SegmentedControl, Box } from '@mantine/core';
 import { EyeOpenIcon, CodeIcon, ExternalLinkIcon } from '@modulz/radix-icons';
 
 function Demo() {
@@ -17,7 +18,7 @@ function Demo() {
           label: (
             <Center>
               <EyeOpenIcon />
-              <div style={{ marginLeft: 10 }}>Preview</div>
+              <Box ml={10}>Preview</Box>
             </Center>
           ),
         },
@@ -26,7 +27,7 @@ function Demo() {
           label: (
             <Center>
               <CodeIcon />
-              <div style={{ marginLeft: 10 }}>Code</div>
+              <Box ml={10}>Code</Box>
             </Center>
           ),
         },
@@ -35,7 +36,7 @@ function Demo() {
           label: (
             <Center>
               <ExternalLinkIcon />
-              <div style={{ marginLeft: 10 }}>Export</div>
+              <Box ml={10}>Export</Box>
             </Center>
           ),
         },
@@ -55,7 +56,7 @@ function Demo() {
             label: (
               <Center>
                 <EyeOpenIcon />
-                <div style={{ marginLeft: 10 }}>Preview</div>
+                <Box ml={10}>Preview</Box>
               </Center>
             ),
           },
@@ -64,7 +65,7 @@ function Demo() {
             label: (
               <Center>
                 <CodeIcon />
-                <div style={{ marginLeft: 10 }}>Code</div>
+                <Box ml={10}>Code</Box>
               </Center>
             ),
           },
@@ -73,7 +74,7 @@ function Demo() {
             label: (
               <Center>
                 <ExternalLinkIcon />
-                <div style={{ marginLeft: 10 }}>Export</div>
+                <Box ml={10}>Export</Box>
               </Center>
             ),
           },
