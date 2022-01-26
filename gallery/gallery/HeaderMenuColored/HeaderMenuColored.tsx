@@ -5,6 +5,10 @@ import { ChevronDown } from 'tabler-icons-react';
 import { MantineLogo } from '../../shared/MantineLogo';
 
 const useStyles = createStyles((theme) => ({
+  header: {
+    backgroundColor: theme.colors[theme.primaryColor][6],
+  },
+
   inner: {
     height: 56,
     display: 'flex',
@@ -30,12 +34,12 @@ const useStyles = createStyles((theme) => ({
     padding: '8px 12px',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color: theme.white,
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5],
     },
   },
 
@@ -48,7 +52,7 @@ interface HeaderSearchProps {
   links: { link: string; label: string; links: { link: string; label: string }[] }[];
 }
 
-export function HeaderMenu({ links }: HeaderSearchProps) {
+export function HeaderMenuColored({ links }: HeaderSearchProps) {
   const [opened, toggleOpened] = useBooleanToggle(false);
   const { classes } = useStyles();
 
@@ -97,10 +101,10 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
   });
 
   return (
-    <Header height={56} mb={120}>
+    <Header height={56} className={classes.header} mb={120}>
       <Container>
         <div className={classes.inner}>
-          <MantineLogo />
+          <MantineLogo variant="white" />
           <Group spacing={5} className={classes.links}>
             {items}
           </Group>
@@ -109,6 +113,7 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
             onClick={() => toggleOpened()}
             className={classes.burger}
             size="sm"
+            color="#fff"
           />
         </div>
       </Container>
