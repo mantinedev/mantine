@@ -27,7 +27,7 @@ import { ColorInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <ColorInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+  return <ColorInput value={value} onChange={setValue} />;
 }
 ```
 
