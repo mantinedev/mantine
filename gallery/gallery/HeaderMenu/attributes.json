@@ -9,6 +9,7 @@
     "/core/group/",
     "/core/center/",
     "/core/burger/",
+    "/core/container/",
     "/hooks/use-toggle/",
     "tabler-icons-react"
   ],

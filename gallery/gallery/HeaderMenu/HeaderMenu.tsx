@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, Header, Menu, Group, Center, Burger } from '@mantine/core';
+import { createStyles, Header, Menu, Group, Center, Burger, Container } from '@mantine/core';
 import { useBooleanToggle } from '@mantine/hooks';
 import { ChevronDown } from 'tabler-icons-react';
 import { MantineLogo } from '../../shared/MantineLogo';
@@ -103,18 +103,20 @@ export function HeaderMenu({ links }: HeaderSearchProps) {
 
   return (
     <Header height={56} className={classes.header} mb={120}>
-      <div className={classes.inner}>
-        <MantineLogo />
-        <Group spacing={5} className={classes.links}>
-          {items}
-        </Group>
-        <Burger
-          opened={opened}
-          onClick={() => toggleOpened()}
-          className={classes.burger}
-          size="sm"
-        />
-      </div>
+      <Container>
+        <div className={classes.inner}>
+          <MantineLogo />
+          <Group spacing={5} className={classes.links}>
+            {items}
+          </Group>
+          <Burger
+            opened={opened}
+            onClick={() => toggleOpened()}
+            className={classes.burger}
+            size="sm"
+          />
+        </div>
+      </Container>
     </Header>
   );
 }
