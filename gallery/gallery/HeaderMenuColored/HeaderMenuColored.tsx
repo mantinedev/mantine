@@ -7,6 +7,7 @@ import { MantineLogo } from '../../shared/MantineLogo';
 const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor: theme.colors[theme.primaryColor][6],
+    borderBottom: 0,
   },
 
   inner: {

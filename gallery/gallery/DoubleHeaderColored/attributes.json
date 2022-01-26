@@ -1,0 +1,25 @@
+{
+  "title": "Header with multiple layers",
+  "category": "headers",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": ["/core/app-shell/", "/core/button/#unstyled-button"],
+  "props": {
+    "userLinks": [
+      { "link": "#", "label": "Privacy & Security" },
+      { "link": "#", "label": "Account settings" },
+      { "link": "#", "label": "Support options" }
+    ],
+    "mainLinks": [
+      { "link": "#", "label": "Book a demo" },
+      { "link": "#", "label": "Documentation" },
+      { "link": "#", "label": "Community" },
+      { "link": "#", "label": "Academy" },
+      { "link": "#", "label": "Forums" }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}
