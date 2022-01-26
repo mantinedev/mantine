@@ -14,6 +14,7 @@ interface TextStyles {
   lineClamp: number;
   inline: boolean;
   inherit: boolean;
+  underline: boolean;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
@@ -66,6 +67,7 @@ export default createStyles(
       lineClamp,
       inline,
       inherit,
+      underline,
       gradientDeg,
       gradientTo,
       gradientFrom,
@@ -89,15 +91,18 @@ export default createStyles(
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize: inherit ? 'inherit' : theme.fontSizes[size],
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-        textDecoration: 'none',
+        textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
 
-        '&:hover': {
-          textDecoration: variant === 'link' ? 'underline' : 'none',
-        },
+        '&:hover':
+          variant === 'link' && underline === undefined
+            ? {
+                textDecoration: 'underline',
+              }
+            : undefined,
       },
 
       gradient: {
