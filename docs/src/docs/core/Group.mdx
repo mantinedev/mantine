@@ -35,11 +35,11 @@ child components must accept it otherwise unexpected negative margins will be ap
 
 ```tsx
 // Will not work with Group – component does not handle className
-const MyButton => ({ label }) => <button>{label}</button>
+const MyButton = ({ label }) => <button>{label}</button>
 
 // Will work with Group – handle className
-const MyButton => ({ label, className }) => <button className={className}>{label}</button>
+const MyButton = ({ label, className }) => <button className={className}>{label}</button>
 
 // Will work with Group – handle className
-const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
+const MyButton = ({ label, ...others }) => <button {...others}>{label}</button>
 ```
