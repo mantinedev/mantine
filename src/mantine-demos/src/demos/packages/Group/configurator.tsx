@@ -1,13 +1,17 @@
 import React from 'react';
-import { Group, GroupProps, Button } from '@mantine/core';
+import { Group, GroupProps, Button, Card } from '@mantine/core';
 
 function Wrapper(props: GroupProps) {
   return (
-    <Group {...props}>
-      <Button variant="outline">1</Button>
-      <Button variant="outline">2</Button>
-      <Button variant="outline">3</Button>
-    </Group>
+    <Card withBorder p={0} sx={{ height: '250px' }}>
+      <Group {...props} sx={{ width: '100%', height: '100%' }}>
+        <Button variant="outline">1</Button>
+        <Button variant="outline" size="xl">
+          2
+        </Button>
+        <Button variant="outline">3</Button>
+      </Group>
+    </Card>
   );
 }
 
@@ -18,7 +22,7 @@ function Demo() {
   return (
     <Group${props}>
       <Button variant="outline">1</Button>
-      <Button variant="outline">2</Button>
+      <Button variant="outline" size="xl">2</Button>
       <Button variant="outline">3</Button>
     </Group>
   );
@@ -38,9 +42,23 @@ export const configurator: MantineDemo = {
         { label: 'center', value: 'center' },
         { label: 'right', value: 'right' },
         { label: 'apart', value: 'apart' },
+        { label: 'top', value: 'top' },
+        { label: 'bottom', value: 'bottom' },
       ],
       initialValue: 'left',
       defaultValue: 'left',
+    },
+    {
+      name: 'align',
+      type: 'select',
+      data: [
+        { label: 'center', value: 'center' },
+        { label: 'flex-start', value: 'flex-start' },
+        { label: 'flex-end', value: 'flex-end' },
+        { label: 'baseline', value: 'baseline' },
+      ],
+      initialValue: 'center',
+      defaultValue: 'center',
     },
     {
       name: 'direction',
