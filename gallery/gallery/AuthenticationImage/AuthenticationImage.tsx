@@ -20,7 +20,9 @@ const useStyles = createStyles((theme) => ({
   },
 
   form: {
-    borderRight: `1px solid ${theme.colors.gray[2]}`,
+    borderRight: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
+    }`,
     minHeight: 900,
     maxWidth: 450,
     paddingTop: 80,
@@ -48,7 +50,7 @@ export function AuthenticationImage() {
   const { classes } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} padding={30} shadow="md">
+      <Paper className={classes.form} radius={0} padding={30}>
         <Title order={2} className={classes.title} align="center" mt="md" mb={50}>
           Welcome back to Mantine!
         </Title>
