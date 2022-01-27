@@ -176,37 +176,3 @@ You can add any amount of properties using `other`:
   transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
 })} />
 ```
-
-## TypeScript
-
-### Adding custom colors
-
-By default TypeScript will only autocomplete Mantine's standard colors when accessing the theme. To add your custom colors to the MantineColor type, you can use TypeScript module declaration:
-```ts
-// ./types.d.ts
-
-declare module "@mantine/core" {
-  export type MantineColor = "myCustomColor"
-}
-
-// or if you want to "extend" standard colors
-import { MantineColor } from '@mantine/core'
-
-declare module "@mantine/core" {
-  export type MantineColor = MantineColor | "myCustomColor"
-}
-```
-
-### Adding custom 'other' properties
-
-Just like with the MantineColor type above, you can add your own properties to the `theme.other` type using TypeScript module declaration:
-```ts
-// ./types.d.ts
-
-declare module "@mantine/core" {
-  export interface MantineThemeOther {
-    myCustomProperty: string
-    myCustomFunction: () => void
-  }
-}
-```
