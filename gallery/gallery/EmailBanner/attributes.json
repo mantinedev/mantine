@@ -4,6 +4,7 @@
   "author": "rtivital",
   "responsive": true,
   "withColor": true,
+  "dimmed": true,
   "dependencies": [
     "/core/button/",
     "/core/text/",
