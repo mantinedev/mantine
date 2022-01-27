@@ -68,5 +68,6 @@ export default createStyles((theme, { color, radius, size, striped, animate }: P
     fontWeight: 700,
     userSelect: 'none',
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
 }));
