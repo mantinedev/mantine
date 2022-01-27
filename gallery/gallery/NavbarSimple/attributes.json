@@ -1,0 +1,11 @@
+{
+  "title": "Simple navbar",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [],
+  "props": {},
+  "canvas": {
+    "center": false
+  }
+}

@@ -70,6 +70,7 @@ export { NavbarMinimal } from './NavbarMinimal/NavbarMinimal';
 export { NavbarNested } from './NavbarNested/NavbarNested';
 export { NavbarSearch } from './NavbarSearch/NavbarSearch';
 export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
+export { NavbarSimple } from './NavbarSimple/NavbarSimple';
 
 // Users
 export { UserButton } from './UserButton/UserButton';
