@@ -4,6 +4,7 @@
   "author": "rtivital",
   "withColor": true,
   "responsive": true,
+  "dimmed": true,
   "dependencies": ["/core/card/", "/core/text/", "/core/group/", "/core/ring-progress/"],
   "props": {
     "title": "Project tasks",

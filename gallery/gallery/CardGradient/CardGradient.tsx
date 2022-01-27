@@ -1,11 +1,12 @@
 import React from 'react';
-import { createStyles, Card, Text, ThemeIcon } from '@mantine/core';
+import { createStyles, Paper, Text, ThemeIcon } from '@mantine/core';
 import { ColorSwatch } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
   card: {
     position: 'relative',
     cursor: 'pointer',
+    overflow: 'hidden',
     transition: 'transform 150ms ease, box-shadow 100ms ease',
     padding: theme.spacing.xl,
     paddingLeft: theme.spacing.xl * 2,
@@ -35,7 +36,7 @@ interface CardGradientProps {
 export function CardGradient({ title, description }: CardGradientProps) {
   const { classes } = useStyles();
   return (
-    <Card withBorder radius="md" className={classes.card}>
+    <Paper withBorder radius="md" className={classes.card}>
       <ThemeIcon
         size="xl"
         radius="md"
@@ -50,6 +51,6 @@ export function CardGradient({ title, description }: CardGradientProps) {
       <Text size="sm" mt="sm" color="dimmed">
         {description}
       </Text>
-    </Card>
+    </Paper>
   );
 }

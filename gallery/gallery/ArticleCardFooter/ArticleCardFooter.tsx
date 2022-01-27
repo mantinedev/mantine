@@ -3,6 +3,10 @@ import { createStyles, Card, Image, ActionIcon, Group, Text, Avatar, Badge } fro
 import { Heart, Bookmark, Share } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
@@ -38,7 +42,7 @@ export function ArticleCardFooter({
   const { classes, theme } = useStyles();
 
   return (
-    <Card withBorder padding="lg" radius="md">
+    <Card withBorder padding="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Image src={image} alt={title} height={180} />
       </Card.Section>

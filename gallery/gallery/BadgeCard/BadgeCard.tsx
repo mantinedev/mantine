@@ -13,6 +13,10 @@ import {
 } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   section: {
     borderBottom: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
@@ -59,7 +63,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
   ));
 
   return (
-    <Card withBorder radius="md" padding="md">
+    <Card withBorder radius="md" padding="md" className={classes.card}>
       <Card.Section>
         <Image src={image} alt={title} height={180} />
       </Card.Section>

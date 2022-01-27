@@ -2,8 +2,12 @@ import React from 'react';
 import { createStyles, Card, Avatar, Text, Group, Button } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   avatar: {
-    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white}`,
+    border: `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`,
   },
 }));
 
@@ -30,7 +34,7 @@ export function UserCardImage({ image, avatar, name, job, stats }: UserCardImage
   ));
 
   return (
-    <Card withBorder padding="xl" radius="md">
+    <Card withBorder padding="xl" radius="md" className={classes.card}>
       <Card.Section sx={{ backgroundImage: `url(${image})`, height: 140 }} />
       <Avatar src={avatar} size={80} radius={80} mx="auto" mt={-30} className={classes.avatar} />
       <Text align="center" size="lg" weight={500} mt="sm">

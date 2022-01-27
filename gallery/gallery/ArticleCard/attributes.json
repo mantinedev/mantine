@@ -2,6 +2,7 @@
   "title": "Article card with image",
   "category": "article-cards",
   "author": "rtivital",
+  "dimmed": true,
   "dependencies": [
     "/core/card/",
     "/core/text/",

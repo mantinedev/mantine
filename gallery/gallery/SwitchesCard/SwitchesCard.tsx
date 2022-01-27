@@ -2,6 +2,10 @@ import React from 'react';
 import { createStyles, Card, Group, Switch, Text } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   item: {
     '& + &': {
       paddingTop: theme.spacing.sm,
@@ -48,7 +52,7 @@ export function SwitchesCard({ title, description, data }: SwitchesCardProps) {
   ));
 
   return (
-    <Card withBorder radius="md" padding="xl">
+    <Card withBorder radius="md" padding="xl" className={classes.card}>
       <Text size="lg" className={classes.title} weight={500}>
         {title}
       </Text>

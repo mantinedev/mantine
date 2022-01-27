@@ -2,6 +2,7 @@
   "title": "Card with progress",
   "category": "stats",
   "author": "rtivital",
+  "dimmed": true,
   "withColor": true,
   "dependencies": [
     "/core/paper/",

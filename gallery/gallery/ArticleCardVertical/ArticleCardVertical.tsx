@@ -2,6 +2,10 @@ import React from 'react';
 import { createStyles, Card, Image, Avatar, Text, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   title: {
     fontWeight: 700,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
@@ -33,7 +37,7 @@ export function ArticleCardVertical({
 }: ArticleCardVerticalProps) {
   const { classes } = useStyles();
   return (
-    <Card withBorder radius="md" padding={0}>
+    <Card withBorder radius="md" padding={0} className={classes.card}>
       <Group noWrap spacing={0}>
         <Image src={image} height={140} width={140} />
         <div className={classes.body}>

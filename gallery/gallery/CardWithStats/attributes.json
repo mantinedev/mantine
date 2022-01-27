@@ -2,6 +2,7 @@
   "title": "Card with stats",
   "category": "app-cards",
   "author": "rtivital",
+  "dimmed": true,
   "dependencies": [
     "/core/card/",
     "/core/image/",

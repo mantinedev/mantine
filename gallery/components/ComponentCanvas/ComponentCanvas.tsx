@@ -34,7 +34,10 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
         })}
       >
         {state === 'preview' ? (
-          <div className={classes.preview} style={{ zIndex: props.zIndex }}>
+          <div
+            className={cx(classes.preview, { [classes.previewDimmed]: props.attributes.dimmed })}
+            style={{ zIndex: props.zIndex }}
+          >
             <GalleryPreview canvas={props.attributes.canvas}>
               <MantineProvider
                 theme={{ primaryColor, colorScheme: theme.colorScheme, dir }}

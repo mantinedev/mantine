@@ -3,6 +3,7 @@
   "category": "stats",
   "author": "rtivital",
   "responsive": true,
+  "dimmed": true,
   "dependencies": [
     "/core/progress/",
     "/core/box/",

@@ -12,6 +12,7 @@ export interface GalleryCategoriesGroup {
 export interface CanvasAttributes {
   responsive?: boolean;
   withColor?: boolean;
+  dimmed?: boolean;
   author: string;
   canvas: { center: boolean; maxWidth?: number };
   category: string;

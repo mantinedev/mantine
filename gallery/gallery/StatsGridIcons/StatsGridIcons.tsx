@@ -5,7 +5,6 @@ import { ArrowUpRight, ArrowDownRight } from 'tabler-icons-react';
 const useStyles = createStyles((theme) => ({
   root: {
     padding: theme.spacing.xl * 1.5,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   },
 
   label: {

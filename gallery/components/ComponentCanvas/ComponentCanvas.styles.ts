@@ -44,6 +44,10 @@ export default createStyles((theme, _params, getRef) => {
       backgroundColor: theme.white,
     },
 
+    previewDimmed: {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    },
+
     code: {
       borderBottomRightRadius: theme.radius.md - 1,
       borderBottomLeftRadius: theme.radius.md - 1,

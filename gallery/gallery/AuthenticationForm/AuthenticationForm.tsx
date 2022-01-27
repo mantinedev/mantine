@@ -31,15 +31,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
   });
 
   return (
-    <Paper
-      shadow="sm"
-      radius="md"
-      padding="xl"
-      sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      })}
-      {...props}
-    >
+    <Paper radius="md" padding="xl" withBorder {...props}>
       <Text size="lg" weight={500}>
         Welcome to Mantine, {type} with
       </Text>

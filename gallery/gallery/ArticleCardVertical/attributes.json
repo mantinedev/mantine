@@ -2,6 +2,7 @@
   "title": "Vertical article card",
   "category": "article-cards",
   "author": "rtivital",
+  "dimmed": true,
   "dependencies": [
     "/core/card/",
     "/core/image/",

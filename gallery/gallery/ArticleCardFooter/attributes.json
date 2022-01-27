@@ -3,6 +3,7 @@
   "category": "article-cards",
   "author": "rtivital",
   "withColor": true,
+  "dimmed": true,
   "dependencies": [
     "/core/card/",
     "/core/image/",

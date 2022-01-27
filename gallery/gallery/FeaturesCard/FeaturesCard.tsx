@@ -3,13 +3,18 @@ import { Card, Image, Text, Group, Badge, createStyles, Center, Button } from '@
 import { GasStation, Gauge, ManualGearbox, Users } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   imageSection: {
-    paddingTop: theme.spacing.md,
-    paddingBottom: theme.spacing.md,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+    padding: theme.spacing.md,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottom: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+    }`,
   },
 
   label: {
@@ -49,13 +54,14 @@ export function FeaturesCard() {
       <Text size="xs">{feature.label}</Text>
     </Center>
   ));
+
   return (
-    <Card shadow="sm" radius="md">
+    <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
         <Image src="https://i.imgur.com/ZL52Q2D.png" alt="Tesla Model S" />
       </Card.Section>
 
-      <Group position="apart" mt="xs">
+      <Group position="apart" mt="md">
         <div>
           <Text weight={500}>Tesla Model S</Text>
           <Text size="xs" color="dimmed">

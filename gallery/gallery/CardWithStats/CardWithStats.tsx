@@ -2,6 +2,10 @@ import React from 'react';
 import { createStyles, Card, Image, Text, Group, RingProgress } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   footer: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -29,6 +33,7 @@ interface CardWithStatsProps {
 
 export function CardWithStats({ image, title, description, stats }: CardWithStatsProps) {
   const { classes } = useStyles();
+
   const items = stats.map((stat) => (
     <div key={stat.title}>
       <Text size="xs" color="dimmed">
@@ -41,7 +46,7 @@ export function CardWithStats({ image, title, description, stats }: CardWithStat
   ));
 
   return (
-    <Card withBorder padding="lg">
+    <Card withBorder padding="lg" className={classes.card}>
       <Card.Section>
         <Image src={image} alt={title} height={100} />
       </Card.Section>

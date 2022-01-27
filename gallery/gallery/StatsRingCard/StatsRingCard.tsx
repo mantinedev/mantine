@@ -2,6 +2,10 @@ import React from 'react';
 import { createStyles, Text, Card, RingProgress, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  card: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+  },
+
   label: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 700,
@@ -57,7 +61,7 @@ export function StatsRingCard({ title, completed, total, stats }: StatsRingCardP
   ));
 
   return (
-    <Card withBorder padding="xl" radius="md">
+    <Card withBorder padding="xl" radius="md" className={classes.card}>
       <div className={classes.inner}>
         <div>
           <Text size="xl" className={classes.label}>

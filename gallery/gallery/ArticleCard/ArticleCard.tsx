@@ -16,6 +16,7 @@ import {
 const useStyles = createStyles((theme) => ({
   card: {
     position: 'relative',
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
   },
 
   rating: {
@@ -67,7 +68,7 @@ export function ArticleCard({
   const linkProps = { href: link, target: '_blank', rel: 'noopener noreferrer' };
 
   return (
-    <Card shadow="sm" className={cx(classes.card, className)} {...others}>
+    <Card withBorder radius="md" className={cx(classes.card, className)} {...others}>
       <Card.Section>
         <a {...linkProps}>
           <Image src={image} height={180} />

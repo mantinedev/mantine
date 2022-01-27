@@ -3,6 +3,7 @@
   "category": "authentication",
   "author": "rtivital",
   "withColor": true,
+  "dimmed": true,
   "dependencies": [
     "/core/paper/",
     "/core/text-input/",

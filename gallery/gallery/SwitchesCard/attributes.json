@@ -4,6 +4,7 @@
   "author": "rtivital",
   "withColor": true,
   "responsive": true,
+  "dimmed": true,
   "dependencies": [],
   "props": {
     "title": "Configure notifications",
