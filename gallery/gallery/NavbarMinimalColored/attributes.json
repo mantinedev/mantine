@@ -1,0 +1,16 @@
+{
+  "title": "Navbar with tooltips",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/button/#unstyled-button",
+    "/core/group/",
+    "/core/tooltip/",
+    "/core/image/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

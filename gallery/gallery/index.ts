@@ -72,6 +72,7 @@ export { NavbarSearch } from './NavbarSearch/NavbarSearch';
 export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
 export { NavbarSimple } from './NavbarSimple/NavbarSimple';
 export { NavbarSimpleColored } from './NavbarSimpleColored/NavbarSimpleColored';
+export { NavbarMinimalColored } from './NavbarMinimalColored/NavbarMinimalColored';
 
 // Users
 export { UserButton } from './UserButton/UserButton';
