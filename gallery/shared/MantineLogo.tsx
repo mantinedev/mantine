@@ -12,7 +12,7 @@ export function MantineLogo({ variant = 'default', width = 110, ...others }: Man
     <svg {...others} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" width={width}>
       <g fill="none" fillRule="evenodd">
         <path
-          fill={variant === 'white' ? '#FFF' : '#339AF0'}
+          fill={variant === 'white' ? '#FFF' : theme.colors[theme.primaryColor][6]}
           fillRule="nonzero"
           d="M162.162 81.5c0-45.011-36.301-81.5-81.08-81.5C36.301 0 0 36.489 0 81.5 0 126.51 36.301 163 81.081 163s81.081-36.49 81.081-81.5z"
         />

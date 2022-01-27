@@ -71,6 +71,7 @@ export { NavbarNested } from './NavbarNested/NavbarNested';
 export { NavbarSearch } from './NavbarSearch/NavbarSearch';
 export { NavbarSegmented } from './NavbarSegmented/NavbarSegmented';
 export { NavbarSimple } from './NavbarSimple/NavbarSimple';
+export { NavbarSimpleColored } from './NavbarSimpleColored/NavbarSimpleColored';
 
 // Users
 export { UserButton } from './UserButton/UserButton';
