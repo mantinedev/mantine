@@ -1,0 +1,12 @@
+{
+  "title": "Authentication form with title",
+  "category": "authentication",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dimmed": true,
+  "dependencies": [],
+  "canvas": {
+    "center": false
+  }
+}

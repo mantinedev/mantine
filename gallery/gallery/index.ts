@@ -2,6 +2,7 @@
 export { AuthenticationForm } from './AuthenticationForm/AuthenticationForm';
 export { AuthenticationImage } from './AuthenticationImage/AuthenticationImage';
 export { SocialButtons } from './SocialButtons/SocialButtons';
+export { AuthenticationTitle } from './AuthenticationTitle/AuthenticationTitle';
 
 // Banners
 export { EmailBanner } from './EmailBanner/EmailBanner';
