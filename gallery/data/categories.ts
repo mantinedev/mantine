@@ -10,7 +10,6 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
       { slug: 'footers', name: 'Footers', images: images.footers },
       { slug: 'grids', name: 'Grids', images: images.grids },
       { slug: 'users', name: 'User info and controls', images: images.users },
-      { slug: 'authentication', name: 'Authentication', images: images.authentication },
       { slug: 'inputs', name: 'Inputs', images: images.inputs },
       { slug: 'buttons', name: 'Buttons', images: images.buttons },
       { slug: 'color-scheme', name: 'Color scheme toggles', images: images['color-scheme'] },
@@ -27,10 +26,11 @@ export const GALLERY_CATEGORIES: GalleryCategoriesGroup[] = [
     categories: [
       { slug: 'hero', name: 'Hero headers', images: images.hero },
       { slug: 'features', name: 'Features section', images: images.features },
-      { slug: 'banners', name: 'Banners', images: images.banners },
+      { slug: 'authentication', name: 'Authentication', images: images.authentication },
       { slug: 'faq', name: 'Frequently asked questions', images: images.faq },
       { slug: 'contact', name: 'Contact us section', images: images.contact },
       { slug: 'error-pages', name: 'Error pages', images: images['error-pages'] },
+      { slug: 'banners', name: 'Banners', images: images.banners },
     ],
   },
   {
