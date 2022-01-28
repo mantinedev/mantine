@@ -18,6 +18,7 @@ function Demo() {
         one of these buttons to proceed.
       </Text>
     ),
+    labels: { confirm: 'Confirm', cancel: "Cancel" },
     onCancel: () => console.log('Cancel'),
     onConfirm: () => console.log('Confirmed'),
   });
