@@ -66,6 +66,7 @@ export function LanguagePicker() {
       transitionDuration={150}
       onOpen={() => setOpened(true)}
       onClose={() => setOpened(false)}
+      radius="md"
       control={
         <UnstyledButton className={classes.control}>
           <Group spacing="xs">
