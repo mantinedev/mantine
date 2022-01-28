@@ -1,6 +1,6 @@
 {
   "title": "Social buttons",
-  "category": "authentication",
+  "category": "buttons",
   "author": "rtivital",
   "dependencies": ["/core/button/", "/core/group/", "@primer/octicons-react"],
   "canvas": {

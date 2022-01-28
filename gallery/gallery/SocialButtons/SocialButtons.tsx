@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, ButtonProps, Group } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { GoogleIcon } from './GoogleIcon';
+import { DiscordIcon } from './DiscordIcon';
+import { FacebookIcon } from './FacebookIcon';
 import { TwitterIcon } from './TwitterIcon';
 
 export function GoogleButton(props: ButtonProps<'button'>) {
@@ -9,7 +11,37 @@ export function GoogleButton(props: ButtonProps<'button'>) {
 }
 
 export function FacebookButton(props: ButtonProps<'button'>) {
-  return <Button style={{ backgroundColor: '#4267B2', color: '#fff' }} {...props} />;
+  return (
+    <Button
+      leftIcon={<FacebookIcon />}
+      sx={(theme) => ({
+        backgroundColor: '#4267B2',
+        color: '#fff',
+        '&:hover': {
+          backgroundColor: theme.fn.darken('#4267B2', 0.1),
+        },
+      })}
+      {...props}
+    />
+  );
+}
+
+export function DiscordButton(props: ButtonProps<'button'>) {
+  return (
+    <Button
+      leftIcon={<DiscordIcon />}
+      sx={(theme) => ({
+        backgroundColor: theme.colorScheme === 'dark' ? '#5865F2' : '#7289da',
+        '&:hover': {
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.fn.lighten('#5865F2', 0.05)
+              : theme.fn.darken('#7289da', 0.05),
+        },
+      })}
+      {...props}
+    />
+  );
 }
 
 // Twitter button as anchor
@@ -22,7 +54,13 @@ export function GithubButton(props: ButtonProps<'button'>) {
     <Button
       {...props}
       leftIcon={<MarkGithubIcon />}
-      style={{ backgroundColor: '#000', color: '#fff' }}
+      sx={(theme) => ({
+        backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 9 : 6],
+        color: '#fff',
+        '&:hover': {
+          backgroundColor: theme.colors.dark[theme.colorScheme === 'dark' ? 9 : 6],
+        },
+      })}
     />
   );
 }
@@ -35,7 +73,8 @@ export function SocialButtons() {
         Follow on Twitter
       </TwitterButton>
       <FacebookButton>Sign in with Facebook</FacebookButton>
-      <GithubButton>View on GitHub</GithubButton>
+      <GithubButton>Login with GitHub</GithubButton>
+      <DiscordButton>Join Discord community</DiscordButton>
     </Group>
   );
 }
