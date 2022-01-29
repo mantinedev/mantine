@@ -16,10 +16,6 @@ describe('@mantine/core/Select/filter-data', () => {
     expect(filterData({ ...baseOptions, searchable: false, searchValue: '' })).toBe(data);
   });
 
-  it('returns unmodified data if searchValue matches any label exactly', () => {
-    expect(filterData({ ...baseOptions, searchable: true, searchValue: 'React' })).toBe(data);
-  });
-
   it('filters data based on custom filter function', () => {
     const filter = (searchValue: string, item: SelectItem) => item.name.includes(searchValue);
     expect(

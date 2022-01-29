@@ -1,0 +1,11 @@
+{
+  "title": "Button with menu",
+  "category": "buttons",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/button/", "/core/menu/", "tabler-icons-react"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 120
+  }
+}

@@ -26,7 +26,6 @@ const MARKS = [
   label={(val) => MARKS.find((mark) => mark.value === val).label}
   defaultValue={50}
   step={25}
-  radius={0}
   marks={MARKS}
   styles={{ markLabel: { display: 'none' } }}
 />
@@ -59,7 +58,6 @@ function Demo() {
           defaultValue={50}
           label={(val) => MARKS.find((mark) => mark.value === val).label}
           step={25}
-          radius={0}
           marks={MARKS}
           styles={{ markLabel: { display: 'none' } }}
         />

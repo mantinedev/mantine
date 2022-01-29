@@ -1,17 +1,20 @@
 import React, { useRef, useState } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
+import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../Button';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';
+import { Divider } from '../../Divider/Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
+import { groupOptions } from '../../../utils';
 
 export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
-interface RenderListProps extends DefaultProps<RenderListStylesNames> {
+export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   data: TransferListItem[];
   onSelect(value: string): void;
   selection: string[];
@@ -21,11 +24,27 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   nothingFound?: React.ReactNode;
   title?: React.ReactNode;
   reversed?: boolean;
+  showTransferAll?: boolean;
   onMoveAll(): void;
   onMove(): void;
   height: number;
   listComponent?: React.FC<any>;
+  limit?: number;
 }
+
+const icons = {
+  Prev: PrevIcon,
+  Next: NextIcon,
+  First: FirstIcon,
+  Last: LastIcon,
+};
+
+const rtlIons = {
+  Next: PrevIcon,
+  Prev: NextIcon,
+  Last: FirstIcon,
+  First: LastIcon,
+};
 
 export function RenderList({
   className,
@@ -38,23 +57,30 @@ export function RenderList({
   filter,
   nothingFound,
   title,
+  showTransferAll,
   reversed,
   onMoveAll,
   onMove,
   height,
   classNames,
   styles,
+  limit,
 }: RenderListProps) {
-  const { classes, cx } = useStyles(
-    { reversed, height },
+  const { classes, cx, theme } = useStyles(
+    { reversed, native: listComponent !== SelectScrollArea },
     { name: 'TransferList', classNames, styles }
   );
+  const unGroupedItems: React.ReactElement<any>[] = [];
+  const groupedItems: React.ReactElement<any>[] = [];
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
-  const filteredData = data.filter((item) => filter(query, item));
+  const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
+  const Icons = theme.dir === 'rtl' ? rtlIons : icons;
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
+
+  const sortedData: TransferListItem[] = groupOptions({ data: filteredData });
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -63,31 +89,56 @@ export function RenderList({
     isList: true,
   });
 
-  const items = filteredData.map((item, index) => (
-    <UnstyledButton
-      tabIndex={-1}
-      onClick={() => onSelect(item.value)}
-      key={item.value}
-      onMouseEnter={() => setHovered(index)}
-      className={cx(classes.transferListItem, {
-        [classes.transferListItemHovered]: index === hovered,
-      })}
-      ref={(node: HTMLButtonElement) => {
-        if (itemsRefs && itemsRefs.current) {
-          // eslint-disable-next-line no-param-reassign
-          itemsRefs.current[item.value] = node;
-        }
-      }}
-    >
-      <ItemComponent data={item} selected={selection.includes(item.value)} />
-    </UnstyledButton>
-  ));
+  let groupName = null;
+
+  sortedData.forEach((item, index) => {
+    const itemComponent = (
+      <UnstyledButton
+        tabIndex={-1}
+        onClick={() => onSelect(item.value)}
+        key={item.value}
+        onMouseEnter={() => setHovered(index)}
+        className={cx(classes.transferListItem, {
+          [classes.transferListItemHovered]: index === hovered,
+        })}
+        ref={(node: HTMLButtonElement) => {
+          if (itemsRefs && itemsRefs.current) {
+            itemsRefs.current[item.value] = node;
+          }
+        }}
+      >
+        <ItemComponent data={item} selected={selection.includes(item.value)} />
+      </UnstyledButton>
+    );
+
+    if (!item.group) {
+      unGroupedItems.push(itemComponent);
+    } else {
+      if (groupName !== item.group) {
+        groupName = item.group;
+        groupedItems.push(
+          <div className={classes.separator} key={groupName}>
+            <Divider classNames={{ label: classes.separatorLabel }} label={groupName} />
+          </div>
+        );
+      }
+      groupedItems.push(itemComponent);
+    }
+  });
+
+  if (groupedItems.length > 0 && unGroupedItems.length > 0) {
+    unGroupedItems.unshift(
+      <div className={classes.separator}>
+        <Divider classNames={{ label: classes.separatorLabel }} />
+      </div>
+    );
+  }
 
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
       case 'Enter': {
+        event.preventDefault();
         if (filteredData[hovered]) {
-          event.preventDefault();
           onSelect(filteredData[hovered].value);
         }
         break;
@@ -159,28 +210,34 @@ export function RenderList({
             disabled={selection.length === 0}
             onClick={onMove}
           >
-            {reversed ? <PrevIcon /> : <NextIcon />}
+            {reversed ? <Icons.Prev /> : <Icons.Next />}
           </ActionIcon>
 
-          <ActionIcon
-            variant="default"
-            size={36}
-            radius={0}
-            className={classes.transferListControl}
-            disabled={data.length === 0}
-            onClick={onMoveAll}
-          >
-            {reversed ? <FirstIcon /> : <LastIcon />}
-          </ActionIcon>
+          {showTransferAll && (
+            <ActionIcon
+              variant="default"
+              size={36}
+              radius={0}
+              className={classes.transferListControl}
+              disabled={data.length === 0}
+              onClick={onMoveAll}
+            >
+              {reversed ? <Icons.First /> : <Icons.Last />}
+            </ActionIcon>
+          )}
         </div>
 
         <ListComponent
-          className={classes.transferListItems}
           ref={scrollableRef}
           onMouseLeave={() => setHovered(-1)}
+          className={classes.transferListItems}
+          style={{ height, position: 'relative', overflowX: 'hidden' }}
         >
-          {items.length > 0 ? (
-            items
+          {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
+            <>
+              {groupedItems}
+              {unGroupedItems}
+            </>
           ) : (
             <Text color="dimmed" size="sm" align="center" mt="sm">
               {nothingFound}

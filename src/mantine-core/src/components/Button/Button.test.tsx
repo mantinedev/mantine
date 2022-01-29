@@ -1,66 +1,41 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
-  itSupportsClassName,
   itRendersChildren,
-  itSupportsRef,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsStylesApi,
-  itSupportsMargins,
+  itIsPolymorphic,
+  itSupportsSystemProps,
+  itSupportsFocusEvents,
 } from '@mantine/tests';
-import { Button } from './Button';
+import { Button, ButtonProps } from './Button';
+
+const defaultProps: ButtonProps<'button'> = {};
 
 describe('@mantine/core/Button', () => {
-  checkAccessibility([mount(<Button>Mantine button</Button>)]);
-  itSupportsOthers(Button, {});
-  itRendersChildren(Button, {});
-  itSupportsStyle(Button, {});
-  itSupportsRef(Button, {}, HTMLButtonElement);
-  itSupportsClassName(Button, {});
-  itSupportsMargins(Button, {});
-
-  itSupportsStylesApi(
-    Button,
-    { children: 'test', leftIcon: 'l', rightIcon: 'r' },
-    ['root', 'icon', 'leftIcon', 'rightIcon', 'inner', 'label'],
-    'Button'
-  );
-
-  it('has correct displayName', () => {
-    expect(Button.displayName).toEqual('@mantine/core/Button');
+  checkAccessibility([<Button>Mantine button</Button>]);
+  itRendersChildren(Button, defaultProps);
+  itIsPolymorphic(Button, defaultProps);
+  itSupportsFocusEvents(Button, defaultProps, 'button');
+  itSupportsSystemProps({
+    component: Button,
+    props: defaultProps,
+    displayName: '@mantine/core/Button',
+    refType: HTMLButtonElement,
   });
 
   it('passes type to button component', () => {
-    const element = shallow(<Button type="submit" />);
-    expect(element.render().attr('type')).toBe('submit');
+    render(<Button type="submit" />);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
 
   it('renders left and right icons if they are provided', () => {
-    const leftIcon = shallow(<Button leftIcon="$">left-icon-test</Button>);
-    const rightIcon = shallow(<Button rightIcon="%">right-icon-test</Button>);
-    const bothIcons = shallow(
-      <Button rightIcon="%" leftIcon="$">
-        both-icon-test
-      </Button>
-    );
-
-    expect(leftIcon.render().find('.mantine-Button-leftIcon').text()).toBe('$');
-    expect(rightIcon.render().find('.mantine-Button-rightIcon').text()).toBe('%');
-    expect(bothIcons.render().find('.mantine-Button-leftIcon').text()).toBe('$');
-    expect(bothIcons.render().find('.mantine-Button-rightIcon').text()).toBe('%');
-
-    expect(leftIcon.render().find('.mantine-Button-label').text()).toBe('left-icon-test');
-    expect(rightIcon.render().find('.mantine-Button-label').text()).toBe('right-icon-test');
-    expect(bothIcons.render().find('.mantine-Button-label').text()).toBe('both-icon-test');
+    render(<Button rightIcon="right-icon" leftIcon="left-icon" />);
+    expect(screen.getByText('right-icon')).toBeInTheDocument();
+    expect(screen.getByText('left-icon')).toBeInTheDocument();
   });
 
   it('sets disabled attribute based on prop', () => {
-    const disabled = shallow(<Button disabled />);
-    const notDisabled = shallow(<Button />);
-
-    expect(disabled.render().attr('disabled')).toBe('disabled');
-    expect(notDisabled.render().attr('disabled')).toBe(undefined);
+    render(<Button disabled />);
+    expect(screen.getByRole('button')).toBeDisabled();
   });
 });

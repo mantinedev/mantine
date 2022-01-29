@@ -1,20 +1,13 @@
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Table } from './Table';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Table, TableProps } from './Table';
+
+const defaultProps: TableProps = {};
 
 describe('@mantine/core/Table', () => {
-  itSupportsClassName(Table, {});
-  itSupportsStyle(Table, {});
-  itSupportsOthers(Table, {});
-  itSupportsMargins(Table, {});
-  itSupportsRef(Table, {}, HTMLTableElement);
-
-  it('has correct displayName', () => {
-    expect(Table.displayName).toEqual('@mantine/core/Table');
+  itSupportsSystemProps({
+    component: Table,
+    props: defaultProps,
+    displayName: '@mantine/core/Table',
+    refType: HTMLTableElement,
   });
 });

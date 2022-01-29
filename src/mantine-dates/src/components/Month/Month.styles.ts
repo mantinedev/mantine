@@ -9,7 +9,7 @@ export default createStyles((theme, { fullWidth }: MonthStyles) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
   },
 
-  root: {
+  month: {
     ...theme.fn.fontStyles(),
     borderCollapse: 'collapse',
     width: fullWidth ? '100%' : 'auto',

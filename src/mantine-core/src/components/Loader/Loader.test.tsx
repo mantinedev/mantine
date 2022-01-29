@@ -1,31 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { Loader } from './Loader';
+import { Loader, LoaderProps } from './Loader';
+
+const defaultProps: LoaderProps = {};
 
 describe('@mantine/core/Loader', () => {
-  itSupportsOthers(Loader, {});
-  itSupportsClassName(Loader, {});
-  itSupportsStyle(Loader, {});
-  itSupportsMargins(Loader, {});
-
-  it('has correct displayName', () => {
-    expect(Loader.displayName).toEqual('@mantine/core/Loader');
+  itSupportsSystemProps({
+    component: Loader,
+    props: defaultProps,
+    displayName: '@mantine/core/Loader',
   });
 
   it('sets svg width based on size prop', () => {
-    const element = shallow(<Loader size={41} variant="bars" />);
-    expect(element.render().attr('width')).toBe('41px');
+    const { container } = render(<Loader size={41} variant="bars" />);
+    expect(container.querySelector('svg')).toHaveAttribute('width', '41px');
   });
 
   it('sets svg fill based on color prop', () => {
-    const element = shallow(<Loader color="yellow" variant="bars" />);
-    expect(element.render().attr('fill')).toBe(DEFAULT_THEME.colors.yellow[6]);
+    const { container } = render(<Loader color="yellow" variant="bars" />);
+    expect(container.querySelector('svg')).toHaveAttribute('fill', DEFAULT_THEME.colors.yellow[6]);
   });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
-import { useWindowEvent, useForceUpdate, useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useSx } from '@mantine/styles';
+import { useReducedMotion } from '@mantine/hooks';
+import { DefaultProps, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
 import { Center } from '../../Center';
@@ -10,26 +11,26 @@ import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 export type { AccordionIconPosition };
 export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 
-export interface PublicAccordionItemProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface PublicAccordionItemProps
+  extends DefaultProps<AccordionItemStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   label?: React.ReactNode;
   icon?: React.ReactNode;
   children?: React.ReactNode;
   disableIconRotation?: boolean;
   iconPosition?: AccordionIconPosition;
+  controlRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export interface AccordionItemType {
-  type: any;
-  props: PublicAccordionItemProps;
-}
-
-interface AccordionItemProps
-  extends DefaultProps<AccordionItemStylesNames>,
-    PublicAccordionItemProps {
+export interface AccordionItemProps extends PublicAccordionItemProps {
   opened?: boolean;
   onToggle?(): void;
   transitionDuration?: number;
   id?: string;
+  onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+  offsetIcon?: boolean;
+  iconSize?: number;
+  order?: 2 | 3 | 4 | 5 | 6;
 }
 
 export function AccordionItem({
@@ -40,49 +41,52 @@ export function AccordionItem({
   className,
   classNames,
   styles,
-  sx,
   transitionDuration,
   icon = <ChevronIcon />,
   disableIconRotation = false,
+  offsetIcon = true,
+  iconSize = 24,
   iconPosition = 'left',
+  order = 3,
   id,
+  controlRef,
+  onControlKeyDown,
   ...others
 }: AccordionItemProps) {
-  const forceUpdate = useForceUpdate();
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
-    { transitionDuration: duration, disableIconRotation, iconPosition },
+    { transitionDuration: duration, disableIconRotation, iconPosition, offsetIcon, iconSize },
     { classNames, styles, name: 'Accordion' }
   );
 
-  useWindowEvent('resize', () => forceUpdate());
+  const cappedOrder = Math.min(6, Math.max(2, order)) as 2 | 3 | 4 | 5 | 6;
+  const Heading = `h${cappedOrder}` as const;
 
   return (
-    <div
-      className={cx(classes.item, { [classes.itemOpened]: opened }, sxClassName, className)}
-      {...others}
-    >
-      <UnstyledButton
-        className={classes.control}
-        onClick={onToggle}
-        type="button"
-        aria-expanded={opened}
-        aria-controls={`${id}-body`}
-        id={id}
-      >
-        <Center className={classes.icon}>{icon}</Center>
-
-        <div className={classes.label}>{label}</div>
-      </UnstyledButton>
+    <Box className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
+      <Heading className={classes.itemTitle}>
+        <UnstyledButton
+          className={classes.control}
+          onClick={onToggle}
+          type="button"
+          aria-expanded={opened}
+          aria-controls={`${id}-body`}
+          id={id}
+          ref={controlRef}
+          onKeyDown={onControlKeyDown}
+        >
+          <Center className={classes.icon}>{icon}</Center>
+          <div className={classes.label}>{label}</div>
+        </UnstyledButton>
+      </Heading>
 
       <Collapse in={opened} transitionDuration={duration}>
         <div className={classes.content} role="region" id={`${id}-body`} aria-labelledby={id}>
           <div className={classes.contentInner}>{children}</div>
         </div>
       </Collapse>
-    </div>
+    </Box>
   );
 }
 

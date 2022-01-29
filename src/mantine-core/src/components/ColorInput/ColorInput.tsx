@@ -1,16 +1,12 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
-import { Popper } from '../Popper/Popper';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input';
+import { ColorSwatch } from '../ColorSwatch';
+import { Popper } from '../Popper';
 import { MantineTransition } from '../Transition';
-import { Paper } from '../Paper/Paper';
+import { Paper } from '../Paper';
 import {
   ColorPicker,
   ColorPickerBaseProps,
@@ -51,6 +47,9 @@ export interface ColorInputProps
 
   /** Dropdown transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 const SWATCH_SIZES = {
@@ -94,9 +93,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       icon,
       transition = 'pop-top-left',
       id,
-      dropdownZIndex = 1,
+      dropdownZIndex = getDefaultZIndex('popover'),
       transitionDuration = 0,
       transitionTimingFunction,
+      withinPortal = true,
       className,
       style,
       swatches,
@@ -109,7 +109,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -156,9 +156,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         size={size}
         id={uuid}
         className={className}
-        style={mergedStyles}
+        style={style}
         __staticSelector="ColorInput"
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>
@@ -200,11 +201,10 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           position="bottom"
           placement="start"
           gutter={5}
-          withArrow
           arrowSize={3}
           zIndex={dropdownZIndex}
-          arrowClassName={classes.arrow}
           arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
+          withinPortal={withinPortal}
         >
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>
@@ -223,6 +223,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 withPicker={withPicker}
                 size={size}
                 focusable={false}
+                styles={styles}
+                classNames={classNames}
               />
             </Paper>
           </div>

@@ -13,13 +13,12 @@ docs: 'core/Input.mdx'
 styles: ['Input']
 ---
 
-import { INPUT_SIZES } from '@mantine/core';
-import { InputDemos, ActionIconDemos, KbdDemos } from '@demos/core';
+import { InputDemos } from '@demos/core';
 
 ## Disclaimer
 
-**!important:** In most cases, you should not use the Input component in your application.
-This component is a base for other inputs and was not designed to be used directly.
+**!important:** In most cases, you should not use Input component in your application.
+Input component is a base for other inputs and was not designed to be used directly.
 
 ```tsx
 // Incorrect usage, input is not accessible
@@ -50,22 +49,7 @@ Note that unstyled input variant may significantly impact usability, use it wise
 
 ## Icon and right section
 
-You can add icon on the left side of the input, for example:
-
-- [radix icons](https://icons.modulz.app/) (used in mantine packages)
-- [feather](https://feathericons.com/)
-- [react-icons](https://react-icons.github.io/react-icons)
-
 <Demo data={InputDemos.icon} />
-
-Right section allows you to place anything on the right side of the input. For example, in [PasswordInput](/core/password-input/)
-component right section is used for show/hide password toggle:
-
-<Demo data={ActionIconDemos.usage} />
-
-Or you can add keyboard shortcut like in search on Mantine docs website:
-
-<Demo data={KbdDemos.input} />
 
 Right section with [Tooltip](/core/tooltip/):
 
@@ -76,17 +60,6 @@ Right section with [Tooltip](/core/tooltip/):
 Component has 5 premade sizes: xs, sm, md, lg, xl, use `size` prop to control input height, padding and font-size:
 
 <Demo data={InputDemos.sizes} />
-
-You can get predefined input heights by importing `INPUT_SIZES`:
-
-```tsx
-import { INPUT_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Input height']}
-  data={Object.keys(INPUT_SIZES).map((size) => [size, `${INPUT_SIZES[size]}px`])}
-/>
 
 ## Custom component
 
@@ -114,76 +87,4 @@ function Demo() {
   const ref = useRef(null);
   return <Input ref={ref} />;
 }
-```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
-
-```tsx
-<Input<'button'>
-  component="button"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-<Input<typeof YourTextarea>
-  component={YourTextarea}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { InputProps } from '@mantine/core';
-```
-
-`InputProps` is a generic type, it accepts either a string or component type as single type argument:
-
-```tsx
-// InputProps with html tag, will extend React.ComponentPropsWithoutRef<'button'>
-type ButtonInputProps = InputProps<'button'>;
-
-// InputProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomInputProps = InputProps<typeof MyOtherComponent>;
-```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.
-
-### InputStylesNames type
-
-`InputStylesNames` type is a union with Button [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { InputStylesNames } from '@mantine/core';
-
-const inputClasses: Partial<Record<InputStylesNames, 'string'>> = {
-  icon: 'input-icon',
-  rightSection: 'input-rightSection',
-};
-
-<Input classNames={inputClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.
-
-### InputVariant type
-
-`InputVariant` is a union, it includes all Input variants:
-
-```tsx
-import type { InputVariant } from '@mantine/core';
-
-const myVariant: InputVariant = 'unstyled';
 ```

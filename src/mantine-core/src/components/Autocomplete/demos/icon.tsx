@@ -1,9 +1,9 @@
 import React from 'react';
-import { FrameIcon } from '@modulz/radix-icons';
+import { Hash } from 'tabler-icons-react';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
-<Autocomplete icon={<FrameIcon />} />
+<Autocomplete icon={<Hash />} />
 `;
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
         label="Enter a hashtag"
         placeholder="Enter a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<FrameIcon />}
+        icon={<Hash size={14} />}
       />
     </div>
   );

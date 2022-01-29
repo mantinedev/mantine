@@ -3,9 +3,10 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   MantineNumberSize,
-  useSx,
   DefaultProps,
+  getDefaultZIndex,
 } from '@mantine/styles';
+import { Box } from '../Box';
 
 interface _OverlayProps extends DefaultProps {
   /** Overlay opacity */
@@ -26,18 +27,17 @@ interface _OverlayProps extends DefaultProps {
 
 export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProps<C, _OverlayProps>;
 
-type OverlayComponent = <C extends React.ElementType = 'div'>(
+type OverlayComponent = (<C extends React.ElementType = 'div'>(
   props: OverlayProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
+export const Overlay: OverlayComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
-      className,
       opacity = 0.6,
       color = '#fff',
       gradient,
-      zIndex = 1000,
+      zIndex = getDefaultZIndex('modal'),
       component,
       radius = 0,
       sx,
@@ -45,14 +45,14 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
     }: OverlayProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { css, sxClassName, cx, theme } = useSx({ sx, className });
-    const Element = component || 'div';
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
     return (
-      <Element
-        className={cx(
-          css({
+      <Box<any>
+        component={component || 'div'}
+        ref={ref}
+        sx={[
+          (theme) => ({
             ...background,
             opacity,
             position: 'absolute',
@@ -63,9 +63,8 @@ export const Overlay: OverlayComponent & { displayName?: string } = forwardRef(
             borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
             zIndex,
           }),
-          sxClassName
-        )}
-        ref={ref}
+          sx,
+        ]}
         {...others}
       />
     );

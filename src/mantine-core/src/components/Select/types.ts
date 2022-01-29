@@ -11,14 +11,12 @@ export interface SelectItem {
   [key: string]: any;
 }
 
-export type SelectDataItem = string | SelectItem;
-
 export type BaseSelectStylesNames =
-  | Exclude<InputStylesNames, 'rightSection'>
+  | InputStylesNames
   | InputWrapperStylesNames
   | SelectItemsStylesNames
   | SelectDropdownStylesNames;
 
 export type BaseSelectProps = InputWrapperBaseProps &
   InputBaseProps &
-  Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size'>;
+  Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size' | 'defaultValue'>;

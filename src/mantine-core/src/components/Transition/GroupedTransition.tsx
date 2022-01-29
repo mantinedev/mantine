@@ -16,8 +16,11 @@ export interface GroupedTransitionProps {
   /** Render function with transition group styles argument */
   children(styles: Record<string, React.CSSProperties>): React.ReactElement<any, any>;
 
-  /** Transition duration in ms */
+  /** Enter transition duration in ms */
   duration?: number;
+
+  /** Exit transition duration in ms */
+  exitDuration?: number;
 
   /** Transition timing function, defaults to theme.transitionTimingFunction */
   timingFunction?: string;
@@ -41,6 +44,7 @@ export interface GroupedTransitionProps {
 export function GroupedTransition({
   transitions,
   duration = 250,
+  exitDuration = duration,
   mounted,
   children,
   timingFunction,
@@ -52,6 +56,7 @@ export function GroupedTransition({
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     duration,
+    exitDuration,
     timingFunction,
     onExit,
     onEntered,

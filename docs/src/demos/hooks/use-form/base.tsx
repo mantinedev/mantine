@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextInput, Group, Button, Checkbox, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
-import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
+import { CodeDemo } from '@mantine/ds';
 
-const code = `import { TextInput, Button } from '@mantine/core';
+const code = `import { TextInput, Checkbox, Button } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
 export function Demo() {
@@ -23,15 +23,14 @@ export function Demo() {
       <TextInput
         required
         label="Email"
-        error={form.errors.email && 'Please specify valid email'}
-        value={form.values.email}
-        onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+        placeholder="your@email.com"
+        {...form.getInputProps('email')}
       />
 
-      <TextInput
-        label="Name"
-        value={form.values.name}
-        onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy to this corporation"
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
       />
 
       <Button type="submit">Submit</Button>
@@ -66,19 +65,16 @@ export function UseFormBaseDemo() {
             required
             label="Email"
             placeholder="your@email.com"
-            error={form.errors.email && 'Please specify valid email'}
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+            {...form.getInputProps('email')}
           />
 
           <Checkbox
-            style={{ marginTop: 15 }}
+            mt="md"
             label="I agree to sell my privacy to this corporation"
-            checked={form.values.termsOfService}
-            onChange={(event) => form.setFieldValue('termsOfService', event.currentTarget.checked)}
+            {...form.getInputProps('termsOfService', { type: 'checkbox' })}
           />
 
-          <Group position="right" style={{ marginTop: 15 }}>
+          <Group position="right" mt="md">
             <Button type="submit">Submit</Button>
           </Group>
         </form>

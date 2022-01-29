@@ -27,6 +27,7 @@ export const configurator: MantineDemo = {
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
         { label: 'default', value: 'default' },
+        { label: 'subtle', value: 'subtle' },
       ],
       initialValue: 'filled',
       defaultValue: 'filled',

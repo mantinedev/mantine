@@ -5,10 +5,11 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
+import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
-import { Tab, TabType } from './Tab/Tab';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
 import useStyles from './Tabs.styles';
 
@@ -39,7 +40,7 @@ export interface TabsProps
   position?: GroupPosition;
 
   /** Called when tab control is clicked with tab index */
-  onTabChange?(tabIndex: number): void;
+  onTabChange?(tabIndex: number, tabKey?: string): void;
 
   /** Controls appearance */
   variant?: TabsVariant;
@@ -51,7 +52,7 @@ export interface TabsProps
   orientation?: 'horizontal' | 'vertical';
 }
 
-function getPreviousTab(active: number, tabs: TabType[]) {
+function getPreviousTab(active: number, tabs: React.ReactElement[]) {
   for (let i = active - 1; i >= 0; i -= 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -61,7 +62,7 @@ function getPreviousTab(active: number, tabs: TabType[]) {
   return active;
 }
 
-function getNextTab(active: number, tabs: TabType[]) {
+function getNextTab(active: number, tabs: React.ReactElement[]) {
   for (let i = active + 1; i < tabs.length; i += 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -71,7 +72,7 @@ function getNextTab(active: number, tabs: TabType[]) {
   return active;
 }
 
-function findInitialTab(tabs: TabType[]) {
+function findInitialTab(tabs: React.ReactElement[]) {
   for (let i = 0; i < tabs.length; i += 1) {
     if (!tabs[i].props.disabled) {
       return i;
@@ -81,17 +82,13 @@ function findInitialTab(tabs: TabType[]) {
   return -1;
 }
 
-type TabsComponent = ((props: TabsProps) => React.ReactElement) & {
-  displayName: string;
-  Tab: typeof Tab;
-};
+type TabsComponent = ForwardRefWithStaticComponents<TabsProps, { Tab: typeof TabControl }>;
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
   (
     {
       className,
       children,
-      style,
       initialTab,
       active,
       position = 'left',
@@ -103,35 +100,42 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       styles,
       tabPadding = 'xs',
       orientation = 'horizontal',
-      sx,
       ...others
     }: TabsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       { tabPadding, orientation },
-      { sx, classNames, styles, name: 'Tabs' }
+      { classNames, styles, name: 'Tabs' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
-
-    const tabs = React.Children.toArray(children).filter(
-      (item: TabType) => item.type === Tab
-    ) as TabType[];
+    const tabs = filterChildrenByType(children, TabControl);
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
       value: active,
       defaultValue: initialTab,
       finalValue: findInitialTab(tabs),
       rule: (value) => typeof value === 'number',
-      onChange: onTabChange,
+      onChange: (value) => {
+        if (onTabChange) {
+          tabs.some((tab) => tab.props.tabKey)
+            ? onTabChange(value, tabs[value].props.tabKey)
+            : onTabChange(value);
+        }
+      },
     });
 
     const activeTab = clamp({ value: _activeTab, min: 0, max: tabs.length - 1 });
 
-    const nextTabCode = orientation === 'horizontal' ? 'ArrowRight' : 'ArrowDown';
-    const previousTabCode = orientation === 'horizontal' ? 'ArrowLeft' : 'ArrowUp';
+    const nextTabCode =
+      orientation === 'horizontal'
+        ? theme.dir === 'ltr'
+          ? 'ArrowRight'
+          : 'ArrowLeft'
+        : 'ArrowDown';
+    const previousTabCode =
+      orientation === 'horizontal' ? (theme.dir === 'ltr' ? 'ArrowLeft' : 'ArrowRight') : 'ArrowUp';
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.nativeEvent.code === nextTabCode) {
@@ -154,14 +158,13 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         {...tab.props}
         key={index}
         active={activeTab === index}
-        tabProps={tab.props}
         onKeyDown={handleKeyDown}
-        color={color}
+        color={tab.props.color || color}
         variant={variant}
         orientation={orientation}
-        buttonRef={mergeRefs((node: HTMLButtonElement) => {
+        ref={mergeRefs((node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
-        }, tab.ref)}
+        }, (tab as any).ref)}
         onClick={() => activeTab !== index && handleActiveTabChange(index)}
         classNames={classNames}
         styles={styles}
@@ -171,7 +174,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     const content = tabs[activeTab].props.children;
 
     return (
-      <div {...rest} ref={ref} className={cx(classes.root, className)} style={mergedStyles}>
+      <Box ref={ref} className={cx(classes.root, className)} {...others}>
         <div className={cx(classes.tabsListWrapper, classes[variant])}>
           <Group
             className={classes.tabsList}
@@ -187,14 +190,14 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
         </div>
 
         {content && (
-          <div role="tabpanel" className={classes.body}>
+          <div role="tabpanel" className={classes.body} key={activeTab}>
             {content}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 ) as any;
 
 Tabs.displayName = '@mantine/core/Tabs';
-Tabs.Tab = Tab;
+Tabs.Tab = TabControl;

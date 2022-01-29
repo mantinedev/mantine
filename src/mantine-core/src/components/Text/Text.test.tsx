@@ -1,36 +1,47 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import {
-  itRendersChildren,
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsMargins,
-  itIsPolymorphic,
-} from '@mantine/tests';
-import { Text } from './Text';
+import { render, screen } from '@testing-library/react';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Text, TextProps } from './Text';
+
+const defaultProps: TextProps<'div'> = {
+  children: 'test-text',
+};
+
+const expectStyle = (props: TextProps<'div'>, style: Record<string, any>) => {
+  render(<Text {...defaultProps} {...props} align="center" />);
+  expect(screen.getByText('test-text')).toHaveStyle(style);
+};
 
 describe('@mantine/core/Text', () => {
-  itRendersChildren(Text, {});
-  itSupportsStyle(Text, {});
-  itSupportsClassName(Text, {});
-  itSupportsOthers(Text, {});
-  itSupportsMargins(Text, {});
-  itIsPolymorphic(Text, {});
-  itSupportsRef(Text, {}, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Text.displayName).toEqual('@mantine/core/Text');
+  itRendersChildren(Text, defaultProps);
+  itIsPolymorphic(Text, defaultProps);
+  itSupportsSystemProps({
+    component: Text,
+    props: defaultProps,
+    displayName: '@mantine/core/Text',
+    refType: HTMLDivElement,
   });
 
-  it('sets font-weight, test-transform and text-align based on props', () => {
-    const withWeight = shallow(<Text weight={600} />);
-    const withTransform = shallow(<Text transform="uppercase" />);
-    const withAlign = shallow(<Text align="right" />);
+  it('sets text-align based on align prop', () => {
+    expectStyle({ align: 'center' }, { textAlign: 'center' });
+  });
 
-    expect(withWeight.render().css('font-weight')).toBe('600');
-    expect(withTransform.render().css('text-transform')).toBe('uppercase');
-    expect(withAlign.render().css('text-align')).toBe('right');
+  it('sets text-transform based on transform prop', () => {
+    expectStyle({ transform: 'uppercase' }, { textTransform: 'uppercase' });
+  });
+
+  it('sets line-height based on inline prop', () => {
+    expectStyle({ inline: true }, { lineHeight: 1 });
+  });
+
+  it('sets font-weight based on weight prop', () => {
+    expectStyle({ weight: 'bolder' }, { fontWeight: 'bolder' });
+  });
+
+  it('inherits text styles if inherit prop is true', () => {
+    expectStyle(
+      { inherit: true },
+      { fontFamily: 'inherit', fontSize: 'inherit', lineHeight: 'inherit' }
+    );
   });
 });

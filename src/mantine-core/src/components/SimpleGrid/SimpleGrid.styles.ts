@@ -1,4 +1,5 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export interface SimpleGridBreakpoint {
   maxWidth?: MantineNumberSize;
@@ -14,7 +15,7 @@ interface SimpleGridStyles {
 }
 
 export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridStyles) => {
-  const gridBreakpoints = breakpoints.reduce((acc, breakpoint) => {
+  const gridBreakpoints = getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
     const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
     const breakpointSize = theme.fn.size({
       size: property === 'max-width' ? breakpoint.maxWidth : breakpoint.minWidth,

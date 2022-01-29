@@ -17,9 +17,9 @@ import { SimpleGridDemos } from '@demos/core';
 
 ## Usage
 
-SimpleGrid is a simple flexbox container where each child is treated as column.
-Each column take equal amount of space and unlike [Grid](/core/grid/) component you do not control column span,
-instead you specify amount of columns per row:
+SimpleGrid is a simple flexbox container where each child is treated as a column.
+Each column takes equal amount of space and unlike [Grid](/core/grid/) component you do not control column span,
+instead you specify number of columns per row:
 
 <Demo data={SimpleGridDemos.configurator} />
 
@@ -28,7 +28,7 @@ instead you specify amount of columns per row:
 Provide an array to `breakpoints` prop to define responsive behavior:
 
 - `maxWidth` or `minWidth` – max-width or min-width at which media query will work
-- `cols` – amount of columns per row at given max-width
+- `cols` – number of columns per row at given max-width
 - `spacing` – optional spacing at given max-width, if not provided spacing from component prop will be used instead
 
 Resize browser to see breakpoints behavior:
@@ -46,11 +46,9 @@ You can also use breakpoints from theme to set `maxWidth`:
 
 <Demo data={SimpleGridDemos.themeBreakpoints} />
 
-You can configure theme breakpoint values in [MantineProvider](/theming/extend-theme/#breakpoints).
-
 ## min-width breakpoints
 
-If you prefer a mobile first approach you can use use min-width breakpoints:
+If you prefer a mobile first approach, you can use min-width breakpoints:
 
 ```tsx
 <SimpleGrid
@@ -81,7 +79,7 @@ You can use either `theme.spacing` value or number value for spacing in px:
 Spacing also works in `breakpoints`:
 
 ```tsx
-// xl spacing from theme.spacing
+// theme.spacing.xl
 <SimpleGrid breakpoints={[{ maxWidth: 755, cols: 2, spacing: 'xl' }]} />;
 
 // 12px spacing
@@ -92,25 +90,3 @@ Spacing also works in `breakpoints`:
 
 Simple grid uses [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout),
 check [caniuse](https://caniuse.com/css-grid) to find out information about browser support.
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { SimpleGridProps } from '@mantine/core';
-```
-
-`SimpleGridProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-Additionally you can import `SimpleGridBreakpoint` to create a variable with component breakpoints:
-
-```tsx
-import type { SimpleGridBreakpoint } from '@mantine/core';
-
-const breakpoints: SimpleGridBreakpoint[] = [
-  { maxWidth: 'md', cols: 3, spacing: 'md' },
-  { maxWidth: 'sm', cols: 2, spacing: 'sm' },
-  { maxWidth: 'xs', cols: 1, spacing: 'sm' },
-];
-```

@@ -6,6 +6,7 @@ export const MANTINE_COLORS = Object.keys(DEFAULT_COLORS);
 export const MANTINE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export const _DEFAULT_THEME: MantineThemeBase = {
+  dir: 'ltr',
   loader: 'oval',
   dateFormat: 'MMMM D, YYYY',
   colorScheme: 'light',
@@ -75,6 +76,7 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
 
   other: {},
+  datesLocale: 'en',
 };
 
 export const DEFAULT_THEME = attachFunctions(_DEFAULT_THEME);

@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
-import { Loader } from '../Loader/Loader';
-import { CloseButton } from '../ActionIcon/CloseButton/CloseButton';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
+import { Text } from '../Text';
+import { Loader } from '../Loader';
+import { CloseButton } from '../ActionIcon';
+import { Box } from '../Box';
 import useStyles from './Notification.styles';
 
 export type NotificationStylesNames = Exclude<ClassNames<typeof useStyles>, 'withIcon'>;
@@ -15,6 +16,9 @@ export interface NotificationProps
 
   /** Notification line or icon color */
   color?: MantineColor;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;
@@ -39,8 +43,8 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
   (
     {
       className,
-      style,
       color = 'blue',
+      radius = 'sm',
       loading = false,
       disallowClose = false,
       title,
@@ -50,28 +54,24 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
       closeButtonProps,
       classNames,
       styles,
-      sx,
       ...others
     }: NotificationProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { color, disallowClose },
-      { sx, classNames, styles, name: 'Notification' }
+      { color, radius, disallowClose },
+      { classNames, styles, name: 'Notification' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const withIcon = icon || loading;
 
     return (
-      <div
+      <Box
         className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
         role="alert"
-        style={mergedStyles}
         ref={ref}
-        {...rest}
+        {...others}
       >
         {icon && !loading && <div className={classes.icon}>{icon}</div>}
-
         {loading && <Loader size={28} color={color} className={classes.loader} />}
 
         <div className={classes.body}>
@@ -93,9 +93,10 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             color="gray"
             onClick={onClose}
             variant="hover"
+            className={classes.closeButton}
           />
         )}
-      </div>
+      </Box>
     );
   }
 );

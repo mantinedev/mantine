@@ -1,34 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { screen, render } from '@testing-library/react';
 import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
-import { DefaultItem } from './DefaultItem';
+import { DefaultItem, PaginationItemProps } from './DefaultItem';
 
-const defaultProps = {};
+const defaultProps: PaginationItemProps = {
+  page: 1,
+};
+
 describe('@mantine/core/Pagination/DefaultItem', () => {
   itSupportsClassName(DefaultItem, defaultProps);
   itSupportsOthers(DefaultItem, defaultProps);
   itSupportsStyle(DefaultItem, defaultProps);
 
   it('number page renders number as child', () => {
-    const element = shallow(<DefaultItem page={1} />);
-    expect(element.render().text()).toBe('1');
-  });
-
-  it('non number pages renders svg icon', () => {
-    const nextPage = shallow(<DefaultItem page="next" />);
-    expect(nextPage.render().find('svg')).toHaveLength(1);
-
-    const prevPage = shallow(<DefaultItem page="prev" />);
-    expect(prevPage.render().find('svg')).toHaveLength(1);
-
-    const firstPage = shallow(<DefaultItem page="first" />);
-    expect(firstPage.render().find('svg')).toHaveLength(1);
-
-    const lastPage = shallow(<DefaultItem page="last" />);
-    expect(lastPage.render().find('svg')).toHaveLength(1);
-
-    const dotsElement = shallow(<DefaultItem page="dots" />);
-    expect(dotsElement.render().find('svg')).toHaveLength(1);
+    render(<DefaultItem page={11} />);
+    expect(screen.getByText('11')).toBeInTheDocument();
   });
 
   it('has correct displayName', () => {

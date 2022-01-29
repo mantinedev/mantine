@@ -21,7 +21,7 @@ import { SliderDemos } from '@demos/core';
 
 ## Controlled
 
-By default both Slider and RangeSlider are uncontrolled, add onChange and value props to make them controlled:
+By default, both Slider and RangeSlider are uncontrolled, add onChange and value props to make them controlled:
 
 ```tsx
 import { useState } from 'react';
@@ -42,9 +42,9 @@ function Demo() {
 
 ## Control label
 
-To change label behavior and appearance set props:
+To change label behavior and appearance, set the following props:
 
-- `label` – formatter function, accepts value as an argument, set to null to disable label, defaults to `f => f`
+- `label` – formatter function, accepts value as an argument, set null to disable label, defaults to `f => f`
 - `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
 - `labelTransition`, `labelTransitionDuration`, `labelTransitionTimingFunction` – label uses [Transition](/core/transition/) component to animate presence, you can choose any premade transition or create your own
 
@@ -56,7 +56,7 @@ To change label behavior and appearance set props:
 
 ## Marks
 
-Add any amount of marks to slider by setting `marks` prop to an array of objects:
+Add any number of marks to slider by setting `marks` prop to an array of objects:
 
 ```tsx
 const marks = [
@@ -80,44 +80,12 @@ You can change styles of any element in slider component with [Styles API](/them
 Slider and RangeSlider components are accessible by default:
 
 - Slider thumbs are focusable
-- When user uses mouse to interact with slider, focus is moved on slider track, when user presses arrows focus is moved on thumb
+- When the user uses mouse to interact with a slider, focus is moved on slider track, when the user presses arrows focus is moved on thumb
 - Value can be changed with arrows with step increment/decrement
 
-To label component for screen readers add labels to thumbs:
+To label component for screen readers, add labels to thumbs:
 
 ```tsx
 <Slider thumbLabel="Thumb aria-label" />
 <RangeSlider thumbFromLabel="First thumb aria-label" thumbToLabel="Second thumb aria-label" />
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { SliderProps, RangeSliderProps } from '@mantine/core';
-```
-
-Both `SliderProps` and `RangeSliderProps` extend `React.ComponentPropsWithoutRef<'div'>`,
-all other props are available under _Component props_ tab.
-
-### SliderStylesNames type
-
-`SliderStylesNames` type is a union with Slider and RangeSlider [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { SliderStylesNames } from '@mantine/core';
-
-const sliderClasses: Partial<Record<SliderStylesNames, 'string'>> = {
-  thumb: 'slider-thumb',
-  mark: 'slider-mark',
-};
-
-// Slider and RangeSlider have the same styles API
-<Slider classNames={sliderClasses} />;
-<RangeSlider classNames={sliderClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

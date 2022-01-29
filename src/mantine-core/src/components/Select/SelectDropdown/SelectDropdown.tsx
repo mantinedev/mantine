@@ -1,5 +1,7 @@
-import React, { forwardRef } from 'react';
-import { DefaultProps, MantineShadow, ClassNames } from '@mantine/styles';
+import React, { forwardRef, useRef } from 'react';
+import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
+import type { Placement } from '@popperjs/core';
+import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { MantineTransition } from '../../Transition';
 import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
@@ -15,13 +17,16 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   uuid: string;
   shadow: MantineShadow;
   maxDropdownHeight?: number | string;
+  withinPortal?: boolean;
   children: React.ReactNode;
   __staticSelector: string;
   dropdownComponent?: React.FC<any>;
   referenceElement?: HTMLElement;
   direction?: React.CSSProperties['flexDirection'];
   onDirectionChange?: (direction: React.CSSProperties['flexDirection']) => void;
+  switchDirectionOnFlip?: boolean;
   zIndex?: number;
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -34,6 +39,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       uuid,
       shadow,
       maxDropdownHeight,
+      withinPortal = true,
       children,
       classNames,
       styles,
@@ -41,12 +47,19 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       referenceElement,
       direction = 'column',
       onDirectionChange,
-      zIndex = 2000,
+      switchDirectionOnFlip = false,
+      zIndex = getDefaultZIndex('popover'),
+      dropdownPosition = 'flip',
       __staticSelector,
     }: SelectDropdownProps,
     ref
   ) => {
-    const { classes } = useStyles(null, { classNames, styles, name: __staticSelector });
+    const { classes } = useStyles(
+      { native: dropdownComponent !== SelectScrollArea },
+      { classNames, styles, name: __staticSelector }
+    );
+
+    const previousPlacement = useRef<Placement>('bottom');
 
     return (
       <Popper
@@ -54,18 +67,20 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         mounted={mounted}
         transition={transition}
         transitionDuration={transitionDuration}
+        exitTransitionDuration={0}
         transitionTimingFunction={transitionTimingFunction}
-        position="bottom"
-        placementFallbacks={['top']}
+        position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
+        withinPortal={withinPortal}
         zIndex={zIndex}
-        onPlacementChange={(placement: string) => {
-          const nextDirection = placement === 'top' ? 'column-reverse' : 'column';
-
-          if (direction !== nextDirection) {
-            onDirectionChange && onDirectionChange(nextDirection);
-          }
-        }}
         modifiers={[
+          {
+            name: 'preventOverflow',
+            enabled: false,
+          },
+          {
+            name: 'flip',
+            enabled: dropdownPosition === 'flip',
+          },
           {
             // @ts-ignore
             name: 'sameWidth',
@@ -81,24 +96,41 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
               state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
             },
           },
+          {
+            // @ts-ignore
+            name: 'directionControl',
+            enabled: true,
+            phase: 'main',
+            fn: ({ state }) => {
+              if (previousPlacement.current !== state.placement) {
+                previousPlacement.current = state.placement;
+
+                const nextDirection = state.placement === 'top' ? 'column-reverse' : 'column';
+
+                if (direction !== nextDirection && switchDirectionOnFlip) {
+                  onDirectionChange && onDirectionChange(nextDirection);
+                }
+              }
+            },
+          },
         ]}
       >
-        <Paper<'div'>
-          component={(dropdownComponent || 'div') as any}
-          id={`${uuid}-items`}
-          aria-labelledby={`${uuid}-label`}
-          role="listbox"
-          className={classes.dropdown}
-          shadow={shadow}
-          ref={ref}
-          style={{
-            maxHeight: maxDropdownHeight,
-            flexDirection: direction,
-          }}
-          onMouseDown={(event) => event.preventDefault()}
-        >
-          {children}
-        </Paper>
+        <div style={{ maxHeight: maxDropdownHeight, display: 'flex' }}>
+          <Paper<'div'>
+            component={(dropdownComponent || 'div') as any}
+            id={`${uuid}-items`}
+            aria-labelledby={`${uuid}-label`}
+            role="listbox"
+            className={classes.dropdown}
+            shadow={shadow}
+            ref={ref}
+            onMouseDown={(event) => event.preventDefault()}
+          >
+            <div style={{ display: 'flex', flexDirection: direction, width: '100%' }}>
+              {children}
+            </div>
+          </Paper>
+        </div>
       </Popper>
     );
   }

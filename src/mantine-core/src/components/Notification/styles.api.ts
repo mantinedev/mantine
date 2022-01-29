@@ -7,4 +7,5 @@ export const Notification: Record<NotificationStylesNames, string> = {
   icon: 'Notification icon on the left, controlled by icon prop',
   title: 'Notification title, controlled by title prop',
   description: 'Notification description, controlled by children',
+  closeButton: 'Close button',
 };

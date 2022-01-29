@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
-import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
+import { CodeDemo } from '@mantine/ds';
 
 const code = `import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
@@ -9,19 +9,17 @@ import { useForm } from '@mantine/hooks';
 export function Demo() {
   const form = useForm({
     initialValues: { email: '' },
-    validationRules: {
-      email: (value) => /^\\S+@\\S+$/.test(value),
-    },
+    validationRules: { email: (value) => /^\\S+@\\S+$/.test(value) },
+    errorMessages: { email: 'Invalid email' },
   });
 
   return (
     <TextInput
       required
       label="Email"
-      error={form.errors.email && 'Please specify valid email'}
-      value={form.values.email}
-      onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+      placeholder="your@email.com"
       onBlur={() => form.validateField('email')}
+      {...form.getInputProps('email')}
     />
   );
 }
@@ -31,9 +29,8 @@ export function UseFormBlurValidateDemo() {
   const theme = useMantineTheme();
   const form = useForm({
     initialValues: { email: '' },
-    validationRules: {
-      email: (value) => /^\S+@\S+$/.test(value),
-    },
+    validationRules: { email: (value) => /^\S+@\S+$/.test(value) },
+    errorMessages: { email: 'Invalid email' },
   });
 
   return (
@@ -47,10 +44,8 @@ export function UseFormBlurValidateDemo() {
           required
           label="Email"
           placeholder="your@email.com"
-          error={form.errors.email && 'Please specify valid email'}
-          value={form.values.email}
-          onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
           onBlur={() => form.validateField('email')}
+          {...form.getInputProps('email')}
         />
       </div>
     </CodeDemo>

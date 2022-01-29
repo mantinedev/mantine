@@ -1,35 +1,24 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsStyle,
-} from '@mantine/tests';
-import { CloseButton } from './CloseButton';
-import { CloseIcon } from './CloseIcon';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps, itSupportsFocusEvents } from '@mantine/tests';
+import { CloseButton, CloseButtonProps } from './CloseButton';
+
+const defaultProps: CloseButtonProps = {};
 
 describe('@mantine/core/CloseButton', () => {
-  checkAccessibility([
-    mount(<CloseButton aria-label="test" />),
-    mount(<CloseButton title="test" />),
-  ]);
-
-  itSupportsClassName(CloseButton, {});
-  itSupportsOthers(CloseButton, {});
-  itSupportsStyle(CloseButton, {});
-  itSupportsRef(CloseButton, {}, HTMLButtonElement);
-
-  it('sets width and height on CloseIcon based on iconSize prop', () => {
-    const element = shallow(<CloseButton iconSize={45} />);
-    const styles = element.find(CloseIcon).prop('style');
-    expect(styles.width).toBe(45);
-    expect(styles.height).toBe(45);
+  checkAccessibility([<CloseButton aria-label="test" />, <CloseButton title="test" />]);
+  itSupportsFocusEvents(CloseButton, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsSystemProps({
+    component: CloseButton as any,
+    props: defaultProps,
+    displayName: '@mantine/core/CloseButton',
+    refType: HTMLButtonElement,
   });
 
-  it('has correct displayName', () => {
-    expect(CloseButton.displayName).toEqual('@mantine/core/CloseButton');
-    expect(CloseIcon.displayName).toEqual('@mantine/core/CloseIcon');
+  it('sets width and height on CloseIcon based on iconSize prop', () => {
+    const { container } = render(<CloseButton iconSize={45} />);
+    const svg = container.querySelector('svg');
+    expect(svg.getAttribute('width')).toBe('45');
+    expect(svg.getAttribute('height')).toBe('45');
   });
 });

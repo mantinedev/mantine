@@ -17,6 +17,9 @@ interface TextStyles {
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
+  transform: 'capitalize' | 'uppercase' | 'lowercase';
+  align: 'left' | 'center' | 'right' | 'justify';
+  weight: React.CSSProperties['fontWeight'];
 }
 
 interface GetTextColor {
@@ -33,10 +36,10 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
   return color in theme.colors
     ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
     : variant === 'link'
-    ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7]
+    ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
     : theme.colorScheme === 'dark'
-    ? theme.colors.dark[0]
-    : theme.black;
+    ? color || theme.colors.dark[0]
+    : color || theme.black;
 }
 
 function getLineClamp(lineClamp: number): CSSObject {
@@ -66,6 +69,9 @@ export default createStyles(
       gradientDeg,
       gradientTo,
       gradientFrom,
+      weight,
+      transform,
+      align,
     }: TextStyles
   ) => {
     const colors = getSharedColorScheme({
@@ -85,6 +91,9 @@ export default createStyles(
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: 'none',
         WebkitTapHighlightColor: 'transparent',
+        fontWeight: inherit ? 'inherit' : weight,
+        textTransform: transform,
+        textAlign: align,
 
         '&:hover': {
           textDecoration: variant === 'link' ? 'underline' : 'none',

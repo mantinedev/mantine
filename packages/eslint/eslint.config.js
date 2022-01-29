@@ -1,6 +1,6 @@
 module.exports = {
   extends: ['airbnb-typescript', 'plugin:jest/recommended'],
-  plugins: ['jest'],
+  plugins: ['jest', 'import', 'react', 'jsx-a11y'],
 
   rules: {
     'max-len': [
@@ -22,6 +22,9 @@ module.exports = {
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
+    '@typescript-eslint/no-redeclare': 'off',
+    'react/prop-types': 'off',
+    'react/jsx-no-bind': 'off',
 
     // @mantine/tests require jest exports
     'jest/no-export': 'off',

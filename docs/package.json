@@ -33,8 +33,8 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "start": "gatsby develop -H 0.0.0.0 -p 7001",
-    "serve": "gatsby serve -H 0.0.0.0 -p 9001",
+    "start": "gatsby develop -H 0.0.0.0 -p 7521",
+    "serve": "gatsby serve -H 0.0.0.0 -p 9521",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx"

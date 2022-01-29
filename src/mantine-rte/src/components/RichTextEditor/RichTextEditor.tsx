@@ -1,7 +1,8 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/core';
-import { useUuid } from '@mantine/hooks';
+import 'quill-mention';
+import { DefaultProps, ClassNames, Box, MantineNumberSize } from '@mantine/core';
+import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -54,65 +55,96 @@ export interface RichTextEditorProps
   /** Make toolbar sticky */
   sticky?: boolean;
 
+  /** Quill mentions plugin setting */
+  mentions?: Record<string, any>;
+
   /** Top toolbar position in any valid css value */
   stickyOffset?: number | string;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Make quill editor read only */
+  readOnly?: boolean;
 }
 
-export function RichTextEditor({
-  value,
-  onChange,
-  onImageUpload = defaultImageUpload,
-  sticky = true,
-  stickyOffset = 0,
-  labels = DEFAULT_LABELS,
-  controls = DEFAULT_CONTROLS,
-  id,
-  style,
-  className,
-  classNames,
-  styles,
-  sx,
-  ...others
-}: RichTextEditorProps) {
-  const uuid = useUuid(id);
-  const editorRef = useRef<any>();
-  const { classes, cx } = useStyles(
-    { saveLabel: labels.save, editLabel: labels.edit, removeLabel: labels.remove },
-    { sx, classNames, styles, name: 'RichTextEditor' }
-  );
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-
-  const modules = useMemo(
-    () => ({
-      ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
-      imageUploader: {
-        upload: (file: File) => onImageUpload(file),
+export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
+  (
+    {
+      value,
+      onChange,
+      onImageUpload = defaultImageUpload,
+      sticky = true,
+      stickyOffset = 0,
+      radius = 'sm',
+      labels = DEFAULT_LABELS,
+      controls = DEFAULT_CONTROLS,
+      id,
+      className,
+      classNames,
+      styles,
+      placeholder,
+      mentions,
+      readOnly = false,
+      ...others
+    }: RichTextEditorProps,
+    ref
+  ) => {
+    const uuid = useUuid(id);
+    const editorRef = useRef<Editor>();
+    const { classes, cx } = useStyles(
+      {
+        saveLabel: labels.save,
+        editLabel: labels.edit,
+        removeLabel: labels.remove,
+        radius,
+        readOnly,
       },
-    }),
-    [uuid]
-  );
+      { classNames, styles, name: 'RichTextEditor' }
+    );
 
-  useEffect(() => {
-    if (editorRef.current) {
-      attachShortcuts(editorRef?.current?.editor?.keyboard);
-    }
-  }, []);
+    const modules = useMemo(
+      () => ({
+        ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
+        mention: mentions,
+        imageUploader: {
+          upload: (file: File) => onImageUpload(file),
+        },
+      }),
+      [uuid, mentions]
+    );
 
-  return (
-    <div className={cx(classes.root, className)} style={mergedStyles} {...rest}>
-      <Toolbar
-        controls={controls}
-        labels={labels}
-        sticky={sticky}
-        stickyOffset={stickyOffset}
-        classNames={classNames}
-        styles={styles}
-        id={uuid}
-      />
+    useEffect(() => {
+      if (editorRef.current) {
+        attachShortcuts(editorRef?.current?.editor?.keyboard);
+      }
+    }, []);
 
-      <Editor theme="snow" modules={modules} value={value} onChange={onChange} ref={editorRef} />
-    </div>
-  );
-}
+    return (
+      <Box className={cx(classes.root, className)} {...others}>
+        <Toolbar
+          controls={controls}
+          labels={labels}
+          sticky={sticky}
+          stickyOffset={stickyOffset}
+          classNames={classNames}
+          styles={styles}
+          id={uuid}
+          className={classes.toolbar}
+        />
+
+        <Editor
+          theme="snow"
+          modules={modules}
+          value={value}
+          onChange={onChange}
+          ref={mergeRefs(editorRef, ref)}
+          placeholder={placeholder}
+          readOnly={readOnly}
+        />
+      </Box>
+    );
+  }
+);
 
 RichTextEditor.displayName = '@mantine/rte/RichTextEditor';

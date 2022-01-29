@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Skeleton.styles';
 
 export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -17,6 +18,9 @@ export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithout
 
   /** Radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Whether to show the animation effect */
+  animate?: boolean;
 }
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
@@ -25,23 +29,26 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
       height = 'auto',
       width = '100%',
       visible = true,
-      sx,
+      animate = true,
       className,
-      style,
       circle,
       radius = 'sm',
+      classNames,
+      styles,
       ...others
     }: SkeletonProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ height, width, circle, radius }, { name: 'Skeleton', sx });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(
+      { height, width, circle, radius, animate },
+      { classNames, styles, name: 'Skeleton' }
+    );
+
     return (
-      <div
+      <Box
         className={cx(classes.root, { [classes.visible]: visible }, className)}
-        style={mergedStyles}
         ref={ref}
-        {...rest}
+        {...others}
       />
     );
   }

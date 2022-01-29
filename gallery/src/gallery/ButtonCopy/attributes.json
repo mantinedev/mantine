@@ -1,0 +1,16 @@
+{
+  "title": "Copy to clipboard button",
+  "category": "buttons",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/button/",
+    "/core/tooltip/",
+    "/hooks/use-clipboard/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 240
+  }
+}

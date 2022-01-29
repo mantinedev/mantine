@@ -12,7 +12,7 @@ function Demo() {
 
   return (
     <>
-      <textarea ref={ref} style={{ pointerEvents: 'none', width: 400, height: 120 }} />
+      <textarea ref={ref} style={{ width: 400, height: 120 }} />
       <Text align="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
     </>
   );
@@ -25,14 +25,13 @@ function Demo() {
   return (
     <>
       <Text align="center" size="sm" style={{ marginBottom: theme.spacing.xs }}>
-        Resize textarea by moving its left bottom corner
+        Resize textarea by dragging its right bottom corner
       </Text>
 
       <Group position="center">
         <textarea
           ref={ref}
           style={{
-            pointerEvents: 'none',
             width: 400,
             height: 120,
             border: 'none',

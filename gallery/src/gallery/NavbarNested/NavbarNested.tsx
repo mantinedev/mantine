@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Group, Code, createStyles } from '@mantine/core';
+import { Navbar, Group, Code, ScrollArea, createStyles } from '@mantine/core';
 import {
   Notes,
   CalendarStats,
@@ -9,7 +9,6 @@ import {
   Adjustments,
   Lock,
 } from 'tabler-icons-react';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { UserButton } from '../UserButton/UserButton';
 import { LinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
 import { Logo } from './Logo';
@@ -99,10 +98,8 @@ export function NavbarNested() {
         </Group>
       </Navbar.Section>
 
-      <Navbar.Section grow className={classes.links}>
-        <Scrollbars>
-          <div className={classes.linksInner}>{links}</div>
-        </Scrollbars>
+      <Navbar.Section grow className={classes.links} component={ScrollArea}>
+        <div className={classes.linksInner}>{links}</div>
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>

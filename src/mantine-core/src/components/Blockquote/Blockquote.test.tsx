@@ -1,54 +1,35 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  checkAccessibility,
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Blockquote } from './Blockquote';
-import { Blockquote as BlockquoteStylesApi } from './styles.api';
+import { render, screen } from '@testing-library/react';
+import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Blockquote, BlockquoteProps } from './Blockquote';
+
+const defaultProps: BlockquoteProps = {
+  children: 'test-quote',
+  cite: 'test-cite',
+};
 
 describe('@mantine/core/Blockquote', () => {
-  itRendersChildren(Blockquote, {});
-  itSupportsClassName(Blockquote, {});
-  itSupportsOthers(Blockquote, {});
-  itSupportsStyle(Blockquote, {});
-  itSupportsMargins(Blockquote, {});
-  itSupportsRef(Blockquote, {}, HTMLQuoteElement);
-  itSupportsStylesApi(
-    Blockquote,
-    { cite: 'test-cite', children: 'test-quote' },
-    Object.keys(BlockquoteStylesApi),
-    'Blockquote'
-  );
-
-  checkAccessibility([
-    mount(<Blockquote>test-quote</Blockquote>),
-    mount(<Blockquote cite="test-cite">test-quote</Blockquote>),
-  ]);
+  checkAccessibility([<Blockquote {...defaultProps} />]);
+  itRendersChildren(Blockquote, defaultProps);
+  itSupportsSystemProps({
+    component: Blockquote,
+    props: defaultProps,
+    displayName: '@mantine/core/Blockquote',
+    refType: HTMLQuoteElement,
+  });
 
   it('renders given icon based on icon prop', () => {
-    const withIcon = shallow(<Blockquote icon="$" />);
-    const withoutIcon = shallow(<Blockquote icon={null} />);
+    render(<Blockquote icon="test-icon" />);
+    expect(screen.getByText('test-icon')).toBeInTheDocument();
+  });
 
-    expect(withIcon.render().find('.mantine-Blockquote-icon').text()).toBe('$');
-    expect(withoutIcon.render().find('.mantine-Blockquote-icon')).toHaveLength(0);
+  it('hides icon if icon prop set to null', () => {
+    const { container } = render(<Blockquote icon={null} />);
+    expect(container.querySelectorAll('.mantine-Blockquote-icon')).toHaveLength(0);
   });
 
   it('renders given cite based on cite prop', () => {
-    const withCite = shallow(<Blockquote cite="test-cite" />);
-    const withoutCite = shallow(<Blockquote />);
-
-    expect(withCite.render().find('cite').text()).toBe('test-cite');
-    expect(withoutCite.render().find('cite')).toHaveLength(0);
-  });
-
-  it('has correct displayName', () => {
-    expect(Blockquote.displayName).toEqual('@mantine/core/Blockquote');
+    render(<Blockquote cite="test-cite" />);
+    expect(screen.getByText('test-cite')).toBeInTheDocument();
   });
 });

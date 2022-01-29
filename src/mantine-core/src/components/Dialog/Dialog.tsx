@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   ClassNames,
   MantineMargin,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../ActionIcon';
@@ -59,7 +60,6 @@ export function MantineDialog({
   position,
   shadow = 'md',
   padding = 'md',
-  zIndex,
   children,
   className,
   style,
@@ -71,10 +71,9 @@ export function MantineDialog({
   transition = 'pop-top-right',
   transitionDuration = 200,
   transitionTimingFunction,
-  sx,
   ...others
 }: DialogProps) {
-  const { classes, cx } = useStyles({ size }, { sx, classNames, styles, name: 'Dialog' });
+  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
 
   return (
     <Transition
@@ -105,12 +104,12 @@ type DialogComponent = (props: DialogProps) => React.ReactElement;
 export const Dialog: DialogComponent & { displayName?: string } = forwardRef<
   HTMLDivElement,
   DialogProps
->((props: DialogProps, ref) => {
+>(({ zIndex = getDefaultZIndex('modal'), ...props }: DialogProps, ref) => {
   const theme = useMantineTheme();
 
   return (
     <Affix
-      zIndex={props.zIndex}
+      zIndex={zIndex}
       position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
       ref={ref}
     >

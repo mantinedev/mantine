@@ -1,24 +1,14 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
-import { MantineTransition } from '../Transition';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
+import { SelectSharedProps } from '../Select/Select';
 
 export type AutocompleteStylesNames =
   | InputStylesNames
@@ -35,60 +25,10 @@ export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
     InputBaseProps,
     InputWrapperBaseProps,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
-  /** Input size */
-  size?: MantineSize;
-
-  /** Autocomplete data used to renderer items in dropdown */
-  data: (string | AutocompleteItem)[];
-
-  /** Change item renderer */
-  itemComponent?: React.FC<any>;
-
-  /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: MantineShadow;
-
-  /** Limit amount of items rendered in dropdown */
-  limit?: number;
-
+    SelectSharedProps<AutocompleteItem, string>,
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
-
-  /** Controlled input value */
-  value?: string;
-
-  /** Uncontrolled input defaultValue */
-  defaultValue?: string;
-
-  /** Controlled input onChange handler */
-  onChange?(value: string): void;
-
-  /** Dropdown body appear/disappear transition */
-  transition?: MantineTransition;
-
-  /** Dropdown body transition duration */
-  transitionDuration?: number;
-
-  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Initial dropdown opened state */
-  initiallyOpened?: boolean;
-
-  /** Function based on which items in dropdown are filtered */
-  filter?(value: string, item: AutocompleteItem): boolean;
-
-  /** Message that will be displayed on zero search results  */
-  nothingFound?: string;
-
-  /** Called when dropdown is opened */
-  onDropdownOpen?(): void;
-
-  /** Called when dropdown is closed */
-  onDropdownClose?(): void;
-
-  /** Dropdown z-index */
-  zIndex?: number;
 }
 
 export function defaultFilter(value: string, item: AutocompleteItem) {
@@ -130,17 +70,19 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       nothingFound,
       onDropdownClose,
       onDropdownOpen,
-      zIndex,
+      withinPortal,
+      switchDirectionOnFlip = false,
+      zIndex = getDefaultZIndex('popover'),
+      dropdownPosition = 'bottom',
       ...others
     }: AutocompleteProps,
     ref
   ) => {
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
-
     const inputRef = useRef<HTMLInputElement>(null);
     const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
@@ -164,7 +106,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const handleItemClick = (item: AutocompleteItem) => {
       handleChange(item.value);
       typeof onItemSubmit === 'function' && onItemSubmit(item);
-      setTimeout(() => setDropdownOpened(false));
+      setDropdownOpened(false);
     };
 
     const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
@@ -186,21 +128,22 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       switch (event.nativeEvent.code) {
         case 'ArrowUp': {
           event.preventDefault();
-
           isColumn ? handlePrevious() : handleNext();
           break;
         }
 
         case 'ArrowDown': {
           event.preventDefault();
-
           isColumn ? handleNext() : handlePrevious();
           break;
         }
 
         case 'Enter': {
-          if (filteredData[hovered] && dropdownOpened) {
+          if (dropdownOpened) {
             event.preventDefault();
+          }
+
+          if (filteredData[hovered] && dropdownOpened) {
             handleChange(filteredData[hovered].value);
             typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
             setDropdownOpened(false);
@@ -219,6 +162,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
+      setDropdownOpened(true);
     };
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -228,7 +172,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     const handleInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
       typeof onClick === 'function' && onClick(event);
-      setDropdownOpened(!dropdownOpened);
+      setDropdownOpened(true);
     };
 
     const shouldRenderDropdown =
@@ -245,9 +189,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         className={className}
         classNames={classNames}
         styles={styles}
-        style={mergedStyles}
         __staticSelector="Autocomplete"
         sx={sx}
+        style={style}
+        {...margins}
         {...wrapperProps}
       >
         <div
@@ -300,8 +245,11 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             __staticSelector="Autocomplete"
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
             referenceElement={inputRef.current}
+            withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}

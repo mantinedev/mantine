@@ -1,10 +1,10 @@
 import React from 'react';
-import { HashIcon } from '@primer/octicons-react';
+import { Hash } from 'tabler-icons-react';
 import { MultiSelect } from '../MultiSelect';
 import { data } from './_data';
 
 const code = `
-<MultiSelect icon={<HashIcon />} />
+<MultiSelect icon={<Hash />} />
 `;
 
 function Demo() {
@@ -14,7 +14,7 @@ function Demo() {
         data={data}
         label="Pick hashtags"
         placeholder="Pick all that you like"
-        icon={<HashIcon />}
+        icon={<Hash size={14} />}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineSize, extractMargins } from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
   InputWrapperBaseProps,
@@ -25,7 +25,7 @@ export interface TextInputProps
   type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Input size */
   size?: MantineSize;
@@ -57,7 +57,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     ref
   ) => {
     const uuid = useUuid(id);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
 
     return (
       <InputWrapper
@@ -68,11 +68,12 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         description={description}
         size={size}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <Input<'input'>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashIcon } from '@primer/octicons-react';
+import { Hash } from 'tabler-icons-react';
 import { Select } from '../Select';
 
 const code = `
@@ -13,7 +13,7 @@ function Demo() {
         label="Pick a hashtag"
         placeholder="Pick a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<HashIcon />}
+        icon={<Hash size={14} />}
       />
     </div>
   );

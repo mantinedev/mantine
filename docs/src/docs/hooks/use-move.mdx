@@ -54,10 +54,11 @@ Moving slider down increases value, to reverse that set value to `1 - y` in your
 
 ```tsx
 function useMove<T extends HTMLElement = HTMLDivElement>(
-  onChange: (value: { x: number; y: number }) => void,
-  handlers?: { onScrubStart?(): void; onScrubEnd?(): void }
+  onChange: (value: UseMovePosition) => void,
+  handlers?: useMoveHandlers,
+  dir?: 'ltr' | 'rtl'
 ): {
-  ref: React.MutableRefObject<T>;
+  ref: MutableRefObject<T>;
   active: boolean;
 };
 ```

@@ -8,4 +8,5 @@ export const SegmentedControl: Record<SegmentedControlStylesNames, string> = {
   control: 'Control wrapper, contains input and label',
   controlActive: 'Active control wrapper',
   active: 'Element which indicates current active item, positioned below controls',
+  disabled: 'Disabled item modifier',
 };

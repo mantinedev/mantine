@@ -4,7 +4,7 @@ import { MultiSelect } from '../MultiSelect';
 import { data } from './_data';
 
 const code = `
-<MultiSelect rightSection={<ChevronDownIcon />} />
+<MultiSelect rightSection={<ChevronDownIcon />} styles={{ rightSection: { pointerEvents: 'none' } }} />
 `;
 
 function Demo() {
@@ -15,6 +15,7 @@ function Demo() {
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
         rightSection={<ChevronDownIcon />}
+        styles={{ rightSection: { pointerEvents: 'none' } }}
       />
     </div>
   );

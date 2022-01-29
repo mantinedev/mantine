@@ -1,12 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineMargin } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../../Box';
 import useStyles from './Col.styles';
 
-export interface ColProps
-  extends Omit<DefaultProps, MantineMargin>,
-    React.ComponentPropsWithoutRef<'div'> {
+export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Default col span */
-  span: number;
+  span?: number;
 
   /** Total amount of columns, controlled by Grid component */
   columns?: number;
@@ -75,8 +74,9 @@ export function Col({
   xl,
   columns,
   className,
+  classNames,
+  styles,
   id,
-  sx,
   ...others
 }: ColProps) {
   const { classes, cx } = useStyles(
@@ -97,16 +97,17 @@ export function Col({
       columns,
       span,
     },
-    { sx, name: 'Col' }
+    { classNames, styles, name: 'Col' }
   );
 
   if (!isValidSpan(span) || span > columns) {
     return null;
   }
+
   return (
-    <div className={cx(classes.root, className)} {...others}>
+    <Box className={cx(classes.root, className)} {...others}>
       {children}
-    </div>
+    </Box>
   );
 }
 

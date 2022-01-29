@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './TypographyStylesProvider.styles';
 
 export interface TypographyStylesProviderProps
@@ -10,10 +11,9 @@ export interface TypographyStylesProviderProps
 }
 
 export const TypographyStylesProvider = forwardRef<HTMLDivElement, TypographyStylesProviderProps>(
-  ({ className, style, sx, ...others }: TypographyStylesProviderProps, ref) => {
-    const { classes, cx } = useStyles(null, { sx, name: 'TypographyStylesProvider' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    return <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest} />;
+  ({ className, ...others }: TypographyStylesProviderProps, ref) => {
+    const { classes, cx } = useStyles(null, { name: 'TypographyStylesProvider' });
+    return <Box className={cx(classes.root, className)} ref={ref} {...others} />;
   }
 );
 

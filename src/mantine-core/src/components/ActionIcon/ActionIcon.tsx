@@ -5,11 +5,11 @@ import {
   MantineNumberSize,
   getSharedColorScheme,
   MantineColor,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
   ClassNames,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
@@ -43,11 +43,11 @@ export type ActionIconProps<C extends React.ElementType> = PolymorphicComponentP
   _ActionIconProps
 >;
 
-type ActionIconComponent = <C extends React.ElementType = 'button'>(
+type ActionIconComponent = (<C extends React.ElementType = 'button'>(
   props: ActionIconProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const ActionIcon: ActionIconComponent & { displayName?: string } = forwardRef(
+export const ActionIcon: ActionIconComponent = forwardRef(
   <C extends React.ElementType = 'button'>(
     {
       className,
@@ -60,8 +60,6 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
       loaderProps,
       loading = false,
       component,
-      sx,
-      style,
       styles,
       classNames,
       ...others
@@ -69,13 +67,10 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
     ref: PolymorphicRef<C>
   ) => {
     const theme = useMantineTheme();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { size, radius, color },
-      { name: 'ActionIcon', classNames, styles, sx }
+      { name: 'ActionIcon', classNames, styles }
     );
-
-    const Element = component || 'button';
     const colors = getSharedColorScheme({ color, theme, variant: 'light' });
 
     const loader = (
@@ -83,16 +78,16 @@ export const ActionIcon: ActionIconComponent & { displayName?: string } = forwar
     );
 
     return (
-      <Element
-        {...rest}
-        style={mergedStyles}
+      <Box<any>
+        component={component || 'button'}
         className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
         type="button"
         ref={ref}
         disabled={disabled || loading}
+        {...others}
       >
         {loading ? loader : children}
-      </Element>
+      </Box>
     );
   }
 );

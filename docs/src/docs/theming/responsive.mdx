@@ -75,10 +75,11 @@ AppShell includes several responsive features with which you can build collapsib
 
 ```tsx
 import { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger } from '@mantine/core';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <AppShell
@@ -102,7 +103,7 @@ function Demo() {
         <Header height={70} padding="md">
           {/* You can handle other responsive styles with MediaQuery component or createStyles function */}
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
                 onClick={() => setOpened((o) => !o)}
@@ -144,11 +145,11 @@ to render different components based on media query:
 
 ```tsx
 <>
-  <MediaQuery largerThan="sm">
+  <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
     <TextInput size="xl" />
   </MediaQuery>
 
-  <MediaQuery smallerThan="sm">
+  <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
     <TextInput size="md" />
   </MediaQuery>
 </>

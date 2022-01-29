@@ -1,45 +1,27 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-  itIsPolymorphic,
-} from '@mantine/tests';
-import { Badge } from './Badge';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Badge, BadgeProps } from './Badge';
+
+const defaultProps: BadgeProps<'div'> = {};
 
 describe('@mantine/core/Badge', () => {
-  checkAccessibility([mount(<Badge>this is badge</Badge>)]);
-  itSupportsOthers(Badge, {});
-  itSupportsClassName(Badge, {});
-  itRendersChildren(Badge, {});
-  itSupportsStyle(Badge, {});
-  itSupportsMargins(Badge, {});
-  itIsPolymorphic(Badge, {});
-  itSupportsRef(Badge, {}, HTMLDivElement);
-  itSupportsStylesApi(
-    Badge,
-    { children: 'test', leftSection: 'l', rightSection: 'r' },
-    ['root', 'inner', 'leftSection', 'rightSection'],
-    'Badge'
-  );
+  itRendersChildren(Badge, defaultProps);
+  itIsPolymorphic(Badge, defaultProps);
+  itSupportsSystemProps({
+    component: Badge,
+    props: defaultProps,
+    displayName: '@mantine/core/Badge',
+    refType: HTMLDivElement,
+  });
 
   it('renders given left and right section', () => {
-    const element = shallow(
+    const { container } = render(
       <Badge rightSection="test-right" leftSection="test-left">
         test
       </Badge>
     );
-    expect(element.render().find('.mantine-Badge-rightSection').text()).toBe('test-right');
-    expect(element.render().find('.mantine-Badge-leftSection').text()).toBe('test-left');
-  });
-
-  it('has correct displayName', () => {
-    expect(Badge.displayName).toEqual('@mantine/core/Badge');
+    expect(container.querySelector('.mantine-Badge-rightSection').textContent).toBe('test-right');
+    expect(container.querySelector('.mantine-Badge-leftSection').textContent).toBe('test-left');
   });
 });

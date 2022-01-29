@@ -102,11 +102,9 @@ const tabs = {
   ],
 };
 
-type NavbarTab = 'account' | 'general';
-
 export function NavbarSegmented() {
   const { classes, cx } = useStyles();
-  const [section, setSection] = useState<NavbarTab>('account');
+  const [section, setSection] = useState('account');
   const [active, setActive] = useState('Billing');
 
   const links = tabs[section].map((item) => (
@@ -131,7 +129,7 @@ export function NavbarSegmented() {
           bgluesticker@mantine.dev
         </Text>
 
-        <SegmentedControl<NavbarTab>
+        <SegmentedControl
           value={section}
           onChange={setSection}
           transitionTimingFunction="ease"

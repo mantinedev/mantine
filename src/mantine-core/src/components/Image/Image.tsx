@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
+import React, { useState, forwardRef, useEffect, useRef } from 'react';
+import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { useMergedRef } from '@mantine/hooks';
+import { Text } from '../Text';
+import { Box } from '../Box';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
@@ -47,7 +49,6 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
   (
     {
       className,
-      style,
       alt,
       src,
       fit = 'cover',
@@ -61,57 +62,52 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
       classNames,
       styles,
       caption,
-      sx,
       ...others
     }: ImageProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ radius }, { sx, classNames, styles, name: 'Image' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(!src);
     const isPlaceholder = withPlaceholder && (!loaded || error);
-    const firstUpdate = useRef(true);
+    const internalImgRef = useRef<HTMLImageElement>(null);
+    const mergedImgRef = useMergedRef(imageRef, internalImgRef);
 
     useEffect(() => {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-      } else {
-        setLoaded(false);
-        setError(false);
+      const { current } = internalImgRef;
+      if (current?.complete) {
+        setError(current.naturalHeight === 0);
+        setLoaded(current.naturalHeight !== 0);
       }
     }, [src]);
 
     return (
-      <div
-        className={cx(classes.root, className)}
-        style={{ width, height, ...mergedStyles }}
-        ref={ref}
-        {...rest}
-      >
-        {isPlaceholder && (
-          <div className={classes.placeholder} title={alt}>
-            {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
-          </div>
-        )}
-
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <figure className={classes.figure}>
-          <img
-            className={classes.image}
-            src={src}
-            alt={alt}
-            style={{ objectFit: fit }}
-            ref={imageRef}
-            onLoad={(event) => {
-              setLoaded(true);
-              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-            }}
-            onError={(event) => {
-              setError(true);
-              typeof imageProps?.onError === 'function' && imageProps.onError(event);
-            }}
-            {...imageProps}
-          />
+          <div className={classes.imageWrapper}>
+            <img
+              className={classes.image}
+              src={src}
+              alt={alt}
+              style={{ objectFit: fit, width, height }}
+              ref={mergedImgRef}
+              {...imageProps}
+              onLoad={(event) => {
+                setLoaded(true);
+                typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
+              }}
+              onError={(event) => {
+                setError(true);
+                typeof imageProps?.onError === 'function' && imageProps.onError(event);
+              }}
+            />
+
+            {isPlaceholder && (
+              <div className={classes.placeholder} title={alt}>
+                {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+              </div>
+            )}
+          </div>
 
           {!!caption && (
             <Text component="figcaption" size="sm" align="center" className={classes.caption}>
@@ -119,7 +115,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
             </Text>
           )}
         </figure>
-      </div>
+      </Box>
     );
   }
 );

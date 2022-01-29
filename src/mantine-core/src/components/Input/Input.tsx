@@ -5,14 +5,14 @@ import {
   MantineNumberSize,
   MantineSize,
   ClassNames,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
+  extractMargins,
 } from '@mantine/styles';
-import useStyles from './Input.styles';
+import { Box } from '../Box';
+import useStyles, { InputVariant } from './Input.styles';
 
-export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
-export type InputStylesNames = Exclude<ClassNames<typeof useStyles>, InputVariant>;
+export type InputStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputBaseProps {
   /** Sets border color to red and aria-invalid=true on input element */
@@ -20,6 +20,9 @@ export interface InputBaseProps {
 
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
+
+  /** Width of icon section in px */
+  iconWidth?: number;
 
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
@@ -31,7 +34,7 @@ export interface InputBaseProps {
   rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Properties spread to root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Sets aria-required=true on input element */
   required?: boolean;
@@ -59,11 +62,11 @@ interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
 
 export type InputProps<C extends React.ElementType> = PolymorphicComponentProps<C, _InputProps>;
 
-type InputComponent = <C extends React.ElementType = 'input'>(
+type InputComponent = (<C extends React.ElementType = 'input'>(
   props: InputProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Input: InputComponent & { displayName?: string } = forwardRef(
+export const Input: InputComponent = forwardRef(
   <C extends React.ElementType = 'input'>(
     {
       component,
@@ -75,6 +78,7 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
       icon,
       style,
       rightSectionWidth = 36,
+      iconWidth,
       rightSection,
       rightSectionProps = {},
       radius = 'sm',
@@ -92,16 +96,27 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
     const theme = useMantineTheme();
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
-      { radius, size, multiline, variant: _variant, invalid, disabled },
-      { sx, classNames, styles, name: __staticSelector }
+      {
+        radius,
+        size,
+        multiline,
+        variant: _variant,
+        invalid,
+        rightSectionWidth,
+        iconWidth,
+        withRightSection: !!rightSection,
+      },
+      { classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const Element: any = component || 'input';
 
     return (
-      <div
-        className={cx(classes.root, classes[_variant], className)}
-        style={mergedStyles}
+      <Box
+        className={cx(classes.wrapper, className)}
+        sx={sx}
+        style={style}
+        {...margins}
         {...wrapperProps}
       >
         {icon && <div className={classes.icon}>{icon}</div>}
@@ -111,21 +126,20 @@ export const Input: InputComponent & { displayName?: string } = forwardRef(
           ref={ref}
           aria-required={required}
           aria-invalid={invalid}
-          className={cx({ [classes.withIcon]: icon }, classes.input)}
           disabled={disabled}
-          style={{ paddingRight: rightSection ? rightSectionWidth : theme.spacing.md }}
+          className={cx(classes[`${_variant}Variant`], classes.input, {
+            [classes.withIcon]: icon,
+            [classes.invalid]: invalid,
+            [classes.disabled]: disabled,
+          })}
         />
 
         {rightSection && (
-          <div
-            {...rightSectionProps}
-            style={{ width: rightSectionWidth }}
-            className={classes.rightSection}
-          >
+          <div {...rightSectionProps} className={classes.rightSection}>
             {rightSection}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 );

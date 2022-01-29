@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
+import { charactersList } from '@mantine/mockdata';
 import { Group, Avatar, Text, MantineColor } from '../../../index';
 import { SelectItemProps } from '../../Select';
-import { LABELS_DATA } from '../../Accordion/demos/_mockdata';
 import { Autocomplete } from '../Autocomplete';
 
 const code = `
@@ -54,7 +54,7 @@ function Demo() {
 }
 `;
 
-const data = LABELS_DATA.map((item) => ({ ...item, value: item.label }));
+const data = charactersList.map((item) => ({ ...item, value: item.label }));
 
 interface ItemProps extends SelectItemProps {
   color: MantineColor;

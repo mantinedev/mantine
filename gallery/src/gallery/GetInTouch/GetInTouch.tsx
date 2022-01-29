@@ -87,6 +87,7 @@ const useStyles = createStyles((theme) => {
 
     title: {
       marginBottom: theme.spacing.xl * 1.5,
+      fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
       [BREAKPOINT]: {
         marginBottom: theme.spacing.xl,

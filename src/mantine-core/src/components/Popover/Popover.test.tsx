@@ -1,22 +1,21 @@
-import { itSupportsClassName, itSupportsOthers, itSupportsStyle } from '@mantine/tests';
-import { Popover } from './Popover';
+import React from 'react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Popover, PopoverProps } from './Popover';
 
-const defaultProps = {
+const defaultProps: PopoverProps = {
   opened: true,
   onClose: () => {},
-  withArrow: true,
-  withCloseButton: true,
-  target: 'test-control',
+  withinPortal: false,
+  target: <div>target</div>,
   children: 'test-content',
   title: 'test-title',
+  transitionDuration: 0,
 };
 
 describe('@mantine/core/Popover', () => {
-  itSupportsClassName(Popover, defaultProps);
-  itSupportsOthers(Popover, defaultProps);
-  itSupportsStyle(Popover, defaultProps);
-
-  it('has correct displayName', () => {
-    expect(Popover.displayName).toEqual('@mantine/core/Popover');
+  itSupportsSystemProps({
+    component: Popover,
+    props: defaultProps,
+    displayName: '@mantine/core/Popover',
   });
 });

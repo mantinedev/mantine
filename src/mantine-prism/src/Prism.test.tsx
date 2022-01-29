@@ -1,54 +1,60 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import { Language } from 'prism-react-renderer';
-import {
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsStylesApi,
-  itSupportsMargins,
-} from '@mantine/tests';
-import { Prism } from './Prism';
-import { Prism as PrismStylesApi } from './styles.api';
+import { render } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
+import { Prism, PrismTab, PrismTabs, PrismProps, PrismTabsProps } from './Prism';
 
-const code = `import React from 'react';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return <Button>Hello</Button>
-}`;
-
-const defaultProps = {
-  children: code,
+const defaultProps: PrismProps = {
+  children: 'test',
   withLineNumbers: true,
-  language: 'tsx' as Language,
+  language: 'tsx',
 };
 
 describe('@mantine/prism/Prism', () => {
-  itSupportsClassName(Prism, defaultProps);
-  itSupportsMargins(Prism, defaultProps);
-  itSupportsOthers(Prism, defaultProps);
-  itSupportsStyle(Prism, defaultProps);
-  itSupportsStylesApi(Prism, defaultProps, Object.keys(PrismStylesApi), 'Prism');
+  itSupportsSystemProps({
+    component: Prism,
+    props: defaultProps,
+    displayName: '@mantine/prism/Prism',
+    refType: HTMLDivElement,
+  });
 
   it('renders tooltip based on noCopy prop', () => {
-    const withCopy = shallow(<Prism {...defaultProps} noCopy={false} />);
-    const withoutCopy = shallow(<Prism {...defaultProps} noCopy />);
+    const { container: withCopy } = render(<Prism {...defaultProps} noCopy={false} />);
+    const { container: withoutCopy } = render(<Prism {...defaultProps} noCopy />);
 
-    expect(withCopy.render().find('[data-mantine-copy]')).toHaveLength(1);
-    expect(withoutCopy.render().find('[data-mantine-copy]')).toHaveLength(0);
+    expect(withCopy.querySelectorAll('.mantine-Prism-copy')).toHaveLength(1);
+    expect(withoutCopy.querySelectorAll('.mantine-Prism-copy')).toHaveLength(0);
   });
 
   it('renders line numbers based on withLineNumbers prop', () => {
-    const withLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers />);
-    const withoutLineNumbers = shallow(<Prism {...defaultProps} withLineNumbers={false} />);
-    expect(withLineNumbers.render().find('[data-mantine-line-number]')).toHaveLength(
+    const { container: withLineNumbers } = render(<Prism {...defaultProps} withLineNumbers />);
+    const { container: withoutLineNumbers } = render(
+      <Prism {...defaultProps} withLineNumbers={false} />
+    );
+    expect(withLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(
       defaultProps.children.split('\n').length
     );
-    expect(withoutLineNumbers.render().find('[data-mantine-line-number]')).toHaveLength(0);
+    expect(withoutLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(0);
   });
 
-  it('has correct displayName', () => {
-    expect(Prism.displayName).toEqual('@mantine/prism/Prism');
+  it('exposes PrismTabs and PrismTab components', () => {
+    expect(Prism.Tabs).toBe(PrismTabs);
+    expect(Prism.Tab).toBe(PrismTab);
+  });
+});
+
+const defaultTabsProps: PrismTabsProps = {
+  children: [
+    <Prism.Tab language="tsx" key="1">
+      code
+    </Prism.Tab>,
+  ],
+};
+
+describe('@mantine/prism/Prism.Tabs', () => {
+  itSupportsSystemProps({
+    component: Prism.Tabs,
+    props: defaultTabsProps,
+    displayName: '@mantine/prism/Tabs',
+    refType: HTMLDivElement,
   });
 });

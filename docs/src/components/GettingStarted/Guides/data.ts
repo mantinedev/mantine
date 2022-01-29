@@ -5,5 +5,5 @@ export const GUIDES_DATA = [
   { id: 'gatsby', title: 'Gatsby', icon: icons.GatsbyIcon },
   { id: 'cra', title: 'Create React App', icon: icons.ReactIcon },
   { id: 'vite', title: 'Vite', icon: icons.ViteIcon },
-  { id: 'preact', title: 'Preact', icon: icons.PreactIcon },
+  { id: 'remix', title: 'Remix', icon: icons.RemixIcon },
 ];

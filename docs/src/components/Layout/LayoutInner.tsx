@@ -39,12 +39,13 @@ const query = graphql`
   }
 `;
 
-const demonstrationModal = ({ context, id }: ContextModalProps) => (
+const demonstrationModal = ({
+  context,
+  id,
+  modalBody,
+}: ContextModalProps & { modalBody: string }) => (
   <>
-    <Text size="sm">
-      This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals
-      hook
-    </Text>
+    <Text size="sm">{modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
       Close modal
     </Button>

@@ -11,4 +11,8 @@ describe('@mantine/styles/theme-color', () => {
       DEFAULT_THEME.colors[DEFAULT_THEME.primaryColor][5]
     );
   });
+
+  it('allows to disable primary color fallback', () => {
+    expect(themeColor(DEFAULT_THEME)('#783298', 5, false)).toBe('#783298');
+  });
 });

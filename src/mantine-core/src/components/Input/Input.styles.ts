@@ -1,6 +1,6 @@
-import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 
-import type { InputVariant } from './Input';
+export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
 
 interface InputStyles {
   radius: MantineNumberSize;
@@ -8,7 +8,9 @@ interface InputStyles {
   variant: InputVariant;
   multiline: boolean;
   invalid: boolean;
-  disabled: boolean;
+  rightSectionWidth: number;
+  withRightSection: boolean;
+  iconWidth: number;
 }
 
 export const sizes = {
@@ -19,115 +21,34 @@ export const sizes = {
   xl: 60,
 };
 
-function getVariantStyles({ variant, theme }: { variant: InputVariant; theme: MantineTheme }) {
-  if (variant === 'default') {
-    return {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4],
-      transition: 'border-color 100ms ease, box-shadow 100ms ease',
-
-      '&:focus, &:focus-within': {
-        outline: 'none',
-        borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5],
-      },
-    };
-  }
-
-  if (variant === 'filled') {
-    return {
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: 'transparent',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-
-      '&:focus, &:focus-within': {
-        outline: 'none',
-        borderColor: `${
-          theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5]
-        } !important`,
-      },
-    };
-  }
-
-  if (variant === 'unstyled') {
-    return {
-      borderWidth: 1,
-      borderColor: 'transparent',
-      borderStyle: 'solid',
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      backgroundColor: 'transparent',
-      minHeight: 28,
-      outline: 0,
-
-      '&:focus, &:focus-within': {
-        outline: 'none',
-        borderColor: 'transparent',
-      },
-
-      '&:disabled': {
-        backgroundColor: 'transparent',
-
-        '&:focus, &:focus-within': {
-          outline: 'none',
-          borderColor: 'transparent',
-        },
-      },
-    };
-  }
-
-  return null;
-}
-
-function getInvalidStyles({ invalid, theme }: { invalid: boolean; theme: MantineTheme }) {
-  if (!invalid) {
-    return null;
-  }
-
-  const color = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
-
-  return {
-    color,
-    borderColor: color,
-
-    '&::placeholder': {
-      opacity: 1,
-      color,
-    },
-  };
-}
-
 export default createStyles(
-  (theme, { size, multiline, radius, variant, invalid, disabled }: InputStyles) => {
+  (
+    theme,
+    {
+      size,
+      multiline,
+      radius,
+      variant,
+      invalid,
+      rightSectionWidth,
+      withRightSection,
+      iconWidth,
+    }: InputStyles
+  ) => {
+    const invalidColor = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
             minHeight: theme.fn.size({ size, sizes }),
             paddingLeft: theme.fn.size({ size, sizes }) / 3,
-            paddingRight: theme.fn.size({ size, sizes }) / 3,
+            paddingRight: withRightSection ? rightSectionWidth : theme.fn.size({ size, sizes }) / 3,
             borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
           }
         : null;
 
-    const disabledStyles = disabled
-      ? {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-          color: theme.colors.dark[2],
-          opacity: 0.6,
-          cursor: 'not-allowed',
-
-          '&::placeholder': {
-            color: theme.colors.dark[2],
-          },
-        }
-      : null;
-
     return {
-      root: {
+      wrapper: {
         position: 'relative',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       },
 
       input:
@@ -135,7 +56,6 @@ export default createStyles(
           ? {}
           : {
               ...theme.fn.fontStyles(),
-              ...getVariantStyles({ variant, theme }),
               height: multiline
                 ? variant === 'unstyled'
                   ? undefined
@@ -152,7 +72,6 @@ export default createStyles(
               display: 'block',
               textAlign: 'left',
               ...sizeStyles,
-              ...disabledStyles,
 
               '&:disabled': {
                 backgroundColor:
@@ -180,12 +99,78 @@ export default createStyles(
               '&[type=number]': {
                 MozAppearance: 'textfield',
               },
-
-              ...getInvalidStyles({ invalid, theme }),
             },
 
+      defaultVariant: {
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        transition: 'border-color 100ms ease',
+
+        '&:focus, &:focus-within': {
+          outline: 'none',
+          borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5],
+        },
+      },
+
+      filledVariant: {
+        border: '1px solid transparent',
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+
+        '&:focus, &:focus-within': {
+          outline: 'none',
+          borderColor: `${
+            theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5]
+          } !important`,
+        },
+      },
+
+      unstyledVariant: {
+        borderWidth: 0,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: 'transparent',
+        minHeight: 28,
+        outline: 0,
+
+        '&:focus, &:focus-within': {
+          outline: 'none',
+          borderColor: 'transparent',
+        },
+
+        '&:disabled': {
+          backgroundColor: 'transparent',
+
+          '&:focus, &:focus-within': {
+            outline: 'none',
+            borderColor: 'transparent',
+          },
+        },
+      },
+
       withIcon: {
-        paddingLeft: `${theme.fn.size({ size, sizes })}px !important`,
+        paddingLeft: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
+      },
+
+      invalid: {
+        color: invalidColor,
+        borderColor: invalidColor,
+
+        '&::placeholder': {
+          opacity: 1,
+          color: invalidColor,
+        },
+      },
+
+      disabled: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+        color: theme.colors.dark[2],
+        opacity: 0.6,
+        cursor: 'not-allowed',
+
+        '&::placeholder': {
+          color: theme.colors.dark[2],
+        },
       },
 
       icon: {
@@ -214,6 +199,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        width: rightSectionWidth,
       },
     };
   }

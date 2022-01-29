@@ -11,7 +11,8 @@ function Wrapper(props: PopoverProps) {
         withArrow
         noFocusTrap
         noEscape
-        styles={{ body: { width: 260, pointerEvents: 'none' } }}
+        width={260}
+        styles={{ body: { pointerEvents: 'none' } }}
         transition="slide-up"
         target={<Badge>Badge with popover</Badge>}
         {...props}
@@ -21,7 +22,8 @@ function Wrapper(props: PopoverProps) {
             src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
             width={30}
             height={30}
-            style={{ minWidth: 30, marginRight: 15 }}
+            sx={{ minWidth: 30 }}
+            mr="md"
           />
           <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
         </div>

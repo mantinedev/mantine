@@ -20,12 +20,7 @@ const sizes = {
 };
 
 export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
-  const dots = {
-    ref: getRef('dots'),
-    cursor: 'default',
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
-  } as const;
+  const dots = getRef('dots');
 
   const colors = getSharedColorScheme({
     color,
@@ -54,7 +49,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 
-      [`&:active:not(:disabled):not(.${dots.ref})`]: {
+      [`&:active:not(:disabled):not(.${dots})`]: {
         transform: 'translateY(1px)',
       },
 
@@ -71,6 +66,11 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
       backgroundColor: colors.background,
     },
 
-    dots,
+    dots: {
+      ref: dots,
+      cursor: 'default',
+      borderColor: 'transparent',
+      backgroundColor: 'transparent',
+    },
   };
 });

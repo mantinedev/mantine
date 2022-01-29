@@ -4,18 +4,12 @@ import { Input } from '../Input';
 import { Tooltip } from '../../Tooltip/Tooltip';
 
 const code = `
-import React from 'react';
 import { Input, Tooltip } from '@mantine/core';
 import { InfoCircledIcon } from '@modulz/radix-icons';
 
 function Demo() {
   const rightSection = (
-    <Tooltip
-      label="We do not send spam"
-      position="top"
-      placement="end"
-      withArrow
-    >
+    <Tooltip label="We do not send spam" position="top" placement="end">
       <InfoCircledIcon />
     </Tooltip>
   );
@@ -26,7 +20,7 @@ function Demo() {
 
 function Demo() {
   const rightSection = (
-    <Tooltip label="We do not send spam" position="bottom" placement="end" withArrow>
+    <Tooltip label="We do not send spam" position="top" placement="end">
       <InfoCircledIcon style={{ width: 15, height: 15, display: 'block', opacity: 0.5 }} />
     </Tooltip>
   );

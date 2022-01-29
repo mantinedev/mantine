@@ -9,5 +9,4 @@ export const ColorInput: Record<ColorInputStylesNames, string> = {
   ...InputWrapper,
   ...ColorPicker,
   dropdownBody: 'Dropdown body, contains color picker',
-  arrow: 'Dropdown body arrow',
 };

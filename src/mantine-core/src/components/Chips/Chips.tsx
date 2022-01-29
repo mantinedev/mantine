@@ -1,6 +1,7 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { useUncontrolled, useUuid } from '@mantine/hooks';
 import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
 import { Group, GroupProps } from '../Group/Group';
 import { Chip, ChipStylesNames } from './Chip/Chip';
 
@@ -39,6 +40,9 @@ export interface ChipsProps<T extends boolean = false>
 
   /** Active chip color, defaults to theme.primaryColor */
   color?: MantineColor;
+
+  /** Inputs name attribute */
+  name?: string;
 }
 
 export function Chips<T extends boolean>({
@@ -49,13 +53,13 @@ export function Chips<T extends boolean>({
   spacing = 'xs',
   radius = 'xl',
   size = 'sm',
+  name,
   variant,
   multiple,
   children,
   id,
   classNames,
   styles,
-  sx,
   ...others
 }: ChipsProps<T>) {
   const uuid = useUuid(id);
@@ -67,37 +71,35 @@ export function Chips<T extends boolean>({
     rule: (val) => (multiple ? Array.isArray(val) : typeof val === 'string'),
   });
 
-  const chips = Children.toArray(children)
-    .filter((child: React.ReactElement) => child.type === Chip)
-    .map((child: React.ReactElement, index) =>
-      React.cloneElement(child, {
-        variant,
-        radius,
-        color,
-        __staticSelector: 'Chips',
-        classNames,
-        styles,
-        name: uuid,
-        size,
-        id: `${uuid}-${index}`,
-        type: multiple ? 'checkbox' : 'radio',
-        checked: Array.isArray(_value)
-          ? _value.includes(child.props.value)
-          : child.props.value === _value,
-        onChange: () => {
-          const val = child.props.value;
+  const chips = filterChildrenByType(children, Chip).map((child, index) =>
+    React.cloneElement(child, {
+      variant,
+      radius,
+      color,
+      __staticSelector: 'Chips',
+      classNames,
+      styles,
+      name,
+      size,
+      id: `${uuid}-${index}`,
+      type: multiple ? 'checkbox' : 'radio',
+      checked: Array.isArray(_value)
+        ? _value.includes(child.props.value)
+        : child.props.value === _value,
+      onChange: () => {
+        const val = child.props.value;
 
-          if (Array.isArray(_value)) {
-            setValue(_value.includes(val) ? _value.filter((v) => v !== val) : [..._value, val]);
-          } else {
-            setValue(val);
-          }
-        },
-      })
-    );
+        if (Array.isArray(_value)) {
+          setValue(_value.includes(val) ? _value.filter((v) => v !== val) : [..._value, val]);
+        } else {
+          setValue(val);
+        }
+      },
+    })
+  );
 
   return (
-    <Group spacing={spacing} id={uuid} sx={sx} {...others}>
+    <Group spacing={spacing} id={uuid} {...others}>
       {chips}
     </Group>
   );

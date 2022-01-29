@@ -36,7 +36,7 @@ export function useMantineEmotionOptions(): EmotionCacheOptions {
   return useContext(MantineThemeContext)?.emotionOptions || { key: 'mantine', prepend: true };
 }
 
-interface MantineProviderProps {
+export interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
   emotionOptions?: EmotionCacheOptions;

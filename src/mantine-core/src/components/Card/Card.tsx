@@ -1,7 +1,7 @@
 import React, { Children, cloneElement, forwardRef } from 'react';
 import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Paper, SharedPaperProps } from '../Paper/Paper';
-import { CardSection, CardSectionProps } from './CardSection/CardSection';
+import { CardSection } from './CardSection/CardSection';
 import useStyles from './Card.styles';
 
 interface _CardProps extends SharedPaperProps {
@@ -11,48 +11,53 @@ interface _CardProps extends SharedPaperProps {
 
 export type CardProps<C extends React.ElementType> = PolymorphicComponentProps<C, _CardProps>;
 
-type CardComponent = <C extends React.ElementType = 'div'>(
+type CardComponent = (<C extends React.ElementType = 'div'>(
   props: CardProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string; Section: typeof CardSection };
 
-export const Card: CardComponent & { displayName?: string; Section: React.FC<CardSectionProps> } =
-  forwardRef(
-    <C extends React.ElementType = 'div'>(
-      {
-        component,
-        className,
-        padding = 'md',
-        radius = 'sm',
-        children,
-        sx,
-        ...others
-      }: CardProps<C>,
-      ref: PolymorphicRef<C>
-    ) => {
-      const { classes, cx } = useStyles(null, { name: 'Card', sx });
+export const Card: CardComponent = forwardRef(
+  <C extends React.ElementType = 'div'>(
+    {
+      component,
+      className,
+      padding = 'md',
+      radius = 'sm',
+      children,
+      classNames,
+      styles,
+      ...others
+    }: CardProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
+    const { classes, cx } = useStyles(null, { name: 'Card', classNames, styles });
+    const _children = Children.toArray(children);
 
-      const content = Children.map(children, (child) => {
-        if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
-          return cloneElement(child, { padding });
-        }
+    const content = _children.map((child, index) => {
+      if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
+        return cloneElement(child, {
+          padding,
+          first: index === 0,
+          last: index === _children.length - 1,
+        });
+      }
 
-        return child;
-      });
+      return child;
+    });
 
-      return (
-        <Paper
-          className={cx(classes.root, className)}
-          radius={radius}
-          padding={padding}
-          component={component as any}
-          ref={ref}
-          {...others}
-        >
-          {content}
-        </Paper>
-      );
-    }
-  ) as any;
+    return (
+      <Paper
+        className={cx(classes.root, className)}
+        radius={radius}
+        padding={padding}
+        component={component as any}
+        ref={ref}
+        {...others}
+      >
+        {content}
+      </Paper>
+    );
+  }
+) as any;
 
 Card.Section = CardSection;
 Card.displayName = '@mantine/core/Card';

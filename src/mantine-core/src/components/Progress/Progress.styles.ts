@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, keyframes } from '@mantine/styles';
 
 export const sizes = {
   xs: 3,
@@ -13,9 +13,15 @@ interface ProgressStyles {
   radius: MantineNumberSize;
   size: MantineNumberSize;
   striped: boolean;
+  animate: boolean;
 }
 
-export default createStyles((theme, { color, radius, size, striped }: ProgressStyles) => ({
+const stripesAnimation = keyframes({
+  from: { backgroundPosition: '0 0' },
+  to: { backgroundPosition: '40px 0' },
+});
+
+export default createStyles((theme, { color, radius, size, striped, animate }: ProgressStyles) => ({
   root: {
     position: 'relative',
     height: theme.fn.size({ size, sizes }),
@@ -30,9 +36,13 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
     bottom: 0,
     left: 0,
     height: '100%',
-    backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 6),
-    transition: `width 200ms ${theme.transitionTimingFunction}`,
-    backgroundSize: `${theme.spacing.md}px ${theme.spacing.md}px`,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.fn.themeColor(color || theme.primaryColor, 6, false),
+    transition: 'width 100ms linear',
+    animation: animate ? `${stripesAnimation} 1000ms linear infinite` : 'none',
+    backgroundSize: '20px 20px',
     backgroundImage: striped
       ? 'linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)'
       : 'none',
@@ -50,5 +60,14 @@ export default createStyles((theme, { color, radius, size, striped }: ProgressSt
     '@media (prefers-reduced-motion)': {
       transitionDuration: '0ms',
     },
+  },
+
+  label: {
+    color: theme.white,
+    fontSize: theme.fn.size({ size, sizes }) * 0.65,
+    fontWeight: 700,
+    userSelect: 'none',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
 }));

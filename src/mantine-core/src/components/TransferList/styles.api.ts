@@ -10,4 +10,6 @@ export const TransferList: Record<TransferListStylesNames, string> = {
   transferListItemHovered: 'List item modifier with hovered state',
   transferListSearch: 'Search field',
   transferListControl: 'Controls to move items',
+  separator: 'Divider wrapper',
+  separatorLabel: 'Separator Label',
 };

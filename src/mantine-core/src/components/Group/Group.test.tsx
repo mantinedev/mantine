@@ -1,22 +1,22 @@
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itRendersChildren,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Group } from './Group';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Group, GroupProps } from './Group';
+
+const defaultProps: GroupProps = {};
 
 describe('@mantine/core/Group', () => {
-  itSupportsOthers(Group, {});
-  itSupportsClassName(Group, {});
-  itSupportsStyle(Group, {});
-  itRendersChildren(Group, {});
-  itSupportsMargins(Group, {});
-  itSupportsRef(Group, {}, HTMLDivElement);
+  itRendersChildren(Group, defaultProps);
+  itSupportsSystemProps({
+    component: Group,
+    props: defaultProps,
+    displayName: '@mantine/core/Group',
+    refType: HTMLDivElement,
+  });
 
-  it('has correct displayName', () => {
-    expect(Group.displayName).toEqual('@mantine/core/Group');
+  it('has no falsy children', () => {
+    const children = [undefined, null, <div key="1" />];
+    const { container } = render(<Group>{children}</Group>);
+    expect(container.querySelectorAll('.mantine-Group-child')).toHaveLength(1);
   });
 });

@@ -3,10 +3,10 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
@@ -28,11 +28,11 @@ export type PaperProps<C extends React.ElementType> = PolymorphicComponentProps<
   SharedPaperProps
 >;
 
-type PaperComponent = <C extends React.ElementType = 'div'>(
+type PaperComponent = (<C extends React.ElementType = 'div'>(
   props: PaperProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Paper: PaperComponent & { displayName?: string } = forwardRef(
+export const Paper: PaperComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       component,
@@ -42,23 +42,21 @@ export const Paper: PaperComponent & { displayName?: string } = forwardRef(
       radius = 'sm',
       withBorder = false,
       shadow,
-      style,
-      sx,
       ...others
     }: PaperProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles(
-      { radius, shadow, padding, withBorder },
-      { sx, name: 'Paper' }
-    );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const Element = component || 'div';
+    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, { name: 'Paper' });
 
     return (
-      <Element className={cx(classes.root, className)} ref={ref} style={mergedStyles} {...rest}>
+      <Box<any>
+        component={component || 'div'}
+        className={cx(classes.root, className)}
+        ref={ref}
+        {...others}
+      >
         {children}
-      </Element>
+      </Box>
     );
   }
 );

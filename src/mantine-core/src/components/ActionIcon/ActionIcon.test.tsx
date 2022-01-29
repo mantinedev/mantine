@@ -1,56 +1,54 @@
 import React from 'react';
-import { RocketIcon } from '@modulz/radix-icons';
-import { shallow, mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsRef,
   itRendersChildren,
-  itSupportsMargins,
   itIsPolymorphic,
+  itSupportsFocusEvents,
+  itSupportsSystemProps,
 } from '@mantine/tests';
-import { Loader } from '../Loader/Loader';
-import { ActionIcon } from './ActionIcon';
+import { ActionIcon, ActionIconProps } from './ActionIcon';
+
+const defaultProps: ActionIconProps<'button'> = { children: <div /> };
 
 describe('@mantine/core/ActionIcon', () => {
-  itSupportsClassName(ActionIcon, {});
-  itSupportsOthers(ActionIcon, {});
-  itSupportsStyle(ActionIcon, {});
-  itSupportsMargins(ActionIcon, {});
-  itIsPolymorphic(ActionIcon, {});
-  itSupportsRef(ActionIcon, {}, HTMLButtonElement);
-  itRendersChildren(ActionIcon, {});
+  itIsPolymorphic(ActionIcon, defaultProps);
+  itRendersChildren(ActionIcon, defaultProps);
+  itSupportsFocusEvents(ActionIcon, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsSystemProps({
+    component: ActionIcon,
+    props: defaultProps,
+    displayName: '@mantine/core/ActionIcon',
+    refType: HTMLButtonElement,
+  });
+
   checkAccessibility([
-    mount(
-      <ActionIcon title="Action icon">
-        <RocketIcon />
-      </ActionIcon>
-    ),
+    <ActionIcon {...defaultProps} title="Action icon" />,
+    <ActionIcon {...defaultProps} aria-label="Action icon" />,
   ]);
 
+  it('supports changing button type', () => {
+    render(<ActionIcon type="submit">$</ActionIcon>);
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
+  });
+
   it('replaces icon with Loader when loading is set to true', () => {
-    const loading = shallow(
+    const { container: loading } = render(
       <ActionIcon loading>
         <span className="test-icon" />
       </ActionIcon>
     );
 
-    const notLoading = shallow(
+    const { container: notLoading } = render(
       <ActionIcon loading={false}>
         <span className="test-icon" />
       </ActionIcon>
     );
 
-    expect(notLoading.find('.test-icon')).toHaveLength(1);
-    expect(notLoading.find(Loader)).toHaveLength(0);
+    expect(notLoading.querySelectorAll('.test-icon')).toHaveLength(1);
+    expect(notLoading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(0);
 
-    expect(loading.find('.test-icon')).toHaveLength(0);
-    expect(loading.find(Loader)).toHaveLength(1);
-  });
-
-  it('has correct displayName', () => {
-    expect(ActionIcon.displayName).toEqual('@mantine/core/ActionIcon');
+    expect(loading.querySelectorAll('.test-icon')).toHaveLength(0);
+    expect(loading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(1);
   });
 });

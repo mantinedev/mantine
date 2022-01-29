@@ -1,17 +1,13 @@
 {
   "name": "@mantine/tests",
   "private": true,
-  "version": "3.2.3",
+  "version": "3.6.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "peerDependencies": {
-    "enzyme": ">=3.11.0",
-    "jest-axe": ">=4.1.0",
-    "react": ">=16.8.0"
-  },
+  "peerDependencies": {},
   "dependencies": {},
   "devDependencies": {}
 }

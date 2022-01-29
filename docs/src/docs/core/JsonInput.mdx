@@ -18,7 +18,7 @@ import { JsonInputDemos } from '@demos/core';
 ## Usage
 
 JsonInput is based on [Textarea](/core/textarea/) component,
-it includes json validation logic and option to format input value:
+it includes json validation logic and option to format input value on blur:
 
 <Demo data={JsonInputDemos.usage} />
 
@@ -42,8 +42,6 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 
 ## Get input ref
 
-You can get textarea ref with `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { JsonInput } from '@mantine/core';
@@ -59,36 +57,7 @@ function Demo() {
 Provide `aria-label` in case you use component without label for screen reader support:
 
 ```tsx
-<JsonInput label="package.json" />; // -> ok, textarea and label is connected
-<JsonInput />; // not ok, textarea is not labeled
-<JsonInput aria-label="package.json" />; // -> ok, label is not visible but will be announced by screen reader
+<JsonInput /> // -> not ok, textarea is not labeled
+<JsonInput label="package.json" /> // -> ok, textarea and label is connected
+<JsonInput aria-label="package.json" /> // -> ok, label is not visible but will be announced by screen reader
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { JsonInputProps } from '@mantine/core';
-```
-
-`JsonInputProps` extends `React.ComponentPropsWithoutRef<'input'>`, all other props are available under _Component props_ tab.
-
-### JsonInputStylesNames type
-
-`JsonInputStylesNames` type is a union with JsonInput [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { JsonInputStylesNames } from '@mantine/core';
-
-const jsonInputClasses: Partial<Record<JsonInputStylesNames, 'string'>> = {
-  label: 'json-input-label',
-  description: 'json-input-description',
-};
-
-<JsonInput classNames={jsonInputClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

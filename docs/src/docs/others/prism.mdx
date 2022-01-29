@@ -11,7 +11,7 @@ source: 'mantine-prism/src'
 docs: 'others/prism.mdx'
 installation: 'prism-react-renderer @mantine/prism'
 license: MIT
-styles: ['Prism']
+styles: ['Prism', 'PrismTabs']
 ---
 
 import * as PrismDemos from '@demos/prism';
@@ -61,9 +61,22 @@ Copy button labels can be changed with `copyLabel` and `copiedLabel` props:
 
 <Demo data={PrismDemos.copyLabel} />
 
-## Force dark theme
+## Native scrollbars
 
-You can force dark color scheme by setting `themeOverride={{ colorScheme: 'dark' }}`:
+By default, Prism uses [ScrollArea](/core/scroll-area/) component to handle overflow content,
+to replace it with native scrollbars set `scrollAreaComponent="div"`:
+
+<Demo data={PrismDemos.scrollbars} />
+
+## With tabs
+
+To display multiple files use `Prism.Tabs` component, it supports the same props as [Tabs](/core/tabs/) component:
+
+<Demo data={PrismDemos.tabs} />
+
+## Force dark/light theme
+
+You can force dark/light color scheme by setting `colorScheme` prop:
 
 <Demo data={PrismDemos.themeOverride} />
 

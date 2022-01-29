@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
-import dayjs from 'dayjs';
 import { Group } from '@mantine/core';
 import { RangeCalendar } from '../RangeCalendar';
 
 const code = `
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import { RangeCalendar } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-  ]);
-
+  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
   return <RangeCalendar value={value} onChange={setValue} />;
 }
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-  ]);
-
+  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
   return (
     <Group position="center">
       <RangeCalendar value={value} onChange={setValue} />

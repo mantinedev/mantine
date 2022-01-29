@@ -1,0 +1,11 @@
+{
+  "title": "Buttons group",
+  "category": "buttons",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/button/", "/core/group/"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

@@ -1,80 +1,41 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
-  itSupportsClassName,
-  itSupportsRef,
-  itSupportsStyle,
   checkAccessibility,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  defaultInputProps,
+  itSupportsSystemProps,
+  itSupportsFocusEvents,
+  itSupportsInputProps,
 } from '@mantine/tests';
-import { InputWrapper } from '../InputWrapper/InputWrapper';
-import { Input } from '../Input/Input';
-import { TextInput } from './TextInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
+import { TextInput, TextInputProps } from './TextInput';
+
+const defaultProps: TextInputProps = {};
 
 describe('@mantine/core/Input', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
+  checkAccessibility([<TextInput label="test-input" />, <TextInput aria-label="test-input" />]);
+  itSupportsInputProps(TextInput, defaultProps, 'TextInput');
+  itSupportsFocusEvents(TextInput, defaultProps, 'input');
+  itSupportsSystemProps({
+    component: TextInput,
+    props: defaultProps,
+    displayName: '@mantine/core/TextInput',
+    refType: HTMLInputElement,
+    excludeOthers: true,
   });
 
-  checkAccessibility([
-    mount(<TextInput label="test-input" />),
-    mount(<TextInput aria-label="test-input" />),
-  ]);
-
-  itSupportsClassName(TextInput, {});
-  itSupportsMargins(TextInput, {});
-  itSupportsRef(TextInput, {}, HTMLInputElement);
-  itSupportsStyle(TextInput, {});
-  itSupportsStylesApi(
-    TextInput,
-    defaultInputProps,
-    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'TextInput'
-  );
-
-  it('has correct displayName', () => {
-    expect(TextInput.displayName).toEqual('@mantine/core/TextInput');
+  it('supports uncontrolled state', () => {
+    render(<TextInput {...defaultProps} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(screen.getByRole('textbox')).toHaveValue('test-value');
   });
 
-  it('passes wrapperProps to InputWrapper', () => {
-    const element = shallow(<TextInput wrapperProps={{ 'aria-label': 'test' }} />);
-    expect(element.render().attr('aria-label')).toBe('test');
-  });
-
-  it('passes required, id, label, error and description props to InputWrapper component', () => {
-    const element = shallow(
-      <TextInput
-        id="test-id"
-        required
-        label="test-label"
-        error="test-error"
-        description="test-description"
-      />
-    );
-
-    expect(element.find(InputWrapper).prop('id')).toBe('test-id');
-    expect(element.find(InputWrapper).prop('required')).toBe(true);
-    expect(element.find(InputWrapper).prop('label')).toBe('test-label');
-    expect(element.find(InputWrapper).prop('error')).toBe('test-error');
-    expect(element.find(InputWrapper).prop('description')).toBe('test-description');
-  });
-
-  it('passes required, id, type, invalid, icon and radius props to Input component', () => {
-    const element = shallow(
-      <TextInput required id="test-id" type="number" error="test-error" icon="$" radius="sm" />
-    );
-
-    expect(element.find(Input).prop('id')).toBe('test-id');
-    expect(element.find(Input).prop('required')).toBe(true);
-    expect(element.find(Input).prop('type')).toBe('number');
-    expect(element.find(Input).prop('invalid')).toBe(true);
-    expect(element.find(Input).prop('icon')).toBe('$');
-    expect(element.find(Input).prop('radius')).toBe('sm');
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<TextInput {...defaultProps} value="" onChange={spy} />);
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    expect(spy).toHaveBeenCalled();
+    expect(screen.getByRole('textbox')).toHaveValue('');
   });
 });

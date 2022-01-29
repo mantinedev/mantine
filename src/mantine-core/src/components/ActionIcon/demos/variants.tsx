@@ -6,20 +6,24 @@ import { Group } from '../../Group/Group';
 const code = `
 <ActionIcon variant="transparent"><GearIcon /></ActionIcon>
 <ActionIcon variant="hover"><GearIcon /></ActionIcon>
+<ActionIcon variant="default"><GearIcon /></ActionIcon>
 <ActionIcon variant="outline"><GearIcon /></ActionIcon>
 <ActionIcon variant="filled"><GearIcon /></ActionIcon>
 <ActionIcon variant="light"><GearIcon /></ActionIcon>
 `;
 
-export function Demo() {
-  const icon = <GearIcon style={{ width: 16, height: 16 }} />;
+const icon = <GearIcon style={{ width: 16, height: 16 }} />;
 
+export function Demo() {
   return (
     <Group position="center">
       <ActionIcon variant="transparent" color="blue">
         {icon}
       </ActionIcon>
       <ActionIcon variant="hover" color="blue">
+        {icon}
+      </ActionIcon>
+      <ActionIcon variant="default" color="blue">
         {icon}
       </ActionIcon>
       <ActionIcon variant="outline" color="blue">

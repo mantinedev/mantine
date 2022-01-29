@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover } from '../../../index';
+import { PasswordInput, Progress, Text, Popover, Box } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
 import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
 
@@ -11,10 +11,11 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
   return (
     <Text
       color={meets ? 'teal' : 'red'}
-      style={{ display: 'flex', alignItems: 'center', marginTop: 7 }}
+      sx={{ display: 'flex', alignItems: 'center' }}
+      mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <span style={{ marginLeft: 10 }}>{label}</span>
+      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -82,10 +83,11 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
   return (
     <Text
       color={meets ? 'teal' : 'red'}
-      style={{ display: 'flex', alignItems: 'center', marginTop: 7 }}
+      sx={{ display: 'flex', alignItems: 'center' }}
+      mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <span style={{ marginLeft: 10 }}>{label}</span>
+      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -125,7 +127,6 @@ function Demo() {
         opened={popoverOpened}
         position="bottom"
         placement="start"
-        withArrow
         noFocusTrap
         transition="pop-top-left"
         onFocusCapture={() => setPopoverOpened(true)}

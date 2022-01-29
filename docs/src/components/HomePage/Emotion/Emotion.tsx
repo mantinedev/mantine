@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { Button, Group } from '@mantine/core';
 import { ArrowRightIcon } from '@modulz/radix-icons';
+import { Demo } from '@mantine/ds';
 import { createStylesBasics } from '../../../demos/create-styles/createStylesBasics';
-import Demo from '../../Demo/Demo';
 import { PageSection } from '../PageSection/PageSection';
 
 export function Emotion() {

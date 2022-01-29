@@ -1,26 +1,25 @@
+import React from 'react';
 import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  defaultInputProps,
+  itSupportsSystemProps,
+  itSupportsInputProps,
+  itSupportsFocusEvents,
+  checkAccessibility,
 } from '@mantine/tests';
-import { JsonInput } from './JsonInput';
-import { Input as InputStylesApi } from '../Input/styles.api';
-import { InputWrapper as InputWrapperStylesApi } from '../InputWrapper/styles.api';
+import { JsonInput, JsonInputProps } from './JsonInput';
+
+const defaultProps: JsonInputProps = {
+  label: 'test-label',
+};
 
 describe('@mantine/core/JsonInput', () => {
-  itSupportsStyle(JsonInput, {});
-  itSupportsClassName(JsonInput, {});
-  itSupportsMargins(JsonInput, {});
-  itSupportsStylesApi(
-    JsonInput,
-    defaultInputProps,
-    Object.keys({ ...InputStylesApi, ...InputWrapperStylesApi }),
-    'JsonInput'
-  );
-
-  it('has correct displayName', () => {
-    expect(JsonInput.displayName).toEqual('@mantine/core/JsonInput');
+  checkAccessibility([<JsonInput {...defaultProps} />]);
+  itSupportsFocusEvents(JsonInput, defaultProps, 'textarea');
+  itSupportsInputProps(JsonInput, defaultProps, 'JsonInput');
+  itSupportsSystemProps({
+    component: JsonInput,
+    props: defaultProps,
+    displayName: '@mantine/core/JsonInput',
+    refType: HTMLTextAreaElement,
+    excludeOthers: true,
   });
 });

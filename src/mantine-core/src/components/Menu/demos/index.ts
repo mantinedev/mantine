@@ -6,3 +6,5 @@ export { component } from './component';
 export { hover } from './hover';
 export { stylesApi } from './stylesApi';
 export { positionConfigurator } from './positionConfigurator';
+export { disabled } from './disabled';
+export { customControl } from './customControl';

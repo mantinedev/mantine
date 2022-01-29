@@ -1,5 +1,5 @@
 import { MantineTheme } from '@mantine/styles';
-import { SimpleGridBreakpoint } from '../SimpleGrid.styles';
+import type { SimpleGridBreakpoint } from '../SimpleGrid.styles';
 
 export function getSortedBreakpoints(theme: MantineTheme, breakpoints: SimpleGridBreakpoint[]) {
   if (breakpoints.length === 0) {

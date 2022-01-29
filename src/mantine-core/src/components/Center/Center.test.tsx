@@ -1,22 +1,17 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Center } from './Center';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Center, CenterProps } from './Center';
+
+const defaultProps: CenterProps<'div'> = {
+  children: 'test-center',
+};
 
 describe('@mantine/core/Center', () => {
-  itRendersChildren(Center, {});
-  itSupportsClassName(Center, {});
-  itSupportsStyle(Center, {});
-  itSupportsOthers(Center, {});
-  itSupportsMargins(Center, {});
-  itSupportsRef(Center, {}, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Center.displayName).toEqual('@mantine/core/Center');
+  itRendersChildren(Center, defaultProps);
+  itIsPolymorphic(Center, defaultProps);
+  itSupportsSystemProps({
+    component: Center,
+    props: defaultProps,
+    displayName: '@mantine/core/Center',
+    refType: HTMLDivElement,
   });
 });

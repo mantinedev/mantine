@@ -1,10 +1,10 @@
 import React from 'react';
+import { charactersList } from '@mantine/mockdata';
 import { Group, Avatar, Text } from '../../../index';
-import { LABELS_DATA } from './_mockdata';
 import { Accordion, AccordionProps } from '../Accordion';
 
 const code = `
-import { Group, Avatar, Text, Accordion } from '../../../index';
+import { Group, Avatar, Text, Accordion } from '@mantine/core';
 
 function AccordionLabel({ label, image, description }) {
   return (
@@ -26,8 +26,7 @@ function Demo() {
       <Accordion.Item label={<AccordionLabel image="./avatar.png" label="Bender Bending Rodríguez" description="..." />}>
         <Text size="sm">{item.content}</Text>
       </Accordion.Item>
-
-      {/* ... more items */}
+      {/* ... other items */}
     </Accordion>
   );
 }
@@ -37,8 +36,6 @@ interface AccordionLabelProps {
   label: string;
   image: string;
   description: string;
-  // eslint-disable-next-line react/no-unused-prop-types
-  content?: string;
 }
 
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
@@ -56,7 +53,7 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 }
 
 export function AccordionDemo(props: Partial<AccordionProps>) {
-  const items = LABELS_DATA.map((item) => (
+  const items = charactersList.map((item) => (
     <Accordion.Item label={<AccordionLabel {...item} />} key={item.label}>
       <Text size="sm">{item.content}</Text>
     </Accordion.Item>

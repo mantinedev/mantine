@@ -7,7 +7,7 @@ import useStyles from './Swatches.styles';
 
 export type SwatchesStylesNames = ClassNames<typeof useStyles>;
 
-interface SwatchesProps
+export interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
   data: string[];

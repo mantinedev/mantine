@@ -14,7 +14,7 @@ const code = `
   labelTransition="fade"
   size={2}
   styles={(theme) => ({
-    track: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
+    track: { '&::before': { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] } },
     mark: { width: 6, height: 6, borderRadius: 6, transform: 'translateX(-3px) translateY(-2px)', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
     markFilled: { borderColor: theme.colors.blue[6] },
     markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
@@ -68,8 +68,10 @@ export function Customize() {
             size={2}
             styles={(theme) => ({
               track: {
-                backgroundColor:
-                  theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                '&::before': {
+                  backgroundColor:
+                    theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+                },
               },
               mark: {
                 width: 6,

@@ -1,19 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
+import { render, screen } from '@testing-library/react';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { Text } from '../Text/Text';
-import { Breadcrumbs } from './Breadcrumbs';
-import { Breadcrumbs as BreadcrumbsStylesApi } from './styles.api';
+import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
 
-const defaultProps = {
+const defaultProps: BreadcrumbsProps = {
   children: [
     { title: 'Mantine', href: 'https://mantine.dev' },
     { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
@@ -26,30 +17,21 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Breadcrumbs', () => {
-  checkAccessibility([mount(<Breadcrumbs {...defaultProps} />)]);
-  itSupportsStylesApi(Breadcrumbs, defaultProps, Object.keys(BreadcrumbsStylesApi), 'Breadcrumbs');
-  itSupportsClassName(Breadcrumbs, defaultProps);
-  itSupportsOthers(Breadcrumbs, defaultProps);
-  itSupportsStyle(Breadcrumbs, defaultProps);
-  itSupportsMargins(Breadcrumbs, defaultProps);
-  itSupportsRef(Breadcrumbs, defaultProps, HTMLDivElement);
+  itSupportsSystemProps({
+    component: Breadcrumbs,
+    props: defaultProps,
+    displayName: '@mantine/core/Breadcrumbs',
+    refType: HTMLDivElement,
+  });
 
   it('renders correct amount of children and separators', () => {
-    const element = shallow(<Breadcrumbs {...defaultProps} />);
-    expect(element.render().find('.mantine-Breadcrumbs-breadcrumb')).toHaveLength(
-      defaultProps.children.length
-    );
-    expect(element.render().find('.mantine-Breadcrumbs-separator')).toHaveLength(
-      defaultProps.children.length - 1
-    );
+    const { container } = render(<Breadcrumbs {...defaultProps} />);
+    expect(container.querySelectorAll('.mantine-Breadcrumbs-breadcrumb')).toHaveLength(3);
+    expect(container.querySelectorAll('.mantine-Breadcrumbs-separator')).toHaveLength(2);
   });
 
   it('accepts separator from props', () => {
-    const element = shallow(<Breadcrumbs separator="test" {...defaultProps} />);
-    expect(element.render().find('.mantine-Breadcrumbs-separator').first().text()).toBe('test');
-  });
-
-  it('has correct displayName', () => {
-    expect(Breadcrumbs.displayName).toEqual('@mantine/core/Breadcrumbs');
+    render(<Breadcrumbs separator="test-separator" {...defaultProps} />);
+    expect(screen.getAllByText('test-separator')).toHaveLength(2);
   });
 });

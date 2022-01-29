@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineSize, extractMargins } from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
-import { Input, InputBaseProps } from '../Input/Input';
+import { Input, InputBaseProps, InputProps } from '../Input/Input';
 import useStyles from './Textarea.styles';
 
 export interface TextareaProps
@@ -25,7 +25,7 @@ export interface TextareaProps
   minRows?: number;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Input size */
   size?: MantineSize;
@@ -59,8 +59,19 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const uuid = useUuid(id);
     const { classes, cx } = useStyles();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const _classNames = { ...classNames, input: cx(classes.input, classNames?.input) };
+    const { margins, rest } = extractMargins(others);
+    const sharedProps: InputProps<'textarea'> = {
+      required,
+      ref,
+      invalid: !!error,
+      id: uuid,
+      classNames: { ...classNames, input: cx(classes.input, classNames?.input) },
+      styles,
+      __staticSelector,
+      size,
+      multiline: true,
+      ...rest,
+    };
 
     return (
       <InputWrapper
@@ -69,45 +80,25 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         id={uuid}
         description={description}
         required={required}
-        style={mergedStyles}
+        style={style}
         className={className}
         classNames={classNames}
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         {autosize ? (
           <Input<typeof TextareaAutosize>
-            required={required}
+            {...sharedProps}
             component={TextareaAutosize}
-            invalid={!!error}
             maxRows={maxRows}
             minRows={minRows}
-            id={uuid}
-            ref={ref}
-            classNames={_classNames}
-            styles={styles}
-            size={size}
-            multiline
-            {...rest}
           />
         ) : (
-          <Input<'textarea'>
-            component="textarea"
-            required={required}
-            id={uuid}
-            invalid={!!error}
-            rows={minRows}
-            ref={ref}
-            classNames={_classNames}
-            styles={styles}
-            size={size}
-            __staticSelector={__staticSelector}
-            multiline
-            {...rest}
-          />
+          <Input<'textarea'> {...sharedProps} component="textarea" rows={minRows} />
         )}
       </InputWrapper>
     );

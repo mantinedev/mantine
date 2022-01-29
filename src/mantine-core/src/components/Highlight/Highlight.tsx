@@ -1,7 +1,11 @@
-/* eslint-disable react/jsx-pascal-case */
 import React, { forwardRef } from 'react';
-import cx from 'clsx';
-import { MantineColor, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
+import {
+  MantineColor,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+  MantineTheme,
+  CSSObject,
+} from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 import { highlighter } from './highlighter/highlighter';
@@ -13,6 +17,9 @@ interface _HighlightProps extends SharedTextProps {
   /** Color from theme that is used for highlighting */
   highlightColor?: MantineColor;
 
+  /** Styles applied to highlighted part */
+  highlightStyles?: CSSObject | ((theme: MantineTheme) => CSSObject);
+
   /** Full string part of which will be highlighted */
   children: string;
 }
@@ -22,42 +29,36 @@ export type HighlightProps<C extends React.ElementType> = PolymorphicComponentPr
   _HighlightProps
 >;
 
-type HighlightComponent = <C extends React.ElementType = 'div'>(
+type HighlightComponent = (<C extends React.ElementType = 'div'>(
   props: HighlightProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Highlight: HighlightComponent & { displayName?: string } = forwardRef(
+export const Highlight: HighlightComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       children,
       highlight,
       highlightColor = 'yellow',
-      className,
       component,
+      highlightStyles,
       ...others
     }: HighlightProps<C>,
     ref: PolymorphicRef<C>
   ) => {
     const highlightChunks = highlighter(children, highlight);
-    const _Text = Text as any;
 
     return (
-      <_Text
-        component={component}
-        className={cx('mantine-highlight', className)}
-        ref={ref}
-        {...others}
-      >
+      <Text component={component as any} ref={ref} {...others}>
         {highlightChunks.map(({ chunk, highlighted }, i) =>
           highlighted ? (
-            <Mark key={i} color={highlightColor}>
+            <Mark key={i} color={highlightColor} sx={highlightStyles}>
               {chunk}
             </Mark>
           ) : (
             <span key={i}>{chunk}</span>
           )
         )}
-      </_Text>
+      </Text>
     );
   }
 );

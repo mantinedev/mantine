@@ -120,7 +120,7 @@ export function HeroTitle() {
             leftIcon={<GitHubLogoIcon style={{ width: 20, height: 20 }} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
-            Github
+            GitHub
           </Button>
         </Group>
       </Container>

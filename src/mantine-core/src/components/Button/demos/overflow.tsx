@@ -1,4 +1,5 @@
 import React from 'react';
+import { Group } from '../../Group';
 import { Button } from '../Button';
 
 const code = `
@@ -17,19 +18,19 @@ const code = `
 
 function Demo() {
   return (
-    <div style={{ display: 'flex' }}>
+    <Group>
       <div style={{ width: 200 }}>
         <Button fullWidth variant="outline">
           Full width button
         </Button>
       </div>
 
-      <div style={{ width: 120, marginLeft: 15 }}>
+      <div style={{ width: 120 }}>
         <Button fullWidth variant="outline">
           Button with overflow
         </Button>
       </div>
-    </div>
+    </Group>
   );
 }
 

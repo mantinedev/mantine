@@ -5,7 +5,7 @@ title: Text
 order: 1
 slug: /core/text/
 category: 'typography'
-description: 'Render text and links with theme styles'
+description: 'Display text and links with theme styles'
 props: ['Text']
 import: "import { Text } from '@mantine/core';"
 source: 'mantine-core/src/components/Text/Text.tsx'
@@ -17,7 +17,7 @@ import { TextDemos } from '@demos/core';
 
 ## Usage
 
-Use Text component to render text and links with theme styles. Control Text styles with props:
+Use Text component to display text and links with theme styles. Control Text styles with props:
 
 - **size** – font-size from `theme.fontSizes` – xs, sm, md, lg, xl
 - **color** – color from `theme.colors` – red, green, blue, etc.
@@ -47,8 +47,8 @@ To use gradient as Text color:
 
 ## Line clamp
 
-You can specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
-CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that you cannot set `padding-bottom` on text element:
+Specify maximum amount of lines with `lineClamp` prop. This option uses [-webkit-line-clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp)
+CSS property ([caniuse](https://caniuse.com/css-line-clamp)). Note that `padding-bottom` cannot be set on text element:
 
 <Demo data={TextDemos.linesConfigurator} />
 
@@ -58,15 +58,15 @@ Line clamp can also be used with any children (not only strings), for example wi
 
 ## Inherit styles
 
-By default Text always applies font-size, font-family and line-height styles,
+Text always applies font-size, font-family and line-height styles,
 but in some cases this is not a desired behavior. To force Text to inherit parent
-styles set `inherit` prop. For example, you can highlight part of [Title](/core/title/):
+styles set `inherit` prop. For example, highlight part of [Title](/core/title/):
 
 <Demo data={TextDemos.inherit} />
 
 ## Custom component
 
-By default text is rendered in div element, you can change it by setting `component` prop:
+By default, text is rendered as div element, to change it by set `component` prop:
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -79,50 +79,3 @@ import { Link } from 'react-router-dom';
   Normal link
 </Text>
 ```
-
-## TypeScript
-
-### Usage with custom component
-
-You need to pass additional type to use custom component with TypeScript
-in case you need full type coverage for events and `ref`:
-
-```tsx
-// With element
-<Text<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-// With component
-<Text<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { TextProps } from '@mantine/core';
-```
-
-`TextProps` is a generic type, it accepts either a string or component type as single type argument:
-
-```tsx
-// TextProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type AnchorTextProps = TextProps<'a'>;
-
-// TextProps with custom component, will extend React.ComponentPropsWithoutRef<typeof MyOtherComponent>
-type CustomTextProps = TextProps<typeof MyOtherComponent>;
-```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

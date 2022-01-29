@@ -11,5 +11,6 @@ export default createStyles((theme) => ({
     fontSize: theme.fontSizes.md,
     backgroundColor: 'transparent',
     textAlign: 'left',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
   },
 }));

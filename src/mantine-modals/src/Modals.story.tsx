@@ -7,12 +7,24 @@ import { ModalsProvider, useModals, ContextModalProps } from './index';
 function Demo() {
   const modals = useModals();
 
-  const showContextModal = () => modals.openContextModal('hello', { title: 'Context modal' });
+  const showContextModal = () =>
+    modals.openContextModal('hello', {
+      title: 'Context modal',
+      onClose: () => console.log('context modal closed'),
+      contextProp: 'test-modal',
+    });
 
   const showContentModal = () =>
     modals.openModal({
       title: 'Hello there',
       children: <Text color="blue">My content modal</Text>,
+      onClose: () => console.log('content modal 1 closed'),
+    });
+
+  const showSingleConfirmModal = () =>
+    modals.openConfirmModal({
+      title: 'Just confirm',
+      onClose: () => console.log('Single confirm modal closed'),
     });
 
   const showNestedModal = () =>
@@ -20,6 +32,7 @@ function Demo() {
       title: 'Are you really sure?',
       closeOnConfirm: false,
       onConfirm: () => modals.closeAll(),
+      onClose: () => console.log('confirm modal 2 closed'),
     });
 
   const showConfirmModal = () =>
@@ -36,13 +49,17 @@ function Demo() {
       ),
       onCancel: () => console.log('Cancel'),
       onConfirm: showNestedModal,
+      onClose: () => console.log('confirm modal 1 closed'),
     });
 
   return (
     <Group sx={{ padding: 40 }}>
       <Button onClick={showContextModal}>Open context modal</Button>
       <Button onClick={showConfirmModal} color="red">
-        Open confirm modal
+        Open nested confirm modal
+      </Button>
+      <Button onClick={showSingleConfirmModal} color="cyan">
+        Open single confirm modal
       </Button>
       <Button onClick={showContentModal} color="violet">
         Open content modal
@@ -54,12 +71,15 @@ function Demo() {
 storiesOf('@mantine/modals', module).add('Custom modal', () => (
   <ModalsProvider
     modals={{
-      hello: ({ context, id }: ContextModalProps) => (
-        <div>
-          <div>Test custom modal</div>
-          <Button onClick={() => context.closeModal(id)}>Close</Button>
-        </div>
-      ),
+      hello: ({ context, id, contextProp }: ContextModalProps & { contextProp: string }) => {
+        console.log(contextProp);
+        return (
+          <div>
+            <div>Test custom modal {contextProp}</div>
+            <Button onClick={() => context.closeModal(id)}>Close</Button>
+          </div>
+        );
+      },
     }}
     labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
   >
