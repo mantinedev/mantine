@@ -92,7 +92,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       classNames,
       styles,
       sx,
-      length = 6,
+      length = 4,
       onChange,
       onComplete,
       manageFocus = true,
@@ -250,6 +250,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
         spacing={spacing}
         ref={ref}
         className={className}
+        sx={sx}
         direction={direction === 'horizontal' ? 'row' : 'column'}
         {...others}
       >
@@ -275,7 +276,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
               inputsRef.current[i] = el;
             }}
             autoComplete={oneTimeCode ? 'one-time-code' : 'off'}
-            // maxLength={1}
             placeholder={focusedIndex === i ? '' : placeholder}
             classNames={classes}
             value={char}
