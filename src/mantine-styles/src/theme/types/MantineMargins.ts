@@ -1,7 +1,7 @@
 import type { MantineNumberSize } from './MantineSize';
 
 export type MantineMargin = 'm' | 'my' | 'mx' | 'mt' | 'mb' | 'ml' | 'mr';
-type MarginValue = MantineNumberSize | 'auto';
+type MarginValue = MantineNumberSize | (string & {});
 
 export interface MantineMargins {
   m?: MarginValue;

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, useExtractedMargins, useMantineTheme } from '@mantine/styles';
+import { DefaultProps, MantineSize, extractMargins, useMantineTheme } from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -30,7 +30,7 @@ export interface NativeSelectProps
   inputStyle?: React.CSSProperties;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Input size */
   size?: MantineSize;
@@ -65,7 +65,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
   ) => {
     const uuid = useUuid(id);
     const theme = useMantineTheme();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
@@ -87,19 +87,20 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
 
     return (
       <InputWrapper
-        {...wrapperProps}
         required={required}
         id={uuid}
         label={label}
         error={error}
         className={className}
-        style={mergedStyles}
+        style={style}
         description={description}
         size={size}
         styles={styles}
         classNames={classNames}
         sx={sx}
         __staticSelector="NativeSelect"
+        {...margins}
+        {...wrapperProps}
       >
         <Input<'select'>
           {...rest}

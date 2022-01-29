@@ -39,8 +39,7 @@ Then set `locale` prop in component:
 
 ## First day of the week
 
-Set the first day of the week using `firstDayOfWeek` prop.
-Accepts either `sunday` or `monday` as values.
+Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` or `monday` as values:
 
 <Demo data={MonthDemos.firstDaySunday} />
 
@@ -108,18 +107,14 @@ interface DayModifiers {
 
 ### Styles based on date
 
-`dayStyle` callback allows you to add inline styles to days.
-Function must return either styles object or null.
-
-In this example we will add red background to each Friday 13th based on date (first argument):
+`dayStyle` callback allows you to add inline styles to days. Function must return either styles object or null.
+In this example, we will add red background to each Friday 13th based on date (first argument):
 
 <Demo data={MonthDemos.styles} />
 
 ### Styles based on modifiers
 
-`dayClassName` callback allows you to add className to days.
-Function must return either className string or null.
-
-In this example we will hide all outside dates and change color of weekends based on modifiers (second argument):
+`dayClassName` callback allows you to add className to days. Function must return either className string or null.
+In this example, we will hide all outside dates and change color of weekends based on modifiers (second argument):
 
 <Demo data={MonthDemos.modifiers} />

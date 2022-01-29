@@ -1,0 +1,10 @@
+{
+  "title": "Hero section with gradient text",
+  "category": "hero",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": ["/core/text/", "/core/button/", "/core/container/", "/core/group/"],
+  "canvas": {
+    "center": false
+  }
+}

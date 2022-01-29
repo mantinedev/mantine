@@ -1,45 +1,33 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import {
-  itSupportsStyle,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStylesApi,
-  checkAccessibility,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { RangeSlider } from './RangeSlider';
-import { RangeSlider as RangeSliderStylesApi } from '../styles.api';
 
 const defaultProps = {
   thumbFromLabel: 'test-label',
   thumbToLabel: 'test-label',
 };
 
-describe('@mantine/core/RangeSlider', () => {
-  checkAccessibility([mount(<RangeSlider {...defaultProps} />)]);
-  itSupportsStyle(RangeSlider, defaultProps);
-  itSupportsClassName(RangeSlider, defaultProps);
-  itSupportsOthers(RangeSlider, defaultProps);
-  itSupportsMargins(RangeSlider, defaultProps);
-  itSupportsRef(RangeSlider, defaultProps, HTMLDivElement);
-  itSupportsStylesApi(
-    RangeSlider,
-    { label: 'test-label', labelAlwaysOn: true, marks: [{ value: 10, label: 'test' }], value: 50 },
-    Object.keys(RangeSliderStylesApi).filter((item) => item !== 'dragging'),
-    'Slider'
-  );
+const getInput = (container: HTMLElement, index: 0 | 1) =>
+  container.querySelectorAll('input[type="hidden"]')[index];
 
-  it('provides name and value to hidden inputs', () => {
-    const element = shallow(<RangeSlider name="test-input" value={[10, 20]} />);
-    expect(element.find('input[type="hidden"]').at(0).prop('value')).toBe(10);
-    expect(element.find('input[type="hidden"]').at(1).prop('value')).toBe(20);
-    expect(element.find('input[type="hidden"]').at(0).prop('name')).toBe('test-input_from');
-    expect(element.find('input[type="hidden"]').at(1).prop('name')).toBe('test-input_to');
+const expectInputValue = (value: string, container: HTMLElement, index: 0 | 1) =>
+  expect(getInput(container, index)).toHaveValue(value);
+
+describe('@mantine/core/RangeSlider', () => {
+  checkAccessibility([<RangeSlider {...defaultProps} />]);
+  itSupportsSystemProps({
+    component: RangeSlider,
+    props: defaultProps,
+    displayName: '@mantine/core/RangeSlider',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(RangeSlider.displayName).toEqual('@mantine/core/RangeSlider');
+  it('provides name and value to hidden inputs', () => {
+    const { container } = render(<RangeSlider name="test-input" value={[10, 20]} />);
+    expectInputValue('10', container, 0);
+    expectInputValue('20', container, 1);
+    expect(getInput(container, 0)).toHaveAttribute('name', 'test-input_from');
+    expect(getInput(container, 1)).toHaveAttribute('name', 'test-input_to');
   });
 });

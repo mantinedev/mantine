@@ -1,11 +1,12 @@
 import React, { useState, forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
 export type ThumbStylesNames = ClassNames<typeof useStyles>;
 
-interface ThumbProps extends DefaultProps<ThumbStylesNames> {
+export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;
   min: number;
   value: number;
@@ -61,7 +62,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <div
+      <Box
         tabIndex={0}
         role="slider"
         aria-label={thumbLabel}
@@ -81,7 +82,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        style={{ left: `${position}%` }}
+        sx={{ left: `${position}%` }}
       >
         {children}
         <Transition
@@ -96,7 +97,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
             </div>
           )}
         </Transition>
-      </div>
+      </Box>
     );
   }
 );

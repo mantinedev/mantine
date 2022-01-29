@@ -1,5 +1,7 @@
-import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { filterFalsyChildren } from '../../utils';
+import { Box } from '../Box';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -26,7 +28,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
   (
     {
       className,
-      style,
       position = 'left',
       align,
       children,
@@ -34,12 +35,13 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
       grow = false,
       spacing = 'md',
       direction = 'row',
-      sx,
+      classNames,
+      styles,
       ...others
     }: GroupProps,
     ref
   ) => {
-    const count = Children.count(children);
+    const filteredChildren = filterFalsyChildren(children);
     const { classes, cx } = useStyles(
       {
         align,
@@ -48,23 +50,21 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>(
         spacing,
         position,
         direction,
-        count,
+        count: filteredChildren.length,
       },
-      { sx, name: 'Group' }
+      { classNames, styles, name: 'Group' }
     );
 
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-
-    const items = (Children.toArray(children) as React.ReactElement[]).map((child) =>
+    const items = filteredChildren.map((child) =>
       React.cloneElement(child, {
         className: cx(classes.child, child.props.className),
       })
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {items}
-      </div>
+      </Box>
     );
   }
 );

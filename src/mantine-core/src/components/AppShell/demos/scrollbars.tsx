@@ -1,23 +1,26 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { ScrollArea } from '../../ScrollArea';
 import { Navbar } from '../Navbar/Navbar';
 import { User } from './_user';
 import { Brand } from './_brand';
 import { MainLinks } from './_mainLinks';
 
 const code = `
-import { Scrollbars } from 'react-custom-scrollbars';
-import { Navbar } from '@mantine/core';
+import { Navbar, ScrollArea } from '@mantine/core';
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs" width={{ base: 300 }}>
+    <Navbar height={600} padding={10} width={{ base: 300 }}>
       <Navbar.Section mt="xs"><Brand /></Navbar.Section>
 
-      <Navbar.Section grow mt="lg">
-        <Scrollbars>
-          {/* scrollable content here */}
-        </Scrollbars>
+      <Navbar.Section
+        grow
+        component={ScrollArea}
+        ml={-10}
+        mr={-10}
+        sx={{ paddingLeft: 10, paddingRight: 10 }}
+      >
+        {/* scrollable content here */}
       </Navbar.Section>
 
       <Navbar.Section><User /></Navbar.Section>
@@ -28,17 +31,23 @@ function Demo() {
 
 function Demo() {
   return (
-    <Navbar height={600} padding="xs" width={{ base: 300 }}>
+    <Navbar height={600} padding={10} width={{ base: 300 }}>
       <Navbar.Section mt="xs">
         <Brand />
       </Navbar.Section>
-      <Navbar.Section grow mt="lg">
-        <Scrollbars>
+      <Navbar.Section
+        grow
+        component={ScrollArea}
+        ml={-10}
+        mr={-10}
+        sx={{ paddingLeft: 10, paddingRight: 10 }}
+      >
+        <div style={{ paddingTop: 15, paddingBottom: 15 }}>
           <MainLinks />
           <MainLinks />
           <MainLinks />
           <MainLinks />
-        </Scrollbars>
+        </div>
       </Navbar.Section>
       <Navbar.Section>
         <User />

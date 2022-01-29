@@ -23,22 +23,22 @@ Image component is a wrapper around img element with option to change object fit
 
 ## Width and height
 
-In example above image takes 100% of width of its container and height is calculated dynamically based on image proportion.
-To change this behavior set image width and height to define image size.
+In the example above, the image takes 100% of width of its container and height is calculated dynamically based on image proportion.
+To change this behavior, set image width and height to define image size.
 
-Note that, if image proportions do not match given width and height some parts will be cut out.
+Note that if image proportions do not match given width and height, some parts will be cut out.
 In case you want to show image in its original proportions but fitted in current width and height set `fit="contain"`:
 
 <Demo data={ImageDemos.sizes} />
 
 ## Placeholder
 
-By default placeholders image placeholders are disabled.
+By default, placeholders image placeholders are disabled.
 Image placeholder is displayed in these cases:
 
 - `withPlaceholder` prop is set to true
 - Image is currently loading
-- Error ocurred during image loading (e.g. broken link)
+- Error occurred during image loading (e.g. broken link)
 - Image did not receive `src` prop
 
 To customize image placeholder pass any react node to `placeholder` prop.
@@ -55,7 +55,8 @@ You can add figcaption to an image with `caption` prop:
 
 ## Radius
 
-Radius has predefined values: xs, sm, md, lg, xl which are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
+Radius is applied both to image and placeholder. Radius has predefined values: xs, sm, md, lg, xl
+which are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
 Alternatively, you can use a number to set border-radius in px:
 
 ```tsx
@@ -63,8 +64,6 @@ Alternatively, you can use a number to set border-radius in px:
 <Image radius="lg" /> // -> theme predefined large radius
 <Image radius={10} /> // -> { borderRadius: 10 }
 ```
-
-Radius is applied both to image and placeholder.
 
 ## Get refs
 
@@ -80,32 +79,3 @@ function Demo() {
   return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { ImageProps } from '@mantine/core';
-```
-
-`ImageProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### ImageStylesNames type
-
-`ImageStylesNames` type is a union with Image [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { ImageStylesNames } from '@mantine/core';
-
-const imageClasses: Partial<Record<ImageStylesNames, 'string'>> = {
-  figure: 'image-figure',
-  caption: 'image-caption',
-};
-
-<Image classNames={imageClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

@@ -4,9 +4,10 @@ interface PopoverBodyStyles {
   shadow: MantineShadow;
   radius: MantineNumberSize;
   spacing: MantineNumberSize;
+  width?: number | string;
 }
 
-export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyles) => ({
+export default createStyles((theme, { radius, shadow, spacing, width }: PopoverBodyStyles) => ({
   title: {},
 
   wrapper: {
@@ -17,6 +18,7 @@ export default createStyles((theme, { radius, shadow, spacing }: PopoverBodyStyl
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     pointerEvents: 'all',
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    width,
   },
 
   body: {

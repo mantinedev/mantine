@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthenticationForm } from '@mantine/core/demos';
 import { useMantineTheme } from '@mantine/core';
-import CodeDemo from '../../../components/Demo/CodeDemo/CodeDemo';
+import { CodeDemo } from '@mantine/ds';
 
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -12,7 +12,7 @@ export function UseFormAuthDemo({ toggle = false }: { toggle: boolean }) {
 
   return (
     <CodeDemo
-      code={code}
+      code={code.replace('../../src', '@mantine/core')}
       language="tsx"
       toggle={toggle}
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}

@@ -1,6 +1,6 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import { useMove, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, useMantineTheme } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
@@ -115,6 +115,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     }: RangeSliderProps,
     ref
   ) => {
+    const theme = useMantineTheme();
     const [focused, setFocused] = useState(-1);
     const [hovered, setHovered] = useState(false);
     const [_value, setValue] = useUncontrolled<Value>({
@@ -136,6 +137,15 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       setValue(val);
       _valueRef.current = val;
     };
+
+    useEffect(
+      () => {
+        if (Array.isArray(value)) {
+          _valueRef.current = value;
+        }
+      },
+      Array.isArray(value) ? [value[0], value[1]] : [null, null]
+    );
 
     const setRangedValue = (val: number, index: number) => {
       const clone: Value = [..._valueRef.current];
@@ -168,7 +178,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       setRangedValue(nextValue, thumbIndex.current);
     };
 
-    const { ref: container, active } = useMove(({ x }) => handleChange(x));
+    const { ref: container, active } = useMove(({ x }) => handleChange(x), undefined, theme.dir);
 
     function handleThumbMouseDown(
       event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -202,8 +212,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
       const nearestHandle =
         Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
+      const _nearestHandle = theme.dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
 
-      thumbIndex.current = nearestHandle;
+      thumbIndex.current = _nearestHandle;
     };
 
     const getFocusedThumbIndex = () => {
@@ -217,8 +228,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
       switch (event.nativeEvent.code) {
-        case 'ArrowUp':
-        case 'ArrowRight': {
+        case 'ArrowUp': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
@@ -228,14 +238,49 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           );
           break;
         }
+        case 'ArrowRight': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          setRangedValue(
+            Math.min(
+              Math.max(
+                theme.dir === 'rtl'
+                  ? _valueRef.current[focusedIndex] - step
+                  : _valueRef.current[focusedIndex] + step,
+                min
+              ),
+              max
+            ),
+            focusedIndex
+          );
+          break;
+        }
 
-        case 'ArrowDown':
-        case 'ArrowLeft': {
+        case 'ArrowDown': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
             Math.min(Math.max(_valueRef.current[focusedIndex] - step, min), max),
+            focusedIndex
+          );
+          break;
+        }
+        case 'ArrowLeft': {
+          event.preventDefault();
+          const focusedIndex = getFocusedThumbIndex();
+          thumbs.current[focusedIndex].focus();
+          setRangedValue(
+            Math.min(
+              Math.max(
+                theme.dir === 'rtl'
+                  ? _valueRef.current[focusedIndex] + step
+                  : _valueRef.current[focusedIndex] - step,
+                min
+              ),
+              max
+            ),
             focusedIndex
           );
           break;

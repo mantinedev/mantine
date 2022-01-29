@@ -3,7 +3,6 @@ import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '../../
 import { demoBase } from './_demo-base';
 
 const code = `
-import React from 'react';
 import { Card, Image, Text, Badge, Button, Group, useMantineTheme } from '@mantine/core';
 
 function Demo() {

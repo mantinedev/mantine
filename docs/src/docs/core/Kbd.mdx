@@ -17,8 +17,6 @@ import { KbdDemos } from '@demos/core';
 
 ## Usage
 
-Use kbd html element to describe keyboard actions and shortcuts:
-
 <Demo data={KbdDemos.usage} />
 
 ## Example
@@ -27,13 +25,3 @@ Usage example with [TextInput](/core/text-input/) component
 – Kbd is used to describe keyboard shortcut to focus input:
 
 <Demo data={KbdDemos.input} />
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { KbdProps } from '@mantine/core';
-```
-
-`KbdProps` extends `React.ComponentPropsWithoutRef<'kbd'>`, all other props are available under _Component props_ tab.

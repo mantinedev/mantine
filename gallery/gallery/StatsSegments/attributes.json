@@ -1,0 +1,29 @@
+{
+  "title": "Stats with segments",
+  "category": "stats",
+  "author": "rtivital",
+  "responsive": true,
+  "dimmed": true,
+  "dependencies": [
+    "/core/progress/",
+    "/core/box/",
+    "/core/text/",
+    "/core/group/",
+    "/core/paper/",
+    "/core/simple-grid/",
+    "tabler-icons-react"
+  ],
+  "props": {
+    "total": "345,765",
+    "diff": 18,
+    "data": [
+      { "label": "Mobile", "count": "204,001", "part": 59, "color": "#47d6ab" },
+      { "label": "Desktop", "count": "121,017", "part": 35, "color": "#03141a" },
+      { "label": "Tablet", "count": "31,118", "part": 6, "color": "#4fcdf7" }
+    ]
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 440
+  }
+}

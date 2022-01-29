@@ -1,0 +1,17 @@
+{
+  "title": "404 page",
+  "category": "error-pages",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/title/",
+    "/core/text/",
+    "/core/container/",
+    "/core/button/",
+    "/core/group/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

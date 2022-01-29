@@ -10,6 +10,9 @@ export interface TransitionProps {
   /** Transition duration in ms */
   duration?: number;
 
+  /** Exit transition duration in ms */
+  exitDuration?: number;
+
   /** Transition timing function, defaults to theme.transitionTimingFunction */
   timingFunction?: string;
 
@@ -35,6 +38,7 @@ export interface TransitionProps {
 export function Transition({
   transition,
   duration = 250,
+  exitDuration = duration,
   mounted,
   children,
   timingFunction,
@@ -45,6 +49,7 @@ export function Transition({
 }: TransitionProps) {
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
+    exitDuration,
     duration,
     timingFunction,
     onExit,

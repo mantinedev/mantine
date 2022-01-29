@@ -61,7 +61,7 @@ function StyledAccordion(props: AccordionProps) {
 
 function Demo() {
   return (
-    <StyledAccordion>
+    <StyledAccordion initialItem={0}>
       {/* <Accordion.Item /> components */}
     </StyledAccordion>
   );
@@ -122,7 +122,7 @@ export function StyledAccordion(props: AccordionProps) {
 function Demo() {
   return (
     <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
-      <StyledAccordion>{baseDemoItems}</StyledAccordion>
+      <StyledAccordion initialItem={0}>{baseDemoItems}</StyledAccordion>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { Kbd, TextInput } from '../../../index';
 
 const code = `
-import React from 'react';
 import { Kbd, TextInput } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 

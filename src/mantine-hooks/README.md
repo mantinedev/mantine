@@ -53,6 +53,11 @@ npm install @mantine/hooks
 - [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) – track element size changes with ResizeObserver
 - [use-mouse](https://mantine.dev/hooks/use-mouse/) – track mouse position over document or given element
 - [use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) – get viewport width and height
+- [use-hover](https://mantine.dev/hooks/use-hover/) – detect when mouse is over a given element
+- [use-os](https://mantine.dev/hooks/use-os/) – detect user OS
+- [use-scroll-into-view](https://mantine.dev/hooks/use-scroll-into-view/) – scroll given node into view within scrollable container or body element
+- [use-set-state](https://mantine.dev/hooks/use-set-state/) – work with state like in class components
+- [use-input-state](https://mantine.dev/hooks/use-input-state/) – manage state of both native and custom inputs
 
 ## License
 

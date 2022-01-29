@@ -2,7 +2,6 @@ import React from 'react';
 import { Prism } from '../Prism';
 
 const demoCode = `
-import React from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {

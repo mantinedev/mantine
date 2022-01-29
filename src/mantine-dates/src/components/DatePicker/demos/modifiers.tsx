@@ -14,6 +14,10 @@ const useStyles = createStyles((theme) => ({
   weekend: {
     color: \`\${theme.colors.blue[6]} !important\`,
   },
+
+  selected: {
+    color: \`\${theme.white} !important\`,
+  },
 }));
 
 
@@ -25,9 +29,12 @@ function Demo() {
       disableOutsideEvents
       placeholder="Pick date"
       label="Event date"
-      initialMonth={new Date(2021, 7)}
       dayClassName={(date, modifiers) =>
-        cx({ [classes.outside]: modifiers.outside, [classes.weekend]: modifiers.weekend })
+        cx({
+          [classes.outside]: modifiers.outside,
+          [classes.weekend]: modifiers.weekend,
+          [classes.selected]: modifiers.selected,
+        })
       }
     />
   );
@@ -42,6 +49,10 @@ const useStyles = createStyles((theme) => ({
   weekend: {
     color: `${theme.colors.blue[6]} !important`,
   },
+
+  selected: {
+    color: `${theme.white} !important`,
+  },
 }));
 
 function Demo() {
@@ -53,9 +64,12 @@ function Demo() {
         disableOutsideEvents
         placeholder="Pick date"
         label="Event date"
-        initialMonth={new Date(2021, 7)}
         dayClassName={(date, modifiers) =>
-          cx({ [classes.outside]: modifiers.outside, [classes.weekend]: modifiers.weekend })
+          cx({
+            [classes.outside]: modifiers.outside,
+            [classes.weekend]: modifiers.weekend,
+            [classes.selected]: modifiers.selected,
+          })
         }
       />
     </div>

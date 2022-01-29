@@ -6,8 +6,9 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Switch.styles';
 
 export type SwitchStylesNames = ClassNames<typeof useStyles>;
@@ -21,17 +22,23 @@ export interface SwitchProps
   /** Switch label */
   label?: React.ReactNode;
 
+  /** Inner label when Switch is in unchecked state */
+  offLabel?: string;
+
+  /** Inner label when Switch is in checked state */
+  onLabel?: string;
+
   /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
   color?: MantineColor;
 
   /** Predefined size value */
   size?: MantineSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 }
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
@@ -40,6 +47,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       className,
       color,
       label,
+      offLabel = '',
+      onLabel = '',
       id,
       style,
       size = 'sm',
@@ -54,14 +63,20 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { size, color, radius },
-      { classNames, styles, sx, name: 'Switch' }
+      { size, color, radius, offLabel, onLabel },
+      { classNames, styles, name: 'Switch' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...margins}
+        {...wrapperProps}
+      >
         <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
 
         {label && (
@@ -69,7 +84,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             {label}
           </label>
         )}
-      </div>
+      </Box>
     );
   }
 );

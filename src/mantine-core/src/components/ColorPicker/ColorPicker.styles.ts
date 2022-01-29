@@ -16,7 +16,7 @@ export const sizes = {
 export default createStyles((theme, { size, fullWidth }: ColorPickerStyles) => ({
   preview: {},
 
-  root: {
+  wrapper: {
     boxSizing: 'border-box',
     width: fullWidth ? '100%' : theme.fn.size({ size, sizes }),
     padding: 1,

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { Anchor } from '../Anchor';
+import { Box } from '../Box';
 import useStyles from './Spoiler.styles';
 
 export type SpoilerStylesNames = ClassNames<typeof useStyles>;
@@ -31,7 +32,6 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
   (
     {
       className,
-      style,
       children,
       maxHeight = 100,
       hideLabel,
@@ -41,16 +41,14 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
       initialState = false,
       classNames,
       styles,
-      sx,
       ...others
     }: SpoilerProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { transitionDuration },
-      { sx, classNames, styles, name: 'Spoiler' }
+      { classNames, styles, name: 'Spoiler' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const [show, setShowState] = useState(initialState);
     const [spoiler, setSpoilerState] = useState(initialState);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -62,7 +60,7 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
     }, [maxHeight, children]);
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <div
           className={classes.content}
           style={{
@@ -82,7 +80,7 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
             {spoilerMoreContent}
           </Anchor>
         )}
-      </div>
+      </Box>
     );
   }
 );

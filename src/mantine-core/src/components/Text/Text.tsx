@@ -4,10 +4,10 @@ import {
   MantineSize,
   MantineGradient,
   MantineColor,
-  useExtractedMargins,
   PolymorphicComponentProps,
   PolymorphicRef,
 } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
@@ -24,7 +24,7 @@ export interface SharedTextProps extends DefaultProps {
   transform?: 'capitalize' | 'uppercase' | 'lowercase';
 
   /** Sets text-align css property */
-  align?: 'left' | 'center' | 'right';
+  align?: 'left' | 'center' | 'right' | 'justify';
 
   /** Link or text variant */
   variant?: 'text' | 'link' | 'gradient';
@@ -35,6 +35,9 @@ export interface SharedTextProps extends DefaultProps {
   /** Sets line-height to 1 for centering */
   inline?: boolean;
 
+  /** Underline the text */
+  underline?: boolean;
+
   /** Inherit font properties from parent element */
   inherit?: boolean;
 
@@ -44,20 +47,18 @@ export interface SharedTextProps extends DefaultProps {
 
 export type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, SharedTextProps>;
 
-type TextComponent = <C extends React.ElementType = 'div'>(
+type TextComponent = (<C extends React.ElementType = 'div'>(
   props: TextProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Text: TextComponent & { displayName?: string } = forwardRef(
+export const Text: TextComponent = forwardRef(
   <C extends React.ElementType = 'div'>(
     {
       className,
       component,
-      children,
       size = 'md',
       weight,
       transform,
-      style,
       color,
       align,
       variant = 'text',
@@ -65,7 +66,9 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,
-      sx,
+      underline,
+      classNames,
+      styles,
       ...others
     }: TextProps<C>,
     ref: PolymorphicRef<C>
@@ -78,29 +81,24 @@ export const Text: TextComponent & { displayName?: string } = forwardRef(
         lineClamp,
         inline,
         inherit,
+        underline,
+        weight,
+        transform,
+        align,
         gradientFrom: gradient.from,
         gradientTo: gradient.to,
         gradientDeg: gradient.deg,
       },
-      { sx, name: 'Text' }
+      { classNames, styles, name: 'Text' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const Element = component || 'div';
 
-    return React.createElement(
-      Element,
-      {
-        ref,
-        className: cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className),
-        style: {
-          fontWeight: inherit ? 'inherit' : weight,
-          textTransform: transform,
-          textAlign: align,
-          ...mergedStyles,
-        },
-        ...rest,
-      },
-      children
+    return (
+      <Box<any>
+        ref={ref}
+        component={component || 'div'}
+        className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
+        {...others}
+      />
     );
   }
 );

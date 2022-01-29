@@ -1,0 +1,9 @@
+{
+  "title": "Social buttons",
+  "category": "buttons",
+  "author": "rtivital",
+  "dependencies": ["/core/button/", "/core/group/", "@primer/octicons-react"],
+  "canvas": {
+    "center": true
+  }
+}

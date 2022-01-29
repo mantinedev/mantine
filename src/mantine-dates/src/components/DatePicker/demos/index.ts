@@ -1,7 +1,6 @@
 export { usage } from './usage';
 export { modal } from './modal';
 export { configurator } from './configurator';
-export { withSelect } from './withSelect';
 export { boundaries } from './boundaries';
 export { exclude } from './exclude';
 export { styles } from './styles';
@@ -15,3 +14,4 @@ export { validation } from './validation';
 export { disabled } from './disabled';
 export { freeInput } from './freeInput';
 export { multipleMonths } from './multipleMonths';
+export { noLevel } from './noLevel';

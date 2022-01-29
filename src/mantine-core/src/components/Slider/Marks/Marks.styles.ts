@@ -10,6 +10,7 @@ export default createStyles((theme, { size, color }: MarksStyles) => ({
   markWrapper: {
     position: 'absolute',
     top: 0,
+    zIndex: 2,
   },
 
   mark: {
@@ -17,7 +18,6 @@ export default createStyles((theme, { size, color }: MarksStyles) => ({
     border: `${theme.fn.size({ size, sizes }) >= 8 ? '2px' : '1px'} solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
-    zIndex: 1,
     height: theme.fn.size({ sizes, size }),
     width: theme.fn.size({ sizes, size }),
     borderRadius: 1000,

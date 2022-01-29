@@ -10,7 +10,7 @@ const code = `
   rel="noopener noreferrer"
   href="https://twitter.com/mantinedev"
   leftIcon={<TwitterLogoIcon width={18} height={18} />}
-  styles={{
+  styles={(theme) => ({
     root: {
       backgroundColor: '#00acee',
       border: 0,
@@ -19,14 +19,14 @@ const code = `
       paddingRight: 20,
 
       '&:hover': {
-        backgroundColor: '#00acee !important',
+        backgroundColor: theme.fn.darken('#00acee', 0.05),
       },
     },
 
     leftIcon: {
       marginRight: 15,
     },
-  }}
+  })}
 >
   Follow on Twitter
 </Button>
@@ -41,7 +41,7 @@ function Demo() {
         rel="noopener noreferrer"
         href="https://twitter.com/mantinedev"
         leftIcon={<TwitterLogoIcon width={18} height={18} />}
-        styles={{
+        styles={(theme) => ({
           root: {
             backgroundColor: '#00acee',
             border: 0,
@@ -50,14 +50,14 @@ function Demo() {
             paddingRight: 20,
 
             '&:hover': {
-              backgroundColor: '#00acee !important',
+              backgroundColor: theme.fn.darken('#00acee', 0.05),
             },
           },
 
           leftIcon: {
             marginRight: 15,
           },
-        }}
+        })}
       >
         Follow on Twitter
       </Button>

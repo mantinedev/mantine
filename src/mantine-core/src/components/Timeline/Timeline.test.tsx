@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsStylesApi,
-  itSupportsMargins,
-} from '@mantine/tests';
+import { render } from '@testing-library/react';
+import { itFiltersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
-import { Timeline as TimelineStylesApi } from './styles.api';
 
 const defaultProps = {
   children: [
@@ -21,23 +15,30 @@ const defaultProps = {
 };
 
 describe('@mantine/core/Timeline', () => {
-  itSupportsClassName(Timeline, defaultProps);
-  itSupportsStyle(Timeline, defaultProps);
-  itSupportsOthers(Timeline, defaultProps);
-  itSupportsMargins(Timeline, defaultProps);
-
-  itSupportsStylesApi(
-    Timeline,
-    { ...defaultProps, active: 1 },
-    Object.keys(TimelineStylesApi),
-    'Timeline'
-  );
-
-  it('exports Timeline.Item', () => {
-    expect(Timeline.Item).toBe(TimelineItem);
+  itSupportsSystemProps({
+    component: Timeline,
+    props: defaultProps,
+    displayName: '@mantine/core/Timeline',
+    refType: HTMLDivElement,
   });
 
-  it('has correct displayName', () => {
-    expect(Timeline.displayName).toEqual('@mantine/core/Timeline');
+  itFiltersChildren(Timeline, defaultProps, '.mantine-Timeline-item', [
+    <Timeline.Item>Child 1</Timeline.Item>,
+    <Timeline.Item>Child 2</Timeline.Item>,
+  ]);
+
+  it('handles active item correctly', () => {
+    const { container: secondActive } = render(<Timeline {...defaultProps} active={1} />);
+    const { container: thirdActive } = render(<Timeline {...defaultProps} active={2} />);
+
+    expect(secondActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(2);
+    expect(secondActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(1);
+
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(2);
+  });
+
+  it('exposes TimelineItem as Timeline.Item', () => {
+    expect(Timeline.Item).toBe(TimelineItem);
   });
 });

@@ -1,13 +1,19 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, MantineNumberSize } from '@mantine/core';
 
 interface RichTextEditorStyles {
   saveLabel: string;
   editLabel: string;
   removeLabel: string;
+  radius: MantineNumberSize;
+  readOnly: boolean;
 }
 
 export default createStyles(
-  (theme, { saveLabel, removeLabel, editLabel }: RichTextEditorStyles) => ({
+  (theme, { saveLabel, removeLabel, editLabel, radius, readOnly }: RichTextEditorStyles) => ({
+    toolbar: {
+      display: readOnly ? 'none' : undefined,
+    },
+
     root: {
       ...theme.fn.fontStyles(),
       fontSize: theme.fontSizes.sm,
@@ -15,9 +21,14 @@ export default createStyles(
         theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
       }`,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-      borderRadius: theme.radius.sm,
+      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       position: 'relative',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+      '& .ql-toolbar': {
+        borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderTopLeftRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      },
 
       '& .ql-container': {
         position: 'relative',
@@ -148,6 +159,49 @@ export default createStyles(
         textAlign: 'right',
       },
 
+      '& .ql-mention-list-container': {
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        borderRadius: theme.radius.sm,
+        overflow: 'hidden',
+
+        '& .ql-mention-list': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+          paddingLeft: 0,
+          marginTop: 0,
+          margin: 0,
+          listStyleType: 'none',
+
+          '& .ql-mention-list-item': {
+            padding: theme.spacing.xs,
+            textDecoration: 'none',
+            cursor: 'pointer',
+          },
+
+          '& .selected': {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+            color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+            textDecoration: 'none',
+          },
+        },
+      },
+
+      '& .mention': {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor:
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
+        padding: '3px 5px',
+        height: 24,
+        width: 65,
+        marginRight: 2,
+        borderRadius: theme.radius.sm,
+        userSelect: 'all',
+        pointerEvents: 'none',
+      },
+
       '& iframe.ql-video': {
         width: '100%',
         height: 400,
@@ -207,6 +261,36 @@ export default createStyles(
       '& p': {
         marginTop: 0,
         marginBottom: theme.spacing.sm,
+      },
+
+      '& pre': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: theme.spacing.xs,
+        margin: 0,
+        overflowX: 'auto',
+      },
+
+      '& code': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: `2px ${theme.spacing.xs / 2}px`,
       },
 
       '& blockquote': {

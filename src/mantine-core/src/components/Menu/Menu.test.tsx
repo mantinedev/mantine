@@ -1,119 +1,122 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsRef,
+  itSupportsSystemProps,
+  itSupportsFocusEvents,
+  renderWithAct,
+  actAsync,
 } from '@mantine/tests';
-import { Divider } from '../Divider/Divider';
-import { Button } from '../Button/Button';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
-import { MenuBody } from './MenuBody/MenuBody';
+import { Divider } from '../Divider';
+import { Button } from '../Button';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
-import { Menu } from './Menu';
+import { Menu, MenuProps } from './Menu';
 
-const defaultProps = {
-  opened: true,
-  children: <MenuItem>test-item</MenuItem>,
+const defaultProps: MenuProps = {
+  transitionDuration: 0,
+  menuButtonLabel: 'test-menu',
+  withinPortal: false,
+  children: [
+    <Menu.Item>test-1</Menu.Item>,
+    <Menu.Item>test-2</Menu.Item>,
+    <Divider />,
+    <Menu.Item>test-3</Menu.Item>,
+    <Divider />,
+  ],
 };
 
 describe('@mantine/core/Menu', () => {
-  checkAccessibility([
-    mount(
-      <Menu menuButtonLabel="test menu">
-        <Menu.Item>test-1</Menu.Item>
-        <Menu.Item>test-2</Menu.Item>
-        <Divider />
-        <Menu.Item>test-3</Menu.Item>
-        <Divider />
-      </Menu>
-    ),
-  ]);
-
-  itSupportsClassName(Menu, defaultProps);
-  itSupportsStyle(Menu, defaultProps);
-  itSupportsOthers(Menu, defaultProps);
-  itSupportsRef(Menu, defaultProps, HTMLButtonElement);
-
-  it('passes props to MenuBody component', () => {
-    const element = shallow(
-      <Menu
-        opened
-        shadow="xl"
-        size="xs"
-        transitionDuration={645}
-        closeOnItemClick={false}
-        menuBodyProps={{ 'data-test-menu': true, style: { color: 'red' } }}
-      >
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-      </Menu>
-    ).find(MenuBody);
-
-    expect(element.prop('children')).toHaveLength(3);
-    expect(element.prop('shadow')).toBe('xl');
-    expect(element.prop('size')).toBe('xs');
-    expect(element.prop('transitionDuration')).toBe(645);
-    expect(element.prop('closeOnItemClick')).toBe(false);
-    expect(element.prop('data-test-menu')).toBe(true);
-    expect(element.prop('style').color).toBe('red');
+  checkAccessibility([<Menu opened {...defaultProps} />]);
+  itSupportsFocusEvents(Menu, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsSystemProps({
+    component: Menu,
+    props: defaultProps,
+    displayName: '@mantine/core/Menu',
+    refType: HTMLButtonElement,
   });
 
-  it('calls onClose and onOpen function with corresponding events', () => {
+  it('calls onClose and onOpen function with corresponding events', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();
-
-    const element = shallow(
-      <Menu onOpen={onOpen} onClose={onClose}>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-      </Menu>
-    );
-
-    element.find(ActionIcon).simulate('click');
-    element.find(ActionIcon).simulate('click');
-
+    await renderWithAct(<Menu onOpen={onOpen} onClose={onClose} {...defaultProps} />);
+    userEvent.click(screen.getByLabelText('test-menu'));
+    userEvent.click(screen.getByLabelText('test-menu'));
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('accepts control from props', () => {
-    const element = shallow(
-      <Menu control={<Button>Test button</Button>}>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
+  it('accepts control from props', async () => {
+    const { container } = await renderWithAct(
+      <Menu
+        {...defaultProps}
+        control={
+          <button type="button" className="test-button">
+            Test button
+          </button>
+        }
+      />
+    );
+
+    expect(container.querySelector('.test-button')).toBeInTheDocument();
+  });
+
+  it('opens menu when controlled is clicked and trigger prop is "click"', async () => {
+    const { container } = await renderWithAct(<Menu {...defaultProps} />);
+    expect(container.querySelector('.mantine-Menu-body')).toBe(null);
+    await actAsync(() => userEvent.click(screen.getByLabelText('test-menu')));
+    expect(container.querySelector('.mantine-Menu-body')).toBeInTheDocument();
+  });
+
+  it('opens menu when controlled is hovered and trigger prop is "hover"', async () => {
+    const { container } = await renderWithAct(<Menu {...defaultProps} trigger="hover" />);
+    expect(container.querySelector('.mantine-Menu-body')).toBe(null);
+    await actAsync(() => userEvent.hover(screen.getByLabelText('test-menu')));
+    expect(container.querySelector('.mantine-Menu-body')).toBeInTheDocument();
+  });
+
+  it('filters out unexpected children', async () => {
+    const { container } = await renderWithAct(
+      <Menu withinPortal={false} opened>
+        <Menu.Item>Child 1</Menu.Item>
+        <Menu.Label>Label 1</Menu.Label>
+        <Menu.Label>Label 2</Menu.Label>
+        <Divider />
+        <Divider />
+        <p className="unexpected">Unexpected child 1</p>
+        <div className="unexpected">Unexpected child 1</div>
+        <Menu.Item>Child 2</Menu.Item>
+        <Button>Unexpected component</Button>
       </Menu>
     );
 
-    expect(element.find(Button).type()).toBe(Button);
-    expect(element.find(Button).dive().text()).toBe('Test button');
+    expect(container.querySelectorAll('.mantine-Menu-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Menu-label')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Menu-divider')).toHaveLength(2);
+    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
+    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
-  it('uses menuId prop to bind control and menu body', () => {
-    const element = shallow(
-      <Menu menuId="test-id">
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-        <Menu.Item>test-item</Menu.Item>
-      </Menu>
+  it('preserves control onClick event', async () => {
+    const spy = jest.fn();
+    await renderWithAct(
+      <Menu
+        {...defaultProps}
+        control={
+          <button type="button" className="test-button" onClick={spy}>
+            Test button
+          </button>
+        }
+      />
     );
 
-    expect(element.find(ActionIcon).prop('aria-controls')).toBe('test-id');
-    expect(element.find(MenuBody).prop('id')).toBe('test-id');
+    await actAsync(() => userEvent.click(screen.getByLabelText('test-menu')));
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('exports Menu.Item and Menu.Label components', () => {
+  it('exposes Menu.Item and Menu.Label components', () => {
     expect(Menu.Item).toBe(MenuItem);
     expect(Menu.Label).toBe(MenuLabel);
-  });
-
-  it('has correct displayName', () => {
-    expect(Menu.displayName).toEqual('@mantine/core/Menu');
   });
 });

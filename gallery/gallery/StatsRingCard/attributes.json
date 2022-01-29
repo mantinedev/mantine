@@ -1,0 +1,22 @@
+{
+  "title": "Stats card with progress",
+  "category": "app-cards",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dimmed": true,
+  "dependencies": ["/core/card/", "/core/text/", "/core/group/", "/core/ring-progress/"],
+  "props": {
+    "title": "Project tasks",
+    "completed": 1887,
+    "total": 2334,
+    "stats": [
+      { "value": 447, "label": "Remaining" },
+      { "value": 76, "label": "In progress" }
+    ]
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

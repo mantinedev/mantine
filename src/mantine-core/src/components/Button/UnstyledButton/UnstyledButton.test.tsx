@@ -1,20 +1,15 @@
-import {
-  itRendersChildren,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsRef,
-  itSupportsStyle,
-} from '@mantine/tests';
-import { UnstyledButton } from './UnstyledButton';
+import { itRendersChildren, itSupportsFocusEvents, itSupportsSystemProps } from '@mantine/tests';
+import { UnstyledButton, UnstyledButtonProps } from './UnstyledButton';
+
+const defaultProps: UnstyledButtonProps = {};
 
 describe('@mantine/core/UnstyledButton', () => {
-  itRendersChildren(UnstyledButton, {});
-  itSupportsClassName(UnstyledButton, {});
-  itSupportsOthers(UnstyledButton, {});
-  itSupportsStyle(UnstyledButton, {});
-  itSupportsRef(UnstyledButton, {}, HTMLButtonElement);
-
-  it('has correct displayName', () => {
-    expect(UnstyledButton.displayName).toEqual('@mantine/core/UnstyledButton');
+  itRendersChildren(UnstyledButton, defaultProps);
+  itSupportsFocusEvents(UnstyledButton, defaultProps, 'button');
+  itSupportsSystemProps({
+    component: UnstyledButton,
+    props: defaultProps,
+    displayName: '@mantine/core/UnstyledButton',
+    refType: HTMLButtonElement,
   });
 });

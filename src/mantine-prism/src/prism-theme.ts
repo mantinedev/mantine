@@ -15,7 +15,7 @@ export const dark = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['string', 'inserted', 'selector'],
+      types: ['string', 'inserted', 'selector', 'atrule'],
       style: {
         color: theme.colors.teal[4],
       },
@@ -115,7 +115,7 @@ export const light = (theme: MantineTheme): PrismTheme => ({
       },
     },
     {
-      types: ['builtin', 'char', 'constant', 'function', 'selector'],
+      types: ['builtin', 'char', 'constant', 'function', 'selector', 'atrule'],
       style: {
         color: theme.colors.lime[9],
       },

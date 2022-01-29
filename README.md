@@ -8,8 +8,6 @@
 [![Discord](https://img.shields.io/badge/Chat%20on-Discord-%235865f2)](https://discord.gg/eUZpPbpxb4)
 [![Twitter Follow](https://img.shields.io/twitter/follow/mantinedev?style=social)](https://twitter.com/mantinedev)
 
-Mantine is a MIT licensed open source react components and hooks library with focus on usability, accessibility and developer experience.
-
 ## Links
 
 - [Documentation](https://mantine.dev/)
@@ -28,6 +26,7 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 - [`@mantine/prism`](https://mantine.dev/others/prism/) – code highlight built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
 - [`@mantine/rte`](https://mantine.dev/others/rte/) – a Quill based rich text editor
 - [`@mantine/dropzone`](https://mantine.dev/others/dropzone/) – manages files drag 'n' drop to an area or entire screen
+- [`@mantine/modals`](https://mantine.dev/others/modals/) – centralized modals manager
 - [`@mantine/ssr`](https://mantine.dev/theming/ssr/) – server side rendering utilities
 - [`@mantine/next`](https://mantine.dev/theming/next/) – server side rendering utilities for Next.js
 - [`gatsby-plugin-mantine`](https://mantine.dev/theming/gatsby/) – Gatsby plugin to setup server side rendering
@@ -38,7 +37,7 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 Mantine has a very friendly community, we are always happy to help you get started:
 
 - [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is an easiest way to get help, all questions are usually answered in about 30 minutes
-- [Github Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
+- [GitHub Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
 
 ## Contributors
 

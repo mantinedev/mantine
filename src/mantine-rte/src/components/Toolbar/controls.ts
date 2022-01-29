@@ -12,10 +12,21 @@ import {
   TextAlignCenterIcon,
   VideoIcon,
   QuoteIcon,
+  CodeIcon,
 } from '@modulz/radix-icons';
 import { OrderedList, H1, H2, H3, H4, H5, H6, Sub, Sup } from './icons';
 
 export const CONTROLS = {
+  code: {
+    icon: CodeIcon,
+    controls: 'code',
+  },
+
+  codeBlock: {
+    icon: CodeIcon,
+    controls: 'code-block',
+  },
+
   bold: {
     icon: FontBoldIcon,
     controls: 'bold',

@@ -1,4 +1,5 @@
 import { TransitionStatus } from 'react-transition-group';
+import { CSSObject } from '@mantine/core';
 import { NotificationsProviderPositioning } from '../../types';
 
 interface NotificationStateStylesProps {
@@ -27,11 +28,11 @@ export default function getNotificationStateStyles({
   maxHeight,
   positioning,
   transitionDuration,
-}: NotificationStateStylesProps): React.CSSProperties {
+}: NotificationStateStylesProps): CSSObject {
   const [vertical, horizontal] = positioning;
   const property = horizontal === 'center' ? `${vertical}-center` : horizontal;
 
-  const commonStyles: React.CSSProperties = {
+  const commonStyles: CSSObject = {
     opacity: 0,
     maxHeight,
     transform: transforms[property],
@@ -40,12 +41,12 @@ export default function getNotificationStateStyles({
     transitionProperty: 'opacity, transform, max-height',
   };
 
-  const inState: React.CSSProperties = {
+  const inState: CSSObject = {
     opacity: 1,
     transform: noTransform[property],
   };
 
-  const outState: React.CSSProperties = {
+  const outState: CSSObject = {
     opacity: 0,
     maxHeight: 0,
     transform: transforms[property],

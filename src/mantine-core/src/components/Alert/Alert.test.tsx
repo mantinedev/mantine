@@ -1,71 +1,55 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsClassName,
-  itRendersChildren,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Text } from '../Text/Text';
-import { CloseButton } from '../ActionIcon';
-import { Alert } from './Alert';
-import { Alert as AlertStylesApi } from './styles.api';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { checkAccessibility, itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { Alert, AlertProps } from './Alert';
 
-const defaultProps = {
+const defaultProps: AlertProps = {
   title: 'test-title',
   children: 'test-alert',
-  icon: '$',
   withCloseButton: true,
+  closeButtonLabel: 'test-close',
 };
 
 describe('@mantine/core/Alert', () => {
-  itSupportsStylesApi(Alert, defaultProps, Object.keys(AlertStylesApi), 'Alert');
-  itSupportsClassName(Alert, defaultProps);
-  itSupportsOthers(Alert, defaultProps);
-  itSupportsStyle(Alert, defaultProps);
-  itSupportsMargins(Alert, defaultProps);
-  itRendersChildren(Alert, {});
-  itSupportsRef(Alert, {}, HTMLDivElement);
+  itRendersChildren(Alert, defaultProps);
+  checkAccessibility([<Alert {...defaultProps} />]);
+  itSupportsSystemProps({
+    component: Alert,
+    props: defaultProps,
+    displayName: '@mantine/core/Alert',
+    refType: HTMLDivElement,
+  });
 
-  checkAccessibility([
-    mount(
-      <Alert title="Error happened" color="red">
-        <Text>Something bad happened</Text>
-      </Alert>
-    ),
-    mount(
-      <Alert color="red">
-        <Text>Something bad happened</Text>
-      </Alert>
-    ),
-  ]);
+  it('renders close button based on withCloseButton prop', () => {
+    const { container: withCloseButton } = render(<Alert {...defaultProps} withCloseButton />);
+    const { container: withoutCloseButton } = render(
+      <Alert {...defaultProps} withCloseButton={false} />
+    );
 
-  it('calls onClose when CloseButton is Clicked', () => {
+    expect(withCloseButton.querySelector('.mantine-Alert-closeButton')).toBeInTheDocument();
+    expect(withoutCloseButton.querySelectorAll('.mantine-Alert-closeButton')).toHaveLength(0);
+  });
+
+  it('calls onClose when CloseButton is clicked', () => {
     const spy = jest.fn();
-    const element = shallow(
+    render(
       <Alert title="test" withCloseButton onClose={spy}>
         test
       </Alert>
     );
-    element.find(CloseButton).simulate('click');
+
+    userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('renders given title', () => {
-    const element = shallow(<Alert title="test-title">test-alert</Alert>);
-    expect(element.render().find('.mantine-Alert-title').text()).toEqual('test-title');
+    render(<Alert title="test-title">test-alert</Alert>);
+    expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
   it('does not render title if title prop was not passed', () => {
-    const element = shallow(<Alert>test-alert</Alert>);
-    expect(element.render().find('.mantine-Alert-title')).toHaveLength(0);
-  });
-
-  it('has correct displayName', () => {
-    expect(Alert.displayName).toEqual('@mantine/core/Alert');
+    const { container } = render(<Alert>test-alert</Alert>);
+    expect(container.querySelectorAll('.mantine-Alert-title')).toHaveLength(0);
   });
 });

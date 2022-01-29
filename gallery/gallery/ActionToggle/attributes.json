@@ -1,0 +1,9 @@
+{
+  "title": "Simple color scheme toggle",
+  "category": "color-scheme",
+  "author": "rtivital",
+  "dependencies": ["/core/action-icon/", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}

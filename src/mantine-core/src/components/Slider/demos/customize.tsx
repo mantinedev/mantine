@@ -50,8 +50,10 @@ function Demo() {
         size={2}
         styles={(theme) => ({
           track: {
-            backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+            '&::before': {
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],
+            },
           },
           mark: {
             width: 6,

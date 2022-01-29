@@ -1,5 +1,6 @@
 import React from 'react';
 import { BlendingModeIcon, MarginIcon, ShuffleIcon } from '@modulz/radix-icons';
+import { baseAccordionMockdata } from '@mantine/mockdata';
 import { ThemeIcon } from '../../ThemeIcon/ThemeIcon';
 import { Accordion, AccordionProps } from '../Accordion';
 
@@ -16,7 +17,7 @@ const code = `
     Colors, fonts, shadows and many other parts are customizable to fit your design needs
   </Accordion.Item>
 
-  {/* ...other <Accordion.Item /> items */}
+  {/* ...other <Accordion.Item /> */}
 </Accordion>
 `;
 
@@ -24,38 +25,36 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
   return (
     <Accordion disableIconRotation {...props}>
       <Accordion.Item
-        label="Customization"
+        label={baseAccordionMockdata[0].label}
         icon={
-          <ThemeIcon color="violet" variant="light">
+          <ThemeIcon color="violet" variant="light" size={28} radius="xl">
             <BlendingModeIcon style={{ width: 14, height: 14 }} />
           </ThemeIcon>
         }
       >
-        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+        {baseAccordionMockdata[0].content}
       </Accordion.Item>
 
       <Accordion.Item
-        label="Flexibility"
+        label={baseAccordionMockdata[1].label}
         icon={
-          <ThemeIcon color="orange" variant="light">
+          <ThemeIcon color="orange" variant="light" size={28} radius="xl">
             <ShuffleIcon style={{ width: 14, height: 14 }} />
           </ThemeIcon>
         }
       >
-        Configure components appearance and behavior with vast amount of settings or overwrite any
-        part of component styles
+        {baseAccordionMockdata[1].content}
       </Accordion.Item>
 
       <Accordion.Item
-        label="No annoying focus ring"
+        label={baseAccordionMockdata[2].label}
         icon={
-          <ThemeIcon color="blue" variant="light">
+          <ThemeIcon color="blue" variant="light" size={28} radius="xl">
             <MarginIcon style={{ width: 14, height: 14 }} />
           </ThemeIcon>
         }
       >
-        With new :focus-visible pseudo-class focus ring appears only when user navigates with
-        keyboard
+        {baseAccordionMockdata[2].content}
       </Accordion.Item>
     </Accordion>
   );

@@ -2,10 +2,12 @@ import { createStyles } from '@mantine/styles';
 
 interface RenderListStyles {
   reversed: boolean;
-  height: number;
+  native: boolean;
 }
 
-export default createStyles((theme, { reversed, height }: RenderListStyles) => ({
+const ITEM_PADDING = 7;
+
+export default createStyles((theme, { reversed, native }: RenderListStyles) => ({
   transferList: {
     flex: 1,
     display: 'flex',
@@ -14,11 +16,19 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
 
   transferListItem: {
     display: 'block',
-    width: 'calc(100% - 14px)',
-    padding: 7,
-    marginLeft: theme.spacing.sm - 7,
-    marginRight: theme.spacing.sm - 7,
+    width: `calc(100% - ${ITEM_PADDING * 2}px)`,
+    padding: ITEM_PADDING,
+    marginLeft: theme.spacing.sm - ITEM_PADDING,
+    marginRight: theme.spacing.sm - ITEM_PADDING,
     borderRadius: theme.radius.sm,
+
+    '&:first-of-type': {
+      marginTop: theme.spacing.sm - ITEM_PADDING,
+    },
+
+    '&:last-of-type': {
+      marginBottom: theme.spacing.sm - ITEM_PADDING,
+    },
   },
 
   transferListItemHovered: {
@@ -26,11 +36,7 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
   },
 
   transferListItems: {
-    paddingTop: theme.spacing.xs / 2,
-    paddingBottom: theme.spacing.xs / 2,
-    overflow: 'auto',
-    height,
-    maxHeight: height,
+    overflow: native ? 'auto' : 'hidden',
   },
 
   transferListHeader: {
@@ -40,7 +46,6 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
 
   transferListBody: {
     flex: 1,
-    overflow: 'hidden',
     borderRadius: theme.radius.sm,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     border: `1px solid ${
@@ -56,6 +61,8 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
+    borderTopLeftRadius: reversed ? 0 : theme.radius.sm - 1,
+    borderTopRightRadius: reversed ? theme.radius.sm - 1 : 0,
     display: 'block',
     borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
   },
@@ -66,9 +73,25 @@ export default createStyles((theme, { reversed, height }: RenderListStyles) => (
     borderLeftWidth: reversed ? 0 : undefined,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
+    '&:last-of-type': {
+      borderTopLeftRadius: reversed ? theme.radius.sm - 1 : 0,
+      borderTopRightRadius: reversed ? 0 : theme.radius.sm - 1,
+    },
+
     '&:disabled': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     },
+  },
+
+  separator: {
+    boxSizing: 'border-box',
+    textAlign: 'left',
+    width: '100%',
+    padding: '7px 12px',
+  },
+
+  separatorLabel: {
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
   },
 }));

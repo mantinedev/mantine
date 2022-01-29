@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  MantineColor,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles from './Progress.styles';
+import { Text } from '../Text';
 
 export type ProgressStylesNames = ClassNames<typeof useStyles>;
 
@@ -28,13 +24,19 @@ export interface ProgressProps
   /** Adds stripes */
   striped?: boolean;
 
+  /** Whether to animate striped progress bars */
+  animate?: boolean;
+
+  /** Text to be placed inside the progress bar */
+  label?: string;
+
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: MantineColor }[];
+  sections?: { value: number; color: MantineColor; label?: string }[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: MantineColor }[]
-): { value: number; color: MantineColor; accumulated: number }[] {
+  sections: { value: number; color: MantineColor; label?: string }[]
+): { value: number; color: MantineColor; accumulated: number; label?: string }[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });
@@ -49,43 +51,44 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
   (
     {
       className,
-      style,
       value,
       color,
       size = 'md',
       radius = 'sm',
       striped = false,
+      animate = false,
+      label = '',
       'aria-label': ariaLabel,
       classNames,
       styles,
       sections,
-      sx,
       ...others
     }: ProgressProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped },
-      { sx, classNames, styles, name: 'Progress' }
+      { color, size, radius, striped: striped || animate, animate },
+      { classNames, styles, name: 'Progress' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     const segments = Array.isArray(sections)
       ? getCumulativeSections(sections).map((section, index) => (
-          <div
+          <Box
             key={index}
             className={classes.bar}
-            style={{
+            sx={{
               width: `${section.value}%`,
               left: `${section.accumulated}%`,
-              backgroundColor: theme.fn.themeColor(section.color, 7),
+              backgroundColor: theme.fn.themeColor(section.color, 6, false),
             }}
-          />
+          >
+            {section.label && <Text className={classes.label}>{section.label}</Text>}
+          </Box>
         ))
       : null;
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {segments || (
           <div
             role="progressbar"
@@ -95,9 +98,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
             aria-label={ariaLabel}
             className={classes.bar}
             style={{ width: `${value}%` }}
-          />
+          >
+            {label ? <Text className={classes.label}>{label}</Text> : ''}
+          </div>
         )}
-      </div>
+      </Box>
     );
   }
 );

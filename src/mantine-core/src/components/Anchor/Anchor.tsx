@@ -8,22 +8,25 @@ export type AnchorProps<C extends React.ElementType> = PolymorphicComponentProps
   SharedTextProps
 >;
 
-type AnchorComponent = <C extends React.ElementType = 'a'>(
+type AnchorComponent = (<C extends React.ElementType = 'a'>(
   props: AnchorProps<C>
-) => React.ReactElement;
+) => React.ReactElement) & { displayName?: string };
 
-export const Anchor: AnchorComponent & { displayName?: string } = forwardRef(
+export const Anchor: AnchorComponent = forwardRef(
   <C extends React.ElementType = 'a'>(
-    { component, className, ...others }: AnchorProps<C>,
+    { component, className, classNames, styles, ...others }: AnchorProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { classes, cx } = useStyles(null, { name: 'Anchor' });
+    const { classes, cx } = useStyles(null, { name: 'Anchor', classNames, styles });
+    const buttonProps = component === 'button' ? { type: 'button' } : null;
+
     return (
       <Text
         component={(component || 'a') as any}
         variant="link"
         ref={ref}
-        className={cx(classes.anchor, className)}
+        className={cx(classes.root, className)}
+        {...buttonProps}
         {...others}
       />
     );

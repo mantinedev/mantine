@@ -14,7 +14,7 @@ const code = `
   label={
     <>
       <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
-      <span style={{ marginLeft: 5 }}>Search results</span>
+      <span style={{ marginLeft: 5, marginRight: 5 }}>Search results</span>
     </>
   }
 />
@@ -39,7 +39,7 @@ function Demo() {
         label={
           <>
             <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
-            <span style={{ marginLeft: 5 }}>Search results</span>
+            <span style={{ marginLeft: 5, marginRight: 5 }}>Search results</span>
           </>
         }
       />

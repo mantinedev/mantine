@@ -31,6 +31,7 @@ export const configurator: MantineDemo = {
     { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'disallowClose', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
+    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
       name: 'title',
       type: 'string',
@@ -39,7 +40,7 @@ export const configurator: MantineDemo = {
     {
       name: 'children',
       type: 'string',
-      initialValue: 'You are now obligated to give a star to Mantine project on Github',
+      initialValue: 'You are now obligated to give a star to Mantine project on GitHub',
     },
   ],
 };

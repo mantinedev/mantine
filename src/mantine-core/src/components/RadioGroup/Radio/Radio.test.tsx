@@ -1,33 +1,26 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
 import {
   checkAccessibility,
-  itSupportsClassName,
   itRendersChildren,
-  itSupportsStyle,
-  itSupportsRef,
+  itConnectsLabelAndInput,
+  itSupportsSystemProps,
 } from '@mantine/tests';
-import { Radio } from './Radio';
+import { Radio, RadioProps } from './Radio';
 
-const defaultProps = {
+const defaultProps: RadioProps = {
   value: 'test-radio',
   children: 'test-radio-label',
 };
 
 describe('@mantine/core/Radio', () => {
-  checkAccessibility([mount(<Radio {...defaultProps} />)]);
-  itSupportsClassName(Radio, defaultProps);
-  itSupportsStyle(Radio, defaultProps);
+  itConnectsLabelAndInput(Radio, defaultProps);
+  checkAccessibility([<Radio {...defaultProps} />]);
   itRendersChildren(Radio, defaultProps);
-  itSupportsRef(Radio, defaultProps, HTMLInputElement);
-
-  it('connects input and label with given id', () => {
-    const element = shallow(<Radio {...defaultProps} id="test-id" />);
-    expect(element.render().find('input').attr('id')).toBe('test-id');
-    expect(element.render().find('label').attr('for')).toBe('test-id');
-  });
-
-  it('has correct displayName', () => {
-    expect(Radio.displayName).toEqual('@mantine/core/Radio');
+  itSupportsSystemProps({
+    component: Radio,
+    props: defaultProps,
+    displayName: '@mantine/core/Radio',
+    refType: HTMLInputElement,
+    excludeOthers: true,
   });
 });

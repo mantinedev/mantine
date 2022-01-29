@@ -1,13 +1,15 @@
-import React, { Children, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   MantineColor,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  useExtractedMargins,
   ClassNames,
 } from '@mantine/styles';
+import { findChildByType, filterChildrenByType } from '../../utils';
+import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
+import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
 export type StepperStylesNames = ClassNames<typeof useStyles> | StepStylesNames;
@@ -48,6 +50,9 @@ export interface StepperProps
   /** Component size */
   size?: MantineSize;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Breakpoint at which orientation will change from horizontal to vertical */
   breakpoint?: MantineNumberSize;
 }
@@ -55,6 +60,7 @@ export interface StepperProps
 type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
   displayName: string;
   Step: typeof Step;
+  Completed: typeof StepCompleted;
 };
 
 export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
@@ -68,29 +74,31 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       progressIcon,
       color,
       iconSize,
-      style,
       contentPadding = 'md',
       size = 'md',
+      radius = 'xl',
       orientation = 'horizontal',
       breakpoint,
       iconPosition = 'left',
       classNames,
       styles,
-      sx,
       ...others
     }: StepperProps,
     ref
   ) => {
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
     const { classes, cx } = useStyles(
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-      { classNames, styles, sx, name: 'Stepper' }
+      { classNames, styles, name: 'Stepper' }
     );
-    const filteredChildren = Children.toArray(children).filter(
-      (item: React.ReactElement) => item.type === Step
-    ) as React.ReactElement[];
+    const filteredChildren = filterChildrenByType(children, Step);
+    const completedStep = findChildByType(children, StepCompleted);
 
-    const items = filteredChildren.reduce((acc, item, index, array) => {
+    const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
+      const shouldAllowSelect =
+        typeof item.props.allowStepSelect === 'boolean'
+          ? item.props.allowStepSelect
+          : typeof onStepClick === 'function';
+
       acc.push(
         <Step
           {...item.props}
@@ -100,13 +108,16 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           state={
             active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
           }
-          onClick={() => typeof onStepClick === 'function' && onStepClick(index)}
-          allowStepClick={typeof onStepClick === 'function'}
+          onClick={() =>
+            shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)
+          }
+          allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
           completedIcon={item.props.completedIcon || completedIcon}
           progressIcon={item.props.progressIcon || progressIcon}
           color={item.props.color || color}
           iconSize={iconSize}
           size={size}
+          radius={radius}
           classNames={classNames}
           styles={styles}
           iconPosition={item.props.iconPosition || iconPosition}
@@ -123,18 +134,21 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       }
 
       return acc;
-    }, [] as React.ReactNode[]);
+    }, []);
 
-    const content = filteredChildren[active]?.props?.children;
+    const stepContent = filteredChildren[active]?.props?.children;
+    const completedContent = completedStep?.props?.children;
+    const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         <div className={classes.steps}>{items}</div>
         {content && <div className={classes.content}>{content}</div>}
-      </div>
+      </Box>
     );
   }
 ) as any;
 
 Stepper.Step = Step;
+Stepper.Completed = StepCompleted;
 Stepper.displayName = '@mantine/core/Stepper';

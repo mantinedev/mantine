@@ -1,29 +1,20 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsClassName,
-  itSupportsOthers,
-  itSupportsStyle,
-  itSupportsRef,
-} from '@mantine/tests';
-import { AlphaSlider } from './AlphaSlider';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { AlphaSlider, AlphaSliderProps } from './AlphaSlider';
 
-const defaultProps = {
+const defaultProps: AlphaSliderProps = {
   value: 0.5,
   onChange: () => {},
   color: '#FF00FF',
-  size: 'sm' as const,
+  size: 'sm',
 };
 
 describe('@mantine/core/AlphaSlider', () => {
-  checkAccessibility([mount(<AlphaSlider {...defaultProps} aria-label="test-label" />)]);
-  itSupportsClassName(AlphaSlider, defaultProps);
-  itSupportsOthers(AlphaSlider, defaultProps);
-  itSupportsStyle(AlphaSlider, defaultProps);
-  itSupportsRef(AlphaSlider, defaultProps, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(AlphaSlider.displayName).toEqual('@mantine/core/AlphaSlider');
+  checkAccessibility([<AlphaSlider {...defaultProps} aria-label="test-label" />]);
+  itSupportsSystemProps({
+    component: AlphaSlider,
+    props: defaultProps,
+    displayName: '@mantine/core/AlphaSlider',
+    refType: HTMLDivElement,
   });
 });

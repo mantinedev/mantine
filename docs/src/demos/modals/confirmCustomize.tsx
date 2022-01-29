@@ -13,6 +13,7 @@ function Demo() {
   const openDeleteModal = () =>
     modals.openConfirmModal({
       title: 'Delete your profile',
+      centered: true,
       children: (
         <Text size="sm">
           Are you sure you want to delete your profile? This action is destructive and you will have
@@ -36,6 +37,7 @@ function Demo() {
   const openDeleteModal = () =>
     modals.openConfirmModal({
       title: 'Delete your profile',
+      centered: true,
       children: (
         <Text size="sm">
           Are you sure you want to delete your profile? This action is destructive and you will have

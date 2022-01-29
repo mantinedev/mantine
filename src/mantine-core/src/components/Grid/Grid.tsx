@@ -1,5 +1,7 @@
 import React, { Children, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, ForwardRefWithStaticComponents } from '@mantine/styles';
+import { Box } from '../Box';
+import { Col } from './Col/Col';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -22,7 +24,9 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
   columns?: number;
 }
 
-export const Grid = forwardRef<HTMLDivElement, GridProps>(
+type GridComponent = ForwardRefWithStaticComponents<GridProps, { Col: typeof Col }>;
+
+export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
   (
     {
       gutter = 'md',
@@ -30,28 +34,37 @@ export const Grid = forwardRef<HTMLDivElement, GridProps>(
       grow = false,
       justify = 'flex-start',
       align = 'stretch',
-      style,
       columns = 12,
       className,
+      classNames,
+      styles,
       id,
-      sx,
       ...others
     }: GridProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ gutter, justify, align }, { sx, name: 'Grid' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(
+      { gutter, justify, align },
+      { classNames, styles, name: 'Grid' }
+    );
 
     const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-      React.cloneElement(col, { gutter, grow, columns, key: index })
+      React.cloneElement(col, {
+        gutter,
+        grow,
+        columns,
+        span: col.props.span || columns,
+        key: index,
+      })
     );
 
     return (
-      <div style={mergedStyles} className={cx(classes.root, className)} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {cols}
-      </div>
+      </Box>
     );
   }
-);
+) as any;
 
+Grid.Col = Col;
 Grid.displayName = '@mantine/core/Grid';

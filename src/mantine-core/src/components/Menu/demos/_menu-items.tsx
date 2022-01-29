@@ -28,7 +28,7 @@ export const menuItems = [
     key="5"
     icon={<MagnifyingGlassIcon {...iconProps} />}
     rightSection={
-      <Text size="xs" color="gray">
+      <Text size="xs" color="dimmed">
         ⌘K
       </Text>
     }

@@ -7,6 +7,8 @@ interface PasswordInputStyles {
 }
 
 export default createStyles((theme, { size, rightSectionWidth }: PasswordInputStyles) => ({
+  visibilityToggle: {},
+
   input: {
     position: 'relative',
     overflow: 'hidden',
@@ -42,6 +44,15 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
       opacity: 1,
       userSelect: 'none',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+    },
+  },
+
+  invalid: {
+    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+
+    '&::placeholder': {
+      opacity: 1,
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
     },
   },
 

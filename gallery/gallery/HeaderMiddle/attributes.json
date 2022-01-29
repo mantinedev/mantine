@@ -1,0 +1,25 @@
+{
+  "title": "Header with logo in the middle",
+  "category": "headers",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/group/",
+    "/core/action-icon/",
+    "/core/container/",
+    "/core/burger/",
+    "tabler-icons-react"
+  ],
+  "props": {
+    "links": [
+      { "link": "/about", "label": "Home" },
+      { "link": "/learn", "label": "Features" },
+      { "link": "/pricing", "label": "Pricing" }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

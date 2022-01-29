@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
+import { Box } from '../../Box';
 import useStyles from './UnstyledButton.styles';
 
 export interface UnstyledButtonProps
@@ -7,9 +8,17 @@ export interface UnstyledButtonProps
     React.ComponentPropsWithoutRef<'button'> {}
 
 export const UnstyledButton = forwardRef<HTMLButtonElement, UnstyledButtonProps>(
-  ({ className, sx, ...others }: UnstyledButtonProps, ref) => {
-    const { classes, cx } = useStyles(null, { sx, name: 'UnstyledButton' });
-    return <button ref={ref} className={cx(classes.root, className)} type="button" {...others} />;
+  ({ className, ...others }: UnstyledButtonProps, ref) => {
+    const { classes, cx } = useStyles(null, { name: 'UnstyledButton' });
+    return (
+      <Box
+        component="button"
+        ref={ref}
+        className={cx(classes.root, className)}
+        type="button"
+        {...others}
+      />
+    );
   }
 );
 

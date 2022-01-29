@@ -1,6 +1,7 @@
 import React from 'react';
-import { DefaultProps, MantineColor, ClassNames, useSx } from '@mantine/styles';
-import { Text } from '../../Text/Text';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
+import { Text } from '../../Text';
+import { Box } from '../../Box';
 import useStyles from './TimelineItem.styles';
 
 export type TimelineItemStylesNames = ClassNames<typeof useStyles>;
@@ -16,6 +17,9 @@ export interface TimelineItemProps
 
   /** Bullet width, height and border-radius in px, controlled by Timeline component */
   bulletSize?: number;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 
   /** React node that will be rendered after title */
   children?: React.ReactNode;
@@ -44,6 +48,7 @@ export function TimelineItem({
   bullet,
   title,
   bulletSize = 20,
+  radius = 'xl',
   lineWidth = 4,
   active,
   lineActive,
@@ -53,21 +58,18 @@ export function TimelineItem({
   color,
   align,
   lineVariant = 'solid',
-  sx,
   ...others
 }: TimelineItemProps) {
-  const { sxClassName } = useSx({ sx });
   const { classes, cx } = useStyles(
-    { bulletSize, color, align, lineVariant, lineWidth },
+    { bulletSize, color, radius, align, lineVariant, lineWidth },
     { classNames, styles, name: 'Timeline' }
   );
 
   return (
-    <div
+    <Box
       className={cx(
         classes.item,
         { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
-        sxClassName,
         className
       )}
       {...others}
@@ -80,7 +82,7 @@ export function TimelineItem({
         {title && <Text className={classes.itemTitle}>{title}</Text>}
         <div className={classes.itemContent}>{children}</div>
       </div>
-    </div>
+    </Box>
   );
 }
 

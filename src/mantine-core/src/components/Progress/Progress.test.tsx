@@ -1,34 +1,23 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import {
-  checkAccessibility,
-  itSupportsStyle,
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
-} from '@mantine/tests';
-import { Progress } from './Progress';
-import { Progress as ProgressStylesApi } from './styles.api';
+import { render, screen } from '@testing-library/react';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
+import { Progress, ProgressProps } from './Progress';
 
-const defaultProps = { value: 80 };
+const defaultProps: ProgressProps = {
+  value: 80,
+};
 
 describe('@mantine/core/Progress', () => {
-  itSupportsClassName(Progress, defaultProps);
-  itSupportsStyle(Progress, defaultProps);
-  itSupportsMargins(Progress, defaultProps);
-  itSupportsOthers(Progress, defaultProps);
-  itSupportsRef(Progress, defaultProps, HTMLDivElement);
-  checkAccessibility([mount(<Progress value={80} aria-label="test-progress" />)]);
-  itSupportsStylesApi(Progress, defaultProps, Object.keys(ProgressStylesApi), 'Progress');
-
-  it('has correct displayName', () => {
-    expect(Progress.displayName).toEqual('@mantine/core/Progress');
+  checkAccessibility([<Progress value={80} aria-label="test-progress" />]);
+  itSupportsSystemProps({
+    component: Progress,
+    props: defaultProps,
+    displayName: '@mantine/core/Progress',
+    refType: HTMLDivElement,
   });
 
   it('renders given amount of sections', () => {
-    const element = shallow(
+    const { container } = render(
       <Progress
         value={84}
         sections={[
@@ -39,18 +28,19 @@ describe('@mantine/core/Progress', () => {
       />
     );
 
-    expect(element.render().find('.mantine-Progress-bar')).toHaveLength(3);
+    expect(container.querySelectorAll('.mantine-Progress-bar')).toHaveLength(3);
   });
 
   it('passes value prop to progressbar', () => {
-    const element = shallow(<Progress value={84} />);
-    expect(element.render().find('[role=progressbar]').prop('style').width).toBe('84%');
+    render(<Progress value={84} />);
+    expect(screen.getByRole('progressbar')).toHaveStyle({ width: '84%' });
   });
 
   it('has correct aria attributes', () => {
-    const element = shallow(<Progress value={84} />);
-    expect(element.render().find('[role=progressbar]').attr('aria-valuenow')).toBe('84');
-    expect(element.render().find('[role=progressbar]').attr('aria-valuemin')).toBe('0');
-    expect(element.render().find('[role=progressbar]').attr('aria-valuemax')).toBe('100');
+    render(<Progress value={84} />);
+    const element = screen.getByRole('progressbar');
+    expect(element).toHaveAttribute('aria-valuenow', '84');
+    expect(element).toHaveAttribute('aria-valuemin', '0');
+    expect(element).toHaveAttribute('aria-valuemax', '100');
   });
 });

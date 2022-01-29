@@ -6,7 +6,8 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames, useSx } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { Box } from '../../Box';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
@@ -19,12 +20,12 @@ export interface BaseColorSliderProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
-  size: MantineSize;
+  size?: MantineSize;
   focusable?: boolean;
   __staticSelector?: string;
 }
 
-interface ColorSliderProps extends BaseColorSliderProps {
+export interface ColorSliderProps extends BaseColorSliderProps {
   maxValue: number;
   overlays: React.CSSProperties[];
   round: boolean;
@@ -38,7 +39,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       onChange,
       maxValue,
       round,
-      size,
+      size = 'md',
       thumbColor = 'transparent',
       __staticSelector = 'ColorSlider',
       focusable = true,
@@ -46,12 +47,10 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       classNames,
       styles,
       className,
-      sx,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
-    const { sxClassName } = useSx({ sx, className });
     const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
@@ -86,10 +85,10 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     ));
 
     return (
-      <div
+      <Box
         {...others}
         ref={useMergedRef(sliderRef, ref)}
-        className={cx(classes.slider, sxClassName, className)}
+        className={cx(classes.slider, className)}
         role="slider"
         aria-valuenow={value}
         aria-valuemax={maxValue}
@@ -108,7 +107,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
           className={classes.sliderThumb}
           size={size}
         />
-      </div>
+      </Box>
     );
   }
 );

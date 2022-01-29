@@ -1,19 +1,26 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["./src", "./demos", "../../configuration/types", "../../tests"],
+  "include": ["./src", "../../configuration/types", "../../tests"],
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
-    "rootDir": ".",
+    "rootDir": "src",
     "baseUrl": ".",
     "outDir": "lib",
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "lib",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@mantine/hooks": ["../mantine-hooks/src"],
+      "@mantine/styles": ["../mantine-styles/src"],
+      "@mantine/tests": ["../mantine-tests/src"],
+      "@mantine/mockdata": ["../mantine-mockdata/src"]
+    }
   },
   "references": [
     { "path": "../mantine-hooks" },
     { "path": "../mantine-styles" },
-    { "path": "../mantine-tests" }
+    { "path": "../mantine-tests" },
+    { "path": "../mantine-mockdata" }
   ]
 }

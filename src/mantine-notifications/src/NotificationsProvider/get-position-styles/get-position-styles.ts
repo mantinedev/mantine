@@ -1,4 +1,4 @@
-import React from 'react';
+import { CSSObject } from '@mantine/core';
 import { NotificationsProviderPositioning } from '../../types';
 
 export default function getPositionStyles(
@@ -6,7 +6,7 @@ export default function getPositionStyles(
   containerWidth: number,
   spacing: number
 ) {
-  const styles: React.CSSProperties = {};
+  const styles: CSSObject = {};
 
   vertical === 'top' && (styles.top = spacing);
   vertical === 'bottom' && (styles.bottom = spacing);

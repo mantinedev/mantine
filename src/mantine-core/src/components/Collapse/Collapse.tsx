@@ -1,6 +1,7 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { useExtractedMargins, useSx, DefaultProps } from '@mantine/styles';
+import { extractMargins, DefaultProps } from '@mantine/styles';
+import { Box } from '../Box';
 import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -29,16 +30,13 @@ export function Collapse({
   transitionDuration = 200,
   transitionTimingFunction = 'ease',
   style,
-  sx,
-  className,
   onTransitionEnd,
   animateOpacity = true,
   ...others
 }: CollapseProps) {
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
-  const { sxClassName } = useSx({ sx, className });
+  const { margins, rest } = extractMargins(others);
   const getCollapseProps = useCollapse({
     opened,
     transitionDuration: duration,
@@ -46,17 +44,21 @@ export function Collapse({
     onTransitionEnd,
   });
 
+  if (duration === 0) {
+    return opened ? <Box {...rest}>{children}</Box> : null;
+  }
+
   return (
-    <div {...getCollapseProps({ style: mergedStyles, ...rest })} className={sxClassName}>
+    <Box {...getCollapseProps({ style, ...rest, ...margins })}>
       <div
         style={{
-          opacity: opened ? 1 : 0,
+          opacity: opened || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
         }}
       >
         {children}
       </div>
-    </div>
+    </Box>
   );
 }
 

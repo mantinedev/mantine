@@ -30,8 +30,10 @@ docs/.docgen/
 # typescript
 *.tsbuildinfo
 
-# gatsby
+# project
 docs/.cache
 gallery/.cache
 docs/public
-gallery/public
+gallery/out
+storybook-static
+.next

@@ -80,16 +80,3 @@ function Demo({ opened }) {
   );
 }
 ```
-
-## TypeScript
-
-You can import `MantineTransition` type to use in your components,
-it includes all premade transitions names and transition object:
-
-```tsx
-import { MantineTransition, Transition } from '@mantine/core';
-
-function Demo({ transition = 'skew-up' }: { transition: MantineTransition }) {
-  return <Transition transition={transition} /* other props */ />;
-}
-```

@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineSize, useSx } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineSize,
+  MantineNumberSize,
+} from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
@@ -45,11 +51,17 @@ export interface StepProps
   /** Component size */
   size?: MantineSize;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Indicates loading state on step */
   loading?: boolean;
 
   /** Set to false to disable clicks on step */
   allowStepClick?: boolean;
+
+  /** Should step selection be allowed */
+  allowStepSelect?: boolean;
 
   /** Static selector base */
   __staticSelector?: string;
@@ -77,30 +89,29 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       withIcon = true,
       iconSize,
       size = 'md',
+      radius = 'xl',
       loading,
       allowStepClick = true,
+      allowStepSelect,
       iconPosition = 'left',
       __staticSelector = 'Step',
       classNames,
       styles,
-      sx,
       ...others
     }: StepProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, iconSize, size, allowStepClick, iconPosition },
+      { color, iconSize, size, radius, allowStepClick, iconPosition },
       { name: __staticSelector, classNames, styles }
     );
-
-    const { sxClassName } = useSx({ sx });
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
     const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
 
     return (
       <UnstyledButton
-        className={cx(classes.step, classes[state], sxClassName, className)}
+        className={cx(classes.step, classes[state], className)}
         tabIndex={allowStepClick ? 0 : -1}
         ref={ref}
         {...others}
@@ -111,7 +122,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
               {(transitionStyles) => (
                 <div className={classes.stepCompletedIcon} style={transitionStyles}>
                   {loading ? (
-                    <Loader color="#fff" size={_iconSize} />
+                    <Loader color="#fff" size={_iconSize} className={classes.stepLoader} />
                   ) : (
                     completedIcon || (
                       <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />

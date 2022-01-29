@@ -1,26 +1,31 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
 
+export type AlertVariant = 'filled' | 'outline' | 'light';
 export type AlertStylesNames = ClassNames<typeof useStyles>;
 
 export interface AlertProps
   extends DefaultProps<AlertStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Optional alert title */
+  /** Alert title */
   title?: React.ReactNode;
+
+  /** Controls Alert background, color and border styles */
+  variant?: AlertVariant;
 
   /** Alert message */
   children: React.ReactNode;
 
-  /** Alert title and line colors from theme */
+  /** Color from theme.colors */
   color?: MantineColor;
 
-  /** Icon displayed before title */
+  /** Icon displayed next to title */
   icon?: React.ReactNode;
 
-  /** Display close button */
+  /** True to display close button */
   withCloseButton?: boolean;
 
   /** Called when close button is clicked */
@@ -28,6 +33,9 @@ export interface AlertProps
 
   /** Close button aria-label */
   closeButtonLabel?: string;
+
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
@@ -35,24 +43,27 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
     {
       className,
       title,
+      variant = 'light',
       children,
       color,
-      style,
       classNames,
       icon,
       styles,
-      sx,
       onClose,
+      radius = 'sm',
       withCloseButton,
+      closeButtonLabel,
       ...others
     }: AlertProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ color }, { classNames, styles, sx, name: 'Alert' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(
+      { color, radius, variant },
+      { classNames, styles, name: 'Alert' }
+    );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, classes[variant], className)} ref={ref} {...others}>
         <div className={classes.wrapper}>
           {icon && <div className={classes.icon}>{icon}</div>}
 
@@ -68,6 +79,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
                     variant="transparent"
                     size={16}
                     iconSize={16}
+                    aria-label={closeButtonLabel}
                   />
                 )}
               </div>
@@ -76,7 +88,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
             <div className={classes.message}>{children}</div>
           </div>
         </div>
-      </div>
+      </Box>
     );
   }
 );

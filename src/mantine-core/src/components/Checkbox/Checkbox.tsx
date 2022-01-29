@@ -4,9 +4,11 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
+  MantineNumberSize,
 } from '@mantine/styles';
 import { useUuid } from '@mantine/hooks';
+import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles from './Checkbox.styles';
 
@@ -18,6 +20,9 @@ export interface CheckboxProps
   /** Checkbox checked and indeterminate state color from theme, defaults to theme.primaryColor */
   color?: MantineColor;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Predefined label font-size and checkbox width and height in px */
   size?: MantineSize;
 
@@ -28,7 +33,7 @@ export interface CheckboxProps
   indeterminate?: boolean;
 
   /** Props spread to wrapper element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: { [key: string]: any };
 
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -45,34 +50,39 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     {
       className,
       style,
+      sx,
       checked,
-      onChange,
       color,
       label,
-      disabled,
       indeterminate,
       id,
       size = 'sm',
+      radius = 'sm',
       wrapperProps,
       children,
       classNames,
       styles,
       transitionDuration = 100,
       icon: Icon = CheckboxIcon,
-      sx,
       ...others
     }: CheckboxProps,
     ref
   ) => {
     const uuid = useUuid(id);
+    const { margins, rest } = extractMargins(others);
     const { classes, cx } = useStyles(
-      { size, color, transitionDuration },
-      { classNames, styles, sx, name: 'Checkbox' }
+      { size, radius, color, transitionDuration },
+      { classNames, styles, name: 'Checkbox' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} {...wrapperProps}>
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...margins}
+        {...wrapperProps}
+      >
         <div className={classes.inner}>
           <input
             id={uuid}
@@ -80,8 +90,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             className={classes.input}
             checked={indeterminate || checked}
-            onChange={onChange}
-            disabled={disabled}
             {...rest}
           />
 
@@ -93,7 +101,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             {label}
           </label>
         )}
-      </div>
+      </Box>
     );
   }
 );

@@ -21,7 +21,7 @@ import { TimelineDemos } from '@demos/core';
 
 ## Line and bullet props
 
-You can control timeline appearance with following props:
+Control timeline appearance with the following props:
 
 - `active` – index of current active element, all elements before this index will be highlighted with `color`
 - `color` – color from theme that should be used to highlight active items, defaults to `theme.primaryColor`
@@ -33,38 +33,4 @@ You can control timeline appearance with following props:
 
 ## Bullet as React node
 
-You can use any React node to replace default bullet:
-
 <Demo data={TimelineDemos.bullet} />
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { TimelineProps, TimelineItemProps } from '@mantine/core';
-```
-
-- `TimelineProps` extends `React.ComponentPropsWithoutRef<'div'>`
-- `TimelineItemProps` extends `React.ComponentPropsWithoutRef<'div'>`
-
-All other props are available under _Component props_ tab.
-
-### TimelineStylesNames type
-
-`TimelineStylesNames` type is a union with Timeline [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { TimelineStylesNames } from '@mantine/core';
-
-const timelineClasses: Partial<Record<TimelineStylesNames, 'string'>> = {
-  item: 'timeline-item',
-  active: 'timeline-itemActive',
-};
-
-<Timeline classNames={timelineClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

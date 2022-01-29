@@ -20,13 +20,19 @@ import { RingProgressDemos } from '@demos/core';
 Set `sections` prop to an array of:
 
 - `value` – number between 0 and 100 – amount of space filled by segment
-- `color` – segment color from theme
+- `color` – segment color from theme or any other css color value
 
 <Demo data={RingProgressDemos.usage} />
 
-## Size and thickness
+## Colors
 
-Use `size` and `thickness` props to configure RingProgress, all values are in px:
+In previous example colors from `theme.colors` were used, but any other css colors can be used instead:
+
+<Demo data={RingProgressDemos.colors} />
+
+## Size, thickness & rounded caps
+
+Use `size`, `thickness` & `roundCaps` props to configure RingProgress, size and thickness values are in px:
 
 <Demo data={RingProgressDemos.configurator} />
 
@@ -36,32 +42,3 @@ You can add any React node as label, e.g. [Text](/core/text/) component with som
 or [ThemeIcon](/core/theme-icon/):
 
 <Demo data={RingProgressDemos.label} />
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { RingProgressProps } from '@mantine/core';
-```
-
-`RingProgressProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### RingProgressStylesNames type
-
-`RingProgressStylesNames` type is a union with RingProgress [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { RingProgressStylesNames } from '@mantine/core';
-
-const progressClasses: Partial<Record<RingProgressStylesNames, 'string'>> = {
-  root: 'progress-root',
-  label: 'progress-label',
-};
-
-<RingProgress classNames={progressClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

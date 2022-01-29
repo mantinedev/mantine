@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput } from '../../../index';
+import { NumberInput } from '../NumberInput';
 
 const code = `
 <NumberInput
@@ -11,7 +11,7 @@ const code = `
 />
 
 <NumberInput
-  style={{ marginTop: 15 }}
+  mt="md"
   label="Your weight in kg"
   description="From 0 to Infinity, step is 5"
   defaultValue={80}
@@ -31,7 +31,7 @@ function Demo() {
         min={0}
       />
       <NumberInput
-        style={{ marginTop: 15 }}
+        mt="md"
         label="Your weight in kg"
         placeholder="Your weight in kg"
         description="From 0 to Infinity, step is 5"

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Overlay, Button, Group } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, Overlay } from '@mantine/core';
 
 function Demo() {

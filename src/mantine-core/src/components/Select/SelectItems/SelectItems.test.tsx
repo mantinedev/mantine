@@ -1,7 +1,7 @@
-import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { SelectItems } from './SelectItems';
-import { Text } from '../../Text/Text';
+import React, { forwardRef } from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { SelectItems, SelectItemsProps } from './SelectItems';
 import { DefaultItem } from '../DefaultItem/DefaultItem';
 
 const data = [
@@ -11,10 +11,10 @@ const data = [
   { value: 'vue', label: 'Vue' },
 ];
 
-const defaultProps = {
+const defaultProps: SelectItemsProps = {
   data,
   hovered: -1,
-  __staticSelector: 'test',
+  __staticSelector: 'Select',
   isItemSelected: () => false,
   uuid: 'test-id',
   itemsRefs: { current: {} } as any,
@@ -25,63 +25,58 @@ const defaultProps = {
   nothingFound: 'test-nothing',
 };
 
-describe('@mantine/core/SelectItems', () => {
+describe('@mantine/core/Select/SelectItems', () => {
   it('renders nothing found message if data array is empty', () => {
-    const withData = shallow(<SelectItems {...defaultProps} data={data} />);
-    const withoutData = shallow(
+    const { container: withData } = render(<SelectItems {...defaultProps} data={data} />);
+    const { container: withoutData } = render(
       <SelectItems {...defaultProps} data={[]} nothingFound="test-nothing" />
     );
 
-    expect(withData.find(Text)).toHaveLength(0);
-    expect(withoutData.find(Text).render().text()).toBe('test-nothing');
+    expect(withData.querySelectorAll('.mantine-Select-nothingFound')).toHaveLength(0);
+    expect(withoutData.querySelector('.mantine-Select-nothingFound').textContent).toBe(
+      'test-nothing'
+    );
   });
 
   it('renders correct default items', () => {
-    const element = shallow(<SelectItems {...defaultProps} />);
-    expect(element.find(DefaultItem)).toHaveLength(defaultProps.data.length);
+    render(<SelectItems {...defaultProps} />);
+    expect(screen.getAllByRole('option')).toHaveLength(defaultProps.data.length);
   });
 
   it('renders correct custom items', () => {
-    const element = shallow(
+    const { container } = render(
       <SelectItems
         {...defaultProps}
-        itemComponent={(props: any) => <span data-custom-item {...props} />}
+        itemComponent={forwardRef((props: any, ref) => (
+          <span data-item ref={ref} {...props} />
+        ))}
       />
     );
-    expect(element.find('[role="option"]')).toHaveLength(defaultProps.data.length);
+    expect(screen.getAllByRole('option')).toHaveLength(defaultProps.data.length);
+    expect(container.querySelectorAll('[data-item]')).toHaveLength(defaultProps.data.length);
   });
 
   it('calls onItemSelect with mouse down event on item', () => {
     const spy = jest.fn();
-    const element = shallow(<SelectItems {...defaultProps} onItemSelect={spy} />);
-    element
-      .find('[role="option"]')
-      .at(2)
-      .simulate('mousedown', { preventDefault: () => {} });
+    render(<SelectItems {...defaultProps} onItemSelect={spy} />);
+    userEvent.click(screen.getAllByRole('option')[2]);
     expect(spy).toHaveBeenCalledWith(defaultProps.data[2]);
   });
 
   it('calls onItemHover when mouse enters item', () => {
     const spy = jest.fn();
-    const element = shallow(<SelectItems {...defaultProps} onItemHover={spy} />);
-    element.find('[role="option"]').at(2).simulate('mouseenter');
+    render(<SelectItems {...defaultProps} onItemHover={spy} />);
+    userEvent.hover(screen.getAllByRole('option')[2]);
     expect(spy).toHaveBeenCalledWith(2);
   });
 
   it('registers refs of all items', () => {
     const refs = { current: {} } as any;
-    mount(<SelectItems {...defaultProps} itemsRefs={refs} />);
+    render(<SelectItems {...defaultProps} itemsRefs={refs} />);
     expect(Object.keys(refs.current)).toHaveLength(defaultProps.data.length);
     expect(
       Object.keys(refs.current).every((ref) => refs.current[ref] instanceof HTMLDivElement)
     ).toBe(true);
-  });
-
-  it('sets aria-selected based on item index and hovered', () => {
-    const element = shallow(<SelectItems {...defaultProps} hovered={1} />);
-    expect(element.find('[role="option"]').at(1).prop('aria-selected')).toBe(true);
-    expect(element.find('[role="option"]').at(2).prop('aria-selected')).toBe(false);
-    expect(element.find('[role="option"]').at(0).prop('aria-selected')).toBe(false);
   });
 
   it('has correct displayName', () => {

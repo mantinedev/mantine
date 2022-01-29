@@ -1,3 +1,8 @@
+require('@testing-library/jest-dom');
+
+const { getComputedStyle } = window;
+window.getComputedStyle = (elt) => getComputedStyle(elt);
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
@@ -11,3 +16,11 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: jest.fn(),
   })),
 });
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.ResizeObserver = ResizeObserver;

@@ -1,6 +1,7 @@
 import React, { createElement, forwardRef } from 'react';
-import { DefaultProps, MantineSize, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
+import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { Text } from '../Text';
+import { Box } from '../Box';
 import useStyles from './InputWrapper.styles';
 
 export type InputWrapperStylesNames = ClassNames<typeof useStyles>;
@@ -52,7 +53,6 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
   (
     {
       className,
-      style,
       label,
       children,
       required,
@@ -65,15 +65,13 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       errorProps,
       classNames,
       styles,
-      sx,
       size = 'sm',
       __staticSelector = 'InputWrapper',
       ...others
     }: InputWrapperProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, sx, name: __staticSelector });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(
       labelElement,
@@ -90,7 +88,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {label && inputLabel}
 
         {description && (
@@ -106,7 +104,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
             {error}
           </Text>
         )}
-      </div>
+      </Box>
     );
   }
 );

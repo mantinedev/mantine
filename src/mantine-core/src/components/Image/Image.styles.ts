@@ -5,9 +5,10 @@ interface ImageStyles {
 }
 
 export default createStyles((theme, { radius }: ImageStyles) => ({
-  root: {
+  root: {},
+
+  imageWrapper: {
     position: 'relative',
-    overflow: 'hidden',
   },
 
   figure: {
@@ -29,18 +30,12 @@ export default createStyles((theme, { radius }: ImageStyles) => ({
   },
 
   placeholder: {
+    ...theme.fn.cover(),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    width: '100%',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    position: 'absolute',
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
 }));

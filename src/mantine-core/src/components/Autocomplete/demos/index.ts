@@ -1,4 +1,5 @@
 export { configurator } from './configurator';
+export { flip } from './flip';
 export { usage } from './usage';
 export { dynamic } from './dynamic';
 export { itemComponent } from './itemComponent';

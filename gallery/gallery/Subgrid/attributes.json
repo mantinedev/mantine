@@ -1,0 +1,10 @@
+{
+  "title": "Grid with vertical items",
+  "category": "grids",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": ["/core/simple-grid/", "/core/skeleton/", "/core/container/"],
+  "canvas": {
+    "center": false
+  }
+}

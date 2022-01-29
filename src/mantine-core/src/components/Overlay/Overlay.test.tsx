@@ -1,20 +1,15 @@
-import {
-  itSupportsOthers,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsRef,
-  itIsPolymorphic,
-} from '@mantine/tests';
-import { Overlay } from './Overlay';
+import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
+import { Overlay, OverlayProps } from './Overlay';
+
+const defaultProps: OverlayProps<'div'> = {};
 
 describe('@mantine/core/Overlay', () => {
-  itSupportsStyle(Overlay, {});
-  itSupportsClassName(Overlay, {});
-  itSupportsOthers(Overlay, {});
-  itIsPolymorphic(Overlay, {});
-  itSupportsRef(Overlay, {}, HTMLDivElement);
-
-  it('has correct displayName', () => {
-    expect(Overlay.displayName).toEqual('@mantine/core/Overlay');
+  itIsPolymorphic(Overlay, defaultProps);
+  itRendersChildren(Overlay, defaultProps);
+  itSupportsSystemProps({
+    component: Overlay,
+    props: defaultProps,
+    displayName: '@mantine/core/Overlay',
+    refType: HTMLDivElement,
   });
 });

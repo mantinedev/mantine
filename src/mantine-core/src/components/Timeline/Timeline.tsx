@@ -1,5 +1,13 @@
-import React, { Children } from 'react';
-import { DefaultProps, MantineColor, useExtractedMargins, useSx } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import {
+  DefaultProps,
+  MantineColor,
+  ForwardRefWithStaticComponents,
+  MantineNumberSize,
+  CSSObject,
+} from '@mantine/styles';
+import { filterChildrenByType } from '../../utils';
+import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
 export interface TimelineProps
@@ -14,6 +22,9 @@ export interface TimelineProps
   /** Active color from theme */
   color?: MantineColor;
 
+  /** Radius from theme.radius, or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Bullet size in px */
   bulletSize?: number;
 
@@ -22,52 +33,65 @@ export interface TimelineProps
 
   /** Line width in px */
   lineWidth?: number;
+
+  /** Reverse active direction without reversing items */
+  reverseActive?: boolean;
 }
 
-export function Timeline({
-  children,
-  style,
-  active,
-  color,
-  bulletSize = 20,
-  align = 'left',
-  lineWidth = 4,
-  classNames,
-  styles,
-  className,
-  sx,
-  ...others
-}: TimelineProps) {
-  const { sxClassName } = useSx({ sx, className });
-  const hasActive = typeof active === 'number';
-  const { mergedStyles, rest } = useExtractedMargins({ others, style });
+type TimelineComponent = ForwardRefWithStaticComponents<
+  TimelineProps,
+  { Item: typeof TimelineItem }
+>;
 
-  const items = Children.toArray(children)
-    .filter((child: React.ReactElement) => child.type === TimelineItem)
-    .map((item: React.ReactElement, index) =>
+export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
+  (
+    {
+      children,
+      active = -1,
+      color,
+      radius = 'xl',
+      bulletSize = 20,
+      align = 'left',
+      lineWidth = 4,
+      classNames,
+      styles,
+      sx,
+      reverseActive = false,
+      ...others
+    }: TimelineProps,
+    ref
+  ) => {
+    const _children = filterChildrenByType(children, TimelineItem);
+    const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
         classNames,
         styles,
         align,
         lineWidth,
+        radius: item.props.radius || radius,
         color: item.props.color || color,
         bulletSize: item.props.bulletSize || bulletSize,
-        active: item.props.active || (hasActive && active >= index),
-        lineActive: item.props.lineActive || (hasActive && active - 1 >= index),
+        active:
+          item.props.active ||
+          (reverseActive ? active >= _children.length - index - 1 : active >= index),
+        lineActive:
+          item.props.lineActive ||
+          (reverseActive ? active >= _children.length - index - 1 : active - 1 >= index),
       })
     );
 
-  const offset: React.CSSProperties =
-    align === 'left'
-      ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
-      : { paddingRight: bulletSize / 2 + lineWidth / 2 };
+    const offset: CSSObject =
+      align === 'left'
+        ? { paddingLeft: bulletSize / 2 + lineWidth / 2 }
+        : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
-  return (
-    <div className={sxClassName} style={{ ...offset, ...mergedStyles }} {...rest}>
-      {items}
-    </div>
-  );
-}
+    return (
+      <Box ref={ref} sx={[offset, sx]} {...others}>
+        {items}
+      </Box>
+    );
+  }
+) as any;
 
 Timeline.Item = TimelineItem;
 Timeline.displayName = '@mantine/core/Timeline';

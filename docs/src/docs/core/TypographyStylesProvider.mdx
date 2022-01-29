@@ -17,7 +17,7 @@ import { TypographyStylesProviderDemos } from '@demos/core';
 
 ## Usage
 
-Mantine does not expose global styles.
+Mantine does not expose typography global styles.
 Use TypographyStylesProvider to add Mantine typography styles to your html content:
 
 ```tsx
@@ -51,14 +51,3 @@ TypographyStylesProvider includes styles for:
 - code and pre
 
 <Demo data={TypographyStylesProviderDemos.all} />
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { TypographyStylesProviderProps } from '@mantine/core';
-```
-
-`TypographyStylesProviderProps` extends `React.ComponentPropsWithoutRef<'div'>`,
-all other props are available under _Component props_ tab.

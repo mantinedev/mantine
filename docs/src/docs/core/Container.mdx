@@ -14,7 +14,6 @@ styles: ['Container', 'single-node']
 ---
 
 import { ContainerDemos } from '@demos/core';
-import { CONTAINER_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -26,26 +25,3 @@ Component accepts these props:
 - **fluid** – overwrites size prop and sets max width to 100%
 
 <Demo data={ContainerDemos.usage} />
-
-## Default sizes
-
-You can get predefined max-width values by importing `CONTAINER_SIZES`:
-
-```tsx
-import { CONTAINER_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'max-width']}
-  data={Object.keys(CONTAINER_SIZES).map((size) => [size, `${CONTAINER_SIZES[size]}px`])}
-/>
-
-## TypeScript
-
-Import component props type:
-
-```tsx
-import type { ContainerProps } from '@mantine/core';
-```
-
-`ContainerProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.

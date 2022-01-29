@@ -14,7 +14,6 @@ styles: ['RadioGroup']
 ---
 
 import { RadioGroupDemos } from '@demos/core';
-import { RADIO_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -32,17 +31,6 @@ Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
 Size defines label font-size, input width and height.
 
 <Demo data={RadioGroupDemos.sizes} />
-
-You can get checkbox sizes by importing `RADIO_SIZES`:
-
-```tsx
-import { RADIO_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Prop value', 'Width and height']}
-  data={Object.keys(RADIO_SIZES).map((size) => [size, `${RADIO_SIZES[size]}px`])}
-/>
 
 ## Controlled
 
@@ -91,35 +79,3 @@ function Demo() {
   );
 }
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { RadioGroupProps, RadioProps } from '@mantine/core';
-```
-
-- `RadioGroupProps` extends `React.ComponentPropsWithoutRef<'div'>`
-- `RadioProps` extends `React.ComponentPropsWithoutRef<'input'>`
-
-All other props are available under _Component props_ tab.
-
-### RadioGroupStylesNames type
-
-`RadioGroupStylesNames` type is a union with RadioGroup [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { RadioGroupStylesNames } from '@mantine/core';
-
-const selectClasses: Partial<Record<RadioGroupStylesNames, 'string'>> = {
-  label: 'select-label',
-  description: 'select-description',
-};
-
-<RadioGroup classNames={selectClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

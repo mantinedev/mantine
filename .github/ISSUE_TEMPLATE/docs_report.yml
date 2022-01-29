@@ -1,0 +1,21 @@
+name: Report an issue with mantine.dev website
+description: Nothing is perfect, especially our docs, help us find and fix mistakes, bad wording, etc.
+body:
+  - type: markdown
+    attributes:
+      value: '## Thanks for reaching out!'
+  - type: input
+    id: link
+    attributes:
+      label: Link to the page where something nasty is located
+  - type: textarea
+    id: quote
+    attributes:
+      label: Exact quote of what is wrong
+  - type: dropdown
+    id: participate
+    attributes:
+      label: Are you willing to create pull request with the fix?
+      options:
+        - 'Yes'
+        - 'No'

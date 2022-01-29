@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useExtractedMargins } from '@mantine/styles';
+import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { Box } from '../Box';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
@@ -18,6 +19,9 @@ export interface RingProgressProps
   /** Width and height of the progress ring in px */
   size?: number;
 
+  /** Sets whether the edges of the progress circle are rounded */
+  roundCaps?: boolean;
+
   /** Ring sections */
   sections: { value: number; color: MantineColor }[];
 }
@@ -33,15 +37,19 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
       thickness = size / 10,
       classNames,
       styles,
-      sx,
+      roundCaps,
       ...others
     }: RingProgressProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, { sx, classNames, styles, name: 'RingProgress' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(null, { classNames, styles, name: 'RingProgress' });
 
-    const curves = getCurves({ size, thickness, sections }).map((curve, index) => (
+    const curves = getCurves({
+      size,
+      thickness,
+      sections,
+      renderRoundedLineCaps: roundCaps,
+    }).map((curve, index) => (
       <Curve
         key={index}
         value={curve.data?.value}
@@ -51,15 +59,16 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
         offset={curve.offset}
         color={curve.data?.color}
         root={curve.root}
+        lineRoundCaps={curve.lineRoundCaps}
       />
     ));
 
     return (
-      <div
-        style={{ width: size, height: size, ...mergedStyles }}
+      <Box
+        style={{ width: size, height: size, ...style }}
         className={cx(classes.root, className)}
         ref={ref}
-        {...rest}
+        {...others}
       >
         <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
           {curves}
@@ -70,7 +79,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
             {label}
           </div>
         )}
-      </div>
+      </Box>
     );
   }
 );

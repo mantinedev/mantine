@@ -14,7 +14,6 @@ styles: ['Burger']
 ---
 
 import { BurgerDemos } from '@demos/core';
-import { BURGER_SIZES } from '@mantine/core';
 
 ## Usage
 
@@ -43,17 +42,6 @@ Alternatively, you can use a number to set width and height in px:
 <Burger size={50} /> // -> { width: 50, height: 50 }
 ```
 
-You can get default sizes by importing `BURGER_SIZES`:
-
-```tsx
-import { BURGER_SIZES } from '@mantine/core';
-```
-
-<DataTable
-  head={['Size', 'Width and height']}
-  data={Object.keys(BURGER_SIZES).map((size) => [size, `${BURGER_SIZES[size]}px`])}
-/>
-
 ## Get button ref
 
 You can get burger button ref by setting `ref` prop:
@@ -81,32 +69,3 @@ as by design element does not associated label.
 // Set aria-label to announce control with screen reader
 <Burger aria-label="Open navigation" />
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { BurgerProps } from '@mantine/core';
-```
-
-`BurgerProps` extends `React.ComponentPropsWithoutRef<'button'>`, all other props are available under _Component props_ tab.
-
-### BurgerStylesNames type
-
-`BurgerStylesNames` type is a union with Burger [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { BurgerStylesNames } from '@mantine/core';
-
-const burgerClasses: Partial<Record<BurgerStylesNames, 'string'>> = {
-  root: 'burger-root',
-  burger: 'burger-icon',
-};
-
-<Burger classNames={burgerClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

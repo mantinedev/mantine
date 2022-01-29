@@ -56,6 +56,7 @@ RichTextEditor supports these controls in toolbar:
 - `video`, `image` – video and image embeds
 - `unorderedList`, `orderedList` – ul and ol tags
 - `alignCenter`, `alignLeft`, `alignRight` – controls text-align
+- `code` and `codeBlock` – inline and block code
 
 You can add, remove and configure controls arrangement in toolbar with `controls` prop:
 
@@ -119,6 +120,19 @@ function Demo() {
 base64 format. In most cases this is not a valid option to store images so make sure you provide `onImageUpload`
 if you are planning to use images.
 
+## Mentions
+
+RichTextEditor comes with [quill-mentions plugin](https://github.com/quill-mention/quill-mention).
+To add mentions support, add provide [quill-mentions](https://github.com/quill-mention/quill-mention) configuration to `mentions` prop:
+
+<Demo data={RichTextDemos.mentions} />
+
+## Read only
+
+When editor is readonly state, user cannot edit content, toolbar is hidden:
+
+<Demo data={RichTextDemos.readOnly} />
+
 ## Keyboard shortcuts
 
 - `⌘ + B` / `Ctrl + B` – toggle bold format in current selection
@@ -126,6 +140,23 @@ if you are planning to use images.
 - `⌘ + U` / `Ctrl + U` – toggle underline format in current selection
 - `⌘ + K` / `Ctrl + K` – add link to current selection
 - `⌘ + option + 1` / `Ctrl + Alt + 1` – toggle heading at current line, valid for 1-6 headings
+
+## Get editor ref
+
+```tsx
+import { useRef, useEffect } from 'react';
+import { RichTextEditor, Editor } from '@mantine/rte';
+
+function Demo() {
+  const editorRef = useRef<Editor>();
+
+  useEffect(() => {
+    editorRef.current.focus();
+  }, []);
+
+  return <RichTextEditor ref={editorRef} {...otherProps} />;
+}
+```
 
 ## Server side rendering
 

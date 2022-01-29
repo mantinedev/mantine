@@ -14,7 +14,7 @@ import {
 } from '../../../index';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Popover,
   Button,
@@ -70,7 +70,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
       />
 
       <Group position="apart" style={{ marginTop: 15 }}>
-        <Anchor component="button" color="gray" onClick={onCancel}>
+        <Anchor component="button" color="gray" size="sm" onClick={onCancel}>
           Cancel
         </Anchor>
         <Button type="submit" size="sm">
@@ -122,7 +122,6 @@ export function EditUserPopover() {
         onClose={() => setOpened(false)}
         position="bottom"
         placement="end"
-        withArrow
         withCloseButton
         title="Edit user"
         transition="pop-top-right"
@@ -173,7 +172,7 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         required
         label="Name"
         placeholder="Name"
-        style={{ minWidth: isMobile ? 220 : 300 }}
+        sx={{ minWidth: isMobile ? 220 : 300 }}
         value={form.values.name}
         onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
         error={form.errors.name}
@@ -185,14 +184,15 @@ function UserEditForm({ initialValues, onSubmit, onCancel }: UserEditFormProps) 
         label="Email"
         placeholder="Email"
         variant="default"
-        style={{ minWidth: isMobile ? 220 : 300, marginTop: 15 }}
+        sx={{ minWidth: isMobile ? 220 : 300 }}
+        mt="md"
         value={form.values.email}
         onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
         error={form.errors.email}
       />
 
-      <Group position="apart" style={{ marginTop: 15 }}>
-        <Anchor component="button" color="gray" onClick={onCancel}>
+      <Group position="apart" mt="md">
+        <Anchor component="button" color="gray" onClick={onCancel} size="sm">
           Cancel
         </Anchor>
         <Button type="submit">Save</Button>
@@ -210,7 +210,7 @@ interface UserProps {
 function User({ name, email, className }: UserProps) {
   return (
     <div className={className} style={{ display: 'flex' }}>
-      <Avatar style={{ marginRight: 15 }} color="blue">
+      <Avatar mr="md" color="blue">
         {name
           .split(' ')
           .map((part) => part.charAt(0).toUpperCase())
@@ -243,10 +243,10 @@ export function Demo() {
         onClose={() => setOpened(false)}
         position="bottom"
         placement={isMobile ? 'center' : 'end'}
-        withArrow
         withCloseButton
         title="Edit user"
         transition="pop-top-right"
+        gutter={15}
         target={
           <ActionIcon
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}

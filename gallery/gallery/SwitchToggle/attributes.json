@@ -1,0 +1,10 @@
+{
+  "title": "Color scheme toggle",
+  "category": "color-scheme",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/switch/", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}

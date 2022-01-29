@@ -1,6 +1,6 @@
 import React from 'react';
-import { ChevronRightIcon } from '@modulz/radix-icons';
-import { createStyles, useMantineTheme } from '@mantine/styles';
+import { ChevronRightIcon, ChevronLeftIcon } from '@modulz/radix-icons';
+import { createStyles } from '@mantine/styles';
 import { UnstyledButton, Group, Avatar, Text } from '../../../index';
 
 const useStyles = createStyles((theme) => ({
@@ -18,8 +18,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function User() {
-  const theme = useMantineTheme();
-  const { classes } = useStyles();
+  const { classes, theme } = useStyles();
 
   return (
     <div
@@ -45,7 +44,11 @@ export function User() {
             </Text>
           </div>
 
-          <ChevronRightIcon width={18} height={18} />
+          {theme.dir === 'ltr' ? (
+            <ChevronRightIcon width={18} height={18} />
+          ) : (
+            <ChevronLeftIcon width={18} height={18} />
+          )}
         </Group>
       </UnstyledButton>
     </div>

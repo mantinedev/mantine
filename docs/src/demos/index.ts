@@ -4,9 +4,11 @@ export * from './hooks/use-click-outside';
 export * from './hooks/use-clipboard';
 export * from './hooks/use-color-scheme';
 export * from './hooks/use-document-title';
+export * from './hooks/use-element-size';
 export * from './hooks/use-idle';
 export * from './hooks/use-interval';
 export * from './hooks/use-media-query';
+export * from './hooks/use-page-leave';
 export * from './hooks/use-reduced-motion';
 export * from './hooks/use-scroll-into-view';
 export * from './hooks/use-resize-observer';
@@ -24,6 +26,7 @@ export * from './hooks/use-mouse';
 export * from './hooks/use-move';
 export * from './hooks/use-hover';
 export * from './hooks/use-os';
+export * from './hooks/use-event-listener';
 
 export * from './theme';
 

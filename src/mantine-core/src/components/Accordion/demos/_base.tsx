@@ -1,8 +1,8 @@
 import React from 'react';
+import { baseAccordionMockdata } from '@mantine/mockdata';
 import { Accordion, AccordionProps } from '../Accordion';
-import { BASE_DATA } from './_mockdata';
 
-export const baseDemoItems = BASE_DATA.map((item) => (
+export const baseDemoItems = baseAccordionMockdata.map((item) => (
   <Accordion.Item label={item.label} key={item.label}>
     {item.content}
   </Accordion.Item>

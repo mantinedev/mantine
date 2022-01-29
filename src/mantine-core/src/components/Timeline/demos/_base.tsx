@@ -6,9 +6,9 @@ import {
   GitBranchIcon,
 } from '@primer/octicons-react';
 import { Text } from '../../Text/Text';
-import { Timeline } from '../Timeline';
+import { Timeline, TimelineProps } from '../Timeline';
 
-export function TimelineBase(props: any) {
+export function TimelineBase(props: Partial<TimelineProps> & { noIcon?: boolean }) {
   const displayIcon = !props?.noIcon;
   return (
     <Timeline active={1} bulletSize={24} lineWidth={2} {...props}>

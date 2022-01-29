@@ -1,0 +1,17 @@
+{
+  "title": "Hero section with text",
+  "category": "hero",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/text/",
+    "/core/title/",
+    "/core/button/",
+    "/core/container/",
+    "/core/group/"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

@@ -6,30 +6,20 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  ClassNames,
-  useExtractedMargins,
-} from '@mantine/styles';
+import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
-import { MantineTransition } from '../Transition';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
-import {
-  SelectItem,
-  SelectDataItem,
-  BaseSelectProps,
-  BaseSelectStylesNames,
-} from '../Select/types';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
+import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
-import { groupSortData } from '../Select/group-sort-data/group-sort-data';
+import { groupOptions } from '../../utils';
 import useStyles from './MultiSelect.styles';
+import { SelectSharedProps } from '../Select/Select';
 
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
@@ -39,57 +29,21 @@ export type MultiSelectStylesNames =
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;
 
-export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, BaseSelectProps {
-  /** Input size */
-  size?: MantineSize;
-
-  /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
-
-  /** Data for select options */
-  data: SelectDataItem[];
-
-  /** Value for controlled component */
-  value?: string[];
-
-  /** Default value for uncontrolled component */
-  defaultValue?: string[];
-
-  /** Called each time value changes */
-  onChange?(value: string[]): void;
-
+export interface MultiSelectProps
+  extends DefaultProps<MultiSelectStylesNames>,
+    BaseSelectProps,
+    Omit<SelectSharedProps<SelectItem, string[]>, 'filter'> {
   /** Component used to render values */
   valueComponent?: React.FC<any>;
 
-  /** Component used to render item */
-  itemComponent?: React.FC<any>;
-
-  /** Dropdown body appear/disappear transition */
-  transition?: MantineTransition;
-
-  /** Dropdown body transition duration */
-  transitionDuration?: number;
-
-  /** Dropdown body transition timing function, defaults to theme.transitionTimingFunction */
-  transitionTimingFunction?: string;
-
-  /** Dropdown shadow from theme or any value to set box-shadow */
-  shadow?: MantineShadow;
-
   /** Maximum dropdown height in px */
   maxDropdownHeight?: number;
-
-  /** Nothing found label */
-  nothingFound?: React.ReactNode;
 
   /** Enable items searching */
   searchable?: boolean;
 
   /** Function based on which items in dropdown are filtered */
   filter?(value: string, selected: boolean, item: SelectItem): boolean;
-
-  /** Limit amount of items displayed at a time for searchable select */
-  limit?: number;
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
@@ -106,12 +60,6 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   /** Called each time search query changes */
   onSearchChange?(query: string): void;
 
-  /** Initial dropdown opened state */
-  initiallyOpened?: boolean;
-
-  /** Get input ref */
-  elementRef?: React.ForwardedRef<HTMLInputElement>;
-
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -125,19 +73,13 @@ export interface MultiSelectProps extends DefaultProps<MultiSelectStylesNames>, 
   onCreate?: (query: string) => void;
 
   /** Change dropdown component, can be used to add custom scrollbars */
-  dropdownComponent?: React.FC<any>;
-
-  /** Called when dropdown is opened */
-  onDropdownOpen?(): void;
-
-  /** Called when dropdown is closed */
-  onDropdownClose?(): void;
+  dropdownComponent?: any;
 
   /** Limit amount of items selected */
   maxSelectedValues?: number;
 
-  /** Dropdown z-index */
-  zIndex?: number;
+  /** Select highlighted item on blur */
+  selectOnBlur?: boolean;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -204,7 +146,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownClose,
       onDropdownOpen,
       maxSelectedValues,
-      zIndex,
+      withinPortal,
+      switchDirectionOnFlip = false,
+      zIndex = getDefaultZIndex('popover'),
+      selectOnBlur = false,
+      name,
+      dropdownPosition,
       ...others
     }: MultiSelectProps,
     ref
@@ -213,7 +160,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
@@ -249,7 +196,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       typeof item === 'string' ? { label: item, value: item } : item
     );
 
-    const sortedData = groupSortData({ data: formattedData });
+    const sortedData = groupOptions({ data: formattedData });
 
     const [_value, setValue] = useUncontrolled({
       value,
@@ -277,12 +224,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
-    };
-
-    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      typeof onBlur === 'function' && onBlur(event);
-      clearSearchOnBlur && handleSearchChange('');
-      setDropdownOpened(false);
     };
 
     const filteredData = filterData({
@@ -323,24 +264,31 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
-      setTimeout(() => {
-        clearSearchOnChange && handleSearchChange('');
-        if (_value.includes(item.value)) {
-          handleValueRemove(item.value);
-        } else {
-          setValue([..._value, item.value]);
-          if (_value.length === maxSelectedValues - 1) {
-            valuesOverflow.current = true;
-            setDropdownOpened(false);
-          }
-          if (hovered === filteredData.length - 1) {
-            setHovered(filteredData.length - 2);
-          }
+      clearSearchOnChange && handleSearchChange('');
+      if (_value.includes(item.value)) {
+        handleValueRemove(item.value);
+      } else {
+        setValue([..._value, item.value]);
+        if (_value.length === maxSelectedValues - 1) {
+          valuesOverflow.current = true;
+          setDropdownOpened(false);
         }
-        if (item.creatable) {
-          typeof onCreate === 'function' && onCreate(item.value);
+        if (hovered === filteredData.length - 1) {
+          setHovered(filteredData.length - 2);
         }
-      });
+      }
+      if (item.creatable) {
+        typeof onCreate === 'function' && onCreate(item.value);
+      }
+    };
+
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      typeof onBlur === 'function' && onBlur(event);
+      if (selectOnBlur && filteredData[hovered] && dropdownOpened) {
+        handleItemSelect(filteredData[hovered]);
+      }
+      clearSearchOnBlur && handleSearchChange('');
+      setDropdownOpened(false);
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -406,8 +354,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         }
 
         case 'Enter': {
+          event.preventDefault();
+
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -416,8 +365,21 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           break;
         }
 
+        case 'Space': {
+          if (!searchable) {
+            event.preventDefault();
+            if (filteredData[hovered] && dropdownOpened) {
+              handleItemSelect(filteredData[hovered]);
+            } else {
+              setDropdownOpened(true);
+            }
+          }
+
+          break;
+        }
+
         case 'Backspace': {
-          if (_value.length > 0 && searchValue.length === 0 && searchable) {
+          if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
           }
@@ -448,12 +410,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           {...item}
           disabled={disabled}
           className={classes.value}
-          onRemove={(e) => {
+          onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
             if (dropdownOpened) {
-              e.preventDefault();
-              e.stopPropagation();
+              event.preventDefault();
+              event.stopPropagation();
             }
             handleValueRemove(item.value);
+            setDropdownOpened(true);
           }}
           key={item.value}
           size={size}
@@ -488,11 +451,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         description={description}
         size={size}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         __staticSelector="MultiSelect"
         sx={sx}
+        {...margins}
         {...wrapperProps}
       >
         <div
@@ -561,7 +525,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
-                autoComplete="off"
+                autoComplete="nope"
                 {...rest}
               />
             </div>
@@ -579,11 +543,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             styles={styles}
             ref={useMergedRef(dropdownRef, scrollableRef)}
             __staticSelector="MultiSelect"
-            dropdownComponent={dropdownComponent}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             referenceElement={wrapperRef.current}
             direction={direction}
             onDirectionChange={setDirection}
+            switchDirectionOnFlip={switchDirectionOnFlip}
+            withinPortal={withinPortal}
             zIndex={zIndex}
+            dropdownPosition={dropdownPosition}
           >
             <SelectItems
               data={filteredData}
@@ -603,6 +570,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             />
           </SelectDropdown>
         </div>
+
+        {name && <input type="hidden" name={name} value={_value.join(',')} />}
       </InputWrapper>
     );
   }

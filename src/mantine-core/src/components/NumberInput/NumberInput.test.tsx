@@ -1,185 +1,154 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import {
   checkAccessibility,
-  itSupportsClassName,
-  itSupportsStyle,
-  itSupportsRef,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  defaultInputProps,
+  itSupportsSystemProps,
+  itSupportsInputProps,
+  itSupportsFocusEvents,
 } from '@mantine/tests';
-import { TextInput } from '../TextInput/TextInput';
-import { NumberInput, NumberInputHandlers } from './NumberInput';
-import { NumberInput as NumberInputStylesApi } from './styles.api';
+import { NumberInput, NumberInputHandlers, NumberInputProps } from './NumberInput';
 
-const defaultProps = {
-  value: 0,
-  onChange: () => {},
-};
+const defaultProps: NumberInputProps = {};
+
+const getRightSection = (container: HTMLElement) =>
+  container.querySelector('.mantine-NumberInput-rightSection');
+
+const clickIncrement = (container: HTMLElement) =>
+  userEvent.click(container.querySelector('.mantine-NumberInput-controlUp'));
+
+const clickDecrement = (container: HTMLElement) =>
+  userEvent.click(container.querySelector('.mantine-NumberInput-controlDown'));
+
+const getInput = () => screen.getByRole('textbox');
+const enterText = (text: string) => userEvent.type(getInput(), text);
+const expectValue = (value: string) => expect(getInput()).toHaveValue(value);
+const blurInput = () => fireEvent.blur(getInput());
 
 describe('@mantine/core/NumberInput', () => {
-  beforeAll(() => {
-    // JSDom does not implement this and an error was being
-    // thrown from jest-axe because of it.
-    window.getComputedStyle = jest.fn();
-  });
-
   checkAccessibility([
-    mount(<NumberInput {...defaultProps} label="test" />),
-    mount(<NumberInput {...defaultProps} aria-label="test" />),
+    <NumberInput {...defaultProps} label="test" />,
+    <NumberInput {...defaultProps} aria-label="test" />,
   ]);
 
-  itSupportsClassName(NumberInput, defaultProps);
-  itSupportsMargins(NumberInput, defaultProps);
-  itSupportsStyle(NumberInput, defaultProps);
-  itSupportsRef(NumberInput, defaultProps, HTMLInputElement);
-  itSupportsStylesApi(
-    NumberInput,
-    defaultInputProps,
-    Object.keys(NumberInputStylesApi),
-    'NumberInput'
-  );
-
-  it('has correct displayName', () => {
-    expect(NumberInput.displayName).toEqual('@mantine/core/NumberInput');
+  itSupportsSystemProps({
+    component: NumberInput,
+    props: defaultProps,
+    displayName: '@mantine/core/NumberInput',
+    refType: HTMLInputElement,
+    excludeOthers: true,
   });
 
-  it('does not render rightSection if input is disabled, variant is unstyled or controls are hidden', () => {
-    const regular = shallow(<NumberInput {...defaultProps} />);
-    const disabled = shallow(<NumberInput {...defaultProps} disabled />);
-    const controlsHidden = shallow(<NumberInput {...defaultProps} hideControls />);
-    const unstyled = shallow(<NumberInput {...defaultProps} variant="unstyled" />);
+  itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');
+  itSupportsFocusEvents(NumberInput, defaultProps, 'input');
 
-    expect(regular.prop('rightSection')).not.toBe(null);
-    expect(disabled.prop('rightSection')).toBe(null);
-    expect(controlsHidden.prop('rightSection')).toBe(null);
-    expect(unstyled.prop('rightSection')).toBe(null);
+  it('does not render rightSection if input is disabled, variant is unstyled or controls are hidden', () => {
+    const { container: regular } = render(<NumberInput {...defaultProps} />);
+    const { container: disabled } = render(<NumberInput {...defaultProps} disabled />);
+    const { container: controlsHidden } = render(<NumberInput {...defaultProps} hideControls />);
+    const { container: unstyled } = render(<NumberInput {...defaultProps} variant="unstyled" />);
+
+    expect(getRightSection(regular)).not.toBe(null);
+    expect(getRightSection(disabled)).toBe(null);
+    expect(getRightSection(controlsHidden)).toBe(null);
+    expect(getRightSection(unstyled)).toBe(null);
   });
 
   it('increments and decrements value with controls', () => {
     const spy = jest.fn();
-    const element = mount(<NumberInput value={0} step={10} onChange={spy} />);
-
-    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
+    const { container } = render(<NumberInput value={0} step={10} onChange={spy} />);
+    clickIncrement(container);
     expect(spy).toHaveBeenLastCalledWith(10);
-
-    // 1st decrement should get it to 0, 2nd decrement should get it to -10
-    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
-    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
+    clickDecrement(container);
+    clickDecrement(container);
     expect(spy).toHaveBeenLastCalledWith(-10);
   });
 
   it('does not increment or decrements out of min and max', () => {
     const spy = jest.fn();
-    const element = mount(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
-
-    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
-    expect(spy).toHaveBeenLastCalledWith(10);
-
-    // 1st mousedown should get it to 4, second mouse down should get it to 0.
-    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
-    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
-    expect(spy).toHaveBeenLastCalledWith(0);
-  });
-
-  it('sets variant, disabled, min, max and step props on TextInput', () => {
-    const element = mount(
-      <NumberInput {...defaultProps} min={-10} max={10} step={5} disabled variant="filled" />
+    const { container } = render(
+      <NumberInput value={5} max={10} min={0} step={6} onChange={spy} />
     );
-    expect(element.find(TextInput).prop('min')).toBe(-10);
-    expect(element.find(TextInput).prop('max')).toBe(10);
-    expect(element.find(TextInput).prop('step')).toBe(5);
-    expect(element.find(TextInput).prop('disabled')).toBe(true);
-    expect(element.find(TextInput).prop('variant')).toBe('filled');
+    clickIncrement(container);
+    expect(spy).toHaveBeenLastCalledWith(10);
+    clickDecrement(container);
+    clickDecrement(container);
+    expect(spy).toHaveBeenLastCalledWith(0);
   });
 
   it('exposes increment/decrement handlers with handlersRef prop', () => {
     const ref = React.createRef<NumberInputHandlers>();
     const spy = jest.fn();
-    mount(<NumberInput {...defaultProps} value={10} step={2} onChange={spy} handlersRef={ref} />);
+    render(<NumberInput {...defaultProps} value={10} step={2} onChange={spy} handlersRef={ref} />);
 
     expect(typeof ref.current.decrement).toBe('function');
     expect(typeof ref.current.increment).toBe('function');
 
-    act(() => {
-      ref.current.decrement();
-    });
-
+    act(() => ref.current.decrement());
     expect(spy).toHaveBeenLastCalledWith(8);
-
-    act(() => {
-      ref.current.increment();
-    });
-
-    // should have incremented by 2, from 8 to 10.
+    act(() => ref.current.increment());
     expect(spy).toHaveBeenLastCalledWith(10);
   });
 
   it('returns undefined when input is empty', () => {
     const spy = jest.fn();
-    const element = mount(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
-
-    const input = element.find('input').at(0);
-    // should start with a value of 5
-    expect(input.getDOMNode().getAttribute('value')).toBe('5');
-    // simulate onChange with empty input. like if the user hits backspace clearing the input.
-    input.simulate('change', { target: { value: '' } });
+    render(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
+    expectValue('5');
+    enterText('{backspace}');
     expect(spy).toHaveBeenLastCalledWith(undefined);
-    expect(input.getDOMNode().getAttribute('value')).toBe('');
+    expectValue('');
   });
 
-  it('clears on blur when input is empty and a string is entered', () => {
+  it('clears input on blur when input is empty and a string is entered', () => {
     const spy = jest.fn();
-    const element = mount(
-      <NumberInput value={undefined} max={10} min={0} step={6} onChange={spy} />
-    );
-
-    const input = element.find('input').at(0);
-    // change value to 6 and blur with a string as if a user typed 6 and then selected the value and typed a string
-    // and then blurred
-    input.simulate('change', { target: { value: '6' } });
+    render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
+    enterText('6');
     expect(spy).toHaveBeenLastCalledWith(6);
-    input.simulate('blur', { target: { value: 'abc' } });
-    expect(input.getDOMNode().getAttribute('value')).toBe('6');
+    enterText('test');
+    blurInput();
+    expect(getInput()).toHaveValue('6');
     expect(spy).toHaveBeenLastCalledWith(6);
-
-    // clear the value and blur with a string as if a user typed "abc" into an empty input and then blurred.
-    input.simulate('change', { target: { value: '' } });
-    input.simulate('blur', { target: { value: 'abc' } });
-    expect(spy).toHaveBeenLastCalledWith(undefined);
-    expect(input.getDOMNode().getAttribute('value')).toBe('');
   });
 
-  it('sets state to min or 0 if input is empty and is incremented/decremented', () => {
+  it('supports changing decimal separator', () => {
     const spy = jest.fn();
-    const element = mount(
-      <NumberInput value={undefined} max={10} min={1} step={6} onChange={spy} />
-    );
+    render(<NumberInput max={10} min={0} step={6} onChange={spy} decimalSeparator="," />);
+    enterText('6,54');
+    expect(spy).toHaveBeenLastCalledWith(6.54);
+    blurInput();
+    expect(getInput()).toHaveValue('7');
+  });
 
-    const input = element.find('input').at(0);
-    // Simulate increment when input is empty
-    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
-    expect(input.getDOMNode().getAttribute('value')).toBe('1');
-    expect(spy).toHaveBeenLastCalledWith(1);
+  it('sets input value with a given precision', () => {
+    const spy = jest.fn();
+    render(<NumberInput max={10} min={0} step={6} precision={2} onChange={spy} />);
+    enterText('6.123');
+    expect(spy).toHaveBeenLastCalledWith(6.123);
+    blurInput();
+    expectValue('6.12');
+    expect(spy).toHaveBeenLastCalledWith(6.12);
+  });
 
-    // reset the input to empty
-    input.simulate('change', { target: { value: '' } });
-    expect(spy).toHaveBeenLastCalledWith(undefined);
-    expect(input.getDOMNode().getAttribute('value')).toBe('');
+  it('sets state to min if input is empty and is incremented/decremented', () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
+    clickIncrement(container);
+    expectValue('0');
+    expect(spy).toHaveBeenLastCalledWith(0);
+    enterText('{backspace}');
+    clickDecrement(container);
+    expectValue('0');
+  });
 
-    // Simulate decrement when input is empty
-    element.find('.mantine-NumberInput-controlDown').simulate('mousedown');
-    expect(input.getDOMNode().getAttribute('value')).toBe('1');
-
-    // Simulate increment when input is empty and min is not set
-    element.setProps({ min: undefined });
-    input.simulate('change', { target: { value: '' } });
-    expect(spy).toHaveBeenLastCalledWith(undefined);
-    expect(input.getDOMNode().getAttribute('value')).toBe('');
-    element.find('.mantine-NumberInput-controlUp').simulate('mousedown');
-    expect(input.getDOMNode().getAttribute('value')).toBe('0');
+  it('steps value with controls on hold keydown without stepHoldInterval', () => {
+    const spy = jest.fn();
+    render(<NumberInput step={10} onChange={spy} defaultValue={0} />);
+    enterText('{arrowup}');
+    expectValue('10');
+    expect(spy).toHaveBeenLastCalledWith(10);
+    enterText('{arrowdown}');
+    expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 });

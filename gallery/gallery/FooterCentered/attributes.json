@@ -1,0 +1,24 @@
+{
+  "title": "Footer with centered links",
+  "category": "footers",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/group/",
+    "/core/anchor/",
+    "/core/button/#unstyled-button",
+    "tabler-icons-react"
+  ],
+  "props": {
+    "links": [
+      { "link": "#", "label": "Contact" },
+      { "link": "#", "label": "Privacy" },
+      { "link": "#", "label": "Blog" },
+      { "link": "#", "label": "Store" },
+      { "link": "#", "label": "Careers" }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

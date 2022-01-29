@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useExtractedMargins } from '@mantine/styles';
-import { Text } from '../Text/Text';
+import { DefaultProps, ClassNames } from '@mantine/styles';
+import { Text } from '../Text';
+import { Box } from '../Box';
 import useStyles from './Breadcrumbs.styles';
 
 export type BreadcrumbsStylesNames = ClassNames<typeof useStyles>;
@@ -17,20 +18,10 @@ export interface BreadcrumbsProps
 
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (
-    {
-      className,
-      style,
-      children,
-      separator = '/',
-      classNames,
-      styles,
-      sx,
-      ...others
-    }: BreadcrumbsProps,
+    { className, children, separator = '/', classNames, styles, ...others }: BreadcrumbsProps,
     ref
   ) => {
-    const { classes, cx } = useStyles(null, { classNames, styles, sx, name: 'Breadcrumbs' });
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
 
     const items = React.Children.toArray(children).reduce(
       (acc: any[], child: any, index, array) => {
@@ -50,9 +41,9 @@ export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {items}
-      </div>
+      </Box>
     );
   }
 );

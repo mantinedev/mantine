@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Button, useMantineTheme } from '@mantine/core';
+import { Button, Group, useMantineTheme } from '@mantine/core';
 import { dropzoneChildren } from '../../Dropzone/demos/_base';
 import { FullScreenDropzone } from '../FullScreenDropzone';
 import { IMAGE_MIME_TYPE } from '../../mime-types';
@@ -40,9 +40,11 @@ function Demo() {
 
   return (
     <>
-      <Button color={disabled ? 'blue' : 'red'} onClick={() => setDisabled((d) => !d)}>
-        {disabled ? 'Enable' : 'Disable'} full screen dropzone
-      </Button>
+      <Group position="center">
+        <Button color={disabled ? 'blue' : 'red'} onClick={() => setDisabled((d) => !d)}>
+          {disabled ? 'Enable' : 'Disable'} full screen dropzone
+        </Button>
+      </Group>
 
       <FullScreenDropzone
         disabled={disabled}

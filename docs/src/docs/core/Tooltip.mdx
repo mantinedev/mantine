@@ -17,8 +17,6 @@ import { TooltipDemos } from '@demos/core';
 
 ## Usage
 
-Use tooltip to provide additional information for target element or component:
-
 <Demo data={TooltipDemos.configurator} />
 
 ## Position and placement
@@ -49,14 +47,14 @@ Tooltip arrow is controlled by:
 
 ## Controlled
 
-By default tooltip is displayed when mouse is over target element.
-You can change this logic by setting `opened` prop:
+By default, tooltip is displayed when mouse is over target element.
+To change this logic set `opened` prop:
 
 <Demo data={TooltipDemos.controlled} />
 
 ## Multiline
 
-By default tooltip white-space property is set to nowrap. To change that use:
+By default, tooltip white-space property is set to nowrap. To change that use:
 
 - **wrapLines** – to enable line breaks
 - **width** – to define tooltip width in px
@@ -67,9 +65,7 @@ Note that, multiline tooltips may require different transitions for better UX.
 
 ## Change transition
 
-Tooltip is built with [Transition](/core/transition/) component.
-
-You can change transitions with props:
+Tooltip is built with [Transition](/core/transition/) component, it supports the following props:
 
 - **transition** – predefined transition name or transition object
 - **transitionDuration** – transition duration in ms, defaults to 100ms
@@ -79,27 +75,27 @@ You can change transitions with props:
 <Tooltip transition="skew-up" transitionDuration={300} transitionTimingFunction="ease" />
 ```
 
-All available predefined transitions demo:
+All available predefined transitions:
 
 <Demo data={TooltipDemos.transitions} />
 
 ## Change color
 
-You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors):
+Tooltip supports all colors defined in [theme.colors](/theming/extend-theme/#default-colors):
 
 <Demo data={TooltipDemos.colors} />
 
 ## Close delay
 
-You can delay tooltip unmount on mouse leave with `delay` prop: set delay in ms.
+Delay tooltip unmount on mouse leave with `delay` prop: set delay in ms.
 Delay defaults to 0 and reset if user hovers over target element before delay is expired:
 
 <Demo data={TooltipDemos.delay} />
 
 ## Allow pointer events
 
-By defaults pointer events on tooltip are disabled to prevent animations collisions.
-If you need to use interactive elements inside tooltip set `allowPointerEvents` prop.
+By default, pointer events on tooltip are disabled to prevent animations collisions.
+To use interactive elements inside tooltip set `allowPointerEvents` prop.
 
 In this example tooltip acts more like popover –
 it is controlled and can be closed with control inside tooltip:
@@ -111,7 +107,7 @@ it is controlled and can be closed with control inside tooltip:
 Do not place any important information in tooltip.
 Component is unmounted from the dom and is not visible to screen readers in default configuration.
 
-If you want to make tooltip accessible use controlled variant, open tooltip on focus, provide `tooltipId` and `aria-describedby` props:
+Provide `tooltipId` and `aria-describedby` props to make tooltip accessible:
 
 ```tsx
 import { useState } from 'react';
@@ -134,32 +130,3 @@ function Demo() {
   );
 }
 ```
-
-## TypeScript
-
-### Component props type
-
-Import component props type:
-
-```tsx
-import type { TooltipProps } from '@mantine/core';
-```
-
-`TooltipProps` extends `React.ComponentPropsWithoutRef<'div'>`, all other props are available under _Component props_ tab.
-
-### TooltipStylesNames type
-
-`TooltipStylesNames` type is a union with Tooltip [Styles API](/theming/styles-api/) names:
-
-```tsx
-import type { TooltipStylesNames } from '@mantine/core';
-
-const tooltipClasses: Partial<Record<TooltipStylesNames, 'string'>> = {
-  tooltip: 'tooltip-tooltip',
-  arrow: 'tooltip-arrow',
-};
-
-<Tooltip classNames={tooltipClasses} />;
-```
-
-See full styles descriptions list under _Styles API_ tab.

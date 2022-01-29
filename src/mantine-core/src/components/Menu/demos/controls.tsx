@@ -5,10 +5,7 @@ import { Button } from '../../Button/Button';
 import { menuItems } from './_menu-items';
 
 const code = `
-<Menu
-  control={<button type="button">Button control</button>}
-  controlRefProp="ref"
->
+<Menu control={<button type="button">Button control</button>}>
   {/* Menu items */}
 </Menu>
 
@@ -20,10 +17,7 @@ const code = `
 function Demo() {
   return (
     <Group position="center">
-      <Menu control={<button type="button">Button control</button>} controlRefProp="ref">
-        {menuItems}
-      </Menu>
-
+      <Menu control={<button type="button">Button control</button>}>{menuItems}</Menu>
       <Menu control={<Button>Mantine Button</Button>}>{menuItems}</Menu>
     </Group>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Tab } from '@mantine/core';
 import { Prism, PrismProps } from '../Prism';
 
-const go = `
+export const go = `
 package main
 
 import "fmt"
@@ -17,7 +17,7 @@ func main() {
 }
 `.trim();
 
-const py = `
+export const py = `
 @requires_authorization
 def somefunc(param1='', param2=0):
     r'''A docstring'''
@@ -32,7 +32,7 @@ class SomeClass:
 ... prompt'''
 `.trim();
 
-const css = `
+export const css = `
 @font-face {
   font-family: Chunkfive; src: url('Chunkfive.otf');
 }

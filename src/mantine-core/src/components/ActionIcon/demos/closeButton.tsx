@@ -3,7 +3,6 @@ import { Group } from '../../Group/Group';
 import { CloseButton } from '../CloseButton/CloseButton';
 
 const code = `
-import React from 'react';
 import { CloseButton, Group } from '@mantine/core';
 
 function Demo() {

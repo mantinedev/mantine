@@ -1,99 +1,69 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsStylesApi,
-  itSupportsMargins,
-  itSupportsRef,
+  itSupportsWrapperProps,
+  itSupportsSystemProps,
+  itFiltersChildren,
 } from '@mantine/tests';
-import { RadioGroup, Radio } from './index';
-import { RadioGroup as RadioGroupStylesApi } from './styles.api';
+import { RadioGroup, Radio, RadioGroupProps } from './index';
 
-const defaultProps = {
-  children: <Radio value="test-1">test-1</Radio>,
-  label: 'test-label',
-  error: 'test-error',
-  description: 'test-description',
-  required: true,
+const defaultProps: RadioGroupProps = {
+  children: [
+    <Radio value="test-value-1">test-label-1</Radio>,
+    <Radio value="test-value-2">test-label-2</Radio>,
+    <Radio value="test-value-3">test-label-3</Radio>,
+  ],
 };
 
 describe('@mantine/core/RadioGroup', () => {
-  itSupportsRef(RadioGroup, defaultProps, HTMLDivElement);
-  itSupportsMargins(RadioGroup, defaultProps);
+  itSupportsWrapperProps(RadioGroup, defaultProps);
+  itSupportsSystemProps({
+    component: RadioGroup,
+    props: defaultProps,
+    displayName: '@mantine/core/RadioGroup',
+    excludeOthers: true,
+    refType: HTMLDivElement,
+  });
 
   checkAccessibility([
-    mount(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    ),
+    <RadioGroup>
+      <Radio value="test-1">test-1</Radio>
+      <Radio value="test-2">test-2</Radio>
+      <Radio value="test-3">test-3</Radio>
+    </RadioGroup>,
   ]);
 
-  itSupportsStylesApi(
-    RadioGroup,
-    {
-      children: <Radio value="test-1">test-1</Radio>,
-      label: 'test-label',
-      error: 'test-error',
-      description: 'test-description',
-      required: true,
-    },
-    Object.keys(RadioGroupStylesApi),
-    'RadioGroup'
-  );
-
-  it('has correct displayName', () => {
-    expect(RadioGroup.displayName).toEqual('@mantine/core/RadioGroup');
-  });
-
-  it('renders correct children', () => {
-    const element = shallow(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-        <div data-imposter>Imposter</div>
-      </RadioGroup>
-    );
-
-    expect(element.find(Radio)).toHaveLength(3);
-    expect(element.render().find('[data-imposter]')).toHaveLength(0);
-  });
+  itFiltersChildren(RadioGroup, defaultProps, '.mantine-RadioGroup-radio', [
+    <Radio value="test-value-1">test-label-1</Radio>,
+    <Radio value="test-value-2">test-label-2</Radio>,
+  ]);
 
   it('passes correct name to Radio components', () => {
-    const withoutName = mount(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
+    const { container: withoutName } = render(<RadioGroup {...defaultProps} />);
+    const { container: withName } = render(<RadioGroup {...defaultProps} name="test-name" />);
 
-    const withName = mount(
-      <RadioGroup name="test-name">
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
-
-    expect(withoutName.find(Radio).at(1).prop('name').includes('mantine-')).toBe(true);
-    expect(withName.find(Radio).at(1).prop('name')).toBe('test-name');
+    expect(
+      withoutName.querySelector('input[type="radio"]').getAttribute('name').includes('mantine-')
+    ).toBe(true);
+    expect(withName.querySelector('input[type="radio"]').getAttribute('name')).toBe('test-name');
   });
 
-  it('passes checked prop to Radio components', () => {
-    const element = shallow(
-      <RadioGroup value="test-2">
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <Radio value="test-3">test-3</Radio>
-      </RadioGroup>
-    );
+  it('supports uncontrolled state', () => {
+    render(<RadioGroup {...defaultProps} defaultValue="test-value-1" />);
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[1]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+  });
 
-    expect(element.find(Radio).at(0).prop('checked')).toBe(false);
-    expect(element.find(Radio).at(1).prop('checked')).toBe(true);
-    expect(element.find(Radio).at(2).prop('checked')).toBe(false);
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<RadioGroup {...defaultProps} value="test-value-2" onChange={spy} />);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[0]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
+    expect(spy).toHaveBeenCalledWith('test-value-1');
   });
 });

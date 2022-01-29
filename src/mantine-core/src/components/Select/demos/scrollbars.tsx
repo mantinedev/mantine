@@ -1,45 +1,14 @@
-import React, { forwardRef } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import React from 'react';
 import { Select } from '../Select';
 
 const code = `
-import { forwardRef } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { Select } from '@mantine/core';
-
-const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
-  <Scrollbars
-    {...props}
-    universal
-    style={{ ...props.style, position: 'absolute', height: 300 }}
-    ref={(scrollbars: any) => scrollbars?.view && ref(scrollbars.view)}
-  >
-    <div style={{ padding: 3 }}>{props.children}</div>
-  </Scrollbars>
-));
-
-function Demo() {
-  return (
-    <Select
-      data={data}
-      label="Select with custom scrollbars"
-      placeholder="Dropdown rendered as custom component"
-      dropdownComponent={CustomScrollbars}
-    />
-  );
-}
+<Select
+  data={data}
+  label="Select with native scrollbars"
+  placeholder="Dropdown with native scrollbars"
+  dropdownComponent="div"
+/>
 `;
-
-const CustomScrollbars = forwardRef<any, any>((props: any, ref: any) => (
-  <Scrollbars
-    {...props}
-    universal
-    style={{ ...props.style, position: 'absolute', height: 300 }}
-    ref={(scrollbars: any) => scrollbars?.view && ref(scrollbars.view)}
-  >
-    <div style={{ padding: 3 }}>{props.children}</div>
-  </Scrollbars>
-));
 
 const data = Array(50)
   .fill(0)
@@ -53,9 +22,9 @@ function Demo() {
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <Select
         data={data}
-        label="Select with custom scrollbars"
-        placeholder="Dropdown rendered as custom component"
-        dropdownComponent={CustomScrollbars}
+        label="Select with native scrollbars"
+        placeholder="Dropdown with native scrollbars"
+        dropdownComponent="div"
       />
     </div>
   );

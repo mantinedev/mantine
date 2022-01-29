@@ -4,10 +4,10 @@
 
 ## checkAccessibility
 
-checkAccessibility test checks markup of given component with axe. It allows to find ~30% of accessibility issues. It takes an array of mounted enzyme wrappers as single argument.
+checkAccessibility test checks markup of given component with axe. It allows to find ~30% of accessibility issues.
 
 ```tsx
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { checkAccessibility } from '@mantine/tests';
 import { Tabs, Tab } from '@mantine/core';
 
@@ -24,7 +24,7 @@ const content = [
 ];
 
 describe('@mantine/core/Tabs', () => {
-  checkAccessibility([mount(<Tabs>{content}</Tabs>), mount(<Tabs initialTab={2}>{content}</Tabs>)]);
+  checkAccessibility([<Tabs>{content}</Tabs>, <Tabs initialTab={2}>{content}</Tabs>]);
 });
 ```
 
@@ -109,19 +109,5 @@ import { Button as ButtonStylesApi } from './styles.api';
 
 describe('@mantine/core/Button', () => {
   itSupportsRef(Button, { children: 'test' }, Object.keys(ButtonStylesApi), 'button');
-});
-```
-
-## mockResizeObserver
-
-Mocks ResizeObserver:
-
-```tsx
-import { mockResizeObserver } from '@mantine/tests';
-
-mockResizeObserver();
-
-describe('@mantine/core/Button', () => {
-  // run tests which depend on resize observer
 });
 ```

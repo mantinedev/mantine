@@ -1,5 +1,5 @@
-export { Tab } from './Tab/Tab';
+export { TabControl as Tab } from './TabControl/TabControl';
 export { Tabs } from './Tabs';
 
-export type { TabProps } from './Tab/Tab';
+export type { TabControlProps as TabProps } from './TabControl/TabControl';
 export type { TabsProps, TabsVariant, TabsStylesNames } from './Tabs';

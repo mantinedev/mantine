@@ -8,7 +8,7 @@ category: 'navigation'
 description: 'Display links with theme styles'
 props: ['Anchor']
 import: "import { Anchor } from '@mantine/core';"
-source: 'mantine-core/src/components/Text/Text.tsx'
+source: 'mantine-core/src/components/Anchor/Anchor.tsx'
 docs: 'core/Anchor.mdx'
 styles: ['Anchor', 'single-node']
 ---
@@ -17,13 +17,14 @@ import { AnchorDemos } from '@demos/core';
 
 ## Usage
 
-Anchor is a wrapper around [Text](/core/text/) component with `component` prop set to `a` by default:
+Anchor is a wrapper around [Text](/core/text/) component with `component` prop set to `a` by default.
+It supports the same props as Text component.
 
 <Demo data={AnchorDemos.usage} />
 
 ## Usage with react-router and other libraries
 
-You can use Anchor with react-router Link component and other similar components by setting `component` prop:
+To use Anchor with react-router Link component and other similar components set `component` prop:
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -37,23 +38,3 @@ function Demo() {
   );
 }
 ```
-
-## Typescript
-
-Import component props type:
-
-```tsx
-import type { AnchorProps } from '@mantine/core';
-```
-
-`AnchorProps` is a generic type, it accepts either a string or component type as single type argument:
-
-```tsx
-// AnchorProps with html tag, will extend React.ComponentPropsWithoutRef<'a'>
-type MyAnchorProps = AnchorProps<'a'>;
-
-// AnchorProps with custom component, will extend React.ComponentPropsWithoutRef<typeof Link>
-type CustomAnchorProps = AnchorProps<typeof Link>;
-```
-
-See [TypeScript guide](/pages/basics/#typescript) to learn how to utilize props type with custom component.

@@ -90,7 +90,6 @@ export default createStyles(
         height,
         WebkitTapHighlightColor: 'transparent',
         lineHeight: `${height - 2}px`,
-        border: '1px solid transparent',
         textDecoration: 'none',
         padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px`,
         boxSizing: 'border-box',
@@ -110,11 +109,13 @@ export default createStyles(
       light: {
         backgroundColor: lightColors.background,
         color: lightColors.color,
+        border: '1px solid transparent',
       },
 
       filled: {
         backgroundColor: filledColors.background,
         color: filledColors.color,
+        border: '1px solid transparent',
       },
 
       outline: {
@@ -132,7 +133,9 @@ export default createStyles(
       dot: {
         backgroundColor: 'transparent',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3],
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+        }`,
         paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
 
         '&::before': {

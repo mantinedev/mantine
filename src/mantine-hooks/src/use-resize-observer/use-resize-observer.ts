@@ -57,3 +57,8 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   return [ref, rect] as const;
 }
+
+export function useElementSize<T extends HTMLElement = any>() {
+  const [ref, { width, height }] = useResizeObserver<T>();
+  return { ref, width, height };
+}

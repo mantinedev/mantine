@@ -15,7 +15,8 @@ function Wrapper(
       placement={props.placement}
       position={props.position}
       transitionDuration={0}
-      styles={{ body: { minWidth: 140, textAlign: 'center', pointerEvents: 'none' } }}
+      width={140}
+      styles={{ body: { textAlign: 'center', pointerEvents: 'none' } }}
       spacing="xs"
       noFocusTrap
       noClickOutside
@@ -46,7 +47,7 @@ function Demo() {
     ));
 
     return (
-      <Group key={position} position="center" style={{ marginTop: index !== 0 && 5 }}>
+      <Group key={position} position="center" mt={index === 0 ? 0 : 'md'}>
         {placements}
       </Group>
     );

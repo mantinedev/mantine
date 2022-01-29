@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  useExtractedMargins,
-  useMantineTheme,
-} from '@mantine/styles';
-import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { Box } from '../Box';
 import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
 
 export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -27,24 +22,21 @@ export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
       cols = 1,
       spacing = 'md',
       children,
-      style,
-      sx,
+      classNames,
+      styles,
       ...others
     }: SimpleGridProps,
     ref
   ) => {
-    const theme = useMantineTheme();
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const sortedBreakpoints = getSortedBreakpoints(theme, breakpoints);
     const { classes, cx } = useStyles(
-      { breakpoints: sortedBreakpoints, cols, spacing },
-      { sx, name: 'SimpleGrid' }
+      { breakpoints, cols, spacing },
+      { classNames, styles, name: 'SimpleGrid' }
     );
 
     return (
-      <div className={cx(classes.root, className)} style={mergedStyles} ref={ref} {...rest}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
         {children}
-      </div>
+      </Box>
     );
   }
 );

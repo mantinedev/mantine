@@ -12,7 +12,7 @@ function Demo() {
   const then = dayjs(now).add(30, 'minutes').toDate();
   const [value, setValue] = useState([now, then]);
 
-  return <TimeRangeInput label="Appointment time" value={value} onChange={setValue} />;
+  return <TimeRangeInput label="Appointment time" value={value} onChange={setValue} clearable />;
 }
 `;
 
@@ -23,7 +23,7 @@ function Demo() {
 
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <TimeRangeInput label="Appointment time" value={value} onChange={setValue} />
+      <TimeRangeInput label="Appointment time" value={value} onChange={setValue} clearable />
     </div>
   );
 }

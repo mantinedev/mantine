@@ -1,9 +1,9 @@
 import React from 'react';
-import { MortarBoardIcon } from '@primer/octicons-react';
+import { Medal } from 'tabler-icons-react';
 import { NumberInput } from '../NumberInput';
 
 const code = `
-<NumberInput icon={<MortarBoardIcon />} />
+<NumberInput icon={<Medal />} />
 `;
 
 function Demo() {
@@ -15,7 +15,7 @@ function Demo() {
         defaultValue={22}
         min={0}
         max={120}
-        icon={<MortarBoardIcon />}
+        icon={<Medal size={18} />}
       />
     </div>
   );

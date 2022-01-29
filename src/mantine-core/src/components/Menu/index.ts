@@ -1,5 +1,3 @@
-export { sizes as MENU_SIZES } from './MenuBody/MenuBody.styles';
-
 export { Menu } from './Menu';
 export { MenuItem } from './MenuItem/MenuItem';
 export { MenuLabel } from './MenuLabel/MenuLabel';

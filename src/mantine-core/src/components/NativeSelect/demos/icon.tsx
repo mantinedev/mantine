@@ -1,14 +1,9 @@
 import React from 'react';
-import { HashIcon } from '@primer/octicons-react';
+import { Hash } from 'tabler-icons-react';
 import { NativeSelect } from '../NativeSelect';
 
 const code = `
-<NativeSelect
-  label="Pick a hashtag"
-  placeholder="Pick a hashtag"
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-  icon={<HashIcon />}
-/>
+<NativeSelect icon={<HashIcon />} />
 `;
 
 function Demo() {
@@ -18,7 +13,7 @@ function Demo() {
         label="Pick a hashtag"
         placeholder="Pick a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<HashIcon />}
+        icon={<Hash size={14} />}
       />
     </div>
   );

@@ -1,0 +1,18 @@
+{
+  "title": "Simple footer",
+  "category": "footers",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": ["/core/container/", "/core/group/", "/core/anchor/"],
+  "props": {
+    "links": [
+      { "link": "#", "label": "Contact" },
+      { "link": "#", "label": "Privacy" },
+      { "link": "#", "label": "Blog" },
+      { "link": "#", "label": "Careers" }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

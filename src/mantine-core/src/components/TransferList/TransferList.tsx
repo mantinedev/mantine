@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { SimpleGrid } from '../SimpleGrid';
 import { useSelectionState, Selection } from './use-selection-state/use-selection-state';
@@ -39,10 +40,16 @@ export interface TransferListProps
   listHeight?: number;
 
   /** Change list component, can be used to add custom scrollbars */
-  listComponent?: React.FC<any>;
+  listComponent?: any;
 
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
+
+  /** Whether to hide the transfer all button */
+  showTransferAll?: boolean;
+
+  /** Limit amount of items showed at a time */
+  limit?: number;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -61,11 +68,12 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       titles = [null, null],
       initialSelection,
       listHeight = 150,
-      listComponent,
+      listComponent = SelectScrollArea,
+      showTransferAll = true,
       breakpoint,
       classNames,
       styles,
-      sx,
+      limit = Infinity,
       ...others
     }: TransferListProps,
     ref
@@ -102,41 +110,39 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
     };
 
     const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
+    const sharedListProps = {
+      itemComponent,
+      listComponent,
+      searchPlaceholder,
+      filter,
+      nothingFound,
+      height: listHeight,
+      showTransferAll,
+      classNames,
+      styles,
+      limit,
+    };
 
     return (
       <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} ref={ref} {...others}>
         <RenderList
+          {...sharedListProps}
           data={value[0]}
           selection={selection[0]}
           onSelect={(val) => handlers.select(0, val)}
           onMoveAll={() => handleMoveAll(0)}
           onMove={() => handleMove(0)}
-          itemComponent={itemComponent}
-          searchPlaceholder={searchPlaceholder}
-          filter={filter}
-          nothingFound={nothingFound}
           title={titles[0]}
-          height={listHeight}
-          listComponent={listComponent}
-          classNames={classNames}
-          styles={styles}
         />
 
         <RenderList
+          {...sharedListProps}
           data={value[1]}
           selection={selection[1]}
           onSelect={(val) => handlers.select(1, val)}
           onMoveAll={() => handleMoveAll(1)}
           onMove={() => handleMove(1)}
-          itemComponent={itemComponent}
-          searchPlaceholder={searchPlaceholder}
-          filter={filter}
-          nothingFound={nothingFound}
           title={titles[1]}
-          height={listHeight}
-          listComponent={listComponent}
-          classNames={classNames}
-          styles={styles}
           reversed
         />
       </SimpleGrid>

@@ -1,0 +1,16 @@
+{
+  "title": "Split button",
+  "category": "buttons",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/button/",
+    "/core/menu/",
+    "/core/action-icon/",
+    "/core/group",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 120
+  }
+}

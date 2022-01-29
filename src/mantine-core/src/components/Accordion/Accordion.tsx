@@ -1,13 +1,15 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useExtractedMargins, useSx } from '@mantine/styles';
-import { useUuid } from '@mantine/hooks';
+import { DefaultProps, ForwardRefWithStaticComponents } from '@mantine/styles';
+import { useUuid, mergeRefs } from '@mantine/hooks';
+import { Box } from '../Box';
+import { filterChildrenByType } from '../../utils';
 import {
   AccordionItem,
   AccordionItemStylesNames,
-  AccordionItemType,
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
 import { useAccordionState, AccordionState } from './use-accordion-state/use-accordion-state';
+import { useAccordionFocus } from './use-accordion-focus/use-accordion-focus';
 
 export interface AccordionProps
   extends DefaultProps<AccordionItemStylesNames>,
@@ -44,12 +46,21 @@ export interface AccordionProps
 
   /** Change icon position: left or right */
   iconPosition?: AccordionIconPosition;
+
+  /** Should icon be offset with padding, applicable only when iconPosition is right */
+  offsetIcon?: boolean;
+
+  /** Icon width in px */
+  iconSize?: number;
+
+  /** Heading level used for items */
+  order?: 2 | 3 | 4 | 5 | 6;
 }
 
-type AccordionComponent = ((props: AccordionProps) => React.ReactElement) & {
-  displayName: string;
-  Item: typeof AccordionItem;
-};
+type AccordionComponent = ForwardRefWithStaticComponents<
+  AccordionProps,
+  { Item: typeof AccordionItem }
+>;
 
 export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, AccordionProps>(
   (
@@ -63,27 +74,24 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
       disableIconRotation = false,
       transitionDuration = 200,
       iconPosition = 'left',
+      offsetIcon = true,
+      iconSize = 24,
+      order = 3,
       icon,
       classNames,
       styles,
-      style,
-      className,
       id,
-      sx,
       ...others
     }: AccordionProps,
     ref
   ) => {
-    const { sxClassName } = useSx({ sx, className });
     const uuid = useUuid(id);
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
-    const items = React.Children.toArray(children).filter(
-      (item: AccordionItemType) => item.type === AccordionItem
-    ) as AccordionItemType[];
+    const items = filterChildrenByType(children, AccordionItem);
 
-    const [value, onToggle] = useAccordionState({
+    const { handleItemKeydown, assignControlRef } = useAccordionFocus(items.length);
+    const [value, handlers] = useAccordionState({
       multiple,
-      items,
+      total: items.length,
       initialItem,
       state,
       initialState,
@@ -99,21 +107,25 @@ export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, Accordio
         key={index}
         transitionDuration={transitionDuration}
         opened={value[index]}
-        onToggle={() => onToggle(index)}
-        classNames={classNames}
-        styles={styles}
+        onToggle={() => handlers.toggle(index)}
+        classNames={item.props?.classNames || classNames}
+        styles={item.props?.styles || styles}
         id={`${uuid}-${index}`}
+        onControlKeyDown={handleItemKeydown(index)}
+        controlRef={mergeRefs(assignControlRef(index), item.props?.controlRef)}
+        offsetIcon={offsetIcon}
+        iconSize={iconSize}
+        order={order}
       />
     ));
 
     return (
-      <div style={mergedStyles} ref={ref} className={sxClassName} {...rest}>
+      <Box ref={ref} {...others}>
         {controls}
-      </div>
+      </Box>
     );
   }
 ) as any;
 
 Accordion.Item = AccordionItem;
-
 Accordion.displayName = '@mantine/core/Accordion';

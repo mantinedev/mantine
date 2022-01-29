@@ -22,7 +22,10 @@ export default function Layout({ children, location }: LayoutProps) {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{ colorScheme, headings: { fontFamily: 'Greycliff CF, sans serif' } }}
+        theme={{
+          colorScheme,
+          headings: { fontFamily: 'Greycliff CF, sans serif' },
+        }}
       >
         <LayoutInner location={location}>{children}</LayoutInner>
       </MantineProvider>

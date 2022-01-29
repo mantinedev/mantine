@@ -15,7 +15,8 @@ import {
   CloseButton,
   MantineShadow,
   ClassNames,
-  useExtractedMargins,
+  extractMargins,
+  getDefaultZIndex,
 } from '@mantine/core';
 import {
   useClickOutside,
@@ -24,12 +25,12 @@ import {
   useWindowEvent,
   useUuid,
 } from '@mantine/hooks';
-import { CalendarStylesNames } from '../Calendar/Calendar';
+import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
   | ClassNames<typeof useStyles>
-  | CalendarStylesNames
+  | CalendarBaseStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -85,6 +86,9 @@ export interface DatePickerBaseSharedProps
 
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
+
+  /** Whether to render the dropdown in a Portal */
+  withinPortal?: boolean;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -138,7 +142,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       size = 'sm',
       children,
       inputLabel,
-      __staticSelector = 'date-picker',
+      __staticSelector = 'DatePickerBase',
       dropdownOpened,
       setDropdownOpened,
       dropdownType = 'popover',
@@ -146,7 +150,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonLabel,
       onClear,
       positionDependencies = [],
-      zIndex = 3,
+      zIndex = getDefaultZIndex('popover'),
+      withinPortal = true,
       onBlur,
       onFocus,
       onChange,
@@ -161,7 +166,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
     );
-    const { mergedStyles, rest } = useExtractedMargins({ others, style });
+    const { margins, rest } = extractMargins(others);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
@@ -199,7 +204,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
-
       if (allowFreeInput) {
         closeDropdown();
       }
@@ -214,7 +218,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
-      if (event.code === 'Space' && !allowFreeInput) {
+      if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
         event.preventDefault();
         setDropdownOpened(true);
       }
@@ -228,13 +232,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         error={error}
         description={description}
         className={className}
-        style={mergedStyles}
+        style={style}
         classNames={classNames}
         styles={styles}
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
         ref={setReferenceElement}
+        {...margins}
         {...wrapperProps}
       >
         <div ref={setRootElement}>
@@ -268,7 +273,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onChange={onChange}
-              autoComplete="off"
+              autoComplete="nope"
               {...rest}
             />
           </div>
@@ -284,6 +289,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               position="bottom"
               placement="start"
               gutter={10}
+              withinPortal={withinPortal}
               withArrow
               arrowSize={3}
               zIndex={zIndex}
