@@ -20,7 +20,8 @@
     "@mantine/core": "3.6.4",
     "@mantine/hooks": "3.6.4",
     "tabler-icons-react": "*",
-    "@modulz/radix-icons": "*"
+    "@modulz/radix-icons": "*",
+    "@primer/octicons-react": "*"
   },
   "dependencies": {},
   "devDependencies": {}
