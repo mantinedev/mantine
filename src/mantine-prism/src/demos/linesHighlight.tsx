@@ -21,12 +21,12 @@ const added = { color: 'green', label: '+' };
   language="tsx"
   withLineNumbers
   highlightLines={{
+    3: deleted,
     4: deleted,
     5: deleted,
-    6: deleted,
+    7: added,
     8: added,
     9: added,
-    10: added,
   }}
 >
   {code}
@@ -42,12 +42,12 @@ function Demo() {
       language="tsx"
       withLineNumbers
       highlightLines={{
+        3: deleted,
         4: deleted,
         5: deleted,
-        6: deleted,
+        7: added,
         8: added,
         9: added,
-        10: added,
       }}
     >
       {demoCode.trim()}
