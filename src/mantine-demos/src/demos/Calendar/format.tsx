@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Group } from '@mantine/core';
-import { Calendar } from '../Calendar';
+import { Calendar } from '@mantine/dates';
 
 const code = `
 <Calendar labelFormat="MM/YYYY" />
