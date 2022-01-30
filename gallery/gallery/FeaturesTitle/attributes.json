@@ -1,0 +1,19 @@
+{
+  "title": "Features with title",
+  "category": "features",
+  "author": "rtivital",
+  "responsive": true,
+  "dependencies": [
+    "/core/title/",
+    "/core/grid/",
+    "/core/simple-grid/",
+    "/core/button/",
+    "/core/text/",
+    "/core/theme-icon/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 1060
+  }
+}

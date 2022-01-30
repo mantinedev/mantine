@@ -1,0 +1,18 @@
+{
+  "title": "Password with strength meter",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/password-input/",
+    "/core/progress/",
+    "/core/text/",
+    "/core/box/",
+    "/core/center/",
+    "/core/group/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

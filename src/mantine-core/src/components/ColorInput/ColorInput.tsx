@@ -176,7 +176,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
             onChange={(event) => setValue(event.currentTarget.value)}
             invalid={!!error}
             required={required}
-            autoComplete="off"
+            autoComplete="nope"
             icon={
               icon ||
               (withPreview ? (

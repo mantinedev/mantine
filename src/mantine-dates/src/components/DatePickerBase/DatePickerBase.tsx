@@ -273,7 +273,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onChange={onChange}
-              autoComplete="off"
+              autoComplete="nope"
               {...rest}
             />
           </div>

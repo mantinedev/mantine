@@ -1,0 +1,15 @@
+{
+  "title": "Color scheme toggle button",
+  "category": "color-scheme",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/button/#unstyled-button",
+    "/core/text/",
+    "/core/center/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

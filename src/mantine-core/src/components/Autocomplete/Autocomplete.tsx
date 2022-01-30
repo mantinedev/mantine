@@ -226,7 +226,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onClick={handleInputClick}
-            autoComplete="off"
+            autoComplete="nope"
             aria-autocomplete="list"
             aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}

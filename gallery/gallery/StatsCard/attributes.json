@@ -1,0 +1,19 @@
+{
+  "title": "Card with progress",
+  "category": "stats",
+  "author": "rtivital",
+  "dimmed": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/theme-icon/",
+    "/core/text/",
+    "/core/group/",
+    "/core/progress/",
+    "/core/badge/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 320
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "title": "Stats grid with diff icons",
+  "category": "stats",
+  "author": "rtivital",
+  "responsive": true,
+  "dimmed": true,
+  "dependencies": [
+    "/core/group/",
+    "/core/paper/",
+    "/core/text/",
+    "/core/theme-icon/",
+    "/core/simple-grid/",
+    "tabler-icons-react"
+  ],
+  "props": {
+    "data": [
+      { "title": "Revenue", "value": "$13,456", "diff": 34 },
+      { "title": "Profit", "value": "$4,145", "diff": -13 },
+      { "title": "Coupons usage", "value": "745", "diff": 18 }
+    ]
+  },
+  "canvas": {
+    "center": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Faq with background",
+  "category": "faq",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dependencies": [
+    "/core/accordion/",
+    "/core/title/",
+    "/core/container/",
+    "/core/accordion/",
+    "/core/theme-icon/",
+    "/core/button/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

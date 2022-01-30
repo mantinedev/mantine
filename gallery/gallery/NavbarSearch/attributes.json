@@ -1,0 +1,19 @@
+{
+  "title": "Navbar with search",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/app-shell/",
+    "/core/badge/",
+    "/core/text-input",
+    "/core/text/",
+    "/core/group/",
+    "/core/action-icon/",
+    "/core/tooltip/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

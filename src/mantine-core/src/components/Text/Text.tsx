@@ -35,6 +35,9 @@ export interface SharedTextProps extends DefaultProps {
   /** Sets line-height to 1 for centering */
   inline?: boolean;
 
+  /** Underline the text */
+  underline?: boolean;
+
   /** Inherit font properties from parent element */
   inherit?: boolean;
 
@@ -63,6 +66,7 @@ export const Text: TextComponent = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,
+      underline,
       classNames,
       styles,
       ...others
@@ -77,6 +81,7 @@ export const Text: TextComponent = forwardRef(
         lineClamp,
         inline,
         inherit,
+        underline,
         weight,
         transform,
         align,

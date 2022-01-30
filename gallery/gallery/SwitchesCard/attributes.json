@@ -1,0 +1,26 @@
+{
+  "title": "Card with switches",
+  "category": "app-cards",
+  "author": "rtivital",
+  "withColor": true,
+  "responsive": true,
+  "dimmed": true,
+  "dependencies": [],
+  "props": {
+    "title": "Configure notifications",
+    "description": "Choose what notifications you want to receive",
+    "data": [
+      { "title": "Messages", "description": "Direct messages you have received from other users" },
+      { "title": "Review requests", "description": "Code review requests from your team members" },
+      { "title": "Comments", "description": "Daily digest with comments on your posts" },
+      {
+        "title": "Recommendations",
+        "description": "Digest with best community posts from previous week"
+      }
+    ]
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 540
+  }
+}
