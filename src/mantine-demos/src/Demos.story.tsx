@@ -15,3 +15,4 @@ attachDemos(storiesOf('@mantine/core/Blockquote/demos', module), demos.Blockquot
 attachDemos(storiesOf('@mantine/core/Box/demos', module), demos.BoxDemos);
 attachDemos(storiesOf('@mantine/core/Breadcrumbs/demos', module), demos.BreadcrumbsDemos);
 attachDemos(storiesOf('@mantine/core/Burger/demos', module), demos.BurgerDemos);
+attachDemos(storiesOf('@mantine/core/Button/demos', module), demos.ButtonDemos);

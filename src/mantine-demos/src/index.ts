@@ -11,3 +11,4 @@ export * as BlockquoteDemos from './demos/Blockquote';
 export * as BoxDemos from './demos/Box';
 export * as BreadcrumbsDemos from './demos/Breadcrumbs';
 export * as BurgerDemos from './demos/Burger';
+export * as ButtonDemos from './demos/Button';
