@@ -36,7 +36,7 @@ export interface InputBaseProps {
   /** Properties spread to root element */
   wrapperProps?: { [key: string]: any };
 
-  /** Sets aria-required=true on input element */
+  /** Sets required on input element */
   required?: boolean;
 
   /** Input border-radius from theme or number to set border-radius in px */
@@ -124,7 +124,7 @@ export const Input: InputComponent = forwardRef(
         <Element
           {...rest}
           ref={ref}
-          aria-required={required}
+          required={required}
           aria-invalid={invalid}
           disabled={disabled}
           className={cx(classes[`${_variant}Variant`], classes.input, {
