@@ -15,8 +15,7 @@ import {
   createStyles,
   Paper,
 } from '@mantine/core';
-import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
-import { CountriesSelect } from '@mantine/core/src/components/MultiSelect/demos/countries';
+import { CustomSelectDemo, CountriesSelect } from '@mantine/demos';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
 
 const BREAKPOINT = '@media (max-width: 960px)';

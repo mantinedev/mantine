@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Prism } from '@mantine/prism';
 import { Title, Modal, Button, Paper, createStyles } from '@mantine/core';
-import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
-import { transitions as TransitionDemo } from '@mantine/core/src/components/Tooltip/demos/transitions';
+import { AuthenticationForm, TooltipDemos } from '@mantine/demos';
 
 const scaleY = {
   in: { opacity: 1, transform: 'scaleY(1)' },
@@ -41,7 +40,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function AnimationsDemo() {
-  const Transitions = TransitionDemo.component;
+  const Transitions = TooltipDemos.transitions.component;
   const [modalOpened, setModalOpened] = useState(false);
   const { classes } = useStyles();
   return (

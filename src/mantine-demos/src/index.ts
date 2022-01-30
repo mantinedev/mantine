@@ -1,3 +1,10 @@
+// Inline demos
+export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
+export { AccordionDemo } from './demos/Accordion/label';
+export { TimelineBase } from './demos/Timeline/_base';
+export { CustomSelectDemo } from './demos/Select/itemComponent';
+export { CountriesSelect } from './demos/MultiSelect/countries';
+
 // @mantine/core
 export * as AccordionDemos from './demos/Accordion';
 export * as ActionIconDemos from './demos/ActionIcon';
