@@ -90,3 +90,4 @@ export * as TimeRangeInputDemos from './demos/TimeRangeInput';
 export * as DropzoneDemos from './demos/Dropzone';
 export * as NotificationsDemos from './demos/Notifications';
 export * as PrismDemos from './demos/Prism';
+export * as RichTextEditorDemos from './demos/RichTextEditor';

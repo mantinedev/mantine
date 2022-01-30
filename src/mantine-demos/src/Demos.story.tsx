@@ -94,3 +94,4 @@ attachDemos(storiesOf('@mantine/dates/TimeRangeInput/demos', module), demos.Time
 attachDemos(storiesOf('@mantine/dropzone/Dropzone/demos', module), demos.DropzoneDemos);
 attachDemos(storiesOf('@mantine/notifications/demos', module), demos.NotificationsDemos);
 attachDemos(storiesOf('@mantine/prism/demos', module), demos.PrismDemos);
+attachDemos(storiesOf('@mantine/rte/demos', module), demos.RichTextEditorDemos);
