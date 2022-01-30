@@ -131,7 +131,7 @@ storiesOf('@mantine/core/Select/stories', module)
         searchable
         value="ng"
         data={data}
-        style={{ marginTop: 20 }}
+        mt={20}
       />
     </div>
   ))
@@ -151,7 +151,7 @@ storiesOf('@mantine/core/Select/stories', module)
         label="Disabled Elements"
         placeholder="Choose value"
         data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
-        style={{ marginTop: 20 }}
+        mt={20}
       />
     </div>
   ))
@@ -161,7 +161,7 @@ storiesOf('@mantine/core/Select/stories', module)
         label="With Grouped and Disabled Data"
         placeholder="Choose value"
         data={groupedData}
-        style={{ marginTop: 20 }}
+        mt={20}
         searchable
       />
     </div>
@@ -184,10 +184,17 @@ storiesOf('@mantine/core/Select/stories', module)
   .add('Deselect item', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Select
-        label="Disabled Elements"
+        label="Allow deselect"
         placeholder="Choose value"
         data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
-        style={{ marginTop: 20 }}
+        mt={20}
+        allowDeselect
+      />
+      <Select
+        label="Disallow deselect"
+        placeholder="Choose value"
+        data={[...data, { value: 'lit', label: 'Lit', disabled: true }]}
+        mt={20}
         allowDeselect={false}
       />
     </div>
