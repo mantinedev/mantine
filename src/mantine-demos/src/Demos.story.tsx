@@ -92,7 +92,3 @@ attachDemos(storiesOf('@mantine/dates/TimeRangeInput/demos', module), demos.Time
 
 // @mantine/dropzone
 attachDemos(storiesOf('@mantine/dropzone/Dropzone/demos', module), demos.DropzoneDemos);
-attachDemos(
-  storiesOf('@mantine/dropzone/FullScreenDropzone/demos', module),
-  demos.FullScreenDropzoneDemos
-);

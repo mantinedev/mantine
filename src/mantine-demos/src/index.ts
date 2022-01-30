@@ -88,4 +88,3 @@ export * as TimeRangeInputDemos from './demos/TimeRangeInput';
 
 // @mantine/dropzone
 export * as DropzoneDemos from './demos/Dropzone';
-export * as FullScreenDropzoneDemos from './demos/FullScreenDropzone';

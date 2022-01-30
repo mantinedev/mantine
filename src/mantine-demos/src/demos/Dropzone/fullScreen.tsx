@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Group, useMantineTheme } from '@mantine/core';
 import { FullScreenDropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { dropzoneChildren } from '../Dropzone/_base';
+import { dropzoneChildren } from './_base';
 
 const code = `
 import { useState } from 'react';
