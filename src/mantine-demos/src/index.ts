@@ -86,8 +86,7 @@ export * as RangeCalendarDemos from './demos/RangeCalendar';
 export * as TimeInputDemos from './demos/TimeInput';
 export * as TimeRangeInputDemos from './demos/TimeRangeInput';
 
-// @mantine/dropzone
+// Other packages
 export * as DropzoneDemos from './demos/Dropzone';
-
-// @mantine/notifications
 export * as NotificationsDemos from './demos/Notifications';
+export * as PrismDemos from './demos/Prism';
