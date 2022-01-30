@@ -127,6 +127,26 @@ To add mentions support, add provide [quill-mentions](https://github.com/quill-m
 
 <Demo data={RichTextDemos.mentions} />
 
+## Extra modules
+
+You can provide any amount of extra modules. Note that it is required to memoize modules object:
+
+```tsx
+import { useMemo } from 'react';
+import { RichTextEditor } from '@mantine/rte';
+
+function Demo() {
+  const modules = useMemo(
+    () => ({
+      history: { delay: 2500, userOnly: true },
+      syntax: true,
+    }),
+    {}
+  );
+  return <RichTextEditor modules={modules} {...otherProps} />;
+}
+```
+
 ## Read only
 
 When editor is readonly state, user cannot edit content, toolbar is hidden:
