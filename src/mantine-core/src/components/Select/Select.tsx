@@ -527,6 +527,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             disabled={disabled}
             data-mantine-stop-propagation={shouldShowDropdown}
             autoComplete="off"
+            name={name}
             classNames={{
               ...classNames,
               input: cx({ [classes.input]: !searchable }, classNames?.input),
@@ -584,8 +585,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             />
           </SelectDropdown>
         </div>
-
-        {name && <input type="hidden" name={name} value={_value || ''} />}
       </InputWrapper>
     );
   }

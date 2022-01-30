@@ -526,6 +526,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
                 autoComplete="off"
+                name={name}
                 {...rest}
               />
             </div>
@@ -570,8 +571,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             />
           </SelectDropdown>
         </div>
-
-        {name && <input type="hidden" name={name} value={_value.join(',')} />}
       </InputWrapper>
     );
   }
