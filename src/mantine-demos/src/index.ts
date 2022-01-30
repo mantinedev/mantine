@@ -14,3 +14,4 @@ export * as BurgerDemos from './demos/Burger';
 export * as ButtonDemos from './demos/Button';
 export * as CardDemos from './demos/Card';
 export * as CenterDemos from './demos/Center';
+export * as CheckboxDemos from './demos/Checkbox';
