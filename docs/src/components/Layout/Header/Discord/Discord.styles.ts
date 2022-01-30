@@ -13,6 +13,7 @@ export default createStyles((theme) => ({
     width: 110,
     height: INPUT_SIZES.sm,
     textDecoration: 'none',
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '@media (max-width: 980px)': {
       display: 'none',
