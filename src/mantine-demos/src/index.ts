@@ -8,3 +8,4 @@ export * as AutocompleteDemos from './demos/Autocomplete';
 export * as AvatarDemos from './demos/Avatar';
 export * as BadgeDemos from './demos/Badge';
 export * as BlockquoteDemos from './demos/Blockquote';
+export * as BoxDemos from './demos/Box';

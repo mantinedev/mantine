@@ -12,3 +12,4 @@ attachDemos(storiesOf('@mantine/core/Autocomplete/demos', module), demos.Autocom
 attachDemos(storiesOf('@mantine/core/Avatar/demos', module), demos.AvatarDemos);
 attachDemos(storiesOf('@mantine/core/Badge/demos', module), demos.BadgeDemos);
 attachDemos(storiesOf('@mantine/core/Blockquote/demos', module), demos.BlockquoteDemos);
+attachDemos(storiesOf('@mantine/core/Box/demos', module), demos.BoxDemos);
