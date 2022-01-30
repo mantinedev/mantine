@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
+import { NProgressProvider } from '@mantine/nprogress';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { Text, Button } from '@mantine/core';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
@@ -85,9 +86,11 @@ export function LayoutInner({ children, location }: LayoutProps) {
             labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
             modals={{ demonstration: demonstrationModal }}
           >
-            <NotificationsProvider>
-              <MdxProvider>{children}</MdxProvider>
-            </NotificationsProvider>
+            <NProgressProvider>
+              <NotificationsProvider>
+                <MdxProvider>{children}</MdxProvider>
+              </NotificationsProvider>
+            </NProgressProvider>
           </ModalsProvider>
         </div>
       </main>

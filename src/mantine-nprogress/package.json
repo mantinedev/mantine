@@ -1,0 +1,25 @@
+{
+  "name": "@mantine/nprogress",
+  "description": "TODO",
+  "version": "3.6.3",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/nprogress/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-nprogress"
+  },
+  "peerDependencies": {
+    "@mantine/core": "3.6.3",
+    "@mantine/hooks": "3.6.3",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
