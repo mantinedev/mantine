@@ -25,5 +25,9 @@
       "@mantine/hooks": ["../mantine-hooks/src"]
     }
   },
-  "references": [{ "path": "../mantine-core" }, { "path": "../mantine-hooks" }]
+  "references": [
+    { "path": "../mantine-core" },
+    { "path": "../mantine-dates" },
+    { "path": "../mantine-hooks" }
+  ]
 }

@@ -2,6 +2,7 @@ import { storiesOf } from '@storybook/react';
 import { attachDemos } from '@mantine/ds/src';
 import * as demos from './index';
 
+// @mantine/core
 attachDemos(storiesOf('@mantine/core/Accordion/demos', module), demos.AccordionDemos);
 attachDemos(storiesOf('@mantine/core/ActionIcon/demos', module), demos.ActionIconDemos);
 attachDemos(storiesOf('@mantine/core/Affix/demos', module), demos.AffixDemos);
@@ -79,3 +80,12 @@ attachDemos(
   storiesOf('@mantine/core/TypographyStylesProvider/demos', module),
   demos.TypographyStylesProviderDemos
 );
+
+// @mantine/dates
+attachDemos(storiesOf('@mantine/dates/Calendar/demos', module), demos.CalendarDemos);
+attachDemos(storiesOf('@mantine/dates/DatePicker/demos', module), demos.DatePickerDemos);
+attachDemos(storiesOf('@mantine/dates/DateRangePicker/demos', module), demos.DateRangePickerDemos);
+attachDemos(storiesOf('@mantine/dates/Month/demos', module), demos.MonthDemos);
+attachDemos(storiesOf('@mantine/dates/RangeCalendar/demos', module), demos.RangeCalendarDemos);
+attachDemos(storiesOf('@mantine/dates/TimeInput/demos', module), demos.TimeInputDemos);
+attachDemos(storiesOf('@mantine/dates/TimeRangeInput/demos', module), demos.TimeRangeInputDemos);

@@ -1,3 +1,4 @@
+// @mantine/core
 export * as AccordionDemos from './demos/Accordion';
 export * as ActionIconDemos from './demos/ActionIcon';
 export * as AffixDemos from './demos/Affix';
@@ -75,3 +76,12 @@ export * as TooltipDemos from './demos/Tooltip';
 export * as TransferListDemos from './demos/TransferList';
 export * as TransitionDemos from './demos/Transition';
 export * as TypographyStylesProviderDemos from './demos/TypographyStylesProvider';
+
+// @mantine/dates
+export * as CalendarDemos from './demos/Calendar';
+export * as DatePickerDemos from './demos/DatePicker';
+export * as DateRangePickerDemos from './demos/DateRangePicker';
+export * as MonthDemos from './demos/Month';
+export * as RangeCalendarDemos from './demos/RangeCalendar';
+export * as TimeInputDemos from './demos/TimeInput';
+export * as TimeRangeInputDemos from './demos/TimeRangeInput';
