@@ -10,3 +10,4 @@ export * as BadgeDemos from './demos/Badge';
 export * as BlockquoteDemos from './demos/Blockquote';
 export * as BoxDemos from './demos/Box';
 export * as BreadcrumbsDemos from './demos/Breadcrumbs';
+export * as BurgerDemos from './demos/Burger';
