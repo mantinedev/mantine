@@ -15,3 +15,4 @@ export * as ButtonDemos from './demos/Button';
 export * as CardDemos from './demos/Card';
 export * as CenterDemos from './demos/Center';
 export * as CheckboxDemos from './demos/Checkbox';
+export * as ChipsDemos from './demos/Chips';
