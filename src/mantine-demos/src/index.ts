@@ -88,3 +88,6 @@ export * as TimeRangeInputDemos from './demos/TimeRangeInput';
 
 // @mantine/dropzone
 export * as DropzoneDemos from './demos/Dropzone';
+
+// @mantine/notifications
+export * as NotificationsDemos from './demos/Notifications';
