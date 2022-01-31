@@ -14,4 +14,9 @@ export default createStyles((theme) => ({
     textDecoration: 'none',
     color: 'inherit',
   },
+
+  offset: {
+    position: 'relative',
+    top: -62,
+  },
 }));
