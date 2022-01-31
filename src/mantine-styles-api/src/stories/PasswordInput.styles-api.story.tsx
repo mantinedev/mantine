@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { PasswordInput, PasswordInputProps } from '../PasswordInput';
-import { PasswordInput as PasswordInputStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, PasswordInput, PasswordInputProps } from '@mantine/core';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { PasswordInput as PasswordInputStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(PasswordInputStylesApi);
 const useStyles = createStyles(() => styles);

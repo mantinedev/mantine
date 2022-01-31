@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { TransferList, TransferListProps } from '../TransferList';
-import { TransferList as TransferListStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, TransferList, TransferListProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { TransferList as TransferListStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TransferListStylesApi);
 const useStyles = createStyles(() => styles);

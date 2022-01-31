@@ -1,8 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Code, CodeProps } from '../Code';
+import { createStyles, MantineProvider, Code, CodeProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
 
 const styles = generateBorderStyles({ root: '' });
 const useStyles = createStyles(() => styles);

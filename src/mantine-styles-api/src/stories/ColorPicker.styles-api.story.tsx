@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { ColorPicker, ColorPickerProps } from '../ColorPicker';
-import { ColorPicker as ColorPickerStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, ColorPicker, ColorPickerProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { ColorPicker as ColorPickerStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(ColorPickerStylesApi);
 const useStyles = createStyles(() => styles);

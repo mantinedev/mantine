@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { TextInput, TextInputProps } from '../TextInput';
-import { TextInput as TextInputStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, TextInput, TextInputProps } from '@mantine/core';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { TextInput as TextInputStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TextInputStylesApi);
 const useStyles = createStyles(() => styles);

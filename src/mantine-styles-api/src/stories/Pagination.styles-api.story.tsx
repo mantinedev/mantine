@@ -1,10 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
+import { createStyles, MantineProvider, Pagination, PaginationProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
 import { paragraph } from '@mantine/mockdata';
-import { Pagination, PaginationProps } from '../Pagination';
-import { Pagination as PaginationStylesApi } from '../styles.api';
+import { Pagination as PaginationStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(PaginationStylesApi);
 const useStyles = createStyles(() => styles);

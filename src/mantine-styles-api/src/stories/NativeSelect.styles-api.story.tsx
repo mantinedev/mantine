@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { NativeSelect, NativeSelectProps } from '../NativeSelect';
-import { NativeSelect as NativeSelectStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, NativeSelect, NativeSelectProps } from '@mantine/core';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { NativeSelect as NativeSelectStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(NativeSelectStylesApi);
 const useStyles = createStyles(() => styles);

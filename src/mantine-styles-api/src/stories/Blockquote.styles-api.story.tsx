@@ -1,10 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
+import { createStyles, MantineProvider, Blockquote, BlockquoteProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
 import { paragraph } from '@mantine/mockdata';
-import { Blockquote, BlockquoteProps } from '../Blockquote';
-import { Blockquote as BlockquoteStylesApi } from '../styles.api';
+import { Blockquote as BlockquoteStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(BlockquoteStylesApi);
 const useStyles = createStyles(() => styles);

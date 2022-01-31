@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Prism, PrismProps } from '../Prism';
-import { Prism as PrismStylesApi } from '../styles.api';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Prism, PrismProps } from '@mantine/prism';
+import { Prism as PrismStylesApi } from '../styles-api';
 
 const demoCode = `
 import { Button } from '@mantine/core';

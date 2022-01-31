@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Group } from '../../Group';
-import { Button, ButtonProps } from '../Button';
-import { Button as ButtonStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Group, Button, ButtonProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Button as ButtonStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(ButtonStylesApi);
 const useStyles = createStyles(() => styles);

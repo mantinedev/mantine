@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { RadioGroup, RadioGroupProps } from '../RadioGroup';
-import { Radio } from '../Radio/Radio';
-import { RadioGroup as RadioGroupStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, RadioGroup, RadioGroupProps, Radio } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { RadioGroup as RadioGroupStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(RadioGroupStylesApi);
 const useStyles = createStyles(() => styles);

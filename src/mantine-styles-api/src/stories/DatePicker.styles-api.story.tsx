@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { DatePicker, DatePickerProps } from '../DatePicker';
-import { DatePicker as DatePickerStylesApi } from '../../DatePickerBase/styles.api';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { DatePicker, DatePickerProps } from '@mantine/dates';
+import { DatePicker as DatePickerStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(DatePickerStylesApi);
 const useStyles = createStyles(() => styles);

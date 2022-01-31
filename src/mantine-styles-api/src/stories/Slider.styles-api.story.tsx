@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Slider, SliderProps } from '../Slider/Slider';
-import { RangeSlider } from '../RangeSlider/RangeSlider';
-import { Slider as SliderStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Slider, SliderProps, RangeSlider } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Slider as SliderStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(SliderStylesApi);
 const useStyles = createStyles(() => styles);

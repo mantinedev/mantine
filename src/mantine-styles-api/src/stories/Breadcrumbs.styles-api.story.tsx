@@ -1,10 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Anchor } from '../../Anchor';
-import { Breadcrumbs, BreadcrumbsProps } from '../Breadcrumbs';
-import { Breadcrumbs as BreadcrumbsStylesApi } from '../styles.api';
+import {
+  createStyles,
+  MantineProvider,
+  Anchor,
+  Breadcrumbs,
+  BreadcrumbsProps,
+} from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Breadcrumbs as BreadcrumbsStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(BreadcrumbsStylesApi);
 const useStyles = createStyles(() => styles);

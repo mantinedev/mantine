@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { WithinOverlays, SubmitForm } from '@mantine/storybook/src';
+import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Autocomplete } from '../Autocomplete';
 
 function DynamicData() {

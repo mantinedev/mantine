@@ -1,11 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Group } from '../../Group';
-import { menuItems } from '../demos/_menu-items';
-import { Menu, MenuProps } from '../Menu';
-import { Menu as MenuStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Group, Menu, MenuProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Menu as MenuStylesApi } from '../styles-api';
+
+const menuItems = [<Menu.Item>first</Menu.Item>, <Menu.Item icon="$">second</Menu.Item>];
 
 const styles = generateBorderStyles(MenuStylesApi);
 const useStyles = createStyles(() => styles);

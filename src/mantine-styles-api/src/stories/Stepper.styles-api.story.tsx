@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Stepper, StepperProps } from '../Stepper';
-import { Stepper as StepperStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Stepper, StepperProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Stepper as StepperStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(StepperStylesApi);
 const useStyles = createStyles(() => styles);

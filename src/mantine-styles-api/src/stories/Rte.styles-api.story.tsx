@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { html } from '../demos/usage';
-import { RichTextEditor, RichTextEditorProps } from '../components/RichTextEditor/RichTextEditor';
-import { RichTextEditor as RichTextEditorStylesApi } from '../styles.api';
+import { generateBorderStyles } from '@mantine/storybook';
+import { RichTextEditor, RichTextEditorProps } from '@mantine/rte';
+import { RichTextEditor as RichTextEditorStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(RichTextEditorStylesApi);
 const useStyles = createStyles(() => styles);
 
 function Wrapper(props: Partial<RichTextEditorProps>) {
-  const [value, onChange] = useState(html);
+  const [value, onChange] = useState('<p>Hello</p>');
   return (
     <RichTextEditor
       {...props}

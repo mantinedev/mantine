@@ -1,13 +1,16 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { baseDemoItems } from '../demos/_base';
-import { Accordion } from '../Accordion';
-import { Accordion as AccordionStylesApi } from '../styles.api';
+import { generateBorderStyles } from '@mantine/storybook';
+import { createStyles, MantineProvider, Accordion } from '@mantine/core';
+import { Accordion as AccordionStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(AccordionStylesApi);
 const useStyles = createStyles(() => styles);
+
+const baseDemoItems = [
+  <Accordion.Item label="First item">First content</Accordion.Item>,
+  <Accordion.Item label="Second item">Second content</Accordion.Item>,
+];
 
 function WithClassNames() {
   return (

@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Checkbox, CheckboxProps } from '../Checkbox';
-import { Checkbox as CheckboxStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Checkbox, CheckboxProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Checkbox as CheckboxStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(CheckboxStylesApi);
 const useStyles = createStyles(() => styles);

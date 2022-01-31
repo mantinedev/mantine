@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/styles';
-import { Kbd } from '../Kbd';
+import { MantineProvider, Kbd } from '@mantine/core';
 
 storiesOf('@mantine/core/Kbd/styles-api', module)
   .add('With sx', () => (

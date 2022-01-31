@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Avatar } from '../Avatar';
-import { AvatarsGroup } from '../AvatarsGroup/AvatarsGroup';
-import { Avatar as AvatarStylesApi, AvatarsGroup as AvatarsGroupStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Avatar, AvatarsGroup } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Avatar as AvatarStylesApi, AvatarsGroup as AvatarsGroupStylesApi } from '../styles-api';
 
 const avatarStyles = generateBorderStyles(AvatarStylesApi);
 const avatarsGroupStyles = generateBorderStyles(AvatarsGroupStylesApi);

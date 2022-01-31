@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Tooltip, TooltipProps } from '../Tooltip';
-import { Tooltip as TooltipStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Tooltip, TooltipProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Tooltip as TooltipStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TooltipStylesApi);
 const useStyles = createStyles(() => styles);

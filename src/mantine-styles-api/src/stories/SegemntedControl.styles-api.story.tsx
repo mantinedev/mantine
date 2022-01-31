@@ -1,9 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { SegmentedControl, SegmentedControlProps } from '../SegmentedControl';
-import { SegmentedControl as SegmentedControlStylesApi } from '../styles.api';
+import {
+  createStyles,
+  MantineProvider,
+  SegmentedControl,
+  SegmentedControlProps,
+} from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { SegmentedControl as SegmentedControlStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(SegmentedControlStylesApi);
 const useStyles = createStyles(() => styles);

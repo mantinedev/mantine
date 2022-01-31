@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Tabs, TabsProps } from '../Tabs';
-import { Tabs as TabsStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Tabs, TabsProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Tabs as TabsStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TabsStylesApi);
 const useStyles = createStyles(() => styles);

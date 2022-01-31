@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Grid, Col } from '../index';
+import { Grid, Col } from '@mantine/core';
 
 storiesOf('@mantine/core/Grid/styles-api', module).add('With sx prop', () => (
   <div style={{ padding: 40 }}>

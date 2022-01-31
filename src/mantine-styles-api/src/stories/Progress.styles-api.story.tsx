@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Progress, ProgressProps } from '../Progress';
-import { Progress as ProgressStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Progress, ProgressProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Progress as ProgressStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(ProgressStylesApi);
 const useStyles = createStyles(() => styles);

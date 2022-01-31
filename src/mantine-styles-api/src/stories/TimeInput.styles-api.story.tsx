@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { TimeInput, TimeInputProps } from '../TimeInput';
-import { TimeInput as TimeInputStylesApi } from '../styles.api';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { TimeInput, TimeInputProps } from '@mantine/dates';
+import { TimeInput as TimeInputStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TimeInputStylesApi);
 const useStyles = createStyles(() => styles);

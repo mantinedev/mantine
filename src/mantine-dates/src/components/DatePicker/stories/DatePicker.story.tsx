@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
-import { WithinOverlays, SubmitForm } from '@mantine/storybook/src';
+import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { DatePicker } from '../DatePicker';
 
 function Controlled() {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Month, MonthProps } from '../Month';
-import { Month as MonthStylesApi } from '../styles.api';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Month, MonthProps } from '@mantine/dates';
+import { Month as MonthStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(MonthStylesApi);
 const useStyles = createStyles(() => styles);

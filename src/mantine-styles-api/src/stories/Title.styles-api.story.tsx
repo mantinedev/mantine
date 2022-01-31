@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/styles';
-import { Title } from '../Title';
+import { MantineProvider, Title } from '@mantine/core';
 
 storiesOf('@mantine/core/Title/styles-api', module)
   .add('With sx', () => <Title sx={{ border: '1px solid red' }}>title</Title>)

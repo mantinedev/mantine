@@ -1,9 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { AppShell } from '../AppShell';
-import { Header } from '../Header/Header';
-import { Navbar } from '../Navbar/Navbar';
+import { createStyles, MantineProvider, AppShell, Header, Navbar } from '@mantine/core';
 
 const styles = { border: '1px solid red' };
 const rootStyles = { root: styles };

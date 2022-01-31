@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Switch, SwitchProps } from '../Switch';
-import { Switch as SwitchStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Switch, SwitchProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Switch as SwitchStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(SwitchStylesApi);
 const useStyles = createStyles(() => styles);

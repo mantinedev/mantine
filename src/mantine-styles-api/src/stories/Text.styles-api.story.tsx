@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { Text } from '../Text';
+import { createStyles, MantineProvider, Text } from '@mantine/core';
 
 const styles = { color: 'red', margin: 10, backgroundColor: 'blue' };
 const useStyles = createStyles(() => ({ root: styles }));

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
-import { SubmitForm } from '@mantine/storybook/src';
+import { SubmitForm } from '@mantine/storybook';
 import { Select, SelectProps } from '../Select';
 import { Button } from '../../Button';
 import { Group } from '../../Group';

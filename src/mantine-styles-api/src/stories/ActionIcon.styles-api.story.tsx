@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { Group } from '../../Group';
-import { ActionIcon, ActionIconProps } from '../ActionIcon';
-import { ActionIcon as ActionIconStylesApi } from '../styles.api';
+import { generateBorderStyles } from '@mantine/storybook';
+import { createStyles, MantineProvider, Group, ActionIcon, ActionIconProps } from '@mantine/core';
+import { ActionIcon as ActionIconStylesApi } from '../styles-api';
 
 const ActionIconStylesApiWithoutRoot = { ...ActionIconStylesApi };
 delete ActionIconStylesApiWithoutRoot.root;

@@ -1,10 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Group } from '../../Group';
-import { Badge, BadgeProps } from '../Badge';
-import { Badge as BadgeStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Group, Badge, BadgeProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Badge as BadgeStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(BadgeStylesApi);
 const useStyles = createStyles(() => styles);

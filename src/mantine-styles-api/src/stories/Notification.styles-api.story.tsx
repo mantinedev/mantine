@@ -1,10 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
+import { createStyles, MantineProvider, Notification, NotificationProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
 import { paragraph } from '@mantine/mockdata';
-import { Notification, NotificationProps } from '../Notification';
-import { Notification as NotificationStylesApi } from '../styles.api';
+import { Notification as NotificationStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(NotificationStylesApi);
 const useStyles = createStyles(() => styles);

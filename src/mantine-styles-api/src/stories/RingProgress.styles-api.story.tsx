@@ -1,11 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
+import {
+  createStyles,
+  MantineProvider,
+  Text,
+  RingProgress,
+  RingProgressProps,
+} from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
 import { paragraph } from '@mantine/mockdata';
-import { Text } from '../../Text';
-import { RingProgress, RingProgressProps } from '../RingProgress';
-import { RingProgress as RingProgressStylesApi } from '../styles.api';
+import { RingProgress as RingProgressStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(RingProgressStylesApi);
 const useStyles = createStyles(() => styles);

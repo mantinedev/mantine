@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Burger, BurgerProps } from '../Burger';
-import { Burger as BurgerStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Burger, BurgerProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Burger as BurgerStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(BurgerStylesApi);
 const useStyles = createStyles(() => styles);

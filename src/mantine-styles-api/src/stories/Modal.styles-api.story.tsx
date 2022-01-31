@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Modal, ModalProps } from '../Modal';
-import { Modal as ModalStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Modal, ModalProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Modal as ModalStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(ModalStylesApi);
 const useStyles = createStyles(() => styles);

@@ -11,6 +11,7 @@ export * from './Breadcrumbs.styles-api';
 export * from './Burger.styles-api';
 export * from './Button.styles-api';
 export * from './Checkbox.styles-api';
+export * from './Chips.styles-api';
 export * from './ColorInput.styles-api';
 export * from './ColorPicker.styles-api';
 export * from './Dialog.styles-api';

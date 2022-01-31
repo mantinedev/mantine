@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/storybook/src';
-import { Dialog, DialogProps } from '../Dialog';
-import { Dialog as DialogStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Dialog, DialogProps } from '@mantine/core';
+import { generateBorderStyles } from '@mantine/storybook';
+import { Dialog as DialogStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(DialogStylesApi);
 const useStyles = createStyles(() => styles);

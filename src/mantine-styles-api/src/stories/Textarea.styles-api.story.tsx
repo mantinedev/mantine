@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
-import { Textarea, TextareaProps } from '../Textarea';
-import { Textarea as TextareaStylesApi } from '../styles.api';
+import { createStyles, MantineProvider, Textarea, TextareaProps } from '@mantine/core';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
+import { Textarea as TextareaStylesApi } from '../styles-api';
 
 const styles = generateBorderStyles(TextareaStylesApi);
 const useStyles = createStyles(() => styles);
