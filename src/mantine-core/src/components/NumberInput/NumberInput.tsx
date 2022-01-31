@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { DefaultProps, ClassNames } from '@mantine/styles';
-import { TextInput } from '../TextInput/TextInput';
+import { assignRef, clamp, useMergedRef } from '@mantine/hooks';
+import { ClassNames, DefaultProps } from '@mantine/styles';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
+import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
 export type InnerNumberInputStylesNames = ClassNames<typeof useStyles>;
@@ -61,6 +61,12 @@ export interface NumberInputProps
 
   /** Get increment/decrement handlers */
   handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
+
+  /** Formats the number into the input */
+  formatter?: (value: string | undefined) => string;
+
+  /** Parsers the value from formatter, should be used with formatter at the same time */
+  parser?: (value: string | undefined) => number | undefined;
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
@@ -88,6 +94,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       styles,
       size,
       rightSection,
+      formatter,
+      parser,
       ...others
     }: NumberInputProps,
     ref
@@ -121,6 +129,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         parsedStr = parsedStr.replace(/\./g, decimalSeparator);
       }
 
+      if (formatter) {
+        parsedStr = formatter(parsedStr);
+      }
+
       return parsedStr;
     };
 
@@ -129,6 +141,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
       if (decimalSeparator) {
         num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
+      }
+
+      if (parser) {
+        return parser(num);
       }
 
       const parsedNum = parseFloat(num);
