@@ -1,5 +1,5 @@
 {
-  "name": "@mantine/ds",
+  "name": "@mantine/storybook",
   "private": true,
   "version": "3.6.4",
   "main": "cjs/index.js",

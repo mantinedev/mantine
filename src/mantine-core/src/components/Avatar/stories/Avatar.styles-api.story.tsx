@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { Avatar } from '../Avatar';
 import { AvatarsGroup } from '../AvatarsGroup/AvatarsGroup';
 import { Avatar as AvatarStylesApi, AvatarsGroup as AvatarsGroupStylesApi } from '../styles.api';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { createStyles, MantineProvider } from '@mantine/styles';
 import { Group } from '../../Group';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';

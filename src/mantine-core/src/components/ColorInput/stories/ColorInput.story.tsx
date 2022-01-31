@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
-import { WithinOverlays } from '@mantine/ds/src';
+import { WithinOverlays } from '@mantine/storybook/src';
 import { ColorInput } from '../ColorInput';
 
 const sizes = MANTINE_SIZES.map((size) => (

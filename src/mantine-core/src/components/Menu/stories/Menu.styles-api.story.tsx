@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { Group } from '../../Group';
 import { menuItems } from '../demos/_menu-items';
 import { Menu, MenuProps } from '../Menu';

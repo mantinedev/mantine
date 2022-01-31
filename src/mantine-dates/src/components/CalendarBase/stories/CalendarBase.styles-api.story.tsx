@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { CalendarBase, CalendarBaseProps } from '../CalendarBase';
 import { CalendarBase as CalendarBaseStylesApi } from '../styles.api';
 

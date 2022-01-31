@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { RangeCalendar, RangeCalendarProps } from '../RangeCalendar';
 import { RangeCalendar as RangeCalendarStylesApi } from '../../Calendar/styles.api';
 

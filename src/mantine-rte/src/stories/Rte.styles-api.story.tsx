@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/core';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { html } from '../demos/usage';
 import { RichTextEditor, RichTextEditorProps } from '../components/RichTextEditor/RichTextEditor';
 import { RichTextEditor as RichTextEditorStylesApi } from '../styles.api';

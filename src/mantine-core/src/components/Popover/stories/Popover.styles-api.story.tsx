@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/ds/src';
+import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook/src';
 import { PopoverProps } from '../Popover';
 import { Popover as PopoverStylesApi } from '../styles.api';
 import { Wrapper as PopoverWrapper } from './_wrapper';

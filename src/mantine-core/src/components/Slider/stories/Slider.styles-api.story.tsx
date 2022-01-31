@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { Slider, SliderProps } from '../Slider/Slider';
 import { RangeSlider } from '../RangeSlider/RangeSlider';
 import { Slider as SliderStylesApi } from '../styles.api';

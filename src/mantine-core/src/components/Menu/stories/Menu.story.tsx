@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
-import { WithinOverlays } from '@mantine/ds/src';
+import { WithinOverlays } from '@mantine/storybook/src';
 import { menuItems } from '../demos/_menu-items';
 import { TextInput } from '../../TextInput';
 import { Container } from '../../Container';

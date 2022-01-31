@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { WithinOverlays, SubmitForm } from '@mantine/ds/src';
+import { WithinOverlays, SubmitForm } from '@mantine/storybook/src';
 import { Group } from '../../Group/Group';
 import { TextInput } from '../../TextInput/TextInput';
 import { SegmentedControl } from '../../SegmentedControl/SegmentedControl';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider } from '@mantine/styles';
-import { generateBorderStyles } from '@mantine/ds/src';
+import { generateBorderStyles } from '@mantine/storybook/src';
 import { paragraph } from '@mantine/mockdata';
 import { Alert, AlertProps } from '../Alert';
 import { Alert as AlertStylesApi } from '../styles.api';
