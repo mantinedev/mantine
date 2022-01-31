@@ -7,8 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/2.2.0
 date: 'August 2nd, 2021'
 ---
 
-import { useIdleHook, useFullscreenDemo, useMoveUsage } from '@docs/demos';
-import { MultiSelectDemos } from '@mantine/demos';
+import { MultiSelectDemos, HooksDemos } from '@mantine/demos';
 
 ### New components and hooks
 
@@ -19,16 +18,16 @@ with option to customize labels and options:
 
 [use-idle](/hooks/use-idle/) hook allows to detect if user does nothing:
 
-<Demo data={useIdleHook} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useIdleHook} demoProps={{ toggle: true }} />
 
 [use-fullscreen](/hooks/use-fullscreen/)use-fullscreen hook allows to work with Fullscreen API:
 
-<Demo data={useFullscreenDemo} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useFullscreenDemo} demoProps={{ toggle: true }} />
 
 New [use-move](/hooks/use-move) hook handles move behavior over any element,
 you can use it to build custom sliders, color pickers, etc.:
 
-<Demo data={useMoveUsage} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useMoveUsage} demoProps={{ toggle: true }} />
 
 ### Other changes
 

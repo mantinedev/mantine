@@ -11,13 +11,13 @@ docs: 'hooks/use-move.mdx'
 source: 'mantine-hooks/src/use-move/use-move.ts'
 ---
 
-import { useMoveUsage, useMoveHorizontal, useMoveVertical, useMoveColor } from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
 use-move handles move behavior over any element:
 
-<Demo data={useMoveUsage} />
+<Demo data={HooksDemos.useMoveUsage} />
 
 ## API
 
@@ -38,17 +38,17 @@ const {
 
 You can ignore changes for one of the axis:
 
-<Demo data={useMoveHorizontal} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useMoveHorizontal} demoProps={{ toggle: true }} />
 
 ### Vertical slider
 
 Moving slider down increases value, to reverse that set value to `1 - y` in your setValue function:
 
-<Demo data={useMoveVertical} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useMoveVertical} demoProps={{ toggle: true }} />
 
 ### Color picker
 
-<Demo data={useMoveColor} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useMoveColor} demoProps={{ toggle: true }} />
 
 ## Definition
 

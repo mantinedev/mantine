@@ -5,6 +5,7 @@ export * from './use-clipboard';
 export * from './use-color-scheme';
 export * from './use-document-title';
 export * from './use-element-size';
+export * from './use-event-listener';
 export * from './use-idle';
 export * from './use-interval';
 export * from './use-media-query';

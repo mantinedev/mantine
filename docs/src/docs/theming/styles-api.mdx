@@ -5,8 +5,14 @@ slug: /theming/styles-api/
 order: 4
 ---
 
-import { providerStyles } from '@docs/demos';
-import { ButtonDemos, SliderDemos, TabsDemos, AccordionDemos, CalendarDemos } from '@mantine/demos';
+import {
+  ButtonDemos,
+  SliderDemos,
+  TabsDemos,
+  AccordionDemos,
+  CalendarDemos,
+  ThemeDemos,
+} from '@mantine/demos';
 import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/styles-api';
 
 # Styles API
@@ -120,7 +126,7 @@ Here extra styles are required only for root element and left icon:
 You can also use Styles API in MantineProvider with `styles` prop.
 All styles defined there will be added to each component rendered inside provider.
 
-<Demo data={providerStyles} />
+<Demo data={ThemeDemos.providerStyles} />
 
 ## Static class names
 

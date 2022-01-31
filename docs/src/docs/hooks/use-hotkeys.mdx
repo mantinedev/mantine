@@ -11,7 +11,7 @@ docs: 'hooks/use-hotkeys.mdx'
 source: 'mantine-hooks/src/use-hotkeys/use-hotkeys.ts'
 ---
 
-import { useHotkeysHook } from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -42,7 +42,7 @@ use-hotkeys hook can work only with document element, you will need to create yo
 if you need to support other elements. For this purpose package exports `getHotkeysHandler` function
 which should be used with `onKeyDown`:
 
-<Demo data={useHotkeysHook} />
+<Demo data={HooksDemos.useHotkeysHook} />
 
 ## Supported formats
 
