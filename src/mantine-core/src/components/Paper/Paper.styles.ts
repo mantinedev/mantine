@@ -12,6 +12,7 @@ export default createStyles((theme, { radius, shadow, padding, withBorder }: Pap
     ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
+    overflow: 'hidden',
     textDecoration: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
