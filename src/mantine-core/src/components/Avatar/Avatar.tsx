@@ -29,7 +29,7 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
 
-  /** Any additional attribute you want to set on the avatar `img` tag */
+  /** `img` element attributes */
   imageProps?: React.ComponentPropsWithoutRef<'img'>;
 }
 
