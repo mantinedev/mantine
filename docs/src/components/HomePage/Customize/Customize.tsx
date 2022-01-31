@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import { ArrowRightIcon } from '@modulz/radix-icons';
 import { Text, SimpleGrid, Slider, Button } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
+import { Slider as SliderStylesApi } from '@mantine/styles-api';
 import DataTable from '../../MdxPage/MdxProvider/DataTable/DataTable';
 import { PageSection } from '../PageSection/PageSection';
 
@@ -50,10 +50,7 @@ export function Customize() {
 
           <DataTable
             head={['Name', 'Description']}
-            data={Object.keys(CORE_STYLES_API.Slider).map((name) => [
-              name,
-              CORE_STYLES_API.Slider[name],
-            ])}
+            data={Object.keys(SliderStylesApi).map((name) => [name, SliderStylesApi[name]])}
           />
         </div>
 
