@@ -1,9 +1,9 @@
-import { assignRef, clamp, useMergedRef } from '@mantine/hooks';
-import { ClassNames, DefaultProps } from '@mantine/styles';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
+import { DefaultProps, ClassNames } from '@mantine/styles';
+import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
-import { TextInput } from '../TextInput/TextInput';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
 export type InnerNumberInputStylesNames = ClassNames<typeof useStyles>;
