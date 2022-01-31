@@ -7,7 +7,7 @@ order: 4
 
 import { providerStyles } from '@docs/demos';
 import { ButtonDemos, SliderDemos, TabsDemos, AccordionDemos, CalendarDemos } from '@mantine/demos';
-import { Slider as SliderStylesApi } from '@mantine/styles-api';
+import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/styles-api';
 
 # Styles API
 
@@ -104,10 +104,10 @@ Styles names for button component:
 
 <DataTable
   head={['Name', 'Static selector', 'Description']}
-  data={Object.keys(CORE_STYLES_API.Button).map((name) => [
+  data={Object.keys(ButtonStylesApi).map((name) => [
     name,
     `.mantine-button-${name}`,
-    CORE_STYLES_API.Button[name],
+    ButtonStylesApi[name],
   ])}
 />
 

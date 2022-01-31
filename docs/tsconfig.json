@@ -13,7 +13,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@docs/demos": ["./src/demos"]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*"]
