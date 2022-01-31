@@ -8,18 +8,12 @@ interface AmPmSelectProps
   /** Called with onChange event */
   onChange(value: string, triggerShift: boolean): void;
 
-  /** Called when input loses focus, used to format value */
-  setValue(value: string): void;
-
   /** Colon text size */
   size?: MantineSize;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
-  (
-    { className, onChange, onFocus, setValue, size = 'sm', value, ...others }: AmPmSelectProps,
-    ref
-  ) => {
+  ({ className, onChange, onFocus, size = 'sm', value, ...others }: AmPmSelectProps, ref) => {
     const { classes, cx } = useStyles({ size, hasValue: !!value });
     const inputRef = useRef<HTMLInputElement>();
 

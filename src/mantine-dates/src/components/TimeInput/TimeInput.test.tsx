@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
   itSupportsSystemProps,
@@ -56,5 +57,14 @@ describe('@mantine/dates/TimeInput', () => {
 
     expect(format12.container.querySelectorAll('input')[0].value).toBe('03');
     expect(format24.container.querySelectorAll('input')[0].value).toBe('15');
+  });
+
+  it('automatically moves to the next field', () => {
+    const format24 = render(<TimeInput format="24" />);
+    const inputs = format24.container.querySelectorAll('input');
+
+    userEvent.click(inputs[0]);
+    userEvent.keyboard('00');
+    expect(inputs[1]).toHaveFocus();
   });
 });

@@ -1,15 +1,16 @@
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef, forwardRef, useState } from 'react';
 import { useMergedRef, clamp } from '@mantine/hooks';
 import { Text, MantineSize } from '@mantine/core';
 import { padTime } from '../pad-time/pad-time';
 import useStyles from '../TimeInputBase.styles';
+import type { createTimeHandler } from '../create-time-handler/create-time-handler';
 
 interface TimeFieldProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
   /** Called with onChange event */
-  onChange(value: string, triggerShift: boolean): void;
+  onChange: ReturnType<typeof createTimeHandler>;
 
-  /** Called when input loses focus, used to format value */
+  /** Called to set input value and bypass parent validation/onChange calls */
   setValue(value: string): void;
 
   /** Adds colon after the field */
@@ -18,8 +19,11 @@ interface TimeFieldProps
   /** Colon text size */
   size?: MantineSize;
 
-  /** Maximum possible value, min value is always 0 */
+  /** Maximum possible value */
   max?: number;
+
+  /** Minimum possible value. Default 0 */
+  min?: number;
 }
 
 export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
@@ -33,21 +37,28 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       withSeparator = false,
       size = 'sm',
       max,
+      min = 0,
       value,
       ...others
     }: TimeFieldProps,
     ref
   ) => {
+    const [digitsEntered, setDigitsEntered] = useState(0);
     const { classes, cx, theme } = useStyles({ size, hasValue: !!value });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
       inputRef.current.select();
+      setDigitsEntered(0);
     };
 
     const handleBlur = (event: any) => {
       typeof onBlur === 'function' && onBlur(event);
+      // Call onChange in case the only digit entered is 0
+      if (digitsEntered === 1) {
+        typeof onChange === 'function' && onChange(event.currentTarget.value, false);
+      }
     };
 
     const handleClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
@@ -59,11 +70,10 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowUp') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min: 0 }).toString()
+          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min }).toString()
         );
 
         if (value !== padded) {
-          setValue(padded);
           onChange(padded, false);
         }
       }
@@ -71,14 +81,26 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min: 0 }).toString()
+          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min }).toString()
         );
 
         if (value !== padded) {
-          setValue(padded);
           onChange(padded, false);
         }
       }
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDigitsEntered(digitsEntered + 1);
+
+      const _val = parseInt(event.currentTarget.value, 10).toString();
+
+      // In 12-hour format, 0 is not allowed, but it could be the start of 01, 02, etc.
+      if (_val === '0' && digitsEntered === 0) {
+        setValue('00');
+        return;
+      }
+      onChange(_val, true, digitsEntered > 0);
     };
 
     return (
@@ -86,7 +108,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         <input
           type="text"
           ref={useMergedRef(inputRef, ref)}
-          onChange={(event) => onChange(event.currentTarget.value, true)}
+          onChange={handleChange}
           onClick={handleClick}
           onFocus={handleFocus}
           onBlur={handleBlur}

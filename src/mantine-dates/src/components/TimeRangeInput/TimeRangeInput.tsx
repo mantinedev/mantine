@@ -138,45 +138,53 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     const minutesRef = useRef<HTMLInputElement[]>([]);
     const secondsRef = useRef<HTMLInputElement[]>([]);
     const formatsRef = useRef<HTMLInputElement[]>([]);
-    const [fromTime, setFromTime] = useState<{ hours: string; minutes: string; seconds: string }>(
-      getTimeValues(value ? value[0] : undefined || defaultValue ? defaultValue[0] : undefined)
+    const [fromTime, setFromTime] = useState<{
+      hours: string;
+      minutes: string;
+      seconds: string;
+      amPm: string;
+    }>(
+      getTimeValues(
+        value ? value[0] : undefined || defaultValue ? defaultValue[0] : undefined,
+        format
+      )
     );
-    const [toTime, setToTime] = useState<{ hours: string; minutes: string; seconds: string }>(
-      getTimeValues(value ? value[1] : undefined || defaultValue ? defaultValue[1] : undefined)
+    const [toTime, setToTime] = useState<{
+      hours: string;
+      minutes: string;
+      seconds: string;
+      amPm: string;
+    }>(
+      getTimeValues(
+        value ? value[1] : undefined || defaultValue ? defaultValue[1] : undefined,
+        format
+      )
     );
-    const [fromAmPm, setFromAmPm] = useState('am');
-    const [toAmPm, setToAmPm] = useState('am');
     const [selectedFieldIndex, setSelectedFieldIndex] = useState<0 | 1>(0);
     const [_value, setValue] = useState<[Date, Date]>(value ?? defaultValue);
 
     useEffect(() => {
-      setValue([
-        getDate(fromTime.hours, fromTime.minutes, fromTime.seconds, format, fromAmPm),
-        getDate(toTime.hours, toTime.minutes, toTime.seconds, format, toAmPm),
-      ]);
-    }, [
-      fromTime.hours,
-      fromTime.minutes,
-      fromTime.seconds,
-      toTime.hours,
-      toTime.minutes,
-      toTime.seconds,
-      format,
-      fromAmPm,
-      toAmPm,
-    ]);
-
-    useEffect(() => {
-      if (format === '12' && (_value[0] || _value[1])) {
-        setFromAmPm(parseInt(fromTime.hours, 10) >= 12 ? 'pm' : 'am');
-        setToAmPm(parseInt(toTime.hours, 10) >= 12 ? 'pm' : 'am');
+      if (_value) {
+        setFromTime(getTimeValues(_value[0], format));
+        setToTime(getTimeValues(_value[1], format));
       }
-    }, [format]);
+    }, [_value, format]);
 
-    const setTime = (
-      cb: (val: ReturnType<typeof getTimeValues>) => ReturnType<typeof getTimeValues>
-    ) => {
-      selectedFieldIndex === 0 ? setFromTime(cb) : setToTime(cb);
+    const setDate = (change: Partial<typeof fromTime>) => {
+      const time = selectedFieldIndex === 0 ? fromTime : toTime;
+      const timeWithChange = { ...time, ...change };
+      const newDate = getDate(
+        timeWithChange.hours,
+        timeWithChange.minutes,
+        timeWithChange.seconds,
+        format,
+        timeWithChange.amPm
+      );
+
+      const newValue: [Date, Date] =
+        selectedFieldIndex === 0 ? [newDate, _value[1]] : [_value[0], newDate];
+      setValue(newValue);
+      typeof onChange === 'function' && onChange(newValue);
     };
 
     const nextMinuteRef = () => {
@@ -197,11 +205,11 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, hours: padTime(val) }));
+        setDate({ hours: padTime(val) });
       },
-      min: 0,
-      max: format === '12' ? 11 : 23,
-      maxValue: format === '12' ? 1 : 2,
+      min: format === '12' ? 1 : 0,
+      max: format === '12' ? 12 : 23,
+      maxValue: 2,
       nextRef: {
         current: minutesRef.current[selectedFieldIndex],
       },
@@ -209,7 +217,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, minutes: padTime(val) }));
+        setDate({ minutes: padTime(val) });
       },
       min: 0,
       max: 59,
@@ -221,7 +229,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, seconds: padTime(val) }));
+        setDate({ seconds: padTime(val) });
       },
       min: 0,
       max: 59,
@@ -238,11 +246,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
 
     const handleAmPmChange = createAmPmHandler({
       onChange: (val) => {
-        if (selectedFieldIndex === 0) {
-          setFromAmPm(val);
-        } else {
-          setToAmPm(val);
-        }
+        setDate({ amPm: val });
       },
       nextRef: {
         current: selectedFieldIndex === 0 ? hoursRef.current[1] : undefined,
@@ -250,11 +254,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     });
 
     const handleClear = () => {
-      setFromTime({ hours: '', minutes: '', seconds: '' });
-      setToTime({ hours: '', minutes: '', seconds: '' });
+      setFromTime({ hours: '', minutes: '', seconds: '', amPm: '' });
+      setToTime({ hours: '', minutes: '', seconds: '', amPm: '' });
       setSelectedFieldIndex(0);
-      setFromAmPm('');
-      setToAmPm('');
       hoursRef.current[0]?.focus();
     };
 
@@ -310,7 +312,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               }, ref)}
               value={fromTime.hours}
               onChange={handleHoursChange}
-              setValue={(val) => setTime((current) => ({ ...current, hours: val }))}
+              setValue={(val) => setFromTime((current) => ({ ...current, hours: val }))}
               id={uuid}
               className={classes.timeField}
               withSeparator
@@ -329,7 +331,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               }}
               value={fromTime.minutes}
               onChange={handleMinutesChange}
-              setValue={(val) => setTime((current) => ({ ...current, minutes: val }))}
+              setValue={(val) => setFromTime((current) => ({ ...current, minutes: val }))}
               className={classes.timeField}
               withSeparator={withSeconds}
               size={size}
@@ -347,7 +349,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={fromTime.seconds}
                 onChange={handleSecondsChange}
-                setValue={(val) => setTime((current) => ({ ...current, seconds: val }))}
+                setValue={(val) => setFromTime((current) => ({ ...current, seconds: val }))}
                 className={classes.timeField}
                 size={size}
                 max={59}
@@ -363,11 +365,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 ref={(node) => {
                   formatsRef.current[0] = node;
                 }}
-                value={fromAmPm}
+                value={fromTime.amPm}
                 onChange={handleAmPmChange}
-                setValue={(val) => {
-                  setFromAmPm(val);
-                }}
                 placeholder={amPmPlaceholder}
                 onFocus={() => setSelectedFieldIndex(0)}
                 aria-label={`from ${amPmLabel}`}
@@ -393,17 +392,13 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 ref={(node) => {
                   hoursRef.current[1] = node;
                 }}
-                value={
-                  format === '12' && parseInt(toTime.hours, 10) >= 12
-                    ? padTime((parseInt(toTime.hours, 10) - 12).toString())
-                    : toTime.hours
-                }
+                value={toTime.hours}
                 onChange={handleHoursChange}
-                setValue={(val) => setTime((current) => ({ ...current, hours: val }))}
+                setValue={(val) => setToTime((current) => ({ ...current, hours: val }))}
                 className={classes.timeField}
                 withSeparator
                 size={size}
-                max={format === '12' ? 11 : 23}
+                max={format === '12' ? 12 : 23}
                 placeholder={timePlaceholder}
                 aria-label={`to ${hoursLabel}`}
                 disabled={disabled}
@@ -416,7 +411,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 }}
                 value={toTime.minutes}
                 onChange={handleMinutesChange}
-                setValue={(val) => setTime((current) => ({ ...current, minutes: val }))}
+                setValue={(val) => setToTime((current) => ({ ...current, minutes: val }))}
                 className={classes.timeField}
                 withSeparator={withSeconds}
                 size={size}
@@ -434,7 +429,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   }}
                   value={toTime.seconds}
                   onChange={handleSecondsChange}
-                  setValue={(val) => setTime((current) => ({ ...current, seconds: val }))}
+                  setValue={(val) => setToTime((current) => ({ ...current, seconds: val }))}
                   className={classes.timeField}
                   size={size}
                   max={59}
@@ -450,11 +445,8 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                   ref={(node) => {
                     formatsRef.current[1] = node;
                   }}
-                  value={toAmPm}
+                  value={toTime.amPm}
                   onChange={handleAmPmChange}
-                  setValue={(val) => {
-                    setToAmPm(val);
-                  }}
                   placeholder={amPmPlaceholder}
                   onFocus={() => setSelectedFieldIndex(1)}
                   aria-label={`to ${amPmLabel}`}
