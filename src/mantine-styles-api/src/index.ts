@@ -53,3 +53,8 @@ export * from './CalendarBase.styles-api';
 export * from './DatePicker.styles-api';
 export * from './Month.styles-api';
 export * from './TimeInput.styles-api';
+
+// Other packages
+export * from './Dropzone.styles-api';
+export * from './Prism.styles-api';
+export * from './RichTextEditor.styles-api';
