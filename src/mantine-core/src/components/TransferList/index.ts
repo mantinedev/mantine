@@ -1,5 +1,5 @@
 export { TransferList } from './TransferList';
-export type { TransferListProps } from './TransferList';
+export type { TransferListProps, TransferListStylesNames } from './TransferList';
 export type {
   TransferListItem,
   TransferListData,

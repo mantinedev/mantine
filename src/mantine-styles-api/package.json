@@ -1,0 +1,24 @@
+{
+  "name": "@mantine/styles-api",
+  "description": "Mantine components styles api descriptions",
+  "private": true,
+  "version": "3.6.4",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-styles-api"
+  },
+  "peerDependencies": {
+    "@mantine/core": "3.6.4",
+    "@mantine/hooks": "3.6.4"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
