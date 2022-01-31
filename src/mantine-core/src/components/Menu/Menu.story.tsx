@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
 import { WithinOverlays } from '@mantine/storybook';
-import { menuItems } from '../demos/_menu-items';
-import { TextInput } from '../../TextInput';
-import { Container } from '../../Container';
-import { Divider } from '../../Divider';
-import { Menu } from '../Menu';
+import { TextInput } from '../TextInput';
+import { Container } from '../Container';
+import { Divider } from '../Divider';
+import { Menu } from './Menu';
+
+const menuItems = [<Menu.Item>first</Menu.Item>, <Menu.Item icon="$">second</Menu.Item>];
 
 function Controlled() {
   const [opened, setOpened] = useState(false);

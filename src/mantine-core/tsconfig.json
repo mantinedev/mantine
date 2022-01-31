@@ -14,6 +14,7 @@
       "@mantine/hooks": ["../mantine-hooks/src"],
       "@mantine/styles": ["../mantine-styles/src"],
       "@mantine/tests": ["../mantine-tests/src"],
+      "@mantine/storybook": ["../mantine-storybook/src"],
       "@mantine/mockdata": ["../mantine-mockdata/src"]
     }
   },
@@ -21,6 +22,7 @@
     { "path": "../mantine-hooks" },
     { "path": "../mantine-styles" },
     { "path": "../mantine-tests" },
+    { "path": "../mantine-storybook" },
     { "path": "../mantine-mockdata" }
   ]
 }

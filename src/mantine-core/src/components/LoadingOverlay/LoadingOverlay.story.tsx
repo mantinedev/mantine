@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, DEFAULT_THEME } from '@mantine/styles';
-import { AuthenticationForm } from '../../../../demos';
-import { Button } from '../../Button/Button';
-import { Group } from '../../Group/Group';
-import { LoadingOverlay } from '../LoadingOverlay';
+import { Button } from '../Button/Button';
+import { Group } from '../Group/Group';
+import { LoadingOverlay } from './LoadingOverlay';
 
 function LoadingOverlayDemo(props?: any) {
   const [visible, setVisible] = useState(true);
@@ -13,7 +12,7 @@ function LoadingOverlayDemo(props?: any) {
     <div style={{ width: 400, padding: 20 }}>
       <div style={{ width: 400, position: 'relative' }}>
         <LoadingOverlay visible={visible} {...props} />
-        <AuthenticationForm />
+        <div style={{ height: 400 }}>content</div>
       </div>
 
       <Group position="center" style={{ marginTop: 30 }}>

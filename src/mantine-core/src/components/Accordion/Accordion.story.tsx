@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { paragraph } from '@mantine/mockdata';
-import { baseDemoItems } from '../demos/_base';
-import { TextInput } from '../../TextInput';
-import { Button } from '../../Button';
-import { Group } from '../../Group';
-import { Accordion, AccordionProps } from '../Accordion';
-import { useAccordionState } from '../use-accordion-state/use-accordion-state';
+import { TextInput } from '../TextInput';
+import { Button } from '../Button';
+import { Group } from '../Group';
+import { Accordion, AccordionProps } from './Accordion';
+import { useAccordionState } from './use-accordion-state/use-accordion-state';
 
 const form = (
   <>
@@ -39,7 +38,9 @@ function Controlled(props: Partial<AccordionProps>) {
         onChange={handlers.setState}
         {...props}
       >
-        {baseDemoItems}
+        <Accordion.Item label="First tab">First tab content</Accordion.Item>
+        <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
+        <Accordion.Item label="Third tab">Third tab content</Accordion.Item>
       </Accordion>
     </>
   );

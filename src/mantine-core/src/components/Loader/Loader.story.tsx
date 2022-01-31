@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, MantineProvider } from '@mantine/styles';
-import { Loader, LoaderProps } from '../Loader';
+import { Loader, LoaderProps } from './Loader';
 
 const getThemes = (props?: LoaderProps) =>
   Object.keys(DEFAULT_THEME.colors).map((color) => (
