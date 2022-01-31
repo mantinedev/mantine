@@ -1,5 +1,6 @@
+// @TODO Fix countries demo
 import React, { forwardRef } from 'react';
-import Flag from 'react-flagpack';
+// import Flag from 'react-flagpack';
 import { MultiSelect, MultiSelectProps, Box, CloseButton } from '@mantine/core';
 import { countriesData } from './_countries-data';
 
@@ -73,9 +74,7 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
           borderRadius: 4,
         })}
       >
-        <Box mr={10}>
-          <Flag code={value} size="S" />
-        </Box>
+        <Box mr={10}>flag</Box>
         <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
         <CloseButton
           onMouseDown={onRemove}
@@ -92,9 +91,7 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
 const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => (
   <div ref={ref} {...others}>
     <Box sx={{ display: 'flex' }}>
-      <Box mr={10}>
-        <Flag code={value} size="S" />
-      </Box>
+      <Box mr={10}>flag</Box>
       <div>{label}</div>
     </Box>
   </div>
