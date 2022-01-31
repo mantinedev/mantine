@@ -1,13 +1,20 @@
 {
-  "extends": "../tsconfig.json",
-  "include": ["src", "../configuration/types", "../gallery/src"],
-  "exclude": ["node_modules"],
   "compilerOptions": {
-    "paths": {
-      "@docs/demos": ["./docs/src/demos"],
-      "@mantine/*": ["src/mantine-*/src"],
-      "@demos/*": ["src/mantine-*/src/demos"],
-      "@gallery/*": ["../gallery/src/gallery"]
-    }
-  }
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*"]
 }

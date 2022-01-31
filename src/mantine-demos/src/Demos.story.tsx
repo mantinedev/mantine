@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/react';
-import { attachDemos } from '@mantine/ds/src';
+import { attachDemos } from './attach-demos';
 import * as demos from './index';
 
 // @mantine/core

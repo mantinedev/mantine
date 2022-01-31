@@ -2,7 +2,7 @@ import React from 'react';
 import { Paper, createStyles } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { NotificationsDemos } from '@mantine/demos';
-import { Demo } from '@mantine/ds';
+import { Demo } from '@mantine/demos';
 
 const code = `import { Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
