@@ -11,27 +11,27 @@ docs: 'hooks/use-idle.mdx'
 source: 'mantine-hooks/src/use-idle/use-idle.ts'
 ---
 
-import { useIdleHook, useIdleEvents, useIdleInitialState } from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
 Hook detect if user does nothing for given time in ms:
 
-<Demo data={useIdleHook} />
+<Demo data={HooksDemos.useIdleHook} />
 
 ## Custom events
 
 By default hook will listen to keypress, mousemove, touchmove, click and scroll events to set idle status.
 To change that provide a list of events in the options argument:
 
-<Demo data={useIdleEvents} />
+<Demo data={HooksDemos.useIdleEvents} />
 
 ## Initial state
 
 By default the hook will return an idle state.
 To change that provide an initial state value in the options argument:
 
-<Demo data={useIdleInitialState} />
+<Demo data={HooksDemos.useIdleInitialState} />
 
 ### Definition
 

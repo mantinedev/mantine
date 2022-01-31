@@ -5,7 +5,7 @@ slug: /theming/mantine-provider/
 order: 0
 ---
 
-import { nestedProviders, providerStyles } from '@docs/demos';
+import { ThemeDemos } from '@mantine/demos';
 
 # MantineProvider
 
@@ -138,14 +138,14 @@ you can wrap them in another MantineProvider.
 Nested MantineProvider components do not inherit theme properties from parents
 and merge theme prop with default theme.
 
-<Demo data={nestedProviders} />
+<Demo data={ThemeDemos.nestedProviders} />
 
 ## Styles on MantineProvider
 
 You can add styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
 All components that are rendered inside MantineProvider will inherit those styles:
 
-<Demo data={providerStyles} />
+<Demo data={ThemeDemos.providerStyles} />
 
 ## Normalize.css and global styles
 

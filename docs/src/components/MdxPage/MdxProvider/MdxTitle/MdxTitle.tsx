@@ -20,7 +20,7 @@ export default function MdxTitle({
 
   return (
     <>
-      <div id={id} />
+      <div id={id} className={classes.offset} />
       <Title order={order} className={classes.title} style={{ fontWeight: 600 }} {...others}>
         <a className={classes.link} href={`#${id}`}>
           {children}

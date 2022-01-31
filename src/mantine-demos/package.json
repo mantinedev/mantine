@@ -1,0 +1,35 @@
+{
+  "name": "@mantine/demos",
+  "description": "Demos used in documentation",
+  "private": true,
+  "version": "3.6.4",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-demos"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "@mantine/core": "3.6.4",
+    "@mantine/hooks": "3.6.4",
+    "@mantine/dates": "3.6.4",
+    "@mantine/rte": "3.6.4",
+    "@mantine/modals": "3.6.4",
+    "@mantine/notifications": "3.6.4",
+    "@mantine/dropzone": "3.6.4",
+    "@mantine/prism": "3.6.4",
+    "tabler-icons-react": "*",
+    "dayjs": "*",
+    "@modulz/radix-icons": "*",
+    "@primer/octicons-react": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

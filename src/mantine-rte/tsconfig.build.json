@@ -18,6 +18,7 @@
     "outDir": "lib",
     "declaration": true,
     "declarationMap": true,
+    "composite": true,
     "declarationDir": "lib",
     "paths": {
       "@mantine/core": ["../mantine-core/src"],

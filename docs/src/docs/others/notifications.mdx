@@ -13,8 +13,7 @@ installation: '@mantine/notifications'
 license: MIT
 ---
 
-import * as MantineNotificationsDemos from '@demos/notifications';
-import { NotificationDemos } from '@demos/core';
+import { NotificationDemos, NotificationsDemos } from '@mantine/demos';
 
 ## Installation
 
@@ -34,7 +33,7 @@ yarn add @mantine/notifications @mantine/core @mantine/hooks
 
 ## Demo
 
-<Demo data={MantineNotificationsDemos.root} />
+<Demo data={NotificationsDemos.root} />
 
 ## Usage
 
@@ -57,7 +56,7 @@ function YourApp() {
 
 Use use-notifications hook at any place in your application:
 
-<Demo data={MantineNotificationsDemos.base} />
+<Demo data={NotificationsDemos.base} />
 
 ## use-notifications hook
 
@@ -166,7 +165,7 @@ You can limit maximum amount of notifications that can be displayed by setting
 All notifications added after limit was reached will be added into queue
 and displayed when notification from current state is closed.
 
-<Demo data={MantineNotificationsDemos.limit} />
+<Demo data={NotificationsDemos.limit} />
 
 ## Remove notifications from state and queue
 
@@ -182,13 +181,13 @@ notifications.hideNotification(id);
 Use `cleanQueue` handler to remove all notifications that are not currently displayed and
 `clean` handler to remove all notifications from state and queue:
 
-<Demo data={MantineNotificationsDemos.clean} />
+<Demo data={NotificationsDemos.clean} />
 
 ## Update notification
 
 showNotification handler returns notification id, you can use it to update notification:
 
-<Demo data={MantineNotificationsDemos.update} />
+<Demo data={NotificationsDemos.update} />
 
 ## Auto close
 
@@ -218,11 +217,11 @@ notifications.updateNotification('hello', {
 
 showNotification and updateNotification have higher priority.
 
-<Demo data={MantineNotificationsDemos.autoclose} />
+<Demo data={NotificationsDemos.autoclose} />
 
 ## React node in notification message
 
 You can render any react node in notification message, for example, input or button.
 Combine this option with other settings to achieve the desired behavior:
 
-<Demo data={MantineNotificationsDemos.interactive} />
+<Demo data={NotificationsDemos.interactive} />

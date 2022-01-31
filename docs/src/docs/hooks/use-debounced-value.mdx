@@ -11,7 +11,7 @@ docs: 'hooks/use-debounced-value.mdx'
 source: 'mantine-hooks/src/use-debounced-value/use-debounced-value.ts'
 ---
 
-import { UseDebouncedValueCancelDemo, UseDebouncedValueBaseDemo } from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -19,13 +19,13 @@ Use hook to debounce value change.
 This can be useful in case you want to perform a heavy operation based on react state,
 for example, send search request.
 
-<UseDebouncedValueBaseDemo />
+<HooksDemos.UseDebouncedValueBaseDemo />
 
 ## Leading update
 
 You can remove immediately update value with first call with `{ leading: true }` options:
 
-<UseDebouncedValueBaseDemo leading />
+<HooksDemos.UseDebouncedValueBaseDemo leading />
 
 ## Cancel update
 

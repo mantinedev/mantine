@@ -1,10 +1,10 @@
 import React from 'react';
 import { useMantineTheme } from '@mantine/core';
-import { usage } from '@demos/rte';
+import { RichTextEditorDemos } from '@mantine/demos';
 
 export function RichTextDemo() {
   const theme = useMantineTheme();
-  const Component = usage.component as any;
+  const Component = RichTextEditorDemos.usage.component as any;
   return (
     <Component
       style={{

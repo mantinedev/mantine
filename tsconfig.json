@@ -16,7 +16,11 @@
     ".cache",
     "configuration/jest",
     "configuration/storybook/main.js",
-    "node_modules"
+    "node_modules",
+    "src/mantine-*/esm/**/*",
+    "src/mantine-*/lib/**/*",
+    "src/mantine-*/cjs/**/*",
+    "gallery/next.config.js"
   ],
   "compilerOptions": {
     "paths": {

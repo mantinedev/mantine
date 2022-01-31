@@ -14,7 +14,7 @@ license: MIT
 styles: ['RichTextEditor']
 ---
 
-import * as RichTextDemos from '@demos/rte';
+import { RichTextEditorDemos } from '@mantine/demos';
 
 ## Installation
 
@@ -34,14 +34,14 @@ yarn add @mantine/rte @mantine/core @mantine/hooks
 
 ## Demo
 
-<Demo data={RichTextDemos.usage} />
+<Demo data={RichTextEditorDemos.usage} />
 
 ## Usage
 
 `value` and `onChange` props are required for component to work.
 Note that though component is controlled you cannot force value (limitation of Quill.js library).
 
-<Demo data={RichTextDemos.simple} />
+<Demo data={RichTextEditorDemos.simple} />
 
 ## Configure toolbar
 
@@ -60,7 +60,7 @@ RichTextEditor supports these controls in toolbar:
 
 You can add, remove and configure controls arrangement in toolbar with `controls` prop:
 
-<Demo data={RichTextDemos.toolbar} />
+<Demo data={RichTextEditorDemos.toolbar} />
 
 To configure sticky toolbar properties set following props:
 
@@ -77,7 +77,7 @@ To configure sticky toolbar properties set following props:
 
 ## Images and videos embeds
 
-<Demo data={RichTextDemos.embeds} />
+<Demo data={RichTextEditorDemos.embeds} />
 
 ## Images upload
 
@@ -125,7 +125,7 @@ if you are planning to use images.
 RichTextEditor comes with [quill-mentions plugin](https://github.com/quill-mention/quill-mention).
 To add mentions support, add provide [quill-mentions](https://github.com/quill-mention/quill-mention) configuration to `mentions` prop:
 
-<Demo data={RichTextDemos.mentions} />
+<Demo data={RichTextEditorDemos.mentions} />
 
 ## Extra modules
 
@@ -151,7 +151,7 @@ function Demo() {
 
 When editor is readonly state, user cannot edit content, toolbar is hidden:
 
-<Demo data={RichTextDemos.readOnly} />
+<Demo data={RichTextEditorDemos.readOnly} />
 
 ## Keyboard shortcuts
 
