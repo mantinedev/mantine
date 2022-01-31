@@ -1,6 +1,5 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { paragraph } from '@mantine/mockdata';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 import { Navbar } from './Navbar/Navbar';
 
@@ -20,7 +19,11 @@ storiesOf('@mantine/core/AppShell/stories/Navbar', module)
         {Array(20)
           .fill(0)
           .map((_, i) => (
-            <p key={i}>{paragraph}</p>
+            <p key={i}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quo aliquam nesciunt
+              tempore, repellendus molestias nobis, hic earum autem suscipit, neque quam
+              perspiciatis ullam a error. Nemo, possimus ad! Dolorem.
+            </p>
           ))}
       </Navbar.Section>
       <Navbar.Section>Last section</Navbar.Section>

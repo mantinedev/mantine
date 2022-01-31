@@ -2,8 +2,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles, MantineProvider, Alert, AlertProps } from '@mantine/core';
 import { generateBorderStyles } from '@mantine/storybook';
-import { paragraph } from '@mantine/mockdata';
 import { Alert as AlertStylesApi } from '../styles-api';
+
+const paragraph =
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto magnam veniam excepturi numquam facere odio eveniet nihil quidem iure. Saepe et illo, earum quia tenetur incidunt quae cum iure iusto!';
 
 const styles = generateBorderStyles(AlertStylesApi);
 const useStyles = createStyles(() => styles);

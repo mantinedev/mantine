@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { paragraph } from '@mantine/mockdata';
 import { SubmitForm } from '@mantine/storybook';
 import { Select, SelectProps } from './Select';
 import { Button } from '../Button';
 import { Group } from '../Group';
+
+const paragraph =
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto magnam veniam excepturi numquam facere odio eveniet nihil quidem iure. Saepe et illo, earum quia tenetur incidunt quae cum iure iusto!';
 
 const data = [
   { value: 'react', label: 'React' },

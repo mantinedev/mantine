@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Heart } from 'tabler-icons-react';
-import { paragraph } from '@mantine/mockdata/src';
 import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
+
+const paragraph =
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto magnam veniam excepturi numquam facere odio eveniet nihil quidem iure. Saepe et illo, earum quia tenetur incidunt quae cum iure iusto!';
 
 function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'value' | 'onChange'>) {
   const [value, setValue] = useState(50);

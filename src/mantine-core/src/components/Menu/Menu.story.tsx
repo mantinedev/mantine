@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { paragraph } from '@mantine/mockdata';
 import { WithinOverlays } from '@mantine/storybook';
 import { TextInput } from '../TextInput';
 import { Container } from '../Container';
@@ -20,7 +19,13 @@ function Controlled() {
 
 const content = Array(10)
   .fill(0)
-  .map((_, i) => <p key={i}>{paragraph}</p>);
+  .map((_, i) => (
+    <p key={i}>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, nam praesentium? Est
+      voluptates dolore eius iusto, accusamus ipsa quam eligendi excepturi sint praesentium officia,
+      magni recusandae nisi deserunt maiores repudiandae.
+    </p>
+  ));
 
 function WithScroll() {
   return (

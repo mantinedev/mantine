@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { paragraph } from '@mantine/mockdata';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Accordion, AccordionProps } from './Accordion';
 import { useAccordionState } from './use-accordion-state/use-accordion-state';
+
+const paragraph =
+  'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quisquam quaerat dolore ex. Dicta voluptate sit corrupti dignissimos, eius reprehenderit! Veritatis unde ad tenetur officiis consequatur qui quasi eum atque!';
 
 const form = (
   <>
