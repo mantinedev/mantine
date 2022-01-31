@@ -15,7 +15,7 @@ export interface DividerProps
   /** Line orientation */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Sets height in horizontal orientation and with in vertical */
+  /** Sets height in horizontal orientation and width in vertical */
   size?: MantineNumberSize;
 
   /** Adds text after line in horizontal orientation */
