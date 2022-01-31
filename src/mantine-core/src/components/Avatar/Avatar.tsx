@@ -28,6 +28,9 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
 
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
+
+  /** `img` element attributes */
+  imageProps?: React.ComponentPropsWithoutRef<'img'>;
 }
 
 export type AvatarProps<C extends React.ElementType> = PolymorphicComponentProps<C, _AvatarProps>;
@@ -49,6 +52,7 @@ export const Avatar: AvatarComponent = forwardRef(
       color = 'gray',
       classNames,
       styles,
+      imageProps,
       ...others
     }: AvatarProps<C>,
     ref: PolymorphicRef<C>
@@ -75,7 +79,13 @@ export const Avatar: AvatarComponent = forwardRef(
             {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
           </div>
         ) : (
-          <img className={classes.image} src={src} alt={alt} onError={() => setError(true)} />
+          <img
+            {...imageProps}
+            className={classes.image}
+            src={src}
+            alt={alt}
+            onError={() => setError(true)}
+          />
         )}
       </Box>
     );
