@@ -21,6 +21,31 @@ storiesOf('@mantine/core/NumberInput/stories', module)
       <Controlled />
     </div>
   ))
+  .add('Formatter/Parser', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <NumberInput
+        label="Price"
+        value={1000}
+        formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+      />
+      <NumberInput
+        label="Price with cents"
+        value={1000.5}
+        precision={2}
+        formatter={(value) => `$ ${value}`}
+        parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+      />
+      <NumberInput
+        label="Percentage"
+        value={0.1}
+        step={0.01}
+        precision={2}
+        formatter={(value) => `${(parseFloat(value) * 100).toFixed(0)}%`}
+        parser={(value) => String(parseFloat(value.replace('%', '')) / 100)}
+      />
+    </div>
+  ))
   .add('Step On Hold', () => (
     <>
       <div style={{ padding: 40, maxWidth: 400 }}>
