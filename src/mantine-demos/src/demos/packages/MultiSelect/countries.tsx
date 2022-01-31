@@ -1,8 +1,6 @@
-// @TODO Fix countries demo
 import React, { forwardRef } from 'react';
-// import Flag from 'react-flagpack';
 import { MultiSelect, MultiSelectProps, Box, CloseButton } from '@mantine/core';
-import { countriesData } from './_countries-data';
+import { countriesData, flags } from './_countries-data';
 
 const code = `
 import Flag from 'react-flagpack';
@@ -22,7 +20,7 @@ function Value({ value, label, onRemove, classNames, ...others }) {
         })}
       >
         <div style={{ marginRight: 10 }}>
-          <Flag code={value} size="S" />
+          <FlagIcon />
         </div>
         <div style={{ lineHeight: 1, fontSize: 12 }}>{label}</div>
         <CloseButton onMouseDown={onRemove} variant="transparent" size={22} iconSize={14} tabIndex={-1} />
@@ -35,7 +33,7 @@ const Item = forwardRef(({ label, value, ...others }, ref) => (
   <div ref={ref} {...others}>
     <Box sx={{ display: 'flex' }}>
       <Box mr={10}>
-        <Flag code={value} size="S" />
+        <FlagIcon />
       </Box>
       <div>{label}</div>
     </Box>
@@ -59,6 +57,7 @@ export function CountriesSelect() {
 `;
 
 function Value({ value, label, onRemove, classNames, ...others }: any) {
+  const Flag = flags[value];
   return (
     <div {...others}>
       <Box
@@ -74,7 +73,9 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
           borderRadius: 4,
         })}
       >
-        <Box mr={10}>flag</Box>
+        <Box mr={10}>
+          <Flag />
+        </Box>
         <Box sx={{ lineHeight: 1, fontSize: 12 }}>{label}</Box>
         <CloseButton
           onMouseDown={onRemove}
@@ -88,14 +89,19 @@ function Value({ value, label, onRemove, classNames, ...others }: any) {
   );
 }
 
-const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => (
-  <div ref={ref} {...others}>
-    <Box sx={{ display: 'flex' }}>
-      <Box mr={10}>flag</Box>
-      <div>{label}</div>
-    </Box>
-  </div>
-));
+const Item = forwardRef<HTMLDivElement, any>(({ label, value, ...others }: any, ref) => {
+  const Flag = flags[value];
+  return (
+    <div ref={ref} {...others}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Box mr={10}>
+          <Flag />
+        </Box>
+        <div>{label}</div>
+      </Box>
+    </div>
+  );
+});
 
 export function CountriesSelect(props: Partial<MultiSelectProps>) {
   return (
@@ -105,7 +111,7 @@ export function CountriesSelect(props: Partial<MultiSelectProps>) {
       valueComponent={Value}
       itemComponent={Item}
       searchable
-      defaultValue={['US', 'DE']}
+      defaultValue={['US', 'FI']}
       placeholder="Pick countries"
       label="Which countries you visited last year?"
       {...props}

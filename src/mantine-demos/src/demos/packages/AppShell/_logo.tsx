@@ -1,6 +1,5 @@
 import React from 'react';
 
-// @TODO: Validate logo usage
 export function Logo() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 623 163" width={100}>
