@@ -36,13 +36,11 @@ export default createStyles(
     }: SegmentedControlStylesParams,
     getRef
   ) => {
-    const label = getRef('label');
-    const control = getRef('control');
     const vertical = orientation === 'vertical';
 
     return {
       label: {
-        ref: label,
+        ref: getRef('label'),
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
@@ -68,7 +66,7 @@ export default createStyles(
       },
 
       control: {
-        ref: control,
+        ref: getRef('control'),
         position: 'relative',
         boxSizing: 'border-box',
         flex: 1,
@@ -79,7 +77,7 @@ export default createStyles(
 
         '&:not(:first-of-type)': {
           borderStyle: 'solid',
-          borderWidth: orientation === 'vertical' ? '1px 0 0 0' : '0 0 0 1px',
+          borderWidth: vertical ? '1px 0 0 0' : '0 0 0 1px',
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },
@@ -96,7 +94,7 @@ export default createStyles(
         '&:focus': {
           outline: 'none',
 
-          [`& + .${label}`]: {
+          [`& + .${getRef('label')}`]: {
             outline: 'none',
             boxShadow: `0 0 0 2px ${
               theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
@@ -104,7 +102,7 @@ export default createStyles(
           },
 
           '&:focus:not(:focus-visible)': {
-            [`& + .${label}`]: {
+            [`& + .${getRef('label')}`]: {
               boxShadow: 'none',
             },
           },
@@ -126,7 +124,7 @@ export default createStyles(
         borderLeftColor: 'transparent !important',
         borderTopColor: 'transparent !important',
 
-        [`& + .${control}`]: {
+        [`& + .${getRef('control')}`]: {
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },

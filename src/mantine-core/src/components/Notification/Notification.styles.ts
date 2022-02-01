@@ -8,7 +8,6 @@ export interface NotificationStylesParams {
 
 export default createStyles(
   (theme, { color, radius, disallowClose }: NotificationStylesParams, getRef) => {
-    const icon = getRef('icon');
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
     const topBottom = Math.min(Math.max(_radius / 1.2, 4), 30);
 
@@ -16,7 +15,7 @@ export default createStyles(
       closeButton: {},
 
       icon: {
-        ref: icon,
+        ref: getRef('icon'),
         boxSizing: 'border-box',
         marginRight: theme.spacing.md,
         width: 28,
@@ -64,7 +63,7 @@ export default createStyles(
           backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
         },
 
-        [`& .${icon}`]: {
+        [`& .${getRef('icon')}`]: {
           backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
           color: theme.white,
         },

@@ -46,47 +46,43 @@ function getPositionStyles({
   }
 }
 
-export default createStyles((theme, { position, size }: DrawerStylesParams, getRef) => {
-  const noOverlay = getRef('noOverlay');
+export default createStyles((theme, { position, size }: DrawerStylesParams, getRef) => ({
+  closeButton: {},
+  overlay: {},
 
-  return {
-    closeButton: {},
-    overlay: {},
+  noOverlay: {
+    ref: getRef('noOverlay'),
+  },
 
-    noOverlay: {
-      ref: noOverlay,
-    },
-
-    root: {
-      [`&:not(.${noOverlay})`]: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-      },
-    },
-
-    drawer: {
-      ...getPositionStyles({ position, size, theme }),
-      maxWidth: '100%',
-      maxHeight: '100vh',
+  root: {
+    [`&:not(.${getRef('noOverlay')})`]: {
       position: 'fixed',
-      outline: 0,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
+  },
 
-    title: {
-      marginRight: theme.spacing.md,
-      textOverflow: 'ellipsis',
-      display: 'block',
-      wordBreak: 'break-word',
-    },
+  drawer: {
+    ...getPositionStyles({ position, size, theme }),
+    maxWidth: '100%',
+    maxHeight: '100vh',
+    position: 'fixed',
+    outline: 0,
+  },
 
-    header: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: theme.spacing.md,
-    },
-  };
-});
+  title: {
+    marginRight: theme.spacing.md,
+    textOverflow: 'ellipsis',
+    display: 'block',
+    wordBreak: 'break-word',
+  },
+
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
+  },
+}));
