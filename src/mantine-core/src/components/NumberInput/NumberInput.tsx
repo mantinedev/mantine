@@ -163,7 +163,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setTempValue(min?.toFixed(precision) ?? '0');
       } else {
         const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
-        console.log('clamp', clamp({ value: _value + step, min: _min, max: _max }), result);
+
         handleValueChange(parseFloat(result));
         setTempValue(result);
       }
@@ -331,8 +331,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         onStepDone();
       }
     };
-
-    console.log('tempValue', tempValue, formatNum(tempValue));
 
     return (
       <TextInput
