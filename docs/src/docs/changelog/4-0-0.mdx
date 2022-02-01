@@ -1,0 +1,54 @@
+---
+group: 'changelog'
+title: 'Version 4.0.0'
+order: 1
+slug: /changelog/4-0-0/
+release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
+date: 'January 13th, 2022'
+---
+
+## createStyles changes
+
+[createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
+Instead of generating unique identifiers with each `getRef` call it returns the same value for given argument:
+
+```tsx
+// before 4.0.0
+// getRef('icon') !== getRef('icon')
+createStyles((theme, params, getRef) => {
+  const icon = getRef('icon');
+  return {
+    icon: { ref: icon },
+    parent: {
+      [`& .${icon}`]: { color: 'red' },
+    },
+  };
+});
+
+// in 4.0.0
+// getRef('icon') === getRef('icon')
+createStyles((theme, params, getRef) => ({
+  icon: { ref: getRef('icon') },
+  parent: {
+    [`& .${getRef('icon')}`]: { color: 'red' },
+  },
+}));
+```
+
+## Other changes
+
+- [Text](https://mantine.dev/core/text/) component now inherits color from parent element
+- [Input](https://mantine.dev/core/input/) component now handles `required` prop differently to support native browser validation
+- [RichTextEditor](https://mantine.dev/others/rte/) now supports providing extra quill modules via `modules` prop
+- [DateRangePicker](https://mantine.dev/dates/date-range-picker/) now displays first selected date
+- [RangeCalendar](https://mantine.dev/dates/range-calendar/) now calls onChange with first selected date
+- [SegmentedControl](https://mantine.dev/core/segmented-control/) component now supports vertical orientation and disabled state
+
+## 3.6.0 – 4.0.0 bug fixes
+
+- Fix incorrect white space handling in [Progress](https://mantine.dev/core/progress/) component with labels
+- Fix incorrect transform prop type in [Text](https://mantine.dev/core/text/) and associated components
+- Add missing ref type in [Navbar](https://mantine.dev/core/app-shell/) component
+- Hidden inputs were removed from [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components to prevent issues with popular form libraries
+- Fix incorrect am/pm input handling in [TimeInput](https://mantine.dev/dates/time-input/) for non qwerty keyboards
+- Fix incorrect initial value in [use-hash](https://mantine.dev/hooks/use-hash/) hook
