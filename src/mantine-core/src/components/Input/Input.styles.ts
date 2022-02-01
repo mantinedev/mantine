@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 
 export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
 
-interface InputStyles {
+export interface InputStylesParams {
   radius: MantineNumberSize;
   size: MantineSize;
   variant: InputVariant;
@@ -33,7 +33,7 @@ export default createStyles(
       rightSectionWidth,
       withRightSection,
       iconWidth,
-    }: InputStyles
+    }: InputStylesParams
   ) => {
     const invalidColor = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
     const sizeStyles =

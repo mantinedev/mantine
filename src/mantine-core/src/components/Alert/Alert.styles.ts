@@ -1,12 +1,12 @@
 import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
-interface AlertStyles {
+export interface AlertStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
   variant: 'filled' | 'outline' | 'light';
 }
 
-export default createStyles((theme, { color, radius, variant }: AlertStyles, getRef) => {
+export default createStyles((theme, { color, radius, variant }: AlertStylesParams, getRef) => {
   const closeButton = getRef('closeButton');
 
   return {

@@ -16,7 +16,7 @@ const iconSizes = {
   xl: 20,
 };
 
-interface CheckboxStyles {
+export interface CheckboxStylesParams {
   size: MantineSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -24,7 +24,7 @@ interface CheckboxStyles {
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStyles, getRef) => {
+  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
     const _size = theme.fn.size({ size, sizes });
 
     const icon = getRef('icon');

@@ -1,10 +1,10 @@
 import { createStyles } from '@mantine/styles';
 
-interface SpoilerStyles {
+export interface SpoilerStylesParams {
   transitionDuration: number;
 }
 
-export default createStyles((_theme, { transitionDuration }: SpoilerStyles) => ({
+export default createStyles((_theme, { transitionDuration }: SpoilerStylesParams) => ({
   control: {},
 
   root: {

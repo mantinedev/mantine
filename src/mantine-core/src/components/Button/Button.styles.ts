@@ -18,7 +18,7 @@ export type ButtonVariant =
   | 'default'
   | 'subtle';
 
-interface ButtonStylesProps {
+export interface ButtonStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
@@ -136,7 +136,7 @@ export default createStyles(
       gradientFrom,
       gradientTo,
       gradientDeg,
-    }: ButtonStylesProps,
+    }: ButtonStylesParams,
     getRef
   ) => {
     const loading = getRef('loading');

@@ -12,7 +12,7 @@ export const sizes = {
 
 export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
 
-interface DrawerStyles {
+export interface DrawerStylesParams {
   position: DrawerPosition;
   size: number | string;
 }
@@ -46,7 +46,7 @@ function getPositionStyles({
   }
 }
 
-export default createStyles((theme, { position, size }: DrawerStyles, getRef) => {
+export default createStyles((theme, { position, size }: DrawerStylesParams, getRef) => {
   const noOverlay = getRef('noOverlay');
 
   return {

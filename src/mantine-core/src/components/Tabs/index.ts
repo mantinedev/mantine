@@ -3,3 +3,4 @@ export { Tabs } from './Tabs';
 
 export type { TabControlProps as TabProps } from './TabControl/TabControl';
 export type { TabsProps, TabsVariant, TabsStylesNames } from './Tabs';
+export type { TabsStylesParams } from './Tabs.styles';

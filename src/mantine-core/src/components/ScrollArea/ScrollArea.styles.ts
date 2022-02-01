@@ -1,13 +1,17 @@
 import { createStyles } from '@mantine/styles';
 
-interface ScrollAreaStyles {
+export interface ScrollAreaStylesParams {
   scrollbarSize: number;
   offsetScrollbars: boolean;
   scrollbarHovered: boolean;
 }
 
 export default createStyles(
-  (theme, { scrollbarSize, offsetScrollbars, scrollbarHovered }: ScrollAreaStyles, getRef) => {
+  (
+    theme,
+    { scrollbarSize, offsetScrollbars, scrollbarHovered }: ScrollAreaStylesParams,
+    getRef
+  ) => {
     const thumb = getRef('thumb');
     return {
       root: {

@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@man
 
 export const WRAPPER_PADDING = 4;
 
-interface SegmentedControlStyles {
+export interface SegmentedControlStylesParams {
   fullWidth: boolean;
   color: MantineColor;
   radius: MantineNumberSize;
@@ -33,7 +33,7 @@ export default createStyles(
       transitionTimingFunction,
       size,
       orientation,
-    }: SegmentedControlStyles,
+    }: SegmentedControlStylesParams,
     getRef
   ) => {
     const label = getRef('label');

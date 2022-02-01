@@ -2,7 +2,7 @@ import { createStyles } from '@mantine/styles';
 
 export type AccordionIconPosition = 'right' | 'left';
 
-interface AccordionItemStyles {
+export interface AccordionStylesParams {
   transitionDuration: number;
   disableIconRotation: boolean;
   iconPosition: AccordionIconPosition;
@@ -19,7 +19,7 @@ export default createStyles(
       iconPosition,
       offsetIcon,
       iconSize,
-    }: AccordionItemStyles,
+    }: AccordionStylesParams,
     getRef
   ) => {
     const icon = getRef('icon');

@@ -1,13 +1,13 @@
 import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
-interface NotificationStyles {
+export interface NotificationStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
   disallowClose: boolean;
 }
 
 export default createStyles(
-  (theme, { color, radius, disallowClose }: NotificationStyles, getRef) => {
+  (theme, { color, radius, disallowClose }: NotificationStylesParams, getRef) => {
     const icon = getRef('icon');
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
     const topBottom = Math.min(Math.max(_radius / 1.2, 4), 30);

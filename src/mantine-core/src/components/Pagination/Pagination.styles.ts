@@ -5,7 +5,7 @@ import {
   MantineColor,
 } from '@mantine/styles';
 
-interface PaginationStyles {
+export interface PaginationStylesParams {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -19,7 +19,7 @@ const sizes = {
   xl: 44,
 };
 
-export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
+export default createStyles((theme, { size, radius, color }: PaginationStylesParams, getRef) => {
   const dots = getRef('dots');
 
   const colors = getSharedColorScheme({

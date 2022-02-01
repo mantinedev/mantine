@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, keyframes } from '@mantine/styles';
 
-interface SkeletonStylesProps {
+export interface SkeletonStylesParams {
   height: number | string;
   width: number | string;
   circle: boolean;
@@ -14,7 +14,7 @@ export const fade = keyframes({
 });
 
 export default createStyles(
-  (theme, { height, width, radius, circle, animate }: SkeletonStylesProps) => ({
+  (theme, { height, width, radius, circle, animate }: SkeletonStylesParams) => ({
     root: {
       height,
       width: circle ? height : width,

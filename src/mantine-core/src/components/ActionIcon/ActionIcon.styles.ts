@@ -14,7 +14,7 @@ export type ActionIconVariant =
   | 'default'
   | 'transparent';
 
-interface ActionIconStyles {
+export interface ActionIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -64,7 +64,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   };
 }
 
-export default createStyles((theme, { color, size, radius }: ActionIconStyles) => ({
+export default createStyles((theme, { color, size, radius }: ActionIconStylesParams) => ({
   root: {
     ...theme.fn.focusStyles(),
     ...theme.fn.fontStyles(),

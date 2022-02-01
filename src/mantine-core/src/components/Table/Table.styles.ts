@@ -1,13 +1,13 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface TableStyles {
+export interface TableStylesParams {
   captionSide: 'top' | 'bottom';
   horizontalSpacing: MantineNumberSize;
   verticalSpacing: MantineNumberSize;
 }
 
 export default createStyles(
-  (theme, { captionSide, horizontalSpacing, verticalSpacing }: TableStyles, getRef) => {
+  (theme, { captionSide, horizontalSpacing, verticalSpacing }: TableStylesParams, getRef) => {
     const striped = { ref: getRef('striped') };
     const hover = { ref: getRef('hover') };
 
