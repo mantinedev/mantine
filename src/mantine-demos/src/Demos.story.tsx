@@ -95,3 +95,5 @@ attachDemos(storiesOf('@mantine/dropzone/Dropzone/demos', module), demos.Dropzon
 attachDemos(storiesOf('@mantine/notifications/demos', module), demos.NotificationsDemos);
 attachDemos(storiesOf('@mantine/prism/demos', module), demos.PrismDemos);
 attachDemos(storiesOf('@mantine/rte/demos', module), demos.RichTextEditorDemos);
+attachDemos(storiesOf('@mantine/styles/demos', module), demos.CreateStylesDemos);
+attachDemos(storiesOf('@mantine/theme/demos', module), demos.ThemeDemos);

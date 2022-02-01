@@ -8,9 +8,14 @@ function Demo() {
   return (
     <MantineProvider
       styles={{
-        Button: (theme) => ({
+        Button: (theme, params) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
+
+          filled: {
+            // subscribe to component params
+            color: theme.colors[params.color || theme.primaryColor][1],
+          },
 
           // These styles are applied only to buttons with outline variant
           outline: {
@@ -45,9 +50,14 @@ function Demo() {
     <MantineProvider
       theme={{ colorScheme }}
       styles={{
-        Button: (theme) => ({
+        Button: (theme, params) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
+
+          filled: {
+            // subscribe to component params
+            color: theme.colors[params.color || theme.primaryColor][1],
+          },
 
           // These styles are applied only to buttons with outline variant
           outline: {
