@@ -9,7 +9,8 @@ import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
   string,
-  Record<string, CSSObject> | ((theme: MantineTheme) => Record<string, CSSObject>)
+  | Record<string, CSSObject>
+  | ((theme: MantineTheme, params: Record<string, any>) => Record<string, CSSObject>)
 >;
 
 interface MantineThemeContextType {

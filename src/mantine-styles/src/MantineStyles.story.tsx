@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { createStyles } from './tss/create-styles';
+import { MantineProvider } from './theme';
 
 const useRefStyles = createStyles((_, __, getRef) => ({
   parent: {
@@ -27,4 +28,28 @@ function UseRefStyles() {
   );
 }
 
-storiesOf('@mantine/styles', module).add('Refs', () => <UseRefStyles />);
+const useConsumerStyles = createStyles((_, { color }: { color: string }) => ({
+  element: { color },
+}));
+
+function MantineProviderConsumer({ color }: { color: string }) {
+  const { classes } = useConsumerStyles({ color }, { name: 'Consumer' });
+  return <div className={classes.element}>element</div>;
+}
+
+storiesOf('@mantine/styles', module)
+  .add('Refs', () => <UseRefStyles />)
+  .add('MantineProvider styles', () => (
+    <MantineProvider
+      styles={{
+        Consumer: (_, params) => ({
+          element: {
+            background: params.color === 'red' ? 'black' : 'orange',
+          },
+        }),
+      }}
+    >
+      <MantineProviderConsumer color="red" />
+      <MantineProviderConsumer color="silver" />
+    </MantineProvider>
+  ));

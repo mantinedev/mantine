@@ -41,7 +41,8 @@ export function createStyles<Key extends string = string, Params = void>(
 
     const _styles =
       typeof options?.styles === 'function' ? options?.styles(theme) : options?.styles || {};
-    const _themeStyles = typeof themeStyles === 'function' ? themeStyles(theme) : themeStyles || {};
+    const _themeStyles =
+      typeof themeStyles === 'function' ? themeStyles(theme, params || {}) : themeStyles || {};
 
     const classes = fromEntries(
       Object.keys(cssObject).map((key) => {
