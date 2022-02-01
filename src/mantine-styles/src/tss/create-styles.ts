@@ -33,11 +33,8 @@ export function createStyles<Key extends string = string, Params = void>(
 
     const { css, cx } = useCss();
 
-    let count = 0;
-
     function createRef(refName: string) {
-      count += 1;
-      return `mantine-ref_${refName || ''}_${count}`;
+      return `__mantine-ref-${refName || ''}`;
     }
 
     const cssObject = getCssObject(theme, params, createRef);
