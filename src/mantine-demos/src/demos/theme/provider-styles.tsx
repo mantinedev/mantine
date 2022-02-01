@@ -1,14 +1,21 @@
 import React from 'react';
-import { MantineProvider, Button, Badge, Group, useMantineColorScheme } from '@mantine/core';
+import {
+  MantineProvider,
+  Button,
+  Badge,
+  Group,
+  useMantineColorScheme,
+  ButtonStylesParams,
+} from '@mantine/core';
 
 const code = `
-import { MantineProvider, Button, Badge } from '@mantine/core';
+import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
 
 function Demo() {
   return (
     <MantineProvider
       styles={{
-        Button: (theme, params) => ({
+        Button: (theme, params: ButtonStylesParams) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
 
@@ -50,7 +57,7 @@ function Demo() {
     <MantineProvider
       theme={{ colorScheme }}
       styles={{
-        Button: (theme, params) => ({
+        Button: (theme, params: ButtonStylesParams) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
 
