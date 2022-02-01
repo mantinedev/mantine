@@ -17,6 +17,9 @@ export interface NumberInputHandlers {
   decrement(): void;
 }
 
+type Formatter = (value: string | undefined) => string;
+type Parser = (value: string | undefined) => string | undefined;
+
 export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
     Omit<
@@ -63,14 +66,14 @@ export interface NumberInputProps
   handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
 
   /** Formats the number into the input */
-  formatter?: (value: string | undefined) => string;
+  formatter?: Formatter;
 
   /** Parsers the value from formatter, should be used with formatter at the same time */
-  parser?: (value: string | undefined) => string | undefined;
+  parser?: Parser;
 }
 
-const defaultFormatter: NumberInputProps['formatter'] = (value) => value;
-const defaultParser: NumberInputProps['parser'] = (num) => {
+const defaultFormatter: Formatter = (value) => value || '';
+const defaultParser: Parser = (num) => {
   const parsedNum = parseFloat(num);
 
   if (Number.isNaN(parsedNum)) {
@@ -134,7 +137,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const formatNum = (val: string | number) => {
-      let parsedStr = String(val);
+      let parsedStr = typeof val === 'number' ? String(val) : val;
 
       if (decimalSeparator) {
         parsedStr = parsedStr.replace(/\./g, decimalSeparator);
@@ -143,7 +146,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       return formatter(parsedStr);
     };
 
-    const parseNum = (val: string) => {
+    const parseNum = (val: string): string | undefined => {
       let num = val;
 
       if (decimalSeparator) {
