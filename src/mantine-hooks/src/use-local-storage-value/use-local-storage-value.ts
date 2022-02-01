@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-export function useLocalStorageValue<T extends string>({
+export function useLocalStorageValue<T>({
   key,
   defaultValue = undefined,
 }: {
@@ -10,7 +10,7 @@ export function useLocalStorageValue<T extends string>({
 }) {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
-      ? (window.localStorage.getItem(key) as T)
+      ? (JSON.parse(window.localStorage.getItem(key)) as T)
       : ((defaultValue ?? '') as T)
   );
 
@@ -19,11 +19,11 @@ export function useLocalStorageValue<T extends string>({
       if (typeof val === 'function') {
         setValue((current) => {
           const result = val(current);
-          window.localStorage.setItem(key, result);
+          window.localStorage.setItem(key, JSON.stringify(result));
           return result;
         });
       } else {
-        window.localStorage.setItem(key, val);
+        window.localStorage.setItem(key, JSON.stringify(val));
         setValue(val);
       }
     },
