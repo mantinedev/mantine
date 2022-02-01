@@ -7,3 +7,4 @@ export type {
   PrismTabProps,
   PrismTabsStylesNames,
 } from './Prism';
+export type { PrismStylesParams } from './Prism.styles';
