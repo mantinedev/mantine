@@ -7,6 +7,32 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
 date: 'January 13th, 2022'
 ---
 
+## Styles params on MantineProvider
+
+You can now get component styles params in [MantineProvider](https://mantine.dev/theming/mantine-provider/) `styles` prop.
+Each component that has [Styles API](https://mantine.dev/theming/styles-api/) now exports type that can be assigned to params
+`ComponentNameStylesParams`, for example, `ButtonStylesParams`. This feature can be used to add more complex context styles that were not possible before:
+
+```tsx
+import { MantineProvider, ButtonStylesParams } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      styles={{
+        Button: (theme, params: ButtonStylesParams) => ({
+          root: {
+            // use params to calculate dynamic styles
+            color: theme.colors[params.color || theme.primaryColor][1],
+            padding: params.size === 'lg' ? '15px 45px' : undefined,
+          },
+        }),
+      }}
+    />
+  );
+}
+```
+
 ## createStyles changes
 
 [createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.

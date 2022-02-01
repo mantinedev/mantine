@@ -36,7 +36,7 @@ function Demo() {
       }}
     >
       <Button variant="outline">Outline button</Button>
-      <Button variant="filled">Filled button</Button>
+      <Button variant="filled" color="cyan">Filled button</Button>
       <Badge variant="dot">Dot badge</Badge>
     </MantineProvider>
   );
@@ -79,7 +79,9 @@ function Demo() {
     >
       <Group position="center">
         <Button variant="outline">Outline button</Button>
-        <Button variant="filled">Filled button</Button>
+        <Button variant="filled" color="cyan">
+          Filled button
+        </Button>
         <Badge variant="dot">Dot badge</Badge>
       </Group>
     </MantineProvider>
