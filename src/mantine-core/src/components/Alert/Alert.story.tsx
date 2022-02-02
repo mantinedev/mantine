@@ -65,4 +65,11 @@ storiesOf('@mantine/core/Alert/stories', module)
         Content
       </Alert>
     </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 'lg' }}>
+      <Alert title="Hello" sx={{ maxWidth: 400 }} mx="auto" my={50}>
+        Content
+      </Alert>
+    </MantineProvider>
   ));

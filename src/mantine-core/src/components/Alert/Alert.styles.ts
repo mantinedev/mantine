@@ -12,7 +12,7 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
     position: 'relative',
     overflow: 'hidden',
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     border: '1px solid transparent',
   },
 

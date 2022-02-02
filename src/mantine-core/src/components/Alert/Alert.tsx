@@ -40,27 +40,26 @@ export interface AlertProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
   radius?: MantineNumberSize;
 }
 
 const defaultProps: Partial<AlertProps> = {
   variant: 'light',
-  radius: 'sm',
 };
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, ref) => {
   const {
     className,
     title,
-    variant = 'light',
+    variant,
     children,
     color,
     classNames,
     icon,
     styles,
     onClose,
-    radius = 'sm',
+    radius,
     withCloseButton,
     closeButtonLabel,
     ...others
