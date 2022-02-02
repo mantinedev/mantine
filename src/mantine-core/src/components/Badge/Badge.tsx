@@ -8,6 +8,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Badge.styles';
@@ -47,26 +48,31 @@ type BadgeComponent = (<C extends React.ElementType = 'div'>(
   props: BadgeProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<BadgeProps<any>> = {
+  variant: 'light',
+  size: 'md',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
+};
+
 export const Badge: BadgeComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
+  <C extends React.ElementType = 'div'>(props: BadgeProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       component,
       className,
       color,
-      variant = 'light',
+      variant,
       fullWidth,
       children,
-      size = 'md',
+      size,
       leftSection,
       rightSection,
-      radius = 'xl',
-      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      radius,
+      gradient,
       classNames,
       styles,
       ...others
-    }: BadgeProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Badge', defaultProps, props);
+
     const { classes, cx } = useStyles(
       {
         size,

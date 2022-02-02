@@ -98,7 +98,7 @@ export default createStyles(
         justifyContent: 'center',
         width: fullWidth ? '100%' : 'auto',
         textTransform: 'uppercase',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 700,
         letterSpacing: 0.25,
         cursor: 'default',
