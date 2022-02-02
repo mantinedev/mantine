@@ -23,7 +23,7 @@ function Demo() {
 
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
+      <Badge sx={{ paddingLeft: 0 }} size="lg" radius="xl" color="teal" leftSection={avatar}>
         Badge with Avatar
       </Badge>
 
@@ -57,7 +57,7 @@ const removeButton = (
 function Demo() {
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
+      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" radius="xl" leftSection={avatar}>
         Badge with Avatar
       </Badge>
       <Badge variant="outline" sx={{ paddingRight: 3 }} rightSection={removeButton}>
