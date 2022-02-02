@@ -17,6 +17,9 @@ export interface NumberInputHandlers {
   decrement(): void;
 }
 
+type Formatter = (value: string | undefined) => string;
+type Parser = (value: string | undefined) => string | undefined;
+
 export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
     Omit<
@@ -61,7 +64,24 @@ export interface NumberInputProps
 
   /** Get increment/decrement handlers */
   handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
+
+  /** Formats the number into the input */
+  formatter?: Formatter;
+
+  /** Parsers the value from formatter, should be used with formatter at the same time */
+  parser?: Parser;
 }
+
+const defaultFormatter: Formatter = (value) => value || '';
+const defaultParser: Parser = (num) => {
+  const parsedNum = parseFloat(num);
+
+  if (Number.isNaN(parsedNum)) {
+    return undefined;
+  }
+
+  return num;
+};
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   (
@@ -88,6 +108,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       styles,
       size,
       rightSection,
+      formatter = defaultFormatter,
+      parser = defaultParser,
       ...others
     }: NumberInputProps,
     ref
@@ -115,29 +137,23 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const formatNum = (val: string | number) => {
-      let parsedStr = String(val);
+      let parsedStr = typeof val === 'number' ? String(val) : val;
 
       if (decimalSeparator) {
         parsedStr = parsedStr.replace(/\./g, decimalSeparator);
       }
 
-      return parsedStr;
+      return formatter(parsedStr);
     };
 
-    const parseNum = (val: string) => {
+    const parseNum = (val: string): string | undefined => {
       let num = val;
 
       if (decimalSeparator) {
         num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
       }
 
-      const parsedNum = parseFloat(num);
-
-      if (Number.isNaN(parsedNum)) {
-        return undefined;
-      }
-
-      return parsedNum;
+      return parser(num);
     };
 
     const _min = typeof min === 'number' ? min : -Infinity;
@@ -150,6 +166,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setTempValue(min?.toFixed(precision) ?? '0');
       } else {
         const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
+
         handleValueChange(parseFloat(result));
         setTempValue(result);
       }
@@ -261,12 +278,14 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const val = event.target.value;
-      setTempValue(val);
+      const parsed = parseNum(val);
+
+      setTempValue(parsed);
+
       if (val === '') {
         handleValueChange(undefined);
       } else {
-        const parsed = parseNum(val);
-        val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parsed);
+        val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
       }
     };
 
@@ -276,7 +295,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         handleValueChange(undefined);
       } else {
         const parsedVal = parseNum(event.target.value);
-        const val = clamp({ value: parsedVal, min: _min, max: _max });
+        const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
 
         if (!Number.isNaN(val)) {
           if (!noClampOnBlur) {
