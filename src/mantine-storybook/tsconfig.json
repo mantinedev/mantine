@@ -15,9 +15,5 @@
       "@mantine/prism": ["../mantine-prism/src"]
     }
   },
-  "references": [
-    { "path": "../mantine-hooks" },
-    { "path": "../mantine-core" },
-    { "path": "../mantine-prism" }
-  ]
+  "references": [{ "path": "../mantine-hooks" }, { "path": "../mantine-core" }]
 }
