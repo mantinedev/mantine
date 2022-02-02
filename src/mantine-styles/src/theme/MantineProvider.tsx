@@ -41,8 +41,13 @@ export function useMantineEmotionOptions(): EmotionCacheOptions {
   return useContext(MantineThemeContext)?.emotionOptions || { key: 'mantine', prepend: true };
 }
 
-export function useMantineDefaultProps(component: string) {
-  return useContext(MantineDefaultPropsProvider)[component] || {};
+export function useMantineDefaultProps<T extends Record<string, any>>(
+  component: string,
+  defaultProps: Partial<T>,
+  props: T
+): T {
+  const contextProps = useContext(MantineDefaultPropsProvider)[component] || {};
+  return { ...defaultProps, ...contextProps, ...props };
 }
 
 export interface MantineProviderProps {
