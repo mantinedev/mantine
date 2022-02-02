@@ -26,11 +26,12 @@ interface MantineThemeFunctions {
   largerThan(breakpoint: MantineNumberSize): string;
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
+  radius(size: MantineNumberSize | (string & {})): string | number;
 }
 
 export interface MantineTheme {
   dir: 'ltr' | 'rtl';
-  defaultRadius: MantineNumberSize;
+  defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;
   dateFormat: string;
   colorScheme: 'light' | 'dark';
