@@ -30,7 +30,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStylesParams)
     width: theme.fn.size({ size, sizes }),
     minWidth: theme.fn.size({ size, sizes }),
     height: theme.fn.size({ size, sizes }),
-    borderRadius: radius ? theme.fn.size({ size: radius, sizes: theme.radius }) : size,
+    borderRadius: theme.fn.radius(radius),
   },
 
   image: {

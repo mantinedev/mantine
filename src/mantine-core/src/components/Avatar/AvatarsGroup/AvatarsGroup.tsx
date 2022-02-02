@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { filterChildrenByType } from '../../../utils';
 import { Avatar } from '../Avatar';
 import { Box } from '../../Box';
@@ -30,9 +35,16 @@ export interface AvatarsGroupProps
   total?: number;
 }
 
+const defaultProps: Partial<AvatarsGroupProps> = {
+  size: 'md',
+  radius: 'xl',
+  limit: 2,
+  spacing: 'lg',
+};
+
 export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
-  (
-    {
+  (props: AvatarsGroupProps, ref) => {
+    const {
       className,
       children,
       size = 'md',
@@ -43,9 +55,7 @@ export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
       spacing = 'lg',
       total,
       ...others
-    }: AvatarsGroupProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('AvatarsGroup', defaultProps, props);
     const { classes, cx } = useStyles({ spacing }, { classNames, styles, name: 'AvatarsGroup' });
 
     const avatars = filterChildrenByType(children, Avatar).map((child, index) =>
