@@ -12,7 +12,8 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   colorScheme: 'light',
   white: '#fff',
   black: '#000',
-  transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
+  defaultRadius: 'sm',
+  transitionTimingFunction: 'ease',
   colors: DEFAULT_COLORS,
   lineHeight: 1.55,
   fontFamily:

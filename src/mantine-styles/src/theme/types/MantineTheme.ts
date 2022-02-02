@@ -30,6 +30,7 @@ interface MantineThemeFunctions {
 
 export interface MantineTheme {
   dir: 'ltr' | 'rtl';
+  defaultRadius: MantineNumberSize;
   loader: LoaderType;
   dateFormat: string;
   colorScheme: 'light' | 'dark';
