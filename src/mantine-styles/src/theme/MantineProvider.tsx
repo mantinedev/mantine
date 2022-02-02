@@ -19,11 +19,15 @@ interface MantineThemeContextType {
   emotionOptions: EmotionCacheOptions;
 }
 
+type MantineDefaultProps = Record<string, Record<string, any>>;
+
 const MantineThemeContext = createContext<MantineThemeContextType>({
   theme: DEFAULT_THEME,
   styles: {},
   emotionOptions: { key: 'mantine', prepend: true },
 });
+
+const MantineDefaultPropsProvider = createContext<MantineDefaultProps>({});
 
 export function useMantineTheme() {
   return useContext(MantineThemeContext)?.theme || DEFAULT_THEME;
@@ -37,9 +41,14 @@ export function useMantineEmotionOptions(): EmotionCacheOptions {
   return useContext(MantineThemeContext)?.emotionOptions || { key: 'mantine', prepend: true };
 }
 
+export function useMantineDefaultProps(component: string) {
+  return useContext(MantineDefaultPropsProvider)[component] || {};
+}
+
 export interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
+  defaultProps?: MantineDefaultProps;
   emotionOptions?: EmotionCacheOptions;
   withNormalizeCSS?: boolean;
   withGlobalStyles?: boolean;
@@ -70,19 +79,22 @@ function GlobalStyles() {
 export function MantineProvider({
   theme,
   styles = {},
+  defaultProps = {},
   emotionOptions,
   withNormalizeCSS = false,
   withGlobalStyles = false,
   children,
 }: MantineProviderProps) {
   return (
-    <MantineThemeContext.Provider
-      value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
-    >
-      {withNormalizeCSS && <NormalizeCSS />}
-      {withGlobalStyles && <GlobalStyles />}
-      {children}
-    </MantineThemeContext.Provider>
+    <MantineDefaultPropsProvider.Provider value={defaultProps}>
+      <MantineThemeContext.Provider
+        value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
+      >
+        {withNormalizeCSS && <NormalizeCSS />}
+        {withGlobalStyles && <GlobalStyles />}
+        {children}
+      </MantineThemeContext.Provider>
+    </MantineDefaultPropsProvider.Provider>
   );
 }
 
