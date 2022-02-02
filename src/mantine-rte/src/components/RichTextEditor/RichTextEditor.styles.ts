@@ -39,7 +39,7 @@ export default createStyles(
       },
 
       '& .ql-editor': {
-        'white-space': 'pre-wrap',
+        whiteSpace: 'pre-wrap',
         outline: 'none',
         padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
       },
