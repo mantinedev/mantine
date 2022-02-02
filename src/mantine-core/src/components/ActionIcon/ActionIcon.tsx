@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   getSharedColorScheme,
@@ -8,6 +7,7 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   ClassNames,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
@@ -22,7 +22,7 @@ interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Controls appearance */
   variant?: ActionIconVariant;
 
-  /** Button hover, active and icon colors from theme */
+  /** Button hover, active and icon colors from theme, defaults to gray */
   color?: MantineColor;
 
   /** Button border-radius from theme or number to set border-radius in px */
@@ -47,27 +47,33 @@ type ActionIconComponent = (<C extends React.ElementType = 'button'>(
   props: ActionIconProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<ActionIconProps<any>> = {
+  color: 'gray',
+  size: 'md',
+  variant: 'hover',
+  disabled: false,
+  loading: false,
+};
+
 export const ActionIcon: ActionIconComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
+  <C extends React.ElementType = 'button'>(props: ActionIconProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       className,
-      color = 'gray',
+      color,
       children,
-      radius = 'sm',
-      size = 'md',
-      variant = 'hover',
-      disabled = false,
+      radius,
+      size,
+      variant,
+      disabled,
       loaderProps,
-      loading = false,
+      loading,
       component,
       styles,
       classNames,
       ...others
-    }: ActionIconProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    } = useMantineDefaultProps('ActionIcon', defaultProps, props);
+
+    const { classes, cx, theme } = useStyles(
       { size, radius, color },
       { name: 'ActionIcon', classNames, styles }
     );

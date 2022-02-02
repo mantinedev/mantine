@@ -77,7 +77,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStylesPar
     minHeight: theme.fn.size({ size, sizes }),
     width: theme.fn.size({ size, sizes }),
     minWidth: theme.fn.size({ size, sizes }),
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     padding: 0,
     lineHeight: 1,
     display: 'flex',
@@ -116,7 +116,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStylesPar
         theme.colorScheme === 'dark'
           ? theme.fn.rgba(theme.colors.dark[7], 0.5)
           : 'rgba(255, 255, 255, .5)',
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+      borderRadius: theme.fn.radius(radius),
       cursor: 'not-allowed',
     },
   },
