@@ -17,5 +17,6 @@ describe('@mantine/tss/radius', () => {
       DEFAULT_THEME.radius.md
     );
     expect(radius({ ...DEFAULT_THEME, defaultRadius: 114 })(null)).toBe(114);
+    expect(radius({ ...DEFAULT_THEME, defaultRadius: 0 })(null)).toBe(0);
   });
 });

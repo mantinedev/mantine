@@ -36,6 +36,8 @@ export function mergeTheme(
       acc[key] =
         typeof themeOverride[key] === 'object'
           ? { ...currentTheme[key], ...themeOverride[key] }
+          : typeof themeOverride[key] === 'number'
+          ? themeOverride[key]
           : themeOverride[key] || currentTheme[key];
       return acc;
     }, {} as MantineThemeBase)
