@@ -2,7 +2,7 @@ import React from 'react';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
-<Tooltip label="Ctrl + J" delay={500}>
+<Tooltip label="Ctrl + J" openDelay={200} delay={500}>
   <Button variant="outline">Toggle color scheme</Button>
 </Tooltip>
 `;
@@ -10,7 +10,7 @@ const code = `
 export function Demo() {
   return (
     <Group position="center">
-      <Tooltip label="Ctrl + J" delay={500}>
+      <Tooltip label="Ctrl + J" openDelay={200} delay={500}>
         <Button variant="outline">Toggle color scheme</Button>
       </Tooltip>
     </Group>
