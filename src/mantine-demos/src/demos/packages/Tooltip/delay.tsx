@@ -5,7 +5,8 @@ const code = `
 <Tooltip label="Opened after 500ms" openDelay={500}>
   <Button variant="outline">Delay open - 500ms</Button>
 </Tooltip>
-<Tooltip label="Close after 500ms" closeDelay={500}>
+
+<Tooltip label="Closes after 500ms" closeDelay={500}>
   <Button variant="outline">Delay close - 500ms</Button>
 </Tooltip>
 `;
@@ -16,7 +17,7 @@ export function Demo() {
       <Tooltip label="Opened after 500ms" openDelay={500}>
         <Button variant="outline">Delay open - 500ms</Button>
       </Tooltip>
-      <Tooltip label="Close after 500ms" closeDelay={500}>
+      <Tooltip label="Closes after 500ms" closeDelay={500}>
         <Button variant="outline">Delay close - 500ms</Button>
       </Tooltip>
     </Group>
