@@ -91,6 +91,8 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
     await actAsync(() => userEvent.hover(screen.getByRole('button')));
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    await actAsync(() => jest.advanceTimersByTime(500));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
     await actAsync(() => userEvent.unhover(screen.getByRole('button')));
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
     await actAsync(() => jest.runAllTimers());

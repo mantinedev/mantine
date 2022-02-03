@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import {
   DefaultProps,
   MantineColor,
@@ -103,7 +103,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     ref
   ) => {
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
-    const [openTimeoutRef, closeTimeoutRef] = [useRef<number>(), useRef<number>()];
+    const openTimeoutRef = useRef<number>();
+    const closeTimeoutRef = useRef<number>();
     const [_opened, setOpened] = useState(false);
     const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
     const [referenceElement, setReferenceElement] = useState(null);
@@ -131,6 +132,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         setOpened(false);
       }
     };
+
+    useEffect(
+      () => () => {
+        window.clearTimeout(openTimeoutRef.current);
+        window.clearTimeout(closeTimeoutRef.current);
+      },
+      []
+    );
 
     return (
       <Box<'div'>
