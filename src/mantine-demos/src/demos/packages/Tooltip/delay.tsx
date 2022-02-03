@@ -2,16 +2,23 @@ import React from 'react';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
-<Tooltip label="Ctrl + J" delay={500}>
-  <Button variant="outline">Toggle color scheme</Button>
+<Tooltip label="Opened after 500ms" openDelay={500}>
+  <Button variant="outline">Delay open - 500ms</Button>
+</Tooltip>
+
+<Tooltip label="Closes after 500ms" closeDelay={500}>
+  <Button variant="outline">Delay close - 500ms</Button>
 </Tooltip>
 `;
 
 export function Demo() {
   return (
     <Group position="center">
-      <Tooltip label="Ctrl + J" delay={500}>
-        <Button variant="outline">Toggle color scheme</Button>
+      <Tooltip label="Opened after 500ms" openDelay={500}>
+        <Button variant="outline">Delay open - 500ms</Button>
+      </Tooltip>
+      <Tooltip label="Closes after 500ms" closeDelay={500}>
+        <Button variant="outline">Delay close - 500ms</Button>
       </Tooltip>
     </Group>
   );

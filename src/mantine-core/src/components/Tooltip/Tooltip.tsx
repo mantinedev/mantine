@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import {
   DefaultProps,
   MantineColor,
@@ -26,8 +26,11 @@ export interface TooltipProps
   /** Tooltip opened state for controlled variant */
   opened?: boolean;
 
+  /** Open delay in ms, 0 to disable delay */
+  openDelay?: number;
+
   /** Close delay in ms, 0 to disable delay */
-  delay?: number;
+  closeDelay?: number;
 
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
   color?: MantineColor;
@@ -70,7 +73,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       label,
       children,
       opened,
-      delay = 0,
+      openDelay = 0,
+      closeDelay = 0,
       gutter = 5,
       color = 'gray',
       radius = 'sm',
@@ -99,25 +103,43 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     ref
   ) => {
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
-    const timeoutRef = useRef<number>();
+    const openTimeoutRef = useRef<number>();
+    const closeTimeoutRef = useRef<number>();
     const [_opened, setOpened] = useState(false);
     const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
     const [referenceElement, setReferenceElement] = useState(null);
 
     const handleOpen = () => {
-      window.clearTimeout(timeoutRef.current);
-      setOpened(true);
+      window.clearTimeout(closeTimeoutRef.current);
+
+      if (openDelay !== 0) {
+        openTimeoutRef.current = window.setTimeout(() => {
+          setOpened(true);
+        }, openDelay);
+      } else {
+        setOpened(true);
+      }
     };
 
     const handleClose = () => {
-      if (delay !== 0) {
-        timeoutRef.current = window.setTimeout(() => {
+      window.clearTimeout(openTimeoutRef.current);
+
+      if (closeDelay !== 0) {
+        closeTimeoutRef.current = window.setTimeout(() => {
           setOpened(false);
-        }, delay);
+        }, closeDelay);
       } else {
         setOpened(false);
       }
     };
+
+    useEffect(
+      () => () => {
+        window.clearTimeout(openTimeoutRef.current);
+        window.clearTimeout(closeTimeoutRef.current);
+      },
+      []
+    );
 
     return (
       <Box<'div'>
