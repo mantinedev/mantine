@@ -101,7 +101,7 @@ describe('@mantine/core/Tooltip', () => {
     jest.useFakeTimers();
 
     await renderWithAct(
-      <Tooltip {...defaultProps} delay={500}>
+      <Tooltip {...defaultProps} closeDelay={500}>
         <button type="button">test-target</button>
       </Tooltip>
     );

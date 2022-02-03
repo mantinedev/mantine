@@ -30,7 +30,7 @@ export interface TooltipProps
   openDelay?: number;
 
   /** Close delay in ms, 0 to disable delay */
-  delay?: number;
+  closeDelay?: number;
 
   /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
   color?: MantineColor;
@@ -74,7 +74,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       children,
       opened,
       openDelay = 0,
-      delay = 0,
+      closeDelay = 0,
       gutter = 5,
       color = 'gray',
       radius = 'sm',
@@ -123,10 +123,10 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const handleClose = () => {
       window.clearTimeout(openTimeoutRef.current);
 
-      if (delay !== 0) {
+      if (closeDelay !== 0) {
         closeTimeoutRef.current = window.setTimeout(() => {
           setOpened(false);
-        }, delay);
+        }, closeDelay);
       } else {
         setOpened(false);
       }
