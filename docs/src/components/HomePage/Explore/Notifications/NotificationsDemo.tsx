@@ -1,8 +1,8 @@
 import React from 'react';
 import { Paper, createStyles } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import * as NotificationDemos from '@demos/notifications';
-import { Demo } from '@mantine/ds';
+import { NotificationsDemos } from '@mantine/demos';
+import { Demo } from '@mantine/demos';
 
 const code = `import { Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
@@ -41,7 +41,7 @@ export function NotificationsDemo() {
   const { classes } = useStyles();
   return (
     <Paper shadow="md" padding={30} radius="md">
-      <Demo data={NotificationDemos.root} demoProps={{ inline: true }} />
+      <Demo data={NotificationsDemos.root} demoProps={{ inline: true }} />
       <Prism noCopy language="tsx" className={classes.prism} mt="xl">
         {code}
       </Prism>

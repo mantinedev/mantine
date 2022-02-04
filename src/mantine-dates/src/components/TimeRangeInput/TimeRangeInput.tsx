@@ -320,6 +320,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               aria-label={`from ${hoursLabel}`}
               disabled={disabled}
               onFocus={() => setSelectedFieldIndex(0)}
+              name={name}
             />
 
             <TimeField
@@ -461,8 +462,6 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
                 />
               )}
             </div>
-            {name && <input type="hidden" name={`${name}-from`} value={_value[0].toISOString()} />}
-            {name && <input type="hidden" name={`${name}-to`} value={_value[1].toISOString()} />}
           </div>
         </Input>
       </InputWrapper>

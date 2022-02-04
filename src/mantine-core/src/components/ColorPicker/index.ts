@@ -6,3 +6,4 @@ export { AlphaSlider } from './AlphaSlider/AlphaSlider';
 export type { ColorPickerProps, ColorPickerBaseProps, ColorPickerStylesNames } from './ColorPicker';
 export type { HueSliderProps } from './HueSlider/HueSlider';
 export type { AlphaSliderProps } from './AlphaSlider/AlphaSlider';
+export type { ColorPickerStylesParams } from './ColorPicker.styles';

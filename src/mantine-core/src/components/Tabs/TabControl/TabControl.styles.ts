@@ -1,11 +1,11 @@
 import { createStyles, MantineColor } from '@mantine/styles';
 
-interface TabControlStyles {
+export interface TabControlStylesParams {
   color: MantineColor;
   orientation: 'horizontal' | 'vertical';
 }
 
-export default createStyles((theme, { color, orientation }: TabControlStyles, getRef) => {
+export default createStyles((theme, { color, orientation }: TabControlStylesParams, getRef) => {
   const tabActive = { ref: getRef('tabActive') } as const;
 
   return {

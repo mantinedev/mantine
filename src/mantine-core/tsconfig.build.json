@@ -23,14 +23,12 @@
     "paths": {
       "@mantine/hooks": ["../mantine-hooks/src"],
       "@mantine/styles": ["../mantine-styles/src"],
-      "@mantine/tests": ["../mantine-tests/src"],
-      "@mantine/mockdata": ["../mantine-mockdata/src"]
+      "@mantine/tests": ["../mantine-tests/src"]
     }
   },
   "references": [
     { "path": "../mantine-hooks" },
     { "path": "../mantine-styles" },
-    { "path": "../mantine-tests" },
-    { "path": "../mantine-mockdata" }
+    { "path": "../mantine-tests" }
   ]
 }

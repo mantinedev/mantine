@@ -11,18 +11,14 @@ docs: 'hooks/use-scroll-into-view.mdx'
 source: 'mantine-hooks/src/use-scroll-into-view/use-scroll-into-view.ts'
 ---
 
-import {
-  useScrollIntoViewUsage,
-  useScrollIntoViewParent,
-  useScrollIntoViewAxis,
-} from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
 use-scroll-into-view handles scroll behavior for any scrollable element. Basic usage works the same way as `element.scrollIntoView()`.
 Hook adjusts scrolling animation with respect to the `reduced-motion` user preference.
 
-<Demo data={useScrollIntoViewUsage} />
+<Demo data={HooksDemos.useScrollIntoViewUsage} />
 
 ## API
 
@@ -68,11 +64,11 @@ useScrollIntoView({
 
 ### Parent node
 
-<Demo data={useScrollIntoViewParent} />
+<Demo data={HooksDemos.useScrollIntoViewParent} />
 
 ### Scroll X axis
 
-<Demo data={useScrollIntoViewAxis} />
+<Demo data={HooksDemos.useScrollIntoViewAxis} />
 
 ## Definition
 

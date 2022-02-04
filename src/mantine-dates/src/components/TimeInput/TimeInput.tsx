@@ -259,6 +259,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               placeholder={timePlaceholder}
               aria-label={hoursLabel}
               disabled={disabled}
+              name={name}
             />
             <TimeField
               ref={minutesRef}
@@ -301,7 +302,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 disabled={disabled}
               />
             )}
-            {name && <input type="hidden" name={name} value={_value.toISOString()} />}
           </div>
         </Input>
       </InputWrapper>

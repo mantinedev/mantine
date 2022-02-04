@@ -11,13 +11,6 @@ export default createStyles((theme, { shouldRenderHeader }: LayoutStyles) => ({
     '#nprogress': {
       zIndex: 100000,
     },
-
-    ':target': {
-      display: 'block',
-      position: 'relative',
-      top: HEADER_HEIGHT * -1 - 10,
-      visibility: 'hidden',
-    },
   },
 
   withNavbar: {

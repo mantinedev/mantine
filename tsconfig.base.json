@@ -5,7 +5,10 @@
     "esm",
     "cjs",
     "jest-config.js",
-    "configuration/storybook/main.js"
+    "configuration/storybook/main.js",
+    "lib/**/*",
+    "esm/**/*",
+    "cjs/**/*"
   ],
   "compilerOptions": {
     "target": "ES2015",

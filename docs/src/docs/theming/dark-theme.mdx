@@ -5,7 +5,7 @@ slug: /theming/dark-theme/
 order: 2
 ---
 
-import { darkThemeToggle } from '@docs/demos';
+import { ThemeDemos } from '@mantine/demos';
 import { ColorsGroup } from '../../components/ThemeColors/ColorsGroup.tsx';
 
 # Dark theme
@@ -102,7 +102,7 @@ export default function Demo() {
 
 And then consume `ColorSchemeProvider` context with `useMantineColorScheme` hook at any place of your app:
 
-<Demo data={darkThemeToggle} />
+<Demo data={ThemeDemos.darkThemeToggle} />
 
 ## Save to localStorage and add keyboard shortcut
 

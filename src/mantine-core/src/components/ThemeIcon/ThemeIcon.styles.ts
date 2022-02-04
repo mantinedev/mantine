@@ -7,7 +7,7 @@ import {
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
 
-interface ThemeIconStyles {
+export interface ThemeIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -28,7 +28,7 @@ export const sizes = {
 export default createStyles(
   (
     theme,
-    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStyles
+    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStylesParams
   ) => {
     const colors = getSharedColorScheme({
       theme,

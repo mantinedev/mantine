@@ -9,13 +9,13 @@ export const sizes = {
   full: '100%',
 };
 
-interface ModalStyles {
+export interface ModalStylesParams {
   overflow: 'outside' | 'inside';
   size: string | number;
   centered: boolean;
 }
 
-export default createStyles((theme, { overflow, size, centered }: ModalStyles) => ({
+export default createStyles((theme, { overflow, size, centered }: ModalStylesParams) => ({
   close: {},
 
   root: {

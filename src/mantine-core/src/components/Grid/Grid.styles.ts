@@ -1,12 +1,12 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface GridStyles {
+export interface GridStylesParams {
   gutter: MantineNumberSize;
   justify?: React.CSSProperties['justifyContent'];
   align?: React.CSSProperties['alignContent'];
 }
 
-export default createStyles((theme, { justify, align, gutter }: GridStyles) => ({
+export default createStyles((theme, { justify, align, gutter }: GridStylesParams) => ({
   root: {
     margin: -theme.fn.size({ size: gutter, sizes: theme.spacing }) / 2,
     display: 'flex',

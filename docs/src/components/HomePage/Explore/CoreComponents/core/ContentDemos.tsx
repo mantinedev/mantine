@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, Paper } from '@mantine/core';
-import { AccordionDemo } from '@mantine/core/src/components/Accordion/demos/label';
-import { TimelineBase } from '@mantine/core/src/components/Timeline/demos/_base';
+import { AccordionDemo, TimelineBase } from '@mantine/demos';
 
 export function ContentDemos() {
   return (

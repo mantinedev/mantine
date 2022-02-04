@@ -1,11 +1,11 @@
 import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 
-interface TooltipStyles {
+export interface TooltipStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { color, radius }: TooltipStyles) => ({
+export default createStyles((theme, { color, radius }: TooltipStylesParams) => ({
   root: {
     position: 'relative',
     display: 'inline-block',

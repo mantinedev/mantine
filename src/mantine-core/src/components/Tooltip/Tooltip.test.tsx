@@ -80,11 +80,30 @@ describe('@mantine/core/Tooltip', () => {
     expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
 
+  it('supports open delay', async () => {
+    jest.useFakeTimers();
+
+    await renderWithAct(
+      <Tooltip {...defaultProps} openDelay={500}>
+        <button type="button">test-target</button>
+      </Tooltip>
+    );
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    await actAsync(() => userEvent.hover(screen.getByRole('button')));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    await actAsync(() => jest.advanceTimersByTime(500));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    await actAsync(() => jest.runAllTimers());
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+  });
+
   it('supports close delay', async () => {
     jest.useFakeTimers();
 
     await renderWithAct(
-      <Tooltip {...defaultProps} delay={500}>
+      <Tooltip {...defaultProps} closeDelay={500}>
         <button type="button">test-target</button>
       </Tooltip>
     );

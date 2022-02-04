@@ -6,6 +6,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
@@ -28,6 +29,9 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
 
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
+
+  /** `img` element attributes */
+  imageProps?: React.ComponentPropsWithoutRef<'img'>;
 }
 
 export type AvatarProps<C extends React.ElementType> = PolymorphicComponentProps<C, _AvatarProps>;
@@ -36,23 +40,27 @@ type AvatarComponent = (<C extends React.ElementType = 'div'>(
   props: AvatarProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<AvatarProps<any>> = {
+  size: 'md',
+  color: 'gray',
+};
+
 export const Avatar: AvatarComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
+  <C extends React.ElementType = 'div'>(props: AvatarProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       component,
       className,
-      size = 'md',
+      size,
       src,
       alt,
-      radius = 'sm',
+      radius,
       children,
-      color = 'gray',
+      color,
       classNames,
       styles,
+      imageProps,
       ...others
-    }: AvatarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Avatar', defaultProps, props);
     const { classes, cx } = useStyles(
       { color, radius, size },
       { classNames, styles, name: 'Avatar' }
@@ -75,7 +83,13 @@ export const Avatar: AvatarComponent = forwardRef(
             {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
           </div>
         ) : (
-          <img className={classes.image} src={src} alt={alt} onError={() => setError(true)} />
+          <img
+            {...imageProps}
+            className={classes.image}
+            src={src}
+            alt={alt}
+            onError={() => setError(true)}
+          />
         )}
       </Box>
     );

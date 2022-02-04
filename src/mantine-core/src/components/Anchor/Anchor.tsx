@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
+import { PolymorphicComponentProps, PolymorphicRef, useMantineDefaultProps } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
@@ -12,11 +12,15 @@ type AnchorComponent = (<C extends React.ElementType = 'a'>(
   props: AnchorProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<AnchorProps<any>> = {};
+
 export const Anchor: AnchorComponent = forwardRef(
-  <C extends React.ElementType = 'a'>(
-    { component, className, classNames, styles, ...others }: AnchorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'a'>(props: AnchorProps<C>, ref: PolymorphicRef<C>) => {
+    const { component, className, classNames, styles, ...others } = useMantineDefaultProps(
+      'Anchor',
+      defaultProps,
+      props
+    );
     const { classes, cx } = useStyles(null, { name: 'Anchor', classNames, styles });
     const buttonProps = component === 'button' ? { type: 'button' } : null;
 

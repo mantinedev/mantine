@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineNumberSize,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
 import useStyles from './Alert.styles';
@@ -13,7 +19,7 @@ export interface AlertProps
   /** Alert title */
   title?: React.ReactNode;
 
-  /** Controls Alert background, color and border styles */
+  /** Controls Alert background, color and border styles, defaults to light */
   variant?: AlertVariant;
 
   /** Alert message */
@@ -34,63 +40,64 @@ export interface AlertProps
   /** Close button aria-label */
   closeButtonLabel?: string;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
+  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
   radius?: MantineNumberSize;
 }
 
-export const Alert = forwardRef<HTMLDivElement, AlertProps>(
-  (
-    {
-      className,
-      title,
-      variant = 'light',
-      children,
-      color,
-      classNames,
-      icon,
-      styles,
-      onClose,
-      radius = 'sm',
-      withCloseButton,
-      closeButtonLabel,
-      ...others
-    }: AlertProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { color, radius, variant },
-      { classNames, styles, name: 'Alert' }
-    );
+const defaultProps: Partial<AlertProps> = {
+  variant: 'light',
+};
 
-    return (
-      <Box className={cx(classes.root, classes[variant], className)} ref={ref} {...others}>
-        <div className={classes.wrapper}>
-          {icon && <div className={classes.icon}>{icon}</div>}
+export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, ref) => {
+  const {
+    className,
+    title,
+    variant,
+    children,
+    color,
+    classNames,
+    icon,
+    styles,
+    onClose,
+    radius,
+    withCloseButton,
+    closeButtonLabel,
+    ...others
+  } = useMantineDefaultProps('Alert', defaultProps, props);
 
-          <div className={classes.body}>
-            {title && (
-              <div className={classes.title}>
-                <span className={classes.label}>{title}</span>
+  const { classes, cx } = useStyles(
+    { color, radius, variant },
+    { classNames, styles, name: 'Alert' }
+  );
 
-                {withCloseButton && (
-                  <CloseButton
-                    className={classes.closeButton}
-                    onClick={() => onClose?.()}
-                    variant="transparent"
-                    size={16}
-                    iconSize={16}
-                    aria-label={closeButtonLabel}
-                  />
-                )}
-              </div>
-            )}
+  return (
+    <Box className={cx(classes.root, classes[variant], className)} ref={ref} {...others}>
+      <div className={classes.wrapper}>
+        {icon && <div className={classes.icon}>{icon}</div>}
 
-            <div className={classes.message}>{children}</div>
-          </div>
+        <div className={classes.body}>
+          {title && (
+            <div className={classes.title}>
+              <span className={classes.label}>{title}</span>
+
+              {withCloseButton && (
+                <CloseButton
+                  className={classes.closeButton}
+                  onClick={() => onClose?.()}
+                  variant="transparent"
+                  size={16}
+                  iconSize={16}
+                  aria-label={closeButtonLabel}
+                />
+              )}
+            </div>
+          )}
+
+          <div className={classes.message}>{children}</div>
         </div>
-      </Box>
-    );
-  }
-);
+      </div>
+    </Box>
+  );
+});
 
 Alert.displayName = '@mantine/core/Alert';

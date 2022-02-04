@@ -66,6 +66,9 @@ export interface RichTextEditorProps
 
   /** Make quill editor read only */
   readOnly?: boolean;
+
+  /** Extra modules for react-quill */
+  modules?: Record<string, any>;
 }
 
 export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
@@ -86,6 +89,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       placeholder,
       mentions,
       readOnly = false,
+      modules: externalModules,
       ...others
     }: RichTextEditorProps,
     ref
@@ -105,13 +109,14 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
 
     const modules = useMemo(
       () => ({
+        ...externalModules,
         ...(uuid ? { toolbar: { container: `#${uuid}` } } : undefined),
         mention: mentions,
         imageUploader: {
           upload: (file: File) => onImageUpload(file),
         },
       }),
-      [uuid, mentions]
+      [uuid, mentions, externalModules]
     );
 
     useEffect(() => {

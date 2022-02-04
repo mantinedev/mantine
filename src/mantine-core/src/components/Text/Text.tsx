@@ -21,7 +21,7 @@ export interface SharedTextProps extends DefaultProps {
   weight?: React.CSSProperties['fontWeight'];
 
   /** Sets text-transform css property */
-  transform?: 'capitalize' | 'uppercase' | 'lowercase';
+  transform?: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
 
   /** Sets text-align css property */
   align?: 'left' | 'center' | 'right' | 'justify';

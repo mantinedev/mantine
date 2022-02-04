@@ -7,7 +7,7 @@ import {
   CSSObject,
 } from '@mantine/styles';
 
-interface TextStyles {
+export interface TextStylesParams {
   color: MantineColor;
   variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
@@ -18,7 +18,7 @@ interface TextStyles {
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
-  transform: 'capitalize' | 'uppercase' | 'lowercase';
+  transform: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
   align: 'left' | 'center' | 'right' | 'justify';
   weight: React.CSSProperties['fontWeight'];
 }
@@ -26,7 +26,7 @@ interface TextStyles {
 interface GetTextColor {
   theme: MantineTheme;
   color: MantineColor;
-  variant: TextStyles['variant'];
+  variant: TextStylesParams['variant'];
 }
 
 function getTextColor({ theme, color, variant }: GetTextColor) {
@@ -38,9 +38,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
     ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
-    : theme.colorScheme === 'dark'
-    ? color || theme.colors.dark[0]
-    : color || theme.black;
+    : color || 'inherit';
 }
 
 function getLineClamp(lineClamp: number): CSSObject {
@@ -74,7 +72,7 @@ export default createStyles(
       weight,
       transform,
       align,
-    }: TextStyles
+    }: TextStylesParams
   ) => {
     const colors = getSharedColorScheme({
       theme,

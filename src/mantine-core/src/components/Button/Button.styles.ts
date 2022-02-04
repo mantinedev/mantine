@@ -18,7 +18,7 @@ export type ButtonVariant =
   | 'default'
   | 'subtle';
 
-interface ButtonStylesProps {
+export interface ButtonStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
@@ -136,11 +136,9 @@ export default createStyles(
       gradientFrom,
       gradientTo,
       gradientDeg,
-    }: ButtonStylesProps,
+    }: ButtonStylesParams,
     getRef
   ) => {
-    const loading = getRef('loading');
-
     const gradient = getSharedColorScheme({
       theme,
       color,
@@ -150,7 +148,7 @@ export default createStyles(
 
     return {
       loading: {
-        ref: loading,
+        ref: getRef('loading'),
         pointerEvents: 'none',
 
         '&::before': {
@@ -208,7 +206,7 @@ export default createStyles(
           transform: 'translateY(1px)',
         },
 
-        [`&:not(.${loading}):disabled`]: {
+        [`&:not(.${getRef('loading')}):disabled`]: {
           borderColor: 'transparent',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],

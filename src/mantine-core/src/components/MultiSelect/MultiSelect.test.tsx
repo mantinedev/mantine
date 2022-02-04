@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
   itSupportsSystemProps,
   checkAccessibility,
@@ -33,15 +32,5 @@ describe('@mantine/core/MultiSelect', () => {
     displayName: '@mantine/core/MultiSelect',
     refType: HTMLInputElement,
     excludeOthers: true,
-  });
-
-  it('renders hidden input with current input value', () => {
-    const { container } = render(
-      <MultiSelect {...defaultProps} name="custom-select" value={['React', 'Angular']} />
-    );
-    expect(container.querySelector('input[name="custom-select"]')).toHaveAttribute(
-      'value',
-      'React,Angular'
-    );
   });
 });

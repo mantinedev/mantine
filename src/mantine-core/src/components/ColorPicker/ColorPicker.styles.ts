@@ -1,6 +1,6 @@
 import { createStyles, MantineSize } from '@mantine/styles';
 
-interface ColorPickerStyles {
+export interface ColorPickerStylesParams {
   size: MantineSize;
   fullWidth: boolean;
 }
@@ -13,7 +13,7 @@ export const sizes = {
   xl: 320,
 };
 
-export default createStyles((theme, { size, fullWidth }: ColorPickerStyles) => ({
+export default createStyles((theme, { size, fullWidth }: ColorPickerStylesParams) => ({
   preview: {},
 
   wrapper: {

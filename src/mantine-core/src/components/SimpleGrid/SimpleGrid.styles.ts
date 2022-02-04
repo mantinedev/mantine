@@ -8,13 +8,13 @@ export interface SimpleGridBreakpoint {
   spacing?: MantineNumberSize;
 }
 
-interface SimpleGridStyles {
+export interface SimpleGridStylesParams {
   spacing: MantineNumberSize;
   breakpoints: SimpleGridBreakpoint[];
   cols: number;
 }
 
-export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridStyles) => {
+export default createStyles((theme, { spacing, breakpoints, cols }: SimpleGridStylesParams) => {
   const gridBreakpoints = getSortedBreakpoints(theme, breakpoints).reduce((acc, breakpoint) => {
     const property = 'maxWidth' in breakpoint ? 'max-width' : 'min-width';
     const breakpointSize = theme.fn.size({

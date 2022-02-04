@@ -11,7 +11,7 @@ docs: 'hooks/use-hotkeys.mdx'
 source: 'mantine-hooks/src/use-hotkeys/use-hotkeys.ts'
 ---
 
-import { useHotkeysHook } from '@docs/demos';
+import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -42,13 +42,14 @@ use-hotkeys hook can work only with document element, you will need to create yo
 if you need to support other elements. For this purpose package exports `getHotkeysHandler` function
 which should be used with `onKeyDown`:
 
-<Demo data={useHotkeysHook} />
+<Demo data={HooksDemos.useHotkeysHook} />
 
 ## Supported formats
 
 - `mod+S` – detects `⌘+S` on macOS and `Ctrl+S` on Windows
 - `ctrl+shift+X` – handles multiple modifiers
 - `alt + shift + L` – you can use whitespace inside hotkey
+- `ArrowLeft` – you can use special keys using (this format)[https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values]
 
 ## Definition
 

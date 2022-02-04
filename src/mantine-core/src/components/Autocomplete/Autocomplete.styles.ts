@@ -1,10 +1,10 @@
 import { createStyles, MantineSize } from '@mantine/styles';
 
-interface AutocompleteStyles {
+export interface AutocompleteStylesParams {
   size: MantineSize;
 }
 
-export default createStyles((theme, { size }: AutocompleteStyles) => {
+export default createStyles((theme, { size }: AutocompleteStylesParams) => {
   const spacing = theme.fn.size({ size, sizes: theme.spacing });
 
   return {

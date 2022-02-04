@@ -91,6 +91,6 @@ describe('@mantine/core/Select', () => {
     const { container } = await renderWithAct(
       <Select {...defaultProps} name="custom-select" value="test-1" />
     );
-    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('test-1');
+    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('Test 1');
   });
 });

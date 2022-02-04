@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize } from '@mantine/core';
 
-interface RichTextEditorStyles {
+export interface RichTextEditorStylesParams {
   saveLabel: string;
   editLabel: string;
   removeLabel: string;
@@ -9,7 +9,7 @@ interface RichTextEditorStyles {
 }
 
 export default createStyles(
-  (theme, { saveLabel, removeLabel, editLabel, radius, readOnly }: RichTextEditorStyles) => ({
+  (theme, { saveLabel, removeLabel, editLabel, radius, readOnly }: RichTextEditorStylesParams) => ({
     toolbar: {
       display: readOnly ? 'none' : undefined,
     },
@@ -39,6 +39,7 @@ export default createStyles(
       },
 
       '& .ql-editor': {
+        whiteSpace: 'pre-wrap',
         outline: 'none',
         padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
       },
