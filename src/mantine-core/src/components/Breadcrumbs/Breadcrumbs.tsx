@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './Breadcrumbs.styles';
@@ -16,11 +16,15 @@ export interface BreadcrumbsProps
   children: React.ReactNode;
 }
 
+const defaultProps: Partial<BreadcrumbsProps> = {
+  separator: '/',
+};
+
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
-  (
-    { className, children, separator = '/', classNames, styles, ...others }: BreadcrumbsProps,
-    ref
-  ) => {
+  (props: BreadcrumbsProps, ref) => {
+    const { className, children, separator, classNames, styles, ...others } =
+      useMantineDefaultProps('Breadcrumbs', defaultProps, props);
+
     const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
 
     const items = React.Children.toArray(children).reduce(
