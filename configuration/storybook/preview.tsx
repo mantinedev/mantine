@@ -25,7 +25,7 @@ function ThemeWrapper(props: any) {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Affix position={{ right: rtl ? 'unset' : 0, left: rtl ? 0 : 'unset', top: 0 }}>
+        <Affix position={{ right: rtl ? 'unset' : 0, left: rtl ? 0 : 'unset', bottom: 0 }}>
           <ActionIcon
             onClick={toggleRtl}
             variant="default"
