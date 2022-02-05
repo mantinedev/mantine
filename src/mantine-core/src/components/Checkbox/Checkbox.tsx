@@ -69,7 +69,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
     classNames,
     styles,
     transitionDuration,
-    icon: Icon = CheckboxIcon,
+    icon: Icon,
     ...others
   } = useMantineDefaultProps('Checkbox', defaultProps, props);
 
