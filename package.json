@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "3.6.5",
+  "version": "3.6.6",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -143,7 +143,6 @@
     "react": "^17.0.2",
     "react-dropzone": "^11.4.2",
     "react-feather": "^2.0.9",
-    "react-flagpack": "^0.1.1",
     "react-popper": "^2.2.5",
     "react-quill": "2.0.0-beta.4",
     "react-router-dom": "^5.2.0",

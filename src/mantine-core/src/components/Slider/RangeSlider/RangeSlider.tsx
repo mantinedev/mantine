@@ -104,7 +104,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       marks = [],
       label = (f) => f,
       labelTransition = 'skew-down',
-      labelTransitionDuration = 150,
+      labelTransitionDuration = 0,
       labelTransitionTimingFunction,
       labelAlwaysOn = false,
       thumbFromLabel = '',

@@ -3,7 +3,6 @@ import { MultiSelect, MultiSelectProps, Box, CloseButton } from '@mantine/core';
 import { countriesData, flags } from './_countries-data';
 
 const code = `
-import Flag from 'react-flagpack';
 import { CloseButton, MultiSelect, Box } from '@mantine/core';
 
 function Value({ value, label, onRemove, classNames, ...others }) {
