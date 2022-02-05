@@ -7,7 +7,7 @@ export function generateStylesCode(names: string[], component: string) {
 }
 
 export function generateClassNamesCode(names: string[], component: string) {
-  const classNames = names.reduce((acc, name) => `${acc}\n    ${name}: 'your-${name}-class'`, '');
+  const classNames = names.reduce((acc, name) => `${acc}\n    ${name}: 'your-${name}-class',`, '');
   return `<${component}
   classNames={{${classNames}
   }}
