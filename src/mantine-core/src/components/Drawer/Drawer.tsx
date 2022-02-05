@@ -7,6 +7,7 @@ import {
   ClassNames,
   MantineMargin,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
@@ -100,38 +101,51 @@ const rtlTransitions: Record<DrawerPosition, MantineTransition> = {
   left: 'slide-left',
 };
 
-export function MantineDrawer({
-  className,
-  opened,
-  onClose,
-  position = 'left',
-  size = 'md',
-  noFocusTrap = false,
-  noScrollLock = false,
-  noCloseOnClickOutside = false,
-  noCloseOnEscape = false,
-  transition,
-  transitionDuration = 250,
-  transitionTimingFunction = 'ease',
-  zIndex = getDefaultZIndex('modal'),
-  overlayColor,
-  overlayOpacity,
-  children,
-  noOverlay = false,
-  shadow = 'md',
-  padding = 0,
-  title,
-  hideCloseButton,
-  closeButtonLabel,
-  classNames,
-  styles,
-  target,
-  ...others
-}: DrawerProps) {
+const defaultProps: Partial<DrawerProps> = {
+  position: 'left',
+  size: 'md',
+  transitionDuration: 250,
+  transitionTimingFunction: 'ease',
+  zIndex: getDefaultZIndex('modal'),
+  shadow: 'md',
+  padding: 0,
+};
+
+export function MantineDrawer(props: DrawerProps) {
+  const {
+    className,
+    opened,
+    onClose,
+    position,
+    size,
+    noFocusTrap,
+    noScrollLock,
+    noCloseOnClickOutside,
+    noCloseOnEscape,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    zIndex,
+    overlayColor,
+    overlayOpacity,
+    children,
+    noOverlay,
+    shadow,
+    padding,
+    title,
+    hideCloseButton,
+    closeButtonLabel,
+    classNames,
+    styles,
+    target,
+    ...others
+  } = useMantineDefaultProps('Drawer', defaultProps, props);
+
   const { classes, cx, theme } = useStyles(
     { size, position },
     { classNames, styles, name: 'Drawer' }
   );
+
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
   const [, lockScroll] = useScrollLock();
@@ -151,13 +165,13 @@ export function MantineDrawer({
     }
   };
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    // onKeyDownCapture event will not fire when focus trap is not active
     if (noFocusTrap) {
       window.addEventListener('keydown', closeOnEscape);
       return () => window.removeEventListener('keydown', closeOnEscape);
     }
+
+    return undefined;
   }, [noFocusTrap]);
 
   useFocusReturn({ opened, transitionDuration });
