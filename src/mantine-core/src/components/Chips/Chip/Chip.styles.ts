@@ -58,7 +58,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
     }`,
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     height: theme.fn.size({ size, sizes }),
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     lineHeight: `${theme.fn.size({ size, sizes }) - 2}px`,
