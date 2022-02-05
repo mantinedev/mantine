@@ -27,7 +27,7 @@ export const IMAGE_MIME_TYPE = [
   MIME_TYPES.webp,
 ];
 
-export const PDF_MINE_TYPE = [MIME_TYPES.pdf];
+export const PDF_MIME_TYPE = [MIME_TYPES.pdf];
 export const MS_WORD_MIME_TYPE = [MIME_TYPES.doc, MIME_TYPES.docx];
 export const MS_EXCEL_MIME_TYPE = [MIME_TYPES.xls, MIME_TYPES.xlsx];
 export const MS_POWERPOINT_MIME_TYPE = [MIME_TYPES.ppt, MIME_TYPES.pptx];
