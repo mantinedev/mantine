@@ -1,6 +1,6 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { extractMargins, DefaultProps } from '@mantine/styles';
+import { extractMargins, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { useCollapse } from './use-collapse';
 
@@ -24,16 +24,24 @@ export interface CollapseProps extends DefaultProps, React.ComponentPropsWithout
   animateOpacity?: boolean;
 }
 
-export function Collapse({
-  children,
-  in: opened,
-  transitionDuration = 200,
-  transitionTimingFunction = 'ease',
-  style,
-  onTransitionEnd,
-  animateOpacity = true,
-  ...others
-}: CollapseProps) {
+const defaultProps: Partial<CollapseProps> = {
+  transitionDuration: 200,
+  transitionTimingFunction: 'ease',
+  animateOpacity: true,
+};
+
+export function Collapse(props: CollapseProps) {
+  const {
+    children,
+    in: opened,
+    transitionDuration,
+    transitionTimingFunction,
+    style,
+    onTransitionEnd,
+    animateOpacity,
+    ...others
+  } = useMantineDefaultProps('Collapse', defaultProps, props);
+
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
   const { margins, rest } = extractMargins(others);
