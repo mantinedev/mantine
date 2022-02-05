@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   ClassNames,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -42,24 +43,29 @@ export interface ListProps
 
 type ListComponent = ForwardRefWithStaticComponents<ListProps, { Item: typeof ListItem }>;
 
+const defaultProps: Partial<ListProps> = {
+  type: 'unordered',
+  size: 'md',
+  spacing: 0,
+};
+
 export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
-  (
-    {
+  (props: ListProps, ref) => {
+    const {
       children,
-      type = 'unordered',
-      size = 'md',
+      type,
+      size,
       listStyleType,
-      withPadding = false,
-      center = false,
-      spacing = 0,
+      withPadding,
+      center,
+      spacing,
       icon,
       className,
       styles,
       classNames,
       ...others
-    }: ListProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('List', defaultProps, props);
+
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType },
       { classNames, styles, name: 'List' }
