@@ -6804,11 +6804,6 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-flagpack-core@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/flagpack-core/-/flagpack-core-1.1.2.tgz#80e2bedc8003e83602aa1f16fc785f237e8f31ef"
-  integrity sha512-brm/LJf/xxiwRnjdThPsxaRZsbcN0fjPX4WMdKfuwJYOt3pdVw1pfP2dTBh743qqkw4CQzXTfEWjRDN0KvZ/qA==
-
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"
@@ -11127,13 +11122,6 @@ react-feather@^2.0.9:
   integrity sha512-yMfCGRkZdXwIs23Zw/zIWCJO3m3tlaUvtHiXlW+3FH7cIT6fiK1iJ7RJWugXq7Fso8ZaQyUm92/GOOHXvkiVUw==
   dependencies:
     prop-types "^15.7.2"
-
-react-flagpack@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/react-flagpack/-/react-flagpack-0.1.1.tgz#9287f05f59d6d1bed7a4aee6f3165d5a9724637e"
-  integrity sha512-cB2IGYkYUVPAPsteBjReHFGquvnkQk0MDzHSfvvCYjh1r4kIEwr//J65JNwF0DRF+W3PiQLcw/bqDRf/6bHgSg==
-  dependencies:
-    flagpack-core "^1.0.0"
 
 react-helmet-async@^1.0.7:
   version "1.0.9"
