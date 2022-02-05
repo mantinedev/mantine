@@ -8,6 +8,7 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   extractMargins,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { InputVariant } from './Input.styles';
@@ -66,33 +67,38 @@ type InputComponent = (<C extends React.ElementType = 'input'>(
   props: InputProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<InputProps<any>> = {
+  rightSectionWidth: 36,
+  size: 'sm',
+  __staticSelector: 'Input',
+};
+
 export const Input: InputComponent = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    {
+  <C extends React.ElementType = 'input'>(props: InputProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       component,
       className,
-      invalid = false,
-      required = false,
-      disabled = false,
+      invalid,
+      required,
+      disabled,
       variant,
       icon,
       style,
-      rightSectionWidth = 36,
+      rightSectionWidth,
       iconWidth,
       rightSection,
-      rightSectionProps = {},
-      radius = 'sm',
-      size = 'sm',
+      rightSectionProps,
+      radius,
+      size,
       wrapperProps,
       classNames,
       styles,
-      __staticSelector = 'Input',
-      multiline = false,
+      __staticSelector,
+      multiline,
       sx,
       ...others
-    }: InputProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Input', defaultProps, props);
+
     const theme = useMantineTheme();
     const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(

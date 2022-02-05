@@ -42,7 +42,7 @@ export default createStyles(
             minHeight: theme.fn.size({ size, sizes }),
             paddingLeft: theme.fn.size({ size, sizes }) / 3,
             paddingRight: withRightSection ? rightSectionWidth : theme.fn.size({ size, sizes }) / 3,
-            borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+            borderRadius: theme.fn.radius(radius),
           }
         : null;
 
