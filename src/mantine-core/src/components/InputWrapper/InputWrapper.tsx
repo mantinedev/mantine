@@ -1,5 +1,5 @@
 import React, { createElement, forwardRef } from 'react';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useMantineDefaultProps } from '@mantine/styles';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './InputWrapper.styles';
@@ -49,9 +49,15 @@ export interface InputWrapperProps
   __staticSelector?: string;
 }
 
+const defaultProps: Partial<InputWrapperProps> = {
+  labelElement: 'label',
+  size: 'sm',
+  __staticSelector: 'InputWrapper',
+};
+
 export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
-  (
-    {
+  (props: InputWrapperProps, ref) => {
+    const {
       className,
       label,
       children,
@@ -59,18 +65,17 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       id,
       error,
       description,
-      labelElement = 'label',
+      labelElement,
       labelProps,
       descriptionProps,
       errorProps,
       classNames,
       styles,
-      size = 'sm',
-      __staticSelector = 'InputWrapper',
+      size,
+      __staticSelector,
       ...others
-    }: InputWrapperProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('InputWrapper', defaultProps, props);
+
     const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(
