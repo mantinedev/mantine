@@ -9,6 +9,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
@@ -69,33 +70,40 @@ type ButtonComponent = (<C extends React.ElementType = 'button'>(
   props: ButtonProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<ButtonProps<any>> = {
+  size: 'sm',
+  type: 'button',
+  variant: 'filled',
+  loaderPosition: 'left',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
+};
+
 export const Button: ButtonComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
+  <C extends React.ElementType = 'button'>(props: ButtonProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       className,
-      size = 'sm',
+      size,
       color,
-      type = 'button',
-      disabled = false,
+      type,
+      disabled,
       children,
       leftIcon,
       rightIcon,
-      fullWidth = false,
-      variant = 'filled',
-      radius = 'sm',
+      fullWidth,
+      variant,
+      radius,
       component,
-      uppercase = false,
-      compact = false,
-      loading = false,
-      loaderPosition = 'left',
+      uppercase,
+      compact,
+      loading,
+      loaderPosition,
       loaderProps,
-      gradient = { from: 'blue', to: 'cyan', deg: 45 },
+      gradient,
       classNames,
       styles,
       ...others
-    }: ButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Button', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       {
         radius,

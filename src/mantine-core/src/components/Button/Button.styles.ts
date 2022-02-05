@@ -162,7 +162,7 @@ export default createStyles(
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors.dark[7], 0.5)
               : 'rgba(255, 255, 255, .5)',
-          borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+          borderRadius: theme.fn.radius(radius),
           cursor: 'not-allowed',
         },
       },
@@ -189,7 +189,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getWidthStyles(fullWidth),
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 600,
         position: 'relative',
         lineHeight: 1,

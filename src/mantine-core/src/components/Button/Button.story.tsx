@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ExternalLinkIcon, CalendarIcon } from '@modulz/radix-icons';
-import { MantineSize, DEFAULT_THEME } from '@mantine/styles';
+import { MANTINE_SIZES, DEFAULT_THEME, MantineProvider } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { Button, ButtonProps, UnstyledButton } from './index';
 
@@ -26,19 +26,19 @@ const getLinkThemes = (props?: Partial<ButtonProps<'a'>>) =>
     </Button>
   ));
 
-const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+const sizes = MANTINE_SIZES.map((size) => (
   <Button color="blue" key={size} size={size}>
     Button {size}
   </Button>
 ));
 
-const compact = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+const compact = MANTINE_SIZES.map((size) => (
   <Button color="blue" key={size} size={size} compact>
     Button {size}
   </Button>
 ));
 
-const loading = (['xs', 'sm', 'md', 'lg', 'xl'] as MantineSize[]).map((size) => (
+const loading = MANTINE_SIZES.map((size) => (
   <Button color="blue" key={size} size={size} loading>
     Button {size}
   </Button>
@@ -102,4 +102,14 @@ storiesOf('@mantine/core/Button/stories', module)
     <div style={{ padding: 40 }}>
       <Group>{loading}</Group>
     </div>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Button: { variant: 'light', color: 'red' } }}>
+      <Button>With default props</Button>
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 'xl' }}>
+      <Button>With default props</Button>
+    </MantineProvider>
   ));
