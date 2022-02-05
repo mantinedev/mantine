@@ -12,7 +12,6 @@ export function createAmPmHandler({ onChange, nextRef }: CreateAmPmHandler) {
     if (valLower === 'am' || valLower === 'pm') {
       onChange(valLower);
       triggerShift && nextRef?.current?.focus();
-      triggerShift && nextRef?.current?.select();
       return;
     }
 

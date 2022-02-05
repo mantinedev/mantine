@@ -20,7 +20,6 @@ export function createTimeHandler({ onChange, nextRef, min, max, maxValue }: Cre
     if (parsed > maxValue || forceTriggerShift) {
       onChange(padTime(clamp({ value: parsed, min, max }).toString()));
       triggerShift && nextRef?.current?.focus();
-      triggerShift && nextRef?.current?.select();
       return;
     }
 

@@ -78,6 +78,9 @@ export interface TimeInputProps
 
   /** Disable field */
   disabled?: boolean;
+
+  /** Ref to focus after final TimeInput field. Used by TimeRangeInput */
+  nextRef?: React.RefObject<HTMLInputElement>;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -118,6 +121,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       amPmPlaceholder = 'am',
       disabled = false,
       sx,
+      nextRef,
       ...others
     }: TimeInputProps,
     ref
@@ -179,7 +183,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: !withSeconds ? amPmRef : secondsRef,
+      nextRef: withSeconds ? secondsRef : format === '12' ? amPmRef : nextRef,
     });
 
     const handleSecondsChange = createTimeHandler({
@@ -189,13 +193,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: amPmRef,
+      nextRef: format === '12' ? amPmRef : nextRef,
     });
 
     const handleAmPmChange = createAmPmHandler({
       onChange: (val) => {
         setDate({ amPm: val });
       },
+      nextRef,
     });
 
     const handleClear = () => {
