@@ -30,9 +30,9 @@ function ThemeWrapper(props: any) {
             onClick={toggleRtl}
             variant="default"
             style={{
-              borderTop: 0,
+              borderBottom: 0,
               borderRight: 0,
-              borderBottomLeftRadius: 4,
+              borderTopLeftRadius: 4,
               width: 60,
               fontWeight: 700,
             }}
