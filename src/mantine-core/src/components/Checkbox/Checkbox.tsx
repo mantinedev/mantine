@@ -6,6 +6,7 @@ import {
   ClassNames,
   extractMargins,
   MantineNumberSize,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { useUuid } from '@mantine/hooks';
 import { Box } from '../Box';
@@ -45,65 +46,68 @@ export interface CheckboxProps
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
 }
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  (
-    {
-      className,
-      style,
-      sx,
-      checked,
-      color,
-      label,
-      indeterminate,
-      id,
-      size = 'sm',
-      radius = 'sm',
-      wrapperProps,
-      children,
-      classNames,
-      styles,
-      transitionDuration = 100,
-      icon: Icon = CheckboxIcon,
-      ...others
-    }: CheckboxProps,
-    ref
-  ) => {
-    const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
-    const { classes, cx } = useStyles(
-      { size, radius, color, transitionDuration },
-      { classNames, styles, name: 'Checkbox' }
-    );
+const defaultProps: Partial<CheckboxProps> = {
+  size: 'sm',
+  transitionDuration: 100,
+  icon: CheckboxIcon,
+};
 
-    return (
-      <Box
-        className={cx(classes.root, className)}
-        style={style}
-        sx={sx}
-        {...margins}
-        {...wrapperProps}
-      >
-        <div className={classes.inner}>
-          <input
-            id={uuid}
-            ref={ref}
-            type="checkbox"
-            className={classes.input}
-            checked={indeterminate || checked}
-            {...rest}
-          />
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: CheckboxProps, ref) => {
+  const {
+    className,
+    style,
+    sx,
+    checked,
+    color,
+    label,
+    indeterminate,
+    id,
+    size,
+    radius,
+    wrapperProps,
+    children,
+    classNames,
+    styles,
+    transitionDuration,
+    icon: Icon = CheckboxIcon,
+    ...others
+  } = useMantineDefaultProps('Checkbox', defaultProps, props);
 
-          <Icon indeterminate={indeterminate} className={classes.icon} />
-        </div>
+  const uuid = useUuid(id);
+  const { margins, rest } = extractMargins(others);
+  const { classes, cx } = useStyles(
+    { size, radius, color, transitionDuration },
+    { classNames, styles, name: 'Checkbox' }
+  );
 
-        {label && (
-          <label className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
-        )}
-      </Box>
-    );
-  }
-);
+  return (
+    <Box
+      className={cx(classes.root, className)}
+      style={style}
+      sx={sx}
+      {...margins}
+      {...wrapperProps}
+    >
+      <div className={classes.inner}>
+        <input
+          id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.input}
+          checked={indeterminate || checked}
+          {...rest}
+        />
+
+        <Icon indeterminate={indeterminate} className={classes.icon} />
+      </div>
+
+      {label && (
+        <label className={classes.label} htmlFor={uuid}>
+          {label}
+        </label>
+      )}
+    </Box>
+  );
+});
 
 Checkbox.displayName = '@mantine/core/Checkbox';

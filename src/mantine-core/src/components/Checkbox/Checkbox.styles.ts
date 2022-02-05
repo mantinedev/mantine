@@ -80,7 +80,7 @@ export default createStyles(
         }`,
         width: _size,
         height: _size,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         padding: 0,
         outline: 0,
         display: 'block',
