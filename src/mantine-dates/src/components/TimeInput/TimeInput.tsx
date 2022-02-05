@@ -35,10 +35,10 @@ export interface TimeInputProps
   size?: MantineSize;
 
   /** Controlled input value */
-  value?: Date;
+  value?: Date | null;
 
   /** Uncontrolled input default value */
-  defaultValue?: Date;
+  defaultValue?: Date | null;
 
   /** Controlled input onChange handler */
   onChange?(value: Date): void;
@@ -136,13 +136,18 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       seconds: string;
       amPm: string;
     }>(getTimeValues(value || defaultValue, format));
-    const [_value, setValue] = useState<Date>(value || defaultValue);
+    const [_value, setValue] = useState<Date | null>(value || defaultValue);
 
     useDidUpdate(() => {
-      if (_value) {
-        setTime(getTimeValues(_value, format));
-      }
+      setTime(getTimeValues(_value, format));
     }, [_value, format]);
+
+    // Allow controlled value prop to override internal _value
+    useDidUpdate(() => {
+      if (value?.getTime() !== _value?.getTime()) {
+        setValue(value);
+      }
+    }, [value]);
 
     const setDate = (change: Partial<typeof time>) => {
       const timeWithChange = { ...time, ...change };
@@ -195,6 +200,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleClear = () => {
       setTime({ hours: '', minutes: '', seconds: '', amPm: '' });
+      setValue(null);
       hoursRef.current.focus();
     };
 
