@@ -216,6 +216,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               onChange={(date) => setValue([date, _value[1]])}
               name={name}
               nextRef={toTimeRef}
+              id={uuid}
               {...forwardProps}
             />
 
