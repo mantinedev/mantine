@@ -219,6 +219,7 @@ export function MantineModal({
 
           <div style={transitionStyles.overlay}>
             <Overlay
+              className={classes.overlay}
               zIndex={0}
               color={
                 overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
