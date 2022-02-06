@@ -17,7 +17,7 @@ export default createStyles(
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       boxSizing: 'border-box',
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
       boxShadow: theme.shadows[shadow] || shadow || 'none',
       padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
       border: withBorder

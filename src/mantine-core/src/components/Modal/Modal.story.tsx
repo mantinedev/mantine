@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
 import { Select } from '../Select/Select';
@@ -84,4 +85,9 @@ storiesOf('@mantine/core/Modal/stories', module)
         )}
       </>
     );
-  });
+  })
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <WrappedModal title="Modal with default radius">default radius</WrappedModal>
+    </MantineProvider>
+  ));

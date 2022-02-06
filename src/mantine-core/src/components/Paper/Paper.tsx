@@ -5,6 +5,7 @@ import {
   MantineShadow,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Paper.styles';
@@ -32,20 +33,14 @@ type PaperComponent = (<C extends React.ElementType = 'div'>(
   props: PaperProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<PaperProps<any>> = {
+  padding: 0,
+};
+
 export const Paper: PaperComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      component,
-      className,
-      children,
-      padding = 0,
-      radius = 'sm',
-      withBorder = false,
-      shadow,
-      ...others
-    }: PaperProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'div'>(props: PaperProps<C>, ref: PolymorphicRef<C>) => {
+    const { component, className, children, padding, radius, withBorder, shadow, ...others } =
+      useMantineDefaultProps('Paper', defaultProps, props);
     const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, { name: 'Paper' });
 
     return (
