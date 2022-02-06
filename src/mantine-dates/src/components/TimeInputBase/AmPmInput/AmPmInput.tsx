@@ -8,18 +8,12 @@ interface AmPmSelectProps
   /** Called with onChange event */
   onChange(value: string, triggerShift: boolean): void;
 
-  /** Called when input loses focus, used to format value */
-  setValue(value: string): void;
-
   /** Colon text size */
   size?: MantineSize;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
-  (
-    { className, onChange, onFocus, setValue, size = 'sm', value, ...others }: AmPmSelectProps,
-    ref
-  ) => {
+  ({ className, onChange, onFocus, size = 'sm', value, ...others }: AmPmSelectProps, ref) => {
     const { classes, cx } = useStyles({ size, hasValue: !!value });
     const inputRef = useRef<HTMLInputElement>();
 
@@ -36,16 +30,25 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.nativeEvent.code === 'ArrowUp' || event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
-        onChange(value === 'am' ? 'pm' : 'am', false);
+        onChange(value === 'am' ? 'pm' : 'am', true);
       }
 
       if (event.key === 'p' || event.nativeEvent.code === 'KeyP') {
-        onChange('pm', true);
+        onChange('pm', false);
       }
 
       if (event.key === 'a' || event.nativeEvent.code === 'KeyA') {
-        onChange('am', true);
+        onChange('am', false);
       }
+    };
+
+    /*
+      If the field change is triggered onKeyDown, the keyUp event seems to steal focus back from the nextRef
+      This way, all key presses focus nextRef and don't steal it back
+      Anything beside a or p will leave the value and just move to the next field
+    */
+    const handleChange = () => {
+      onChange(value.toString(), true);
     };
 
     return (
@@ -55,7 +58,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onClick={handleClick}
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
-        onChange={() => {}}
+        onChange={handleChange}
         value={value}
         className={cx(classes.timeInput, className)}
         {...others}

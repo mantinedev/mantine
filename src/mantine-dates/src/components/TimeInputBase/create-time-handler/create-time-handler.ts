@@ -10,21 +10,14 @@ interface CreateTimeHandler {
 }
 
 export function createTimeHandler({ onChange, nextRef, min, max, maxValue }: CreateTimeHandler) {
-  return (value: string, triggerShift: boolean) => {
-    if (value === '00') {
-      onChange('00');
-      triggerShift && nextRef?.current?.focus();
-      triggerShift && nextRef?.current?.select();
-      return;
-    }
-
+  return (value: string, triggerShift: boolean, forceTriggerShift = false) => {
     const parsed = parseInt(value, 10);
 
     if (Number.isNaN(parsed)) {
       return;
     }
 
-    if (parsed > maxValue) {
+    if (parsed > maxValue || forceTriggerShift) {
       onChange(padTime(clamp({ value: parsed, min, max }).toString()));
       triggerShift && nextRef?.current?.focus();
       triggerShift && nextRef?.current?.select();

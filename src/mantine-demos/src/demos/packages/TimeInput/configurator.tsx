@@ -41,6 +41,16 @@ export const configurator: MantineDemo = {
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
+      name: 'format',
+      type: 'select',
+      data: [
+        { label: '24', value: '24' },
+        { label: '12', value: '12' },
+      ],
+      initialValue: '24',
+      defaultValue: '24',
+    },
+    {
       name: 'withSeconds',
       type: 'boolean',
       initialValue: false,
@@ -51,6 +61,12 @@ export const configurator: MantineDemo = {
       name: 'required',
       type: 'boolean',
       initialValue: true,
+      defaultValue: false,
+    },
+    {
+      name: 'clearable',
+      type: 'boolean',
+      initialValue: false,
       defaultValue: false,
     },
   ],
