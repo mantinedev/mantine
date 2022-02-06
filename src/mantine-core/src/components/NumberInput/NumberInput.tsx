@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
@@ -83,41 +83,51 @@ const defaultParser: Parser = (num) => {
   return num;
 };
 
+const defaultProps: Partial<NumberInputProps> = {
+  step: 1,
+  hideControls: false,
+  radius: 'sm',
+  precision: 0,
+  noClampOnBlur: false,
+  formatter: defaultFormatter,
+  parser: defaultParser,
+};
+
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
-  (
-    {
+  (props: NumberInputProps, ref) => {
+    const {
       disabled,
       value,
       onChange,
       decimalSeparator,
       min,
       max,
-      step = 1,
+      step,
       stepHoldInterval,
       stepHoldDelay,
       onBlur,
       onFocus,
-      hideControls = false,
-      radius = 'sm',
+      hideControls,
+      radius,
       variant,
-      precision = 0,
+      precision,
       defaultValue,
-      noClampOnBlur = false,
+      noClampOnBlur,
       handlersRef,
       classNames,
       styles,
       size,
       rightSection,
-      formatter = defaultFormatter,
-      parser = defaultParser,
+      formatter,
+      parser,
       ...others
-    }: NumberInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('NumberInput', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { radius, size },
       { classNames, styles, name: 'NumberInput' }
     );
+
     const [focused, setFocused] = useState(false);
     const [_value, setValue] = useState(
       typeof value === 'number'
