@@ -108,3 +108,6 @@ export * as PrismDemos from './demos/packages/Prism';
 export * as RichTextEditorDemos from './demos/packages/RichTextEditor';
 export * as ModalsDemos from './demos/modals';
 export * as HooksDemos from './demos/hooks';
+
+// @mantine/labs
+export * as PinInputDemos from './demos/packages/PinInput';
