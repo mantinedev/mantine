@@ -43,7 +43,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
       minWidth: theme.fn.size({ size, sizes }),
       padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 2}px`,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 
