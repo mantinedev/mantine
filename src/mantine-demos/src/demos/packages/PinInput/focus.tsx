@@ -1,4 +1,4 @@
-import { PinInput } from '@mantine/core';
+import { PinInput } from '@mantine/labs';
 
 const codeTemplate = (props: string) => `<PasswordInput
  ${props}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { createStyles, MantineProvider, PinInput, PinInputProps } from '@mantine/core';
+import { createStyles, MantineProvider } from '@mantine/core';
+import { PinInput, PinInputProps } from '@mantine/labs';
 import { generateBorderStyles, InputStylesApiWrapper } from '@mantine/storybook';
 import { PinInput as PinInputStylesApi } from '../styles-api';
 

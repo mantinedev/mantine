@@ -1,6 +1,4 @@
-import type { PinInputStylesNames } from '@mantine/core';
+import type { PinInputStylesNames } from '@mantine/labs';
 import { Input } from './Input.styles-api';
 
-export const PinInput: Record<PinInputStylesNames, string> = {
-  ...Input,
-};
+export const PinInput: Record<PinInputStylesNames, string> = Input;
