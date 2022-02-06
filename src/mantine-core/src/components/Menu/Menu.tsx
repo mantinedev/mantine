@@ -13,6 +13,7 @@ import {
   ClassNames,
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -135,46 +136,66 @@ function getPreviousItem(active: number, items: MenuItemType[]) {
   return active;
 }
 
+const defaultProps: Partial<MenuProps> = {
+  control: defaultControl,
+  closeOnItemClick: true,
+  transitionDuration: 150,
+  size: 'md',
+  shadow: 'md',
+  position: 'bottom',
+  placement: 'start',
+  gutter: 5,
+  withArrow: false,
+  transition: 'pop-top-left',
+  controlRefProp: 'ref',
+  trigger: 'click',
+  radius: 'sm',
+  delay: 100,
+  zIndex: getDefaultZIndex('popover'),
+  withinPortal: true,
+  trapFocus: true,
+  closeOnScroll: false,
+  clickOutsideEvents: ['click', 'touchstart'],
+};
+
 export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
-  (
-    {
-      control = defaultControl,
+  (props: MenuProps, ref) => {
+    const {
+      control,
       children,
       onClose,
       onOpen,
       opened,
       menuId,
-      closeOnItemClick = true,
-      transitionDuration = 250,
-      size = 'md',
-      shadow = 'md',
-      position = 'bottom',
-      placement = 'start',
-      gutter = 5,
-      withArrow = false,
-      transition = 'pop-top-left',
+      closeOnItemClick,
+      transitionDuration,
+      size,
+      shadow,
+      position,
+      placement,
+      gutter,
+      withArrow,
+      transition,
       transitionTimingFunction,
       menuButtonLabel,
-      controlRefProp = 'ref',
-      trigger = 'click',
-      radius = 'sm',
-      delay = 100,
-      zIndex = getDefaultZIndex('popover'),
-      withinPortal = true,
-      trapFocus = true,
+      controlRefProp,
+      trigger,
+      radius,
+      delay,
+      zIndex,
+      withinPortal,
+      trapFocus,
       classNames,
       styles,
-      closeOnScroll = false,
+      closeOnScroll,
       onMouseLeave,
       onMouseEnter,
       onChange,
       className,
       sx,
-      clickOutsideEvents = ['click', 'touchstart'],
+      clickOutsideEvents,
       ...others
-    }: MenuProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Menu', defaultProps, props);
     const [hovered, setHovered] = useState(-1);
     const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
