@@ -114,7 +114,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       setValue(val);
     };
 
-    const formatNum = (val: string | number) => {
+    const formatNum = (val: string | number = '') => {
       let parsedStr = String(val);
 
       if (decimalSeparator) {
