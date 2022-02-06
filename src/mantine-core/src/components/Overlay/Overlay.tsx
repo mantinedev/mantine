@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   DefaultProps,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 
@@ -31,20 +32,17 @@ type OverlayComponent = (<C extends React.ElementType = 'div'>(
   props: OverlayProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<OverlayProps<any>> = {
+  opacity: 0.6,
+  color: '#fff',
+  zIndex: getDefaultZIndex('modal'),
+  radius: 0,
+};
+
 export const Overlay: OverlayComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      opacity = 0.6,
-      color = '#fff',
-      gradient,
-      zIndex = getDefaultZIndex('modal'),
-      component,
-      radius = 0,
-      sx,
-      ...others
-    }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'div'>(props: OverlayProps<C>, ref: PolymorphicRef<C>) => {
+    const { opacity, color, gradient, zIndex, component, radius, sx, ...others } =
+      useMantineDefaultProps('Overlay', defaultProps, props);
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
     return (
