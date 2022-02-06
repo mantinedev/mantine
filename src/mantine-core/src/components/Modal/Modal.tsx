@@ -8,6 +8,7 @@ import {
   ClassNames,
   MantineMargin,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon';
 import { Text } from '../Text';
@@ -90,33 +91,45 @@ export interface ModalProps
   target?: HTMLElement | string;
 }
 
-export function MantineModal({
-  className,
-  opened,
-  title,
-  onClose,
-  children,
-  hideCloseButton = false,
-  overlayOpacity,
-  size = 'md',
-  transitionDuration = 300,
-  closeButtonLabel,
-  overlayColor,
-  overflow = 'outside',
-  transition = 'pop',
-  padding = 'lg',
-  shadow = 'lg',
-  radius = 'sm',
-  id,
-  classNames,
-  styles,
-  closeOnClickOutside = true,
-  noFocusTrap = false,
-  closeOnEscape = true,
-  centered = false,
-  target,
-  ...others
-}: ModalProps) {
+const defaultProps: Partial<ModalProps> = {
+  size: 'md',
+  transitionDuration: 250,
+  overflow: 'outside',
+  transition: 'pop',
+  padding: 'lg',
+  shadow: 'lg',
+  closeOnClickOutside: true,
+  closeOnEscape: true,
+};
+
+export function MantineModal(props: ModalProps) {
+  const {
+    className,
+    opened,
+    title,
+    onClose,
+    children,
+    hideCloseButton,
+    overlayOpacity,
+    size,
+    transitionDuration,
+    closeButtonLabel,
+    overlayColor,
+    overflow,
+    transition,
+    padding,
+    shadow,
+    radius,
+    id,
+    classNames,
+    styles,
+    closeOnClickOutside,
+    noFocusTrap,
+    closeOnEscape,
+    centered,
+    target,
+    ...others
+  } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
