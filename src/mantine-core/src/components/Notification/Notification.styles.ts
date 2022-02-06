@@ -8,7 +8,7 @@ export interface NotificationStylesParams {
 
 export default createStyles(
   (theme, { color, radius, disallowClose }: NotificationStylesParams, getRef) => {
-    const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const _radius = theme.fn.radius(radius) as number;
     const topBottom = Math.min(Math.max(_radius / 1.2, 4), 30);
 
     return {
