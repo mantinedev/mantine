@@ -6,7 +6,13 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  ClassNames,
+  extractMargins,
+  getDefaultZIndex,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
@@ -93,15 +99,39 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
+const defaultProps: Partial<MultiSelectProps> = {
+  size: 'sm',
+  valueComponent: DefaultValue,
+  itemComponent: DefaultItem,
+  transition: 'pop-top-left',
+  transitionDuration: 0,
+  maxDropdownHeight: 220,
+  shadow: 'sm',
+  searchable: false,
+  filter: defaultFilter,
+  limit: Infinity,
+  clearSearchOnChange: true,
+  clearable: false,
+  clearSearchOnBlur: false,
+  disabled: false,
+  initiallyOpened: false,
+  radius: 'sm',
+  creatable: false,
+  shouldCreate: defaultShouldCreate,
+  switchDirectionOnFlip: false,
+  zIndex: getDefaultZIndex('popover'),
+  selectOnBlur: false,
+};
+
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
-  (
-    {
+  (props: MultiSelectProps, ref) => {
+    const {
       className,
       style,
       required,
       label,
       description,
-      size = 'sm',
+      size,
       error,
       classNames,
       styles,
@@ -110,36 +140,36 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       defaultValue,
       data,
       onChange,
-      valueComponent: Value = DefaultValue,
-      itemComponent = DefaultItem,
+      valueComponent: Value,
+      itemComponent,
       id,
-      transition = 'pop-top-left',
-      transitionDuration = 0,
+      transition,
+      transitionDuration,
       transitionTimingFunction,
-      maxDropdownHeight = 220,
-      shadow = 'sm',
+      maxDropdownHeight,
+      shadow,
       nothingFound,
       onFocus,
       onBlur,
-      searchable = false,
+      searchable,
       placeholder,
-      filter = defaultFilter,
-      limit = Infinity,
-      clearSearchOnChange = true,
-      clearable = false,
-      clearSearchOnBlur = false,
+      filter,
+      limit,
+      clearSearchOnChange,
+      clearable,
+      clearSearchOnBlur,
       clearButtonLabel,
       variant,
       onSearchChange,
-      disabled = false,
-      initiallyOpened = false,
-      radius = 'sm',
+      disabled,
+      initiallyOpened,
+      radius,
       icon,
       rightSection,
       rightSectionWidth,
-      creatable = false,
+      creatable,
       getCreateLabel,
-      shouldCreate = defaultShouldCreate,
+      shouldCreate,
       onCreate,
       sx,
       dropdownComponent,
@@ -147,15 +177,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
-      switchDirectionOnFlip = false,
-      zIndex = getDefaultZIndex('popover'),
-      selectOnBlur = false,
+      switchDirectionOnFlip,
+      zIndex,
+      selectOnBlur,
       name,
       dropdownPosition,
       ...others
-    }: MultiSelectProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('MultiSelect', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
