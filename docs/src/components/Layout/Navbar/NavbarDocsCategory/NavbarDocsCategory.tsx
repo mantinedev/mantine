@@ -74,7 +74,7 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
       <button className={classes.header} type="button" onClick={() => setCollapsed((c) => !c)}>
         <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
         <Text className={classes.title} weight={700} size="xs" transform="uppercase">
-          {group.group}
+          {group.group.replace('-', ' ')}
         </Text>
       </button>
       {!collapsed && uncategorized}
