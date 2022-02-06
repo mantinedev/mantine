@@ -14,14 +14,13 @@ export interface _CardSectionProps extends DefaultProps {
   last?: boolean;
 }
 
-export type CardSectionProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  _CardSectionProps
->;
+export type CardSectionProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _CardSectionProps>
+  : never;
 
-type CardSectionComponent = (<C extends React.ElementType = 'div'>(
-  props: CardSectionProps<C>
-) => React.ReactElement) & { displayName?: string };
+type CardSectionComponent = (<C = 'div'>(props: CardSectionProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const CardSection: CardSectionComponent = forwardRef(
   <C extends React.ElementType = 'div'>(

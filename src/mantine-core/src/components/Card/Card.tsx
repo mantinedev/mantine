@@ -9,11 +9,14 @@ interface _CardProps extends SharedPaperProps {
   children: React.ReactNode;
 }
 
-export type CardProps<C extends React.ElementType> = PolymorphicComponentProps<C, _CardProps>;
+export type CardProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _CardProps>
+  : never;
 
-type CardComponent = (<C extends React.ElementType = 'div'>(
-  props: CardProps<C>
-) => React.ReactElement) & { displayName?: string; Section: typeof CardSection };
+type CardComponent = (<C = 'div'>(props: CardProps<C>) => React.ReactElement) & {
+  displayName?: string;
+  Section: typeof CardSection;
+};
 
 export const Card: CardComponent = forwardRef(
   <C extends React.ElementType = 'div'>(

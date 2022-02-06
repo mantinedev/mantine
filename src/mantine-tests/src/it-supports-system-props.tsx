@@ -8,7 +8,7 @@ import { itSupportsRef } from './it-supports-ref';
 
 interface Options<T extends React.FC> {
   component: T;
-  props: React.ComponentProps<T>;
+  props: any;
   displayName?: string;
   excludeOthers?: boolean;
   refType?: any;

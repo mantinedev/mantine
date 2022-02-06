@@ -19,14 +19,13 @@ interface _ColorSwatchProps extends DefaultProps {
   radius?: MantineNumberSize;
 }
 
-export type ColorSwatchProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  _ColorSwatchProps
->;
+export type ColorSwatchProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _ColorSwatchProps>
+  : never;
 
-type ColorSwatchComponent = (<C extends React.ElementType = 'div'>(
-  props: ColorSwatchProps<C>
-) => React.ReactElement) & { displayName?: string };
+type ColorSwatchComponent = (<C = 'div'>(props: ColorSwatchProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const ColorSwatch: ColorSwatchComponent = forwardRef(
   <C extends React.ElementType = 'div'>(

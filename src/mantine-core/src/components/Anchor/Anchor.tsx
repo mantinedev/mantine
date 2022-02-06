@@ -3,14 +3,13 @@ import { PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
-export type AnchorProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  SharedTextProps
->;
+export type AnchorProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, SharedTextProps>
+  : never;
 
-type AnchorComponent = (<C extends React.ElementType = 'a'>(
-  props: AnchorProps<C>
-) => React.ReactElement) & { displayName?: string };
+type AnchorComponent = (<C = 'a'>(props: AnchorProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const Anchor: AnchorComponent = forwardRef(
   <C extends React.ElementType = 'a'>(

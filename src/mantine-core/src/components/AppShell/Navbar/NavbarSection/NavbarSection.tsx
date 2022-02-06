@@ -10,14 +10,11 @@ interface _NavbarSectionProps extends DefaultProps {
   grow?: boolean;
 }
 
-export type NavbarSectionProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  _NavbarSectionProps
->;
+export type NavbarSectionProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _NavbarSectionProps>
+  : never;
 
-type NavbarSectionComponent = <C extends React.ElementType = 'div'>(
-  props: NavbarSectionProps<C>
-) => React.ReactElement;
+type NavbarSectionComponent = <C = 'div'>(props: NavbarSectionProps<C>) => React.ReactElement;
 
 export const NavbarSection: NavbarSectionComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
