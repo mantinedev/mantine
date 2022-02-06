@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useEffect } from 'react';
+import React, { useState, useRef, forwardRef } from 'react';
 import {
   InputBaseProps,
   InputWrapperBaseProps,
@@ -12,11 +12,10 @@ import {
   CloseButton,
   extractMargins,
 } from '@mantine/core';
-import { useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
-import { padTime } from '../TimeInputBase/pad-time/pad-time';
 import { AmPmInput } from '../TimeInputBase/AmPmInput/AmPmInput';
 import { createAmPmHandler } from '../TimeInputBase/create-amPm-handler/create-amPm-handler';
 import { getDate } from '../TimeInputBase/get-date/get-date';
@@ -36,10 +35,10 @@ export interface TimeInputProps
   size?: MantineSize;
 
   /** Controlled input value */
-  value?: Date;
+  value?: Date | null;
 
   /** Uncontrolled input default value */
-  defaultValue?: Date;
+  defaultValue?: Date | null;
 
   /** Controlled input onChange handler */
   onChange?(value: Date): void;
@@ -79,6 +78,9 @@ export interface TimeInputProps
 
   /** Disable field */
   disabled?: boolean;
+
+  /** Ref to focus after final TimeInput field. Used by TimeRangeInput */
+  nextRef?: React.RefObject<HTMLInputElement>;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -119,6 +121,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       amPmPlaceholder = 'am',
       disabled = false,
       sx,
+      nextRef,
       ...others
     }: TimeInputProps,
     ref
@@ -131,75 +134,78 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const minutesRef = useRef<HTMLInputElement>();
     const secondsRef = useRef<HTMLInputElement>();
     const amPmRef = useRef<HTMLInputElement>();
-    const [amPm, setAmPm] = useState('am');
-    const [time, setTime] = useState<{ hours: string; minutes: string; seconds: string }>(
-      getTimeValues(value || defaultValue)
-    );
-    const [_value, setValue] = useState<Date>(value || defaultValue);
+    const [time, setTime] = useState<{
+      hours: string;
+      minutes: string;
+      seconds: string;
+      amPm: string;
+    }>(getTimeValues(value || defaultValue, format));
+    const [_value, setValue] = useState<Date | null>(value || defaultValue);
 
-    useEffect(() => {
-      setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
-    }, [time, format, amPm, onChange]);
+    useDidUpdate(() => {
+      setTime(getTimeValues(_value, format));
+    }, [_value, format]);
 
-    useEffect(() => {
-      if (format === '12' && _value) {
-        const _hours = parseInt(time.hours, 10);
-        setAmPm(_hours >= 12 ? 'pm' : 'am');
-
-        if (_hours >= 12) {
-          setTime({ ...time, hours: padTime((_hours - 12).toString()) });
-        }
+    // Allow controlled value prop to override internal _value
+    useDidUpdate(() => {
+      if (value?.getTime() !== _value?.getTime()) {
+        setValue(value);
       }
-    }, [format]);
+    }, [value]);
+
+    const setDate = (change: Partial<typeof time>) => {
+      const timeWithChange = { ...time, ...change };
+      const newDate = getDate(
+        timeWithChange.hours,
+        timeWithChange.minutes,
+        timeWithChange.seconds,
+        format,
+        timeWithChange.amPm
+      );
+      setValue(newDate);
+      typeof onChange === 'function' && onChange(newDate);
+    };
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        const newTime = { ...time, hours: padTime(val) };
-        setTime(newTime);
-        typeof onChange === 'function' &&
-          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
+        setDate({ hours: val });
       },
-      min: 0,
-      max: format === '12' ? 11 : 23,
-      maxValue: format === '12' ? 1 : 2,
+      min: format === '12' ? 1 : 0,
+      max: format === '12' ? 12 : 23,
+      maxValue: 2,
       nextRef: minutesRef,
     });
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        const newTime = { ...time, minutes: padTime(val) };
-        setTime(newTime);
-        typeof onChange === 'function' &&
-          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
+        setDate({ minutes: val });
       },
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: !withSeconds ? amPmRef : secondsRef,
+      nextRef: withSeconds ? secondsRef : format === '12' ? amPmRef : nextRef,
     });
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        const newTime = { ...time, seconds: padTime(val) };
-        setTime(newTime);
-        typeof onChange === 'function' &&
-          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
+        setDate({ seconds: val });
       },
       min: 0,
       max: 59,
       maxValue: 5,
-      nextRef: amPmRef,
+      nextRef: format === '12' ? amPmRef : nextRef,
     });
 
     const handleAmPmChange = createAmPmHandler({
       onChange: (val) => {
-        setAmPm(val);
+        setDate({ amPm: val });
       },
+      nextRef,
     });
 
     const handleClear = () => {
-      setTime({ hours: '', minutes: '', seconds: '' });
-      setAmPm('');
+      setTime({ hours: '', minutes: '', seconds: '', amPm: '' });
+      setValue(null);
       hoursRef.current.focus();
     };
 
@@ -255,7 +261,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               className={classes.timeInput}
               withSeparator
               size={size}
-              max={format === '12' ? 11 : 23}
+              max={format === '12' ? 12 : 23}
               placeholder={timePlaceholder}
               aria-label={hoursLabel}
               disabled={disabled}
@@ -291,11 +297,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             {format === '12' && (
               <AmPmInput
                 ref={amPmRef}
-                value={amPm}
+                value={time.amPm}
                 onChange={handleAmPmChange}
-                setValue={(val) => {
-                  setAmPm(val);
-                }}
                 placeholder={amPmPlaceholder}
                 size={size}
                 aria-label={amPmLabel}

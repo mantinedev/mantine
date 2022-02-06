@@ -16,8 +16,15 @@ export function getDate(
     _hours = 0;
   }
 
+  if (format === '12') {
+    _hours %= 12;
+    if (amPm === 'pm') {
+      _hours += 12;
+    }
+  }
+
   return date
-    .hour(format === '12' && amPm === 'pm' ? (_hours < 12 ? _hours - 12 : _hours) : _hours)
+    .hour(_hours)
     .minute(Number.isNaN(_minutes) ? 0 : _minutes)
     .second(Number.isNaN(_seconds) ? 0 : _seconds)
     .toDate();

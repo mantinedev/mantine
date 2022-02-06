@@ -19,5 +19,8 @@ describe('@mantine/dates/get-date', () => {
     expect(format12AM.getHours()).toEqual(8);
     expect(format12AM.getMinutes()).toEqual(12);
     expect(format12AM.getSeconds()).toEqual(30);
+
+    expect(getDate('12', '00', '00', '12', 'am').getHours()).toEqual(0);
+    expect(getDate('12', '00', '00', '12', 'pm').getHours()).toEqual(12);
   });
 });
