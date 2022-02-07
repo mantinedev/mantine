@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
@@ -79,40 +80,64 @@ export interface PopoverProps
   clickOutsideEvents?: string[];
 }
 
-export function Popover({
-  className,
-  children,
-  target,
-  title,
-  onClose,
-  opened,
-  zIndex = getDefaultZIndex('popover'),
-  arrowSize = 4,
-  withArrow = false,
-  transition = 'fade',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  gutter = 10,
-  position = 'left',
-  placement = 'center',
-  disabled = false,
-  noClickOutside = false,
-  noFocusTrap = false,
-  noEscape = false,
-  withCloseButton = false,
-  radius = 'sm',
-  spacing = 'md',
-  shadow = 'sm',
-  closeButtonLabel,
-  positionDependencies = [],
-  withinPortal = true,
-  id,
-  classNames,
-  styles,
-  width,
-  clickOutsideEvents = ['click', 'touchstart'],
-  ...others
-}: PopoverProps) {
+const defaultProps: Partial<PopoverProps> = {
+  zIndex: getDefaultZIndex('popover'),
+  arrowSize: 4,
+  withArrow: false,
+  transition: 'fade',
+  transitionDuration: 200,
+  gutter: 10,
+  position: 'left',
+  placement: 'center',
+  disabled: false,
+  noClickOutside: false,
+  noFocusTrap: false,
+  noEscape: false,
+  withCloseButton: false,
+  radius: 'sm',
+  spacing: 'md',
+  shadow: 'sm',
+  positionDependencies: [],
+  withinPortal: true,
+  clickOutsideEvents: ['click', 'touchstart'],
+};
+
+export function Popover(props: PopoverProps) {
+  const {
+    className,
+    children,
+    target,
+    title,
+    onClose,
+    opened,
+    zIndex,
+    arrowSize,
+    withArrow,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    gutter,
+    position,
+    placement,
+    disabled,
+    noClickOutside,
+    noFocusTrap,
+    noEscape,
+    withCloseButton,
+    radius,
+    spacing,
+    shadow,
+    closeButtonLabel,
+    positionDependencies,
+    withinPortal,
+    id,
+    classNames,
+    styles,
+    width,
+    clickOutsideEvents,
+    ...others
+  } = useMantineDefaultProps('Popover', defaultProps, props);
+
   const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);
