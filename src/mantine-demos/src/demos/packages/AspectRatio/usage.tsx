@@ -1,16 +1,22 @@
 import React from 'react';
-import { AspectRatio, Image } from '@mantine/core';
+import { AspectRatio } from '@mantine/core';
 
 const code = `
-<AspectRatio maxWidth="200" ratio={1}>
-  <Image src="https://mantine.dev/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" />
+<AspectRatio ratio={16 / 9}>
+  <img
+    src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+    alt="Nature"
+  />
 </AspectRatio>
 `;
 
 function Demo() {
   return (
-    <AspectRatio maxWidth={200} ratio={1}>
-      <Image src="https://mantine.dev/favicon.svg?v=c7bf473b30e5d81722ea0acf3a11a107" />
+    <AspectRatio ratio={16 / 9}>
+      <img
+        src="https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
+        alt="Nature"
+      />
     </AspectRatio>
   );
 }

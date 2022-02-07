@@ -1,22 +1,13 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 interface AspectRatioStyles {
   ratio: number;
-  maxWidth: MantineNumberSize;
 }
 
-const sizes = {
-  xs: 480,
-  sm: 800,
-  md: 1024,
-  lg: 1280,
-  xl: 1920,
-};
-
-export default createStyles((theme, { ratio, maxWidth }: AspectRatioStyles) => ({
+export default createStyles((theme, { ratio }: AspectRatioStyles) => ({
   root: {
     position: 'relative',
-    maxWidth: theme.fn.size({ size: maxWidth, sizes }),
+    maxWidth: '100%',
 
     '&::before': {
       content: '""',
