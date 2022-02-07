@@ -7,6 +7,8 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
 date: 'January 13th, 2022'
 ---
 
+import { AspectRatioDemos } from '@mantine/demos';
+
 ## Breaking changes
 
 - Default border-radius of [Badge](https://mantine.dev/core/badge/) and [Chip](https://mantine.dev/core/chips/) components no longer defaults to `theme.radius.xl`, it was changed to support new `theme.defaultRadius`
@@ -64,6 +66,12 @@ createStyles((theme, params, getRef) => ({
   },
 }));
 ```
+
+## New components
+
+New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
+
+<Demo data={AspectRatioDemos.video} />
 
 ## Other changes
 

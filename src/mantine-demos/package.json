@@ -20,6 +20,7 @@
     "@mantine/core": "3.6.6",
     "@mantine/hooks": "3.6.6",
     "@mantine/dates": "3.6.6",
+    "@mantine/labs": "3.6.6",
     "@mantine/rte": "3.6.6",
     "@mantine/modals": "3.6.6",
     "@mantine/notifications": "3.6.6",

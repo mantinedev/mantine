@@ -5,7 +5,7 @@ title: AspectRatio
 order: 1
 slug: /core/aspect-ratio/
 category: 'layout'
-description: 'Aspect ratio friendly container'
+description: 'Maintain responsive consistent width/height ratio'
 props: ['AspectRatio']
 import: "import { AspectRatio } from '@mantine/core';"
 source: 'mantine-core/src/components/AspectRatio/AspectRatio.tsx'
@@ -13,10 +13,19 @@ docs: 'core/AspectRatio.mdx'
 styles: ['AspectRatio']
 ---
 
-import { AspectRatioDemos } from '@demos/core'
+import { AspectRatioDemos } from '@mantine/demos';
 
 ## Usage
 
-AspectRatio allows you to maintain a consistent aspect-ratio i.e. width to height ratio.
+AspectRatio allows to maintain consistent width/height ratio.
+It can be used to display images, maps, videos and other media.
 
 <Demo data={AspectRatioDemos.usage} />
+
+## Map embed
+
+<Demo data={AspectRatioDemos.map} />
+
+## Video embed
+
+<Demo data={AspectRatioDemos.video} />
