@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Progress.styles';
 import { Text } from '../Text';
@@ -47,64 +53,69 @@ function getCumulativeSections(
   ).sections;
 }
 
-export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
-  (
-    {
-      className,
-      value,
-      color,
-      size = 'md',
-      radius = 'sm',
-      striped = false,
-      animate = false,
-      label = '',
-      'aria-label': ariaLabel,
-      classNames,
-      styles,
-      sections,
-      ...others
-    }: ProgressProps,
-    ref
-  ) => {
-    const { classes, cx, theme } = useStyles(
-      { color, size, radius, striped: striped || animate, animate },
-      { classNames, styles, name: 'Progress' }
-    );
+const defaultProps: Partial<ProgressProps> = {
+  size: 'md',
+  radius: 'sm',
+  striped: false,
+  animate: false,
+  label: '',
+};
 
-    const segments = Array.isArray(sections)
-      ? getCumulativeSections(sections).map((section, index) => (
-          <Box
-            key={index}
-            className={classes.bar}
-            sx={{
-              width: `${section.value}%`,
-              left: `${section.accumulated}%`,
-              backgroundColor: theme.fn.themeColor(section.color, 6, false),
-            }}
-          >
-            {section.label && <Text className={classes.label}>{section.label}</Text>}
-          </Box>
-        ))
-      : null;
+export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: ProgressProps, ref) => {
+  const {
+    className,
+    value,
+    color,
+    size,
+    radius,
+    striped,
+    animate,
+    label,
+    'aria-label': ariaLabel,
+    classNames,
+    styles,
+    sections,
+    ...others
+  } = useMantineDefaultProps('Progress', defaultProps, props);
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {segments || (
-          <div
-            role="progressbar"
-            aria-valuemax={100}
-            aria-valuemin={0}
-            aria-valuenow={value}
-            aria-label={ariaLabel}
-            className={classes.bar}
-            style={{ width: `${value}%` }}
-          >
-            {label ? <Text className={classes.label}>{label}</Text> : ''}
-          </div>
-        )}
-      </Box>
-    );
-  }
-);
+  const { classes, cx, theme } = useStyles(
+    { color, size, radius, striped: striped || animate, animate },
+    { classNames, styles, name: 'Progress' }
+  );
+
+  const segments = Array.isArray(sections)
+    ? getCumulativeSections(sections).map((section, index) => (
+        <Box
+          key={index}
+          className={classes.bar}
+          sx={{
+            width: `${section.value}%`,
+            left: `${section.accumulated}%`,
+            backgroundColor: theme.fn.themeColor(section.color, 6, false),
+          }}
+        >
+          {section.label && <Text className={classes.label}>{section.label}</Text>}
+        </Box>
+      ))
+    : null;
+
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {segments || (
+        <div
+          role="progressbar"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={value}
+          aria-label={ariaLabel}
+          className={classes.bar}
+          style={{ width: `${value}%` }}
+        >
+          {label ? <Text className={classes.label}>{label}</Text> : ''}
+        </div>
+      )}
+    </Box>
+  );
+});
 
 Progress.displayName = '@mantine/core/Progress';
