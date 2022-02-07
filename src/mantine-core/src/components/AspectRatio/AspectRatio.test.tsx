@@ -1,7 +1,9 @@
 import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { AspectRatio, AspectRatioProps } from './AspectRatio';
 
-const defaultProps: AspectRatioProps = {};
+const defaultProps: AspectRatioProps = {
+  ratio: 16 / 9,
+};
 
 describe('@mantine/core/AspectRatio', () => {
   itRendersChildren(AspectRatio, defaultProps);
