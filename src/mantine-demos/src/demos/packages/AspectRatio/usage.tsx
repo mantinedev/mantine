@@ -1,6 +1,5 @@
 import React from 'react';
-import { AspectRatio } from '../AspectRatio';
-import { Image } from '../../Image/Image';
+import { AspectRatio, Image } from '@mantine/core';
 
 const code = `
 <AspectRatio maxWidth="200" ratio={1}>
