@@ -146,8 +146,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       setValue(val);
     };
 
-    const formatNum = (val: string | number) => {
-      let parsedStr = typeof val === 'number' ? String(val) : val;
+    const formatNum = (val: string | number = '') => {
+      let parsedStr = String(val);
 
       if (decimalSeparator) {
         parsedStr = parsedStr.replace(/\./g, decimalSeparator);
