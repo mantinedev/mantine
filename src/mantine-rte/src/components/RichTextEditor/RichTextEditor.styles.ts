@@ -5,10 +5,15 @@ interface RichTextEditorStyles {
   editLabel: string;
   removeLabel: string;
   radius: MantineNumberSize;
+  readOnly: boolean;
 }
 
 export default createStyles(
-  (theme, { saveLabel, removeLabel, editLabel, radius }: RichTextEditorStyles) => ({
+  (theme, { saveLabel, removeLabel, editLabel, radius, readOnly }: RichTextEditorStyles) => ({
+    toolbar: {
+      display: readOnly ? 'none' : undefined,
+    },
+
     root: {
       ...theme.fn.fontStyles(),
       fontSize: theme.fontSizes.sm,
@@ -256,6 +261,36 @@ export default createStyles(
       '& p': {
         marginTop: 0,
         marginBottom: theme.spacing.sm,
+      },
+
+      '& pre': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: theme.spacing.xs,
+        margin: 0,
+        overflowX: 'auto',
+      },
+
+      '& code': {
+        ...theme.fn.fontStyles(),
+        lineHeight: theme.lineHeight,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        backgroundColor: theme.fn.rgba(
+          theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 0),
+          theme.colorScheme === 'dark' ? 0.35 : 1
+        ),
+        fontFamily: theme.fontFamilyMonospace,
+        fontSize: theme.fontSizes.xs,
+        padding: `2px ${theme.spacing.xs / 2}px`,
       },
 
       '& blockquote': {

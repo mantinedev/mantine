@@ -21,7 +21,7 @@ export interface SharedTextProps extends DefaultProps {
   weight?: React.CSSProperties['fontWeight'];
 
   /** Sets text-transform css property */
-  transform?: 'capitalize' | 'uppercase' | 'lowercase';
+  transform?: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
 
   /** Sets text-align css property */
   align?: 'left' | 'center' | 'right' | 'justify';
@@ -34,6 +34,9 @@ export interface SharedTextProps extends DefaultProps {
 
   /** Sets line-height to 1 for centering */
   inline?: boolean;
+
+  /** Underline the text */
+  underline?: boolean;
 
   /** Inherit font properties from parent element */
   inherit?: boolean;
@@ -63,6 +66,7 @@ export const Text: TextComponent = forwardRef(
       gradient = { from: 'blue', to: 'cyan', deg: 45 },
       inline = false,
       inherit = false,
+      underline,
       classNames,
       styles,
       ...others
@@ -77,6 +81,7 @@ export const Text: TextComponent = forwardRef(
         lineClamp,
         inline,
         inherit,
+        underline,
         weight,
         transform,
         align,

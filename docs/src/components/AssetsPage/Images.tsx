@@ -15,7 +15,7 @@ const data = [
 
 export function Images() {
   const images = data.map(({ image, title }) => (
-    <Image src={image} caption={title} alt={title} radius="md" />
+    <Image src={image as any} caption={title} alt={title} radius="md" />
   ));
 
   return (

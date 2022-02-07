@@ -20,7 +20,7 @@ export function Usage() {
   return (
     <PageSection
       title="Use anywhere"
-      description="Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js, create-react-app, Vite or Preact by following getting started guide:"
+      description="Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js, create-react-app, Vite or Remix by following getting started guide:"
     >
       <SimpleGrid
         cols={5}

@@ -9,7 +9,14 @@ import {
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
-export type ButtonVariant = 'filled' | 'outline' | 'light' | 'gradient' | 'white' | 'default';
+export type ButtonVariant =
+  | 'filled'
+  | 'outline'
+  | 'light'
+  | 'gradient'
+  | 'white'
+  | 'default'
+  | 'subtle';
 
 interface ButtonStylesProps {
   color: MantineColor;
@@ -95,7 +102,7 @@ const getWidthStyles = (fullWidth: boolean) => ({
 interface GetVariantStyles {
   theme: MantineTheme;
   color: MantineColor;
-  variant: 'filled' | 'outline' | 'light' | 'default' | 'white';
+  variant: ButtonVariant;
 }
 
 function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
@@ -167,6 +174,7 @@ export default createStyles(
       light: getVariantStyles({ variant: 'light', theme, color }),
       default: getVariantStyles({ variant: 'default', theme, color }),
       white: getVariantStyles({ variant: 'white', theme, color }),
+      subtle: getVariantStyles({ variant: 'subtle', theme, color }),
 
       gradient: {
         border: 0,

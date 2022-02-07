@@ -47,6 +47,9 @@ export interface TransferListProps
 
   /** Whether to hide the transfer all button */
   showTransferAll?: boolean;
+
+  /** Limit amount of items showed at a time */
+  limit?: number;
 }
 
 export function defaultFilter(query: string, item: TransferListItem) {
@@ -70,6 +73,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       breakpoint,
       classNames,
       styles,
+      limit = Infinity,
       ...others
     }: TransferListProps,
     ref
@@ -106,43 +110,39 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
     };
 
     const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
+    const sharedListProps = {
+      itemComponent,
+      listComponent,
+      searchPlaceholder,
+      filter,
+      nothingFound,
+      height: listHeight,
+      showTransferAll,
+      classNames,
+      styles,
+      limit,
+    };
 
     return (
       <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} ref={ref} {...others}>
         <RenderList
+          {...sharedListProps}
           data={value[0]}
           selection={selection[0]}
           onSelect={(val) => handlers.select(0, val)}
           onMoveAll={() => handleMoveAll(0)}
           onMove={() => handleMove(0)}
-          itemComponent={itemComponent}
-          searchPlaceholder={searchPlaceholder}
-          filter={filter}
-          nothingFound={nothingFound}
           title={titles[0]}
-          height={listHeight}
-          listComponent={listComponent}
-          showTransferAll={showTransferAll}
-          classNames={classNames}
-          styles={styles}
         />
 
         <RenderList
+          {...sharedListProps}
           data={value[1]}
           selection={selection[1]}
           onSelect={(val) => handlers.select(1, val)}
           onMoveAll={() => handleMoveAll(1)}
           onMove={() => handleMove(1)}
-          itemComponent={itemComponent}
-          searchPlaceholder={searchPlaceholder}
-          filter={filter}
-          nothingFound={nothingFound}
           title={titles[1]}
-          height={listHeight}
-          listComponent={listComponent}
-          showTransferAll={showTransferAll}
-          classNames={classNames}
-          styles={styles}
           reversed
         />
       </SimpleGrid>

@@ -1,0 +1,20 @@
+{
+  "title": "Forgot password",
+  "category": "authentication",
+  "author": "rtivital",
+  "withColor": true,
+  "dimmed": true,
+  "responsive": true,
+  "dependencies": [
+    "/core/container/",
+    "/core/title/",
+    "/core/anchor/",
+    "/core/button/",
+    "/core/text-input/",
+    "/core/paper/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": false
+  }
+}

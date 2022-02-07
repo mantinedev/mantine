@@ -15,8 +15,7 @@ import {
   createStyles,
   Paper,
 } from '@mantine/core';
-import { CustomSelectDemo } from '@mantine/core/src/components/Select/demos/itemComponent';
-import { CountriesSelect } from '@mantine/core/src/components/MultiSelect/demos/countries';
+import { CustomSelectDemo, CountriesSelect } from '@mantine/demos';
 import { DatePicker, DateRangePicker } from '@mantine/dates';
 
 const BREAKPOINT = '@media (max-width: 960px)';
@@ -68,9 +67,9 @@ const data = [
 ];
 
 export function SegmentedControlWrapper(
-  props: Omit<SegmentedControlProps<string>, 'value' | 'onChange' | 'data'>
+  props: Omit<SegmentedControlProps, 'value' | 'onChange' | 'data'>
 ) {
-  const [value, onChange] = useState<string>('react');
+  const [value, onChange] = useState('react');
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }
 
@@ -136,22 +135,19 @@ export function InputsDemo() {
 
         <InputWrapper labelElement="div" label="Slider and RangeSlider" style={{ marginTop: 15 }}>
           <Slider defaultValue={40} style={{ marginTop: 10 }} />
-          <div style={{ paddingLeft: 4, paddingRight: 4 }}>
-            <RangeSlider
-              style={{ marginTop: 10 }}
-              step={25}
-              defaultValue={[25, 75]}
-              minRange={25}
-              radius={0}
-              marks={[
-                { value: 0, label: 'xs' },
-                { value: 25, label: 'sm' },
-                { value: 50, label: 'md' },
-                { value: 75, label: 'lg' },
-                { value: 100, label: 'xl' },
-              ]}
-            />
-          </div>
+          <RangeSlider
+            mt={10}
+            step={25}
+            defaultValue={[25, 75]}
+            minRange={25}
+            marks={[
+              { value: 0, label: 'xs' },
+              { value: 25, label: 'sm' },
+              { value: 50, label: 'md' },
+              { value: 75, label: 'lg' },
+              { value: 100, label: 'xl' },
+            ]}
+          />
         </InputWrapper>
       </div>
     </Paper>

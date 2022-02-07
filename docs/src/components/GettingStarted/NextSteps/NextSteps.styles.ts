@@ -19,6 +19,7 @@ export default createStyles((theme) => ({
     }`,
     textDecoration: 'none',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],

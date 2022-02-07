@@ -7,8 +7,13 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.3.0
 date: 'December 2nd, 2021'
 ---
 
-import { ScrollAreaDemos, ModalDemos, AccordionDemos, SelectDemos } from '@demos/core';
-import { UseFormBaseDemo } from '@docs/demos';
+import {
+  ScrollAreaDemos,
+  ModalDemos,
+  AccordionDemos,
+  SelectDemos,
+  HooksDemos,
+} from '@mantine/demos';
 
 ## ScrollArea component
 
@@ -26,7 +31,7 @@ and [TransferList](https://mantine.dev/core/transfer-list/) components:
 
 [use-form](https://mantine.dev/hooks/use-form/) hook now includes new `getInputProps` handler to simplify inputs
 
-<UseFormBaseDemo />
+<HooksDemos.UseFormBaseDemo />
 
 Also [use-form](https://mantine.dev/hooks/use-form/) hook now supports optional error messages (hook will work as before if messages are not provided):
 

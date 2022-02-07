@@ -1,0 +1,23 @@
+{
+  "title": "Authentication form",
+  "category": "authentication",
+  "author": "rtivital",
+  "withColor": true,
+  "dimmed": true,
+  "dependencies": [
+    "/core/paper/",
+    "/core/text-input/",
+    "/core/password-input/",
+    "/core/checkbox/",
+    "/core/text/",
+    "/core/button/",
+    "/core/group/",
+    "/core/divider/",
+    "/hooks/use-form/",
+    "/hooks/use-toggle/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

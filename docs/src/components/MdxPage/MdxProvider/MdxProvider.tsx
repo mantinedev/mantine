@@ -2,7 +2,7 @@ import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Code, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { Demo } from '@mantine/ds';
+import { Demo } from '@mantine/demos';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import DataTable from './DataTable/DataTable';
 import MdxTitle from './MdxTitle/MdxTitle';

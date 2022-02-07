@@ -2,7 +2,7 @@ import { MantineTheme } from '../../types';
 
 interface GetSharedColorScheme {
   color?: string;
-  variant: 'outline' | 'filled' | 'light' | 'gradient' | 'white' | 'default';
+  variant: 'outline' | 'filled' | 'light' | 'gradient' | 'white' | 'default' | 'subtle';
   gradient?: { from: string; to: string; deg: number };
   theme: MantineTheme;
 }
@@ -89,6 +89,23 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
       color: theme.white,
       border: 'transparent',
       hover: null,
+    };
+  }
+
+  if (variant === 'subtle') {
+    return {
+      border: 'transparent',
+      background: 'transparent',
+      color:
+        color === 'dark'
+          ? theme.colorScheme === 'dark'
+            ? theme.colors.dark[0]
+            : theme.colors.dark[9]
+          : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
+      hover: theme.fn.rgba(
+        theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
+        theme.colorScheme === 'dark' ? 0.35 : 1
+      ),
     };
   }
 

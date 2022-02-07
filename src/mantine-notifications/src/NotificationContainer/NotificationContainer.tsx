@@ -11,7 +11,7 @@ export interface NotificationContainerProps extends DefaultProps {
 
 export default function NotificationContainer({
   className,
-  style,
+  sx,
   notification,
   autoClose,
   onHide,
@@ -47,11 +47,12 @@ export default function NotificationContainer({
 
   return (
     <Notification
-      style={style}
+      sx={sx}
       className={className}
       title={notification.title}
       onClose={handleHide}
       color={notification.color}
+      radius={notification.radius}
       icon={notification.icon}
       loading={notification.loading}
       disallowClose={notification.disallowClose}

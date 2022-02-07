@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Text, Group, Button, Modal, Drawer, Divider, CloseButton, Paper } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { form as FormPopoverDemo } from '@mantine/core/src/components/Popover/demos/form';
-import { AuthenticationForm } from '@mantine/core/demos/AuthenticationForm/AuthenticationForm';
+import { AuthenticationForm, PopoverDemos } from '@mantine/demos';
 
 const code = `
 import { useState } from 'react';
@@ -25,7 +24,7 @@ function Demo() {
 export function OverlaysDemos() {
   const [modalOpened, setModalOpened] = useState(false);
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const PopoverDemo = FormPopoverDemo.component;
+  const PopoverDemo = PopoverDemos.form.component;
 
   return (
     <Paper shadow="md" radius="md" padding={30}>

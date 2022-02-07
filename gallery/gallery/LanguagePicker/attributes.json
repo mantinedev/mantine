@@ -1,0 +1,17 @@
+{
+  "title": "Language picker",
+  "category": "inputs",
+  "author": "rtivital",
+  "dependencies": [
+    "/core/menu/",
+    "/core/button/#unstyled-button",
+    "/core/image/",
+    "/core/group/",
+    "tabler-icons-react",
+    "https://icons8.com/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 220
+  }
+}

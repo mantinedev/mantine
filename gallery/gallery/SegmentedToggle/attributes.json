@@ -1,0 +1,9 @@
+{
+  "title": "Segmented color scheme toggle",
+  "category": "color-scheme",
+  "author": "rtivital",
+  "dependencies": ["/core/segmented-control/", "/core/center/", "/core/box/", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}

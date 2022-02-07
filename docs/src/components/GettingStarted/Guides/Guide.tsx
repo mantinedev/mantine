@@ -99,16 +99,6 @@ function ViteGuide({ dependencies }: GuideProps) {
   );
 }
 
-function PreactGuide({ dependencies }: GuideProps) {
-  return (
-    <Guide
-      dependencies={dependencies}
-      initScript="npx preact-cli create default your-app"
-      withDone
-    />
-  );
-}
-
 function NextGuide({ dependencies }: GuideProps) {
   return (
     <Guide
@@ -143,10 +133,48 @@ function GatsbyGuide({ dependencies }: GuideProps) {
   );
 }
 
+const remixCode = `import { renderToString } from 'react-dom/server';
+import { RemixServer } from 'remix';
+import type { EntryContext } from 'remix';
+import { injectStylesIntoStaticMarkup } from '@mantine/ssr';
+
+export default function handleRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext
+) {
+  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
+  responseHeaders.set('Content-Type', 'text/html');
+
+  return new Response(\`<!DOCTYPE html>\${injectStylesIntoStaticMarkup(markup)}\`, {
+    status: responseStatusCode,
+    headers: responseHeaders,
+  });
+}
+`;
+
+function RemixGuide({ dependencies }: GuideProps) {
+  return (
+    <Guide
+      dependencies={`${dependencies} @mantine/ssr`}
+      initScript="npx create-remix@latest"
+      action="View example setup"
+      actionLink="https://github.com/remix-run/remix/tree/main/examples/mantine"
+      withDone
+    >
+      <Text weight={500} mt={30} mb={5} size="lg">
+        Replace your entry.server.tsx file with
+      </Text>
+      <Prism language="tsx">{remixCode}</Prism>
+    </Guide>
+  );
+}
+
 export const guides = {
   cra: CraGuide,
   next: NextGuide,
   vite: ViteGuide,
   gatsby: GatsbyGuide,
-  preact: PreactGuide,
+  remix: RemixGuide,
 };

@@ -122,6 +122,9 @@ export interface SelectProps
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
 
+  /** Select highlighted item on blur */
+  selectOnBlur?: boolean;
+
   /** Allow deselecting items on click */
   allowDeselect?: boolean;
 }
@@ -175,6 +178,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       creatable = false,
       getCreateLabel,
       shouldCreate = defaultShouldCreate,
+      selectOnBlur = false,
       onCreate,
       sx,
       dropdownComponent,
@@ -281,7 +285,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           handleSearchChange(item.label);
         }
         setHovered(-1);
-        setTimeout(() => setDropdownOpened(false));
+        setDropdownOpened(false);
         inputRef.current.focus();
       }
     };
@@ -430,6 +434,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onBlur === 'function' && onBlur(event);
       const selected = sortedData.find((item) => item.value === _value);
+      if (selectOnBlur && filteredData[hovered] && dropdownOpened) {
+        handleItemSelect(filteredData[hovered]);
+      }
       handleSearchChange(selected?.label || '');
       setDropdownOpened(false);
     };
@@ -438,6 +445,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       typeof onFocus === 'function' && onFocus(event);
       if (searchable) {
         setDropdownOpened(true);
+        scrollSelectedItemIntoView();
       }
     };
 
@@ -453,13 +461,15 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     const handleInputClick = () => {
+      let dropdownOpen = true;
+
       if (!searchable) {
-        setDropdownOpened(!dropdownOpened);
-      } else {
-        setDropdownOpened(true);
+        dropdownOpen = !dropdownOpened;
       }
 
-      if (_value && !dropdownOpened) {
+      setDropdownOpened(dropdownOpen);
+
+      if (_value && dropdownOpen) {
         setHovered(selectedItemIndex);
         scrollSelectedItemIntoView();
       }
@@ -516,7 +526,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             readOnly={!searchable}
             disabled={disabled}
             data-mantine-stop-propagation={shouldShowDropdown}
-            autoComplete="off"
+            name={name}
+            autoComplete="nope"
             classNames={{
               ...classNames,
               input: cx({ [classes.input]: !searchable }, classNames?.input),
@@ -574,8 +585,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             />
           </SelectDropdown>
         </div>
-
-        {name && <input type="hidden" name={name} value={_value || ''} />}
       </InputWrapper>
     );
   }

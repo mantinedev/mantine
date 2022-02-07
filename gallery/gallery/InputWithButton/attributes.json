@@ -1,0 +1,11 @@
+{
+  "title": "Input with contained button",
+  "category": "inputs",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/text-input/", "/core/button/", "tabler-icons-react"],
+  "canvas": {
+    "center": true,
+    "maxWidth": 520
+  }
+}

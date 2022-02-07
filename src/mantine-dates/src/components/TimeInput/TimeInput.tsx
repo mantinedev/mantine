@@ -135,11 +135,11 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const [time, setTime] = useState<{ hours: string; minutes: string; seconds: string }>(
       getTimeValues(value || defaultValue)
     );
-    const [_value, setValue] = useState<Date>(value ?? defaultValue);
+    const [_value, setValue] = useState<Date>(value || defaultValue);
 
     useEffect(() => {
       setValue(getDate(time.hours, time.minutes, time.seconds, format, amPm));
-    }, [time, format, amPm]);
+    }, [time, format, amPm, onChange]);
 
     useEffect(() => {
       if (format === '12' && _value) {
@@ -154,7 +154,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleHoursChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, hours: padTime(val) }));
+        const newTime = { ...time, hours: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: format === '12' ? 11 : 23,
@@ -164,7 +167,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleMinutesChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, minutes: padTime(val) }));
+        const newTime = { ...time, minutes: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: 59,
@@ -174,7 +180,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const handleSecondsChange = createTimeHandler({
       onChange: (val) => {
-        setTime((current) => ({ ...current, seconds: padTime(val) }));
+        const newTime = { ...time, seconds: padTime(val) };
+        setTime(newTime);
+        typeof onChange === 'function' &&
+          onChange(getDate(newTime.hours, newTime.minutes, newTime.seconds, format, amPm));
       },
       min: 0,
       max: 59,
@@ -250,6 +259,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               placeholder={timePlaceholder}
               aria-label={hoursLabel}
               disabled={disabled}
+              name={name}
             />
             <TimeField
               ref={minutesRef}
@@ -292,7 +302,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 disabled={disabled}
               />
             )}
-            {name && <input type="hidden" name={name} value={_value.toISOString()} />}
           </div>
         </Input>
       </InputWrapper>

@@ -1,15 +1,20 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { checkAccessibility, itSupportsWrapperProps, itSupportsSystemProps } from '@mantine/tests';
-import { Button } from '../Button';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {
+  checkAccessibility,
+  itSupportsWrapperProps,
+  itSupportsSystemProps,
+  itFiltersChildren,
+} from '@mantine/tests';
 import { RadioGroup, Radio, RadioGroupProps } from './index';
 
 const defaultProps: RadioGroupProps = {
-  children: <Radio value="test-1">test-1</Radio>,
-  label: 'test-label',
-  error: 'test-error',
-  description: 'test-description',
-  required: true,
+  children: [
+    <Radio value="test-value-1">test-label-1</Radio>,
+    <Radio value="test-value-2">test-label-2</Radio>,
+    <Radio value="test-value-3">test-label-3</Radio>,
+  ],
 };
 
 describe('@mantine/core/RadioGroup', () => {
@@ -30,22 +35,10 @@ describe('@mantine/core/RadioGroup', () => {
     </RadioGroup>,
   ]);
 
-  it('filters out unexpected children', () => {
-    const { container } = render(
-      <RadioGroup>
-        <Radio value="test-1">test-1</Radio>
-        <Radio value="test-2">test-2</Radio>
-        <p className="unexpected">Unexpected child 1</p>
-        <div className="unexpected">Unexpected child 1</div>
-        <Radio value="test-3">test-3</Radio>
-        <Button>Unexpected component</Button>
-      </RadioGroup>
-    );
-
-    expect(container.querySelectorAll('.mantine-RadioGroup-radioWrapper')).toHaveLength(3);
-    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
-    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
-  });
+  itFiltersChildren(RadioGroup, defaultProps, '.mantine-RadioGroup-radio', [
+    <Radio value="test-value-1">test-label-1</Radio>,
+    <Radio value="test-value-2">test-label-2</Radio>,
+  ]);
 
   it('passes correct name to Radio components', () => {
     const { container: withoutName } = render(<RadioGroup {...defaultProps} />);
@@ -57,7 +50,20 @@ describe('@mantine/core/RadioGroup', () => {
     expect(withName.querySelector('input[type="radio"]').getAttribute('name')).toBe('test-name');
   });
 
-  it('has correct displayName', () => {
-    expect(RadioGroup.displayName).toEqual('@mantine/core/RadioGroup');
+  it('supports uncontrolled state', () => {
+    render(<RadioGroup {...defaultProps} defaultValue="test-value-1" />);
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[1]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+  });
+
+  it('supports controlled state', () => {
+    const spy = jest.fn();
+    render(<RadioGroup {...defaultProps} value="test-value-2" onChange={spy} />);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    userEvent.click(screen.getAllByRole('radio')[0]);
+    expect(screen.getAllByRole('radio')[1]).toBeChecked();
+    expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
+    expect(spy).toHaveBeenCalledWith('test-value-1');
   });
 });

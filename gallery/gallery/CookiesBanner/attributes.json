@@ -1,0 +1,12 @@
+{
+  "title": "Cookies banner",
+  "category": "banners",
+  "author": "rtivital",
+  "withColor": true,
+  "dimmed": true,
+  "dependencies": [],
+  "canvas": {
+    "center": true,
+    "maxWidth": 420
+  }
+}

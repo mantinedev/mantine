@@ -51,7 +51,7 @@ export interface MenuProps
   menuButtonLabel?: string;
 
   /** Predefined menu width or number for width in px */
-  size?: MantineNumberSize;
+  size?: MantineNumberSize | 'auto';
 
   /** Predefined shadow from theme or box-shadow value */
   shadow?: MantineShadow;
@@ -85,6 +85,9 @@ export interface MenuProps
 
   /** Should focus be trapped when menu is opened */
   trapFocus?: boolean;
+
+  /** Events that should trigger outside clicks */
+  clickOutsideEvents?: string[];
 }
 
 const defaultControl = (
@@ -167,6 +170,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onChange,
       className,
       sx,
+      clickOutsideEvents = ['click', 'touchstart'],
       ...others
     }: MenuProps,
     ref
@@ -210,7 +214,10 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
 
     useWindowEvent('scroll', () => closeOnScroll && handleClose());
 
-    useClickOutside(() => _opened && handleClose(), null, [dropdownElement, wrapperElement]);
+    useClickOutside(() => _opened && handleClose(), clickOutsideEvents, [
+      dropdownElement,
+      wrapperElement,
+    ]);
 
     const toggleMenu = () => {
       _opened ? handleClose() : handleOpen();

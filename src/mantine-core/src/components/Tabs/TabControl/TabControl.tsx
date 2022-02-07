@@ -10,7 +10,6 @@ export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,
     React.ComponentPropsWithRef<'button'> {
   active?: boolean;
-
   color?: MantineColor;
   variant?: TabsVariant;
   orientation?: 'horizontal' | 'vertical';

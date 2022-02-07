@@ -1,0 +1,16 @@
+{
+  "title": "Contact information with icons",
+  "category": "contact",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": [
+    "/core/select/",
+    "/core/text-input/",
+    "/dates/date-picker/",
+    "tabler-icons-react"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 980
+  }
+}

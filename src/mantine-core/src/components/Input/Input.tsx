@@ -21,6 +21,9 @@ export interface InputBaseProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
+  /** Width of icon section in px */
+  iconWidth?: number;
+
   /** Right section of input, similar to icon but on the right */
   rightSection?: React.ReactNode;
 
@@ -33,7 +36,7 @@ export interface InputBaseProps {
   /** Properties spread to root element */
   wrapperProps?: { [key: string]: any };
 
-  /** Sets aria-required=true on input element */
+  /** Sets required on input element */
   required?: boolean;
 
   /** Input border-radius from theme or number to set border-radius in px */
@@ -75,6 +78,7 @@ export const Input: InputComponent = forwardRef(
       icon,
       style,
       rightSectionWidth = 36,
+      iconWidth,
       rightSection,
       rightSectionProps = {},
       radius = 'sm',
@@ -99,6 +103,7 @@ export const Input: InputComponent = forwardRef(
         variant: _variant,
         invalid,
         rightSectionWidth,
+        iconWidth,
         withRightSection: !!rightSection,
       },
       { classNames, styles, name: __staticSelector }
@@ -119,7 +124,7 @@ export const Input: InputComponent = forwardRef(
         <Element
           {...rest}
           ref={ref}
-          aria-required={required}
+          required={required}
           aria-invalid={invalid}
           disabled={disabled}
           className={cx(classes[`${_variant}Variant`], classes.input, {

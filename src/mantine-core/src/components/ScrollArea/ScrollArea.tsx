@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import * as RadixScrollArea from '@radix-ui/react-scroll-area';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useMantineTheme } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './ScrollArea.styles';
 
@@ -41,7 +41,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       scrollbarSize = 12,
       scrollHideDelay = 1000,
       type = 'hover',
-      dir = 'ltr',
+      dir,
       offsetScrollbars = false,
       viewportRef,
       onScrollPositionChange,
@@ -50,8 +50,9 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     ref
   ) => {
     const [scrollbarHovered, setScrollbarHovered] = useState(false);
+    const theme = useMantineTheme();
     const { classes, cx } = useStyles(
-      { scrollbarSize, offsetScrollbars, dir, scrollbarHovered },
+      { scrollbarSize, offsetScrollbars, scrollbarHovered },
       { name: 'ScrollArea', classNames, styles }
     );
 
@@ -59,7 +60,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       <RadixScrollArea.Root
         type={type}
         scrollHideDelay={scrollHideDelay}
-        dir={dir}
+        dir={dir || theme.dir}
         ref={ref}
         asChild
       >

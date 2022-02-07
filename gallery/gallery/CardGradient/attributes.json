@@ -1,0 +1,15 @@
+{
+  "title": "Card with gradient border",
+  "category": "article-cards",
+  "author": "rtivital",
+  "dimmed": true,
+  "dependencies": ["/core/paper/", "/core/text/", "/core/theme-icon/", "tabler-icons-react"],
+  "props": {
+    "title": "Theming documentation",
+    "description": "Extend default theme with any amount of additional colors, replace shadows, radius, spacing, fonts and many other properties to match your design requirements. Mantine theme is just an object, you can subscribe to it in any part of application via context and use it to build your own components."
+  },
+  "canvas": {
+    "center": true,
+    "maxWidth": 360
+  }
+}

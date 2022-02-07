@@ -74,6 +74,9 @@ export interface PopoverProps
 
   /** Popover body width */
   width?: number | string;
+
+  /** Events that should trigger outside clicks */
+  clickOutsideEvents?: string[];
 }
 
 export function Popover({
@@ -107,6 +110,7 @@ export function Popover({
   classNames,
   styles,
   width,
+  clickOutsideEvents = ['click', 'touchstart'],
   ...others
 }: PopoverProps) {
   const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
@@ -116,7 +120,10 @@ export function Popover({
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
   const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
 
-  useClickOutside(() => !noClickOutside && handleClose(), null, [rootElement, dropdownElement]);
+  useClickOutside(() => !noClickOutside && handleClose(), clickOutsideEvents, [
+    rootElement,
+    dropdownElement,
+  ]);
 
   const returnFocus = useFocusReturn({
     opened: opened || noFocusTrap,

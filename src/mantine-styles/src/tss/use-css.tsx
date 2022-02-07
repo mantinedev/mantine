@@ -4,7 +4,7 @@ import { insertStyles, getRegisteredStyles } from '@emotion/utils';
 import type { EmotionCache } from '@emotion/cache';
 import { useGuaranteedMemo } from './utils/use-guaranteed-memo/use-guaranteed-memo';
 import type { CSS } from './types';
-import { useCache } from './CacheProvider';
+import { useEmotionCache } from './use-emotion-cache';
 
 const refPropertyName = 'ref' as const;
 
@@ -63,6 +63,6 @@ export const { cssFactory } = (() => {
 })();
 
 export function useCss() {
-  const cache = useCache();
+  const cache = useEmotionCache();
   return useGuaranteedMemo(() => cssFactory({ cache }), [cache]);
 }

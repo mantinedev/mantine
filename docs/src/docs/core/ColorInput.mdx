@@ -13,7 +13,7 @@ docs: 'core/ColorInput.mdx'
 styles: ['ColorInput']
 ---
 
-import { ColorInputDemos, ColorPickerDemos } from '@demos/core';
+import { ColorInputDemos, ColorPickerDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -27,7 +27,7 @@ import { ColorInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <ColorInput value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+  return <ColorInput value={value} onChange={setValue} />;
 }
 ```
 

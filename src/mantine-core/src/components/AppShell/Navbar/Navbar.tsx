@@ -14,7 +14,7 @@ export type NavbarStylesNames = ClassNames<typeof useStyles>;
 
 export interface NavbarProps
   extends DefaultProps<NavbarStylesNames>,
-    React.ComponentPropsWithoutRef<'nav'> {
+    React.ComponentPropsWithRef<'nav'> {
   /** Navbar width with breakpoints */
   width?: NavbarWidth;
 

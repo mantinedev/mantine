@@ -7,7 +7,6 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.1.0
 date: 'October 28th, 2021'
 ---
 
-import { providerStyles, CreateStylesDemos, useScrollIntoViewParent } from '@docs/demos';
 import {
   MediaQueryDemos,
   CollapseDemos,
@@ -15,7 +14,10 @@ import {
   SelectDemos,
   BoxDemos,
   SkeletonDemos,
-} from '@demos/core';
+  HooksDemos,
+  CreateStylesDemos,
+  ThemeDemos,
+} from '@mantine/demos';
 
 ## Breaking changes
 
@@ -53,7 +55,7 @@ function Demo() {
 You can now add styles to components with MantineProvider.
 Styles will be added to every matching component rendered inside MantineProvider:
 
-<Demo data={providerStyles} />
+<Demo data={ThemeDemos.providerStyles} />
 
 ## Inline styles with emotion
 
@@ -116,7 +118,7 @@ With [Skeleton](https://mantine.dev/core/skeleton/) component you can create pla
 
 New [use-scroll-into-view](https://mantine.dev/hooks/use-scroll-into-view/) hook lets you scroll given node into view within scrollable container or body element:
 
-<Demo data={useScrollIntoViewParent} />
+<Demo data={HooksDemos.useScrollIntoViewParent} />
 
 [Box](https://mantine.dev/core/box/) component allows you to utilize new `sx` prop to style any component or element:
 

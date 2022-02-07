@@ -47,6 +47,9 @@ export interface DateRangePickerProps
 const validationRule = (val: any) =>
   Array.isArray(val) && val.length === 2 && val.every((v) => v instanceof Date);
 
+const isFirstDateSet = (val: any) =>
+  Array.isArray(val) && val.length === 2 && val[0] instanceof Date;
+
 export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
   (
     {
@@ -72,7 +75,6 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       excludeDate,
       initialMonth,
       initiallyOpened = false,
-      name = 'date',
       size = 'sm',
       dropdownType = 'popover',
       labelSeparator = '–',
@@ -97,7 +99,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: validationRule,
+      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {
@@ -109,6 +111,15 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     };
 
     const valueValid = validationRule(_value);
+    const firstValueValid = isFirstDateSet(_value);
+
+    const firstDateLabel = _value[0]
+      ? upperFirst(dayjs(_value[0]).locale(finalLocale).format(dateFormat))
+      : '';
+
+    const secondDateLabel = _value[1]
+      ? upperFirst(dayjs(_value[1]).locale(finalLocale).format(dateFormat))
+      : '';
 
     const handleClear = () => {
       setValue([null, null]);
@@ -116,71 +127,56 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       inputRef.current?.focus();
     };
 
+    const handleDropdownToggle = (isOpen) => {
+      if (!isOpen && firstValueValid && _value[1] === null) {
+        handleClear();
+      }
+      setDropdownOpened(!dropdownOpened);
+    };
+
     return (
-      <>
-        <DatePickerBase
-          dropdownOpened={dropdownOpened}
-          setDropdownOpened={setDropdownOpened}
-          shadow={shadow}
-          transitionDuration={transitionDuration}
-          ref={useMergedRef(ref, inputRef)}
-          size={size}
-          styles={styles}
+      <DatePickerBase
+        dropdownOpened={dropdownOpened}
+        setDropdownOpened={handleDropdownToggle}
+        shadow={shadow}
+        transitionDuration={transitionDuration}
+        ref={useMergedRef(ref, inputRef)}
+        size={size}
+        styles={styles}
+        classNames={classNames}
+        inputLabel={firstValueValid ? `${firstDateLabel} ${labelSeparator} ${secondDateLabel}` : ''}
+        __staticSelector="DateRangePicker"
+        dropdownType={dropdownType}
+        clearable={clearable && firstValueValid}
+        clearButtonLabel={clearButtonLabel}
+        onClear={handleClear}
+        withinPortal={withinPortal}
+        {...others}
+      >
+        <RangeCalendar
           classNames={classNames}
-          inputLabel={
-            valueValid
-              ? `${upperFirst(
-                  dayjs(_value[0]).locale(finalLocale).format(dateFormat)
-                )} ${labelSeparator} ${upperFirst(
-                  dayjs(_value[1]).locale(finalLocale).format(dateFormat)
-                )}`
-              : ''
-          }
+          styles={styles}
+          locale={finalLocale}
+          nextMonthLabel={nextMonthLabel}
+          previousMonthLabel={previousMonthLabel}
+          initialMonth={valueValid ? _value[0] : initialMonth}
+          value={_value}
+          onChange={handleValueChange}
+          labelFormat={labelFormat}
+          dayClassName={dayClassName}
+          dayStyle={dayStyle}
+          disableOutsideEvents={disableOutsideEvents}
+          minDate={minDate}
+          maxDate={maxDate}
+          excludeDate={excludeDate}
           __staticSelector="DateRangePicker"
-          dropdownType={dropdownType}
-          clearable={clearable && valueValid}
-          clearButtonLabel={clearButtonLabel}
-          onClear={handleClear}
-          withinPortal={withinPortal}
-          {...others}
-        >
-          <RangeCalendar
-            classNames={classNames}
-            styles={styles}
-            locale={finalLocale}
-            nextMonthLabel={nextMonthLabel}
-            previousMonthLabel={previousMonthLabel}
-            initialMonth={valueValid ? _value[0] : initialMonth}
-            value={_value}
-            onChange={handleValueChange}
-            labelFormat={labelFormat}
-            dayClassName={dayClassName}
-            dayStyle={dayStyle}
-            disableOutsideEvents={disableOutsideEvents}
-            minDate={minDate}
-            maxDate={maxDate}
-            excludeDate={excludeDate}
-            __staticSelector="DateRangePicker"
-            fullWidth={dropdownType === 'modal'}
-            firstDayOfWeek={firstDayOfWeek}
-            size={dropdownType === 'modal' ? 'lg' : calendarSize}
-            allowSingleDateInRange={allowSingleDateInRange}
-            amountOfMonths={amountOfMonths}
-          />
-        </DatePickerBase>
-
-        <input
-          type="hidden"
-          name={`${name}-from`}
-          value={valueValid ? _value[0].toISOString() : ''}
+          fullWidth={dropdownType === 'modal'}
+          firstDayOfWeek={firstDayOfWeek}
+          size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          allowSingleDateInRange={allowSingleDateInRange}
+          amountOfMonths={amountOfMonths}
         />
-
-        <input
-          type="hidden"
-          name={`${name}-to`}
-          value={valueValid ? _value[1].toISOString() : ''}
-        />
-      </>
+      </DatePickerBase>
     );
   }
 );

@@ -31,7 +31,6 @@ function Demo() {
 const useStyles = createStyles((theme) => ({
   prism: {
     '& pre': {
-      marginTop: theme.spacing.xl,
       backgroundColor: `${
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white
       } !important`,
@@ -39,6 +38,15 @@ const useStyles = createStyles((theme) => ({
       padding: 14,
       paddingTop: 30,
       paddingBottom: 30,
+    },
+
+    '& .mantine-ScrollArea-viewport': {
+      borderRadius: theme.radius.md,
+    },
+
+    '& .mantine-ScrollArea-root': {
+      marginTop: theme.spacing.xl,
+      borderRadius: theme.radius.md,
       boxShadow: theme.shadows.md,
     },
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import { DefaultProps, Portal, MantineMargin, getDefaultZIndex } from '@mantine/core';
+import { DefaultProps, Portal, MantineMargin, getDefaultZIndex, Box } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
@@ -93,7 +93,7 @@ export function NotificationsProvider({
           onHide={hideNotification}
           className={classes.notification}
           autoClose={autoClose}
-          style={{
+          sx={{
             ...getNotificationStateStyles({
               state,
               positioning,
@@ -119,17 +119,17 @@ export function NotificationsProvider({
       }}
     >
       <Portal zIndex={zIndex}>
-        <div
+        <Box
           className={cx(classes.notifications, className)}
-          style={{
+          style={style}
+          sx={{
             maxWidth: containerWidth,
             ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
-            ...style,
           }}
           {...others}
         >
           <TransitionGroup>{items}</TransitionGroup>
-        </div>
+        </Box>
       </Portal>
 
       {children}

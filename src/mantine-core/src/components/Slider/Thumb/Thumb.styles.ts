@@ -40,7 +40,7 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     transitionDuration: '100ms',
     transitionProperty: 'box-shadow, transform',
     transitionTimingFunction: theme.transitionTimingFunction,
-    zIndex: 2,
+    zIndex: 3,
   },
 
   dragging: {

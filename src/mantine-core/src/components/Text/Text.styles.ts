@@ -14,10 +14,11 @@ interface TextStyles {
   lineClamp: number;
   inline: boolean;
   inherit: boolean;
+  underline: boolean;
   gradientFrom: string;
   gradientTo: string;
   gradientDeg: number;
-  transform: 'capitalize' | 'uppercase' | 'lowercase';
+  transform: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
   align: 'left' | 'center' | 'right' | 'justify';
   weight: React.CSSProperties['fontWeight'];
 }
@@ -37,9 +38,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
     ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
-    : theme.colorScheme === 'dark'
-    ? color || theme.colors.dark[0]
-    : color || theme.black;
+    : color || 'inherit';
 }
 
 function getLineClamp(lineClamp: number): CSSObject {
@@ -66,6 +65,7 @@ export default createStyles(
       lineClamp,
       inline,
       inherit,
+      underline,
       gradientDeg,
       gradientTo,
       gradientFrom,
@@ -89,15 +89,18 @@ export default createStyles(
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
         fontSize: inherit ? 'inherit' : theme.fontSizes[size],
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-        textDecoration: 'none',
+        textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
 
-        '&:hover': {
-          textDecoration: variant === 'link' ? 'underline' : 'none',
-        },
+        '&:hover':
+          variant === 'link' && underline === undefined
+            ? {
+                textDecoration: 'underline',
+              }
+            : undefined,
       },
 
       gradient: {

@@ -7,14 +7,14 @@ release: https://github.com/mantinedev/mantine/releases/tag/1.3.0
 date: 'June 1st, 2021'
 ---
 
-import { useIntervalHook } from '@docs/demos';
 import {
   CenterDemos,
   TabsDemos,
   RingProgressDemos,
   BadgeDemos,
   NumberInputDemos,
-} from '@demos/core';
+  HooksDemos,
+} from '@mantine/demos';
 
 ## New components, hooks and features
 
@@ -40,7 +40,7 @@ New [Center](https://mantine.dev/core/center/) component – simple wrapper to c
 
 New [use-interval](https://mantine.dev/hooks/use-interval/) hook provides simple wrapper around `window.setInterval`:
 
-<Demo data={useIntervalHook} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useIntervalHook} demoProps={{ toggle: true }} />
 
 ## Other changes
 

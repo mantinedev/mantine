@@ -94,8 +94,12 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
             getLineProps,
             getTokenProps,
           }) => (
-            <ScrollAreaComponent className={classes.scrollArea}>
-              <pre className={cx(classes.code, inheritedClassName)} style={inheritedStyle}>
+            <ScrollAreaComponent className={classes.scrollArea} dir="ltr">
+              <pre
+                className={cx(classes.code, inheritedClassName)}
+                style={inheritedStyle}
+                dir="ltr"
+              >
                 {tokens
                   .map((line, index) => {
                     if (

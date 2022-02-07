@@ -20,7 +20,7 @@ export function itSupportsInputProps(
       <Component {...requiredProps} required id="secret-test-id" label="Test label" />
     );
     expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
-    expect(container.querySelector('#secret-test-id')).toHaveAttribute('aria-required', 'true');
+    expect(container.querySelector('#secret-test-id')).toHaveAttribute('required');
   });
 
   it('handles error and invalid state', async () => {

@@ -5,10 +5,15 @@ slug: /theming/styles-api/
 order: 4
 ---
 
-import { providerStyles } from '@docs/demos';
-import { ButtonDemos, SliderDemos, TabsDemos, AccordionDemos } from '@demos/core';
-import { CalendarDemos } from '@demos/dates';
-import * as CORE_STYLES_API from '@mantine/core/src/styles.api';
+import {
+  ButtonDemos,
+  SliderDemos,
+  TabsDemos,
+  AccordionDemos,
+  CalendarDemos,
+  ThemeDemos,
+} from '@mantine/demos';
+import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/styles-api';
 
 # Styles API
 
@@ -29,10 +34,10 @@ styles names table. Name column will tell you how to target specific element in 
 
 <DataTable
   head={['Name', 'Static selector', 'Description']}
-  data={Object.keys(CORE_STYLES_API.Slider).map((name) => [
+  data={Object.keys(SliderStylesApi).map((name) => [
     name,
     `.mantine-slider-${name}`,
-    CORE_STYLES_API.Slider[name],
+    SliderStylesApi[name],
   ])}
 />
 
@@ -105,10 +110,10 @@ Styles names for button component:
 
 <DataTable
   head={['Name', 'Static selector', 'Description']}
-  data={Object.keys(CORE_STYLES_API.Button).map((name) => [
+  data={Object.keys(ButtonStylesApi).map((name) => [
     name,
     `.mantine-button-${name}`,
-    CORE_STYLES_API.Button[name],
+    ButtonStylesApi[name],
   ])}
 />
 
@@ -121,7 +126,7 @@ Here extra styles are required only for root element and left icon:
 You can also use Styles API in MantineProvider with `styles` prop.
 All styles defined there will be added to each component rendered inside provider.
 
-<Demo data={providerStyles} />
+<Demo data={ThemeDemos.providerStyles} />
 
 ## Static class names
 

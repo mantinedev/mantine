@@ -7,9 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/3.4.0
 date: 'December 13th, 2021'
 ---
 
-import { usePageLeaveDemo } from '@docs/demos';
-import { CalendarDemos } from '@demos/dates';
-import { SelectDemos, HighlightDemos, CardDemos } from '@demos/core';
+import { SelectDemos, HighlightDemos, CardDemos, CalendarDemos, HooksDemos } from '@mantine/demos';
 
 ## @mantine/dates improvements
 
@@ -28,7 +26,7 @@ There are several **breaking changes** associated with this improvement:
 
 [use-page-leave](https://mantine.dev/hooks/use-page-leave/) hook calls given function when mouse leaves page:
 
-<Demo data={usePageLeaveDemo} />
+<Demo data={HooksDemos.usePageLeaveDemo} />
 
 [use-input-state](https://mantine.dev/hooks/use-input-state/) hook lets you handle state of native inputs (with event in `onChange` handler) and custom inputs (with value in `onChange` handler):
 

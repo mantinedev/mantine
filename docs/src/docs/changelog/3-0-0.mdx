@@ -13,15 +13,10 @@ import {
   MediaQueryDemos,
   SelectDemos,
   MultiSelectDemos,
-} from '@demos/core';
-import {
-  useResizeObserverDemo,
-  useViewportSizeDemo,
-  useMouseRef,
+  DropzoneDemos,
+  HooksDemos,
   CreateStylesDemos,
-  useHoverHookDemo,
-} from '@docs/demos';
-import * as DropzoneDemos from '@demos/dropzone';
+} from '@mantine/demos';
 
 ## Breaking changes
 
@@ -207,19 +202,19 @@ uses browser window as dropzone:
 
 [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) lets you subscribe to element size and position changes with [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver):
 
-<Demo data={useResizeObserverDemo} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useResizeObserverDemo} demoProps={{ toggle: true }} />
 
 [use-viewport-size](https://mantine.dev/hooks/use-viewport-size/) hook returns viewport width and height:
 
-<Demo data={useViewportSizeDemo} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useViewportSizeDemo} demoProps={{ toggle: true }} />
 
 [use-mouse](https://mantine.dev/hooks/use-mouse/) hook tracks mouse position over given element:
 
-<Demo data={useMouseRef} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useMouseRef} demoProps={{ toggle: true }} />
 
 [use-hover](https://mantine.dev/hooks/use-hover/) hook detects if mouse is over given element:
 
-<Demo data={useHoverHookDemo} demoProps={{ toggle: true }} />
+<Demo data={HooksDemos.useHoverHookDemo} demoProps={{ toggle: true }} />
 
 ## Other changes
 

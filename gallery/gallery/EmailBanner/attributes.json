@@ -1,0 +1,20 @@
+{
+  "title": "Email banner",
+  "category": "banners",
+  "author": "rtivital",
+  "responsive": true,
+  "withColor": true,
+  "dimmed": true,
+  "dependencies": [
+    "/core/button/",
+    "/core/text/",
+    "/core/title/",
+    "/core/image/",
+    "/core/text-input/",
+    "https://www.freepik.com/"
+  ],
+  "canvas": {
+    "center": true,
+    "maxWidth": 980
+  }
+}

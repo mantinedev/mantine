@@ -7,12 +7,14 @@ import {
   ModalSettings,
   ConfirmLabels,
   OpenConfirmModal,
+  OpenContextModal,
   ModalState,
 } from './context';
 import { ConfirmModal } from './ConfirmModal';
 
 export interface ContextModalProps {
   context: ModalsContext;
+  props: Record<string, any>;
   id: string;
 }
 
@@ -78,7 +80,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     return id;
   };
 
-  const openContextModal = (modal: string, props: OpenConfirmModal) => {
+  const openContextModal = (modal: string, props: OpenContextModal) => {
     const id = props.id || randomId();
     handlers.append({ id, props, type: 'context', ctx: modal });
     setCurrentModal({ id, props, type: 'context', ctx: modal });
@@ -116,7 +118,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
   const content =
     currentModal?.type === 'context' ? (
-      <ContextModal context={ctx} id={currentModal?.id} />
+      <ContextModal context={ctx} id={currentModal?.id} {...(currentModal?.props as any)} />
     ) : currentModal?.type === 'confirm' ? (
       <ConfirmModal
         {...currentModal.props}

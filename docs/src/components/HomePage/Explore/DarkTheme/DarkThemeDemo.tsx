@@ -10,5 +10,7 @@ const useStyles = createStyles((theme) => ({
 
 export function DarkThemeDemo() {
   const { classes } = useStyles();
-  return <Image src={image} radius="md" className={classes.image} alt="Mantine dark theme" />;
+  return (
+    <Image src={image as any} radius="md" className={classes.image} alt="Mantine dark theme" />
+  );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Burger, Code, Group } from '@mantine/core';
-import corePackageJson from '../../../../package.json';
+import corePackageJson from '../../../../../package.json';
 import { getDocsData } from '../get-docs-data';
 import Search from './Search/Search';
 import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';

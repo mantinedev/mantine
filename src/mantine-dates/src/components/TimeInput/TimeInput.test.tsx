@@ -35,10 +35,10 @@ describe('@mantine/dates/TimeInput', () => {
     <TimeInput {...defaultProps} withSeconds />,
   ]);
 
-  it('renders hidden input with given name', () => {
+  it('renders input with given name', () => {
     const value = new Date(2021, 11, 1);
     const { container } = render(<TimeInput value={value} name="test-name" />);
-    expect(container.querySelector('input[type="hidden"]')).toBeInTheDocument();
+    expect(container.querySelector('input[name="test-name"]')).toBeInTheDocument();
   });
 
   it('renders correct amount of TimeField components based on withSeconds prop', () => {

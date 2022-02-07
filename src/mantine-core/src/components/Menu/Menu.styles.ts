@@ -1,7 +1,7 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface MenuStyles {
-  size: MantineNumberSize;
+  size: MantineNumberSize | 'auto';
 }
 
 export const sizes = {

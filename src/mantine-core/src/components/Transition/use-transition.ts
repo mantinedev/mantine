@@ -12,6 +12,7 @@ export type TransitionStatus =
 
 interface UseTransition {
   duration: number;
+  exitDuration: number;
   timingFunction: string;
   mounted: boolean;
   onEnter?(): void;
@@ -22,6 +23,7 @@ interface UseTransition {
 
 export function useTransition({
   duration,
+  exitDuration,
   timingFunction,
   mounted,
   onEnter,
@@ -31,8 +33,8 @@ export function useTransition({
 }: UseTransition) {
   const theme = useMantineTheme();
   const reduceMotion = useReducedMotion();
-  const transitionDuration = reduceMotion ? 0 : duration;
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
+  const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
   const timeoutRef = useRef<number>(-1);
 
   const handleStateChange = (shouldMount: boolean) => {
@@ -41,8 +43,10 @@ export function useTransition({
 
     setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
     window.clearTimeout(timeoutRef.current);
+    const _duration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
+    setTransitionDuration(_duration);
 
-    if (duration === 0) {
+    if (_duration === 0) {
       typeof preHandler === 'function' && preHandler();
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
@@ -56,7 +60,7 @@ export function useTransition({
         window.clearTimeout(preStateTimeout);
         typeof handler === 'function' && handler();
         setStatus(shouldMount ? 'entered' : 'exited');
-      }, transitionDuration);
+      }, _duration);
     }
   };
 

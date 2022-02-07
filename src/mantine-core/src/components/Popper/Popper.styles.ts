@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineTheme } from '@mantine/styles';
 
 interface PopperStyles {
   arrowSize: number;
@@ -25,21 +25,28 @@ const horizontalPlacement = (arrowSize: number, distance: number, classes: Place
   },
 });
 
-const verticalPlacement = (arrowSize: number, distance: number, classes: PlacementClasses) => ({
+const verticalPlacement = (
+  arrowSize: number,
+  distance: number,
+  classes: PlacementClasses,
+  theme: MantineTheme
+) => ({
   [`&.${classes.center}`]: {
     left: `calc(50% - ${arrowSize}px)`,
   },
 
   [`&.${classes.end}`]: {
-    right: arrowSize * distance,
+    right: theme.dir === 'ltr' ? arrowSize * distance : undefined,
+    left: theme.dir === 'rtl' ? arrowSize * distance : undefined,
   },
 
   [`&.${classes.start}`]: {
-    left: arrowSize * distance,
+    left: theme.dir === 'ltr' ? arrowSize * distance : undefined,
+    right: theme.dir === 'rtl' ? arrowSize * distance : undefined,
   },
 });
 
-export default createStyles((_theme, { arrowSize, arrowDistance }: PopperStyles, getRef) => {
+export default createStyles((theme, { arrowSize, arrowDistance }: PopperStyles, getRef) => {
   const center = { ref: getRef('center') } as const;
   const start = { ref: getRef('start') } as const;
   const end = { ref: getRef('end') } as const;
@@ -66,29 +73,35 @@ export default createStyles((_theme, { arrowSize, arrowDistance }: PopperStyles,
 
     left: {
       ...horizontalPlacement(arrowSize, arrowDistance, placementClasses),
-      right: -arrowSize,
-      borderLeft: 0,
+      right: theme.dir === 'ltr' ? -arrowSize : 'unset',
+      left: theme.dir === 'rtl' ? -arrowSize : 'unset',
+      borderLeft: theme.dir === 'ltr' ? 0 : undefined,
+      borderRight: theme.dir === 'rtl' ? 0 : undefined,
       borderBottom: 0,
     },
 
     right: {
       ...horizontalPlacement(arrowSize, arrowDistance, placementClasses),
-      left: -arrowSize,
-      borderRight: 0,
+      left: theme.dir === 'ltr' ? -arrowSize : 'unset',
+      right: theme.dir === 'rtl' ? -arrowSize : 'unset',
+      borderRight: theme.dir === 'ltr' ? 0 : undefined,
+      borderLeft: theme.dir === 'rtl' ? 0 : undefined,
       borderTop: 0,
     },
 
     top: {
-      ...verticalPlacement(arrowSize, arrowDistance, placementClasses),
+      ...verticalPlacement(arrowSize, arrowDistance, placementClasses, theme),
       bottom: -arrowSize,
-      borderLeft: 0,
+      borderLeft: theme.dir === 'ltr' ? 0 : undefined,
+      borderRight: theme.dir === 'rtl' ? 0 : undefined,
       borderTop: 0,
     },
 
     bottom: {
-      ...verticalPlacement(arrowSize, arrowDistance, placementClasses),
+      ...verticalPlacement(arrowSize, arrowDistance, placementClasses, theme),
       top: -arrowSize,
-      borderRight: 0,
+      borderRight: theme.dir === 'ltr' ? 0 : undefined,
+      borderLeft: theme.dir === 'rtl' ? 0 : undefined,
       borderBottom: 0,
     },
   };

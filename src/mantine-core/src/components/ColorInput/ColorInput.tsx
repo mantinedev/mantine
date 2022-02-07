@@ -176,7 +176,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
             onChange={(event) => setValue(event.currentTarget.value)}
             invalid={!!error}
             required={required}
-            autoComplete="off"
+            autoComplete="nope"
             icon={
               icon ||
               (withPreview ? (
@@ -201,10 +201,8 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           position="bottom"
           placement="start"
           gutter={5}
-          withArrow
           arrowSize={3}
           zIndex={dropdownZIndex}
-          arrowClassName={classes.arrow}
           arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
           withinPortal={withinPortal}
         >

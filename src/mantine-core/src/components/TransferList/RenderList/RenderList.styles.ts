@@ -71,8 +71,6 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     borderTop: 0,
     borderRightWidth: reversed ? undefined : 0,
     borderLeftWidth: reversed ? 0 : undefined,
-    borderTopLeftRadius: reversed ? theme.radius.sm : 0,
-    borderTopRightRadius: reversed ? 0 : theme.radius.sm,
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
     '&:last-of-type': {
@@ -90,7 +88,7 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     boxSizing: 'border-box',
     textAlign: 'left',
     width: '100%',
-    padding: `${theme.spacing.sm / 1.5}px ${theme.spacing.sm}px`,
+    padding: '7px 12px',
   },
 
   separatorLabel: {

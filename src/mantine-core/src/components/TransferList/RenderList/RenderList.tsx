@@ -14,7 +14,7 @@ import { groupOptions } from '../../../utils';
 
 export type RenderListStylesNames = ClassNames<typeof useStyles>;
 
-interface RenderListProps extends DefaultProps<RenderListStylesNames> {
+export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   data: TransferListItem[];
   onSelect(value: string): void;
   selection: string[];
@@ -29,7 +29,22 @@ interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   onMove(): void;
   height: number;
   listComponent?: React.FC<any>;
+  limit?: number;
 }
+
+const icons = {
+  Prev: PrevIcon,
+  Next: NextIcon,
+  First: FirstIcon,
+  Last: LastIcon,
+};
+
+const rtlIons = {
+  Next: PrevIcon,
+  Prev: NextIcon,
+  Last: FirstIcon,
+  First: LastIcon,
+};
 
 export function RenderList({
   className,
@@ -49,8 +64,9 @@ export function RenderList({
   height,
   classNames,
   styles,
+  limit,
 }: RenderListProps) {
-  const { classes, cx } = useStyles(
+  const { classes, cx, theme } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea },
     { name: 'TransferList', classNames, styles }
   );
@@ -58,8 +74,9 @@ export function RenderList({
   const groupedItems: React.ReactElement<any>[] = [];
   const [query, setQuery] = useState('');
   const [hovered, setHovered] = useState(-1);
-  const filteredData = data.filter((item) => filter(query, item));
+  const filteredData = data.filter((item) => filter(query, item)).slice(0, limit);
   const ListComponent = listComponent || 'div';
+  const Icons = theme.dir === 'rtl' ? rtlIons : icons;
 
   const itemsRefs = useRef<Record<string, HTMLButtonElement>>({});
 
@@ -72,46 +89,49 @@ export function RenderList({
     isList: true,
   });
 
-  const constructItemComponent = (item: TransferListItem, index: number) => (
-    <UnstyledButton
-      tabIndex={-1}
-      onClick={() => onSelect(item.value)}
-      key={item.value}
-      onMouseEnter={() => setHovered(index)}
-      className={cx(classes.transferListItem, {
-        [classes.transferListItemHovered]: index === hovered,
-      })}
-      ref={(node: HTMLButtonElement) => {
-        if (itemsRefs && itemsRefs.current) {
-          // eslint-disable-next-line no-param-reassign
-          itemsRefs.current[item.value] = node;
-        }
-      }}
-    >
-      <ItemComponent data={item} selected={selection.includes(item.value)} />
-    </UnstyledButton>
-  );
-
-  const constructSeparator = (label?: string) => (
-    <div className={classes.separator} key={label}>
-      <Divider classNames={{ label: classes.separatorLabel }} label={label} />
-    </div>
-  );
-
   let groupName = null;
+
   sortedData.forEach((item, index) => {
-    if (!item.group) unGroupedItems.push(constructItemComponent(item, index));
-    else {
+    const itemComponent = (
+      <UnstyledButton
+        tabIndex={-1}
+        onClick={() => onSelect(item.value)}
+        key={item.value}
+        onMouseEnter={() => setHovered(index)}
+        className={cx(classes.transferListItem, {
+          [classes.transferListItemHovered]: index === hovered,
+        })}
+        ref={(node: HTMLButtonElement) => {
+          if (itemsRefs && itemsRefs.current) {
+            itemsRefs.current[item.value] = node;
+          }
+        }}
+      >
+        <ItemComponent data={item} selected={selection.includes(item.value)} />
+      </UnstyledButton>
+    );
+
+    if (!item.group) {
+      unGroupedItems.push(itemComponent);
+    } else {
       if (groupName !== item.group) {
         groupName = item.group;
-        groupedItems.push(constructSeparator(groupName));
+        groupedItems.push(
+          <div className={classes.separator} key={groupName}>
+            <Divider classNames={{ label: classes.separatorLabel }} label={groupName} />
+          </div>
+        );
       }
-      groupedItems.push(constructItemComponent(item, index));
+      groupedItems.push(itemComponent);
     }
   });
 
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
-    unGroupedItems.unshift(constructSeparator());
+    unGroupedItems.unshift(
+      <div className={classes.separator}>
+        <Divider classNames={{ label: classes.separatorLabel }} />
+      </div>
+    );
   }
 
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -190,7 +210,7 @@ export function RenderList({
             disabled={selection.length === 0}
             onClick={onMove}
           >
-            {reversed ? <PrevIcon /> : <NextIcon />}
+            {reversed ? <Icons.Prev /> : <Icons.Next />}
           </ActionIcon>
 
           {showTransferAll && (
@@ -202,7 +222,7 @@ export function RenderList({
               disabled={data.length === 0}
               onClick={onMoveAll}
             >
-              {reversed ? <FirstIcon /> : <LastIcon />}
+              {reversed ? <Icons.First /> : <Icons.Last />}
             </ActionIcon>
           )}
         </div>

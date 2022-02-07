@@ -1,0 +1,10 @@
+{
+  "title": "Simple navbar",
+  "category": "navbars",
+  "author": "rtivital",
+  "withColor": true,
+  "dependencies": ["/core/app-shell/", "/core/group/", "/core/code/", "tabler-icons-react"],
+  "canvas": {
+    "center": false
+  }
+}

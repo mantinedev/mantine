@@ -33,8 +33,11 @@ export interface SharedPopperProps {
   /** Customize mount/unmount transition */
   transition?: MantineTransition;
 
-  /** Mount/unmount transition duration in ms */
+  /** Mount transition duration in ms */
   transitionDuration?: number;
+
+  /** Unmount transition duration in ms */
+  exitTransitionDuration?: number;
 
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
@@ -69,6 +72,38 @@ export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
   withinPortal?: boolean;
 }
 
+function flipPlacement(placement: 'start' | 'center' | 'end', dir: 'ltr' | 'rtl') {
+  if (placement === 'center') {
+    return placement;
+  }
+
+  if (dir === 'rtl') {
+    if (placement === 'end') {
+      return 'start';
+    }
+
+    return 'end';
+  }
+
+  return placement;
+}
+
+function flipPosition(position: 'top' | 'left' | 'bottom' | 'right', dir: 'ltr' | 'rtl') {
+  if (position === 'top' || position === 'bottom') {
+    return position;
+  }
+
+  if (dir === 'rtl') {
+    if (position === 'left') {
+      return 'right';
+    }
+
+    return 'left';
+  }
+
+  return position;
+}
+
 export function Popper<T extends HTMLElement = HTMLDivElement>({
   position = 'top',
   placement = 'center',
@@ -81,6 +116,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   mounted,
   transition = 'pop-top-left',
   transitionDuration,
+  exitTransitionDuration = transitionDuration,
   transitionTimingFunction,
   arrowClassName,
   arrowStyle,
@@ -91,11 +127,13 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   withinPortal = true,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
-  const { classes, cx } = useStyles({ arrowSize, arrowDistance }, { name: 'Popper' });
+  const { classes, cx, theme } = useStyles({ arrowSize, arrowDistance }, { name: 'Popper' });
   const [popperElement, setPopperElement] = useState(null);
+  const _placement = flipPlacement(placement, theme.dir);
+  const _position = flipPosition(position, theme.dir);
 
   const initialPlacement: Placement =
-    placement === 'center' ? position : `${position}-${placement}`;
+    _placement === 'center' ? _position : `${_position}-${_placement}`;
 
   const { styles, attributes, forceUpdate } = usePopper(referenceElement, popperElement, {
     placement: initialPlacement,
@@ -120,6 +158,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
     <Transition
       mounted={mounted && !!referenceElement}
       duration={transitionDuration}
+      exitDuration={exitTransitionDuration}
       transition={transition}
       timingFunction={transitionTimingFunction}
       onExited={onTransitionEnd}
