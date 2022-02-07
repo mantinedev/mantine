@@ -9,6 +9,7 @@ attachDemos(storiesOf('@mantine/core/Affix/demos', module), demos.AffixDemos);
 attachDemos(storiesOf('@mantine/core/Alert/demos', module), demos.AlertDemos);
 attachDemos(storiesOf('@mantine/core/Anchor/demos', module), demos.AnchorDemos);
 attachDemos(storiesOf('@mantine/core/AppShell/demos', module), demos.AppShellDemos);
+attachDemos(storiesOf('@mantine/core/AspectRatio/demos', module), demos.AspectRatioDemos);
 attachDemos(storiesOf('@mantine/core/Autocomplete/demos', module), demos.AutocompleteDemos);
 attachDemos(storiesOf('@mantine/core/Avatar/demos', module), demos.AvatarDemos);
 attachDemos(storiesOf('@mantine/core/Badge/demos', module), demos.BadgeDemos);
