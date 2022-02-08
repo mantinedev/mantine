@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -56,28 +56,37 @@ export function defaultFilter(query: string, item: TransferListItem) {
   return item.label.toLowerCase().trim().includes(query.toLowerCase().trim());
 }
 
+const defaultProps: Partial<TransferListProps> = {
+  itemComponent: DefaultItem,
+  filter: defaultFilter,
+  titles: [null, null],
+  listHeight: 150,
+  listComponent: SelectScrollArea,
+  showTransferAll: true,
+  limit: Infinity,
+};
+
 export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
-  (
-    {
+  (props: TransferListProps, ref) => {
+    const {
       value,
       onChange,
-      itemComponent = DefaultItem,
+      itemComponent,
       searchPlaceholder,
-      filter = defaultFilter,
+      filter,
       nothingFound,
-      titles = [null, null],
+      titles,
       initialSelection,
-      listHeight = 150,
-      listComponent = SelectScrollArea,
-      showTransferAll = true,
+      listHeight,
+      listComponent,
+      showTransferAll,
       breakpoint,
       classNames,
       styles,
-      limit = Infinity,
+      limit,
       ...others
-    }: TransferListProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('TransferList', defaultProps, props);
+
     const [selection, handlers] = useSelectionState(initialSelection);
 
     const handleMoveAll = (listIndex: 0 | 1) => {
