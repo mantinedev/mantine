@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
 import useStyles from './Spoiler.styles';
@@ -28,61 +28,65 @@ export interface SpoilerProps
   transitionDuration?: number;
 }
 
-export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>(
-  (
-    {
-      className,
-      children,
-      maxHeight = 100,
-      hideLabel,
-      showLabel,
-      transitionDuration = 200,
-      controlRef,
-      initialState = false,
-      classNames,
-      styles,
-      ...others
-    }: SpoilerProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { transitionDuration },
-      { classNames, styles, name: 'Spoiler' }
-    );
-    const [show, setShowState] = useState(initialState);
-    const [spoiler, setSpoilerState] = useState(initialState);
-    const contentRef = useRef<HTMLDivElement>(null);
+const defaultProps: Partial<SpoilerProps> = {
+  maxHeight: 100,
+  transitionDuration: 200,
+  initialState: false,
+};
 
-    const spoilerMoreContent = show ? hideLabel : showLabel;
+export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props: SpoilerProps, ref) => {
+  const {
+    className,
+    children,
+    maxHeight,
+    hideLabel,
+    showLabel,
+    transitionDuration,
+    controlRef,
+    initialState,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Spoiler', defaultProps, props);
 
-    useEffect(() => {
-      setSpoilerState(maxHeight < contentRef.current.clientHeight);
-    }, [maxHeight, children]);
+  const { classes, cx } = useStyles(
+    { transitionDuration },
+    { classNames, styles, name: 'Spoiler' }
+  );
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        <div
-          className={classes.content}
-          style={{
-            maxHeight: !show ? maxHeight : contentRef.current && contentRef.current.clientHeight,
-          }}
+  const [show, setShowState] = useState(initialState);
+  const [spoiler, setSpoilerState] = useState(initialState);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const spoilerMoreContent = show ? hideLabel : showLabel;
+
+  useEffect(() => {
+    setSpoilerState(maxHeight < contentRef.current.clientHeight);
+  }, [maxHeight, children]);
+
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <div
+        className={classes.content}
+        style={{
+          maxHeight: !show ? maxHeight : contentRef.current && contentRef.current.clientHeight,
+        }}
+      >
+        <div ref={contentRef}>{children}</div>
+      </div>
+
+      {spoiler && (
+        <Anchor
+          component="button"
+          ref={controlRef}
+          onClick={() => setShowState((opened) => !opened)}
+          className={classes.control}
         >
-          <div ref={contentRef}>{children}</div>
-        </div>
-
-        {spoiler && (
-          <Anchor
-            component="button"
-            ref={controlRef}
-            onClick={() => setShowState((opened) => !opened)}
-            className={classes.control}
-          >
-            {spoilerMoreContent}
-          </Anchor>
-        )}
-      </Box>
-    );
-  }
-);
+          {spoilerMoreContent}
+        </Anchor>
+      )}
+    </Box>
+  );
+});
 
 Spoiler.displayName = '@mantine/core/Spoiler';
