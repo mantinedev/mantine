@@ -5,6 +5,7 @@ import {
   ClassNames,
   getDefaultZIndex,
   MantineNumberSize,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
@@ -66,130 +67,147 @@ export interface TooltipProps
   withinPortal?: boolean;
 }
 
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  (
-    {
-      className,
-      label,
-      children,
-      opened,
-      openDelay = 0,
-      closeDelay = 0,
-      gutter = 5,
-      color = 'gray',
-      radius = 'sm',
-      disabled = false,
-      withArrow = false,
-      arrowSize = 2,
-      position = 'top',
-      placement = 'center',
-      transition = 'pop-top-left',
-      transitionDuration = 100,
-      zIndex = getDefaultZIndex('popover'),
-      transitionTimingFunction,
-      width = 'auto',
-      wrapLines = false,
-      allowPointerEvents = false,
-      positionDependencies = [],
-      withinPortal = true,
-      tooltipRef,
-      tooltipId,
-      classNames,
-      styles,
-      onMouseLeave,
-      onMouseEnter,
-      ...others
-    }: TooltipProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
-    const openTimeoutRef = useRef<number>();
-    const closeTimeoutRef = useRef<number>();
-    const [_opened, setOpened] = useState(false);
-    const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
-    const [referenceElement, setReferenceElement] = useState(null);
+const defaultProps: Partial<TooltipProps> = {
+  openDelay: 0,
+  closeDelay: 0,
+  gutter: 5,
+  color: 'gray',
+  disabled: false,
+  withArrow: false,
+  arrowSize: 2,
+  position: 'top',
+  placement: 'center',
+  transition: 'pop-top-left',
+  transitionDuration: 100,
+  zIndex: getDefaultZIndex('popover'),
+  width: 'auto',
+  wrapLines: false,
+  allowPointerEvents: false,
+  positionDependencies: [],
+  withinPortal: true,
+};
 
-    const handleOpen = () => {
-      window.clearTimeout(closeTimeoutRef.current);
+export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipProps, ref) => {
+  const {
+    className,
+    label,
+    children,
+    opened,
+    openDelay,
+    closeDelay,
+    gutter,
+    color,
+    radius,
+    disabled,
+    withArrow,
+    arrowSize,
+    position,
+    placement,
+    transition,
+    transitionDuration,
+    zIndex,
+    transitionTimingFunction,
+    width,
+    wrapLines,
+    allowPointerEvents,
+    positionDependencies,
+    withinPortal,
+    tooltipRef,
+    tooltipId,
+    classNames,
+    styles,
+    onMouseLeave,
+    onMouseEnter,
+    ...others
+  } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
-      if (openDelay !== 0) {
-        openTimeoutRef.current = window.setTimeout(() => {
-          setOpened(true);
-        }, openDelay);
-      } else {
+  const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
+  const openTimeoutRef = useRef<number>();
+  const closeTimeoutRef = useRef<number>();
+  const [_opened, setOpened] = useState(false);
+  const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
+  const [referenceElement, setReferenceElement] = useState(null);
+
+  const handleOpen = () => {
+    window.clearTimeout(closeTimeoutRef.current);
+
+    if (openDelay !== 0) {
+      openTimeoutRef.current = window.setTimeout(() => {
         setOpened(true);
-      }
-    };
+      }, openDelay);
+    } else {
+      setOpened(true);
+    }
+  };
 
-    const handleClose = () => {
-      window.clearTimeout(openTimeoutRef.current);
+  const handleClose = () => {
+    window.clearTimeout(openTimeoutRef.current);
 
-      if (closeDelay !== 0) {
-        closeTimeoutRef.current = window.setTimeout(() => {
-          setOpened(false);
-        }, closeDelay);
-      } else {
+    if (closeDelay !== 0) {
+      closeTimeoutRef.current = window.setTimeout(() => {
         setOpened(false);
-      }
-    };
+      }, closeDelay);
+    } else {
+      setOpened(false);
+    }
+  };
 
-    useEffect(
-      () => () => {
-        window.clearTimeout(openTimeoutRef.current);
-        window.clearTimeout(closeTimeoutRef.current);
-      },
-      []
-    );
+  useEffect(
+    () => () => {
+      window.clearTimeout(openTimeoutRef.current);
+      window.clearTimeout(closeTimeoutRef.current);
+    },
+    []
+  );
 
-    return (
-      <Box<'div'>
-        className={cx(classes.root, className)}
-        onMouseEnter={(event) => {
-          handleOpen();
-          typeof onMouseEnter === 'function' && onMouseEnter(event);
-        }}
-        onMouseLeave={(event) => {
-          handleClose();
-          typeof onMouseLeave === 'function' && onMouseLeave(event);
-        }}
-        onFocusCapture={handleOpen}
-        onBlurCapture={handleClose}
-        ref={mergeRefs(setReferenceElement, ref)}
-        {...others}
+  return (
+    <Box<'div'>
+      className={cx(classes.root, className)}
+      onMouseEnter={(event) => {
+        handleOpen();
+        typeof onMouseEnter === 'function' && onMouseEnter(event);
+      }}
+      onMouseLeave={(event) => {
+        handleClose();
+        typeof onMouseLeave === 'function' && onMouseLeave(event);
+      }}
+      onFocusCapture={handleOpen}
+      onBlurCapture={handleClose}
+      ref={mergeRefs(setReferenceElement, ref)}
+      {...others}
+    >
+      <Popper
+        referenceElement={referenceElement}
+        transitionDuration={transitionDuration}
+        transition={transition}
+        mounted={visible}
+        position={position}
+        placement={placement}
+        gutter={gutter}
+        withArrow={withArrow}
+        arrowSize={arrowSize}
+        arrowDistance={7}
+        zIndex={zIndex}
+        arrowClassName={classes.arrow}
+        forceUpdateDependencies={[color, radius, ...positionDependencies]}
+        withinPortal={withinPortal}
       >
-        <Popper
-          referenceElement={referenceElement}
-          transitionDuration={transitionDuration}
-          transition={transition}
-          mounted={visible}
-          position={position}
-          placement={placement}
-          gutter={gutter}
-          withArrow={withArrow}
-          arrowSize={arrowSize}
-          arrowDistance={7}
-          zIndex={zIndex}
-          arrowClassName={classes.arrow}
-          forceUpdateDependencies={[color, radius, ...positionDependencies]}
-          withinPortal={withinPortal}
+        <Box
+          className={classes.body}
+          ref={tooltipRef}
+          sx={{
+            pointerEvents: allowPointerEvents ? 'all' : 'none',
+            whiteSpace: wrapLines ? 'normal' : 'nowrap',
+            width,
+          }}
         >
-          <Box
-            className={classes.body}
-            ref={tooltipRef}
-            sx={{
-              pointerEvents: allowPointerEvents ? 'all' : 'none',
-              whiteSpace: wrapLines ? 'normal' : 'nowrap',
-              width,
-            }}
-          >
-            {label}
-          </Box>
-        </Popper>
+          {label}
+        </Box>
+      </Popper>
 
-        {children}
-      </Box>
-    );
-  }
-);
+      {children}
+    </Box>
+  );
+});
 
 Tooltip.displayName = '@mantine/core/Tooltip';
