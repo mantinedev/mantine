@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Table.styles';
 
@@ -20,40 +20,45 @@ export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef
   verticalSpacing?: MantineNumberSize;
 }
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(
-  (
-    {
-      className,
-      children,
-      striped = false,
-      highlightOnHover = false,
-      captionSide = 'top',
-      horizontalSpacing = 'xs',
-      verticalSpacing = 7,
-      ...others
-    }: TableProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { captionSide, verticalSpacing, horizontalSpacing },
-      { name: 'Table' }
-    );
+const defaultProps: Partial<TableProps> = {
+  striped: false,
+  highlightOnHover: false,
+  captionSide: 'top',
+  horizontalSpacing: 'xs',
+  verticalSpacing: 7,
+};
 
-    return (
-      <Box
-        {...others}
-        component="table"
-        ref={ref}
-        className={cx(
-          classes.root,
-          { [classes.striped]: striped, [classes.hover]: highlightOnHover },
-          className
-        )}
-      >
-        {children}
-      </Box>
-    );
-  }
-);
+export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps, ref) => {
+  const {
+    className,
+    children,
+    striped,
+    highlightOnHover,
+    captionSide,
+    horizontalSpacing,
+    verticalSpacing,
+    ...others
+  } = useMantineDefaultProps('Table', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    { captionSide, verticalSpacing, horizontalSpacing },
+    { name: 'Table' }
+  );
+
+  return (
+    <Box
+      {...others}
+      component="table"
+      ref={ref}
+      className={cx(
+        classes.root,
+        { [classes.striped]: striped, [classes.hover]: highlightOnHover },
+        className
+      )}
+    >
+      {children}
+    </Box>
+  );
+});
 
 Table.displayName = '@mantine/core/Table';
