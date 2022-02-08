@@ -118,7 +118,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       handlers.deselectAll(listIndex);
     };
 
-    const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : undefined;
+    const breakpoints = breakpoint ? [{ maxWidth: breakpoint, cols: 1 }] : [];
     const sharedListProps = {
       itemComponent,
       listComponent,
