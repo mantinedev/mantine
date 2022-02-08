@@ -1,6 +1,12 @@
 import React, { cloneElement, forwardRef } from 'react';
 import { useUncontrolled, useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import {
   InputWrapper,
@@ -47,25 +53,29 @@ export interface RadioGroupProps
   wrapperProps?: { [key: string]: any };
 }
 
+const defaultProps: Partial<RadioGroupProps> = {
+  variant: 'horizontal',
+  spacing: 'sm',
+};
+
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
-  (
-    {
+  (props: RadioGroupProps, ref) => {
+    const {
       name,
       children,
       value,
       defaultValue,
       onChange,
-      variant = 'horizontal',
-      spacing = 'sm',
+      variant,
+      spacing,
       color,
       size,
       classNames,
       styles,
       wrapperProps,
       ...others
-    }: RadioGroupProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('RadioGroup', defaultProps, props);
+
     const uuid = useUuid(name);
     const [_value, setValue] = useUncontrolled({
       value,
