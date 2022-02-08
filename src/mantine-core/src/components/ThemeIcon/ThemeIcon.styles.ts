@@ -50,7 +50,7 @@ export default createStyles(
         height: iconSize,
         minWidth: iconSize,
         minHeight: iconSize,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         backgroundColor: colors.background,
         color: colors.color,
         backgroundImage: variant === 'gradient' ? colors.background : null,
