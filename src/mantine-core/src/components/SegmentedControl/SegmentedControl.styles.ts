@@ -44,7 +44,7 @@ export default createStyles(
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 500,
         fontSize: size in theme.fontSizes ? theme.fontSizes[size] : theme.fontSizes.sm,
         cursor: 'pointer',
@@ -115,7 +115,7 @@ export default createStyles(
         width: vertical && !fullWidth ? 'max-content' : 'inherit',
         flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         overflow: 'hidden',
         padding: WRAPPER_PADDING,
       },
@@ -144,7 +144,7 @@ export default createStyles(
 
       active: {
         boxSizing: 'border-box',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         position: 'absolute',
         zIndex: 1,
         boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,
