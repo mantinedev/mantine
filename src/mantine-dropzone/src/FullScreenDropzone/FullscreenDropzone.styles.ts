@@ -31,7 +31,7 @@ export default createStyles(
           theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
         }`,
         padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         cursor: 'pointer',
         userSelect: 'none',
         transition: 'background-color 150ms ease',
