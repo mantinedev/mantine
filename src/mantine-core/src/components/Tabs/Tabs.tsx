@@ -6,6 +6,7 @@ import {
   MantineColor,
   ClassNames,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -84,26 +85,33 @@ function findInitialTab(tabs: React.ReactElement[]) {
 
 type TabsComponent = ForwardRefWithStaticComponents<TabsProps, { Tab: typeof TabControl }>;
 
+const defaultProps: Partial<TabsProps> = {
+  position: 'left',
+  grow: false,
+  variant: 'default',
+  tabPadding: 'xs',
+  orientation: 'horizontal',
+};
+
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
-  (
-    {
+  (props: TabsProps, ref) => {
+    const {
       className,
       children,
       initialTab,
       active,
-      position = 'left',
-      grow = false,
+      position,
+      grow,
       onTabChange,
       color,
-      variant = 'default',
+      variant,
       classNames,
       styles,
-      tabPadding = 'xs',
-      orientation = 'horizontal',
+      tabPadding,
+      orientation,
       ...others
-    }: TabsProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Tabs', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { tabPadding, orientation },
       { classNames, styles, name: 'Tabs' }
