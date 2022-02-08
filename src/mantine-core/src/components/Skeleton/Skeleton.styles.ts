@@ -18,7 +18,7 @@ export default createStyles(
     root: {
       height,
       width: circle ? height : width,
-      borderRadius: circle ? height : theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: circle ? height : theme.fn.radius(radius),
       position: 'relative',
       overflow: 'hidden',
     },

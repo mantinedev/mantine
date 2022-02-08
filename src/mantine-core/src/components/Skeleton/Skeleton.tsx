@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Skeleton.styles';
 
@@ -23,35 +23,39 @@ export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithout
   animate?: boolean;
 }
 
-export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
-  (
-    {
-      height = 'auto',
-      width = '100%',
-      visible = true,
-      animate = true,
-      className,
-      circle,
-      radius = 'sm',
-      classNames,
-      styles,
-      ...others
-    }: SkeletonProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { height, width, circle, radius, animate },
-      { classNames, styles, name: 'Skeleton' }
-    );
+const defaultProps: Partial<SkeletonProps> = {
+  height: 'auto',
+  width: '100%',
+  visible: true,
+  animate: true,
+};
 
-    return (
-      <Box
-        className={cx(classes.root, { [classes.visible]: visible }, className)}
-        ref={ref}
-        {...others}
-      />
-    );
-  }
-);
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props: SkeletonProps, ref) => {
+  const {
+    height,
+    width,
+    visible,
+    animate,
+    className,
+    circle,
+    radius,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Skeleton', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    { height, width, circle, radius, animate },
+    { classNames, styles, name: 'Skeleton' }
+  );
+
+  return (
+    <Box
+      className={cx(classes.root, { [classes.visible]: visible }, className)}
+      ref={ref}
+      {...others}
+    />
+  );
+});
 
 Skeleton.displayName = '@mantine/core/Skeleton';
