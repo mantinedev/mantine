@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -50,23 +50,40 @@ const validationRule = (val: any) =>
 const isFirstDateSet = (val: any) =>
   Array.isArray(val) && val.length === 2 && val[0] instanceof Date;
 
+const defaultProps: Partial<DateRangePickerProps> = {
+  shadow: 'sm',
+  locale: 'en',
+  transitionDuration: 200,
+  closeCalendarOnChange: true,
+  labelFormat: 'MMMM YYYY',
+  initiallyOpened: false,
+  size: 'sm',
+  dropdownType: 'popover',
+  labelSeparator: '–',
+  clearable: true,
+  firstDayOfWeek: 'monday',
+  allowSingleDateInRange: false,
+  amountOfMonths: 1,
+  withinPortal: true,
+};
+
 export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
-  (
-    {
+  (props: DateRangePickerProps, ref) => {
+    const {
       value,
       onChange,
       defaultValue,
       classNames,
       styles,
-      shadow = 'sm',
-      locale = 'en',
+      shadow,
+      locale,
       inputFormat,
-      transitionDuration = 200,
+      transitionDuration,
       transitionTimingFunction,
       nextMonthLabel,
       previousMonthLabel,
-      closeCalendarOnChange = true,
-      labelFormat = 'MMMM YYYY',
+      closeCalendarOnChange,
+      labelFormat,
       dayClassName,
       dayStyle,
       disableOutsideEvents,
@@ -74,20 +91,19 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       maxDate,
       excludeDate,
       initialMonth,
-      initiallyOpened = false,
-      size = 'sm',
-      dropdownType = 'popover',
-      labelSeparator = '–',
-      clearable = true,
+      initiallyOpened,
+      size,
+      dropdownType,
+      labelSeparator,
+      clearable,
       clearButtonLabel,
-      firstDayOfWeek = 'monday',
-      allowSingleDateInRange = false,
-      amountOfMonths = 1,
-      withinPortal = true,
+      firstDayOfWeek,
+      allowSingleDateInRange,
+      amountOfMonths,
+      withinPortal,
       ...others
-    }: DateRangePickerProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
+
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;

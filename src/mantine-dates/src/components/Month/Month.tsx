@@ -1,5 +1,12 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, Text, Box, MantineSize, ClassNames } from '@mantine/core';
+import {
+  DefaultProps,
+  Text,
+  Box,
+  MantineSize,
+  ClassNames,
+  useMantineDefaultProps,
+} from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { FirstDayOfWeek } from '../../types';
@@ -95,140 +102,152 @@ export interface MonthProps
 
 const no = () => false;
 
-export const Month = forwardRef<HTMLTableElement, MonthProps>(
-  (
-    {
-      className,
-      month,
-      value,
-      onChange,
-      disableOutsideEvents = false,
-      locale,
-      dayClassName,
-      dayStyle,
-      classNames,
-      styles,
-      minDate,
-      maxDate,
-      excludeDate,
-      onDayMouseEnter,
-      range,
-      hideWeekdays = false,
-      __staticSelector = 'Month',
-      size = 'sm',
-      fullWidth = false,
-      preventFocus = false,
-      focusable = true,
-      firstDayOfWeek = 'monday',
-      onDayKeyDown,
-      daysRefs,
-      hideOutsideDates = false,
-      isDateInRange = no,
-      isDateFirstInRange = no,
-      isDateLastInRange = no,
-      ...others
-    }: MonthProps,
-    ref
-  ) => {
-    const { classes, cx, theme } = useStyles(
-      { fullWidth },
-      { classNames, styles, name: __staticSelector }
-    );
-    const finalLocale = locale || theme.datesLocale;
-    const days = getMonthDays(month, firstDayOfWeek);
+const defaultProps: Partial<MonthProps> = {
+  disableOutsideEvents: false,
+  hideWeekdays: false,
+  __staticSelector: 'Month',
+  size: 'sm',
+  fullWidth: false,
+  preventFocus: false,
+  focusable: true,
+  firstDayOfWeek: 'monday',
+  hideOutsideDates: false,
+  isDateInRange: no,
+  isDateFirstInRange: no,
+  isDateLastInRange: no,
+};
 
-    const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
-      <th className={classes.weekdayCell} key={weekday}>
-        <Text size={size} className={classes.weekday}>
-          {upperFirst(weekday)}
-        </Text>
-      </th>
-    ));
+export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
+  const {
+    className,
+    month,
+    value,
+    onChange,
+    disableOutsideEvents,
+    locale,
+    dayClassName,
+    dayStyle,
+    classNames,
+    styles,
+    minDate,
+    maxDate,
+    excludeDate,
+    onDayMouseEnter,
+    range,
+    hideWeekdays,
+    __staticSelector,
+    size,
+    fullWidth,
+    preventFocus,
+    focusable,
+    firstDayOfWeek,
+    onDayKeyDown,
+    daysRefs,
+    hideOutsideDates,
+    isDateInRange,
+    isDateFirstInRange,
+    isDateLastInRange,
+    ...others
+  } = useMantineDefaultProps('Month', defaultProps, props);
 
-    const hasValue = value instanceof Date;
-    const hasValueInMonthRange =
-      hasValue &&
-      dayjs(value).isAfter(dayjs(month).startOf('month')) &&
-      dayjs(value).isBefore(dayjs(month).endOf('month'));
+  const { classes, cx, theme } = useStyles(
+    { fullWidth },
+    { classNames, styles, name: __staticSelector }
+  );
+  const finalLocale = locale || theme.datesLocale;
+  const days = getMonthDays(month, firstDayOfWeek);
 
-    const rows = days.map((row, rowIndex) => {
-      const cells = row.map((date, cellIndex) => {
-        const dayProps = getDayProps({
-          date,
-          month,
-          hasValue,
-          minDate,
-          maxDate,
-          value,
-          excludeDate,
-          disableOutsideEvents,
-          range,
-        });
+  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
+    <th className={classes.weekdayCell} key={weekday}>
+      <Text size={size} className={classes.weekday}>
+        {upperFirst(weekday)}
+      </Text>
+    </th>
+  ));
 
-        const onKeyDownPayload = { rowIndex, cellIndex, date };
+  const hasValue = value instanceof Date;
+  const hasValueInMonthRange =
+    hasValue &&
+    dayjs(value).isAfter(dayjs(month).startOf('month')) &&
+    dayjs(value).isBefore(dayjs(month).endOf('month'));
 
-        return (
-          <td className={classes.cell} key={cellIndex}>
-            <Day
-              ref={(button) => {
-                if (daysRefs) {
-                  if (!Array.isArray(daysRefs[rowIndex])) {
-                    // eslint-disable-next-line no-param-reassign
-                    daysRefs[rowIndex] = [];
-                  }
-
-                  // eslint-disable-next-line no-param-reassign
-                  daysRefs[rowIndex][cellIndex] = button;
-                }
-              }}
-              onClick={() => typeof onChange === 'function' && onChange(date)}
-              onMouseDown={(event) => preventFocus && event.preventDefault()}
-              value={date}
-              outside={dayProps.outside}
-              weekend={dayProps.weekend}
-              inRange={dayProps.inRange || isDateInRange(date, dayProps)}
-              firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
-              lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
-              firstInMonth={
-                hideOutsideDates
-                  ? isSameDate(date, dayjs(month).startOf('month').toDate())
-                  : cellIndex === 0 && rowIndex === 0
-              }
-              selected={dayProps.selected || dayProps.selectedInRange}
-              hasValue={hasValueInMonthRange}
-              onKeyDown={(event) =>
-                typeof onDayKeyDown === 'function' && onDayKeyDown(onKeyDownPayload, event)
-              }
-              className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
-              style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
-              disabled={dayProps.disabled}
-              onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
-              size={size}
-              fullWidth={fullWidth}
-              focusable={focusable}
-              hideOutsideDates={hideOutsideDates}
-              __staticSelector={__staticSelector}
-              styles={styles}
-              classNames={classNames}
-            />
-          </td>
-        );
+  const rows = days.map((row, rowIndex) => {
+    const cells = row.map((date, cellIndex) => {
+      const dayProps = getDayProps({
+        date,
+        month,
+        hasValue,
+        minDate,
+        maxDate,
+        value,
+        excludeDate,
+        disableOutsideEvents,
+        range,
       });
 
-      return <tr key={rowIndex}>{cells}</tr>;
+      const onKeyDownPayload = { rowIndex, cellIndex, date };
+
+      return (
+        <td className={classes.cell} key={cellIndex}>
+          <Day
+            ref={(button) => {
+              if (daysRefs) {
+                if (!Array.isArray(daysRefs[rowIndex])) {
+                  // eslint-disable-next-line no-param-reassign
+                  daysRefs[rowIndex] = [];
+                }
+
+                // eslint-disable-next-line no-param-reassign
+                daysRefs[rowIndex][cellIndex] = button;
+              }
+            }}
+            onClick={() => typeof onChange === 'function' && onChange(date)}
+            onMouseDown={(event) => preventFocus && event.preventDefault()}
+            value={date}
+            outside={dayProps.outside}
+            weekend={dayProps.weekend}
+            inRange={dayProps.inRange || isDateInRange(date, dayProps)}
+            firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
+            lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
+            firstInMonth={
+              hideOutsideDates
+                ? isSameDate(date, dayjs(month).startOf('month').toDate())
+                : cellIndex === 0 && rowIndex === 0
+            }
+            selected={dayProps.selected || dayProps.selectedInRange}
+            hasValue={hasValueInMonthRange}
+            onKeyDown={(event) =>
+              typeof onDayKeyDown === 'function' && onDayKeyDown(onKeyDownPayload, event)
+            }
+            className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
+            style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
+            disabled={dayProps.disabled}
+            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
+            size={size}
+            fullWidth={fullWidth}
+            focusable={focusable}
+            hideOutsideDates={hideOutsideDates}
+            __staticSelector={__staticSelector}
+            styles={styles}
+            classNames={classNames}
+          />
+        </td>
+      );
     });
 
-    return (
-      <Box component="table" className={cx(classes.month, className)} ref={ref} {...others}>
-        {!hideWeekdays && (
-          <thead>
-            <tr>{weekdays}</tr>
-          </thead>
-        )}
-        <tbody>{rows}</tbody>
-      </Box>
-    );
-  }
-);
+    return <tr key={rowIndex}>{cells}</tr>;
+  });
+
+  return (
+    <Box component="table" className={cx(classes.month, className)} ref={ref} {...others}>
+      {!hideWeekdays && (
+        <thead>
+          <tr>{weekdays}</tr>
+        </thead>
+      )}
+      <tbody>{rows}</tbody>
+    </Box>
+  );
+});
 
 Month.displayName = '@mantine/dates/Month';
