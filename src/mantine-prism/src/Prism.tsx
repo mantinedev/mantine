@@ -11,6 +11,7 @@ import {
   TabProps,
   TabsProps,
   ScrollArea,
+  useMantineDefaultProps,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -32,25 +33,33 @@ type PrismComponent = ((props: PrismProps) => React.ReactElement) & {
   Tabs: typeof PrismTabs;
 };
 
+const prismDefaultProps: Partial<PrismProps> = {
+  noCopy: false,
+  copyLabel: 'Copy code',
+  copiedLabel: 'Copied',
+  withLineNumbers: false,
+  highlightLines: {},
+  scrollAreaComponent: ScrollArea,
+};
+
 export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
-  (
-    {
+  (props: PrismProps, ref) => {
+    const {
       className,
       children,
       language,
-      noCopy = false,
+      noCopy,
       classNames,
       styles,
-      copyLabel = 'Copy code',
-      copiedLabel = 'Copied',
-      withLineNumbers = false,
-      highlightLines = {},
-      scrollAreaComponent: ScrollAreaComponent = ScrollArea,
+      copyLabel,
+      copiedLabel,
+      withLineNumbers,
+      highlightLines,
+      scrollAreaComponent: ScrollAreaComponent,
       colorScheme,
       ...others
-    }: PrismProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Prism', prismDefaultProps, props);
+
     const theme = useMantineTheme();
     const clipboard = useClipboard();
     const { classes, cx } = useStyles(
@@ -188,7 +197,8 @@ export interface PrismTabsProps
     Omit<TabsProps, 'classNames' | 'styles'> {}
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  ({ children, classNames, styles, ...others }: PrismTabsProps, ref) => {
+  (props: PrismTabsProps, ref) => {
+    const { children, classNames, styles, ...others } = useMantineDefaultProps('PrismTabs', {}, props);
     const { classes, cx } = useTabsStyles(null, { name: 'PrismTabs', classNames, styles });
 
     const tabs = (Children.toArray(children) as React.ReactElement[])
