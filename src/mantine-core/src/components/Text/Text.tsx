@@ -6,6 +6,7 @@ import {
   MantineColor,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Text.styles';
@@ -51,9 +52,17 @@ type TextComponent = (<C extends React.ElementType = 'div'>(
   props: TextProps<C>
 ) => React.ReactElement) & { displayName?: string };
 
+const defaultProps: Partial<TextProps<any>> = {
+  size: 'md',
+  variant: 'text',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
+  inline: false,
+  inherit: false,
+};
+
 export const Text: TextComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
+  <C extends React.ElementType = 'div'>(props: TextProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       className,
       component,
       size = 'md',
@@ -70,9 +79,8 @@ export const Text: TextComponent = forwardRef(
       classNames,
       styles,
       ...others
-    }: TextProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Text', defaultProps, props);
+
     const { classes, cx } = useStyles(
       {
         variant,
