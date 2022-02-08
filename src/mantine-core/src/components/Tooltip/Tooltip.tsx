@@ -121,7 +121,10 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipP
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
-  const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Tooltip' });
+  const { classes, cx, theme } = useStyles(
+    { color, radius },
+    { classNames, styles, name: 'Tooltip' }
+  );
   const openTimeoutRef = useRef<number>();
   const closeTimeoutRef = useRef<number>();
   const [_opened, setOpened] = useState(false);
@@ -186,7 +189,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipP
         gutter={gutter}
         withArrow={withArrow}
         arrowSize={arrowSize}
-        arrowDistance={7}
+        arrowDistance={theme.fn.radius(radius) > 10 ? 7 : 3}
         zIndex={zIndex}
         arrowClassName={classes.arrow}
         forceUpdateDependencies={[color, radius, ...positionDependencies]}
