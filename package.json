@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "3.6.6",
+  "version": "3.6.7",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -16,9 +16,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "build": "esno scripts/build",
+    "build:all": "npm run build all && npm run build:private",
     "build:demos": "npm run build @mantine/demos",
     "build:private": "npm run build @mantine/styles-api && npm run build @mantine/demos",
-    "build:public": "npm run build all",
     "jest": "jest",
     "prettier:test": "prettier --check \"**/*.{ts,tsx}\"",
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",

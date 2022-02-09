@@ -87,13 +87,13 @@ export function useFullscreen<T extends HTMLElement = any>() {
     }
   }, []);
 
-  const ref = (element: T | null) => {
+  const ref = useCallback((element: T | null) => {
     if (element === null) {
       _ref.current = window.document.documentElement as T;
     } else {
       _ref.current = element;
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (!_ref.current && window.document) {

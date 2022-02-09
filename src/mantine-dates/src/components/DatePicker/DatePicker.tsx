@@ -11,7 +11,7 @@ export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
     Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles'> {
   /** Selected date, required with controlled input */
-  value?: Date;
+  value?: Date | null;
 
   /** Called when date changes */
   onChange?(value: Date | null): void;

@@ -38,14 +38,13 @@ interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   loading?: boolean;
 }
 
-export type ActionIconProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  _ActionIconProps
->;
+export type ActionIconProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _ActionIconProps>
+  : never;
 
-type ActionIconComponent = (<C extends React.ElementType = 'button'>(
-  props: ActionIconProps<C>
-) => React.ReactElement) & { displayName?: string };
+type ActionIconComponent = (<C = 'button'>(props: ActionIconProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 const defaultProps: Partial<ActionIconProps<any>> = {
   color: 'gray',

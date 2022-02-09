@@ -24,14 +24,13 @@ export interface SharedPaperProps extends DefaultProps {
   withBorder?: boolean;
 }
 
-export type PaperProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  SharedPaperProps
->;
+export type PaperProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, SharedPaperProps>
+  : never;
 
-type PaperComponent = (<C extends React.ElementType = 'div'>(
-  props: PaperProps<C>
-) => React.ReactElement) & { displayName?: string };
+type PaperComponent = (<C = 'div'>(props: PaperProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 const defaultProps: Partial<PaperProps<any>> = {
   padding: 0,

@@ -61,14 +61,13 @@ export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   loaderPosition?: 'left' | 'right';
 }
 
-export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  SharedButtonProps
->;
+export type ButtonProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, SharedButtonProps>
+  : never;
 
-type ButtonComponent = (<C extends React.ElementType = 'button'>(
-  props: ButtonProps<C>
-) => React.ReactElement) & { displayName?: string };
+type ButtonComponent = (<C = 'button'>(props: ButtonProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 const defaultProps: Partial<ButtonProps<any>> = {
   size: 'sm',
