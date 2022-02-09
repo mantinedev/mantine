@@ -112,9 +112,6 @@ const defaultProps: Partial<MonthProps> = {
   focusable: true,
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
-  isDateInRange: no,
-  isDateFirstInRange: no,
-  isDateLastInRange: no,
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
@@ -144,9 +141,9 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     onDayKeyDown,
     daysRefs,
     hideOutsideDates,
-    isDateInRange,
-    isDateFirstInRange,
-    isDateLastInRange,
+    isDateInRange = no,
+    isDateFirstInRange = no,
+    isDateLastInRange = no,
     ...others
   } = useMantineDefaultProps('Month', defaultProps, props);
 
