@@ -37,7 +37,7 @@ function MantineProviderConsumer({ color }: { color: string }) {
   return <div className={classes.element}>element</div>;
 }
 
-storiesOf('@mantine/styles', module)
+storiesOf('@mantine/styles/createStyles', module)
   .add('Refs', () => <UseRefStyles />)
   .add('MantineProvider styles', () => (
     <MantineProvider
