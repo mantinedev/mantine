@@ -109,8 +109,13 @@ You can use polymorphic components (Button, ActionIcon, Anchor, etc.) with Next 
 
 ```tsx
 import Link from 'next/link';
+import { Button } from '@mantine/core';
 
-<Link href="/hello">
-  <Button component="a">Next link button</Button>
-</Link>;
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
 ```
