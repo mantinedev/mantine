@@ -13,32 +13,32 @@ type ProviderStyles = Record<
   | ((theme: MantineTheme, params: Record<string, any>) => Record<string, CSSObject>)
 >;
 
-interface MantineThemeContextType {
+type MantineDefaultProps = Record<string, Record<string, any>>;
+
+interface MantineProviderContextType {
   theme: MantineTheme;
   styles: ProviderStyles;
   emotionOptions: EmotionCacheOptions;
+  defaultProps: MantineDefaultProps;
 }
 
-type MantineDefaultProps = Record<string, Record<string, any>>;
-
-const MantineThemeContext = createContext<MantineThemeContextType>({
+const MantineProviderContext = createContext<MantineProviderContextType>({
   theme: DEFAULT_THEME,
   styles: {},
   emotionOptions: { key: 'mantine', prepend: true },
+  defaultProps: {},
 });
 
-const MantineDefaultPropsProvider = createContext<MantineDefaultProps>({});
-
 export function useMantineTheme() {
-  return useContext(MantineThemeContext)?.theme || DEFAULT_THEME;
+  return useContext(MantineProviderContext)?.theme || DEFAULT_THEME;
 }
 
 export function useMantineThemeStyles() {
-  return useContext(MantineThemeContext)?.styles || {};
+  return useContext(MantineProviderContext)?.styles || {};
 }
 
 export function useMantineEmotionOptions(): EmotionCacheOptions {
-  return useContext(MantineThemeContext)?.emotionOptions || { key: 'mantine', prepend: true };
+  return useContext(MantineProviderContext)?.emotionOptions || { key: 'mantine', prepend: true };
 }
 
 export function useMantineDefaultProps<T extends Record<string, any>>(
@@ -46,7 +46,7 @@ export function useMantineDefaultProps<T extends Record<string, any>>(
   defaultProps: Partial<T>,
   props: T
 ): T {
-  const contextProps = useContext(MantineDefaultPropsProvider)[component] || {};
+  const contextProps = useContext(MantineProviderContext)?.defaultProps?.[component] || {};
   return { ...defaultProps, ...contextProps, ...props };
 }
 
@@ -70,12 +70,12 @@ function GlobalStyles() {
         },
 
         body: {
-          ...theme.fn.fontStyles(),
+          ...(theme.fn.fontStyles() as any),
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
           fontSizes: theme.fontSizes.md,
-        } as any,
+        },
       }}
     />
   );
@@ -91,15 +91,13 @@ export function MantineProvider({
   children,
 }: MantineProviderProps) {
   return (
-    <MantineDefaultPropsProvider.Provider value={defaultProps}>
-      <MantineThemeContext.Provider
-        value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions }}
-      >
-        {withNormalizeCSS && <NormalizeCSS />}
-        {withGlobalStyles && <GlobalStyles />}
-        {children}
-      </MantineThemeContext.Provider>
-    </MantineDefaultPropsProvider.Provider>
+    <MantineProviderContext.Provider
+      value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions, defaultProps }}
+    >
+      {withNormalizeCSS && <NormalizeCSS />}
+      {withGlobalStyles && <GlobalStyles />}
+      {children}
+    </MantineProviderContext.Provider>
   );
 }
 
