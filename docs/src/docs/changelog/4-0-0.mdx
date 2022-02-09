@@ -13,6 +13,35 @@ import { AspectRatioDemos } from '@mantine/demos';
 
 - Default border-radius of [Badge](https://mantine.dev/core/badge/) and [Chip](https://mantine.dev/core/chips/) components no longer defaults to `theme.radius.xl`, it was changed to support new `theme.defaultRadius`
 
+## Default props on MantineProvider
+
+Most of components now support default props on MantineProvider:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      defaultProps={{
+        Button: { color: 'red' },
+        Badge: { size: 'xl', radius: 0 },
+        // ... default props for other components
+      }}
+    >
+      {/* By default Button will have red color */}
+      <Button>Red button</Button>
+
+      {/* Default color can be overwritten by props */}
+      <Button color="blue">Blue button</Button>
+
+      {/* By default Badge will have xl size and 0 radius */}
+      <Badge>Badge</Badge>
+    </MantineProvider>
+  );
+}
+```
+
 ## Styles params on MantineProvider
 
 You can now get component styles params in [MantineProvider](https://mantine.dev/theming/mantine-provider/) `styles` prop.
@@ -39,7 +68,7 @@ function Demo() {
 }
 ```
 
-## createStyles changes
+## createStyles references changes
 
 [createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
 Instead of generating unique identifiers with each `getRef` call it returns the same value for given argument:

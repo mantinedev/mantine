@@ -156,10 +156,8 @@ function App() {
 
 ## Nested MantineProviders
 
-If some parts of your application require different theme styles
-you can wrap them in another MantineProvider.
-Nested MantineProvider components do not inherit theme properties from parents
-and merge theme prop with default theme.
+If some parts of your application require different theme styles you can wrap them in another MantineProvider.
+Nested MantineProvider components do not inherit theme properties from parents and merge theme prop with default theme.
 
 <Demo data={ThemeDemos.nestedProviders} />
 
@@ -169,6 +167,35 @@ You can add styles to components that support [Styles API](/theming/styles-api/)
 All components that are rendered inside MantineProvider will inherit those styles:
 
 <Demo data={ThemeDemos.providerStyles} />
+
+## Default props on MantineProvider
+
+Most of Mantine components support default props on MantineProvider:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      defaultProps={{
+        Button: { color: 'red' },
+        Badge: { size: 'xl', radius: 0 },
+        // ... default props for other components
+      }}
+    >
+      {/* By default Button will have red color */}
+      <Button>Red button</Button>
+
+      {/* Default color can be overwritten by props */}
+      <Button color="blue">Blue button</Button>
+
+      {/* By default Badge will have xl size and 0 radius */}
+      <Badge>Badge</Badge>
+    </MantineProvider>
+  );
+}
+```
 
 ## Normalize.css and global styles
 
