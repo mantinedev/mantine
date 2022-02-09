@@ -58,6 +58,7 @@ export interface ChipProps
 const defaultProps: Partial<ChipProps> = {
   type: 'checkbox',
   size: 'sm',
+  radius: 'xl',
   __staticSelector: 'Chip',
 };
 
