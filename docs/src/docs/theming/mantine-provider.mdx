@@ -132,6 +132,28 @@ Pass theme object to MantineProvider to change global styles:
 </MantineProvider>
 ```
 
+## Store theme override object in variable
+
+To store theme override object in a variable use `MantineThemeOverride` type:
+
+```tsx
+import { MantineThemeOverride, MantineProvider } from '@mantine/core';
+
+const myTheme: MantineThemeOverride = {
+  colorScheme: 'light',
+  primaryColor: 'orange',
+  defaultRadius: 0,
+};
+
+function App() {
+  return (
+    <MantineProvider theme={myTheme}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
 ## Nested MantineProviders
 
 If some parts of your application require different theme styles
