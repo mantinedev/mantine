@@ -66,6 +66,23 @@ function Demo() {
 }
 ```
 
+## Default radius on theme
+
+Mantine theme now includes `defaultRadius` property which is used to set border-radius on most components by default:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <Button>Zero radius button</Button>
+      <Button radius="xl">xl radius button</Button>
+    </MantineProvider>
+  );
+}
+```
+
 ## createStyles references changes
 
 [createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
