@@ -66,6 +66,38 @@ function Demo() {
 }
 ```
 
+## Nested MantineProvider inheritance
+
+Nested MantineProviders will now inherit `theme` override, `emotionOptions`, `defaultProps` and `styles` from
+parent provider if `inherit` prop is set:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    // Parent MantineProvider
+    <MantineProvider
+      theme={{ colorScheme: 'dark' }}
+      styles={{ Button: { root: { fontWeight: 400 } } }}
+      defaultProps={{ Badge: { variant: 'outline' } }}
+      emotionOptions={{ key: 'custom-cache' }}
+    >
+      <Button>Affected only by parent provider</Button>
+
+      {/*
+        Child MantineProvider, inherits theme, emotionOptions, defaultProps and styles
+        from parent MantineProvider. Other properties specified on child provider will override parent props.
+        For example, theme override will be: { colorScheme: 'dark', primaryColor: 'red' }
+      */}
+      <MantineProvider theme={{ primaryColor: 'red' }} inherit>
+        <Button>Affected only by child provider</Button>
+      </MantineProvider>
+    </MantineProvider>
+  );
+}
+```
+
 ## Default radius on theme
 
 Mantine theme now includes `defaultRadius` property which is used to set border-radius on most components by default:
