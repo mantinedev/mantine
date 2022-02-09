@@ -31,12 +31,13 @@ export const configurator: MantineDemo = {
   configurator: [
     {
       name: 'variant',
-      type: 'select',
+      type: 'segmented',
       initialValue: 'filled',
       defaultValue: 'filled',
       data: [
-        { label: 'light', value: 'light' },
         { label: 'filled', value: 'filled' },
+        { label: 'light', value: 'light' },
+        { label: 'outline', value: 'outline' },
       ],
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

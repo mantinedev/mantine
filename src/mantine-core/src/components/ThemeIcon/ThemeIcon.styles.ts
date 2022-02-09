@@ -5,7 +5,7 @@ import {
   MantineColor,
 } from '@mantine/styles';
 
-export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
+export type ThemeIconVariant = 'filled' | 'light' | 'gradient' | 'outline';
 
 export interface ThemeIconStylesParams {
   color: MantineColor;
@@ -54,6 +54,7 @@ export default createStyles(
         backgroundColor: colors.background,
         color: colors.color,
         backgroundImage: variant === 'gradient' ? colors.background : null,
+        border: `1px solid ${colors.border}`,
       },
     };
   }
