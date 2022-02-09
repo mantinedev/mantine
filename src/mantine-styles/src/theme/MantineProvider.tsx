@@ -4,7 +4,7 @@ import { Global } from '@emotion/react';
 import { DEFAULT_THEME } from './default-theme';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
-import { mergeTheme } from './utils/merge-theme/merge-theme';
+import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
 import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
@@ -50,16 +50,6 @@ export function useMantineDefaultProps<T extends Record<string, any>>(
   return { ...defaultProps, ...contextProps, ...props };
 }
 
-export interface MantineProviderProps {
-  theme?: MantineThemeOverride;
-  styles?: ProviderStyles;
-  defaultProps?: MantineDefaultProps;
-  emotionOptions?: EmotionCacheOptions;
-  withNormalizeCSS?: boolean;
-  withGlobalStyles?: boolean;
-  children: React.ReactNode;
-}
-
 function GlobalStyles() {
   const theme = useMantineTheme();
   return (
@@ -81,6 +71,17 @@ function GlobalStyles() {
   );
 }
 
+export interface MantineProviderProps {
+  theme?: MantineThemeOverride;
+  styles?: ProviderStyles;
+  defaultProps?: MantineDefaultProps;
+  emotionOptions?: EmotionCacheOptions;
+  withNormalizeCSS?: boolean;
+  withGlobalStyles?: boolean;
+  children: React.ReactNode;
+  inherit?: boolean;
+}
+
 export function MantineProvider({
   theme,
   styles = {},
@@ -88,11 +89,25 @@ export function MantineProvider({
   emotionOptions,
   withNormalizeCSS = false,
   withGlobalStyles = false,
+  inherit = false,
   children,
 }: MantineProviderProps) {
+  const ctx = useContext(MantineProviderContext);
+  const overrides = {
+    themeOverride: inherit ? { ...ctx.theme, ...theme } : theme,
+    emotionOptions: inherit ? { ...ctx.emotionOptions, ...emotionOptions } : emotionOptions,
+    styles: inherit ? { ...ctx.styles, ...styles } : styles,
+    defaultProps: inherit ? { ...ctx.defaultProps, ...defaultProps } : defaultProps,
+  };
+
   return (
     <MantineProviderContext.Provider
-      value={{ theme: mergeTheme(DEFAULT_THEME, theme), styles, emotionOptions, defaultProps }}
+      value={{
+        theme: mergeThemeWithFunctions(DEFAULT_THEME, overrides.themeOverride),
+        styles: overrides.styles,
+        emotionOptions: overrides.emotionOptions,
+        defaultProps: overrides.defaultProps,
+      }}
     >
       {withNormalizeCSS && <NormalizeCSS />}
       {withGlobalStyles && <GlobalStyles />}

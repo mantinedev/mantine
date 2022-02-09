@@ -1,25 +1,37 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from './theme';
+import { MantineProvider, useMantineDefaultProps } from './theme';
 import { createStyles } from './tss';
 
 const useStyles = createStyles((theme) => ({
   element: {
-    color: theme.colors[theme.primaryColor][8],
+    color: theme.colors[theme.primaryColor][5],
     fontSize: theme.fontSizes.sm,
+    backgroundColor: theme.colorScheme === 'dark' ? 'white' : 'black',
+    paddingLeft: 100,
   },
 }));
 
 function TestElement() {
-  const { classes } = useStyles();
-  return <div className={classes.element}>Test element</div>;
+  const { classes } = useStyles(null, { name: 'TestElement' });
+  const { children } = useMantineDefaultProps(
+    'TestElement',
+    { children: 'Not default' },
+    {}
+  ) as any;
+  return <div className={classes.element}>{children}</div>;
 }
 
 storiesOf('@mantine/styles/MantineProvider', module).add('Inheritance: theme', () => (
-  <MantineProvider theme={{ primaryColor: 'orange' }}>
+  <MantineProvider
+    inherit
+    theme={{ primaryColor: 'orange', colorScheme: 'light' }}
+    styles={{ TestElement: { element: { fontSize: 50 } } }}
+    defaultProps={{ TestElement: { children: 'Default test element' } }}
+  >
     <TestElement />
 
-    <MantineProvider theme={{ fontSizes: { sm: 20 } }}>
+    <MantineProvider theme={{ primaryColor: 'red' }} inherit>
       <TestElement />
     </MantineProvider>
   </MantineProvider>
