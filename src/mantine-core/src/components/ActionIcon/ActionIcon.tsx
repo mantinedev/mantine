@@ -38,14 +38,13 @@ interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   loading?: boolean;
 }
 
-export type ActionIconProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  _ActionIconProps
->;
+export type ActionIconProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, _ActionIconProps>
+  : never;
 
-type ActionIconComponent = (<C extends React.ElementType = 'button'>(
-  props: ActionIconProps<C>
-) => React.ReactElement) & { displayName?: string };
+type ActionIconComponent = (<C = 'button'>(props: ActionIconProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const ActionIcon: ActionIconComponent = forwardRef(
   <C extends React.ElementType = 'button'>(
@@ -56,14 +55,14 @@ export const ActionIcon: ActionIconComponent = forwardRef(
       radius = 'sm',
       size = 'md',
       variant = 'hover',
-      disabled = false,
+      disabled,
       loaderProps,
       loading = false,
       component,
       styles,
       classNames,
       ...others
-    }: ActionIconProps<C>,
+    }: any,
     ref: PolymorphicRef<C>
   ) => {
     const theme = useMantineTheme();

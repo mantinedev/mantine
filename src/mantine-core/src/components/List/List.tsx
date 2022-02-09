@@ -76,7 +76,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     );
 
     return (
-      <Box
+      <Box<any>
         component={type === 'unordered' ? 'ul' : 'ol'}
         className={cx(classes.root, className)}
         ref={ref}

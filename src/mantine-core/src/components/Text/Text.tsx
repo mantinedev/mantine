@@ -45,11 +45,13 @@ export interface SharedTextProps extends DefaultProps {
   gradient?: MantineGradient;
 }
 
-export type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, SharedTextProps>;
+export type TextProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, SharedTextProps>
+  : never;
 
-type TextComponent = (<C extends React.ElementType = 'div'>(
-  props: TextProps<C>
-) => React.ReactElement) & { displayName?: string };
+type TextComponent = (<C = 'div'>(props: TextProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const Text: TextComponent = forwardRef(
   <C extends React.ElementType = 'div'>(

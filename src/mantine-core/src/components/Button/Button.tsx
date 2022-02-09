@@ -60,14 +60,13 @@ export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   loaderPosition?: 'left' | 'right';
 }
 
-export type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<
-  C,
-  SharedButtonProps
->;
+export type ButtonProps<C> = C extends React.ElementType
+  ? PolymorphicComponentProps<C, SharedButtonProps>
+  : never;
 
-type ButtonComponent = (<C extends React.ElementType = 'button'>(
-  props: ButtonProps<C>
-) => React.ReactElement) & { displayName?: string };
+type ButtonComponent = (<C = 'button'>(props: ButtonProps<C>) => React.ReactElement) & {
+  displayName?: string;
+};
 
 export const Button: ButtonComponent = forwardRef(
   <C extends React.ElementType = 'button'>(
@@ -76,7 +75,7 @@ export const Button: ButtonComponent = forwardRef(
       size = 'sm',
       color,
       type = 'button',
-      disabled = false,
+      disabled,
       children,
       leftIcon,
       rightIcon,
@@ -93,7 +92,7 @@ export const Button: ButtonComponent = forwardRef(
       classNames,
       styles,
       ...others
-    }: ButtonProps<C>,
+    }: any,
     ref: PolymorphicRef<C>
   ) => {
     const { classes, cx, theme } = useStyles(

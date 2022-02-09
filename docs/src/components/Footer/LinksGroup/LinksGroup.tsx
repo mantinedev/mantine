@@ -17,7 +17,7 @@ export function LinksGroup({ data, title }: LinksGroupProps) {
   const links = data.map((link, index) => {
     const props = link.type === 'gatsby' ? { to: link.link } : { href: link.link };
     return (
-      <Text
+      <Text<any>
         className={classes.link}
         component={link.type === 'gatsby' ? Link : 'a'}
         {...props}

@@ -1,8 +1,11 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/styles';
-import { Text } from '../../Text/Text';
+import { SharedTextProps } from '../../Text/Text';
 
-export interface MenuLabelProps extends DefaultProps, React.ComponentPropsWithoutRef<typeof Text> {
+export interface MenuLabelProps
+  extends DefaultProps,
+    SharedTextProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'color'> {
   /** Label content */
   children: React.ReactNode;
 }
