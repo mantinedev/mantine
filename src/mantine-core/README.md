@@ -5,13 +5,10 @@ Mantine is a MIT licensed open source react components and hooks library with fo
 ## Links
 
 - [Documentation](https://mantine.dev/)
-- [Core components by category](https://mantine.dev/core/getting-started/)
-- [Hooks list](https://mantine.dev/hooks/getting-started/#included-hooks)
 - [Notifications system](https://mantine.dev/others/notifications/)
 - [Contributing](https://mantine.dev/contribute/)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
 - [Changelog](https://mantine.dev/pages/changelog/)
-- [Sign up for monthly newsletter](https://buttondown.email/mantine)
 - [Follow Mantine on Twitter](https://twitter.com/mantinedev)
 - [Join Discord community](https://discord.gg/eUZpPbpxb4)
 

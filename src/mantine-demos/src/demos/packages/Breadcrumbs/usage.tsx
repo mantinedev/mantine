@@ -5,9 +5,9 @@ const code = `
 import { Breadcrumbs, Anchor } from '@mantine/core';
 
 const items = [
-  { title: 'Mantine', href: 'https://mantine.dev' },
-  { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
-  { title: 'use-id', href: 'https://mantine.dev/hooks/use-id' },
+  { title: 'Mantine', href: '#' },
+  { title: 'Mantine hooks', href: '#' },
+  { title: 'use-id', href: '#' },
 ].map((item, index) => (
   <Anchor href={item.href} key={index}>
     {item.title}
@@ -26,8 +26,8 @@ function Demo() {
 
 const items = [
   { title: 'Mantine', href: 'https://mantine.dev' },
-  { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
-  { title: 'use-id', href: 'https://mantine.dev/hooks/use-id' },
+  { title: 'Mantine hooks', href: '#' },
+  { title: 'use-id', href: '#' },
 ].map((item, index) => (
   <Anchor href={item.href} key={index}>
     {item.title}
