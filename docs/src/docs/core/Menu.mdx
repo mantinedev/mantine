@@ -143,6 +143,42 @@ By default menu items render as button, to change that set `component` prop on M
 
 <Demo data={MenuDemos.component} />
 
+## Menu.Item as Next.js Link
+
+Create a wrapper component for Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { forwardRef } from 'react';
+
+export const NextLink = forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<'a'>>(
+  (props, ref) => (
+    <Link href={props.href}>
+      <a {...props} ref={ref}>
+        {props.children}
+      </a>
+    </Link>
+  )
+);
+```
+
+Pass this component to Menu.Item:
+
+```tsx
+import { Menu } from '@mantine/core';
+import { NextLink } from './NextLink';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Item component={NextLink} href="/hello">
+        Hello
+      </Menu.Item>
+    </Menu>
+  );
+}
+```
+
 ## Store items separately
 
 Menu does not support fragments, the following example **will not work**:
