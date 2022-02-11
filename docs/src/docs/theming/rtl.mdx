@@ -18,6 +18,12 @@ yarn add stylis stylis-plugin-rtl
 npm install stylis stylis-plugin-rtl
 ```
 
+Add `dir="rtl"` to `html` element:
+
+```tsx
+<html dir="rtl">...</html>
+```
+
 Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
@@ -33,13 +39,9 @@ function Demo() {
 }
 ```
 
-You can apply rtl plugin based on locale. Note that you will have to manage popovers positions in some
-components ([Menu](/core/menu/), [Popover](/core/popover/), etc.) on your side as `position` and `placement`
-props are not flipped based on text direction.
-
 ## Dynamic direction changes
 
-To make rtl dynamic, change cache key when cache changes:
+To make rtl dynamic, change cache key when cache changes (**!important** cache key cannot be the same):
 
 ```tsx
 import { useState } from 'react';
