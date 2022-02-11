@@ -11,7 +11,7 @@ import { ColorsGroup } from '../../components/ThemeColors/ColorsGroup.tsx';
 # Dark theme
 
 All mantine components support dark color scheme natively without any additional steps.
-To use dark color scheme wrap your application in MantineProvider and specify `colorScheme`:
+To use dark color scheme, wrap your application in MantineProvider and specify `colorScheme`:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -27,43 +27,47 @@ function Demo() {
 
 ## Colors
 
-Mantine uses `theme.colors.dark` values to style components with dark color scheme.
-Default colors have purple-blue accent:
+Mantine uses `theme.colors.dark` values to style components with dark color scheme:
 
 <ColorsGroup group="dark" />
 
-You can customize these values just like any other color:
+You can customize these values the same way as other colors:
 
 ```tsx
-<MantineProvider
-  theme={{
-    colorScheme: 'dark',
-    colors: {
-      // override dark colors here to change them for all components
-      dark: [
-        '#d5d7e0',
-        '#acaebf',
-        '#8c8fa3',
-        '#666980',
-        '#4d4f66',
-        '#34354a',
-        '#2b2c3d',
-        '#1d1e30',
-        '#0c0d21',
-        '#01010a',
-      ],
-    },
-  }}
->
-  <App />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        colorScheme: 'dark',
+        colors: {
+          // override dark colors here to change them for all components
+          dark: [
+            '#d5d7e0',
+            '#acaebf',
+            '#8c8fa3',
+            '#666980',
+            '#4d4f66',
+            '#34354a',
+            '#2b2c3d',
+            '#1d1e30',
+            '#0c0d21',
+            '#01010a',
+          ],
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 ## Global styles
 
-`theme.colors.dark[7]` shade is considered to be the body background color and `theme.colors.dark[0]` shade as text color with dark color scheme.
-You can create these styles on your own or add them by setting `withGlobalStyles` prop on [MantineProvider](/theming/mantine-provider/), which includes them by default.
-Usually global styles are added on top level component inside MantineProvider:
+`theme.colors.dark[7]` shade is considered to be the body background color and `theme.colors.dark[0]` shade is used as text color with dark color scheme.
+You can create these styles on your own or add them by setting `withGlobalStyles` prop on [MantineProvider](/theming/mantine-provider/), which includes them by default:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -137,7 +141,7 @@ export default function Demo() {
 
 Usually saving value to localStorage is not the best strategy as it will create
 [FART](https://css-tricks.com/flash-of-inaccurate-color-theme-fart/).
-If it is possible store user preferred color scheme on server and serve your application without flashes.
+If it is possible, store user preferred color scheme on server and serve your application without flashes.
 
 For example, Mantine docs are deployed to gh-pages and do not have server (website is fully static) –
 in this case if you refresh the page with dark theme, first you will see the prerendered light theme
