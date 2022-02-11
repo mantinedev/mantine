@@ -359,6 +359,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
+        inputMode={Number.isInteger(step) && precision === 0 ? 'numeric' : 'decimal'}
         __staticSelector="NumberInput"
       />
     );
