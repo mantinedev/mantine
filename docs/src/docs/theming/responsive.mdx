@@ -17,7 +17,7 @@ import {
 # Responsive styles
 
 `@mantine/core` package exports several components that can help you organize responsive styles without writing CSS.
-Note that in most cases that are not covered in this guide, the best approach to make your app responsive is to
+Note that in most cases that are not covered in this guide, the best way to make your app responsive is to
 add styles with [createStyles](/theming/create-styles/) function.
 
 ## Configure breakpoints
@@ -47,7 +47,7 @@ function YourApp() {
 }
 ```
 
-Default `theme.breakpoints` values are the same as in Bootstrap:
+Default `theme.breakpoints` values:
 
 <DataTable
   head={['Breakpoint', 'Viewport width']}
@@ -59,7 +59,7 @@ Default `theme.breakpoints` values are the same as in Bootstrap:
 
 ## Layout components
 
-Most of layout components support responsive features. This section includes basic responsive features,
+Most of the layout components support responsive features. This section includes basic responsive features,
 visit components documentation to learn more.
 
 [Grid](/core/grid/) component allows you to set columns span based on `theme.breakpoints`.
@@ -67,7 +67,7 @@ Grid is based on flexbox and can be used in older browsers (IE11+):
 
 <Demo data={GridDemos.responsive} />
 
-[SimpleGrid](/core/simple-grid/) component allows you to create a layout with given amount of columns with equal width.
+[SimpleGrid](/core/simple-grid/) component creates a layout with a given number of columns which have equal width.
 SimpleGrid is based on CSS grid and can have issue in older browsers (IE11+):
 
 <Demo data={SimpleGridDemos.breakpoints} />
