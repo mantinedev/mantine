@@ -79,7 +79,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
             withArrow
             arrowSize={4}
             gutter={8}
-            color={clipboard.copied ? 'teal' : undefined}
+            color={clipboard.copied ? 'teal' : 'gray'}
           >
             <ActionIcon
               aria-label={clipboard.copied ? copiedLabel : copyLabel}
@@ -198,7 +198,11 @@ export interface PrismTabsProps
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
   (props: PrismTabsProps, ref) => {
-    const { children, classNames, styles, ...others } = useMantineDefaultProps('PrismTabs', {}, props);
+    const { children, classNames, styles, ...others } = useMantineDefaultProps(
+      'PrismTabs',
+      {},
+      props
+    );
     const { classes, cx } = useTabsStyles(null, { name: 'PrismTabs', classNames, styles });
 
     const tabs = (Children.toArray(children) as React.ReactElement[])
