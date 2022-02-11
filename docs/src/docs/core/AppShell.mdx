@@ -113,16 +113,11 @@ Navbar can be used outside of AppShell context:
 ```tsx
 <Navbar
   width={{
-    // Base width – used when viewport is larger than theme.breakpoints.lg
-    base: 400,
+    // When viewport is larger than theme.breakpoints.sm, Navbar width will be 300
+    sm: 300,
 
-    breakpoints: {
-      // When viewport is smaller than theme.breakpoints.lg and larger than theme.breakpoints.sm
-      lg: 300,
-
-      // When viewport is smaller than theme.breakpoints.sm
-      sm: '100%',
-    },
+    // When viewport is larger than theme.breakpoints.lg, Navbar width will be 400
+    lg: 400,
   }}
 />
 ```
