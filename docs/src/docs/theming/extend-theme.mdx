@@ -6,7 +6,7 @@ order: 0
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
-import { PaperDemos, ThemeDemos } from '@mantine/demos';
+import { ThemeDemos } from '@mantine/demos';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 
 # Theme object
@@ -99,12 +99,7 @@ These values are exposed on theme:
 - `theme.radius` – border-radius values – used in all components which support radius: [Paper](/core/paper/), [Button](/core/button/), [Input](/core/input/) and others
 - `theme.defaultRadius` – default border-radius used in all components
 
-Example with [Paper](/core/paper/) component (padding is set with `theme.spacing`):
-
-<Demo data={PaperDemos.configurator} />
-
-You can change size values by setting corresponding properties.
-In this example:
+You can change size values by setting corresponding properties. In the following example:
 
 - xs and xl values from theme will be overwritten
 - sm, md and lg values will be used from default theme
