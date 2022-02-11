@@ -134,7 +134,7 @@ form.values; // -> { name: 'Bob', age: 0 }
 
 ### form.getInputProps
 
-`getInputProps` function returns an object with `value` (of `checked` for checkboxes), `onChange` and `error` that should be spread on input, work perfect with Mantine inputs:
+`getInputProps` function returns an object with `value` (or `checked` for checkboxes), `onChange` and `error` that should be spread on input, work perfect with Mantine inputs:
 
 ```tsx
 const form = useForm({
