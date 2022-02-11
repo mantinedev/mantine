@@ -35,7 +35,7 @@ export const components = {
   },
   p: (props: any) => <p {...props} style={{ lineHeight: 1.55 }} />,
   ul: (props: any) => (
-    <ul {...props} style={{ lineHeight: 1.55, marginBottom: 20, marginTop: 10 }} />
+    <ul {...props} style={{ lineHeight: 1.65, marginBottom: 20, marginTop: 10 }} />
   ),
   li: (props: any) => <li {...props} style={{ marginTop: 4 }} />,
   pre: (props: any) => {

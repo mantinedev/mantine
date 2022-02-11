@@ -1,23 +1,22 @@
 ---
 group: 'theming'
-title: Extend theme
+title: Theme object
 slug: /theming/extend-theme/
-order: 1
+order: 0
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
 import { PaperDemos, ThemeDemos } from '@mantine/demos';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 
-# Extend theme
+# Theme object
 
 ## Typography
 
-By default Mantine uses system fonts. It brings fast and familiar experience to users.
-You can change fonts and other text styles for headings, code and all other components:
+By default, Mantine uses system fonts. You can change fonts and other text styles for headings, code and all other components:
 
-- `theme.fontFamilyMonospace` – controls components with monospace font-family, for example, [Code](/core/code/) and [Kbd](/core/kbd/)
-- `theme.fontFamily` – controls font-family in all other cases
+- `theme.fontFamilyMonospace` – controls font-family of components that require monospace font, for example, [Code](/core/code/), [Kbd](/core/kbd/) and [Prism](/others/prism/)
+- `theme.fontFamily` – controls font-family in all other components except headings
 - `theme.lineHeight` – controls line-height property in all components except headings
 - `theme.fontSizes` – controls font-size in all components except headings
 - `theme.headings` – controls font-family, line-height and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
@@ -42,8 +41,7 @@ theme.colors.blue[0];
 
 ## Extend or replace colors
 
-You can add any amount of extra colors by extending theme.colors with MantineProvider.
-This will allow you to use these colors with all components which support color change,
+You can add extra colors. This will allow you to use these colors with all components which support color change,
 for example, [Button](/core/button/), [Badge](/core/badge/) or [Switch](/core/switch/).
 
 Note that all colors that are added should **always include 10 shades**.
@@ -59,17 +57,37 @@ You can use some of these tools to generate or copy ready color palettes:
 
 ## Primary color
 
-The default primary color is `'blue'`, which means it is referencing `theme.colors.blue`. You can change it to any color defined in `theme.colors`.
+The default primary color is `blue`, which means it is referencing `theme.colors.blue`.
+You can change it to any color defined in `theme.colors`.
 
 Primary color is used:
 
 - in some components to determine color value if component didn't receive color prop;
 - to define focus styles for all interactive elements.
 
-For example, [Button](/core/button/) Component
-by default will use `theme.primaryColor` (press any key on keyboard to see focus ring):
+For example, [Button](/core/button/) Component by default will use `theme.primaryColor`
 
 <Demo data={ThemeDemos.primaryColor} />
+
+**!important** `theme.primaryColor` cannot be a hex, rgb or other color value,
+it should only reference value from `theme.colors`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        // THIS WILL RESUlT IN ERROR, DO NOT DO THIS
+        primaryColor: '#EC45EE',
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
 
 ## Spacing, radius and shadows
 
