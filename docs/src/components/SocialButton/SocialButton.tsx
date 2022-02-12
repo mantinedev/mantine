@@ -3,7 +3,6 @@ import { Button, useMantineTheme } from '@mantine/core';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
-import { MailIcon } from './MailIcon';
 
 const baseStyles = {
   border: 0,
@@ -56,23 +55,6 @@ function TwitterButton({ style, ...others }: SocialButtonProps) {
   );
 }
 
-function EmailButton({ style, ...others }: SocialButtonProps) {
-  return (
-    <Button
-      component="a"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://buttondown.email/mantine"
-      color="teal"
-      leftIcon={<MailIcon style={{ width: 14, marginRight: 5 }} />}
-      style={{ ...style, ...baseStyles }}
-      {...others}
-    >
-      Subscribe to email newsletter
-    </Button>
-  );
-}
-
 function GithubButton({ style, ...others }: SocialButtonProps) {
   const theme = useMantineTheme();
   return (
@@ -111,5 +93,5 @@ export function SocialButton({
     return <GithubButton {...others} />;
   }
 
-  return <EmailButton {...others} />;
+  return null;
 }
