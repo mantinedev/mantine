@@ -178,6 +178,7 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 - [RangeCalendar](https://mantine.dev/dates/range-calendar/) now calls onChange with first selected date
 - [SegmentedControl](https://mantine.dev/core/segmented-control/) component now supports vertical orientation and disabled state
 - [ThemeIcon](https://mantine.dev/core/theme-icon/) component now supports outline variant
+- [Text](https://mantine.dev/core/text/), [Anchor](https://mantine.dev/core/anchor/) and [Highlight](https://mantine.dev/core/highlight/) components now support `underline` prop
 
 ## 3.6.0 – 4.0.0 bug fixes
 
@@ -187,3 +188,6 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 - Hidden inputs were removed from [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) components to prevent issues with popular form libraries
 - Fix incorrect am/pm input handling in [TimeInput](https://mantine.dev/dates/time-input/) for non qwerty keyboards
 - Fix incorrect initial value in [use-hash](https://mantine.dev/hooks/use-hash/) hook
+- Fix incorrect events handling in [use-hotkeys](https://mantine.dev/hooks/use-hotkeys/) hook for input, textarea and select elements
+- [Improve TypeScript performance](https://github.com/mantinedev/mantine/issues/812) for polymorphic components (~ 2x increase in compilation time)
+- Fix incorrect [RichTextEditor](https://mantine.dev/others/rte/) white space handling in Firefox
