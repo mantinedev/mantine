@@ -35,11 +35,6 @@ export default function PropsTable({ component, query }: PropsTableProps) {
               </Text>
             )}
           </td>
-          <td>
-            <Text size="sm" color={prop.defaultValue && prop.defaultValue.value ? null : 'gray'}>
-              {(prop.defaultValue && prop.defaultValue.value) || ''}
-            </Text>
-          </td>
           <td style={{ verticalAlign: 'middle' }}>
             <Text
               color={theme.colorScheme === 'dark' ? 'red' : 'indigo'}
@@ -75,7 +70,6 @@ export default function PropsTable({ component, query }: PropsTableProps) {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Default</th>
                 <th>Type</th>
                 <th>Description</th>
               </tr>
