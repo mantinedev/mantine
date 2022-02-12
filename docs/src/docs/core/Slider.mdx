@@ -40,6 +40,15 @@ function Demo() {
 }
 ```
 
+## onChangeEnd
+
+`onChangeEnd` callback is called when user stops dragging the slider or uses arrows:
+
+```tsx
+<Slider onChangeEnd={value => console.log(value)} />
+<RangeSlider onChangeEnd={value => console.log(value)} />
+```
+
 ## Control label
 
 To change label behavior and appearance, set the following props:

@@ -51,6 +51,9 @@ export interface SliderProps
   /** Called each time value changes */
   onChange?(value: number): void;
 
+  /** Called when user stops dragging slider or changes value with arrows */
+  onChangeEnd?(value: number): void;
+
   /** Hidden input name, use with uncontrolled variant */
   name?: string;
 
@@ -104,6 +107,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
     color,
     value,
     onChange,
+    onChangeEnd,
     size,
     radius,
     min,
@@ -133,6 +137,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
     rule: (val) => typeof val === 'number',
     onChange,
   });
+
+  const valueRef = useRef(_value);
   const thumb = useRef<HTMLDivElement>();
   const position = getPosition({ value: _value, min, max });
   const _label = typeof label === 'function' ? label(_value) : label;
@@ -140,9 +146,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
   const handleChange = (val: number) => {
     const nextValue = getChangeValue({ value: val, min, max, step });
     setValue(nextValue);
+    valueRef.current = nextValue;
   };
 
-  const { ref: container, active } = useMove(({ x }) => handleChange(x), undefined, theme.dir);
+  const { ref: container, active } = useMove(
+    ({ x }) => handleChange(x),
+    { onScrubEnd: () => onChangeEnd?.(valueRef.current) },
+    theme.dir
+  );
 
   function handleThumbMouseDown(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
@@ -158,27 +169,41 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
       case 'ArrowUp': {
         event.preventDefault();
         thumb.current.focus();
-        setValue(Math.min(Math.max(_value + step, min), max));
+        const nextValue = Math.min(Math.max(_value + step, min), max);
+        onChangeEnd?.(nextValue);
+        setValue(nextValue);
         break;
       }
       case 'ArrowRight': {
         event.preventDefault();
         thumb.current.focus();
-        setValue(Math.min(Math.max(theme.dir === 'rtl' ? _value - step : _value + step, min), max));
+        const nextValue = Math.min(
+          Math.max(theme.dir === 'rtl' ? _value - step : _value + step, min),
+          max
+        );
+        onChangeEnd?.(nextValue);
+        setValue(nextValue);
         break;
       }
 
       case 'ArrowDown': {
         event.preventDefault();
         thumb.current.focus();
-        setValue(Math.min(Math.max(_value - step, min), max));
+        const nextValue = Math.min(Math.max(_value - step, min), max);
+        onChangeEnd?.(nextValue);
+        setValue(nextValue);
         break;
       }
 
       case 'ArrowLeft': {
         event.preventDefault();
         thumb.current.focus();
-        setValue(Math.min(Math.max(theme.dir === 'rtl' ? _value + step : _value - step, min), max));
+        const nextValue = Math.min(
+          Math.max(theme.dir === 'rtl' ? _value + step : _value - step, min),
+          max
+        );
+        onChangeEnd?.(nextValue);
+        setValue(nextValue);
         break;
       }
 
