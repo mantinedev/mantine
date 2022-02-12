@@ -129,6 +129,14 @@ function Demo() {
 }
 ```
 
+Margin props can get value from `theme.spacing`:
+
+```tsx
+<Button mt="xl" /> // -> margin-top: theme.spacing.xl
+<Button ml="-md" /> // -> margin-left: theme.spacing.md * -1
+<Button m={20} /> // -> margin: 20px
+```
+
 ### Color prop
 
 Mantine components work with colors defined in [theme.colors](/theming/extend-theme/#default-colors).
