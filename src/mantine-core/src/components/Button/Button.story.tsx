@@ -112,4 +112,17 @@ storiesOf('@mantine/core/Button/stories', module)
     <MantineProvider theme={{ defaultRadius: 'xl' }}>
       <Button>With default props</Button>
     </MantineProvider>
+  ))
+  .add('Focus ring on MantineProvider', () => (
+    <div style={{ padding: 40 }}>
+      <MantineProvider theme={{ focusRing: 'always' }}>
+        <Button m="xl">Focus ring always</Button>
+      </MantineProvider>
+      <MantineProvider theme={{ focusRing: 'auto' }}>
+        <Button m="xl">Focus ring auto</Button>
+      </MantineProvider>
+      <MantineProvider theme={{ focusRing: 'never' }}>
+        <Button m="xl">Focus ring never</Button>
+      </MantineProvider>
+    </div>
   ));

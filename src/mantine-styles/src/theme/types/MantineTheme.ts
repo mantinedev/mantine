@@ -31,6 +31,7 @@ interface MantineThemeFunctions {
 
 export interface MantineTheme {
   dir: 'ltr' | 'rtl';
+  focusRing: 'auto' | 'always' | 'never';
   defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;
   dateFormat: string;

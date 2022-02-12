@@ -160,14 +160,19 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
 
       [`& + .${getRef('label')}`]: {
         outline: 'none',
-        boxShadow: `0 0 0 2px ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-        }, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
+        boxShadow:
+          theme.focusRing === 'always' || theme.focusRing === 'auto'
+            ? `0 0 0 2px ${
+                theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
+              }, 0 0 0 4px ${
+                theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
+              }`
+            : undefined,
       },
 
       '&:focus:not(:focus-visible)': {
         [`& + .${getRef('label')}`]: {
-          boxShadow: 'none',
+          boxShadow: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
         },
       },
     },
