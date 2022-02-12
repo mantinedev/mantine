@@ -16,7 +16,7 @@ const code = `
 function Demo() {
   return (
     <Prism language="tsx" colorScheme="dark">
-      {demoCode.trim()}
+      {demoCode}
     </Prism>
   );
 }

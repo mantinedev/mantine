@@ -38,6 +38,7 @@ const prismDefaultProps: Partial<PrismProps> = {
   copyLabel: 'Copy code',
   copiedLabel: 'Copied',
   withLineNumbers: false,
+  trim: true,
   highlightLines: {},
   scrollAreaComponent: ScrollArea,
 };
@@ -57,8 +58,10 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       highlightLines,
       scrollAreaComponent: ScrollAreaComponent,
       colorScheme,
+      trim,
       ...others
     } = useMantineDefaultProps('Prism', prismDefaultProps, props);
+    const code = trim && typeof children === 'string' ? children.trim() : children;
 
     const theme = useMantineTheme();
     const clipboard = useClipboard();
@@ -83,7 +86,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
           >
             <ActionIcon
               aria-label={clipboard.copied ? copiedLabel : copyLabel}
-              onClick={() => clipboard.copy(children)}
+              onClick={() => clipboard.copy(code)}
             >
               <CopyIcon copied={clipboard.copied} />
             </ActionIcon>
@@ -93,7 +96,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
         <Highlight
           {...defaultProps}
           theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
-          code={children}
+          code={code}
           language={language}
         >
           {({

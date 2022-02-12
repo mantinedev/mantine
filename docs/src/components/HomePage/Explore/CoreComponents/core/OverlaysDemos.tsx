@@ -19,7 +19,7 @@ function Demo() {
     </>
   );
 }
-`.trim();
+`;
 
 export function OverlaysDemos() {
   const [modalOpened, setModalOpened] = useState(false);

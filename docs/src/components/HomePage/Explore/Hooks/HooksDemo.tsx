@@ -36,7 +36,7 @@ function Demo() {
   const label = scrollLocked ? 'Unlock scroll' : 'Lock scroll';
   return <Button onClick={() => setScrollLocked((c) => !c)}>{label}</Button>;
 }
-`.trim();
+`;
 
 const clickOutsideCode = `
 import { useState } from 'react';
@@ -53,7 +53,7 @@ function Demo() {
     </>
   );
 }
-`.trim();
+`;
 
 export function HooksDemo() {
   const { classes } = useStyles();

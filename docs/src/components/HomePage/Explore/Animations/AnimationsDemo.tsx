@@ -21,7 +21,7 @@ const scaleY = {
 <Modal transition={scaleY} transitionDuration={300}>
   <AuthenticationForm />
 </Modal>
-`.trim();
+`;
 
 const useStyles = createStyles((theme) => ({
   prism: {

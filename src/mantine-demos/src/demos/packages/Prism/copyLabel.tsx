@@ -25,7 +25,7 @@ function Demo() {
   return (
     <>
       <Prism language="tsx" noCopy>
-        {demoCode.trim()}
+        {demoCode}
       </Prism>
 
       <Prism
@@ -34,7 +34,7 @@ function Demo() {
         copiedLabel="Code copied to clipboard"
         style={{ marginTop: 20 }}
       >
-        {demoCode.trim()}
+        {demoCode}
       </Prism>
     </>
   );

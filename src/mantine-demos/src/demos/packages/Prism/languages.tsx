@@ -3,6 +3,10 @@ import { Tabs, Tab } from '@mantine/core';
 import { Prism, PrismProps } from '@mantine/prism';
 
 export const go = `
+
+
+
+
 package main
 
 import "fmt"
@@ -15,7 +19,7 @@ func main() {
     go println(len("hello world!"))
     return
 }
-`.trim();
+`;
 
 export const py = `
 @requires_authorization
@@ -30,7 +34,7 @@ class SomeClass:
 
 >>> message = '''interpreter
 ... prompt'''
-`.trim();
+`;
 
 export const css = `
 @font-face {
@@ -49,7 +53,7 @@ body, .usertext {
     content: attr(href)
   }
 }
-`.trim();
+`;
 
 const sql = `
 CREATE TABLE "topic" (
@@ -64,7 +68,7 @@ REFERENCES "forum" ("id");
 -- Initials
 insert into "topic" ("forum_id", "subject")
 values (2, 'D''artagnian');
-`.trim();
+`;
 
 function Demo() {
   const prismStyles: PrismProps['styles'] = {

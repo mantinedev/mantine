@@ -20,7 +20,7 @@ import { Button } from '@mantine/core';
 export function MyApp() {
   return <Button>Hello world!</Button>;
 }
-`.trim();
+`;
 
 function Guide({ dependencies, initScript, children, action, actionLink, withDone }: GuideProps) {
   const theme = useMantineTheme();

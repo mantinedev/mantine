@@ -26,7 +26,7 @@ function Demo() {
     </MantineProvider>
   );
 }
-`.trim();
+`;
 
 const useStyles = createStyles((theme) => ({
   prism: {

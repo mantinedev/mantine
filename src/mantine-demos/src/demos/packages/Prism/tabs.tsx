@@ -74,7 +74,7 @@ function Demo() {
         {py}
       </Prism.Tab>
       <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon width={16} height={16} />}>
-        {demoCode.trim()}
+        {demoCode}
       </Prism.Tab>
     </Prism.Tabs>
   );

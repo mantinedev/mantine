@@ -50,7 +50,7 @@ function Demo() {
         9: added,
       }}
     >
-      {demoCode.trim()}
+      {demoCode}
     </Prism>
   );
 }

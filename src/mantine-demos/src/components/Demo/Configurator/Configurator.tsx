@@ -86,7 +86,7 @@ export default function Configurator({
 
       {includeCode && (
         <Prism language="tsx" className={classes.prism} classNames={{ code: classes.code }}>
-          {code.trim()}
+          {code}
         </Prism>
       )}
     </div>
