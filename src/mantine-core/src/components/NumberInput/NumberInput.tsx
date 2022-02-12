@@ -86,7 +86,7 @@ const defaultParser: Parser = (num) => {
 const defaultProps: Partial<NumberInputProps> = {
   step: 1,
   hideControls: false,
-  radius: 'sm',
+  size: 'sm',
   precision: 0,
   noClampOnBlur: false,
   formatter: defaultFormatter,
