@@ -25,16 +25,16 @@ export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
     SharedPopperProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Disable closing by click outside */
-  noClickOutside?: boolean;
+  /** Defines whether Popover can be closed with outside click, defaults to true */
+  closeOnClickOutside?: boolean;
 
-  /** Disable focus trap (may impact close on escape feature) */
-  noFocusTrap?: boolean;
+  /** Defines whether Popover should trap focus, defaults to true */
+  trapFocus?: boolean;
 
-  /** Disables close on escape */
-  noEscape?: boolean;
+  /** Defines whether Popover can be closed with Escape key, defaults to true */
+  closeOnEscape?: boolean;
 
-  /** Adds close button */
+  /** Displays close button */
   withCloseButton?: boolean;
 
   /** True to disable popover */
@@ -52,7 +52,7 @@ export interface PopoverProps
   /** Content inside popover */
   children: React.ReactNode;
 
-  /** Optional popover title */
+  /** Popover title */
   title?: React.ReactNode;
 
   /** Popover body padding, value from theme.spacing or number to set padding in px */
@@ -90,9 +90,9 @@ const defaultProps: Partial<PopoverProps> = {
   position: 'left',
   placement: 'center',
   disabled: false,
-  noClickOutside: false,
-  noFocusTrap: false,
-  noEscape: false,
+  closeOnClickOutside: true,
+  trapFocus: true,
+  closeOnEscape: true,
   withCloseButton: false,
   radius: 'sm',
   spacing: 'md',
@@ -120,9 +120,9 @@ export function Popover(props: PopoverProps) {
     position,
     placement,
     disabled,
-    noClickOutside,
-    noFocusTrap,
-    noEscape,
+    closeOnClickOutside,
+    trapFocus,
+    closeOnEscape,
     withCloseButton,
     radius,
     spacing,
@@ -143,21 +143,21 @@ export function Popover(props: PopoverProps) {
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
+  const focusTrapRef = useFocusTrap(!trapFocus && opened);
 
-  useClickOutside(() => !noClickOutside && handleClose(), clickOutsideEvents, [
+  useClickOutside(() => closeOnClickOutside && handleClose(), clickOutsideEvents, [
     rootElement,
     dropdownElement,
   ]);
 
   const returnFocus = useFocusReturn({
-    opened: opened || noFocusTrap,
+    opened: opened || trapFocus,
     transitionDuration,
     shouldReturnFocus: false,
   });
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!noEscape && event.nativeEvent.code === 'Escape') {
+    if (closeOnEscape && event.nativeEvent.code === 'Escape') {
       handleClose();
       window.setTimeout(returnFocus, 0);
     }

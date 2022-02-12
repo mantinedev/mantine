@@ -9,8 +9,8 @@ function Wrapper(props: PopoverProps) {
         position="top"
         placement="center"
         withArrow
-        noFocusTrap
-        noEscape
+        trapFocus={false}
+        closeOnEscape={false}
         width={260}
         styles={{ body: { pointerEvents: 'none' } }}
         transition="slide-up"

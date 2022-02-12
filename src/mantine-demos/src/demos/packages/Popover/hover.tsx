@@ -14,8 +14,8 @@ function Demo() {
       position="bottom"
       placement="center"
       withArrow
-      noFocusTrap
-      noEscape
+      trapFocus={false}
+      closeOnEscape={false}
       transition="pop-top-left"
       width={260}
       styles={{ body: { pointerEvents: 'none' } }}
@@ -51,8 +51,8 @@ function Demo() {
           position="bottom"
           placement="center"
           withArrow
-          noFocusTrap
-          noEscape
+          trapFocus={false}
+          closeOnEscape={false}
           width={260}
           styles={{ body: { pointerEvents: 'none' } }}
           transition="pop-top-left"
