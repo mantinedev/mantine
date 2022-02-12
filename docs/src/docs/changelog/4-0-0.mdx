@@ -98,9 +98,11 @@ function App() {
 }
 ```
 
-## Default radius on theme
+## Default radius and focus ring configuration on theme
 
-Mantine theme now includes `defaultRadius` property which is used to set border-radius on most components by default:
+Mantine theme now includes two new properties: `defaultRadius` and `focusRing`.
+
+`defaultRadius` property is used to set border-radius on most components by default:
 
 ```tsx
 import { MantineProvider, Button } from '@mantine/core';
@@ -110,6 +112,24 @@ function App() {
     <MantineProvider theme={{ defaultRadius: 0 }}>
       <Button>Zero radius button</Button>
       <Button radius="xl">xl radius button</Button>
+    </MantineProvider>
+  );
+}
+```
+
+With `focusRing` property you can configure how focus ring is displayed:
+
+- `auto` – display focus ring only when user navigates with keyboard (default)
+- `always` – display focus ring when user navigates with keyboard and mouse
+- `never` – focus ring is always hidden (not recommended)
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider theme={{ focusRing: 'always' }}>
+      <Button>Focus ring will be displayed when user clicks the button</Button>
     </MantineProvider>
   );
 }

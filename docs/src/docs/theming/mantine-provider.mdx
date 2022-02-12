@@ -37,6 +37,12 @@ interface MantineTheme {
   // Defines color scheme for all components, defaults to "light"
   colorScheme: 'light' | 'dark';
 
+  // Controls focus ring styles:
+  // auto – display focus ring only when user navigates with keyboard (default)
+  // always – display focus ring when user navigates with keyboard and mouse
+  // never – focus ring is always hidden (not recommended)
+  focusRing: 'auto' | 'always' | 'never';
+
   // Default border-radius used for most elements
   defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
 
