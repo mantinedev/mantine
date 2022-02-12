@@ -87,7 +87,7 @@ storiesOf('@mantine/core/Modal/stories', module)
     );
   })
   .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 0 }}>
+    <MantineProvider theme={{ defaultRadius: 0 }} inherit>
       <WrappedModal title="Modal with default radius">default radius</WrappedModal>
     </MantineProvider>
   ));

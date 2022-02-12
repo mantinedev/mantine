@@ -82,7 +82,7 @@ export interface ModalProps
   closeOnEscape?: boolean;
 
   /** Disables focus trap */
-  noFocusTrap?: boolean;
+  trapFocus?: boolean;
 
   /** Controls if modal should be centered */
   centered?: boolean;
@@ -100,6 +100,7 @@ const defaultProps: Partial<ModalProps> = {
   shadow: 'lg',
   closeOnClickOutside: true,
   closeOnEscape: true,
+  trapFocus: true,
 };
 
 export function MantineModal(props: ModalProps) {
@@ -124,7 +125,7 @@ export function MantineModal(props: ModalProps) {
     classNames,
     styles,
     closeOnClickOutside,
-    noFocusTrap,
+    trapFocus,
     closeOnEscape,
     centered,
     target,
@@ -137,7 +138,7 @@ export function MantineModal(props: ModalProps) {
     { size, overflow, centered },
     { classNames, styles, name: 'Modal' }
   );
-  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
+  const focusTrapRef = useFocusTrap(trapFocus && opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -148,19 +149,19 @@ export function MantineModal(props: ModalProps) {
   const [, lockScroll] = useScrollLock();
 
   const closeOnEscapePress = (event: KeyboardEvent) => {
-    if (noFocusTrap && event.code === 'Escape' && closeOnEscape) {
+    if (!trapFocus && event.code === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    // onKeyDownCapture event will not fire when focus trap is not active
-    if (noFocusTrap) {
+    if (!trapFocus) {
       window.addEventListener('keydown', closeOnEscapePress);
       return () => window.removeEventListener('keydown', closeOnEscapePress);
     }
-  }, [noFocusTrap]);
+
+    return undefined;
+  }, [trapFocus]);
 
   useFocusReturn({ opened, transitionDuration });
 
