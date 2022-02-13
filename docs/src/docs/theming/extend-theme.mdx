@@ -169,23 +169,29 @@ Mantine uses Bootstrap's breakpoint values as defaults:
 You can add any amount of properties using `other`:
 
 ```tsx
-// Add any other properties on theme
-<MantineProvider
-  theme={{
-    other: {
-      fontFamilySecondary: 'Arial',
-      lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
-      reduceMotion: true,
-    },
-  }}
->
-  <App />
-</MantineProvider>
+import { MantineProvider, Box } from '@mantine/core';
 
-// Then use your custom properties
-<Box sx={(theme) => ({
-  fontFamily: theme.other.fontFamilySecondary,
-  lineHeight: theme.other.lineHeight[2],
-  transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
-})} />
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        // Add any other properties on theme
+        other: {
+          fontFamilySecondary: 'Arial',
+          lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
+          reduceMotion: true,
+        },
+      }}
+    >
+      <Box
+        sx={(theme) => ({
+          // Then use custom properties in sx, createStyles or any other place
+          fontFamily: theme.other.fontFamilySecondary,
+          lineHeight: theme.other.lineHeight[2],
+          transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
+        })}
+      />
+    </MantineProvider>
+  );
+}
 ```

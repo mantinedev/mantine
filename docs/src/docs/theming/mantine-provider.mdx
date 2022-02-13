@@ -179,7 +179,7 @@ if you did not wrap application with MantineProvider.
 ```tsx
 import { useMantineTheme } from '@mantine/core';
 
-function Component() {
+function Demo() {
   const theme = useMantineTheme();
   return <div style={{ background: theme.colors.blue[5] }} />;
 }
@@ -236,7 +236,7 @@ import { MantineProvider, Text } from '@mantine/core';
 function App() {
   return (
     <MantineProvider styles={{ Text: { root: { fontSize: 20 } } }}>
-      <Text>Large text</Text>
+      <Text>20px text</Text>
     </MantineProvider>
   );
 }
@@ -247,7 +247,7 @@ function App() {
 All Mantine components support default props on MantineProvider:
 
 ```tsx
-import { MantineProvider, Button } from '@mantine/core';
+import { MantineProvider, Button, Badge } from '@mantine/core';
 
 function App() {
   return (
