@@ -153,9 +153,8 @@ You can detect user preferred color scheme with media query or [use-color-scheme
 hook and set is as default value:
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
-import ColorSchemeContext from './ColorSchemeContext';
 
 export default function Demo() {
   // hook will return either 'dark' or 'light' on client
