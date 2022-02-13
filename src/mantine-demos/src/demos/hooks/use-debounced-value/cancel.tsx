@@ -7,7 +7,7 @@ const code = `import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text, Button } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [value, setValue] = useState('');
   const [debounced, cancel] = useDebouncedValue(value, 1000);
 

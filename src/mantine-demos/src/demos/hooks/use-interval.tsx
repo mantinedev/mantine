@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Group, Button, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 
-const code = `import { useState, useEffect } from 'react';
+const code = `
+import { useState, useEffect } from 'react';
 import { useInterval } from '@mantine/hooks';
 import { Group, Button, Text } from '@mantine/core';
 
@@ -27,7 +28,8 @@ function Demo() {
       </Button>
     </Group>
   );
-}`;
+}
+`;
 
 function Demo() {
   const [seconds, setSeconds] = useState(0);

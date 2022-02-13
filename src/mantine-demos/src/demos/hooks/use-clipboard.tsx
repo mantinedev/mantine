@@ -6,7 +6,7 @@ const code = `
 import { Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const clipboard = useClipboard({ timeout: 500 });
 
   return (

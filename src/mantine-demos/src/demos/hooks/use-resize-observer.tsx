@@ -3,11 +3,10 @@ import { useMantineTheme, Text, Group, Code } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme, Text, Code } from '@mantine/core';
+import { Text, Code } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 
 function Demo() {
-  const theme = useMantineTheme();
   const [ref, rect] = useResizeObserver();
 
   return (

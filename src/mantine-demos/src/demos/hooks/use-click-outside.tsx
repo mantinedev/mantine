@@ -7,7 +7,7 @@ const getCode = (events?: string) => `import { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const [opened, setOpened] = useState(false);
   const ref = useClickOutside(() => setOpened(false)${events});
 

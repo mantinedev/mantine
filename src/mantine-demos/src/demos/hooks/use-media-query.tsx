@@ -6,7 +6,7 @@ const code = `
 import { Badge } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const matches = useMediaQuery('(min-width: 900px)');
 
   return (

@@ -22,3 +22,9 @@ Call hook with string that should be set as document title inside any component.
 Hook is triggered every time value changes and value is not empty string (trailing whitespace is trimmed) or null.
 
 <Demo data={HooksDemos.useDocumentTitleHook} />
+
+## Definition
+
+```tsx
+function useDocumentTitle(title: string): void;
+```

@@ -7,7 +7,7 @@ const code = (leading: boolean) => `import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [value, setValue] = useState('');
   const [debounced] = useDebouncedValue(value, 200${leading ? ', { leading: true }' : ''});
 

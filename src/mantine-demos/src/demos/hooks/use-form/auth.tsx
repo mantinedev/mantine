@@ -20,7 +20,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
-export function AuthenticationForm() {
+function AuthenticationForm() {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);

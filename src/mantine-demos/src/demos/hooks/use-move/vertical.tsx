@@ -3,7 +3,7 @@ import { useMantineTheme, Group, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme, Text, Code } from '@mantine/core';
+import { useMantineTheme, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -30,7 +30,7 @@ function Demo() {
             bottom: 0,
             height: \`\${value * 100}%\`,
             width: 16,
-            backgroundColor: theme.colors.blue[2],
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[2],
           }}
         />
 
@@ -79,7 +79,8 @@ function Demo() {
               bottom: 0,
               height: `${value * 100}%`,
               width: 16,
-              backgroundColor: theme.colors.blue[2],
+              backgroundColor:
+                theme.colorScheme === 'dark' ? theme.colors.blue[9] : theme.colors.blue[2],
             }}
           />
 

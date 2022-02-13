@@ -18,7 +18,7 @@ Hook allows you to manage state for both controlled and uncontrolled components:
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
 
-function YourInput({ value, defaultValue, onChange }) {
+function CustomInput({ value, defaultValue, onChange }) {
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
@@ -42,27 +42,27 @@ In the example above `rule` function is used to determine with value should be u
 ```tsx
 // defaultValue and finalValue are ignored for controlled components
 // _value === 'Hello'
-<YourInput value="Hello" defaultValue="There" onChange={() => {}} />
+<CustomInput value="Hello" defaultValue="There" onChange={() => {}} />
 
 // Since value prop does not meet requirements default value will be used instead
 // _value === 'There'
-<YourInput value={null} defaultValue="There" />
+<CustomInput value={null} defaultValue="There" />
 
 // When both value and defaultValue fail to meet requirements, finalValue will be used
 // _value === 'Final'
-<YourInput value={null} defaultValue={null} />
+<CustomInput value={null} defaultValue={null} />
 ```
 
 Now you can use your component as controlled and uncontrolled input:
 
 ```tsx
 // Uncontrolled
-<YourInput />
-<YourInput defaultValue="hello" />
-<YourInput onChange={() => {}} /> // still possible since value is stored in internal state
+<CustomInput />
+<CustomInput defaultValue="hello" />
+<CustomInput onChange={() => {}} /> // still possible since value is stored in internal state
 
 // Controlled
-<YourInput value="Hello" onChange={() => {}} />
+<CustomInput value="Hello" onChange={() => {}} />
 ```
 
 ## TypeScript

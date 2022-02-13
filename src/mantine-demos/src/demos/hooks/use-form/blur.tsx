@@ -6,7 +6,7 @@ import { CodeDemo } from '../../../components/Demo/Demo';
 const code = `import { TextInput } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const form = useForm({
     initialValues: { email: '' },
     validationRules: { email: (value) => /^\\S+@\\S+$/.test(value) },

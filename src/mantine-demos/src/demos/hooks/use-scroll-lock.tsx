@@ -5,7 +5,7 @@ import { Group, Button } from '@mantine/core';
 
 const code = `
 import { useScrollLock } from '@mantine/hooks';
-import { Button } from '@mantine/core';
+import { Button, Group } from '@mantine/core';
 import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
 function Demo() {

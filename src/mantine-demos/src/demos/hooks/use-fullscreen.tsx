@@ -7,7 +7,6 @@ import { useFullscreen } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const theme = useMantineTheme();
   const { toggle, fullscreen } = useFullscreen();
 
   return (

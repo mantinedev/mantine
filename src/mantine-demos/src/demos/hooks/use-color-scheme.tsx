@@ -6,7 +6,7 @@ const code = `
 import { Badge } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const colorScheme = useColorScheme();
 
   return (

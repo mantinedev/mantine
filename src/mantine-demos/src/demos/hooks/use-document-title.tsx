@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [title, setTitle] = useState('');
   useDocumentTitle(title);
 

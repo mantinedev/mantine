@@ -7,22 +7,16 @@ import { useScrollIntoView } from '@mantine/hooks';
 import { Button, Text } from '@mantine/core';
 
 function Demo() {
-  const navbarHeight = 60;
-  const { scrollIntoView, targetRef } = useScrollIntoView({ offset: navbarHeight });
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({ offset: 60 });
 
   return (
     <>
-      <Button onClick={() => scrollIntoView({ alignment: 'center' })}>
-        Scroll to target
-      </Button>
-
-      <div style={{ height: '50vh'}} />
-
+      <Button onClick={() => scrollIntoView({ alignment: 'center' })}>Scroll to target</Button>
+      <div style={{ height: '50vh' }} />
       <Text ref={targetRef}>Hello there</Text>
     </>
   );
 }
-
 `;
 
 function Demo() {

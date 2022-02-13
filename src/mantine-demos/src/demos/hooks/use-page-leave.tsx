@@ -5,7 +5,6 @@ import { Text } from '@mantine/core';
 const code = `
 import { useState } from 'react';
 import { usePageLeave } from '@mantine/hooks';
-import { Text } from '@mantine/core';
 
 function Demo() {
   const [leftsCount, setLeftsCount] = useState(0);

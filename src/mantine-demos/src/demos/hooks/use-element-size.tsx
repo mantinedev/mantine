@@ -6,7 +6,6 @@ const code = `
 import { useElementSize } from '@mantine/hooks';
 
 function Demo() {
-  const theme = useMantineTheme();
   const { ref, width, height } = useElementSize();
 
   return (

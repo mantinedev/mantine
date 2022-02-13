@@ -3,6 +3,7 @@ import { useIntersection } from '@mantine/hooks';
 import { Text, Paper, useMantineTheme } from '@mantine/core';
 
 const code = `
+import { useRef } from 'react';
 import { useIntersection } from '@mantine/hooks';
 import { Paper, Text, useMantineTheme } from '@mantine/core';
 

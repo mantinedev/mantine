@@ -27,9 +27,9 @@ function Demo() {
   // ctrl + J and ⌘ + J to toggle color scheme
   // ctrl + K and ⌘ + K to search
   useHotkeys([
-    ['mod+J', () => toggleColorScheme()],
-    ['ctrl+K', () => search()],
-    ['alt+mod+shift+X', () => rickRoll()],
+    ['mod+J', () => console.log('Toggle color scheme')],
+    ['ctrl+K', () => console.log('Trigger search')],
+    ['alt+mod+shift+X', () => console.log('Rick roll')],
   ]);
 
   return null;
@@ -49,7 +49,7 @@ which should be used with `onKeyDown`:
 - `mod+S` – detects `⌘+S` on macOS and `Ctrl+S` on Windows
 - `ctrl+shift+X` – handles multiple modifiers
 - `alt + shift + L` – you can use whitespace inside hotkey
-- `ArrowLeft` – you can use special keys using (this format)[https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values]
+- `ArrowLeft` – you can use special keys using [this format](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 
 ## Definition
 

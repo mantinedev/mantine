@@ -3,7 +3,7 @@ import { Group, Button, TextInput, ActionIcon, useMantineTheme } from '@mantine/
 import { EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
 import { useNotifications } from '@mantine/notifications';
 
-const code = `import React from 'react';
+const code = `
 import { Group, Button, ActionIcon, TextInput } from '@mantine/core';
 import { EnvelopeClosedIcon, PaperPlaneIcon } from '@modulz/radix-icons';
 import { EnvelopeClosedIcon } from '@modulz/radix-icons';

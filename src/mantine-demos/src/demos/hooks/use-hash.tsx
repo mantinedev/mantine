@@ -1,23 +1,34 @@
 import React from 'react';
 import { useHash, randomId } from '@mantine/hooks';
-import { Group, Button } from '@mantine/core';
+import { Group, Button, Text, Code } from '@mantine/core';
 
 const code = `
 import { useHash, randomId } from '@mantine/hooks';
-import { Button } from '@mantine/core';
+import { Button, Text, Code } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [hash, setHash] = useHash();
-  return <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
+  return (
+    <>
+      <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
+      <Text>Current hash: <Code>{hash}</Code></Text>
+    </>
+  );
 }`;
 
 function Demo() {
-  const [, setHash] = useHash();
+  const [hash, setHash] = useHash();
 
   return (
-    <Group position="center">
-      <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
-    </Group>
+    <>
+      <Group position="center">
+        <Button onClick={() => setHash(randomId())}>Set hash to random string</Button>
+      </Group>
+
+      <Text align="center" mt="md">
+        Current hash: <Code>{hash}</Code>
+      </Text>
+    </>
   );
 }
 

@@ -7,7 +7,7 @@ const code = `import { useState } from 'react';
 import { TextInput, Button, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
-export function Demo() {
+function Demo() {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string>(null);
   const form = useForm({

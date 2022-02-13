@@ -3,6 +3,8 @@ import { useHover } from '@mantine/hooks';
 import { useMantineTheme, Text } from '@mantine/core';
 
 const code = `
+import { useHover } from '@mantine/hooks';
+
 function Demo() {
   const { hovered, ref } = useHover();
   return (
