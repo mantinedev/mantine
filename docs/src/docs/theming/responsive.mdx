@@ -6,13 +6,7 @@ order: 3
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
-import {
-  GridDemos,
-  SimpleGridDemos,
-  AppShellDemos,
-  MediaQueryDemos,
-  CreateStylesDemos,
-} from '@mantine/demos';
+import { MediaQueryDemos, CreateStylesDemos } from '@mantine/demos';
 
 # Responsive styles
 
@@ -56,81 +50,6 @@ Default `theme.breakpoints` values:
     `${DEFAULT_THEME.breakpoints[size]}px`,
   ])}
 />
-
-## Layout components
-
-Most of the layout components support responsive features. This section includes basic responsive features,
-visit components documentation to learn more.
-
-[Grid](/core/grid/) component allows you to set columns span based on `theme.breakpoints`.
-Grid is based on flexbox and can be used in older browsers (IE11+):
-
-<Demo data={GridDemos.responsive} />
-
-[SimpleGrid](/core/simple-grid/) component creates a layout with a given number of columns which have equal width.
-SimpleGrid is based on CSS grid and can have issue in older browsers (IE11+):
-
-<Demo data={SimpleGridDemos.breakpoints} />
-
-[AppShell](/core/app-shell/) component can be used to create a common layout pattern: `Header – Navbar – Content`:
-
-<Demo data={AppShellDemos.usage} />
-
-AppShell includes several responsive features with which you can build collapsible Navbar without any additional styles ([demo](/app-shell-demo/)):
-
-```tsx
-import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
-
-  return (
-    <AppShell
-      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-      navbarOffsetBreakpoint="sm"
-      // fixed prop on AppShell will be automatically added to Header and Navbar
-      fixed
-      navbar={
-        <Navbar
-          padding="md"
-          // Breakpoint at which navbar will be hidden if hidden prop is true
-          hiddenBreakpoint="sm"
-          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
-          hidden={!opened}
-          // when viewport size is less than theme.breakpoints.sm navbar width is 100%
-          // viewport size > theme.breakpoints.sm – width is 300px
-          // viewport size > theme.breakpoints.lg – width is 400px
-          width={{ sm: 300, lg: 400 }}
-        >
-          <Text>Application navbar</Text>
-        </Navbar>
-      }
-      header={
-        <Header height={70} padding="md">
-          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
-          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-
-            <Text>Application header</Text>
-          </div>
-        </Header>
-      }
-    >
-      <Text>Resize app to see responsive navbar in action</Text>
-    </AppShell>
-  );
-}
-```
 
 ## Media queries in createStyles
 
