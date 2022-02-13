@@ -12,6 +12,7 @@ Mantine is built with [emotion](https://emotion.sh) which supports RTL languages
 Install `stylis-plugin-rtl`:
 
 ```bash
+# Install with yarn
 yarn add stylis stylis-plugin-rtl
 
 # or with npm
@@ -30,10 +31,10 @@ Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
 import { MantineProvider } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
-function Demo() {
+function App() {
   return (
     <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
@@ -48,7 +49,7 @@ import { useState } from 'react';
 import { MantineProvider, Button } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
-function Demo() {
+function App() {
   const [rtl, setRtl] = useState(false);
   return (
     <MantineProvider
@@ -62,7 +63,8 @@ function Demo() {
       }
     >
       <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
-      <App />
+
+      <YourApp />
     </MantineProvider>
   );
 }
