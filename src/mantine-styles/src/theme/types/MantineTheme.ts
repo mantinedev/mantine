@@ -2,7 +2,6 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { Tuple } from './Tuple';
 import type { DeepPartial } from './DeepPartial';
-import { CSSObject } from '../../tss';
 import { MantineColor } from './MantineColor';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
@@ -14,9 +13,9 @@ export interface HeadingStyle {
 }
 
 interface MantineThemeFunctions {
-  fontStyles(): CSSObject;
-  focusStyles(): CSSObject;
-  cover(offset?: number | string): CSSObject;
+  fontStyles(): any;
+  focusStyles(): any;
+  cover(offset?: number | string): any;
   themeColor(color: string, shade: number, primaryFallback?: boolean): string;
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;
