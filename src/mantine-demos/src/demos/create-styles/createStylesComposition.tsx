@@ -2,6 +2,8 @@ import React from 'react';
 import { createStyles } from '@mantine/core';
 
 const code = `
+import { createStyles } from '@mantine/core';
+
 const useStyles = createStyles((theme, _params, getRef) => ({
   button: {
     // assign reference to selector

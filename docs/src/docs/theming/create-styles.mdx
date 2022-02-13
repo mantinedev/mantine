@@ -67,27 +67,6 @@ defined via [MantineProvider](/theming/extend-theme/#breakpoints) or just static
 
 <Demo data={CreateStylesDemos.createStylesKeyframes} />
 
-## use-css hook
-
-use-css hook is a simpler alternative to `createStyles` function.
-Hook returns `css` and `cx` functions. `css` function accepts styles object and returns class name.
-Note that `css` function cannot subscribe to `theme`, if you need this use `useMantineTheme` hook or `createStyles` function:
-
-```tsx
-import { useCss, Button } from '@mantine/core';
-
-function Demo({ active }) {
-  const { css, cx } = useCss();
-  return (
-    <Button
-      className={cx(css({ backgroundColor: 'red', opacity: 1 }), { [css({ opacity: 1 })]: active })}
-    >
-      Custom button
-    </Button>
-  );
-}
-```
-
 ## Global styles
 
 To set global styles use `Global` component:
@@ -139,7 +118,7 @@ After installation you can import `createStyles` and other function from `@manti
 import { createStyles, MantineProvider, useMantineTheme } from '@mantine/styles';
 ```
 
-## Can I use other css-in-js libraries with Mantine?
+## Can I use other css-in-js libraries or SCSS with Mantine?
 
 Yes, you can. But please note that Mantine already uses [emotion](https://emotion.sh/) and you may
 have styles collisions and would have to overwrite styles with `!important`. Please consider

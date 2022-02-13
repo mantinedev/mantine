@@ -3,7 +3,7 @@ import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
 import { Tabs, TabsProps } from '@mantine/core';
 
 const code = `
-import { TabsProps, Tabs, Tab } from '@mantine/core';
+import { TabsProps, Tabs } from '@mantine/core';
 import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
 
 function StyledTabs(props: TabsProps) {

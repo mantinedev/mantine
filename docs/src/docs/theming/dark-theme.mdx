@@ -16,10 +16,10 @@ To use dark color scheme, wrap your application in MantineProvider and specify `
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function Demo() {
+function App() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
@@ -42,7 +42,7 @@ function App() {
       theme={{
         colorScheme: 'dark',
         colors: {
-          // override dark colors here to change them for all components
+          // override dark colors to change them for all components
           dark: [
             '#d5d7e0',
             '#acaebf',
@@ -87,9 +87,10 @@ Mantine support dynamic color scheme change and exports `ColorSchemeProvider` to
 help you set up color scheme context:
 
 ```tsx
+import { useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
-export default function Demo() {
+function App() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -97,7 +98,7 @@ export default function Demo() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
-        <App />
+        <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
   );
@@ -118,7 +119,7 @@ to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
 
-export default function Demo() {
+function App() {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
@@ -132,7 +133,7 @@ export default function Demo() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
-        <App />
+        <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
   );
@@ -153,10 +154,11 @@ You can detect user preferred color scheme with media query or [use-color-scheme
 hook and set is as default value:
 
 ```tsx
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+import { useState } from 'react';
+import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 
-export default function Demo() {
+function App() {
   // hook will return either 'dark' or 'light' on client
   // and always 'light' during ssr as window.matchMedia is not available
   const preferredColorScheme = useColorScheme();
@@ -167,7 +169,7 @@ export default function Demo() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }}>
-        <App />
+        <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
   );
