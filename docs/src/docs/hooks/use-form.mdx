@@ -175,14 +175,18 @@ form.values; // -> { name: 'Bob', age: 25 }
 Usually this function is used to work with input elements:
 
 ```tsx
-const form = useForm({ initialValues: { name: '' } });
+import { useForm } from '@mantine/hooks';
 
-const input = (
-  <input
-    value={form.values.name}
-    onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
-  />
-);
+function Demo() {
+  const form = useForm({ initialValues: { name: '' } });
+
+  return (
+    <input
+      value={form.values.name}
+      onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+    />
+  );
+}
 ```
 
 ### form.setValues
@@ -337,8 +341,6 @@ const authForm = <form onSubmit={form.onSubmit((values) => console.log(values))}
 
 ## Examples
 
-<br />
-
 ### Validate field on blur
 
 <HooksDemos.UseFormBlurValidateDemo />
@@ -350,8 +352,6 @@ Submit form with `test@mantine.dev` email to see external validation error:
 <HooksDemos.UseFormServerValidationDemo />
 
 ### Authentication form
-
-[Browse code on GitHub](https://github.com/mantinedev/mantine/blob/master/src/mantine-demos/src/shared/AuthenticationForm/AuthenticationForm.tsx)
 
 <HooksDemos.UseFormAuthDemo />
 

@@ -4,7 +4,7 @@ import { AuthenticationForm } from '../../../shared/AuthenticationForm/Authentic
 import { CodeDemo } from '../../../components/Demo/Demo';
 
 const code = `
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from '@mantine/hooks';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import {
@@ -20,19 +20,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 
-export interface AuthenticationFormProps {
-  noShadow?: boolean;
-  noPadding?: boolean;
-  noSubmit?: boolean;
-  style?: React.CSSProperties;
-}
-
-export function AuthenticationForm({
-  noShadow,
-  noPadding,
-  noSubmit,
-  style,
-}: AuthenticationFormProps) {
+export function AuthenticationForm() {
   const [formType, setFormType] = useState<'register' | 'login'>('register');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>(null);
@@ -83,12 +71,11 @@ export function AuthenticationForm({
 
   return (
     <Paper
-      padding={noPadding ? 0 : 'lg'}
-      shadow={noShadow ? null : 'sm'}
+      padding="lg"
+      shadow="sm"
       style={{
         position: 'relative',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        ...style,
       }}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -155,25 +142,15 @@ export function AuthenticationForm({
           </Text>
         )}
 
-        {!noSubmit && (
-          <Group position="apart" mt="xl">
-            <Anchor
-              component="button"
-              type="button"
-              color="gray"
-              onClick={toggleFormType}
-              size="sm"
-            >
-              {formType === 'register'
-                ? 'Have an account? Login'
-                : "Don't have an account? Register"}
-            </Anchor>
+        <Group position="apart" mt="xl">
+          <Anchor component="button" type="button" color="gray" onClick={toggleFormType} size="sm">
+            {formType === 'register' ? 'Have an account? Login' : "Don't have an account? Register"}
+          </Anchor>
 
-            <Button color="blue" type="submit">
-              {formType === 'register' ? 'Register' : 'Login'}
-            </Button>
-          </Group>
-        )}
+          <Button color="blue" type="submit">
+            {formType === 'register' ? 'Register' : 'Login'}
+          </Button>
+        </Group>
       </form>
     </Paper>
   );

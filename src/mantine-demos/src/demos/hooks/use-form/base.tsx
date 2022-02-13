@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { TextInput, Group, Button, Checkbox, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
@@ -60,7 +61,7 @@ export function UseFormBaseDemo() {
       demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
     >
       <div style={{ maxWidth: 360, margin: 'auto' }}>
-        <form onSubmit={form.onSubmit(() => {})}>
+        <form onSubmit={form.onSubmit(console.log)}>
           <TextInput
             required
             label="Email"
