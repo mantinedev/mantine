@@ -96,30 +96,45 @@ Navbar can be used outside of AppShell context:
 ### Navbar.Section
 
 ```tsx
-<Navbar>
-  {/* First section with normal height (depends on section content) */}
-  <Navbar.Section>First section</Navbar.Section>
+import { Navbar } from '@mantine/core';
 
-  {/* Grow section will take all available space that is not taken by first and last sections */}
-  <Navbar.Section grow>Grow section</Navbar.Section>
+function Demo() {
+  return (
+    <Navbar>
+      {/* First section with normal height (depends on section content) */}
+      <Navbar.Section>First section</Navbar.Section>
 
-  {/* Last section with normal height (depends on section content) */}
-  <Navbar.Section>Last section</Navbar.Section>
-</Navbar>
+      {/* Grow section will take all available space that is not taken by first and last sections */}
+      <Navbar.Section grow>Grow section</Navbar.Section>
+
+      {/* Last section with normal height (depends on section content) */}
+      <Navbar.Section>Last section</Navbar.Section>
+    </Navbar>
+  );
+}
 ```
 
 ### Responsive width
 
 ```tsx
-<Navbar
-  width={{
-    // When viewport is larger than theme.breakpoints.sm, Navbar width will be 300
-    sm: 300,
+import { Navbar } from '@mantine/core';
 
-    // When viewport is larger than theme.breakpoints.lg, Navbar width will be 400
-    lg: 400,
-  }}
-/>
+function Demo() {
+  return (
+    <Navbar
+      width={{
+        // When viewport is larger than theme.breakpoints.sm, Navbar width will be 300
+        sm: 300,
+
+        // When viewport is larger than theme.breakpoints.lg, Navbar width will be 400
+        lg: 400,
+
+        // When other breakpoints do not match base width is used, defaults to 100%
+        base: 100,
+      }}
+    />
+  );
+}
 ```
 
 ### Fixed position
@@ -127,7 +142,11 @@ Navbar can be used outside of AppShell context:
 To make Navbar fixed (like in Mantine docs) set `fixed` and `position` props:
 
 ```tsx
-<Navbar fixed position={{ top: 0, left: 0 }} />
+import { Navbar } from '@mantine/core';
+
+function Demo() {
+  return <Navbar fixed position={{ top: 0, left: 0 }} />;
+}
 ```
 
 ### Navbar with custom scrollbars
@@ -143,7 +162,7 @@ In addition, `width` and `height` need to be explicitly set on the wrapping `Nav
 To use custom components instead of Navbar or Header:
 
 ```tsx
-import { AppShell, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
+import { AppShell, Header, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
 
 function CustomNavbar(props: Omit<NavbarProps, 'children'>) {
   return <Navbar {...props}>Custom navbar</Navbar>;

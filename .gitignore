@@ -37,3 +37,4 @@ docs/public
 gallery/out
 storybook-static
 .next
+docs/src/components/Test.tsx
