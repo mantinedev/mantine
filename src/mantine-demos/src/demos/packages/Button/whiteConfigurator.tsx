@@ -1,22 +1,29 @@
 import React from 'react';
-import { DatabaseIcon } from '@primer/octicons-react';
+import { Database } from 'tabler-icons-react';
 import { DEFAULT_THEME, Button, Group, ButtonProps } from '@mantine/core';
 
 function Wrapper(props: ButtonProps<'button'>) {
   return (
     <Group position="center">
-      <Button leftIcon={<DatabaseIcon size={14} />} variant="white" {...props}>
+      <Button leftIcon={<Database size={14} />} variant="white" {...props}>
         Connect to database
       </Button>
     </Group>
   );
 }
 
-const codeTemplate = (
-  props: string
-) => `<Button leftIcon={<DatabaseIcon />} variant="white"${props}>
-  Connect to database
-</Button>`;
+const codeTemplate = (props: string) => `
+import { Button } from '@mantine/core';
+import { Database } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Button leftIcon={<Database />} variant="white"${props}>
+      Connect to database
+    </Button>
+  );
+}
+`;
 
 export const whiteConfigurator: MantineDemo = {
   type: 'configurator',

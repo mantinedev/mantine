@@ -2,22 +2,24 @@ import React from 'react';
 import { Button, Group } from '@mantine/core';
 
 const code = `
-<Button compact>My compact button</Button>
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <Button compact>My compact button</Button>;
+}
 `;
 
 function Demo() {
   return (
-    <>
-      <Group position="center">
-        <Button compact>Compact filled button</Button>
-        <Button compact variant="light">
-          Compact light button
-        </Button>
-        <Button compact variant="outline">
-          Compact outline button
-        </Button>
-      </Group>
-    </>
+    <Group position="center">
+      <Button compact>Compact filled button</Button>
+      <Button compact variant="light">
+        Compact light button
+      </Button>
+      <Button compact variant="outline">
+        Compact outline button
+      </Button>
+    </Group>
   );
 }
 

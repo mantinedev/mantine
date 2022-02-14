@@ -1,30 +1,25 @@
 import React from 'react';
-import { ExternalLinkIcon } from '@modulz/radix-icons';
+import { ExternalLink } from 'tabler-icons-react';
 import { Button, Group } from '@mantine/core';
 
 const code = `
-<Button
-  component="a"
-  href="https://mantine.dev"
-  target="_blank"
-  variant="outline"
-  leftIcon={<ExternalLinkIcon />}
->
-  Mantine docs
-</Button>
+import { Button } from '@mantine/core';
+import { ExternalLink } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Button component="a" href="#" variant="outline" leftIcon={<ExternalLink size={14} />}>
+      Open in new tab
+    </Button>
+  );
+}
 `;
 
 function Demo() {
   return (
     <Group position="center">
-      <Button
-        component="a"
-        href="https://mantine.dev"
-        target="_blank"
-        variant="outline"
-        leftIcon={<ExternalLinkIcon />}
-      >
-        Mantine docs
+      <Button<'a'> component="a" href="#" variant="outline" leftIcon={<ExternalLink size={14} />}>
+        Open in new tab
       </Button>
     </Group>
   );
