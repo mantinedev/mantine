@@ -3,11 +3,17 @@ import { Grid } from '@mantine/core';
 import { ColWrapper as Col } from './_col-wrapper';
 
 const code = `
-<Grid>
-  <Grid.Col span={3}>1</Grid.Col>
-  <Grid.Col span={3}>2</Grid.Col>
-  <Grid.Col span={3} offset={3}>3</Grid.Col>
-</Grid>
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid>
+      <Grid.Col span={3}>1</Grid.Col>
+      <Grid.Col span={3}>2</Grid.Col>
+      <Grid.Col span={3} offset={3}>3</Grid.Col>
+    </Grid>
+  );
+}
 `;
 
 function Demo() {

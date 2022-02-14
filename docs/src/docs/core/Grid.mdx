@@ -17,15 +17,12 @@ import { GridDemos } from '@mantine/demos';
 
 ## Usage
 
-Grid component provides simple grid system based on flexbox container:
-
 <Demo data={GridDemos.usage} />
 
 ## Gutter
 
 Customize spacing between columns with `gutter` prop on Grid component.
-Use xs, sm, md, lg, xl values to set spacing from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows)
-or number to set spacing in px:
+Use xs, sm, md, lg, xl values to set spacing from `theme.spacing` or number to set spacing in px:
 
 ```tsx
 <Grid gutter="xl" /> // -> theme.spacing.xl
@@ -40,7 +37,7 @@ Set `grow` prop on Grid component to force last row take 100% of container width
 
 ## Column offset
 
-Set `offset` prop on Grid.Col component to create gaps in grid.
+Set `offset` prop on `Grid.Col` component to create gaps in grid.
 `offset` adds left margin to target column and has the same units as `span`:
 
 <Demo data={GridDemos.offset} />
@@ -78,8 +75,8 @@ In this example, first column takes 50% with 12 span (12/24), second and third t
 
 ## Wrap Grid.Col component
 
-Grid.Col component depends on context props from Grid component.
-If you want to enhance it with additional logic – pass all props to child Gird.Col:
+`Grid.Col` component depends on context props from Grid component.
+If you want to enhance it with additional logic – pass all props to child `Gird.Col`:
 
 ```tsx
 // Example Grid.Col component wrapper, used in all demos
@@ -87,10 +84,15 @@ import { Grid, Text, useMantineTheme } from '@mantine/core';
 
 function ColWrapper(props: React.ComponentProps<typeof Grid.Col>) {
   const theme = useMantineTheme();
-  const background = theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0];
 
   return (
-    <Grid.Col {...props} style={{ background, padding: theme.spacing.md, ...props.style }}>
+    <Grid.Col
+      {...props}
+      sx={{
+        background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.blue[0],
+        padding: theme.spacing.md,
+      }}
+    >
       <Text
         color={theme.colorScheme === 'dark' ? 'gray' : 'blue'}
         size="xl"
@@ -104,9 +106,13 @@ function ColWrapper(props: React.ComponentProps<typeof Grid.Col>) {
 }
 
 // Later
-<Grid>
-  <ColWrapper span={4}>1</ColWrapper>
-  <ColWrapper span={4}>2</ColWrapper>
-  <ColWrapper span={4}>3</ColWrapper>
-</Grid>;
+function Demo() {
+  return (
+    <Grid>
+      <ColWrapper span={4}>1</ColWrapper>
+      <ColWrapper span={4}>2</ColWrapper>
+      <ColWrapper span={4}>3</ColWrapper>
+    </Grid>
+  );
+}
 ```
