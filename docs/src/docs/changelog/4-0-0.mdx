@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
 date: 'January 13th, 2022'
 ---
 
-import { AspectRatioDemos } from '@mantine/demos';
+import { AspectRatioDemos, NumberInputDemos } from '@mantine/demos';
 
 ## Breaking changes
 
@@ -183,6 +183,12 @@ createStyles((theme, params, getRef) => ({
 New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 
 <Demo data={AspectRatioDemos.video} />
+
+## New features
+
+[NumberInput](https://mantine.dev/core/number-input/) component now supports `formatter` and `parser` props to customize how value is displayed in the input:
+
+<Demo data={NumberInputDemos.formatter} />
 
 ## Other changes
 
