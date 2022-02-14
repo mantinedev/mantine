@@ -11,18 +11,26 @@ function Wrapper(props: InputWrapperProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<InputWrapper
-  id="input-demo"
- ${props}
->
-  <Input id="input-demo" placeholder="Your email" />
-</InputWrapper>`;
+const codeTemplate = (props: string) => `
+import { InputWrapper, Input } from '@mantine/core';
+
+function Demo() {
+  return (
+    <InputWrapper
+      id="input-demo"
+     ${props}
+    >
+      <Input id="input-demo" placeholder="Your email" />
+    </InputWrapper>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'required',
