@@ -27,7 +27,7 @@ use-form hook accepts `configuration` object as single argument:
 
 - `initialValues` – object with initial form values
 - `validationRules` – objects of functions that will be used to validate form values
-- `errorMessages` – object of react nodes that will be used to ser errors, if not provided errors will be set to true
+- `errorMessages` – object of react nodes that will be used to set errors, if not provided errors will be set to true
 
 Hook returns object with properties:
 
@@ -322,7 +322,7 @@ form.errors; // -> { name: null, age: null }
 form.values; // -> { name: '', age: 0 }
 ```
 
-### form.onSubmit:
+### form.onSubmit
 
 `onSubmit` takes function as an argument and calls it with values if form has no validation errors:
 
