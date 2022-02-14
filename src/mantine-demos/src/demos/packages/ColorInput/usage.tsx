@@ -2,7 +2,11 @@ import React from 'react';
 import { ColorInput } from '@mantine/core';
 
 const code = `
-<ColorInput placeholder="Pick color" label="Your favorite color" />
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput placeholder="Pick color" label="Your favorite color" />;
+}
 `;
 
 function Demo() {
