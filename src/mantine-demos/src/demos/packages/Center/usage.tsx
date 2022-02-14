@@ -2,9 +2,15 @@ import React from 'react';
 import { Center, useMantineTheme } from '@mantine/core';
 
 const code = `
-<Center style={{ width: 400, height: 200 }}>
-  <div>All elements inside Center are centered</div>
-</Center>
+import { Center } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Center style={{ width: 400, height: 200 }}>
+      <div>All elements inside Center are centered</div>
+    </Center>
+  );
+}
 `;
 
 function Demo() {
