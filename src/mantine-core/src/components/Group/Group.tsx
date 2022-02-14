@@ -59,11 +59,15 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
     { classNames, styles, name: 'Group' }
   );
 
-  const items = filteredChildren.map((child) =>
-    React.cloneElement(child, {
-      className: cx(classes.child, child.props.className),
-    })
-  );
+  const items = filteredChildren.map((child) => {
+    if (typeof child === 'object' && child !== null && 'props' in child) {
+      return React.cloneElement(child, {
+        className: cx(classes.child, child.props?.className),
+      });
+    }
+
+    return child;
+  });
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
