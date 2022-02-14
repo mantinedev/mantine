@@ -17,7 +17,7 @@ export type ActionIconStylesNames = ClassNames<typeof useStyles>;
 
 interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Icon rendered inside button */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Controls appearance */
   variant?: ActionIconVariant;
