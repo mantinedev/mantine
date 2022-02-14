@@ -2,17 +2,25 @@ import React from 'react';
 import { useMantineTheme, Container } from '@mantine/core';
 
 const code = `
-<Container>
-  Default container
-</Container>
+import { Container } from '@mantine/core';
 
-<Container size="xs" padding="xs">
-  xs container with xs horizontal padding
-</Container>
+function Demo() {
+  return (
+    <>
+      <Container>
+        Default container
+      </Container>
 
-<Container size={200} padding={0}>
-  200px container with 0 horizontal padding
-</Container>
+      <Container size="xs" padding="xs">
+        xs container with xs horizontal padding
+      </Container>
+
+      <Container size={200} padding={0}>
+        200px container with 0 horizontal padding
+      </Container>
+    </>
+  );
+}
 `;
 
 function Demo() {
