@@ -1,7 +1,13 @@
 import React from 'react';
 import { NumberInput } from '@mantine/core';
 
-const code = '<NumberInput disabled />';
+const code = `
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return <NumberInput disabled />;
+}
+`;
 
 function Demo() {
   return (

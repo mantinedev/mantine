@@ -48,6 +48,7 @@ attachDemos(storiesOf('@mantine/core/Modal/demos', module), demos.ModalDemos);
 attachDemos(storiesOf('@mantine/core/MultiSelect/demos', module), demos.MultiSelectDemos);
 attachDemos(storiesOf('@mantine/core/NativeSelect/demos', module), demos.NativeSelectDemos);
 attachDemos(storiesOf('@mantine/core/Notification/demos', module), demos.NotificationDemos);
+attachDemos(storiesOf('@mantine/core/NumberInput/demos', module), demos.NumberInputDemos);
 attachDemos(storiesOf('@mantine/core/Overlay/demos', module), demos.OverlayDemos);
 attachDemos(storiesOf('@mantine/core/Pagination/demos', module), demos.PaginationDemos);
 attachDemos(storiesOf('@mantine/core/Paper/demos', module), demos.PaperDemos);
