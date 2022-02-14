@@ -13,10 +13,17 @@ function Wrapper(props: ColorPickerProps) {
   );
 }
 
-const codeTemplate = (props: string) =>
-  `<ColorPicker${props} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors).map(
-    (color) => `'${DEFAULT_THEME.colors[color][6]}'`
-  )}]} />`;
+const codeTemplate = (props: string) => `
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ColorPicker${props} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
+  .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
+  .join(', ')}]} />
+  );
+}
+`;
 
 export const swatchesConfigurator: MantineDemo = {
   type: 'configurator',
