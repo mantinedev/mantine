@@ -9,7 +9,7 @@ interface ConfiguratorProps {
   component: any;
   codeTemplate(props: string, children?: string): string;
   previewBackground?: string;
-  multiline?: boolean;
+  multiline?: boolean | number;
   includeCode?: boolean;
   center?: boolean;
   props: ControlProps[];

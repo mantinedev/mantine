@@ -27,7 +27,7 @@ import { Autocomplete } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <Autocomplete value={value} onChange={setValue} />;
+  return <Autocomplete value={value} onChange={setValue} data={[]} />;
 }
 ```
 
@@ -39,32 +39,45 @@ Autocomplete support two different data formats:
 2. An array of objects with required `value` property and any other additional properties
 
 ```tsx
-// Data as an array of strings
-<Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} />
+import { Autocomplete } from '@mantine/core';
 
-// Data as an array of objects:
-// Minimal example (same as first example above)
-<Autocomplete data={[
-  { value: 'React' },
-  { value: 'Angular' },
-  { value: 'Svelte' },
-  { value: 'Vue' },
-]} />
+function Demo() {
+  return (
+    <>
+      {/* Data as an array of strings */}
+      <Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} />
 
-// Additional data properties for custom item component (see documentation below)
-<Autocomplete
-  itemComponent={({ value, color, email, name }) => /* Your custom item component with data properties */}
-  data={[
-    { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
-    { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
-    { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
-  ]}
-/>
+      {/* Data as an array of objects: Minimal example (same as first example above) */}
+      <Autocomplete
+        data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
+      />
+
+      {/* Additional data properties for custom item component (see documentation below) */}
+      <Autocomplete
+        // Your custom item component with data properties
+        itemComponent={({ value, color, email, name }) => <div />}
+        data={[
+          {
+            value: 'bob@handsome.inc',
+            color: 'red',
+            email: 'bob@handsome.inc',
+            name: 'Bob Handsome',
+          },
+          {
+            value: 'bill@outlook.com',
+            color: 'teal',
+            email: 'bill@outlook.com',
+            name: 'Bill Gates',
+          },
+          { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
+        ]}
+      />
+    </>
+  );
+}
 ```
 
 ## Dynamic data
-
-`data` prop can have dynamic values:
 
 <Demo data={AutocompleteDemos.dynamic} />
 
@@ -75,18 +88,6 @@ Autocomplete item component and filtering logic can be changed. To do so:
 - Add extra props to `data` objects
 - Create `filter` function which determines whether item should be added to the search results
 - Provide `itemComponent` which will consume `data` objects
-
-`data` prop must be an array of objects with required `value` field:
-
-```tsx
-[
-  { value: 'bob@handsome.inc', color: 'red', email: 'bob@handsome.inc', name: 'Bob Handsome' },
-  { value: 'bill@outlook.com', color: 'teal', email: 'bill@outlook.com', name: 'Bill Gates' },
-  { value: 'amy@wong.cn', color: 'blue', email: 'amy@wong.cn', name: 'Amy Wong' },
-];
-```
-
-Then define custom `filter` function and `itemComponent` which will consume data:
 
 <Demo data={AutocompleteDemos.itemComponent} />
 
@@ -128,8 +129,6 @@ To enable animations set the following optional props:
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={AutocompleteDemos.configurator} />
 
 ## Get input ref
@@ -139,8 +138,8 @@ import { useRef } from 'react';
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
-  return <Autocomplete ref={ref} />;
+  const ref = useRef<HTMLInputElement>();
+  return <Autocomplete ref={ref} data={[]} />;
 }
 ```
 

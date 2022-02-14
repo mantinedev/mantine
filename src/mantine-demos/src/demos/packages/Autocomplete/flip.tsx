@@ -35,8 +35,8 @@ export const flip: MantineDemo = {
         { label: 'bottom', value: 'bottom' },
         { label: 'flip', value: 'flip' },
       ],
-      initialValue: 'bottom',
-      defaultValue: 'bottom',
+      initialValue: 'flip',
+      defaultValue: 'flip',
     },
   ],
 };
