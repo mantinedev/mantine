@@ -1,11 +1,6 @@
 import React from 'react';
-import { EnvelopeClosedIcon } from '@modulz/radix-icons';
-import { Input } from '@mantine/core';
-
-const codeTemplate = (props: string) => `<Input
-  icon={<MailIcon />}
- ${props}
-/>`;
+import { At } from 'tabler-icons-react';
+import { Input, InputProps } from '@mantine/core';
 
 const iconSizes = {
   xs: 14,
@@ -15,20 +10,29 @@ const iconSizes = {
   xl: 24,
 };
 
+function Wrapper(props: InputProps<'input'>) {
+  return <Input icon={<At size={iconSizes[props.size]} />} {...props} />;
+}
+
+const codeTemplate = (props: string) => `
+import { Input } from '@mantine/core';
+import { At } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Input
+      icon={<At />}
+     ${props}
+    />
+  );
+}
+`;
+
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: any) => (
-    <Input
-      icon={
-        <EnvelopeClosedIcon
-          style={{ width: iconSizes[props.size], height: iconSizes[props.size] }}
-        />
-      }
-      {...props}
-    />
-  ),
+  component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'variant',

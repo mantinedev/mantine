@@ -1,10 +1,6 @@
 import React from 'react';
 import { Input, MANTINE_SIZES } from '@mantine/core';
 
-const code = `
-<Input size="xl" placeholder="xl input size" />
-`;
-
 function Demo() {
   const inputs = MANTINE_SIZES.map((size, index) => (
     <Input
@@ -19,6 +15,5 @@ function Demo() {
 
 export const sizes: MantineDemo = {
   type: 'demo',
-  code,
   component: Demo,
 };
