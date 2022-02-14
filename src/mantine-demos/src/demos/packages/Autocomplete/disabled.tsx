@@ -2,7 +2,11 @@ import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
-<Autocomplete disabled />
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return <Autocomplete disabled />;
+}
 `;
 
 function Demo() {

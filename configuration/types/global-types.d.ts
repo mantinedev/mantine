@@ -43,7 +43,7 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
   configurator?: MantineDemoControlProps[];
   configuratorProps?: {
     previewBackground?: string;
-    multiline?: boolean;
+    multiline?: boolean | number;
     includeCode?: boolean;
     filter?: string[];
     center?: boolean;

@@ -1,23 +1,41 @@
 import React, { forwardRef } from 'react';
 import { Group, Avatar, Text, MantineColor, SelectItemProps, Autocomplete } from '@mantine/core';
-import { charactersList } from './_mockdata';
 
 const code = `
-import { Group, Avatar, Text, Autocomplete } from '@mantine/core';
+import { forwardRef } from 'react';
+import { Group, Avatar, Text, MantineColor, SelectItemProps, Autocomplete } from '@mantine/core';
 
-export const LABELS_DATA = [
+const charactersList = [
   {
-    image: 'avatar.png',
-    value: 'Bender Bending Rodríguez',
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
     description: 'Fascinated with cooking, though has no sense of taste',
   },
+
   {
-    image: 'avatar.png',
-    value: 'Carol Miller',
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
     description: 'One of the richest people on Earth',
   },
-  // ... other items
-]
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
+];
+
+const data = charactersList.map((item) => ({ ...item, value: item.label }));
+
+interface ItemProps extends SelectItemProps {
+  color: MantineColor;
+  description: string;
+  image: string;
+}
 
 const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ description, value, image, ...others }: ItemProps, ref) => (
@@ -51,6 +69,30 @@ function Demo() {
   );
 }
 `;
+
+const charactersList = [
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    label: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking, though has no sense of taste',
+  },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    label: 'Carol Miller',
+    description: 'One of the richest people on Earth',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    label: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    label: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+  },
+];
 
 const data = charactersList.map((item) => ({ ...item, value: item.label }));
 

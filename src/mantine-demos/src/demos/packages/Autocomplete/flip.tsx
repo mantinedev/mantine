@@ -1,7 +1,13 @@
 import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Autocomplete ${props} />`;
+const codeTemplate = (props: string) => `
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return <Autocomplete${props} />;
+}
+`;
 
 export const flip: MantineDemo = {
   type: 'configurator',

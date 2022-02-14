@@ -3,7 +3,12 @@ import { Hash } from 'tabler-icons-react';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
-<Autocomplete icon={<Hash />} />
+import { Autocomplete } from '@mantine/core';
+import { Hash } from 'tabler-icons-react';
+
+function Demo() {
+  return <Autocomplete icon={<Hash />} />;
+}
 `;
 
 function Demo() {

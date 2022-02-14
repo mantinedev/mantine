@@ -2,11 +2,19 @@ import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
-// Error as boolean – red border color
-<Autocomplete error />
+import { Autocomplete } from '@mantine/core';
 
-// Error as React node – red border color and message below input
-<Autocomplete error="Pick at least one item" />
+function Demo() {
+  return (
+    <>
+      {/* Error as boolean – red border color */}
+      <Autocomplete error />
+
+      {/* Error as React node – red border color and message below input */}
+      <Autocomplete error="Field is required" />
+    </>
+  );
+}
 `;
 
 function Demo() {
@@ -24,7 +32,7 @@ function Demo() {
         data={['React', 'Angular', 'Svelte', 'Vue']}
         label="Your favorite frameworks/libraries"
         placeholder="Pick one that you like"
-        error="Pick at least one item"
+        error="Field is required"
       />
     </div>
   );
