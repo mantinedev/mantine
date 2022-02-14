@@ -2,20 +2,25 @@ import React from 'react';
 import { MultiSelect } from '@mantine/core';
 
 const code = `
-<MultiSelect
-  data={data}
-  label="MultiSelect with native scrollbars"
-  placeholder="Dropdown rendered as div element"
-  dropdownComponent="div"
-/>
+import { MultiSelect } from '@mantine/core';
+
+const data = Array(50).fill(0).map((_, index) => \`Item \${index}\`);
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={data}
+      label="MultiSelect with native scrollbars"
+      placeholder="Dropdown rendered as div element"
+      dropdownComponent="div"
+    />
+  );
+}
 `;
 
 const data = Array(50)
   .fill(0)
-  .map((_, index) => ({
-    value: `${index}`,
-    label: `Item ${index}`,
-  }));
+  .map((_, index) => `Item ${index}`);
 
 function Demo() {
   return (

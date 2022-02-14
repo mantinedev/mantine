@@ -3,6 +3,8 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
+import { MultiSelect } from '@mantine/core';
+
 const data = [
   { value: 'react', label: 'React' },
   { value: 'ng', label: 'Angular' },

@@ -3,7 +3,11 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
-<MultiSelect disabled />
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return <MultiSelect disabled />;
+}
 `;
 
 function Demo() {

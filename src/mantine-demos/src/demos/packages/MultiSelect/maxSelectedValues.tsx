@@ -3,7 +3,11 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
-<MultiSelect maxSelectedValues={3} />
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return <MultiSelect maxSelectedValues={3} />;
+}
 `;
 
 function Demo() {
