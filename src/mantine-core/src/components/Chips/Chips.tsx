@@ -54,6 +54,7 @@ export interface ChipsProps<T extends boolean = false>
 const defaultProps: Partial<ChipsProps<false>> = {
   size: 'sm',
   spacing: 'xs',
+  radius: 'xl',
 };
 
 export function Chips<T extends boolean>(props: ChipsProps<T>) {
