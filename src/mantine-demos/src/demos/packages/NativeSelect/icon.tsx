@@ -3,7 +3,19 @@ import { Hash } from 'tabler-icons-react';
 import { NativeSelect } from '@mantine/core';
 
 const code = `
-<NativeSelect icon={<HashIcon />} />
+import { NativeSelect } from '@mantine/core';
+import { Hash } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <NativeSelect
+      label="Pick a hashtag"
+      placeholder="Pick a hashtag"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      icon={<Hash size={14} />}
+    />
+  );
+}
 `;
 
 function Demo() {
