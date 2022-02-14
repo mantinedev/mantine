@@ -34,9 +34,14 @@ export function MediaQuery(props: MediaQueryProps) {
   );
 
   const child = Children.only(children) as React.ReactElement;
-  return React.cloneElement(child, {
-    className: cx(classes.media, child.props?.className, className),
-  });
+
+  if (typeof child === 'object' && child !== null && 'props' in child) {
+    return React.cloneElement(child, {
+      className: cx(classes.media, child.props?.className, className),
+    });
+  }
+
+  return child;
 }
 
 MediaQuery.displayName = '@mantine/core/MediaQuery';

@@ -1,12 +1,13 @@
 import React from 'react';
-import { useMantineTheme, MediaQuery, Group, Box } from '@mantine/core';
+import { useMantineTheme, MediaQuery, Group, Box, CSSObject } from '@mantine/core';
 
 const code = `
 import { Group, Box, MediaQuery, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
-  const highlight = {
+
+  const highlight: CSSObject = {
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.fn.rgba(theme.colors.blue[7], 0.25)
@@ -43,7 +44,8 @@ function Demo() {
 
 function Demo() {
   const theme = useMantineTheme();
-  const highlight = {
+
+  const highlight: CSSObject = {
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.fn.rgba(theme.colors.blue[7], 0.25)
