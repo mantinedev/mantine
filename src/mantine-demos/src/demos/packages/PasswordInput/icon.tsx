@@ -1,15 +1,20 @@
 import React from 'react';
-import { LockIcon } from '@primer/octicons-react';
+import { Lock } from 'tabler-icons-react';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
-<PasswordInput icon={<LockIcon />} />
+import { PasswordInput } from '@mantine/core';
+import { Lock } from 'tabler-icons-react';
+
+function Demo() {
+  return <PasswordInput label="Your password" placeholder="Your password" icon={<Lock size={16} />} />;
+}
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
-      <PasswordInput label="Your password" placeholder="Your password" icon={<LockIcon />} />
+      <PasswordInput label="Your password" placeholder="Your password" icon={<Lock size={16} />} />
     </div>
   );
 }

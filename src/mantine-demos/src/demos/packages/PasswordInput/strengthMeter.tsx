@@ -5,7 +5,7 @@ import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 const code = `
 import { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
