@@ -67,7 +67,7 @@ import { useRef } from 'react';
 import { Checkbox } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>();
   return <Checkbox ref={ref} />;
 }
 ```
