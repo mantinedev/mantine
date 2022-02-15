@@ -33,8 +33,15 @@ You can change overlay opacity (from 0 to 1), color (CSS color value, not connec
 You can pass custom tag or component that will be used as root element:
 
 ```tsx
+import { Overlay } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
-<Overlay component="a" href="https://mantine.dev" />
-<Overlay component={Link} to="/mantine" />
+function Demo() {
+  return (
+    <>
+      <Overlay<'a'> component="a" href="#" />
+      <Overlay<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```

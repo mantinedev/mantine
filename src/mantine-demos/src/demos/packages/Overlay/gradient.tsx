@@ -1,15 +1,15 @@
 import React from 'react';
-import { useMantineTheme, Button, Overlay } from '@mantine/core';
+import { useMantineTheme, Button, Box, Overlay } from '@mantine/core';
 
 const code = `
-import { Overlay, Button, useMantineTheme } from '@mantine/core';
+import { Overlay, Button, Box, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         position: 'relative',
         height: 200,
         width: '100%',
@@ -25,7 +25,7 @@ function Demo() {
       <Overlay
         gradient={\`linear-gradient(105deg, \${theme.black} 20%, #312f2f 50%, \${theme.colors.gray[4]} 100%)\`}
       />
-    </div>
+    </Box>
   );
 }
 `;
@@ -34,8 +34,8 @@ function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         position: 'relative',
         height: 200,
         width: '100%',
@@ -51,7 +51,7 @@ function Demo() {
       <Overlay
         gradient={`linear-gradient(105deg, ${theme.black} 20%, #312f2f 50%, ${theme.colors.gray[4]} 100%)`}
       />
-    </div>
+    </Box>
   );
 }
 
