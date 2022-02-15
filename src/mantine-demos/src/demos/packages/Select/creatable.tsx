@@ -7,6 +7,7 @@ import { Select } from '@mantine/core';
 
 export function Demo() {
   const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
+
   return (
     <Select
       label="Creatable Select"
@@ -24,15 +25,12 @@ export function Demo() {
 
 export function Demo() {
   const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
-  const [value, onChange] = useState(null);
 
   return (
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <Select
         label="Creatable Select"
         data={data}
-        value={value}
-        onChange={onChange}
         placeholder="Select items"
         nothingFound="Nothing found"
         searchable
