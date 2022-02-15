@@ -2,9 +2,17 @@ import React from 'react';
 import { Code, Group } from '@mantine/core';
 
 const code = `
-<Code color="red">React.createElement()</Code>
-<Code color="teal">React.createElement()</Code>
-<Code color="blue">React.createElement()</Code>
+import { Code } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Code color="red">React.createElement()</Code>
+      <Code color="teal">React.createElement()</Code>
+      <Code color="blue">React.createElement()</Code>
+    </>
+  );
+}
 `;
 
 function Demo() {
