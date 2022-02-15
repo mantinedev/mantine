@@ -1,14 +1,22 @@
 import { Textarea } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Textarea
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Textarea
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Textarea,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Your comment' },
     {
