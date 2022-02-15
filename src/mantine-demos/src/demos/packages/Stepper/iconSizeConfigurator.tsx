@@ -10,10 +10,18 @@ function Wrapper(props: Partial<StepperProps>) {
   );
 }
 
-const codeTemplate = (props: string) => `<Stepper${props} active={1}>
-  <Stepper.Step label="Step 1" description="Create an account" />
-  <Stepper.Step label="Step 2" description="Verify email" />
-</Stepper>`;
+const codeTemplate = (props: string) => `
+import { Stepper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stepper${props} active={1}>
+      <Stepper.Step label="Step 1" description="Create an account" />
+      <Stepper.Step label="Step 2" description="Verify email" />
+    </Stepper>
+  );
+}
+`;
 
 export const iconSizeConfigurator: MantineDemo = {
   type: 'configurator',

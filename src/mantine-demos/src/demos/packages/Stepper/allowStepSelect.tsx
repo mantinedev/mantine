@@ -3,6 +3,7 @@ import { Stepper, Button, Group } from '@mantine/core';
 import { Content } from './_content';
 
 const code = `
+import { useState } from 'react';
 import { Stepper, Button, Group } from '@mantine/core';
 
 function Demo() {

@@ -107,11 +107,11 @@ import { useRef } from 'react';
 import { Stepper } from '@mantine/core';
 
 function MyStepper() {
-  const firstStep = useRef();
-  const stepper = useRef();
+  const firstStep = useRef<HTMLButtonElement>();
+  const stepper = useRef<HTMLDivElement>();
 
   return (
-    <Stepper ref={stepper}>
+    <Stepper ref={stepper} active={0}>
       <Stepper.Step label="First step" ref={firstStep} />
       <Stepper.Step label="Second step" />
     </Stepper>
