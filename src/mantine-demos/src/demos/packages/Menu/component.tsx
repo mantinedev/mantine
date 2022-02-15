@@ -1,22 +1,29 @@
 import React from 'react';
-import { ExternalLinkIcon } from '@modulz/radix-icons';
+import { ExternalLink } from 'tabler-icons-react';
 import { Menu, Group } from '@mantine/core';
 
 const code = `
-<Menu>
-  <Menu.Item component="a" href="https://mantine.dev">
-    Mantine website
-  </Menu.Item>
+import { Menu } from '@mantine/core';
+import { ExternalLink } from 'tabler-icons-react';
 
-  <Menu.Item
-    icon={<ExternalLinkIcon />}
-    component="a"
-    href="https://mantine.dev"
-    target="_blank"
-  >
-    External link
-  </Menu.Item>
-</Menu>
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Item component="a" href="https://mantine.dev">
+        Mantine website
+      </Menu.Item>
+
+      <Menu.Item
+        icon={<ExternalLink size={14} />}
+        component="a"
+        href="https://mantine.dev"
+        target="_blank"
+      >
+        External link
+      </Menu.Item>
+    </Menu>
+  );
+}
 `;
 
 function Demo() {
@@ -27,7 +34,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          icon={<ExternalLinkIcon />}
+          icon={<ExternalLink size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"

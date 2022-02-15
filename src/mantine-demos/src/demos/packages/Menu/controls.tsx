@@ -3,13 +3,21 @@ import { Menu, Group, Button } from '@mantine/core';
 import { menuItems } from './_menu-items';
 
 const code = `
-<Menu control={<button type="button">Button control</button>}>
-  {/* Menu items */}
-</Menu>
+import { Menu, Button } from '@mantine/core';
 
-<Menu control={<Button>Mantine Button</Button>}>
-  {/* Menu items */}
-</Menu>
+function Demo() {
+  return (
+    <>
+      <Menu control={<button type="button">Button control</button>}>
+        {/* Menu items */}
+      </Menu>
+
+      <Menu control={<Button>Mantine Button</Button>}>
+        {/* Menu items */}
+      </Menu>
+    </>
+  );
+}
 `;
 
 function Demo() {
