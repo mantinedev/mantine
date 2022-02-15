@@ -29,7 +29,7 @@ import { Slider, RangeSlider } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(40);
-  const [rangeValue, setRangeValue] = useState([20, 80]);
+  const [rangeValue, setRangeValue] = useState<[number, number]>([20, 80]);
 
   return (
     <>
@@ -44,10 +44,7 @@ function Demo() {
 
 `onChangeEnd` callback is called when user stops dragging the slider or uses arrows:
 
-```tsx
-<Slider onChangeEnd={value => console.log(value)} />
-<RangeSlider onChangeEnd={value => console.log(value)} />
-```
+<Demo data={SliderDemos.changeEnd} />
 
 ## Control label
 
