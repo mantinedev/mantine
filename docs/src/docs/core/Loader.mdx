@@ -28,10 +28,15 @@ You can configure default loader in [MantineProvider](/theming/mantine-provider/
 it will be used in Loader and [LoadingOverlay](/core/loading-overlay/) components by default:
 
 ```tsx
-// Loader component will render bars
-<MantineProvider theme={{ loader: 'bars' }}>
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ loader: 'bars' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 ## Size
