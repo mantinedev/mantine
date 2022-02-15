@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Popover, Text, Badge, Group, Image } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { Popover, Badge, Image, Text } from '@mantine/core';
 
 function Demo() {

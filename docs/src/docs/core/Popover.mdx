@@ -17,9 +17,6 @@ import { PopoverDemos, PasswordInputDemos } from '@mantine/demos';
 
 ## Usage
 
-Popover is more complex and customizable alternative to [Tooltip](/core/tooltip/)
-component.
-
 <Demo data={PopoverDemos.usage} />
 
 ## Examples
@@ -75,9 +72,9 @@ focus or hover:
 
 ```tsx
 <Popover
-  noFocusTrap // -> disable focus trap
-  noEscape // -> disable escape key press handling
-  noClickOutside // -> disable outside click handling
+  trapFocus={false} // -> disable focus trap
+  closeOnEscape={false} // -> disable escape key press handling
+  closeOnClickOutside={false} // -> disable outside click handling
 />
 ```
 
@@ -101,16 +98,6 @@ To change popover appearance use:
 - `shadow` – add box-shadow from `theme.shadows`
 
 <Demo data={PopoverDemos.configurator} />
-
-For additional modifications of popover body styles use `bodyClassName` or `bodyStyle` props:
-
-```tsx
-// Add inline styles to popover body
-<Popover bodyStyle={{ width: 200, pointerEvents: 'none' }} />
-
-// Or with className
-<Popover bodyClassName="my-class-name" />
-```
 
 ## Initial focus
 
