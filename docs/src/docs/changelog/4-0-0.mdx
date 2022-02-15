@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
 date: 'January 13th, 2022'
 ---
 
-import { AspectRatioDemos, NumberInputDemos, TooltipDemos } from '@mantine/demos';
+import { AspectRatioDemos, NumberInputDemos, TooltipDemos, SliderDemos } from '@mantine/demos';
 
 ## Breaking changes
 
@@ -197,6 +197,10 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 
 <Demo data={TooltipDemos.delay} />
 
+[Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `onChangeEnd` prop:
+
+<Demo data={SliderDemos.changeEnd} />
+
 ## Other changes
 
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
@@ -209,7 +213,6 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 - [Text](https://mantine.dev/core/text/), [Anchor](https://mantine.dev/core/anchor/) and [Highlight](https://mantine.dev/core/highlight/) components now support `underline` prop
 - [Container](https://mantine.dev/core/container/) component now supports sizes configuration with default props on MantineProvider
 - All components now support negative margins for theme values with margin props (`m`, `mx`, `my`, `mt`, etc.): `<Button mx="-xl">Negative margins</Button>`
-- [Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `onChangeEnd` prop
 
 ## 3.6.0 – 4.0.0 bug fixes
 
