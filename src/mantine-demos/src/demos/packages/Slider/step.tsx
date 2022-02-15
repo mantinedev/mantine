@@ -2,15 +2,7 @@ import React from 'react';
 import { Slider, Text } from '@mantine/core';
 
 const code = `
-// Set min, max and step props to replace default values
-<Slider
-  defaultValue={5}
-  min={-10}
-  max={10}
-  label={(value) => value.toFixed(1)}
-  step={0.1}
-  styles={{ markLabel: { display: 'none' } }}
-/>
+import { Slider } from '@mantine/core';
 
 // Configure marks to match step
 const MARKS = [
@@ -21,13 +13,29 @@ const MARKS = [
   { value: 100, label: 'xl' },
 ];
 
-<Slider
-  label={(val) => MARKS.find((mark) => mark.value === val).label}
-  defaultValue={50}
-  step={25}
-  marks={MARKS}
-  styles={{ markLabel: { display: 'none' } }}
-/>
+function Demo() {
+  return (
+    <>
+      {/* Set min, max and step props to replace default values */}
+      <Slider
+        defaultValue={5}
+        min={-10}
+        max={10}
+        label={(value) => value.toFixed(1)}
+        step={0.1}
+        styles={{ markLabel: { display: 'none' } }}
+      />
+
+      <Slider
+        label={(val) => MARKS.find((mark) => mark.value === val).label}
+        defaultValue={50}
+        step={25}
+        marks={MARKS}
+        styles={{ markLabel: { display: 'none' } }}
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {

@@ -4,6 +4,12 @@ import { Slider } from '@mantine/core';
 const code = `
 import { Slider } from '@mantine/core';
 
+const marks = [
+  { value: 20, label: '20%' },
+  { value: 50, label: '50%' },
+  { value: 80, label: '80%' },
+];
+
 function Demo() {
   return (
     <Slider
@@ -11,7 +17,7 @@ function Demo() {
       marks={marks}
       labelTransition="fade"
       size={2}
-      styles={(theme) =>({
+      styles={(theme) => ({
         track: {
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1],

@@ -2,21 +2,29 @@ import React from 'react';
 import { Slider, Text } from '@mantine/core';
 
 const code = `
-// Disable label
-<Slider label={null} />
+import { Slider } from '@mantine/core';
 
-// Format label with function
-<Slider label={(value) => \`\${value} °C\`} />
+function Demo() {
+  return (
+    <>
+      {/* Disable label */}
+      <Slider label={null} />
 
-// Always display label
-<Slider labelAlwaysOn />
+      {/* Format label with function */}
+      <Slider label={(value) => \`\${value} °C\`} />
 
-// Change label transition
-<Slider
-  labelTransition="skew-down"
-  labelTransitionDuration={150}
-  labelTransitionTimingFunction="ease"
-/>
+      {/* Always display label */}
+      <Slider labelAlwaysOn />
+
+      {/* Change label transition */}
+      <Slider
+        labelTransition="skew-down"
+        labelTransitionDuration={150}
+        labelTransitionTimingFunction="ease"
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {
