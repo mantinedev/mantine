@@ -28,9 +28,15 @@ function Wrapper(props: TableProps) {
 }
 
 const codeTemplate = (props: string) => `
-<Table${props}>
-  /* {...rows} */
-</Table>
+import { Table } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Table${props}>
+      {/* {...rows} */}
+    </Table>
+  );
+}
 `;
 
 export const configurator: MantineDemo = {
