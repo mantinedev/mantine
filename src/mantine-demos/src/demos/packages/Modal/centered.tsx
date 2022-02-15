@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
-const code = '<Modal centered />';
+const code = `
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal centered /* ...other props */ />;
+};
+`;
 
 function Demo() {
   const [opened, setOpened] = useState(false);
