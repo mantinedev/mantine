@@ -70,13 +70,15 @@ styles set `inherit` prop. For example, highlight part of [Title](/core/title/):
 By default, text is rendered as div element, to change it by set `component` prop:
 
 ```tsx
+import { Text } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
-<Text variant="link" component={Link} to="/hello">
-  React router link
-</Text>
-
-<Text variant="link" component="a" href="https://mantine.dev">
-  Normal link
-</Text>
+function Demo() {
+  return (
+    <>
+      <Text<'a'> component="a" href="#" />
+      <Text<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
