@@ -20,7 +20,7 @@ export interface ListProps
   children: React.ReactNode;
 
   /** List type: ol or ul */
-  type?: 'order' | 'unordered';
+  type?: 'ordered' | 'unordered';
 
   /** Include padding-left to offset list from main content */
   withPadding?: boolean;
