@@ -37,10 +37,10 @@ export interface RadioGroupProps
   /** Initial value for uncontrolled component */
   defaultValue?: string;
 
-  /** Radios position */
-  variant?: 'horizontal' | 'vertical';
+  /** Horizontal or vertical orientation */
+  orientation?: 'horizontal' | 'vertical';
 
-  /** Spacing between radios in horizontal variant */
+  /** Spacing between radios in horizontal orientation */
   spacing?: MantineNumberSize;
 
   /** Active radio color from theme.colors */
@@ -54,7 +54,7 @@ export interface RadioGroupProps
 }
 
 const defaultProps: Partial<RadioGroupProps> = {
-  variant: 'horizontal',
+  orientation: 'horizontal',
   spacing: 'sm',
 };
 
@@ -66,7 +66,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       value,
       defaultValue,
       onChange,
-      variant,
+      orientation,
       spacing,
       color,
       size,
@@ -114,7 +114,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         <Group
           role="radiogroup"
           spacing={spacing}
-          direction={variant === 'horizontal' ? 'row' : 'column'}
+          direction={orientation === 'horizontal' ? 'row' : 'column'}
           style={{ paddingTop: 5 }}
         >
           {radios}

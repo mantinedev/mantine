@@ -28,7 +28,7 @@ export const configurator: MantineDemo = {
   configuratorProps: { multiline: true },
   configurator: [
     {
-      name: 'variant',
+      name: 'orientation',
       type: 'segmented',
       data: [
         { label: 'horizontal', value: 'horizontal' },
