@@ -143,7 +143,7 @@ export function Popover(props: PopoverProps) {
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const focusTrapRef = useFocusTrap(!trapFocus && opened);
+  const focusTrapRef = useFocusTrap(trapFocus && opened);
 
   useClickOutside(() => closeOnClickOutside && handleClose(), clickOutsideEvents, [
     rootElement,
