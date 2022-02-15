@@ -11,7 +11,6 @@ import { AspectRatioDemos, NumberInputDemos } from '@mantine/demos';
 
 ## Breaking changes
 
-- [Tooltip](https://mantine.dev/core/tooltip/) component `delay` prop was renamed to `closeDelay`
 - `@mantine/core` package no longer exports `CONTAINER_SIZES` variable
 - [Prism](https://mantine.dev/others/prism/) now trims code by default, to disable that set `<Prism trim={false} />`
 
@@ -19,6 +18,8 @@ import { AspectRatioDemos, NumberInputDemos } from '@mantine/demos';
 
 Some props were renamed to make Mantine components more consistent:
 
+- [Tooltip](https://mantine.dev/core/tooltip):
+  - `delay` -> `closeDelay`
 - [Popover](https://mantine.dev/core/popover/):
   - `noClickOutside` –> `closeOnClickOutside`
   - `noFocusTrap` -> `trapFocus`
