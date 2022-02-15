@@ -18,7 +18,7 @@ function Demo() {
         padding="xl"
         size="xl"
       >
-        <AuthenticationForm />
+        {/* Drawer content */}
       </Drawer>
 
       <Group position="center">
