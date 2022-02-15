@@ -1,27 +1,36 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
+import { Check } from 'tabler-icons-react';
 import { ThemeIcon, RingProgress, Group, Text, Center } from '@mantine/core';
 
 const code = `
-<RingProgress
-  sections={[{ value: 40, color: 'blue' }]}
-  label={
-    <Text color="blue" weight={700} align="center" size="xl">
-      40%
-    </Text>
-  }
-/>
+import { ThemeIcon, RingProgress, Text, Center } from '@mantine/core';
+import { Check } from 'tabler-icons-react';
 
-<RingProgress
-  sections={[{ value: 100, color: 'teal' }]}
-  label={
-    <Center>
-      <ThemeIcon color="teal" variant="light" radius="xl size="xl">
-        <CheckIcon style={{ height: 22, width: 22 }} />
-      </ThemeIcon>
-    </Center>
-  }
-/>
+function Demo() {
+  return (
+    <>
+      <RingProgress
+        sections={[{ value: 40, color: 'blue' }]}
+        label={
+          <Text color="blue" weight={700} align="center" size="xl">
+            40%
+          </Text>
+        }
+      />
+
+      <RingProgress
+        sections={[{ value: 100, color: 'teal' }]}
+        label={
+          <Center>
+            <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
+              <Check size={22} />
+            </ThemeIcon>
+          </Center>
+        }
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {
@@ -41,7 +50,7 @@ function Demo() {
         label={
           <Center>
             <ThemeIcon color="teal" variant="light" radius="xl" size="xl">
-              <CheckIcon style={{ height: 22, width: 22 }} />
+              <Check size={22} />
             </ThemeIcon>
           </Center>
         }
