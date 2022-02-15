@@ -1,10 +1,10 @@
 import React from 'react';
-import { IssueClosedIcon, IssueDraftIcon } from '@primer/octicons-react';
+import { CircleCheck, CircleDashed } from 'tabler-icons-react';
 import { ThemeIcon, List } from '@mantine/core';
 
 const code = `
 import { List, ThemeIcon } from '@mantine/core';
-import { IssueClosedIcon, IssueDraftIcon } from '@primer/octicons-react';
+import { CircleCheck, CircleDashed } from 'tabler-icons-react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IssueClosedIcon size={12} />
+          <CircleCheck size={16} />
         </ThemeIcon>
       }
     >
@@ -25,7 +25,7 @@ function Demo() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IssueDraftIcon size={12} />
+            <CircleDashed size={16} />
           </ThemeIcon>
         }
       >
@@ -45,7 +45,7 @@ function Demo() {
         center
         icon={
           <ThemeIcon color="teal" size={24} radius="xl">
-            <IssueClosedIcon size={12} />
+            <CircleCheck size={16} />
           </ThemeIcon>
         }
       >
@@ -56,7 +56,7 @@ function Demo() {
         <List.Item
           icon={
             <ThemeIcon color="blue" size={24} radius="xl">
-              <IssueDraftIcon size={12} />
+              <CircleDashed size={16} />
             </ThemeIcon>
           }
         >
