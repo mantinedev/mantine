@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Cross1Icon } from '@modulz/radix-icons';
+import { X } from 'tabler-icons-react';
 import { Tooltip, Button, ActionIcon, Text, Box, useMantineTheme } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
-import { Cross1Icon } from '@modulz/radix-icons';
+const code = `
+import { useState } from 'react';
 import { Tooltip, Button, ActionIcon, Text, useMantineTheme } from '@mantine/core';
+import { X } from 'tabler-icons-react';
 
 function Demo() {
   const [opened, setOpened] = useState(true);
@@ -20,11 +21,12 @@ function Demo() {
         access it any time and share it via email.
       </Text>
       <ActionIcon
-      style={{ marginLeft: 5, color: theme.colorScheme === 'dark' ? theme.black : theme.white }}
+        ml={5}
+        style={{ color: theme.colorScheme === 'dark' ? theme.black : theme.white }}
         size="xs"
         onClick={() => setOpened(false)}
       >
-        <Cross1Icon style={{ width: 12, height: 12 }} />
+        <X size={12} />
       </ActionIcon>
     </div>
   );
@@ -64,7 +66,7 @@ function Demo() {
   const theme = useMantineTheme();
 
   const tooltip = (
-    <Box sx={{ display: 'flex', marginRight: -5 }} mr={-5}>
+    <Box sx={{ display: 'flex' }} mr={-5}>
       <Text
         size="xs"
         sx={{ color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white }}
@@ -79,7 +81,7 @@ function Demo() {
         size="xs"
         onClick={() => setOpened(false)}
       >
-        <Cross1Icon style={{ width: 12, height: 12 }} />
+        <X size={12} />
       </ActionIcon>
     </Box>
   );

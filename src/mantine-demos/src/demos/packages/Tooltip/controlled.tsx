@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Tooltip, Group, Button } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { Tooltip, Button } from '@mantine/core';
 
 function Demo() {
