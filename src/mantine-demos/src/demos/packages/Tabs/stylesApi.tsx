@@ -1,10 +1,10 @@
 import React from 'react';
-import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
+import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
 import { Tabs, TabsProps } from '@mantine/core';
 
 const code = `
 import { TabsProps, Tabs } from '@mantine/core';
-import { ImageIcon, ChatBubbleIcon, GearIcon } from '@modulz/radix-icons';
+import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
 
 function StyledTabs(props: TabsProps) {
   return (
@@ -47,9 +47,9 @@ function StyledTabs(props: TabsProps) {
 function Demo() {
   return (
     <StyledTabs>
-      <Tabs.Tab label="Settings" icon={<GearIcon width={16} height={16} />} />
-      <Tabs.Tab label="Messages" icon={<ChatBubbleIcon width={16} height={16} />} />
-      <Tabs.Tab label="Gallery" icon={<ImageIcon width={16} height={16} />} />
+      <Tabs.Tab label="Settings" icon={<Settings size={16} />} />
+      <Tabs.Tab label="Messages" icon={<MessageCircle size={16} />} />
+      <Tabs.Tab label="Gallery" icon={<Photo size={16} />} />
     </StyledTabs>
   );
 }
@@ -98,9 +98,9 @@ function StyledTabs(props: TabsProps) {
 function Demo() {
   return (
     <StyledTabs>
-      <Tabs.Tab label="Settings" icon={<GearIcon width={16} height={16} />} />
-      <Tabs.Tab label="Messages" icon={<ChatBubbleIcon width={16} height={16} />} />
-      <Tabs.Tab label="Gallery" icon={<ImageIcon width={16} height={16} />} />
+      <Tabs.Tab label="Settings" icon={<Settings size={16} />} />
+      <Tabs.Tab label="Messages" icon={<MessageCircle size={16} />} />
+      <Tabs.Tab label="Gallery" icon={<Photo size={16} />} />
     </StyledTabs>
   );
 }

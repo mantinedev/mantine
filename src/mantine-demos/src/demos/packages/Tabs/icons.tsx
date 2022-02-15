@@ -1,25 +1,32 @@
 import React from 'react';
-import { MixerHorizontalIcon, ChatBubbleIcon } from '@modulz/radix-icons';
+import { Settings, MessageCircle, Coin } from 'tabler-icons-react';
 import { Tabs } from '@mantine/core';
 
 const code = `
-<Tabs>
-  <Tabs.Tab label="Chat" icon={<ChatBubbleIcon />}>Chat here</Tabs.Tab>
-  <Tabs.Tab label="Settings" icon={<MixerHorizontalIcon />}>Settings</Tabs.Tab>
-  <Tabs.Tab icon="$">Get money!</Tabs.Tab>
-</Tabs>
+import { Tabs } from '@mantine/core';
+import { Settings, MessageCircle, Coin } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Tabs>
+      <Tabs.Tab label="Chat" icon={<MessageCircle size={14} />}>Chat here</Tabs.Tab>
+      <Tabs.Tab label="Settings" icon={<Settings size={14} />}>Settings</Tabs.Tab>
+      <Tabs.Tab icon={<Coin size={14} />}>Get money!</Tabs.Tab>
+    </Tabs>
+  );
+}
 `;
 
 function Demo() {
   return (
     <Tabs styles={{ body: { paddingTop: 5 } }}>
-      <Tabs.Tab label="Chat" icon={<ChatBubbleIcon />}>
+      <Tabs.Tab label="Chat" icon={<MessageCircle size={14} />}>
         Chat here
       </Tabs.Tab>
-      <Tabs.Tab label="Settings" icon={<MixerHorizontalIcon />}>
+      <Tabs.Tab label="Settings" icon={<Settings size={14} />}>
         Settings
       </Tabs.Tab>
-      <Tabs.Tab icon="$">Get money!</Tabs.Tab>
+      <Tabs.Tab icon={<Coin size={14} />}>Get money!</Tabs.Tab>
     </Tabs>
   );
 }
