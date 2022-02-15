@@ -1,11 +1,11 @@
 import React from 'react';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 import { Accordion, AccordionProps, createStyles } from '@mantine/core';
 import { baseDemoItems } from './_base';
 
 const code = `
 import { Accordion, AccordionProps, createStyles } from '@mantine/core';
-import { PlusIcon } from '@modulz/radix-icons';
+import { Plus } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   icon: { ref: getRef('icon') },
@@ -50,7 +50,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 function StyledAccordion(props: AccordionProps) {
   const { classes } = useStyles();
-  return <Accordion classNames={classes} icon={<PlusIcon />} {...props} />;
+  return <Accordion classNames={classes} icon={<Plus size={16} />} {...props} />;
 }
 
 function Demo() {
@@ -105,7 +105,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 
 export function StyledAccordion(props: AccordionProps) {
   const { classes } = useStyles();
-  return <Accordion classNames={classes} icon={<PlusIcon />} {...props} />;
+  return <Accordion classNames={classes} icon={<Plus size={16} />} {...props} />;
 }
 
 function Demo() {

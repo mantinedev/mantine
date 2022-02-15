@@ -14,7 +14,7 @@ import {
 
 const code = `
 import { User, MapPin, CircleCheck } from 'tabler-icons-react';
-import { TextInput, Textarea, Group, Button, ThemeIcon, Text, SimpleGrid, Accordion, useAccordionState } from '@mantine/core';
+import { TextInput, Textarea, Group, Button, Text, SimpleGrid, Accordion, useAccordionState, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [state, handlers] = useAccordionState({ total: 3, initialItem: 0 });
