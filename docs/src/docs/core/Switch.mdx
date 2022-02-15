@@ -42,7 +42,7 @@ import { useRef } from 'react';
 import { Switch } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>();
   return <Switch ref={ref} />;
 }
 ```
