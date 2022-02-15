@@ -2,7 +2,11 @@ import React from 'react';
 import { TextInput, Loader } from '@mantine/core';
 
 const code = `
-<TextInput label="Your email" placeholder="Your email" rightSection={<Loader size="xs" />} />
+import { TextInput, Loader } from '@mantine/core';
+
+function Demo() {
+  return <TextInput label="Your email" placeholder="Your email" rightSection={<Loader size="xs" />} />;
+}
 `;
 
 function Demo() {
