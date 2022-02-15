@@ -39,8 +39,8 @@ export interface ModalProps
   /** Control vertical overflow behavior */
   overflow?: 'outside' | 'inside';
 
-  /** Hides close button, modal still can be closed with escape key and by clicking outside */
-  hideCloseButton?: boolean;
+  /** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
+  withCloseButton?: boolean;
 
   /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
   overlayOpacity?: number;
@@ -101,6 +101,7 @@ const defaultProps: Partial<ModalProps> = {
   closeOnClickOutside: true,
   closeOnEscape: true,
   trapFocus: true,
+  withCloseButton: true,
 };
 
 export function MantineModal(props: ModalProps) {
@@ -110,7 +111,7 @@ export function MantineModal(props: ModalProps) {
     title,
     onClose,
     children,
-    hideCloseButton,
+    withCloseButton,
     overlayOpacity,
     size,
     transitionDuration,
@@ -208,13 +209,13 @@ export function MantineModal(props: ModalProps) {
                 zIndex: 3,
               }}
             >
-              {(title || !hideCloseButton) && (
+              {(title || withCloseButton) && (
                 <div className={classes.header}>
                   <Text id={titleId} className={classes.title}>
                     {title}
                   </Text>
 
-                  {!hideCloseButton && (
+                  {withCloseButton && (
                     <CloseButton
                       iconSize={16}
                       onClick={onClose}

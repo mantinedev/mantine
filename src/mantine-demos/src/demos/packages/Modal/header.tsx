@@ -5,7 +5,7 @@ const code = `
 <Modal
   opened={opened}
   onClose={() => setOpened(false)}
-  hideCloseButton
+  withCloseButton={false}
 >
   Modal without header, press escape or click on overlay to close
 </Modal>
@@ -16,7 +16,7 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={() => setOpened(false)} hideCloseButton>
+      <Modal opened={opened} onClose={() => setOpened(false)} withCloseButton={false}>
         Modal without header, press escape or click on overlay to close
       </Modal>
 

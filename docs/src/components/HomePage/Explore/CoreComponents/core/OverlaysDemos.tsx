@@ -37,7 +37,7 @@ export function OverlaysDemos() {
         onClose={() => setDrawerOpened(false)}
         padding="xl"
         size={440}
-        hideCloseButton
+        withCloseButton={false}
       >
         <Group position="apart">
           <Text size="lg">Register</Text>

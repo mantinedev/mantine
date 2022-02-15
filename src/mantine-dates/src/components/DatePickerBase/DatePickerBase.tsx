@@ -308,7 +308,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               </div>
             </Popper>
           ) : (
-            <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
+            <Modal opened={dropdownOpened} onClose={closeDropdown} withCloseButton={false}>
               {children}
             </Modal>
           )}

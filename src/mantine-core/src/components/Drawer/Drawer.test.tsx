@@ -35,10 +35,10 @@ describe('@mantine/core/Drawer', () => {
     expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
-  it('allows to hide close button with hideCloseButton prop', () => {
+  it('allows to hide close button with withCloseButton={false} prop', () => {
     const { container: withCloseButton } = render(<MantineDrawer {...defaultProps} />);
     const { container: withoutCloseButton } = render(
-      <MantineDrawer {...defaultProps} hideCloseButton />
+      <MantineDrawer {...defaultProps} withCloseButton={false} />
     );
 
     expect(withoutCloseButton.querySelectorAll('.mantine-Drawer-closeButton')).toHaveLength(0);

@@ -31,7 +31,9 @@ describe('@mantine/core/Modal', () => {
 
   it('allows to hide close button', () => {
     const { container: withButton } = render(<MantineModal {...defaultProps} />);
-    const { container: withoutButton } = render(<MantineModal {...defaultProps} hideCloseButton />);
+    const { container: withoutButton } = render(
+      <MantineModal {...defaultProps} withCloseButton={false} />
+    );
     expect(withButton.querySelectorAll('.mantine-Modal-close')).toHaveLength(1);
     expect(withoutButton.querySelectorAll('.mantine-Modal-close')).toHaveLength(0);
   });
@@ -41,7 +43,7 @@ describe('@mantine/core/Modal', () => {
       <MantineModal {...defaultProps} title="With header" />
     );
     const { container: withoutHeader } = render(
-      <MantineModal {...defaultProps} title={null} hideCloseButton />
+      <MantineModal {...defaultProps} title={null} withCloseButton={false} />
     );
     expect(withHeader.querySelectorAll('.mantine-Modal-header')).toHaveLength(1);
     expect(withoutHeader.querySelectorAll('.mantine-Modal-header')).toHaveLength(0);
