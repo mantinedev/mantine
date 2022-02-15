@@ -71,21 +71,15 @@ To change badge root element pass React element to `component` prop:
 To use custom component with TypeScript provide type:
 
 ```tsx
-// With element
-<Badge<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { Badge } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
-// With component
-<Badge<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <>
+      <Badge<'a'> component="a" href="#" />
+      <Badge<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```

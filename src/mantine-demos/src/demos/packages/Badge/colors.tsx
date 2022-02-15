@@ -12,13 +12,13 @@ function Demo() {
   return (
     <>
       <Group position="center">{getThemes({ variant: 'outline' })}</Group>
-      <Group position="center" style={{ marginTop: 25 }}>
+      <Group position="center" mt={25}>
         {getThemes({ variant: 'light' })}
       </Group>
-      <Group position="center" style={{ marginTop: 25 }}>
+      <Group position="center" mt={25}>
         {getThemes({ variant: 'filled' })}
       </Group>
-      <Group position="center" style={{ marginTop: 25 }}>
+      <Group position="center" mt={25}>
         {getThemes({ variant: 'dot' })}
       </Group>
     </>

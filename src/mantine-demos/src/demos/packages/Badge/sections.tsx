@@ -1,9 +1,10 @@
 import React from 'react';
-import { Cross1Icon } from '@modulz/radix-icons';
+import { X } from 'tabler-icons-react';
 import { Group, Badge, ActionIcon, Avatar } from '@mantine/core';
 
 const code = `
 import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
+import { X } from 'tabler-icons-react';
 
 function Demo() {
   const avatar = (
@@ -17,7 +18,7 @@ function Demo() {
 
   const removeButton = (
     <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-      <Cross1Icon style={{ width: 10, height: 10 }} />
+      <X size={10} />
     </ActionIcon>
   );
 
@@ -50,7 +51,7 @@ const avatar = (
 
 const removeButton = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-    <Cross1Icon style={{ width: 10, height: 10 }} />
+    <X size={10} />
   </ActionIcon>
 );
 
