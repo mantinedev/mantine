@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
 date: 'January 13th, 2022'
 ---
 
-import { AspectRatioDemos, NumberInputDemos } from '@mantine/demos';
+import { AspectRatioDemos, NumberInputDemos, TooltipDemos } from '@mantine/demos';
 
 ## Breaking changes
 
@@ -19,13 +19,13 @@ import { AspectRatioDemos, NumberInputDemos } from '@mantine/demos';
 Some props were renamed to make Mantine components more consistent:
 
 - [Tooltip](https://mantine.dev/core/tooltip):
-  - `delay` -> `closeDelay`
+  - `delay` → `closeDelay`
 - [Popover](https://mantine.dev/core/popover/):
-  - `noClickOutside` –> `closeOnClickOutside`
-  - `noFocusTrap` -> `trapFocus`
-  - `noEscape` -> `closeOnEscape`
+  - `noClickOutside` → `closeOnClickOutside`
+  - `noFocusTrap` → `trapFocus`
+  - `noEscape` → `closeOnEscape`
 - [Modal](https://mantine.dev/core/modal):
-  - `noFocusTrap` -> `trapFocus`
+  - `noFocusTrap` → `trapFocus`
 
 ## Default props on MantineProvider
 
@@ -191,6 +191,10 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 
 <Demo data={NumberInputDemos.formatter} />
 
+[Tooltip](https://mantine.dev/core/tooltip/) component now supports `openDelay`:
+
+<Demo data={TooltipDemos.delay} />
+
 ## Other changes
 
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
@@ -202,7 +206,6 @@ New [AspectRatio](https://mantine.dev/core/aspect-ratio/) component
 - [ThemeIcon](https://mantine.dev/core/theme-icon/) component now supports outline variant
 - [Text](https://mantine.dev/core/text/), [Anchor](https://mantine.dev/core/anchor/) and [Highlight](https://mantine.dev/core/highlight/) components now support `underline` prop
 - [Container](https://mantine.dev/core/container/) component now supports sizes configuration with default props on MantineProvider
-- [Tooltip](https://mantine.dev/core/tooltip/) component now support open and close delay
 - All components now support negative margins for theme values with margin props (`m`, `mx`, `my`, `mt`, etc.): `<Button mx="-xl">Negative margins</Button>`
 - [Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `onChangeEnd` prop
 
