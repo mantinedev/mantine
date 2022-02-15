@@ -1,6 +1,6 @@
 import React from 'react';
-import { RocketIcon } from '@modulz/radix-icons';
-import { ThemeIcon, Group } from '@mantine/core';
+import { Photo } from 'tabler-icons-react';
+import { ThemeIcon, Group, MANTINE_SIZES } from '@mantine/core';
 
 const iconSizes = {
   xs: 10,
@@ -10,15 +10,14 @@ const iconSizes = {
   xl: 26,
 };
 
-const getSizes = (props?: any) =>
-  ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <ThemeIcon key={size} size={size} radius="xl" {...props}>
-      <RocketIcon style={{ width: iconSizes[size], height: iconSizes[size] }} />
+function Demo() {
+  const items = MANTINE_SIZES.map((size) => (
+    <ThemeIcon key={size} size={size}>
+      <Photo size={iconSizes[size]} />
     </ThemeIcon>
   ));
 
-function Demo() {
-  return <Group position="center">{getSizes({ color: 'blue' })}</Group>;
+  return <Group position="center">{items}</Group>;
 }
 
 export const sizes: MantineDemo = {

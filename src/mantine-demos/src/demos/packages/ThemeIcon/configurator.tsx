@@ -1,5 +1,5 @@
 import React from 'react';
-import { RocketIcon } from '@modulz/radix-icons';
+import { Photo } from 'tabler-icons-react';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const iconSizes = {
@@ -14,15 +14,24 @@ function Wrapper(props: ThemeIconProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <ThemeIcon {...props}>
-        <RocketIcon style={{ width: iconSizes[props.size], height: iconSizes[props.size] }} />
+        <Photo size={iconSizes[props.size]} />
       </ThemeIcon>
     </div>
   );
 }
 
-const codeTemplate = (props: string) => `<ThemeIcon${props}>
-  <RocketIcon />
-</ThemeIcon>`;
+const codeTemplate = (props: string) => `
+import { ThemeIcon } from '@mantine/core';
+import { Photo } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <ThemeIcon${props}>
+      <Photo />
+    </ThemeIcon>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
