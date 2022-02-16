@@ -84,6 +84,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       allowSingleDateInRange = false,
       amountOfMonths = 1,
       withinPortal = true,
+      initialLevel,
       ...others
     }: DateRangePickerProps,
     ref
@@ -175,6 +176,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
+          initialLevel={initialLevel}
         />
       </DatePickerBase>
     );

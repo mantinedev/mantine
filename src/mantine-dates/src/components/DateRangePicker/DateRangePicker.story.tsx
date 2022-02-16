@@ -50,4 +50,14 @@ storiesOf('@mantine/dates/DateRangePicker/stories', module)
       <DateRangePicker label="First" />
     </MantineProvider>
   ))
+  .add('Initial level: month', () => (
+    <div style={{ padding: 40 }}>
+      <DateRangePicker initialLevel="month" />
+    </div>
+  ))
+  .add('Initial level: year', () => (
+    <div style={{ padding: 40 }}>
+      <DateRangePicker initialLevel="year" />
+    </div>
+  ))
   .add('Controlled', () => <Controlled />);
