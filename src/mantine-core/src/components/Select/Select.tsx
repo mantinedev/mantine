@@ -506,6 +506,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
           tabIndex={-1}
         >
           <Input<'input'>
+            autoComplete="nope"
             {...rest}
             type="text"
             required={required}
@@ -527,7 +528,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
             disabled={disabled}
             data-mantine-stop-propagation={shouldShowDropdown}
             name={name}
-            autoComplete="nope"
             classNames={{
               ...classNames,
               input: cx({ [classes.input]: !searchable }, classNames?.input),
