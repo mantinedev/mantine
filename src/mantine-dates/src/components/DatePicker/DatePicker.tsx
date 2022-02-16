@@ -98,6 +98,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       amountOfMonths,
       allowLevelChange,
       initialLevel,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
@@ -122,6 +124,16 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       _value instanceof Date ? upperFirst(dayjs(_value).locale(finalLocale).format(dateFormat)) : ''
     );
 
+    const closeDropdown = () => {
+      setDropdownOpened(false);
+      onDropdownClose?.();
+    };
+
+    const openDropdown = () => {
+      setDropdownOpened(true);
+      onDropdownOpen?.();
+    };
+
     useEffect(() => {
       if (value === null && !focused) {
         setInputState('');
@@ -135,7 +147,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     const handleValueChange = (date: Date) => {
       setValue(date);
       setInputState(upperFirst(dayjs(date).locale(finalLocale).format(dateFormat)));
-      closeCalendarOnChange && setDropdownOpened(false);
+      closeCalendarOnChange && closeDropdown();
       window.setTimeout(() => inputRef.current?.focus(), 0);
     };
 
@@ -143,7 +155,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(null);
       setLastValidValue(null);
       setInputState('');
-      setDropdownOpened(true);
+      openDropdown();
       inputRef.current?.focus();
     };
 
@@ -182,7 +194,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.code === 'Enter' && allowFreeInput) {
-        setDropdownOpened(false);
+        closeDropdown();
         setDateFromInput();
       }
     };
@@ -193,7 +205,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setDropdownOpened(true);
+      openDropdown();
 
       const date = parseDate(event.target.value);
       if (dayjs(date).isValid()) {
@@ -230,6 +242,9 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         onClear={handleClear}
         disabled={disabled}
         withinPortal={withinPortal}
+        amountOfMonths={amountOfMonths}
+        onDropdownClose={onDropdownClose}
+        onDropdownOpen={onDropdownOpen}
         {...others}
       >
         <Calendar

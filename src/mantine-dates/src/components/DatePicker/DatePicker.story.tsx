@@ -66,7 +66,12 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
   ))
   .add('Amount of months', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePicker amountOfMonths={2} label="Two months" />
+      <DatePicker
+        amountOfMonths={2}
+        label="Two months"
+        onDropdownClose={() => console.log('Close')}
+        onDropdownOpen={() => console.log('open')}
+      />
       <DatePicker amountOfMonths={3} label="Three months" />
     </div>
   ))

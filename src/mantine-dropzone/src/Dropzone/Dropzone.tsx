@@ -44,7 +44,7 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   accept?: string[];
 
   /** Get open function as ref */
-  openRef?: React.ForwardedRef<() => void>;
+  openRef?: React.ForwardedRef<() => void | undefined>;
 
   /** Allow selection of multiple files */
   multiple?: boolean;

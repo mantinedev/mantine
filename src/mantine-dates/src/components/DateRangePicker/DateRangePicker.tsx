@@ -101,6 +101,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       allowSingleDateInRange,
       amountOfMonths,
       withinPortal,
+      initialLevel,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -122,6 +125,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       setValue(range);
       if (closeCalendarOnChange && validationRule(range)) {
         setDropdownOpened(false);
+        onDropdownClose?.();
         window.setTimeout(() => inputRef.current?.focus(), 0);
       }
     };
@@ -140,14 +144,16 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     const handleClear = () => {
       setValue([null, null]);
       setDropdownOpened(true);
+      onDropdownOpen?.();
       inputRef.current?.focus();
     };
 
-    const handleDropdownToggle = (isOpen) => {
-      if (!isOpen && firstValueValid && _value[1] === null) {
+    const handleDropdownToggle = (isOpened: boolean) => {
+      if (!isOpened && firstValueValid && _value[1] === null) {
         handleClear();
       }
       setDropdownOpened(!dropdownOpened);
+      !dropdownOpened ? onDropdownOpen?.() : onDropdownClose?.();
     };
 
     return (
@@ -167,6 +173,9 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         withinPortal={withinPortal}
+        amountOfMonths={amountOfMonths}
+        onDropdownClose={onDropdownClose}
+        onDropdownOpen={onDropdownOpen}
         {...others}
       >
         <RangeCalendar
@@ -191,6 +200,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
+          initialLevel={initialLevel}
         />
       </DatePickerBase>
     );

@@ -37,6 +37,8 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     minHeight: '100vh',
     paddingTop: `calc(${props.headerHeight} + ${padding}px)`,
     paddingLeft: `calc(${props.navbarWidth} + ${padding}px)`,
+    paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
+    paddingBottom: theme.fn.size({ size: padding, sizes: theme.spacing }),
     ...queries,
   };
 }
