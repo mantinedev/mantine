@@ -43,18 +43,18 @@ Wrap your application with NotificationsProvider.
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function YourApp() {
+function App() {
   return (
-    <MantineProvider theme={yourTheme}>
+    <MantineProvider>
       <NotificationsProvider>
-        <App />
+        <YourApp />
       </NotificationsProvider>
     </MantineProvider>
   );
 }
 ```
 
-Use use-notifications hook at any place in your application:
+Then use use-notifications hook at any place in your application:
 
 <Demo data={NotificationsDemos.base} />
 
@@ -218,10 +218,3 @@ notifications.updateNotification('hello', {
 showNotification and updateNotification have higher priority.
 
 <Demo data={NotificationsDemos.autoclose} />
-
-## React node in notification message
-
-You can render any react node in notification message, for example, input or button.
-Combine this option with other settings to achieve the desired behavior:
-
-<Demo data={NotificationsDemos.interactive} />
