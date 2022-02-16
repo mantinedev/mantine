@@ -152,6 +152,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         withinPortal={withinPortal}
+        amountOfMonths={amountOfMonths}
         {...others}
       >
         <RangeCalendar

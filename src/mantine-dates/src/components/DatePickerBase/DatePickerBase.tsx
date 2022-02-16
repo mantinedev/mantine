@@ -109,6 +109,9 @@ export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
 
   /** Allow free input */
   allowFreeInput?: boolean;
+
+  /** Amount of months */
+  amountOfMonths?: number;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -158,6 +161,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onKeyDown,
       name = 'date',
       sx,
+      amountOfMonths = 1,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -308,7 +312,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               </div>
             </Popper>
           ) : (
-            <Modal opened={dropdownOpened} onClose={closeDropdown} hideCloseButton>
+            <Modal
+              opened={dropdownOpened}
+              onClose={closeDropdown}
+              hideCloseButton
+              size={amountOfMonths * 400}
+            >
               {children}
             </Modal>
           )}

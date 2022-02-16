@@ -215,6 +215,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         onClear={handleClear}
         disabled={disabled}
         withinPortal={withinPortal}
+        amountOfMonths={amountOfMonths}
         {...others}
       >
         <Calendar

@@ -38,11 +38,25 @@ storiesOf('@mantine/dates/DateRangePicker/stories', module)
   .add('2 months', () => (
     <div style={{ padding: 40 }}>
       <DateRangePicker label="2 months" placeholder="Dates range" amountOfMonths={2} mt="xl" />
+      <DateRangePicker
+        dropdownType="modal"
+        label="2 months"
+        placeholder="Dates range in modal"
+        amountOfMonths={2}
+        mt="xl"
+      />
     </div>
   ))
   .add('3 months', () => (
     <div style={{ padding: 40 }}>
       <DateRangePicker label="3 months" placeholder="Dates range" amountOfMonths={3} mt="xl" />
+      <DateRangePicker
+        dropdownType="modal"
+        label="3 months"
+        placeholder="Dates range in modal"
+        amountOfMonths={3}
+        mt="xl"
+      />
     </div>
   ))
   .add('Date format on theme', () => (
