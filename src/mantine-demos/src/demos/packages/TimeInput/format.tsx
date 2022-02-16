@@ -2,7 +2,11 @@ import React from 'react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-<TimeInput format="12" />
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  return <TimeInput label="Pick time" format="12" defaultValue={new Date()} />;
+}
 `;
 
 function Demo() {
