@@ -1,12 +1,7 @@
 import React from 'react';
-import { Tabs, Tab } from '@mantine/core';
-import { Prism, PrismProps } from '@mantine/prism';
+import { Prism } from '@mantine/prism';
 
 export const go = `
-
-
-
-
 package main
 
 import "fmt"
@@ -71,33 +66,21 @@ values (2, 'D''artagnian');
 `;
 
 function Demo() {
-  const prismStyles: PrismProps['styles'] = {
-    code: { borderRadius: 0 },
-  };
-
   return (
-    <Tabs tabPadding={0}>
-      <Tab label="Go">
-        <Prism language="go" styles={prismStyles}>
-          {go}
-        </Prism>
-      </Tab>
-      <Tab label="SQL">
-        <Prism language="sql" styles={prismStyles}>
-          {sql}
-        </Prism>
-      </Tab>
-      <Tab label="Python">
-        <Prism language="python" styles={prismStyles}>
-          {py}
-        </Prism>
-      </Tab>
-      <Tab label="CSS">
-        <Prism language="css" styles={prismStyles}>
-          {css}
-        </Prism>
-      </Tab>
-    </Tabs>
+    <Prism.Tabs>
+      <Prism.Tab label="Go" language="go">
+        {go}
+      </Prism.Tab>
+      <Prism.Tab label="Python" language="python">
+        {py}
+      </Prism.Tab>
+      <Prism.Tab label="CSS" language="css">
+        {css}
+      </Prism.Tab>
+      <Prism.Tab label="SQL" language="sql">
+        {sql}
+      </Prism.Tab>
+    </Prism.Tabs>
   );
 }
 

@@ -10,7 +10,11 @@ function Demo() {
 `;
 
 const code = `
-<Prism withLineNumbers language="tsx">{code}</Prism>
+import { Prism } from '@mantine/prism';
+
+function Demo() {
+  return <Prism withLineNumbers language="tsx">{/* ...code */}</Prism>;
+}
 `;
 
 function Demo() {

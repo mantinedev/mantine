@@ -10,15 +10,23 @@ function Demo() {
 `;
 
 const code = `
-<Prism noCopy language="tsx">{code}</Prism>
+import { Prism } from '@mantine/prism';
 
-<Prism
-  language="tsx"
-  copyLabel="Copy code to clipboard"
-  copiedLabel="Code copied to clipboard"
->
-  {code}
-</Prism>
+function Demo() {
+  return (
+    <>
+      <Prism noCopy language="tsx">{/* ...code */}</Prism>
+
+      <Prism
+        language="tsx"
+        copyLabel="Copy code to clipboard"
+        copiedLabel="Code copied to clipboard"
+      >
+        {/* ...code */}
+      </Prism>
+    </>
+  );
+}
 `;
 
 function Demo() {
