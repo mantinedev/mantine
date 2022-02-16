@@ -97,4 +97,22 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
       App shell
     </AppShell>
   ))
-  .add('With navbar toggle', () => <NavbarToggle />);
+  .add('With navbar toggle', () => <NavbarToggle />)
+  .add('Layout padding', () => (
+    <AppShell
+      padding={0}
+      fixed
+      navbar={
+        <Navbar width={{ base: 200 }} height={500} padding="xs">
+          Navbar
+        </Navbar>
+      }
+      header={
+        <Header height={60} padding="xs">
+          Header
+        </Header>
+      }
+    >
+      <div style={{ background: 'silver', width: '100%', height: '100%' }} />
+    </AppShell>
+  ));
