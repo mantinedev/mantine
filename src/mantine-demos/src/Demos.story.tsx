@@ -29,6 +29,7 @@ attachDemos(storiesOf('@mantine/core/ColorPicker/demos', module), demos.ColorPic
 attachDemos(storiesOf('@mantine/core/ColorSwatch/demos', module), demos.ColorSwatchDemos);
 attachDemos(storiesOf('@mantine/core/Container/demos', module), demos.ContainerDemos);
 attachDemos(storiesOf('@mantine/core/Dialog/demos', module), demos.DialogDemos);
+attachDemos(storiesOf('@mantine/core/Divider/demos', module), demos.DividerDemos);
 attachDemos(storiesOf('@mantine/core/Drawer/demos', module), demos.DrawerDemos);
 attachDemos(storiesOf('@mantine/core/Grid/demos', module), demos.GridDemos);
 attachDemos(storiesOf('@mantine/core/Group/demos', module), demos.GroupDemos);
