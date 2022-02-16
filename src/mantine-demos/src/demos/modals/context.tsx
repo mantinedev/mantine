@@ -3,7 +3,7 @@ import { Group, Button } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 
 const code = `
-import { Group, Button, Text } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 
 function Demo() {
