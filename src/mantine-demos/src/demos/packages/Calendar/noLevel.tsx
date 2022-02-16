@@ -2,7 +2,13 @@ import React from 'react';
 import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
-const code = '<Calendar allowLevelChange={false} />';
+const code = `
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  return <Calendar allowLevelChange={false} />;
+}
+`;
 
 function Demo() {
   return (

@@ -3,7 +3,13 @@ import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
-<Calendar labelFormat="MM/YYYY" />
+import { useState } from 'react';
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState(null);
+  return <Calendar value={value} onChange={setValue} labelFormat="MM/YYYY" />;
+}
 `;
 
 function Demo() {
