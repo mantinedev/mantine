@@ -89,6 +89,12 @@ export interface DatePickerBaseSharedProps
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Called when dropdown opens */
+  onDropdownOpen?(): void;
+
+  /** Called when dropdown closes */
+  onDropdownClose?(): void;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -162,6 +168,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       name = 'date',
       sx,
       amountOfMonths = 1,
+      onDropdownClose,
+      onDropdownOpen,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -181,6 +189,17 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const closeDropdown = () => {
       setDropdownOpened(false);
+      onDropdownClose?.();
+    };
+
+    const openDropdown = () => {
+      openDropdown();
+      onDropdownOpen?.();
+    };
+
+    const toggleDropdown = () => {
+      setDropdownOpened(!dropdownOpened);
+      !dropdownOpened ? onDropdownOpen?.() : onDropdownClose?.();
     };
 
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -216,7 +235,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       typeof onFocus === 'function' && onFocus(event);
       if (allowFreeInput) {
-        setDropdownOpened(true);
+        openDropdown();
       }
     };
 
@@ -224,7 +243,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       typeof onKeyDown === 'function' && onKeyDown(event);
       if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
         event.preventDefault();
-        setDropdownOpened(true);
+        openDropdown();
       }
     };
 
@@ -258,9 +277,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
                 ),
               }}
               styles={styles}
-              onClick={() =>
-                !allowFreeInput ? setDropdownOpened(!dropdownOpened) : setDropdownOpened(true)
-              }
+              onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
               onKeyDown={handleKeyDown}
               id={uuid}
               ref={useMergedRef(ref, inputRef)}

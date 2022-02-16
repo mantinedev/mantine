@@ -49,7 +49,14 @@ storiesOf('@mantine/dates/DateRangePicker/stories', module)
   ))
   .add('3 months', () => (
     <div style={{ padding: 40 }}>
-      <DateRangePicker label="3 months" placeholder="Dates range" amountOfMonths={3} mt="xl" />
+      <DateRangePicker
+        label="3 months"
+        placeholder="Dates range"
+        amountOfMonths={3}
+        mt="xl"
+        onDropdownClose={() => console.log('Close')}
+        onDropdownOpen={() => console.log('open')}
+      />
       <DateRangePicker
         dropdownType="modal"
         label="3 months"
