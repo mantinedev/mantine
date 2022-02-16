@@ -26,8 +26,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build public packages
-        run: npm run build:public
-      - name: Build private packages
-        run: npm run build:private
+        run: npm run build:all
       - name: Run syncpack, eslint, tsc and jest
         run: npm test
