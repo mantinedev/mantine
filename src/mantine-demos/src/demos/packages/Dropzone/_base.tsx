@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
-import { ImageIcon, UploadIcon, CrossCircledIcon } from '@modulz/radix-icons';
+import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
 import { Dropzone, DropzoneStatus, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
@@ -17,24 +17,21 @@ function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
 function ImageUploadIcon({
   status,
   ...props
-}: React.ComponentPropsWithoutRef<typeof ImageIcon> & { status: DropzoneStatus }) {
+}: React.ComponentProps<TablerIcon> & { status: DropzoneStatus }) {
   if (status.accepted) {
-    return <UploadIcon {...props} />;
+    return <Upload {...props} />;
   }
 
   if (status.rejected) {
-    return <CrossCircledIcon {...props} />;
+    return <X {...props} />;
   }
 
-  return <ImageIcon {...props} />;
+  return <Photo {...props} />;
 }
 
 export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
   <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
-    <ImageUploadIcon
-      status={status}
-      style={{ width: 80, height: 80, color: getIconColor(status, theme) }}
-    />
+    <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
 
     <div>
       <Text size="xl" inline>
