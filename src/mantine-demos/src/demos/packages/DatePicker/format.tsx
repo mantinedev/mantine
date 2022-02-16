@@ -2,13 +2,19 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker
-  placeholder="Pick date"
-  label="Event date"
-  inputFormat="MM/DD/YYYY"
-  labelFormat="MM/YYYY"
-  defaultValue={new Date()}
-/>
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker
+      placeholder="Pick date"
+      label="Event date"
+      inputFormat="MM/DD/YYYY"
+      labelFormat="MM/YYYY"
+      defaultValue={new Date()}
+    />
+  );
+}
 `;
 
 function Demo() {

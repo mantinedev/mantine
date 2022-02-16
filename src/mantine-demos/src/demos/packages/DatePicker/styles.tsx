@@ -4,6 +4,7 @@ import { DatePicker } from '@mantine/dates';
 
 const code = `
 import { useMantineTheme } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   const theme = useMantineTheme();

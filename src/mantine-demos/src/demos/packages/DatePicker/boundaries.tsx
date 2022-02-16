@@ -3,12 +3,19 @@ import dayjs from 'dayjs';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker
-  placeholder="Pick date"
-  label="Event date"
-  minDate={dayjs(new Date()).startOf('month').add(5, 'days').toDate()}
-  maxDate={dayjs(new Date()).endOf('month').subtract(5, 'days').toDate()}
-/>
+import dayjs from 'dayjs';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker
+      placeholder="Pick date"
+      label="Event date"
+      minDate={dayjs(new Date()).startOf('month').add(5, 'days').toDate()}
+      maxDate={dayjs(new Date()).endOf('month').subtract(5, 'days').toDate()}
+    />
+  );
+}
 `;
 
 function Demo() {
