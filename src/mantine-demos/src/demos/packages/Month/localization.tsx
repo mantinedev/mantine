@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
 import 'dayjs/locale/ru';
+import React, { useState } from 'react';
 import { Group } from '@mantine/core';
 import { Month } from '@mantine/dates';
 
 const code = `
-import { useState } from 'react';
 import 'dayjs/locale/ru';
+import { useState } from 'react';
+import { Month } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState(new Date());
