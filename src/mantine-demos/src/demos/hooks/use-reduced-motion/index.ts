@@ -1,0 +1,1 @@
+export { useReducedMotionDemo } from './usage';

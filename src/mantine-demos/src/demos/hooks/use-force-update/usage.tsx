@@ -29,7 +29,7 @@ function Demo() {
   );
 }
 
-export const useForceUpdateHook: MantineDemo = {
+export const useForceUpdateDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

@@ -40,7 +40,7 @@ function Demo() {
   );
 }
 
-export const useScrollLockHook: MantineDemo = {
+export const useScrollLockDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

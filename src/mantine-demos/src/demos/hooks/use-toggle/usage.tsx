@@ -29,7 +29,7 @@ function Demo() {
   );
 }
 
-export const useToggleHook: MantineDemo = {
+export const useToggleDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

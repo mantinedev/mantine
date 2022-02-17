@@ -29,7 +29,7 @@ function Demo() {
   );
 }
 
-export const useDocumentTitleHook: MantineDemo = {
+export const useDocumentTitleDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

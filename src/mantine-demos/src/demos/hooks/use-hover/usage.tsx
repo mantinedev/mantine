@@ -34,7 +34,7 @@ function Demo() {
   );
 }
 
-export const useHoverHookDemo: MantineDemo = {
+export const useHoverDemo: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

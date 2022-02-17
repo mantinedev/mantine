@@ -28,7 +28,7 @@ function Demo() {
   );
 }
 
-export const useColorSchemeHooks: MantineDemo = {
+export const useColorSchemeDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

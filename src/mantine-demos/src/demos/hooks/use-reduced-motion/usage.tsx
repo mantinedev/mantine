@@ -35,7 +35,7 @@ function Demo() {
   );
 }
 
-export const useReducedMotionHook: MantineDemo = {
+export const useReducedMotionDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

@@ -101,9 +101,9 @@ export function InputsDemo() {
         />
 
         <RadioGroup label="Radio group" style={{ marginTop: 15 }} defaultValue="react">
-          <Radio value="react">React</Radio>
-          <Radio value="svelte">Svelte</Radio>
-          <Radio value="vue">Vue</Radio>
+          <Radio value="react" label="React" />
+          <Radio value="svelte" label="Svelte" />
+          <Radio value="vue" label="Vue" />
         </RadioGroup>
 
         <Checkbox style={{ marginTop: 20 }} label="Checkbox" defaultChecked />

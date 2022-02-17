@@ -2,33 +2,6 @@ import React from 'react';
 import { useFullscreen } from '@mantine/hooks';
 import { Button, Group, Image } from '@mantine/core';
 
-const code = `
-import { useFullscreen } from '@mantine/hooks';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  const { toggle, fullscreen } = useFullscreen();
-
-  return (
-    <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
-      {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-    </Button>
-  );
-}
-`;
-
-function Demo() {
-  const { toggle, fullscreen } = useFullscreen();
-
-  return (
-    <Group position="center">
-      <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
-        {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-      </Button>
-    </Group>
-  );
-}
-
 const refCode = `
 import { useFullscreen } from '@mantine/hooks';
 import { Button, Image } from '@mantine/core';
@@ -70,12 +43,6 @@ function RefDemo() {
     </Group>
   );
 }
-
-export const useFullscreenDemo: MantineDemo = {
-  type: 'demo',
-  code,
-  component: Demo,
-};
 
 export const useFullscreenRefDemo: MantineDemo = {
   type: 'demo',

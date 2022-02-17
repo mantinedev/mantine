@@ -28,7 +28,7 @@ function Demo() {
   );
 }
 
-export const useMediaQueryHook: MantineDemo = {
+export const useMediaQueryDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

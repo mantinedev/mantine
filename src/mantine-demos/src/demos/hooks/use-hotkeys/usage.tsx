@@ -67,7 +67,7 @@ function Demo() {
   );
 }
 
-export const useHotkeysHook: MantineDemo = {
+export const useHotkeysDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

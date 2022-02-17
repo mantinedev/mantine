@@ -32,7 +32,7 @@ function Demo() {
   );
 }
 
-export const useHashHook: MantineDemo = {
+export const useHashDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

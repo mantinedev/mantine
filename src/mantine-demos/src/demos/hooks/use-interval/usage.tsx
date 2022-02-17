@@ -52,7 +52,7 @@ function Demo() {
   );
 }
 
-export const useIntervalHook: MantineDemo = {
+export const useIntervalDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

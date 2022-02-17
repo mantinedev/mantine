@@ -33,7 +33,7 @@ function Demo() {
   );
 }
 
-export const useWindowScrollHook: MantineDemo = {
+export const useWindowScrollDemo: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,
