@@ -81,3 +81,25 @@ Provide `aria-label` in case you use checkbox without label for screen reader su
 <Checkbox label="My checkbox" /> // -> ok, input and label is connected
 <Checkbox aria-label="My checkbox" /> // -> ok, label is not visible but will be announced by screen reader
 ```
+
+## CheckboxGroup
+
+<Demo data={CheckboxDemos.groupConfigurator} />
+
+### Controlled
+
+```tsx
+import { useState } from 'react';
+import { CheckboxGroup, Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <CheckboxGroup value={value} onChange={setValue}>
+      <Checkbox value="react" label="React" />
+      <Checkbox value="svelte" label="Svelte" />
+    </CheckboxGroup>
+  );
+}
+```
