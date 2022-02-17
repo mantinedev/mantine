@@ -11,9 +11,9 @@ import { RadioGroup, Radio, RadioGroupProps } from './index';
 
 const defaultProps: RadioGroupProps = {
   children: [
-    <Radio value="test-value-1">test-label-1</Radio>,
-    <Radio value="test-value-2">test-label-2</Radio>,
-    <Radio value="test-value-3">test-label-3</Radio>,
+    <Radio value="test-value-1" label="test-label-1" />,
+    <Radio value="test-value-2" label="test-label-2" />,
+    <Radio value="test-value-3" label="test-label-3" />,
   ],
 };
 
@@ -29,15 +29,15 @@ describe('@mantine/core/RadioGroup', () => {
 
   checkAccessibility([
     <RadioGroup>
-      <Radio value="test-1">test-1</Radio>
-      <Radio value="test-2">test-2</Radio>
-      <Radio value="test-3">test-3</Radio>
+      <Radio value="test-1" label="test-1" />
+      <Radio value="test-2" label="test-2" />
+      <Radio value="test-3" label="test-3" />
     </RadioGroup>,
   ]);
 
   itFiltersChildren(RadioGroup, defaultProps, '.mantine-RadioGroup-radio', [
-    <Radio value="test-value-1">test-label-1</Radio>,
-    <Radio value="test-value-2">test-label-2</Radio>,
+    <Radio value="test-value-1" label="test-label-1" />,
+    <Radio value="test-value-2" label="test-label-2" />,
   ]);
 
   it('passes correct name to Radio components', () => {
