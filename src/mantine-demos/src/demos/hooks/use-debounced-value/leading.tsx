@@ -9,7 +9,7 @@ import { TextInput, Text } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200);
+  const [debounced] = useDebouncedValue(value, 200, { leading: true });
 
   return (
     <>
@@ -29,7 +29,7 @@ function Demo() {
 
 function Demo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200);
+  const [debounced] = useDebouncedValue(value, 200, { leading: true });
 
   return (
     <>
@@ -68,7 +68,7 @@ function Demo() {
   );
 }
 
-export const useDebouncedValueUsage: MantineDemo = {
+export const useDebouncedValueLeading: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

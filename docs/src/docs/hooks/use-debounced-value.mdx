@@ -19,13 +19,13 @@ Use hook to debounce value change.
 This can be useful in case you want to perform a heavy operation based on react state,
 for example, send search request.
 
-<HooksDemos.UseDebouncedValueBaseDemo />
+<Demo data={HooksDemos.useDebouncedValueUsage} />
 
 ## Leading update
 
 You can immediately update value with first call with `{ leading: true }` options:
 
-<HooksDemos.UseDebouncedValueBaseDemo leading />
+<Demo data={HooksDemos.useDebouncedValueLeading} />
 
 ## Cancel update
 
@@ -34,7 +34,7 @@ Update cancels automatically on component unmount.
 
 In this example, type in some text and click cancel button within a minute to cancel debounced value change:
 
-<HooksDemos.UseDebouncedValueCancelDemo />
+<Demo data={HooksDemos.useDebouncedValueCancel} />
 
 ## Definition
 

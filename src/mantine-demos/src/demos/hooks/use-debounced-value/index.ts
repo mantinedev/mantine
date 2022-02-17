@@ -1,2 +1,3 @@
-export { UseDebouncedValueBaseDemo } from './base';
-export { UseDebouncedValueCancelDemo } from './cancel';
+export { useDebouncedValueUsage } from './base';
+export { useDebouncedValueCancel } from './cancel';
+export { useDebouncedValueLeading } from './leading';
