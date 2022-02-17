@@ -1,7 +1,6 @@
 import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
-import { CodeDemo } from '../../../components/Demo/Demo';
 
 const code = `
 import { useState } from 'react';
@@ -157,23 +156,22 @@ function AuthenticationForm() {
 }
 `;
 
-export function UseFormAuthDemo({ toggle = true }: { toggle: boolean }) {
+function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <CodeDemo
-      code={code.trim()}
-      language="tsx"
-      toggle={toggle}
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
-    >
-      <div style={{ maxWidth: 400, margin: 'auto' }}>
-        <AuthenticationForm
-          style={{
-            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-          }}
-        />
-      </div>
-    </CodeDemo>
+    <div style={{ maxWidth: 400, margin: 'auto' }}>
+      <AuthenticationForm
+        style={{
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        }}
+      />
+    </div>
   );
 }
+
+export const useFormAuth: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};

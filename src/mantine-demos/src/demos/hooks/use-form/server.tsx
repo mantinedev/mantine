@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { TextInput, Group, Button, LoadingOverlay, useMantineTheme } from '@mantine/core';
+import { TextInput, Group, Button, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
-import { CodeDemo } from '../../../components/Demo/Demo';
 
-const code = `import { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { TextInput, Button, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/hooks';
 
@@ -50,8 +50,7 @@ function Demo() {
 }
 `;
 
-export function UseFormServerValidationDemo() {
-  const theme = useMantineTheme();
+function Demo() {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string>(null);
 
@@ -74,32 +73,32 @@ export function UseFormServerValidationDemo() {
   };
 
   return (
-    <CodeDemo
-      code={code}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}
-    >
-      <div style={{ maxWidth: 360, margin: 'auto' }}>
-        <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
-          <LoadingOverlay visible={loading} />
-          <TextInput
-            required
-            label="Email"
-            placeholder="your@email.com"
-            error={form.errors.email && (serverError || 'Please specify valid email')}
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
-            onFocus={() => {
-              setServerError(null);
-              form.setFieldError('email', false);
-            }}
-          />
+    <div style={{ maxWidth: 360, margin: 'auto' }}>
+      <form onSubmit={form.onSubmit(handleSubmit)} style={{ position: 'relative' }}>
+        <LoadingOverlay visible={loading} />
+        <TextInput
+          required
+          label="Email"
+          placeholder="your@email.com"
+          error={form.errors.email && (serverError || 'Please specify valid email')}
+          value={form.values.email}
+          onChange={(event) => form.setFieldValue('email', event.currentTarget.value)}
+          onFocus={() => {
+            setServerError(null);
+            form.setFieldError('email', false);
+          }}
+        />
 
-          <Group position="right" style={{ marginTop: 15 }}>
-            <Button type="submit">Register</Button>
-          </Group>
-        </form>
-      </div>
-    </CodeDemo>
+        <Group position="right" style={{ marginTop: 15 }}>
+          <Button type="submit">Register</Button>
+        </Group>
+      </form>
+    </div>
   );
 }
+
+export const useFormValidation: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};

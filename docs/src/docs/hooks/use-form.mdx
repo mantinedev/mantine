@@ -19,7 +19,7 @@ use-form provides bare minimum api to manage simple forms.
 It includes handlers to set and validate values.
 Hook does not depend on `@mantine/core` inputs and does not work with dom.
 
-<HooksDemos.UseFormBaseDemo />
+<Demo data={HooksDemos.useFormBase} />
 
 ## API
 
@@ -343,17 +343,17 @@ const authForm = <form onSubmit={form.onSubmit((values) => console.log(values))}
 
 ### Validate field on blur
 
-<HooksDemos.UseFormBlurValidateDemo />
+<Demo data={HooksDemos.useFormBlur} />
 
 ### External field validation
 
 Submit form with `test@mantine.dev` email to see external validation error:
 
-<HooksDemos.UseFormServerValidationDemo />
+<Demo data={HooksDemos.useFormValidation} />
 
 ### Authentication form
 
-<HooksDemos.UseFormAuthDemo />
+<Demo data={HooksDemos.useFormAuth} />
 
 ## TypeScript
 
