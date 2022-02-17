@@ -1,5 +1,4 @@
 export * from './use-form';
-export * from './use-click-outside';
 
 export * from './use-clipboard';
 export * from './use-color-scheme';
@@ -28,3 +27,4 @@ export * from './use-window-scroll';
 export * from './use-move';
 export * from './use-mouse';
 export * from './use-scroll-into-view';
+export * from './use-click-outside';

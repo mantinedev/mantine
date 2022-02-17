@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Paper, Button, Group, useMantineTheme } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
-import { CodeDemo } from '../../components/Demo/Demo';
 
-const getCode = (events?: string) => `import { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false)${events});
+  const ref = useClickOutside(() => setOpened(false), ['mouseup', 'touchend']);
 
   return (
     <>
@@ -22,19 +22,16 @@ function Demo() {
       )}
     </>
   );
-}`;
+}
+`;
 
-export function UseClickOutsideDemo({ events }: { events?: string[] }) {
+function Demo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const ref = useClickOutside(() => setOpened(false), events || undefined);
+  const ref = useClickOutside(() => setOpened(false), ['mouseup', 'touchend']);
 
   return (
-    <CodeDemo
-      code={getCode(events ? `, [${events.map((event) => `'${event}'`).join(', ')}]` : '')}
-      language="tsx"
-      demoBackground={theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0]}
-    >
+    <>
       <div style={{ position: 'relative' }}>
         <Group position="center">
           <Button onClick={() => setOpened(true)}>Open dropdown</Button>
@@ -44,7 +41,7 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
           <Paper
             ref={ref}
             shadow="sm"
-            style={{
+            sx={{
               width: 300,
               height: 60,
               position: 'absolute',
@@ -60,6 +57,12 @@ export function UseClickOutsideDemo({ events }: { events?: string[] }) {
           </Paper>
         )}
       </div>
-    </CodeDemo>
+    </>
   );
 }
+
+export const useClickOutsideEvents: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};
