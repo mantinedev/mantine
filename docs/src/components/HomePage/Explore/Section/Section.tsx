@@ -8,8 +8,8 @@ interface SectionProps {
   title: React.ReactNode;
   description: React.ReactNode | React.ReactNode[];
   children: React.ReactNode;
-  label: React.ReactNode;
-  link: string;
+  label?: React.ReactNode;
+  link?: string;
 }
 
 export function Section({ title, description, children, link, label }: SectionProps) {
@@ -31,10 +31,12 @@ export function Section({ title, description, children, link, label }: SectionPr
           <Text className={classes.description}>{description}</Text>
         )}
 
-        <Anchor component={Link} to={link} className={classes.link}>
-          {label}
-          <ArrowRightIcon style={{ marginLeft: 8 }} />
-        </Anchor>
+        {link && (
+          <Anchor component={Link} to={link} className={classes.link}>
+            {label}
+            <ArrowRightIcon style={{ marginLeft: 8 }} />
+          </Anchor>
+        )}
       </div>
 
       <div className={classes.body}>{children}</div>
