@@ -44,10 +44,14 @@ export interface CheckboxProps
 
   /** Replace default icon */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
+
+  /** Static selector base */
+  __staticSelector?: string;
 }
 
 const defaultProps: Partial<CheckboxProps> = {
   size: 'sm',
+  __staticSelector: 'Checkbox',
   transitionDuration: 100,
   icon: CheckboxIcon,
 };
@@ -70,6 +74,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
     styles,
     transitionDuration,
     icon: Icon,
+    __staticSelector,
     ...others
   } = useMantineDefaultProps('Checkbox', defaultProps, props);
 
@@ -77,7 +82,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
   const { margins, rest } = extractMargins(others);
   const { classes, cx } = useStyles(
     { size, radius, color, transitionDuration },
-    { classNames, styles, name: 'Checkbox' }
+    { classNames, styles, name: __staticSelector }
   );
 
   return (
