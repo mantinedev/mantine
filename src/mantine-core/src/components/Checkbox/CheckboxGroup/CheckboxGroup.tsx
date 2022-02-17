@@ -112,7 +112,11 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
         {...wrapperProps}
         {...others}
       >
-        <Group spacing={spacing} direction={orientation === 'horizontal' ? 'row' : 'column'}>
+        <Group
+          spacing={spacing}
+          direction={orientation === 'horizontal' ? 'row' : 'column'}
+          sx={{ paddingTop: 5 }}
+        >
           {checkboxes}
         </Group>
       </InputWrapper>
