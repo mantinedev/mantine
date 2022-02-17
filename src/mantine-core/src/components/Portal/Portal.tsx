@@ -2,6 +2,7 @@ import React, { ReactPortal, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/styles';
+import type { Property } from 'csstype';
 
 export interface PortalProps {
   /** Portal children, for example, modal or popover */
@@ -10,6 +11,9 @@ export interface PortalProps {
   /** Root element z-index property */
   zIndex?: number;
 
+  /** Root element position property */
+  position?: Property.Position;
+
   /** Element where portal should be rendered, by default new div element is created and appended to document.body */
   target?: HTMLElement | string;
 
@@ -17,7 +21,13 @@ export interface PortalProps {
   className?: string;
 }
 
-export function Portal({ children, zIndex = 1, target, className }: PortalProps): ReactPortal {
+export function Portal({
+  children,
+  zIndex = 1,
+  position = 'relative',
+  target,
+  className,
+}: PortalProps): ReactPortal {
   const theme = useMantineTheme();
   const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLElement>();
@@ -44,7 +54,7 @@ export function Portal({ children, zIndex = 1, target, className }: PortalProps)
   }
 
   return createPortal(
-    <div className={className} dir={theme.dir} style={{ position: 'relative', zIndex }}>
+    <div className={className} dir={theme.dir} style={{ position, zIndex }}>
       {children}
     </div>,
     ref.current
