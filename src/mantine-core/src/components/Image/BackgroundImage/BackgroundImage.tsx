@@ -45,6 +45,7 @@ export const BackgroundImage: BackgroundImageComponent = forwardRef(
           (theme) => ({
             ...theme.fn.focusStyles(),
             backgroundSize: 'cover',
+            backgroundPosition: 'center',
             display: 'block',
             width: '100%',
             border: 0,
