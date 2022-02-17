@@ -6,7 +6,7 @@ export function ContentDemos() {
   return (
     <Paper shadow="md" radius="md" padding={30}>
       <div>
-        <Text size="lg" style={{ marginBottom: 15 }}>
+        <Text size="lg" mb="md">
           Accordion component
         </Text>
         <AccordionDemo />

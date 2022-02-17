@@ -12,7 +12,7 @@ export default function MdxTitle({
 
   if (order === 1) {
     return (
-      <Title className={classes.title} style={{ fontWeight: 900, fontSize: 44 }}>
+      <Title className={classes.title} sx={{ fontWeight: 900, fontSize: 44 }}>
         {children}
       </Title>
     );
@@ -21,7 +21,7 @@ export default function MdxTitle({
   return (
     <>
       <div id={id} className={classes.offset} />
-      <Title order={order} className={classes.title} style={{ fontWeight: 600 }} {...others}>
+      <Title order={order} className={classes.title} sx={{ fontWeight: 600 }} {...others}>
         <a className={classes.link} href={`#${id}`}>
           {children}
         </a>

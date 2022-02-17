@@ -76,7 +76,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
         size="sm"
         className={cx(classes.link, { [classes.linkActive]: active === index })}
         href={`#${slug}`}
-        style={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
+        sx={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
         onClick={(event) => {
           event.preventDefault();
           const element = document.getElementById(slug);

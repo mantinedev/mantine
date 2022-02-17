@@ -39,7 +39,7 @@ export function Jumbotron() {
 
         <SimpleGrid
           cols={3}
-          style={{ maxWidth: 800 }}
+          sx={{ maxWidth: 800 }}
           spacing={30}
           mt={40}
           breakpoints={[{ maxWidth: 800, cols: 1 }]}

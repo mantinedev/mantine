@@ -45,13 +45,13 @@ export function AnimationsDemo() {
   const { classes } = useStyles();
   return (
     <Paper shadow="md" padding={30} radius="md">
-      <Title order={4} style={{ marginBottom: 15 }}>
+      <Title order={4} mb="md">
         Use premade transitions with any component
       </Title>
 
       <Transitions />
 
-      <Title order={4} style={{ marginBottom: 10, marginTop: 30 }}>
+      <Title order={4} mb="xs" mt="xl">
         Or create your own transitions
       </Title>
 
@@ -59,7 +59,7 @@ export function AnimationsDemo() {
         {code}
       </Prism>
 
-      <Button variant="outline" onClick={() => setModalOpened(true)} style={{ marginTop: 15 }}>
+      <Button variant="outline" onClick={() => setModalOpened(true)} mt="md">
         Open modal with scaleY transition
       </Button>
 

@@ -44,7 +44,7 @@ export const components = {
     return (
       <Prism
         language={matches && matches.groups && matches.groups.lang ? matches.groups.lang : ''}
-        style={{ marginBottom: 20 }}
+        mb={20}
       >
         {props.children.props.children}
       </Prism>

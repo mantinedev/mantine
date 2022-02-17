@@ -70,7 +70,8 @@ export function HooksDemo() {
         onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
         leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
-        style={{ marginTop: 10, marginBottom: 15 }}
+        mt="xs"
+        mb="md"
       >
         {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
@@ -95,7 +96,7 @@ export function HooksDemo() {
             ref={ref}
             shadow="md"
             padding="xl"
-            style={{
+            sx={{
               position: 'absolute',
               top: -15,
               left: -15,
@@ -106,7 +107,7 @@ export function HooksDemo() {
               color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
             }}
           >
-            <Center style={{ height: '100%' }}>Click outside to close</Center>
+            <Center sx={{ height: '100%' }}>Click outside to close</Center>
           </Paper>
         )}
       </div>

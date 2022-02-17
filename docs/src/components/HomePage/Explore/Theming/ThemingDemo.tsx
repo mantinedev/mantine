@@ -92,7 +92,7 @@ export function ThemingDemo() {
       >
         <Group position="center">
           <Button color="ocean-blue">Ocean blue button</Button>
-          <Badge color="bright-pink" variant="filled" size="lg" style={{ lineHeight: 1 }}>
+          <Badge color="bright-pink" variant="filled" size="lg" sx={{ lineHeight: 1 }}>
             Bright pink badge
           </Badge>
         </Group>
