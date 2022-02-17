@@ -9,10 +9,10 @@ function Demo() {
     <RadioGroup
      ${props}
     >
-      <Radio value="react">React</Radio>
-      <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng">Angular</Radio>
-      <Radio value="vue">Vue</Radio>
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
     </RadioGroup>
   );
 }
@@ -21,10 +21,10 @@ function Demo() {
 function Wrapper(props: RadioGroupProps) {
   return (
     <RadioGroup defaultValue="react" {...props}>
-      <Radio value="react">React</Radio>
-      <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng">Angular</Radio>
-      <Radio value="vue">Vue</Radio>
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
     </RadioGroup>
   );
 }

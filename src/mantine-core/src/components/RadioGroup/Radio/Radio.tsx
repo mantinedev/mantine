@@ -17,7 +17,7 @@ export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
-  children?: React.ReactNode;
+  label?: React.ReactNode;
 
   /** Radio value */
   value: string;
@@ -41,7 +41,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
     className,
     style,
     id,
-    children,
+    label,
     size,
     title,
     disabled,
@@ -77,7 +77,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
           disabled={disabled}
           {...rest}
         />
-        {children && <span>{children}</span>}
+        {label && <span>{label}</span>}
       </label>
     </Box>
   );

@@ -12,9 +12,9 @@ const sizes = MANTINE_SIZES.map((size) => (
     spacing={size}
     key={size}
   >
-    <Radio value="1">{size}</Radio>
-    <Radio value="2">{size}</Radio>
-    <Radio value="3">{size}</Radio>
+    <Radio value="1" label={size} />
+    <Radio value="2" label={size} />
+    <Radio value="3" label={size} />
   </RadioGroup>
 ));
 
@@ -22,9 +22,9 @@ function Controlled() {
   const [value, setValue] = useState(null);
   return (
     <RadioGroup value={value} onChange={setValue}>
-      <Radio value="1">Item 1</Radio>
-      <Radio value="2">Item 2</Radio>
-      <Radio value="3">Item 3</Radio>
+      <Radio value="1" label="Item 1" />
+      <Radio value="2" label="Item 2" />
+      <Radio value="3" label="Item 3" />
     </RadioGroup>
   );
 }
@@ -35,12 +35,12 @@ storiesOf('@mantine/core/RadioGroup/stories', module)
       style={{ padding: 40, maxWidth: 300, background: 'rgba(0, 0, 0, .1)' }}
       label="Too many items"
     >
-      <Radio value="item-1">item-1</Radio>
-      <Radio value="item-2">item-2</Radio>
-      <Radio value="item-3">item-3</Radio>
-      <Radio value="item-4">item-4</Radio>
-      <Radio value="item-5">item-5</Radio>
-      <Radio value="item-6">item-6</Radio>
+      <Radio value="item-1" label="item-1" />
+      <Radio value="item-2" label="item-2" />
+      <Radio value="item-3" label="item-3" />
+      <Radio value="item-4" label="item-4" />
+      <Radio value="item-5" label="item-5" />
+      <Radio value="item-6" label="item-6" />
     </RadioGroup>
   ))
   .add('Sizes', () => <>{sizes}</>)
