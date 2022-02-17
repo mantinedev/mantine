@@ -193,7 +193,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     };
 
     const openDropdown = () => {
-      openDropdown();
+      setDropdownOpened(true);
       onDropdownOpen?.();
     };
 
@@ -294,7 +294,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onChange={onChange}
-              autoComplete="nope"
+              autoComplete="off"
               {...rest}
             />
           </div>
