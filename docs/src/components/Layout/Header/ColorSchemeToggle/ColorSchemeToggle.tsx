@@ -21,7 +21,7 @@ export function ColorSchemeToggle({
       {...others}
     >
       <Text size="sm" className={classes.value}>
-        {upperFirst(colorScheme === 'light' ? 'dark' : 'light')} theme
+        {upperFirst(colorScheme === 'light' ? 'dark' : 'light')}
       </Text>
 
       <Center className={classes.iconWrapper}>
