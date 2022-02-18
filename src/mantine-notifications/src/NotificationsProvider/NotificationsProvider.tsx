@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 import { DefaultProps, Portal, MantineMargin, getDefaultZIndex, Box } from '@mantine/core';
-import { useReducedMotion } from '@mantine/hooks';
+import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
 import getPositionStyles from './get-position-styles/get-position-styles';
@@ -63,6 +63,9 @@ export function NotificationsProvider({
   children,
   ...others
 }: NotificationProviderProps) {
+  const forceUpdate = useForceUpdate();
+  const refs = useRef<Record<string, HTMLDivElement>>({});
+  const previousLength = useRef<number>(0);
   const {
     notifications,
     queue,
@@ -79,16 +82,25 @@ export function NotificationsProvider({
     '-'
   ) as NotificationsProviderPositioning;
 
+  useDidUpdate(() => {
+    if (notifications.length > previousLength.current) {
+      setTimeout(() => forceUpdate(), 0);
+    }
+    previousLength.current = notifications.length;
+  }, [notifications]);
+
   const items = notifications.map((notification) => (
     <Transition
       key={notification.id}
       timeout={duration}
-      unmountOnExit
-      mountOnEnter
-      onEnter={(node: any) => node.offsetHeight}
+      onEnter={() => refs.current[notification.id].offsetHeight}
+      nodeRef={{ current: refs.current[notification.id] }}
     >
       {(state) => (
         <NotificationContainer
+          innerRef={(node) => {
+            refs.current[notification.id] = node;
+          }}
           notification={notification}
           onHide={hideNotification}
           className={classes.notification}
