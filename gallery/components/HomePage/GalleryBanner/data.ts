@@ -18,6 +18,7 @@ export default [
   {
     icon: LawIcon,
     title: 'Free for everyone',
-    description: 'Free, open source, MIT licensed, use anywhere. All contributions are welcome.',
+    description:
+      'Free, open source, community-driven, MIT license. Use anywhere, including commercial projects.',
   },
 ];

@@ -57,9 +57,9 @@ export function GalleryBanner({ componentsCount }: GalleryBannerProps) {
           </Title>
 
           <Text className={classes.description}>
-            Build websites even faster with over {componentsCount}+ fully responsive components
-            designed and built by Mantine maintainers and community. All components are free forever
-            for everyone.
+            Build your next website even faster with premade responsive components designed and
+            built by Mantine maintainers and community. All components are free forever for
+            everyone.
           </Text>
 
           <Group className={classes.controls}>
