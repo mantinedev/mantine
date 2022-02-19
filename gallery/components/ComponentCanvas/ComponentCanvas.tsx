@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Prism } from '@mantine/prism';
-import { MantineProvider, useMantineTheme } from '@mantine/core';
-import rtlPlugin from 'stylis-plugin-rtl';
+import { MantineProvider } from '@mantine/core';
 import * as GalleryComponents from '../../gallery';
 import { GalleryComponent } from '../../data';
-import { useGalleryDirection } from '../DirectionContext/DirectionContext';
 import { GalleryPreview } from '../GalleryPreview/GalleryPreview';
 import { CanvasHeader } from './CanvasHeader/CanvasHeader';
 import useStyles from './ComponentCanvas.styles';
@@ -12,10 +10,8 @@ import useStyles from './ComponentCanvas.styles';
 export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
   const [state, setState] = useState('preview');
   const [primaryColor, setPrimaryColor] = useState('blue');
-  const theme = useMantineTheme();
   const { classes, cx } = useStyles();
   const Component = GalleryComponents[props.component];
-  const dir = useGalleryDirection();
 
   return (
     <div className={classes.canvas}>
@@ -39,14 +35,7 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
             style={{ zIndex: props.zIndex }}
           >
             <GalleryPreview canvas={props.attributes.canvas}>
-              <MantineProvider
-                theme={{ primaryColor, colorScheme: theme.colorScheme, dir }}
-                emotionOptions={
-                  dir === 'rtl'
-                    ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] }
-                    : { key: 'mantine' }
-                }
-              >
+              <MantineProvider inherit theme={{ primaryColor }}>
                 <Component {...props.attributes.props} />
               </MantineProvider>
             </GalleryPreview>
