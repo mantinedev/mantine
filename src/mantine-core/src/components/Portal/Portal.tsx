@@ -2,7 +2,6 @@ import React, { ReactPortal, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/styles';
-import type { Property } from 'csstype';
 
 export interface PortalProps {
   /** Portal children, for example, modal or popover */
@@ -12,7 +11,7 @@ export interface PortalProps {
   zIndex?: number;
 
   /** Root element position property */
-  position?: Property.Position;
+  position?: string;
 
   /** Element where portal should be rendered, by default new div element is created and appended to document.body */
   target?: HTMLElement | string;
