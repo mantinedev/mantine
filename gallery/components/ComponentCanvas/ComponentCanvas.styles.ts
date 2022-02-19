@@ -41,7 +41,7 @@ export default createStyles((theme, _params, getRef) => {
 
     bodyWithCode: {
       padding: 0,
-      backgroundColor: theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
     },
 
     previewDimmed: {
