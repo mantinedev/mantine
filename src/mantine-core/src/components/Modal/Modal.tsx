@@ -29,6 +29,9 @@ export interface ModalProps
   /** Called when close button clicked and when escape key is pressed */
   onClose(): void;
 
+  /** Called when cancel button clicked and when escape key is pressed, or when modal closes and no separate close handler is provided */
+  onCancel(): void;
+
   /** Modal title, displayed in header before close button */
   title?: React.ReactNode;
 
@@ -95,6 +98,7 @@ export function MantineModal({
   opened,
   title,
   onClose,
+  onCancel,
   children,
   hideCloseButton = false,
   overlayOpacity,
@@ -134,9 +138,14 @@ export function MantineModal({
 
   const [, lockScroll] = useScrollLock();
 
+  const onCancelClose = () => {
+    onCancel?.();
+    onClose();
+  };
+
   const closeOnEscapePress = (event: KeyboardEvent) => {
     if (noFocusTrap && event.code === 'Escape' && closeOnEscape) {
-      onClose();
+      onCancelClose();
     }
   };
 
@@ -169,11 +178,14 @@ export function MantineModal({
         <Box className={cx(classes.root, className)} {...others}>
           <div
             className={classes.inner}
-            onMouseDown={() => closeOnClickOutside && onClose()}
+            onMouseDown={() => closeOnClickOutside && onCancelClose()}
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+              shouldTrigger &&
+                event.nativeEvent.code === 'Escape' &&
+                closeOnEscape &&
+                onCancelClose();
             }}
             ref={focusTrapRef}
           >
@@ -203,7 +215,7 @@ export function MantineModal({
                   {!hideCloseButton && (
                     <CloseButton
                       iconSize={16}
-                      onClick={onClose}
+                      onClick={onCancelClose}
                       aria-label={closeButtonLabel}
                       className={classes.close}
                     />
