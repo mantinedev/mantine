@@ -14,6 +14,9 @@
     "type": "git",
     "directory": "src/mantine-prism"
   },
+  "keywords": [
+    "react", "next", "nextjs", "ui", "components", "ui-kit", "library", "frontend", "code", "highlight", "syntax", "syntax-highlight"
+  ],
   "peerDependencies": {
     "@mantine/core": "3.6.9",
     "@mantine/hooks": "3.6.9",

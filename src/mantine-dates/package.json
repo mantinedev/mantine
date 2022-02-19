@@ -8,6 +8,9 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/dates/getting-started/",
+  "keywords": [
+    "react", "next", "nextjs", "ui", "components", "ui-kit", "library", "frontend", "calendar", "date", "time", "picker"
+  ],
   "peerDependencies": {
     "@mantine/core": "3.6.9",
     "@mantine/hooks": "3.6.9",

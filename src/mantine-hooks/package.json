@@ -13,6 +13,9 @@
     "type": "git",
     "directory": "src/mantine-hooks"
   },
+  "keywords": [
+    "react", "next", "nextjs", "library", "frontend", "react-hooks", "hooks", "state"
+  ],
   "peerDependencies": {
     "react": ">=16.8.0"
   },
