@@ -52,7 +52,7 @@ export function ComponentCanvas(props: GalleryComponent & { zIndex: number }) {
             </GalleryPreview>
           </div>
         ) : (
-          <Prism language="tsx" className={classes.code}>
+          <Prism language="tsx" classNames={{ code: classes.code }}>
             {props.code}
           </Prism>
         )}
