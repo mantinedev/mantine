@@ -6,7 +6,7 @@ import {
   MantineColor,
 } from '@mantine/styles';
 
-interface BadgeStyles {
+export interface BadgeStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
@@ -55,7 +55,7 @@ export const heights = Object.keys(sizes).reduce((acc, key) => {
 export default createStyles(
   (
     theme,
-    { color, size, radius, gradientFrom, gradientTo, gradientDeg, fullWidth }: BadgeStyles
+    { color, size, radius, gradientFrom, gradientTo, gradientDeg, fullWidth }: BadgeStylesParams
   ) => {
     const dotSize = theme.fn.size({ size, sizes: dotSizes });
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
@@ -98,7 +98,7 @@ export default createStyles(
         justifyContent: 'center',
         width: fullWidth ? '100%' : 'auto',
         textTransform: 'uppercase',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 700,
         letterSpacing: 0.25,
         cursor: 'default',

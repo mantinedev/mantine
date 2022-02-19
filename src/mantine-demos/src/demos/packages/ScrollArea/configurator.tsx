@@ -12,9 +12,17 @@ function Wrapper(props: ScrollAreaProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<ScrollArea style={{ height: 250 }}${props}>
-  {/* ... content */}
-</ScrollArea>`;
+const codeTemplate = (props: string) => `
+import { ScrollArea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ScrollArea style={{ height: 250 }}${props}>
+      {/* ... content */}
+    </ScrollArea>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

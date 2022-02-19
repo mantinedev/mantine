@@ -1,5 +1,10 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  ClassNames,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { useDidUpdate } from '@mantine/hooks';
 import { Text } from '../Text';
 import { Box } from '../Box';
@@ -45,74 +50,77 @@ export interface ImageProps
   caption?: React.ReactNode;
 }
 
-export const Image = forwardRef<HTMLDivElement, ImageProps>(
-  (
-    {
-      className,
-      alt,
-      src,
-      fit = 'cover',
-      width = '100%',
-      height = 'auto',
-      radius = 0,
-      imageProps,
-      withPlaceholder = false,
-      placeholder,
-      imageRef,
-      classNames,
-      styles,
-      caption,
-      ...others
-    }: ImageProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
-    const [loaded, setLoaded] = useState(false);
-    const [error, setError] = useState(!src);
-    const isPlaceholder = withPlaceholder && (!loaded || error);
+const defaultProps: Partial<ImageProps> = {
+  fit: 'cover',
+  width: '100%',
+  height: 'auto',
+  radius: 0,
+};
 
-    useDidUpdate(() => {
-      setLoaded(false);
-      setError(false);
-    }, [src]);
+export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, ref) => {
+  const {
+    className,
+    alt,
+    src,
+    fit,
+    width,
+    height,
+    radius,
+    imageProps,
+    withPlaceholder,
+    placeholder,
+    imageRef,
+    classNames,
+    styles,
+    caption,
+    ...others
+  } = useMantineDefaultProps('Image', defaultProps, props);
+  const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(!src);
+  const isPlaceholder = withPlaceholder && (!loaded || error);
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        <figure className={classes.figure}>
-          <div className={classes.imageWrapper}>
-            <img
-              className={classes.image}
-              src={src}
-              alt={alt}
-              style={{ objectFit: fit, width, height }}
-              ref={imageRef}
-              onLoad={(event) => {
-                setLoaded(true);
-                typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
-              }}
-              onError={(event) => {
-                setError(true);
-                typeof imageProps?.onError === 'function' && imageProps.onError(event);
-              }}
-              {...imageProps}
-            />
+  useDidUpdate(() => {
+    setLoaded(false);
+    setError(false);
+  }, [src]);
 
-            {isPlaceholder && (
-              <div className={classes.placeholder} title={alt}>
-                {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
-              </div>
-            )}
-          </div>
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <figure className={classes.figure}>
+        <div className={classes.imageWrapper}>
+          <img
+            className={classes.image}
+            src={src}
+            alt={alt}
+            style={{ objectFit: fit, width, height }}
+            ref={imageRef}
+            onLoad={(event) => {
+              setLoaded(true);
+              typeof imageProps?.onLoad === 'function' && imageProps.onLoad(event);
+            }}
+            onError={(event) => {
+              setError(true);
+              typeof imageProps?.onError === 'function' && imageProps.onError(event);
+            }}
+            {...imageProps}
+          />
 
-          {!!caption && (
-            <Text component="figcaption" size="sm" align="center" className={classes.caption}>
-              {caption}
-            </Text>
+          {isPlaceholder && (
+            <div className={classes.placeholder} title={alt}>
+              {placeholder || <ImageIcon style={{ width: 40, height: 40 }} />}
+            </div>
           )}
-        </figure>
-      </Box>
-    );
-  }
-);
+        </div>
+
+        {!!caption && (
+          <Text component="figcaption" size="sm" align="center" className={classes.caption}>
+            {caption}
+          </Text>
+        )}
+      </figure>
+    </Box>
+  );
+});
 
 Image.displayName = '@mantine/core/Image';

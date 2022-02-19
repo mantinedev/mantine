@@ -24,7 +24,7 @@ export function Demo({ data, demoProps, configuratorProps }: DemoProps) {
     return (
       <CodeDemo
         language="tsx"
-        code={data.code?.trim()}
+        code={data.code || null}
         demoBackground={background}
         {...data.demoProps}
         {...demoProps}

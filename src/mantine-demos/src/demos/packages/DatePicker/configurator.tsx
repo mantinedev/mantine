@@ -1,14 +1,22 @@
 import { DatePicker } from '@mantine/dates';
 
-const codeTemplate = (props: string) => `<DatePicker
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: DatePicker,
   codeTemplate,
-  configuratorProps: { multiline: true, center: false },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Event date' },
     {

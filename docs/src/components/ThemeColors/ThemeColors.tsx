@@ -9,6 +9,6 @@ export function ThemeColors() {
   ));
 
   return (
-    <div style={{ marginTop: theme.spacing.md, marginBottom: theme.spacing.xl }}>{swatches}</div>
+    <div style={{ marginTop: theme.spacing.xl, marginBottom: theme.spacing.xl }}>{swatches}</div>
   );
 }

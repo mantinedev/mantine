@@ -4,6 +4,7 @@ import corePackageJson from '../../../../../package.json';
 import { getDocsData } from '../get-docs-data';
 import Search from './Search/Search';
 import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
+import { DirToggle } from './DirToggle/DirToggle';
 import { SourceCode } from './SourceCode/SourceCode';
 import { Discord } from './Discord/Discord';
 import { Logo } from '../../Logo/Logo';
@@ -59,6 +60,7 @@ export default function Header({ data, navbarOpened, toggleNavbar }: HeaderProps
         <Search data={data.filter((group) => group.group !== 'changelog')} isMacOS={isMacOS} />
         <Discord />
         <SourceCode />
+        <DirToggle />
         <ColorSchemeToggle />
       </Group>
     </div>

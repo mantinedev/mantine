@@ -3,7 +3,8 @@ import { LoadingOverlay, Button, Group, useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 import { demoBase } from './_demo-base';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { LoadingOverlay, Button, Group } from '@mantine/core';
 
 function Demo() {
@@ -14,7 +15,7 @@ function Demo() {
     <>
       <div style={{ width: 400, position: 'relative' }}>
         <LoadingOverlay visible={visible} />
-        <AuthenticationForm />
+        {/* ...other content */}
       </div>
 
       <Group position="center">

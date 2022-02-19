@@ -1,16 +1,6 @@
 import React from 'react';
 import { Chips, Chip } from '@mantine/core';
 
-const code = `
-<Chips multiple value={['checked', 'checked-disabled']}>
-  <Chip value="default">Default</Chip>
-  <Chip value="checked">Checked</Chip>
-  <Chip value="checked-disabled" disabled>
-    Checked disabled
-  </Chip>
-</Chips>
-`;
-
 function Demo() {
   return (
     <>
@@ -42,5 +32,4 @@ function Demo() {
 export const states: MantineDemo = {
   type: 'demo',
   component: Demo,
-  code,
 };

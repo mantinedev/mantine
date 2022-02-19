@@ -10,7 +10,7 @@ export default createStyles((theme) => ({
     borderRadius: 1000,
     paddingLeft: theme.spacing.sm,
     paddingRight: 4,
-    width: 136,
+    width: 84,
     height: INPUT_SIZES.sm,
 
     [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {

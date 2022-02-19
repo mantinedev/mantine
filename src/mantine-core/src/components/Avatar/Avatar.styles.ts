@@ -5,7 +5,7 @@ import {
   getSharedColorScheme,
 } from '@mantine/styles';
 
-interface AvatarStyles {
+export interface AvatarStylesParams {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -19,7 +19,7 @@ export const sizes = {
   xl: 84,
 };
 
-export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
+export default createStyles((theme, { size, radius, color }: AvatarStylesParams) => ({
   root: {
     ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
@@ -30,7 +30,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStyles) => ({
     width: theme.fn.size({ size, sizes }),
     minWidth: theme.fn.size({ size, sizes }),
     height: theme.fn.size({ size, sizes }),
-    borderRadius: radius ? theme.fn.size({ size: radius, sizes: theme.radius }) : size,
+    borderRadius: theme.fn.radius(radius),
   },
 
   image: {

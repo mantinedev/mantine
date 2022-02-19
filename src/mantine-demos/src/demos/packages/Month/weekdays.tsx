@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Group } from '@mantine/core';
 import { Month } from '@mantine/dates';
 
 const code = `
-<Month hideWeekdays />
+import { Month } from '@mantine/dates';
+
+function Demo() {
+  return <Month hideWeekdays month={new Date()} />;
+}
 `;
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
   return (
     <Group position="center">
-      <Month month={value} value={value} onChange={setValue} hideWeekdays />
+      <Month month={new Date()} hideWeekdays />
     </Group>
   );
 }

@@ -7,7 +7,7 @@ import {
   CSSObject,
 } from '@mantine/styles';
 
-interface TextStyles {
+export interface TextStylesParams {
   color: MantineColor;
   variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
@@ -26,7 +26,7 @@ interface TextStyles {
 interface GetTextColor {
   theme: MantineTheme;
   color: MantineColor;
-  variant: TextStyles['variant'];
+  variant: TextStylesParams['variant'];
 }
 
 function getTextColor({ theme, color, variant }: GetTextColor) {
@@ -72,7 +72,7 @@ export default createStyles(
       weight,
       transform,
       align,
-    }: TextStyles
+    }: TextStylesParams
   ) => {
     const colors = getSharedColorScheme({
       theme,

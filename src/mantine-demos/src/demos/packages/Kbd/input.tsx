@@ -1,10 +1,10 @@
 import React from 'react';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { Search } from 'tabler-icons-react';
 import { Kbd, TextInput } from '@mantine/core';
 
 const code = `
 import { Kbd, TextInput } from '@mantine/core';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { Search } from 'tabler-icons-react';
 
 function Demo() {
   const rightSection = (
@@ -18,7 +18,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<MagnifyingGlassIcon />}
+      icon={<Search size={16} />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -39,7 +39,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<MagnifyingGlassIcon />}
+      icon={<Search size={16} />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}

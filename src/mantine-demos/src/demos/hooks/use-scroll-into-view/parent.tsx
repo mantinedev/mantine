@@ -12,7 +12,7 @@ function Demo() {
   return (
     <>
       <Paper ref={scrollableRef} style={{ overflowY: 'scroll', height: 300, flex: 1 }}>
-        <Paper ref={targetRef}>Scroll me into view<</Paper>
+        <Paper ref={targetRef}>Scroll me into view</Paper>
       </Paper>
 
       <Button onClick={() => scrollIntoView()}>Scroll to target</Button>

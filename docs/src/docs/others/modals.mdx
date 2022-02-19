@@ -78,9 +78,15 @@ Using this properties you can customize confirm modal to match current context r
 To setup shared labels for confirm modals set `labels` on `ModalsProvider`:
 
 ```tsx
-<ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
-  <App />
-</ModalsProvider>
+import { ModalsProvider } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
+      <App />
+    </ModalsProvider>
+  );
+}
 ```
 
 ## Context modals

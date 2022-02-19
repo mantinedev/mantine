@@ -2,12 +2,12 @@ import { createStyles } from '@mantine/styles';
 
 type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-interface TitleStyles {
+export interface TitleStylesParams {
   element: HeadingElement;
   align: 'right' | 'left' | 'center' | 'justify';
 }
 
-export default createStyles((theme, { element, align }: TitleStyles) => ({
+export default createStyles((theme, { element, align }: TitleStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,

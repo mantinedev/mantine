@@ -2,7 +2,11 @@ import React from 'react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-<TimeInput disabled />
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  return <TimeInput disabled />;
+}
 `;
 
 function Demo() {

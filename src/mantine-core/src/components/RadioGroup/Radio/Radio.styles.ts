@@ -1,6 +1,6 @@
 import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
 
-interface RadioStyles {
+export interface RadioStylesParams {
   size: MantineSize;
   color: MantineColor;
 }
@@ -13,7 +13,7 @@ export const sizes = {
   xl: 36,
 };
 
-export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
+export default createStyles((theme, { size, color }: RadioStylesParams, getRef) => {
   const labelDisabled = { ref: getRef('labelDisabled') } as const;
 
   return {

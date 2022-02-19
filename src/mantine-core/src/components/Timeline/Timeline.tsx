@@ -5,6 +5,7 @@ import {
   ForwardRefWithStaticComponents,
   MantineNumberSize,
   CSSObject,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -43,24 +44,32 @@ type TimelineComponent = ForwardRefWithStaticComponents<
   { Item: typeof TimelineItem }
 >;
 
+const defaultProps: Partial<TimelineProps> = {
+  active: -1,
+  radius: 'xl',
+  bulletSize: 20,
+  align: 'left',
+  lineWidth: 4,
+  reverseActive: false,
+};
+
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
-  (
-    {
+  (props: TimelineProps, ref) => {
+    const {
       children,
-      active = -1,
+      active,
       color,
-      radius = 'xl',
-      bulletSize = 20,
-      align = 'left',
-      lineWidth = 4,
+      radius,
+      bulletSize,
+      align,
+      lineWidth,
       classNames,
       styles,
       sx,
-      reverseActive = false,
+      reverseActive,
       ...others
-    }: TimelineProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Timeline', defaultProps, props);
+
     const _children = filterChildrenByType(children, TimelineItem);
     const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, useMantineTheme } from '@mantine/styles';
+import { DEFAULT_THEME, useMantineTheme, MantineProvider } from '@mantine/styles';
 import { Burger } from '../Burger';
 import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
@@ -98,6 +98,17 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
     </AppShell>
   ))
   .add('With navbar toggle', () => <NavbarToggle />)
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ AppShell: { sx: { background: 'silver' } } }}>
+      <AppShell
+        fixed
+        navbarOffsetBreakpoint="sm"
+        navbar={<Navbar width={{ md: 350, lg: 400 }}>Navbar</Navbar>}
+      >
+        App shell
+      </AppShell>
+    </MantineProvider>
+  ))
   .add('Layout padding', () => (
     <AppShell
       padding={0}

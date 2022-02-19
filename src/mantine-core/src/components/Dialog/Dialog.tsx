@@ -6,6 +6,7 @@ import {
   ClassNames,
   MantineMargin,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../ActionIcon';
@@ -54,25 +55,36 @@ export interface DialogProps
   size?: MantineNumberSize;
 }
 
-export function MantineDialog({
-  withCloseButton,
-  onClose,
-  position,
-  shadow = 'md',
-  padding = 'md',
-  children,
-  className,
-  style,
-  classNames,
-  styles,
-  opened,
-  withBorder = true,
-  size = 'md',
-  transition = 'pop-top-right',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  ...others
-}: DialogProps) {
+const defaultProps: Partial<DialogProps> = {
+  shadow: 'md',
+  padding: 'md',
+  withBorder: true,
+  size: 'md',
+  transition: 'pop-top-right',
+  transitionDuration: 200,
+};
+
+export function MantineDialog(props: DialogProps) {
+  const {
+    withCloseButton,
+    onClose,
+    position,
+    shadow,
+    padding,
+    children,
+    className,
+    style,
+    classNames,
+    styles,
+    opened,
+    withBorder,
+    size,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    ...others
+  } = useMantineDefaultProps('Dialog', defaultProps, props);
+
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
 
   return (

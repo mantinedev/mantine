@@ -1,17 +1,26 @@
 import React from 'react';
-import { GearIcon } from '@modulz/radix-icons';
+import { Settings } from 'tabler-icons-react';
 import { ActionIcon, Group } from '@mantine/core';
 
 const code = `
-<ActionIcon variant="transparent"><GearIcon /></ActionIcon>
-<ActionIcon variant="hover"><GearIcon /></ActionIcon>
-<ActionIcon variant="default"><GearIcon /></ActionIcon>
-<ActionIcon variant="outline"><GearIcon /></ActionIcon>
-<ActionIcon variant="filled"><GearIcon /></ActionIcon>
-<ActionIcon variant="light"><GearIcon /></ActionIcon>
+import { ActionIcon } from '@mantine/core';
+import { Settings } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <>
+      <ActionIcon variant="transparent"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="hover"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="default"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="outline"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="filled"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="light"><Settings size={16} /></ActionIcon>
+    </>
+  );
+}
 `;
 
-const icon = <GearIcon style={{ width: 16, height: 16 }} />;
+const icon = <Settings size={16} />;
 
 export function Demo() {
   return (

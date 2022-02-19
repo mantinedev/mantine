@@ -1,4 +1,4 @@
-export { UseFormAuthDemo } from './auth';
-export { UseFormBaseDemo } from './base';
-export { UseFormBlurValidateDemo } from './blur';
-export { UseFormServerValidationDemo } from './server';
+export { useFormAuth } from './auth';
+export { useFormBase } from './base';
+export { useFormBlur } from './blur';
+export { useFormValidation } from './server';

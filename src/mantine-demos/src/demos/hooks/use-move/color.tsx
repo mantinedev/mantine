@@ -3,15 +3,14 @@ import { useMantineTheme, Group } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 const code = `
-import { useMantineTheme } from '@mantine/core';
+import { useState } from 'react';
+import { useMantineTheme, Group } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
   const theme = useMantineTheme();
   const [value, setValue] = useState({ x: 0.2, y: 0.6 });
   const { ref } = useMove(setValue);
-
-  const overlayStyles = { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 };
 
   return (
     <Group position="center">
@@ -25,12 +24,8 @@ function Demo() {
         }}
       >
         {/* Gradient overlays */}
-        <div
-          style={{ ...overlayStyles, backgroundImage: 'linear-gradient(90deg, #fff, transparent)' }}
-        />
-        <div
-          style={{ ...overlayStyles, backgroundImage: 'linear-gradient(0deg, #000, transparent)' }}
-        />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(90deg, #fff, transparent)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(0deg, #000, transparent)' }} />
 
         {/* Thumb */}
         <div
@@ -55,8 +50,6 @@ function Demo() {
   const [value, setValue] = useState({ x: 0.2, y: 0.6 });
   const { ref } = useMove(setValue);
 
-  const overlayStyles: any = { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 };
-
   return (
     <Group position="center">
       <div
@@ -70,10 +63,24 @@ function Demo() {
       >
         {/* Gradient overlays */}
         <div
-          style={{ ...overlayStyles, backgroundImage: 'linear-gradient(90deg, #fff, transparent)' }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'linear-gradient(90deg, #fff, transparent)',
+          }}
         />
         <div
-          style={{ ...overlayStyles, backgroundImage: 'linear-gradient(0deg, #000, transparent)' }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'linear-gradient(0deg, #000, transparent)',
+          }}
         />
 
         {/* Thumb */}

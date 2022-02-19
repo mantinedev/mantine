@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text } from '@mantine/core';
-import { CodeDemo } from '../../../components/Demo/Demo';
 
-const code = (leading: boolean) => `import { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200${leading ? ', { leading: true }' : ''});
+  const [debounced] = useDebouncedValue(value, 200);
 
   return (
     <>
@@ -24,20 +24,15 @@ export function Demo() {
       <Text>Debounced value: {debounced}</Text>
     </>
   );
-}`;
+}
+`;
 
-export function UseDebouncedValueBaseDemo({
-  leading = false,
-  toggle = false,
-}: {
-  leading: boolean;
-  toggle: boolean;
-}) {
+function Demo() {
   const [value, setValue] = useState('');
-  const [debounced] = useDebouncedValue(value, 200, { leading });
+  const [debounced] = useDebouncedValue(value, 200);
 
   return (
-    <CodeDemo code={code(leading)} language="tsx" toggle={toggle}>
+    <>
       <div
         style={{
           display: 'flex',
@@ -69,6 +64,12 @@ export function UseDebouncedValueBaseDemo({
           {debounced.trim() || '[empty string]'}
         </Text>
       </div>
-    </CodeDemo>
+    </>
   );
 }
+
+export const useDebouncedValueUsage: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};

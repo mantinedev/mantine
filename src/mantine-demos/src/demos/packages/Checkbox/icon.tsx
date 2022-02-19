@@ -3,13 +3,20 @@ import { Biohazard, Radioactive } from 'tabler-icons-react';
 import { Checkbox, CheckboxProps } from '@mantine/core';
 
 const code = `
+import { Checkbox, CheckboxProps } from '@mantine/core';
 import { Biohazard, Radioactive } from 'tabler-icons-react';
 
-const CheckboxIcon = ({ indeterminate, className }) =>
+const CheckboxIcon: CheckboxProps['icon'] = ({ indeterminate, className }) =>
   indeterminate ? <Radioactive className={className} /> : <Biohazard className={className} />;
 
-<Checkbox icon={CheckboxIcon} label="Custom icon" defaultChecked />
-<Checkbox icon={CheckboxIcon} label="Custom icon: indeterminate" indeterminate mt="sm" />
+function Demo() {
+  return (
+    <>
+      <Checkbox icon={CheckboxIcon} label="Custom icon" defaultChecked />
+      <Checkbox icon={CheckboxIcon} label="Custom icon: indeterminate" indeterminate mt="sm" />
+    </>
+  );
+}
 `;
 
 const CheckboxIcon: CheckboxProps['icon'] = ({

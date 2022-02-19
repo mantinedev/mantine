@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
 
 const code = `
-<Modal
-  transition="fade"
-  transitionDuration={600}
-  transitionTimingFunction="ease"
-/>
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal
+      transition="fade"
+      transitionDuration={600}
+      transitionTimingFunction="ease"
+    />
+  );
+}
 `;
 
 function Demo() {

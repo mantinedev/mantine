@@ -6,7 +6,11 @@ import { useState } from 'react';
 import { DateRangePicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
+  const [value, setValue] = useState<[Date | null, Date | null]>([
+    new Date(2021, 11, 1),
+    new Date(2021, 11, 5),
+  ]);
+
   return (
     <DateRangePicker
       label="Book hotel"
@@ -19,7 +23,10 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date, Date]>([new Date(2021, 11, 1), new Date(2021, 11, 5)]);
+  const [value, setValue] = useState<[Date | null, Date | null]>([
+    new Date(2021, 11, 1),
+    new Date(2021, 11, 5),
+  ]);
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
       <DateRangePicker

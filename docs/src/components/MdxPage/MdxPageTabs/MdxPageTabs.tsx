@@ -25,7 +25,7 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
   const propsTables = hasProps
     ? frontmatter.props.map((component) => (
         <div key={component}>
-          <Title order={2} style={{ fontWeight: 600, marginBottom: 20 }}>
+          <Title order={2} sx={{ fontWeight: 600 }} mb={20}>
             {component} component props
           </Title>
           <PropsTable key={component} component={component} query={query} />
@@ -69,7 +69,7 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
                 autoFocus
                 icon={<MagnifyingGlassIcon />}
                 placeholder="Search props"
-                style={{ marginBottom: 20 }}
+                mb={20}
                 value={query}
                 onChange={(event) => setQuery(event.currentTarget.value)}
               />

@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, CSSObject } from '@mantine/styles';
 
-interface MediaQueryStyles {
+export interface MediaQueryStylesParams {
   smallerThan: MantineNumberSize;
   largerThan: MantineNumberSize;
   styles: CSSObject;
@@ -8,7 +8,7 @@ interface MediaQueryStyles {
 }
 
 export default createStyles(
-  (theme, { smallerThan, largerThan, query, styles }: MediaQueryStyles) => {
+  (theme, { smallerThan, largerThan, query, styles }: MediaQueryStylesParams) => {
     const media: CSSObject = {};
     const minWidth = theme.fn.size({ size: largerThan, sizes: theme.breakpoints }) + 1;
     const maxWidth = theme.fn.size({ size: smallerThan, sizes: theme.breakpoints });

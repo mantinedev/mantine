@@ -2,11 +2,17 @@ import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
-<Autocomplete
-  transition="pop-top-left"
-  transitionDuration={80}
-  transitionTimingFunction="ease"
-/>
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Autocomplete
+      transition="pop-top-left"
+      transitionDuration={80}
+      transitionTimingFunction="ease"
+    />
+  );
+}
 `;
 
 function Demo() {

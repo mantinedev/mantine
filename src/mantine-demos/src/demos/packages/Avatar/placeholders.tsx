@@ -1,21 +1,31 @@
 import React from 'react';
-import { StarIcon } from '@modulz/radix-icons';
+import { Star } from 'tabler-icons-react';
 import { Avatar, Group } from '@mantine/core';
 
 const code = `
-// Default placeholder
-<Avatar src={null} alt="no image here" />
+import { Avatar } from '@mantine/core';
+import { Star } from 'tabler-icons-react';
 
-// Default placeholder with custom color
-<Avatar src={null} alt="no image here" color="indigo" />
+function Demo() {
+  return (
+    <>
+      {/* Default placeholder */}
+      <Avatar src={null} alt="no image here" />
 
-// Placeholder with initials
-<Avatar src={null} alt="Vitaly Rtishchev" color="red">VR</Avatar>
+      {/* Default placeholder with custom color */}
+      <Avatar src={null} alt="no image here" color="indigo" />
 
-// Placeholder with custom icon
-<Avatar color="blue" radius="xl">
-  <StarIcon />
-</Avatar>
+      {/* Placeholder with initials */}
+      <Avatar src={null} alt="Vitaly Rtishchev" color="red">VR</Avatar>
+
+      {/* Placeholder with custom icon */}
+      <Avatar color="blue" radius="xl">
+        <Star size={24} />
+      </Avatar>
+    </>
+  );
+}
+
 `;
 
 function Demo() {
@@ -28,7 +38,7 @@ function Demo() {
           VR
         </Avatar>
         <Avatar color="blue" radius="xl">
-          <StarIcon style={{ width: 24, height: 24 }} />
+          <Star size={24} />
         </Avatar>
       </Group>
     </Group>

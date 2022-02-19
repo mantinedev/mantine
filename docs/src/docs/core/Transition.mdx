@@ -30,7 +30,7 @@ To use one of them set `transition` property to one of these values:
 ```tsx
 import { Transition } from '@mantine/core';
 
-function YourModal({ opened }) {
+function Demo({ opened }) {
   return (
     <Transition mounted={opened} transition="fade" duration={400} timingFunction="ease">
       {(styles) => <div style={styles}>Your modal</div>}

@@ -1,22 +1,32 @@
 import React from 'react';
-import { StarIcon } from '@modulz/radix-icons';
+import { Star } from 'tabler-icons-react';
 import { Avatar, Group } from '@mantine/core';
 import { avatars } from './_mockdata';
 
 const code = `
-// With image
-<Avatar src="avatar.png" alt="it's me" />
+import { Avatar } from '@mantine/core';
+import { Star } from 'tabler-icons-react';
 
-// Default placeholder
-<Avatar radius="xl" />
+function Demo() {
+  return (
+    <>
+      {/* With image */}
+      <Avatar src="avatar.png" alt="it's me" />
 
-// Letters with xl radius
-<Avatar color="cyan" radius="xl">MK</Avatar>
+      {/* Default placeholder */}
+      <Avatar radius="xl" />
 
-// Custom placeholder icon
-<Avatar color="blue" radius="sm">
-  <StarIcon style={{ width: 24, height: 24 }} />
-</Avatar>
+      {/* Letters with xl radius */}
+      <Avatar color="cyan" radius="xl">MK</Avatar>
+
+      {/* Custom placeholder icon */}
+      <Avatar color="blue" radius="sm">
+        <Star size={24} />
+      </Avatar>
+    </>
+  );
+}
+
 `;
 
 function Demo() {
@@ -28,7 +38,7 @@ function Demo() {
         MK
       </Avatar>
       <Avatar color="blue" radius="xl">
-        <StarIcon style={{ width: 24, height: 24 }} />
+        <Star size={24} />
       </Avatar>
     </Group>
   );

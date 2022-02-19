@@ -1,9 +1,10 @@
 import React from 'react';
 import { Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+import { Sun, MoonStars } from 'tabler-icons-react';
 
-const code = `import { ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { SunIcon, MoonIcon } from '@modulz/radix-icons';
+const code = `
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { Sun, MoonStars } from 'tabler-icons-react';
 
 function Demo() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -16,14 +17,11 @@ function Demo() {
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? (
-        <SunIcon style={{ width: 18, height: 18 }} />
-      ) : (
-        <MoonIcon style={{ width: 18, height: 18 }} />
-      )}
+      {dark ? <Sun size={18} /> : <MoonStars size={18} />}
     </ActionIcon>
   );
-}`;
+}
+`;
 
 function Demo() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -37,11 +35,7 @@ function Demo() {
         onClick={() => toggleColorScheme()}
         title="Toggle color scheme"
       >
-        {dark ? (
-          <SunIcon style={{ width: 18, height: 18 }} />
-        ) : (
-          <MoonIcon style={{ width: 18, height: 18 }} />
-        )}
+        {dark ? <Sun size={18} /> : <MoonStars size={18} />}
       </ActionIcon>
     </Group>
   );

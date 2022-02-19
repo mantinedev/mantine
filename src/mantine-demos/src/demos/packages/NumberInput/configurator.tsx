@@ -1,16 +1,24 @@
 import React from 'react';
 import { NumberInput, NumberInputProps } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<NumberInput
-  defaultValue={18}
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NumberInput
+      defaultValue={18}
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props: NumberInputProps) => <NumberInput {...props} defaultValue={18} />,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Your age' },
     {

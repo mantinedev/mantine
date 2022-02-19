@@ -14,13 +14,21 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Grid${props}>
-  <Grid.Col span={4}>1</Grid.Col>
-  <Grid.Col span={4}>2</Grid.Col>
-  <Grid.Col span={4}>3</Grid.Col>
-  <Grid.Col span={4}>4</Grid.Col>
-  <Grid.Col span={4}>5</Grid.Col>
-</Grid>`;
+const codeTemplate = (props: string) => `
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid${props}>
+      <Grid.Col span={4}>1</Grid.Col>
+      <Grid.Col span={4}>2</Grid.Col>
+      <Grid.Col span={4}>3</Grid.Col>
+      <Grid.Col span={4}>4</Grid.Col>
+      <Grid.Col span={4}>5</Grid.Col>
+    </Grid>
+  );
+}
+`;
 
 export const growConfigurator: MantineDemo = {
   type: 'configurator',

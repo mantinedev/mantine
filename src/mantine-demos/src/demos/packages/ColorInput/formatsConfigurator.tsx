@@ -14,7 +14,13 @@ function Wrapper(props: ColorInputProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<ColorInput${props} />`;
+const codeTemplate = (props: string) => `
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput defaultValue="#C5D899"${props} />;
+}
+`;
 
 export const formatsConfigurator: MantineDemo = {
   type: 'configurator',

@@ -16,11 +16,19 @@ function Wrapper(props: GridProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Grid${props}>
-  <Grid.Col span={3} style={{ minHeight: 80 }}>1</Grid.Col>
-  <Grid.Col span={3} style={{ minHeight: 120 }}>2</Grid.Col>
-  <Grid.Col span={3}>3</Grid.Col>
-</Grid>`;
+const codeTemplate = (props: string) => `
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid${props}>
+      <Grid.Col span={3} style={{ minHeight: 80 }}>1</Grid.Col>
+      <Grid.Col span={3} style={{ minHeight: 120 }}>2</Grid.Col>
+      <Grid.Col span={3}>3</Grid.Col>
+    </Grid>
+  );
+}
+`;
 
 export const flexConfigurator: MantineDemo = {
   type: 'configurator',

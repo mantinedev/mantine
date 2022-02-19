@@ -4,22 +4,32 @@ import dayjs from 'dayjs';
 import { Month } from '@mantine/dates';
 
 const code = `
-const range = [
-  dayjs(new Date()).startOf('month').toDate(),
-  dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-];
+import dayjs from 'dayjs';
+import { Month } from '@mantine/dates';
 
-<Month range={range} month={new Date()} />
+function Demo() {
+  return (
+    <Month
+      month={new Date()}
+      range={[
+        dayjs(new Date()).startOf('month').toDate(),
+        dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
+      ]}
+    />
+  );
+}
 `;
 
 function Demo() {
-  const range: [Date, Date] = [
-    dayjs(new Date()).startOf('month').toDate(),
-    dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
-  ];
   return (
     <Group position="center">
-      <Month range={range} month={new Date()} />
+      <Month
+        month={new Date()}
+        range={[
+          dayjs(new Date()).startOf('month').toDate(),
+          dayjs(new Date()).startOf('month').add(4, 'days').toDate(),
+        ]}
+      />
     </Group>
   );
 }

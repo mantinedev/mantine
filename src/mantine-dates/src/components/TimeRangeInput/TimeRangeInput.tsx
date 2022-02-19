@@ -11,6 +11,7 @@ import {
   ClassNames,
   CloseButton,
   extractMargins,
+  useMantineDefaultProps,
 } from '@mantine/core';
 import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import useStyles from './TimeRangeInput.styles';
@@ -86,45 +87,57 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
+const defaultProps: Partial<TimeRangeInputProps> = {
+  size: 'sm',
+  defaultValue: [null, null],
+  withSeconds: false,
+  clearable: false,
+  format: '24',
+  timePlaceholder: '--',
+  amPmPlaceholder: 'am',
+  labelSeparator: '–',
+  disabled: false,
+};
+
 export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
-  (
-    {
+  (props: TimeRangeInputProps, ref) => {
+    const {
       required,
       label,
       error,
       description,
       className,
       style,
-      size = 'sm',
+      size,
       wrapperProps,
       classNames,
       styles,
       id,
       value,
-      defaultValue = [null, null],
+      defaultValue,
       onChange,
-      withSeconds = false,
-      clearable = false,
+      withSeconds,
+      clearable,
       clearButtonLabel,
-      format = '24',
+      format,
       name,
       hoursLabel,
       minutesLabel,
       secondsLabel,
       amPmLabel,
-      timePlaceholder = '--',
-      amPmPlaceholder = 'am',
-      labelSeparator = '–',
-      disabled = false,
+      timePlaceholder,
+      amPmPlaceholder,
+      labelSeparator,
+      disabled,
       sx,
       ...others
-    }: TimeRangeInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { size },
       { classNames, styles, name: 'TimeRangeInput' }
     );
+
     const { margins, rest } = extractMargins(others);
     const uuid = useUuid(id);
 

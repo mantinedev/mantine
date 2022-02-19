@@ -1,15 +1,14 @@
 import React from 'react';
 import { Group, MANTINE_COLORS, Badge } from '@mantine/core';
 
-const getDots = (props?: any) =>
-  MANTINE_COLORS.map((color) => (
-    <Badge key={color} color={color} variant="dot" {...props}>
+function Demo() {
+  const items = MANTINE_COLORS.map((color) => (
+    <Badge key={color} color={color} variant="dot">
       {color}
     </Badge>
   ));
 
-function Demo() {
-  return <Group position="center">{getDots()}</Group>;
+  return <Group position="center">{items}</Group>;
 }
 
 export const dots: MantineDemo = {

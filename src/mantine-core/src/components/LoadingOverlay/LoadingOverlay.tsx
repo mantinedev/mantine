@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  getDefaultZIndex,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Overlay } from '../Overlay';
 import { Transition } from '../Transition';
 import { Loader, LoaderProps } from '../Loader';
@@ -32,25 +37,29 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   radius?: MantineNumberSize;
 }
 
+const defaultProps: Partial<LoadingOverlayProps> = {
+  overlayOpacity: 0.75,
+  transitionDuration: 200,
+  zIndex: getDefaultZIndex('overlay'),
+};
+
 export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>(
-  (
-    {
+  (props: LoadingOverlayProps, ref) => {
+    const {
       className,
       visible,
-      loaderProps = {},
-      overlayOpacity = 0.75,
+      loaderProps,
+      overlayOpacity,
       overlayColor,
-      transitionDuration = 200,
-      zIndex = getDefaultZIndex('overlay'),
+      transitionDuration,
+      zIndex,
       style,
       loader,
       radius,
       classNames,
       styles,
       ...others
-    }: LoadingOverlayProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
     const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
 
     return (

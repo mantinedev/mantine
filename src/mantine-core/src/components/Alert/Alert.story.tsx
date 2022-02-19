@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { XCircleFillIcon } from '@primer/octicons-react';
+import { MantineProvider } from '@mantine/styles';
 import { Alert } from './Alert';
 
 storiesOf('@mantine/core/Alert/stories', module)
@@ -54,4 +55,21 @@ storiesOf('@mantine/core/Alert/stories', module)
         lost forever!
       </Alert>
     </div>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Alert: { color: 'cyan', title: 'Context prop' } }}>
+      <Alert title="Hello" sx={{ maxWidth: 400 }} mx="auto" my={50}>
+        Content
+      </Alert>
+      <Alert color="red" sx={{ maxWidth: 400 }} mx="auto" my={50}>
+        Content
+      </Alert>
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 'lg' }}>
+      <Alert title="Hello" sx={{ maxWidth: 400 }} mx="auto" my={50}>
+        Content
+      </Alert>
+    </MantineProvider>
   ));

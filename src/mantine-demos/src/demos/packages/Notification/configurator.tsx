@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
+import { Check } from 'tabler-icons-react';
 import { Notification, NotificationProps } from '@mantine/core';
 import { demoBase } from './_demo-base';
 
@@ -7,19 +7,28 @@ function Wrapper(props: NotificationProps) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Notification onClose={() => {}} {...props} />
-      <Notification style={{ marginTop: 15 }} icon={<CheckIcon />} onClose={() => {}} {...props} />
+      <Notification mt="md" icon={<Check size={20} />} onClose={() => {}} {...props} />
     </div>
   );
 }
 
 const codeTemplate = (props: string, children: string) => `
-<Notification${props}>
-  ${children}
-</Notification>
+import { Notification } from '@mantine/core';
+import { Check } from 'tabler-icons-react';
 
-<Notification icon={<CheckIcon />}${props}>
-  ${children}
-</Notification>
+function Demo() {
+  return (
+    <>
+      <Notification${props}>
+        ${children}
+      </Notification>
+
+      <Notification icon={<Check size={20} />}${props}>
+        ${children}
+      </Notification>
+    </>
+  );
+}
 `;
 
 export const configurator: MantineDemo = {

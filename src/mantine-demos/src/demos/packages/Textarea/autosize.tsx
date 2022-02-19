@@ -2,20 +2,29 @@ import React from 'react';
 import { Textarea } from '@mantine/core';
 
 const code = `
-<Textarea
-  placeholder="Autosize with no rows limit"
-  label="Autosize with no rows limit"
-  autosize
-  minRows={2}
-/>
+import { Textarea } from '@mantine/core';
 
-<Textarea
-  label="Autosize with 4 rows max"
-  placeholder="Autosize with 4 rows max"
-  autosize
-  minRows={2}
-  maxRows={4}
-/>
+function Demo() {
+  return (
+    <>
+      <Textarea
+        placeholder="Autosize with no rows limit"
+        label="Autosize with no rows limit"
+        autosize
+        minRows={2}
+      />
+
+      <Textarea
+        label="Autosize with 4 rows max"
+        placeholder="Autosize with 4 rows max"
+        autosize
+        minRows={2}
+        maxRows={4}
+      />
+    </>
+  );
+}
+
 `;
 
 function Demo() {

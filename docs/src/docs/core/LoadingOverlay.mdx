@@ -45,11 +45,17 @@ LoadingOverlay is built using [Overlay](/core/overlay/) and [Loader](/core/loade
 You can change all props of Loader component, opacity and color of Overlay:
 
 ```tsx
-<LoadingOverlay
-  loaderProps={{ size: 'sm', color: 'pink', variant: 'bars' }}
-  overlayOpacity={0.3}
-  overlayColor="#c5c5c5"
-/>
+import { LoadingOverlay } from '@mantine/core';
+
+function Demo() {
+  return (
+    <LoadingOverlay
+      loaderProps={{ size: 'sm', color: 'pink', variant: 'bars' }}
+      overlayOpacity={0.3}
+      overlayColor="#c5c5c5"
+    />
+  );
+}
 ```
 
 ## Configure default loader
@@ -58,10 +64,15 @@ You can configure default loader in [MantineProvider](/theming/mantine-provider/
 it will be used in [Loader](/core/loader/) and LoadingOverlay components by default:
 
 ```tsx
-// Loader component will render bars
-<MantineProvider theme={{ loader: 'bars' }}>
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ loader: 'bars' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 ## Custom loader

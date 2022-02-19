@@ -1,16 +1,28 @@
 import React from 'react';
-import { MantineProvider, Button, Badge, Group, useMantineColorScheme } from '@mantine/core';
+import {
+  MantineProvider,
+  Button,
+  Badge,
+  Group,
+  useMantineColorScheme,
+  ButtonStylesParams,
+} from '@mantine/core';
 
 const code = `
-import { MantineProvider, Button, Badge } from '@mantine/core';
+import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
 
 function Demo() {
   return (
     <MantineProvider
       styles={{
-        Button: (theme) => ({
+        Button: (theme, params: ButtonStylesParams) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
+
+          filled: {
+            // subscribe to component params
+            color: theme.colors[params.color || theme.primaryColor][1],
+          },
 
           // These styles are applied only to buttons with outline variant
           outline: {
@@ -31,7 +43,7 @@ function Demo() {
       }}
     >
       <Button variant="outline">Outline button</Button>
-      <Button variant="filled">Filled button</Button>
+      <Button variant="filled" color="cyan">Filled button</Button>
       <Badge variant="dot">Dot badge</Badge>
     </MantineProvider>
   );
@@ -45,9 +57,14 @@ function Demo() {
     <MantineProvider
       theme={{ colorScheme }}
       styles={{
-        Button: (theme) => ({
+        Button: (theme, params: ButtonStylesParams) => ({
           // Shared button styles are applied to all buttons
           root: { height: 42, padding: '0 30px' },
+
+          filled: {
+            // subscribe to component params
+            color: theme.colors[params.color || theme.primaryColor][1],
+          },
 
           // These styles are applied only to buttons with outline variant
           outline: {
@@ -69,7 +86,9 @@ function Demo() {
     >
       <Group position="center">
         <Button variant="outline">Outline button</Button>
-        <Button variant="filled">Filled button</Button>
+        <Button variant="filled" color="cyan">
+          Filled button
+        </Button>
         <Badge variant="dot">Dot badge</Badge>
       </Group>
     </MantineProvider>

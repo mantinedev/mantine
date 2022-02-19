@@ -22,7 +22,7 @@ function Demo() {
         onClose={() => setOpened(false)}
         padding="md"
         size={size}
-        hideCloseButton
+        withCloseButton={false}
       >
         Press escape to close the drawer
       </Drawer>

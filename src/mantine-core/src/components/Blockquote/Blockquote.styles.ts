@@ -1,10 +1,10 @@
 import { createStyles, MantineColor } from '@mantine/styles';
 
-interface BlockquoteStyles {
+export interface BlockquoteStylesParams {
   color: MantineColor;
 }
 
-export default createStyles((theme, { color }: BlockquoteStyles) => ({
+export default createStyles((theme, { color }: BlockquoteStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontSize: theme.fontSizes.lg,

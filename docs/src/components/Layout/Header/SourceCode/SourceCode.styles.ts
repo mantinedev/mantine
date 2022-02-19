@@ -10,7 +10,7 @@ export default createStyles((theme) => ({
     borderRadius: 1000,
     paddingLeft: theme.spacing.sm,
     paddingRight: 4,
-    width: 140,
+    width: 100,
     height: INPUT_SIZES.sm,
     textDecoration: 'none',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,

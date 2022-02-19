@@ -28,4 +28,7 @@ export interface PrismSharedProps {
 
   /** Change scroll area component */
   scrollAreaComponent?: any;
+
+  /** Defines whether the code should be trimmed, defaults to true */
+  trim?: boolean;
 }

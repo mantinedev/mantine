@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 
 export interface SpaceProps extends DefaultProps {
@@ -10,8 +10,15 @@ export interface SpaceProps extends DefaultProps {
   h?: MantineNumberSize;
 }
 
-export const Space = forwardRef<HTMLDivElement, SpaceProps>(
-  ({ w = 0, h = 0, sx, ...others }: SpaceProps, ref) => (
+const defaultProps: Partial<SpaceProps> = {
+  w: 0,
+  h: 0,
+};
+
+export const Space = forwardRef<HTMLDivElement, SpaceProps>((props: SpaceProps, ref) => {
+  const { w, h, sx, ...others } = useMantineDefaultProps('Space', defaultProps, props);
+
+  return (
     <Box
       ref={ref}
       sx={[
@@ -24,7 +31,7 @@ export const Space = forwardRef<HTMLDivElement, SpaceProps>(
       ]}
       {...others}
     />
-  )
-);
+  );
+});
 
 Space.displayName = '@mantine/core/Space';

@@ -15,13 +15,21 @@ function Wrapper(props: any) {
   );
 }
 
-const codeTemplate = (props: string) => `<Paper${props}>
-  <Text>Paper is the most basic ui component</Text>
-  <Text>
-    Use it to create cards, dropdowns, modals and other components that require background
-    with shadow
-  </Text>
-</Paper>`;
+const codeTemplate = (props: string) => `
+import { Text, Paper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Paper${props}>
+      <Text>Paper is the most basic ui component</Text>
+      <Text>
+        Use it to create cards, dropdowns, modals and other components that require background
+        with shadow
+      </Text>
+    </Paper>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

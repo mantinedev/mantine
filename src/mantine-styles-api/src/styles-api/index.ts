@@ -30,6 +30,7 @@ export * from './Notification.styles-api';
 export * from './NumberInput.styles-api';
 export * from './Pagination.styles-api';
 export * from './PasswordInput.styles-api';
+export * from './PinInput.styles-api';
 export * from './Popover.styles-api';
 export * from './Progress.styles-api';
 export * from './RadioGroup.styles-api';

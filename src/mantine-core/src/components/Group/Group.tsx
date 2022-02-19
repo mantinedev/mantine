@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { filterFalsyChildren } from '../../utils';
 import { Box } from '../Box';
 import useStyles, { GroupPosition } from './Group.styles';
@@ -24,49 +24,56 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
   align?: React.CSSProperties['alignItems'];
 }
 
-export const Group = forwardRef<HTMLDivElement, GroupProps>(
-  (
+const defaultProps: Partial<GroupProps> = {
+  position: 'left',
+  spacing: 'md',
+  direction: 'row',
+};
+
+export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
+  const {
+    className,
+    position,
+    align,
+    children,
+    noWrap,
+    grow,
+    spacing,
+    direction,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Group', defaultProps, props);
+
+  const filteredChildren = filterFalsyChildren(children);
+  const { classes, cx } = useStyles(
     {
-      className,
-      position = 'left',
       align,
-      children,
-      noWrap = false,
-      grow = false,
-      spacing = 'md',
-      direction = 'row',
-      classNames,
-      styles,
-      ...others
-    }: GroupProps,
-    ref
-  ) => {
-    const filteredChildren = filterFalsyChildren(children);
-    const { classes, cx } = useStyles(
-      {
-        align,
-        grow,
-        noWrap,
-        spacing,
-        position,
-        direction,
-        count: filteredChildren.length,
-      },
-      { classNames, styles, name: 'Group' }
-    );
+      grow,
+      noWrap,
+      spacing,
+      position,
+      direction,
+      count: filteredChildren.length,
+    },
+    { classNames, styles, name: 'Group' }
+  );
 
-    const items = filteredChildren.map((child) =>
-      React.cloneElement(child, {
-        className: cx(classes.child, child.props.className),
-      })
-    );
+  const items = filteredChildren.map((child) => {
+    if (typeof child === 'object' && child !== null && 'props' in child) {
+      return React.cloneElement(child, {
+        className: cx(classes.child, child.props?.className),
+      });
+    }
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {items}
-      </Box>
-    );
-  }
-);
+    return child;
+  });
+
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {items}
+    </Box>
+  );
+});
 
 Group.displayName = '@mantine/core/Group';

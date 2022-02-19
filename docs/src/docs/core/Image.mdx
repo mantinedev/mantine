@@ -74,8 +74,16 @@ import { useRef } from 'react';
 import { Image } from '@mantine/core';
 
 function Demo() {
-  const imageRef = useRef();
-  const rootRef = useRef();
+  const imageRef = useRef<HTMLImageElement>();
+  const rootRef = useRef<HTMLDivElement>();
   return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```
+
+## BackgroundImage component
+
+Use BackgroundImage component when you need to display image below any content.
+Component sets background-image to given `src`, background-size to `cover` and background-position to `center`.
+It can be used for cards, hero headers and similar components:
+
+<Demo data={ImageDemos.background} />

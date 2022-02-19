@@ -7,16 +7,10 @@ const getThemeBase = () => {
   return themeBase;
 };
 
-const getMergedThemeBase = (themeBase: any, override: any) => {
-  const result = mergeTheme(themeBase, override);
-  delete result.fn;
-  return result;
-};
-
 describe('@mantine/styles/merge-theme', () => {
   it('shallow merges non-object properties', () => {
     const themeBase = getThemeBase();
-    expect(getMergedThemeBase(themeBase, { primaryColor: 'red', white: '#ccc' })).toEqual({
+    expect(mergeTheme(themeBase, { primaryColor: 'red', white: '#ccc' })).toEqual({
       ...themeBase,
       primaryColor: 'red',
       white: '#ccc',
@@ -26,7 +20,7 @@ describe('@mantine/styles/merge-theme', () => {
   it('shallow merges theme object properties', () => {
     const themeBase = getThemeBase();
     expect(
-      getMergedThemeBase(themeBase, {
+      mergeTheme(themeBase, {
         colors: { stone: ['#ccc', '#ddd', '#eee'], red: ['red'] },
         spacing: { xl: 900 },
       })
@@ -43,7 +37,7 @@ describe('@mantine/styles/merge-theme', () => {
   it('merges headings correctly', () => {
     const themeBase = getThemeBase();
     expect(
-      getMergedThemeBase(themeBase, {
+      mergeTheme(themeBase, {
         headings: { fontFamily: 'sans-serif', sizes: { h3: { fontSize: 500 } } },
       })
     ).toEqual({
@@ -64,7 +58,7 @@ describe('@mantine/styles/merge-theme', () => {
 
   it('merges other property correctly', () => {
     const themeBase = getThemeBase();
-    expect(getMergedThemeBase(themeBase, { other: { prop: 1, test: { nested: true } } })).toEqual({
+    expect(mergeTheme(themeBase, { other: { prop: 1, test: { nested: true } } })).toEqual({
       ...themeBase,
       other: { prop: 1, test: { nested: true } },
     });

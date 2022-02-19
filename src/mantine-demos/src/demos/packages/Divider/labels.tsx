@@ -1,29 +1,36 @@
 import React from 'react';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
-import { Divider } from '@mantine/core';
+import { Search } from 'tabler-icons-react';
+import { Divider, Box } from '@mantine/core';
 
 const code = `
-<Divider my="xs" label="Label on the left" />
-<Divider my="xs" label="Label in the center" labelPosition="center" />
-<Divider my="xs" label="Label on the right" labelPosition="right" />
+import { Divider, Box } from '@mantine/core';
+import { Search } from 'tabler-icons-react';
 
-<Divider
-  my="xs"
-  variant="dashed"
-  labelPosition="center"
-  label={
+function Demo() {
+  return (
     <>
-      <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
-      <span style={{ marginLeft: 5, marginRight: 5 }}>Search results</span>
+      <Divider my="xs" label="Label on the left" />
+      <Divider my="xs" label="Label in the center" labelPosition="center" />
+      <Divider my="xs" label="Label on the right" labelPosition="right" />
+      <Divider
+        my="xs"
+        variant="dashed"
+        labelPosition="center"
+        label={
+          <>
+            <Search size={12} />
+            <Box ml={5}>Search results</Box>
+          </>
+        }
+      />
+      <Divider
+        my="xs"
+        label="Link label"
+        labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
+      />
     </>
-  }
-/>
-
-<Divider
-  my="xs"
-  label="Link label"
-  labelProps={{ component: 'a', href: 'https://mantine.dev', variant: 'link', color: 'blue' }}
-/>
+  );
+}
 `;
 
 function Demo() {
@@ -38,8 +45,8 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <MagnifyingGlassIcon style={{ width: 12, height: 12 }} />
-            <span style={{ marginLeft: 5, marginRight: 5 }}>Search results</span>
+            <Search size={12} />
+            <Box ml={5}>Search results</Box>
           </>
         }
       />

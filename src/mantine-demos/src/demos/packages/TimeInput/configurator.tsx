@@ -1,16 +1,24 @@
 import React from 'react';
 import { TimeInput } from '@mantine/dates';
 
-const codeTemplate = (props: string) => `<TimeInput
-  defaultValue={new Date()}
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimeInput
+      defaultValue={new Date()}
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props) => <TimeInput defaultValue={new Date()} {...props} />,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'label',

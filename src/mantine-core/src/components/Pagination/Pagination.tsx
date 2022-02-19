@@ -1,6 +1,12 @@
 import React, { forwardRef } from 'react';
 import { usePagination } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  ClassNames,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 import useStyles from './Pagination.styles';
@@ -55,30 +61,40 @@ export interface PaginationProps
   withControls?: boolean;
 }
 
+const defaultProps: Partial<PaginationProps> = {
+  itemComponent: DefaultItem,
+  initialPage: 1,
+  siblings: 1,
+  boundaries: 1,
+  size: 'md',
+  radius: 'sm',
+  withEdges: false,
+  withControls: true,
+};
+
 export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
-  (
-    {
-      itemComponent: Item = DefaultItem,
+  (props: PaginationProps, ref) => {
+    const {
+      itemComponent: Item,
       classNames,
       styles,
       page,
-      initialPage = 1,
+      initialPage,
       color,
       total,
-      siblings = 1,
-      boundaries = 1,
-      size = 'md',
-      radius = 'sm',
+      siblings,
+      boundaries,
+      size,
+      radius,
       onChange,
       getItemAriaLabel,
       spacing,
-      withEdges = false,
-      withControls = true,
+      withEdges,
+      withControls,
       sx,
       ...others
-    }: PaginationProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Pagination', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { color, size, radius },
       { classNames, styles, name: 'Pagination' }

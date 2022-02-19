@@ -1,21 +1,27 @@
 import React from 'react';
-import { XCircleFillIcon } from '@primer/octicons-react';
+import { AlertCircle } from 'tabler-icons-react';
 import { Alert } from '@mantine/core';
 
 function Wrapper(props: React.ComponentPropsWithoutRef<typeof Alert>) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
-      <Alert {...props} icon={<XCircleFillIcon size={16} />} />
+      <Alert {...props} icon={<AlertCircle size={16} />} />
     </div>
   );
 }
 
-const codeTemplate = (
-  props: string,
-  children: string
-) => `<Alert icon={<XCircleFillIcon size={16} />}${props}>
-  ${children}
-</Alert>`;
+const codeTemplate = (props: string, children: string) => `
+import { Alert } from '@mantine/core';
+import { AlertCircle } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Alert icon={<AlertCircle size={16} />}${props}>
+      ${children}
+    </Alert>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

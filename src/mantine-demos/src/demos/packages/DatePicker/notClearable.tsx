@@ -2,7 +2,11 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker placeholder="Pick date" label="Event date" clearable={false} />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker clearable={false} placeholder="Pick date" label="Event date" />;
+}
 `;
 
 function Demo() {

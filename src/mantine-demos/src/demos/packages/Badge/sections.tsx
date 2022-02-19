@@ -1,9 +1,10 @@
 import React from 'react';
-import { Cross1Icon } from '@modulz/radix-icons';
+import { X } from 'tabler-icons-react';
 import { Group, Badge, ActionIcon, Avatar } from '@mantine/core';
 
 const code = `
 import { ActionIcon, Avatar, Badge, Group } from '@mantine/core';
+import { X } from 'tabler-icons-react';
 
 function Demo() {
   const avatar = (
@@ -17,13 +18,13 @@ function Demo() {
 
   const removeButton = (
     <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-      <Cross1Icon style={{ width: 10, height: 10 }} />
+      <X size={10} />
     </ActionIcon>
   );
 
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
+      <Badge sx={{ paddingLeft: 0 }} size="lg" radius="xl" color="teal" leftSection={avatar}>
         Badge with Avatar
       </Badge>
 
@@ -50,14 +51,14 @@ const avatar = (
 
 const removeButton = (
   <ActionIcon size="xs" color="blue" radius="xl" variant="transparent">
-    <Cross1Icon style={{ width: 10, height: 10 }} />
+    <X size={10} />
   </ActionIcon>
 );
 
 function Demo() {
   return (
     <Group>
-      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" leftSection={avatar}>
+      <Badge sx={{ paddingLeft: 0 }} size="lg" color="teal" radius="xl" leftSection={avatar}>
         Badge with Avatar
       </Badge>
       <Badge variant="outline" sx={{ paddingRight: 3 }} rightSection={removeButton}>

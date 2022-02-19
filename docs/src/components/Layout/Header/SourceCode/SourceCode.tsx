@@ -12,7 +12,7 @@ export function SourceCode({ className, ...others }: React.ComponentProps<'a'>) 
       href="https://github.com/mantinedev/mantine"
       {...others}
     >
-      <Text size="sm">Source code</Text>
+      <Text size="sm">GitHub</Text>
       <Center className={classes.icon}>
         <MarkGithubIcon />
       </Center>

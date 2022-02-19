@@ -16,7 +16,7 @@ const iconSizes = {
   xl: 20,
 };
 
-interface CheckboxStyles {
+export interface CheckboxStylesParams {
   size: MantineSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -24,14 +24,12 @@ interface CheckboxStyles {
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStyles, getRef) => {
+  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
     const _size = theme.fn.size({ size, sizes });
-
-    const icon = getRef('icon');
 
     return {
       icon: {
-        ref: icon,
+        ref: getRef('icon'),
         color: theme.white,
         transform: 'translateY(5px) scale(0.5)',
         opacity: 0,
@@ -82,7 +80,7 @@ export default createStyles(
         }`,
         width: _size,
         height: _size,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         padding: 0,
         outline: 0,
         display: 'block',
@@ -93,7 +91,7 @@ export default createStyles(
           backgroundColor: theme.fn.themeColor(color, 6),
           borderColor: theme.fn.themeColor(color, 6),
 
-          [`& + .${icon}`]: {
+          [`& + .${getRef('icon')}`]: {
             opacity: 1,
             transform: 'translateY(0) scale(1)',
           },
@@ -105,7 +103,7 @@ export default createStyles(
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[3],
           cursor: 'not-allowed',
 
-          [`& + .${icon}`]: {
+          [`& + .${getRef('icon')}`]: {
             color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
           },
         },

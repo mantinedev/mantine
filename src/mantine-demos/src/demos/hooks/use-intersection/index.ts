@@ -1,0 +1,1 @@
+export { useIntersectionDemo } from './usage';

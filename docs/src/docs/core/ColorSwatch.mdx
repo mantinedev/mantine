@@ -17,14 +17,6 @@ import { ColorSwatchDemos } from '@mantine/demos';
 
 ## Usage
 
-Use ColorSwatch to display color:
-
-```tsx
-<ColorSwatch color="#c3c3c3" />
-```
-
-Example with default Mantine theme colors:
-
 <Demo data={ColorSwatchDemos.usage} />
 
 ## Alpha channel
@@ -49,17 +41,3 @@ radius has predefined xs, sm, md, lg, xl values from [theme.radius](/theming/ext
 Use any component or element with ColorSwatch by setting `component` prop:
 
 <Demo data={ColorSwatchDemos.component} />
-
-## Get root element ref
-
-You can get root element ref with `ref` prop:
-
-```tsx
-import { useRef } from 'react';
-import { ColorSwatch } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef();
-  return <ColorSwatch ref={ref} />;
-}
-```

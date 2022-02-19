@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Popover, Text, Badge, Group, Image } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { Popover, Badge, Image, Text } from '@mantine/core';
 
 function Demo() {
@@ -14,8 +15,8 @@ function Demo() {
       position="bottom"
       placement="center"
       withArrow
-      noFocusTrap
-      noEscape
+      trapFocus={false}
+      closeOnEscape={false}
       transition="pop-top-left"
       width={260}
       styles={{ body: { pointerEvents: 'none' } }}
@@ -51,8 +52,8 @@ function Demo() {
           position="bottom"
           placement="center"
           withArrow
-          noFocusTrap
-          noEscape
+          trapFocus={false}
+          closeOnEscape={false}
           width={260}
           styles={{ body: { pointerEvents: 'none' } }}
           transition="pop-top-left"

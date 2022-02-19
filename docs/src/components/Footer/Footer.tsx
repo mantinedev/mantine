@@ -45,7 +45,7 @@ export function Footer({ withNavbar }: FooterProps) {
                   href="https://github.com/mantinedev/mantine/discussions/new"
                   variant="default"
                   rightIcon={<ArrowRightIcon size={14} />}
-                  style={{ paddingRight: 12 }}
+                  sx={{ paddingRight: 12 }}
                 >
                   Leave feedback
                 </Button>

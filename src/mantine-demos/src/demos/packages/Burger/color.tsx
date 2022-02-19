@@ -3,9 +3,17 @@ import { Group } from '@mantine/core';
 import { DemoBase } from './_base';
 
 const code = `
-<Burger />
-<Burger color="#fe6734" />
-<Burger color="#45f50d" />
+import { Burger } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Burger />
+      <Burger color="#fe6734" />
+      <Burger color="#45f50d" />
+    </>
+  );
+}
 `;
 
 export function Demo() {

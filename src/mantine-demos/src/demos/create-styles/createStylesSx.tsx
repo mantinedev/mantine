@@ -5,8 +5,9 @@ const code = `
 <Button
   sx={(theme) => ({
     borderColor: theme.colors.blue[9],
+
     '&:hover': {
-      backgroundColor: theme.colors.blue[7],
+      backgroundColor: theme.colors.blue[9],
     },
   })}
 >
@@ -22,7 +23,7 @@ function Demo() {
           borderColor: theme.colors.blue[9],
 
           '&:hover': {
-            backgroundColor: theme.colors.blue[7],
+            backgroundColor: theme.colors.blue[9],
           },
         })}
       >

@@ -19,6 +19,7 @@ export * as AffixDemos from './demos/packages/Affix';
 export * as AlertDemos from './demos/packages/Alert';
 export * as AnchorDemos from './demos/packages/Anchor';
 export * as AppShellDemos from './demos/packages/AppShell';
+export * as AspectRatioDemos from './demos/packages/AspectRatio';
 export * as AutocompleteDemos from './demos/packages/Autocomplete';
 export * as AvatarDemos from './demos/packages/Avatar';
 export * as BadgeDemos from './demos/packages/Badge';
@@ -108,3 +109,6 @@ export * as PrismDemos from './demos/packages/Prism';
 export * as RichTextEditorDemos from './demos/packages/RichTextEditor';
 export * as ModalsDemos from './demos/modals';
 export * as HooksDemos from './demos/hooks';
+
+// @mantine/labs
+export * as PinInputDemos from './demos/packages/PinInput';

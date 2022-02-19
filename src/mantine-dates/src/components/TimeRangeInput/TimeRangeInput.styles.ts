@@ -1,10 +1,10 @@
 import { createStyles, INPUT_SIZES, MantineSize } from '@mantine/core';
 
-interface TimeRangeInputStyles {
+export interface TimeRangeInputStylesParams {
   size: MantineSize;
 }
 
-export default createStyles((theme, { size }: TimeRangeInputStyles) => ({
+export default createStyles((theme, { size }: TimeRangeInputStylesParams) => ({
   timeField: {},
 
   disabled: {

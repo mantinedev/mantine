@@ -2,14 +2,20 @@ import React from 'react';
 import { JsonInput } from '@mantine/core';
 
 const code = `
-<JsonInput
-  label="Your package.json"
-  placeholder="Textarea will autosize to fit the content"
-  validationError="Invalid json"
-  formatOnBlur
-  autosize
-  minRows={4}
-/>
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <JsonInput
+      label="Your package.json"
+      placeholder="Textarea will autosize to fit the content"
+      validationError="Invalid json"
+      formatOnBlur
+      autosize
+      minRows={4}
+    />
+  );
+}
 `;
 
 function Demo() {

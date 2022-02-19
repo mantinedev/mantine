@@ -1,31 +1,40 @@
 import React from 'react';
-import { TwitterLogoIcon } from '@modulz/radix-icons';
+import { BrandTwitter } from 'tabler-icons-react';
 import { Input, Badge } from '@mantine/core';
 
 const code = `
-<Input
-  icon={<TwitterLogoIcon />}
-  placeholder="Your twitter"
-  rightSection={rightSection}
-  rightSectionWidth={70}
-  styles={{ rightSection: { pointerEvents: 'none' } }}
-/>
+import { Input, Badge } from '@mantine/core';
+import { BrandTwitter } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Input
+      icon={<BrandTwitter size={16} />}
+      placeholder="Your twitter"
+      rightSectionWidth={70}
+      styles={{ rightSection: { pointerEvents: 'none' } }}
+      rightSection={
+        <Badge color="blue" variant="filled">
+          new
+        </Badge>
+      }
+    />
+  );
+}
 `;
 
 function Demo() {
-  const rightSection = (
-    <Badge color="blue" variant="filled">
-      new
-    </Badge>
-  );
-
   return (
     <Input
-      icon={<TwitterLogoIcon />}
+      icon={<BrandTwitter size={16} />}
       placeholder="Your twitter"
-      rightSection={rightSection}
       rightSectionWidth={70}
       styles={{ rightSection: { pointerEvents: 'none' } }}
+      rightSection={
+        <Badge color="blue" variant="filled">
+          new
+        </Badge>
+      }
     />
   );
 }

@@ -50,7 +50,7 @@ You can add any amount of predefined color swatches:
 
 <Demo data={ColorInputDemos.swatches} />
 
-By default there will be 10 swatches per row, you can change this with `swatchesPerRow` prop,
+By default, there will be 10 swatches per row, you can change this with `swatchesPerRow` prop,
 like in [ColorPicker](/core/color-picker/) component:
 
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
@@ -61,21 +61,16 @@ If you need to restrict color picking to certain colors – disable color picker
 
 ## Remove or replace preview
 
-By default color preview will be rendered on the left side of the input,
+By default, color preview will be rendered on the left side of the input,
 you can remove it (`withPreview={false}` prop) or replace with any React node (`icon` prop):
 
 <Demo data={ColorInputDemos.icon} />
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={ColorInputDemos.inputConfigurator} />
 
 ## Right section
-
-Like most other inputs ColorInput supports right section,
-for example, you can add random color button there:
 
 <Demo data={ColorInputDemos.rightSection} />
 
@@ -89,14 +84,12 @@ for example, you can add random color button there:
 
 ## Get input ref
 
-You can get input ref with `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>();
   return <ColorInput ref={ref} />;
 }
 ```

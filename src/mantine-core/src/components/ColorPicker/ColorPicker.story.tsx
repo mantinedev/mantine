@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+import { DEFAULT_THEME, MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { ColorPicker } from './ColorPicker';
 import { HueSlider, HueSliderProps } from './HueSlider/HueSlider';
 import { AlphaSlider, AlphaSliderProps } from './AlphaSlider/AlphaSlider';
@@ -39,4 +39,18 @@ function ControlledAlphaSlider(props: Partial<AlphaSliderProps>) {
 storiesOf('@mantine/core/ColorPicker/stories', module)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Controlled HueSlider', () => <ControlledHueSlider />)
-  .add('Controlled AlphaSlider', () => <ControlledAlphaSlider />);
+  .add('Controlled AlphaSlider', () => <ControlledAlphaSlider />)
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider
+      defaultProps={{
+        ColorPicker: {
+          format: 'rgba',
+          swatches: Object.keys(DEFAULT_THEME.colors).map(
+            (color) => DEFAULT_THEME.colors[color][6]
+          ),
+        },
+      }}
+    >
+      <ColorPicker />
+    </MantineProvider>
+  ));

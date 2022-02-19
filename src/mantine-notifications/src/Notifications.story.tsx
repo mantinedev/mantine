@@ -114,11 +114,13 @@ function NotificationsDemo() {
 
 storiesOf('@mantine/notifications', module)
   .add('bottom-right (default)', () => (
-    <MantineProvider>
-      <NotificationsProvider>
-        <NotificationsDemo />
-      </NotificationsProvider>
-    </MantineProvider>
+    <React.StrictMode>
+      <MantineProvider>
+        <NotificationsProvider>
+          <NotificationsDemo />
+        </NotificationsProvider>
+      </MantineProvider>
+    </React.StrictMode>
   ))
   .add('top-right', () => (
     <MantineProvider>

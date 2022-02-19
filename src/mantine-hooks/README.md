@@ -7,7 +7,7 @@ You can use these hooks in your applications with or without other @mantine/ pac
 
 ## Documentation
 
-[See full documentation on Mantine website](https://mantine.dev/hooks/getting-started/)
+[See full documentation on Mantine website](https://mantine.dev)
 
 ## Installation
 

@@ -26,9 +26,15 @@ const html = `
 `;
 
 const code = `
-<TypographyStylesProvider>
-  <div dangerouslySetInnerHTML={{ __html: html }} />
-</TypographyStylesProvider>
+import { TypographyStylesProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TypographyStylesProvider>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </TypographyStylesProvider>
+  );
+}
 `;
 
 function Demo() {

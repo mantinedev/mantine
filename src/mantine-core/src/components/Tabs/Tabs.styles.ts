@@ -1,11 +1,11 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface TabsStyles {
+export interface TabsStylesParams {
   tabPadding: MantineNumberSize;
   orientation: 'horizontal' | 'vertical';
 }
 
-export default createStyles((theme, { tabPadding, orientation }: TabsStyles, getRef) => {
+export default createStyles((theme, { tabPadding, orientation }: TabsStylesParams, getRef) => {
   const tabsList = { ref: getRef('tabsList') } as const;
 
   return {

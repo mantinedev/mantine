@@ -2,22 +2,37 @@ import React from 'react';
 import { Group, Badge } from '@mantine/core';
 
 const code = `
-const CustomComponent = ({ pads, children, ...others }) => (
+import { Badge } from '@mantine/core';
+
+const CustomComponent = ({ pads, children, ...others }: { pads: string; children: React.ReactNode; }) => (
   <div {...others}>
     {pads} {children} {pads}
   </div>
 );
 
-<Badge component="a" href="https://mantine.dev" variant="outline">
-  Link badge
-</Badge>
+function Demo() {
+  return (
+    <>
+      <Badge component="a" href="https://mantine.dev" variant="outline">
+        Link badge
+      </Badge>
 
-<Badge component={CustomComponent} pads="$$$" variant="filled">
-  Get lots of money
-</Badge>
+      <Badge component={CustomComponent} pads="$$$" variant="filled">
+        Get lots of money
+      </Badge>
+    </>
+  );
+}
 `;
 
-const CustomComponent = ({ pads, children, ...others }: any) => (
+const CustomComponent = ({
+  pads,
+  children,
+  ...others
+}: {
+  pads: string;
+  children: React.ReactNode;
+}) => (
   <div {...others}>
     {pads} {children} {pads}
   </div>

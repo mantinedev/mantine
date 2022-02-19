@@ -332,7 +332,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
             <Modal
               opened={dropdownOpened}
               onClose={closeDropdown}
-              hideCloseButton
+              withCloseButton={false}
               size={amountOfMonths * 400}
             >
               {children}

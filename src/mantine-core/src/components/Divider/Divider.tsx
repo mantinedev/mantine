@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { useMantineTheme, DefaultProps, MantineNumberSize, MantineColor } from '@mantine/styles';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import useStyles from './Divider.styles';
 import { Text } from '../Text';
 import { Box } from '../Box';
@@ -31,61 +37,65 @@ export interface DividerProps
   variant?: 'solid' | 'dashed' | 'dotted';
 }
 
-export const Divider = forwardRef<HTMLDivElement, DividerProps>(
-  (
-    {
-      className,
-      color,
-      orientation = 'horizontal',
-      size = 'xs',
-      label,
-      labelPosition = 'left',
-      labelProps,
-      variant = 'solid',
-      styles,
-      classNames,
-      ...others
-    }: DividerProps,
-    ref
-  ) => {
-    const theme = useMantineTheme();
-    const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-    const { classes, cx } = useStyles(
-      { color: _color, size, variant },
-      { classNames, styles, name: 'Divider' }
-    );
+const defaultProps: Partial<DividerProps> = {
+  orientation: 'horizontal',
+  size: 'xs',
+  labelPosition: 'left',
+  variant: 'solid',
+};
 
-    const vertical = orientation === 'vertical';
-    const horizontal = !vertical;
-    const withLabel = !!label && horizontal;
+export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerProps, ref) => {
+  const {
+    className,
+    color,
+    orientation,
+    size,
+    label,
+    labelPosition,
+    labelProps,
+    variant,
+    styles,
+    classNames,
+    ...others
+  } = useMantineDefaultProps('Divider', defaultProps, props);
 
-    return (
-      <Box
-        ref={ref}
-        className={cx(
-          {
-            [classes.vertical]: vertical,
-            [classes.horizontal]: horizontal,
-            [classes.withLabel]: withLabel,
-          },
-          className
-        )}
-        {...others}
-      >
-        {!!label && horizontal && (
-          <Text
-            {...labelProps}
-            color={_color}
-            size={labelProps?.size || 'xs'}
-            sx={{ marginTop: 2 }}
-            className={cx(classes.label, classes[labelPosition])}
-          >
-            {label}
-          </Text>
-        )}
-      </Box>
-    );
-  }
-);
+  const theme = useMantineTheme();
+  const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
+  const { classes, cx } = useStyles(
+    { color: _color, size, variant },
+    { classNames, styles, name: 'Divider' }
+  );
+
+  const vertical = orientation === 'vertical';
+  const horizontal = !vertical;
+  const withLabel = !!label && horizontal;
+
+  return (
+    <Box
+      ref={ref}
+      className={cx(
+        {
+          [classes.vertical]: vertical,
+          [classes.horizontal]: horizontal,
+          [classes.withLabel]: withLabel,
+        },
+        className
+      )}
+      {...others}
+    >
+      {!!label && horizontal && (
+        <Text
+          {...labelProps}
+          color={_color}
+          size={labelProps?.size || 'xs'}
+          sx={{ marginTop: 2 }}
+          className={cx(classes.label, classes[labelPosition])}
+        >
+          {label}
+        </Text>
+      )}
+    </Box>
+  );
+});
 
 Divider.displayName = '@mantine/core/Divider';

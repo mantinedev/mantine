@@ -6,6 +6,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
@@ -41,24 +42,27 @@ type AvatarComponent = (<C = 'div'>(props: AvatarProps<C>) => React.ReactElement
   displayName?: string;
 };
 
+const defaultProps: Partial<AvatarProps<any>> = {
+  size: 'md',
+  color: 'gray',
+};
+
 export const Avatar: AvatarComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
+  <C extends React.ElementType = 'div'>(props: AvatarProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       component,
       className,
-      size = 'md',
+      size,
       src,
       alt,
-      radius = 'sm',
+      radius,
       children,
-      color = 'gray',
+      color,
       classNames,
       styles,
       imageProps,
       ...others
-    }: AvatarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+    } = useMantineDefaultProps('Avatar', defaultProps, props);
     const { classes, cx } = useStyles(
       { color, radius, size },
       { classNames, styles, name: 'Avatar' }

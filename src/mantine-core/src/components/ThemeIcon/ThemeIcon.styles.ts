@@ -5,9 +5,9 @@ import {
   MantineColor,
 } from '@mantine/styles';
 
-export type ThemeIconVariant = 'filled' | 'light' | 'gradient';
+export type ThemeIconVariant = 'filled' | 'light' | 'gradient' | 'outline';
 
-interface ThemeIconStyles {
+export interface ThemeIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -28,7 +28,7 @@ export const sizes = {
 export default createStyles(
   (
     theme,
-    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStyles
+    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStylesParams
   ) => {
     const colors = getSharedColorScheme({
       theme,
@@ -50,10 +50,11 @@ export default createStyles(
         height: iconSize,
         minWidth: iconSize,
         minHeight: iconSize,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         backgroundColor: colors.background,
         color: colors.color,
         backgroundImage: variant === 'gradient' ? colors.background : null,
+        border: `1px solid ${colors.border}`,
       },
     };
   }

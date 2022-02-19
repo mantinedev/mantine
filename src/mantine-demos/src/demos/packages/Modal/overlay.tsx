@@ -3,17 +3,20 @@ import { Modal, Group, Button, useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-const theme = useMantineTheme();
+import { Modal, useMantineTheme } from '@mantine/core';
 
-<Modal
-  opened={opened}
-  onClose={() => setOpened(false)}
-  title="Introduce yourself!"
-  overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-  overlayOpacity={0.95}
->
-  <AuthenticationForm />
-</Modal>
+function Demo() {
+  const theme = useMantineTheme();
+
+  return (
+    <Modal
+      overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
+      overlayOpacity={0.95}
+    >
+      {/* Modal content */}
+    </Modal>
+  );
+}
 `;
 
 function Demo() {

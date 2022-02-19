@@ -36,7 +36,7 @@ export default createStyles((theme, { size }: SaturationStyles, getRef) => {
       },
 
       [`&:focus:not(:focus-visible) .${saturationThumb.ref}`]: {
-        boxShadow: 'none',
+        boxShadow: theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
       },
     },
 

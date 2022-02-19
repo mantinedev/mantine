@@ -3,6 +3,7 @@ import { useMantineTheme, Group, Text, Code } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 const code = `
+import { useState } from 'react';
 import { useMantineTheme, Text, Code } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 

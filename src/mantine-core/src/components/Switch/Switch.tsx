@@ -7,6 +7,7 @@ import {
   MantineColor,
   ClassNames,
   extractMargins,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Switch.styles';
@@ -41,52 +42,57 @@ export interface SwitchProps
   wrapperProps?: { [key: string]: any };
 }
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
-  (
-    {
-      className,
-      color,
-      label,
-      offLabel = '',
-      onLabel = '',
-      id,
-      style,
-      size = 'sm',
-      radius = 'xl',
-      wrapperProps,
-      children,
-      classNames,
-      styles,
-      sx,
-      ...others
-    }: SwitchProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { size, color, radius, offLabel, onLabel },
-      { classNames, styles, name: 'Switch' }
-    );
-    const { margins, rest } = extractMargins(others);
-    const uuid = useUuid(id);
+const defaultProps: Partial<SwitchProps> = {
+  offLabel: '',
+  onLabel: '',
+  size: 'sm',
+  radius: 'xl',
+};
 
-    return (
-      <Box
-        className={cx(classes.root, className)}
-        style={style}
-        sx={sx}
-        {...margins}
-        {...wrapperProps}
-      >
-        <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchProps, ref) => {
+  const {
+    className,
+    color,
+    label,
+    offLabel,
+    onLabel,
+    id,
+    style,
+    size,
+    radius,
+    wrapperProps,
+    children,
+    classNames,
+    styles,
+    sx,
+    ...others
+  } = useMantineDefaultProps('Switch', defaultProps, props);
 
-        {label && (
-          <label className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
-        )}
-      </Box>
-    );
-  }
-);
+  const { classes, cx } = useStyles(
+    { size, color, radius, offLabel, onLabel },
+    { classNames, styles, name: 'Switch' }
+  );
+
+  const { margins, rest } = extractMargins(others);
+  const uuid = useUuid(id);
+
+  return (
+    <Box
+      className={cx(classes.root, className)}
+      style={style}
+      sx={sx}
+      {...margins}
+      {...wrapperProps}
+    >
+      <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
+
+      {label && (
+        <label className={classes.label} htmlFor={uuid}>
+          {label}
+        </label>
+      )}
+    </Box>
+  );
+});
 
 Switch.displayName = '@mantine/core/Switch';

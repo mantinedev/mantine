@@ -9,9 +9,17 @@ function Wrapper(props: ButtonProps<'button'>) {
   );
 }
 
-const codeTemplate = (props: string, children: string) => `<Button${props}>
-  ${children}
-</Button>`;
+const codeTemplate = (props: string, children: string) => `
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button${props}>
+      ${children}
+    </Button>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

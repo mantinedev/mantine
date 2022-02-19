@@ -3,12 +3,19 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker
-  locale="ru"
-  placeholder="Выберите дату"
-  label="Дата события"
-  defaultValue={new Date()}
-/>
+import 'dayjs/locale/ru';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker
+      locale="ru"
+      placeholder="Выберите дату"
+      label="Дата события"
+      defaultValue={new Date()}
+    />
+  );
+}
 `;
 
 function Demo() {

@@ -27,7 +27,14 @@ import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <NativeSelect value={value} onChange={(event) => setValue(event.currentTarget.value)} />;
+
+  return (
+    <NativeSelect
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+      data={[]}
+    />
+  );
 }
 ```
 
@@ -57,8 +64,8 @@ import { useRef } from 'react';
 import { NativeSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
-  return <NativeSelect ref={ref} />;
+  const ref = useRef<HTMLSelectElement>();
+  return <NativeSelect ref={ref} data={[]} />;
 }
 ```
 

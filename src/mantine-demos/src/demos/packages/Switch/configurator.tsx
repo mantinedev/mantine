@@ -1,15 +1,23 @@
 import React from 'react';
 import { Switch, SwitchProps } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Switch
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Switch
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props: SwitchProps) => <Switch {...props} defaultChecked />,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'label',

@@ -1,11 +1,11 @@
 import { createStyles, MantineNumberSize, getSharedColorScheme } from '@mantine/core';
 
-interface DropzoneStyles {
+export interface DropzoneStylesParams {
   padding: MantineNumberSize;
   radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { padding, radius }: DropzoneStyles) => {
+export default createStyles((theme, { padding, radius }: DropzoneStylesParams) => {
   const rejected = getSharedColorScheme({ color: 'red', theme, variant: 'light' });
   const accepted = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'light' });
 
@@ -19,7 +19,7 @@ export default createStyles((theme, { padding, radius }: DropzoneStyles) => {
         theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
       }`,
       padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
       cursor: 'pointer',
       userSelect: 'none',
       transition: 'background-color 150ms ease',

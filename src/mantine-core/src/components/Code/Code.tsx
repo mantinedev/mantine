@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { useMantineTheme, DefaultProps, MantineColor } from '@mantine/styles';
+import {
+  useMantineTheme,
+  DefaultProps,
+  MantineColor,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Code.styles';
 
@@ -14,35 +19,32 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
   block?: boolean;
 }
 
-export const Code = forwardRef<HTMLElement, CodeProps>(
-  (
-    { className, children, block = false, color, styles, classNames, ...others }: CodeProps,
-    ref
-  ) => {
-    const theme = useMantineTheme();
-    const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-    const { classes, cx } = useStyles({ color: themeColor }, { name: 'Code', styles, classNames });
+export const Code = forwardRef<HTMLElement, CodeProps>((props: CodeProps, ref) => {
+  const { className, children, block, color, styles, classNames, ...others } =
+    useMantineDefaultProps('Code', {}, props);
+  const theme = useMantineTheme();
+  const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
+  const { classes, cx } = useStyles({ color: themeColor }, { name: 'Code', styles, classNames });
 
-    if (block) {
-      return (
-        <Box
-          component="pre"
-          dir="ltr"
-          className={cx(classes.root, classes.block, className)}
-          ref={ref as any}
-          {...others}
-        >
-          {children}
-        </Box>
-      );
-    }
-
+  if (block) {
     return (
-      <Box component="code" className={cx(classes.root, className)} ref={ref} dir="ltr" {...others}>
+      <Box
+        component="pre"
+        dir="ltr"
+        className={cx(classes.root, classes.block, className)}
+        ref={ref as any}
+        {...others}
+      >
         {children}
       </Box>
     );
   }
-);
+
+  return (
+    <Box component="code" className={cx(classes.root, className)} ref={ref} dir="ltr" {...others}>
+      {children}
+    </Box>
+  );
+});
 
 Code.displayName = '@mantine/core/Code';

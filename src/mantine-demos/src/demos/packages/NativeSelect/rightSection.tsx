@@ -1,9 +1,22 @@
 import React from 'react';
-import { ChevronDownIcon } from '@modulz/radix-icons';
+import { ChevronDown } from 'tabler-icons-react';
 import { NativeSelect } from '@mantine/core';
 
 const code = `
-<NativeSelect rightSection={<ChevronDownIcon />} />
+import { NativeSelect } from '@mantine/core';
+import { ChevronDown } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <NativeSelect
+      label="Your favorite library/framework"
+      placeholder="Your favorite library/framework"
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+      rightSection={<ChevronDown size={14} />}
+      rightSectionWidth={40}
+    />
+  );
+}
 `;
 
 function Demo() {
@@ -13,7 +26,8 @@ function Demo() {
         label="Your favorite library/framework"
         placeholder="Your favorite library/framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        rightSection={<ChevronDownIcon />}
+        rightSection={<ChevronDown size={14} />}
+        rightSectionWidth={30}
       />
     </div>
   );

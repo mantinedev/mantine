@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   MantineSize,
   ClassNames,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { findChildByType, filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -63,9 +64,17 @@ type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
   Completed: typeof StepCompleted;
 };
 
+const defaultProps: Partial<StepperProps> = {
+  contentPadding: 'md',
+  size: 'md',
+  radius: 'xl',
+  orientation: 'horizontal',
+  iconPosition: 'left',
+};
+
 export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
-  (
-    {
+  (props: StepperProps, ref) => {
+    const {
       className,
       children,
       onStepClick,
@@ -74,22 +83,22 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       progressIcon,
       color,
       iconSize,
-      contentPadding = 'md',
-      size = 'md',
-      radius = 'xl',
-      orientation = 'horizontal',
+      contentPadding,
+      size,
+      radius,
+      orientation,
       breakpoint,
-      iconPosition = 'left',
+      iconPosition,
       classNames,
       styles,
       ...others
-    }: StepperProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Stepper', defaultProps, props);
+
     const { classes, cx } = useStyles(
       { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
       { classNames, styles, name: 'Stepper' }
     );
+
     const filteredChildren = filterChildrenByType(children, Step);
     const completedStep = findChildByType(children, StepCompleted);
 

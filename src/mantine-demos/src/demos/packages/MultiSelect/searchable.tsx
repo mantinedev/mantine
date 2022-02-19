@@ -3,13 +3,19 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
-<MultiSelect
-  data={data}
-  label="Your favorite frameworks/libraries"
-  placeholder="Pick all that you like"
-  searchable
-  nothingFound="Nothing found"
-/>
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
+      label="Your favorite frameworks/libraries"
+      placeholder="Pick all that you like"
+      searchable
+      nothingFound="Nothing found"
+    />
+  );
+}
 `;
 
 function Demo() {

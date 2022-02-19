@@ -2,16 +2,24 @@ import React from 'react';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
-<PasswordInput
-  label="Toggle button is not focusable"
-  placeholder="Toggle button is not focusable"
-/>
+import { PasswordInput } from '@mantine/core';
 
-<PasswordInput
-  label="Toggle button is focusable"
-  placeholder="Toggle button is focusable"
-  toggleTabIndex={0}
-/>
+function Demo() {
+  return (
+    <>
+      <PasswordInput
+        label="Toggle button is not focusable"
+        placeholder="Toggle button is not focusable"
+      />
+
+      <PasswordInput
+        label="Toggle button is focusable"
+        placeholder="Toggle button is focusable"
+        toggleTabIndex={0}
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {

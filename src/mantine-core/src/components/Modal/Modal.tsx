@@ -8,6 +8,7 @@ import {
   ClassNames,
   MantineMargin,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { CloseButton } from '../ActionIcon';
 import { Text } from '../Text';
@@ -29,9 +30,6 @@ export interface ModalProps
   /** Called when close button clicked and when escape key is pressed */
   onClose(): void;
 
-  /** Called when cancel button clicked and when escape key is pressed, or when modal closes and no separate close handler is provided */
-  onCancel(): void;
-
   /** Modal title, displayed in header before close button */
   title?: React.ReactNode;
 
@@ -41,8 +39,8 @@ export interface ModalProps
   /** Control vertical overflow behavior */
   overflow?: 'outside' | 'inside';
 
-  /** Hides close button, modal still can be closed with escape key and by clicking outside */
-  hideCloseButton?: boolean;
+  /** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
+  withCloseButton?: boolean;
 
   /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
   overlayOpacity?: number;
@@ -84,7 +82,7 @@ export interface ModalProps
   closeOnEscape?: boolean;
 
   /** Disables focus trap */
-  noFocusTrap?: boolean;
+  trapFocus?: boolean;
 
   /** Controls if modal should be centered */
   centered?: boolean;
@@ -93,34 +91,47 @@ export interface ModalProps
   target?: HTMLElement | string;
 }
 
-export function MantineModal({
-  className,
-  opened,
-  title,
-  onClose,
-  onCancel,
-  children,
-  hideCloseButton = false,
-  overlayOpacity,
-  size = 'md',
-  transitionDuration = 300,
-  closeButtonLabel,
-  overlayColor,
-  overflow = 'outside',
-  transition = 'pop',
-  padding = 'lg',
-  shadow = 'lg',
-  radius = 'sm',
-  id,
-  classNames,
-  styles,
-  closeOnClickOutside = true,
-  noFocusTrap = false,
-  closeOnEscape = true,
-  centered = false,
-  target,
-  ...others
-}: ModalProps) {
+const defaultProps: Partial<ModalProps> = {
+  size: 'md',
+  transitionDuration: 250,
+  overflow: 'outside',
+  transition: 'pop',
+  padding: 'lg',
+  shadow: 'lg',
+  closeOnClickOutside: true,
+  closeOnEscape: true,
+  trapFocus: true,
+  withCloseButton: true,
+};
+
+export function MantineModal(props: ModalProps) {
+  const {
+    className,
+    opened,
+    title,
+    onClose,
+    children,
+    withCloseButton,
+    overlayOpacity,
+    size,
+    transitionDuration,
+    closeButtonLabel,
+    overlayColor,
+    overflow,
+    transition,
+    padding,
+    shadow,
+    radius,
+    id,
+    classNames,
+    styles,
+    closeOnClickOutside,
+    trapFocus,
+    closeOnEscape,
+    centered,
+    target,
+    ...others
+  } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
@@ -128,7 +139,7 @@ export function MantineModal({
     { size, overflow, centered },
     { classNames, styles, name: 'Modal' }
   );
-  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
+  const focusTrapRef = useFocusTrap(trapFocus && opened);
   const _overlayOpacity =
     typeof overlayOpacity === 'number'
       ? overlayOpacity
@@ -138,25 +149,20 @@ export function MantineModal({
 
   const [, lockScroll] = useScrollLock();
 
-  const onCancelClose = () => {
-    onCancel?.();
-    onClose();
-  };
-
   const closeOnEscapePress = (event: KeyboardEvent) => {
-    if (noFocusTrap && event.code === 'Escape' && closeOnEscape) {
-      onCancelClose();
+    if (!trapFocus && event.code === 'Escape' && closeOnEscape) {
+      onClose();
     }
   };
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    // onKeyDownCapture event will not fire when focus trap is not active
-    if (noFocusTrap) {
+    if (!trapFocus) {
       window.addEventListener('keydown', closeOnEscapePress);
       return () => window.removeEventListener('keydown', closeOnEscapePress);
     }
-  }, [noFocusTrap]);
+
+    return undefined;
+  }, [trapFocus]);
 
   useFocusReturn({ opened, transitionDuration });
 
@@ -178,14 +184,11 @@ export function MantineModal({
         <Box className={cx(classes.root, className)} {...others}>
           <div
             className={classes.inner}
-            onMouseDown={() => closeOnClickOutside && onCancelClose()}
+            onMouseDown={() => closeOnClickOutside && onClose()}
             onKeyDownCapture={(event) => {
               const shouldTrigger =
                 (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-              shouldTrigger &&
-                event.nativeEvent.code === 'Escape' &&
-                closeOnEscape &&
-                onCancelClose();
+              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
             }}
             ref={focusTrapRef}
           >
@@ -206,16 +209,16 @@ export function MantineModal({
                 zIndex: 3,
               }}
             >
-              {(title || !hideCloseButton) && (
+              {(title || withCloseButton) && (
                 <div className={classes.header}>
                   <Text id={titleId} className={classes.title}>
                     {title}
                   </Text>
 
-                  {!hideCloseButton && (
+                  {withCloseButton && (
                     <CloseButton
                       iconSize={16}
-                      onClick={onCancelClose}
+                      onClick={onClose}
                       aria-label={closeButtonLabel}
                       className={classes.close}
                     />

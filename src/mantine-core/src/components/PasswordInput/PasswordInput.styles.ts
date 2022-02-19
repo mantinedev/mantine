@@ -1,12 +1,12 @@
 import { createStyles, MantineSize } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
-interface PasswordInputStyles {
+export interface PasswordInputStylesParams {
   size: MantineSize;
   rightSectionWidth: number;
 }
 
-export default createStyles((theme, { size, rightSectionWidth }: PasswordInputStyles) => ({
+export default createStyles((theme, { size, rightSectionWidth }: PasswordInputStylesParams) => ({
   visibilityToggle: {},
 
   input: {

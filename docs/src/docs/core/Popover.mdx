@@ -17,9 +17,6 @@ import { PopoverDemos, PasswordInputDemos } from '@mantine/demos';
 
 ## Usage
 
-Popover is more complex and customizable alternative to [Tooltip](/core/tooltip/)
-component.
-
 <Demo data={PopoverDemos.usage} />
 
 ## Examples
@@ -33,7 +30,7 @@ to determine if any element inside has focus:
 
 ### With form
 
-By default focus trap inside popover is active,
+By default, focus trap inside popover is active,
 you can place forms inside and focus will be kept inside popover:
 
 <Demo data={PopoverDemos.form} demoProps={{ zIndex: 4 }} />
@@ -42,7 +39,7 @@ you can place forms inside and focus will be kept inside popover:
 
 To show popover on hover add `onMouseEnter` and `onMouseLeave` handlers to
 element that should trigger popover. Note that in this case you have to disable
-focus trap with `noFocusTrap` prop:
+focus trap with `trapFocus={false}`:
 
 <Demo data={PopoverDemos.hover} />
 
@@ -64,7 +61,7 @@ All positions and placement:
 
 ## Control behavior
 
-By default popover:
+By default, popover:
 
 - has focus trap
 - closes when escape key is pressed
@@ -75,9 +72,9 @@ focus or hover:
 
 ```tsx
 <Popover
-  noFocusTrap // -> disable focus trap
-  noEscape // -> disable escape key press handling
-  noClickOutside // -> disable outside click handling
+  trapFocus={false} // -> disable focus trap
+  closeOnEscape={false} // -> disable escape key press handling
+  closeOnClickOutside={false} // -> disable outside click handling
 />
 ```
 
@@ -101,16 +98,6 @@ To change popover appearance use:
 - `shadow` – add box-shadow from `theme.shadows`
 
 <Demo data={PopoverDemos.configurator} />
-
-For additional modifications of popover body styles use `bodyClassName` or `bodyStyle` props:
-
-```tsx
-// Add inline styles to popover body
-<Popover bodyStyle={{ width: 200, pointerEvents: 'none' }} />
-
-// Or with className
-<Popover bodyClassName="my-class-name" />
-```
 
 ## Initial focus
 

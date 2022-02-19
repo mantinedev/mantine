@@ -2,9 +2,15 @@ import React from 'react';
 import { BaseDemo } from './_base';
 
 const code = `
-<Dropzone loading>
-  {/* children */}
-</Dropzone>
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone loading>
+      {/* children */}
+    </Dropzone>
+  );
+}
 `;
 
 function Demo() {

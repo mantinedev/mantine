@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, MantineNumberSize } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  ClassNames,
+  MantineNumberSize,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Text } from '../Text';
 import { Loader } from '../Loader';
 import { CloseButton } from '../ActionIcon';
@@ -40,13 +46,13 @@ export interface NotificationProps
 }
 
 export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
-  (
-    {
+  (props: NotificationProps, ref) => {
+    const {
       className,
-      color = 'blue',
-      radius = 'sm',
-      loading = false,
-      disallowClose = false,
+      color,
+      radius,
+      loading,
+      disallowClose,
       title,
       icon,
       children,
@@ -55,9 +61,8 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
       classNames,
       styles,
       ...others
-    }: NotificationProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Notification', {}, props);
+
     const { classes, cx } = useStyles(
       { color, radius, disallowClose },
       { classNames, styles, name: 'Notification' }

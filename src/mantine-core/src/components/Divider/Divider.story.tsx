@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME } from '@mantine/styles';
+import { DEFAULT_THEME, MantineProvider } from '@mantine/styles';
 import { Divider } from './Divider';
 
 const getColors = (props?: any) =>
@@ -14,4 +14,9 @@ storiesOf('@mantine/core/Divider/stories', module)
     <div style={{ padding: 20, height: 200 }}>
       <Divider orientation="vertical" />
     </div>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Divider: { color: 'red' } }}>
+      <Divider />
+    </MantineProvider>
   ));

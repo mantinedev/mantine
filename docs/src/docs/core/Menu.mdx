@@ -21,8 +21,6 @@ import { MenuDemos } from '@mantine/demos';
 
 ## Controlled
 
-To control component opened state provide `opened`, `onClose` and `onOpen` props:
-
 ```tsx
 import { useState } from 'react';
 import { Menu } from '@mantine/core';
@@ -60,17 +58,26 @@ Menu.Item renders button and accepts following props:
 - `...others` – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `sx`, `className`
 
 ```tsx
-<Menu.Item
-  icon={<GearIcon />}
-  onClick={() => console.log('Hello')}
-  rightSection={
-    <Text size="sm" color="gray">
-      ⌘K
-    </Text>
-  }
->
-  Label
-</Menu.Item>
+import { Menu, Text } from '@mantine/core';
+import { Settings } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Item
+        icon={<Settings size={16} />}
+        onClick={() => console.log('Hello')}
+        rightSection={
+          <Text size="sm" color="gray">
+            ⌘K
+          </Text>
+        }
+      >
+        Label
+      </Menu.Item>
+    </Menu>
+  );
+}
 ```
 
 ## Disabled item
@@ -131,7 +138,7 @@ You can also use number value to set width in px:
 
 ## Custom component as Menu.Item
 
-By default menu items render as button, to change that set `component` prop on Menu.Item component:
+By default, menu items render as button, to change that set `component` prop on Menu.Item component:
 
 ```tsx
 // Regular anchor as Menu.Item root element
@@ -142,6 +149,42 @@ By default menu items render as button, to change that set `component` prop on M
 ```
 
 <Demo data={MenuDemos.component} />
+
+## Menu.Item as Next.js Link
+
+Create a wrapper component for Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { forwardRef } from 'react';
+
+export const NextLink = forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<'a'>>(
+  (props, ref) => (
+    <Link href={props.href}>
+      <a {...props} ref={ref}>
+        {props.children}
+      </a>
+    </Link>
+  )
+);
+```
+
+Pass this component to Menu.Item:
+
+```tsx
+import { Menu } from '@mantine/core';
+import { NextLink } from './NextLink';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Item component={NextLink} href="/hello">
+        Hello
+      </Menu.Item>
+    </Menu>
+  );
+}
+```
 
 ## Store items separately
 
@@ -185,7 +228,7 @@ import { useRef } from 'react';
 import { Menu } from '@mantine/core';
 
 function Demo() {
-  const menuControlRef = useRef();
+  const menuControlRef = useRef<HTMLButtonElement>();
   return <Menu ref={menuControlRef} />;
 }
 ```

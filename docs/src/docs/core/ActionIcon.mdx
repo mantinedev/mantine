@@ -21,12 +21,20 @@ import { ActionIconDemos } from '@mantine/demos';
 
 ## Children
 
-ActionIcon accepts any React node as child. It **does not control icon size**, specify it manually on icon component to match ActionIcon size:
+ActionIcon accepts any React node as child. It **does not control icon size**, specify it manually on icon component to match ActionIcon size.
+For example, in [tabler icons](https://tablericons.com/) you can use size prop:
 
 ```tsx
-<ActionIcon>
-  <SomeIcon style={{ width: 16, height: 16 }} />
-</ActionIcon>
+import { ActionIcon } from '@mantine/core';
+import { Adjustments } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <ActionIcon>
+      <Adjustments size={16} />
+    </ActionIcon>
+  );
+}
 ```
 
 ## Variants
@@ -88,23 +96,17 @@ function Demo() {
 To use custom component with TypeScript, provide type (should match `component` prop):
 
 ```tsx
-// With element
-<ActionIcon<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { ActionIcon } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
-// With component
-<ActionIcon<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <>
+      <ActionIcon<'a'> component="a" href="#" />
+      <ActionIcon<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
 
 ## Get element ref
@@ -114,7 +116,7 @@ import { useRef } from 'react';
 import { ActionIcon } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLButtonElement>();
   return <ActionIcon ref={ref} />;
 }
 ```
@@ -122,7 +124,13 @@ function Demo() {
 To use `ref` with custom component in TypeScript, specify generic type:
 
 ```tsx
-<ActionIcon<'a'> component="a" ref={(node) => {}} />
+import { useRef } from 'react';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLAnchorElement>();
+  return <ActionIcon<'a'> component="a" href="#" ref={ref} />;
+}
 ```
 
 ## Accessibility

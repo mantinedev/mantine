@@ -3,9 +3,15 @@ import { Menu, Group } from '@mantine/core';
 import { menuItems } from './_menu-items';
 
 const code = `
-<Menu trigger="hover" delay={500}>
-  {/* ... menu items */}
-</Menu>
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu trigger="hover" delay={500}>
+      {/* ... menu items */}
+    </Menu>
+  );
+}
 `;
 
 function Demo() {

@@ -3,3 +3,4 @@ export { configurator } from './configurator';
 export { indeterminate } from './indeterminate';
 export { states } from './states';
 export { icon } from './icon';
+export { groupConfigurator } from './groupConfigurator';

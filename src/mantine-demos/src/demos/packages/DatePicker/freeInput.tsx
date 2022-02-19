@@ -2,7 +2,11 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker placeholder="Pick date" label="Event date" required allowFreeInput />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker allowFreeInput placeholder="Pick date" label="Event date" required />;
+}
 `;
 
 function Demo() {

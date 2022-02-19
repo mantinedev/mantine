@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  GitPullRequestIcon,
-  IssueOpenedIcon,
-  CommentDiscussionIcon,
-  DatabaseIcon,
-} from '@primer/octicons-react';
-import { ThemeIcon, UnstyledButton, Group, Text, createStyles } from '@mantine/core';
+import { GitPullRequest, AlertCircle, Messages, Database } from 'tabler-icons-react';
+import { ThemeIcon, UnstyledButton, Group, Text } from '@mantine/core';
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -13,25 +8,22 @@ interface MainLinkProps {
   label: string;
 }
 
-const useStyles = createStyles((theme) => ({
-  button: {
-    display: 'block',
-    width: '100%',
-    padding: theme.spacing.xs,
-    borderRadius: theme.radius.sm,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
-  },
-}));
-
 function MainLink({ icon, color, label }: MainLinkProps) {
-  const { classes } = useStyles();
-
   return (
-    <UnstyledButton className={classes.button}>
+    <UnstyledButton
+      sx={(theme) => ({
+        display: 'block',
+        width: '100%',
+        padding: theme.spacing.xs,
+        borderRadius: theme.radius.sm,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+        '&:hover': {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        },
+      })}
+    >
       <Group>
         <ThemeIcon color={color} variant="light">
           {icon}
@@ -44,10 +36,10 @@ function MainLink({ icon, color, label }: MainLinkProps) {
 }
 
 const data = [
-  { icon: <GitPullRequestIcon />, color: 'blue', label: 'Pull Requests' },
-  { icon: <IssueOpenedIcon />, color: 'lime', label: 'Open Issues' },
-  { icon: <CommentDiscussionIcon />, color: 'violet', label: 'Discussions' },
-  { icon: <DatabaseIcon />, color: 'grape', label: 'Databases' },
+  { icon: <GitPullRequest size={16} />, color: 'blue', label: 'Pull Requests' },
+  { icon: <AlertCircle size={16} />, color: 'teal', label: 'Open Issues' },
+  { icon: <Messages size={16} />, color: 'violet', label: 'Discussions' },
+  { icon: <Database size={16} />, color: 'grape', label: 'Databases' },
 ];
 
 export function MainLinks() {

@@ -9,7 +9,7 @@ interface ConfiguratorProps {
   component: any;
   codeTemplate(props: string, children?: string): string;
   previewBackground?: string;
-  multiline?: boolean;
+  multiline?: boolean | number;
   includeCode?: boolean;
   center?: boolean;
   props: ControlProps[];
@@ -86,7 +86,7 @@ export default function Configurator({
 
       {includeCode && (
         <Prism language="tsx" className={classes.prism} classNames={{ code: classes.code }}>
-          {code.trim()}
+          {code}
         </Prism>
       )}
     </div>

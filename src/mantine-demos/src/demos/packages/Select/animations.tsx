@@ -2,11 +2,17 @@ import React from 'react';
 import { Select } from '@mantine/core';
 
 const code = `
-<Select
-  transition="pop-top-left"
-  transitionDuration={80}
-  transitionTimingFunction="ease"
-/>
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      transition="pop-top-left"
+      transitionDuration={80}
+      transitionTimingFunction="ease"
+    />
+  );
+}
 `;
 
 function Demo() {

@@ -1,7 +1,13 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
 import 'quill-mention';
-import { DefaultProps, ClassNames, Box, MantineNumberSize } from '@mantine/core';
+import {
+  DefaultProps,
+  ClassNames,
+  Box,
+  MantineNumberSize,
+  useMantineDefaultProps,
+} from '@mantine/core';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
@@ -71,29 +77,37 @@ export interface RichTextEditorProps
   modules?: Record<string, any>;
 }
 
+const defaultProps: Partial<RichTextEditorProps> = {
+  onImageUpload: defaultImageUpload,
+  sticky: true,
+  stickyOffset: 0,
+  labels: DEFAULT_LABELS,
+  controls: DEFAULT_CONTROLS,
+  readOnly: false,
+};
+
 export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
-  (
-    {
+  (props: RichTextEditorProps, ref) => {
+    const {
       value,
       onChange,
-      onImageUpload = defaultImageUpload,
-      sticky = true,
-      stickyOffset = 0,
-      radius = 'sm',
-      labels = DEFAULT_LABELS,
-      controls = DEFAULT_CONTROLS,
+      onImageUpload,
+      sticky,
+      stickyOffset,
+      radius,
+      labels,
+      controls,
       id,
       className,
       classNames,
       styles,
       placeholder,
       mentions,
-      readOnly = false,
+      readOnly,
       modules: externalModules,
       ...others
-    }: RichTextEditorProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
+
     const uuid = useUuid(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(

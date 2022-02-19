@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Modal, Group, Button } from '@mantine/core';
 
 const code = `
-<Modal
-  opened={opened}
-  onClose={() => setOpened(false)}
-  hideCloseButton
->
-  Modal without header, press escape or click on overlay to close
-</Modal>
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal withCloseButton={false}>
+      Modal without header, press escape or click on overlay to close
+    </Modal>
+  );
+}
 `;
 
 function Demo() {
@@ -16,7 +18,7 @@ function Demo() {
 
   return (
     <>
-      <Modal opened={opened} onClose={() => setOpened(false)} hideCloseButton>
+      <Modal opened={opened} onClose={() => setOpened(false)} withCloseButton={false}>
         Modal without header, press escape or click on overlay to close
       </Modal>
 

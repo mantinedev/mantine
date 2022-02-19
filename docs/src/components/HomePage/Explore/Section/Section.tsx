@@ -31,7 +31,7 @@ export function Section({ title, description, children, link, label }: SectionPr
           <Text className={classes.description}>{description}</Text>
         )}
 
-        {link && (
+        {label && (
           <Anchor component={Link} to={link} className={classes.link}>
             {label}
             <ArrowRightIcon style={{ marginLeft: 8 }} />

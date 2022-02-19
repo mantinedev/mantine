@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, MantineTheme, CSSObject } from '@mantine/styles';
 
-interface AppShellStyles {
+export interface AppShellStylesParams {
   padding: MantineNumberSize;
   fixed: boolean;
   headerHeight: string;
@@ -9,7 +9,7 @@ interface AppShellStyles {
   navbarOffsetBreakpoint: MantineNumberSize;
 }
 
-function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObject {
+function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CSSObject {
   const padding = theme.fn.size({ size: props.padding, sizes: theme.spacing });
   const offset = props.navbarOffsetBreakpoint
     ? theme.fn.size({ size: props.navbarOffsetBreakpoint, sizes: theme.breakpoints })
@@ -43,7 +43,7 @@ function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObjec
   };
 }
 
-export default createStyles((theme, props: AppShellStyles) => ({
+export default createStyles((theme, props: AppShellStylesParams) => ({
   root: {
     boxSizing: 'border-box',
   },

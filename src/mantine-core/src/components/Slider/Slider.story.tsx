@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Heart } from 'tabler-icons-react';
@@ -64,8 +65,15 @@ storiesOf('@mantine/core/Slider/stories', module)
   ))
   .add('Near text: user-select', () => (
     <div style={{ maxWidth: 500, margin: 'auto' }}>
-      <Slider />
+      <Slider mt="xl" />
+      <RangeSlider mt="xl" />
       <p>{paragraph}</p>
+    </div>
+  ))
+  .add('onChangeEnd', () => (
+    <div style={{ maxWidth: 500, margin: 'auto' }}>
+      <Slider mt="xl" onChangeEnd={console.log} />
+      <RangeSlider mt="xl" onChangeEnd={console.log} />
     </div>
   ))
   .add('With thumb children', () => (
