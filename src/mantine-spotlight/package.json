@@ -1,0 +1,25 @@
+{
+  "name": "@mantine/spotlight",
+  "description": "Command center for your application",
+  "version": "3.6.9",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/notifications/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-notifications"
+  },
+  "peerDependencies": {
+    "@mantine/core": "3.6.9",
+    "@mantine/hooks": "3.6.9",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
