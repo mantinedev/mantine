@@ -1,3 +1,4 @@
+import React from 'react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { Code, Database } from 'tabler-icons-react';
 
