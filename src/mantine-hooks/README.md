@@ -17,6 +17,9 @@ yarn add @mantine/hooks
 
 # With npm
 npm install @mantine/hooks
+
+# With pnpm
+pnpm add @mantine/hooks
 ```
 
 ## Included hooks
