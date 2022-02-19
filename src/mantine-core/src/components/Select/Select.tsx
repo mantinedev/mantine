@@ -214,6 +214,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
     const isDeselectable = allowDeselect === undefined ? clearable : allowDeselect;
 
     const setDropdownOpened = (opened: boolean) => {
+      if (dropdownOpened === opened) {
+        return;
+      }
+
       _setDropdownOpened(opened);
       const handler = opened ? onDropdownOpen : onDropdownClose;
       typeof handler === 'function' && handler();
