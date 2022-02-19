@@ -24,7 +24,8 @@ function Demo() {
   const showSingleConfirmModal = () =>
     modals.openConfirmModal({
       title: 'Just confirm',
-      onClose: () => console.log('Single confirm modal closed'),
+      onCancel: () => console.log('Single confirm modal cancelled'),
+      onConfirm: () => console.log('Single confirm modal confirmed'),
     });
 
   const showNestedModal = () =>
