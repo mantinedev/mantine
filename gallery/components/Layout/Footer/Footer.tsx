@@ -6,7 +6,7 @@ export function Footer() {
   const { classes } = useStyles();
   return (
     <Container size="xl">
-      <footer className={classes.footer}>Footer</footer>
+      <footer className={classes.footer} />
     </Container>
   );
 }
