@@ -58,6 +58,7 @@ npm install @mantine/hooks
 - [use-scroll-into-view](https://mantine.dev/hooks/use-scroll-into-view/) – scroll given node into view within scrollable container or body element
 - [use-set-state](https://mantine.dev/hooks/use-set-state/) – work with state like in class components
 - [use-input-state](https://mantine.dev/hooks/use-input-state/) – manage state of both native and custom inputs
+- [use-disclosure](https://mantine.dev/hooks/use-disclosure/) – manage boolean state
 
 ## License
 
