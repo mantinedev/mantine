@@ -38,18 +38,6 @@ toggle(); // -> value == 'dark'
 toggle('dark'); // -> value == 'dark'
 ```
 
-## use-boolean-toggle
-
-use-boolean-toggle is a wrapper around use-toggle that works with boolean values:
-
-```tsx
-import { useBooleanToggle, useToggle } from '@mantine/hooks';
-
-const [value, toggle] = useBooleanToggle(false);
-// same as
-const [value, toggle] = useToggle(false, [true, false]);
-```
-
 ## TypeScript
 
 ### Set type
