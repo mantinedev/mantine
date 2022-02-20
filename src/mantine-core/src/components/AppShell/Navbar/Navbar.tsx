@@ -24,9 +24,6 @@ export interface NavbarProps
   /** Navbar content */
   children: React.ReactNode;
 
-  /** Navbar padding from theme.spacing or number to set padding in px */
-  padding?: MantineNumberSize;
-
   /** Set position to fixed */
   fixed?: boolean;
 
@@ -53,7 +50,6 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
     {
       width,
       height = '100vh',
-      padding = 0,
       fixed = false,
       position = { top: 0, left: 0 },
       zIndex = getDefaultZIndex('app'),
@@ -68,7 +64,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { width, height, padding, fixed, position, hiddenBreakpoint, zIndex },
+      { width, height, fixed, position, hiddenBreakpoint, zIndex },
       { classNames, styles, name: 'Navbar' }
     );
 

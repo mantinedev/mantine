@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex } from '@mantine/styles';
 import { Box } from '../../Box';
 import useStyles, { HeaderPosition } from './Header.styles';
 
@@ -9,9 +9,6 @@ export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRe
 
   /** Header height */
   height: number | string;
-
-  /** Header padding from theme.spacing or number to set padding in px */
-  padding?: MantineNumberSize;
 
   /** Changes position to fixed, controlled by AppShell component if rendered inside */
   fixed?: boolean;
@@ -31,7 +28,6 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
       classNames,
       styles,
       height,
-      padding = 0,
       fixed = false,
       position = { top: 0, left: 0, right: 0 },
       zIndex = getDefaultZIndex('app'),
@@ -40,7 +36,7 @@ export const Header = forwardRef<HTMLElement, HeaderProps>(
     ref
   ) => {
     const { classes, cx } = useStyles(
-      { height, padding, fixed, position, zIndex },
+      { height, fixed, position, zIndex },
       { name: 'Header', classNames, styles }
     );
 

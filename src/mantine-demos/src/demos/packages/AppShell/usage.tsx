@@ -12,8 +12,8 @@ function Demo() {
   return (
     <AppShell
       padding="md"
-      navbar={<Navbar width={{ base: 300 }} height={500} padding="xs">{/* Navbar content */}</Navbar>}
-      header={<Header height={60} padding="xs">{/* Header content */}</Header>}
+      navbar={<Navbar width={{ base: 300 }} height={500} p="xs">{/* Navbar content */}</Navbar>}
+      header={<Header height={60} p="xs">{/* Header content */}</Header>}
       styles={(theme) => ({
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
       })}
@@ -31,7 +31,7 @@ function Demo() {
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 300 }} height={500} padding="xs">
+        <Navbar width={{ base: 300 }} height={500} p="xs">
           <Navbar.Section grow mt="xs">
             <MainLinks />
           </Navbar.Section>
@@ -42,7 +42,7 @@ function Demo() {
       }
       header={
         <Header height={60}>
-          <Group sx={{ height: '100%', paddingLeft: 20, paddingRight: 20 }} position="apart">
+          <Group sx={{ height: '100%' }} px={20} position="apart">
             <Logo colorScheme={colorScheme} />
             <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
               {colorScheme === 'dark' ? <Sun size={16} /> : <MoonStars size={16} />}

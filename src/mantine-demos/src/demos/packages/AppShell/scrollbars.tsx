@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollArea, Navbar } from '@mantine/core';
+import { ScrollArea, Navbar, Box } from '@mantine/core';
 import { User } from './_user';
 import { Brand } from './_brand';
 import { MainLinks } from './_mainLinks';
@@ -9,16 +9,10 @@ import { Navbar, ScrollArea } from '@mantine/core';
 
 function Demo() {
   return (
-    <Navbar height={600} padding={10} width={{ base: 300 }}>
+    <Navbar height={600} p="xs" width={{ base: 300 }}>
       <Navbar.Section mt="xs">{/* Header with logo */}</Navbar.Section>
 
-      <Navbar.Section
-        grow
-        component={ScrollArea}
-        ml={-10}
-        mr={-10}
-        sx={{ paddingLeft: 10, paddingRight: 10 }}
-      >
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         {/* scrollable content here */}
       </Navbar.Section>
 
@@ -30,23 +24,17 @@ function Demo() {
 
 function Demo() {
   return (
-    <Navbar height={600} padding={10} width={{ base: 300 }}>
+    <Navbar height={600} p="xs" width={{ base: 300 }}>
       <Navbar.Section mt="xs">
         <Brand />
       </Navbar.Section>
-      <Navbar.Section
-        grow
-        component={ScrollArea}
-        ml={-10}
-        mr={-10}
-        sx={{ paddingLeft: 10, paddingRight: 10 }}
-      >
-        <div style={{ paddingTop: 15, paddingBottom: 15 }}>
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+        <Box py="md">
           <MainLinks />
           <MainLinks />
           <MainLinks />
           <MainLinks />
-        </div>
+        </Box>
       </Navbar.Section>
       <Navbar.Section>
         <User />
