@@ -11,7 +11,6 @@ import { Box } from '../../Box';
 interface _BackgroundImageProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   src: string;
   radius?: MantineNumberSize;
-  padding?: MantineNumberSize;
 }
 
 export type BackgroundImageProps<C> = C extends React.ElementType
@@ -26,7 +25,6 @@ type BackgroundImageComponent = (<C = 'div'>(
 
 const defaultProps: Partial<BackgroundImageProps<any>> = {
   radius: 0,
-  padding: 0,
 };
 
 export const BackgroundImage: BackgroundImageComponent = forwardRef(
@@ -53,7 +51,6 @@ export const BackgroundImage: BackgroundImageComponent = forwardRef(
             color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
             backgroundImage: `url(${src})`,
             borderRadius: theme.fn.radius(radius),
-            padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
           }),
           sx,
         ]}

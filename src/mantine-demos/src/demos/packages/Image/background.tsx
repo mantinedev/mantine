@@ -8,7 +8,7 @@ function Wrapper(props: BackgroundImageProps<'div'>) {
         src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
         {...props}
       >
-        <Center>
+        <Center p="md">
           <Text color="#fff">
             BackgroundImage component can be used to add any content on image. It is useful for hero
             headers and other similar sections
@@ -29,7 +29,7 @@ function Demo() {
         src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
        ${props}
       >
-        <Center>
+        <Center p="md">
           <Text color="#fff">
             BackgroundImage component can be used to add any content on image. It is useful for hero
             headers and other similar sections
@@ -46,8 +46,5 @@ export const background: MantineDemo = {
   component: Wrapper,
   codeTemplate,
   configuratorProps: { multiline: 4 },
-  configurator: [
-    { name: 'padding', type: 'size', initialValue: 'md' },
-    { name: 'radius', type: 'size', initialValue: 'sm' },
-  ],
+  configurator: [{ name: 'radius', type: 'size', initialValue: 'sm' }],
 };
