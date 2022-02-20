@@ -174,6 +174,31 @@ function App() {
 }
 ```
 
+## Padding props
+
+All components now support setting following props to control padding:
+
+- `p` – sets `padding` property on root element
+- `py` – sets `padding-top` and `padding-bottom` properties on root element
+- `px` – sets `padding-right` and `padding-left` properties on root element
+- `pt` – sets `padding-top` property on root element
+- `pb` – sets `padding-bottom` property on root element
+- `pl` – sets `padding-left` property on root element
+- `pr` – sets `padding-right` property on root element
+
+```tsx
+import { Paper, Container } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Paper p={20} />
+      <Container px="xl" />
+    </>
+  );
+}
+```
+
 ## createStyles references changes
 
 [createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
