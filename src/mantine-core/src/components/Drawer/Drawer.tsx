@@ -11,7 +11,7 @@ import {
 } from '@mantine/styles';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
-import { Portal } from '../Portal';
+import { OptionalPortal } from '../Portal';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import { CloseButton } from '../ActionIcon';
@@ -85,6 +85,9 @@ export interface DrawerProps
 
   /** Target element or selector where drawer portal should be rendered */
   target?: HTMLElement | string;
+
+  /** Determines whether drawer should be rendered within Portal, defaults to true */
+  withinPortal?: boolean;
 }
 
 const transitions: Record<DrawerPosition, MantineTransition> = {
@@ -115,9 +118,10 @@ const defaultProps: Partial<DrawerProps> = {
   trapFocus: true,
   withOverlay: true,
   withCloseButton: true,
+  withinPortal: true,
 };
 
-export function MantineDrawer(props: DrawerProps) {
+export function Drawer(props: DrawerProps) {
   const {
     className,
     opened,
@@ -144,11 +148,12 @@ export function MantineDrawer(props: DrawerProps) {
     classNames,
     styles,
     target,
+    withinPortal,
     ...others
   } = useMantineDefaultProps('Drawer', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, position },
+    { size, position, zIndex },
     { classNames, styles, name: 'Drawer' }
   );
 
@@ -183,88 +188,78 @@ export function MantineDrawer(props: DrawerProps) {
   useFocusReturn({ opened, transitionDuration });
 
   return (
-    <GroupedTransition
-      onExited={() => _lockScroll(false)}
-      onEntered={() => _lockScroll(lockScroll && true)}
-      mounted={opened}
-      transitions={{
-        overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
-        drawer: {
-          duration: transitionDuration,
-          transition: drawerTransition,
-          timingFunction: transitionTimingFunction,
-        },
-      }}
-    >
-      {(transitionStyles) => (
-        <Box
-          className={cx(classes.root, { [classes.noOverlay]: !withOverlay }, className)}
-          role="dialog"
-          aria-modal
-          onMouseDown={() => closeOnClickOutside && onClose()}
-          {...others}
-        >
-          <Paper<'div'>
-            onMouseDown={(event) => event.stopPropagation()}
-            className={cx(classes.drawer, className)}
-            ref={focusTrapRef}
-            style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}
-            radius={0}
-            tabIndex={-1}
-            onKeyDownCapture={(event) => {
-              const shouldTrigger =
-                (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-
-              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
-            }}
-            shadow={shadow}
-            padding={padding}
+    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+      <GroupedTransition
+        onExited={() => _lockScroll(false)}
+        onEntered={() => _lockScroll(lockScroll && true)}
+        mounted={opened}
+        transitions={{
+          overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
+          drawer: {
+            duration: transitionDuration,
+            transition: drawerTransition,
+            timingFunction: transitionTimingFunction,
+          },
+        }}
+      >
+        {(transitionStyles) => (
+          <Box
+            className={cx(classes.root, { [classes.noOverlay]: !withOverlay }, className)}
+            role="dialog"
+            aria-modal
+            onMouseDown={() => closeOnClickOutside && onClose()}
+            {...others}
           >
-            {(title || withCloseButton) && (
-              <div className={classes.header}>
-                <Text className={classes.title}>{title}</Text>
+            <Paper<'div'>
+              onMouseDown={(event) => event.stopPropagation()}
+              className={cx(classes.drawer, className)}
+              ref={focusTrapRef}
+              style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}
+              radius={0}
+              tabIndex={-1}
+              onKeyDownCapture={(event) => {
+                const shouldTrigger =
+                  (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
 
-                {withCloseButton && (
-                  <CloseButton
-                    iconSize={16}
-                    onClick={onClose}
-                    aria-label={closeButtonLabel}
-                    className={classes.closeButton}
-                  />
-                )}
+                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+              }}
+              shadow={shadow}
+              padding={padding}
+            >
+              {(title || withCloseButton) && (
+                <div className={classes.header}>
+                  <Text className={classes.title}>{title}</Text>
+
+                  {withCloseButton && (
+                    <CloseButton
+                      iconSize={16}
+                      onClick={onClose}
+                      aria-label={closeButtonLabel}
+                      className={classes.closeButton}
+                    />
+                  )}
+                </div>
+              )}
+              {children}
+            </Paper>
+
+            {withOverlay && (
+              <div style={transitionStyles.overlay}>
+                <Overlay
+                  className={classes.overlay}
+                  opacity={_overlayOpacity}
+                  zIndex={zIndex}
+                  color={
+                    overlayColor ||
+                    (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
+                  }
+                />
               </div>
             )}
-            {children}
-          </Paper>
-
-          {withOverlay && (
-            <div style={transitionStyles.overlay}>
-              <Overlay
-                className={classes.overlay}
-                opacity={_overlayOpacity}
-                zIndex={zIndex}
-                color={
-                  overlayColor ||
-                  (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
-                }
-              />
-            </div>
-          )}
-        </Box>
-      )}
-    </GroupedTransition>
-  );
-}
-
-export function Drawer({
-  zIndex = getDefaultZIndex('modal'),
-  target,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof MantineDrawer>) {
-  return (
-    <Portal zIndex={zIndex} target={target}>
-      <MantineDrawer {...props} />
-    </Portal>
+          </Box>
+        )}
+      </GroupedTransition>
+    </OptionalPortal>
   );
 }
 

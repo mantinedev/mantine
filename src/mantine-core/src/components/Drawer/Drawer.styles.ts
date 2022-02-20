@@ -15,6 +15,7 @@ export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
 export interface DrawerStylesParams {
   position: DrawerPosition;
   size: number | string;
+  zIndex: number;
 }
 
 interface GetPositionStyles {
@@ -46,7 +47,7 @@ function getPositionStyles({
   }
 }
 
-export default createStyles((theme, { position, size }: DrawerStylesParams, getRef) => ({
+export default createStyles((theme, { position, size, zIndex }: DrawerStylesParams, getRef) => ({
   closeButton: {},
   overlay: {},
 
@@ -57,6 +58,7 @@ export default createStyles((theme, { position, size }: DrawerStylesParams, getR
   root: {
     [`&:not(.${getRef('noOverlay')})`]: {
       position: 'fixed',
+      zIndex,
       top: 0,
       left: 0,
       right: 0,
