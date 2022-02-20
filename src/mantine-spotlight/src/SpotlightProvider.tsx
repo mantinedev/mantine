@@ -73,3 +73,5 @@ export function SpotlightProvider({
     </SpotlightContext.Provider>
   );
 }
+
+SpotlightProvider.displayName = '@mantine/spotlight/SpotlightProvider';
