@@ -6,7 +6,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
@@ -86,7 +86,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
   } = useMantineDefaultProps('Chip', defaultProps, props);
 
   const uuid = useUuid(id);
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const { classes, cx, theme } = useStyles(
     { radius, size, color },
     { classNames, styles, name: __staticSelector }
@@ -107,7 +107,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
       className={cx(classes.root, className)}
       style={style}
       sx={sx}
-      {...margins}
+      {...systemStyles}
       {...wrapperProps}
     >
       <input

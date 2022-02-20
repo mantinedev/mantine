@@ -3,7 +3,7 @@ import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -127,7 +127,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -177,7 +177,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         style={style}
         __staticSelector="ColorInput"
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>

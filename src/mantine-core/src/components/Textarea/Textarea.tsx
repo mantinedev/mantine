@@ -1,7 +1,12 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, extractMargins, useMantineDefaultProps } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  extractSystemStyles,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import { Input, InputBaseProps, InputProps } from '../Input/Input';
@@ -64,7 +69,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     const uuid = useUuid(id);
     const { classes, cx } = useStyles();
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const sharedProps: InputProps<'textarea'> = {
       required,
       ref,
@@ -92,7 +97,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         {autosize ? (

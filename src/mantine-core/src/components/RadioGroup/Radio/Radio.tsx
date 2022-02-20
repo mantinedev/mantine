@@ -5,7 +5,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
@@ -57,7 +57,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
     { color, size },
     { classNames, styles, name: __staticSelector }
   );
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useUuid(id);
 
   return (
@@ -66,7 +66,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
       style={style}
       title={title}
       sx={sx}
-      {...margins}
+      {...systemStyles}
     >
       <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
         <input

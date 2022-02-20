@@ -3,7 +3,7 @@ import { useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
-  extractMargins,
+  extractSystemStyles,
   useMantineTheme,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -73,7 +73,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
     } = useMantineDefaultProps('NativeSelect', defaultProps, props);
     const uuid = useUuid(id);
     const theme = useMantineTheme();
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
@@ -107,7 +107,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
         classNames={classNames}
         sx={sx}
         __staticSelector="NativeSelect"
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'select'>

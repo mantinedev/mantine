@@ -3,7 +3,7 @@ import {
   DefaultProps,
   PolymorphicComponentProps,
   PolymorphicRef,
-  extractMargins,
+  extractSystemStyles,
 } from '@mantine/styles';
 import { useSx, BoxSx } from './use-sx/use-sx';
 
@@ -24,9 +24,11 @@ export const Box: BoxComponent = forwardRef(
     { className, component, style, sx, ...others }: BoxProps<C>,
     ref: PolymorphicRef<C>
   ) => {
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const Element = component || 'div';
-    return <Element ref={ref} className={useSx(sx, margins, className)} style={style} {...rest} />;
+    return (
+      <Element ref={ref} className={useSx(sx, systemStyles, className)} style={style} {...rest} />
+    );
   }
 );
 

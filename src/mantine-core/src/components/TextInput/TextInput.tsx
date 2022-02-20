@@ -1,6 +1,11 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, extractMargins, useMantineDefaultProps } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  extractSystemStyles,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
   InputWrapperBaseProps,
@@ -62,7 +67,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     } = useMantineDefaultProps('TextInput', defaultProps, props);
 
     const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
 
     return (
       <InputWrapper
@@ -78,7 +83,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'input'>

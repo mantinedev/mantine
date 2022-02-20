@@ -3,7 +3,7 @@ import { useBooleanToggle, useUuid } from '@mantine/hooks';
 import {
   ClassNames,
   DefaultProps,
-  extractMargins,
+  extractSystemStyles,
   useMantineTheme,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -90,7 +90,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
     const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
     const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const [reveal, toggle] = useBooleanToggle(false);
 
     const rightSection = (
@@ -129,7 +129,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'div'>

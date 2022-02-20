@@ -9,7 +9,7 @@ import {
 import {
   DefaultProps,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -189,7 +189,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
@@ -485,7 +485,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         styles={styles}
         __staticSelector="MultiSelect"
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div

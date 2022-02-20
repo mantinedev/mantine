@@ -4,7 +4,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -79,7 +79,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
   } = useMantineDefaultProps('Checkbox', defaultProps, props);
 
   const uuid = useUuid(id);
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const { classes, cx } = useStyles(
     { size, radius, color, transitionDuration },
     { classNames, styles, name: __staticSelector }
@@ -90,7 +90,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props: Chec
       className={cx(classes.root, className)}
       style={style}
       sx={sx}
-      {...margins}
+      {...systemStyles}
       {...wrapperProps}
     >
       <div className={classes.inner}>

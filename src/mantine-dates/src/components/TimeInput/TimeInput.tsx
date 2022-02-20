@@ -10,7 +10,7 @@ import {
   MantineSize,
   ClassNames,
   CloseButton,
-  extractMargins,
+  extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/core';
 import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
@@ -137,7 +137,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     } = useMantineDefaultProps('TimeInput', defaultProps, props);
 
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useUuid(id);
 
     const hoursRef = useRef<HTMLInputElement>();
@@ -243,7 +243,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         __staticSelector="TimeInput"
         id={uuid}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input

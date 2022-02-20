@@ -10,7 +10,7 @@ import {
   DefaultProps,
   MantineSize,
   MantineShadow,
-  extractMargins,
+  extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -215,7 +215,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   } = useMantineDefaultProps('Select', defaultProps, props);
 
   const { classes, cx, theme } = useStyles();
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -513,7 +513,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       styles={styles}
       __staticSelector="Select"
       sx={sx}
-      {...margins}
+      {...systemStyles}
       {...wrapperProps}
     >
       <div

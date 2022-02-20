@@ -6,7 +6,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -73,7 +73,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchPr
     { classNames, styles, name: 'Switch' }
   );
 
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useUuid(id);
 
   return (
@@ -81,7 +81,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchPr
       className={cx(classes.root, className)}
       style={style}
       sx={sx}
-      {...margins}
+      {...systemStyles}
       {...wrapperProps}
     >
       <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />

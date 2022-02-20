@@ -7,7 +7,7 @@ import {
   ClassNames,
   PolymorphicComponentProps,
   PolymorphicRef,
-  extractMargins,
+  extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -116,7 +116,7 @@ export const Input: InputComponent = forwardRef(
       },
       { classNames, styles, name: __staticSelector }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const Element: any = component || 'input';
 
     return (
@@ -124,7 +124,7 @@ export const Input: InputComponent = forwardRef(
         className={cx(classes.wrapper, className)}
         sx={sx}
         style={style}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         {icon && <div className={classes.icon}>{icon}</div>}

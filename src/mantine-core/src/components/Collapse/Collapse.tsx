@@ -1,6 +1,6 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { extractMargins, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { extractSystemStyles, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { useCollapse } from './use-collapse';
 
@@ -44,7 +44,7 @@ export function Collapse(props: CollapseProps) {
 
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;
-  const { margins, rest } = extractMargins(others);
+  const { systemStyles, rest } = extractSystemStyles(others);
   const getCollapseProps = useCollapse({
     opened,
     transitionDuration: duration,
@@ -57,7 +57,7 @@ export function Collapse(props: CollapseProps) {
   }
 
   return (
-    <Box {...getCollapseProps({ style, ...rest, ...margins })}>
+    <Box {...getCollapseProps({ style, ...rest, ...systemStyles })}>
       <div
         style={{
           opacity: opened || !animateOpacity ? 1 : 0,
