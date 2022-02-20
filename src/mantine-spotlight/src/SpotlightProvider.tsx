@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useHotkeys } from '@mantine/hooks';
+import React from 'react';
+import { useHotkeys, useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
@@ -48,33 +48,21 @@ export function SpotlightProvider({
   const [actions, { registerActions, removeActions, triggerAction }] =
     useActionsState(initialActions);
 
-  const [opened, setOpened] = useState(false);
-  const openSpotlight = () => {
-    setOpened(true);
-    onSpotlightOpen?.();
-  };
-
-  const closeSpotlight = () => {
-    setOpened(false);
-    onSpotlightClose?.();
-  };
-
-  const toggleSpotlight = () => {
-    opened ? closeSpotlight() : openSpotlight();
-  };
+  const [opened, { open, close, toggle }] = useDisclosure(false, {
+    onClose: onSpotlightClose,
+    onOpen: onSpotlightOpen,
+  });
 
   useHotkeys(
-    typeof shortcut === 'string'
-      ? [[shortcut, toggleSpotlight]]
-      : shortcut.map((item) => [item, toggleSpotlight])
+    typeof shortcut === 'string' ? [[shortcut, toggle]] : shortcut.map((item) => [item, toggle])
   );
 
   return (
     <SpotlightContext.Provider
       value={{
-        openSpotlight,
-        closeSpotlight,
-        toggleSpotlight,
+        openSpotlight: open,
+        closeSpotlight: close,
+        toggleSpotlight: toggle,
         registerActions,
         removeActions,
         triggerAction,
