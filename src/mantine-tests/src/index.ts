@@ -5,6 +5,7 @@ export { itSupportsOthers } from './it-supports-others';
 export { itSupportsRef } from './it-supports-ref';
 export { itSupportsStyle } from './it-supports-style';
 export { itSupportsMargins } from './it-supports-margins';
+export { itSupportsPaddings } from './it-supports-paddings';
 export { itIsPolymorphic } from './it-is-polymorphic';
 export { itSupportsSx } from './it-supports-sx';
 export { itSupportsFocusEvents } from './it-supports-focus-events';
