@@ -55,7 +55,7 @@ export function SpotlightProvider({
   };
 
   const closeSpotlight = () => {
-    setOpened(true);
+    setOpened(false);
     onSpotlightClose?.();
   };
 
