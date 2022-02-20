@@ -10,6 +10,9 @@ export interface SpotlightAction {
   /** Action description, small text displayed after title, used for default filtering */
   description?: string;
 
+  /** Action group, used to render group label */
+  group?: string;
+
   /** Keywords that are used for default filtering, not displayed anywhere, can be a string: "react,router,javascript" or an array: ['react', 'router', 'javascript'] */
   keywords?: string | string[];
 
