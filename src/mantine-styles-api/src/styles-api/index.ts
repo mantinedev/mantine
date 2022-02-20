@@ -10,6 +10,7 @@ export * from './Blockquote.styles-api';
 export * from './Breadcrumbs.styles-api';
 export * from './Burger.styles-api';
 export * from './Button.styles-api';
+export * from './Carousel.styles-api';
 export * from './Checkbox.styles-api';
 export * from './Chips.styles-api';
 export * from './ColorInput.styles-api';
