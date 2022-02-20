@@ -332,3 +332,21 @@ function App() {
   );
 }
 ```
+
+## Change classes prefix
+
+To change classes prefix set `emotionOptions.key` property:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'custom-key' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+Now classes will follow this pattern: `custom-key-{random part}`.
