@@ -12,9 +12,6 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   /** Predefined container max-width or number for max-width in px */
   size?: MantineNumberSize;
 
-  /** Horizontal padding defined in theme.spacing, or number value for padding in px */
-  padding?: MantineNumberSize;
-
   /** If fluid is set to true, size prop is ignored and Container always take 100% of width */
   fluid?: boolean;
 
@@ -23,7 +20,7 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 }
 
 const defaultProps: Partial<ContainerProps> = {
-  padding: 'md',
+  px: 'md',
   sizes: {
     xs: 540,
     sm: 720,
@@ -35,11 +32,14 @@ const defaultProps: Partial<ContainerProps> = {
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   (props: ContainerProps, ref) => {
-    const { className, padding, fluid, size, styles, classNames, sizes, ...others } =
-      useMantineDefaultProps('Container', defaultProps, props);
+    const { className, fluid, size, styles, classNames, sizes, ...others } = useMantineDefaultProps(
+      'Container',
+      defaultProps,
+      props
+    );
 
     const { classes, cx } = useStyles(
-      { padding, fluid, size, sizes },
+      { fluid, size, sizes },
       { styles, classNames, name: 'Container' }
     );
 

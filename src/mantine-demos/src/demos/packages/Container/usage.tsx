@@ -11,12 +11,12 @@ function Demo() {
         Default container
       </Container>
 
-      <Container size="xs" padding="xs">
+      <Container size="xs" px="xs">
         xs container with xs horizontal padding
       </Container>
 
-      <Container size={200} padding={0}>
-        200px container with 0 horizontal padding
+      <Container size={200} px={0}>
+        200px container with 0px horizontal padding
       </Container>
     </>
   );
@@ -29,22 +29,14 @@ function Demo() {
 
   return (
     <>
-      <Container style={{ backgroundColor: color, height: 50 }}>Default container</Container>
+      <Container sx={{ backgroundColor: color, height: 50 }}>Default container</Container>
 
-      <Container
-        size="xs"
-        padding="xs"
-        style={{ backgroundColor: color, height: 50, marginTop: 20 }}
-      >
+      <Container size="xs" px="xs" sx={{ backgroundColor: color, height: 50 }} mt={20}>
         xs container with xs horizontal padding
       </Container>
 
-      <Container
-        size={200}
-        padding={0}
-        style={{ backgroundColor: color, height: 50, marginTop: 20 }}
-      >
-        200px container with 0 horizontal padding
+      <Container size={200} px={0} sx={{ backgroundColor: color, height: 50 }} mt={20}>
+        200px container with 0px horizontal padding
       </Container>
     </>
   );
