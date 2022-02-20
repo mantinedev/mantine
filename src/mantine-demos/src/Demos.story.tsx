@@ -19,6 +19,7 @@ attachDemos(storiesOf('@mantine/core/Breadcrumbs/demos', module), demos.Breadcru
 attachDemos(storiesOf('@mantine/core/Burger/demos', module), demos.BurgerDemos);
 attachDemos(storiesOf('@mantine/core/Button/demos', module), demos.ButtonDemos);
 attachDemos(storiesOf('@mantine/core/Card/demos', module), demos.CardDemos);
+attachDemos(storiesOf('@mantine/core/Carousel/demos', module), undefined);
 attachDemos(storiesOf('@mantine/core/Center/demos', module), demos.CenterDemos);
 attachDemos(storiesOf('@mantine/core/Checkbox/demos', module), demos.CheckboxDemos);
 attachDemos(storiesOf('@mantine/core/Chips/demos', module), demos.ChipsDemos);
