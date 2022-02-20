@@ -49,4 +49,4 @@ export { useDisclosure } from './use-disclosure/use-disclosure';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
-export type { HokeyItem } from './use-hotkeys/use-hotkeys';
+export type { HotkeyItem } from './use-hotkeys/use-hotkeys';

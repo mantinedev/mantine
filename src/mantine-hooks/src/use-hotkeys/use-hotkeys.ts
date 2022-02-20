@@ -3,7 +3,7 @@ import { getHotkeyMatcher, getHotkeyHandler } from './parse-hotkey';
 
 export { getHotkeyHandler };
 
-export type HokeyItem = [string, (event: KeyboardEvent) => void];
+export type HotkeyItem = [string, (event: KeyboardEvent) => void];
 
 function shouldFireEvent(event: KeyboardEvent) {
   if (event.target instanceof HTMLElement) {
@@ -12,7 +12,7 @@ function shouldFireEvent(event: KeyboardEvent) {
   return true;
 }
 
-export function useHotkeys(hotkeys: HokeyItem[]) {
+export function useHotkeys(hotkeys: HotkeyItem[]) {
   useEffect(() => {
     const keydownListener = (event: KeyboardEvent) => {
       hotkeys.forEach(([hotkey, handler]) => {
