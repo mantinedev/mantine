@@ -66,7 +66,7 @@ export function StatsSegments({ total, diff, data }: StatsSegmentsProps) {
   ));
 
   return (
-    <Paper withBorder padding="md" radius="md">
+    <Paper withBorder p="md" radius="md">
       <Group position="apart">
         <Group align="flex-end" spacing="xs">
           <Text size="xl" weight={700}>

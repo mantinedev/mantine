@@ -50,7 +50,7 @@ export function AuthenticationImage() {
   const { classes } = useStyles();
   return (
     <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} padding={30}>
+      <Paper className={classes.form} radius={0} p={30}>
         <Title order={2} className={classes.title} align="center" mt="md" mb={50}>
           Welcome back to Mantine!
         </Title>

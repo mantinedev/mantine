@@ -20,7 +20,7 @@ function Demo() {
       <div style={{ paddingTop: 260, paddingBottom: 280 }}>
         <Paper
           ref={ref}
-          padding="xl"
+          p="xl"
           style={{
             backgroundColor: observer?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
             minWidth: '50%',
@@ -49,7 +49,7 @@ function Demo() {
       <div style={{ paddingTop: 260, paddingBottom: 280 }}>
         <Paper
           ref={ref}
-          padding="xl"
+          p="xl"
           style={{
             backgroundColor: observer?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
             minWidth: '50%',

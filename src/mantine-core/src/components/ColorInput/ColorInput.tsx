@@ -227,7 +227,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>
               shadow="sm"
-              padding={size}
+              p={size}
               className={classes.dropdownBody}
               onMouseDown={(event) => event.preventDefault()}
             >

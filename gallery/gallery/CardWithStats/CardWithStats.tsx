@@ -46,7 +46,7 @@ export function CardWithStats({ image, title, description, stats }: CardWithStat
   ));
 
   return (
-    <Card withBorder padding="lg" className={classes.card}>
+    <Card withBorder p="lg" className={classes.card}>
       <Card.Section>
         <Image src={image} alt={title} height={100} />
       </Card.Section>

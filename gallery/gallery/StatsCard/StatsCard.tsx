@@ -27,7 +27,7 @@ export function StatsCard() {
   const { classes } = useStyles();
 
   return (
-    <Paper radius="md" withBorder padding="xl" className={classes.card} mt={ICON_SIZE / 3}>
+    <Paper radius="md" withBorder p="xl" className={classes.card} mt={ICON_SIZE / 3}>
       <ThemeIcon className={classes.icon} size={ICON_SIZE} radius={ICON_SIZE}>
         <Swimming size={34} />
       </ThemeIcon>

@@ -16,7 +16,7 @@ export function Header({ toggleDir, dir }: HeaderProps) {
   const { classes } = useStyles();
   return (
     <div className={classes.header}>
-      <Container size="xl" padding="md" className={classes.inner}>
+      <Container size="xl" px="md" className={classes.inner}>
         <Logo />
         <Group mr={-8}>
           <Discord />

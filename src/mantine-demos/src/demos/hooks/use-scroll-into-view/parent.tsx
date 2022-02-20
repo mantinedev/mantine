@@ -35,7 +35,7 @@ function Demo() {
         <div style={{ paddingTop: 260, paddingBottom: 450 }}>
           <Paper
             ref={targetRef}
-            padding="xl"
+            p="xl"
             style={{
               backgroundColor:
                 theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],

@@ -42,7 +42,7 @@ export function ArticleCardFooter({
   const { classes, theme } = useStyles();
 
   return (
-    <Card withBorder padding="lg" radius="md" className={classes.card}>
+    <Card withBorder p="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Image src={image} alt={title} height={180} />
       </Card.Section>

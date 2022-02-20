@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 export function NotificationsDemo() {
   const { classes } = useStyles();
   return (
-    <Paper shadow="md" padding={30} radius="md">
+    <Paper shadow="md" p={30} radius="md">
       <Demo data={NotificationsDemos.root} demoProps={{ inline: true }} />
       <Prism noCopy language="tsx" className={classes.prism} mt="xl">
         {code}

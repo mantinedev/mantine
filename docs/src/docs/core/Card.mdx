@@ -31,7 +31,7 @@ Card.Section works the following way:
 - If it is in the middle then only left and right margins will be negative
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
   <Card.Section>First section</Card.Section>
 
@@ -49,7 +49,7 @@ Card.Section works the following way:
 Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for `Card.Section`:
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   <div>
     <Card.Section>Won't work</Card.Section>
   </div>

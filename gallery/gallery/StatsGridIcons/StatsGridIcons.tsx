@@ -22,7 +22,7 @@ export function StatsGridIcons({ data }: StatsGridIconsProps) {
     const DiffIcon = stat.diff > 0 ? ArrowUpRight : ArrowDownRight;
 
     return (
-      <Paper withBorder padding="md" radius="md" key={stat.title}>
+      <Paper withBorder p="md" radius="md" key={stat.title}>
         <Group position="apart">
           <div>
             <Text

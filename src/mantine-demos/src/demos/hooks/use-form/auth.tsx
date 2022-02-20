@@ -70,7 +70,7 @@ function AuthenticationForm() {
 
   return (
     <Paper
-      padding="lg"
+      p="lg"
       shadow="sm"
       style={{
         position: 'relative',

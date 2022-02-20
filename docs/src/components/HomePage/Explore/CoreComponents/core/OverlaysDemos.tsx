@@ -27,7 +27,7 @@ export function OverlaysDemos() {
   const PopoverDemo = PopoverDemos.form.component;
 
   return (
-    <Paper shadow="md" radius="md" padding={30}>
+    <Paper shadow="md" radius="md" p={30}>
       <Modal title="Register" opened={modalOpened} onClose={() => setModalOpened(false)}>
         <AuthenticationForm noShadow noPadding />
       </Modal>

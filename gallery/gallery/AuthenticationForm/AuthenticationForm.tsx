@@ -31,7 +31,7 @@ export function AuthenticationForm(props: PaperProps<'div'>) {
   });
 
   return (
-    <Paper radius="md" padding="xl" withBorder {...props}>
+    <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" weight={500}>
         Welcome to Mantine, {type} with
       </Text>

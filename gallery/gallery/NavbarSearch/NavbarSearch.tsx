@@ -156,7 +156,7 @@ export function NavbarSearch() {
   ));
 
   return (
-    <Navbar height={700} width={{ sm: 300 }} padding="md" className={classes.navbar}>
+    <Navbar height={700} width={{ sm: 300 }} p="md" className={classes.navbar}>
       <Navbar.Section className={classes.section}>
         <UserButton
           image="https://i.imgur.com/fGxgcDF.png"

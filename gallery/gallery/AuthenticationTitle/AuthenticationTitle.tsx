@@ -28,7 +28,7 @@ export function AuthenticationTitle() {
         </Anchor>
       </Text>
 
-      <Paper withBorder shadow="md" padding={30} mt={30} radius="md">
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <TextInput label="Email" placeholder="you@mantine.dev" required />
         <PasswordInput label="Password" placeholder="Your password" required mt="md" />
         <Group position="apart" mt="md">

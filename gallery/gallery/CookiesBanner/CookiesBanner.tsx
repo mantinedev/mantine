@@ -3,7 +3,7 @@ import { Button, Paper, Text, Group, CloseButton } from '@mantine/core';
 
 export function CookiesBanner() {
   return (
-    <Paper withBorder padding="lg" radius="md" shadow="md">
+    <Paper withBorder p="lg" radius="md" shadow="md">
       <Group position="apart" mb="xs">
         <Text size="md" weight={500}>
           Allow cookies

@@ -21,7 +21,7 @@ export function StatsRing({ data }: StatsRingProps) {
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
     return (
-      <Paper withBorder radius="md" padding="xs" key={stat.label}>
+      <Paper withBorder radius="md" p="xs" key={stat.label}>
         <Group>
           <RingProgress
             size={80}

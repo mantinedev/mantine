@@ -45,7 +45,7 @@ export const Card: CardComponent = forwardRef(
       <Paper
         className={cx(classes.root, className)}
         radius={radius}
-        padding={padding}
+        p={padding}
         component={component as any}
         ref={ref}
         {...others}

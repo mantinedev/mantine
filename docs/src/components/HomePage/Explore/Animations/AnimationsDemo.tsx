@@ -44,7 +44,7 @@ export function AnimationsDemo() {
   const [modalOpened, setModalOpened] = useState(false);
   const { classes } = useStyles();
   return (
-    <Paper shadow="md" padding={30} radius="md">
+    <Paper shadow="md" p={30} radius="md">
       <Title order={4} mb="md">
         Use premade transitions with any component
       </Title>

@@ -17,12 +17,12 @@ export default function AppShellDemo() {
         navbarOffsetBreakpoint="sm"
         fixed
         navbar={
-          <Navbar padding="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 400 }}>
+          <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 400 }}>
             <Text>Application navbar</Text>
           </Navbar>
         }
         header={
-          <Header height={70} padding="md">
+          <Header height={70} p="md">
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger

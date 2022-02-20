@@ -10,7 +10,7 @@ function Demo() {
   const secondaryColor = theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
 
   return (
-    <Card shadow="sm" padding="lg">
+    <Card shadow="sm" p="lg">
       <Card.Section component="a" href="https://mantine.dev" target="_blank">
         <Image
           src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
@@ -44,7 +44,7 @@ function Demo() {
   const secondaryColor = theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
 
   return (
-    <Card shadow="sm" padding="lg">
+    <Card shadow="sm" p="lg">
       <Card.Section component="a" href="https://mantine.dev" target="_blank">
         <Image
           src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"

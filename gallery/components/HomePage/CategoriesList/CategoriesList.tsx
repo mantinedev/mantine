@@ -54,7 +54,7 @@ export function CategoriesList({ groups, componentsCountByCategory }: Categories
   });
 
   return (
-    <Container size="xl" padding="md" className={classes.wrapper}>
+    <Container size="xl" px="md" className={classes.wrapper}>
       {items}
     </Container>
   );

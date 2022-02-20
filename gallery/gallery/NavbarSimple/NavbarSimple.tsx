@@ -104,7 +104,7 @@ export function NavbarSimple() {
   ));
 
   return (
-    <Navbar height={700} width={{ sm: 300 }} padding="md">
+    <Navbar height={700} width={{ sm: 300 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           <MantineLogo />

@@ -204,7 +204,7 @@ export function Modal(props: ModalProps) {
                 onMouseDown={(event) => event.stopPropagation()}
                 className={classes.modal}
                 shadow={shadow}
-                padding={padding}
+                p={padding}
                 radius={radius}
                 role="dialog"
                 aria-labelledby={titleId}

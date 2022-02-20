@@ -74,7 +74,7 @@ export function FeaturesGrid({ title, description, data = MOCKDATA }: FeaturesGr
     <Container className={classes.wrapper}>
       <Title className={classes.title}>{title}</Title>
 
-      <Container size={560} padding={0}>
+      <Container size={560} p={0}>
         <Text size="sm" className={classes.description}>
           {description}
         </Text>

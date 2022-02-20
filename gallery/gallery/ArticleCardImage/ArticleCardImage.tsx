@@ -41,7 +41,7 @@ export function ArticleCardImage({ image, title, category }: ArticleCardImagePro
   return (
     <Paper
       shadow="md"
-      padding="xl"
+      p="xl"
       radius="md"
       sx={{ backgroundImage: `url(${image})` }}
       className={classes.card}

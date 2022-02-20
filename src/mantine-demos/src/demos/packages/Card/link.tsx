@@ -9,7 +9,7 @@ function Demo() {
   return (
     <Card
       shadow="sm"
-      padding="xl"
+      p="xl"
       component="a"
       href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       target="_blank"
@@ -34,7 +34,7 @@ function Demo() {
   return (
     <Card
       shadow="sm"
-      padding="xl"
+      p="xl"
       component="a"
       href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
       target="_blank"

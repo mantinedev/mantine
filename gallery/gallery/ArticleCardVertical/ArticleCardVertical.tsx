@@ -37,7 +37,7 @@ export function ArticleCardVertical({
 }: ArticleCardVerticalProps) {
   const { classes } = useStyles();
   return (
-    <Card withBorder radius="md" padding={0} className={classes.card}>
+    <Card withBorder radius="md" p={0} className={classes.card}>
       <Group noWrap spacing={0}>
         <Image src={image} height={140} width={140} />
         <div className={classes.body}>

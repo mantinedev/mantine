@@ -57,7 +57,7 @@ export interface DialogProps
 
 const defaultProps: Partial<DialogProps> = {
   shadow: 'md',
-  padding: 'md',
+  p: 'md',
   withBorder: true,
   size: 'md',
   transition: 'pop-top-right',
@@ -70,7 +70,6 @@ export function MantineDialog(props: DialogProps) {
     onClose,
     position,
     shadow,
-    padding,
     children,
     className,
     style,
@@ -99,7 +98,6 @@ export function MantineDialog(props: DialogProps) {
           className={cx(classes.root, className)}
           style={{ ...style, ...transitionStyles }}
           shadow={shadow}
-          padding={padding}
           withBorder={withBorder}
           {...others}
         >

@@ -77,7 +77,7 @@ export function InputsDemo() {
   const { classes } = useStyles();
 
   return (
-    <Paper className={classes.wrapper} shadow="md" padding={30} radius="md">
+    <Paper className={classes.wrapper} shadow="md" p={30} radius="md">
       <div className={classes.column}>
         <DatePicker
           label="Date picker"

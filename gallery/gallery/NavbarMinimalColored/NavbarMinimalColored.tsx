@@ -87,7 +87,7 @@ export function NavbarMinimalColored() {
   ));
 
   return (
-    <Navbar height={750} width={{ base: 80 }} padding="md" className={classes.navbar}>
+    <Navbar height={750} width={{ base: 80 }} p="md" className={classes.navbar}>
       <Center>
         <MantineLogoSmall variant="white" />
       </Center>

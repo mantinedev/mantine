@@ -52,7 +52,7 @@ export function SwitchesCard({ title, description, data }: SwitchesCardProps) {
   ));
 
   return (
-    <Card withBorder radius="md" padding="xl" className={classes.card}>
+    <Card withBorder radius="md" p="xl" className={classes.card}>
       <Text size="lg" className={classes.title} weight={500}>
         {title}
       </Text>

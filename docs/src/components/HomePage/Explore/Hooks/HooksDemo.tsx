@@ -95,7 +95,7 @@ export function HooksDemo() {
           <Paper
             ref={ref}
             shadow="md"
-            padding="xl"
+            p="xl"
             sx={{
               position: 'absolute',
               top: -15,

@@ -224,7 +224,7 @@ export function Drawer(props: DrawerProps) {
                 shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
               }}
               shadow={shadow}
-              padding={padding}
+              p={padding}
             >
               {(title || withCloseButton) && (
                 <div className={classes.header}>

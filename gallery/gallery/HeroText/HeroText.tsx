@@ -104,7 +104,7 @@ export function HeroText() {
           for any stack
         </Title>
 
-        <Container padding={0} size={600}>
+        <Container p={0} size={600}>
           <Text size="lg" color="dimmed" className={classes.description}>
             Build more reliable software with AI companion. AI is also trained to detect lazy
             developers who do nothing and just complain on Twitter.

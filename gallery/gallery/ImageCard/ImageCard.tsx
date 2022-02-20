@@ -75,7 +75,7 @@ export function ImageCard({ image, title, author, views, comments, link }: Image
 
   return (
     <Card
-      padding="lg"
+      p="lg"
       shadow="lg"
       className={classes.card}
       radius="md"

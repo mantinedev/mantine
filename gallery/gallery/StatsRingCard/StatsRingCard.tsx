@@ -61,7 +61,7 @@ export function StatsRingCard({ title, completed, total, stats }: StatsRingCardP
   ));
 
   return (
-    <Card withBorder padding="xl" radius="md" className={classes.card}>
+    <Card withBorder p="xl" radius="md" className={classes.card}>
       <div className={classes.inner}>
         <div>
           <Text size="xl" className={classes.label}>

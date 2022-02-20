@@ -92,7 +92,7 @@ export function FeaturesImages({ supTitle, description, data }: FeaturesImagesPr
         PharmLand is <span className={classes.highlight}>not</span> just for pharmacists
       </Title>
 
-      <Container size={660} padding={0}>
+      <Container size={660} p={0}>
         <Text color="dimmed" className={classes.description}>
           {description}
         </Text>

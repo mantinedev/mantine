@@ -63,7 +63,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
   ));
 
   return (
-    <Card withBorder radius="md" padding="md" className={classes.card}>
+    <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
         <Image src={image} alt={title} height={180} />
       </Card.Section>

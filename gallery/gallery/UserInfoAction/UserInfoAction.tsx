@@ -13,7 +13,7 @@ export function UserInfoAction({ avatar, name, email, job }: UserInfoActionProps
     <Paper
       radius="md"
       withBorder
-      padding="lg"
+      p="lg"
       sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       })}

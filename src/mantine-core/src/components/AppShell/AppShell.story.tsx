@@ -22,12 +22,12 @@ function NavbarToggle() {
       navbarOffsetBreakpoint="sm"
       fixed
       navbar={
-        <Navbar padding="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Text>Application navbar</Text>
         </Navbar>
       }
       header={
-        <Header height={50} padding="md">
+        <Header height={50} p="md">
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -114,12 +114,12 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
       padding={0}
       fixed
       navbar={
-        <Navbar width={{ base: 200 }} height={500} padding="xs">
+        <Navbar width={{ base: 200 }} height={500} p="xs">
           Navbar
         </Navbar>
       }
       header={
-        <Header height={60} padding="xs">
+        <Header height={60} p="xs">
           Header
         </Header>
       }
