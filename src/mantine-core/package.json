@@ -25,6 +25,7 @@
     "clsx": "^1.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",
+    "embla-carousel-react": "^6.2.0",
     "react-popper": "^2.2.5"
   },
   "devDependencies": {}
