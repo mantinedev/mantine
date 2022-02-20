@@ -38,9 +38,9 @@ export const configurator: MantineDemo = {
   background: (colorScheme) =>
     colorScheme === 'dark' ? DEFAULT_THEME.colors.dark[8] : DEFAULT_THEME.colors.gray[0],
   configurator: [
-    { name: 'padding', type: 'size', initialValue: 'md', defaultValue: 0 },
     { name: 'shadow', type: 'size', initialValue: 'xs', defaultValue: 'none' },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
+    { name: 'p', label: 'Padding', type: 'size', initialValue: 'md', defaultValue: 0 },
     { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

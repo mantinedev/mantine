@@ -10,6 +10,7 @@ type MantineDemoControlType =
 interface MantineDemoControlProps {
   type: MantineDemoControlType;
   name: string;
+  label?: string;
   initialValue?: any;
   defaultValue?: any;
   capitalize?: boolean;

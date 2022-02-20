@@ -11,9 +11,6 @@ import { Box } from '../Box';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
-  /** Predefined padding value from theme.spacing or number for padding in px */
-  padding?: MantineNumberSize;
-
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: MantineShadow;
 
@@ -32,15 +29,13 @@ type PaperComponent = (<C = 'div'>(props: PaperProps<C>) => React.ReactElement) 
   displayName?: string;
 };
 
-const defaultProps: Partial<PaperProps<any>> = {
-  padding: 0,
-};
+const defaultProps: Partial<PaperProps<any>> = {};
 
 export const Paper: PaperComponent = forwardRef(
   <C extends React.ElementType = 'div'>(props: PaperProps<C>, ref: PolymorphicRef<C>) => {
-    const { component, className, children, padding, radius, withBorder, shadow, ...others } =
+    const { component, className, children, radius, withBorder, shadow, ...others } =
       useMantineDefaultProps('Paper', defaultProps, props);
-    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, { name: 'Paper' });
+    const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
 
     return (
       <Box<any>
