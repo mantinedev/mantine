@@ -9,14 +9,16 @@ function prepareAction(action: SpotlightAction) {
 function filterDuplicateActions(actions: SpotlightAction[]) {
   const ids = [];
 
-  return actions.reduceRight<SpotlightAction[]>((acc, action) => {
-    if (!ids.includes(action.id)) {
-      ids.push(action.id);
-      acc.push(action);
-    }
+  return actions
+    .reduceRight<SpotlightAction[]>((acc, action) => {
+      if (!ids.includes(action.id)) {
+        ids.push(action.id);
+        acc.push(action);
+      }
 
-    return acc;
-  }, []);
+      return acc;
+    }, [])
+    .reverse();
 }
 
 function prepareActions(initialActions: SpotlightAction[]) {
