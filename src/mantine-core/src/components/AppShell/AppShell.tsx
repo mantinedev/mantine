@@ -4,7 +4,7 @@ import {
   DefaultProps,
   useMantineTheme,
   ClassNames,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -14,7 +14,8 @@ import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
-export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, MantineMargin> {
+export interface AppShellProps
+  extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 

@@ -1,28 +1,33 @@
-import { MantineMargins, MantineTheme, CSSObject } from '@mantine/styles';
+import { MantineStyleSystemProps, MantineTheme, CSSObject } from '@mantine/styles';
 
-const MARGINS = {
+const SYSTEM_PROPS = {
   m: 'margin',
   mt: 'marginTop',
   mb: 'marginBottom',
   ml: 'marginLeft',
   mr: 'marginRight',
+  p: 'padding',
+  pt: 'paddingTop',
+  pb: 'paddingBottom',
+  pl: 'paddingLeft',
+  pr: 'paddingRight',
 };
 
-const NEGATIVE_MARGINS = ['-xs', '-sm', '-md', '-lg', '-xl'];
+const NEGATIVE_VALUES = ['-xs', '-sm', '-md', '-lg', '-xl'];
 
 function isValidMargin(margin: any) {
   return typeof margin === 'string' || typeof margin === 'number';
 }
 
 function getMarginValue(margin: any, theme: MantineTheme) {
-  if (NEGATIVE_MARGINS.includes(margin)) {
+  if (NEGATIVE_VALUES.includes(margin)) {
     return theme.fn.size({ size: margin.replace('-', ''), sizes: theme.spacing }) * -1;
   }
 
   return theme.fn.size({ size: margin, sizes: theme.spacing });
 }
 
-export function getMargins(margins: MantineMargins, theme: MantineTheme) {
+export function getSystemStyles(margins: MantineStyleSystemProps, theme: MantineTheme) {
   const styles: CSSObject = {};
 
   if (isValidMargin(margins.my)) {
@@ -37,9 +42,9 @@ export function getMargins(margins: MantineMargins, theme: MantineTheme) {
     styles.marginRight = margin;
   }
 
-  Object.keys(MARGINS).forEach((margin) => {
+  Object.keys(SYSTEM_PROPS).forEach((margin) => {
     if (isValidMargin(margins[margin])) {
-      styles[MARGINS[margin]] = theme.fn.size({
+      styles[SYSTEM_PROPS[margin]] = theme.fn.size({
         size: getMarginValue(margins[margin], theme),
         sizes: theme.spacing,
       });

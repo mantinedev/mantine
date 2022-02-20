@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   ClassNames,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -17,7 +17,7 @@ import useStyles from './Dialog.styles';
 export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames>, MantineMargin>,
+  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
     Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;

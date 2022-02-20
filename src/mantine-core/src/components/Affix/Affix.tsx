@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -9,7 +9,7 @@ import { Box } from '../Box';
 import { Portal } from '../Portal/Portal';
 
 export interface AffixProps
-  extends Omit<DefaultProps, MantineMargin>,
+  extends Omit<DefaultProps, MantineStyleSystemSize>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Element where portal should be rendered, by default new div element is created and appended to document.body */
   target?: HTMLDivElement;

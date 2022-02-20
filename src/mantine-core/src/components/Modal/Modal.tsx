@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   MantineShadow,
   ClassNames,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -22,7 +22,7 @@ import useStyles from './Modal.styles';
 export type ModalStylesNames = ClassNames<typeof useStyles>;
 
 export interface ModalProps
-  extends Omit<DefaultProps<ModalStylesNames>, MantineMargin>,
+  extends Omit<DefaultProps<ModalStylesNames>, MantineStyleSystemSize>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;

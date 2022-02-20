@@ -1,9 +1,9 @@
 import type { CSSProperties } from 'react';
-import type { MantineMargins } from './MantineMargins';
+import type { MantineStyleSystemProps } from './MantineStyleSystem';
 import type { MantineTheme } from './MantineTheme';
 import type { CSSObject } from '../../tss';
 
-export interface DefaultProps<T extends string = never> extends MantineMargins {
+export interface DefaultProps<T extends string = never> extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;
   sx?: CSSObject | ((theme: MantineTheme) => CSSObject);

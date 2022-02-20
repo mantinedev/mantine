@@ -1,6 +1,6 @@
-import type { MantineMargins } from '../../types';
+import type { MantineStyleSystemProps } from '../../types';
 
-export function extractSystemStyles(others: MantineMargins & { [key: string]: any }) {
+export function extractSystemStyles(others: MantineStyleSystemProps & { [key: string]: any }) {
   const { m, mx, my, mt, mb, ml, mr, p, px, py, pt, pb, pl, pr, ...rest } = others;
   const systemStyles = { m, mx, my, mt, mb, ml, mr, p, px, py, pt, pb, pl, pr };
 
