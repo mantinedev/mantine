@@ -3,7 +3,7 @@ import { getHotkeyMatcher, getHotkeyHandler } from './parse-hotkey';
 
 export { getHotkeyHandler };
 
-type HokeyItem = [string, (event: KeyboardEvent) => void];
+export type HokeyItem = [string, (event: KeyboardEvent) => void];
 
 function shouldFireEvent(event: KeyboardEvent) {
   if (event.target instanceof HTMLElement) {
