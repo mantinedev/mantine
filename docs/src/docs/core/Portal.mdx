@@ -75,3 +75,21 @@ If you don't specify the target element, new one will be created and appended to
 
 `createPortal` is not supported during server side rendering.
 All components inside Portal are rendered only after application was mounted to the dom.
+
+## OptionalPortal component
+
+OptionalPortal component lets you configure whether children should be rendered in Portal.
+It accepts the same props as Portal component:
+
+```tsx
+import { OptionalPortal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <OptionalPortal withinPortal>This text is rendered in Portal</OptionalPortal>
+      <OptionalPortal withinPortal={false}>This text is rendered as regular child</OptionalPortal>
+    </>
+  );
+}
+```
