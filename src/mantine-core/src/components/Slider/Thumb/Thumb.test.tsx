@@ -46,6 +46,6 @@ describe('@mantine/core/Thumb', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Thumb.displayName).toEqual('@mantine/core/SliderThumb');
+    expect(Thumb.displayName).toStrictEqual('@mantine/core/SliderThumb');
   });
 });

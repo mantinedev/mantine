@@ -18,7 +18,7 @@ describe('@mantine/notifications/use-notifications', () => {
 
   it('throws error if called outside of NotificationsProvider', () => {
     const hook = renderHook(() => useNotifications());
-    expect(hook.result.error).toEqual(
+    expect(hook.result.error).toStrictEqual(
       Error('@mantine/notifications: NotificationsProvider was not found in tree')
     );
   });

@@ -23,6 +23,6 @@ describe('@mantine/core/Dialog', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Dialog.displayName).toEqual('@mantine/core/Dialog');
+    expect(Dialog.displayName).toStrictEqual('@mantine/core/Dialog');
   });
 });

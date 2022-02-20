@@ -12,6 +12,6 @@ describe('@mantine/core/Thumb', () => {
   itSupportsStyle(Thumb, defaultProps);
 
   it('has correct displayName', () => {
-    expect(Thumb.displayName).toEqual('@mantine/core/Thumb');
+    expect(Thumb.displayName).toStrictEqual('@mantine/core/Thumb');
   });
 });

@@ -45,6 +45,6 @@ describe('@mantine/core/PopoverBody', () => {
   });
 
   it('has correct displayName', () => {
-    expect(PopoverBody.displayName).toEqual('@mantine/core/PopoverBody');
+    expect(PopoverBody.displayName).toStrictEqual('@mantine/core/PopoverBody');
   });
 });

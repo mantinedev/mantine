@@ -36,7 +36,7 @@ describe('@mantine/core/RingProgress/get-curves', () => {
       },
       { data: null, offset: 261.9650020918711, root: true, sum: 71.345, lineRoundCaps: false },
     ];
-    expect(curves.length).toEqual(expectedCurves.length);
-    expect(curves).toEqual(expect.arrayContaining(expectedCurves));
+    expect(curves.length).toStrictEqual(expectedCurves.length);
+    expect(curves).toStrictEqual(expect.arrayContaining(expectedCurves));
   });
 });

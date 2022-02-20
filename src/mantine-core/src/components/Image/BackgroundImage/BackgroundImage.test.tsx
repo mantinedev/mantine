@@ -10,6 +10,6 @@ describe('@mantine/core/BackgroundImage', () => {
   });
 
   it('has correct displayName', () => {
-    expect(BackgroundImage.displayName).toEqual('@mantine/core/BackgroundImage');
+    expect(BackgroundImage.displayName).toStrictEqual('@mantine/core/BackgroundImage');
   });
 });

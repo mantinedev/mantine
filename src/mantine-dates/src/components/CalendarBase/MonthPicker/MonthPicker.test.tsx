@@ -110,6 +110,6 @@ describe('@mantine/core/MonthPicker', () => {
   });
 
   it('has correct displayName', () => {
-    expect(MonthPicker.displayName).toEqual('@mantine/dates/MonthPicker');
+    expect(MonthPicker.displayName).toStrictEqual('@mantine/dates/MonthPicker');
   });
 });

@@ -44,14 +44,14 @@ const BOOLEAN_FORM = {
 describe('@mantine/hooks/use-form', () => {
   it('returns correct values', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
-    expect(hook.result.current.values).toEqual(TEST_FORM.initialValues);
+    expect(hook.result.current.values).toStrictEqual(TEST_FORM.initialValues);
   });
 
   it('sets field value with setFieldValue handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
     act(() => hook.result.current.setFieldValue('email', 'test@email.dev'));
 
-    expect(hook.result.current.values).toEqual({
+    expect(hook.result.current.values).toStrictEqual({
       ...TEST_FORM.initialValues,
       email: 'test@email.dev',
     });
@@ -107,7 +107,7 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: true,
       email: true,
@@ -118,7 +118,7 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: true,
       email: null,
@@ -129,7 +129,7 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: true,
       email: null,
@@ -140,7 +140,7 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: null,
       email: null,
@@ -156,7 +156,7 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.onSubmit(spy)();
     });
 
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: true,
       email: true,
@@ -188,14 +188,14 @@ describe('@mantine/hooks/use-form', () => {
     });
 
     expect(hook.result.current.errors.name).toBe(true);
-    expect(hook.result.current.values).toEqual({
+    expect(hook.result.current.values).toStrictEqual({
       ...TEST_FORM.initialValues,
       email: 'test@email.dev',
     });
 
     act(() => hook.result.current.reset());
 
-    expect(hook.result.current.values).toEqual(TEST_FORM.initialValues);
+    expect(hook.result.current.values).toStrictEqual(TEST_FORM.initialValues);
     expect(hook.result.current.errors.name).toBe(null);
   });
 
@@ -210,7 +210,7 @@ describe('@mantine/hooks/use-form', () => {
       });
     });
 
-    expect(hook.result.current.values).toEqual({
+    expect(hook.result.current.values).toStrictEqual({
       email: 'hello@mantine.dev',
       confirmEmail: 'hello@mantine.dev',
       name: 'Mantine',
@@ -225,7 +225,7 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.validate();
     });
 
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: true,
       email: true,
@@ -236,7 +236,7 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.resetErrors();
     });
 
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: null,
       email: null,
@@ -246,7 +246,7 @@ describe('@mantine/hooks/use-form', () => {
 
   it('allows to set errors object with setErrors handler', () => {
     const hook = renderHook(() => useForm(TEST_FORM));
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       name: null,
       email: null,
@@ -257,7 +257,7 @@ describe('@mantine/hooks/use-form', () => {
       hook.result.current.setErrors({ age: true, name: null, email: true, confirmEmail: null });
     });
 
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: true,
       name: null,
       email: true,
@@ -270,7 +270,7 @@ describe('@mantine/hooks/use-form', () => {
     act(() => {
       hook.result.current.validate();
     });
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       confirmEmail: 'test-confirm-email-error',
       email: 'test-email-error',
@@ -281,7 +281,7 @@ describe('@mantine/hooks/use-form', () => {
   it('supports setting custom error messages', () => {
     const hook = renderHook(() => useForm(MESSAGES_FORM));
     act(() => hook.result.current.setFieldError('email', 'test-external-error'));
-    expect(hook.result.current.errors).toEqual({
+    expect(hook.result.current.errors).toStrictEqual({
       age: null,
       confirmEmail: null,
       email: 'test-external-error',

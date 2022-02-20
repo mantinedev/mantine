@@ -80,6 +80,6 @@ describe('@mantine/core/Select/SelectItems', () => {
   });
 
   it('has correct displayName', () => {
-    expect(SelectItems.displayName).toEqual('@mantine/core/SelectItems');
+    expect(SelectItems.displayName).toStrictEqual('@mantine/core/SelectItems');
   });
 });

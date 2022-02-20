@@ -50,6 +50,6 @@ describe('@mantine/core/Modal', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Modal.displayName).toEqual('@mantine/core/Modal');
+    expect(Modal.displayName).toStrictEqual('@mantine/core/Modal');
   });
 });

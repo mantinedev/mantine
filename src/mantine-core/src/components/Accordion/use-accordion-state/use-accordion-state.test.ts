@@ -16,7 +16,7 @@ describe('@mantine/core/Accordion/use-accordion-state', () => {
       useAccordionState({ ...defaultProps, state: createAccordionState(2) })
     );
 
-    expect(hook.result.current[0]).toEqual({ 0: false, 1: false });
+    expect(hook.result.current[0]).toStrictEqual({ 0: false, 1: false });
   });
 
   it('creates initial state based on initialState value', () => {
@@ -24,17 +24,17 @@ describe('@mantine/core/Accordion/use-accordion-state', () => {
       useAccordionState({ ...defaultProps, initialState: createAccordionState(2) })
     );
 
-    expect(hook.result.current[0]).toEqual({ 0: false, 1: false });
+    expect(hook.result.current[0]).toStrictEqual({ 0: false, 1: false });
   });
 
   it('creates initial state based on initialItem value', () => {
     const hook = renderHook(() => useAccordionState({ ...defaultProps, initialItem: 2 }));
-    expect(hook.result.current[0]).toEqual({ 0: false, 1: false, 2: true });
+    expect(hook.result.current[0]).toStrictEqual({ 0: false, 1: false, 2: true });
   });
 
   it('creates initial state based on items if state and initialState are not provided', () => {
     const hook = renderHook(() => useAccordionState(defaultProps));
-    expect(hook.result.current[0]).toEqual(createAccordionState(defaultProps.total));
+    expect(hook.result.current[0]).toStrictEqual(createAccordionState(defaultProps.total));
   });
 
   it('correctly handles single item changes', () => {
@@ -69,6 +69,6 @@ describe('@mantine/core/Accordion/use-accordion-state', () => {
   it('allows to set state with setState handler', () => {
     const hook = renderHook(() => useAccordionState(defaultProps));
     act(() => hook.result.current[1].setState({ 0: true, 1: true, 2: true, 3: false }));
-    expect(hook.result.current[0]).toEqual({ 0: true, 1: true, 2: true, 3: false });
+    expect(hook.result.current[0]).toStrictEqual({ 0: true, 1: true, 2: true, 3: false });
   });
 });

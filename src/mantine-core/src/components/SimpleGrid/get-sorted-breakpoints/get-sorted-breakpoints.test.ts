@@ -3,7 +3,7 @@ import { getSortedBreakpoints } from './get-sorted-breakpoints';
 
 describe('@mantine/core/SimpleGrid/get-sorted-breakpoints', () => {
   it('returns an empty array if breakpoints are not set', () => {
-    expect(getSortedBreakpoints(DEFAULT_THEME, [])).toEqual([]);
+    expect(getSortedBreakpoints(DEFAULT_THEME, [])).toStrictEqual([]);
   });
 
   it('sorts max-width breakpoints', () => {
@@ -13,7 +13,7 @@ describe('@mantine/core/SimpleGrid/get-sorted-breakpoints', () => {
         { maxWidth: 1200, cols: 4 },
         { maxWidth: 700, cols: 2 },
       ])
-    ).toEqual([
+    ).toStrictEqual([
       { maxWidth: 1200, cols: 4 },
       { maxWidth: 900, cols: 3 },
       { maxWidth: 700, cols: 2 },
@@ -27,7 +27,7 @@ describe('@mantine/core/SimpleGrid/get-sorted-breakpoints', () => {
         { minWidth: 1200, cols: 4 },
         { minWidth: 700, cols: 2 },
       ])
-    ).toEqual([
+    ).toStrictEqual([
       { minWidth: 700, cols: 2 },
       { minWidth: 900, cols: 3 },
       { minWidth: 1200, cols: 4 },

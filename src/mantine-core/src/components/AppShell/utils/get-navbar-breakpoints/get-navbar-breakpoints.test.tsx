@@ -8,7 +8,7 @@ describe('@mantine/core/AppShell/get-navbar-breakpoints', () => {
   it('extracts sorted breakpoints from Navbar component', () => {
     expect(
       getNavbarBreakpoints(<Navbar width={{ sm: 200, md: 300 }}>Navbar</Navbar>, DEFAULT_THEME)
-    ).toEqual(getSortedBreakpoints({ sm: 200, md: 300 }, DEFAULT_THEME));
+    ).toStrictEqual(getSortedBreakpoints({ sm: 200, md: 300 }, DEFAULT_THEME));
   });
 
   it('filters out base width from breakpoints', () => {
@@ -17,6 +17,6 @@ describe('@mantine/core/AppShell/get-navbar-breakpoints', () => {
         <Navbar width={{ base: 100, sm: 200, md: 300 }}>Navbar</Navbar>,
         DEFAULT_THEME
       )
-    ).toEqual(getSortedBreakpoints({ sm: 200, md: 300 }, DEFAULT_THEME));
+    ).toStrictEqual(getSortedBreakpoints({ sm: 200, md: 300 }, DEFAULT_THEME));
   });
 });

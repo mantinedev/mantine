@@ -21,7 +21,7 @@ describe('@mantine/core/MultiSelect/filter-data', () => {
   it('removes selected items from input that is not searchable', () => {
     expect(
       filterData({ ...baseOptions, searchable: false, searchValue: '', value: ['vue', 'ng'] })
-    ).toEqual(data.filter((item) => item.value !== 'vue' && item.value !== 'ng'));
+    ).toStrictEqual(data.filter((item) => item.value !== 'vue' && item.value !== 'ng'));
   });
 
   it('filters items with given filter function', () => {
@@ -36,7 +36,7 @@ describe('@mantine/core/MultiSelect/filter-data', () => {
         searchValue: 'Rea',
         value: [],
       })
-    ).toEqual([{ value: 'react', label: 'React', name: 'React' }]);
+    ).toStrictEqual([{ value: 'react', label: 'React', name: 'React' }]);
   });
 
   it('limits data during search based on limit prop', () => {

@@ -53,6 +53,6 @@ describe('@mantine/core/Month/Day', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Day.displayName).toEqual('@mantine/core/Day');
+    expect(Day.displayName).toStrictEqual('@mantine/core/Day');
   });
 });

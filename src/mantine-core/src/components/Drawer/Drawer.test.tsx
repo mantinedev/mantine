@@ -46,6 +46,6 @@ describe('@mantine/core/Drawer', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Drawer.displayName).toEqual('@mantine/core/Drawer');
+    expect(Drawer.displayName).toStrictEqual('@mantine/core/Drawer');
   });
 });
