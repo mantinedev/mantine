@@ -2,6 +2,7 @@ import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
+import { Spotlight } from './Spotlight/Spotlight';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
@@ -69,6 +70,7 @@ export function SpotlightProvider({
         actions,
       }}
     >
+      <Spotlight actions={actions} onClose={close} opened={opened} />
       {children}
     </SpotlightContext.Provider>
   );
