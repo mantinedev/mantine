@@ -24,6 +24,8 @@ function Demo() {
   const showSingleConfirmModal = () =>
     modals.openConfirmModal({
       title: 'Just confirm',
+      onCancel: () => console.log('Single confirm modal cancelled'),
+      onConfirm: () => console.log('Single confirm modal confirmed'),
       onClose: () => console.log('Single confirm modal closed'),
     });
 

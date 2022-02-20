@@ -61,8 +61,14 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     props: null,
     type: 'content',
   });
-  const closeAll = () => {
-    state.forEach((modal) => modal.props?.onClose?.());
+  const closeAll = (canceled?: boolean) => {
+    state.forEach((modal) => {
+      if (modal.type === 'confirm' && canceled) {
+        modal.props?.onCancel?.();
+      }
+
+      modal.props?.onClose?.();
+    });
     handlers.setState([]);
   };
 
@@ -87,12 +93,15 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     return id;
   };
 
-  const closeModal = (id: string) => {
+  const closeModal = (id: string, canceled?: boolean) => {
     const index = state.findIndex((item) => item.id === id);
     if (state.length <= 1) {
-      closeAll();
+      closeAll(canceled);
     } else {
       const modal = state.find((item) => item.id === id);
+      if (modal?.type === 'confirm' && canceled) {
+        modal.props?.onCancel?.();
+      }
       modal?.props?.onClose?.();
       index !== -1 && handlers.remove(index);
       setCurrentModal(
@@ -137,7 +146,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
           ? extractConfirmModalProps(currentModal?.props)
           : currentModal?.props)}
         opened={state.length > 0}
-        onClose={() => closeModal(currentModal?.id)}
+        onClose={() => closeModal(currentModal?.id, true)}
       >
         {content}
       </Modal>
