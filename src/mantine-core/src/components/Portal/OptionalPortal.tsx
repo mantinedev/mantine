@@ -11,7 +11,7 @@ export function OptionalPortal({ withinPortal = true, children, ...others }: Opt
     return <Portal {...others}>{children}</Portal>;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
 OptionalPortal.displayName = '@mantine/core/OptionalPortal';

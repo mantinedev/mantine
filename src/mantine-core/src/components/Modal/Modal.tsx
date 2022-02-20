@@ -14,7 +14,7 @@ import { CloseButton } from '../ActionIcon';
 import { Text } from '../Text';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
-import { Portal } from '../Portal';
+import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles from './Modal.styles';
@@ -89,6 +89,9 @@ export interface ModalProps
 
   /** Target element or selector where modal portal should be rendered */
   target?: HTMLElement | string;
+
+  /** Determines whether modal should be rendered within Portal, defaults to true */
+  withinPortal?: boolean;
 }
 
 const defaultProps: Partial<ModalProps> = {
@@ -102,9 +105,11 @@ const defaultProps: Partial<ModalProps> = {
   closeOnEscape: true,
   trapFocus: true,
   withCloseButton: true,
+  withinPortal: true,
+  zIndex: getDefaultZIndex('modal'),
 };
 
-export function MantineModal(props: ModalProps) {
+export function Modal(props: ModalProps) {
   const {
     className,
     opened,
@@ -130,13 +135,15 @@ export function MantineModal(props: ModalProps) {
     closeOnEscape,
     centered,
     target,
+    withinPortal,
+    zIndex,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useUuid(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
-    { size, overflow, centered },
+    { size, overflow, centered, zIndex },
     { classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
@@ -167,96 +174,87 @@ export function MantineModal(props: ModalProps) {
   useFocusReturn({ opened, transitionDuration });
 
   return (
-    <GroupedTransition
-      onExited={() => lockScroll(false)}
-      onEntered={() => lockScroll(true)}
-      mounted={opened}
-      transitions={{
-        modal: { duration: transitionDuration, transition },
-        overlay: {
-          duration: transitionDuration / 2,
-          transition: 'fade',
-          timingFunction: 'ease',
-        },
-      }}
-    >
-      {(transitionStyles) => (
-        <Box className={cx(classes.root, className)} {...others}>
-          <div
-            className={classes.inner}
-            onMouseDown={() => closeOnClickOutside && onClose()}
-            onKeyDownCapture={(event) => {
-              const shouldTrigger =
-                (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-              shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
-            }}
-            ref={focusTrapRef}
-          >
-            <Paper<'div'>
-              onMouseDown={(event) => event.stopPropagation()}
-              className={classes.modal}
-              shadow={shadow}
-              padding={padding}
-              radius={radius}
-              role="dialog"
-              aria-labelledby={titleId}
-              aria-describedby={bodyId}
-              aria-modal
-              tabIndex={-1}
-              style={{
-                ...transitionStyles.modal,
-                marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
-                zIndex: 3,
+    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+      <GroupedTransition
+        onExited={() => lockScroll(false)}
+        onEntered={() => lockScroll(true)}
+        mounted={opened}
+        transitions={{
+          modal: { duration: transitionDuration, transition },
+          overlay: {
+            duration: transitionDuration / 2,
+            transition: 'fade',
+            timingFunction: 'ease',
+          },
+        }}
+      >
+        {(transitionStyles) => (
+          <Box className={cx(classes.root, className)} {...others}>
+            <div
+              className={classes.inner}
+              onMouseDown={() => closeOnClickOutside && onClose()}
+              onKeyDownCapture={(event) => {
+                const shouldTrigger =
+                  (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
               }}
+              ref={focusTrapRef}
             >
-              {(title || withCloseButton) && (
-                <div className={classes.header}>
-                  <Text id={titleId} className={classes.title}>
-                    {title}
-                  </Text>
+              <Paper<'div'>
+                onMouseDown={(event) => event.stopPropagation()}
+                className={classes.modal}
+                shadow={shadow}
+                padding={padding}
+                radius={radius}
+                role="dialog"
+                aria-labelledby={titleId}
+                aria-describedby={bodyId}
+                aria-modal
+                tabIndex={-1}
+                style={{
+                  ...transitionStyles.modal,
+                  marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+                  zIndex: 3,
+                }}
+              >
+                {(title || withCloseButton) && (
+                  <div className={classes.header}>
+                    <Text id={titleId} className={classes.title}>
+                      {title}
+                    </Text>
 
-                  {withCloseButton && (
-                    <CloseButton
-                      iconSize={16}
-                      onClick={onClose}
-                      aria-label={closeButtonLabel}
-                      className={classes.close}
-                    />
-                  )}
+                    {withCloseButton && (
+                      <CloseButton
+                        iconSize={16}
+                        onClick={onClose}
+                        aria-label={closeButtonLabel}
+                        className={classes.close}
+                      />
+                    )}
+                  </div>
+                )}
+
+                <div id={bodyId} className={classes.body}>
+                  {children}
                 </div>
-              )}
+              </Paper>
+            </div>
 
-              <div id={bodyId} className={classes.body}>
-                {children}
-              </div>
-            </Paper>
-          </div>
-
-          <div style={transitionStyles.overlay}>
-            <Overlay
-              className={classes.overlay}
-              zIndex={0}
-              color={
-                overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
-              }
-              opacity={_overlayOpacity}
-            />
-          </div>
-        </Box>
-      )}
-    </GroupedTransition>
-  );
-}
-
-export function Modal({
-  zIndex = getDefaultZIndex('modal'),
-  target,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof MantineModal>) {
-  return (
-    <Portal zIndex={zIndex} target={target}>
-      <MantineModal {...props} />
-    </Portal>
+            <div style={transitionStyles.overlay}>
+              <Overlay
+                className={classes.overlay}
+                zIndex={0}
+                color={
+                  overlayColor ||
+                  (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
+                }
+                opacity={_overlayOpacity}
+              />
+            </div>
+          </Box>
+        )}
+      </GroupedTransition>
+    </OptionalPortal>
   );
 }
 
