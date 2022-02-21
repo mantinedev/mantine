@@ -60,7 +60,7 @@ export const Overlay: OverlayComponent = forwardRef(
       zIndex,
     };
 
-    const OverlayBox = (
+    const innerOverlay = (
       <Box<any>
         component={component || 'div'}
         ref={ref}
@@ -87,13 +87,14 @@ export const Overlay: OverlayComponent = forwardRef(
             }),
             sx,
           ]}
+          {...others}
         >
-          {OverlayBox}
+          {innerOverlay}
         </Box>
       );
     }
 
-    return OverlayBox;
+    return innerOverlay;
   }
 );
 
