@@ -12,6 +12,10 @@ export default createStyles((theme) => ({
     },
   },
 
+  actionHovered: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+  },
+
   actionIcon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
   },

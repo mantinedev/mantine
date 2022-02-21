@@ -5,15 +5,25 @@ import useStyles from './Action.styles';
 
 export type ActionStylesNames = ClassNames<typeof useStyles>;
 
-interface ActionProps extends DefaultProps<ActionStylesNames> {
+interface ActionProps
+  extends DefaultProps<ActionStylesNames>,
+    React.ComponentPropsWithoutRef<'button'> {
   action: SpotlightAction;
+  hovered: boolean;
+  onTrigger(): void;
 }
 
-export function Action({ action, styles, classNames }: ActionProps) {
-  const { classes } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+export function Action({ action, styles, classNames, hovered, onTrigger, ...others }: ActionProps) {
+  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
-    <UnstyledButton className={classes.action}>
+    <UnstyledButton
+      className={cx(classes.action, { [classes.actionHovered]: hovered })}
+      tabIndex={-1}
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={onTrigger}
+      {...others}
+    >
       <Group noWrap>
         {action.icon && <Center className={classes.actionIcon}>{action.icon}</Center>}
 

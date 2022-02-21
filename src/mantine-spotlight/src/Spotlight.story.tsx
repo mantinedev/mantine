@@ -110,4 +110,7 @@ storiesOf('@mantine/spotlight', module)
     />
   ))
   .add('Limit', () => <Wrapper {...defaultProps} actions={LARGE_ACTIONS_SET} limit={5} />)
-  .add('Dynamic actions', () => <DynamicActions />);
+  .add('Dynamic actions', () => <DynamicActions />)
+  .add('closeOnActionTrigger: false', () => (
+    <Wrapper {...defaultProps} closeOnActionTrigger={false} />
+  ));
