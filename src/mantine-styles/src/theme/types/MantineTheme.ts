@@ -46,6 +46,7 @@ export interface MantineTheme {
 
   fontSizes: MantineSizes;
   radius: MantineSizes;
+  blur: MantineSizes;
   spacing: MantineSizes;
   breakpoints: MantineSizes;
   shadows: Record<MantineSize, string>;
