@@ -26,6 +26,7 @@ export interface InnerSpotlightProps
   shadow?: MantineShadow;
   center?: boolean;
   maxWidth?: number;
+  topOffset?: number;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -48,11 +49,12 @@ export function Spotlight({
   shadow = 'md',
   center = false,
   maxWidth = 600,
+  topOffset = 120,
   className,
   ...others
 }: SpotlightProps) {
   const { classes, theme, cx } = useStyles(
-    { center, maxWidth },
+    { center, maxWidth, topOffset },
     { classNames, styles, name: 'Spotlight' }
   );
   const _overlayColor =

@@ -3,9 +3,10 @@ import { createStyles } from '@mantine/core';
 export interface SpotlightStylesParams {
   center: boolean;
   maxWidth: number;
+  topOffset: number;
 }
 
-export default createStyles((theme, { center, maxWidth }: SpotlightStylesParams) => ({
+export default createStyles((theme, { center, maxWidth, topOffset }: SpotlightStylesParams) => ({
   root: {
     ...theme.fn.cover(),
     position: 'fixed',
@@ -29,6 +30,7 @@ export default createStyles((theme, { center, maxWidth }: SpotlightStylesParams)
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    paddingTop: center ? theme.spacing.md : topOffset,
     justifyContent: center ? 'center' : 'flex-start',
     alignItems: 'center',
   },
