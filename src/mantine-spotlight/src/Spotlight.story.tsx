@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
@@ -40,18 +40,17 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
 }
 
 function DynamicActions() {
-  const [query, setQuery] = useState('');
-
-  const actions: SpotlightAction[] =
-    query.trim().length > 0
-      ? [
-          { title: `Search docs: ${query}`, onTrigger: () => console.log('Search') },
-          { title: `Create new ticket: ${query}`, onTrigger: () => console.log('Search') },
-        ]
-      : [];
-
   return (
-    <SpotlightProvider onQueryChange={setQuery} actions={actions}>
+    <SpotlightProvider
+      actions={(query) =>
+        query.trim().length > 0
+          ? [
+              { title: `Search docs: ${query}`, onTrigger: () => console.log('Search') },
+              { title: `Create new ticket: ${query}`, onTrigger: () => console.log('Search') },
+            ]
+          : []
+      }
+    >
       <Control />
     </SpotlightProvider>
   );

@@ -7,7 +7,7 @@ import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
-  actions: SpotlightAction[];
+  actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
   children: React.ReactNode;
   onSpotlightOpen?(): void;
   onSpotlightClose?(): void;
@@ -25,8 +25,10 @@ export function SpotlightProvider({
   ...others
 }: SpotlightProviderProps) {
   const [query, setQuery] = useState('');
-  const [actions, { registerActions, removeActions, triggerAction }] =
-    useActionsState(initialActions);
+  const [actions, { registerActions, removeActions, triggerAction }] = useActionsState(
+    initialActions,
+    query
+  );
 
   const [opened, { open, close, toggle }] = useDisclosure(true, {
     onClose: onSpotlightClose,
