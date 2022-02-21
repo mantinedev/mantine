@@ -9,6 +9,7 @@ import {
   ClassNames,
   MantineShadow,
   TextInput,
+  Text,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap } from '@mantine/hooks';
 import { Action, ActionStylesNames } from '../Action/Action';
@@ -34,6 +35,7 @@ export interface InnerSpotlightProps
   searchIcon?: React.ReactNode;
   onQueryChange?(query: string): void;
   filter?(query: string, actions: SpotlightAction[]): SpotlightAction[];
+  nothingFoundMessage?: React.ReactNode;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -62,6 +64,7 @@ export function Spotlight({
   searchIcon,
   onQueryChange,
   filter = filterActions,
+  nothingFoundMessage,
   ...others
 }: SpotlightProps) {
   const [query, setQuery] = useState('');
@@ -82,6 +85,8 @@ export function Spotlight({
   const items = filter(query, actions).map((action) => (
     <Action key={action.id} action={action} classNames={classNames} styles={styles} />
   ));
+
+  const shouldRenderActions = items.length > 0 || !!nothingFoundMessage;
 
   return (
     <OptionalPortal withinPortal={withinPortal}>
@@ -119,7 +124,23 @@ export function Spotlight({
                   icon={searchIcon}
                 />
 
-                <div className={classes.actions}>{items}</div>
+                {shouldRenderActions && (
+                  <div className={classes.actions}>
+                    {items.length > 0 ? (
+                      items
+                    ) : (
+                      <Text
+                        color="dimmed"
+                        className={classes.nothingFound}
+                        align="center"
+                        size="lg"
+                        py="md"
+                      >
+                        {nothingFoundMessage}
+                      </Text>
+                    )}
+                  </div>
+                )}
               </Paper>
 
               <div style={transitionStyles.overlay}>

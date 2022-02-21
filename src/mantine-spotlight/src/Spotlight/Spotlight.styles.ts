@@ -7,6 +7,8 @@ export interface SpotlightStylesParams {
 }
 
 export default createStyles((theme, { centered, maxWidth, topOffset }: SpotlightStylesParams) => ({
+  nothingFound: {},
+
   root: {
     ...theme.fn.cover(),
     position: 'fixed',
@@ -19,6 +21,7 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
     borderRadius: theme.radius.sm,
     width: '100%',
     maxWidth,
+    overflow: 'hidden',
   },
 
   overlay: {

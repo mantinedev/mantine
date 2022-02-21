@@ -34,12 +34,13 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
 const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
   actions: DEFAULT_ACTIONS,
   searchPlaceholder: 'Search...',
-  searchIcon: <Search size={18} />,
+  nothingFoundMessage: 'Nothing found...',
 };
 
 storiesOf('@mantine/spotlight', module)
-  .add('Default', () => <Wrapper {...defaultProps} searchIcon={null} />)
+  .add('Default', () => <Wrapper {...defaultProps} />)
   .add('Centered', () => <Wrapper {...defaultProps} centered />)
+  .add('With search icon', () => <Wrapper {...defaultProps} searchIcon={<Search size={18} />} />)
   .add('Custom filter', () => (
     <Wrapper
       {...defaultProps}
