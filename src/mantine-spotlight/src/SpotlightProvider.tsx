@@ -1,56 +1,40 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineTransition, DefaultProps } from '@mantine/core';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
-import { Spotlight } from './Spotlight/Spotlight';
+import { Spotlight, SpotlightStylesNames } from './Spotlight/Spotlight';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
-export interface SpotlightProviderProps {
+export interface SpotlightProviderProps
+  extends DefaultProps<SpotlightStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   actions: SpotlightAction[];
   children: React.ReactNode;
   onSpotlightOpen?(): void;
   onSpotlightClose?(): void;
   shortcut?: string | string[];
-}
-
-export interface SpotlightContextProps {
-  /** Opens spotlight */
-  openSpotlight(): void;
-
-  /** Closes spotlight */
-  closeSpotlight(): void;
-
-  /** Toggles spotlight opened state */
-  toggleSpotlight(): void;
-
-  /** Triggers action with given id */
-  triggerAction(actionId: string): void;
-
-  /** Registers additional actions */
-  registerActions(action: SpotlightAction[]): void;
-
-  /** Removes actions with given ids */
-  removeActions(actionIds: string[]): void;
-
-  /** Current opened state */
-  opened: boolean;
-
-  /** List of registered actions */
-  actions: SpotlightAction[];
+  withinPortal?: boolean;
+  transition?: MantineTransition;
+  transitionDuration?: number;
 }
 
 export function SpotlightProvider({
   actions: initialActions,
   children,
   shortcut = 'mod + K',
+  withinPortal = true,
+  transition = 'pop',
+  transitionDuration = 150,
   onSpotlightClose,
   onSpotlightOpen,
+  ...others
 }: SpotlightProviderProps) {
   const [actions, { registerActions, removeActions, triggerAction }] =
     useActionsState(initialActions);
 
-  const [opened, { open, close, toggle }] = useDisclosure(false, {
+  const [opened, { open, close, toggle }] = useDisclosure(true, {
     onClose: onSpotlightClose,
     onOpen: onSpotlightOpen,
   });
@@ -70,7 +54,15 @@ export function SpotlightProvider({
         actions,
       }}
     >
-      <Spotlight actions={actions} onClose={close} opened={opened} />
+      <Spotlight
+        actions={actions}
+        onClose={close}
+        opened={opened}
+        withinPortal={withinPortal}
+        transition={transition}
+        transitionDuration={transitionDuration}
+        {...others}
+      />
       {children}
     </SpotlightContext.Provider>
   );
