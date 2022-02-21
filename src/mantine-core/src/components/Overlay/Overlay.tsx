@@ -6,6 +6,7 @@ import {
   DefaultProps,
   getDefaultZIndex,
   useMantineDefaultProps,
+  CSSObject,
 } from '@mantine/styles';
 import { Box } from '../Box';
 
@@ -51,8 +52,8 @@ export const Overlay: OverlayComponent = forwardRef(
       useMantineDefaultProps('Overlay', defaultProps, props);
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
-    const baseStyles = {
-      position: 'absolute' as React.CSSProperties['position'],
+    const baseStyles: CSSObject = {
+      position: 'absolute',
       top: 0,
       bottom: 0,
       left: 0,
@@ -60,7 +61,7 @@ export const Overlay: OverlayComponent = forwardRef(
       zIndex,
     };
 
-    const innerOverlay = (
+    const innerOverlay = (otherProps?: Record<string, any>) => (
       <Box<any>
         component={component || 'div'}
         ref={ref}
@@ -73,7 +74,7 @@ export const Overlay: OverlayComponent = forwardRef(
           }),
           sx,
         ]}
-        {...others}
+        {...otherProps}
       />
     );
 
@@ -89,12 +90,12 @@ export const Overlay: OverlayComponent = forwardRef(
           ]}
           {...others}
         >
-          {innerOverlay}
+          {innerOverlay()}
         </Box>
       );
     }
 
-    return innerOverlay;
+    return innerOverlay(others);
   }
 );
 
