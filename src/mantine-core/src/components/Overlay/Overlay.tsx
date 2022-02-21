@@ -17,7 +17,7 @@ interface _OverlayProps extends DefaultProps {
   color?: React.CSSProperties['backgroundColor'];
 
   /** Overlay background blur in px */
-  blur?: MantineNumberSize;
+  blur?: number;
 
   /** Use gradient instead of background-color */
   gradient?: string;
@@ -81,9 +81,9 @@ export const Overlay: OverlayComponent = forwardRef(
       return (
         <Box
           sx={[
-            (theme) => ({
+            () => ({
               ...baseStyles,
-              backdropFilter: `blur(${theme.fn.size({ size: blur, sizes: theme.blur })}px)`,
+              backdropFilter: `blur(${blur}px)`,
             }),
             sx,
           ]}
