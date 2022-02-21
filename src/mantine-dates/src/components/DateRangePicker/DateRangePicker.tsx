@@ -59,7 +59,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       classNames,
       styles,
       shadow = 'sm',
-      locale = 'en',
+      locale,
       inputFormat,
       transitionDuration = 200,
       transitionTimingFunction,
