@@ -10,9 +10,17 @@ const DEFAULT_ACTIONS: SpotlightAction[] = [
     title: 'Action 1',
     description: 'This action will trigger something important',
     onTrigger: () => console.log('Action 1'),
+    keywords: 'home, work',
   },
-  { title: 'Action 2', onTrigger: () => console.log('Action 2') },
+  { title: 'Action 2', onTrigger: () => console.log('Action 2'), keywords: ['hello', 'there'] },
 ];
+
+const LARGE_ACTIONS_SET: SpotlightAction[] = Array(100)
+  .fill(0)
+  .map((_, index) => ({
+    title: `Action ${index + 1}`,
+    onTrigger: () => console.log('Action'),
+  }));
 
 function Control() {
   const spotlight = useSpotlight();
@@ -81,4 +89,5 @@ storiesOf('@mantine/spotlight', module)
       {...defaultProps}
       filter={(query, actions) => actions.filter((action) => action.title.includes(query))}
     />
-  ));
+  ))
+  .add('Limit', () => <Wrapper {...defaultProps} actions={LARGE_ACTIONS_SET} limit={5} />);

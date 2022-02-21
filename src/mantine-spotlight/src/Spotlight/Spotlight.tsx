@@ -36,6 +36,7 @@ export interface InnerSpotlightProps
   onQueryChange?(query: string): void;
   filter?(query: string, actions: SpotlightAction[]): SpotlightAction[];
   nothingFoundMessage?: React.ReactNode;
+  limit?: number;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -65,6 +66,7 @@ export function Spotlight({
   onQueryChange,
   filter = filterActions,
   nothingFoundMessage,
+  limit = 10,
   ...others
 }: SpotlightProps) {
   const [query, setQuery] = useState('');
@@ -82,9 +84,11 @@ export function Spotlight({
     onQueryChange?.(value);
   };
 
-  const items = filter(query, actions).map((action) => (
-    <Action key={action.id} action={action} classNames={classNames} styles={styles} />
-  ));
+  const items = filter(query, actions)
+    .slice(0, limit)
+    .map((action) => (
+      <Action key={action.id} action={action} classNames={classNames} styles={styles} />
+    ));
 
   const shouldRenderActions = items.length > 0 || !!nothingFoundMessage;
 
