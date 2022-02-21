@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineTransition, DefaultProps } from '@mantine/core';
+import { MantineTransition, DefaultProps, MantineShadow } from '@mantine/core';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
 import { Spotlight, SpotlightStylesNames } from './Spotlight/Spotlight';
@@ -18,15 +18,15 @@ export interface SpotlightProviderProps
   withinPortal?: boolean;
   transition?: MantineTransition;
   transitionDuration?: number;
+  overlayColor?: string;
+  overlayOpacity?: number;
+  shadow?: MantineShadow;
 }
 
 export function SpotlightProvider({
   actions: initialActions,
   children,
   shortcut = 'mod + K',
-  withinPortal = true,
-  transition = 'pop',
-  transitionDuration = 150,
   onSpotlightClose,
   onSpotlightOpen,
   ...others
@@ -54,15 +54,7 @@ export function SpotlightProvider({
         actions,
       }}
     >
-      <Spotlight
-        actions={actions}
-        onClose={close}
-        opened={opened}
-        withinPortal={withinPortal}
-        transition={transition}
-        transitionDuration={transitionDuration}
-        {...others}
-      />
+      <Spotlight actions={actions} onClose={close} opened={opened} {...others} />
       {children}
     </SpotlightContext.Provider>
   );
