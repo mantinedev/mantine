@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   OptionalPortal,
   GroupedTransition,
@@ -33,7 +33,6 @@ export interface InnerSpotlightProps
   topOffset?: number;
   searchPlaceholder?: string;
   searchIcon?: React.ReactNode;
-  onQueryChange?(query: string): void;
   filter?(query: string, actions: SpotlightAction[]): SpotlightAction[];
   nothingFoundMessage?: React.ReactNode;
   limit?: number;
@@ -43,9 +42,13 @@ interface SpotlightProps extends InnerSpotlightProps {
   actions: SpotlightAction[];
   onClose(): void;
   opened: boolean;
+  query: string;
+  onQueryChange(query: string): void;
 }
 
 export function Spotlight({
+  query,
+  onQueryChange,
   actions,
   onClose,
   opened,
@@ -63,13 +66,11 @@ export function Spotlight({
   className,
   searchPlaceholder,
   searchIcon,
-  onQueryChange,
   filter = filterActions,
   nothingFoundMessage,
   limit = 10,
   ...others
 }: SpotlightProps) {
-  const [query, setQuery] = useState('');
   const { classes, cx } = useStyles(
     { centered, maxWidth, topOffset },
     { classNames, styles, name: 'Spotlight' }
@@ -77,12 +78,6 @@ export function Spotlight({
 
   const [, lockScroll] = useScrollLock();
   const focusTrapRef = useFocusTrap(opened);
-
-  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    setQuery(value);
-    onQueryChange?.(value);
-  };
 
   const items = filter(query, actions)
     .slice(0, limit)
@@ -121,7 +116,7 @@ export function Spotlight({
               >
                 <TextInput
                   value={query}
-                  onChange={handleQueryChange}
+                  onChange={(event) => onQueryChange(event.currentTarget.value)}
                   classNames={{ input: classes.searchInput }}
                   size="lg"
                   placeholder={searchPlaceholder}

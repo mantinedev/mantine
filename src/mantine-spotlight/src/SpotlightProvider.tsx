@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
@@ -11,6 +11,7 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
   children: React.ReactNode;
   onSpotlightOpen?(): void;
   onSpotlightClose?(): void;
+  onQueryChange?(query: string): void;
   shortcut?: string | string[];
 }
 
@@ -20,8 +21,10 @@ export function SpotlightProvider({
   shortcut = 'mod + K',
   onSpotlightClose,
   onSpotlightOpen,
+  onQueryChange,
   ...others
 }: SpotlightProviderProps) {
+  const [query, setQuery] = useState('');
   const [actions, { registerActions, removeActions, triggerAction }] =
     useActionsState(initialActions);
 
@@ -29,6 +32,11 @@ export function SpotlightProvider({
     onClose: onSpotlightClose,
     onOpen: onSpotlightOpen,
   });
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    onQueryChange?.(value);
+  };
 
   useSpotlightShortcuts(shortcut, toggle);
 
@@ -45,7 +53,14 @@ export function SpotlightProvider({
         actions,
       }}
     >
-      <Spotlight actions={actions} onClose={close} opened={opened} {...others} />
+      <Spotlight
+        actions={actions}
+        onClose={close}
+        opened={opened}
+        query={query}
+        onQueryChange={handleQueryChange}
+        {...others}
+      />
       {children}
     </SpotlightContext.Provider>
   );

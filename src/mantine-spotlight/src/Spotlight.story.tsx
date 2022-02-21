@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
@@ -34,6 +34,24 @@ function Control() {
 function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
   return (
     <SpotlightProvider {...props}>
+      <Control />
+    </SpotlightProvider>
+  );
+}
+
+function DynamicActions() {
+  const [query, setQuery] = useState('');
+
+  const actions: SpotlightAction[] =
+    query.trim().length > 0
+      ? [
+          { title: `Search docs: ${query}`, onTrigger: () => console.log('Search') },
+          { title: `Create new ticket: ${query}`, onTrigger: () => console.log('Search') },
+        ]
+      : [];
+
+  return (
+    <SpotlightProvider onQueryChange={setQuery} actions={actions}>
       <Control />
     </SpotlightProvider>
   );
@@ -90,4 +108,5 @@ storiesOf('@mantine/spotlight', module)
       filter={(query, actions) => actions.filter((action) => action.title.includes(query))}
     />
   ))
-  .add('Limit', () => <Wrapper {...defaultProps} actions={LARGE_ACTIONS_SET} limit={5} />);
+  .add('Limit', () => <Wrapper {...defaultProps} actions={LARGE_ACTIONS_SET} limit={5} />)
+  .add('Dynamic actions', () => <DynamicActions />);
