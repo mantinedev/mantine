@@ -53,7 +53,7 @@ export function Portal({
   }
 
   return createPortal(
-    <div className={className} dir={theme.dir} style={{ position, zIndex }}>
+    <div className={className} dir={theme.dir} style={{ position: position as any, zIndex }}>
       {children}
     </div>,
     ref.current
