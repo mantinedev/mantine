@@ -43,15 +43,12 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-
-    '&, &:focus': {
-      borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-      } !important`,
-    },
   },
 
   actions: {
     padding: 5,
+    borderTop: `1px solid ${
+      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
   },
 }));

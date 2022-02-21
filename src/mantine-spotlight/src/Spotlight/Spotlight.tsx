@@ -85,7 +85,8 @@ export function Spotlight({
       <Action key={action.id} action={action} classNames={classNames} styles={styles} />
     ));
 
-  const shouldRenderActions = items.length > 0 || !!nothingFoundMessage;
+  const shouldRenderActions =
+    items.length > 0 || (!!nothingFoundMessage && query.trim().length > 0);
 
   return (
     <OptionalPortal withinPortal={withinPortal}>

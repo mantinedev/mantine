@@ -42,6 +42,8 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
 function DynamicActions() {
   return (
     <SpotlightProvider
+      nothingFoundMessage="Nothing found"
+      placeholder="Dynamic actions"
       actions={(query) =>
         query.trim().length > 0
           ? [
