@@ -13,6 +13,7 @@ import {
 import { useScrollLock, useFocusTrap } from '@mantine/hooks';
 import { Action, ActionStylesNames } from '../Action/Action';
 import type { SpotlightAction } from '../types';
+import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
 export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionStylesNames;
@@ -32,6 +33,7 @@ export interface InnerSpotlightProps
   searchPlaceholder?: string;
   searchIcon?: React.ReactNode;
   onQueryChange?(query: string): void;
+  filter?(query: string, actions: SpotlightAction[]): SpotlightAction[];
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -59,6 +61,7 @@ export function Spotlight({
   searchPlaceholder,
   searchIcon,
   onQueryChange,
+  filter = filterActions,
   ...others
 }: SpotlightProps) {
   const [query, setQuery] = useState('');
@@ -76,7 +79,7 @@ export function Spotlight({
     onQueryChange?.(value);
   };
 
-  const items = actions.map((action) => (
+  const items = filter(query, actions).map((action) => (
     <Action key={action.id} action={action} classNames={classNames} styles={styles} />
   ));
 

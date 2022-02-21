@@ -39,4 +39,10 @@ const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
 
 storiesOf('@mantine/spotlight', module)
   .add('Default', () => <Wrapper {...defaultProps} searchIcon={null} />)
-  .add('Centered', () => <Wrapper centered {...defaultProps} />);
+  .add('Centered', () => <Wrapper {...defaultProps} centered />)
+  .add('Custom filter', () => (
+    <Wrapper
+      {...defaultProps}
+      filter={(query, actions) => actions.filter((action) => action.title.includes(query))}
+    />
+  ));
