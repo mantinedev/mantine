@@ -6,7 +6,11 @@ import { Search } from 'tabler-icons-react';
 import { SpotlightProvider, useSpotlight, SpotlightProviderProps, SpotlightAction } from '.';
 
 const DEFAULT_ACTIONS: SpotlightAction[] = [
-  { title: 'Action 1', onTrigger: () => console.log('Action 1') },
+  {
+    title: 'Action 1',
+    description: 'This action will trigger something important',
+    onTrigger: () => console.log('Action 1'),
+  },
   { title: 'Action 2', onTrigger: () => console.log('Action 2') },
 ];
 
@@ -29,10 +33,10 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
 
 const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
   actions: DEFAULT_ACTIONS,
-  searchPlaceholder: 'Search',
+  searchPlaceholder: 'Search...',
   searchIcon: <Search size={18} />,
 };
 
 storiesOf('@mantine/spotlight', module)
-  .add('Default', () => <Wrapper {...defaultProps} />)
+  .add('Default', () => <Wrapper {...defaultProps} searchIcon={null} />)
   .add('Centered', () => <Wrapper centered {...defaultProps} />);

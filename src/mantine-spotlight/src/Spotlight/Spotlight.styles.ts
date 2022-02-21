@@ -37,5 +37,17 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
 
   searchInput: {
     border: 0,
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0,
+
+    '&, &:focus': {
+      borderBottom: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[2]
+      }`,
+    },
+  },
+
+  actions: {
+    padding: 5,
   },
 }));

@@ -10,11 +10,12 @@ import {
   MantineShadow,
   TextInput,
 } from '@mantine/core';
-import { useScrollLock } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap } from '@mantine/hooks';
+import { Action, ActionStylesNames } from '../Action/Action';
 import type { SpotlightAction } from '../types';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles>;
+export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
@@ -67,12 +68,17 @@ export function Spotlight({
   );
 
   const [, lockScroll] = useScrollLock();
+  const focusTrapRef = useFocusTrap(opened);
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     setQuery(value);
     onQueryChange?.(value);
   };
+
+  const items = actions.map((action) => (
+    <Action key={action.id} action={action} classNames={classNames} styles={styles} />
+  ));
 
   return (
     <OptionalPortal withinPortal={withinPortal}>
@@ -95,7 +101,7 @@ export function Spotlight({
       >
         {(transitionStyles) => (
           <div className={cx(classes.root, className)} {...others}>
-            <div className={classes.inner}>
+            <div className={classes.inner} ref={focusTrapRef}>
               <Paper
                 style={transitionStyles.spotlight}
                 className={classes.spotlight}
@@ -109,6 +115,8 @@ export function Spotlight({
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                 />
+
+                <div className={classes.actions}>{items}</div>
               </Paper>
 
               <div style={transitionStyles.overlay}>
