@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   OptionalPortal,
   GroupedTransition,
@@ -8,6 +8,7 @@ import {
   DefaultProps,
   ClassNames,
   MantineShadow,
+  TextInput,
 } from '@mantine/core';
 import { useScrollLock } from '@mantine/hooks';
 import type { SpotlightAction } from '../types';
@@ -24,9 +25,12 @@ export interface InnerSpotlightProps
   overlayColor?: string;
   overlayOpacity?: number;
   shadow?: MantineShadow;
-  center?: boolean;
+  centered?: boolean;
   maxWidth?: number;
   topOffset?: number;
+  searchPlaceholder?: string;
+  searchIcon?: React.ReactNode;
+  onQueryChange?(query: string): void;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -47,19 +51,28 @@ export function Spotlight({
   overlayColor = '#000',
   overlayOpacity = 0.65,
   shadow = 'md',
-  center = false,
+  centered = false,
   maxWidth = 600,
   topOffset = 120,
   className,
+  searchPlaceholder,
+  searchIcon,
+  onQueryChange,
   ...others
 }: SpotlightProps) {
-  const { classes, theme, cx } = useStyles(
-    { center, maxWidth, topOffset },
+  const [query, setQuery] = useState('');
+  const { classes, cx } = useStyles(
+    { centered, maxWidth, topOffset },
     { classNames, styles, name: 'Spotlight' }
   );
-  const _overlayColor =
-    overlayColor || theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white;
+
   const [, lockScroll] = useScrollLock();
+
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    setQuery(value);
+    onQueryChange?.(value);
+  };
 
   return (
     <OptionalPortal withinPortal={withinPortal}>
@@ -88,7 +101,14 @@ export function Spotlight({
                 className={classes.spotlight}
                 shadow={shadow}
               >
-                spotlight
+                <TextInput
+                  value={query}
+                  onChange={handleQueryChange}
+                  classNames={{ input: classes.searchInput }}
+                  size="lg"
+                  placeholder={searchPlaceholder}
+                  icon={searchIcon}
+                />
               </Paper>
 
               <div style={transitionStyles.overlay}>
@@ -96,7 +116,7 @@ export function Spotlight({
                   className={classes.overlay}
                   zIndex={1}
                   onMouseDown={onClose}
-                  color={_overlayColor}
+                  color={overlayColor}
                   opacity={overlayOpacity}
                 />
               </div>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
+import { Search } from 'tabler-icons-react';
 import { SpotlightProvider, useSpotlight, SpotlightProviderProps, SpotlightAction } from '.';
 
 const DEFAULT_ACTIONS: SpotlightAction[] = [
@@ -26,6 +27,12 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
   );
 }
 
-storiesOf('@mantine/spotlight', module).add('Initial actions', () => (
-  <Wrapper actions={DEFAULT_ACTIONS} />
-));
+const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
+  actions: DEFAULT_ACTIONS,
+  searchPlaceholder: 'Search',
+  searchIcon: <Search size={18} />,
+};
+
+storiesOf('@mantine/spotlight', module)
+  .add('Default', () => <Wrapper {...defaultProps} />)
+  .add('Centered', () => <Wrapper centered {...defaultProps} />);

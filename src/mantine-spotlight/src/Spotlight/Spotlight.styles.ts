@@ -1,12 +1,12 @@
 import { createStyles } from '@mantine/core';
 
 export interface SpotlightStylesParams {
-  center: boolean;
+  centered: boolean;
   maxWidth: number;
   topOffset: number;
 }
 
-export default createStyles((theme, { center, maxWidth, topOffset }: SpotlightStylesParams) => ({
+export default createStyles((theme, { centered, maxWidth, topOffset }: SpotlightStylesParams) => ({
   root: {
     ...theme.fn.cover(),
     position: 'fixed',
@@ -30,8 +30,12 @@ export default createStyles((theme, { center, maxWidth, topOffset }: SpotlightSt
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: center ? theme.spacing.md : topOffset,
-    justifyContent: center ? 'center' : 'flex-start',
+    paddingTop: centered ? theme.spacing.md : topOffset,
+    justifyContent: centered ? 'center' : 'flex-start',
     alignItems: 'center',
+  },
+
+  searchInput: {
+    border: 0,
   },
 }));
