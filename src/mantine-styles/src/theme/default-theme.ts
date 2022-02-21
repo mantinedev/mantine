@@ -47,6 +47,14 @@ export const _DEFAULT_THEME: MantineThemeBase = {
     xl: 32,
   },
 
+  blur: {
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 16,
+    xl: 32,
+  },
+
   spacing: {
     xs: 10,
     sm: 12,
