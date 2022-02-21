@@ -1,12 +1,10 @@
 import { MantineStyleSystemProps, MantineTheme, CSSObject } from '@mantine/styles';
 
 const SYSTEM_PROPS = {
-  m: 'margin',
   mt: 'marginTop',
   mb: 'marginBottom',
   ml: 'marginLeft',
   mr: 'marginRight',
-  p: 'padding',
   pt: 'paddingTop',
   pb: 'paddingBottom',
   pl: 'paddingLeft',
@@ -29,6 +27,16 @@ function getSizeValue(margin: any, theme: MantineTheme) {
 
 export function getSystemStyles(systemStyles: MantineStyleSystemProps, theme: MantineTheme) {
   const styles: CSSObject = {};
+
+  if (isValidSizeValue(systemStyles.p)) {
+    const value = getSizeValue(systemStyles.p, theme);
+    styles.padding = value;
+  }
+
+  if (isValidSizeValue(systemStyles.m)) {
+    const value = getSizeValue(systemStyles.m, theme);
+    styles.margin = value;
+  }
 
   if (isValidSizeValue(systemStyles.py)) {
     const value = getSizeValue(systemStyles.py, theme);
