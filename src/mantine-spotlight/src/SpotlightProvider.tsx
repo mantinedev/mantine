@@ -1,26 +1,17 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineTransition, DefaultProps, MantineShadow } from '@mantine/core';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
-import { Spotlight, SpotlightStylesNames } from './Spotlight/Spotlight';
+import { Spotlight, InnerSpotlightProps } from './Spotlight/Spotlight';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
-export interface SpotlightProviderProps
-  extends DefaultProps<SpotlightStylesNames>,
-    React.ComponentPropsWithoutRef<'div'> {
+export interface SpotlightProviderProps extends InnerSpotlightProps {
   actions: SpotlightAction[];
   children: React.ReactNode;
   onSpotlightOpen?(): void;
   onSpotlightClose?(): void;
   shortcut?: string | string[];
-  withinPortal?: boolean;
-  transition?: MantineTransition;
-  transitionDuration?: number;
-  overlayColor?: string;
-  overlayOpacity?: number;
-  shadow?: MantineShadow;
 }
 
 export function SpotlightProvider({

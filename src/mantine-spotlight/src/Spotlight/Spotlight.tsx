@@ -15,16 +15,23 @@ import useStyles from './Spotlight.styles';
 
 export type SpotlightStylesNames = ClassNames<typeof useStyles>;
 
-interface SpotlightProps extends DefaultProps<SpotlightStylesNames> {
+export interface InnerSpotlightProps
+  extends DefaultProps<SpotlightStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   withinPortal?: boolean;
-  actions: SpotlightAction[];
-  onClose(): void;
-  opened: boolean;
   transition?: MantineTransition;
   transitionDuration?: number;
   overlayColor?: string;
   overlayOpacity?: number;
   shadow?: MantineShadow;
+  center?: boolean;
+  maxWidth?: number;
+}
+
+interface SpotlightProps extends InnerSpotlightProps {
+  actions: SpotlightAction[];
+  onClose(): void;
+  opened: boolean;
 }
 
 export function Spotlight({
@@ -39,8 +46,15 @@ export function Spotlight({
   overlayColor = '#000',
   overlayOpacity = 0.65,
   shadow = 'md',
+  center = false,
+  maxWidth = 600,
+  className,
+  ...others
 }: SpotlightProps) {
-  const { classes, theme } = useStyles(null, { classNames, styles, name: 'Spotlight' });
+  const { classes, theme, cx } = useStyles(
+    { center, maxWidth },
+    { classNames, styles, name: 'Spotlight' }
+  );
   const _overlayColor =
     overlayColor || theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white;
   const [, lockScroll] = useScrollLock();
@@ -65,7 +79,7 @@ export function Spotlight({
         }}
       >
         {(transitionStyles) => (
-          <div className={classes.root}>
+          <div className={cx(classes.root, className)} {...others}>
             <div className={classes.inner}>
               <Paper
                 style={transitionStyles.spotlight}

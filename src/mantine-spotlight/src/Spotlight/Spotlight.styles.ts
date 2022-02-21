@@ -1,6 +1,11 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
+export interface SpotlightStylesParams {
+  center: boolean;
+  maxWidth: number;
+}
+
+export default createStyles((theme, { center, maxWidth }: SpotlightStylesParams) => ({
   root: {
     ...theme.fn.cover(),
     position: 'fixed',
@@ -11,12 +16,20 @@ export default createStyles((theme) => ({
     zIndex: 2,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     borderRadius: theme.radius.sm,
+    width: '100%',
+    maxWidth,
   },
 
   overlay: {
-    // ...theme.fn.cover(),
-    // position: 'fixed',
+    ...theme.fn.cover(),
+    position: 'fixed',
   },
 
-  inner: {},
+  inner: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: center ? 'center' : 'flex-start',
+    alignItems: 'center',
+  },
 }));
