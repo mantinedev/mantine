@@ -70,6 +70,7 @@ attachDemos(storiesOf('@mantine/core/Stepper/demos', module), demos.StepperDemos
 attachDemos(storiesOf('@mantine/core/Switch/demos', module), demos.SwitchDemos);
 attachDemos(storiesOf('@mantine/core/Table/demos', module), demos.TableDemos);
 attachDemos(storiesOf('@mantine/core/Tabs/demos', module), demos.TabsDemos);
+attachDemos(storiesOf('@mantine/core/TagInput/demos', module), demos.TagInputDemos);
 attachDemos(storiesOf('@mantine/core/Text/demos', module), demos.TextDemos);
 attachDemos(storiesOf('@mantine/core/Textarea/demos', module), demos.TextareaDemos);
 attachDemos(storiesOf('@mantine/core/TextInput/demos', module), demos.TextInputDemos);

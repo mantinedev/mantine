@@ -82,6 +82,7 @@ export * as StepperDemos from './demos/packages/Stepper';
 export * as SwitchDemos from './demos/packages/Switch';
 export * as TableDemos from './demos/packages/Table';
 export * as TabsDemos from './demos/packages/Tabs';
+export * as TagInputDemos from './demos/packages/TagInput';
 export * as TextDemos from './demos/packages/Text';
 export * as TextareaDemos from './demos/packages/Textarea';
 export * as TextInputDemos from './demos/packages/TextInput';

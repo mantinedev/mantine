@@ -43,6 +43,7 @@ export * from './Spoiler.styles-api';
 export * from './Stepper.styles-api';
 export * from './Switch.styles-api';
 export * from './Tabs.styles-api';
+export * from './TagInput.styles-api';
 export * from './Textarea.styles-api';
 export * from './TextInput.styles-api';
 export * from './Timeline.styles-api';
