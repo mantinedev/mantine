@@ -1,19 +1,26 @@
 import React from 'react';
 import { DefaultProps, ClassNames, Text, UnstyledButton, Group, Center } from '@mantine/core';
 import type { SpotlightAction } from '../types';
-import useStyles from './Action.styles';
+import useStyles from './DefaultSpotlightAction.styles';
 
-export type ActionStylesNames = ClassNames<typeof useStyles>;
+export type DefaultSpotlightActionStylesNames = ClassNames<typeof useStyles>;
 
-interface ActionProps
-  extends DefaultProps<ActionStylesNames>,
+interface DefaultSpotlightActionProps
+  extends DefaultProps<DefaultSpotlightActionStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
   action: SpotlightAction;
   hovered: boolean;
   onTrigger(): void;
 }
 
-export function Action({ action, styles, classNames, hovered, onTrigger, ...others }: ActionProps) {
+export function DefaultSpotlightAction({
+  action,
+  styles,
+  classNames,
+  hovered,
+  onTrigger,
+  ...others
+}: DefaultSpotlightActionProps) {
   const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
 
   return (
@@ -41,4 +48,4 @@ export function Action({ action, styles, classNames, hovered, onTrigger, ...othe
   );
 }
 
-Action.displayName = '@mantine/spotlight/Action';
+DefaultSpotlightAction.displayName = '@mantine/spotlight/DefaultSpotlightAction';

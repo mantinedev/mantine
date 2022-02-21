@@ -12,12 +12,15 @@ import {
   Text,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
-import { Action, ActionStylesNames } from '../Action/Action';
+import {
+  DefaultSpotlightAction,
+  DefaultSpotlightActionStylesNames,
+} from '../DefaultSpotlightAction/DefaultSpotlightAction';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionStylesNames;
+export type SpotlightStylesNames = ClassNames<typeof useStyles> | DefaultSpotlightActionStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
@@ -99,7 +102,7 @@ export function Spotlight({
   }, [filteredActions.length]);
 
   const items = filteredActions.map((action, index) => (
-    <Action
+    <DefaultSpotlightAction
       key={action.id}
       action={action}
       hovered={index === hovered}
