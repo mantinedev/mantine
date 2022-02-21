@@ -41,6 +41,41 @@ storiesOf('@mantine/spotlight', module)
   .add('Default', () => <Wrapper {...defaultProps} />)
   .add('Centered', () => <Wrapper {...defaultProps} centered />)
   .add('With search icon', () => <Wrapper {...defaultProps} searchIcon={<Search size={18} />} />)
+  .add('With action icon', () => (
+    <Wrapper
+      {...defaultProps}
+      searchIcon={<Search size={18} />}
+      actions={[
+        { title: 'Search', icon: <Search size={18} />, onTrigger: () => console.log('Search') },
+        {
+          title: 'Search',
+          description: 'Search action with description',
+          icon: <Search size={18} />,
+          onTrigger: () => console.log('Search'),
+        },
+        {
+          title: 'Search',
+          description:
+            'Action description that may collapse to next line and may break the icon, bu who know how it will turn out',
+          icon: <Search size={18} />,
+          onTrigger: () => console.log('Search'),
+        },
+        {
+          title:
+            'Action title that will overflow to next line and may collapse the icon or maybe not, who knows',
+          description: 'Search action with description',
+          icon: <Search size={18} />,
+          onTrigger: () => console.log('Search'),
+        },
+        {
+          title: 'Icon that has really huge icon',
+          description: 'This is user fault, will not be handled on library side',
+          icon: <Search size={100} />,
+          onTrigger: () => console.log('Search'),
+        },
+      ]}
+    />
+  ))
   .add('Custom filter', () => (
     <Wrapper
       {...defaultProps}

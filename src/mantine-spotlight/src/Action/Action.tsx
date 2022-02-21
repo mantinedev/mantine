@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text, UnstyledButton } from '@mantine/core';
+import { DefaultProps, ClassNames, Text, UnstyledButton, Group, Center } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import useStyles from './Action.styles';
 
@@ -14,13 +14,19 @@ export function Action({ action, styles, classNames }: ActionProps) {
 
   return (
     <UnstyledButton className={classes.action}>
-      <Text>{action.title}</Text>
+      <Group noWrap>
+        {action.icon && <Center className={classes.actionIcon}>{action.icon}</Center>}
 
-      {action.description && (
-        <Text color="dimmed" size="sm">
-          {action.description}
-        </Text>
-      )}
+        <div className={classes.actionBody}>
+          <Text>{action.title}</Text>
+
+          {action.description && (
+            <Text color="dimmed" size="xs">
+              {action.description}
+            </Text>
+          )}
+        </div>
+      </Group>
     </UnstyledButton>
   );
 }
