@@ -15,6 +15,7 @@ import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mant
 import {
   DefaultSpotlightAction,
   DefaultSpotlightActionStylesNames,
+  DefaultSpotlightActionProps,
 } from '../DefaultSpotlightAction/DefaultSpotlightAction';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
@@ -40,6 +41,7 @@ export interface InnerSpotlightProps
   nothingFoundMessage?: React.ReactNode;
   limit?: number;
   closeOnActionTrigger?: boolean;
+  actionComponent?: React.FC<DefaultSpotlightActionProps>;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -74,6 +76,7 @@ export function Spotlight({
   filter = filterActions,
   nothingFoundMessage,
   limit = 10,
+  actionComponent: Action = DefaultSpotlightAction,
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
@@ -102,7 +105,7 @@ export function Spotlight({
   }, [filteredActions.length]);
 
   const items = filteredActions.map((action, index) => (
-    <DefaultSpotlightAction
+    <Action
       key={action.id}
       action={action}
       hovered={index === hovered}

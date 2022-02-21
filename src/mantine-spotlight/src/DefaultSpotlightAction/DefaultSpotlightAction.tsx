@@ -5,7 +5,7 @@ import useStyles from './DefaultSpotlightAction.styles';
 
 export type DefaultSpotlightActionStylesNames = ClassNames<typeof useStyles>;
 
-interface DefaultSpotlightActionProps
+export interface DefaultSpotlightActionProps
   extends DefaultProps<DefaultSpotlightActionStylesNames>,
     React.ComponentPropsWithoutRef<'button'> {
   action: SpotlightAction;

@@ -39,6 +39,24 @@ function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
   );
 }
 
+function CustomActionComponent() {
+  return (
+    <SpotlightProvider
+      actions={[
+        { title: 'Action 1', extra: 'Extra info 1', onTrigger: () => console.log('Action 1') },
+        { title: 'Action 2', extra: 'Extra info 2', onTrigger: () => console.log('Action 2') },
+      ]}
+      actionComponent={({ onTrigger, hovered, action, ...others }) => (
+        <button type="button" style={{ background: hovered ? 'red' : undefined }} {...others}>
+          {action.extra}
+        </button>
+      )}
+    >
+      <Control />
+    </SpotlightProvider>
+  );
+}
+
 function DynamicActions() {
   return (
     <SpotlightProvider
@@ -113,4 +131,5 @@ storiesOf('@mantine/spotlight', module)
   .add('Dynamic actions', () => <DynamicActions />)
   .add('closeOnActionTrigger: false', () => (
     <Wrapper {...defaultProps} closeOnActionTrigger={false} />
-  ));
+  ))
+  .add('Custom action component', () => <CustomActionComponent />);
