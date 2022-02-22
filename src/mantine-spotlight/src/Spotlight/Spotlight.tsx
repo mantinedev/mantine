@@ -9,19 +9,19 @@ import {
   ClassNames,
   MantineShadow,
   TextInput,
-  Text,
+  groupOptions,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import {
   DefaultSpotlightAction,
-  DefaultSpotlightActionStylesNames,
   DefaultSpotlightActionProps,
 } from '../DefaultSpotlightAction/DefaultSpotlightAction';
+import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles> | DefaultSpotlightActionStylesNames;
+export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
@@ -77,7 +77,7 @@ export function Spotlight({
   filter = filterActions,
   nothingFoundMessage,
   limit = 10,
-  actionComponent: Action = DefaultSpotlightAction,
+  actionComponent = DefaultSpotlightAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
   ...others
 }: SpotlightProps) {
@@ -98,31 +98,14 @@ export function Spotlight({
 
   useFocusReturn({ transitionDuration: 0, opened });
 
-  const filteredActions = filter(query, actions).slice(0, limit);
+  const groupedActions: SpotlightAction[] = groupOptions({ data: actions });
+  const filteredActions = filter(query, groupedActions).slice(0, limit);
 
   useDidUpdate(() => {
     if (filteredActions.length - 1 < hovered) {
       setHovered(filteredActions.length - 1);
     }
   }, [filteredActions.length]);
-
-  const items = filteredActions.map((action, index) => (
-    <Action
-      key={action.id}
-      action={action}
-      hovered={index === hovered}
-      onMouseEnter={() => setHovered(index)}
-      classNames={classNames}
-      styles={styles}
-      onTrigger={() => {
-        action.onTrigger(action);
-        closeOnActionTrigger && handleClose();
-      }}
-    />
-  ));
-
-  const shouldRenderActions =
-    items.length > 0 || (!!nothingFoundMessage && query.trim().length > 0);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
@@ -197,23 +180,20 @@ export function Spotlight({
                   onMouseEnter={resetHovered}
                 />
                 <ActionsWrapper>
-                  {shouldRenderActions && (
-                    <div className={classes.actions}>
-                      {items.length > 0 ? (
-                        items
-                      ) : (
-                        <Text
-                          color="dimmed"
-                          className={classes.nothingFound}
-                          align="center"
-                          size="lg"
-                          py="md"
-                        >
-                          {nothingFoundMessage}
-                        </Text>
-                      )}
-                    </div>
-                  )}
+                  <ActionsList
+                    actions={filteredActions}
+                    actionComponent={actionComponent}
+                    hovered={hovered}
+                    query={query}
+                    nothingFoundMessage={nothingFoundMessage}
+                    onActionHover={setHovered}
+                    onActionTrigger={(action) => {
+                      action.onTrigger(action);
+                      closeOnActionTrigger && handleClose();
+                    }}
+                    styles={styles}
+                    classNames={classNames}
+                  />
                 </ActionsWrapper>
               </Paper>
 

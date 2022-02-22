@@ -150,4 +150,21 @@ storiesOf('@mantine/spotlight', module)
         </div>
       )}
     />
+  ))
+  .add('Multiple shortcuts', () => (
+    <Wrapper {...defaultProps} shortcut={['mod + K', 'mod + P', 'mod + /']} />
+  ))
+  .add('Grouped actions', () => (
+    <Wrapper
+      {...defaultProps}
+      actions={[
+        { title: 'Create 1', group: 'Create', onTrigger: () => console.log('Crate') },
+        { title: 'Search 1', group: 'Search', onTrigger: () => console.log('Search') },
+        { title: 'No group', onTrigger: () => console.log('Crate') },
+        { title: 'Create 2', group: 'Create', onTrigger: () => console.log('Crate') },
+        { title: 'Search 2', group: 'Search', onTrigger: () => console.log('Search') },
+        { title: 'Search 3', group: 'Search', onTrigger: () => console.log('Search') },
+        { title: 'Create 3', group: 'Create', onTrigger: () => console.log('Crate') },
+      ]}
+    />
   ));
