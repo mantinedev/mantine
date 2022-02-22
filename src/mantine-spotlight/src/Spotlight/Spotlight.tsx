@@ -9,7 +9,6 @@ import {
   ClassNames,
   MantineShadow,
   TextInput,
-  groupOptions,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
@@ -95,8 +94,7 @@ export function Spotlight({
 
   useFocusReturn({ transitionDuration: 0, opened });
 
-  const groupedActions: SpotlightAction[] = groupOptions({ data: actions });
-  const filteredActions = filter(query, groupedActions).slice(0, limit);
+  const filteredActions = filter(query, actions).slice(0, limit);
 
   useDidUpdate(() => {
     if (filteredActions.length - 1 < hovered) {

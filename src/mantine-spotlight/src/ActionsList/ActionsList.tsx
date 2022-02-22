@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text } from '@mantine/core';
+import { DefaultProps, ClassNames, Text, getGroupedOptions } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
@@ -16,34 +16,6 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   onActionTrigger(action: SpotlightAction): void;
 }
 
-function getGroupedData<T extends any[]>(data: T) {
-  type Item = { type: 'item'; item: T[number]; index: number };
-  type Label = { type: 'label'; label: string };
-
-  const unGrouped: Item[] = [];
-  const grouped: (Item | Label)[] = [];
-  let groupName = null;
-
-  data.forEach((item, index) => {
-    if (!item.group) {
-      unGrouped.push({ type: 'item', item, index });
-    } else {
-      if (groupName !== item.group) {
-        groupName = item.group;
-        grouped.push({ type: 'label', label: groupName });
-      }
-      grouped.push({ type: 'item', item, index });
-    }
-  });
-
-  return {
-    grouped,
-    unGrouped,
-    items: [...grouped, ...unGrouped],
-    hasItems: grouped.length > 0 || unGrouped.length > 0,
-  };
-}
-
 export function ActionsList({
   actions,
   styles,
@@ -55,9 +27,9 @@ export function ActionsList({
   query,
   nothingFoundMessage,
 }: ActionsListProps) {
-  const grouped = getGroupedData(actions);
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
-  const items = grouped.items.map((item) => {
+
+  const items = getGroupedOptions(actions).items.map((item) => {
     if (item.type === 'item') {
       return (
         <Action
