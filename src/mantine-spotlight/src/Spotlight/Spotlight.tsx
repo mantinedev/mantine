@@ -127,17 +127,17 @@ export function Spotlight({
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
       case 'ArrowDown': {
-        setHovered((current) => (current < actions.length - 1 ? current + 1 : 0));
+        setHovered((current) => (current < filteredActions.length - 1 ? current + 1 : 0));
         break;
       }
 
       case 'ArrowUp': {
-        setHovered((current) => (current > 0 ? current - 1 : actions.length - 1));
+        setHovered((current) => (current > 0 ? current - 1 : filteredActions.length - 1));
         break;
       }
 
       case 'Enter': {
-        const action = actions[hovered];
+        const action = filteredActions[hovered];
         action?.onTrigger?.(action);
         if (closeOnActionTrigger && action?.onTrigger) {
           handleClose();
@@ -148,6 +148,13 @@ export function Spotlight({
       case 'Escape': {
         handleClose();
       }
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onQueryChange(event.currentTarget.value);
+    if (hovered === -1) {
+      setHovered(0);
     }
   };
 
@@ -181,7 +188,7 @@ export function Spotlight({
               >
                 <TextInput
                   value={query}
-                  onChange={(event) => onQueryChange(event.currentTarget.value)}
+                  onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
                   classNames={{ input: classes.searchInput }}
                   size="lg"
