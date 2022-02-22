@@ -9,6 +9,7 @@ import {
   ClassNames,
   MantineShadow,
   TextInput,
+  getDefaultZIndex,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
@@ -39,6 +40,7 @@ export interface InnerSpotlightProps
   closeOnActionTrigger?: boolean;
   actionComponent?: React.FC<DefaultActionProps>;
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
+  zIndex?: number;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -75,6 +77,7 @@ export function Spotlight({
   limit = 10,
   actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
+  zIndex = getDefaultZIndex('modal'),
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
@@ -137,7 +140,7 @@ export function Spotlight({
   };
 
   return (
-    <OptionalPortal withinPortal={withinPortal}>
+    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
       <GroupedTransition
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
