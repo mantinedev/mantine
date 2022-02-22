@@ -43,12 +43,48 @@ export function ActionsList({
   const shouldRenderActions =
     items.length > 0 || (!!nothingFoundMessage && query.trim().length > 0);
 
+  const getAction = (action: SpotlightAction, index: number) => (
+    <Action
+      key={action.id}
+      action={action}
+      hovered={index === hovered}
+      onMouseEnter={() => onActionHover(index)}
+      onMouseLeave={() => onActionHover(-1)}
+      classNames={classNames}
+      styles={styles}
+      onTrigger={() => onActionTrigger(action)}
+    />
+  );
+
+  const unGroupedItems: React.ReactElement<any>[] = [];
+  const groupedItems: React.ReactElement<any>[] = [];
+  let groupName = null;
+
+  actions.forEach((item, index) => {
+    if (!item.group) {
+      unGroupedItems.push(getAction(item, index));
+    } else {
+      if (groupName !== item.group) {
+        groupName = item.group;
+        groupedItems.push(
+          <Text className={classes.actionsGroup} color="dimmed">
+            {item.group}
+          </Text>
+        );
+      }
+      groupedItems.push(getAction(item, index));
+    }
+  });
+
   return (
     <>
       {shouldRenderActions && (
         <div className={classes.actions}>
-          {items.length > 0 ? (
-            items
+          {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
+            <>
+              {groupedItems}
+              {unGroupedItems}
+            </>
           ) : (
             <Text color="dimmed" className={classes.nothingFound} align="center" size="lg" py="md">
               {nothingFoundMessage}
