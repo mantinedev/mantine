@@ -1,8 +1,6 @@
 import React from 'react';
-import { Button, Group } from '@mantine/core';
-import { SpotlightProvider, useSpotlight } from '@mantine/spotlight';
 import { Search } from 'tabler-icons-react';
-import { actions } from './_actions';
+import { Wrapper } from './_wrapper';
 
 const code = `
 import { Button, Group } from '@mantine/core';
@@ -55,25 +53,13 @@ function Demo() {
 }
 `;
 
-function SpotlightControl() {
-  const spotlight = useSpotlight();
-  return (
-    <Group position="center">
-      <Button onClick={spotlight.openSpotlight}>Open spotlight</Button>
-    </Group>
-  );
-}
-
 function Demo() {
   return (
-    <SpotlightProvider
-      actions={actions}
+    <Wrapper
       searchIcon={<Search size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 1"
-    >
-      <SpotlightControl />
-    </SpotlightProvider>
+    />
   );
 }
 
