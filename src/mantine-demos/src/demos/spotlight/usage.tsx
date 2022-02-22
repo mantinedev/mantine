@@ -46,6 +46,7 @@ function Demo() {
       searchIcon={<Search size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 1"
+      nothingFoundMessage="Nothing found..."
     >
       <SpotlightControl />
     </SpotlightProvider>
@@ -59,6 +60,7 @@ function Demo() {
       searchIcon={<Search size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 1"
+      nothingFoundMessage="Nothing found..."
     />
   );
 }

@@ -4,3 +4,4 @@ export { transitionRotate } from './transitionRotate';
 export { large } from './large';
 export { closeOnTrigger } from './closeOnTrigger';
 export { register } from './register';
+export { groups } from './groups';
