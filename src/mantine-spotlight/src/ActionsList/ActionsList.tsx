@@ -1,19 +1,14 @@
 import React from 'react';
 import { DefaultProps, ClassNames, Text } from '@mantine/core';
 import type { SpotlightAction } from '../types';
-import type {
-  DefaultSpotlightActionProps,
-  DefaultSpotlightActionStylesNames,
-} from '../DefaultSpotlightAction/DefaultSpotlightAction';
+import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
 
-export type ActionsListStylesNames =
-  | ClassNames<typeof useStyles>
-  | DefaultSpotlightActionStylesNames;
+export type ActionsListStylesNames = ClassNames<typeof useStyles> | DefaultActionStylesNames;
 
 export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   actions: SpotlightAction[];
-  actionComponent?: React.FC<DefaultSpotlightActionProps>;
+  actionComponent?: React.FC<DefaultActionProps>;
   hovered: number;
   query: string;
   nothingFoundMessage?: React.ReactNode;

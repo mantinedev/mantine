@@ -12,10 +12,7 @@ import {
   groupOptions,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
-import {
-  DefaultSpotlightAction,
-  DefaultSpotlightActionProps,
-} from '../DefaultSpotlightAction/DefaultSpotlightAction';
+import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
 import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
@@ -41,7 +38,7 @@ export interface InnerSpotlightProps
   nothingFoundMessage?: React.ReactNode;
   limit?: number;
   closeOnActionTrigger?: boolean;
-  actionComponent?: React.FC<DefaultSpotlightActionProps>;
+  actionComponent?: React.FC<DefaultActionProps>;
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 }
 
@@ -77,7 +74,7 @@ export function Spotlight({
   filter = filterActions,
   nothingFoundMessage,
   limit = 10,
-  actionComponent = DefaultSpotlightAction,
+  actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
   ...others
 }: SpotlightProps) {
