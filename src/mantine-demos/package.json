@@ -26,6 +26,7 @@
     "@mantine/dropzone": "3.6.9",
     "@mantine/prism": "3.6.9",
     "@mantine/labs": "3.6.9",
+    "@mantine/spotlight": "3.6.9",
     "tabler-icons-react": "*",
     "dayjs": "*",
     "@modulz/radix-icons": "*",
