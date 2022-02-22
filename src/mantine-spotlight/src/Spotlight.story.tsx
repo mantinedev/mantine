@@ -132,4 +132,22 @@ storiesOf('@mantine/spotlight', module)
   .add('closeOnActionTrigger: false', () => (
     <Wrapper {...defaultProps} closeOnActionTrigger={false} />
   ))
-  .add('Custom action component', () => <CustomActionComponent />);
+  .add('Custom action component', () => <CustomActionComponent />)
+  .add('Custom wrapper component', () => (
+    <Wrapper
+      {...defaultProps}
+      actionsWrapperComponent={({ children }) => (
+        <div>
+          <div>
+            <button type="button">Header button 1</button>
+            <button type="button">Header button 2</button>
+          </div>
+          {children}
+          <div>
+            <button type="button">Footer button 1</button>
+            <button type="button">Footer button 2</button>
+          </div>
+        </div>
+      )}
+    />
+  ));

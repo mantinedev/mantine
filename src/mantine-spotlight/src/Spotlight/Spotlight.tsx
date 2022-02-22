@@ -42,6 +42,7 @@ export interface InnerSpotlightProps
   limit?: number;
   closeOnActionTrigger?: boolean;
   actionComponent?: React.FC<DefaultSpotlightActionProps>;
+  actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -77,6 +78,7 @@ export function Spotlight({
   nothingFoundMessage,
   limit = 10,
   actionComponent: Action = DefaultSpotlightAction,
+  actionsWrapperComponent: ActionsWrapper = 'div',
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
@@ -187,24 +189,25 @@ export function Spotlight({
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
                 />
-
-                {shouldRenderActions && (
-                  <div className={classes.actions}>
-                    {items.length > 0 ? (
-                      items
-                    ) : (
-                      <Text
-                        color="dimmed"
-                        className={classes.nothingFound}
-                        align="center"
-                        size="lg"
-                        py="md"
-                      >
-                        {nothingFoundMessage}
-                      </Text>
-                    )}
-                  </div>
-                )}
+                <ActionsWrapper>
+                  {shouldRenderActions && (
+                    <div className={classes.actions}>
+                      {items.length > 0 ? (
+                        items
+                      ) : (
+                        <Text
+                          color="dimmed"
+                          className={classes.nothingFound}
+                          align="center"
+                          size="lg"
+                          py="md"
+                        >
+                          {nothingFoundMessage}
+                        </Text>
+                      )}
+                    </div>
+                  )}
+                </ActionsWrapper>
               </Paper>
 
               <div style={transitionStyles.overlay}>
