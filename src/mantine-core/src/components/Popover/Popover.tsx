@@ -152,7 +152,7 @@ export function Popover(props: PopoverProps) {
 
   const returnFocus = useFocusReturn({
     opened: opened || trapFocus,
-    transitionDuration,
+    transitionDuration: 0,
     shouldReturnFocus: false,
   });
 
