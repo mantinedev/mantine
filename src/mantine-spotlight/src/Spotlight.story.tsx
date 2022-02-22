@@ -27,6 +27,15 @@ function Control() {
   return (
     <Box sx={{ padding: 40 }}>
       <Button onClick={() => spotlight.openSpotlight()}>Open spotlight</Button>
+      <Button
+        onClick={() =>
+          spotlight.registerActions([
+            { title: 'Registered', onTrigger: () => console.log('registered') },
+          ])
+        }
+      >
+        Register actions
+      </Button>
     </Box>
   );
 }

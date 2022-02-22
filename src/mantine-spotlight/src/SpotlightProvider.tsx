@@ -30,7 +30,7 @@ export function SpotlightProvider({
     query
   );
 
-  const [opened, { open, close, toggle }] = useDisclosure(true, {
+  const [opened, { open, close, toggle }] = useDisclosure(false, {
     onClose: onSpotlightClose,
     onOpen: onSpotlightOpen,
   });
