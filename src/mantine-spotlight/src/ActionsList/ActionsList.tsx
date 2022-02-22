@@ -16,6 +16,34 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   onActionTrigger(action: SpotlightAction): void;
 }
 
+function getGroupedData<T extends any[]>(data: T) {
+  type Item = { type: 'item'; item: T[number]; index: number };
+  type Label = { type: 'label'; label: string };
+
+  const unGrouped: Item[] = [];
+  const grouped: (Item | Label)[] = [];
+  let groupName = null;
+
+  data.forEach((item, index) => {
+    if (!item.group) {
+      unGrouped.push({ type: 'item', item, index });
+    } else {
+      if (groupName !== item.group) {
+        groupName = item.group;
+        grouped.push({ type: 'label', label: groupName });
+      }
+      grouped.push({ type: 'item', item, index });
+    }
+  });
+
+  return {
+    grouped,
+    unGrouped,
+    items: [...grouped, ...unGrouped],
+    hasItems: grouped.length > 0 || unGrouped.length > 0,
+  };
+}
+
 export function ActionsList({
   actions,
   styles,
@@ -27,64 +55,39 @@ export function ActionsList({
   query,
   nothingFoundMessage,
 }: ActionsListProps) {
+  const grouped = getGroupedData(actions);
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
-  const items = actions.map((action, index) => (
-    <Action
-      key={action.id}
-      action={action}
-      hovered={index === hovered}
-      onMouseEnter={() => onActionHover(index)}
-      classNames={classNames}
-      styles={styles}
-      onTrigger={() => onActionTrigger(action)}
-    />
-  ));
+  const items = grouped.items.map((item) => {
+    if (item.type === 'item') {
+      return (
+        <Action
+          key={item.item.id}
+          action={item.item}
+          hovered={item.index === hovered}
+          onMouseEnter={() => onActionHover(item.index)}
+          classNames={classNames}
+          styles={styles}
+          onTrigger={() => onActionTrigger(item.item)}
+        />
+      );
+    }
+
+    return (
+      <Text className={classes.actionsGroup} color="dimmed" key={item.label}>
+        {item.label}
+      </Text>
+    );
+  });
 
   const shouldRenderActions =
     items.length > 0 || (!!nothingFoundMessage && query.trim().length > 0);
-
-  const getAction = (action: SpotlightAction, index: number) => (
-    <Action
-      key={action.id}
-      action={action}
-      hovered={index === hovered}
-      onMouseEnter={() => onActionHover(index)}
-      onMouseLeave={() => onActionHover(-1)}
-      classNames={classNames}
-      styles={styles}
-      onTrigger={() => onActionTrigger(action)}
-    />
-  );
-
-  const unGroupedItems: React.ReactElement<any>[] = [];
-  const groupedItems: React.ReactElement<any>[] = [];
-  let groupName = null;
-
-  actions.forEach((item, index) => {
-    if (!item.group) {
-      unGroupedItems.push(getAction(item, index));
-    } else {
-      if (groupName !== item.group) {
-        groupName = item.group;
-        groupedItems.push(
-          <Text className={classes.actionsGroup} color="dimmed">
-            {item.group}
-          </Text>
-        );
-      }
-      groupedItems.push(getAction(item, index));
-    }
-  });
 
   return (
     <>
       {shouldRenderActions && (
         <div className={classes.actions}>
-          {groupedItems.length > 0 || unGroupedItems.length > 0 ? (
-            <>
-              {groupedItems}
-              {unGroupedItems}
-            </>
+          {items.length > 0 ? (
+            items
           ) : (
             <Text color="dimmed" className={classes.nothingFound} align="center" size="lg" py="md">
               {nothingFoundMessage}
