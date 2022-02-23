@@ -1,5 +1,13 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Highlight, UnstyledButton, Group, Center } from '@mantine/core';
+import {
+  DefaultProps,
+  ClassNames,
+  Highlight,
+  UnstyledButton,
+  Group,
+  Center,
+  Text,
+} from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import useStyles from './DefaultAction.styles';
 
@@ -42,9 +50,9 @@ export function DefaultAction({
           <Highlight highlight={highlightQuery ? query : null}>{action.title}</Highlight>
 
           {action.description && (
-            <Highlight color="dimmed" size="xs" highlight={highlightQuery ? query : null}>
+            <Text color="dimmed" size="xs">
               {action.description}
-            </Highlight>
+            </Text>
           )}
         </div>
       </Group>
