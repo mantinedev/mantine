@@ -14,6 +14,9 @@
     "type": "git",
     "directory": "src/mantine-modals"
   },
+  "keywords": [
+    "react", "next", "nextjs", "ui", "components", "ui-kit", "library", "frontend", "modal", "confirm"
+  ],
   "peerDependencies": {
     "@mantine/core": "3.6.9",
     "@mantine/hooks": "3.6.9",

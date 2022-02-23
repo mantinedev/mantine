@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
-import { useState } from 'react;
+import { useState } from 'react';
 import { RichTextEditor } from '@mantine/rte';
 
 const initialValue =

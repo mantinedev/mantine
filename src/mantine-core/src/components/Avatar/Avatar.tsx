@@ -15,7 +15,7 @@ export type AvatarStylesNames = ClassNames<typeof useStyles>;
 
 interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Image url */
-  src?: string;
+  src?: string | null;
 
   /** Image alt text or title for placeholder variant */
   alt?: string;

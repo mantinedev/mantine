@@ -14,6 +14,9 @@
     "type": "git",
     "directory": "src/mantine-rte"
   },
+  "keywords": [
+    "react", "next", "nextjs", "ui", "components", "ui-kit", "library", "frontend", "text", "text-editor", "rich-text", "quill", "quilljs"
+  ],
   "peerDependencies": {
     "@mantine/core": "3.6.9",
     "@mantine/hooks": "3.6.9",
