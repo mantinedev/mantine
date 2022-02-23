@@ -14,4 +14,8 @@ describe('@mantine/spotlight/use-spotlight-shortcuts', () => {
       ['alt + J', spy],
     ]);
   });
+
+  it('returns empty array for null shortcut', () => {
+    expect(getHotkeysPayload(null, spy)).toStrictEqual(null);
+  });
 });

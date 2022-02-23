@@ -8,8 +8,7 @@ import { SpotlightProvider } from '@mantine/spotlight';
 function Demo() {
   return (
     <SpotlightProvider
-      shortcut="mod + shift + 2"
-      transitionDuration={0}
+      shortcut="mod + alt + V"
       nothingFoundMessage="Nothing found..."
       filter={(query, actions) =>
         actions.filter((action) => action.title.toLowerCase().includes(query.toLowerCase()))
@@ -26,7 +25,6 @@ function Demo() {
   return (
     <Wrapper
       searchIcon={<Search size={18} />}
-      transitionDuration={0}
       searchPlaceholder="Search..."
       shortcut="mod + alt + V"
       nothingFoundMessage="Nothing found..."

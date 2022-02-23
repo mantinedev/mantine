@@ -8,11 +8,11 @@ import { SpotlightContext } from './Spotlight.context';
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
   actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onSpotlightOpen?(): void;
   onSpotlightClose?(): void;
   onQueryChange?(query: string): void;
-  shortcut?: string | string[];
+  shortcut?: string | string[] | null;
 }
 
 export function SpotlightProvider({
