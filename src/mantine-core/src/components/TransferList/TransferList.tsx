@@ -45,6 +45,9 @@ export interface TransferListProps
   /** Breakpoint at which list will collapse to single column layout */
   breakpoint?: MantineNumberSize;
 
+  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  radius?: MantineNumberSize;
+
   /** Whether to hide the transfer all button */
   showTransferAll?: boolean;
 
@@ -81,6 +84,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       listComponent,
       showTransferAll,
       breakpoint,
+      radius,
       classNames,
       styles,
       limit,
@@ -130,6 +134,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>(
       classNames,
       styles,
       limit,
+      radius,
     };
 
     return (
