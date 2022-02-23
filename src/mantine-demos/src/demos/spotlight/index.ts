@@ -6,3 +6,4 @@ export { closeOnTrigger } from './closeOnTrigger';
 export { register } from './register';
 export { groups } from './groups';
 export { actionComponent } from './actionComponent';
+export { actionsWrapperComponent } from './actionsWrapperComponent';
