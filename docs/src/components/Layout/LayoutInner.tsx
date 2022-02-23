@@ -99,6 +99,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
       actions={getActions(data)}
       searchIcon={<Search size={18} />}
       searchPlaceholder="Search documentation"
+      shortcut={['mod + K', 'mod + P', '/']}
     >
       <div
         className={cx({
