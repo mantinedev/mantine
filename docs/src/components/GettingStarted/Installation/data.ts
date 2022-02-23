@@ -39,4 +39,9 @@ export const PACKAGES_DATA = [
     description: 'Centralized modals manager',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/modals'],
   },
+  {
+    package: '@mantine/spotlight',
+    description: 'Overlay command center',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/spotlight'],
+  },
 ];
