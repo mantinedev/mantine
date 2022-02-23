@@ -20,7 +20,7 @@ export function filterActions(_query: string, actions: SpotlightAction[]) {
   const query = _query.trim().toLowerCase();
   return actions.filter(
     (action) =>
-      action.title.toLowerCase().includes(query) ||
+      action.title?.toLowerCase().includes(query) ||
       action.description?.toLowerCase().includes(query) ||
       getKeywords(action.keywords).includes(query)
   );
