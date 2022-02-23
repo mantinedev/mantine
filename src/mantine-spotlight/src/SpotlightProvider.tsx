@@ -76,6 +76,7 @@ export function SpotlightProvider({
         opened={opened}
         query={query}
         onQueryChange={handleQueryChange}
+        transitionDuration={transitionDuration}
         {...others}
       />
       {children}
