@@ -2,6 +2,7 @@ import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   control: {
+    ...theme.fn.focusStyles(),
     width: 34,
     height: 34,
     borderRadius: theme.radius.md,
@@ -29,6 +30,18 @@ export default createStyles((theme) => ({
         theme.colorScheme === 'dark'
           ? theme.fn.lighten('#5865f2', 0.1)
           : theme.fn.darken('#7289da', 0.1),
+    },
+  },
+  twitter: {
+    color: theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? '#1C8CD8' : '#00acee',
+    borderColor: theme.colorScheme === 'dark' ? '#1C8CD8' : '#00acee',
+
+    '&:hover': {
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.fn.lighten('#1C8CD8', 0.1)
+          : theme.fn.darken('#00acee', 0.1),
     },
   },
 }));

@@ -4,6 +4,7 @@ import { TextDirectionRtl, TextDirectionLtr, Sun, Moon } from 'tabler-icons-reac
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { DiscordIcon } from './DiscordIcon';
 import { HeaderControl } from './HeaderControl';
+import { SearchControl } from './SearchControl';
 import { useDirectionContext } from '../../DirectionContext';
 
 export function HeaderControls() {
@@ -12,11 +13,9 @@ export function HeaderControls() {
 
   return (
     <Group pr="md" spacing="xs">
-      <HeaderControl
-        link="https://github.com/mantinedev/mantine/"
-        tooltip="Discord"
-        variant="discord"
-      >
+      <SearchControl />
+
+      <HeaderControl link="https://discord.gg/eUZpPbpxb4" tooltip="Discord" variant="discord">
         <DiscordIcon size={20} />
       </HeaderControl>
 

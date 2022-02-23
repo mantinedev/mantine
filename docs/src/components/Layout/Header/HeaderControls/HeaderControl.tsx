@@ -5,7 +5,7 @@ import useStyles from './HeaderControl.styles';
 interface HeaderControlProps extends UnstyledButtonProps {
   tooltip: string;
   link?: string;
-  variant?: 'default' | 'discord';
+  variant?: 'default' | 'discord' | 'twitter';
 }
 
 export function HeaderControl({
