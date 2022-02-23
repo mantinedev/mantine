@@ -108,16 +108,19 @@ export function Spotlight({
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
       case 'ArrowDown': {
+        event.preventDefault();
         setHovered((current) => (current < filteredActions.length - 1 ? current + 1 : 0));
         break;
       }
 
       case 'ArrowUp': {
+        event.preventDefault();
         setHovered((current) => (current > 0 ? current - 1 : filteredActions.length - 1));
         break;
       }
 
       case 'Enter': {
+        event.preventDefault();
         const action = filteredActions[hovered];
         action?.onTrigger?.(action);
         if (closeOnActionTrigger && action?.onTrigger) {
@@ -127,6 +130,7 @@ export function Spotlight({
       }
 
       case 'Escape': {
+        event.preventDefault();
         handleClose();
       }
     }
