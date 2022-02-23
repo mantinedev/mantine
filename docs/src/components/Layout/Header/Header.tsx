@@ -3,6 +3,7 @@ import { Burger, Code } from '@mantine/core';
 import corePackageJson from '../../../../../package.json';
 import { Logo } from '../../Logo/Logo';
 import { HeaderControls } from './HeaderControls/HeaderControls';
+import { HeaderLinks } from './HeaderLinks/HeaderLinks';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -34,7 +35,8 @@ export default function Header({ navbarOpened, toggleNavbar }: HeaderProps) {
             <Code>v{corePackageJson.version}</Code>
           </a>
         </div>
-        <div />
+
+        <HeaderLinks />
       </div>
 
       <HeaderControls />

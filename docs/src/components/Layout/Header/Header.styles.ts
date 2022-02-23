@@ -42,6 +42,9 @@ export default createStyles((theme) => ({
   },
 
   mainSection: {
+    display: 'flex',
+    alignItems: 'center',
+
     [`@media (max-width: ${NAVBAR_BREAKPOINT}px)`]: {
       position: 'absolute',
       top: 0,
