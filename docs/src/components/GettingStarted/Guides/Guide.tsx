@@ -102,7 +102,7 @@ function ViteGuide({ dependencies }: GuideProps) {
 function NextGuide({ dependencies }: GuideProps) {
   return (
     <Guide
-      dependencies={dependencies}
+      dependencies={`${dependencies} @mantine/next`}
       initScript="npx create-next-app --ts"
       action="Get started with Next.js GitHub template"
       actionLink="https://github.com/mantinedev/mantine-next-template"
