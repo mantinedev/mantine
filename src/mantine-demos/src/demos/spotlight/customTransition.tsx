@@ -10,7 +10,7 @@ function Demo() {
     <SpotlightProvider
       shortcut="mod + shift + 2"
       transitionDuration={300}
-      transition="rotate-right"
+      transition="slide-down"
       {...otherProps}
     >
       <YourApp />
@@ -24,15 +24,15 @@ function Demo() {
     <Wrapper
       searchIcon={<Search size={18} />}
       transitionDuration={300}
-      transition="rotate-right"
+      transition="slide-down"
       searchPlaceholder="Search..."
       shortcut="mod + shift + L"
-      buttonLabel="Open spotlight with rotate 300ms transition"
+      buttonLabel="Open spotlight with custom transition"
     />
   );
 }
 
-export const transitionRotate: MantineDemo = {
+export const customTransition: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
