@@ -106,7 +106,6 @@ export function LayoutInner({ children, location }: LayoutProps) {
       searchIcon={<Search size={18} />}
       searchPlaceholder="Search documentation"
       shortcut={['mod + K', 'mod + P', '/']}
-      transitionDuration={150}
       highlightQuery
       transition={{
         in: { transform: 'translateY(0)', opacity: 1 },

@@ -15,7 +15,7 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
   spotlight: {
     position: 'relative',
     zIndex: 2,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     borderRadius: theme.radius.sm,
     width: '100%',
     maxWidth,
@@ -40,6 +40,6 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
     border: 0,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
   },
 }));

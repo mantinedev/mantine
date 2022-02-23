@@ -28,6 +28,7 @@ export interface InnerSpotlightProps
   transitionDuration?: number;
   overlayColor?: string;
   overlayOpacity?: number;
+  overlayBlur?: number;
   shadow?: MantineShadow;
   centered?: boolean;
   maxWidth?: number;
@@ -64,7 +65,8 @@ export function Spotlight({
   classNames,
   styles,
   overlayColor = '#000',
-  overlayOpacity = 0.65,
+  overlayOpacity = 0.25,
+  overlayBlur = 3,
   shadow = 'md',
   centered = false,
   closeOnActionTrigger = true,
@@ -209,6 +211,7 @@ export function Spotlight({
                   onMouseDown={handleClose}
                   color={overlayColor}
                   opacity={overlayOpacity}
+                  blur={overlayBlur}
                 />
               </div>
             </div>
