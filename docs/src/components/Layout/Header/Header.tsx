@@ -1,11 +1,8 @@
 import React from 'react';
-import { Burger, Code, Group } from '@mantine/core';
+import { Burger, Code } from '@mantine/core';
 import corePackageJson from '../../../../../package.json';
-import { ColorSchemeToggle } from './ColorSchemeToggle/ColorSchemeToggle';
-import { DirToggle } from './DirToggle/DirToggle';
-import { SourceCode } from './SourceCode/SourceCode';
-import { Discord } from './Discord/Discord';
 import { Logo } from '../../Logo/Logo';
+import { HeaderControls } from './HeaderControls/HeaderControls';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -40,12 +37,7 @@ export default function Header({ navbarOpened, toggleNavbar }: HeaderProps) {
         <div />
       </div>
 
-      <Group className={classes.links} spacing="xs">
-        <Discord />
-        <SourceCode />
-        <DirToggle />
-        <ColorSchemeToggle />
-      </Group>
+      <HeaderControls />
     </div>
   );
 }
