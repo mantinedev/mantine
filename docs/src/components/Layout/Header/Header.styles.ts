@@ -27,6 +27,7 @@ export default createStyles((theme) => ({
     paddingRight: theme.spacing.md,
     paddingLeft: theme.spacing.md,
     height: HEADER_HEIGHT,
+    paddingTop: 6,
     display: 'flex',
     alignItems: 'center',
   },
@@ -76,7 +77,7 @@ export default createStyles((theme) => ({
     ...theme.fn.focusStyles(),
     fontWeight: 700,
     textDecoration: 'none',
-    marginBottom: 6,
+    marginTop: 2,
 
     [`@media (max-width: ${HEADER_BREAKPOINT}px)`]: {
       display: 'none',

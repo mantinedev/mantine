@@ -1,6 +1,10 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme) => ({
+interface HeaderControlStyles {
+  hideOnMobile: boolean;
+}
+
+export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
   control: {
     ...theme.fn.focusStyles(),
     width: 34,
@@ -17,6 +21,20 @@ export default createStyles((theme) => ({
 
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
+    },
+
+    [theme.fn.smallerThan('sm')]: {
+      display: hideOnMobile ? 'none' : undefined,
+      position: 'absolute',
+      right: 0,
+    },
+  },
+
+  container: {
+    [theme.fn.smallerThan('sm')]: {
+      position: 'fixed',
+      top: 14,
+      right: theme.spacing.md,
     },
   },
 

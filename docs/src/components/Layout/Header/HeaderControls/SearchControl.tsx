@@ -29,6 +29,10 @@ export function SearchControl(props: UnstyledButtonProps) {
               ? theme.fn.rgba(theme.colors.dark[5], 0.85)
               : theme.fn.rgba(theme.colors.gray[0], 0.35),
         },
+
+        [theme.fn.smallerThan('sm')]: {
+          display: 'none',
+        },
       })}
     >
       <Group spacing="xs">
