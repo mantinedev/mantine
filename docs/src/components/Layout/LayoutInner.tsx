@@ -33,7 +33,9 @@ const query = graphql`
             order
             slug
             category
+            description
             package
+            search
           }
         }
       }
@@ -65,7 +67,7 @@ function getActions(data: ReturnType<typeof getDocsData>): SpotlightAction[] {
         acc.push(
           ...group.pages.map((item) => ({
             title: item.title,
-            keywords: '',
+            description: item.search || item.description,
             onTrigger: () => navigate(item.slug),
           }))
         );
@@ -79,7 +81,11 @@ function getActions(data: ReturnType<typeof getDocsData>): SpotlightAction[] {
           !page.title.toLowerCase().includes('version')
       )
       .forEach((page) => {
-        acc.push({ title: page.title, keywords: '', onTrigger: () => navigate(page.slug) });
+        acc.push({
+          title: page.title,
+          description: page.search || page.description,
+          onTrigger: () => navigate(page.slug),
+        });
       });
 
     return acc;
