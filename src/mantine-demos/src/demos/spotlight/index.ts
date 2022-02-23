@@ -8,3 +8,4 @@ export { groups } from './groups';
 export { actionComponent } from './actionComponent';
 export { actionsWrapperComponent } from './actionsWrapperComponent';
 export { filter } from './filter';
+export { highlightQuery } from './highlightQuery';
