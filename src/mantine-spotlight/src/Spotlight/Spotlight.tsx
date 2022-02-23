@@ -41,6 +41,7 @@ export interface InnerSpotlightProps
   actionComponent?: React.FC<DefaultActionProps>;
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
   zIndex?: number;
+  highlightQuery?: boolean;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -67,6 +68,7 @@ export function Spotlight({
   shadow = 'md',
   centered = false,
   closeOnActionTrigger = true,
+  highlightQuery = false,
   maxWidth = 600,
   topOffset = 120,
   className,
@@ -183,6 +185,7 @@ export function Spotlight({
                 />
                 <ActionsWrapper>
                   <ActionsList
+                    highlightQuery={highlightQuery}
                     actions={filteredActions}
                     actionComponent={actionComponent}
                     hovered={hovered}

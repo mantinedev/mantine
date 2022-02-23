@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text, UnstyledButton, Group, Center } from '@mantine/core';
+import { DefaultProps, ClassNames, Highlight, UnstyledButton, Group, Center } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import useStyles from './DefaultAction.styles';
 
@@ -11,6 +11,8 @@ export interface DefaultActionProps
   action: SpotlightAction;
   hovered: boolean;
   onTrigger(): void;
+  highlightQuery: boolean;
+  query: string;
 }
 
 export function DefaultAction({
@@ -19,6 +21,8 @@ export function DefaultAction({
   classNames,
   hovered,
   onTrigger,
+  highlightQuery,
+  query,
   ...others
 }: DefaultActionProps) {
   const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
@@ -35,12 +39,12 @@ export function DefaultAction({
         {action.icon && <Center className={classes.actionIcon}>{action.icon}</Center>}
 
         <div className={classes.actionBody}>
-          <Text>{action.title}</Text>
+          <Highlight highlight={highlightQuery ? query : null}>{action.title}</Highlight>
 
           {action.description && (
-            <Text color="dimmed" size="xs">
+            <Highlight color="dimmed" size="xs" highlight={highlightQuery ? query : null}>
               {action.description}
-            </Text>
+            </Highlight>
           )}
         </div>
       </Group>

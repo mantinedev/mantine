@@ -176,4 +176,5 @@ storiesOf('@mantine/spotlight', module)
         { title: 'Create 3', group: 'Create', onTrigger: () => console.log('Crate') },
       ]}
     />
-  ));
+  ))
+  .add('Highlight query', () => <Wrapper {...defaultProps} highlightQuery />);

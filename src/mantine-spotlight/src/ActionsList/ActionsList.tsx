@@ -14,6 +14,7 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   nothingFoundMessage?: React.ReactNode;
   onActionHover(index: number): void;
   onActionTrigger(action: SpotlightAction): void;
+  highlightQuery: boolean;
 }
 
 export function ActionsList({
@@ -26,6 +27,7 @@ export function ActionsList({
   onActionTrigger,
   query,
   nothingFoundMessage,
+  highlightQuery,
 }: ActionsListProps) {
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
 
@@ -33,6 +35,7 @@ export function ActionsList({
     if (item.type === 'item') {
       return (
         <Action
+          query={query}
           key={item.item.id}
           action={item.item}
           hovered={item.index === hovered}
@@ -40,6 +43,7 @@ export function ActionsList({
           classNames={classNames}
           styles={styles}
           onTrigger={() => onActionTrigger(item.item)}
+          highlightQuery={highlightQuery}
         />
       );
     }
