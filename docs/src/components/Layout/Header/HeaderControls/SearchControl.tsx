@@ -26,7 +26,7 @@ export function SearchControl(props: UnstyledButtonProps) {
         '&:hover': {
           backgroundColor:
             theme.colorScheme === 'dark'
-              ? theme.colors.dark[6]
+              ? theme.fn.rgba(theme.colors.dark[5], 0.85)
               : theme.fn.rgba(theme.colors.gray[0], 0.35),
         },
       })}
