@@ -24,7 +24,7 @@ export function SpotlightProvider({
   onSpotlightOpen,
   onQueryChange,
   cleanQueryOnClose = true,
-  transitionDuration,
+  transitionDuration = 150,
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);

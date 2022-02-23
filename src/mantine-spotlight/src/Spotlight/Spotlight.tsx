@@ -60,7 +60,7 @@ export function Spotlight({
   opened,
   withinPortal,
   transition = 'pop',
-  transitionDuration = 150,
+  transitionDuration,
   classNames,
   styles,
   overlayColor = '#000',
