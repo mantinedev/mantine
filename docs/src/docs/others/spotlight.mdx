@@ -87,8 +87,10 @@ Note that provided shortcuts will prevent the default behavior, for example, `mo
 disable "Print page" native browser function, choose those shortcuts that will not interfere
 with desired default browser behavior.
 
-Keyboard shortcuts will only work if focus is somewhere on the page. If page does not have focus,
-for example, if browser address field if focused, then default browser behavior will be used instead.
+Keyboard shortcuts will not work if:
+
+- focus is not on current page
+- `input`, `textarea` or `select` elements are focused
 
 To disabled keyboard shortcuts set `shortcut={null}`:
 
@@ -150,6 +152,9 @@ interface UseSpotlight {
 
   /** List of registered actions */
   actions: SpotlightAction[];
+
+  /** Search query */
+  query: string;
 }
 ```
 
@@ -205,3 +210,56 @@ You can change filtering logic by setting `filter` prop on `SpotlightProvider`.
 The following example filters actions only by title:
 
 <Demo data={SpotlightDemos.filter} />
+
+## Actions limit
+
+If you have a large list of actions, most of them will not be get to the initial list (when user have not enter any text yet).
+You can control how many actions are displayed at a time with `limit` prop:
+
+<Demo data={SpotlightDemos.large} />
+
+## Register additional actions
+
+You can register any amount of additional actions with `registerActions` function on `use-spotlight` hook.
+To remove actions from the list use `removeActions` function:
+
+<Demo data={SpotlightDemos.register} />
+
+## Group actions
+
+<Demo data={SpotlightDemos.groups} />
+
+## Custom action component
+
+You can provide custom component to render actions, this feature can be used to customize
+how actions are displayed:
+
+<Demo data={SpotlightDemos.actionComponent} />
+
+## Custom actions wrapper component
+
+With custom actions wrapper component you can customize how actions list is rendered,
+for example, you can add a footer:
+
+<Demo data={SpotlightDemos.actionsWrapperComponent} />
+
+## Close spotlight on action trigger
+
+By default, spotlight will be closed with any action is triggered with mouse click of `Enter` key.
+To change this behavior set `closeOnActionTrigger={false}` prop on `SpotlightProvider`:
+
+<Demo data={SpotlightDemos.closeOnTrigger} />
+
+## Change transitions
+
+Component presence is animated with [Transition](/core/transition/) component,
+it supports all premade and custom transitions. To change transition set the following properties:
+
+- `transition` – premade transition name or custom transition object
+- `transitionDuration` – transition duration in ms
+
+<Demo data={SpotlightDemos.customTransition} />
+
+To disable transitions set `transitionDuration={0}`:
+
+<Demo data={SpotlightDemos.transitionNone} />
