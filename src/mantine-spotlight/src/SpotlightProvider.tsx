@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
@@ -13,6 +13,7 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
   onSpotlightClose?(): void;
   onQueryChange?(query: string): void;
   shortcut?: string | string[] | null;
+  cleanQueryOnClose?: boolean;
 }
 
 export function SpotlightProvider({
@@ -22,25 +23,38 @@ export function SpotlightProvider({
   onSpotlightClose,
   onSpotlightOpen,
   onQueryChange,
+  cleanQueryOnClose = true,
+  transitionDuration,
   ...others
 }: SpotlightProviderProps) {
+  const timeoutRef = useRef<number>(-1);
   const [query, setQuery] = useState('');
   const [actions, { registerActions, removeActions, triggerAction }] = useActionsState(
     initialActions,
     query
   );
 
-  const [opened, { open, close, toggle }] = useDisclosure(false, {
-    onClose: onSpotlightClose,
-    onOpen: onSpotlightOpen,
-  });
-
   const handleQueryChange = (value: string) => {
     setQuery(value);
     onQueryChange?.(value);
   };
 
-  useSpotlightShortcuts(shortcut, toggle);
+  const [opened, { open, close, toggle }] = useDisclosure(false, {
+    onClose: () => {
+      onSpotlightClose?.();
+      if (cleanQueryOnClose) {
+        timeoutRef.current = window.setTimeout(() => {
+          handleQueryChange('');
+        }, transitionDuration);
+      }
+    },
+    onOpen: () => {
+      onSpotlightOpen?.();
+      window.clearTimeout(timeoutRef.current);
+    },
+  });
+
+  useSpotlightShortcuts(shortcut, open);
 
   return (
     <SpotlightContext.Provider
