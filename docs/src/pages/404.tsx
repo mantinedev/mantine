@@ -16,7 +16,7 @@ export default function PageNotFound() {
         <P>
           <H1>Congratulations!</H1>
           You've found a completely secret place on Mantine website. Unfortunately, this is only a
-          404 page. If you've landed on this page from link on Mantine website, please{' '}
+          404 page. If you've landed on this page from a link on the Mantine website, please{' '}
           <A href="https://github.com/mantinedev/mantine/issues/new">create an issue</A>. Otherwise,
           here are some learning materials that will help you get started with Mantine:
         </P>
