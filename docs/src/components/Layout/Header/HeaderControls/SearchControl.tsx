@@ -11,7 +11,8 @@ export function SearchControl(props: UnstyledButtonProps) {
   return (
     <UnstyledButton
       {...props}
-      px="sm"
+      pl="sm"
+      pr={5}
       onClick={spotlight.openSpotlight}
       sx={(theme) => ({
         height: 34,
