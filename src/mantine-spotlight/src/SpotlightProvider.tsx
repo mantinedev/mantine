@@ -53,6 +53,7 @@ export function SpotlightProvider({
         triggerAction,
         opened,
         actions,
+        query,
       }}
     >
       <Spotlight
