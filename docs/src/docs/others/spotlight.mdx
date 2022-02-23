@@ -104,6 +104,55 @@ function App() {
 }
 ```
 
+## use-spotlight hook
+
+`use-spotlight` hook lets you control spotlight from anywhere in your application.
+For example, it can be used to open spotlight with button click:
+
+```tsx
+import { useSpotlight } from '@mantine/spotlight';
+import { Button, Group } from '@mantine/core';
+
+function SpotlightControl() {
+  const spotlight = useSpotlight();
+  return (
+    <Group position="center">
+      <Button onClick={spotlight.openSpotlight}>Open spotlight</Button>
+    </Group>
+  );
+}
+```
+
+`use-spotlight` returns an object with the following properties:
+
+```tsx
+interface UseSpotlight {
+  /** Opens spotlight */
+  openSpotlight(): void;
+
+  /** Closes spotlight */
+  closeSpotlight(): void;
+
+  /** Toggles spotlight opened state */
+  toggleSpotlight(): void;
+
+  /** Triggers action with given id */
+  triggerAction(actionId: string): void;
+
+  /** Registers additional actions */
+  registerActions(action: SpotlightAction[]): void;
+
+  /** Removes actions with given ids */
+  removeActions(actionIds: string[]): void;
+
+  /** Current opened state */
+  opened: boolean;
+
+  /** List of registered actions */
+  actions: SpotlightAction[];
+}
+```
+
 ## Spotlight actions
 
 `actions` is the only required prop of `SpotlightProvider`. Action shape:
