@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "3.6.9",
+  "version": "3.6.10",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -14,7 +14,14 @@
     "directory": "src/mantine-hooks"
   },
   "keywords": [
-    "react", "next", "nextjs", "library", "frontend", "react-hooks", "hooks", "state"
+    "react",
+    "next",
+    "nextjs",
+    "library",
+    "frontend",
+    "react-hooks",
+    "hooks",
+    "state"
   ],
   "peerDependencies": {
     "react": ">=16.8.0"

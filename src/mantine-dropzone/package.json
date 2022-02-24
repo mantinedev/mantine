@@ -1,7 +1,7 @@
 {
   "name": "@mantine/dropzone",
   "description": "Dropzone component built with Mantine theme and components",
-  "version": "3.6.9",
+  "version": "3.6.10",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,11 +15,21 @@
     "directory": "src/mantine-prism"
   },
   "keywords": [
-    "react", "next", "nextjs", "ui", "components", "ui-kit", "library", "frontend", "dropzone", "dragndrop", "upload"
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "dropzone",
+    "dragndrop",
+    "upload"
   ],
   "peerDependencies": {
-    "@mantine/core": "3.6.9",
-    "@mantine/hooks": "3.6.9",
+    "@mantine/core": "3.6.10",
+    "@mantine/hooks": "3.6.10",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@mantine/next",
   "description": "Mantine integration for Next.js",
-  "version": "3.6.9",
+  "version": "3.6.10",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,7 +15,9 @@
     "directory": "src/mantine-ssr"
   },
   "keywords": [
-    "react", "next", "nextjs"
+    "react",
+    "next",
+    "nextjs"
   ],
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -23,7 +25,7 @@
     "next": "*"
   },
   "dependencies": {
-    "@mantine/ssr": "3.6.9"
+    "@mantine/ssr": "3.6.10"
   },
   "devDependencies": {}
 }
