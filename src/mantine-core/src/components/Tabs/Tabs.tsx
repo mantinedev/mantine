@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef, forwardRef, Children } from 'react';
 import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -7,7 +7,6 @@ import {
   ClassNames,
   ForwardRefWithStaticComponents,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -110,7 +109,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     );
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const tabs = filterChildrenByType(children, TabControl);
+    const tabs = Children.toArray(children) as React.ReactElement[];
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
       value: active,
