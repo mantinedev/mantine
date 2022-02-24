@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../../Box';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
@@ -17,7 +18,7 @@ export interface TabControlProps
   tabKey?: string;
   label?: React.ReactNode;
   children?: React.ReactNode;
-  ref?: React.ForwardedRef<HTMLButtonElement>;
+  elementRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 export const TabControl = forwardRef<HTMLButtonElement, TabControlProps>(
@@ -35,6 +36,7 @@ export const TabControl = forwardRef<HTMLButtonElement, TabControlProps>(
       icon,
       tabKey,
       color: overrideColor,
+      elementRef,
       ...others
     }: TabControlProps,
     ref
@@ -58,7 +60,7 @@ export const TabControl = forwardRef<HTMLButtonElement, TabControlProps>(
         type="button"
         role="tab"
         aria-selected={active}
-        ref={ref}
+        ref={mergeRefs(ref, elementRef)}
       >
         <div className={classes.tabInner}>
           {icon && <div className={classes.tabIcon}>{icon}</div>}

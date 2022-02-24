@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef, Children } from 'react';
-import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
+import { useUncontrolled, clamp } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -152,23 +152,22 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       }
     };
 
-    const panes = tabs.map((tab, index) => (
-      <TabControl
-        {...tab.props}
-        key={index}
-        active={activeTab === index}
-        onKeyDown={handleKeyDown}
-        color={tab.props.color || color}
-        variant={variant}
-        orientation={orientation}
-        ref={mergeRefs((node: HTMLButtonElement) => {
+    const panes = tabs.map((tab, index) =>
+      React.cloneElement(tab, {
+        key: index,
+        active: activeTab === index,
+        onKeyDown: handleKeyDown,
+        color: tab.props.color || color,
+        variant,
+        orientation,
+        elementRef: (node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
-        }, (tab as any).ref)}
-        onClick={() => activeTab !== index && handleActiveTabChange(index)}
-        classNames={classNames}
-        styles={styles}
-      />
-    ));
+        },
+        onClick: () => activeTab !== index && handleActiveTabChange(index),
+        classNames,
+        styles,
+      })
+    );
 
     const content = tabs[activeTab].props.children;
 
