@@ -98,26 +98,6 @@ In addition to `icon` and `label` props shown before,
 
 <Demo data={TabsDemos.tabProps} />
 
-## Wrap Tabs.Tab component
-
-```tsx
-import { Tabs, TabProps } from '@mantine/core';
-
-// !important: spreading props is required
-function DemoTab(props: TabProps) {
-  return <Tabs.Tab label="Wrapped tab" />;
-}
-
-function Demo() {
-  return (
-    <Tabs>
-      <DemoTab />
-      <Tabs.Tab label="Regular tab" />
-    </Tabs>
-  );
-}
-```
-
 ## Add your styles with styles API
 
 You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements.
