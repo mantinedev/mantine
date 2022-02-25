@@ -4,3 +4,4 @@ export { SpotlightProvider } from './SpotlightProvider';
 export type { SpotlightAction } from './types';
 export type { SpotlightProviderProps } from './SpotlightProvider';
 export type { DefaultActionProps as SpotlightActionProps } from './DefaultAction/DefaultAction';
+export type { SpotlightStylesNames } from './Spotlight/Spotlight';
