@@ -26,6 +26,7 @@ export interface UseFormReturnType<T> {
     index: number,
     value: U extends any[] ? U[number] : never
   ) => void;
+  removeListItems(field: keyof T, indices: number[] | number): void;
 }
 
 export function useForm<T extends { [key: string]: any }>({
@@ -52,6 +53,17 @@ export function useForm<T extends { [key: string]: any }>({
     }
   };
 
+  const removeListItems = (field: keyof T, indices: number[] | number) => {
+    if (Array.isArray(values[field])) {
+      setFieldValue(
+        field,
+        values[field].filter((_: any, index: number) =>
+          Array.isArray(indices) ? !indices.includes(index) : indices !== index
+        )
+      );
+    }
+  };
+
   return {
     values,
     setValues,
@@ -61,5 +73,6 @@ export function useForm<T extends { [key: string]: any }>({
     resetErrors,
     setFieldError,
     setListValue,
+    removeListItems,
   };
 }

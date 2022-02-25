@@ -25,4 +25,46 @@ describe('@mantine/form/use-form lists', () => {
     act(() => hook.result.current.setListValue('fruits', -1, 'apple'));
     expect(hook.result.current.values).toStrictEqual({ fruits: ['banana', 'orange'], other: true });
   });
+
+  it('removes single item from the list with removeListItems handler', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.removeListItems('fruits', 2));
+    expect(hook.result.current.values).toStrictEqual({ fruits: ['banana', 'orange'], other: true });
+
+    act(() => hook.result.current.removeListItems('fruits', 0));
+    expect(hook.result.current.values).toStrictEqual({ fruits: ['orange'], other: true });
+  });
+
+  it('removes multiple items from the list with removeListItems handler', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.removeListItems('fruits', [0, 2]));
+    expect(hook.result.current.values).toStrictEqual({ fruits: ['orange'], other: true });
+
+    act(() => hook.result.current.removeListItems('fruits', [0]));
+    expect(hook.result.current.values).toStrictEqual({ fruits: [], other: true });
+  });
+
+  it('ignores indices that are not in the list with removeListItems handler', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.removeListItems('fruits', [3, -1]));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+
+    act(() => hook.result.current.removeListItems('fruits', 50));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+  });
 });
