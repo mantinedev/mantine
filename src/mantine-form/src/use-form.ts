@@ -21,6 +21,11 @@ export interface UseFormReturnType<T> {
   setErrors: SetFormErrors<T>;
   setFieldError: SetFieldError<T>;
   resetErrors(): void;
+  setListValue: <K extends keyof T, U extends T[K]>(
+    field: K,
+    index: number,
+    value: U extends any[] ? U[number] : never
+  ) => void;
 }
 
 export function useForm<T extends { [key: string]: any }>({
@@ -35,6 +40,18 @@ export function useForm<T extends { [key: string]: any }>({
     setFieldError(field, null);
   };
 
+  const setListValue = <K extends keyof T, U extends T[K][number]>(
+    field: K,
+    index: number,
+    value: U
+  ) => {
+    if (Array.isArray(values[field]) && values[field][index] !== undefined) {
+      const clone = [...values[field]];
+      clone[index] = value;
+      setFieldValue(field, clone as any);
+    }
+  };
+
   return {
     values,
     setValues,
@@ -43,5 +60,6 @@ export function useForm<T extends { [key: string]: any }>({
     setErrors,
     resetErrors,
     setFieldError,
+    setListValue,
   };
 }
