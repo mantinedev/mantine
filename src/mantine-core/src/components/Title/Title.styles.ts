@@ -15,7 +15,7 @@ export default createStyles((theme, { element, align }: TitleStylesParams) => ({
     fontSize: theme.headings.sizes[element].fontSize,
     lineHeight: theme.headings.sizes[element].lineHeight,
     margin: 0,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    color: 'inherit',
     textAlign: align,
   },
 }));
