@@ -18,6 +18,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',
   '../src/mantine-core/src/components/Grid/Col/Col.tsx',
   '../src/mantine-prism/src/Prism.tsx',
+  '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
   '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
 ];
