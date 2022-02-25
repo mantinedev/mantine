@@ -7,12 +7,25 @@ import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
 export interface SpotlightProviderProps extends InnerSpotlightProps {
+  /** Actions list */
   actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
+
+  /** Your application */
   children?: React.ReactNode;
+
+  /** Called when spotlight opens */
   onSpotlightOpen?(): void;
+
+  /** Called when spotlight closes */
   onSpotlightClose?(): void;
+
+  /** Called when user enters text in search input */
   onQueryChange?(query: string): void;
+
+  /** Keyboard shortcut or list of shortcuts to trigger spotlight */
   shortcut?: string | string[] | null;
+
+  /** Should search be cleared when spotlight closes */
   cleanQueryOnClose?: boolean;
 }
 
