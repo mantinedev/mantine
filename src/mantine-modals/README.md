@@ -1,22 +1,19 @@
-# Mantine Notifications
+# Mantine modals manager
 
-Modals manager built on top of [Mantine](https://mantine.dev/) components library.
+Manage modals state
 
-[Documentation](https://mantine.dev/others/modals/)
+[View documentation](https://mantine.dev/)
 
 ## Installation
 
 ```sh
 # With yarn
-yarn add @mantine/modals @mantine/core @mantine/hooks
+yarn add @mantine/hooks @mantine/core @mantine/modals
 
 # With npm
-npm install @mantine/modals @mantine/core @mantine/hooks
-
-# With install-peerdeps
-npx install-peerdeps @mantine/modals
+npm install @mantine/hooks @mantine/core @mantine/modals
 ```
 
 ## License
 
-All Mantine packages have MIT license. All @mantine/modals dependencies also have MIT license.
+MIT
