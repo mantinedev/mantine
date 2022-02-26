@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { formList, isFormList } from './form-list/form-list';
+import { validateValues } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import type { FormErrors, FormRules, FormValidationResult } from './types';
 
@@ -35,6 +36,7 @@ export interface UseFormReturnType<T> {
 export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
+  validate: rules,
 }: UseFormInput<T>): UseFormReturnType<T> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
@@ -104,6 +106,12 @@ export function useForm<T extends { [key: string]: any }>({
     }
   };
 
+  const validate = () => {
+    const results = validateValues(rules, values);
+    setErrors(results.errors);
+    return results;
+  };
+
   return {
     values,
     setValues,
@@ -117,5 +125,6 @@ export function useForm<T extends { [key: string]: any }>({
     removeListItem,
     addListItem,
     reorderListItem,
+    validate,
   };
 }

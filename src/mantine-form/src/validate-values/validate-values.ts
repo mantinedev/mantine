@@ -13,7 +13,8 @@ function validateRecordRules<T>(rules: FormRulesRecord<T>, values: T): FormError
 }
 
 function getValidationResults<T>(errors: FormErrors<T>) {
-  return { hasErrors: Object.keys(errors).length > 0, errors: filterErrors(errors) };
+  const filteredErrors = filterErrors(errors);
+  return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
 }
 
 export function validateValues<T>(rules: FormRules<T>, values: T): FormValidationResult<T> {
