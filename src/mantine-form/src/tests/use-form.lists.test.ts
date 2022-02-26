@@ -83,4 +83,58 @@ describe('@mantine/form/use-form lists', () => {
       other: true,
     });
   });
+
+  it('reorders list item at given position with reorderListItem handler', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: 0, to: 2 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['orange', 'apple', 'banana'],
+      other: true,
+    });
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: 1, to: 0 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['apple', 'orange', 'banana'],
+      other: true,
+    });
+  });
+
+  it('does not reorder item if its index is not in the list', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: 3, to: 2 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: -1, to: 2 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+  });
+
+  it('does not reorder item if target index is not in the list', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+    );
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: 0, to: -1 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+
+    act(() => hook.result.current.reorderListItem('fruits', { from: -1, to: 10 }));
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: ['banana', 'orange', 'apple'],
+      other: true,
+    });
+  });
 });

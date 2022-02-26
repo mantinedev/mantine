@@ -31,6 +31,7 @@ export interface UseFormReturnType<T> {
     payload: U extends any[] ? U[number] : never
   ) => void;
   removeListItem(field: keyof T, indices: number[] | number): void;
+  reorderListItem(field: keyof T, payload: { from: number; to: number }): void;
 }
 
 export function useForm<T extends { [key: string]: any }>({
@@ -50,10 +51,11 @@ export function useForm<T extends { [key: string]: any }>({
     index: number,
     value: U
   ) => {
-    if (Array.isArray(values[field]) && values[field][index] !== undefined) {
-      const clone = [...values[field]];
-      clone[index] = value;
-      setFieldValue(field, clone as any);
+    const list = values[field];
+    if (Array.isArray(list) && list[index] !== undefined) {
+      const cloned = [...list];
+      cloned[index] = value;
+      setFieldValue(field, cloned as any);
     }
   };
 
@@ -69,8 +71,23 @@ export function useForm<T extends { [key: string]: any }>({
   };
 
   const addListItem = <K extends keyof T, U extends T[K][number]>(field: K, payload: U) => {
-    if (Array.isArray(values[field])) {
-      setFieldValue(field, [...values[field], payload] as any);
+    const list = values[field];
+
+    if (Array.isArray(list)) {
+      setFieldValue(field, [...list, payload] as any);
+    }
+  };
+
+  const reorderListItem = (field: keyof T, { from, to }: { from: number; to: number }) => {
+    const list = values[field];
+
+    if (Array.isArray(list) && list[from] !== undefined && list[to] !== undefined) {
+      const cloned = [...list];
+      const item = list[from];
+
+      cloned.splice(from, 1);
+      cloned.splice(to, 0, item);
+      setFieldValue(field, cloned as any);
     }
   };
 
@@ -85,5 +102,6 @@ export function useForm<T extends { [key: string]: any }>({
     setListItem,
     removeListItem,
     addListItem,
+    reorderListItem,
   };
 }
