@@ -85,7 +85,7 @@ describe('@mantine/form/use-form errors', () => {
       })
     );
 
-    act(() => hook.result.current.clearFieldError('apple'));
+    act(() => hook.result.current.clearFieldError('apple' as any));
     expect(hook.result.current.errors).toStrictEqual({
       orange: 'orange-error',
       banana: 'banana-error',

@@ -7,8 +7,11 @@ import type {
 } from '../types';
 import { filterErrors } from '../filter-errors/filter-errors';
 
-function validateRecordRules<T>(rules: FormRulesRecord<T>, values: T): FormErrors<T> {
-  return Object.keys(rules).reduce<FormErrors<T>>((acc, key) => {
+function validateRecordRules<T, K extends keyof T, V extends T[K]>(
+  rules: FormRulesRecord<T>,
+  values: T
+): FormErrors<T, K, V> {
+  return Object.keys(rules).reduce<FormErrors<T, K, V>>((acc, key) => {
     const rule = rules[key];
     if (typeof rules[key] === 'function') {
       acc[key] = rule(values[key], values);
@@ -18,12 +21,15 @@ function validateRecordRules<T>(rules: FormRulesRecord<T>, values: T): FormError
   }, {});
 }
 
-function getValidationResults<T>(errors: FormErrors<T>) {
+function getValidationResults<T, K extends keyof T, V extends T[K]>(errors: FormErrors<T, K, V>) {
   const filteredErrors = filterErrors(errors);
   return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
 }
 
-export function validateValues<T>(rules: FormRules<T>, values: T): FormValidationResult<T> {
+export function validateValues<T, K extends keyof T, V extends T[K]>(
+  rules: FormRules<T, K, V>,
+  values: T
+): FormValidationResult<T, K, V> {
   if (rules === undefined || rules === null) {
     return { hasErrors: true, errors: {} };
   }
@@ -35,9 +41,9 @@ export function validateValues<T>(rules: FormRules<T>, values: T): FormValidatio
   return getValidationResults(validateRecordRules(rules, values));
 }
 
-export function validateFieldValue<T>(
+export function validateFieldValue<T, K extends keyof T, V extends T[K]>(
   field: keyof T,
-  rules: FormRules<T>,
+  rules: FormRules<T, K, V>,
   values: T
 ): FormFieldValidationResult {
   const results = validateValues(rules, values);

@@ -1,6 +1,6 @@
 const LIST_IDENTIFIER = Symbol('@mantine/form/list');
 
-interface FormList<T> extends Array<T> {
+export interface FormList<T> extends Array<T> {
   [LIST_IDENTIFIER]: true;
 }
 
