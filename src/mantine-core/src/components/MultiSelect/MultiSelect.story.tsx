@@ -233,6 +233,15 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         nothingFound="Nothing found"
         clearable
       />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        clearable
+        disabled
+      />
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
