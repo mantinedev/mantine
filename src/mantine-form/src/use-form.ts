@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { formList, isFormList } from './form-list/form-list';
-import { validateValues } from './validate-values/validate-values';
+import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
-import type { FormErrors, FormRules, FormValidationResult } from './types';
+import type {
+  FormErrors,
+  FormRules,
+  FormValidationResult,
+  FormFieldValidationResult,
+} from './types';
 
 export interface UseFormInput<T> {
   initialValues: T;
@@ -31,6 +36,7 @@ export interface UseFormReturnType<T> {
   removeListItem(field: keyof T, indices: number[] | number): void;
   reorderListItem(field: keyof T, payload: { from: number; to: number }): void;
   validate(): FormValidationResult<T>;
+  validateField(field: keyof T): FormFieldValidationResult;
 }
 
 export function useForm<T extends { [key: string]: any }>({
@@ -112,6 +118,12 @@ export function useForm<T extends { [key: string]: any }>({
     return results;
   };
 
+  const validateField = (field: keyof T) => {
+    const results = validateFieldValue(field, rules, values);
+    results.valid ? clearFieldError(field) : setFieldError(field, results.error);
+    return results;
+  };
+
   return {
     values,
     setValues,
@@ -126,5 +138,6 @@ export function useForm<T extends { [key: string]: any }>({
     addListItem,
     reorderListItem,
     validate,
+    validateField,
   };
 }

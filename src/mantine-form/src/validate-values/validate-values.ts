@@ -1,4 +1,10 @@
-import type { FormErrors, FormRulesRecord, FormRules, FormValidationResult } from '../types';
+import type {
+  FormErrors,
+  FormRulesRecord,
+  FormRules,
+  FormValidationResult,
+  FormFieldValidationResult,
+} from '../types';
 import { filterErrors } from '../filter-errors/filter-errors';
 
 function validateRecordRules<T>(rules: FormRulesRecord<T>, values: T): FormErrors<T> {
@@ -27,4 +33,14 @@ export function validateValues<T>(rules: FormRules<T>, values: T): FormValidatio
   }
 
   return getValidationResults(validateRecordRules(rules, values));
+}
+
+export function validateFieldValue<T>(
+  field: keyof T,
+  rules: FormRules<T>,
+  values: T
+): FormFieldValidationResult {
+  const results = validateValues(rules, values);
+  const valid = !(field in results.errors);
+  return { valid, error: valid ? null : results.errors[field] };
 }

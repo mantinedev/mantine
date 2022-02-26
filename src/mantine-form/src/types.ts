@@ -12,3 +12,8 @@ export interface FormValidationResult<T> {
   hasErrors: boolean;
   errors: FormErrors<T>;
 }
+
+export interface FormFieldValidationResult {
+  valid: boolean;
+  error: React.ReactNode | null;
+}

@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { useForm } from '../index';
 
 describe('@mantine/form/use-form object rules validation', () => {
-  it('validates all fields with validate handler when rules are an object', () => {
+  it('validates all fields with validate handler', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: {
@@ -50,6 +50,37 @@ describe('@mantine/form/use-form object rules validation', () => {
     act(() => {
       const result = hook.result.current.validate();
       expect(result).toStrictEqual({ hasErrors: false, errors: {} });
+    });
+
+    expect(hook.result.current.errors).toStrictEqual({});
+  });
+
+  it('validates single field with validateField handler', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: {
+          banana: '',
+          orange: '',
+        },
+
+        validate: {
+          banana: (value) => (value !== 'test-banana' ? 'invalid banana' : null),
+          orange: (value) => (value !== 'test-orange' ? 'invalid orange' : null),
+        },
+      })
+    );
+
+    act(() => {
+      const result = hook.result.current.validateField('banana');
+      expect(result).toStrictEqual({ valid: false, error: 'invalid banana' });
+    });
+
+    expect(hook.result.current.errors).toStrictEqual({ banana: 'invalid banana' });
+
+    act(() => hook.result.current.setFieldValue('banana', 'test-banana'));
+    act(() => {
+      const result = hook.result.current.validateField('banana');
+      expect(result).toStrictEqual({ valid: true, error: null });
     });
 
     expect(hook.result.current.errors).toStrictEqual({});
