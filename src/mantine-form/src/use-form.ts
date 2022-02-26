@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-export type FormErrors<T> = Partial<Record<keyof T, React.ReactNode | null>>;
+import type { FormErrors } from './types';
 
 export type ValidationRules<T> =
   | ((values: T) => FormErrors<T>)
