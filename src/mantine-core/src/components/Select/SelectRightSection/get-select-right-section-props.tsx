@@ -33,7 +33,7 @@ export function getSelectRightSectionProps({
   return {
     rightSectionWidth:
       props.disabled && props.shouldClear
-        ? '0'
+        ? 0
         : (theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number),
     rightSection: <SelectRightSection {...props} />,
     styles: {
