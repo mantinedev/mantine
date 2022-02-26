@@ -16,6 +16,6 @@ describe('@mantine/spotlight/use-spotlight-shortcuts', () => {
   });
 
   it('returns empty array for null shortcut', () => {
-    expect(getHotkeysPayload(null, spy)).toStrictEqual(null);
+    expect(getHotkeysPayload(null, spy)).toStrictEqual([]);
   });
 });
