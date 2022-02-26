@@ -7,3 +7,8 @@ export type FormRulesRecord<T> = {
 };
 
 export type FormRules<T> = ((values: T) => FormErrors<T>) | FormRulesRecord<T>;
+
+export interface FormValidationResult<T> {
+  hasErrors: boolean;
+  errors: FormErrors<T>;
+}

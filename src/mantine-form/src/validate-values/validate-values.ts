@@ -1,21 +1,5 @@
-import type { FormErrors, FormRulesRecord, FormRules } from '../types';
-
-interface ValidateReturnType<T> {
-  hasErrors: boolean;
-  errors: FormErrors<T>;
-}
-
-function filterErrors<T>(errors: FormErrors<T>): FormErrors<T> {
-  return Object.keys(errors).reduce<FormErrors<T>>((acc, key) => {
-    const errorValue = errors[key];
-
-    if (errorValue !== undefined && errorValue !== null) {
-      acc[key] = errorValue;
-    }
-
-    return acc;
-  }, {});
-}
+import type { FormErrors, FormRulesRecord, FormRules, FormValidationResult } from '../types';
+import { filterErrors } from '../filter-errors/filter-errors';
 
 function validateRecordRules<T>(rules: FormRulesRecord<T>, values: T): FormErrors<T> {
   return Object.keys(rules).reduce<FormErrors<T>>((acc, key) => {
@@ -32,7 +16,7 @@ function getValidationResults<T>(errors: FormErrors<T>) {
   return { hasErrors: Object.keys(errors).length > 0, errors: filterErrors(errors) };
 }
 
-export function validateValues<T>(rules: FormRules<T>, values: T): ValidateReturnType<T> {
+export function validateValues<T>(rules: FormRules<T>, values: T): FormValidationResult<T> {
   if (rules === undefined || rules === null) {
     return { hasErrors: true, errors: {} };
   }

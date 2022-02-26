@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { formList, isFormList } from './form-list/form-list';
-import type { FormErrors, FormRules } from './types';
+import { filterErrors } from './filter-errors/filter-errors';
+import type { FormErrors, FormRules, FormValidationResult } from './types';
 
 export interface UseFormInput<T> {
   initialValues: T;
@@ -28,13 +29,14 @@ export interface UseFormReturnType<T> {
   ) => void;
   removeListItem(field: keyof T, indices: number[] | number): void;
   reorderListItem(field: keyof T, payload: { from: number; to: number }): void;
+  validate(): FormValidationResult<T>;
 }
 
 export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
 }: UseFormInput<T>): UseFormReturnType<T> {
-  const [errors, setErrors] = useState<FormErrors<T>>(initialErrors || {});
+  const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
   const clearErrors = () => setErrors({});

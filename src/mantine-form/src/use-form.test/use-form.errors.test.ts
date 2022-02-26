@@ -6,15 +6,25 @@ describe('@mantine/form/use-form errors', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: { orange: 'fruit', banana: true, apple: 20 },
-        initialErrors: { orange: 'orange-error', banana: 55, apple: null },
+        initialErrors: { orange: 'orange-error', banana: 55 },
       })
     );
 
     expect(hook.result.current.errors).toStrictEqual({
       orange: 'orange-error',
       banana: 55,
-      apple: null,
     });
+  });
+
+  it('filters out invalid initial errors', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { banana: true, apple: true, orange: true },
+        initialErrors: { orange: 'orange-error', banana: null, apple: undefined },
+      })
+    );
+
+    expect(hook.result.current.errors).toStrictEqual({ orange: 'orange-error' });
   });
 
   it('sets errors to empty object if initial errors are not defined', () => {
