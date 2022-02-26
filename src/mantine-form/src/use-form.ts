@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useErrors, FormErrors, SetFormErrors, SetFieldError } from './use-errors/use-errors';
+
+export type FormErrors<T> = Partial<Record<keyof T, React.ReactNode | null>>;
 
 export type ValidationRules<T> =
   | ((values: T) => FormErrors<T>)
@@ -18,8 +19,8 @@ export interface UseFormReturnType<T> {
   setValues: React.Dispatch<React.SetStateAction<T>>;
   setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
   errors: FormErrors<T>;
-  setErrors: SetFormErrors<T>;
-  setFieldError: SetFieldError<T>;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
+  setFieldError: (field: keyof T, error: React.ReactNode | null) => void;
   resetErrors(): void;
   setListItem: <K extends keyof T, U extends T[K]>(
     field: K,
@@ -38,8 +39,12 @@ export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
 }: UseFormInput<T>): UseFormReturnType<T> {
+  const [errors, setErrors] = useState<FormErrors<T>>(initialErrors || {});
   const [values, setValues] = useState(initialValues);
-  const { errors, setErrors, resetErrors, setFieldError } = useErrors(initialErrors);
+
+  const resetErrors = () => setErrors({});
+  const setFieldError = (field: keyof T, error: React.ReactNode | null) =>
+    setErrors((current) => ({ ...current, [field]: error }));
 
   const setFieldValue = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
