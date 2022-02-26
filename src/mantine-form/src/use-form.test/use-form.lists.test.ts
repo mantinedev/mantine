@@ -1,10 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks';
-import { useForm } from '../index';
+import { useForm, formList } from '../index';
 
 describe('@mantine/form/use-form lists', () => {
   it('sets list values with setListItem handler', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange']), other: true } })
     );
 
     act(() => hook.result.current.setListItem('fruits', 0, 'apple'));
@@ -16,7 +16,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('does not set list values that are not in current list', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange']), other: true } })
     );
 
     act(() => hook.result.current.setListItem('fruits', 2, 'apple'));
@@ -28,7 +28,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('removes single item from the list with removeListItem handler', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.removeListItem('fruits', 2));
@@ -40,7 +40,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('removes multiple items from the list with removeListItem handler', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.removeListItem('fruits', [0, 2]));
@@ -52,7 +52,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('ignores indices that are not in the list with removeListItem handler', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.removeListItem('fruits', [3, -1]));
@@ -69,7 +69,9 @@ describe('@mantine/form/use-form lists', () => {
   });
 
   it('adds single item to the end of the list with addListItem handler', () => {
-    const hook = renderHook(() => useForm({ initialValues: { fruits: ['banana'], other: true } }));
+    const hook = renderHook(() =>
+      useForm({ initialValues: { fruits: formList(['banana']), other: true } })
+    );
 
     act(() => hook.result.current.addListItem('fruits', 'orange'));
     expect(hook.result.current.values).toStrictEqual({
@@ -86,7 +88,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('reorders list item at given position with reorderListItem handler', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.reorderListItem('fruits', { from: 0, to: 2 }));
@@ -104,7 +106,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('does not reorder item if its index is not in the list', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.reorderListItem('fruits', { from: 3, to: 2 }));
@@ -122,7 +124,7 @@ describe('@mantine/form/use-form lists', () => {
 
   it('does not reorder item if target index is not in the list', () => {
     const hook = renderHook(() =>
-      useForm({ initialValues: { fruits: ['banana', 'orange', 'apple'], other: true } })
+      useForm({ initialValues: { fruits: formList(['banana', 'orange', 'apple']), other: true } })
     );
 
     act(() => hook.result.current.reorderListItem('fruits', { from: 0, to: -1 }));
