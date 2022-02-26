@@ -1,6 +1,10 @@
 const LIST_IDENTIFIER = Symbol('@mantine/form/list');
 
-export function formList<T extends any[]>(list: T) {
+interface FormList<T> extends Array<T> {
+  [LIST_IDENTIFIER]: true;
+}
+
+export function formList<T>(list: T[]): FormList<T> {
   Object.defineProperty(list, LIST_IDENTIFIER, {
     value: true,
     writable: false,
@@ -8,9 +12,9 @@ export function formList<T extends any[]>(list: T) {
     configurable: false,
   });
 
-  return list;
+  return list as FormList<T>;
 }
 
-export function isFormList(list: any[]) {
+export function isFormList(list: unknown) {
   return Array.isArray(list) && !!list[LIST_IDENTIFIER];
 }

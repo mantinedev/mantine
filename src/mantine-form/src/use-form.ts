@@ -86,7 +86,7 @@ export function useForm<T extends { [key: string]: any }>({
           list.filter((_: any, index: number) =>
             Array.isArray(indices) ? !indices.includes(index) : indices !== index
           )
-        )
+        ) as any
       );
     }
   };
