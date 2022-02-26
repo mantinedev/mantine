@@ -21,12 +21,16 @@ export interface UseFormReturnType<T> {
   setErrors: SetFormErrors<T>;
   setFieldError: SetFieldError<T>;
   resetErrors(): void;
-  setListValue: <K extends keyof T, U extends T[K]>(
+  setListItem: <K extends keyof T, U extends T[K]>(
     field: K,
     index: number,
     value: U extends any[] ? U[number] : never
   ) => void;
-  removeListItems(field: keyof T, indices: number[] | number): void;
+  addListItem: <K extends keyof T, U extends T[K]>(
+    field: K,
+    payload: U extends any[] ? U[number] : never
+  ) => void;
+  removeListItem(field: keyof T, indices: number[] | number): void;
 }
 
 export function useForm<T extends { [key: string]: any }>({
@@ -41,7 +45,7 @@ export function useForm<T extends { [key: string]: any }>({
     setFieldError(field, null);
   };
 
-  const setListValue = <K extends keyof T, U extends T[K][number]>(
+  const setListItem = <K extends keyof T, U extends T[K][number]>(
     field: K,
     index: number,
     value: U
@@ -53,7 +57,7 @@ export function useForm<T extends { [key: string]: any }>({
     }
   };
 
-  const removeListItems = (field: keyof T, indices: number[] | number) => {
+  const removeListItem = (field: keyof T, indices: number[] | number) => {
     if (Array.isArray(values[field])) {
       setFieldValue(
         field,
@@ -61,6 +65,12 @@ export function useForm<T extends { [key: string]: any }>({
           Array.isArray(indices) ? !indices.includes(index) : indices !== index
         )
       );
+    }
+  };
+
+  const addListItem = <K extends keyof T, U extends T[K][number]>(field: K, payload: U) => {
+    if (Array.isArray(values[field])) {
+      setFieldValue(field, [...values[field], payload] as any);
     }
   };
 
@@ -72,7 +82,8 @@ export function useForm<T extends { [key: string]: any }>({
     setErrors,
     resetErrors,
     setFieldError,
-    setListValue,
-    removeListItems,
+    setListItem,
+    removeListItem,
+    addListItem,
   };
 }
