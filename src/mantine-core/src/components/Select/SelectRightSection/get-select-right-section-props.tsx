@@ -31,11 +31,8 @@ export function getSelectRightSectionProps({
   const _styles = typeof styles === 'function' ? styles(theme) : styles;
 
   return {
-    rightSectionWidth:
-      props.disabled && props.shouldClear
-        ? 0
-        : (theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number),
-    rightSection: <SelectRightSection {...props} />,
+    rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
+    rightSection: !props.disabled && !props.shouldClear && <SelectRightSection {...props} />,
     styles: {
       ..._styles,
       rightSection: {

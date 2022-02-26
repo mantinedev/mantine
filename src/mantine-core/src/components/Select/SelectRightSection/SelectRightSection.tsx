@@ -18,12 +18,7 @@ export function SelectRightSection({
   onClear,
   size,
   error,
-  disabled,
 }: SelectRightSectionProps) {
-  if (disabled && shouldClear) {
-    return null;
-  }
-
   return shouldClear ? (
     <CloseButton
       variant="transparent"
