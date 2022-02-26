@@ -20,8 +20,9 @@ export interface UseFormReturnType<T> {
   setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
   errors: FormErrors<T>;
   setErrors: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
-  setFieldError: (field: keyof T, error: React.ReactNode | null) => void;
-  resetErrors(): void;
+  setFieldError(field: keyof T, error: React.ReactNode): void;
+  clearFieldError(field: keyof T): void;
+  clearErrors(): void;
   setListItem: <K extends keyof T, U extends T[K]>(
     field: K,
     index: number,
@@ -42,13 +43,20 @@ export function useForm<T extends { [key: string]: any }>({
   const [errors, setErrors] = useState<FormErrors<T>>(initialErrors || {});
   const [values, setValues] = useState(initialValues);
 
-  const resetErrors = () => setErrors({});
-  const setFieldError = (field: keyof T, error: React.ReactNode | null) =>
+  const clearErrors = () => setErrors({});
+  const setFieldError = (field: keyof T, error: React.ReactNode) =>
     setErrors((current) => ({ ...current, [field]: error }));
+
+  const clearFieldError = (field: keyof T) =>
+    setErrors((current) => {
+      const clone = { ...current };
+      delete clone[field];
+      return clone;
+    });
 
   const setFieldValue = <K extends keyof T, U extends T[K]>(field: K, value: U) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    setFieldError(field, null);
+    clearFieldError(field);
   };
 
   const setListItem = <K extends keyof T, U extends T[K][number]>(
@@ -102,7 +110,8 @@ export function useForm<T extends { [key: string]: any }>({
     setFieldValue,
     errors,
     setErrors,
-    resetErrors,
+    clearErrors,
+    clearFieldError,
     setFieldError,
     setListItem,
     removeListItem,
