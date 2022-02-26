@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineSize } from '@mantine/styles';
+import { createStyles, MantineSize } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import { ChevronIcon } from './ChevronIcon';
 
@@ -9,7 +9,17 @@ export interface SelectRightSectionProps {
   onClear?: () => void;
   size: MantineSize;
   error?: any;
+  disabled?: boolean;
 }
+
+const useStyles = createStyles(() => ({
+  button: {
+    '&:disabled': {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+    },
+  },
+}));
 
 export function SelectRightSection({
   shouldClear,
@@ -17,13 +27,18 @@ export function SelectRightSection({
   onClear,
   size,
   error,
+  disabled,
 }: SelectRightSectionProps) {
+  const { classes } = useStyles();
+
   return shouldClear ? (
     <CloseButton
       variant="transparent"
       aria-label={clearButtonLabel}
       onClick={onClear}
       size={size}
+      disabled={disabled}
+      className={classes.button}
     />
   ) : (
     <ChevronIcon error={error} size={size} />
