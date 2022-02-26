@@ -1,20 +1,25 @@
-import { createFormList, isFormList } from './form-list';
+import { formList, isFormList } from './form-list';
 
 describe('@mantine/form form-list', () => {
   it('creates new list from given list without noticeable modifications', () => {
-    expect(createFormList([{ apple: 1 }, { banana: 'fruit' }])).toStrictEqual([
+    expect(formList([{ apple: 1 }, { banana: 'fruit' }])).toStrictEqual([
       { apple: 1 },
       { banana: 'fruit' },
     ]);
   });
 
-  it('detects list created by createFormList function with isFormList function', () => {
-    const list = createFormList([{ apple: 1 }, { banana: 'fruit' }]);
+  it('detects list created by formList function with isFormList function', () => {
+    const list = formList([{ apple: 1 }, { banana: 'fruit' }]);
     expect(isFormList(list)).toBe(true);
   });
 
-  it('detects lists created without createFormList function with isFormList function', () => {
+  it('detects lists created without formList function with isFormList function', () => {
     expect(isFormList([{ apple: 1 }, { banana: 'fruit' }])).toBe(false);
+  });
+
+  it('serializes form list to the same string as regular list with JSON.stringify', () => {
+    const list = formList([{ apple: 1 }, { banana: 'fruit' }]);
+    expect(JSON.stringify(list)).toBe(JSON.stringify([{ apple: 1 }, { banana: 'fruit' }]));
   });
 
   it('handles all possible types correctly', () => {
