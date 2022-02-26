@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import type { FormErrors } from './types';
-
-export type ValidationRules<T> =
-  | ((values: T) => FormErrors<T>)
-  | {
-      [P in keyof T]?: (value: T[P], values?: T) => boolean;
-    };
+import type { FormErrors, FormRules } from './types';
 
 export interface UseFormInput<T> {
   initialValues: T;
   initialErrors?: FormErrors<T>;
-  validate?: ValidationRules<T>;
+  validate?: FormRules<T>;
 }
 
 export interface UseFormReturnType<T> {
