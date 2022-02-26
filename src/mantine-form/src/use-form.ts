@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formList, isFormList } from './form-list/form-list';
 import type { FormErrors, FormRules } from './types';
 
 export interface UseFormInput<T> {
@@ -58,19 +59,23 @@ export function useForm<T extends { [key: string]: any }>({
     value: U
   ) => {
     const list = values[field];
-    if (Array.isArray(list) && list[index] !== undefined) {
+    if (isFormList(list) && list[index] !== undefined) {
       const cloned = [...list];
       cloned[index] = value;
-      setFieldValue(field, cloned as any);
+      setFieldValue(field, formList(cloned) as any);
     }
   };
 
   const removeListItem = (field: keyof T, indices: number[] | number) => {
-    if (Array.isArray(values[field])) {
+    const list = values[field];
+
+    if (isFormList(list)) {
       setFieldValue(
         field,
-        values[field].filter((_: any, index: number) =>
-          Array.isArray(indices) ? !indices.includes(index) : indices !== index
+        formList(
+          list.filter((_: any, index: number) =>
+            Array.isArray(indices) ? !indices.includes(index) : indices !== index
+          )
         )
       );
     }
@@ -79,21 +84,21 @@ export function useForm<T extends { [key: string]: any }>({
   const addListItem = <K extends keyof T, U extends T[K][number]>(field: K, payload: U) => {
     const list = values[field];
 
-    if (Array.isArray(list)) {
-      setFieldValue(field, [...list, payload] as any);
+    if (isFormList(list)) {
+      setFieldValue(field, formList([...list, payload]) as any);
     }
   };
 
   const reorderListItem = (field: keyof T, { from, to }: { from: number; to: number }) => {
     const list = values[field];
 
-    if (Array.isArray(list) && list[from] !== undefined && list[to] !== undefined) {
+    if (isFormList(list) && list[from] !== undefined && list[to] !== undefined) {
       const cloned = [...list];
       const item = list[from];
 
       cloned.splice(from, 1);
       cloned.splice(to, 0, item);
-      setFieldValue(field, cloned as any);
+      setFieldValue(field, formList(cloned) as any);
     }
   };
 
