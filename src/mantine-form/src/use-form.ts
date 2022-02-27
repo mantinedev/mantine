@@ -9,18 +9,18 @@ import type {
   FormFieldValidationResult,
 } from './types';
 
-export interface UseFormInput<T, K extends keyof T, V extends T[K]> {
+export interface UseFormInput<T, K extends keyof T> {
   initialValues: T;
-  initialErrors?: FormErrors<T, K, V>;
-  validate?: FormRules<T, K, V>;
+  initialErrors?: FormErrors<T, K>;
+  validate?: FormRules<T, K>;
 }
 
 export interface UseFormReturnType<T, K extends keyof T, V extends T[K]> {
   values: T;
   setValues: React.Dispatch<React.SetStateAction<T>>;
   setFieldValue: (field: K, value: V) => void;
-  errors: FormErrors<T, K, V>;
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T, K, V>>>;
+  errors: FormErrors<T, K>;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T, K>>>;
   setFieldError(field: K, error: React.ReactNode): void;
   clearFieldError(field: K): void;
   clearErrors(): void;
@@ -28,7 +28,7 @@ export interface UseFormReturnType<T, K extends keyof T, V extends T[K]> {
   addListItem: (field: K, payload: V extends any[] ? V[number] : never) => void;
   removeListItem(field: K, indices: number[] | number): void;
   reorderListItem(field: K, payload: { from: number; to: number }): void;
-  validate(): FormValidationResult<T, K, V>;
+  validate(): FormValidationResult<T, K>;
   validateField(field: K): FormFieldValidationResult;
 }
 
@@ -36,7 +36,7 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
   initialValues,
   initialErrors,
   validate: rules,
-}: UseFormInput<T, K, V>): UseFormReturnType<T, K, V> {
+}: UseFormInput<T, K>): UseFormReturnType<T, K, V> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
