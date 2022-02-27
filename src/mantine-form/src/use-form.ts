@@ -134,7 +134,8 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   const onSubmit =
     (handleSubmit: (values: T, event: React.FormEvent) => void) => (event: React.FormEvent) => {
       event.preventDefault();
-      !validate().hasErrors && handleSubmit(values, event);
+      const results = validate();
+      !results.hasErrors && handleSubmit(values, event);
     };
 
   const reset = () => {

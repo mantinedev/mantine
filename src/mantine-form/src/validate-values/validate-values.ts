@@ -36,7 +36,7 @@ export function validateValues<T, K extends keyof T>(
   values: T
 ): FormValidationResult<T, K> {
   if (rules === undefined || rules === null) {
-    return { hasErrors: true, errors: {} };
+    return { hasErrors: false, errors: {} };
   }
 
   if (typeof rules === 'function') {
