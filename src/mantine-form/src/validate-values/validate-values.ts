@@ -5,8 +5,9 @@ import type {
   FormValidationResult,
   FormFieldValidationResult,
 } from '../types';
-import { isFormList, FormList } from '../form-list/form-list';
+import { isFormList } from '../form-list/form-list';
 import { filterErrors } from '../filter-errors/filter-errors';
+import { validateListValues } from './validate-list-values';
 
 function validateRecordRules<T, K extends keyof T>(
   rules: FormRulesRecord<T, K>,
@@ -15,26 +16,10 @@ function validateRecordRules<T, K extends keyof T>(
   return Object.keys(rules).reduce<FormErrors<T, K>>((acc, key) => {
     const rule = rules[key];
 
-    if (typeof rules[key] === 'function') {
-      acc[key] = rule(values[key], values);
-    }
-
     if (isFormList(values[key])) {
-      const items: FormList<any> = values[key];
-      const results = Array(items.length);
-
-      items.forEach((item, itemIndex) => {
-        if (typeof item === 'object' && item !== null) {
-          Object.keys(item).forEach((listItemKey) => {
-            const error = rules[key][listItemKey](item[listItemKey]);
-            if (error) {
-              results[itemIndex] = { ...results[itemIndex], [listItemKey]: error };
-            }
-          });
-        }
-      });
-
-      acc[key] = results;
+      acc[key] = validateListValues(values, key, rules);
+    } else if (typeof rules[key] === 'function') {
+      acc[key] = rule(values[key], values);
     }
 
     return acc;
