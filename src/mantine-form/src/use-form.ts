@@ -15,28 +15,35 @@ export interface UseFormInput<T, K extends keyof T> {
   validate?: FormRules<T, K>;
 }
 
-export interface UseFormReturnType<T, K extends keyof T, V extends T[K]> {
+export interface UseFormReturnType<T, KK extends keyof T> {
   values: T;
   setValues: React.Dispatch<React.SetStateAction<T>>;
-  setFieldValue: (field: K, value: V) => void;
-  errors: FormErrors<T, K>;
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T, K>>>;
-  setFieldError(field: K, error: React.ReactNode): void;
-  clearFieldError(field: K): void;
+  setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
+  errors: FormErrors<T, KK>;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
+  setFieldError: <K extends keyof T>(field: K, error: React.ReactNode) => void;
+  clearFieldError: <K extends keyof T>(field: K) => void;
   clearErrors(): void;
-  setListItem: (field: K, index: number, value: V extends FormList<infer U> ? U : never) => void;
-  addListItem: (field: K, payload: V extends FormList<infer U> ? U : never) => void;
-  removeListItem(field: K, indices: number[] | number): void;
-  reorderListItem(field: K, payload: { from: number; to: number }): void;
-  validate(): FormValidationResult<T, K>;
-  validateField(field: K): FormFieldValidationResult;
+  setListItem: <K extends keyof T, V extends T[K]>(
+    field: K,
+    index: number,
+    value: V extends FormList<infer U> ? U : never
+  ) => void;
+  addListItem: <K extends keyof T, V extends T[K]>(
+    field: K,
+    payload: V extends FormList<infer U> ? U : never
+  ) => void;
+  removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
+  reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
+  validate(): FormValidationResult<T>;
+  validateField: <K extends keyof T>(field: K) => FormFieldValidationResult;
 }
 
-export function useForm<T extends { [key: string]: any }, K extends keyof T, V extends T[K]>({
+export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   initialValues,
   initialErrors,
   validate: rules,
-}: UseFormInput<T, K>): UseFormReturnType<T, K, V> {
+}: UseFormInput<T, KK>): UseFormReturnType<T, KK> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
@@ -51,12 +58,16 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
       return clone;
     });
 
-  const setFieldValue = (field: K, value: V) => {
+  const setFieldValue = <K extends keyof T, V extends T[K]>(field: K, value: V) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
     clearFieldError(field);
   };
 
-  const setListItem = (field: K, index: number, value: T[K][number]) => {
+  const setListItem = <K extends keyof T, V extends T[K]>(
+    field: K,
+    index: number,
+    value: V[K][number]
+  ) => {
     const list = values[field];
     if (isFormList(list) && list[index] !== undefined) {
       const cloned = [...list];
@@ -65,7 +76,7 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
     }
   };
 
-  const removeListItem = (field: K, indices: number[] | number) => {
+  const removeListItem = <K extends keyof T>(field: K, indices: number[] | number) => {
     const list = values[field];
 
     if (isFormList(list)) {
@@ -80,7 +91,7 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
     }
   };
 
-  const addListItem = (field: K, payload: T[K][number]) => {
+  const addListItem = <K extends keyof T, V extends T[K]>(field: K, payload: V[number]) => {
     const list = values[field];
 
     if (isFormList(list)) {
@@ -88,7 +99,10 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
     }
   };
 
-  const reorderListItem = (field: K, { from, to }: { from: number; to: number }) => {
+  const reorderListItem = <K extends keyof T>(
+    field: K,
+    { from, to }: { from: number; to: number }
+  ) => {
     const list = values[field];
 
     if (isFormList(list) && list[from] !== undefined && list[to] !== undefined) {
@@ -107,8 +121,8 @@ export function useForm<T extends { [key: string]: any }, K extends keyof T, V e
     return results;
   };
 
-  const validateField = (field: K) => {
-    const results = validateFieldValue(field, rules, values);
+  const validateField = <K extends keyof T>(field: K) => {
+    const results = validateFieldValue<any, any>(field, rules, values);
     results.valid ? clearFieldError(field) : setFieldError(field, results.error);
     return results;
   };

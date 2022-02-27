@@ -2,10 +2,14 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { useForm, formList } from '../index';
 
 type Fruit = Record<'fruit', string>;
+type Vegetable = Record<'vegetable', string>;
 
 const banana: Fruit = { fruit: 'banana' };
 const orange: Fruit = { fruit: 'orange' };
 const apple: Fruit = { fruit: 'apple' };
+
+const carrot: Vegetable = { vegetable: 'carrot' };
+const potato: Vegetable = { vegetable: 'potato' };
 
 describe('@mantine/form/use-form lists', () => {
   it('sets list values with setListItem handler', () => {
@@ -144,5 +148,19 @@ describe('@mantine/form/use-form lists', () => {
       fruits: [banana, orange, apple],
       other: true,
     });
+  });
+
+  it('supports multiple lists manipulations', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { fruits: formList([banana, orange]), vegetables: formList([carrot]) },
+      })
+    );
+
+    act(() => hook.result.current.setListItem('fruits', 0, apple));
+    expect(hook.result.current.values).toStrictEqual({ fruits: [apple, orange], other: true });
+
+    act(() => hook.result.current.addListItem('vegetables', potato));
+    expect(hook.result.current.values).toStrictEqual({ fruits: [apple, apple], other: true });
   });
 });

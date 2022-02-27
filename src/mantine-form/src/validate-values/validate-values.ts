@@ -8,7 +8,7 @@ import type {
 import { filterErrors } from '../filter-errors/filter-errors';
 
 function validateRecordRules<T, K extends keyof T>(
-  rules: FormRulesRecord<T>,
+  rules: FormRulesRecord<T, K>,
   values: T
 ): FormErrors<T, K> {
   return Object.keys(rules).reduce<FormErrors<T, K>>((acc, key) => {
@@ -42,7 +42,7 @@ export function validateValues<T, K extends keyof T>(
 }
 
 export function validateFieldValue<T, K extends keyof T>(
-  field: keyof T,
+  field: K,
   rules: FormRules<T, K>,
   values: T
 ): FormFieldValidationResult {
