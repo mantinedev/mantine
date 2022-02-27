@@ -17,7 +17,7 @@ describe('@mantine/form/use-form list validation', () => {
         validate: {
           fruits: {
             name: (value) => (value.includes('test') ? null : 'invalid fruit'),
-            price: (value) => (value < 10 ? null : 'invalid price'),
+            price: (value) => (value > 10 ? null : 'invalid price'),
           },
         },
       })
@@ -27,7 +27,9 @@ describe('@mantine/form/use-form list validation', () => {
       const results = hook.result.current.validate();
       expect(results).toStrictEqual({
         hasErrors: true,
-        fruits: [{ name: 'invalid fruit' }, { name: 'invalid fruit', price: 'invalid price' }],
+        errors: {
+          fruits: [{ name: 'invalid fruit' }, { name: 'invalid fruit', price: 'invalid price' }],
+        },
       });
     });
   });
