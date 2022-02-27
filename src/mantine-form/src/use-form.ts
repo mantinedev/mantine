@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formList, isFormList } from './form-list/form-list';
+import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import type {
@@ -24,8 +24,8 @@ export interface UseFormReturnType<T, K extends keyof T, V extends T[K]> {
   setFieldError(field: K, error: React.ReactNode): void;
   clearFieldError(field: K): void;
   clearErrors(): void;
-  setListItem: (field: K, index: number, value: V extends any[] ? V[number] : never) => void;
-  addListItem: (field: K, payload: V extends any[] ? V[number] : never) => void;
+  setListItem: (field: K, index: number, value: V extends FormList<infer U> ? U : never) => void;
+  addListItem: (field: K, payload: V extends FormList<infer U> ? U : never) => void;
   removeListItem(field: K, indices: number[] | number): void;
   reorderListItem(field: K, payload: { from: number; to: number }): void;
   validate(): FormValidationResult<T, K>;
