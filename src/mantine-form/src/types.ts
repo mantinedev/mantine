@@ -8,7 +8,9 @@ export type FormErrors<T extends Record<string, any>, K extends keyof T = string
 export type FormRulesRecord<T, K extends keyof T = any> = Record<
   K,
   T[K] extends FormList<infer U>
-    ? Record<keyof U, (value: T[K], values: T) => React.ReactNode>
+    ? {
+        [P in keyof U]?: (value: U[P], values: T) => React.ReactNode;
+      }
     : (value: T[K], values: T) => React.ReactNode
 >;
 
