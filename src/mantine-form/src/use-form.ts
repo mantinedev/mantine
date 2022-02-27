@@ -37,9 +37,10 @@ export interface UseFormReturnType<T, KK extends keyof T> {
   reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
   validate(): FormValidationResult<T>;
   validateField: <K extends keyof T>(field: K) => FormFieldValidationResult;
-  onSubmit: (
+  onSubmit(
     handleSubmit: (values: T, event: React.FormEvent) => void
-  ) => (event?: React.FormEvent) => void;
+  ): (event?: React.FormEvent) => void;
+  reset(): void;
 }
 
 export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
@@ -136,6 +137,11 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
       !validate().hasErrors && handleSubmit(values, event);
     };
 
+  const reset = () => {
+    setValues(initialValues);
+    clearErrors();
+  };
+
   return {
     values,
     setValues,
@@ -152,5 +158,6 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     validate,
     validateField,
     onSubmit,
+    reset,
   };
 }
