@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider, TextInput } from '@mantine/core';
+import { MANTINE_SIZES, MantineProvider, TextInput, Modal } from '@mantine/core';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { DatePicker } from './DatePicker';
 
@@ -59,6 +59,11 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 storiesOf('@mantine/dates/DatePicker/stories', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
+  .add('Within modal', () => (
+    <Modal opened onClose={() => {}} title="Modal with DatePicker">
+      <DatePicker mt="md" id="dateOfBirth" label="Date Of Birth" placeholder="Date Of Birth" />
+    </Modal>
+  ))
   .add('Dropdown type modal', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
