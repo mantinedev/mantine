@@ -544,6 +544,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
               clearButtonLabel,
               onClear: handleClear,
               error,
+              disabled,
             })}
           />
 
