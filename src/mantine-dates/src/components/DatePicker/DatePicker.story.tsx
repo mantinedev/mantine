@@ -66,7 +66,12 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
   ))
   .add('Dropdown type modal', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePicker dropdownType="modal" placeholder="Pick date" label="Date picker" />
+      <DatePicker
+        dropdownType="modal"
+        placeholder="Pick date"
+        label="Date picker"
+        modalZIndex={4554}
+      />
     </div>
   ))
   .add('Amount of months', () => (
