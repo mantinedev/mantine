@@ -54,5 +54,6 @@ which should be used with `onKeyDown`:
 ## Definition
 
 ```tsx
-function useHotkeys(hotkey: string, handler: (event: KeyboardEvent) => void): void;
+type HotkeyItem = [hotkey: string, handler: (event: KeyboardEvent) => void];
+function useHotkeys(hotkeys: HotkeyItem[]): void;
 ```
