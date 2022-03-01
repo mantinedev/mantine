@@ -1,13 +1,14 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface RenderListStyles {
   reversed: boolean;
   native: boolean;
+  radius: MantineNumberSize;
 }
 
 const ITEM_PADDING = 7;
 
-export default createStyles((theme, { reversed, native }: RenderListStyles) => ({
+export default createStyles((theme, { reversed, native, radius }: RenderListStyles) => ({
   transferList: {
     flex: 1,
     display: 'flex',
@@ -20,7 +21,7 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     padding: ITEM_PADDING,
     marginLeft: theme.spacing.sm - ITEM_PADDING,
     marginRight: theme.spacing.sm - ITEM_PADDING,
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.fn.radius(radius),
 
     '&:first-of-type': {
       marginTop: theme.spacing.sm - ITEM_PADDING,
@@ -46,7 +47,7 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
 
   transferListBody: {
     flex: 1,
-    borderRadius: theme.radius.sm,
+    borderRadius: theme.fn.radius(radius),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
@@ -61,8 +62,8 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     borderTopWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
-    borderTopLeftRadius: reversed ? 0 : theme.radius.sm - 1,
-    borderTopRightRadius: reversed ? theme.radius.sm - 1 : 0,
+    borderTopLeftRadius: reversed ? 0 : `calc(${theme.fn.radius(radius)}px - 1px)`,
+    borderTopRightRadius: reversed ? `calc(${theme.fn.radius(radius)}px - 1px)` : 0,
     display: 'block',
     borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
   },
@@ -74,8 +75,8 @@ export default createStyles((theme, { reversed, native }: RenderListStyles) => (
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
     '&:last-of-type': {
-      borderTopLeftRadius: reversed ? theme.radius.sm - 1 : 0,
-      borderTopRightRadius: reversed ? 0 : theme.radius.sm - 1,
+      borderTopLeftRadius: reversed ? `calc(${theme.fn.radius(radius)}px - 1px)` : 0,
+      borderTopRightRadius: reversed ? 0 : `calc(${theme.fn.radius(radius)}px - 1px)`,
     },
 
     '&:disabled': {
