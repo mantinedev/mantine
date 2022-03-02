@@ -26,7 +26,7 @@ const defaultProps: Partial<PortalProps> = {
 };
 
 export function Portal(props: PortalProps): ReactPortal {
-  const { children, zIndex, target, className } = useMantineDefaultProps(
+  const { children, zIndex, target, className, position } = useMantineDefaultProps(
     'Portal',
     defaultProps,
     props

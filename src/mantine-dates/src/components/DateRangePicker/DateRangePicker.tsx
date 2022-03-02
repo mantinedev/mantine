@@ -52,7 +52,6 @@ const isFirstDateSet = (val: any) =>
 
 const defaultProps: Partial<DateRangePickerProps> = {
   shadow: 'sm',
-  locale: 'en',
   transitionDuration: 200,
   closeCalendarOnChange: true,
   labelFormat: 'MMMM YYYY',
