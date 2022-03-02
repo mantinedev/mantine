@@ -1,5 +1,5 @@
-import React, { useRef, forwardRef } from 'react';
-import { useUncontrolled, mergeRefs, clamp } from '@mantine/hooks';
+import React, { useRef, forwardRef, Children } from 'react';
+import { useUncontrolled, clamp } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -8,7 +8,6 @@ import {
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { Group, GroupPosition } from '../Group';
 import { TabControl, TabControlStylesNames } from './TabControl/TabControl';
@@ -118,7 +117,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
     );
 
     const controlRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const tabs = filterChildrenByType(children, TabControl);
+    const tabs = Children.toArray(children) as React.ReactElement[];
 
     const [_activeTab, handleActiveTabChange] = useUncontrolled({
       value: active,
@@ -161,23 +160,22 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       }
     };
 
-    const panes = tabs.map((tab, index) => (
-      <TabControl
-        {...tab.props}
-        key={index}
-        active={activeTab === index}
-        onKeyDown={handleKeyDown}
-        color={tab.props.color || color}
-        variant={variant}
-        orientation={orientation}
-        ref={mergeRefs((node: HTMLButtonElement) => {
+    const panes = tabs.map((tab, index) =>
+      React.cloneElement(tab, {
+        key: index,
+        active: activeTab === index,
+        onKeyDown: handleKeyDown,
+        color: tab.props.color || color,
+        variant,
+        orientation,
+        elementRef: (node: HTMLButtonElement) => {
           controlRefs.current[index] = node;
-        }, (tab as any).ref)}
-        onClick={() => activeTab !== index && handleActiveTabChange(index)}
-        classNames={classNames}
-        styles={styles}
-      />
-    ));
+        },
+        onClick: () => activeTab !== index && handleActiveTabChange(index),
+        classNames,
+        styles,
+      })
+    );
 
     const content = tabs[activeTab].props.children;
 

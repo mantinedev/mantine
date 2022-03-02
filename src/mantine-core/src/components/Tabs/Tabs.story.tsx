@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Tabs, Tab } from './index';
+import { Tabs, Tab, TabProps } from './index';
+
+function Wrapped(props: TabProps) {
+  return <Tabs.Tab {...props} />;
+}
 
 function Controlled() {
   const [activeTab, setActiveTab] = useState(1);
@@ -9,6 +13,7 @@ function Controlled() {
     <Tabs active={activeTab} onTabChange={setActiveTab}>
       <Tab label="First">First tab content</Tab>
       <Tab label="Second">Second tab content</Tab>
+      <Wrapped label="wrapped" />
       <Tab label="Third">Third tab content</Tab>
     </Tabs>
   );

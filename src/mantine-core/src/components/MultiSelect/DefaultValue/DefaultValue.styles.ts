@@ -40,7 +40,6 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
       : theme.colors.gray[7],
-    lineHeight: 1,
     height: theme.fn.size({ size, sizes }),
     paddingLeft: theme.fn.size({ size, sizes: theme.spacing }),
     paddingRight: disabled ? theme.fn.size({ size, sizes: theme.spacing }) : 0,

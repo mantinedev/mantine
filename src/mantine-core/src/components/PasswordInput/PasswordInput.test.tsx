@@ -28,6 +28,11 @@ describe('@mantine/core/PasswordInput', () => {
     refType: HTMLInputElement,
   });
 
+  it('sets required on input', () => {
+    const { container } = render(<PasswordInput required />);
+    expect(container.querySelector('input')).toHaveAttribute('required');
+  });
+
   it('sets input type based on password visibility state', () => {
     const { container } = render(<PasswordInput />);
     expect(container.querySelector('input')).toHaveAttribute('type', 'password');

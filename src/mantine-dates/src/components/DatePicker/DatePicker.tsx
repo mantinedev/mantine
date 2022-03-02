@@ -100,6 +100,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       initialLevel,
       onDropdownClose,
       onDropdownOpen,
+      hideOutsideDates,
+      hideWeekdays,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
@@ -273,6 +275,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           amountOfMonths={amountOfMonths}
           allowLevelChange={allowLevelChange}
           initialLevel={initialLevel}
+          hideOutsideDates={hideOutsideDates}
+          hideWeekdays={hideWeekdays}
         />
       </DatePickerBase>
     );

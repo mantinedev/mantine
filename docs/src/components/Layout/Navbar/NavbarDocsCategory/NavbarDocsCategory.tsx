@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'gatsby';
 import { ChevronDownIcon } from '@modulz/radix-icons';
 import { Text } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import { useLocation } from '@reach/router';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
+import { HEADER_HEIGHT } from '../../Header/Header.styles';
 
 interface NavbarDocsCategoryProps {
   group: ReturnType<typeof getDocsData>[number];
@@ -14,16 +16,31 @@ interface NavbarDocsCategoryProps {
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
   const { classes, cx } = useStyles();
   const [collapsed, setCollapsed] = useState(group.group === 'changelog');
-  const activeCoreItemRef = useRef(null);
+  const itemRefs = useRef<{ [slug: string]: HTMLElement }>({});
   const location = useLocation();
+  const { height } = useViewportSize();
 
-  React.useEffect(() => {
-    if (activeCoreItemRef.current) {
-      activeCoreItemRef.current.scrollIntoView({
-        block: 'center',
-      });
+  // Scrolls the active Navbar item into view if necessary
+  useEffect(() => {
+    // Current location is in this category
+    if (location.pathname in itemRefs.current) {
+      // Expand category if needed. Can't scroll into view until expanded
+      if (collapsed) {
+        setCollapsed(false);
+        return;
+      }
+
+      const elem = itemRefs.current[location.pathname];
+      const { top, bottom } = elem.getBoundingClientRect();
+
+      // Only scroll into view if any part of the existing item is out of view
+      if (top < HEADER_HEIGHT || bottom > height) {
+        elem.scrollIntoView({
+          block: 'center',
+        });
+      }
     }
-  }, [activeCoreItemRef.current]);
+  }, [location.pathname, height, collapsed]);
 
   const uncategorized = (
     group.group === 'changelog' ? [...group.uncategorized].reverse() : group.uncategorized
@@ -34,6 +51,9 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
       activeClassName={classes.linkActive}
       to={link.slug}
       onClick={onLinkClick}
+      ref={(r) => {
+        itemRefs.current[link.slug] = r;
+      }}
     >
       {link.title}
     </Link>
@@ -52,7 +72,9 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
             activeClassName={classes.linkActive}
             to={link.slug}
             onClick={onLinkClick}
-            ref={location.pathname === link.slug ? activeCoreItemRef : null}
+            ref={(r) => {
+              itemRefs.current[link.slug] = r;
+            }}
           >
             {link.title}
           </Link>

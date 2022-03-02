@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { checkAccessibility, itSupportsSystemProps, itFiltersChildren } from '@mantine/tests';
+import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Tabs, TabsProps } from './Tabs';
 
 const content = [
@@ -49,11 +49,6 @@ describe('@mantine/core/Tabs', () => {
     displayName: '@mantine/core/Tabs',
     refType: HTMLDivElement,
   });
-
-  itFiltersChildren(Tabs, defaultProps, '.mantine-Tabs-tabControl', [
-    <Tabs.Tab>test-label-1</Tabs.Tab>,
-    <Tabs.Tab>test-label-2</Tabs.Tab>,
-  ]);
 
   it('handles tabs change correctly', () => {
     render(<Tabs initialTab={1}>{content}</Tabs>);

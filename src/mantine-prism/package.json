@@ -1,7 +1,7 @@
 {
   "name": "@mantine/prism",
   "description": "Code highlight with Mantine theme",
-  "version": "3.6.9",
+  "version": "3.6.13",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -14,9 +14,23 @@
     "type": "git",
     "directory": "src/mantine-prism"
   },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "code",
+    "highlight",
+    "syntax",
+    "syntax-highlight"
+  ],
   "peerDependencies": {
-    "@mantine/core": "3.6.9",
-    "@mantine/hooks": "3.6.9",
+    "@mantine/core": "3.6.13",
+    "@mantine/hooks": "3.6.13",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

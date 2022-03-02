@@ -1,7 +1,7 @@
 {
   "name": "@mantine/modals",
   "description": "Modals manager based on Mantine components",
-  "version": "3.6.9",
+  "version": "3.6.13",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -14,9 +14,21 @@
     "type": "git",
     "directory": "src/mantine-modals"
   },
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "modal",
+    "confirm"
+  ],
   "peerDependencies": {
-    "@mantine/core": "3.6.9",
-    "@mantine/hooks": "3.6.9",
+    "@mantine/core": "3.6.13",
+    "@mantine/hooks": "3.6.13",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

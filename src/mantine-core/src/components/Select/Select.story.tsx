@@ -293,4 +293,18 @@ storiesOf('@mantine/core/Select/stories', module)
         ]}
       />
     </div>
-  ));
+  ))
+  .add('Disabled', () => (
+    <div style={{ padding: 40 }}>
+      <Controlled disabled />
+    </div>
+  ))
+  .add('Clearable and disabled', () => {
+    const [value, setValue] = useState(data[0].value);
+
+    return (
+      <div style={{ padding: 40 }}>
+        <Select data={data} value={value} onChange={setValue} disabled clearable />
+      </div>
+    );
+  });
