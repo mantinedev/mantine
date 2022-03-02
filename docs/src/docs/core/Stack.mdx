@@ -1,0 +1,25 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Stack
+order: 1
+slug: /core/stack/
+category: 'layout'
+description: 'Center content horizontally with predefined max-width'
+props: ['Stack']
+import: "import { Stack } from '@mantine/core';"
+source: 'mantine-core/src/components/Stack/Stack.tsx'
+docs: 'core/Stack.mdx'
+styles: ['Stack', 'single-node']
+---
+
+import { StackDemos } from '@mantine/demos';
+
+## Usage
+
+Stack is the most basic layout element, it arranges child elements horizontally or vertically with given spacing:
+
+- **spacing** – controls space between the child elements
+- **direction** – controls direction of the stack. use row, column
+
+<Demo data={StackDemos.usage} />

@@ -77,6 +77,7 @@ export * as SkeletonDemos from './demos/packages/Skeleton';
 export * as SliderDemos from './demos/packages/Slider';
 export * as SpaceDemos from './demos/packages/Space';
 export * as SpoilerDemos from './demos/packages/Spoiler';
+export * as StackDemos from './demos/packages/Stack';
 export * as StepperDemos from './demos/packages/Stepper';
 export * as SwitchDemos from './demos/packages/Switch';
 export * as TableDemos from './demos/packages/Table';

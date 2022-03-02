@@ -63,6 +63,7 @@ attachDemos(storiesOf('@mantine/core/SimpleGrid/demos', module), demos.SimpleGri
 attachDemos(storiesOf('@mantine/core/Skeleton/demos', module), demos.SkeletonDemos);
 attachDemos(storiesOf('@mantine/core/Slider/demos', module), demos.SliderDemos);
 attachDemos(storiesOf('@mantine/core/Spoiler/demos', module), demos.SpoilerDemos);
+attachDemos(storiesOf('@mantine/core/Stack/demos', module), demos.StackDemos);
 attachDemos(storiesOf('@mantine/core/Stepper/demos', module), demos.StepperDemos);
 attachDemos(storiesOf('@mantine/core/Switch/demos', module), demos.SwitchDemos);
 attachDemos(storiesOf('@mantine/core/Table/demos', module), demos.TableDemos);
