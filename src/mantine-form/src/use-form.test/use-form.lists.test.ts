@@ -153,14 +153,26 @@ describe('@mantine/form/use-form lists', () => {
   it('supports multiple lists manipulations', () => {
     const hook = renderHook(() =>
       useForm({
-        initialValues: { fruits: formList([banana, orange]), vegetables: formList([carrot]) },
+        initialValues: {
+          fruits: formList([banana, orange]),
+          vegetables: formList([carrot]),
+          other: true,
+        },
       })
     );
 
     act(() => hook.result.current.setListItem('fruits', 0, apple));
-    expect(hook.result.current.values).toStrictEqual({ fruits: [apple, orange], other: true });
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: [apple, orange],
+      vegetables: [carrot],
+      other: true,
+    });
 
     act(() => hook.result.current.addListItem('vegetables', potato));
-    expect(hook.result.current.values).toStrictEqual({ fruits: [apple, apple], other: true });
+    expect(hook.result.current.values).toStrictEqual({
+      fruits: [apple, orange],
+      vegetables: [carrot, potato],
+      other: true,
+    });
   });
 });
