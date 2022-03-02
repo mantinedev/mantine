@@ -1,7 +1,7 @@
 {
   "name": "@mantine/dates",
   "description": "Calendars, date and time pickers based on Mantine components",
-  "version": "3.6.12",
+  "version": "3.6.13",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -23,8 +23,8 @@
     "picker"
   ],
   "peerDependencies": {
-    "@mantine/core": "3.6.12",
-    "@mantine/hooks": "3.6.12",
+    "@mantine/core": "3.6.13",
+    "@mantine/hooks": "3.6.13",
     "dayjs": "^1.10.5",
     "react": ">=16.8.0"
   },
