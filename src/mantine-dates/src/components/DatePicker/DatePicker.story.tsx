@@ -59,6 +59,16 @@ const sizes = MANTINE_SIZES.map((size) => (
 
 storiesOf('@mantine/dates/DatePicker/stories', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
+  .add('Hide week days', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePicker hideWeekdays label="Date picker" />
+    </div>
+  ))
+  .add('Hide outside dates', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePicker hideOutsideDates label="Date picker" />
+    </div>
+  ))
   .add('Within modal', () => (
     <Modal opened onClose={() => {}} title="Modal with DatePicker">
       <DatePicker mt="md" id="dateOfBirth" label="Date Of Birth" placeholder="Date Of Birth" />
