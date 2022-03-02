@@ -174,7 +174,7 @@ To remove specific notification from state or queue use `hideNotification` handl
 ```tsx
 const notifications = useNotifications();
 
-const id = notifications.show({ message: 'Hello!' });
+const id = notifications.showNotification({ message: 'Hello!' });
 notifications.hideNotification(id);
 ```
 
