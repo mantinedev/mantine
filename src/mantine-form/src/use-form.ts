@@ -45,7 +45,7 @@ export interface UseFormReturnType<T, KK extends keyof T> {
   reset(): void;
   getInputProps: <K extends keyof T, U extends T[K], L extends 'checkbox' | 'input' = 'input'>(
     field: K,
-    options: { type?: L; withError?: boolean }
+    options?: { type?: L; withError?: boolean }
   ) => GetInputProps<L, U>;
 }
 
@@ -155,17 +155,14 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     L extends 'checkbox' | 'input' = 'input'
   >(
     field: K,
-    options: { type?: L; withError?: boolean } = {
-      withError: true,
-    }
+    { type, withError = true }: { type?: L; withError?: boolean } = {}
   ): GetInputProps<L, U> => {
     const value = values[field];
     const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
 
-    const payload: any =
-      options?.type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
+    const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
 
-    if (options?.withError && errors[field as any]) {
+    if (withError && errors[field as any]) {
       payload.error = errors[field as any];
     }
 
