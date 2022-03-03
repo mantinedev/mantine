@@ -45,9 +45,7 @@ export interface SharedTextProps extends DefaultProps {
   gradient?: MantineGradient;
 }
 
-export type TextProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, SharedTextProps>
-  : never;
+export type TextProps<C> = PolymorphicComponentProps<C, SharedTextProps>;
 
 type TextComponent = (<C = 'div'>(props: TextProps<C>) => React.ReactElement) & {
   displayName?: string;

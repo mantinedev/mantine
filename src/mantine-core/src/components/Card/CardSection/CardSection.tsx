@@ -14,9 +14,7 @@ export interface _CardSectionProps extends DefaultProps {
   last?: boolean;
 }
 
-export type CardSectionProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _CardSectionProps>
-  : never;
+export type CardSectionProps<C> = PolymorphicComponentProps<C, _CardSectionProps>;
 
 type CardSectionComponent = (<C = 'div'>(props: CardSectionProps<C>) => React.ReactElement) & {
   displayName?: string;
