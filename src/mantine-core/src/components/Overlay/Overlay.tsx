@@ -30,9 +30,7 @@ interface _OverlayProps extends DefaultProps {
   radius?: MantineNumberSize;
 }
 
-export type OverlayProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _OverlayProps>
-  : never;
+export type OverlayProps<C> = PolymorphicComponentProps<C, _OverlayProps>;
 
 type OverlayComponent = (<C = 'div'>(props: OverlayProps<C>) => React.ReactElement) & {
   displayName?: string;

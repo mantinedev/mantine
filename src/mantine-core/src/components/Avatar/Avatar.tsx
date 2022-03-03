@@ -34,9 +34,7 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   imageProps?: React.ComponentPropsWithoutRef<'img'>;
 }
 
-export type AvatarProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _AvatarProps>
-  : never;
+export type AvatarProps<C> = PolymorphicComponentProps<C, _AvatarProps>;
 
 type AvatarComponent = (<C = 'div'>(props: AvatarProps<C>) => React.ReactElement) & {
   displayName?: string;

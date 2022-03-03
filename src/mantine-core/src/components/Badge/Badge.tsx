@@ -42,9 +42,7 @@ interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   rightSection?: React.ReactNode;
 }
 
-export type BadgeProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _BadgeProps>
-  : never;
+export type BadgeProps<C> = PolymorphicComponentProps<C, _BadgeProps>;
 
 type BadgeComponent = (<C = 'div'>(props: BadgeProps<C>) => React.ReactElement) & {
   displayName?: string;

@@ -11,9 +11,7 @@ interface _BoxProps extends Omit<DefaultProps, 'sx'> {
   sx?: BoxSx;
 }
 
-export type BoxProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _BoxProps>
-  : never;
+export type BoxProps<C> = PolymorphicComponentProps<C, _BoxProps>;
 
 type BoxComponent = (<C = 'div'>(props: BoxProps<C>) => React.ReactElement) & {
   displayName?: string;

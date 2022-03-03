@@ -61,9 +61,7 @@ interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
   __staticSelector?: string;
 }
 
-export type InputProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _InputProps>
-  : never;
+export type InputProps<C> = PolymorphicComponentProps<C, _InputProps>;
 
 type InputComponent = (<C = 'input'>(props: InputProps<C>) => React.ReactElement) & {
   displayName?: string;

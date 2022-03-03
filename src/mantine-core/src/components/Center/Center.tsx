@@ -15,9 +15,7 @@ export interface _CenterProps extends DefaultProps {
   inline?: boolean;
 }
 
-export type CenterProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _CenterProps>
-  : never;
+export type CenterProps<C> = PolymorphicComponentProps<C, _CenterProps>;
 
 type CenterComponent = (<C = 'div'>(props: CenterProps<C>) => React.ReactElement) & {
   displayName?: string;
