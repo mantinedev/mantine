@@ -111,4 +111,15 @@ storiesOf('@mantine/core/Accordion/stories', module)
         SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere
       </Accordion.Item>
     </Accordion>
+  ))
+  .add('Nested', () => (
+    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
+      <Accordion.Item label="First tab">
+        <Accordion>
+          <Accordion.Item label="Nested First tab">Nested First tab content</Accordion.Item>
+          <Accordion.Item label="Nested Second tab">Nested Second tab content</Accordion.Item>
+        </Accordion>
+      </Accordion.Item>
+      <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
+    </Accordion>
   ));
