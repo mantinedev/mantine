@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
+import { getInputOnChange } from './get-input-on-change/get-input-on-change';
 import type {
   FormErrors,
   FormRules,
   FormValidationResult,
   FormFieldValidationResult,
+  GetInputProps,
 } from './types';
 
 export interface UseFormInput<T, K extends keyof T> {
@@ -41,6 +43,10 @@ export interface UseFormReturnType<T, KK extends keyof T> {
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
   reset(): void;
+  getInputProps: <K extends keyof T, U extends T[K], L extends 'checkbox' | 'input' = 'input'>(
+    field: K,
+    options: { type?: L; withError?: boolean }
+  ) => GetInputProps<L, U>;
 }
 
 export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
@@ -48,7 +54,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   initialErrors,
   validate: rules,
 }: UseFormInput<T, KK>): UseFormReturnType<T, KK> {
-  const [errors, setErrors] = useState(filterErrors(initialErrors));
+  const [errors, setErrors] = useState(filterErrors<T, KK>(initialErrors));
   const [values, setValues] = useState(initialValues);
 
   const clearErrors = () => setErrors({});
@@ -143,6 +149,29 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     clearErrors();
   };
 
+  const getInputProps = <
+    K extends keyof T,
+    U extends T[K],
+    L extends 'checkbox' | 'input' = 'input'
+  >(
+    field: K,
+    options: { type?: L; withError?: boolean } = {
+      withError: true,
+    }
+  ): GetInputProps<L, U> => {
+    const value = values[field];
+    const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
+
+    const payload: any =
+      options?.type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
+
+    if (options?.withError && errors[field as any]) {
+      payload.error = errors[field as any];
+    }
+
+    return payload as any;
+  };
+
   return {
     values,
     setValues,
@@ -160,5 +189,6 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     validateField,
     onSubmit,
     reset,
+    getInputProps,
   };
 }

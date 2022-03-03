@@ -27,3 +27,19 @@ export interface FormFieldValidationResult {
   valid: boolean;
   error: any;
 }
+
+export interface GetInputPropsPayload<V> {
+  value: V;
+  onChange(event: React.ChangeEvent<any> | V): void;
+  error?: React.ReactNode;
+}
+
+export interface GetCheckboxPropsPayload<V> {
+  checked: V;
+  onChange(event: React.ChangeEvent<any> | V): void;
+  error?: React.ReactNode;
+}
+
+export type GetInputProps<T extends 'checkbox' | 'input', V> = T extends 'checkbox'
+  ? GetCheckboxPropsPayload<V>
+  : GetInputPropsPayload<V>;
