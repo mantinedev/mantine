@@ -24,9 +24,7 @@ interface _HighlightProps extends SharedTextProps {
   children: string;
 }
 
-export type HighlightProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _HighlightProps>
-  : never;
+export type HighlightProps<C> = PolymorphicComponentProps<C, _HighlightProps>;
 
 type HighlightComponent = (<C = 'div'>(props: HighlightProps<C>) => React.ReactElement) & {
   displayName?: string;
