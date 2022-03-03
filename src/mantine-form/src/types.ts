@@ -40,6 +40,8 @@ export interface GetCheckboxPropsPayload<V> {
   error?: React.ReactNode;
 }
 
-export type GetInputProps<T extends 'checkbox' | 'input', V> = T extends 'checkbox'
+export type GetInputPropsFieldType = 'checkbox' | 'input';
+
+export type GetInputProps<T extends GetInputPropsFieldType, V> = T extends 'checkbox'
   ? GetCheckboxPropsPayload<V>
   : GetInputPropsPayload<V>;

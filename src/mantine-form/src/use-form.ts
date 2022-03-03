@@ -9,6 +9,7 @@ import type {
   FormValidationResult,
   FormFieldValidationResult,
   GetInputProps,
+  GetInputPropsFieldType,
 } from './types';
 
 export interface UseFormInput<T, K extends keyof T> {
@@ -43,19 +44,19 @@ export interface UseFormReturnType<T, KK extends keyof T> {
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
   reset(): void;
-  getInputProps: <K extends keyof T, U extends T[K], L extends 'checkbox' | 'input' = 'input'>(
+  getInputProps: <K extends keyof T, U extends T[K], L extends GetInputPropsFieldType = 'input'>(
     field: K,
     options?: { type?: L; withError?: boolean }
   ) => GetInputProps<L, U>;
+
   getListInputProps: <
     K extends keyof T,
     U extends T[K],
-    LK extends keyof U,
-    L extends 'checkbox' | 'input' = 'input'
+    L extends GetInputPropsFieldType = 'input'
   >(
     field: K,
     index: number,
-    listField: LK,
+    listField: U extends FormList<infer V> ? keyof V : never,
     options?: { type?: L; withError?: boolean }
   ) => GetInputProps<L, U extends FormList<infer V> ? V[keyof V] : never>;
 }
@@ -163,7 +164,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   const getInputProps = <
     K extends keyof T,
     U extends T[K],
-    L extends 'checkbox' | 'input' = 'input'
+    L extends GetInputPropsFieldType = 'input'
   >(
     field: K,
     { type, withError = true }: { type?: L; withError?: boolean } = {}
@@ -184,7 +185,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     K extends keyof T,
     U extends T[K][number],
     LK extends keyof U,
-    L extends 'checkbox' | 'input' = 'input'
+    L extends GetInputPropsFieldType = 'input'
   >(
     field: K,
     index: number,
@@ -193,11 +194,11 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   ): GetInputProps<L, U[LK]> => {
     const list = values[field];
 
-    if (isFormList(list)) {
+    if (isFormList(list) && list[index] && listField in list[index]) {
       const listValue = list[index];
       const value = listValue[listField];
       const onChange = getInputOnChange<U[LK]>((val: U[LK]) =>
-        setListItem(field, index, { ...value, [listField]: val })
+        setListItem(field, index, { ...listValue, [listField]: val })
       ) as any;
       const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
 
@@ -208,7 +209,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
       return payload;
     }
 
-    return undefined;
+    return {} as any;
   };
 
   return {
