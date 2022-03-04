@@ -25,7 +25,7 @@ export function createTimeHandler({ onChange, nextRef, min, max, nextMax }: Crea
           1. The number starts with the last digit of the current value.
           2. The number is less than the next field's maximum value constraint.
       */
-      if (parsed > max && lastDigit <= Math.floor(nextMax / 10)) {
+      if (nextMax && parsed > max && lastDigit <= Math.floor(nextMax / 10)) {
         onChange(padTime(Math.floor(parsed / 10).toString()), padTime(lastDigit.toString()));
       } else {
         onChange(padTime(clamp({ value: parsed, min, max }).toString()));
