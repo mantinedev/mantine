@@ -149,6 +149,7 @@
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
-    "tabler-icons-react": "^1.35.0"
+    "tabler-icons-react": "^1.35.0",
+    "zod": "^3.13.4"
   }
 }
