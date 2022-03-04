@@ -176,6 +176,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: format === '12' ? 1 : 0,
       max: format === '12' ? 12 : 23,
       nextRef: minutesRef,
+      nextMax: 59,
     });
 
     const handleMinutesChange = createTimeHandler({
@@ -188,6 +189,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       min: 0,
       max: 59,
       nextRef: withSeconds ? secondsRef : format === '12' ? amPmRef : nextRef,
+      nextMax: 59,
     });
 
     const handleSecondsChange = createTimeHandler({
