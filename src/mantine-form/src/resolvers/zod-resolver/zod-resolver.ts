@@ -1,3 +1,5 @@
+import type { FormErrors } from '../../types';
+
 interface ZodError {
   path: (string | number)[];
   message: string;
@@ -14,10 +16,10 @@ interface ZodSchema {
   safeParse(values: Record<string, any>): ZodResults;
 }
 
-export function zodResolver(schema: any) {
+export function zodResolver<T extends Record<string, any>>(schema: any) {
   const _schema: ZodSchema = schema;
 
-  return (values: Record<string, any>) => {
+  return (values: T): FormErrors => {
     const parsed = _schema.safeParse(values);
 
     if (parsed.success) {

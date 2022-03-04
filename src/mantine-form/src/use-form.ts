@@ -17,6 +17,7 @@ export interface UseFormInput<T, K extends keyof T> {
   initialValues: T;
   initialErrors?: FormErrors;
   validate?: FormRules<T, K>;
+  schema?: (values: Record<string, any>) => FormErrors;
 }
 
 export interface UseFormReturnType<T> {
@@ -66,6 +67,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   initialValues,
   initialErrors,
   validate: rules,
+  schema,
 }: UseFormInput<T, KK>): UseFormReturnType<T> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
@@ -139,13 +141,13 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   };
 
   const validate = () => {
-    const results = validateValues(rules, values);
+    const results = validateValues(schema || rules, values);
     setErrors(results.errors);
     return results;
   };
 
   const validateField = <K extends keyof T>(field: K) => {
-    const results = validateFieldValue<any, any>(field, rules, values);
+    const results = validateFieldValue<any, any>(field, schema || rules, values);
     results.valid ? clearFieldError(field) : setFieldError(field, results.error);
     return results;
   };

@@ -23,7 +23,7 @@ export interface FormValidationResult {
 
 export interface FormFieldValidationResult {
   valid: boolean;
-  error: any;
+  error: React.ReactNode;
 }
 
 export interface GetInputPropsPayload<V> {
