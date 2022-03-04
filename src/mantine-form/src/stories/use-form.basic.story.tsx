@@ -24,4 +24,20 @@ function BasicForm() {
   );
 }
 
-storiesOf('@mantine/form/basic', module).add('Basic form', () => <BasicForm />);
+function GetInputProps() {
+  const form = useForm({
+    initialValues: {
+      email: '',
+    },
+  });
+
+  return (
+    <FormStoryBase form={form}>
+      <TextInput {...form.getInputProps('email')} label="Email" placeholder="email" required />
+    </FormStoryBase>
+  );
+}
+
+storiesOf('@mantine/form/basic', module)
+  .add('Basic form', () => <BasicForm />)
+  .add('Get input props', () => <GetInputProps />);
