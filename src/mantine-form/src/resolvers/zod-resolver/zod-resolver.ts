@@ -27,9 +27,8 @@ export function zodResolver<T extends Record<string, any>>(schema: any) {
     }
 
     const results = {};
-    const { errors } = parsed.error;
 
-    errors.forEach((error) => {
+    parsed.error.errors.forEach((error) => {
       results[error.path.join('.')] = error.message;
     });
 

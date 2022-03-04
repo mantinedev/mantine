@@ -150,6 +150,7 @@
     "react-transition-group": "^4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
     "tabler-icons-react": "^1.35.0",
+    "yup": "^0.32.11",
     "zod": "^3.13.4"
   }
 }
