@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsRef(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>,
+export function itSupportsRef<P>(
+  Component: React.ComponentType<P>,
+  requiredProps: P,
   refType: any,
   refProp: string = 'ref'
 ) {
