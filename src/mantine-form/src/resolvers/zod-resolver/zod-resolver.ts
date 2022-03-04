@@ -1,10 +1,24 @@
-function parsePath(path: (string | number)[]) {
-  return path.join('.');
+interface ZodError {
+  path: (string | number)[];
+  message: string;
+}
+
+interface ZodResults {
+  success: boolean;
+  error: {
+    errors: ZodError[];
+  };
+}
+
+interface ZodSchema {
+  safeParse(values: Record<string, any>): ZodResults;
 }
 
 export function zodResolver(schema: any) {
+  const _schema: ZodSchema = schema;
+
   return (values: Record<string, any>) => {
-    const parsed = schema.safeParse(values);
+    const parsed = _schema.safeParse(values);
 
     if (parsed.success) {
       return {};
@@ -14,7 +28,7 @@ export function zodResolver(schema: any) {
     const { errors } = parsed.error;
 
     errors.forEach((error) => {
-      results[parsePath(error.path)] = error.message || error.code;
+      results[error.path.join('.')] = error.message;
     });
 
     return results;
