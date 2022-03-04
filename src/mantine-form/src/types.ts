@@ -1,9 +1,7 @@
 import type React from 'react';
 import type { FormList } from './form-list/form-list';
 
-export type FormErrors<T extends Record<string, any>, K extends keyof T = string> = Partial<
-  Record<K, any>
->;
+export type FormErrors = Record<string, React.ReactNode>;
 
 export type FormRulesRecord<T, K extends keyof T = any> = Record<
   K,
@@ -15,12 +13,12 @@ export type FormRulesRecord<T, K extends keyof T = any> = Record<
 >;
 
 export type FormRules<T, K extends keyof T = any> =
-  | ((values: T) => FormErrors<T, K>)
+  | ((values: T) => FormErrors)
   | FormRulesRecord<T, K>;
 
-export interface FormValidationResult<T, K extends keyof T = any> {
+export interface FormValidationResult {
   hasErrors: boolean;
-  errors: FormErrors<T, K>;
+  errors: FormErrors;
 }
 
 export interface FormFieldValidationResult {

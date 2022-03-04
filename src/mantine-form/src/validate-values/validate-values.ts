@@ -12,13 +12,15 @@ import { validateListValues } from './validate-list-values';
 function validateRecordRules<T, K extends keyof T>(
   rules: FormRulesRecord<T, K>,
   values: T
-): FormErrors<T, K> {
-  return Object.keys(rules).reduce<FormErrors<T, K>>((acc, key) => {
+): FormErrors {
+  return Object.keys(rules).reduce<FormErrors>((acc, key) => {
     const rule = rules[key];
 
     if (isFormList(values[key])) {
-      acc[key] = validateListValues(values, key, rules);
-    } else if (typeof rules[key] === 'function') {
+      return { ...acc, ...validateListValues(values, key, rules) };
+    }
+
+    if (typeof rules[key] === 'function') {
       acc[key] = rule(values[key], values);
     }
 
@@ -26,7 +28,7 @@ function validateRecordRules<T, K extends keyof T>(
   }, {});
 }
 
-function getValidationResults<T, K extends keyof T>(errors: FormErrors<T, K>) {
+function getValidationResults(errors: FormErrors) {
   const filteredErrors = filterErrors(errors);
   return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
 }
@@ -34,7 +36,7 @@ function getValidationResults<T, K extends keyof T>(errors: FormErrors<T, K>) {
 export function validateValues<T, K extends keyof T>(
   rules: FormRules<T, K>,
   values: T
-): FormValidationResult<T, K> {
+): FormValidationResult {
   if (rules === undefined || rules === null) {
     return { hasErrors: false, errors: {} };
   }

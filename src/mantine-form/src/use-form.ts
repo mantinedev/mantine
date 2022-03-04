@@ -14,16 +14,16 @@ import type {
 
 export interface UseFormInput<T, K extends keyof T> {
   initialValues: T;
-  initialErrors?: FormErrors<T, K>;
+  initialErrors?: FormErrors;
   validate?: FormRules<T, K>;
 }
 
-export interface UseFormReturnType<T, KK extends keyof T> {
+export interface UseFormReturnType<T> {
   values: T;
   setValues: React.Dispatch<React.SetStateAction<T>>;
   setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
-  errors: FormErrors<T, KK>;
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
+  errors: FormErrors;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors>>;
   setFieldError: <K extends keyof T>(field: K, error: React.ReactNode) => void;
   clearFieldError: <K extends keyof T>(field: K) => void;
   clearErrors(): void;
@@ -38,7 +38,7 @@ export interface UseFormReturnType<T, KK extends keyof T> {
   ) => void;
   removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
   reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
-  validate(): FormValidationResult<T>;
+  validate(): FormValidationResult;
   validateField: <K extends keyof T>(field: K) => FormFieldValidationResult;
   onSubmit(
     handleSubmit: (values: T, event: React.FormEvent) => void
@@ -65,8 +65,8 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   initialValues,
   initialErrors,
   validate: rules,
-}: UseFormInput<T, KK>): UseFormReturnType<T, KK> {
-  const [errors, setErrors] = useState(filterErrors<T, KK>(initialErrors));
+}: UseFormInput<T, KK>): UseFormReturnType<T> {
+  const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
   const clearErrors = () => setErrors({});

@@ -29,9 +29,17 @@ describe('@mantine/form/use-form list validation', () => {
       expect(results).toStrictEqual({
         hasErrors: true,
         errors: {
-          fruits: [{ name: 'invalid fruit' }, { name: 'invalid fruit', price: 'invalid price' }],
+          'fruits.0.name': 'invalid fruit',
+          'fruits.1.name': 'invalid fruit',
+          'fruits.1.price': 'invalid price',
         },
       });
+    });
+
+    expect(hook.result.current.errors).toStrictEqual({
+      'fruits.0.name': 'invalid fruit',
+      'fruits.1.name': 'invalid fruit',
+      'fruits.1.price': 'invalid price',
     });
   });
 
@@ -46,42 +54,6 @@ describe('@mantine/form/use-form list validation', () => {
     });
 
     expect(hook.result.current.errors).toStrictEqual({});
-  });
-
-  it('creates empty slots at the errors list when some values are valid', () => {
-    const hook = renderHook(() =>
-      useForm({
-        initialValues: {
-          fruits: formList([
-            { name: 'test-banana', price: 5 },
-            { name: 'test-orange', price: 20 },
-            { name: 'apple', price: 20 },
-          ]),
-        },
-        validate: {
-          fruits: {
-            name: (value) => (value.includes('test') ? null : 'invalid fruit'),
-            price: (value) => (value > 10 ? null : 'invalid price'),
-          },
-        },
-      })
-    );
-
-    expect(hook.result.current.errors).toStrictEqual({});
-
-    act(() => {
-      const result = hook.result.current.validate();
-      expect(result).toStrictEqual({
-        hasErrors: true,
-        errors: {
-          fruits: [{ price: 'invalid price' }, undefined, { name: 'invalid fruit' }],
-        },
-      });
-    });
-
-    expect(hook.result.current.errors).toStrictEqual({
-      fruits: [{ price: 'invalid price' }, undefined, { name: 'invalid fruit' }],
-    });
   });
 
   it('correctly handles all valid list values', () => {
