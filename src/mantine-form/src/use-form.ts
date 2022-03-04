@@ -3,6 +3,7 @@ import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import { getInputOnChange } from './get-input-on-change/get-input-on-change';
+import { getErrorPath } from './get-error-path/get-error-path';
 import type {
   FormErrors,
   FormRules,
@@ -201,9 +202,10 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
         setListItem(field, index, { ...listValue, [listField]: val })
       ) as any;
       const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
+      const error = errors[getErrorPath([field, index, listField])];
 
-      if (withError && errors[field as any]?.[index]?.[listField]) {
-        payload.error = errors[field as any]?.[index]?.[listField];
+      if (withError && error) {
+        payload.error = error;
       }
 
       return payload;

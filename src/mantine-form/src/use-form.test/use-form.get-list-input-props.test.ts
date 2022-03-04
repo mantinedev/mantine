@@ -24,7 +24,7 @@ describe('@mantine/form/use-form get-list-input-props', () => {
         },
 
         initialErrors: {
-          fruits: [{ fruit: 'invalid fruit' }],
+          'fruits.0.fruit': 'invalid fruit',
         },
       })
     );
@@ -44,7 +44,7 @@ describe('@mantine/form/use-form get-list-input-props', () => {
         },
 
         initialErrors: {
-          fruits: [{ fruit: 'invalid fruit' }],
+          'fruits.0.fruit': 'invalid fruit',
         },
       })
     );
@@ -64,7 +64,7 @@ describe('@mantine/form/use-form get-list-input-props', () => {
         },
 
         initialErrors: {
-          fruits: [{ fruit: 'invalid fruit' }],
+          'fruits.0.fruit': 'invalid fruit',
         },
       })
     );
@@ -82,7 +82,7 @@ describe('@mantine/form/use-form get-list-input-props', () => {
         },
 
         initialErrors: {
-          fruits: [{ inStock: 'not in stock' }],
+          'fruits.0.inStock': 'not in stock',
         },
       })
     );
@@ -104,7 +104,7 @@ describe('@mantine/form/use-form get-list-input-props', () => {
         },
 
         initialErrors: {
-          fruits: [{ fruit: 'invalid fruit' }],
+          'fruits.0.fruit': 'invalid fruit',
         },
       })
     );
