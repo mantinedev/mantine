@@ -15,6 +15,7 @@
     "public",
     ".cache",
     "configuration/jest",
+    "gallery/out",
     "configuration/storybook/main.js",
     "node_modules",
     "src/mantine-*/esm/**/*",
