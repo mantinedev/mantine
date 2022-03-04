@@ -59,6 +59,12 @@ export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
 
   /** Loader position relative to button label */
   loaderPosition?: 'left' | 'right';
+
+  /** Button label */
+  children?: React.ReactNode;
+
+  /** Disabled state */
+  disabled?: boolean;
 }
 
 export type ButtonProps<C> = PolymorphicComponentProps<C, SharedButtonProps>;

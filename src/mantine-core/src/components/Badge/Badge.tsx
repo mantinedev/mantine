@@ -40,6 +40,9 @@ interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
 
   /** Section rendered on the right side of label */
   rightSection?: React.ReactNode;
+
+  /** Badge label */
+  children?: React.ReactNode;
 }
 
 export type BadgeProps<C> = PolymorphicComponentProps<C, _BadgeProps>;

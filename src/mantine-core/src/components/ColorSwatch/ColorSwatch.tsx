@@ -18,6 +18,9 @@ interface _ColorSwatchProps extends DefaultProps {
 
   /** Swatch border-radius predefined from theme or number for px value */
   radius?: MantineNumberSize;
+
+  /** ColorSwatch children */
+  children?: React.ReactNode;
 }
 
 export type ColorSwatchProps<C> = PolymorphicComponentProps<C, _ColorSwatchProps>;

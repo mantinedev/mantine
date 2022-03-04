@@ -29,7 +29,7 @@ const defaultProps: Partial<BackgroundImageProps<any>> = {
 
 export const BackgroundImage: BackgroundImageComponent = forwardRef(
   <C extends React.ElementType = 'div'>(props: BackgroundImageProps<C>, ref: PolymorphicRef<C>) => {
-    const { src, radius, padding, sx, ...others } = useMantineDefaultProps(
+    const { src, radius, sx, ...others } = useMantineDefaultProps(
       'BackgroundImage',
       defaultProps,
       props
