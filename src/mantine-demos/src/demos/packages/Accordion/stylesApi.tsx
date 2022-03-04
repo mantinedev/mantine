@@ -10,9 +10,11 @@ import { PlusIcon } from '@modulz/radix-icons';
 const useStyles = createStyles((theme, _params, getRef) => {
   const controlRef = getRef('control');
   const iconRef = getRef('icon');
+  const itemTitleRef = getRef('itemTitle');
 
   return {
     icon: { ref: iconRef },
+    itemTitle: { ref: itemTitleRef },
 
     control: {
       ref: controlRef,
@@ -42,7 +44,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
         opacity: 1,
       },
 
-      [\`& .\${iconRef}\`]: {
+      [\`& > .\${itemTitleRef} .\${iconRef}\`]: {
         transform: 'rotate(45deg)',
       },
     },
@@ -70,9 +72,11 @@ function Demo() {
 const useStyles = createStyles((theme, _params, getRef) => {
   const controlRef = getRef('control');
   const iconRef = getRef('icon');
+  const itemTitleRef = getRef('itemTitle');
 
   return {
     icon: { ref: iconRef },
+    itemTitle: { ref: itemTitleRef },
 
     control: {
       ref: controlRef,
@@ -101,8 +105,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       [`& .${controlRef}`]: {
         opacity: 1,
       },
-
-      [`& .${iconRef}`]: {
+      [`& > .${itemTitleRef} .${iconRef}`]: {
         transform: 'rotate(45deg)',
       },
     },

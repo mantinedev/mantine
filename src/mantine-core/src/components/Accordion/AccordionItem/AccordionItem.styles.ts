@@ -23,6 +23,7 @@ export default createStyles(
     getRef
   ) => {
     const icon = getRef('icon');
+    const itemTitle = getRef('itemTitle');
 
     return {
       icon: {
@@ -50,12 +51,13 @@ export default createStyles(
       },
 
       itemOpened: {
-        [`& .${icon}`]: {
+        [`& > .${itemTitle} .${icon}`]: {
           transform: disableIconRotation ? 'none' : 'rotate(180deg)',
         },
       },
 
       itemTitle: {
+        ref: itemTitle,
         margin: 0,
         padding: 0,
         fontWeight: 'normal',
