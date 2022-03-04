@@ -28,7 +28,7 @@ describe('@mantine/dates/create-time-handler', () => {
 
     handler('6', true);
 
-    expect(spy).toHaveBeenCalledWith('06');
+    expect(spy).toHaveBeenCalledWith('06', undefined);
     expect(ref.current.focus).toHaveBeenCalledTimes(1);
     expect(ref.current.select).toHaveBeenCalledTimes(1);
   });

@@ -1,5 +1,6 @@
 import { clamp } from '@mantine/hooks';
 import { padTime } from '../pad-time/pad-time';
+import { allButLastDigit } from './all-but-last-digit/all-but-last-digit';
 
 interface CreateTimeHandler {
   onChange(value: string, carryOver?: string): void;
@@ -17,20 +18,25 @@ export function createTimeHandler({ onChange, nextRef, min, max, nextMax }: Crea
       return;
     }
 
-    if (parsed > Math.floor(max / 10) || forceTriggerShift) {
+    if (parsed > allButLastDigit(max) || forceTriggerShift) {
       const lastDigit = parsed % 10;
+
+      let updatedValue: string;
+      let carryOver: string | undefined;
 
       /*
         Check if it is possible to construct a number that satisfies the following conditions:
           1. The number starts with the last digit of the current value.
           2. The number is less than the next field's maximum value constraint.
       */
-      if (nextMax && parsed > max && lastDigit <= Math.floor(nextMax / 10)) {
-        onChange(padTime(Math.floor(parsed / 10).toString()), padTime(lastDigit.toString()));
+      if (parsed > max && nextMax && lastDigit <= allButLastDigit(nextMax)) {
+        updatedValue = padTime(allButLastDigit(parsed).toString());
+        carryOver = padTime(lastDigit.toString());
       } else {
-        onChange(padTime(clamp({ value: parsed, min, max }).toString()));
+        updatedValue = padTime(clamp({ value: parsed, min, max }).toString());
       }
 
+      onChange(updatedValue, carryOver);
       triggerShift && nextRef?.current?.focus();
       triggerShift && nextRef?.current?.select();
       return;
