@@ -101,6 +101,7 @@ attachDemos(storiesOf('@mantine/rte/demos', module), demos.RichTextEditorDemos);
 attachDemos(storiesOf('@mantine/styles/demos', module), demos.CreateStylesDemos);
 attachDemos(storiesOf('@mantine/theme/demos', module), demos.ThemeDemos);
 attachDemos(storiesOf('@mantine/spotlight/demos', module), demos.SpotlightDemos);
+attachDemos(storiesOf('@mantine/form/demos', module), demos.FormDemos);
 
 // @mantine/labs
 attachDemos(storiesOf('@mantine/labs/PinInput/demos', module), demos.PinInputDemos);
