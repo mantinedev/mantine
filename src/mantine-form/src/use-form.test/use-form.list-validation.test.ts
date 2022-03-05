@@ -96,5 +96,9 @@ describe('@mantine/form/use-form list validation', () => {
       const result = hook.result.current.validateField('fruits.0.name');
       expect(result).toStrictEqual({ valid: false, error: 'invalid fruit' });
     });
+
+    expect(hook.result.current.errors).toStrictEqual({
+      'fruits.0.name': 'invalid fruit',
+    });
   });
 });
