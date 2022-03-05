@@ -46,10 +46,10 @@ export interface UseFormReturnType<T> {
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
   reset(): void;
-  getInputProps: <K extends keyof T, U extends T[K], L extends GetInputPropsFieldType = 'input'>(
+  getInputProps: <K extends keyof T, L extends GetInputPropsFieldType = 'input'>(
     field: K,
     options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L, U>;
+  ) => GetInputProps<L>;
 
   getListInputProps: <
     K extends keyof T,
@@ -60,7 +60,7 @@ export interface UseFormReturnType<T> {
     index: number,
     listField: U extends FormList<infer V> ? keyof V : never,
     options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L, U extends FormList<infer V> ? V[keyof V] : never>;
+  ) => GetInputProps<L>;
 }
 
 export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
@@ -171,7 +171,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   >(
     field: K,
     { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L, U> => {
+  ): GetInputProps<L> => {
     const value = values[field];
     const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
 
@@ -194,7 +194,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     index: number,
     listField: LK,
     { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L, U[LK]> => {
+  ): GetInputProps<L> => {
     const list = values[field];
 
     if (isFormList(list) && list[index] && listField in list[index]) {
