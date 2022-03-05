@@ -1,51 +1,20 @@
-import { act, renderHook } from '@testing-library/react-hooks';
 import { z } from 'zod';
-import { useForm, zodResolver } from '../index';
-
-const regularResolver = zodResolver(
-  z.object({
-    name: z.string().min(1, { message: 'name-error' }),
-    age: z.number().min(10, { message: 'age-error' }),
-  })
-);
+import { zodResolver } from '../index';
+import { testResolver, RESOLVER_ERROR_MESSAGES } from './test-resolver';
 
 describe('@mantine/form/use-form zod resolver', () => {
-  it('validates regular values with zod resolver', () => {
-    const hook = renderHook(() =>
-      useForm({
-        schema: regularResolver,
-        initialValues: { name: '', age: 5 },
+  testResolver(
+    zodResolver(
+      z.object({
+        name: z.string().min(2, { message: RESOLVER_ERROR_MESSAGES.name }),
+        age: z.number().min(10, { message: RESOLVER_ERROR_MESSAGES.age }),
+        fruits: z.array(
+          z.object({
+            name: z.string().min(2, { message: RESOLVER_ERROR_MESSAGES.fruitName }),
+            stock: z.number().min(0, { message: RESOLVER_ERROR_MESSAGES.fruitStock }),
+          })
+        ),
       })
-    );
-
-    expect(hook.result.current.errors).toStrictEqual({});
-
-    act(() => {
-      const results = hook.result.current.validate();
-      expect(results).toStrictEqual({
-        hasErrors: true,
-        errors: { name: 'name-error', age: 'age-error' },
-      });
-    });
-
-    expect(hook.result.current.errors).toStrictEqual({ name: 'name-error', age: 'age-error' });
-  });
-
-  it('validates single field with validateField handler', () => {
-    const hook = renderHook(() =>
-      useForm({
-        schema: regularResolver,
-        initialValues: { name: '', age: 5 },
-      })
-    );
-
-    expect(hook.result.current.errors).toStrictEqual({});
-
-    act(() => {
-      const results = hook.result.current.validateField('name');
-      expect(results).toStrictEqual({ valid: false, error: 'name-error' });
-    });
-
-    expect(hook.result.current.errors).toStrictEqual({ name: 'name-error' });
-  });
+    )
+  );
 });
