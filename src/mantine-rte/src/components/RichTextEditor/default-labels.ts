@@ -23,6 +23,9 @@ export interface RichTextEditorLabels {
   h6: string;
   sub: string;
   sup: string;
+  code: string;
+  codeBlock: string;
+  blockquote: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -50,4 +53,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   h6: 'Heading 6',
   sup: 'Super script',
   sub: 'Sub script',
+  code: 'Code',
+  codeBlock: 'Code block',
+  blockquote: 'Block quote',
 };
