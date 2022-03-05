@@ -22,7 +22,7 @@ function Demo() {
   return (
     <div style={{ maxWidth: 420, margin: 'auto' }}>
       <NumberInput
-        label="Ste on hold"
+        label="Step on hold"
         description="Step the value when clicking and holding the arrows"
         placeholder="Hold mouse down on control button"
         stepHoldDelay={500}
