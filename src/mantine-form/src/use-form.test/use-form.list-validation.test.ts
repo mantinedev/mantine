@@ -78,4 +78,23 @@ describe('@mantine/form/use-form list validation', () => {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+
+  it('correctly handles list validation with validateField', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: { fruits: formList([banana, orange]) },
+        validate: {
+          fruits: {
+            name: (value) => (value.includes('test') ? null : 'invalid fruit'),
+            price: (value) => (value > 10 ? null : 'invalid price'),
+          },
+        },
+      })
+    );
+
+    act(() => {
+      const result = hook.result.current.validateField('fruits.0.name');
+      expect(result).toStrictEqual({ valid: false, error: 'invalid fruit' });
+    });
+  });
 });

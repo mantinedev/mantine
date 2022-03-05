@@ -41,7 +41,7 @@ export interface UseFormReturnType<T> {
   removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
   reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
   validate(): FormValidationResult;
-  validateField: <K extends keyof T>(field: K) => FormFieldValidationResult;
+  validateField: (field: string) => FormFieldValidationResult;
   onSubmit(
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
@@ -146,8 +146,8 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     return results;
   };
 
-  const validateField = <K extends keyof T>(field: K) => {
-    const results = validateFieldValue<any, any>(field, schema || rules, values);
+  const validateField = (field: string) => {
+    const results = validateFieldValue(field, schema || rules, values);
     results.valid ? clearFieldError(field) : setFieldError(field, results.error);
     return results;
   };
