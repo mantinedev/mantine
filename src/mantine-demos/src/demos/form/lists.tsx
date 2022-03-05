@@ -59,7 +59,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Text size="sm" weight={500}>
+      <Text size="sm" weight={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
@@ -119,7 +119,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Text size="sm" weight={500}>
+      <Text size="sm" weight={500} mt="md">
         Form values:
       </Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
