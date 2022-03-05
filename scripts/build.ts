@@ -12,12 +12,12 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   })
   .option('project', {
     type: 'string',
-    description: 'Specify package should be bundled.',
+    description: 'Specify package which should be bundled.',
   })
   .option('analyze', {
     type: 'boolean',
     default: false,
-    description: 'Generate analyze files.',
+    description: 'Generate bundle analytics.',
   })
   .option('sourcemap', {
     type: 'boolean',
@@ -27,13 +27,13 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   .option('formats', {
     type: 'string',
     array: true,
-    choices: ['es', 'cjs'],
+    choices: ['es', 'cjs', 'umd'],
     default: ['es', 'cjs'],
     description: "Specify module code generation: 'es', 'cjs'.",
   })
   .example([
-    ['$0 all --formats umd cjs', 'Building only umd and cjs packages.'],
-    ['$0 mantine-core --analyze', 'Building mantine-core package and generating analyzing file.'],
+    ['$0 all --formats umd cjs', 'Bundle packages to umd and cjs.'],
+    ['$0 @mantine/core --analyze', 'Bundle mantine-core package and generate bundle analytics.'],
   ]);
 
 (async () => {
