@@ -121,7 +121,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       >
         <Input<'div'>
           component="div"
-          required={required}
           invalid={!!error}
           icon={icon}
           size={size}
@@ -136,6 +135,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         >
           <input
             type={reveal ? 'text' : 'password'}
+            required={required}
             className={cx(classes.innerInput, {
               [classes.withIcon]: icon,
               [classes.invalid]: !!error,

@@ -31,7 +31,7 @@ function Demo() {
       <NumberInput
         mt="md"
         label="Step the value with interval function"
-        description="Ste value will increase incrementally when control is hold"
+        description="Step value will increase incrementally when control is hold"
         placeholder="Hold mouse down on control button"
         stepHoldDelay={500}
         stepHoldInterval={(t) => Math.max(1000 / t ** 2, 25)}

@@ -170,7 +170,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onChange,
       className,
       sx,
-      clickOutsideEvents = ['click', 'touchstart'],
+      clickOutsideEvents = ['mouseup', 'touchstart'],
       ...others
     }: MenuProps,
     ref

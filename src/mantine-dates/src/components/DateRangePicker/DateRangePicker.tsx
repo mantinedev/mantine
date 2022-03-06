@@ -87,6 +87,8 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       initialLevel,
       onDropdownClose,
       onDropdownOpen,
+      hideOutsideDates,
+      hideWeekdays,
       ...others
     }: DateRangePickerProps,
     ref
@@ -185,6 +187,8 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
           initialLevel={initialLevel}
+          hideOutsideDates={hideOutsideDates}
+          hideWeekdays={hideWeekdays}
         />
       </DatePickerBase>
     );
