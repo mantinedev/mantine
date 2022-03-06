@@ -29,7 +29,9 @@
     "@mantine/labs": "3.6.14",
     "@mantine/spotlight": "3.6.14",
     "tabler-icons-react": "*",
+    "react-beautiful-dnd": "*",
     "dayjs": "*",
+    "zod": "*",
     "@modulz/radix-icons": "*",
     "@primer/octicons-react": "*"
   },
