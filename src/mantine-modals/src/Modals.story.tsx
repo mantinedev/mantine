@@ -11,7 +11,7 @@ function Demo() {
     modals.openContextModal('hello', {
       title: 'Context modal',
       onClose: () => console.log('context modal closed'),
-      customProps: {
+      innerProps: {
         contextProp: 'test-modal',
       },
     });

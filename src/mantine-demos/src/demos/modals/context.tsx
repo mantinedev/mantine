@@ -11,7 +11,7 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      customProps: {
+      innerProps: {
         modalBody:
           'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
       }
@@ -27,7 +27,7 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      customProps: {
+      innerProps: {
         modalBody:
           'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
       },

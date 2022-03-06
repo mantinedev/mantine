@@ -9,19 +9,19 @@ export type ConfirmLabels = Record<'confirm' | 'cancel', string>;
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
 export interface OpenContextModal<CustomProps extends Record<string, unknown> = {}>
   extends ModalSettings {
-  customProps: CustomProps;
+  innerProps: CustomProps;
 }
 
 export interface ContextModalProps<T extends Record<string, unknown> = {}> {
   context: ModalsContext;
-  customProps: T;
+  innerProps: T;
   id: string;
 }
 
 export type ModalState =
   | { id: string; props: ModalSettings; type: 'content' }
   | { id: string; props: OpenConfirmModal; type: 'confirm' }
-  | { id: string; props: Record<string, any>; type: 'context'; ctx: string };
+  | { id: string; props: OpenContextModal; type: 'context'; ctx: string };
 
 export interface ModalsContext {
   modals: ModalState[];

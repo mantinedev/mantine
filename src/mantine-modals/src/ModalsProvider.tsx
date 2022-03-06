@@ -135,12 +135,12 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
     switch (currentModal.type) {
       case 'context': {
-        const { customProps, ...rest } = currentModal.props;
+        const { innerProps, ...rest } = currentModal.props;
         const ContextModal = modals[currentModal.ctx];
 
         return (
           <Modal {...modalProps} {...rest} {...baseModalProps}>
-            <ContextModal customProps={customProps} context={ctx} id={currentModal.id} />
+            <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} />
           </Modal>
         );
       }
