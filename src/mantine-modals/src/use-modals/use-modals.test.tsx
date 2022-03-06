@@ -18,7 +18,6 @@ describe('@mantine/modals/use-modals', () => {
 
   it('throws error if called outside of ModalsProvider', () => {
     const hook = renderHook(() => useModals());
-    console.log(hook.result.error);
 
     expect(hook.result.error).toStrictEqual(
       Error(
