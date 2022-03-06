@@ -13,7 +13,7 @@ export interface OpenContextModal<CustomProps extends Record<string, unknown> = 
 }
 
 export interface ContextModalProps<T extends Record<string, unknown> = {}> {
-  context: ModalsContext;
+  context: ModalsContextProps;
   innerProps: T;
   id: string;
 }
@@ -23,7 +23,7 @@ export type ModalState =
   | { id: string; props: OpenConfirmModal; type: 'confirm' }
   | { id: string; props: OpenContextModal; type: 'context'; ctx: string };
 
-export interface ModalsContext {
+export interface ModalsContextProps {
   modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
@@ -35,11 +35,5 @@ export interface ModalsContext {
   closeAll: () => void;
 }
 
-export const modalsContext = createContext<ModalsContext>({
-  modals: [],
-  openModal: () => null,
-  openConfirmModal: () => null,
-  openContextModal: () => null,
-  closeAll: () => {},
-  closeModal: () => {},
-});
+export const ModalsContext = createContext<ModalsContextProps>(null);
+ModalsContext.displayName = '@mantine/modals/ModalsContext';

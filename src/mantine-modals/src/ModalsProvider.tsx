@@ -2,13 +2,13 @@ import React, { useReducer } from 'react';
 import { Modal } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import {
-  modalsContext,
   ModalsContext,
   ModalSettings,
   ConfirmLabels,
   OpenConfirmModal,
   OpenContextModal,
   ContextModalProps,
+  ModalsContextProps,
 } from './context';
 import { ConfirmModal } from './ConfirmModal';
 import { modalsReducer } from './reducer';
@@ -133,7 +133,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     dispatch({ type: 'CLOSE', payload: modal.id });
   };
 
-  const ctx: ModalsContext = {
+  const ctx: ModalsContextProps = {
     modals: state.modals,
     openModal,
     openConfirmModal,
@@ -188,7 +188,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   const { modalProps: currentModalProps, content } = getCurrentModal();
 
   return (
-    <modalsContext.Provider value={ctx}>
+    <ModalsContext.Provider value={ctx}>
       <Modal
         {...modalProps}
         {...currentModalProps}
@@ -199,6 +199,6 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
       </Modal>
 
       {children}
-    </modalsContext.Provider>
+    </ModalsContext.Provider>
   );
 }
