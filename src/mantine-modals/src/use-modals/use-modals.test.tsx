@@ -46,7 +46,7 @@ describe('@mantine/modals/use-modals', () => {
     expect(current.openModal).toBeDefined();
   });
 
-  it('correctly renders innerProps inside a context modal', () => {
+  it('correctly passes innerProps to a context modal', () => {
     const ContextModal = ({ innerProps }: ContextModalProps<{ text: string }>) => (
       <div>{innerProps.text}</div>
     );
@@ -94,6 +94,32 @@ describe('@mantine/modals/use-modals', () => {
     render(<Component />, { wrapper });
     expect(screen.getByText('ProviderCancel')).toBeInTheDocument();
     expect(screen.getByText('ProviderConfirm')).toBeInTheDocument();
+  });
+
+  it('correctly renders a confirm modal with overwritten provider labels', () => {
+    const wrapper: WrapperComponent<unknown> = ({ children }) => (
+      <MantineProvider>
+        <ModalsProvider labels={{ cancel: 'ProviderCancel', confirm: 'ProviderConfirm' }}>
+          {children}
+        </ModalsProvider>
+      </MantineProvider>
+    );
+
+    const Component = () => {
+      const modals = useModals();
+
+      useEffect(() => {
+        modals.openConfirmModal({
+          labels: { confirm: 'Confirm', cancel: 'Cancel' },
+        });
+      }, []);
+
+      return <div>Empty</div>;
+    };
+
+    render(<Component />, { wrapper });
+    expect(screen.getByText('Confirm')).toBeInTheDocument();
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
   it('correctly renders a regular modal with children and a title', () => {
