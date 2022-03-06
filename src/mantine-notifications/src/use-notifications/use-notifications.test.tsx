@@ -23,7 +23,7 @@ describe('@mantine/notifications/use-notifications', () => {
     );
   });
 
-  it('returns context value of MantineProvider', () => {
+  it('returns context value of NotificationsProvider', () => {
     const wrapper = ({ children }) => (
       <MantineProvider>
         <NotificationsProvider>{children}</NotificationsProvider>
