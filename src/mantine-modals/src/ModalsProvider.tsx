@@ -125,55 +125,68 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     closeAll,
   };
 
-  const baseModalProps = {
-    opened: state.length > 0,
-    onClose: () => closeModal(currentModal.id),
-  };
-
-  const renderModal = (): JSX.Element => {
-    if (!currentModal) return null;
-
-    switch (currentModal.type) {
+  const getCurrentModal = () => {
+    switch (currentModal?.type) {
       case 'context': {
         const { innerProps, ...rest } = currentModal.props;
         const ContextModal = modals[currentModal.ctx];
 
-        return (
-          <Modal {...modalProps} {...rest} {...baseModalProps}>
-            <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} />
-          </Modal>
-        );
+        return {
+          modalProps: rest,
+          content: (
+            <ContextModal
+              innerProps={innerProps}
+              context={ctx}
+              id={currentModal.id}
+              {...currentModal.props}
+            />
+          ),
+        };
       }
       case 'confirm': {
-        const { confirmProps: separatedConfirmProps, modalProps: separatedModalProps } =
+        const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
           separateConfirmModalProps(currentModal.props);
 
-        return (
-          <Modal {...modalProps} {...separatedModalProps} {...baseModalProps}>
+        return {
+          modalProps: separatedModalProps,
+          content: (
             <ConfirmModal
-              {...currentModal.props}
               {...separatedConfirmProps}
+              id={currentModal.id}
               labels={currentModal.props.labels || labels}
             />
-          </Modal>
-        );
+          ),
+        };
       }
       case 'content': {
-        return (
-          <Modal {...modalProps} {...currentModal.props} {...baseModalProps}>
-            {currentModal.props.children};
-          </Modal>
-        );
+        const { children: currentModalChildren, ...rest } = currentModal.props;
+
+        return {
+          modalProps: rest,
+          content: <>{currentModalChildren}</>,
+        };
       }
       default: {
-        return null;
+        return {
+          modalProps: {},
+          content: null,
+        };
       }
     }
   };
 
+  const { modalProps: currentModalProps, content } = getCurrentModal();
+
   return (
     <modalsContext.Provider value={ctx}>
-      {renderModal()}
+      <Modal
+        {...modalProps}
+        {...currentModalProps}
+        opened={state.length > 0}
+        onClose={() => closeModal(currentModal.id)}
+      >
+        {content}
+      </Modal>
 
       {children}
     </modalsContext.Provider>
