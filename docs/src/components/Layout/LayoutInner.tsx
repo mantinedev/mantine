@@ -46,10 +46,10 @@ const query = graphql`
 const demonstrationModal = ({
   context,
   id,
-  modalBody,
-}: ContextModalProps & { modalBody: string }) => (
+  innerProps,
+}: ContextModalProps<{ modalBody: string }>) => (
   <>
-    <Text size="sm">{modalBody}</Text>
+    <Text size="sm">{innerProps.modalBody}</Text>
     <Button fullWidth mt="md" onClick={() => context.closeModal(id)}>
       Close modal
     </Button>
