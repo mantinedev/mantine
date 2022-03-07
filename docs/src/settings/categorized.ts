@@ -14,11 +14,11 @@ export const MANTINE_CORE_CATEGORIZED = {
 };
 
 export const CATEGORIZED = [
-  { group: 'changelog', categories: {}, order: [] },
   { group: 'theming', categories: {}, order: [] },
   MANTINE_HOOKS_CATEGORIZED,
   { group: 'mantine-form', categories: {}, order: [] },
   MANTINE_CORE_CATEGORIZED,
   { group: 'mantine-dates', categories: {}, order: [] },
   { group: 'Other packages', categories: {}, order: [] },
+  { group: 'changelog', categories: {}, order: [] },
 ];
