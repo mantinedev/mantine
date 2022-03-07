@@ -213,3 +213,61 @@ const form = useForm({
 form.validateField('name'); // returns { hasError: true, error: 'name-error' }
 form.errors; // -> { name: 'name-error' }
 ```
+
+## Errors
+
+`useForm` hook gives you full control of `errors` state:
+
+```tsx
+const form = useForm({ initialValues: { name: '', email: '' } });
+
+form.setErrors({ name: 'Invalid name', email: 'Invalid email' });
+form.errors; // -> { name: 'Invalid name', email: 'Invalid email' }
+
+form.clearErrors();
+form.errors; // -> {} (empty object, no errors)
+
+form.setFieldError('name', 'Invalid name');
+form.errors; // -> { name: 'Invalid name' }
+
+form.clearFieldError('name');
+form.errors; // -> {} (empty object, no errors)
+```
+
+You can use all of the handlers shown above to create custom validation logic,
+for example, you can set errors received from backend.
+
+### Initial errors
+
+You can set initial errors with `initialErrors` property:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', email: '' },
+  initialErrors: { name: 'name-error', email: 'email-error' },
+});
+
+form.errors; // -> { name: 'name-error', email: 'email-error' }
+```
+
+### Errors type
+
+You can use any React node as an error message:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', email: '' },
+  initialErrors: {
+    name: <p>Paragraph error</p>, // -> error as a react element
+    email: 42, // -> error as a number
+  },
+});
+```
+
+Note that errors that have `null` or `undefined` will be automatically removed:
+
+```tsx
+const form = useForm({ initialValues: { name: '', email: '' } });
+form.setErrors({ name: 'name-error', email: null });
+form.errors; // -> { name: 'name-error' }, email error is not included in errors object
+```
