@@ -318,3 +318,47 @@ function Demo() {
   return <form onSubmit={form.onSubmit(handleSubmit)}>{/* ...inputs */}</form>;
 }
 ```
+
+## TypeScript
+
+### Get form values type
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // Get form values type, will be { name: string; age: number }
+  type FormValues = typeof form.values;
+
+  // Use values type in handleSubmit function or anywhere else
+  const handleSubmit = (values: FormValues) => console.log(values);
+}
+```
+
+### Set form values type
+
+By default, form values types will be inferred from `initialValues`.
+To avoid that, you can pass type to `useForm` hook, this approach is useful when
+types cannot be inferred or when you want to provide more specific types:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string; // regular field, same as inferred type
+  role: 'user' | 'admin'; // union, more specific than inferred type (string)
+  age: number | undefined; // values that may be undefined cannot be inferred
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    initialValues: {
+      name: '',
+      role: 'user',
+      age: undefined,
+    },
+  });
+}
+```
