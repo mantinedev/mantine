@@ -35,7 +35,30 @@ Value returned from the `formList` function is a regular array – it will seria
 same string as array with the same content. It also supports all array methods (`map`, `forEach`, `reduce`, etc.).
 
 ```tsx
-JSON.stringify(formList([{ a: 1 }, { a: 1 }])) === JSON.stringify([{ a: 1 }, { a: 1 }]);
+JSON.stringify(formList([{ a: 1 }, { a: 2 }])) === JSON.stringify([{ a: 1 }, { a: 2 }]);
+```
+
+## Validation with rules object
+
+```tsx
+const form = useForm({
+  initialValues: {
+    users: formList([
+      { name: 'John', age: 12 },
+      { name: '', age: 22 },
+    ]),
+  },
+
+  validate: {
+    users: {
+      name: (value) => (value.length < 2 ? 'Name should have at least 2 letters' : null),
+      age: (value) => (value < 18 ? 'User must be 18 or older' : null),
+    },
+  },
+});
+
+form.validate();
+form.errors; // -> { 'users.0.age': 'Name should have at least 2 letters', 'users.1.age': 'User must be 18 or older' }
 ```
 
 ## List items reordering
