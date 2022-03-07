@@ -271,3 +271,50 @@ const form = useForm({ initialValues: { name: '', email: '' } });
 form.setErrors({ name: 'name-error', email: null });
 form.errors; // -> { name: 'name-error' }, email error is not included in errors object
 ```
+
+## getInputProps handler
+
+`getInputProps` handler is a primary way to add `value`, `error` and `onChange` props
+to Mantine inputs.
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', termsOfService: false },
+  validate: { name: (value) => value.trim().length >= 2 },
+  initialErrors: { name: 'Name must include at least 2 letters' },
+});
+
+form.getInputProps('name'); // -> returns object with the following properties:
+// value – input value
+// onChange – input onChange function, works with all Mantine and regular inputs
+// error – error message if input is invalid
+
+// returns object with the same properties as above example but without error
+form.getInputProps('name', { withError: false });
+
+form.getInputProps('termsOfService', { type: 'checkbox' }); // -> returns object with the following properties:
+// checked – input[type="checkbox"] checked value
+// onChange – input onChange event, works with Mantine Checkbox, Switch and regular input[type="checkbox"]
+// error – error message if input is invalid
+```
+
+## onSubmit handler
+
+`onSubmit` handler is a wrapper function that will:
+
+- prevent default form event
+- run `form.validate` when form is submitted
+- call provided function with form values when form is submitted if all fields are valid
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // You can get form values type using typeof to store function separately
+  const handleSubmit = (values: typeof form.values) => console.log(values);
+
+  return <form onSubmit={form.onSubmit(handleSubmit)}>{/* ...inputs */}</form>;
+}
+```
