@@ -1,0 +1,32 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'Schema validation'
+order: 2
+slug: /form/schema/
+description: 'Validate form values with schema'
+docs: 'form/schema.mdx'
+source: 'mantine-form/src'
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## Getting started
+
+`@mantine/form` supports schema validation with [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) and [yup](https://www.npmjs.com/package/yup) out of the box.
+You will need to install one of the libraries yourself, as `@mantine/form` package does not depend on any of them.
+If you do not know what validation library to choose, we recommend choosing [zod](https://www.npmjs.com/package/zod)
+as the most modern and developer-friendly library.
+
+## zod
+
+Install [zod](https://www.npmjs.com/package/zod):
+
+```
+yarn add zod
+npm install zod
+```
+
+Then create schema and wrap it with `zodResolver` exported from `@mantine/form`:
+
+<Demo data={FormDemos.zod} />
