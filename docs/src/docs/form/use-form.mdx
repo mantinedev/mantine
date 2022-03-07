@@ -62,3 +62,66 @@ Hook returns an object with the following properties:
 - `reset` – resets `values` to initial state, clears all validation errors
 - `getInputProps` – returns an object with value, onChange and error that should be spread on input
 - `getListInputProps` – returns an object with value, onChange and error that should be spread on input that is used to manage list value
+
+## Set form values
+
+### setFieldValue handler
+
+`setFieldValue` handler sets value of the specified field. When this handler is called field validation error is automatically cleared.
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setFieldValue('name', 'John');
+form.values; // -> { name: 'John', age: 0 }
+
+form.setFieldValue('age', 22);
+form.values; // -> { name: 'John', age: 22 }
+```
+
+`setFieldValue` can be used with all `@mantine/core` inputs, example with [TextInput](/core/text-input/) component:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '' } });
+
+  return (
+    <TextInput
+      label="Name"
+      value={form.values.name}
+      onChange={(event) => form.setFieldValue(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+### setValues handler
+
+`setValues` handler allows to set all form values with one function:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setValues({ name: 'John', age: 22 });
+form.values; // -> { name: 'John', age: 22 }
+```
+
+### reset handler
+
+`reset` handler clears all validation errors and resets all values to `initialValues`:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setValues({ name: 'John', age: 22 });
+form.values; // -> { name: 'John', age: 22 }
+
+form.reset();
+form.values; // -> { name: '', age: 0 }
+```
