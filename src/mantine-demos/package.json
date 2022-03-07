@@ -32,6 +32,8 @@
     "react-beautiful-dnd": "*",
     "dayjs": "*",
     "zod": "*",
+    "joi": "*",
+    "yup": "*",
     "@modulz/radix-icons": "*",
     "@primer/octicons-react": "*"
   },
