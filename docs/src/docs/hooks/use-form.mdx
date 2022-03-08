@@ -12,6 +12,14 @@ source: 'mantine-hooks/src/use-form/use-form.ts'
 ---
 
 import { HooksDemos } from '@mantine/demos';
+import { Alert, Text } from '@mantine/core';
+
+<Alert title="Deprecation Warning!" color="red" variant="filled">
+  {'This hook will be removed in one of the next versions. Please switch to new '}
+  <Text variant="link" inherit component="a" href="/form/use-form/">
+    use-form
+  </Text>
+</Alert>
 
 ## Usage
 
