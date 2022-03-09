@@ -66,7 +66,7 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
         },
       },
     },
-
+    labelWrapper: {},
     label: {
       ...theme.fn.fontStyles(),
       display: 'flex',

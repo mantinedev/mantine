@@ -5,5 +5,6 @@ export const RadioGroup: Record<RadioGroupStylesNames, string> = {
   radioWrapper: 'Wrapper for label and radio button',
   label: 'Radio element',
   radio: 'Radio button',
+  labelWrapper: 'Wrapper for label only',
   ...InputWrapper,
 };
