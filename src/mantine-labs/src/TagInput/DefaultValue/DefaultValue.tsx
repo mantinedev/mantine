@@ -65,4 +65,4 @@ export function DefaultValue({
   );
 }
 
-DefaultValue.displayName = '@mantine/core/TagInput/DefaultValue';
+DefaultValue.displayName = '@mantine/labs/TagInput/DefaultValue';

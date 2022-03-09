@@ -17,7 +17,7 @@ const defaultProps: TagInputProps = {
   id: 'test-tag-input',
 };
 
-describe('@mantine/core/TagInput', () => {
+describe('@mantine/labs/TagInput', () => {
   checkAccessibility([<TagInput {...defaultProps} />]);
   itSupportsFocusEvents(TagInput, defaultProps, '#test-tag-input');
   itSupportsInputIcon(TagInput, defaultProps);
@@ -27,7 +27,7 @@ describe('@mantine/core/TagInput', () => {
   itSupportsSystemProps({
     component: TagInput,
     props: defaultProps,
-    displayName: '@mantine/core/TagInput',
+    displayName: '@mantine/labs/TagInput',
     refType: HTMLInputElement,
     excludeOthers: true,
   });

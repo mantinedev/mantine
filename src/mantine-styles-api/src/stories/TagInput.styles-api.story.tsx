@@ -16,7 +16,7 @@ function WithClassNames() {
   return <Wrapper classNames={useStyles().classes} />;
 }
 
-storiesOf('@mantine/core/TagInput/styles-api', module)
+storiesOf('@mantine/labs/TagInput/styles-api', module)
   .add('With sx', () => (
     <Wrapper sx={{ border: '1px solid red', maxWidth: 400 }} mx="auto" mt="xl" />
   ))

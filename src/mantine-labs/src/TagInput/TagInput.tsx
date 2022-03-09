@@ -386,4 +386,4 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   }
 );
 
-TagInput.displayName = '@mantine/core/TagInput';
+TagInput.displayName = '@mantine/labs/TagInput';
