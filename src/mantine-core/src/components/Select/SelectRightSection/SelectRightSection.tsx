@@ -9,7 +9,7 @@ export interface SelectRightSectionProps {
   onClear?: () => void;
   size: MantineSize;
   error?: any;
-  disabled?: boolean;
+  // disabled?: boolean;
 }
 
 export function SelectRightSection({
