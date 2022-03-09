@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
 import { NavbarSection } from './NavbarSection/NavbarSection';
@@ -45,24 +46,32 @@ type NavbarComponent = ForwardRefWithStaticComponents<
   { Section: typeof NavbarSection }
 >;
 
+const defaultProps: Partial<NavbarProps> = {
+  height: '100vh',
+  fixed: false,
+  position: { top: 0, left: 0 },
+  zIndex: getDefaultZIndex('app'),
+  hiddenBreakpoint: 'md',
+  hidden: false,
+};
+
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
-  (
-    {
+  (props: NavbarProps, ref) => {
+    const {
       width,
-      height = '100vh',
-      fixed = false,
-      position = { top: 0, left: 0 },
-      zIndex = getDefaultZIndex('app'),
-      hiddenBreakpoint = 'md',
-      hidden = false,
+      height,
+      fixed,
+      position,
+      zIndex,
+      hiddenBreakpoint,
+      hidden,
       className,
       classNames,
       styles,
       children,
       ...others
-    }: NavbarProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Navbar', defaultProps, props);
+
     const { classes, cx } = useStyles(
       { width, height, fixed, position, hiddenBreakpoint, zIndex },
       { classNames, styles, name: 'Navbar' }

@@ -1,25 +1,17 @@
-# Mantine Styles
+# Mantine styles
 
-This package contains Mantine specific css-in-js library based on [emotion](https://emotion.sh)
+Mantine CSS-in-JS library built on top of emotion
 
-## Documentation
-
-[Read createStyles documentation on Mantine website](https://mantine.dev/theming/create-styles/)
+[View documentation](https://mantine.dev/)
 
 ## Installation
 
-Most likely you do not have to install @mantine/styles separately – it is included with @mantine/core
-
-Install with npm:
-
 ```sh
-npm install @mantine/styles
-```
-
-Install with yarn:
-
-```sh
+# With yarn
 yarn add @mantine/styles
+
+# With npm
+npm install @mantine/styles
 ```
 
 ## License

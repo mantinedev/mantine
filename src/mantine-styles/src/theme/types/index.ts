@@ -1,6 +1,11 @@
 export type { ColorScheme } from './ColorScheme';
 export type { DefaultProps } from './DefaultProps';
-export type { MantineColor } from './MantineColor';
+export type {
+  MantineColor,
+  MantineThemeColors,
+  DefaultMantineColor,
+  MantineThemeColorsOverride,
+} from './MantineColor';
 export type { MantineGradient } from './MantineGradient';
 export type { MantineStyleSystemProps, MantineStyleSystemSize } from './MantineStyleSystem';
 export type { MantineShadow } from './MantineShadow';

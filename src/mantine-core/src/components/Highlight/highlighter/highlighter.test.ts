@@ -54,6 +54,11 @@ describe('@mantine/core/Highlight/highlighter', () => {
     expect(highlighter(VALUE, 'Hi, there')).toStrictEqual([{ chunk: VALUE, highlighted: false }]);
   });
 
+  it('does not highlight if highlight is null or undefined', () => {
+    expect(highlighter(VALUE, null)).toStrictEqual([{ chunk: VALUE, highlighted: false }]);
+    expect(highlighter(VALUE, undefined)).toStrictEqual([{ chunk: VALUE, highlighted: false }]);
+  });
+
   it('escapes regex symbols', () => {
     expect(highlighter('[Hello], there', 'lo], t')).toStrictEqual([
       { chunk: '[Hel', highlighted: false },

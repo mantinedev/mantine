@@ -11,8 +11,7 @@ export default createStyles((theme) => ({
 
   header: {
     ...theme.fn.focusStyles(),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-    outline: 0,
+    backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
     width: `calc(100% + ${theme.spacing.md}px)`,

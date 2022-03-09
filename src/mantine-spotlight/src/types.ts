@@ -16,9 +16,6 @@ export interface SpotlightAction {
   /** Keywords that are used for default filtering, not displayed anywhere, can be a string: "react,router,javascript" or an array: ['react', 'router', 'javascript'] */
   keywords?: string | string[];
 
-  /** Hotkey to trigger action when search field is focused, for example "mod + 1" */
-  hotkey?: string;
-
   /** Decorative icon */
   icon?: ReactNode;
 

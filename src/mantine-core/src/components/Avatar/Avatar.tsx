@@ -16,7 +16,7 @@ export type AvatarStylesNames = ClassNames<typeof useStyles>;
 
 interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Image url */
-  src?: string;
+  src?: string | null;
 
   /** Image alt text or title for placeholder variant */
   alt?: string;
@@ -32,11 +32,12 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
 
   /** `img` element attributes */
   imageProps?: React.ComponentPropsWithoutRef<'img'>;
+
+  /** Custom placeholder */
+  children?: React.ReactNode;
 }
 
-export type AvatarProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _AvatarProps>
-  : never;
+export type AvatarProps<C> = PolymorphicComponentProps<C, _AvatarProps>;
 
 type AvatarComponent = (<C = 'div'>(props: AvatarProps<C>) => React.ReactElement) & {
   displayName?: string;

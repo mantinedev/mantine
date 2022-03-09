@@ -25,6 +25,9 @@ export interface SpotlightContextProps {
 
   /** List of registered actions */
   actions: SpotlightAction[];
+
+  /** Search query */
+  query: string;
 }
 
 export const SpotlightContext = createContext<SpotlightContextProps>(null);

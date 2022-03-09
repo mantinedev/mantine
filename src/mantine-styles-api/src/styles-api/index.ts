@@ -61,3 +61,4 @@ export * from './TimeInput.styles-api';
 export * from './Dropzone.styles-api';
 export * from './Prism.styles-api';
 export * from './RichTextEditor.styles-api';
+export * from './SpotlightProvider.styles-api';

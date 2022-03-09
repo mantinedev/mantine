@@ -8,6 +8,7 @@ describe('@mantine/core/Container', () => {
   itSupportsSystemProps({
     component: Container,
     props: defaultProps,
+    excludePadding: true,
     displayName: '@mantine/core/Container',
     refType: HTMLDivElement,
   });

@@ -155,7 +155,7 @@ const defaultProps: Partial<MenuProps> = {
   withinPortal: true,
   trapFocus: true,
   closeOnScroll: false,
-  clickOutsideEvents: ['click', 'touchstart'],
+  clickOutsideEvents: ['mouseup', 'touchstart'],
 };
 
 export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(

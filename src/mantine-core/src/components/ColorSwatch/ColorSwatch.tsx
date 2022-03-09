@@ -18,11 +18,12 @@ interface _ColorSwatchProps extends DefaultProps {
 
   /** Swatch border-radius predefined from theme or number for px value */
   radius?: MantineNumberSize;
+
+  /** ColorSwatch children */
+  children?: React.ReactNode;
 }
 
-export type ColorSwatchProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, _ColorSwatchProps>
-  : never;
+export type ColorSwatchProps<C> = PolymorphicComponentProps<C, _ColorSwatchProps>;
 
 type ColorSwatchComponent = (<C = 'div'>(props: ColorSwatchProps<C>) => React.ReactElement) & {
   displayName?: string;

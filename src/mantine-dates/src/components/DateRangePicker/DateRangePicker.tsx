@@ -52,7 +52,6 @@ const isFirstDateSet = (val: any) =>
 
 const defaultProps: Partial<DateRangePickerProps> = {
   shadow: 'sm',
-  locale: 'en',
   transitionDuration: 200,
   closeCalendarOnChange: true,
   labelFormat: 'MMMM YYYY',
@@ -104,6 +103,8 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       initialLevel,
       onDropdownClose,
       onDropdownOpen,
+      hideOutsideDates,
+      hideWeekdays,
       ...others
     } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -201,6 +202,8 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
           initialLevel={initialLevel}
+          hideOutsideDates={hideOutsideDates}
+          hideWeekdays={hideWeekdays}
         />
       </DatePickerBase>
     );

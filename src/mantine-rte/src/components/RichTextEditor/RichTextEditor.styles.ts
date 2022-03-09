@@ -50,6 +50,7 @@ export default createStyles(
 
       '& .ql-tooltip': {
         position: 'absolute',
+        zIndex: 1,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
         padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
         border: `1px solid ${

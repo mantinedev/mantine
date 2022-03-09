@@ -1,4 +1,6 @@
-export type MantineColor =
+import { Tuple } from './Tuple';
+
+export type DefaultMantineColor =
   | 'dark'
   | 'gray'
   | 'red'
@@ -8,9 +10,18 @@ export type MantineColor =
   | 'indigo'
   | 'blue'
   | 'cyan'
-  | 'teal'
   | 'green'
   | 'lime'
   | 'yellow'
   | 'orange'
   | (string & {});
+
+export type MantineThemeColorsOverride = Record<string, any>;
+
+export type MantineThemeColors = MantineThemeColorsOverride extends {
+  colors: Record<string, Tuple<string, 10>>;
+}
+  ? MantineThemeColorsOverride['colors']
+  : Record<DefaultMantineColor, Tuple<string, 10>>;
+
+export type MantineColor = keyof MantineThemeColors;

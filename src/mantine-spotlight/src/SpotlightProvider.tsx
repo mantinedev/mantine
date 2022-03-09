@@ -1,43 +1,32 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
-import { Spotlight } from './Spotlight/Spotlight';
+import { Spotlight, InnerSpotlightProps } from './Spotlight/Spotlight';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
-export interface SpotlightProviderProps {
-  actions: SpotlightAction[];
-  children: React.ReactNode;
+export interface SpotlightProviderProps extends InnerSpotlightProps {
+  /** Actions list */
+  actions: SpotlightAction[] | ((query: string) => SpotlightAction[]);
+
+  /** Your application */
+  children?: React.ReactNode;
+
+  /** Called when spotlight opens */
   onSpotlightOpen?(): void;
+
+  /** Called when spotlight closes */
   onSpotlightClose?(): void;
-  shortcut?: string | string[];
-}
 
-export interface SpotlightContextProps {
-  /** Opens spotlight */
-  openSpotlight(): void;
+  /** Called when user enters text in search input */
+  onQueryChange?(query: string): void;
 
-  /** Closes spotlight */
-  closeSpotlight(): void;
+  /** Keyboard shortcut or list of shortcuts to trigger spotlight */
+  shortcut?: string | string[] | null;
 
-  /** Toggles spotlight opened state */
-  toggleSpotlight(): void;
-
-  /** Triggers action with given id */
-  triggerAction(actionId: string): void;
-
-  /** Registers additional actions */
-  registerActions(action: SpotlightAction[]): void;
-
-  /** Removes actions with given ids */
-  removeActions(actionIds: string[]): void;
-
-  /** Current opened state */
-  opened: boolean;
-
-  /** List of registered actions */
-  actions: SpotlightAction[];
+  /** Should search be cleared when spotlight closes */
+  cleanQueryOnClose?: boolean;
 }
 
 export function SpotlightProvider({
@@ -46,16 +35,39 @@ export function SpotlightProvider({
   shortcut = 'mod + K',
   onSpotlightClose,
   onSpotlightOpen,
+  onQueryChange,
+  cleanQueryOnClose = true,
+  transitionDuration = 150,
+  ...others
 }: SpotlightProviderProps) {
-  const [actions, { registerActions, removeActions, triggerAction }] =
-    useActionsState(initialActions);
+  const timeoutRef = useRef<number>(-1);
+  const [query, setQuery] = useState('');
+  const [actions, { registerActions, removeActions, triggerAction }] = useActionsState(
+    initialActions,
+    query
+  );
+
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
+    onQueryChange?.(value);
+  };
 
   const [opened, { open, close, toggle }] = useDisclosure(false, {
-    onClose: onSpotlightClose,
-    onOpen: onSpotlightOpen,
+    onClose: () => {
+      onSpotlightClose?.();
+      if (cleanQueryOnClose) {
+        timeoutRef.current = window.setTimeout(() => {
+          handleQueryChange('');
+        }, transitionDuration);
+      }
+    },
+    onOpen: () => {
+      onSpotlightOpen?.();
+      window.clearTimeout(timeoutRef.current);
+    },
   });
 
-  useSpotlightShortcuts(shortcut, toggle);
+  useSpotlightShortcuts(shortcut, open);
 
   return (
     <SpotlightContext.Provider
@@ -68,9 +80,18 @@ export function SpotlightProvider({
         triggerAction,
         opened,
         actions,
+        query,
       }}
     >
-      <Spotlight actions={actions} onClose={close} opened={opened} />
+      <Spotlight
+        actions={actions}
+        onClose={close}
+        opened={opened}
+        query={query}
+        onQueryChange={handleQueryChange}
+        transitionDuration={transitionDuration}
+        {...others}
+      />
       {children}
     </SpotlightContext.Provider>
   );

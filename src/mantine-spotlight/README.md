@@ -1,8 +1,8 @@
 # Mantine Spotlight
 
-Overlay command center for your application built on top of [Mantine](https://mantine.dev/others/spotlight).
+Overlay command center for your application
 
-[Documentation](https://mantine.dev/others/notifications/)
+[Documentation](https://mantine.dev/)
 
 ## Installation
 

@@ -1,0 +1,22 @@
+{
+  "name": "@mantine/form",
+  "description": "Mantine form management library",
+  "version": "3.6.9",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-hooks"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

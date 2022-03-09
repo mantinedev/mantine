@@ -10,6 +10,9 @@ export interface PortalProps {
   /** Root element z-index property */
   zIndex?: number;
 
+  /** Root element position property */
+  position?: string;
+
   /** Element where portal should be rendered, by default new div element is created and appended to document.body */
   target?: HTMLElement | string;
 
@@ -19,10 +22,11 @@ export interface PortalProps {
 
 const defaultProps: Partial<PortalProps> = {
   zIndex: 1,
+  position: 'relative',
 };
 
 export function Portal(props: PortalProps): ReactPortal {
-  const { children, zIndex, target, className } = useMantineDefaultProps(
+  const { children, zIndex, target, className, position } = useMantineDefaultProps(
     'Portal',
     defaultProps,
     props
@@ -54,7 +58,7 @@ export function Portal(props: PortalProps): ReactPortal {
   }
 
   return createPortal(
-    <div className={className} dir={theme.dir} style={{ position: 'relative', zIndex }}>
+    <div className={className} dir={theme.dir} style={{ position: position as any, zIndex }}>
       {children}
     </div>,
     ref.current

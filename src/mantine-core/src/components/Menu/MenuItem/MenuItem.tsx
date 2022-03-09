@@ -38,9 +38,7 @@ export interface SharedMenuItemProps extends DefaultProps<MenuItemStylesNames> {
   radius?: MantineNumberSize;
 }
 
-export type MenuItemProps<C> = C extends React.ElementType
-  ? PolymorphicComponentProps<C, SharedMenuItemProps>
-  : never;
+export type MenuItemProps<C> = PolymorphicComponentProps<C, SharedMenuItemProps>;
 
 export type MenuItemComponent = <C = 'button'>(props: MenuItemProps<C>) => React.ReactElement;
 

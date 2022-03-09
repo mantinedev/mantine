@@ -526,10 +526,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               rightSectionWidth,
               styles,
               size,
-              shouldClear: !disabled && clearable && _value.length > 0,
+              shouldClear: clearable && _value.length > 0,
               clearButtonLabel,
               onClear: handleClear,
               error,
+              disabled,
             })}
           >
             <div className={classes.values}>

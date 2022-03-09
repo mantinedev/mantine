@@ -95,6 +95,12 @@ export interface DatePickerBaseSharedProps
 
   /** Called when dropdown closes */
   onDropdownClose?(): void;
+
+  /** Events that should trigger outside clicks */
+  clickOutsideEvents?: string[];
+
+  /** Modal z-index */
+  modalZIndex?: number;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -170,6 +176,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       amountOfMonths = 1,
       onDropdownClose,
       onDropdownOpen,
+      clickOutsideEvents = ['mouseup', 'touchstart'],
+      modalZIndex,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -209,10 +217,11 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       }
     };
 
-    useClickOutside(() => dropdownType === 'popover' && !allowFreeInput && closeDropdown(), null, [
-      dropdownElement,
-      rootElement,
-    ]);
+    useClickOutside(
+      () => dropdownType === 'popover' && !allowFreeInput && closeDropdown(),
+      clickOutsideEvents,
+      [dropdownElement, rootElement]
+    );
 
     useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
@@ -334,6 +343,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               onClose={closeDropdown}
               withCloseButton={false}
               size={amountOfMonths * 400}
+              zIndex={modalZIndex}
             >
               {children}
             </Modal>

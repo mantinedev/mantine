@@ -14,12 +14,15 @@ import {
   SliderDemos,
   CheckboxDemos,
   ImageDemos,
+  SpotlightDemos,
+  OverlayDemos,
 } from '@mantine/demos';
 
 ## Breaking changes
 
 - `@mantine/core` package no longer exports `CONTAINER_SIZES` variable
 - [Prism](https://mantine.dev/others/prism/) now trims code by default, to disable that set `<Prism trim={false} />`
+- `useForm` hook exported from `@mantine/hooks` package is now deprecated, it will be removed in one of the next releases.
 
 ## Renamed props
 
@@ -174,6 +177,31 @@ function App() {
 }
 ```
 
+## Padding props
+
+All components now support setting following props to control padding:
+
+- `p` – sets `padding` property on root element
+- `py` – sets `padding-top` and `padding-bottom` properties on root element
+- `px` – sets `padding-right` and `padding-left` properties on root element
+- `pt` – sets `padding-top` property on root element
+- `pb` – sets `padding-bottom` property on root element
+- `pl` – sets `padding-left` property on root element
+- `pr` – sets `padding-right` property on root element
+
+```tsx
+import { Paper, Container } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Paper p={20} />
+      <Container px="xl" />
+    </>
+  );
+}
+```
+
 ## createStyles references changes
 
 [createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
@@ -201,6 +229,14 @@ createStyles((theme, params, getRef) => ({
   },
 }));
 ```
+
+## @mantine/spotlight package
+
+[@mantine/spotlight](https://mantine.dev/others/spotlight/) is a new package that lets you create
+a command center for you application. It can be triggered with keyboard shortcut and programmatically
+from anywhere in you application:
+
+<Demo data={SpotlightDemos.usage} />
 
 ## New hooks
 
@@ -240,6 +276,10 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 
 <Demo data={SliderDemos.changeEnd} />
 
+[Overlay](https://mantine.dev/core/overlay/) component now supports `blur`:
+
+<Demo data={OverlayDemos.blur} />
+
 ## Other changes
 
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
@@ -255,6 +295,7 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 - `onCancel` callback in [@mantine/modals](https://mantine.dev/others/modals/) is now also called when confirm modal is closed without confirmation
 - New [OptionalPortal](https://mantine.dev/core/portal/#optionalportal-component) component can be used to switch between rendering within Portal or as a regular child with `withinPortal` prop
 - [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) can now be used without [Portal](https://mantine.dev/core/portal/)
+- [Title](https://mantine.dev/core/title/) component now inherits color from parent element
 
 ## 3.6.0 – 4.0.0 bug fixes
 

@@ -22,7 +22,7 @@ export default function Layout({ children, location }: LayoutProps) {
 
   useHotkeys([
     ['mod+J', () => toggleColorScheme()],
-    ['mod+L', () => toggleDirection()],
+    ['mod + shift + L', () => toggleDirection()],
   ]);
 
   return (
