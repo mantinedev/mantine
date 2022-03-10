@@ -16,6 +16,7 @@ import {
   ImageDemos,
   SpotlightDemos,
   OverlayDemos,
+  FormDemos,
 } from '@mantine/demos';
 
 ## Breaking changes
@@ -231,6 +232,17 @@ createStyles((theme, params, getRef) => ({
 }));
 ```
 
+## @mantine/form package
+
+New [@mantine/form package](https://mantine.dev/form/use-form/) is an enhanced version of `useForm` hook that was previously exported from
+`@mantine/hooks` package. `@mantine/form` introduces the following features:
+
+- Improved fields validation logic
+- Schema based validation with zod, yup or joi
+- Array fields support
+
+<Demo data={FormDemos.usage} />
+
 ## @mantine/spotlight package
 
 [@mantine/spotlight](https://mantine.dev/others/spotlight/) is a new package that lets you create
@@ -238,10 +250,6 @@ a command center for you application. It can be triggered with keyboard shortcut
 from anywhere in you application:
 
 <Demo data={SpotlightDemos.usage} />
-
-## New hooks
-
-- [use-disclosure](https://mantine.dev/hooks/use-disclosure/)
 
 ## New components
 
@@ -283,6 +291,7 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 
 ## Other changes
 
+- New [use-disclosure](https://mantine.dev/hooks/use-disclosure/) hook
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
 - [Input](https://mantine.dev/core/input/) component now handles `required` prop differently to support native browser validation
 - [RichTextEditor](https://mantine.dev/others/rte/) now supports providing extra quill modules via `modules` prop
