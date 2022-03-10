@@ -2,7 +2,11 @@ import React from 'react';
 import { ColorInput } from '@mantine/core';
 
 const code = `
-<ColorInput disallowInput />
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return <ColorInput disallowInput />;
+}
 `;
 
 function Demo() {

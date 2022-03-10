@@ -17,9 +17,6 @@ import { ModalDemos } from '@mantine/demos';
 
 ## Usage
 
-Modal is wrapped in [Portal](/core/portal/) component,
-it can be rendered only on client as createPortal is not available during server side rendering:
-
 <Demo data={ModalDemos.usage} />
 
 ## Remove title and close button
@@ -85,6 +82,15 @@ To specify initial focus element add `data-autofocus` attribute:
   <input />
 </Modal>
 ```
+
+## Control behavior
+
+The following props can be used to control Modal behavior.
+In most cases you should not turn these features off as it will make your modal less accessible.
+
+- `trapFocus` – defines whether focus should be trapped inside modal
+- `closeOnEscape` – defines whether modal should be closed when user presses `Escape` key
+- `closeOnClickOutside` – defines whether modal should be closed when user clicks outside of modal body
 
 ## Accessibility and usability
 

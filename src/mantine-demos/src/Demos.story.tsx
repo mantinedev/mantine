@@ -9,6 +9,7 @@ attachDemos(storiesOf('@mantine/core/Affix/demos', module), demos.AffixDemos);
 attachDemos(storiesOf('@mantine/core/Alert/demos', module), demos.AlertDemos);
 attachDemos(storiesOf('@mantine/core/Anchor/demos', module), demos.AnchorDemos);
 attachDemos(storiesOf('@mantine/core/AppShell/demos', module), demos.AppShellDemos);
+attachDemos(storiesOf('@mantine/core/AspectRatio/demos', module), demos.AspectRatioDemos);
 attachDemos(storiesOf('@mantine/core/Autocomplete/demos', module), demos.AutocompleteDemos);
 attachDemos(storiesOf('@mantine/core/Avatar/demos', module), demos.AvatarDemos);
 attachDemos(storiesOf('@mantine/core/Badge/demos', module), demos.BadgeDemos);
@@ -28,6 +29,7 @@ attachDemos(storiesOf('@mantine/core/ColorPicker/demos', module), demos.ColorPic
 attachDemos(storiesOf('@mantine/core/ColorSwatch/demos', module), demos.ColorSwatchDemos);
 attachDemos(storiesOf('@mantine/core/Container/demos', module), demos.ContainerDemos);
 attachDemos(storiesOf('@mantine/core/Dialog/demos', module), demos.DialogDemos);
+attachDemos(storiesOf('@mantine/core/Divider/demos', module), demos.DividerDemos);
 attachDemos(storiesOf('@mantine/core/Drawer/demos', module), demos.DrawerDemos);
 attachDemos(storiesOf('@mantine/core/Grid/demos', module), demos.GridDemos);
 attachDemos(storiesOf('@mantine/core/Group/demos', module), demos.GroupDemos);
@@ -47,6 +49,7 @@ attachDemos(storiesOf('@mantine/core/Modal/demos', module), demos.ModalDemos);
 attachDemos(storiesOf('@mantine/core/MultiSelect/demos', module), demos.MultiSelectDemos);
 attachDemos(storiesOf('@mantine/core/NativeSelect/demos', module), demos.NativeSelectDemos);
 attachDemos(storiesOf('@mantine/core/Notification/demos', module), demos.NotificationDemos);
+attachDemos(storiesOf('@mantine/core/NumberInput/demos', module), demos.NumberInputDemos);
 attachDemos(storiesOf('@mantine/core/Overlay/demos', module), demos.OverlayDemos);
 attachDemos(storiesOf('@mantine/core/Pagination/demos', module), demos.PaginationDemos);
 attachDemos(storiesOf('@mantine/core/Paper/demos', module), demos.PaperDemos);
@@ -95,3 +98,10 @@ attachDemos(storiesOf('@mantine/dropzone/Dropzone/demos', module), demos.Dropzon
 attachDemos(storiesOf('@mantine/notifications/demos', module), demos.NotificationsDemos);
 attachDemos(storiesOf('@mantine/prism/demos', module), demos.PrismDemos);
 attachDemos(storiesOf('@mantine/rte/demos', module), demos.RichTextEditorDemos);
+attachDemos(storiesOf('@mantine/styles/demos', module), demos.CreateStylesDemos);
+attachDemos(storiesOf('@mantine/theme/demos', module), demos.ThemeDemos);
+attachDemos(storiesOf('@mantine/spotlight/demos', module), demos.SpotlightDemos);
+attachDemos(storiesOf('@mantine/form/demos', module), demos.FormDemos);
+
+// @mantine/labs
+attachDemos(storiesOf('@mantine/labs/PinInput/demos', module), demos.PinInputDemos);

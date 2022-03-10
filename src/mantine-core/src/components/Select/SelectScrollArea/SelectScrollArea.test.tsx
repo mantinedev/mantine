@@ -13,6 +13,6 @@ describe('@mantine/core/SelectScrollArea', () => {
   itSupportsRef(SelectScrollArea, {}, HTMLDivElement);
 
   it('has correct displayName', () => {
-    expect(SelectScrollArea.displayName).toEqual('@mantine/core/SelectScrollArea');
+    expect(SelectScrollArea.displayName).toStrictEqual('@mantine/core/SelectScrollArea');
   });
 });

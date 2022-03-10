@@ -14,6 +14,6 @@ describe('@mantine/rte/Toolbar', () => {
   itSupportsOthers(Toolbar, defaultProps);
 
   it('has correct displayName', () => {
-    expect(Toolbar.displayName).toEqual('@mantine/rte/Toolbar');
+    expect(Toolbar.displayName).toStrictEqual('@mantine/rte/Toolbar');
   });
 });

@@ -10,14 +10,14 @@ describe('@mantine/tss/merge-class-names', () => {
   it('merges classNames correctly', () => {
     expect(
       mergeClassNames(cx, classes, { root: 'root-test', title: 'title-test' }, 'alert')
-    ).toEqual({
+    ).toStrictEqual({
       root: 'root-1 root-test mantine-alert-root',
       title: 'title-1 title-test mantine-alert-title',
     });
   });
 
   it('merges classNames partial correctly', () => {
-    expect(mergeClassNames(cx, classes, { root: 'root-test' }, 'alert')).toEqual({
+    expect(mergeClassNames(cx, classes, { root: 'root-test' }, 'alert')).toStrictEqual({
       root: 'root-1 root-test mantine-alert-root',
       title: 'title-1 mantine-alert-title',
     });

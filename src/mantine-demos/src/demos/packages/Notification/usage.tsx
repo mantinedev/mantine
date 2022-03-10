@@ -1,28 +1,37 @@
 import React from 'react';
-import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
+import { Check, X } from 'tabler-icons-react';
 import { Notification } from '@mantine/core';
 import { demoBase } from './_demo-base';
 
 const code = `
-<Notification title="Default notification">
-  This is default notification with title and body
-</Notification>
+import { Notification } from '@mantine/core';
+import { Check, X } from 'tabler-icons-react';
 
-<Notification icon={<CheckIcon />} color="teal" title="Teal notification">
-  This is teal notification with icon
-</Notification>
+function Demo() {
+  return (
+    <>
+      <Notification title="Default notification">
+        This is default notification with title and body
+      </Notification>
 
-<Notification icon={<Cross1Icon />} color="red">
-  Bummer! Notification without title
-</Notification>
+      <Notification icon={<Check size={18} />} color="teal" title="Teal notification">
+        This is teal notification with icon
+      </Notification>
 
-<Notification
-  loading
-  title="Uploading data to the server"
-  disallowClose
->
-  Please wait until data is uploaded, you cannot close this notification yet
-</Notification>
+      <Notification icon={<X size={18} />} color="red">
+        Bummer! Notification without title
+      </Notification>
+
+      <Notification
+        loading
+        title="Uploading data to the server"
+        disallowClose
+      >
+        Please wait until data is uploaded, you cannot close this notification yet
+      </Notification>
+    </>
+  );
+}
 `;
 
 function Demo() {
@@ -34,7 +43,7 @@ function Demo() {
 
       <Notification
         style={{ marginTop: 15 }}
-        icon={<CheckIcon />}
+        icon={<Check size={18} />}
         color="teal"
         title="Teal notification"
         onClose={() => {}}
@@ -42,7 +51,7 @@ function Demo() {
         This is teal notification with icon
       </Notification>
 
-      <Notification style={{ marginTop: 15 }} icon={<Cross1Icon />} color="red" onClose={() => {}}>
+      <Notification style={{ marginTop: 15 }} icon={<X size={18} />} color="red" onClose={() => {}}>
         Bummer! Notification without title
       </Notification>
 

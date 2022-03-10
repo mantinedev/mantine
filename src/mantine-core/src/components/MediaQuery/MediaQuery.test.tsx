@@ -11,6 +11,6 @@ describe('@mantine/core/MediaQuery', () => {
   itSupportsClassName(MediaQuery, defaultProps);
 
   it('has correct displayName', () => {
-    expect(MediaQuery.displayName).toEqual('@mantine/core/MediaQuery');
+    expect(MediaQuery.displayName).toStrictEqual('@mantine/core/MediaQuery');
   });
 });

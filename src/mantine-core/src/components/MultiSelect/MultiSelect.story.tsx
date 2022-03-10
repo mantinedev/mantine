@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '@mantine/styles';
+import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Group } from '../Group/Group';
 import { TextInput } from '../TextInput/TextInput';
@@ -289,4 +289,9 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         searchable
       />
     </SubmitForm>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ MultiSelect: { radius: 0, label: 'Default label' } }}>
+      <MultiSelect data={data} placeholder="Select items" />
+    </MantineProvider>
   ));

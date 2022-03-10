@@ -32,8 +32,9 @@ docs/.docgen/
 
 # project
 docs/.cache
-gallery/.cache
 docs/public
-gallery/out
 storybook-static
 .next
+docs/src/components/Test.tsx
+____*.internal.ts
+____*.internal.tsx

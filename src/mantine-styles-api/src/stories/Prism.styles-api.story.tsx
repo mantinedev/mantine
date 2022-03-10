@@ -19,7 +19,7 @@ const useStyles = createStyles(() => styles);
 function Wrapper(props: Partial<PrismProps>) {
   return (
     <Prism language="tsx" withLineNumbers {...props}>
-      {demoCode.trim()}
+      {demoCode}
     </Prism>
   );
 }

@@ -17,7 +17,7 @@ import { LoaderDemos } from '@mantine/demos';
 
 ## Usage
 
-By default loader will be rendered with `theme.primaryColor`.
+By default, loader will be rendered with `theme.primaryColor`.
 You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors):
 
 <Demo data={LoaderDemos.configurator} />
@@ -28,10 +28,15 @@ You can configure default loader in [MantineProvider](/theming/mantine-provider/
 it will be used in Loader and [LoadingOverlay](/core/loading-overlay/) components by default:
 
 ```tsx
-// Loader component will render bars
-<MantineProvider theme={{ loader: 'bars' }}>
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ loader: 'bars' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 ## Size

@@ -58,6 +58,6 @@ describe('@mantine/dates/MonthsList', () => {
   });
 
   it('has correct displayName', () => {
-    expect(MonthsList.displayName).toEqual('@mantine/dates/MonthsList');
+    expect(MonthsList.displayName).toStrictEqual('@mantine/dates/MonthsList');
   });
 });

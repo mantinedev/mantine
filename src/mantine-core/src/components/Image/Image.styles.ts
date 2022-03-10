@@ -1,10 +1,10 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface ImageStyles {
+export interface ImageStylesParams {
   radius: MantineNumberSize;
 }
 
-export default createStyles((theme, { radius }: ImageStyles) => ({
+export default createStyles((theme, { radius }: ImageStylesParams) => ({
   root: {},
 
   imageWrapper: {

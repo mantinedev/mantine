@@ -4,7 +4,12 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
-<MultiSelect icon={<Hash />} />
+import { MultiSelect } from '@mantine/core';
+import { Hash } from 'tabler-icons-react';
+
+function Demo() {
+  return <MultiSelect icon={<Hash />} />;
+}
 `;
 
 function Demo() {

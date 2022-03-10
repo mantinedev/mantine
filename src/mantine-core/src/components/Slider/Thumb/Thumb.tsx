@@ -61,8 +61,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;
 
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <Box
+      <Box<'div'>
         tabIndex={0}
         role="slider"
         aria-label={thumbLabel}

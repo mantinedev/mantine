@@ -18,6 +18,7 @@ describe('@mantine/core/Timeline', () => {
   itSupportsSystemProps({
     component: Timeline,
     props: defaultProps,
+    excludePadding: true,
     displayName: '@mantine/core/Timeline',
     refType: HTMLDivElement,
   });

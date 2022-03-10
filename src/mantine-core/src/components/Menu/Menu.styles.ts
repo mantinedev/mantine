@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface MenuStyles {
+export interface MenuStylesParams {
   size: MantineNumberSize | 'auto';
 }
 
@@ -14,7 +14,7 @@ export const sizes = {
 
 const MENU_PADDING = 4;
 
-export default createStyles((theme, { size }: MenuStyles) => ({
+export default createStyles((theme, { size }: MenuStylesParams) => ({
   root: {
     display: 'inline-block',
     position: 'relative',

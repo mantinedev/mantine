@@ -26,7 +26,7 @@ describe('@mantine/core/Select/filter-data', () => {
         searchable: true,
         searchValue: 'Rea',
       })
-    ).toEqual([{ value: 'react', label: 'React', name: 'React' }]);
+    ).toStrictEqual([{ value: 'react', label: 'React', name: 'React' }]);
   });
 
   it('limits data during search based on limit prop', () => {

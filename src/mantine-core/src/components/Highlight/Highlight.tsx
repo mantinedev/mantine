@@ -5,6 +5,7 @@ import {
   PolymorphicRef,
   MantineTheme,
   CSSObject,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Text, SharedTextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
@@ -30,18 +31,14 @@ type HighlightComponent = (<C = 'div'>(props: HighlightProps<C>) => React.ReactE
   displayName?: string;
 };
 
+const defaultProps: Partial<HighlightProps<any>> = {
+  highlightColor: 'yellow',
+};
+
 export const Highlight: HighlightComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      children,
-      highlight,
-      highlightColor = 'yellow',
-      component,
-      highlightStyles,
-      ...others
-    }: HighlightProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'div'>(props: HighlightProps<C>, ref: PolymorphicRef<C>) => {
+    const { children, highlight, highlightColor, component, highlightStyles, ...others } =
+      useMantineDefaultProps('Highlight', defaultProps, props);
     const highlightChunks = highlighter(children, highlight);
 
     return (

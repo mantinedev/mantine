@@ -36,7 +36,9 @@ function Demo() {
   return (
     <div>
       {/* Based on this button popper will be positioned */}
-      <button ref={referenceElement}>Reference element</button>
+      <button ref={setReferenceElement} type="button">
+        Reference element
+      </button>
       {/*
        * Popper is rendered inside Portal, it will be added
        * outside of current rendering context – before closing body tag

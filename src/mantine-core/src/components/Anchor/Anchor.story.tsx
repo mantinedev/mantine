@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { Anchor } from './Anchor';
 
 storiesOf('@mantine/core/Anchor/stories', module)
@@ -20,4 +21,9 @@ storiesOf('@mantine/core/Anchor/stories', module)
         Text props
       </Anchor>
     </div>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Anchor: { weight: 900 } }}>
+      <Anchor>Some link</Anchor>
+    </MantineProvider>
   ));

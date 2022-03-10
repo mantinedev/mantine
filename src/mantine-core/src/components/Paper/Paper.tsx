@@ -5,14 +5,12 @@ import {
   MantineShadow,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Paper.styles';
 
 export interface SharedPaperProps extends DefaultProps {
-  /** Predefined padding value from theme.spacing or number for padding in px */
-  padding?: MantineNumberSize;
-
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: MantineShadow;
 
@@ -21,6 +19,9 @@ export interface SharedPaperProps extends DefaultProps {
 
   /** Adds 1px border with theme.colors.gray[2] color in light color scheme and theme.colors.dark[6] in dark color scheme */
   withBorder?: boolean;
+
+  /** Paper children */
+  children?: React.ReactNode;
 }
 
 export type PaperProps<C> = PolymorphicComponentProps<C, SharedPaperProps>;
@@ -29,21 +30,13 @@ type PaperComponent = (<C = 'div'>(props: PaperProps<C>) => React.ReactElement) 
   displayName?: string;
 };
 
+const defaultProps: Partial<PaperProps<any>> = {};
+
 export const Paper: PaperComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      component,
-      className,
-      children,
-      padding = 0,
-      radius = 'sm',
-      withBorder = false,
-      shadow,
-      ...others
-    }: PaperProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const { classes, cx } = useStyles({ radius, shadow, padding, withBorder }, { name: 'Paper' });
+  <C extends React.ElementType = 'div'>(props: PaperProps<C>, ref: PolymorphicRef<C>) => {
+    const { component, className, children, radius, withBorder, shadow, ...others } =
+      useMantineDefaultProps('Paper', defaultProps, props);
+    const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
 
     return (
       <Box<any>

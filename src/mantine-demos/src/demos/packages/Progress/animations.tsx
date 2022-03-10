@@ -1,7 +1,13 @@
 import React from 'react';
 import { Progress } from '@mantine/core';
 
-const code = '<Progress value={75} animate />';
+const code = `
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  return <Progress value={75} animate />;
+}
+`;
 
 function Label() {
   return <Progress value={75} animate />;

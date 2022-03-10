@@ -13,7 +13,7 @@ storiesOf('@mantine/core/AppShell/stories/Navbar', module)
     </Navbar>
   ))
   .add('Grow section with scrollbars', () => (
-    <Navbar padding="md" width={{ base: 300 }}>
+    <Navbar p="md" width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>
       <Navbar.Section grow component={ScrollArea}>
         {Array(20)

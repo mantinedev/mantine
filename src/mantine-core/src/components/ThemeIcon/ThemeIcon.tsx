@@ -1,5 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, MantineGradient, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineGradient,
+  MantineColor,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
 
@@ -23,20 +29,17 @@ export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithou
   gradient?: MantineGradient;
 }
 
+const defaultProps: Partial<ThemeIconProps> = {
+  size: 'md',
+  variant: 'filled',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
+};
+
 export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
-  (
-    {
-      className,
-      size = 'md',
-      radius = 'sm',
-      variant = 'filled',
-      color,
-      children,
-      gradient = { from: 'blue', to: 'cyan', deg: 45 },
-      ...others
-    }: ThemeIconProps,
-    ref
-  ) => {
+  (props: ThemeIconProps, ref) => {
+    const { className, size, radius, variant, color, children, gradient, ...others } =
+      useMantineDefaultProps('ThemeIcon', defaultProps, props);
+
     const { classes, cx } = useStyles(
       {
         variant,

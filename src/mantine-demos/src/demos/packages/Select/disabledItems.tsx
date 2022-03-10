@@ -2,16 +2,22 @@ import React from 'react';
 import { Select } from '@mantine/core';
 
 const code = `
-<Select
-  label="Select with disabled items"
-  placeholder="Select something"
-  data={[
-    { value: 'react', label: 'React', disabled: true },
-    { value: 'ng', label: 'Angular', disabled: true },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue' },
-  ]}
-/>
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      label="Select with disabled items"
+      placeholder="Select something"
+      data={[
+        { value: 'react', label: 'React', disabled: true },
+        { value: 'ng', label: 'Angular', disabled: true },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'vue', label: 'Vue' },
+      ]}
+    />
+  );
+}
 `;
 
 export function Demo() {

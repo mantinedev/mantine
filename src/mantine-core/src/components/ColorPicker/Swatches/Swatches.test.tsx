@@ -26,6 +26,6 @@ describe('@mantine/core/Swatches', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Swatches.displayName).toEqual('@mantine/core/Swatches');
+    expect(Swatches.displayName).toStrictEqual('@mantine/core/Swatches');
   });
 });

@@ -2,20 +2,16 @@ import React from 'react';
 import { Select } from '@mantine/core';
 
 const code = `
-<Select
-  label="Your favorite framework/library"
-  placeholder="Pick one"
-  clearable
-  data={data}
-/>
+import { Select } from '@mantine/core';
 
-<Select
-  label="Your favorite framework/library"
-  placeholder="Pick one"
-  searchable
-  clearable
-  data={data}
-/>
+function Demo() {
+  return (
+    <>
+      <Select clearable />
+      <Select searchable clearable />
+    </>
+  );
+}
 `;
 
 function Demo() {

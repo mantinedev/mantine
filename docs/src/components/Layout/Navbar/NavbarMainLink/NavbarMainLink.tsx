@@ -30,7 +30,7 @@ export default function NavbarMainLink({
       to={to}
       onClick={onClick}
     >
-      <ThemeIcon size={30} style={{ backgroundColor: color, color: theme.white }} radius="lg">
+      <ThemeIcon size={30} sx={{ backgroundColor: color, color: theme.white }} radius="lg">
         {icon}
       </ThemeIcon>
       <div className={classes.body}>{children}</div>

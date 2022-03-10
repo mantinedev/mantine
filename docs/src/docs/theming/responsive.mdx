@@ -3,21 +3,16 @@ group: 'theming'
 title: Responsive styles
 slug: /theming/responsive/
 order: 3
+search: 'Media queries, breakpoints, inline responsive styles'
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
-import {
-  GridDemos,
-  SimpleGridDemos,
-  AppShellDemos,
-  MediaQueryDemos,
-  CreateStylesDemos,
-} from '@mantine/demos';
+import { MediaQueryDemos, CreateStylesDemos } from '@mantine/demos';
 
 # Responsive styles
 
 `@mantine/core` package exports several components that can help you organize responsive styles without writing CSS.
-Note that in most cases that are not covered in this guide, the best approach to make your app responsive is to
+Note that in most cases that are not covered in this guide, the best way to make your app responsive is to
 add styles with [createStyles](/theming/create-styles/) function.
 
 ## Configure breakpoints
@@ -28,7 +23,7 @@ You can configure these values with [MantineProvider](/theming/mantine-provider/
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function YourApp() {
+function App() {
   return (
     <MantineProvider
       theme={{
@@ -41,13 +36,13 @@ function YourApp() {
         },
       }}
     >
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
 ```
 
-Default `theme.breakpoints` values are the same as in Bootstrap:
+Default `theme.breakpoints` values:
 
 <DataTable
   head={['Breakpoint', 'Viewport width']}
@@ -56,78 +51,6 @@ Default `theme.breakpoints` values are the same as in Bootstrap:
     `${DEFAULT_THEME.breakpoints[size]}px`,
   ])}
 />
-
-## Layout components
-
-Most of layout components support responsive features. This section includes basic responsive features,
-visit components documentation to learn more.
-
-[Grid](/core/grid/) component allows you to set columns span based on `theme.breakpoints`.
-Grid is based on flexbox and can be used in older browsers (IE11+):
-
-<Demo data={GridDemos.responsive} />
-
-[SimpleGrid](/core/simple-grid/) component allows you to create a layout with given amount of columns with equal width.
-SimpleGrid is based on CSS grid and can have issue in older browsers (IE11+):
-
-<Demo data={SimpleGridDemos.breakpoints} />
-
-[AppShell](/core/app-shell/) component can be used to create a common layout pattern: `Header – Navbar – Content`:
-
-<Demo data={AppShellDemos.usage} />
-
-AppShell includes several responsive features with which you can build collapsible Navbar without any additional styles ([demo](/app-shell-demo/)):
-
-```tsx
-import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
-
-  return (
-    <AppShell
-      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-      navbarOffsetBreakpoint="sm"
-      // fixed prop on AppShell will be automatically added to Header and Navbar
-      fixed
-      navbar={
-        <Navbar
-          padding="md"
-          // Breakpoint at which navbar will be hidden if hidden prop is true
-          hiddenBreakpoint="sm"
-          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
-          hidden={!opened}
-          width={{ base: 400, breakpoints: { sm: '100%', lg: 300 } }}
-        >
-          <Text>Application navbar</Text>
-        </Navbar>
-      }
-      header={
-        <Header height={70} padding="md">
-          {/* You can handle other responsive styles with MediaQuery component or createStyles function */}
-          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
-
-            <Text>Application header</Text>
-          </div>
-        </Header>
-      }
-    >
-      <Text>Resize app to see responsive navbar in action</Text>
-    </AppShell>
-  );
-}
-```
 
 ## Media queries in createStyles
 
@@ -179,16 +102,22 @@ function Demo() {
 All Mantine components support `sx` prop with which you can add styles (including responsive styles) to root component element:
 
 ```tsx
-<TextInput
-  sx={(theme) => ({
-    background: theme.colors.gray[0],
-    padding: theme.spacing.md,
+import { TextInput } from '@mantine/core';
 
-    '@media (max-width: 755px)': {
-      padding: theme.spacing.sm,
-    },
-  })}
-/>
+function Demo() {
+  return (
+    <TextInput
+      sx={(theme) => ({
+        background: theme.colors.gray[0],
+        padding: theme.spacing.md,
+
+        '@media (max-width: 755px)': {
+          padding: theme.spacing.sm,
+        },
+      })}
+    />
+  );
+}
 ```
 
 If you want to add styles with `sx` prop to non-Mantine component, you can wrap it in [Box](/core/box/):

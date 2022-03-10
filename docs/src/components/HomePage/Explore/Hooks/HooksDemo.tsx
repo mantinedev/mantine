@@ -36,7 +36,7 @@ function Demo() {
   const label = scrollLocked ? 'Unlock scroll' : 'Lock scroll';
   return <Button onClick={() => setScrollLocked((c) => !c)}>{label}</Button>;
 }
-`.trim();
+`;
 
 const clickOutsideCode = `
 import { useState } from 'react';
@@ -53,7 +53,7 @@ function Demo() {
     </>
   );
 }
-`.trim();
+`;
 
 export function HooksDemo() {
   const { classes } = useStyles();
@@ -70,7 +70,8 @@ export function HooksDemo() {
         onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
         leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
-        style={{ marginTop: 10, marginBottom: 15 }}
+        mt="xs"
+        mb="md"
       >
         {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
@@ -94,8 +95,8 @@ export function HooksDemo() {
           <Paper
             ref={ref}
             shadow="md"
-            padding="xl"
-            style={{
+            p="xl"
+            sx={{
               position: 'absolute',
               top: -15,
               left: -15,
@@ -106,7 +107,7 @@ export function HooksDemo() {
               color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
             }}
           >
-            <Center style={{ height: '100%' }}>Click outside to close</Center>
+            <Center sx={{ height: '100%' }}>Click outside to close</Center>
           </Paper>
         )}
       </div>

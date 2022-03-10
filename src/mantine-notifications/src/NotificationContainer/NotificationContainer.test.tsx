@@ -12,7 +12,7 @@ describe('@mantine/notifications/NotificationContainer', () => {
   itSupportsClassName(NotificationContainer, defaultProps);
 
   it('has correct displayName', () => {
-    expect(NotificationContainer.displayName).toEqual(
+    expect(NotificationContainer.displayName).toStrictEqual(
       '@mantine/notifications/NotificationContainer'
     );
   });

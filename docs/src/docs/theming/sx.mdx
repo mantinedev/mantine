@@ -3,6 +3,7 @@ group: 'theming'
 title: sx prop
 slug: /theming/sx/
 order: 1
+search: 'Inline styles with emotion'
 ---
 
 # sx prop
@@ -12,33 +13,41 @@ If you need to customize other elements within component use [Styles API](/themi
 
 ## sx object
 
-With `sx` prop you can add inline styles to any component the same way you would do it as with [createStyles](/theming/create-styles/)
+With `sx` prop, you can add inline styles to any component the same way you would do it as with [createStyles](/theming/create-styles/)
 function. Styles added with `sx` will be parsed by [emotion](https://emotion.sh) and added to page head or specified target container in [MantineProvider](/theming/mantine-provider/).
 
 ```tsx
 import { Text } from '@mantine/core';
 
 function Demo() {
-  return <Text sx={{ color: 'red', fontSize: 18, lineHeight: 1.4 }}>My custom text</Text>;
+  return (
+    <Text sx={{ color: '#00ECE5', fontSize: 18, lineHeight: 1.4 }}>Text with custom styles</Text>
+  );
 }
 ```
 
 You can use pseudo-classes, media queries and all other nested selectors with `sx`:
 
 ```tsx
-<Text
-  sx={{
-    '&:hover': {
-      backgroundColor: '#eee',
-    },
+import { Text } from '@mantine/core';
 
-    '@media (max-width: 755px)': {
-      fontSize: 14,
-    },
-  }}
->
-  My custom text
-</Text>
+function Demo() {
+  return (
+    <Text
+      sx={{
+        '&:hover': {
+          backgroundColor: '#eee',
+        },
+
+        '@media (max-width: 755px)': {
+          fontSize: 14,
+        },
+      }}
+    >
+      My custom text
+    </Text>
+  );
+}
 ```
 
 ## Subscribe to theme
@@ -46,19 +55,25 @@ You can use pseudo-classes, media queries and all other nested selectors with `s
 Use a function instead of an object to subscribe to Mantine theme:
 
 ```tsx
-<Text
-  sx={(theme) => ({
-    // subscribe to color scheme changes
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
+import { Text } from '@mantine/core';
 
-    // or use any other static values from theme
-    color: theme.colors.gray[1],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
-  })}
->
-  My custom text
-</Text>
+function Demo() {
+  return (
+    <Text
+      sx={(theme) => ({
+        // subscribe to color scheme changes
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.blue[0],
+
+        // or use any other static values from theme
+        color: theme.colors.gray[1],
+        fontSize: theme.fontSizes.sm,
+        fontWeight: 500,
+      })}
+    >
+      My custom text
+    </Text>
+  );
+}
 ```
 
 ## Box component
@@ -91,7 +106,7 @@ function BoxWithElement() {
 }
 
 // Box with custom component
-function BoxWithElement() {
+function BoxWithComponent() {
   return (
     <Box
       component={Link}
@@ -116,7 +131,10 @@ function BoxWithElement() {
 To create sharable styles you can store them in a variable:
 
 ```tsx
-const styles = {
+import { Text, Box, CSSObject } from '@mantine/core';
+
+// styles object is compatible with every Mantine component
+const styles: CSSObject = {
   border: '1px solid #eee',
   color: '#999',
 
@@ -125,17 +143,22 @@ const styles = {
   },
 };
 
-// styles object is compatible with every Mantine component
-<Text sx={styles} />;
-<Box sx={styles} />;
+function Demo() {
+  return (
+    <>
+      <Text sx={styles} />
+      <Box sx={styles} />
+    </>
+  );
+}
 ```
 
 To store function styles in a variable you will need to use `MantineTheme` type in case you are using TypeScript:
 
 ```tsx
-import { MantineTheme } from '@mantine/core';
+import { Text, Box, CSSObject, MantineTheme } from '@mantine/core';
 
-const styles = (theme: MantineTheme) => ({
+const styles = (theme: MantineTheme): CSSObject => ({
   border: `1px solid ${theme.colors.gray[3]}`,
   color: theme.colors.gray[7],
 
@@ -144,6 +167,12 @@ const styles = (theme: MantineTheme) => ({
   },
 });
 
-<Text sx={styles} />;
-<Box sx={styles} />;
+function Demo() {
+  return (
+    <>
+      <Text sx={styles} />
+      <Box sx={styles} />
+    </>
+  );
+}
 ```

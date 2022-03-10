@@ -3,6 +3,7 @@ group: 'theming'
 title: RTL Support
 slug: /theming/rtl/
 order: 6
+search: 'Add RTL direction support with stylis-plugin-rtl'
 ---
 
 # RTL Support
@@ -12,10 +13,17 @@ Mantine is built with [emotion](https://emotion.sh) which supports RTL languages
 Install `stylis-plugin-rtl`:
 
 ```bash
+# Install with yarn
 yarn add stylis stylis-plugin-rtl
 
 # or with npm
 npm install stylis stylis-plugin-rtl
+```
+
+Add `dir="rtl"` to `html` element:
+
+```tsx
+<html dir="rtl">...</html>
 ```
 
 Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
@@ -24,29 +32,25 @@ Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
 import { MantineProvider } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
-function Demo() {
+function App() {
   return (
     <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
 ```
 
-You can apply rtl plugin based on locale. Note that you will have to manage popovers positions in some
-components ([Menu](/core/menu/), [Popover](/core/popover/), etc.) on your side as `position` and `placement`
-props are not flipped based on text direction.
-
 ## Dynamic direction changes
 
-To make rtl dynamic, change cache key when cache changes:
+To make rtl dynamic, change cache key when cache changes (**!important** cache key cannot be the same):
 
 ```tsx
 import { useState } from 'react';
 import { MantineProvider, Button } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
-function Demo() {
+function App() {
   const [rtl, setRtl] = useState(false);
   return (
     <MantineProvider
@@ -60,7 +64,8 @@ function Demo() {
       }
     >
       <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
-      <App />
+
+      <YourApp />
     </MantineProvider>
   );
 }

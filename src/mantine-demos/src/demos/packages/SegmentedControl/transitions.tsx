@@ -3,14 +3,23 @@ import { Text } from '@mantine/core';
 import { SegmentedControlWrapper } from './Wrapper';
 
 const code = `
-// No transitions
-<SegmentedControl transitionDuration={0} />
+import { SegmentedControl } from '@mantine/core';
 
-// 500ms linear transition
-<SegmentedControl
-  transitionDuration={500}
-  transitionTimingFunction="linear"
-/>
+function Demo() {
+  return (
+    <>
+      {/* No transitions */}
+      <SegmentedControl transitionDuration={0} />
+
+      {/* 500ms linear transition */}
+      <SegmentedControl
+        transitionDuration={500}
+        transitionTimingFunction="linear"
+      />
+    </>
+  );
+}
+
 `;
 
 function Demo() {

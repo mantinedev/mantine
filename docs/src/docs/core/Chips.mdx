@@ -35,14 +35,14 @@ Since Chips component supports both single and multiple state you will need to a
 
 ```tsx
 import { useState } from 'react';
-import { Chips } from '@mantine/core';
+import { Chips, Chip } from '@mantine/core';
 
-function Demo() {
+function Single() {
   // string value when multiple is false (default)
   const [value, setValue] = useState('react');
 
   return (
-    <Chips value={value} onChange={setValue}>
+    <Chips multiple={false} value={value} onChange={setValue}>
       <Chip value="react">React</Chip>
       <Chip value="ng">Angular</Chip>
       <Chip value="svelte">Svelte</Chip>
@@ -51,7 +51,7 @@ function Demo() {
   );
 }
 
-function Demo() {
+function Multiple() {
   // array of strings value when multiple is true
   const [value, setValue] = useState(['react']);
 

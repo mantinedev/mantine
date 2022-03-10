@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
+import { MantineProvider } from '@mantine/styles';
 import { Autocomplete } from './Autocomplete';
 
 function DynamicData() {
@@ -70,4 +71,14 @@ storiesOf('@mantine/core/Autocomplete/stories', module)
         data={['React', 'Angular', 'Svelte', 'Vue']}
       />
     </SubmitForm>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Autocomplete: { placeholder: 'Default placeholder' } }}>
+      <Autocomplete label="Default props" data={['React', 'Angular', 'Svelte', 'Vue']} />
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <Autocomplete label="Default radius" data={['React', 'Angular', 'Svelte', 'Vue']} />
+    </MantineProvider>
   ));

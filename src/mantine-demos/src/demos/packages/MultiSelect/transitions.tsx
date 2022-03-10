@@ -3,11 +3,18 @@ import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
-<MultiSelect
-  transitionDuration={150}
-  transition="pop-top-left"
-  transitionTimingFunction="ease"
-/>
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={[]}
+      transitionDuration={150}
+      transition="pop-top-left"
+      transitionTimingFunction="ease"
+    />
+  );
+}
 `;
 
 function Demo() {

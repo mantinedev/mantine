@@ -1,14 +1,22 @@
 import { PasswordInput } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<PasswordInput
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { PasswordInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <PasswordInput
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: PasswordInput,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Password' },
     {

@@ -2,7 +2,7 @@
 title: Learn the basics
 ---
 
-import { PaperDemos, SliderDemos, CreateStylesDemos } from '@mantine/demos';
+import { SliderDemos, CreateStylesDemos } from '@mantine/demos';
 
 # Learn the basics
 
@@ -19,10 +19,10 @@ Mantine has a very friendly community, we are always happy to help you get start
 
 ## Using documentation
 
-Mantine documentation includes more than 150 pages so to use it efficiently remember 2 keyboard shortcuts:
+Mantine documentation includes more than 150 pages, to use it efficiently remember 2 keyboard shortcuts:
 
 - `⌘ + K` or `Ctrl + K` – focus search field, searching components and hooks is the best way to jump straight to the page you are looking for.
-- `⌘ + J` or `Ctrl + J` – toggle color scheme (light/dark). All components support both color schemes and using this shortcut is the easiest way to preview both color schemes.
+- `⌘ + J` or `Ctrl + J` – toggle color scheme (light/dark). All components support both light and dark color schemes, using this shortcut is the easiest way to preview both color schemes.
 
 ## Mantine packages
 
@@ -41,12 +41,12 @@ Mantine documentation includes more than 150 pages so to use it efficiently reme
 ## Theming
 
 Mantine theming supports changing colors, spacing, box-shadows, font families, font sizes and many other properties.
-To configure the theme wrap your app with a [MantineProvider](/theming/mantine-provider/) component:
+To configure theme, wrap your app with a [MantineProvider](/theming/mantine-provider/) component:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-export function Demo() {
+function App() {
   return (
     <MantineProvider
       theme={{
@@ -55,7 +55,7 @@ export function Demo() {
         spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
       }}
     >
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
@@ -71,10 +71,10 @@ You can edit the details of each color scheme via [MantineProvider](/theming/man
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-export function Demo() {
+function App() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <App />
+      <YourApp />
     </MantineProvider>
   );
 }
@@ -108,7 +108,7 @@ All Mantine components support these props:
 
 - `className` – adds class to root element.
 - `style` – adds style to root element.
-- Margins:
+- Margin props:
   - `m` – sets `margin` property on root element.
   - `my` – sets `margin-top` and `margin-bottom` properties on root element.
   - `mx` – sets `margin-right` and `margin-left` properties on root element.
@@ -116,6 +116,14 @@ All Mantine components support these props:
   - `mb` – sets `margin-bottom` property on root element.
   - `ml` – sets `margin-left` property on root element.
   - `mr` – sets `margin-right` property on root element.
+- Padding props:
+  - `p` – sets `padding` property on root element
+  - `py` – sets `padding-top` and `padding-bottom` properties on root element
+  - `px` – sets `padding-right` and `padding-left` properties on root element
+  - `pt` – sets `padding-top` property on root element
+  - `pb` – sets `padding-bottom` property on root element
+  - `pl` – sets `padding-left` property on root element
+  - `pr` – sets `padding-right` property on root element
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -127,6 +135,21 @@ function Demo() {
     </Button>
   );
 }
+```
+
+Margin props can get value from `theme.spacing`:
+
+```tsx
+<Button mt="xl" /> // -> margin-top: theme.spacing.xl
+<Button ml="-md" /> // -> margin-left: theme.spacing.md * -1
+<Button m={20} /> // -> margin: 20px
+```
+
+Same is applied to padding props:
+
+```tsx
+<Paper p="xl" /> // -> padding: theme.spacing.xl
+<Container px={30} /> // -> padding-left: 30px, padding-right: 30px
 ```
 
 ### Color prop
@@ -142,19 +165,25 @@ Mantine components work with colors defined in [theme.colors](/theming/extend-th
 You can [extend theme](/theming/extend-theme/) with any amount of your colors:
 
 ```tsx
-// Theme is deeply merged with default theme
-<MantineProvider
-  theme={{
-    colors: {
-      // Add your color
-      'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-      // or replace default theme color
-      blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-    },
-  }}
->
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        // Theme is deeply merged with default theme
+        colors: {
+          // Add your color
+          'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* 7 other shades */],
+          // or replace default theme color
+          blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* 7 other shades */],
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 Note that component appearance usually depends on `variant` prop and current `theme.colorScheme`.
@@ -188,17 +217,20 @@ default values are:
 To change these values set `spacing` property on [theme](/theming/extend-theme/):
 
 ```tsx
-<MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
-Later when you use Mantine components you can reference these values in `spacing` or `padding` props or set the spacing in px:
+Later when you use Mantine components you can reference these values in `spacing` or other similar props or set the spacing in px:
 
 ```tsx
-<Paper padding="xl" /> // -> xl padding from theme.spacing
-<Paper padding={30} /> // -> 30px padding
-
 <Group spacing="md" /> // -> md spacing from theme.spacing
 <Group spacing={40} /> // 40px spacing
 ```
@@ -221,19 +253,25 @@ default values are:
 To change these values set the `shadows` property on [theme](/theming/extend-theme/):
 
 ```tsx
-<MantineProvider
-  theme={{
-    shadows: {
-      xs: '1px 1px 1px rgba(0, 0, 0, 0.3)',
-      sm: '1px 1px 4px rgba(0, 0, 0, 0.4)',
-      md: '3px 3px 4px rgba(0, 0, 0, 0.4)',
-      lg: '3px 3px 4px 5px rgba(0, 0, 0, 0.4)',
-      xl: '3px 3px 4px 15px rgba(0, 0, 0, 0.4)',
-    },
-  }}
->
-  <YourApp />
-</MantineProvider>
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        shadows: {
+          xs: '1px 1px 1px rgba(0, 0, 0, 0.3)',
+          sm: '1px 1px 4px rgba(0, 0, 0, 0.4)',
+          md: '3px 3px 4px rgba(0, 0, 0, 0.4)',
+          lg: '3px 3px 4px 5px rgba(0, 0, 0, 0.4)',
+          xl: '3px 3px 4px 15px rgba(0, 0, 0, 0.4)',
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
 ```
 
 Later when you use Mantine components you can reference these values in `shadow` prop or define your own shadow:
@@ -243,26 +281,30 @@ Later when you use Mantine components you can reference these values in `shadow`
 <Paper shadow="1px 3px 4px rgba(0, 0, 0, 0.4)" /> // -> your own shadow not related to theme.shadows
 ```
 
-### Default spacing and shadow demo
-
-<Demo data={PaperDemos.configurator} />
-
 ## Polymorphic components
 
 Some Mantine components support changing root element with `component` prop,
 you can pass html element or React component to the prop:
 
 ```tsx
-// with html element
-<Text component="a" href="https://mantine.dev">
-  My link text
-</Text>;
-
-// with custom component
+import { Text, Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
-<Text component={Link} to="/hello">
-  My link text
-</Text>;
+
+function Demo() {
+  return (
+    <>
+      {/* with html element */}
+      <Text component="a" href="https://mantine.dev">
+        My link text
+      </Text>
+
+      {/* with react-router-dom Link */}
+      <Button component={Link} to="/hello">
+        My link text
+      </Button>
+    </>
+  );
+}
 ```
 
 To use Mantine components with Next.js Link:
@@ -271,23 +313,38 @@ To use Mantine components with Next.js Link:
 - wrap it with Link
 
 ```tsx
+import { Button } from '@mantine/core';
 import Link from 'next/link';
 
-<Link href="/hello">
-  <Button component="a">Next link button</Button>
-</Link>;
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
 ```
 
 If you use polymorphic with TypeScript you will also need to set type for full types coverage,
 otherwise you will have untyped event handlers and ref props:
 
 ```tsx
-// with html component
-<Button<'a'> component="a" />;
-
-// with custom component
+import { Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
-<Button<typeof Link> component="a" />;
+
+function Demo() {
+  return (
+    <>
+      <Button<'a'> component="a" href="#">
+        Anchor button
+      </Button>
+
+      <Button<typeof Link> component={Link} to="/hello">
+        React router button
+      </Button>
+    </>
+  );
+}
 ```
 
 ## Getting element ref
@@ -299,9 +356,9 @@ import { useRef } from 'react';
 import { Button, Paper, TextInput } from '@mantine/core';
 
 function Demo() {
-  const buttonRef = useRef(); // HTMLButtonElement
-  const paperRef = useRef(); // -> HTMLDivElement
-  const inputRef = useRef(); // -> HTMLInputElement
+  const buttonRef = useRef<HTMLButtonElement>();
+  const paperRef = useRef<HTMLDivElement>();
+  const inputRef = useRef<HTMLInputElement>();
 
   return (
     <>
@@ -350,11 +407,12 @@ custom components with ref forwarding:
 
 ```tsx
 import { forwardRef } from 'react';
-import type { PolymorphicRef, PolymorphicComponentProps } from '@mantine/core';
+import { PolymorphicRef, PolymorphicComponentProps } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 // Define all component specific props here
 interface _TextProps {
-  bold: boolean;
+  bold?: boolean;
 }
 
 type TextProps<C extends React.ElementType> = PolymorphicComponentProps<C, _TextProps>;
@@ -369,17 +427,26 @@ const Text: TextComponent = forwardRef(
     ref: PolymorphicRef<C>
   ) => {
     const Element = component || 'div';
-    return <Element style={{ fontWeight: bold ? 700 : 400 }} {...others} />
+    return <Element style={{ fontWeight: bold ? 700 : 400 }} ref={ref} {...others} />;
   }
 );
 
-// Default div text, props will have type React.ComponentPropsWithoutRef<'div'> & _TextProps
-<Text bold>Bold text</Text>
+function Demo() {
+  return (
+    <>
+      {/* Default div text, props will have type React.ComponentPropsWithoutRef<'div'> & _TextProps */}
+      <Text bold>Bold text</Text>
 
-// Text as an anchor, props will have type React.ComponentPropsWithoutRef<'a'> & _TextProps
-<Text component="a" href="https://mantine.dev">Mantine website</Text>
+      {/* Text as an anchor, props will have type React.ComponentPropsWithoutRef<'a'> & _TextProps */}
+      <Text<'a'> component="a" href="https://mantine.dev">
+        Mantine website
+      </Text>
 
-// Text as component, props will have type React.ComponentPropsWithoutRef<typeof Link> & _TextProps
-import { Link } from 'react-router-dom';
-<Text component={Link} to="/route">Router link</Text>
+      {/* Text as component, props will have type React.ComponentPropsWithoutRef<typeof Link> & _TextProps */}
+      <Text<typeof Link> component={Link} to="/route">
+        Router link
+      </Text>
+    </>
+  );
+}
 ```

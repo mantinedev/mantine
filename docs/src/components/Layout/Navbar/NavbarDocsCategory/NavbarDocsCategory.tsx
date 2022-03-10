@@ -13,34 +13,35 @@ interface NavbarDocsCategoryProps {
   onLinkClick(): void;
 }
 
+function hasActiveLink(group: ReturnType<typeof getDocsData>[number], pathname: string) {
+  if (group.uncategorized.some((link) => link.slug === pathname)) {
+    return true;
+  }
+
+  if (group.groups.some((_group) => _group.pages.some((link) => link.slug === pathname))) {
+    return true;
+  }
+
+  return false;
+}
+
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
   const { classes, cx } = useStyles();
-  const [collapsed, setCollapsed] = useState(group.group === 'changelog');
-  const itemRefs = useRef<{ [slug: string]: HTMLElement }>({});
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const [collapsed, setCollapsed] = useState(!hasActiveLink(group, pathname));
+  const itemRefs = useRef<Record<string, HTMLElement>>({});
   const { height } = useViewportSize();
 
-  // Scrolls the active Navbar item into view if necessary
   useEffect(() => {
-    // Current location is in this category
-    if (location.pathname in itemRefs.current) {
-      // Expand category if needed. Can't scroll into view until expanded
-      if (collapsed) {
-        setCollapsed(false);
-        return;
-      }
+    if (hasActiveLink(group, pathname) && itemRefs.current[pathname]) {
+      const element = itemRefs.current[pathname];
+      const { top, bottom } = element.getBoundingClientRect();
 
-      const elem = itemRefs.current[location.pathname];
-      const { top, bottom } = elem.getBoundingClientRect();
-
-      // Only scroll into view if any part of the existing item is out of view
       if (top < HEADER_HEIGHT || bottom > height) {
-        elem.scrollIntoView({
-          block: 'center',
-        });
+        element.scrollIntoView({ block: 'center' });
       }
     }
-  }, [location.pathname, height, collapsed]);
+  }, [pathname, height]);
 
   const uncategorized = (
     group.group === 'changelog' ? [...group.uncategorized].reverse() : group.uncategorized
@@ -96,7 +97,7 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
       <button className={classes.header} type="button" onClick={() => setCollapsed((c) => !c)}>
         <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
         <Text className={classes.title} weight={700} size="xs" transform="uppercase">
-          {group.group}
+          {group.group.replace('-', ' ')}
         </Text>
       </button>
       {!collapsed && uncategorized}

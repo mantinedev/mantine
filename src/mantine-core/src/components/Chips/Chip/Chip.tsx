@@ -6,7 +6,8 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
 import { CheckboxIcon } from '../../Checkbox';
@@ -54,84 +55,88 @@ export interface ChipProps
   wrapperProps?: { [key: string]: any };
 }
 
-export const Chip = forwardRef<HTMLInputElement, ChipProps>(
-  (
-    {
-      radius = 'xl',
-      type = 'checkbox',
-      size = 'sm',
-      variant,
-      disabled = false,
-      __staticSelector = 'Chip',
-      id,
-      color,
-      children,
-      className,
-      classNames,
-      style,
-      styles,
-      checked,
-      defaultChecked,
-      onChange,
-      sx,
-      wrapperProps,
-      ...others
-    }: ChipProps,
-    ref
-  ) => {
-    const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
-    const { classes, cx, theme } = useStyles(
-      { radius, size, color },
-      { classNames, styles, name: __staticSelector }
-    );
+const defaultProps: Partial<ChipProps> = {
+  type: 'checkbox',
+  size: 'sm',
+  radius: 'xl',
+  __staticSelector: 'Chip',
+};
 
-    const [value, setValue] = useUncontrolled({
-      value: checked,
-      defaultValue: defaultChecked,
-      finalValue: false,
-      onChange,
-      rule: (val) => typeof val === 'boolean',
-    });
+export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, ref) => {
+  const {
+    radius,
+    type,
+    size,
+    variant,
+    disabled,
+    __staticSelector,
+    id,
+    color,
+    children,
+    className,
+    classNames,
+    style,
+    styles,
+    checked,
+    defaultChecked,
+    onChange,
+    sx,
+    wrapperProps,
+    ...others
+  } = useMantineDefaultProps('Chip', defaultProps, props);
 
-    const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
+  const uuid = useUuid(id);
+  const { systemStyles, rest } = extractSystemStyles(others);
+  const { classes, cx, theme } = useStyles(
+    { radius, size, color },
+    { classNames, styles, name: __staticSelector }
+  );
 
-    return (
-      <Box
-        className={cx(classes.root, className)}
-        style={style}
-        sx={sx}
-        {...margins}
-        {...wrapperProps}
+  const [value, setValue] = useUncontrolled({
+    value: checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+    onChange,
+    rule: (val) => typeof val === 'boolean',
+  });
+
+  const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
+
+  return (
+    <Box
+      className={cx(classes.root, className)}
+      style={style}
+      sx={sx}
+      {...systemStyles}
+      {...wrapperProps}
+    >
+      <input
+        type={type}
+        className={classes.input}
+        checked={value}
+        onChange={(event) => setValue(event.currentTarget.checked)}
+        id={uuid}
+        disabled={disabled}
+        ref={ref}
+        {...rest}
+      />
+      <label
+        htmlFor={uuid}
+        className={cx(
+          classes.label,
+          { [classes.checked]: value, [classes.disabled]: disabled },
+          classes[variant || defaultVariant]
+        )}
       >
-        <input
-          type={type}
-          className={classes.input}
-          checked={value}
-          onChange={(event) => setValue(event.currentTarget.checked)}
-          id={uuid}
-          disabled={disabled}
-          ref={ref}
-          {...rest}
-        />
-        <label
-          htmlFor={uuid}
-          className={cx(
-            classes.label,
-            { [classes.checked]: value, [classes.disabled]: disabled },
-            classes[variant || defaultVariant]
-          )}
-        >
-          {value && (
-            <span className={classes.iconWrapper}>
-              <CheckboxIcon indeterminate={false} className={classes.checkIcon} />
-            </span>
-          )}
-          {children}
-        </label>
-      </Box>
-    );
-  }
-);
+        {value && (
+          <span className={classes.iconWrapper}>
+            <CheckboxIcon indeterminate={false} className={classes.checkIcon} />
+          </span>
+        )}
+        {children}
+      </label>
+    </Box>
+  );
+});
 
 Chip.displayName = '@mantine/core/Chip';

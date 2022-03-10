@@ -1,7 +1,12 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, extractMargins } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  extractSystemStyles,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import { Input, InputBaseProps, InputProps } from '../Input/Input';
@@ -34,10 +39,16 @@ export interface TextareaProps
   __staticSelector?: string;
 }
 
+const defaultProps: Partial<TextareaProps> = {
+  autosize: false,
+  size: 'sm',
+  __staticSelector: 'Textarea',
+};
+
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    {
-      autosize = false,
+  (props: TextareaProps, ref) => {
+    const {
+      autosize,
       maxRows,
       minRows,
       label,
@@ -50,16 +61,15 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       wrapperProps,
       classNames,
       styles,
-      size = 'sm',
-      __staticSelector = 'Textarea',
+      size,
+      __staticSelector,
       sx,
       ...others
-    }: TextareaProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Textarea', defaultProps, props);
+
     const uuid = useUuid(id);
     const { classes, cx } = useStyles();
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const sharedProps: InputProps<'textarea'> = {
       required,
       ref,
@@ -87,7 +97,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         {autosize ? (

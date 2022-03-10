@@ -1,59 +1,60 @@
 import { BaseDemo } from './_base';
 
 const code = `
-import { Group, Text, useMantineTheme } from '@mantine/core';
-import { ImageIcon, UploadIcon, CrossCircledIcon } from '@modulz/radix-icons';
+import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
+import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
-function ImageUploadIcon({ status, ...props }) {
+function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
+  return status.accepted
+    ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]
+    : status.rejected
+    ? theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]
+    : theme.colorScheme === 'dark'
+    ? theme.colors.dark[0]
+    : theme.colors.gray[7];
+}
+
+function ImageUploadIcon({
+  status,
+  ...props
+}: React.ComponentProps<TablerIcon> & { status: DropzoneStatus }) {
   if (status.accepted) {
-    return <UploadIcon {...props} />;
+    return <Upload {...props} />;
   }
 
   if (status.rejected) {
-    return <CrossCircledIcon {...props} />;
+    return <X {...props} />;
   }
 
-  return <ImageIcon {...props} />;
+  return <Photo {...props} />;
 }
 
-function getIconColor(status, theme) {
-  return status.accepted
-    ? theme.colors[theme.primaryColor][6]
-    : status.rejected
-    ? theme.colors.red[6]
-    : theme.colorScheme === 'dark'
-    ? theme.colors.dark[0]
-    : theme.black;
-}
+export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (
+  <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+    <ImageUploadIcon status={status} style={{ color: getIconColor(status, theme) }} size={80} />
+
+    <div>
+      <Text size="xl" inline>
+        Drag images here or click to select files
+      </Text>
+      <Text size="sm" color="dimmed" inline mt={7}>
+        Attach as many files as you like, each file should not exceed 5mb
+      </Text>
+    </div>
+  </Group>
+);
 
 function Demo() {
   const theme = useMantineTheme();
-
   return (
-    // See results in console after dropping files to Dropzone
     <Dropzone
       onDrop={(files) => console.log('accepted files', files)}
       onReject={(files) => console.log('rejected files', files)}
       maxSize={3 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
     >
-      {(status) => (
-        <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
-          <ImageUploadIcon
-            status={status}
-            style={{ width: 80, height: 80, color: getIconColor(status, theme) }}
-          />
-
-          <div>
-            <Text size="xl" inline>
-              Drag images here or click to select files
-            </Text>
-            <Text size="sm" color="dimmed" inline mt={7}>
-              Attach as many files as you like, each file should not exceed 5mb
-            </Text>
-          </div>
-        </Group>
-      )}
+      {(status) => dropzoneChildren(status, theme)}
     </Dropzone>
   );
 }

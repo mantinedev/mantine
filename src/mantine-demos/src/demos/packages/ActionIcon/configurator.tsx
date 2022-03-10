@@ -1,5 +1,5 @@
 import React from 'react';
-import { GearIcon } from '@modulz/radix-icons';
+import { Adjustments } from 'tabler-icons-react';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
 const iconSizes = {
@@ -14,15 +14,24 @@ function Wrapper(props: ActionIconProps<'button'>) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
-        <GearIcon style={{ width: iconSizes[props.size], height: iconSizes[props.size] }} />
+        <Adjustments size={iconSizes[props.size]} />
       </ActionIcon>
     </Group>
   );
 }
 
-const codeTemplate = (props: string) => `<ActionIcon${props}>
-  <GearIcon />
-</ActionIcon>`;
+const codeTemplate = (props: string) => `
+import { ActionIcon } from '@mantine/core';
+import { Adjustments } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <ActionIcon${props}>
+      <Adjustments />
+    </ActionIcon>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

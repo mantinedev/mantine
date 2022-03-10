@@ -3,7 +3,11 @@ import { Container } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-<TimeInput label="What time is it now?" withSeconds />
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  return <TimeInput label="What time is it now?" withSeconds defaultValue={new Date()} />;
+}
 `;
 
 function Demo() {

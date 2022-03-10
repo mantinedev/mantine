@@ -1,6 +1,12 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  ClassNames,
+  extractSystemStyles,
+  getDefaultZIndex,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { ColorSwatch } from '../ColorSwatch';
@@ -68,16 +74,29 @@ const ARROW_OFFSET = {
   xl: 25,
 };
 
+const defaultProps: Partial<ColorInputProps> = {
+  size: 'sm',
+  format: 'hex',
+  fixOnBlur: true,
+  withPreview: true,
+  swatchesPerRow: 10,
+  withPicker: true,
+  transition: 'pop-top-left',
+  dropdownZIndex: getDefaultZIndex('popover'),
+  transitionDuration: 0,
+  withinPortal: true,
+};
+
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
-  (
-    {
+  (props: ColorInputProps, ref) => {
+    const {
       label,
       description,
       error,
       required,
       wrapperProps,
-      size = 'sm',
-      format = 'hex',
+      size,
+      format,
       onChange,
       onFocus,
       onBlur,
@@ -85,31 +104,30 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       defaultValue,
       classNames,
       styles,
-      disallowInput = false,
-      fixOnBlur = true,
-      withPreview = true,
-      swatchesPerRow = 10,
-      withPicker = true,
+      disallowInput,
+      fixOnBlur,
+      withPreview,
+      swatchesPerRow,
+      withPicker,
       icon,
-      transition = 'pop-top-left',
+      transition,
       id,
-      dropdownZIndex = getDefaultZIndex('popover'),
-      transitionDuration = 0,
+      dropdownZIndex,
+      transitionDuration,
       transitionTimingFunction,
-      withinPortal = true,
+      withinPortal,
       className,
       style,
       swatches,
       sx,
       ...others
-    }: ColorInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('ColorInput', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { disallowInput },
       { classNames, styles, name: 'ColorInput' }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useUuid(id);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const [dropdownOpened, setDropdownOpened] = useState(false);
@@ -159,7 +177,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         style={style}
         __staticSelector="ColorInput"
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div ref={setReferenceElement}>
@@ -209,7 +227,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           <div style={{ pointerEvents: 'all' }}>
             <Paper<'div'>
               shadow="sm"
-              padding={size}
+              p={size}
               className={classes.dropdownBody}
               onMouseDown={(event) => event.preventDefault()}
             >

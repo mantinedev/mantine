@@ -111,8 +111,8 @@ To remove all default styles set `variant` prop to `unstyled`:
 import { useRef } from 'react';
 import { Tabs } from '@mantine/core';
 
-function TabsDemo() {
-  const secondTabRef = useRef();
+function Demo() {
+  const secondTabRef = useRef<HTMLButtonElement>();
 
   return (
     <Tabs>

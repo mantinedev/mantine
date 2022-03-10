@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -111,6 +112,14 @@ storiesOf('@mantine/core/Accordion/stories', module)
         SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere
       </Accordion.Item>
     </Accordion>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Accordion: { icon: '$' } }}>
+      <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
+        <Accordion.Item label="First tab">First tab content</Accordion.Item>
+        <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
+      </Accordion>
+    </MantineProvider>
   ))
   .add('Nested', () => (
     <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>

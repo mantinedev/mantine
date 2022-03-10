@@ -95,8 +95,13 @@ By default, DatePicker will try to parse date using dayjs with given `inputForma
 to change that provide `dateParser` function:
 
 ```tsx
-const dateParser = (dateString) => new Date(Date.parse(dateString));
-<DatePicker allowFreeInput dateParser={dateParser} />;
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker allowFreeInput dateParser={(dateString) => new Date(Date.parse(dateString))} />
+  );
+}
 ```
 
 `dateParser` function should always return Date object.
@@ -204,7 +209,7 @@ import { useRef } from 'react';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>();
   return <DatePicker ref={ref} />;
 }
 ```

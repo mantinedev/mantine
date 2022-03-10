@@ -61,6 +61,6 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('has correct displayName', () => {
-    expect(YearPicker.displayName).toEqual('@mantine/dates/YearPicker');
+    expect(YearPicker.displayName).toStrictEqual('@mantine/dates/YearPicker');
   });
 });

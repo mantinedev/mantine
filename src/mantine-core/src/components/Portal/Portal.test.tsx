@@ -60,6 +60,6 @@ describe('@mantine/core/Portal', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Portal.displayName).toEqual('@mantine/core/Portal');
+    expect(Portal.displayName).toStrictEqual('@mantine/core/Portal');
   });
 });

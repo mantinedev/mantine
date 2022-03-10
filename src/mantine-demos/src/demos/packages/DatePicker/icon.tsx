@@ -1,19 +1,26 @@
 import React from 'react';
-import { CalendarIcon } from '@modulz/radix-icons';
+import { Calendar } from 'tabler-icons-react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker
-  placeholder="Pick date"
-  label="Event date"
-  icon={<CalendarIcon />}
-/>
+import { DatePicker } from '@mantine/dates';
+import { Calendar } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <DatePicker
+      placeholder="Pick date"
+      label="Event date"
+      icon={<Calendar size={16} />}
+    />
+  );
+}
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" icon={<CalendarIcon />} />
+      <DatePicker placeholder="Pick date" label="Event date" icon={<Calendar size={16} />} />
     </div>
   );
 }

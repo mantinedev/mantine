@@ -1,28 +1,26 @@
 import React from 'react';
 import { NativeSelect } from '@mantine/core';
 
-const data = [
-  { value: 'react', label: 'React' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-];
+const codeTemplate = (props: string) => `
+import { NativeSelect } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<NativeSelect
-  data={[
-    { value: 'react', label: 'React' },
-    { value: 'vue', label: 'Vue' },
-    { value: 'ng', label: 'Angular' },
-    { value: 'svelte', label: 'Svelte' },
-  ]}
- ${props}
-/>`;
+function Demo() {
+  return (
+    <NativeSelect
+      data={['React', 'Vue', 'Angular', 'Svelte']}
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: any) => <NativeSelect {...props} data={data} />,
+  component: (props: any) => (
+    <NativeSelect {...props} data={['React', 'Vue', 'Angular', 'Svelte']} />
+  ),
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Pick one' },
     {

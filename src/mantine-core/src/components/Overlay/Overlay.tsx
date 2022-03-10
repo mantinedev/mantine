@@ -5,6 +5,8 @@ import {
   MantineNumberSize,
   DefaultProps,
   getDefaultZIndex,
+  useMantineDefaultProps,
+  CSSObject,
 } from '@mantine/styles';
 import { Box } from '../Box';
 
@@ -14,6 +16,9 @@ interface _OverlayProps extends DefaultProps {
 
   /** Overlay background-color */
   color?: React.CSSProperties['backgroundColor'];
+
+  /** Overlay background blur in px */
+  blur?: number;
 
   /** Use gradient instead of background-color */
   gradient?: string;
@@ -31,43 +36,64 @@ type OverlayComponent = (<C = 'div'>(props: OverlayProps<C>) => React.ReactEleme
   displayName?: string;
 };
 
+const defaultProps: Partial<OverlayProps<any>> = {
+  opacity: 0.6,
+  color: '#fff',
+  zIndex: getDefaultZIndex('modal'),
+  radius: 0,
+  blur: 0,
+};
+
 export const Overlay: OverlayComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      opacity = 0.6,
-      color = '#fff',
-      gradient,
-      zIndex = getDefaultZIndex('modal'),
-      component,
-      radius = 0,
-      sx,
-      ...others
-    }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'div'>(props: OverlayProps<C>, ref: PolymorphicRef<C>) => {
+    const { opacity, blur, color, gradient, zIndex, component, radius, sx, ...others } =
+      useMantineDefaultProps('Overlay', defaultProps, props);
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
-    return (
+    const baseStyles: CSSObject = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex,
+    };
+
+    const innerOverlay = (otherProps?: Record<string, any>) => (
       <Box<any>
         component={component || 'div'}
         ref={ref}
         sx={[
           (theme) => ({
             ...background,
+            ...baseStyles,
             opacity,
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
             borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-            zIndex,
           }),
           sx,
         ]}
-        {...others}
+        {...otherProps}
       />
     );
+
+    if (blur) {
+      return (
+        <Box
+          sx={[
+            () => ({
+              ...baseStyles,
+              backdropFilter: `blur(${blur}px)`,
+            }),
+            sx,
+          ]}
+          {...others}
+        >
+          {innerOverlay()}
+        </Box>
+      );
+    }
+
+    return innerOverlay(others);
   }
 );
 

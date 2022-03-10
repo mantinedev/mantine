@@ -18,9 +18,9 @@ function Wrapper(
       width={140}
       styles={{ body: { textAlign: 'center', pointerEvents: 'none' } }}
       spacing="xs"
-      noFocusTrap
-      noClickOutside
-      noEscape
+      trapFocus={false}
+      closeOnClickOutside={false}
+      closeOnEscape={false}
       target={
         <Badge
           color="blue"

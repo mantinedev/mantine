@@ -22,7 +22,7 @@ describe('@mantine/core/List', () => {
   });
 
   it('changes root element based on type prop', () => {
-    const { container: ordered } = render(<List {...defaultProps} type="order" />);
+    const { container: ordered } = render(<List {...defaultProps} type="ordered" />);
     const { container: unordered } = render(<List {...defaultProps} type="unordered" />);
 
     expect(ordered.querySelector('ol')).toBeInTheDocument();

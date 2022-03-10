@@ -17,7 +17,7 @@ import { HooksDemos } from '@mantine/demos';
 
 Hook implements common state pattern – it switches state between two given values:
 
-<Demo data={HooksDemos.useToggleHook} />
+<Demo data={HooksDemos.useToggleDemo} />
 
 ## API
 
@@ -38,23 +38,11 @@ toggle(); // -> value == 'dark'
 toggle('dark'); // -> value == 'dark'
 ```
 
-## use-boolean-toggle
-
-use-boolean-toggle is a wrapper around use-toggle that works with boolean values:
-
-```tsx
-import { useBooleanToggle, useToggle } from '@mantine/hooks';
-
-const [value, toggle] = useBooleanToggle(false);
-// same as
-const [value, toggle] = useToggle(false, [true, false]);
-```
-
 ## TypeScript
 
 ### Set type
 
-By default TypeScript will guess your type, but in most cases it's better to set type manually:
+By default, TypeScript will guess your type, but in most cases it's better to set type manually:
 
 ```tsx
 const [value, toggle] = useToggle('dark', ['light', 'dark']); // value is string

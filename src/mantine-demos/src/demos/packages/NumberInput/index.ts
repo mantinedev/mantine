@@ -8,3 +8,4 @@ export { icon } from './icon';
 export { decimal } from './decimal';
 export { decimalSeparator } from './decimalSeparator';
 export { hold } from './hold';
+export { formatter } from './formatter';

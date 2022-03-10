@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import useStyles, { HeaderPosition } from './Header.styles';
 
@@ -9,9 +9,6 @@ export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRe
 
   /** Header height */
   height: number | string;
-
-  /** Header padding from theme.spacing or number to set padding in px */
-  padding?: MantineNumberSize;
 
   /** Changes position to fixed, controlled by AppShell component if rendered inside */
   fixed?: boolean;
@@ -23,33 +20,26 @@ export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRe
   zIndex?: number;
 }
 
-export const Header = forwardRef<HTMLElement, HeaderProps>(
-  (
-    {
-      children,
-      className,
-      classNames,
-      styles,
-      height,
-      padding = 0,
-      fixed = false,
-      position = { top: 0, left: 0, right: 0 },
-      zIndex = getDefaultZIndex('app'),
-      ...others
-    }: HeaderProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { height, padding, fixed, position, zIndex },
-      { name: 'Header', classNames, styles }
-    );
+const defaultProps: Partial<HeaderProps> = {
+  fixed: false,
+  position: { top: 0, left: 0, right: 0 },
+  zIndex: getDefaultZIndex('app'),
+};
 
-    return (
-      <Box component="nav" className={cx(classes.root, className)} ref={ref} {...others}>
-        {children}
-      </Box>
-    );
-  }
-);
+export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, ref) => {
+  const { children, className, classNames, styles, height, fixed, position, zIndex, ...others } =
+    useMantineDefaultProps('Header', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    { height, fixed, position, zIndex },
+    { name: 'Header', classNames, styles }
+  );
+
+  return (
+    <Box component="nav" className={cx(classes.root, className)} ref={ref} {...others}>
+      {children}
+    </Box>
+  );
+});
 
 Header.displayName = '@mantine/core/Header';

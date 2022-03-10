@@ -1,10 +1,10 @@
 import { createStyles } from '@mantine/core';
 
-interface MonthStyles {
+export interface MonthStylesParams {
   fullWidth: boolean;
 }
 
-export default createStyles((theme, { fullWidth }: MonthStyles) => ({
+export default createStyles((theme, { fullWidth }: MonthStylesParams) => ({
   weekday: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[5],
   },

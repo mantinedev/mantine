@@ -19,7 +19,7 @@ function Demo() {
     </>
   );
 }
-`.trim();
+`;
 
 export function OverlaysDemos() {
   const [modalOpened, setModalOpened] = useState(false);
@@ -27,7 +27,7 @@ export function OverlaysDemos() {
   const PopoverDemo = PopoverDemos.form.component;
 
   return (
-    <Paper shadow="md" radius="md" padding={30}>
+    <Paper shadow="md" radius="md" p={30}>
       <Modal title="Register" opened={modalOpened} onClose={() => setModalOpened(false)}>
         <AuthenticationForm noShadow noPadding />
       </Modal>
@@ -37,15 +37,11 @@ export function OverlaysDemos() {
         onClose={() => setDrawerOpened(false)}
         padding="xl"
         size={440}
-        hideCloseButton
+        withCloseButton={false}
       >
         <Group position="apart">
           <Text size="lg">Register</Text>
-          <CloseButton
-            style={{ marginRight: -1 }}
-            iconSize={18}
-            onClick={() => setDrawerOpened(false)}
-          />
+          <CloseButton mr={-1} iconSize={18} onClick={() => setDrawerOpened(false)} />
         </Group>
         <Divider my="md" />
         <AuthenticationForm noShadow noPadding />
@@ -53,7 +49,7 @@ export function OverlaysDemos() {
 
       <Group align="flex-start" spacing={30}>
         <div>
-          <Text size="lg" style={{ marginBottom: 15 }}>
+          <Text size="lg" mb="md">
             Modal and Drawer
           </Text>
 
@@ -67,7 +63,7 @@ export function OverlaysDemos() {
           </Group>
         </div>
         <div>
-          <Text size="lg" style={{ marginBottom: 15 }}>
+          <Text size="lg" mb="md">
             Popover
           </Text>
           <div style={{ display: 'inline-block', position: 'relative', zIndex: 1 }}>
@@ -76,7 +72,7 @@ export function OverlaysDemos() {
         </div>
       </Group>
 
-      <Text size="lg" style={{ marginTop: 30, marginBottom: 10 }}>
+      <Text size="lg" mt="xl" mb="xs">
         Clean and easy API
       </Text>
 

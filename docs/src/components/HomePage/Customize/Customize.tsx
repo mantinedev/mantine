@@ -21,7 +21,8 @@ const code = `
     thumb: { height: 16, width: 16, backgroundColor: theme.white, borderWidth: 1, boxShadow: theme.shadows.sm },
   })}
 />
-`.trim();
+`;
+
 const marks = [
   { value: 20, label: '20%' },
   { value: 50, label: '50%' },

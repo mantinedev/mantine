@@ -4,6 +4,7 @@ import {
   MantineNumberSize,
   PolymorphicComponentProps,
   PolymorphicRef,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './ColorSwatch.styles';
@@ -17,6 +18,9 @@ interface _ColorSwatchProps extends DefaultProps {
 
   /** Swatch border-radius predefined from theme or number for px value */
   radius?: MantineNumberSize;
+
+  /** ColorSwatch children */
+  children?: React.ReactNode;
 }
 
 export type ColorSwatchProps<C> = PolymorphicComponentProps<C, _ColorSwatchProps>;
@@ -25,21 +29,16 @@ type ColorSwatchComponent = (<C = 'div'>(props: ColorSwatchProps<C>) => React.Re
   displayName?: string;
 };
 
+const defaultProps: Partial<ColorSwatchProps<any>> = {
+  size: 25,
+  radius: 25,
+};
+
 export const ColorSwatch: ColorSwatchComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      component,
-      color,
-      size = 25,
-      radius = 25,
-      className,
-      children,
-      classNames,
-      styles,
-      ...others
-    }: ColorSwatchProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  <C extends React.ElementType = 'div'>(props: ColorSwatchProps<C>, ref: PolymorphicRef<C>) => {
+    const { component, color, size, radius, className, children, classNames, styles, ...others } =
+      useMantineDefaultProps('ColorSwatch', defaultProps, props);
+
     const { classes, cx } = useStyles(
       { radius, size },
       { classNames, styles, name: 'ColorSwatch' }

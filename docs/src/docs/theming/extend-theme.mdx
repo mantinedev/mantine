@@ -1,23 +1,23 @@
 ---
 group: 'theming'
-title: Extend theme
+title: Theme object
 slug: /theming/extend-theme/
-order: 1
+order: 0
+search: 'Extends colors, typography, shadows, spacing, breakpoints'
 ---
 
 import { DEFAULT_THEME } from '@mantine/core';
-import { PaperDemos, ThemeDemos } from '@mantine/demos';
+import { ThemeDemos } from '@mantine/demos';
 import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
 
-# Extend theme
+# Theme object
 
 ## Typography
 
-By default Mantine uses system fonts. It brings fast and familiar experience to users.
-You can change fonts and other text styles for headings, code and all other components:
+By default, Mantine uses system fonts. You can change fonts and other text styles for headings, code and all other components:
 
-- `theme.fontFamilyMonospace` – controls components with monospace font-family, for example, [Code](/core/code/) and [Kbd](/core/kbd/)
-- `theme.fontFamily` – controls font-family in all other cases
+- `theme.fontFamilyMonospace` – controls font-family of components that require monospace font, for example, [Code](/core/code/), [Kbd](/core/kbd/) and [Prism](/others/prism/)
+- `theme.fontFamily` – controls font-family in all other components except headings
 - `theme.lineHeight` – controls line-height property in all components except headings
 - `theme.fontSizes` – controls font-size in all components except headings
 - `theme.headings` – controls font-family, line-height and font-size of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
@@ -42,8 +42,7 @@ theme.colors.blue[0];
 
 ## Extend or replace colors
 
-You can add any amount of extra colors by extending theme.colors with MantineProvider.
-This will allow you to use these colors with all components which support color change,
+You can add extra colors. This will allow you to use these colors with all components which support color change,
 for example, [Button](/core/button/), [Badge](/core/badge/) or [Switch](/core/switch/).
 
 Note that all colors that are added should **always include 10 shades**.
@@ -59,17 +58,37 @@ You can use some of these tools to generate or copy ready color palettes:
 
 ## Primary color
 
-The default primary color is `'blue'`, which means it is referencing `theme.colors.blue`. You can change it to any color defined in `theme.colors`.
+The default primary color is `blue`, which means it is referencing `theme.colors.blue`.
+You can change it to any color defined in `theme.colors`.
 
 Primary color is used:
 
 - in some components to determine color value if component didn't receive color prop;
 - to define focus styles for all interactive elements.
 
-For example, [Button](/core/button/) Component
-by default will use `theme.primaryColor` (press any key on keyboard to see focus ring):
+For example, [Button](/core/button/) Component by default will use `theme.primaryColor`
 
 <Demo data={ThemeDemos.primaryColor} />
+
+**!important** `theme.primaryColor` cannot be a hex, rgb or other color value,
+it should only reference value from `theme.colors`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        // THIS WILL RESUlT IN ERROR, DO NOT DO THIS
+        primaryColor: '#EC45EE',
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
 
 ## Spacing, radius and shadows
 
@@ -79,13 +98,9 @@ These values are exposed on theme:
 - `theme.spacing` – general spacing values used for paddings and margins, for example, to set padding on [Paper](/core/paper/) or [Container](/core/container/) components or to calculate margins in [TypographyStylesProvider](/core/typography-styles-provider/) component.
 - `theme.shadows` – box-shadow values – used with components which extend [Paper](/core/paper/): [Modal](/core/modal/), [Menu](/core/menu/) and others
 - `theme.radius` – border-radius values – used in all components which support radius: [Paper](/core/paper/), [Button](/core/button/), [Input](/core/input/) and others
+- `theme.defaultRadius` – default border-radius used in all components
 
-Example with [Paper](/core/paper/) component (padding is set with `theme.spacing`):
-
-<Demo data={PaperDemos.configurator} />
-
-You can change size values by setting corresponding properties.
-In this example:
+You can change size values by setting corresponding properties. In the following example:
 
 - xs and xl values from theme will be overwritten
 - sm, md and lg values will be used from default theme
@@ -155,23 +170,69 @@ Mantine uses Bootstrap's breakpoint values as defaults:
 You can add any amount of properties using `other`:
 
 ```tsx
-// Add any other properties on theme
-<MantineProvider
-  theme={{
-    other: {
-      fontFamilySecondary: 'Arial',
-      lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
-      reduceMotion: true,
-    },
-  }}
->
-  <App />
-</MantineProvider>
+import { MantineProvider, Box } from '@mantine/core';
 
-// Then use your custom properties
-<Box sx={(theme) => ({
-  fontFamily: theme.other.fontFamilySecondary,
-  lineHeight: theme.other.lineHeight[2],
-  transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
-})} />
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        // Add any other properties on theme
+        other: {
+          fontFamilySecondary: 'Arial',
+          lineHeights: [1.2, 1.4, 1.6, 1.8, 1.95],
+          reduceMotion: true,
+        },
+      }}
+    >
+      <Box
+        sx={(theme) => ({
+          // Then use custom properties in sx, createStyles or any other place
+          fontFamily: theme.other.fontFamilySecondary,
+          lineHeight: theme.other.lineHeight[2],
+          transitionDuration: theme.other.reduceMotion ? '0ms' : '200ms',
+        })}
+      />
+    </MantineProvider>
+  );
+}
+```
+
+## TypeScript
+
+### Adding custom colors
+
+TypeScript will only autocomplete Mantine's default colors when accessing the theme. To add your custom colors to the MantineColor type, you can use TypeScript module declaration:
+```ts
+import { Tuple } from "@mantine/core";
+
+type CustomColors = "primaryColorName" | "secondaryColorName";
+
+declare module "@mantine/core" {
+  export interface MantineThemeColorsOverride {
+    colors: Record<CustomColors, Tuple<string, 10>>;
+  }
+}
+
+// or if you want to "extend" standard colors
+import { Tuple, DefaultMantineColor } from '@mantine/core'
+
+type ExtendedCustomColors = "primaryColorName" | "secondaryColorName" | DefaultMantineColor;
+
+declare module "@mantine/core" {
+  export interface MantineThemeColorsOverride {
+    colors: Record<ExtendedCustomColors, Tuple<string, 10>>;
+  }
+}
+```
+
+### Adding custom 'other' properties
+
+Similar to how you can extend/set custom colors, you can add your own properties to the `theme.other` type using TypeScript module declaration:
+```ts
+declare module "@mantine/core" {
+  export interface MantineThemeOther {
+    myCustomProperty: string
+    myCustomFunction: () => void
+  }
+}
 ```

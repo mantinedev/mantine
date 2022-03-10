@@ -6,9 +6,9 @@ import { Breadcrumbs, BreadcrumbsProps } from './Breadcrumbs';
 
 const defaultProps: BreadcrumbsProps = {
   children: [
-    { title: 'Mantine', href: 'https://mantine.dev' },
-    { title: 'Mantine hooks', href: 'https://mantine.dev/hooks/getting-started' },
-    { title: 'use-id', href: 'https://mantine.dev/hooks/use-id' },
+    { title: 'Mantine', href: '#' },
+    { title: 'Mantine hooks', href: '#' },
+    { title: 'use-id', href: '#' },
   ].map((item) => (
     <Text<'a'> variant="link" component="a" href={item.href} key={item.title}>
       {item.title}

@@ -13,7 +13,6 @@ export interface NavbarPosition {
 interface NavbarStyles {
   width: Partial<Record<string, string | number>>;
   height: string | number;
-  padding: MantineNumberSize;
   position: NavbarPosition;
   hiddenBreakpoint: MantineNumberSize;
   fixed: boolean;
@@ -21,7 +20,7 @@ interface NavbarStyles {
 }
 
 export default createStyles(
-  (theme, { height, width, padding, fixed, position, hiddenBreakpoint, zIndex }: NavbarStyles) => {
+  (theme, { height, width, fixed, position, hiddenBreakpoint, zIndex }: NavbarStyles) => {
     const breakpoints =
       typeof width === 'object' && width !== null
         ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
@@ -43,7 +42,6 @@ export default createStyles(
         width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
-        padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,

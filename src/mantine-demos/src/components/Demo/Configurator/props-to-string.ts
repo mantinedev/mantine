@@ -30,8 +30,16 @@ export function propToString({ type, name, value, defaultValue }: PropToString) 
 interface PropsToString {
   props: ControlProps[];
   values: Record<string, any>;
-  multiline: boolean;
+  multiline: boolean | number;
 }
+
+const getOffset = (value: boolean | number) => {
+  if (typeof value === 'boolean') {
+    return '\n  ';
+  }
+
+  return `\n${Array(value).fill('  ').join('')}`;
+};
 
 export function propsToString({ props, values, multiline }: PropsToString) {
   return props
@@ -44,6 +52,6 @@ export function propsToString({ props, values, multiline }: PropsToString) {
       })
     )
     .filter(Boolean)
-    .join(multiline ? '\n  ' : ' ')
+    .join(multiline ? getOffset(multiline) : ' ')
     .trim();
 }

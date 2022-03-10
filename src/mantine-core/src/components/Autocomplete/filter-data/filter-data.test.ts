@@ -12,7 +12,7 @@ describe('@mantine/core/Autocomplete/filter-data', () => {
         filter: defaultFilter,
         value: 're',
       })
-    ).toEqual([{ value: 'react' }]);
+    ).toStrictEqual([{ value: 'react' }]);
   });
 
   it('does not call filter function more times than required', () => {

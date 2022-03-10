@@ -15,7 +15,7 @@ import {
   CloseButton,
   MantineShadow,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
   getDefaultZIndex,
 } from '@mantine/core';
 import {
@@ -186,7 +186,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       { size, invalid: !!error },
       { classNames, styles, name: __staticSelector }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
     const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
@@ -271,7 +271,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         __staticSelector={__staticSelector}
         sx={sx}
         ref={setReferenceElement}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div ref={setRootElement}>
@@ -341,7 +341,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
             <Modal
               opened={dropdownOpened}
               onClose={closeDropdown}
-              hideCloseButton
+              withCloseButton={false}
               size={amountOfMonths * 400}
               zIndex={modalZIndex}
             >

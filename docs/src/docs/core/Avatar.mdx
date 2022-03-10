@@ -60,23 +60,17 @@ function Demo() {
 To use a custom component with TypeScript, pass an additional type:
 
 ```tsx
-// With element
-<Avatar<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { Avatar } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
-// With component
-<Avatar<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <>
+      <Avatar<'a'> component="a" href="#" />
+      <Avatar<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
 
 ## Avatars Group

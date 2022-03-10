@@ -8,6 +8,6 @@ describe('@mantine/core/Affix', () => {
   itRendersChildren(Affix, defaultProps);
 
   it('has correct displayName', () => {
-    expect(Affix.displayName).toEqual('@mantine/core/Affix');
+    expect(Affix.displayName).toStrictEqual('@mantine/core/Affix');
   });
 });

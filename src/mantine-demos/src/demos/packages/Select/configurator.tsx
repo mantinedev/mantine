@@ -1,31 +1,26 @@
 import React from 'react';
+import { Select, SelectProps } from '@mantine/core';
+
+const codeTemplate = (props: string) => `
 import { Select } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Select
- ${props}
-  data={[
-    { value: 'react', label: 'React' },
-    { value: 'ng', label: 'Angular' },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue' },
-  ]}
-/>`;
+function Demo() {
+  return (
+    <Select
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
-  component: (props: any) => (
-    <Select
-      data={[
-        { value: 'react', label: 'React' },
-        { value: 'ng', label: 'Angular' },
-        { value: 'svelte', label: 'Svelte' },
-        { value: 'vue', label: 'Vue' },
-      ]}
-      {...props}
-    />
+  component: (props: SelectProps) => (
+    <Select data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
   ),
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Pick one' },
     {

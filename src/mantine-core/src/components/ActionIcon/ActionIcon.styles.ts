@@ -14,7 +14,7 @@ export type ActionIconVariant =
   | 'default'
   | 'transparent';
 
-interface ActionIconStyles {
+export interface ActionIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -64,7 +64,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   };
 }
 
-export default createStyles((theme, { color, size, radius }: ActionIconStyles) => ({
+export default createStyles((theme, { color, size, radius }: ActionIconStylesParams) => ({
   root: {
     ...theme.fn.focusStyles(),
     ...theme.fn.fontStyles(),
@@ -77,7 +77,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
     minHeight: theme.fn.size({ size, sizes }),
     width: theme.fn.size({ size, sizes }),
     minWidth: theme.fn.size({ size, sizes }),
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     padding: 0,
     lineHeight: 1,
     display: 'flex',
@@ -116,7 +116,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStyles) =
         theme.colorScheme === 'dark'
           ? theme.fn.rgba(theme.colors.dark[7], 0.5)
           : 'rgba(255, 255, 255, .5)',
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+      borderRadius: theme.fn.radius(radius),
       cursor: 'not-allowed',
     },
   },

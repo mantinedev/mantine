@@ -44,23 +44,20 @@ Alternatively, you can use a number to set width and height in px:
 
 ## Get button ref
 
-You can get burger button ref by setting `ref` prop:
-
 ```tsx
 import { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
-  return <Burger ref={ref} />;
+  const ref = useRef<HTMLButtonElement>();
+  return <Burger ref={ref} opened={false} />;
 }
 ```
 
 ## Accessibility
 
-Burger renders a regular button element.
-Include `title` or `aria-label` props for screen reader support
-as by design element does not associated label.
+Burger renders a regular button element. Include `title` or `aria-label` props for screen reader support
+as by default element does not associated label.
 
 ```tsx
 // Set title to show message on hover

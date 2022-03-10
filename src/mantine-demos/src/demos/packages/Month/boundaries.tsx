@@ -4,8 +4,8 @@ import { Month } from '@mantine/dates';
 import dayjs from 'dayjs';
 
 const code = `
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { Month } from '@mantine/dates';
 
 function Demo() {

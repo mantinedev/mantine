@@ -1,0 +1,25 @@
+{
+  "name": "@mantine/labs",
+  "description": "Experimental unstable Mantine components",
+  "version": "3.7.0-alpha.2",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/labs/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-labs"
+  },
+  "peerDependencies": {
+    "@mantine/core": "3.7.0-alpha.2",
+    "@mantine/hooks": "3.7.0-alpha.2",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

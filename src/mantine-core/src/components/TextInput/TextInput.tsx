@@ -1,6 +1,11 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, extractMargins } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  extractSystemStyles,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
 import {
   InputWrapperBaseProps,
@@ -34,30 +39,35 @@ export interface TextInputProps
   __staticSelector?: string;
 }
 
+const defaultProps: Partial<TextInputProps> = {
+  type: 'text',
+  size: 'sm',
+  __staticSelector: 'TextInput',
+};
+
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (
-    {
+  (props: TextInputProps, ref) => {
+    const {
       className,
       id,
       label,
       error,
       required,
-      type = 'text',
+      type,
       style,
       icon,
       description,
       wrapperProps,
-      size = 'sm',
+      size,
       classNames,
       styles,
-      __staticSelector = 'TextInput',
+      __staticSelector,
       sx,
       ...others
-    }: TextInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('TextInput', defaultProps, props);
+
     const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
 
     return (
       <InputWrapper
@@ -73,7 +83,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'input'>

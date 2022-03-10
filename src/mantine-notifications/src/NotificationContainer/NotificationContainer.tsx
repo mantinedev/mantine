@@ -7,6 +7,7 @@ export interface NotificationContainerProps extends DefaultProps {
   notification: NotificationProps;
   onHide(id: string): void;
   autoClose: false | number;
+  innerRef: React.ForwardedRef<HTMLDivElement>;
 }
 
 export default function NotificationContainer({
@@ -15,6 +16,7 @@ export default function NotificationContainer({
   notification,
   autoClose,
   onHide,
+  innerRef,
 }: NotificationContainerProps) {
   const autoCloseTimeout = getAutoClose(autoClose, notification);
   const hideTimeout = useRef<number>();
@@ -58,6 +60,7 @@ export default function NotificationContainer({
       disallowClose={notification.disallowClose}
       onMouseEnter={cancelDelayedHide}
       onMouseLeave={handleDelayedHide}
+      ref={innerRef}
     >
       {notification.message}
     </Notification>

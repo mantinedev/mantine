@@ -9,7 +9,7 @@ interface ConfiguratorProps {
   component: any;
   codeTemplate(props: string, children?: string): string;
   previewBackground?: string;
-  multiline?: boolean;
+  multiline?: boolean | number;
   includeCode?: boolean;
   center?: boolean;
   props: ControlProps[];
@@ -38,14 +38,14 @@ export default function Configurator({
     setState((current) => ({ ...current, [field]: value }));
 
   const items = componentProps.map((prop, index) => {
-    const { name, data, type, capitalize, initialValue, ...others } = prop;
+    const { name, data, type, capitalize, initialValue, label, ...others } = prop;
     const ControlComponent = controls[type] as any;
     return (
       <ControlComponent
         {...others}
         key={name}
         value={state[name]}
-        label={name}
+        label={label || name}
         onChange={(value: any) => setStateField(name, value)}
         data={data}
         capitalize={capitalize}
@@ -86,7 +86,7 @@ export default function Configurator({
 
       {includeCode && (
         <Prism language="tsx" className={classes.prism} classNames={{ code: classes.code }}>
-          {code.trim()}
+          {code}
         </Prism>
       )}
     </div>

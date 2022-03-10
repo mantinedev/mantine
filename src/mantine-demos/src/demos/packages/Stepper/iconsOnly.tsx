@@ -3,11 +3,13 @@ import { UserCheck, MailOpened, ShieldCheck } from 'tabler-icons-react';
 import { Stepper } from '@mantine/core';
 
 const code = `
-import { UserCheck, MailOpened, ShieldCheck } from 'tabler-icons-react';
+import { useState } from 'react';
 import { Stepper } from '@mantine/core';
+import { UserCheck, MailOpened, ShieldCheck } from 'tabler-icons-react';
 
 function Demo() {
   const [active, setActive] = useState(0);
+
   return (
     <Stepper active={active} onStepClick={setActive}>
       <Stepper.Step icon={<UserCheck size={18} />} />

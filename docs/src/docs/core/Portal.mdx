@@ -26,18 +26,20 @@ and portals are used for components with fixed position, for example, modals.
 import { useState } from 'react';
 import { Portal } from '@mantine/core';
 
-function PortalDemo() {
+function Demo() {
   const [opened, setOpened] = useState(false);
 
   return (
     <main style={{ position: 'relative', zIndex: 1 }}>
-      <Portal zIndex={5}>
-        <div opened={opened} onClose={() => setOpened(false)}>
-          Your modal content
-        </div>
-      </Portal>
+      {opened && (
+        <Portal zIndex={5}>
+          <div>Your modal content</div>
+        </Portal>
+      )}
 
-      <button onClick={() => setOpened(true)}>Open modal</button>
+      <button onClick={() => setOpened(true)} type="button">
+        Open modal
+      </button>
     </main>
   );
 }
@@ -51,10 +53,14 @@ but still receives `opened` and `onClose` props. Element will not be affected by
 You can specify dom node where portal will be rendered by passing `target` prop:
 
 ```tsx
+import { Portal } from '@mantine/core';
+
 const container = document.createElement('div');
 document.body.appendChild(container);
 
-<Portal target={container} />;
+function Demo() {
+  return <Portal target={container}>My portal</Portal>;
+}
 ```
 
 Alternatively, you can specify selector to render portal in existing element:
@@ -69,3 +75,21 @@ If you don't specify the target element, new one will be created and appended to
 
 `createPortal` is not supported during server side rendering.
 All components inside Portal are rendered only after application was mounted to the dom.
+
+## OptionalPortal component
+
+OptionalPortal component lets you configure whether children should be rendered in Portal.
+It accepts the same props as Portal component:
+
+```tsx
+import { OptionalPortal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <OptionalPortal withinPortal>This text is rendered in Portal</OptionalPortal>
+      <OptionalPortal withinPortal={false}>This text is rendered as regular child</OptionalPortal>
+    </>
+  );
+}
+```

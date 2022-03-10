@@ -3,7 +3,11 @@ import { Group } from '@mantine/core';
 import { Month } from '@mantine/dates';
 
 const code = `
-<Month month={new Date()} firstDayOfWeek="sunday" />
+import { Month } from '@mantine/dates';
+
+function Demo() {
+  return <Month month={new Date()} firstDayOfWeek="sunday" />;
+}
 `;
 
 function Demo() {

@@ -1,6 +1,13 @@
 import React, { forwardRef } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
-import { DefaultProps, ClassNames, MantineNumberSize, LoadingOverlay, Box } from '@mantine/core';
+import {
+  DefaultProps,
+  ClassNames,
+  MantineNumberSize,
+  LoadingOverlay,
+  Box,
+  useMantineDefaultProps,
+} from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
 
@@ -46,63 +53,64 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   maxSize?: number;
 }
 
-export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
-  (
-    {
-      className,
-      padding = 'md',
-      radius = 'sm',
-      disabled,
-      classNames,
-      styles,
-      loading = false,
-      multiple = true,
-      maxSize = Infinity,
-      accept,
-      children,
-      onDrop,
-      onReject,
-      openRef,
-      ...others
-    }: DropzoneProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { radius, padding },
-      { classNames, styles, name: 'Dropzone' }
-    );
+const defaultProps: Partial<DropzoneProps> = {
+  padding: 'md',
+  loading: false,
+  multiple: true,
+  maxSize: Infinity,
+};
 
-    const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-      onDropAccepted: (files) => onDrop(files),
-      onDropRejected: (fileRejections) => onReject(fileRejections),
-      disabled: disabled || loading,
-      accept,
-      multiple,
-      maxSize,
-    });
+export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: DropzoneProps, ref) => {
+  const {
+    className,
+    padding,
+    radius,
+    disabled,
+    classNames,
+    styles,
+    loading,
+    multiple,
+    maxSize,
+    accept,
+    children,
+    onDrop,
+    onReject,
+    openRef,
+    ...others
+  } = useMantineDefaultProps('Dropzone', defaultProps, props);
 
-    assignRef(openRef, open);
+  const { classes, cx } = useStyles({ radius, padding }, { classNames, styles, name: 'Dropzone' });
 
-    return (
-      <Box
-        {...others}
-        {...getRootProps({ ref })}
-        className={cx(
-          classes.root,
-          {
-            [classes.active]: isDragAccept,
-            [classes.reject]: isDragReject,
-            [classes.loading]: loading,
-          },
-          className
-        )}
-      >
-        <LoadingOverlay visible={loading} radius={radius} />
-        <input {...getInputProps()} />
-        {children({ accepted: isDragAccept, rejected: isDragReject })}
-      </Box>
-    );
-  }
-);
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+    onDropAccepted: (files) => onDrop(files),
+    onDropRejected: (fileRejections) => onReject(fileRejections),
+    disabled: disabled || loading,
+    accept,
+    multiple,
+    maxSize,
+  });
+
+  assignRef(openRef, open);
+
+  return (
+    <Box
+      {...others}
+      {...getRootProps({ ref })}
+      className={cx(
+        classes.root,
+        {
+          [classes.active]: isDragAccept,
+          [classes.reject]: isDragReject,
+          [classes.loading]: loading,
+        },
+        className
+      )}
+    >
+      <LoadingOverlay visible={loading} radius={radius} />
+      <input {...getInputProps()} />
+      {children({ accepted: isDragAccept, rejected: isDragReject })}
+    </Box>
+  );
+});
 
 Dropzone.displayName = '@mantine/dropzone/Dropzone';

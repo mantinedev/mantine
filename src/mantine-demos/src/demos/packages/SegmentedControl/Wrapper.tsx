@@ -8,9 +8,7 @@ const data = [
   { label: 'Svelte', value: 'svelte' },
 ];
 
-export function SegmentedControlWrapper(
-  props: Omit<SegmentedControlProps, 'value' | 'onChange' | 'data'>
-) {
+export function SegmentedControlWrapper(props: Omit<SegmentedControlProps, 'data'>) {
   const [value, onChange] = useState<string>('react');
   return <SegmentedControl {...props} data={data} value={value} onChange={onChange} />;
 }

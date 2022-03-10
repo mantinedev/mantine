@@ -11,7 +11,11 @@ function Demo(props: SegmentedControlProps) {
 }
 
 const codeTemplate = (props: string) => `
-  <SegmentedControl ${props} />
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return <SegmentedControl${props} />;
+}
 `;
 
 export const fullWidth: MantineDemo = {

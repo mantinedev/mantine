@@ -12,6 +12,7 @@ import {
   MantineShadow,
   ClassNames,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
@@ -24,16 +25,16 @@ export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,
     SharedPopperProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Disable closing by click outside */
-  noClickOutside?: boolean;
+  /** Defines whether Popover can be closed with outside click, defaults to true */
+  closeOnClickOutside?: boolean;
 
-  /** Disable focus trap (may impact close on escape feature) */
-  noFocusTrap?: boolean;
+  /** Defines whether Popover should trap focus, defaults to true */
+  trapFocus?: boolean;
 
-  /** Disables close on escape */
-  noEscape?: boolean;
+  /** Defines whether Popover can be closed with Escape key, defaults to true */
+  closeOnEscape?: boolean;
 
-  /** Adds close button */
+  /** Displays close button */
   withCloseButton?: boolean;
 
   /** True to disable popover */
@@ -51,7 +52,7 @@ export interface PopoverProps
   /** Content inside popover */
   children: React.ReactNode;
 
-  /** Optional popover title */
+  /** Popover title */
   title?: React.ReactNode;
 
   /** Popover body padding, value from theme.spacing or number to set padding in px */
@@ -79,60 +80,84 @@ export interface PopoverProps
   clickOutsideEvents?: string[];
 }
 
-export function Popover({
-  className,
-  children,
-  target,
-  title,
-  onClose,
-  opened,
-  zIndex = getDefaultZIndex('popover'),
-  arrowSize = 4,
-  withArrow = false,
-  transition = 'fade',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  gutter = 10,
-  position = 'left',
-  placement = 'center',
-  disabled = false,
-  noClickOutside = false,
-  noFocusTrap = false,
-  noEscape = false,
-  withCloseButton = false,
-  radius = 'sm',
-  spacing = 'md',
-  shadow = 'sm',
-  closeButtonLabel,
-  positionDependencies = [],
-  withinPortal = true,
-  id,
-  classNames,
-  styles,
-  width,
-  clickOutsideEvents = ['click', 'touchstart'],
-  ...others
-}: PopoverProps) {
+const defaultProps: Partial<PopoverProps> = {
+  zIndex: getDefaultZIndex('popover'),
+  arrowSize: 4,
+  withArrow: false,
+  transition: 'fade',
+  transitionDuration: 200,
+  gutter: 10,
+  position: 'left',
+  placement: 'center',
+  disabled: false,
+  closeOnClickOutside: true,
+  trapFocus: true,
+  closeOnEscape: true,
+  withCloseButton: false,
+  radius: 'sm',
+  spacing: 'md',
+  shadow: 'sm',
+  positionDependencies: [],
+  withinPortal: true,
+  clickOutsideEvents: ['click', 'touchstart'],
+};
+
+export function Popover(props: PopoverProps) {
+  const {
+    className,
+    children,
+    target,
+    title,
+    onClose,
+    opened,
+    zIndex,
+    arrowSize,
+    withArrow,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    gutter,
+    position,
+    placement,
+    disabled,
+    closeOnClickOutside,
+    trapFocus,
+    closeOnEscape,
+    withCloseButton,
+    radius,
+    spacing,
+    shadow,
+    closeButtonLabel,
+    positionDependencies,
+    withinPortal,
+    id,
+    classNames,
+    styles,
+    width,
+    clickOutsideEvents,
+    ...others
+  } = useMantineDefaultProps('Popover', defaultProps, props);
+
   const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
   const handleClose = () => typeof onClose === 'function' && onClose();
   const [referenceElement, setReferenceElement] = useState(null);
   const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
   const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const focusTrapRef = useFocusTrap(!noFocusTrap && opened);
+  const focusTrapRef = useFocusTrap(trapFocus && opened);
 
-  useClickOutside(() => !noClickOutside && handleClose(), clickOutsideEvents, [
+  useClickOutside(() => closeOnClickOutside && handleClose(), clickOutsideEvents, [
     rootElement,
     dropdownElement,
   ]);
 
   const returnFocus = useFocusReturn({
-    opened: opened || noFocusTrap,
-    transitionDuration,
+    opened: opened || trapFocus,
+    transitionDuration: 0,
     shouldReturnFocus: false,
   });
 
   const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!noEscape && event.nativeEvent.code === 'Escape') {
+    if (closeOnEscape && event.nativeEvent.code === 'Escape') {
       handleClose();
       window.setTimeout(returnFocus, 0);
     }

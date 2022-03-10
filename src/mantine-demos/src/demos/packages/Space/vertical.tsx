@@ -12,9 +12,17 @@ function Wrapper(props: any) {
 }
 
 const codeTemplate = (props: string) => `
-<Text>First line</Text>
-<Space${props} />
-<Text>Second line</Text>
+import { Text, Space } from '@mantine/core';
+
+function Demo() {
+  return (
+    <div style={{ display: 'flex' }}>
+      <Text>First line</Text>
+      <Space${props} />
+      <Text>Second line</Text>
+    </div>
+  );
+}
 `;
 
 export const vertical: MantineDemo = {

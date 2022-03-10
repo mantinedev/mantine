@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, MantineNumberSize } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../Button';
@@ -28,6 +28,7 @@ export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   onMoveAll(): void;
   onMove(): void;
   height: number;
+  radius: MantineNumberSize;
   listComponent?: React.FC<any>;
   limit?: number;
 }
@@ -62,12 +63,13 @@ export function RenderList({
   onMoveAll,
   onMove,
   height,
+  radius,
   classNames,
   styles,
   limit,
 }: RenderListProps) {
   const { classes, cx, theme } = useStyles(
-    { reversed, native: listComponent !== SelectScrollArea },
+    { reversed, native: listComponent !== SelectScrollArea, radius },
     { name: 'TransferList', classNames, styles }
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
@@ -107,7 +109,7 @@ export function RenderList({
           }
         }}
       >
-        <ItemComponent data={item} selected={selection.includes(item.value)} />
+        <ItemComponent data={item} selected={selection.includes(item.value)} radius={radius} />
       </UnstyledButton>
     );
 

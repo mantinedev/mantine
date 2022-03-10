@@ -3,7 +3,7 @@ import { MultiSelect, Avatar, Group, Text } from '@mantine/core';
 
 const code = `
 import { forwardRef } from 'react';
-import { Group, Avatar, Text, MultiSelect } from '@mantine/core';
+import { MultiSelect, Avatar, Group, Text } from '@mantine/core';
 
 const data = [
   {
@@ -33,7 +33,12 @@ const data = [
   },
 ];
 
-// !important: Forwarding ref is required
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+  image: string;
+  label: string;
+  description: string;
+}
+
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ image, label, description, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
@@ -60,6 +65,7 @@ function Demo() {
       data={data}
       searchable
       nothingFound="Nobody here"
+      maxDropdownHeight={400}
       filter={(value, selected, item) =>
         !selected &&
         (item.label.toLowerCase().includes(value.toLowerCase().trim()) ||

@@ -11,11 +11,19 @@ function Wrapper(props: GroupProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Group${props}>
-  <Button variant="outline">1</Button>
-  <Button variant="outline">2</Button>
-  <Button variant="outline">3</Button>
-</Group>`;
+const codeTemplate = (props: string) => `
+import { Group, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group${props}>
+      <Button variant="outline">1</Button>
+      <Button variant="outline">2</Button>
+      <Button variant="outline">3</Button>
+    </Group>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

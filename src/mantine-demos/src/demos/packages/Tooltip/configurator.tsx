@@ -13,20 +13,28 @@ const Wrapper = (props: TooltipProps) => (
   </div>
 );
 
-const codeTemplate = (props: string) => `<Tooltip
-  opened
- ${props}
->
-  <Button variant="outline" color="gray" size="xl">
-    With tooltip
-  </Button>
-</Tooltip>`;
+const codeTemplate = (props: string) => `
+import { Tooltip, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip
+      opened
+     ${props}
+    >
+      <Button variant="outline" color="gray" size="xl">
+        With tooltip
+      </Button>
+    </Tooltip>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'label',

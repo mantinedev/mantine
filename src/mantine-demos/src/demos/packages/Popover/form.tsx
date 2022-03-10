@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, useMediaQuery } from '@mantine/hooks';
-import { Pencil2Icon } from '@modulz/radix-icons';
+import { Edit } from 'tabler-icons-react';
 import {
   Popover,
   Button,
@@ -21,12 +21,13 @@ import {
   Group,
   TextInput,
   Avatar,
+  Anchor,
   Text,
   ActionIcon,
   useMantineTheme,
 } from '@mantine/core';
 import { useForm, useMediaQuery } from '@mantine/hooks';
-import { Pencil2Icon } from '@modulz/radix-icons';
+import { Edit } from 'tabler-icons-react';
 
 interface UserEditFormProps {
   initialValues: { name: string; email: string };
@@ -130,7 +131,7 @@ export function EditUserPopover() {
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
             onClick={() => setOpened((o) => !o)}
           >
-            <Pencil2Icon />
+            <Edit size={16} />
           </ActionIcon>
         }
       >
@@ -252,7 +253,7 @@ export function Demo() {
             variant={theme.colorScheme === 'dark' ? 'hover' : 'light'}
             onClick={() => setOpened((o) => !o)}
           >
-            <Pencil2Icon />
+            <Edit size={16} />
           </ActionIcon>
         }
       >

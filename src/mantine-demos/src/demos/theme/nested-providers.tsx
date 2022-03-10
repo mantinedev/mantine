@@ -6,7 +6,7 @@ const code = `import { Button, MantineProvider, Text } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider theme={{ fontFamily: 'Georgia, serif' }}>
-      <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
+      <Text align="center" mb="xs">Georgia or serif text</Text>
 
       <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif' }}>
         <Button>Greycliff CF button</Button>
@@ -20,7 +20,9 @@ function Demo() {
 
   return (
     <MantineProvider theme={{ fontFamily: 'Georgia, serif', colorScheme }}>
-      <Text style={{ textAlign: 'center', marginBottom: 10 }}>Georgia or serif text</Text>
+      <Text align="center" mb="xs">
+        Georgia or serif text
+      </Text>
 
       <MantineProvider theme={{ fontFamily: 'Greycliff CF, sans-serif', colorScheme }}>
         <Group position="center">

@@ -2,13 +2,22 @@ import React from 'react';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
-<Tooltip label="Default arrow" withArrow opened>
-  <Button variant="outline">Default arrow</Button>
-</Tooltip>
+import { Tooltip, Button } from '@mantine/core';
 
-<Tooltip label="Arrow with size" withArrow arrowSize={3} opened>
-  <Button variant="outline">With size</Button>
-</Tooltip>
+function Demo() {
+  return (
+    <>
+      <Tooltip label="Default arrow" withArrow opened>
+        <Button variant="outline">Default arrow</Button>
+      </Tooltip>
+
+      <Tooltip label="Arrow with size" withArrow arrowSize={3} opened>
+        <Button variant="outline">With size</Button>
+      </Tooltip>
+    </>
+  );
+}
+
 `;
 
 export function Demo() {

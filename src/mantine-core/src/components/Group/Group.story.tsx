@@ -45,4 +45,12 @@ storiesOf('@mantine/core/Group/stories', module)
         <Button>Button 3</Button>
       </Group>
     </div>
+  ))
+  .add('Invalid children', () => (
+    <Group>
+      String
+      {true}
+      {20}
+      <>Fragment</>
+    </Group>
   ));

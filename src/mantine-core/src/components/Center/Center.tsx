@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
+import {
+  DefaultProps,
+  PolymorphicComponentProps,
+  PolymorphicRef,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { Box } from '../Box';
 
 export interface _CenterProps extends DefaultProps {
@@ -17,23 +22,23 @@ type CenterComponent = (<C = 'div'>(props: CenterProps<C>) => React.ReactElement
 };
 
 export const Center: CenterComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { inline = false, sx, ...others }: CenterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => (
-    <Box<any>
-      ref={ref}
-      sx={[
-        {
-          display: inline ? 'inline-flex' : 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        sx,
-      ]}
-      {...others}
-    />
-  )
+  <C extends React.ElementType = 'div'>(props: CenterProps<C>, ref: PolymorphicRef<C>) => {
+    const { inline, sx, ...others } = useMantineDefaultProps('Center', {}, props);
+    return (
+      <Box<any>
+        ref={ref}
+        sx={[
+          {
+            display: inline ? 'inline-flex' : 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+          sx,
+        ]}
+        {...others}
+      />
+    );
+  }
 );
 
 Center.displayName = '@mantine/core/Center';

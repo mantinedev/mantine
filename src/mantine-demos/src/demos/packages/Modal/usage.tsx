@@ -16,7 +16,7 @@ function Demo() {
         onClose={() => setOpened(false)}
         title="Introduce yourself!"
       >
-        <AuthenticationForm />
+        {/* Modal content */}
       </Modal>
 
       <Group position="center">

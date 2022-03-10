@@ -5,7 +5,7 @@ import {
   MantineColor,
 } from '@mantine/styles';
 
-interface PaginationStyles {
+export interface PaginationStylesParams {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   color: MantineColor;
@@ -19,9 +19,7 @@ const sizes = {
   xl: 44,
 };
 
-export default createStyles((theme, { size, radius, color }: PaginationStyles, getRef) => {
-  const dots = getRef('dots');
-
+export default createStyles((theme, { size, radius, color }: PaginationStylesParams, getRef) => {
   const colors = getSharedColorScheme({
     color,
     theme,
@@ -45,11 +43,11 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
       minWidth: theme.fn.size({ size, sizes }),
       padding: `0 ${theme.fn.size({ size, sizes: theme.spacing }) / 2}px`,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      borderRadius: theme.fn.radius(radius),
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
 
-      [`&:active:not(:disabled):not(.${dots})`]: {
+      [`&:active:not(:disabled):not(.${getRef('dots')})`]: {
         transform: 'translateY(1px)',
       },
 
@@ -67,7 +65,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStyles, g
     },
 
     dots: {
-      ref: dots,
+      ref: getRef('dots'),
       cursor: 'default',
       borderColor: 'transparent',
       backgroundColor: 'transparent',

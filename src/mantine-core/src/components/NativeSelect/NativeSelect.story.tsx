@@ -23,6 +23,11 @@ storiesOf('@mantine/core/NativeSelect/stories', module)
       <Controlled label="Your favorite library" placeholder="Your favorite library" />
     </div>
   ))
-  .add('String data', () => (
-    <NativeSelect label="Data as string" data={stringData} placeholder="String data" />
+  .add('Uncontrolled with default value', () => (
+    <NativeSelect
+      label="Data as string"
+      data={stringData}
+      placeholder="String data"
+      defaultValue="Vue"
+    />
   ));

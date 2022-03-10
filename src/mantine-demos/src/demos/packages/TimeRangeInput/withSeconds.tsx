@@ -4,7 +4,18 @@ import { Container } from '@mantine/core';
 import { TimeRangeInput } from '@mantine/dates';
 
 const code = `
-<TimeRangeInput withSeconds />
+import dayjs from 'dayjs';
+import { TimeRangeInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimeRangeInput
+      label="Appointment time"
+      withSeconds
+      defaultValue={[new Date(), dayjs(new Date()).add(30, 'minutes').toDate()]}
+    />
+  );
+}
 `;
 
 function Demo() {

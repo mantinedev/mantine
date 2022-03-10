@@ -2,17 +2,18 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
-import { MantineDrawer, Drawer, DrawerProps } from './Drawer';
+import { Drawer, DrawerProps } from './Drawer';
 
 const defaultProps: DrawerProps = {
   opened: true,
   onClose: () => {},
+  withinPortal: false,
 };
 
 describe('@mantine/core/Drawer', () => {
-  itSupportsSystemProps({ component: MantineDrawer, props: defaultProps });
+  itSupportsSystemProps({ component: Drawer, props: defaultProps });
   checkAccessibility([
-    <MantineDrawer
+    <Drawer
       {...defaultProps}
       aria-labelledby="drawer-title"
       aria-describedby="drawer-body"
@@ -20,25 +21,25 @@ describe('@mantine/core/Drawer', () => {
     >
       <h1 id="drawer-title">Title</h1>
       <div id="drawer-body">Body</div>
-    </MantineDrawer>,
+    </Drawer>,
   ]);
 
   it('calls onClose when close button is clicked', () => {
     const spy = jest.fn();
-    render(<MantineDrawer {...defaultProps} onClose={spy} />);
+    render(<Drawer {...defaultProps} onClose={spy} />);
     userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalled();
   });
 
   it('renders correct title', () => {
-    render(<MantineDrawer {...defaultProps} title="test-title" />);
+    render(<Drawer {...defaultProps} title="test-title" />);
     expect(screen.getByText('test-title')).toBeInTheDocument();
   });
 
-  it('allows to hide close button with hideCloseButton prop', () => {
-    const { container: withCloseButton } = render(<MantineDrawer {...defaultProps} />);
+  it('allows to hide close button with withCloseButton={false} prop', () => {
+    const { container: withCloseButton } = render(<Drawer {...defaultProps} />);
     const { container: withoutCloseButton } = render(
-      <MantineDrawer {...defaultProps} hideCloseButton />
+      <Drawer {...defaultProps} withCloseButton={false} />
     );
 
     expect(withoutCloseButton.querySelectorAll('.mantine-Drawer-closeButton')).toHaveLength(0);
@@ -46,6 +47,6 @@ describe('@mantine/core/Drawer', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Drawer.displayName).toEqual('@mantine/core/Drawer');
+    expect(Drawer.displayName).toStrictEqual('@mantine/core/Drawer');
   });
 });

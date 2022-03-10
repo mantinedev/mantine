@@ -1,14 +1,22 @@
 import { JsonInput } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<JsonInput
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <JsonInput
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: JsonInput,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Your package.json' },
     {

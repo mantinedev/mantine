@@ -19,6 +19,18 @@ import { NumberInputDemos } from '@mantine/demos';
 
 <Demo data={NumberInputDemos.configurator} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(0);
+  return <NumberInput value={value} onChange={(val) => setValue(val)} />;
+}
+```
+
 ## Clamp on blur
 
 Component has internal state to manage user input, when blur event is triggered
@@ -30,6 +42,12 @@ If you want to disable this behavior set `noClampOnBlur` prop:
 ```tsx
 <NumberInput noClampOnBlur />
 ```
+
+## Parser and formatter
+
+With `parser` and `formatter` props you can customize how value is displayed in the input:
+
+<Demo data={NumberInputDemos.formatter} />
 
 ## Min, max and step
 
@@ -77,18 +95,6 @@ You can use it to create custom controls:
 
 <Demo data={NumberInputDemos.handlers} />
 
-## Controlled
-
-```tsx
-import { useState } from 'react';
-import { NumberInput } from '@mantine/core';
-
-function Demo() {
-  const [value, setValue] = useState(0);
-  return <NumberInput value={value} onChange={(val) => setValue(val)} />;
-}
-```
-
 ## Invalid state and error
 
 <Demo data={NumberInputDemos.validation} />
@@ -110,7 +116,7 @@ import { useRef } from 'react';
 import { NumberInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>();
   return <NumberInput ref={ref} />;
 }
 ```

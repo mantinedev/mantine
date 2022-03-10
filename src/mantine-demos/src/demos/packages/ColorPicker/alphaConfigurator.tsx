@@ -5,7 +5,9 @@ function Wrapper(props: AlphaSliderProps) {
   const [value, onChange] = useState(1);
   return (
     <div style={{ maxWidth: 300, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Text style={{ marginBottom: 10 }}>Alpha value: {value}</Text>
+      <Text mb="xs" ml={-6}>
+        Alpha value: {value}
+      </Text>
       <AlphaSlider
         style={{ margin: 'auto' }}
         color={DEFAULT_THEME.colors.blue[7]}

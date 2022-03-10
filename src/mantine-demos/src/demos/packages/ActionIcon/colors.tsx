@@ -1,11 +1,11 @@
 import React from 'react';
-import { ImageIcon } from '@modulz/radix-icons';
+import { Sun } from 'tabler-icons-react';
 import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps } from '@mantine/core';
 
 const getColors = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
   MANTINE_COLORS.slice(1).map((color) => (
     <ActionIcon key={color} color={color} {...props}>
-      <ImageIcon style={{ width: 16, height: 16 }} />
+      <Sun size={18} />
     </ActionIcon>
   ));
 

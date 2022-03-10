@@ -34,9 +34,12 @@ To disable animations, set prop to 0:
 
 ## Get control ref
 
-You can get control button ref with `controlRef` prop:
-
 ```tsx
-const spoilerControlRef = useRef();
-<Spoiler controlRef={spoilerControlRef} />;
+import { useRef } from 'react';
+import { Spoiler } from '@mantine/core';
+
+function Demo() {
+  const spoilerControlRef = useRef<HTMLButtonElement>();
+  return <Spoiler controlRef={spoilerControlRef} />;
+}
 ```

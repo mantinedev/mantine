@@ -14,6 +14,6 @@ describe('@mantine/core/Paper', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Paper.displayName).toEqual('@mantine/core/Paper');
+    expect(Paper.displayName).toStrictEqual('@mantine/core/Paper');
   });
 });

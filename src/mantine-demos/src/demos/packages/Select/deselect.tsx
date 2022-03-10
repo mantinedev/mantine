@@ -2,7 +2,11 @@ import React from 'react';
 import { Select } from '@mantine/core';
 
 const code = `
-<Select allowDeselect {...otherProps} />
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return <Select allowDeselect />;
+}
 `;
 
 function Demo() {

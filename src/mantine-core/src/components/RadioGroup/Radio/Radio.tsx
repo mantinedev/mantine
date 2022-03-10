@@ -5,7 +5,8 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
-  extractMargins,
+  extractSystemStyles,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
 import useStyles from './Radio.styles';
@@ -16,7 +17,7 @@ export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
-  children?: React.ReactNode;
+  label?: React.ReactNode;
 
   /** Radio value */
   value: string;
@@ -31,54 +32,55 @@ export interface RadioProps
   __staticSelector?: string;
 }
 
-export const Radio = forwardRef<HTMLInputElement, RadioProps>(
-  (
-    {
-      className,
-      style,
-      id,
-      children,
-      size,
-      title,
-      disabled,
-      color,
-      classNames,
-      styles,
-      __staticSelector = 'Radio',
-      sx,
-      ...others
-    }: RadioProps,
-    ref
-  ) => {
-    const { classes, cx } = useStyles(
-      { color, size },
-      { classNames, styles, name: __staticSelector }
-    );
-    const { margins, rest } = extractMargins(others);
-    const uuid = useUuid(id);
+const defaultProps: Partial<RadioProps> = {
+  __staticSelector: 'Radio',
+};
 
-    return (
-      <Box
-        className={cx(classes.radioWrapper, className)}
-        style={style}
-        title={title}
-        sx={sx}
-        {...margins}
-      >
-        <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
-          <input
-            ref={ref}
-            className={classes.radio}
-            type="radio"
-            id={uuid}
-            disabled={disabled}
-            {...rest}
-          />
-          {children && <span>{children}</span>}
-        </label>
-      </Box>
-    );
-  }
-);
+export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps, ref) => {
+  const {
+    className,
+    style,
+    id,
+    label,
+    size,
+    title,
+    disabled,
+    color,
+    classNames,
+    styles,
+    __staticSelector,
+    sx,
+    ...others
+  } = useMantineDefaultProps('Radio', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    { color, size },
+    { classNames, styles, name: __staticSelector }
+  );
+  const { systemStyles, rest } = extractSystemStyles(others);
+  const uuid = useUuid(id);
+
+  return (
+    <Box
+      className={cx(classes.radioWrapper, className)}
+      style={style}
+      title={title}
+      sx={sx}
+      {...systemStyles}
+    >
+      <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+        <input
+          ref={ref}
+          className={classes.radio}
+          type="radio"
+          id={uuid}
+          disabled={disabled}
+          {...rest}
+        />
+        {label && <span>{label}</span>}
+      </label>
+    </Box>
+  );
+});
 
 Radio.displayName = '@mantine/core/Radio';

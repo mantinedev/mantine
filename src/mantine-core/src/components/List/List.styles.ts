@@ -1,12 +1,12 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface ListStyles {
+export interface ListStylesParams {
   withPadding: boolean;
   size: MantineNumberSize;
   listStyleType: string;
 }
 
-export default createStyles((theme, { withPadding, size, listStyleType }: ListStyles) => ({
+export default createStyles((theme, { withPadding, size, listStyleType }: ListStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     listStyleType,

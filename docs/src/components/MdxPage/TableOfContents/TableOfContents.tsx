@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Slugger from 'github-slugger';
+import { navigate } from 'gatsby';
+import { useLocation } from '@reach/router';
 import { Text, useMantineTheme } from '@mantine/core';
 import { ActivityLogIcon } from '@modulz/radix-icons';
-import { HEADER_HEIGHT } from '../../Layout/Header/Header.styles';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {
@@ -42,6 +43,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
   const { classes, cx } = useStyles();
   const slugger = new Slugger();
   const [active, setActive] = useState(0);
+  const { pathname } = useLocation();
 
   const slugs = useRef<HTMLDivElement[]>([]);
   const filteredHeadings = headings.filter((heading) => heading.depth > 1);
@@ -76,14 +78,10 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
         size="sm"
         className={cx(classes.link, { [classes.linkActive]: active === index })}
         href={`#${slug}`}
-        style={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
+        sx={{ paddingLeft: (heading.depth - 1) * theme.spacing.lg }}
         onClick={(event) => {
           event.preventDefault();
-          const element = document.getElementById(slug);
-          window.scrollTo({
-            top: element.getBoundingClientRect().top + window.pageYOffset - HEADER_HEIGHT - 10,
-            behavior: 'smooth',
-          });
+          navigate(`${pathname}#${slug}`, { replace: true });
         }}
       >
         {heading.value}

@@ -4,24 +4,20 @@ import { Chips, Chip, createStyles } from '@mantine/core';
 const code = `
 import { createStyles, Chip, Chips } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => {
-  const iconWrapper = getRef('iconWrapper');
+const useStyles = createStyles((theme, _params, getRef) => ({
+  iconWrapper: {
+    ref: getRef('iconWrapper'),
+  },
 
-  return {
-    iconWrapper: {
-      ref: iconWrapper,
-    },
+  checked: {
+    backgroundColor: \`\${theme.colors.blue[6]} !important\`,
+    color: theme.white,
 
-    checked: {
-      backgroundColor: \`\${theme.colors.blue[6]} !important\`,
+    [\`& .\${getRef('iconWrapper')}\`]: {
       color: theme.white,
-
-      [\`& .\${iconWrapper}\`]: {
-        color: theme.white,
-      },
     },
-  };
-});
+  },
+}));
 
 function Demo() {
   const { classes } = useStyles();
@@ -37,24 +33,20 @@ function Demo() {
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => {
-  const iconWrapper = getRef('iconWrapper');
+const useStyles = createStyles((theme, _params, getRef) => ({
+  iconWrapper: {
+    ref: getRef('iconWrapper'),
+  },
 
-  return {
-    iconWrapper: {
-      ref: iconWrapper,
-    },
+  checked: {
+    backgroundColor: `${theme.colors.blue[6]} !important`,
+    color: theme.white,
 
-    checked: {
-      backgroundColor: `${theme.colors.blue[6]} !important`,
+    [`& .${getRef('iconWrapper')}`]: {
       color: theme.white,
-
-      [`& .${iconWrapper}`]: {
-        color: theme.white,
-      },
     },
-  };
-});
+  },
+}));
 
 function Demo() {
   const { classes } = useStyles();

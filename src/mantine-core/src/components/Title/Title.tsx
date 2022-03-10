@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Title.styles';
 
@@ -13,20 +13,28 @@ export interface TitleProps extends DefaultProps, React.ComponentPropsWithoutRef
   align?: 'right' | 'left' | 'center' | 'justify';
 }
 
-export const Title = forwardRef<HTMLHeadingElement, TitleProps>(
-  ({ className, order = 1, children, align, ...others }: TitleProps, ref) => {
-    const { classes, cx } = useStyles({ element: `h${order}`, align }, { name: 'Title' });
+const defaultProps: Partial<TitleProps> = {
+  order: 1,
+};
 
-    if (![1, 2, 3, 4, 5, 6].includes(order)) {
-      return null;
-    }
+export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props: TitleProps, ref) => {
+  const { className, order, children, align, ...others } = useMantineDefaultProps(
+    'Title',
+    defaultProps,
+    props
+  );
 
-    return (
-      <Box component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
-        {children}
-      </Box>
-    );
+  const { classes, cx } = useStyles({ element: `h${order}`, align }, { name: 'Title' });
+
+  if (![1, 2, 3, 4, 5, 6].includes(order)) {
+    return null;
   }
-);
+
+  return (
+    <Box component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
+      {children}
+    </Box>
+  );
+});
 
 Title.displayName = '@mantine/core/Title';

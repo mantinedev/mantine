@@ -13,10 +13,18 @@ function Wrapper(props: Partial<SkeletonProps>) {
 }
 
 const codeTemplate = (props: string) => `
-<Skeleton${props} height={50} circle mb="xl" />
-<Skeleton${props} height={8} radius="xl" />
-<Skeleton${props} height={8} mt={6} radius="xl" />
-<Skeleton${props} height={8} mt={6} width="70%" radius="xl" />
+import { Skeleton } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Skeleton${props} height={50} circle mb="xl" />
+      <Skeleton${props} height={8} radius="xl" />
+      <Skeleton${props} height={8} mt={6} radius="xl" />
+      <Skeleton${props} height={8} mt={6} width="70%" radius="xl" />
+    </>
+  );
+}
 `;
 
 export const configurator: MantineDemo = {

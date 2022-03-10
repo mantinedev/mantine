@@ -34,7 +34,7 @@ import { Select } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
-  return <Select value={value} onChange={setValue} />;
+  return <Select value={value} onChange={setValue} data={[]} />;
 }
 ```
 
@@ -149,50 +149,6 @@ To do so you will need to:
 - Create `filter` function which determines whether item should be added to the search results
 - Provide `itemComponent` which will consume `data` objects
 
-```tsx
-// Minimum data for default select used in previous examples
-[
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-];
-```
-
-You can add any other fields to your data:
-
-```tsx
-const data = [
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
-    label: 'Bender Bending Rodríguez',
-    value: 'Bender Bending Rodríguez',
-    description: 'Fascinated with cooking',
-  },
-
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
-    label: 'Carol Miller',
-    value: 'Carol Miller',
-    description: 'One of the richest people on Earth',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
-    label: 'Homer Simpson',
-    value: 'Homer Simpson',
-    description: 'Overweight, lazy, and often ignorant',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    value: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-  },
-];
-```
-
-Based on this data shape you can create custom `filter` function and `itemComponent`:
-
 <Demo data={SelectDemos.itemComponent} />
 
 ## Dropdown position
@@ -204,7 +160,7 @@ To change this behavior, set `dropdownPosition` prop:
 
 ## Animations
 
-By default dropdown animations are turned off to increase responsiveness.
+By default, dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
@@ -221,8 +177,6 @@ If you want to use native scrollbars instead, set `div` as a dropdown component:
 <Demo data={SelectDemos.scrollbars} />
 
 ## With icon
-
-You can use any React node as icon:
 
 <Demo data={SelectDemos.icon} demoProps={{ zIndex: 4 }} />
 
@@ -243,21 +197,17 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={SelectDemos.configurator} />
 
 ## Get input element ref
-
-You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
-  return <Select ref={ref} />;
+  const ref = useRef<HTMLInputElement>();
+  return <Select ref={ref} data={[]} />;
 }
 ```
 

@@ -4,9 +4,9 @@ import { AccordionDemo, TimelineBase } from '@mantine/demos';
 
 export function ContentDemos() {
   return (
-    <Paper shadow="md" radius="md" padding={30}>
+    <Paper shadow="md" radius="md" p={30}>
       <div>
-        <Text size="lg" style={{ marginBottom: 15 }}>
+        <Text size="lg" mb="md">
           Accordion component
         </Text>
         <AccordionDemo />

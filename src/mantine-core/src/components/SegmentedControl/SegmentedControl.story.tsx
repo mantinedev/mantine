@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
 const stringData = ['React', 'Angular', 'Vue', 'Very long label'];
@@ -49,4 +50,14 @@ storiesOf('@mantine/core/SegmentedControl/stories', module)
       <SegmentedControl data={stringData} defaultValue="Vue" />
     </div>
   ))
-  .add('Scaled', () => <Scaled />);
+  .add('Scaled', () => <Scaled />)
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ SegmentedControl: { color: 'orange' } }}>
+      <Controlled />
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <Controlled />
+    </MantineProvider>
+  ));

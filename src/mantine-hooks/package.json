@@ -1,13 +1,13 @@
 {
   "name": "@mantine/hooks",
-  "version": "3.6.14",
+  "version": "3.7.0-alpha.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "homepage": "https://mantine.dev/hooks/getting-started/",
+  "homepage": "https://mantine.dev",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",

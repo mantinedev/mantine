@@ -27,40 +27,17 @@ Box itself does not include any styles.
 To use Box with custom component or element set `component` prop to tag name or react component:
 
 ```tsx
-// With custom element
-<Box component="a" href="https://mantine.dev/" />;
-
-// With custom component
+import { ActionIcon } from '@mantine/core';
 import { Link } from 'react-router-dom';
-<Box component={Link} to="/hello" />;
 
-// With Next.js Link
-import Link from 'next/link';
-<Link href="/next-link">
-  <Box component="a">Next link</Box>
-</Link>;
+function Demo() {
+  return (
+    <>
+      <ActionIcon<'a'> component="a" href="#" />
+      <ActionIcon<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
 
 <Demo data={BoxDemos.link} />
-
-To use custom component with TypeScript provide type:
-
-```tsx
-// With element
-<Box<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-
-// With component
-<Box<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
-```

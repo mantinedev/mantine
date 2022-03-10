@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { Group } from '../Group/Group';
 import { Button } from '../Button/Button';
 import { Chip } from './Chip/Chip';
@@ -73,4 +74,20 @@ storiesOf('@mantine/core/Chips/stories', module)
     </Group>
   ))
   .add('Dynamic chips', () => <Dynamic />)
-  .add('Controlled', () => <Controlled />);
+  .add('Controlled', () => <Controlled />)
+  .add('DefaultProps on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Chips: { color: 'orange' }, Chip: { radius: 'xl' } }}>
+      <Controlled />
+      <Chip value="1" mt="xl">
+        Single chip
+      </Chip>
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <Controlled />
+      <Chip value="1" mt="xl">
+        Single chip
+      </Chip>
+    </MantineProvider>
+  ));

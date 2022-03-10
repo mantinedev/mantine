@@ -1,15 +1,22 @@
 import React from 'react';
-import { PlusCircledIcon } from '@modulz/radix-icons';
+import { CirclePlus } from 'tabler-icons-react';
 import { BaseDemo } from './_base';
 
 const code = `
-<Accordion icon={<PlusCircledIcon />} disableIconRotation>
-  {/* <Accordion.Item /> components */}
-</Accordion>
+import { Accordion } from '@mantine/core';
+import { CirclePlus } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Accordion icon={<CirclePlus size={16} />} disableIconRotation>
+      {/* <Accordion.Item /> components */}
+    </Accordion>
+  );
+}
 `;
 
 export function IconReplaceDemo() {
-  return <BaseDemo disableIconRotation icon={<PlusCircledIcon />} />;
+  return <BaseDemo disableIconRotation icon={<CirclePlus size={16} />} />;
 }
 
 function Demo() {

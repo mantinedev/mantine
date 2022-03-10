@@ -30,7 +30,7 @@ export function IndeterminateCheckbox() {
   ));
 
   return (
-    <div>
+    <>
       <Checkbox
         checked={allChecked}
         indeterminate={indeterminate}
@@ -43,7 +43,7 @@ export function IndeterminateCheckbox() {
         }
       />
       {items}
-    </div>
+    </>
   );
 }
 `;

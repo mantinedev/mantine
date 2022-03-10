@@ -5,7 +5,7 @@ const BREAKPOINT = 765;
 export default createStyles((theme: MantineTheme) => ({
   wrapper: {
     '& + &': {
-      marginTop: theme.spacing.xl * 2,
+      marginTop: theme.spacing.xl,
     },
   },
 

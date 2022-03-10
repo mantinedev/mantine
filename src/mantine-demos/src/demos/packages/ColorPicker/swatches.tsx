@@ -2,9 +2,18 @@ import React from 'react';
 import { DEFAULT_THEME, Group, ColorPicker } from '@mantine/core';
 
 const code = `
-<ColorPicker format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors).map(
-  (color) => `'${DEFAULT_THEME.colors[color][6]}'`
-)}]} />
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ColorPicker
+      format="hex"
+      swatches={[${Object.keys(DEFAULT_THEME.colors)
+        .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
+        .join(', ')}]}
+    />
+  );
+}
 `;
 
 function Demo() {

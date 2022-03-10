@@ -32,7 +32,7 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 11, 8),
         value: new Date(2021, 11, 8),
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...defaultResult,
       selected: true,
     });
@@ -44,7 +44,7 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 11, 8),
         value: new Date(2021, 12, 8),
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...defaultResult,
       selected: false,
     });
@@ -53,14 +53,14 @@ describe('@mantine/dates/Day/get-day-props', () => {
   it('detects outside date', () => {
     expect(
       getDayProps({ ...defaultProps, date: new Date(2021, 11, 9), month: new Date(2021, 11, 1) })
-    ).toEqual({
+    ).toStrictEqual({
       ...defaultResult,
       outside: false,
     });
 
     expect(
       getDayProps({ ...defaultProps, date: new Date(2021, 10, 9), month: new Date(2021, 11, 1) })
-    ).toEqual({
+    ).toStrictEqual({
       ...defaultResult,
       outside: true,
     });
@@ -68,13 +68,15 @@ describe('@mantine/dates/Day/get-day-props', () => {
 
   it('detects disabled date', () => {
     const disabledResults = { ...defaultResult, disabled: true };
-    expect(getDayProps({ ...defaultProps, minDate: new Date(2040, 1, 1) })).toEqual(
+    expect(getDayProps({ ...defaultProps, minDate: new Date(2040, 1, 1) })).toStrictEqual(
       disabledResults
     );
-    expect(getDayProps({ ...defaultProps, maxDate: new Date(2000, 1, 1) })).toEqual(
+    expect(getDayProps({ ...defaultProps, maxDate: new Date(2000, 1, 1) })).toStrictEqual(
       disabledResults
     );
-    expect(getDayProps({ ...defaultProps, excludeDate: () => true })).toEqual(disabledResults);
+    expect(getDayProps({ ...defaultProps, excludeDate: () => true })).toStrictEqual(
+      disabledResults
+    );
     expect(
       getDayProps({
         ...defaultProps,
@@ -82,7 +84,7 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 10, 9),
         month: new Date(2021, 11, 1),
       })
-    ).toEqual({ ...disabledResults, outside: true });
+    ).toStrictEqual({ ...disabledResults, outside: true });
   });
 
   it('returns correct range properties', () => {
@@ -95,7 +97,7 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 0, 5),
         month: new Date(2021, 0, 1),
       })
-    ).toEqual(rangeResults);
+    ).toStrictEqual(rangeResults);
 
     expect(
       getDayProps({
@@ -104,7 +106,7 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 0, 1),
         month: new Date(2021, 0, 1),
       })
-    ).toEqual({ ...rangeResults, firstInRange: true, selectedInRange: true });
+    ).toStrictEqual({ ...rangeResults, firstInRange: true, selectedInRange: true });
 
     expect(
       getDayProps({
@@ -113,19 +115,19 @@ describe('@mantine/dates/Day/get-day-props', () => {
         date: new Date(2021, 0, 15),
         month: new Date(2021, 0, 1),
       })
-    ).toEqual({ ...rangeResults, lastInRange: true, selectedInRange: true });
+    ).toStrictEqual({ ...rangeResults, lastInRange: true, selectedInRange: true });
   });
 
   it('detects weekend', () => {
-    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 11) })).toEqual({
+    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 11) })).toStrictEqual({
       ...defaultResult,
       weekend: true,
     });
-    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 12) })).toEqual({
+    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 12) })).toStrictEqual({
       ...defaultResult,
       weekend: true,
     });
-    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 8) })).toEqual({
+    expect(getDayProps({ ...defaultProps, date: new Date(2021, 11, 8) })).toStrictEqual({
       ...defaultResult,
       weekend: false,
     });

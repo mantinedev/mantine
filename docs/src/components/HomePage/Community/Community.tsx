@@ -18,7 +18,7 @@ export function Community() {
               Join the community
             </Title>
 
-            <Text style={{ maxWidth: 600 }} className={classes.description}>
+            <Text sx={{ maxWidth: 600 }} className={classes.description}>
               Mantine has a very friendly community, we are always open to new ideas and feedback.
               Join us on Discord or GitHub Discussions to get any kind of help or on Twitter to get
               notified about releases.

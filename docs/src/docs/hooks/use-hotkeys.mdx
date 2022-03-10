@@ -27,9 +27,9 @@ function Demo() {
   // ctrl + J and ⌘ + J to toggle color scheme
   // ctrl + K and ⌘ + K to search
   useHotkeys([
-    ['mod+J', () => toggleColorScheme()],
-    ['ctrl+K', () => search()],
-    ['alt+mod+shift+X', () => rickRoll()],
+    ['mod+J', () => console.log('Toggle color scheme')],
+    ['ctrl+K', () => console.log('Trigger search')],
+    ['alt+mod+shift+X', () => console.log('Rick roll')],
   ]);
 
   return null;
@@ -42,7 +42,7 @@ use-hotkeys hook can work only with document element, you will need to create yo
 if you need to support other elements. For this purpose package exports `getHotkeysHandler` function
 which should be used with `onKeyDown`:
 
-<Demo data={HooksDemos.useHotkeysHook} />
+<Demo data={HooksDemos.useHotkeysDemo} />
 
 ## Supported formats
 

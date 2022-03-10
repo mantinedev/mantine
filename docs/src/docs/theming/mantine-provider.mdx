@@ -3,14 +3,14 @@ group: 'theming'
 title: MantineProvider
 slug: /theming/mantine-provider/
 order: 0
+search: 'Theme object, useMantineTheme, default props, normalize.css, emotionOptions'
 ---
 
 import { ThemeDemos } from '@mantine/demos';
 
 # MantineProvider
 
-MantineProvider component allows you to change theme globally.
-It is not required if you decide to use default theme:
+MantineProvider component can be used to change theme globally. It is not required if you decide to use default theme:
 
 ```tsx
 import { MantineProvider, Button } from '@mantine/core';
@@ -27,54 +27,58 @@ function WithProvider() {
     </MantineProvider>
   );
 }
-
-// Default theme is used in all components in App
-function NoProvider() {
-  return <App />;
-}
-```
-
-## use-mantine-theme hook
-
-Hook returns theme from MantineProvider context or default theme
-if you did not wrap application with MantineProvider.
-
-```tsx
-import { useMantineTheme } from '@mantine/core';
-
-function Component() {
-  const theme = useMantineTheme();
-  return <div style={{ background: theme.colors.blue[5] }} />;
-}
 ```
 
 ## Theme object
 
-Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design elements are defined.
-
-Theme shape:
+Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design tokens are stored.
 
 ```tsx
 interface MantineTheme {
-  dir: 'ltr' | 'rtl';
-  loader: 'oval' | 'bars' | 'dots';
-  dateFormat: string;
+  // Defines color scheme for all components, defaults to "light"
   colorScheme: 'light' | 'dark';
+
+  // Controls focus ring styles:
+  // auto – display focus ring only when user navigates with keyboard (default)
+  // always – display focus ring when user navigates with keyboard and mouse
+  // never – focus ring is always hidden (not recommended)
+  focusRing: 'auto' | 'always' | 'never';
+
+  // Default border-radius used for most elements
+  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+
+  // White and black colors, defaults to '#fff' and '#000'
   white: string;
   black: string;
+
+  // Object of arrays with 10 colors
   colors: Record<string, Tuple<string, 10>>;
-  fontFamily: CSSProperties['fontFamily'];
-  lineHeight: CSSProperties['lineHeight'];
-  transitionTimingFunction: CSSProperties['transitionTimingFunction'];
-  fontFamilyMonospace: CSSProperties['fontFamily'];
+
+  // Should be key of theme.colors, cannot be actual color value
   primaryColor: string;
 
+  // font-family and line-height used in most components
+  fontFamily: string;
+  lineHeight: string | number;
+
+  // Timing function used for animations, defaults to 'ease'
+  transitionTimingFunction: string;
+
+  // Monospace font-family, used in Code, Kbd and Prism components
+  fontFamilyMonospace: string;
+
+  // Sizes for corresponding properties
   fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
   radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
   spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+
+  // Values used for box-shadow
   shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
 
+  // Breakpoints used in some components to add responsive styles
+  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+
+  // h1-h6 styles, used in Title and TypographyStylesProvider components
   headings: {
     fontFamily: CSSProperties['fontFamily'];
     fontWeight: CSSProperties['fontWeight'];
@@ -88,13 +92,22 @@ interface MantineTheme {
     };
   };
 
-  // theme functions, see in separate guide
+  // theme functions, see in theme functions guide
   fn: MantineThemeFunctions;
+
+  // Left to right or right to left direction, see RTL Support guide to learn more
+  dir: 'ltr' | 'rtl';
+
+  // Default loader used in Loader and LoadingOverlay components
+  loader: 'oval' | 'bars' | 'dots';
+
+  // Default date format used in DatePicker and DateRangePicker components
+  dateFormat: string;
 
   // Add your own custom properties on Mantine theme
   other: Record<string, any>;
 
-  // Set a default locale for every date related component
+  // Default dates formatting locale used in every @mantine/dates component
   datesLocale: string;
 }
 ```
@@ -102,93 +115,239 @@ interface MantineTheme {
 Pass theme object to MantineProvider to change global styles:
 
 ```tsx
-// Theme is deeply merged with default theme
-<MantineProvider
-  theme={{
-    colorScheme: 'light',
-    colors: {
-      // Add your color
-      'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-      // or replace default theme color
-      blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-    },
-
-    shadows: {
-      // other shadows (xs, sm, lg) will be merged from default theme
-      md: '1px 1px 3px rgba(0,0,0,.25)',
-      xl: '5px 5px 3px rgba(0,0,0,.25)',
-    },
-
-    headings: {
-      fontFamily: 'Roboto, sans-serif',
-      sizes: {
-        h1: { fontSize: 30 },
-      },
-    },
-  }}
->
-  <YourApp />
-</MantineProvider>
-```
-
-## Nested MantineProviders
-
-If some parts of your application require different theme styles
-you can wrap them in another MantineProvider.
-Nested MantineProvider components do not inherit theme properties from parents
-and merge theme prop with default theme.
-
-<Demo data={ThemeDemos.nestedProviders} />
-
-## Styles on MantineProvider
-
-You can add styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
-All components that are rendered inside MantineProvider will inherit those styles:
-
-<Demo data={ThemeDemos.providerStyles} />
-
-## Normalize.css and global styles
-
-MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles:
-
-- background color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
-- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
-- font-family and font-smoothing based on theme
-- font-size to `theme.fontSize.md`
-
-To enable these global styles set `withNormalizeCSS` and `withGlobalStyles` props:
-
-```tsx
-<MantineProvider withNormalizeCSS withGlobalStyles>
-  <App />
-</MantineProvider>
-```
-
-## Configure emotion
-
-You can configure [emotion cache options](https://emotion.sh/docs/@emotion/cache#options) in MantineProvider.
-These options are usually used to configure styles insertion point. By default Mantine components styles and
-styles created with `createStyles` function are prepended to head. To change that behavior set `prepend` option to `false`:
-
-```tsx
-<MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
-  <App />
-</MantineProvider>
-```
-
-Emotion cache also allows you to use Stylis plugins. For example,
-you can use [stylis-plugin-rtl](https://github.com/styled-components/stylis-plugin-rtl)
-to add rtl support:
-
-```tsx
 import { MantineProvider } from '@mantine/core';
-import rtlPlugin from 'stylis-plugin-rtl';
 
-function Demo() {
+function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
-      <App />
+    <MantineProvider
+      theme={{
+        // Theme is deeply merged with default theme
+        colorScheme: 'light',
+        colors: {
+          // Add your color
+          'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+          // or replace default theme color
+          blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+        },
+
+        shadows: {
+          // other shadows (xs, sm, lg) will be merged from default theme
+          md: '1px 1px 3px rgba(0,0,0,.25)',
+          xl: '5px 5px 3px rgba(0,0,0,.25)',
+        },
+
+        headings: {
+          fontFamily: 'Roboto, sans-serif',
+          sizes: {
+            h1: { fontSize: 30 },
+          },
+        },
+      }}
+    >
+      <YourApp />
     </MantineProvider>
   );
 }
 ```
+
+## Store theme override object in a variable
+
+To store theme override object in a variable use `MantineThemeOverride` type:
+
+```tsx
+import { MantineThemeOverride, MantineProvider } from '@mantine/core';
+
+const myTheme: MantineThemeOverride = {
+  colorScheme: 'light',
+  primaryColor: 'orange',
+  defaultRadius: 0,
+};
+
+function App() {
+  return (
+    <MantineProvider theme={myTheme}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## use-mantine-theme hook
+
+Hook returns theme from MantineProvider context or default theme
+if you did not wrap application with MantineProvider.
+
+```tsx
+import { useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ background: theme.colors.blue[5] }} />;
+}
+```
+
+## Nested MantineProviders
+
+If some parts of your application require different theme settings, you can wrap them with another MantineProvider:
+
+<Demo data={ThemeDemos.nestedProviders} />
+
+Nested MantineProviders will inherit `theme` override, `emotionOptions`, `defaultProps` and `styles` from
+parent provider if `inherit` prop is set:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    // Parent MantineProvider
+    <MantineProvider
+      theme={{ colorScheme: 'dark' }}
+      styles={{ Button: { root: { fontWeight: 400 } } }}
+      defaultProps={{ Badge: { variant: 'outline' } }}
+      emotionOptions={{ key: 'custom-cache' }}
+    >
+      <Button>Affected only by parent provider</Button>
+
+      {/*
+        Child MantineProvider, inherits theme, emotionOptions, defaultProps and styles
+        from parent MantineProvider. Other properties specified on child provider will override parent props.
+        For example, theme override will be: { colorScheme: 'dark', primaryColor: 'red' }
+      */}
+      <MantineProvider theme={{ primaryColor: 'red' }} inherit>
+        <Button>Affected only by child provider</Button>
+      </MantineProvider>
+    </MantineProvider>
+  );
+}
+```
+
+## Styles on MantineProvider
+
+You can add context styles to components which support [Styles API](/theming/styles-api/) with MantineProvider.
+All components that are rendered inside MantineProvider will inherit those styles:
+
+<Demo data={ThemeDemos.providerStyles} />
+
+If component does not specify Styles API selectors, then in most cases you can add styles using `root` selector:
+
+```tsx
+import { MantineProvider, Text } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider styles={{ Text: { root: { fontSize: 20 } } }}>
+      <Text>20px text</Text>
+    </MantineProvider>
+  );
+}
+```
+
+## Default props on MantineProvider
+
+All Mantine components support default props on MantineProvider:
+
+```tsx
+import { MantineProvider, Button, Badge } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      defaultProps={{
+        Button: { color: 'red' },
+        Badge: { size: 'xl', radius: 0 },
+        // ... default props for other components
+      }}
+    >
+      {/* By default, Button will have red color */}
+      <Button>Red button</Button>
+
+      {/* Default color can be overwritten by props */}
+      <Button color="blue">Blue button</Button>
+
+      {/* By default, Badge will have xl size and 0 radius */}
+      <Badge>Badge</Badge>
+    </MantineProvider>
+  );
+}
+```
+
+## Normalize.css and global styles
+
+MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
+
+- background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
+- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
+- font-family and font-smoothing based on theme
+- font-size to `theme.fontSize.md`
+
+To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider withNormalizeCSS withGlobalStyles>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Configure emotion
+
+You can provide [emotion options](https://emotion.sh/docs/@emotion/cache#options) to MantineProvider to configure emotion cache:
+
+- `key` (required) – the prefix before class names, defaults to `mantine`
+- `container` – a DOM node that emotion will insert all of its style tags into. This is useful for inserting styles into iframes.
+- `prepend` - a boolean representing whether to prepend rather than append style tags into the specified container DOM node
+- `stylisPlugins` – an array of Stylis plugins that will be run by Stylis during preprocessing, for example [stylis-plugin-rtl](https://www.npmjs.com/package/stylis-plugin-rtl) can be used to add [RTL](/theming/rtl) support
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Change styles insertion point
+
+By default, Mantine components styles are prepended to head to allow overrides.
+To make Mantine styles override other styles, set `propend` to `false`.
+With this option styles will be added at the end of `head` element:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Change classes prefix
+
+To change classes prefix set `emotionOptions.key` property:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider emotionOptions={{ key: 'custom-key' }}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+Now classes will follow this pattern: `custom-key-{random part}`.

@@ -2,12 +2,20 @@ import React from 'react';
 import { Divider } from '@mantine/core';
 
 const code = `
-<Divider size="xs" />
-<Divider size="sm" />
-<Divider size="md" />
-<Divider size="lg" />
-<Divider size="xl" />
-<Divider size={10} />
+import { Divider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Divider size="xs" />
+      <Divider size="sm" />
+      <Divider size="md" />
+      <Divider size="lg" />
+      <Divider size="xl" />
+      <Divider size={10} />
+    </>
+  );
+}
 `;
 
 function Demo() {

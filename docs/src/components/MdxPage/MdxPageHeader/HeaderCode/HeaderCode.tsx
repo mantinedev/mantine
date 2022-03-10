@@ -29,7 +29,7 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
         arrowSize={4}
         gutter={15}
         color={clipboard.copied ? 'teal' : undefined}
-        style={{ flex: 1 }}
+        sx={{ flex: 1 }}
         disabled={mobile}
       >
         <button className={classes.copy} type="button" onClick={() => clipboard.copy(code)}>
