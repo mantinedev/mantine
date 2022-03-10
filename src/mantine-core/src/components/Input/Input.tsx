@@ -16,9 +16,6 @@ import useStyles, { InputVariant } from './Input.styles';
 export type InputStylesNames = ClassNames<typeof useStyles>;
 
 export interface InputBaseProps {
-  /** Sets border color to red and aria-invalid=true on input element */
-  invalid?: boolean;
-
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
@@ -46,9 +43,6 @@ export interface InputBaseProps {
   /** Defines input appearance, defaults to default in light color scheme and filled in dark */
   variant?: InputVariant;
 
-  /** Will input have multiple lines? */
-  multiline?: boolean;
-
   /** Disabled input state */
   disabled?: boolean;
 
@@ -59,6 +53,12 @@ export interface InputBaseProps {
 interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
   /** Static css selector base */
   __staticSelector?: string;
+
+  /** Sets border color to red and aria-invalid=true on input element */
+  invalid?: boolean;
+
+  /** Will input have multiple lines? */
+  multiline?: boolean;
 }
 
 export type InputProps<C> = PolymorphicComponentProps<C, _InputProps>;
