@@ -54,6 +54,8 @@ export default createStyles((theme, { overflow, size, centered }: ModalStyles) =
     width: theme.fn.size({ sizes, size }),
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    marginTop: centered ? 'auto' : undefined,
+    marginBottom: centered ? 'auto' : undefined,
   },
 
   header: {
