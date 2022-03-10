@@ -28,6 +28,6 @@ export default createStyles((theme) => ({
 
   wrapper: {
     paddingTop: theme.spacing.xl * 2,
-    paddingBottom: theme.spacing.xl * 4,
+    paddingBottom: theme.spacing.xl,
   },
 }));

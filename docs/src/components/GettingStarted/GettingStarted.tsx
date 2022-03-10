@@ -5,6 +5,7 @@ import Head from '../Head/Head';
 import { Installation } from './Installation/Installation';
 import { Guides } from './Guides/Guides';
 import { NextSteps } from './NextSteps/NextSteps';
+import { MantineUiBanner } from '../MantineUiBanner/MantineUiBanner';
 import useStyles from './GettingStarted.styles';
 
 export function GettingStarted() {
@@ -20,6 +21,7 @@ export function GettingStarted() {
           <Installation setDependencies={setDependencies} />
           <Guides dependencies={dependencies} />
           <NextSteps />
+          <MantineUiBanner />
         </Container>
       </div>
 
