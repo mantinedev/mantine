@@ -12,6 +12,14 @@ export default createStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center right',
     backgroundSize: 600,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+    [theme.fn.smallerThan('md')]: {
+      backgroundImage: 'none',
+      minHeight: 'unset',
+    },
   },
 
   content: {
