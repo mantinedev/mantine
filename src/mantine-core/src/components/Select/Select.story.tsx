@@ -119,7 +119,53 @@ function DynamicLabels(props: Partial<SelectProps>) {
   );
 }
 
+function CustomValueOnCreate() {
+  const [objectOptions, setObjectOptions] = React.useState([
+    {
+      label: 'AA',
+      value: 'aa',
+    },
+    {
+      label: 'BB',
+      value: 'bb',
+    },
+  ]);
+
+  return (
+    <Select
+      searchable
+      creatable
+      clearable
+      label="Type"
+      placeholder="Pick one"
+      autoComplete="off"
+      nothingFound="No options"
+      name="type"
+      getCreateLabel={(query) => `+ Create ${query}`}
+      onCreate={(d) => {
+        const customValue = Date.now();
+
+        setObjectOptions((items) => [
+          ...items,
+          {
+            label: d,
+            value: customValue,
+          },
+        ]);
+
+        return customValue;
+      }}
+      data={objectOptions}
+    />
+  );
+}
+
 storiesOf('@mantine/core/Select/stories', module)
+  .add('Custom value on create', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <CustomValueOnCreate />
+    </div>
+  ))
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
