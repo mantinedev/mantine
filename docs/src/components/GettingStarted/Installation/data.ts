@@ -10,6 +10,11 @@ export const PACKAGES_DATA = [
     dependencies: ['@mantine/hooks', '@mantine/core'],
   },
   {
+    package: '@mantine/form',
+    description: 'Form management library',
+    dependencies: ['@mantine/form'],
+  },
+  {
     package: '@mantine/dates',
     description: 'Date inputs, calendars',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dates', 'dayjs'],
