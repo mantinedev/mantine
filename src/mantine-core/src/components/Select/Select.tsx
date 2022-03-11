@@ -297,15 +297,16 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       handleChange(null);
       setDropdownOpened(false);
     } else {
-      handleChange(item.value);
 
       if (item.creatable) {
         if (typeof onCreate === 'function') {
-          const newValue = onCreate(item.value)
+          const newValue = onCreate(item.value);
           if (newValue !== undefined) {
-            handleChange(newValue)
+            handleChange(newValue);
           }
         }
+      } else {
+        handleChange(item.value);
       }
 
       if (inputMode === 'uncontrolled') {
