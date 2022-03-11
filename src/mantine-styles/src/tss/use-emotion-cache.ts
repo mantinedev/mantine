@@ -13,7 +13,7 @@ export const { getCache } = (() => {
   function _getCache(options?: Options) {
     if (cache === undefined || _key !== options?.key) {
       _key = options?.key || 'mantine';
-      cache = createCache(options || defaultCacheOptions);
+      cache = createCache(options?.key ? options : defaultCacheOptions);
     }
 
     return cache;
