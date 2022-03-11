@@ -149,7 +149,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <input
             type={reveal ? 'text' : 'password'}
             required={required}
-            className={cx(classes.innerInput, {
+            className={cx(classes.innerInput, classNames?.innerInput, {
               [classes.withIcon]: icon,
               [classes.invalid]: !!error,
             })}
