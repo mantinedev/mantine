@@ -30,18 +30,18 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
   const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(!hasActiveLink(group, pathname));
   const itemRefs = useRef<Record<string, HTMLElement>>({});
-  const { height } = useViewportSize();
 
   useEffect(() => {
     if (hasActiveLink(group, pathname) && itemRefs.current[pathname]) {
       const element = itemRefs.current[pathname];
+      const height = typeof window !== 'undefined' ? window.innerHeight : 0;
       const { top, bottom } = element.getBoundingClientRect();
 
       if (top < HEADER_HEIGHT || bottom > height) {
         element.scrollIntoView({ block: 'center' });
       }
     }
-  }, [pathname, height]);
+  }, [pathname]);
 
   const uncategorized = (
     group.group === 'changelog' ? [...group.uncategorized].reverse() : group.uncategorized
