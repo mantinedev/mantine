@@ -192,7 +192,6 @@ export function Modal(props: ModalProps) {
           <Box className={cx(classes.root, className)} {...others}>
             <div
               className={classes.inner}
-              onMouseDown={() => closeOnClickOutside && onClose()}
               onKeyDownCapture={(event) => {
                 const shouldTrigger =
                   (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
@@ -201,7 +200,6 @@ export function Modal(props: ModalProps) {
               ref={focusTrapRef}
             >
               <Paper<'div'>
-                onMouseDown={(event) => event.stopPropagation()}
                 className={classes.modal}
                 shadow={shadow}
                 p={padding}
@@ -211,11 +209,7 @@ export function Modal(props: ModalProps) {
                 aria-describedby={bodyId}
                 aria-modal
                 tabIndex={-1}
-                style={{
-                  ...transitionStyles.modal,
-                  marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
-                  zIndex: 3,
-                }}
+                style={transitionStyles.modal}
               >
                 {(title || withCloseButton) && (
                   <div className={classes.header}>
@@ -238,18 +232,19 @@ export function Modal(props: ModalProps) {
                   {children}
                 </div>
               </Paper>
-            </div>
-
-            <div style={transitionStyles.overlay}>
-              <Overlay
-                className={classes.overlay}
-                zIndex={0}
-                color={
-                  overlayColor ||
-                  (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
-                }
-                opacity={_overlayOpacity}
-              />
+              <div style={transitionStyles.overlay}>
+                <Overlay
+                  className={classes.overlay}
+                  sx={{ position: 'fixed' }}
+                  zIndex={0}
+                  onMouseDown={() => closeOnClickOutside && onClose()}
+                  color={
+                    overlayColor ||
+                    (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
+                  }
+                  opacity={_overlayOpacity}
+                />
+              </div>
             </div>
           </Box>
         )}

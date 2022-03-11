@@ -99,7 +99,7 @@ const defaultProps: Partial<PopoverProps> = {
   shadow: 'sm',
   positionDependencies: [],
   withinPortal: true,
-  clickOutsideEvents: ['click', 'touchstart'],
+  clickOutsideEvents: ['mousedown', 'touchstart'],
 };
 
 export function Popover(props: PopoverProps) {

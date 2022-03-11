@@ -35,7 +35,6 @@ export default createStyles((theme, { overflow, size, centered, zIndex }: ModalS
     left: 0,
     right: 0,
     bottom: 0,
-    zIndex: 4,
     overflowY: 'auto',
     padding: `${theme.spacing.xl * 2}px ${theme.spacing.md}px`,
     display: 'flex',
@@ -52,12 +51,13 @@ export default createStyles((theme, { overflow, size, centered, zIndex }: ModalS
 
   modal: {
     position: 'relative',
-    zIndex: 5,
     width: theme.fn.size({ sizes, size }),
     outline: 0,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     marginTop: centered ? 'auto' : undefined,
     marginBottom: centered ? 'auto' : undefined,
+    zIndex: 1,
+    marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
   },
 
   header: {

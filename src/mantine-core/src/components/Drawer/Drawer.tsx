@@ -207,14 +207,13 @@ export function Drawer(props: DrawerProps) {
             className={cx(classes.root, { [classes.noOverlay]: !withOverlay }, className)}
             role="dialog"
             aria-modal
-            onMouseDown={() => closeOnClickOutside && onClose()}
             {...others}
           >
             <Paper<'div'>
               onMouseDown={(event) => event.stopPropagation()}
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}
-              style={{ ...transitionStyles.drawer, zIndex: zIndex + 2 }}
+              style={transitionStyles.drawer}
               radius={0}
               tabIndex={-1}
               onKeyDownCapture={(event) => {
@@ -246,9 +245,10 @@ export function Drawer(props: DrawerProps) {
             {withOverlay && (
               <div style={transitionStyles.overlay}>
                 <Overlay
+                  onMouseDown={() => closeOnClickOutside && onClose()}
                   className={classes.overlay}
                   opacity={_overlayOpacity}
-                  zIndex={zIndex}
+                  zIndex={0}
                   color={
                     overlayColor ||
                     (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
