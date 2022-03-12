@@ -9,7 +9,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import { getElementHeight, getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
+import { getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
 import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
@@ -62,26 +62,16 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
   const theme = useMantineTheme();
   const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
   const navbarWidth = getNavbarBaseWidth(navbar);
-  const headerHeight = getElementHeight(header);
-  const navbarHeight = getElementHeight(navbar);
   const { classes, cx } = useStyles(
     {
       padding,
       fixed,
       navbarWidth,
-      headerHeight,
       navbarBreakpoints,
       navbarOffsetBreakpoint,
     },
     { styles, classNames, name: 'AppShell' }
   );
-
-  const _navbar = navbar
-    ? React.cloneElement(navbar, {
-        height: navbarHeight !== '0px' ? navbarHeight : `calc(100vh - ${headerHeight})`,
-        position: { top: headerHeight, left: 0 },
-      })
-    : null;
 
   return (
     <AppShellProvider value={{ fixed, zIndex }}>
@@ -89,7 +79,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
         {header}
 
         <div className={classes.body}>
-          {_navbar}
+          {navbar}
           <main className={classes.main}>{children}</main>
         </div>
       </Box>

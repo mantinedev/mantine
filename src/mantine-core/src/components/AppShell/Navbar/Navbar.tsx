@@ -48,7 +48,6 @@ type NavbarComponent = ForwardRefWithStaticComponents<
 >;
 
 const defaultProps: Partial<NavbarProps> = {
-  height: '100vh',
   fixed: false,
   position: { top: 0, left: 0 },
   zIndex: getDefaultZIndex('app'),

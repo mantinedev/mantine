@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, getDefaultZIndex, useMantineDefaultProps, Global } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
 import useStyles, { HeaderPosition } from './Header.styles';
@@ -40,6 +40,13 @@ export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, 
   return (
     <Box component="nav" className={cx(classes.root, className)} ref={ref} {...others}>
       {children}
+      <Global
+        styles={() => ({
+          ':root': {
+            '--mantine-header-height': `${height}px`,
+          },
+        })}
+      />
     </Box>
   );
 });

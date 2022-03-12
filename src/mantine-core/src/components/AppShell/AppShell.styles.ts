@@ -3,7 +3,6 @@ import { createStyles, MantineNumberSize, MantineTheme, CSSObject } from '@manti
 export interface AppShellStylesParams {
   padding: MantineNumberSize;
   fixed: boolean;
-  headerHeight: string;
   navbarBreakpoints: [number, { width: string | number }][];
   navbarWidth: string;
   navbarOffsetBreakpoint: MantineNumberSize;
@@ -35,7 +34,7 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
 
   return {
     minHeight: '100vh',
-    paddingTop: `calc(${props.headerHeight} + ${padding}px)`,
+    paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding}px)`,
     paddingLeft: `calc(${props.navbarWidth} + ${padding}px)`,
     paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
     paddingBottom: theme.fn.size({ size: padding, sizes: theme.spacing }),
