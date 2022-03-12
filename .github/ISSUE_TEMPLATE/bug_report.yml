@@ -15,11 +15,13 @@ body:
         - '@mantine/core'
         - '@mantine/dates'
         - '@mantine/hooks'
+        - '@mantine/form'
         - '@mantine/notifications'
         - '@mantine/rte'
         - '@mantine/prism'
         - '@mantine/modals'
         - '@mantine/dropzone'
+        - '@mantine/spotlight'
     validations:
       required: true
   - type: textarea
