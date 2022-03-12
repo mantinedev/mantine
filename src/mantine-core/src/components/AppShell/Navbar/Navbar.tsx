@@ -8,6 +8,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
+import { useAppShellContext } from '../AppShell.context';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
@@ -71,9 +72,17 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       children,
       ...others
     } = useMantineDefaultProps('Navbar', defaultProps, props);
+    const ctx = useAppShellContext();
 
     const { classes, cx } = useStyles(
-      { width, height, fixed, position, hiddenBreakpoint, zIndex },
+      {
+        width,
+        height,
+        fixed: ctx.fixed || fixed,
+        position,
+        hiddenBreakpoint,
+        zIndex: ctx.zIndex || zIndex,
+      },
       { classNames, styles, name: 'Navbar' }
     );
 

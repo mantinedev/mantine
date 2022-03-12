@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
+import { useAppShellContext } from '../AppShell.context';
 import useStyles, { HeaderPosition } from './Header.styles';
 
 export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'nav'> {
@@ -29,9 +30,10 @@ const defaultProps: Partial<HeaderProps> = {
 export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, ref) => {
   const { children, className, classNames, styles, height, fixed, position, zIndex, ...others } =
     useMantineDefaultProps('Header', defaultProps, props);
+  const ctx = useAppShellContext();
 
   const { classes, cx } = useStyles(
-    { height, fixed, position, zIndex },
+    { height, fixed: ctx.fixed || fixed, position, zIndex: ctx.zIndex || zIndex },
     { name: 'Header', classNames, styles }
   );
 

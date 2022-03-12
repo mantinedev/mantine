@@ -10,6 +10,7 @@ import {
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { getElementHeight, getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
+import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
@@ -74,25 +75,25 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     },
     { styles, classNames, name: 'AppShell' }
   );
-  const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
+
   const _navbar = navbar
     ? React.cloneElement(navbar, {
-        fixed,
-        zIndex,
         height: navbarHeight !== '0px' ? navbarHeight : `calc(100vh - ${headerHeight})`,
         position: { top: headerHeight, left: 0 },
       })
     : null;
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
-      {_header}
+    <AppShellProvider value={{ fixed, zIndex }}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        {header}
 
-      <div className={classes.body}>
-        {_navbar}
-        <main className={classes.main}>{children}</main>
-      </div>
-    </Box>
+        <div className={classes.body}>
+          {_navbar}
+          <main className={classes.main}>{children}</main>
+        </div>
+      </Box>
+    </AppShellProvider>
   );
 });
 

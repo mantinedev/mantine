@@ -8,6 +8,16 @@ import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { AppShell } from './AppShell';
 
+const content = Array(30)
+  .fill(0)
+  .map(() => (
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus officiis labore alias nam,
+      voluptate aperiam non quidem consequuntur enim unde corrupti quaerat possimus facilis. Ipsa
+      quos alias doloremque at veniam?
+    </p>
+  ));
+
 function NavbarToggle() {
   const [opened, setOpened] = useState(false);
   const theme = useMantineTheme();
@@ -22,7 +32,7 @@ function NavbarToggle() {
       navbarOffsetBreakpoint="sm"
       fixed
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
           <Text>Application navbar</Text>
         </Navbar>
       }
@@ -44,7 +54,7 @@ function NavbarToggle() {
         </Header>
       }
     >
-      <Text>My app content</Text>
+      {content}
     </AppShell>
   );
 }
@@ -55,14 +65,14 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
       header={<Header height={50}>Header</Header>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
-      App shell
+      {content}
     </AppShell>
   ))
   .add('Static without Header', () => (
-    <AppShell navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}>App shell</AppShell>
+    <AppShell navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}>{content}</AppShell>
   ))
   .add('Static without Navbar', () => (
-    <AppShell header={<Header height={50}>Header</Header>}>App shell</AppShell>
+    <AppShell header={<Header height={50}>Header</Header>}>{content}</AppShell>
   ))
   .add('Fixed', () => (
     <AppShell
@@ -70,22 +80,22 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
       header={<Header height={50}>Header</Header>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
-      App shell
+      {content}
     </AppShell>
   ))
   .add('Fixed without Navbar', () => (
     <AppShell fixed header={<Header height={50}>Header</Header>}>
-      App shell
+      {content}
     </AppShell>
   ))
   .add('Fixed without Header', () => (
     <AppShell fixed navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}>
-      App shell
+      {content}
     </AppShell>
   ))
   .add('Fixed with Navbar breakpoints', () => (
     <AppShell fixed navbar={<Navbar width={{ base: 100, sm: 200, md: 300 }}>Navbar</Navbar>}>
-      App shell
+      {content}
     </AppShell>
   ))
   .add('With offset breakpoint', () => (
@@ -94,7 +104,7 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
       navbarOffsetBreakpoint="sm"
       navbar={<Navbar width={{ md: 350, lg: 400 }}>Navbar</Navbar>}
     >
-      App shell
+      {content}
     </AppShell>
   ))
   .add('With navbar toggle', () => <NavbarToggle />)
@@ -105,7 +115,7 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
         navbarOffsetBreakpoint="sm"
         navbar={<Navbar width={{ md: 350, lg: 400 }}>Navbar</Navbar>}
       >
-        App shell
+        {content}
       </AppShell>
     </MantineProvider>
   ))
