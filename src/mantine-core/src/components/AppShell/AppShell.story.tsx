@@ -59,6 +59,54 @@ function NavbarToggle() {
   );
 }
 
+function WrappedNavbar({ opened }: { opened: boolean }) {
+  return (
+    <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
+      <Text>Application navbar</Text>
+    </Navbar>
+  );
+}
+
+function WrappedHeader({ opened, setOpened }: any) {
+  return (
+    <Header height={50} p="md">
+      <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+        <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+          <Burger
+            opened={opened}
+            onClick={() => setOpened((o) => !o)}
+            size="sm"
+            color={DEFAULT_THEME.colors.gray[6]}
+            mr="xl"
+          />
+        </MediaQuery>
+
+        <Text>Application header</Text>
+      </div>
+    </Header>
+  );
+}
+
+function WrappedAppShell() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <AppShell
+      styles={(theme) => ({
+        main: {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        },
+      })}
+      navbarOffsetBreakpoint="sm"
+      fixed
+      navbar={<WrappedNavbar opened={opened} />}
+      header={<WrappedHeader opened={opened} setOpened={setOpened} />}
+    >
+      {content}
+    </AppShell>
+  );
+}
+
 storiesOf('@mantine/core/AppShell/stories/AppShell', module)
   .add('Static', () => (
     <AppShell
@@ -136,4 +184,5 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
     >
       <div style={{ background: 'silver', width: '100%', height: '100%' }} />
     </AppShell>
-  ));
+  ))
+  .add('Wrapped Navbar and Header', () => <WrappedAppShell />);

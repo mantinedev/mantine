@@ -3,8 +3,6 @@ import { createStyles, MantineNumberSize, MantineTheme, CSSObject } from '@manti
 export interface AppShellStylesParams {
   padding: MantineNumberSize;
   fixed: boolean;
-  navbarBreakpoints: [number, { width: string | number }][];
-  navbarWidth: string;
   navbarOffsetBreakpoint: MantineNumberSize;
 }
 
@@ -18,27 +16,15 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     return { padding };
   }
 
-  const queries = props.navbarBreakpoints.reduce((acc, [breakpoint, breakpointSize]) => {
-    acc[`@media (min-width: ${breakpoint + 1}px)`] = {
-      paddingLeft: `calc(${breakpointSize}px + ${padding}px)`,
-    };
-
-    return acc;
-  }, {});
-
-  if (offset) {
-    queries[`@media (max-width: ${offset}px)`] = {
-      paddingLeft: padding,
-    };
-  }
-
   return {
     minHeight: '100vh',
     paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding}px)`,
-    paddingLeft: `calc(${props.navbarWidth} + ${padding}px)`,
+    paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding}px)`,
     paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
     paddingBottom: theme.fn.size({ size: padding, sizes: theme.spacing }),
-    ...queries,
+    [`@media (max-width: ${offset}px)`]: {
+      paddingLeft: padding,
+    },
   };
 }
 

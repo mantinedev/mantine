@@ -6,9 +6,11 @@ import {
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
+  Global,
 } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
+import { getSortedBreakpoints } from '../utils';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
@@ -73,7 +75,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
     } = useMantineDefaultProps('Navbar', defaultProps, props);
     const ctx = useAppShellContext();
 
-    const { classes, cx } = useStyles(
+    const { classes, cx, theme } = useStyles(
       {
         width,
         height,
@@ -85,6 +87,17 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
       { classNames, styles, name: 'Navbar' }
     );
 
+    const breakpoints = getSortedBreakpoints(width, theme).reduce(
+      (acc, [breakpoint, breakpointSize]) => {
+        acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+          '--mantine-navbar-width': `${breakpointSize}px`,
+        };
+
+        return acc;
+      },
+      {}
+    );
+
     return (
       <Box
         component="nav"
@@ -93,6 +106,15 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
         {...others}
       >
         {children}
+
+        <Global
+          styles={() => ({
+            ':root': {
+              '--mantine-navbar-width': width?.base || '0px',
+              ...breakpoints,
+            },
+          })}
+        />
       </Box>
     );
   }

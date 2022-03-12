@@ -2,14 +2,12 @@ import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
-  useMantineTheme,
   ClassNames,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import { getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
 import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
@@ -59,17 +57,8 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     classNames,
     ...others
   } = useMantineDefaultProps('AppShell', defaultProps, props);
-  const theme = useMantineTheme();
-  const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
-  const navbarWidth = getNavbarBaseWidth(navbar);
   const { classes, cx } = useStyles(
-    {
-      padding,
-      fixed,
-      navbarWidth,
-      navbarBreakpoints,
-      navbarOffsetBreakpoint,
-    },
+    { padding, fixed, navbarOffsetBreakpoint },
     { styles, classNames, name: 'AppShell' }
   );
 
