@@ -144,7 +144,8 @@ By default, menu items render as button, to change that set `component` prop on 
 // Regular anchor as Menu.Item root element
 <Menu.Item component="a" href="https://mantine/dev" target="_blank" />
 
-// React router link as Menu.Item root element
+// react-router-dom Link as Menu.Item root element
+// !important: This approach cannot be used with Next.js Link component
 <Menu.Item component={Link} to="/hello" />
 ```
 
@@ -152,28 +153,9 @@ By default, menu items render as button, to change that set `component` prop on 
 
 ## Menu.Item as Next.js Link
 
-Create a wrapper component for Next.js Link:
-
-```tsx
-import Link from 'next/link';
-import { forwardRef } from 'react';
-
-export const NextLink = forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<'a'>>(
-  (props, ref) => (
-    <Link href={props.href}>
-      <a {...props} ref={ref}>
-        {props.children}
-      </a>
-    </Link>
-  )
-);
-```
-
-Pass this component to Menu.Item:
-
 ```tsx
 import { Menu } from '@mantine/core';
-import { NextLink } from './NextLink';
+import { NextLink } from '@mantine/next';
 
 function Demo() {
   return (
