@@ -84,7 +84,7 @@ export function testResolver(schema: (values: Record<string, any>) => FormErrors
 
     act(() => {
       const results = hook.result.current.validateField('name');
-      expect(results).toStrictEqual({ valid: false, error: RESOLVER_ERROR_MESSAGES.name });
+      expect(results).toStrictEqual({ hasError: true, error: RESOLVER_ERROR_MESSAGES.name });
     });
 
     expect(hook.result.current.errors).toStrictEqual({ name: RESOLVER_ERROR_MESSAGES.name });

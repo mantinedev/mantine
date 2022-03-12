@@ -37,6 +37,7 @@ function Demo() {
     <SpotlightProvider
       shortcut="mod + alt + T"
       nothingFoundMessage="Nothing found..."
+      actionsWrapperComponent={ActionsWrapper}
       {...otherProps}
     >
       <YourApp />

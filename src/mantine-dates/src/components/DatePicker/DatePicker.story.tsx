@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider, TextInput, Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { MANTINE_SIZES, MantineProvider, TextInput, Modal, Button } from '@mantine/core';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { DatePicker } from './DatePicker';
 
@@ -45,6 +46,18 @@ function ControlledFreeInput() {
   );
 }
 
+function WithinModal() {
+  const [opened, handlers] = useDisclosure(false);
+  return (
+    <>
+      <Button onClick={handlers.open}>Open Modal</Button>
+      <Modal opened={opened} onClose={handlers.close} title="Modal with DatePicker">
+        <DatePicker mt="md" id="dateOfBirth" label="Date Of Birth" placeholder="Date Of Birth" />
+      </Modal>
+    </>
+  );
+}
+
 const sizes = MANTINE_SIZES.map((size) => (
   <DatePicker
     placeholder={`${size} placeholder`}
@@ -69,11 +82,7 @@ storiesOf('@mantine/dates/DatePicker/stories', module)
       <DatePicker hideOutsideDates label="Date picker" />
     </div>
   ))
-  .add('Within modal', () => (
-    <Modal opened onClose={() => {}} title="Modal with DatePicker">
-      <DatePicker mt="md" id="dateOfBirth" label="Date Of Birth" placeholder="Date Of Birth" />
-    </Modal>
-  ))
+  .add('Within modal', () => <WithinModal />)
   .add('Dropdown type modal', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker

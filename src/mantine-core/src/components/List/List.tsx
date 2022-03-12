@@ -6,9 +6,9 @@ import {
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
+import { ListContext } from './List.context';
 import useStyles from './List.styles';
 
 export type ListStylesNames = ListItemStylesNames | ClassNames<typeof useStyles>;
@@ -71,25 +71,17 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       { classNames, styles, name: 'List' }
     );
 
-    const items = filterChildrenByType(children, ListItem).map((item) =>
-      React.cloneElement(item, {
-        classNames,
-        styles,
-        spacing,
-        center,
-        icon: item.props?.icon || icon,
-      })
-    );
-
     return (
-      <Box<any>
-        component={type === 'unordered' ? 'ul' : 'ol'}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        {items}
-      </Box>
+      <ListContext.Provider value={{ classNames, styles, spacing, center, icon }}>
+        <Box<any>
+          component={type === 'unordered' ? 'ul' : 'ol'}
+          className={cx(classes.root, className)}
+          ref={ref}
+          {...others}
+        >
+          {children}
+        </Box>
+      </ListContext.Provider>
     );
   }
 ) as any;

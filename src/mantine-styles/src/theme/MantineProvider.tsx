@@ -5,6 +5,7 @@ import { DEFAULT_THEME } from './default-theme';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
 import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
+import { filterProps } from './utils/filter-props/filter-props';
 import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
@@ -47,7 +48,7 @@ export function useMantineDefaultProps<T extends Record<string, any>>(
   props: T
 ): T {
   const contextProps = useContext(MantineProviderContext)?.defaultProps?.[component] || {};
-  return { ...defaultProps, ...contextProps, ...props };
+  return { ...defaultProps, ...contextProps, ...filterProps(props) };
 }
 
 function GlobalStyles() {

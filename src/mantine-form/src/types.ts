@@ -22,7 +22,7 @@ export interface FormValidationResult {
 }
 
 export interface FormFieldValidationResult {
-  valid: boolean;
+  hasError: boolean;
   error: React.ReactNode;
 }
 

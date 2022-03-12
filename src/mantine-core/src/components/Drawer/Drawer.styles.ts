@@ -72,6 +72,7 @@ export default createStyles((theme, { position, size, zIndex }: DrawerStylesPara
     maxHeight: '100vh',
     position: 'fixed',
     outline: 0,
+    zIndex: 1,
   },
 
   title: {

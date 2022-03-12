@@ -3,7 +3,6 @@ import type { MenuStylesNames } from '@mantine/core';
 export const Menu: Record<MenuStylesNames, string> = {
   root: 'Root element',
   body: 'Menu body',
-  divider: 'Divider inside menu body',
   label: 'Menu label wrapper (Text component)',
   item: 'MenuItem root element',
   itemHovered: 'MenuItem hovered modifier',

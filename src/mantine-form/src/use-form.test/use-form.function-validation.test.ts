@@ -72,7 +72,7 @@ describe('@mantine/form/use-form function validation', () => {
 
     act(() => {
       const result = hook.result.current.validateField('banana');
-      expect(result).toStrictEqual({ valid: false, error: 'invalid banana' });
+      expect(result).toStrictEqual({ hasError: true, error: 'invalid banana' });
     });
 
     expect(hook.result.current.errors).toStrictEqual({ banana: 'invalid banana' });
@@ -80,7 +80,7 @@ describe('@mantine/form/use-form function validation', () => {
     act(() => hook.result.current.setFieldValue('banana', 'test-banana'));
     act(() => {
       const result = hook.result.current.validateField('banana');
-      expect(result).toStrictEqual({ valid: true, error: null });
+      expect(result).toStrictEqual({ hasError: false, error: null });
     });
 
     expect(hook.result.current.errors).toStrictEqual({});

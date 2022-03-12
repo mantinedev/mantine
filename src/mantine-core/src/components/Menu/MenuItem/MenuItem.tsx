@@ -1,18 +1,14 @@
-import React, { forwardRef } from 'react';
-import {
-  MantineNumberSize,
-  ClassNames,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  DefaultProps,
-  MantineColor,
-} from '@mantine/styles';
+import React, { forwardRef, useRef } from 'react';
+import { ClassNames, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
+import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../../Box';
+import { useMenuContext } from '../Menu.context';
+import { getContextItemIndex } from '../../../utils';
 import useStyles from './MenuItem.styles';
 
 export type MenuItemStylesNames = ClassNames<typeof useStyles>;
 
-export interface SharedMenuItemProps extends DefaultProps<MenuItemStylesNames> {
+export interface SharedMenuItemProps extends DefaultProps {
   /** Item label */
   children: React.ReactNode;
 
@@ -27,57 +23,53 @@ export interface SharedMenuItemProps extends DefaultProps<MenuItemStylesNames> {
 
   /** Is item disabled */
   disabled?: boolean;
-
-  /** Is item hovered, controlled by parent Menu component */
-  hovered?: boolean;
-
-  /** Called when item is hovered, controlled by parent Menu component */
-  onHover?(): void;
-
-  /** Border radius, controlled by parent Menu component */
-  radius?: MantineNumberSize;
 }
 
-export type MenuItemProps<C> = PolymorphicComponentProps<C, SharedMenuItemProps>;
-
-export type MenuItemComponent = <C = 'button'>(props: MenuItemProps<C>) => React.ReactElement;
-
-export interface MenuItemType {
-  type: any;
-  props: MenuItemProps<'button'>;
-  ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
+interface _MenuItemProps
+  extends SharedMenuItemProps,
+    Omit<React.ComponentPropsWithoutRef<'button'>, keyof SharedMenuItemProps> {
+  component: any;
 }
 
-export const MenuItem: MenuItemComponent & { displayName?: string } = forwardRef(
-  <C extends React.ElementType = 'button'>(
+export const _MenuItem = forwardRef(
+  (
     {
       className,
       children,
-      onHover,
-      hovered,
       icon,
       color,
       disabled,
       rightSection,
       component,
-      classNames,
-      styles,
-      radius,
+      onClick,
       ...others
-    }: MenuItemProps<C>,
-    ref: PolymorphicRef<C>
+    }: _MenuItemProps,
+    ref: React.ForwardedRef<HTMLButtonElement>
   ) => {
+    const itemRef = useRef<HTMLButtonElement>();
+    const { hovered, onItemHover, radius, onItemKeyDown, classNames, styles, onItemClick } =
+      useMenuContext();
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
+    const itemIndex = getContextItemIndex(
+      { elementSelector: '.mantine-Menu-item', parentClassName: 'mantine-Menu-body' },
+      itemRef.current
+    );
 
     return (
-      <Box<any>
+      <Box
         component={component || 'button'}
         type="button"
         role="menuitem"
-        className={cx(classes.item, { [classes.itemHovered]: hovered }, className)}
-        onMouseEnter={() => !disabled && onHover()}
-        ref={ref}
+        className={cx(classes.item, { [classes.itemHovered]: hovered === itemIndex }, className)}
+        onMouseEnter={() => !disabled && onItemHover(itemIndex)}
+        onMouseLeave={() => onItemHover(-1)}
+        onKeyDown={onItemKeyDown}
+        ref={mergeRefs(ref, itemRef)}
         disabled={disabled}
+        onClick={(event: React.MouseEvent<any, MouseEvent>) => {
+          typeof onClick === 'function' && onClick(event);
+          onItemClick();
+        }}
         {...others}
       >
         <div className={classes.itemInner}>
@@ -91,6 +83,11 @@ export const MenuItem: MenuItemComponent & { displayName?: string } = forwardRef
       </Box>
     );
   }
-) as any;
+);
+
+export type MenuItemProps<C> = PolymorphicComponentProps<C, SharedMenuItemProps>;
+type MenuItemComponent = <C = 'button'>(props: MenuItemProps<C>) => React.ReactElement;
+
+export const MenuItem: MenuItemComponent & { displayName?: string } = _MenuItem as any;
 
 MenuItem.displayName = '@mantine/core/MenuItem';

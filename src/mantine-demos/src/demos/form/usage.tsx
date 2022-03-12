@@ -15,7 +15,7 @@ function Demo() {
     },
 
     validate: {
-      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : true),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
 
@@ -52,7 +52,7 @@ function Demo() {
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : true),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
 

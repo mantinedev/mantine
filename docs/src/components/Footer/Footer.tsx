@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container, Text, Group, Button } from '@mantine/core';
-import { ArrowRightIcon } from '@primer/octicons-react';
+import { Container, Text, Group } from '@mantine/core';
 import { Logo } from '../Logo/Logo';
 import { SocialButton } from '../SocialButton/SocialButton';
 import { LinksGroup } from './LinksGroup/LinksGroup';
@@ -30,27 +29,7 @@ export function Footer({ withNavbar }: FooterProps) {
               </Text>
             </div>
 
-            <div className={classes.groups}>
-              {groups}
-
-              <div className={classes.feedback}>
-                <Text className={classes.feedbackTitle}>Feedback</Text>
-                <Text className={classes.feedbackDescription} size="sm">
-                  Your feedback is most valuable contribution to the project, please share how you
-                  use Mantine, what features are missing and what is done good
-                </Text>
-
-                <Button
-                  component="a"
-                  href="https://github.com/mantinedev/mantine/discussions/new"
-                  variant="default"
-                  rightIcon={<ArrowRightIcon size={14} />}
-                  sx={{ paddingRight: 12 }}
-                >
-                  Leave feedback
-                </Button>
-              </div>
-            </div>
+            <div className={classes.groups}>{groups}</div>
           </div>
 
           <div className={classes.afterFooter}>

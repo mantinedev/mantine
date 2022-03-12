@@ -1,6 +1,7 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { Box } from '../../Box';
+import { useListContext } from '../List.context';
 import useStyles from './ListItem.styles';
 
 export type ListItemStylesNames = ClassNames<typeof useStyles>;
@@ -13,34 +14,21 @@ export interface ListItemProps
 
   /** Item content */
   children: React.ReactNode;
-
-  /** Predefined spacing between items or number to set value in px */
-  spacing?: MantineNumberSize;
-
-  /** Center item content with icon */
-  center?: boolean;
 }
 
-export function ListItem({
-  className,
-  children,
-  icon,
-  classNames,
-  styles,
-  spacing,
-  center,
-  ...others
-}: ListItemProps) {
+export function ListItem({ className, children, icon, ...others }: ListItemProps) {
+  const { classNames, styles, icon: ctxIcon, spacing, center } = useListContext();
+  const _icon = icon || ctxIcon;
   const { classes, cx } = useStyles({ spacing, center }, { classNames, styles, name: 'List' });
 
   return (
     <Box
       component="li"
-      className={cx(classes.item, { [classes.withIcon]: icon }, className)}
+      className={cx(classes.item, { [classes.withIcon]: _icon }, className)}
       {...others}
     >
       <div className={classes.itemWrapper}>
-        {icon && <span className={classes.itemIcon}>{icon}</span>}
+        {_icon && <span className={classes.itemIcon}>{_icon}</span>}
         <span>{children}</span>
       </div>
     </Box>

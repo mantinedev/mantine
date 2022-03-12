@@ -63,7 +63,7 @@ export interface UseFormReturnType<T> {
   ) => GetInputProps<L>;
 }
 
-export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
+export function useForm<T extends { [key: string]: any }, KK extends keyof T = string>({
   initialValues,
   initialErrors,
   validate: rules,
@@ -148,7 +148,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
 
   const validateField = (field: string) => {
     const results = validateFieldValue(field, schema || rules, values);
-    results.valid ? clearFieldError(field) : setFieldError(field, results.error);
+    results.hasError ? setFieldError(field, results.error) : clearFieldError(field);
     return results;
   };
 

@@ -9,7 +9,6 @@ import {
   actAsync,
 } from '@mantine/tests';
 import { Divider } from '../Divider';
-import { Button } from '../Button';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
 import { Menu, MenuProps } from './Menu';
@@ -19,16 +18,19 @@ const defaultProps: MenuProps = {
   menuButtonLabel: 'test-menu',
   withinPortal: false,
   children: [
-    <Menu.Item>test-1</Menu.Item>,
-    <Menu.Item>test-2</Menu.Item>,
-    <Divider />,
-    <Menu.Item>test-3</Menu.Item>,
-    <Divider />,
+    <Menu.Item key="1">test-1</Menu.Item>,
+    <Menu.Item key="2">test-2</Menu.Item>,
+    <Divider key="3" />,
+    <Menu.Item key="4">test-3</Menu.Item>,
+    <Divider key="5" />,
   ],
 };
 
 describe('@mantine/core/Menu', () => {
-  checkAccessibility([<Menu opened {...defaultProps} />]);
+  checkAccessibility([
+    <Menu opened {...defaultProps} />,
+    <Menu opened={false} {...defaultProps} />,
+  ]);
   itSupportsFocusEvents(Menu, defaultProps, '.mantine-ActionIcon-root');
   itSupportsSystemProps({
     component: Menu,
@@ -74,28 +76,6 @@ describe('@mantine/core/Menu', () => {
     expect(container.querySelector('.mantine-Menu-body')).toBe(null);
     await actAsync(() => userEvent.hover(screen.getByLabelText('test-menu')));
     expect(container.querySelector('.mantine-Menu-body')).toBeInTheDocument();
-  });
-
-  it('filters out unexpected children', async () => {
-    const { container } = await renderWithAct(
-      <Menu withinPortal={false} opened>
-        <Menu.Item>Child 1</Menu.Item>
-        <Menu.Label>Label 1</Menu.Label>
-        <Menu.Label>Label 2</Menu.Label>
-        <Divider />
-        <Divider />
-        <p className="unexpected">Unexpected child 1</p>
-        <div className="unexpected">Unexpected child 1</div>
-        <Menu.Item>Child 2</Menu.Item>
-        <Button>Unexpected component</Button>
-      </Menu>
-    );
-
-    expect(container.querySelectorAll('.mantine-Menu-item')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Menu-label')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Menu-divider')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
-    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
   it('preserves control onClick event', async () => {

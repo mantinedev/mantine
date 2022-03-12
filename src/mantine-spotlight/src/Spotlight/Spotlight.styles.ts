@@ -20,6 +20,7 @@ export default createStyles((theme, { centered, maxWidth, topOffset }: Spotlight
     width: '100%',
     maxWidth,
     overflow: 'hidden',
+    marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
   },
 
   overlay: {

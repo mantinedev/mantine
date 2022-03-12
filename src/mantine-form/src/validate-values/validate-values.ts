@@ -54,6 +54,6 @@ export function validateFieldValue(
   values: Record<string, any>
 ): FormFieldValidationResult {
   const results = validateValues(rules, values);
-  const valid = !(field in results.errors);
-  return { valid, error: valid ? null : results.errors[field] };
+  const hasError = field in results.errors;
+  return { hasError, error: hasError ? results.errors[field] : null };
 }

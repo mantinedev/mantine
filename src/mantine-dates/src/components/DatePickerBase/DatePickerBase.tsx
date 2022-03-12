@@ -176,7 +176,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       amountOfMonths = 1,
       onDropdownClose,
       onDropdownOpen,
-      clickOutsideEvents = ['mouseup', 'touchstart'],
+      clickOutsideEvents = ['mousedown', 'touchstart'],
       modalZIndex,
       ...others
     }: DatePickerBaseProps,

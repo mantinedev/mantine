@@ -1,0 +1,364 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'use-form'
+order: 0
+slug: /form/use-form/
+description: 'Manage form state'
+import: "import { useForm } from '@mantine/form';"
+docs: 'form/use-form.mdx'
+source: 'mantine-form/src'
+license: MIT
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## Installation
+
+`@mantine/form` package does not depend on any other libraries, you can use it with or without `@mantine/core` inputs:
+
+Install with npm:
+
+```sh
+npm install @mantine/form
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/form
+```
+
+## Usage
+
+<Demo data={FormDemos.usage} />
+
+## API
+
+`useForm` hook accepts a single argument with a configuration object that includes the following properties:
+
+- `initialValues` – initial form values, form types are generated based on this value
+- `validate` (optional) – an object with validation rules or a validation function that receives form values as an argument and returns object with validation errors
+- `schema` (optional) – [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) or [yup](https://www.npmjs.com/package/yup) validation schema, if provided `validate` is ignored
+- `initialErrors` (optional) – initial form errors, object of React nodes
+
+Hook returns an object with the following properties:
+
+- `values` – current form values
+- `setValues` – handler to set all form values
+- `setFieldValue` – handler to set value of the specified form field
+- `errors` – current validation errors
+- `setErrors` – sets validation errors
+- `clearErrors` – clears all validation errors
+- `clearFieldError` – clears validation error of the specified field
+- `setFieldError` – sets validation error of the specified field
+- `setListItem` – sets list item at specified field and index
+- `removeListItem` – removes list item at specified field and index
+- `addListItem` – appends list item to the end of the list at specified field
+- `reorderListItem` – reorders list item with given position at specified field
+- `validate` – validates all fields, returns validation results
+- `validateField` – validates specified field, returns validation results
+- `onSubmit` – wrapper function for form onSubmit event handler
+- `reset` – resets `values` to initial state, clears all validation errors
+- `getInputProps` – returns an object with value, onChange and error that should be spread on input
+- `getListInputProps` – returns an object with value, onChange and error that should be spread on input that is used to manage list value
+
+## Set form values
+
+### setFieldValue handler
+
+`setFieldValue` handler sets value of the specified field. When this handler is called field validation error is automatically cleared.
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setFieldValue('name', 'John');
+form.values; // -> { name: 'John', age: 0 }
+
+form.setFieldValue('age', 22);
+form.values; // -> { name: 'John', age: 22 }
+```
+
+`setFieldValue` can be used with all `@mantine/core` inputs, example with [TextInput](/core/text-input/) component:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '' } });
+
+  return (
+    <TextInput
+      label="Name"
+      value={form.values.name}
+      onChange={(event) => form.setFieldValue(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+### setValues handler
+
+`setValues` handler allows to set all form values with one function:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setValues({ name: 'John', age: 22 });
+form.values; // -> { name: 'John', age: 22 }
+```
+
+### reset handler
+
+`reset` handler clears all validation errors and resets all values to `initialValues`:
+
+```tsx
+const form = useForm({ initialValues: { name: '', age: 0 } });
+form.values; // -> { name: '', age: 0 }
+
+form.setValues({ name: 'John', age: 22 });
+form.values; // -> { name: 'John', age: 22 }
+
+form.reset();
+form.values; // -> { name: '', age: 0 }
+```
+
+## Validation
+
+`useForm` hook supports three validation strategies: rules object, validation function and schema validation (covered in [separate guide](/form/schema/)).
+
+### Validation with rules object
+
+To validate form with rules object, provide an object of functions which take field value as an argument
+and return error message (any React node) or null if field is valid:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+
+  // functions will be used to validate values at corresponding key
+  rules: {
+    name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+    age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+  },
+});
+
+form.errors; // -> {} (empty object, no errors)
+
+form.validate();
+form.errors; // -> { name: 'Name must have at least 2 letters', age: 'You must be at least 18 to register' }
+
+form.setValues({ name: 'John', age: 20 });
+form.validate();
+form.errors; // -> {} (empty object, no errors)
+```
+
+You can also get all form values as a second argument to perform field validation based on other
+fields values. For example, this strategy can be used to validate that password confirmation matches with password:
+
+<Demo data={FormDemos.password} />
+
+### Validation function
+
+Another approach to handle validation is to provide a function to `validate`.
+Function takes form values as single argument and should return object that contains
+errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
+from the validation results.
+
+<Demo data={FormDemos.validateFunction} />
+
+### Schema validation
+
+`useForm` hook also supports schema validation with several popular libraries [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) and [yup](https://www.npmjs.com/package/yup).
+See [separate guide](/form/schema/) to learn how to setup schema validation.
+
+### validate handler
+
+`validate` handler can be used to validate all fields all at once. It sets `errors` and returns an object with validation results:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  rules: {
+    name: (value) => (value.length < 2 ? 'name-error' : null),
+    age: (value) => (value < 18 ? 'age-error' : null),
+  },
+});
+
+form.validate(); // returns { hasErrors: true, errors: { name: 'name-error', age: 'age-error' } }
+form.errors; // -> { name: 'name-error', age: 'age-error' }
+
+form.setValues({ name: 'John', age: 20 });
+form.validate(); // returns { hasErrors: false, errors: {} }
+form.errors; // -> {} (empty object, no errors)
+```
+
+### validateField handler
+
+`validateField` handler can be used to validate single field. It sets field error in `errors` and returns validation results:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  rules: {
+    name: (value) => (value.length < 2 ? 'name-error' : null),
+    age: (value) => (value < 18 ? 'age-error' : null),
+  },
+});
+
+// age field will not be validated
+form.validateField('name'); // returns { hasError: true, error: 'name-error' }
+form.errors; // -> { name: 'name-error' }
+```
+
+## Errors
+
+`useForm` hook gives you full control of `errors` state:
+
+```tsx
+const form = useForm({ initialValues: { name: '', email: '' } });
+
+form.setErrors({ name: 'Invalid name', email: 'Invalid email' });
+form.errors; // -> { name: 'Invalid name', email: 'Invalid email' }
+
+form.clearErrors();
+form.errors; // -> {} (empty object, no errors)
+
+form.setFieldError('name', 'Invalid name');
+form.errors; // -> { name: 'Invalid name' }
+
+form.clearFieldError('name');
+form.errors; // -> {} (empty object, no errors)
+```
+
+You can use all of the handlers shown above to create custom validation logic,
+for example, you can set errors received from backend.
+
+### Initial errors
+
+You can set initial errors with `initialErrors` property:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', email: '' },
+  initialErrors: { name: 'name-error', email: 'email-error' },
+});
+
+form.errors; // -> { name: 'name-error', email: 'email-error' }
+```
+
+### Errors type
+
+You can use any React node as an error message:
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', email: '' },
+  initialErrors: {
+    name: <p>Paragraph error</p>, // -> error as a react element
+    email: 42, // -> error as a number
+  },
+});
+```
+
+Note that errors that have `null` or `undefined` will be automatically removed:
+
+```tsx
+const form = useForm({ initialValues: { name: '', email: '' } });
+form.setErrors({ name: 'name-error', email: null });
+form.errors; // -> { name: 'name-error' }, email error is not included in errors object
+```
+
+## getInputProps handler
+
+`getInputProps` handler is a primary way to add `value`, `error` and `onChange` props
+to Mantine inputs.
+
+```tsx
+const form = useForm({
+  initialValues: { name: '', termsOfService: false },
+  validate: { name: (value) => value.trim().length >= 2 },
+  initialErrors: { name: 'Name must include at least 2 letters' },
+});
+
+form.getInputProps('name'); // -> returns object with the following properties:
+// value – input value
+// onChange – input onChange function, works with all Mantine and regular inputs
+// error – error message if input is invalid
+
+// returns object with the same properties as above example but without error
+form.getInputProps('name', { withError: false });
+
+form.getInputProps('termsOfService', { type: 'checkbox' }); // -> returns object with the following properties:
+// checked – input[type="checkbox"] checked value
+// onChange – input onChange event, works with Mantine Checkbox, Switch and regular input[type="checkbox"]
+// error – error message if input is invalid
+```
+
+## onSubmit handler
+
+`onSubmit` handler is a wrapper function that will:
+
+- prevent default form event
+- run `form.validate` when form is submitted
+- call provided function with form values when form is submitted if all fields are valid
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // You can get form values type using typeof to store function separately
+  const handleSubmit = (values: typeof form.values) => console.log(values);
+
+  return <form onSubmit={form.onSubmit(handleSubmit)}>{/* ...inputs */}</form>;
+}
+```
+
+## TypeScript
+
+### Get form values type
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // Get form values type, will be { name: string; age: number }
+  type FormValues = typeof form.values;
+
+  // Use values type in handleSubmit function or anywhere else
+  const handleSubmit = (values: FormValues) => console.log(values);
+}
+```
+
+### Set form values type
+
+By default, form values types will be inferred from `initialValues`.
+To avoid that, you can pass type to `useForm` hook, this approach is useful when
+types cannot be inferred or when you want to provide more specific types:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string; // regular field, same as inferred type
+  role: 'user' | 'admin'; // union, more specific than inferred type (string)
+  age: number | undefined; // values that may be undefined cannot be inferred
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    initialValues: {
+      name: '',
+      role: 'user',
+      age: undefined,
+    },
+  });
+}
+```
