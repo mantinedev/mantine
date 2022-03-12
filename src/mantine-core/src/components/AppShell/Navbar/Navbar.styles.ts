@@ -1,5 +1,5 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
-import { getSortedBreakpoints } from '../utils';
+import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export type NavbarWidth = Partial<Record<string, string | number>>;
 

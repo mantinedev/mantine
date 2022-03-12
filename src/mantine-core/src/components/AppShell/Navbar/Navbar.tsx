@@ -10,7 +10,7 @@ import {
 } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
-import { getSortedBreakpoints } from '../utils';
+import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 import { NavbarSection } from './NavbarSection/NavbarSection';
 import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
 
