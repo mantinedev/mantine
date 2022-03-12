@@ -32,6 +32,9 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
 
   /** `img` element attributes */
   imageProps?: React.ComponentPropsWithoutRef<'img'>;
+
+  /** Custom placeholder */
+  children?: React.ReactNode;
 }
 
 export type AvatarProps<C> = PolymorphicComponentProps<C, _AvatarProps>;

@@ -19,6 +19,9 @@ export interface SharedPaperProps extends DefaultProps {
 
   /** Adds 1px border with theme.colors.gray[2] color in light color scheme and theme.colors.dark[6] in dark color scheme */
   withBorder?: boolean;
+
+  /** Paper children */
+  children?: React.ReactNode;
 }
 
 export type PaperProps<C> = PolymorphicComponentProps<C, SharedPaperProps>;
