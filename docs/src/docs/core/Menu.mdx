@@ -186,34 +186,6 @@ function Demo() {
 }
 ```
 
-## Store items separately
-
-Menu does not support fragments, the following example **will not work**:
-
-```tsx
-// Won't work, will not render items
-const items = (
-  <>
-    <Menu.Item>First</Menu.Item>
-    <Menu.Item>Second</Menu.Item>
-  </>
-);
-
-<Menu>{items}</Menu>;
-```
-
-In case you want to store items separately use array instead of fragment:
-
-```tsx
-// Works as expected
-const items = [
-  <Menu.Item>First</Menu.Item>
-  <Menu.Item>Second</Menu.Item>
-];
-
-<Menu>{items}</Menu>;
-```
-
 ## Add your styles with styles API
 
 You can customize add styles to any part of Menu with [Styles API](/theming/styles-api/),
