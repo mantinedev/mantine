@@ -22,14 +22,14 @@ import { MenuDemos } from '@mantine/demos';
 ## Controlled
 
 ```tsx
-import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { Menu } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
+  const [opened, handlers] = useDisclosure(false);
 
   return (
-    <Menu opened={opened} onOpen={() => setOpened(true)} onClose={() => setOpened(false)}>
+    <Menu opened={opened} onOpen={handlers.open} onClose={handlers.close}>
       {/* Menu items... */}
     </Menu>
   );
