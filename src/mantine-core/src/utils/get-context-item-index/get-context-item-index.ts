@@ -10,6 +10,10 @@ export function getContextItemIndex(
   options: { elementSelector: string; parentClassName: string },
   node: HTMLElement
 ) {
+  if (!node) {
+    return -1;
+  }
+
   return Array.from(
     findAncestor(node, options.parentClassName).querySelectorAll(options.elementSelector)
   ).findIndex((element) => element === node);
