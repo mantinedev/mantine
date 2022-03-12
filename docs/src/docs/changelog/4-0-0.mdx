@@ -4,7 +4,7 @@ title: 'Version 4.0.0'
 order: 1
 slug: /changelog/4-0-0/
 release: https://github.com/mantinedev/mantine/releases/tag/4.0.0
-date: 'January 13th, 2022'
+date: 'March 10th, 2022'
 ---
 
 import {
@@ -15,13 +15,25 @@ import {
   CheckboxDemos,
   ImageDemos,
   SpotlightDemos,
-  OverlayDemo,
+  OverlayDemos,
+  FormDemos,
 } from '@mantine/demos';
+
+## Mantine UI
+
+[Mantine UI](https://ui.mantine.dev/) is a new project with set of more than 120 responsive components built with Mantine.
+All components support dark/light color scheme and Mantine theme customizations.
+Mantine UI is free for everyone.
+
+- [Mantine UI website](https://ui.mantine.dev/)
+- [Mantine UI source code](https://github.com/mantinedev/ui.mantine.dev)
 
 ## Breaking changes
 
 - `@mantine/core` package no longer exports `CONTAINER_SIZES` variable
 - [Prism](https://mantine.dev/others/prism/) now trims code by default, to disable that set `<Prism trim={false} />`
+- `useForm` hook exported from `@mantine/hooks` package is now deprecated, it will be removed in one of the next releases.
+- [@mantine/eslint-config](https://www.npmjs.com/package/@mantine/eslint-config) was migrated to [eslint-config-mantine](https://www.npmjs.com/package/eslint-config-mantine)
 
 ## Renamed props
 
@@ -31,7 +43,7 @@ Some props were renamed to make Mantine components more consistent:
   - `padding` → `p`
 - [Container](https://mantine.dev/core/container/)
   - `padding` → `px`
-- [Radio](https://mantine.dev/core/radio/)
+- [Radio](https://mantine.dev/core/radio-group/)
   - `children` → `label`
 - [RadioGroup](https://mantine.dev/core/radio-group/):
   - `variant` → `orientation`
@@ -229,6 +241,17 @@ createStyles((theme, params, getRef) => ({
 }));
 ```
 
+## @mantine/form package
+
+New [@mantine/form package](https://mantine.dev/form/use-form/) is an enhanced version of `useForm` hook that was previously exported from
+`@mantine/hooks` package. `@mantine/form` introduces the following features:
+
+- Improved fields validation logic
+- Schema based validation with zod, yup or joi
+- Array fields support
+
+<Demo data={FormDemos.usage} />
+
 ## @mantine/spotlight package
 
 [@mantine/spotlight](https://mantine.dev/others/spotlight/) is a new package that lets you create
@@ -236,10 +259,6 @@ a command center for you application. It can be triggered with keyboard shortcut
 from anywhere in you application:
 
 <Demo data={SpotlightDemos.usage} />
-
-## New hooks
-
-- [use-disclosure](https://mantine.dev/hooks/use-disclosure/)
 
 ## New components
 
@@ -281,6 +300,7 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 
 ## Other changes
 
+- New [use-disclosure](https://mantine.dev/hooks/use-disclosure/) hook
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
 - [Input](https://mantine.dev/core/input/) component now handles `required` prop differently to support native browser validation
 - [RichTextEditor](https://mantine.dev/others/rte/) now supports providing extra quill modules via `modules` prop

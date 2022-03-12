@@ -1,5 +1,5 @@
 import type { FormList } from '../form-list/form-list';
-import type { FormRulesRecord } from '../types';
+import type { FormRulesRecord, FormErrors } from '../types';
 
 export function validateListValues<T, K extends keyof T>(
   values: T,
@@ -7,7 +7,7 @@ export function validateListValues<T, K extends keyof T>(
   rules: FormRulesRecord<T, K>
 ) {
   const list: FormList<any> = values[key] as any;
-  const results = Array(list.length).fill(undefined);
+  const results: FormErrors = {};
 
   list.forEach((item, itemIndex) => {
     if (typeof item === 'object' && item !== null) {
@@ -15,12 +15,12 @@ export function validateListValues<T, K extends keyof T>(
         if (typeof rules[key][listItemKey] === 'function') {
           const error = rules[key][listItemKey](item[listItemKey]);
           if (error) {
-            results[itemIndex] = { ...results[itemIndex], [listItemKey]: error };
+            results[`${key}.${itemIndex}.${listItemKey}`] = error;
           }
         }
       });
     }
   });
 
-  return results.every((result) => result === undefined) ? null : results;
+  return results;
 }

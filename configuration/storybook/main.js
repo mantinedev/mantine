@@ -12,12 +12,8 @@ const storiesPath = !argv._[0]
       )
       .replace(/\\/g, '/');
 
-const stories = argv.gallery
-  ? [path.resolve(__dirname, '../../gallery/**/*.story.@(ts|tsx)').replace(/\\/g, '/')]
-  : [storiesPath];
-
 module.exports = {
-  stories,
+  stories: [storiesPath],
   addons: [
     'storybook-addon-turbo-build',
     'storybook-dark-mode',

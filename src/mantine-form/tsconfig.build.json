@@ -8,6 +8,7 @@
     "**/*.story.tsx",
     "**/*.test.tsx",
     "**/*.test.ts",
+    "./src/use-form.test",
     "**/styles.api.ts",
     "src/components/*/demos/*",
     "src/demos.ts"

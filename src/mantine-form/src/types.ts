@@ -1,9 +1,7 @@
 import type React from 'react';
 import type { FormList } from './form-list/form-list';
 
-export type FormErrors<T extends Record<string, any>, K extends keyof T = string> = Partial<
-  Record<K, any>
->;
+export type FormErrors = Record<string, React.ReactNode>;
 
 export type FormRulesRecord<T, K extends keyof T = any> = Record<
   K,
@@ -15,33 +13,33 @@ export type FormRulesRecord<T, K extends keyof T = any> = Record<
 >;
 
 export type FormRules<T, K extends keyof T = any> =
-  | ((values: T) => FormErrors<T, K>)
+  | ((values: T) => FormErrors)
   | FormRulesRecord<T, K>;
 
-export interface FormValidationResult<T, K extends keyof T = any> {
+export interface FormValidationResult {
   hasErrors: boolean;
-  errors: FormErrors<T, K>;
+  errors: FormErrors;
 }
 
 export interface FormFieldValidationResult {
-  valid: boolean;
-  error: any;
+  hasError: boolean;
+  error: React.ReactNode;
 }
 
-export interface GetInputPropsPayload<V> {
-  value: V;
-  onChange(event: React.ChangeEvent<any> | V): void;
+export interface GetInputPropsPayload {
+  value: any;
+  onChange(event: any): void;
   error?: React.ReactNode;
 }
 
-export interface GetCheckboxPropsPayload<V> {
-  checked: V;
-  onChange(event: React.ChangeEvent<any> | V): void;
+export interface GetCheckboxPropsPayload {
+  checked: boolean;
+  onChange(event: any): void;
   error?: React.ReactNode;
 }
 
 export type GetInputPropsFieldType = 'checkbox' | 'input';
 
-export type GetInputProps<T extends GetInputPropsFieldType, V> = T extends 'checkbox'
-  ? GetCheckboxPropsPayload<V>
-  : GetInputPropsPayload<V>;
+export type GetInputProps<T extends GetInputPropsFieldType> = T extends 'checkbox'
+  ? GetCheckboxPropsPayload
+  : GetInputPropsPayload;

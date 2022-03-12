@@ -9,6 +9,7 @@ export interface SelectRightSectionProps {
   onClear?: () => void;
   size: MantineSize;
   error?: any;
+  // eslint-disable-next-line react/no-unused-prop-types
   disabled?: boolean;
 }
 

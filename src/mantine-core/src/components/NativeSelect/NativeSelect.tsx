@@ -60,7 +60,6 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
       wrapperProps,
       inputStyle,
       description,
-      defaultValue,
       onChange,
       value,
       classNames,

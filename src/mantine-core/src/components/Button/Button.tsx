@@ -60,7 +60,7 @@ export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Loader position relative to button label */
   loaderPosition?: 'left' | 'right';
 
-  /** Button Label */
+  /** Button label */
   children?: React.ReactNode;
 
   /** Disabled state */

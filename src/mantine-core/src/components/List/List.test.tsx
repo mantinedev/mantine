@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
-import { Button } from '../Button';
 import { ListItem } from './ListItem/ListItem';
 import { List, ListProps } from './List';
 
@@ -27,22 +26,6 @@ describe('@mantine/core/List', () => {
 
     expect(ordered.querySelector('ol')).toBeInTheDocument();
     expect(unordered.querySelector('ul')).toBeInTheDocument();
-  });
-
-  it('filters out unexpected children', () => {
-    const { container } = render(
-      <List>
-        <List.Item>Child 1</List.Item>
-        <p className="unexpected">Unexpected child 1</p>
-        <div className="unexpected">Unexpected child 1</div>
-        <List.Item>Child 2</List.Item>
-        <Button>Unexpected component</Button>
-      </List>
-    );
-
-    expect(container.querySelectorAll('.mantine-List-item')).toHaveLength(2);
-    expect(container.querySelectorAll('.mantine-Button-root')).toHaveLength(0);
-    expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });
 
   it('exposes ListItem as List.Item', () => {

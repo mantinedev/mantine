@@ -3,6 +3,7 @@ import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import { getInputOnChange } from './get-input-on-change/get-input-on-change';
+import { getErrorPath } from './get-error-path/get-error-path';
 import type {
   FormErrors,
   FormRules,
@@ -14,16 +15,17 @@ import type {
 
 export interface UseFormInput<T, K extends keyof T> {
   initialValues: T;
-  initialErrors?: FormErrors<T, K>;
+  initialErrors?: FormErrors;
   validate?: FormRules<T, K>;
+  schema?: (values: Record<string, any>) => FormErrors;
 }
 
-export interface UseFormReturnType<T, KK extends keyof T> {
+export interface UseFormReturnType<T> {
   values: T;
   setValues: React.Dispatch<React.SetStateAction<T>>;
   setFieldValue: <K extends keyof T, V extends T[K]>(field: K, value: V) => void;
-  errors: FormErrors<T, KK>;
-  setErrors: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
+  errors: FormErrors;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors>>;
   setFieldError: <K extends keyof T>(field: K, error: React.ReactNode) => void;
   clearFieldError: <K extends keyof T>(field: K) => void;
   clearErrors(): void;
@@ -38,16 +40,16 @@ export interface UseFormReturnType<T, KK extends keyof T> {
   ) => void;
   removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
   reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
-  validate(): FormValidationResult<T>;
-  validateField: <K extends keyof T>(field: K) => FormFieldValidationResult;
+  validate(): FormValidationResult;
+  validateField: (field: string) => FormFieldValidationResult;
   onSubmit(
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
   reset(): void;
-  getInputProps: <K extends keyof T, U extends T[K], L extends GetInputPropsFieldType = 'input'>(
+  getInputProps: <K extends keyof T, L extends GetInputPropsFieldType = 'input'>(
     field: K,
     options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L, U>;
+  ) => GetInputProps<L>;
 
   getListInputProps: <
     K extends keyof T,
@@ -58,15 +60,16 @@ export interface UseFormReturnType<T, KK extends keyof T> {
     index: number,
     listField: U extends FormList<infer V> ? keyof V : never,
     options?: { type?: L; withError?: boolean }
-  ) => GetInputProps<L, U extends FormList<infer V> ? V[keyof V] : never>;
+  ) => GetInputProps<L>;
 }
 
-export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
+export function useForm<T extends { [key: string]: any }, KK extends keyof T = string>({
   initialValues,
   initialErrors,
   validate: rules,
-}: UseFormInput<T, KK>): UseFormReturnType<T, KK> {
-  const [errors, setErrors] = useState(filterErrors<T, KK>(initialErrors));
+  schema,
+}: UseFormInput<T, KK>): UseFormReturnType<T> {
+  const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
   const clearErrors = () => setErrors({});
@@ -138,14 +141,14 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   };
 
   const validate = () => {
-    const results = validateValues(rules, values);
+    const results = validateValues(schema || rules, values);
     setErrors(results.errors);
     return results;
   };
 
-  const validateField = <K extends keyof T>(field: K) => {
-    const results = validateFieldValue<any, any>(field, rules, values);
-    results.valid ? clearFieldError(field) : setFieldError(field, results.error);
+  const validateField = (field: string) => {
+    const results = validateFieldValue(field, schema || rules, values);
+    results.hasError ? setFieldError(field, results.error) : clearFieldError(field);
     return results;
   };
 
@@ -168,7 +171,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
   >(
     field: K,
     { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L, U> => {
+  ): GetInputProps<L> => {
     const value = values[field];
     const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
 
@@ -191,7 +194,7 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
     index: number,
     listField: LK,
     { type, withError = true }: { type?: L; withError?: boolean } = {}
-  ): GetInputProps<L, U[LK]> => {
+  ): GetInputProps<L> => {
     const list = values[field];
 
     if (isFormList(list) && list[index] && listField in list[index]) {
@@ -201,9 +204,10 @@ export function useForm<T extends { [key: string]: any }, KK extends keyof T>({
         setListItem(field, index, { ...listValue, [listField]: val })
       ) as any;
       const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
+      const error = errors[getErrorPath([field, index, listField])];
 
-      if (withError && errors[field as any]?.[index]?.[listField]) {
-        payload.error = errors[field as any]?.[index]?.[listField];
+      if (withError && error) {
+        payload.error = error;
       }
 
       return payload;
