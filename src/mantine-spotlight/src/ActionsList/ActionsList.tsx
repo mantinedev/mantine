@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text } from '@mantine/core';
+import { DefaultProps, ClassNames, Text, MantineNumberSize } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
@@ -17,6 +17,7 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   onActionHover(index: number): void;
   onActionTrigger(action: SpotlightAction): void;
   highlightQuery: boolean;
+  radius: MantineNumberSize;
 }
 
 export function ActionsList({
@@ -30,6 +31,7 @@ export function ActionsList({
   query,
   nothingFoundMessage,
   highlightQuery,
+  radius,
 }: ActionsListProps) {
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
 
@@ -44,6 +46,7 @@ export function ActionsList({
           onMouseEnter={() => onActionHover(item.index)}
           classNames={classNames}
           styles={styles}
+          radius={radius}
           onTrigger={() => onActionTrigger(item.item)}
           highlightQuery={highlightQuery}
         />
