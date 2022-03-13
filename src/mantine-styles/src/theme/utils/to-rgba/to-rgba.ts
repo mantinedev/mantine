@@ -8,10 +8,9 @@ interface RGBA {
 }
 
 function isHexColor(hex: string): boolean {
-  const replaced = hex.replace('#', '');
-  return (
-    typeof replaced === 'string' && replaced.length === 6 && !Number.isNaN(Number(`0x${replaced}`))
-  );
+  const HEX_REGEXP = /^#+?([0-9A-F]{3}){1,2}$/i
+  
+  return HEX_REGEXP.test(hex)
 }
 
 function hexToRgba(color: string): RGBA {
