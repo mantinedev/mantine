@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
+export type GroupPosition = 'right' | 'center' | 'left' | 'apart' | 'top' | 'bottom';
 
 export interface GroupStylesParams {
   position: GroupPosition;
@@ -14,8 +14,10 @@ export interface GroupStylesParams {
 }
 
 const POSITIONS = {
+  top: 'flex-start',
   left: 'flex-start',
   center: 'center',
+  bottom: 'flex-end',
   right: 'flex-end',
   apart: 'space-between',
 };
@@ -26,17 +28,9 @@ export default createStyles(
       boxSizing: 'border-box',
       display: 'flex',
       flexDirection: direction,
-      alignItems:
-        align ||
-        (direction === 'row'
-          ? 'center'
-          : grow
-          ? 'stretch'
-          : position === 'apart'
-          ? 'flex-start'
-          : POSITIONS[position]),
+      alignItems: align,
       flexWrap: noWrap ? 'nowrap' : 'wrap',
-      justifyContent: direction === 'row' ? POSITIONS[position] : undefined,
+      justifyContent: POSITIONS[position],
       gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
 
