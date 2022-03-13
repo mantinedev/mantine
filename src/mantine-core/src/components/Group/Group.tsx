@@ -26,7 +26,6 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
 
 const defaultProps: Partial<GroupProps> = {
   position: 'left',
-  align: 'center',
   spacing: 'md',
   direction: 'row',
 };
