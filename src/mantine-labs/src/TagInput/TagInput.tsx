@@ -9,8 +9,8 @@ import {
   Input,
   InputStylesNames,
   CloseButton,
+  extractSystemStyles,
 } from '@mantine/core';
-import { extractSystemStyles } from '@mantine/styles';
 import { BaseSelectProps } from '@mantine/core/src/components/Select/types';
 import useStyles, { RIGHT_SECTION_WIDTH } from './TagInput.styles';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
