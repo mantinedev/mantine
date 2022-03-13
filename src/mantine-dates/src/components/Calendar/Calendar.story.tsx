@@ -19,6 +19,11 @@ storiesOf('@mantine/dates/Calendar/stories', module)
     </div>
   ))
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
+  .add('Full width', () => (
+    <div style={{ padding: 40, width: '100%' }}>
+      <WrappedCalendar fullWidth />
+    </div>
+  ))
   .add('First day of the week sunday', () => (
     <div style={{ padding: 40, width: 400 }}>
       <WrappedCalendar minDate={new Date()} firstDayOfWeek="sunday" />
