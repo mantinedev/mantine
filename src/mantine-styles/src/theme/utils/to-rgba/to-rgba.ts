@@ -8,17 +8,24 @@ interface RGBA {
 }
 
 function isHexColor(hex: string): boolean {
-  const HEX_REGEXP = /^#+?([0-9A-F]{3}){1,2}$/i
-  
-  return HEX_REGEXP.test(hex)
+  const HEX_REGEXP = /^#?([0-9A-F]{3}){1,2}$/i;
+
+  return HEX_REGEXP.test(hex);
 }
 
 function hexToRgba(color: string): RGBA {
   let hexString = color.replace('#', '');
 
   if (hexString.length === 3) {
-    let shorthandHex = hexString.split('')
-    hexString = [shorthandHex[0], shorthandHex[0], shorthandHex[1], shorthandHex[1], shorthandHex[2], shorthandHex[2]].join('')
+    const shorthandHex = hexString.split('');
+    hexString = [
+      shorthandHex[0],
+      shorthandHex[0],
+      shorthandHex[1],
+      shorthandHex[1],
+      shorthandHex[2],
+      shorthandHex[2],
+    ].join('');
   }
 
   const parsed = parseInt(hexString, 16);
