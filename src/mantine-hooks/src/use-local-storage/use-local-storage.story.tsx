@@ -1,13 +1,12 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
-import { useLocalStorageValue } from './use-local-storage-value';
+import { useLocalStorage } from './use-local-storage';
 
 export default {
   title: '@mantine/hooks/use-local-storage-value',
-} as Meta;
+};
 
-export function Example() {
-  const [value, setValue] = useLocalStorageValue<string>({
+export function Usage() {
+  const [value, setValue] = useLocalStorage<string>({
     key: '@mantine/localStorage/val',
     defaultValue: 'Value persists through reloads and changes across multiple tabs',
   });

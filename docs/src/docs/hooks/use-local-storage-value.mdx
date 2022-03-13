@@ -6,7 +6,7 @@ category: 'state'
 order: 1
 slug: /hooks/use-local-storage-value/
 description: 'Use localStorage value as react state, sync state across opened tabs'
-import: "import { useLocalStorageValue } from '@mantine/hooks';"
+import: "import { useLocalStorage } from '@mantine/hooks';"
 docs: 'hooks/use-local-storage-value.mdx'
 source: 'mantine-hooks/src/use-local-storage-value/use-local-storage-value.ts'
 ---
@@ -17,12 +17,12 @@ use-local-storage-value allows you to use value from localStorage as react state
 Hook works exactly the same as useState, but also writes value to local storage:
 
 ```tsx
-import { useLocalStorageValue } from '@mantine/hooks';
+import { useLocalStorage } from '@mantine/hooks';
 
 // hook will read value from localStorage.getItem('color-scheme')
 // if localStorage is not available or value at given key does not exist
 // 'dark' will be assigned to value variable
-const [value, setValue] = useLocalStorageValue({ key: 'color-scheme', defaultValue: 'dark' });
+const [value, setValue] = useLocalStorage({ key: 'color-scheme', defaultValue: 'dark' });
 
 // Value is set both to state and localStorage at 'color-scheme'
 setValue('light');
@@ -36,12 +36,12 @@ setValue((current) => (current === 'dark' ? 'light' : 'dark'));
 Mantine docs website uses this hook to store color scheme information:
 
 ```tsx
-import { useLocalStorageValue } from '@mantine/hooks';
+import { useLocalStorage } from '@mantine/hooks';
 import { ActionIcon, ColorScheme } from '@mantine/core';
 import { Sun, MoonStars } from 'tabler-icons-react';
 
 function ColorSchemeToggle() {
-  const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'color-scheme',
     defaultValue: 'light',
   });
@@ -69,7 +69,7 @@ You can test this feature by opening 2 tabs with Mantine docs side by side and c
 ### Definition
 
 ```tsx
-function useLocalStorageValue<T extends string>(options: {
+function useLocalStorage<T extends string>(options: {
   key: string;
   defaultValue?: T;
 }): [T, (val: T | ((prevState: T) => T)) => void];
@@ -82,7 +82,7 @@ You can specify value type same as in useState hook, type must extend string:
 ```tsx
 type ColorScheme = 'dark' | 'light';
 
-const [value, setValue] = useLocalStorageValue<ColorScheme>({
+const [value, setValue] = useLocalStorage<ColorScheme>({
   key: 'color-scheme',
   defaultValue: 'light',
 });

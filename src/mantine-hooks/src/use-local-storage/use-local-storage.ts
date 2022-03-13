@@ -1,29 +1,51 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-export function useLocalStorageValue<T extends string>({
-  key,
-  defaultValue = undefined,
-}: {
+interface UseLocalStorage<T> {
   key: string;
   defaultValue?: T;
-}) {
+  serialize?(value: T): string;
+  deserialize?(value: string): T;
+}
+
+function serializeJSON<T>(value: T) {
+  try {
+    return JSON.stringify(value);
+  } catch (error) {
+    throw new Error('@mantine/hooks use-local-storage: Failed to serialize the value');
+  }
+}
+
+function deserializeJSON(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value;
+  }
+}
+
+export function useLocalStorage<T = string>({
+  key,
+  defaultValue = undefined,
+  deserialize = deserializeJSON,
+  serialize = serializeJSON,
+}: UseLocalStorage<T>) {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
-      ? (window.localStorage.getItem(key) as T)
+      ? deserialize(window.localStorage.getItem(key))
       : ((defaultValue ?? '') as T)
   );
 
   const setLocalStorageValue = useCallback(
     (val: T | ((prevState: T) => T)) => {
-      if (typeof val === 'function') {
+      if (val instanceof Function) {
         setValue((current) => {
           const result = val(current);
-          window.localStorage.setItem(key, result);
+          window.localStorage.setItem(key, serialize(result));
           return result;
         });
       } else {
-        window.localStorage.setItem(key, val);
+        window.localStorage.setItem(key, serialize(val));
         setValue(val);
       }
     },
@@ -32,7 +54,7 @@ export function useLocalStorageValue<T extends string>({
 
   useWindowEvent('storage', (event) => {
     if (event.storageArea === window.localStorage && event.key === key) {
-      setValue(event.newValue as T);
+      setValue(deserialize(event.newValue));
     }
   });
 
@@ -44,3 +66,5 @@ export function useLocalStorageValue<T extends string>({
 
   return [value || defaultValue, setLocalStorageValue] as const;
 }
+
+export const useLocalStorageValue = useLocalStorage;
