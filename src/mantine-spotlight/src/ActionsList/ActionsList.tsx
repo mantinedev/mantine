@@ -1,13 +1,15 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text, getGroupedOptions } from '@mantine/core';
+import { DefaultProps, ClassNames, Text } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
 
 export type ActionsListStylesNames = ClassNames<typeof useStyles> | DefaultActionStylesNames;
+type GetGroupOptionsItem<T extends any[]> = { type: 'item'; item: T[number]; index: number };
+type GetGroupOptionsLabel = { type: 'label'; label: string };
 
 export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
-  actions: SpotlightAction[];
+  actions: (GetGroupOptionsItem<SpotlightAction[]> | GetGroupOptionsLabel)[];
   actionComponent?: React.FC<DefaultActionProps>;
   hovered: number;
   query: string;
@@ -31,7 +33,7 @@ export function ActionsList({
 }: ActionsListProps) {
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
 
-  const items = getGroupedOptions(actions).items.map((item) => {
+  const items = actions.map((item) => {
     if (item.type === 'item') {
       return (
         <Action
