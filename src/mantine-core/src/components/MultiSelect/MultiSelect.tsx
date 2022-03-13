@@ -321,6 +321,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.nativeEvent.code !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
+        return;
+      }
       const isColumn = direction === 'column';
 
       const handleNext = () => {
@@ -411,6 +414,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
+            if (maxSelectedValues) {
+              valuesOverflow.current = false;
+            }
           }
 
           break;
@@ -459,6 +465,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       handleSearchChange('');
       setValue([]);
       inputRef.current?.focus();
+      if (maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
     };
 
     if (isCreatable && shouldCreate(searchValue, sortedData)) {
