@@ -5,6 +5,7 @@ const defaultProps = {
   notification: { id: 'test', message: 'test-message' },
   onHide: () => {},
   autoClose: false,
+  innerRef: undefined,
 } as const;
 
 describe('@mantine/notifications/NotificationContainer', () => {

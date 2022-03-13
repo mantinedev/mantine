@@ -2,10 +2,7 @@ import React from 'react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsMargins(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>
-) {
+export function itSupportsMargins<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports m, mx, my, mt, mb, mr and ml props', async () => {
     const { container: m } = await renderWithAct(<Component {...requiredProps} m={45} />);
     const { container: theme } = await renderWithAct(<Component {...requiredProps} m="xl" />);

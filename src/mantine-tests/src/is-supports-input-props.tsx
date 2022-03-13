@@ -5,9 +5,9 @@ import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsInputProps(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>,
+export function itSupportsInputProps<P>(
+  Component: React.ComponentType<P>,
+  requiredProps: P,
   name: string
 ) {
   itSupportsWrapperProps(Component, requiredProps);

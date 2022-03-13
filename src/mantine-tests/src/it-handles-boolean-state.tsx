@@ -2,10 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-export function itHandlesBooleanState(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>
-) {
+export function itHandlesBooleanState<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('correctly handles uncontrolled state', () => {
     render(<Component {...requiredProps} />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
