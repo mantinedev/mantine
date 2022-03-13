@@ -14,9 +14,14 @@ function isHexColor(hex: string): boolean {
 }
 
 function hexToRgba(color: string): RGBA {
-  const replaced = color.replace('#', '');
+  let hexString = color.replace('#', '');
 
-  const parsed = parseInt(replaced, 16);
+  if (hexString.length === 3) {
+    let shorthandHex = hexString.split('')
+    hexString = [shorthandHex[0], shorthandHex[0], shorthandHex[1], shorthandHex[1], shorthandHex[2], shorthandHex[2]].join('')
+  }
+
+  const parsed = parseInt(hexString, 16);
   const r = (parsed >> 16) & 255;
   const g = (parsed >> 8) & 255;
   const b = parsed & 255;
