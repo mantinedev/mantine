@@ -1,19 +1,19 @@
 ---
 group: 'mantine-hooks'
 package: '@mantine/hooks'
-title: 'use-local-storage-value'
+title: 'use-local-storage'
 category: 'state'
 order: 1
-slug: /hooks/use-local-storage-value/
+slug: /hooks/use-local-storage/
 description: 'Use localStorage value as react state, sync state across opened tabs'
 import: "import { useLocalStorage } from '@mantine/hooks';"
-docs: 'hooks/use-local-storage-value.mdx'
-source: 'mantine-hooks/src/use-local-storage-value/use-local-storage-value.ts'
+docs: 'hooks/use-local-storage.mdx'
+source: 'mantine-hooks/src/use-local-storage/use-local-storage.ts'
 ---
 
 ## Usage
 
-use-local-storage-value allows you to use value from localStorage as react state.
+use-local-storage allows you to use value from localStorage as react state.
 Hook works exactly the same as useState, but also writes value to local storage:
 
 ```tsx
@@ -59,30 +59,48 @@ function ColorSchemeToggle() {
 
 ## Browser tabs synchronization
 
-use-local-storage-value subscribes to [storage event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
+use-local-storage subscribes to [storage event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
 When state changes in one tab it automatically updates value in all other opened browser tabs.
 You can test this feature by opening 2 tabs with Mantine docs side by side and changing color scheme
 (button on the top right or `⌘ + J` on mac and `Ctrl + J` on Windows and Linux).
+
+## Serialize/deserialize json
+
+By default, hook will serialize/deserialize data with `JSON.stringify`/`JSON.parse`.
+If you need to store data in local storage that cannot be serialized with `JSON.stringify`
+– provide your own serialization handlers:
+
+```tsx
+const [value, setValue] = useLocalStorage({
+  key: 'color-scheme',
+  serialize: (value) => {
+    /* return value serialized to string */
+  },
+  deserialize: (localStorageValue) => {
+    /* parse localStorage string value and return value */
+  },
+});
+```
 
 ## TypeScript
 
 ### Definition
 
 ```tsx
-function useLocalStorage<T extends string>(options: {
-  key: string;
-  defaultValue?: T;
-}): [T, (val: T | ((prevState: T) => T)) => void];
+function useLocalStorage<T = string>({
+  key,
+  defaultValue,
+  deserialize,
+  serialize,
+}: UseLocalStorage<T>): readonly [T, (val: T | ((prevState: T) => T)) => void];
 ```
 
 ### Set value type
 
-You can specify value type same as in useState hook, type must extend string:
+You can specify value type same as in useState hook:
 
 ```tsx
-type ColorScheme = 'dark' | 'light';
-
-const [value, setValue] = useLocalStorage<ColorScheme>({
+const [value, setValue] = useLocalStorage<'dark' | 'light'>({
   key: 'color-scheme',
   defaultValue: 'light',
 });
