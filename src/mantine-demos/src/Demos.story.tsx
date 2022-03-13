@@ -105,3 +105,4 @@ attachDemos(storiesOf('@mantine/form/demos', module), demos.FormDemos);
 
 // @mantine/labs
 attachDemos(storiesOf('@mantine/labs/PinInput/demos', module), demos.PinInputDemos);
+attachDemos(storiesOf('@mantine/labs/TagInput/demos', module), demos.TagInputDemos);

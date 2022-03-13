@@ -114,3 +114,4 @@ export * as FormDemos from './demos/form';
 
 // @mantine/labs
 export * as PinInputDemos from './demos/packages/PinInput';
+export * as TagInputDemos from './demos/packages/TagInput';
