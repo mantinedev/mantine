@@ -2,10 +2,7 @@ import React from 'react';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsPaddings(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>
-) {
+export function itSupportsPaddings<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports p, px, py, pt, pb, pr and pl props', async () => {
     const { container: p } = await renderWithAct(<Component {...requiredProps} p={45} />);
     const { container: theme } = await renderWithAct(<Component {...requiredProps} p="xl" />);

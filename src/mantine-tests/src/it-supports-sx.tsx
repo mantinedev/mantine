@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsSx(Component: React.ElementType, requiredProps: Record<string, any>) {
+export function itSupportsSx<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports sx', async () => {
     const styles = { border: '1px solid aquamarine', background: 'beige' };
     const fn = () => styles;
