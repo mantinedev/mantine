@@ -140,7 +140,7 @@ const form = useForm({
   initialValues: { name: '', age: 0 },
 
   // functions will be used to validate values at corresponding key
-  rules: {
+  validate: {
     name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
     age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
   },
@@ -182,7 +182,7 @@ See [separate guide](/form/schema/) to learn how to setup schema validation.
 ```tsx
 const form = useForm({
   initialValues: { name: '', age: 0 },
-  rules: {
+  validate: {
     name: (value) => (value.length < 2 ? 'name-error' : null),
     age: (value) => (value < 18 ? 'age-error' : null),
   },
@@ -203,7 +203,7 @@ form.errors; // -> {} (empty object, no errors)
 ```tsx
 const form = useForm({
   initialValues: { name: '', age: 0 },
-  rules: {
+  validate: {
     name: (value) => (value.length < 2 ? 'name-error' : null),
     age: (value) => (value < 18 ? 'age-error' : null),
   },
