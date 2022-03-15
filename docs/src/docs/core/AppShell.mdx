@@ -49,7 +49,7 @@ function Demo() {
       fixed
       navbar={
         <Navbar
-          p="md"
+          padding="md"
           // Breakpoint at which navbar will be hidden if hidden prop is true
           hiddenBreakpoint="sm"
           // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
@@ -63,7 +63,7 @@ function Demo() {
         </Navbar>
       }
       header={
-        <Header height={70} p="md">
+        <Header height={70} padding="md">
           {/* Handle other responsive styles with MediaQuery component or createStyles function */}
           <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
