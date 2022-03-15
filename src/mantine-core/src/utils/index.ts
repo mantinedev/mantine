@@ -2,3 +2,4 @@ export { filterChildrenByType } from './filter-children-by-type/filter-children-
 export { findChildByType } from './find-child-by-type/find-child-by-type';
 export { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 export { groupOptions, getGroupedOptions } from './group-options/group-options';
+export { getContextItemIndex } from './get-context-item-index/get-context-item-index';

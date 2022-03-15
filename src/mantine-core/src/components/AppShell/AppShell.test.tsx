@@ -52,21 +52,4 @@ describe('@mantine/core/AppShell', () => {
       position: 'fixed',
     });
   });
-
-  it('sets Navbar height and position based on Header height', () => {
-    const { container } = render(
-      <AppShell
-        header={<Header height={87}>test-header</Header>}
-        navbar={<Navbar width={{ base: 200 }}>test-navbar</Navbar>}
-      >
-        test-shell
-      </AppShell>
-    );
-
-    expect(container.querySelector('.mantine-Navbar-root')).toHaveStyle({
-      height: 'calc(100vh - 87px)',
-      top: '87px',
-      left: 0,
-    });
-  });
 });

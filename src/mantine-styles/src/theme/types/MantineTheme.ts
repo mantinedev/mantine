@@ -41,7 +41,7 @@ export interface MantineTheme {
   lineHeight: CSSProperties['lineHeight'];
   transitionTimingFunction: CSSProperties['transitionTimingFunction'];
   fontFamilyMonospace: CSSProperties['fontFamily'];
-  primaryColor: string;
+  primaryColor: keyof MantineThemeColors;
 
   fontSizes: MantineSizes;
   radius: MantineSizes;

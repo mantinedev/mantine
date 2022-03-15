@@ -8,7 +8,6 @@ describe('@mantine/dates/create-time-handler', () => {
       onChange: spy,
       min: 0,
       max: 23,
-      maxValue: 2,
       nextRef: ref as any,
     });
 
@@ -17,32 +16,30 @@ describe('@mantine/dates/create-time-handler', () => {
     expect(spy).toHaveBeenCalledTimes(0);
   });
 
-  it('calls onChange with padded value when value is more than maxValue', () => {
+  it('calls onChange with padded value when value is more than Math.floor(max / 10)', () => {
     const ref = { current: { focus: jest.fn(), select: jest.fn() } };
     const spy = jest.fn();
     const handler = createTimeHandler({
       onChange: spy,
       min: 0,
       max: 23,
-      maxValue: 2,
       nextRef: ref as any,
     });
 
     handler('6', true);
 
-    expect(spy).toHaveBeenCalledWith('06');
+    expect(spy).toHaveBeenCalledWith('06', undefined);
     expect(ref.current.focus).toHaveBeenCalledTimes(1);
     expect(ref.current.select).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onChange with value when value is less than maxValue', () => {
+  it('calls onChange with value when value is less than Math.floor(max / 10)', () => {
     const ref = { current: { focus: jest.fn(), select: jest.fn() } };
     const spy = jest.fn();
     const handler = createTimeHandler({
       onChange: spy,
       min: 0,
       max: 59,
-      maxValue: 5,
       nextRef: ref as any,
     });
 

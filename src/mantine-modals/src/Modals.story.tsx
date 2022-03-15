@@ -11,7 +11,9 @@ function Demo() {
     modals.openContextModal('hello', {
       title: 'Context modal',
       onClose: () => console.log('context modal closed'),
-      contextProp: 'test-modal',
+      innerProps: {
+        contextProp: 'test-modal',
+      },
     });
 
   const showContentModal = () =>
@@ -73,11 +75,11 @@ function Demo() {
 storiesOf('@mantine/modals', module).add('Custom modal', () => (
   <ModalsProvider
     modals={{
-      hello: ({ context, id, contextProp }: ContextModalProps & { contextProp: string }) => {
-        console.log(contextProp);
+      hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
+        console.log(innerProps);
         return (
           <div>
-            <div>Test custom modal {contextProp}</div>
+            <div>Test custom modal: {innerProps.contextProp}</div>
             <Button onClick={() => context.closeModal(id)}>Close</Button>
           </div>
         );

@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsInputRightSection(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>
+export function itSupportsInputRightSection<P>(
+  Component: React.ComponentType<P>,
+  requiredProps: P
 ) {
   it('supports input right section', async () => {
     const { getByText } = await renderWithAct(

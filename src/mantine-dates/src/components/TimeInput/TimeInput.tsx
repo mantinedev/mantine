@@ -177,23 +177,29 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     };
 
     const handleHoursChange = createTimeHandler({
-      onChange: (val) => {
-        setDate({ hours: val });
+      onChange: (val, carryOver) => {
+        setDate({
+          hours: val,
+          minutes: carryOver ?? time.minutes,
+        });
       },
       min: format === '12' ? 1 : 0,
       max: format === '12' ? 12 : 23,
-      maxValue: 2,
       nextRef: minutesRef,
+      nextMax: 59,
     });
 
     const handleMinutesChange = createTimeHandler({
-      onChange: (val) => {
-        setDate({ minutes: val });
+      onChange: (val, carryOver) => {
+        setDate({
+          minutes: val,
+          seconds: carryOver ?? time.seconds,
+        });
       },
       min: 0,
       max: 59,
-      maxValue: 5,
       nextRef: withSeconds ? secondsRef : format === '12' ? amPmRef : nextRef,
+      nextMax: withSeconds ? 59 : undefined,
     });
 
     const handleSecondsChange = createTimeHandler({
@@ -202,7 +208,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       },
       min: 0,
       max: 59,
-      maxValue: 5,
       nextRef: format === '12' ? amPmRef : nextRef,
     });
 

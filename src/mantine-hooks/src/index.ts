@@ -15,7 +15,7 @@ export { useIdle } from './use-idle/use-idle';
 export { useInterval } from './use-interval/use-interval';
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect';
 export { useListState } from './use-list-state/use-list-state';
-export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
+export { useLocalStorageValue, useLocalStorage } from './use-local-storage/use-local-storage';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef, mergeRefs } from './use-merged-ref/use-merged-ref';
 export { useMouse } from './use-mouse/use-mouse';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsOthers(Component: React.ElementType, requiredProps: Record<string, any>) {
+export function itSupportsOthers<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports ...others props', async () => {
     const { container } = await renderWithAct(
       <Component {...requiredProps} data-other-attribute="test" />

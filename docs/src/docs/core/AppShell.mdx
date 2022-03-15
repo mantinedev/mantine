@@ -20,11 +20,9 @@ import { AppShellDemos } from '@mantine/demos';
 ## Usage
 
 AppShell is a layout component that can be used to create a common Header - Navbar - Content layout pattern.
-AppShell, Header and Navbar components include bare minimum default styles to simplify customization.
+AppShell, Header and Navbar components include bare minimum default styles to simplify customization. [View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)
 
 <Demo data={AppShellDemos.usage} />
-
-[View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)
 
 ## Responsive styles
 
@@ -91,11 +89,9 @@ function Demo() {
 
 ## Navbar component
 
-Navbar can be used outside of AppShell context:
+Navbar can be used outside of AppShell context ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)):
 
 <Demo data={AppShellDemos.navbar} />
-
-[View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)
 
 ### Navbar.Section
 
@@ -155,40 +151,9 @@ function Demo() {
 
 ### Navbar with custom scrollbars
 
-`Navbar.Section` can be used with [ScrollArea](/core/scroll-area/) component:
+`Navbar.Section` can be used with [ScrollArea](/core/scroll-area/) component ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)):
 
 <Demo data={AppShellDemos.scrollbars} />
-
-[View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/packages/AppShell)
-
-## Wrapping Navbar and Header components
-
-AppShell component requires Navbar and Header components to be direct children at `navbar` and `header` props.
-In addition, `width` and `height` need to be explicitly set on the wrapping `Navbar` or `Header` element respectively.
-To use custom components instead of Navbar or Header:
-
-```tsx
-import { AppShell, Header, HeaderProps, Navbar, NavbarProps } from '@mantine/core';
-
-function CustomNavbar(props: Omit<NavbarProps, 'children'>) {
-  return <Navbar {...props}>Custom navbar</Navbar>;
-}
-
-function CustomHeader(props: Omit<HeaderProps, 'children'>) {
-  return <Header {...props}>Custom header</Header>;
-}
-
-function App() {
-  return (
-    <AppShell
-      navbar={<CustomNavbar width={{ base: 300 }} height={500} p="xs" />}
-      header={<CustomHeader height={70} p="xs" />}
-    >
-      App content
-    </AppShell>
-  );
-}
-```
 
 ## Semantic elements
 

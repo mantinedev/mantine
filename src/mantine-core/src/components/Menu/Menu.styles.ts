@@ -34,11 +34,11 @@ export default createStyles((theme, { size }: MenuStylesParams) => ({
     }`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     padding: MENU_PADDING,
-  },
 
-  divider: {
-    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
-    margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px`,
+    '& .mantine-Divider-horizontal': {
+      margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px`,
+      borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
+    },
   },
 
   label: {

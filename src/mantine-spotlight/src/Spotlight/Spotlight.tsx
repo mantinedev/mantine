@@ -11,6 +11,7 @@ import {
   TextInput,
   getDefaultZIndex,
   getGroupedOptions,
+  MantineNumberSize,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
@@ -44,6 +45,9 @@ export interface InnerSpotlightProps
 
   /** Value from theme.shadows or any valid css box-shadow value */
   shadow?: MantineShadow;
+
+  /** Radius from theme.radius, or number to set border-radius in px, defaults to theme.defaultRadius */
+  radius?: MantineNumberSize;
 
   /** Should spotlight be rendered in the center of the screen */
   centered?: boolean;
@@ -108,6 +112,7 @@ export function Spotlight({
   overlayOpacity = 0.25,
   overlayBlur = 3,
   shadow = 'md',
+  radius = 'sm',
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
@@ -126,7 +131,7 @@ export function Spotlight({
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
   const { classes, cx } = useStyles(
-    { centered, maxWidth, topOffset },
+    { centered, maxWidth, topOffset, radius },
     { classNames, styles, name: 'Spotlight' }
   );
 
@@ -217,6 +222,7 @@ export function Spotlight({
                 style={transitionStyles.spotlight}
                 className={classes.spotlight}
                 shadow={shadow}
+                radius={radius}
                 onMouseLeave={resetHovered}
               >
                 <TextInput
@@ -244,6 +250,7 @@ export function Spotlight({
                     }}
                     styles={styles}
                     classNames={classNames}
+                    radius={radius}
                   />
                 </ActionsWrapper>
               </Paper>

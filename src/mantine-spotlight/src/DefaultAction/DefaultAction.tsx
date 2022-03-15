@@ -7,6 +7,7 @@ import {
   Group,
   Center,
   Text,
+  MantineNumberSize,
 } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import useStyles from './DefaultAction.styles';
@@ -21,6 +22,7 @@ export interface DefaultActionProps
   onTrigger(): void;
   highlightQuery: boolean;
   query: string;
+  radius: MantineNumberSize;
 }
 
 export function DefaultAction({
@@ -31,9 +33,10 @@ export function DefaultAction({
   onTrigger,
   highlightQuery,
   query,
+  radius,
   ...others
 }: DefaultActionProps) {
-  const { classes, cx } = useStyles(null, { styles, classNames, name: 'Spotlight' });
+  const { classes, cx } = useStyles({ radius }, { styles, classNames, name: 'Spotlight' });
 
   return (
     <UnstyledButton
