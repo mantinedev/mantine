@@ -8,11 +8,11 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "homepage": "https://mantine.dev/others/notifications/",
+  "homepage": "https://mantine.dev/others/spotlight/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-notifications"
+    "directory": "src/mantine-spotlight"
   },
   "peerDependencies": {
     "@mantine/core": "4.0.4",
