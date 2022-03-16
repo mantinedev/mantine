@@ -14,6 +14,7 @@ export type DefaultMantineColor =
   | 'lime'
   | 'yellow'
   | 'orange'
+  | 'teal'
   | (string & {});
 
 export type MantineThemeColorsOverride = Record<string, any>;
