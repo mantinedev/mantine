@@ -2,7 +2,7 @@ import { ClassNames, DefaultProps, MantineSize } from '@mantine/core';
 import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 import React, { forwardRef } from 'react';
 import { CascaderItem } from '../types';
-import { useStyles } from './Menu.styles';
+import { useStyles } from './CascaderItemsList.styles';
 
 export type CascaderMenuStyles = ClassNames<typeof useStyles>;
 
@@ -22,7 +22,7 @@ export interface CascaderMenuProps extends DefaultProps<CascaderMenuStyles> {
   maxDropdownHeight: number;
 }
 
-export const Menu = forwardRef<HTMLDivElement, CascaderMenuProps>(
+export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
   (
     {
       data,

@@ -15,7 +15,7 @@ export interface CascaderItem {
   [key: string]: any;
 }
 
-export type BaseCascaderStylesNames =
+export type CascaderStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | CascaderDropdownStyles;

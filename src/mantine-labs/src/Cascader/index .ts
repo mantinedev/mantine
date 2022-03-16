@@ -1,4 +1,4 @@
 export { Cascader } from './Cascader';
 
 export type { CascaderProps } from './Cascader';
-export type { CascaderItem, BaseCascaderStylesNames } from './types';
+export type { CascaderItem, CascaderStylesNames } from './types';

@@ -9,6 +9,7 @@ import {
   MantineTransition,
   useMantineDefaultProps,
 } from '@mantine/core';
+import { getSelectRightSectionProps } from '@mantine/core/src/components/Select/SelectRightSection/get-select-right-section-props';
 import {
   useDidUpdate,
   useMergedRef,
@@ -19,28 +20,27 @@ import {
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useStyles } from './Cascader.styles';
 import { CascaderDropdown } from './CascaderDropdown/CascaderDropdown';
-import { CascaderMenus } from './CascaderMenus/CascaderMenus';
-import { getCascaderRightSectionProps } from './CascaderRightSection/get-cascader-right-section-props';
+import { CascaderItems } from './CascaderItems/CascaderItems';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { findSelectedValue } from './findSelectedValue';
 import { getItem } from './getItem';
 import { getValuesFromIndexes } from './getValuesFromIndexes';
-import { BaseCascaderProps, BaseCascaderStylesNames, CascaderItem } from './types';
+import { BaseCascaderProps, CascaderStylesNames, CascaderItem } from './types';
 
-export interface SharedCascaderProps<Item, Value>
-  extends DefaultProps<BaseCascaderStylesNames>,
+export interface SharedCascaderProps<Item, CascaderValue>
+  extends DefaultProps<CascaderStylesNames>,
     BaseCascaderProps {
   /** Select data used to renderer items in dropdown */
   data: (string | Item)[];
 
   /** Controlled input value */
-  value?: Value;
+  value?: CascaderValue;
 
   /** Uncontrolled input defaultValue */
-  defaultValue?: Value;
+  defaultValue?: CascaderValue;
 
   /** Controlled input onChange handler */
-  onChange?(value: Value): void;
+  onChange?(value: CascaderValue): void;
 
   /** Input size */
   size?: MantineSize;
@@ -515,7 +515,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             ...classNames,
             input: cx(classes.input, classNames?.input),
           }}
-          {...getCascaderRightSectionProps({
+          {...getSelectRightSectionProps({
             theme,
             rightSection,
             rightSectionWidth,
@@ -551,7 +551,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
           zIndex={zIndex}
           dropdownPosition={dropdownPosition}
         >
-          <CascaderMenus
+          <CascaderItems
             data={formattedData}
             hovered={hovered}
             classNames={classNames}

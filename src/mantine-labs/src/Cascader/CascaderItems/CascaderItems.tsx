@@ -2,10 +2,10 @@ import { DefaultProps, MantineSize } from '@mantine/core';
 import { mergeRefs } from '@mantine/hooks';
 import React from 'react';
 import { getItem } from '../getItem';
-import { Menu } from '../Menu/Menu';
+import { CascaderItemsList } from '../CascaderItemsList/CascaderItemsList';
 import { CascaderItem } from '../types';
 
-export interface CascaderMenusProps extends DefaultProps {
+export interface CascaderItemsProps extends DefaultProps {
   data: CascaderItem[];
   hovered: number[];
   isItemSelected?(itemValue: string, nesting: number): boolean;
@@ -22,7 +22,7 @@ export interface CascaderMenusProps extends DefaultProps {
   itemComponent: React.FC<any>;
 }
 
-export function CascaderMenus({
+export function CascaderItems({
   data,
   hovered,
   classNames,
@@ -39,10 +39,10 @@ export function CascaderMenus({
   size,
   menuComponent,
   itemComponent,
-}: CascaderMenusProps) {
+}: CascaderItemsProps) {
   return (
     <>
-      <Menu
+      <CascaderItemsList
         data={data}
         hovered={hovered}
         classNames={classNames}
@@ -64,7 +64,7 @@ export function CascaderMenus({
         const hoveredItem = getItem(data, i, hovered);
         if (!hoveredItem?.children) return <></>;
         return (
-          <Menu
+          <CascaderItemsList
             data={hoveredItem.children}
             hovered={hovered}
             classNames={classNames}
