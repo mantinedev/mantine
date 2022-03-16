@@ -105,6 +105,9 @@ export interface SharedCascaderProps<Item, Value>
 
   /** String to separate selected values with */
   separator?: string;
+
+  /** Expand options on hover */
+  expandOnHover?: boolean;
 }
 
 export interface CascaderProps extends SharedCascaderProps<CascaderItem, string | null> {}
@@ -121,6 +124,7 @@ const defaultProps: Partial<CascaderProps> = {
   disabled: false,
   selectOnBlur: false,
   switchDirectionOnFlip: false,
+  expandOnHover: false,
   zIndex: getDefaultZIndex('popover'),
   separator: ', ',
   menuComponent: DefaultMenu,
@@ -172,6 +176,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     allowDeselect,
     menuComponent,
     separator,
+    expandOnHover,
     ...others
   } = useMantineDefaultProps('Cascader', defaultProps, props);
 
@@ -540,6 +545,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             data={formattedData}
             hovered={hovered}
             classNames={classNames}
+            expandOnHover={expandOnHover}
             styles={styles}
             isItemSelected={(val, nesting) =>
               selectedValue && getItem(formattedData, nesting, selectedValue)?.value === val

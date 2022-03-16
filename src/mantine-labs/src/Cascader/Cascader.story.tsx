@@ -23,6 +23,7 @@ function Controlled() {
         onChange={setValue}
         data={DEFAULT_DATA}
         clearable
+        expandOnHover={false}
         label="Cascader"
         placeholder="Cascader"
       />

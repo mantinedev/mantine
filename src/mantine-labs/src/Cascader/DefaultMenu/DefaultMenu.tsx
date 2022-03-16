@@ -26,6 +26,7 @@ export function DefaultMenu({
   styles,
   __staticSelector,
   uuid,
+  isItemSelected,
   itemsRefs,
   onItemHover,
   onItemSelect,
@@ -37,48 +38,51 @@ export function DefaultMenu({
 
   return (
     <div>
-      {data.map((item, index) => (
-        <Item
-          key={item.value}
-          size={size}
-          hasChildren={item.children && item.children.length > 0}
-          className={cx(classes.item, {
-            [classes.hovered]: !item.disabled && hovered[nesting] === index,
-            //[classes.selected]: !item.disabled && selected,
-            [classes.disabled]: item.disabled,
-          })}
-          onMouseEnter={() =>
-            onItemHover(
-              (prev) =>
-                prev.length === nesting
-                  ? [...prev, index] // higher nesting level
-                  : prev.length - 1 === nesting
-                  ? [...prev.slice(0, prev.length - 1), index] // same nesting level
-                  : [...prev.slice(0, prev.length - (nesting + 2)), index] // lower nesting level
-            )
-          }
-          id={`${uuid}-${index}`}
-          role="option"
-          tabIndex={-1}
-          aria-selected={hovered === index}
-          ref={(node: HTMLDivElement) => {
-            if (itemsRefs && itemsRefs.current) {
-              // eslint-disable-next-line no-param-reassign
-              itemsRefs.current[item.value] = node;
+      {data.map((item, index) => {
+        const selected = isItemSelected(item.value, nesting);
+        return (
+          <Item
+            key={item.value}
+            size={size}
+            hasChildren={item.children && item.children.length > 0}
+            className={cx(classes.item, {
+              [classes.hovered]: !item.disabled && hovered[nesting] === index,
+              [classes.selected]: !item.disabled && selected && hovered[nesting] === index,
+              [classes.disabled]: item.disabled,
+            })}
+            onMouseEnter={() =>
+              onItemHover(
+                (prev) =>
+                  prev.length === nesting
+                    ? [...prev, index] // higher nesting level
+                    : prev.length - 1 === nesting
+                    ? [...prev.slice(0, prev.length - 1), index] // same nesting level
+                    : [...prev.slice(0, prev.length - (nesting + 2)), index] // lower nesting level
+              )
             }
-          }}
-          onMouseDown={
-            !item.disabled
-              ? (event: React.MouseEvent<HTMLDivElement>) => {
-                  event.preventDefault();
-                  onItemSelect(item, index);
-                }
-              : null
-          }
-          disabled={item.disabled}
-          {...item}
-        />
-      ))}
+            id={`${uuid}-${index}`}
+            role="option"
+            tabIndex={-1}
+            aria-selected={hovered === index}
+            ref={(node: HTMLDivElement) => {
+              if (itemsRefs && itemsRefs.current) {
+                // eslint-disable-next-line no-param-reassign
+                itemsRefs.current[item.value] = node;
+              }
+            }}
+            onMouseDown={
+              !item.disabled
+                ? (event: React.MouseEvent<HTMLDivElement>) => {
+                    event.preventDefault();
+                    onItemSelect(item, index);
+                  }
+                : null
+            }
+            disabled={item.disabled}
+            {...item}
+          />
+        );
+      })}
     </div>
   );
 }
