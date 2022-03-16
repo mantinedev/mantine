@@ -11,7 +11,6 @@ import { Box } from '../../Box';
 interface _BackgroundImageProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   src: string;
   radius?: MantineNumberSize;
-  padding?: MantineNumberSize;
 }
 
 export type BackgroundImageProps<C> = C extends React.ElementType
