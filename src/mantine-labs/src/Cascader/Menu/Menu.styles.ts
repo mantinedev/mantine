@@ -8,7 +8,6 @@ export const useStyles = createStyles((theme, { size }: CascaderMenuStylesProps)
   item: {
     boxSizing: 'border-box',
     textAlign: 'left',
-    width: '100%',
     padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
       size,
       sizes: theme.spacing,
@@ -17,6 +16,7 @@ export const useStyles = createStyles((theme, { size }: CascaderMenuStylesProps)
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderRadius: theme.radius.sm,
+    inlineSize: 'max-content',
   },
 
   selected: {

@@ -2,7 +2,7 @@ import { CascaderItem } from './types';
 
 export function getValuesFromIndexes(
   data: CascaderItem[],
-  indexes: number[] | null,
+  indexes: number[],
   separator: string
 ) {
   if (!indexes) return '';

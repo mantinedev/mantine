@@ -107,6 +107,12 @@ export interface SharedCascaderProps<Item, Value>
 
   /** Expand options on hover */
   expandOnHover?: boolean;
+
+  /** Whether the dropdown can leave it's bounding box */
+  preventOverflow?: boolean;
+
+  /** Where the dropdown is placed along the input (left, center, or right) */
+  placement?: 'start' | 'center' | 'end';
 }
 
 export interface CascaderProps extends SharedCascaderProps<CascaderItem, string | null> {}
@@ -124,9 +130,11 @@ const defaultProps: Partial<CascaderProps> = {
   selectOnBlur: false,
   switchDirectionOnFlip: false,
   expandOnHover: false,
+  preventOverflow: false,
+  placement: 'start',
   zIndex: getDefaultZIndex('popover'),
   separator: ', ',
-  menuComponent: ({ children }) => <div>{children}</div>,
+  menuComponent: ({ children, ...props }) => <div {...props}>{children}</div>,
   itemComponent: DefaultItem,
 };
 
@@ -146,6 +154,8 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     defaultValue,
     onChange,
     itemComponent,
+    preventOverflow,
+    placement,
     onKeyDown,
     onBlur,
     onFocus,
@@ -181,7 +191,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
 
   const { classes, cx, theme } = useStyles();
   const { systemStyles, rest } = extractSystemStyles(others);
-  const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
+  const [dropdownOpened, _setDropdownOpened] = useState(true);
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
@@ -231,6 +241,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
 
   useEffect(() => {
     const newSelectedValue = findSelectedValue(formattedData, separator, _value);
+    newSelectedValue && setHovered(newSelectedValue);
 
     if (newSelectedValue) {
       setInputValue(getValuesFromIndexes(formattedData, newSelectedValue, separator));
@@ -521,6 +532,8 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
           referenceElement={inputRef.current}
           mounted={dropdownOpened}
           transition={transition}
+          placement={placement}
+          preventOverflow={preventOverflow}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
           uuid={uuid}
@@ -549,7 +562,6 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             }
             uuid={uuid}
             maxDropdownHeight={maxDropdownHeight}
-            __staticSelector="Cascader"
             onItemHover={setHovered}
             onItemSelect={handleItemSelect}
             itemsRefs={itemsRefs}

@@ -3,8 +3,8 @@ import { CascaderItem } from './types';
 export function getItem(
   data: CascaderItem[],
   nesting: number,
-  indexes: number[] | null
-): CascaderItem | null {
+  indexes: number[]
+): CascaderItem {
   if (indexes === null || nesting < 0) return null;
   let currData = data;
 

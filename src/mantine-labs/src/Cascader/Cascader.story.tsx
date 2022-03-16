@@ -54,7 +54,9 @@ storiesOf('@mantine/labs/Cascader/stories', module)
         data={[
           ...DEFAULT_DATA,
           ...Array.from(Array(10).keys()).map((_, i) => ({ value: `item ${i}` })),
+          { value: 'i' },
         ]}
+        defaultValue="I love, react"
       />
     </Wrapper>
   ));

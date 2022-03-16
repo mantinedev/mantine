@@ -1,4 +1,12 @@
-import { ClassNames, DefaultProps, getDefaultZIndex, MantineShadow, MantineTransition, Paper, Popper } from '@mantine/core';
+import {
+  ClassNames,
+  DefaultProps,
+  getDefaultZIndex,
+  MantineShadow,
+  MantineTransition,
+  Paper,
+  Popper,
+} from '@mantine/core';
 import { Placement } from '@popperjs/core';
 import React, { forwardRef, useRef } from 'react';
 import { useStyles } from './CascaderDropdown.styles';
@@ -23,6 +31,8 @@ export interface CascaderDropdownProps extends DefaultProps<CascaderDropdownStyl
   switchDirectionOnFlip?: boolean;
   zIndex?: number;
   dropdownPosition?: 'bottom' | 'top' | 'flip';
+  preventOverflow: boolean;
+  placement: 'start' | 'center' | 'end';
 }
 
 export const CascaderDropdown = forwardRef<HTMLDivElement, CascaderDropdownProps>(
@@ -35,6 +45,7 @@ export const CascaderDropdown = forwardRef<HTMLDivElement, CascaderDropdownProps
       uuid,
       shadow,
       maxDropdownHeight,
+      placement,
       withinPortal = true,
       children,
       classNames,
@@ -43,6 +54,7 @@ export const CascaderDropdown = forwardRef<HTMLDivElement, CascaderDropdownProps
       referenceElement,
       direction = 'row',
       onDirectionChange,
+      preventOverflow,
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'flip',
@@ -51,7 +63,7 @@ export const CascaderDropdown = forwardRef<HTMLDivElement, CascaderDropdownProps
     ref
   ) => {
     const { classes } = useStyles(
-      { native: false }, // PLaceholder
+      { native: false },
       { classNames, styles, name: __staticSelector }
     );
 
@@ -66,32 +78,24 @@ export const CascaderDropdown = forwardRef<HTMLDivElement, CascaderDropdownProps
         exitTransitionDuration={0}
         transitionTimingFunction={transitionTimingFunction}
         position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
+        placement={placement}
         withinPortal={withinPortal}
         zIndex={zIndex}
         modifiers={[
           {
             name: 'preventOverflow',
-            enabled: false,
+            enabled: preventOverflow,
           },
           {
             name: 'flip',
             enabled: dropdownPosition === 'flip',
           },
-          {
-            // @ts-ignore
-            name: 'sameWidth',
-            enabled: true,
-            phase: 'beforeWrite',
-            requires: ['computeStyles'],
-            fn: ({ state }) => {
-              // eslint-disable-next-line no-param-reassign
-              state.styles.popper.width = `${state.rects.reference.width}px`;
-            },
-            effect: ({ state }) => {
-              // eslint-disable-next-line no-param-reassign
-              state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
-            },
-          },
+          // {
+          //   name: 'offset',
+          //   options: {
+          //     offset: ({ popper, reference, placement }) => [-reference.width / 2, 0],
+          //   },
+          // },
           {
             // @ts-ignore
             name: 'directionControl',

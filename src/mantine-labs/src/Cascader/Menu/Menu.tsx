@@ -1,6 +1,6 @@
 import { ClassNames, DefaultProps, MantineSize } from '@mantine/core';
+import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 import React, { forwardRef } from 'react';
-import { CascaderScrollArea } from '../CascaderScrollArea/CascaderScrollArea';
 import { CascaderItem } from '../types';
 import { useStyles } from './Menu.styles';
 
@@ -37,6 +37,7 @@ export const Menu = forwardRef<HTMLDivElement, CascaderMenuProps>(
       onItemSelect,
       size,
       nesting,
+      maxDropdownHeight,
       itemComponent: Item,
       menuComponent: MenuComponent,
     }: CascaderMenuProps,
@@ -48,8 +49,14 @@ export const Menu = forwardRef<HTMLDivElement, CascaderMenuProps>(
     if (!itemsRefs.current[nesting]) itemsRefs.current[nesting] = {};
 
     return (
-      <CascaderScrollArea style={{ height: 200 }} ref={ref}>
-        <MenuComponent>
+      <SelectScrollArea style={{ height: maxDropdownHeight }} ref={ref}>
+        <MenuComponent
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'stretch',
+          }}
+        >
           {data.map((item, index) => {
             const selected = isItemSelected(item.value, nesting);
             return (
@@ -96,7 +103,7 @@ export const Menu = forwardRef<HTMLDivElement, CascaderMenuProps>(
             );
           })}
         </MenuComponent>
-      </CascaderScrollArea>
+      </SelectScrollArea>
     );
   }
 );

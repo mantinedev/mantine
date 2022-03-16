@@ -35,7 +35,7 @@ export function findSelectedValue(
   items: CascaderItem[],
   separator: string,
   value: string | null
-): number[] | null {
+): number[] {
   if (!value) return null;
   const noSeparators = value.replace(separator, '');
   let indexes = null;

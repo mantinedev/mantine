@@ -1,17 +1,13 @@
-import { ClassNames, DefaultProps, MantineSize } from '@mantine/core';
+import { DefaultProps, MantineSize } from '@mantine/core';
 import { mergeRefs } from '@mantine/hooks';
 import React from 'react';
 import { getItem } from '../getItem';
 import { Menu } from '../Menu/Menu';
 import { CascaderItem } from '../types';
-import { useStyles } from './CascaderMenus.styles';
 
-type CascaderMenusStyles = ClassNames<typeof useStyles>;
-
-export interface CascaderMenusProps extends DefaultProps<CascaderMenusStyles> {
+export interface CascaderMenusProps extends DefaultProps {
   data: CascaderItem[];
   hovered: number[];
-  __staticSelector: string;
   isItemSelected?(itemValue: string, nesting: number): boolean;
   uuid: string;
   itemsRefs?: React.MutableRefObject<Record<number, Record<number, HTMLDivElement>>>;
@@ -31,7 +27,6 @@ export function CascaderMenus({
   hovered,
   classNames,
   styles,
-  __staticSelector,
   uuid,
   itemsRefs,
   menuRefs,
@@ -45,8 +40,6 @@ export function CascaderMenus({
   menuComponent,
   itemComponent,
 }: CascaderMenusProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
-
   return (
     <>
       <Menu
