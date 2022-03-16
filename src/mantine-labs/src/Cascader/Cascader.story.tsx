@@ -6,7 +6,10 @@ import { CascaderItem } from './types';
 
 const DEFAULT_DATA: CascaderItem[] = [
   { value: 'I love', children: [{ value: 'react' }, { value: 'svelte' }, { value: 'vue' }] },
-  { value: 'I hate', children: [{ value: 'react', disabled: true }, { value: 'solid' }, { value: 'angular' }] },
+  {
+    value: 'I hate',
+    children: [{ value: 'react', disabled: true }, { value: 'solid' }, { value: 'angular' }],
+  },
 ];
 
 function Wrapper({ children }) {
@@ -39,8 +42,19 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/labs/Cascader/stories', module).add('Controlled', () => (
-  <Wrapper>
-    <Controlled />
-  </Wrapper>
-));
+storiesOf('@mantine/labs/Cascader/stories', module)
+  .add('Controlled', () => (
+    <Wrapper>
+      <Controlled />
+    </Wrapper>
+  ))
+  .add('Many Items', () => (
+    <Wrapper>
+      <Cascader
+        data={[
+          ...DEFAULT_DATA,
+          ...Array.from(Array(10).keys()).map((_, i) => ({ value: `item ${i}` })),
+        ]}
+      />
+    </Wrapper>
+  ));

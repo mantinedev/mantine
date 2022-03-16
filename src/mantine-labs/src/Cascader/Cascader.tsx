@@ -22,7 +22,6 @@ import { CascaderDropdown } from './CascaderDropdown/CascaderDropdown';
 import { CascaderMenus } from './CascaderMenus/CascaderMenus';
 import { getCascaderRightSectionProps } from './CascaderRightSection/get-cascader-right-section-props';
 import { DefaultItem } from './DefaultItem/DefaultItem';
-import { DefaultMenu } from './DefaultMenu/DefaultMenu';
 import { findSelectedValue } from './findSelectedValue';
 import { getItem } from './getItem';
 import { getValuesFromIndexes } from './getValuesFromIndexes';
@@ -127,7 +126,7 @@ const defaultProps: Partial<CascaderProps> = {
   expandOnHover: false,
   zIndex: getDefaultZIndex('popover'),
   separator: ', ',
-  menuComponent: DefaultMenu,
+  menuComponent: ({ children }) => <div>{children}</div>,
   itemComponent: DefaultItem,
 };
 
@@ -186,9 +185,9 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
   const dropdownRef = useRef<HTMLDivElement>();
-  const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
+  const menuRefs = useRef<Record<number, HTMLDivElement>>({});
+  const itemsRefs = useRef<Record<number, Record<number, HTMLDivElement>>>({});
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('row');
-  const isColumn = direction === 'column';
   const uuid = useUuid(id);
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -292,8 +291,6 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     );
   }, [inputValue]);
 
-  const selectedItemIndex = _value ? formattedData.findIndex((el) => el.value === _value) : 0;
-
   const handlePrevious = () => {
     setHovered((current) => {
       const nextIndexes = getNextIndex(
@@ -302,8 +299,8 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         (index) => index > 0
       );
 
-      targetRef.current = itemsRefs.current[formattedData[0]?.value];
-      scrollIntoView({ alignment: isColumn ? 'start' : 'end' });
+      targetRef.current = itemsRefs.current[current.length - 1][current[current.length - 1]];
+      scrollIntoView({ alignment: 'center' });
       return nextIndexes;
     });
   };
@@ -320,16 +317,16 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             : formattedData.length) - 1
       );
 
-      targetRef.current = itemsRefs.current[formattedData[0]?.value];
-      scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      targetRef.current = itemsRefs.current[current.length - 1][current[current.length - 1]];
+      scrollIntoView({ alignment: 'center' });
       return nextIndexes;
     });
   };
 
   const scrollSelectedItemIntoView = () =>
     window.setTimeout(() => {
-      targetRef.current = itemsRefs.current[formattedData[selectedItemIndex]?.value];
-      scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+      targetRef.current = itemsRefs.current[hovered.length - 1][hovered[hovered.length - 1]];
+      scrollIntoView({ alignment: 'center' });
     }, 0);
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -551,10 +548,13 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
               selectedValue && getItem(formattedData, nesting, selectedValue)?.value === val
             }
             uuid={uuid}
+            maxDropdownHeight={maxDropdownHeight}
             __staticSelector="Cascader"
             onItemHover={setHovered}
             onItemSelect={handleItemSelect}
             itemsRefs={itemsRefs}
+            menuRefs={menuRefs}
+            scrollableRef={scrollableRef}
             itemComponent={itemComponent}
             menuComponent={menuComponent}
             size={size}
