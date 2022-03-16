@@ -110,7 +110,7 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
         <Global
           styles={() => ({
             ':root': {
-              '--mantine-navbar-width': width?.base || '0px',
+              '--mantine-navbar-width': width?.base ? `${width.base}px` : '0px',
               ...breakpoints,
             },
           })}
