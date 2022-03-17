@@ -1,8 +1,10 @@
 import { useCallback, useRef, useState } from 'react';
 
+export type UseIntersection<T> = readonly [(element: T | null) => void, IntersectionObserverEntry];
+
 export function useIntersection<T extends HTMLElement = any>(
   options?: ConstructorParameters<typeof IntersectionObserver>[1]
-): readonly [(element: T | null) => void, IntersectionObserverEntry | null] {
+): UseIntersection<T> {
   const [entry, setEntry] = useState<IntersectionObserverEntry>(null);
 
   const observer = useRef<IntersectionObserver>();
