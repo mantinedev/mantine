@@ -1,9 +1,17 @@
 import { useState } from 'react';
 
+export interface UseDisclosureHandler {
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+}
+
+export type UseDisclosure = [boolean, UseDisclosureHandler];
+
 export function useDisclosure(
   initialState: boolean,
   callbacks?: { onOpen?(): void; onClose?(): void }
-) {
+): UseDisclosure {
   const [opened, setOpened] = useState(initialState);
 
   const open = () => {
@@ -24,5 +32,5 @@ export function useDisclosure(
     opened ? close() : open();
   };
 
-  return [opened, { open, close, toggle }] as const;
+  return [opened, { open, close, toggle }];
 }
