@@ -1,7 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
-export function useMouse<T extends HTMLElement = any>() {
+export interface UseMouse<T> {
+  x: number;
+  y: number;
+  ref: React.MutableRefObject<T>;
+}
+
+export function useMouse<T extends HTMLElement = any>(): UseMouse<T> {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const ref = useRef<T>();
