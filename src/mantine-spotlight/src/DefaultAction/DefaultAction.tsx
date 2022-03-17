@@ -8,6 +8,7 @@ import {
   Center,
   Text,
   MantineNumberSize,
+  MantineColor,
 } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import useStyles from './DefaultAction.styles';
@@ -21,6 +22,7 @@ export interface DefaultActionProps
   hovered: boolean;
   onTrigger(): void;
   highlightQuery: boolean;
+  highlightColor: MantineColor;
   query: string;
   radius: MantineNumberSize;
 }
@@ -32,6 +34,7 @@ export function DefaultAction({
   hovered,
   onTrigger,
   highlightQuery,
+  highlightColor,
   query,
   radius,
   ...others
@@ -50,7 +53,9 @@ export function DefaultAction({
         {action.icon && <Center className={classes.actionIcon}>{action.icon}</Center>}
 
         <div className={classes.actionBody}>
-          <Highlight highlight={highlightQuery ? query : null}>{action.title}</Highlight>
+          <Highlight highlightColor={highlightColor} highlight={highlightQuery ? query : null}>
+            {action.title}
+          </Highlight>
 
           {action.description && (
             <Text color="dimmed" size="xs">
