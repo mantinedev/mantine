@@ -1,12 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-interface UseLocalStorage<T> {
+interface UseLocalStorageInput<T> {
   key: string;
   defaultValue?: T;
   serialize?(value: T): string;
   deserialize?(value: string): T;
 }
+
+export type UseLocalStorage<T> = readonly [T, (val: T | ((prevState: T) => T)) => void];
 
 function serializeJSON<T>(value: T) {
   try {
@@ -29,7 +31,7 @@ export function useLocalStorage<T = string>({
   defaultValue = undefined,
   deserialize = deserializeJSON,
   serialize = serializeJSON,
-}: UseLocalStorage<T>) {
+}: UseLocalStorageInput<T>): UseLocalStorage<T> {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
       ? deserialize(window.localStorage.getItem(key))
@@ -64,7 +66,7 @@ export function useLocalStorage<T = string>({
     }
   }, [defaultValue, value, setLocalStorageValue]);
 
-  return [value || defaultValue, setLocalStorageValue] as const;
+  return [value || defaultValue, setLocalStorageValue];
 }
 
 export const useLocalStorageValue = useLocalStorage;
