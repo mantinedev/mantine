@@ -56,7 +56,13 @@ function addEvents(
   };
 }
 
-export function useFullscreen<T extends HTMLElement = any>() {
+export interface UseFullscreen<T> {
+  ref: (element: T | null) => void;
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+export function useFullscreen<T extends HTMLElement = any>(): UseFullscreen<T> {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const _ref = useRef<T>();
@@ -107,5 +113,5 @@ export function useFullscreen<T extends HTMLElement = any>() {
     return undefined;
   }, []);
 
-  return { ref, toggle, fullscreen } as const;
+  return { ref, toggle, fullscreen };
 }
