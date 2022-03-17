@@ -24,6 +24,16 @@ export interface PaginationParams {
   onChange?: (page: number) => void;
 }
 
+export interface UsePagination {
+  range: (number | 'dots')[];
+  active: number;
+  setPage: (pageNumber: number) => void;
+  next: () => void;
+  previous: () => void;
+  first: () => void;
+  last: () => void;
+}
+
 export function usePagination({
   total,
   siblings = 1,
@@ -31,7 +41,7 @@ export function usePagination({
   page,
   initialPage = 1,
   onChange,
-}: PaginationParams) {
+}: PaginationParams): UsePagination {
   const [activePage, setActivePage] = useUncontrolled({
     value: page,
     onChange,
