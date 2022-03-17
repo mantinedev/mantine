@@ -7,6 +7,11 @@ export interface UseMovePosition {
   y: number;
 }
 
+export interface UseMove<T> {
+  ref: React.MutableRefObject<T>;
+  active: boolean;
+}
+
 export const clampUseMovePosition = (position: UseMovePosition) => ({
   x: clamp({ min: 0, max: 1, value: position.x }),
   y: clamp({ min: 0, max: 1, value: position.y }),
@@ -21,7 +26,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
   onChange: (value: UseMovePosition) => void,
   handlers?: useMoveHandlers,
   dir: 'ltr' | 'rtl' = 'ltr'
-) {
+): UseMove<T> {
   const ref = useRef<T>();
   const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
