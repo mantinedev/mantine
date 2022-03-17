@@ -1,6 +1,13 @@
 import { useRef, useState } from 'react';
 
-export function useInterval(fn: () => void, interval: number) {
+export interface UseInterval {
+  start: () => void;
+  stop: () => void;
+  toggle: () => void;
+  active: boolean;
+}
+
+export function useInterval(fn: () => void, interval: number): UseInterval {
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number>();
 
