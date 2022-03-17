@@ -4,6 +4,7 @@ import { DefaultProps, Portal, MantineStyleSystemSize, getDefaultZIndex, Box } f
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
+import { useNotificationsEvents } from '../events';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
 import NotificationContainer from '../NotificationContainer/NotificationContainer';
@@ -82,12 +83,24 @@ export function NotificationsProvider({
     '-'
   ) as NotificationsProviderPositioning;
 
+  const ctx = {
+    notifications,
+    queue,
+    showNotification,
+    hideNotification,
+    updateNotification,
+    clean,
+    cleanQueue,
+  };
+
   useDidUpdate(() => {
     if (notifications.length > previousLength.current) {
       setTimeout(() => forceUpdate(), 0);
     }
     previousLength.current = notifications.length;
   }, [notifications]);
+
+  useNotificationsEvents(ctx);
 
   const items = notifications.map((notification) => (
     <Transition
@@ -119,17 +132,7 @@ export function NotificationsProvider({
   ));
 
   return (
-    <NotificationsContext.Provider
-      value={{
-        notifications,
-        queue,
-        showNotification,
-        hideNotification,
-        updateNotification,
-        clean,
-        cleanQueue,
-      }}
-    >
+    <NotificationsContext.Provider value={ctx}>
       <Portal zIndex={zIndex}>
         <Box
           className={cx(classes.notifications, className)}
