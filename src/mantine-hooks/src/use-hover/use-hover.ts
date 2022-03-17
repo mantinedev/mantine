@@ -1,6 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, MutableRefObject } from 'react';
 
-export function useHover<T extends HTMLElement = HTMLDivElement>() {
+export interface UseHover<T> {
+  ref: MutableRefObject<T>;
+  hovered: boolean;
+}
+
+export function useHover<T extends HTMLElement = HTMLDivElement>(): UseHover<T> {
   const [hovered, setHovered] = useState(false);
   const ref = useRef<T>(null);
   const onMouseEnter = useCallback(() => setHovered(true), []);
