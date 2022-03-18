@@ -64,6 +64,14 @@ function Guide({ dependencies, initScript, children, action, actionLink, withDon
         {`npm install ${dependencies || '@mantine/core @mantine/hooks'}`}
       </Prism>
 
+      <Text mb={5} mt={15} size="sm">
+        With pnpm
+      </Text>
+
+      <Prism language="bash">
+        {`pnpm install ${dependencies || '@mantine/core @mantine/hooks'}`}
+      </Prism>
+
       {children}
 
       {withDone && (
