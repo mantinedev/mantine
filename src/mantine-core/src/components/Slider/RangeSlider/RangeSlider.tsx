@@ -48,6 +48,9 @@ export interface RangeSliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
 
+  /** Amount of digits after the decimal point */
+  precision?: number;
+
   /** Current value for controlled slider */
   value?: Value;
 
@@ -126,6 +129,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       max,
       minRange,
       step,
+      precision,
       defaultValue,
       name,
       marks,
@@ -204,7 +208,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     };
 
     const handleChange = (val: number) => {
-      const nextValue = getChangeValue({ value: val, min, max, step });
+      const nextValue = getChangeValue({ value: val, min, max, step, precision });
       setRangedValue(nextValue, thumbIndex.current, false);
     };
 

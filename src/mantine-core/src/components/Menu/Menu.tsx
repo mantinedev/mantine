@@ -22,7 +22,7 @@ import { Popper, SharedPopperProps } from '../Popper';
 import { MenuIcon } from './MenuIcon';
 import { MenuItem, MenuItemStylesNames } from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelStylesNames } from './MenuLabel/MenuLabel';
-import { MenuContext } from './Menu.context';
+import { MenuProvider } from './Menu.context';
 import useStyles from './Menu.styles';
 
 export type MenuStylesNames =
@@ -320,7 +320,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
     };
 
     return (
-      <MenuContext.Provider
+      <MenuProvider
         value={{
           hovered,
           radius,
@@ -371,7 +371,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
             </Paper>
           </Popper>
         </Box>
-      </MenuContext.Provider>
+      </MenuProvider>
     );
   }
 ) as any;
