@@ -1,6 +1,18 @@
 import { useState } from 'react';
 
-export function useValidatedState<T>(initialValue: T, validation: (value: T) => boolean) {
+export type UseValidatedState<T> = readonly [
+  {
+    readonly value: T;
+    readonly lastValidValue: T;
+    readonly valid: boolean;
+  },
+  (val: T) => void
+];
+
+export function useValidatedState<T>(
+  initialValue: T,
+  validation: (value: T) => boolean
+): UseValidatedState<T> {
   const [value, setValue] = useState<T>(initialValue);
   const [lastValidValue, setLastValidValue] = useState<T>(
     validation(initialValue) ? initialValue : undefined
@@ -18,5 +30,5 @@ export function useValidatedState<T>(initialValue: T, validation: (value: T) => 
     setValue(val);
   };
 
-  return [{ value, lastValidValue, valid }, onChange] as const;
+  return [{ value, lastValidValue, valid }, onChange];
 }
