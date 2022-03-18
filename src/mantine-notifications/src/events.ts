@@ -23,6 +23,18 @@ export function updateNotification(notification: NotificationProps & { id: strin
   window.dispatchEvent(createEvent(NOTIFICATIONS_EVENTS.update, notification));
 }
 
+export function hideNotification(id: string) {
+  window.dispatchEvent(createEvent(NOTIFICATIONS_EVENTS.hide, id));
+}
+
+export function cleanNotifications() {
+  window.dispatchEvent(createEvent(NOTIFICATIONS_EVENTS.clean));
+}
+
+export function cleanNotificationsQueue() {
+  window.dispatchEvent(createEvent(NOTIFICATIONS_EVENTS.cleanQueue));
+}
+
 export function useNotificationsEvents(ctx: NotificationsContextProps) {
   const events = {
     show: (event: any) => ctx.showNotification(event.detail),

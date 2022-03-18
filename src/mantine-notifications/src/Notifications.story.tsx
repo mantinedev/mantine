@@ -2,13 +2,10 @@ import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { storiesOf } from '@storybook/react';
 import { Button, Group, MantineProvider } from '@mantine/core';
-import { useNotifications } from './use-notifications/use-notifications';
-import { showNotification } from './events';
+import { showNotification, updateNotification } from './events';
 import { NotificationsProvider } from './NotificationsProvider/NotificationsProvider';
 
 function NotificationsDemo() {
-  const notifications = useNotifications();
-
   return (
     <Group style={{ padding: 50 }}>
       <Button
@@ -96,7 +93,7 @@ function NotificationsDemo() {
           });
 
           setTimeout(() => {
-            notifications.updateNotification('data-loading', {
+            updateNotification({
               id: 'data-loading',
               color: 'teal',
               title: 'Data was loaded',
