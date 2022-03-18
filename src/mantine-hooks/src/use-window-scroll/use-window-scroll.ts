@@ -28,7 +28,12 @@ function scrollTo({ x, y }: Partial<ScrollPosition>) {
   }
 }
 
-export function useWindowScroll() {
+export type UseWindowScroll = readonly [
+  ScrollPosition,
+  ({ x, y }: Partial<ScrollPosition>) => void
+];
+
+export function useWindowScroll(): UseWindowScroll {
   const [position, setPosition] = useState(getScrollPosition());
 
   useWindowEvent('scroll', () => setPosition(getScrollPosition()));
