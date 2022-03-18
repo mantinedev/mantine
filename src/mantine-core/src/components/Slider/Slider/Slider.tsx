@@ -42,6 +42,9 @@ export interface SliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
 
+  /** Amount of digits after the decimal point */
+  precision?: number;
+
   /** Current value for controlled slider */
   value?: number;
 
@@ -113,6 +116,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
     min,
     max,
     step,
+    precision,
     defaultValue,
     name,
     marks,
@@ -144,7 +148,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProp
   const _label = typeof label === 'function' ? label(_value) : label;
 
   const handleChange = (val: number) => {
-    const nextValue = getChangeValue({ value: val, min, max, step });
+    const nextValue = getChangeValue({ value: val, min, max, step, precision });
     setValue(nextValue);
     valueRef.current = nextValue;
   };
