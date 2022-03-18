@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-export function useHash() {
+export type UseHash = readonly [string, (value: string) => void];
+
+export function useHash(): UseHash {
   const [hash, setHashValue] = useState<string>(
     typeof window !== 'undefined' ? window.location.hash : ''
   );
@@ -15,5 +17,5 @@ export function useHash() {
     setHashValue(window.location.hash);
   });
 
-  return [hash, setHash] as const;
+  return [hash, setHash];
 }
