@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-export function useToggle<T>(initialValue: T, options: [T, T]) {
+export type UseToggle<T> = readonly [T, (value?: React.SetStateAction<T>) => void];
+
+export function useToggle<T>(initialValue: T, options: [T, T]): UseToggle<T> {
   const [state, setState] = useState(initialValue);
 
   const toggle = (value?: React.SetStateAction<T>) => {
@@ -17,7 +19,7 @@ export function useToggle<T>(initialValue: T, options: [T, T]) {
     }
   };
 
-  return [state, toggle] as const;
+  return [state, toggle];
 }
 
 export function useBooleanToggle(initialValue = false) {
