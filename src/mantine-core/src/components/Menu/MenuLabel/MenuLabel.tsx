@@ -21,7 +21,7 @@ export interface MenuLabelType {
 }
 
 export function MenuLabel(props: MenuLabelProps) {
-  const { classNames, styles } = useMenuContext('Label');
+  const { classNames, styles } = useMenuContext('Menu.Label');
   const { classes } = useStyles(null, { name: 'Menu', classNames, styles });
   return <Text className={classes.label} {...props} />;
 }

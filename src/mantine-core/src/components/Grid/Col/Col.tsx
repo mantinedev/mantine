@@ -1,14 +1,12 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
+import { useGridContext } from '../Grid.context';
 import useStyles from './Col.styles';
 
 export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Default col span */
   span?: number;
-
-  /** Total amount of columns, controlled by Grid component */
-  columns?: number;
 
   /** Column left offset */
   offset?: number;
@@ -28,12 +26,6 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   /** Column left offset at (min-width: theme.breakpoints.xl) */
   offsetXl?: number;
 
-  /** Space between columns from theme, or number to set value in px, controlled by Grid component */
-  gutter?: MantineNumberSize;
-
-  /** sets flex-grow to 1 if true, controlled by Grid component */
-  grow?: boolean;
-
   /** Col span at (min-width: theme.breakpoints.xs) */
   xs?: number;
 
@@ -50,35 +42,31 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   xl?: number;
 }
 
-export function isValidSpan(span: number) {
+function isValidSpan(span: number) {
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
-
-export const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
 
 export function Col({
   children,
   span,
-  gutter,
   offset = 0,
   offsetXs = 0,
   offsetSm = 0,
   offsetMd = 0,
   offsetLg = 0,
   offsetXl = 0,
-  grow,
   xs,
   sm,
   md,
   lg,
   xl,
-  columns,
   className,
   classNames,
   styles,
   id,
   ...others
 }: ColProps) {
+  const { columns, gutter, grow } = useGridContext('Grid.Col');
   const { classes, cx } = useStyles(
     {
       gutter,

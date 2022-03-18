@@ -48,7 +48,7 @@ export const _MenuItem = forwardRef(
   ) => {
     const itemRef = useRef<HTMLButtonElement>();
     const { hovered, onItemHover, radius, onItemKeyDown, classNames, styles, onItemClick } =
-      useMenuContext();
+      useMenuContext('Menu.Item');
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
     const itemIndex = getContextItemIndex(
       { elementSelector: '.mantine-Menu-item', parentClassName: 'mantine-Menu-body' },

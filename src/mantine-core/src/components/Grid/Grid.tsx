@@ -7,6 +7,7 @@ import {
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Col } from './Col/Col';
+import { GridProvider } from './Grid.context';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -70,9 +71,11 @@ export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
     );
 
     return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {cols}
-      </Box>
+      <GridProvider value={{ gutter, grow, columns }}>
+        <Box className={cx(classes.root, className)} ref={ref} {...others}>
+          {cols}
+        </Box>
+      </GridProvider>
     );
   }
 ) as any;

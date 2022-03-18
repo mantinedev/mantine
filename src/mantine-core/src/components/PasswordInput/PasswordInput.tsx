@@ -88,7 +88,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     const theme = useMantineTheme();
     const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
-    const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
+    const { classes, cx } = useStyles(
+      { size, rightSectionWidth },
+      { name: 'PasswordInput', classNames, styles }
+    );
     const uuid = useUuid(id);
     const { systemStyles, rest } = extractSystemStyles(others);
     const [reveal, toggle] = useBooleanToggle(false);
@@ -137,7 +140,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           invalid={!!error}
           icon={icon}
           size={size}
-          classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+          classNames={{ ...classNames, input: classes.input }}
           styles={styles}
           radius={radius}
           disabled={disabled}
@@ -149,7 +152,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <input
             type={reveal ? 'text' : 'password'}
             required={required}
-            className={cx(classes.innerInput, classNames?.innerInput, {
+            className={cx(classes.innerInput, {
               [classes.withIcon]: icon,
               [classes.invalid]: !!error,
             })}
