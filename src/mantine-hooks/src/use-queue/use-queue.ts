@@ -1,6 +1,20 @@
 import { useState } from 'react';
 
-export function useQueue<T>({ initialValues = [], limit }: { initialValues?: T[]; limit: number }) {
+export interface UseQueue<T> {
+  state: T[];
+  queue: T[];
+  add: (...items: T[]) => void;
+  update: (fn: (state: T[]) => T[]) => void;
+  cleanQueue: () => void;
+}
+
+export function useQueue<T>({
+  initialValues = [],
+  limit,
+}: {
+  initialValues?: T[];
+  limit: number;
+}): UseQueue<T> {
   const [{ state, queue }, setState] = useState({
     state: initialValues.slice(0, limit),
     queue: initialValues.slice(limit),
