@@ -1,0 +1,27 @@
+---
+group: 'changelog'
+title: 'Version 4.1.0'
+order: 1
+slug: /changelog/4-1-0/
+release: https://github.com/mantinedev/mantine/releases/tag/4.1.0
+date: 'March 10th, 2022'
+---
+
+import { NotificationsDemos } from '@mantine/demos';
+
+## @mantine/notifications improvements
+
+[Notifications system](https://mantine.dev/others/notifications/) functions were migrated to
+[custom events](https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events),
+they are no longer depend on context and can be called in any part of application.
+Old way with `useNotifications` hook will work until version 5.0 release.
+
+`@mantine/notifications` now exports the following functions:
+
+- `showNotification` – adds given notification to notifications list or queue depending on current state and limit
+- `updateNotification` – updates notification that was previously added to the state or queue
+- `hideNotification` – removes notification with given id from notifications state and queue
+- `cleanNotifications` – removes all notifications from notifications state and queue
+- `cleanNotificationsQueue` – removes all notifications from queue
+
+<Demo data={NotificationsDemos.base} />
