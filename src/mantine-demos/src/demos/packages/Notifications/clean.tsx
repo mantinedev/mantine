@@ -1,10 +1,14 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import {
+  showNotification,
+  cleanNotificationsQueue,
+  cleanNotifications,
+} from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { showNotification, cleanNotificationsQueue, cleanNotifications } from '@mantine/notifications';
 
 function Demo() {
   const notifications = useNotifications();
@@ -17,7 +21,7 @@ function Demo() {
           Array(10)
             .fill(0)
             .forEach((_, index) => {
-              notifications.showNotification({
+              showNotification({
                 title: \`Notification \${index + 1}\`,
                 message: 'Most notifications are added to queue',
                 autoClose: false,
@@ -28,11 +32,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button variant="outline" color="gray" onClick={cleanNotificationsQueue}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
+      <Button variant="outline" color="red" onClick={cleanNotifications}>
         Clean all
       </Button>
     </Group>
@@ -40,8 +44,6 @@ function Demo() {
 }`;
 
 function Demo() {
-  const notifications = useNotifications();
-
   return (
     <Group position="center">
       <Button
@@ -50,7 +52,7 @@ function Demo() {
           Array(10)
             .fill(0)
             .forEach((_, index) => {
-              notifications.showNotification({
+              showNotification({
                 title: `Notification ${index + 1}`,
                 message: 'Most notifications are added to queue',
                 autoClose: false,
@@ -61,11 +63,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button variant="outline" color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button variant="outline" color="gray" onClick={cleanNotificationsQueue}>
         Clean queue
       </Button>
 
-      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
+      <Button variant="outline" color="red" onClick={cleanNotifications}>
         Clean all
       </Button>
     </Group>

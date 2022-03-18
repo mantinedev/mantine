@@ -1,16 +1,17 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { showNotification } from '@mantine/notifications';
 
 const code = `
-function Demo() {
-  const notifications = useNotifications();
+import { Group, Button } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 
+function Demo() {
   return (
     <Group position="center">
       <Button
         variant="outline"
-        onClick={() => notifications.showNotification({ message: 'I will close in 4 seconds' })}
+        onClick={() => showNotification({ message: 'I will close in 4 seconds' })}
       >
         Notifications Provider timeout
       </Button>
@@ -18,7 +19,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             message: 'I will close in 500ms',
             autoClose: 500,
           })
@@ -30,7 +31,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             color: 'blue',
             title: 'I will never close',
             message: 'unless you click X',
@@ -46,13 +47,11 @@ function Demo() {
 `;
 
 function Demo() {
-  const notifications = useNotifications();
-
   return (
     <Group position="center">
       <Button
         variant="outline"
-        onClick={() => notifications.showNotification({ message: 'I will close in 4 seconds' })}
+        onClick={() => showNotification({ message: 'I will close in 4 seconds' })}
       >
         Notifications Provider timeout
       </Button>
@@ -60,7 +59,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             message: 'I will close in 500ms',
             autoClose: 500,
           })
@@ -72,7 +71,7 @@ function Demo() {
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             color: 'blue',
             title: 'I will never close',
             message: 'unless you click X',
