@@ -11,6 +11,12 @@ export interface UncontrolledOptions<T> {
   rule: (value: T | null | undefined) => boolean;
 }
 
+export type UseUncontrolled<T> = readonly [
+  T | null,
+  (nextValue: T | null) => void,
+  UncontrolledMode
+];
+
 export function useUncontrolled<T>({
   value,
   defaultValue,
@@ -18,7 +24,7 @@ export function useUncontrolled<T>({
   rule,
   onChange,
   onValueUpdate,
-}: UncontrolledOptions<T>): readonly [T | null, (nextValue: T | null) => void, UncontrolledMode] {
+}: UncontrolledOptions<T>): UseUncontrolled<T> {
   // determine, whether new props indicate controlled state
   const shouldBeControlled = rule(value);
 
