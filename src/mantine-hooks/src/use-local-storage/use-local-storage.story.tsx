@@ -33,3 +33,22 @@ export function SerializeJson() {
     </div>
   );
 }
+
+export function SerializeBoolean() {
+  const [value, setValue] = useLocalStorage<boolean>({
+    key: '@mantine/localStorage/val',
+    defaultValue: true,
+  });
+
+  return (
+    <div style={{ padding: 20 }}>
+      <input
+        type="checkbox"
+        checked={value}
+        onChange={(event) => {
+          setValue(event.currentTarget.checked);
+        }}
+      />
+    </div>
+  );
+}
