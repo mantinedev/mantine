@@ -80,12 +80,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(
       labelElement,
-      {
-        ..._labelProps,
-        ...labelProps,
-        id: id ? `${id}-label` : undefined,
-        className: classes.label,
-      },
+      { ..._labelProps, ...labelProps, className: classes.label },
       <>
         {label}
         {required && <span className={classes.required}> *</span>}

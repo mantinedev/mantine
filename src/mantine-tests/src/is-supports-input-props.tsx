@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
 import { itConnectsLabelAndInput } from './it-connects-label-and-input';
 import { itSupportsInputIcon } from './it-supports-input-icon';
@@ -50,5 +51,47 @@ export function itSupportsInputProps<P>(
       <Component {...requiredProps} radius={43} id="secret-test-id" />
     );
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
+  });
+
+  it('supports labelProps', async () => {
+    await renderWithAct(
+      <Component
+        {...requiredProps}
+        label="Test label"
+        labelProps={{ id: 'test-label', 'data-test': 'test-data' }}
+      />
+    );
+
+    const label = screen.getByText('Test label');
+    expect(label).toHaveAttribute('id', 'test-label');
+    expect(label).toHaveAttribute('data-test', 'test-data');
+  });
+
+  it('supports errorProps', async () => {
+    await renderWithAct(
+      <Component
+        {...requiredProps}
+        error="Test error"
+        errorProps={{ id: 'test-error', 'data-test': 'test-data' }}
+      />
+    );
+
+    const error = screen.getByText('Test error');
+    expect(error).toHaveAttribute('id', 'test-error');
+    expect(error).toHaveAttribute('data-test', 'test-data');
+  });
+
+  it('supports descriptionProps', async () => {
+    await renderWithAct(
+      <Component
+        {...requiredProps}
+        description="Test description"
+        descriptionProps={{ id: 'test-description', 'data-test': 'test-data' }}
+      />
+    );
+
+    const description = screen.getByText('Test description');
+    expect(description).toHaveAttribute('id', 'test-description');
+    expect(description).toHaveAttribute('data-test', 'test-data');
   });
 }
