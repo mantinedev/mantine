@@ -95,6 +95,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'bottom',
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('Autocomplete', defaultProps, props);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
@@ -211,6 +214,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         __staticSelector="Autocomplete"
         sx={sx}
         style={style}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

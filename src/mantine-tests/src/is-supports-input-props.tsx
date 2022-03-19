@@ -55,15 +55,10 @@ export function itSupportsInputProps<P>(
 
   it('supports labelProps', async () => {
     await renderWithAct(
-      <Component
-        {...requiredProps}
-        label="Test label"
-        labelProps={{ id: 'test-label', 'data-test': 'test-data' }}
-      />
+      <Component {...requiredProps} label="Test label" labelProps={{ 'data-test': 'test-data' }} />
     );
 
     const label = screen.getByText('Test label');
-    expect(label).toHaveAttribute('id', 'test-label');
     expect(label).toHaveAttribute('data-test', 'test-data');
   });
 
