@@ -5,12 +5,14 @@ import { injectStyles } from './utils/inject-style-tag';
 import { insertStyleTag } from './utils/insert-style-tag';
 import { makeStyleTag } from './utils/make-style-tag';
 
+export type UseScrollLock = readonly [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+
 export function useScrollLock(
   lock?: boolean,
   options = {
     disableBodyPadding: false,
   }
-) {
+): UseScrollLock {
   const [scrollLocked, setScrollLocked] = useState(lock || false);
   const scrollTop = useRef(0);
 
