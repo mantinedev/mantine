@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react';
 
 const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 
+export type UseClickOutside<T> = React.MutableRefObject<T>;
+
 export function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events?: string[] | null,
   nodes?: HTMLElement[]
-) {
+): UseClickOutside<T> {
   const ref = useRef<T>();
 
   useEffect(() => {
