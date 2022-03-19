@@ -12,8 +12,9 @@ export function useClickOutside<T extends HTMLElement = any>(
   useEffect(() => {
     const listener = (event: any) => {
       if (Array.isArray(nodes)) {
+        const shouldIgnore = event.target?.hasAttribute('data-ignore-outside-clicks');
         const shouldTrigger = nodes.every((node) => !!node && !node.contains(event.target));
-        shouldTrigger && handler();
+        shouldTrigger && !shouldIgnore && handler();
       } else if (ref.current && !ref.current.contains(event.target)) {
         handler();
       }
