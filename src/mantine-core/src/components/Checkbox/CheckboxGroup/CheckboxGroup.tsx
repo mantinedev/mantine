@@ -70,6 +70,9 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       classNames,
       styles,
       wrapperProps,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('CheckboxGroup', defaultProps, props);
 
@@ -109,6 +112,9 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
         classNames={classNames}
         styles={styles}
         ref={ref}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...wrapperProps}
         {...others}
       >

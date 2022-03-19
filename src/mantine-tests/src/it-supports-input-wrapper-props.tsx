@@ -15,7 +15,6 @@ export function itSupportsInputWrapperProps<P>(
       <Component {...requiredProps} required id="secret-test-id" label="Test label" />
     );
     expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
-    expect(container.querySelector('#secret-test-id')).toHaveAttribute('required');
   });
 
   it('supports description prop', async () => {
