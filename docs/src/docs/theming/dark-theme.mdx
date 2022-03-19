@@ -176,3 +176,46 @@ function App() {
   );
 }
 ```
+
+## Save color scheme in cookie
+
+Saving color scheme in cookie is the easiest way to prevent color scheme mismatch.
+This strategy can be applied to any framework/library that has server side rendering support.
+The following example shows how to store color scheme in cookie with Next.js:
+
+```tsx
+// _app.tsx file
+import { GetServerSidePropsContext } from 'next';
+import { useState } from 'react';
+import { AppProps } from 'next/app';
+// install cookies-next package to manage cookies
+import { getCookie, setCookies } from 'cookies-next';
+import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
+
+export default function App(props: AppProps & { colorScheme: ColorScheme }) {
+  const { Component, pageProps } = props;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(nextColorScheme);
+    // when color scheme is updated save it to cookie
+    setCookies('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+  };
+
+  return (
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <Component {...pageProps} />
+      </MantineProvider>
+    </ColorSchemeProvider>
+  );
+}
+
+App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
+  // get color scheme from cookie
+  colorScheme: getCookie('mantine-color-scheme', ctx) || 'light',
+});
+```
+
+Full code is available in [Mantine Next.js template](https://github.com/mantinedev/mantine-next-template).
