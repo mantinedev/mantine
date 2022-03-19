@@ -32,7 +32,7 @@ export function useLocalStorage<T = string>({
 }: UseLocalStorage<T>) {
   const [value, setValue] = useState<T>(
     typeof window !== 'undefined' && 'localStorage' in window
-      ? deserialize(window.localStorage.getItem(key))
+      ? deserialize(window.localStorage.getItem(key) ?? undefined)
       : ((defaultValue ?? '') as T)
   );
 
@@ -54,17 +54,17 @@ export function useLocalStorage<T = string>({
 
   useWindowEvent('storage', (event) => {
     if (event.storageArea === window.localStorage && event.key === key) {
-      setValue(deserialize(event.newValue));
+      setValue(deserialize(event.newValue ?? undefined));
     }
   });
 
   useEffect(() => {
-    if (defaultValue && !value) {
+    if (defaultValue !== undefined && value === undefined) {
       setLocalStorageValue(defaultValue);
     }
   }, [defaultValue, value, setLocalStorageValue]);
 
-  return [value || defaultValue, setLocalStorageValue] as const;
+  return [value === undefined ? defaultValue : value, setLocalStorageValue] as const;
 }
 
 export const useLocalStorageValue = useLocalStorage;
