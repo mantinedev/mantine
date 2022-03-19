@@ -12,6 +12,7 @@ import {
   getDefaultZIndex,
   getGroupedOptions,
   MantineNumberSize,
+  MantineColor,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
@@ -87,6 +88,9 @@ export interface InnerSpotlightProps
 
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;
+
+  /** The highlight color */
+  highlightColor?: MantineColor;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -116,6 +120,7 @@ export function Spotlight({
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
+  highlightColor,
   maxWidth = 600,
   topOffset = 120,
   className,
@@ -238,6 +243,7 @@ export function Spotlight({
                 <ActionsWrapper>
                   <ActionsList
                     highlightQuery={highlightQuery}
+                    highlightColor={highlightColor}
                     actions={groupedWithLabels}
                     actionComponent={actionComponent}
                     hovered={hovered}
