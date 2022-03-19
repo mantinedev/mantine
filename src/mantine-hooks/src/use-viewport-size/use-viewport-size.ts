@@ -7,7 +7,12 @@ const eventListerOptions = {
 
 const browser = typeof window !== 'undefined';
 
-export function useViewportSize() {
+export type UseViewportSize = {
+  width: number;
+  height: number;
+};
+
+export function useViewportSize(): UseViewportSize {
   const [windowSize, setWindowSize] = useState({
     width: browser ? window.innerWidth : 0,
     height: browser ? window.innerHeight : 0,
