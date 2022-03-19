@@ -15,7 +15,9 @@ const defaultState: ObserverRect = {
 
 const browser = typeof window !== 'undefined';
 
-export function useResizeObserver<T extends HTMLElement = any>() {
+export type UseResizeObserver<T> = readonly [React.MutableRefObject<T>, ObserverRect];
+
+export function useResizeObserver<T extends HTMLElement = any>(): UseResizeObserver<T> {
   const frameID = useRef(0);
   const ref = useRef<T>(null);
 
@@ -58,7 +60,13 @@ export function useResizeObserver<T extends HTMLElement = any>() {
   return [ref, rect] as const;
 }
 
-export function useElementSize<T extends HTMLElement = any>() {
+export interface UseElementSize<T> {
+  ref: React.MutableRefObject<T>;
+  width: number;
+  height: number;
+}
+
+export function useElementSize<T extends HTMLElement = any>(): UseElementSize<T> {
   const [ref, { width, height }] = useResizeObserver<T>();
   return { ref, width, height };
 }
