@@ -68,6 +68,9 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
       rightSection,
       rightSectionWidth,
       sx,
+      errorProps,
+      descriptionProps,
+      labelProps,
       ...others
     } = useMantineDefaultProps('NativeSelect', defaultProps, props);
     const uuid = useUuid(id);
@@ -106,6 +109,9 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
         classNames={classNames}
         sx={sx}
         __staticSelector="NativeSelect"
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

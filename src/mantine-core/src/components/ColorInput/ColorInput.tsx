@@ -120,6 +120,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       style,
       swatches,
       sx,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('ColorInput', defaultProps, props);
 
@@ -177,6 +180,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         style={style}
         __staticSelector="ColorInput"
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

@@ -64,6 +64,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       size,
       __staticSelector,
       sx,
+      errorProps,
+      descriptionProps,
+      labelProps,
       ...others
     } = useMantineDefaultProps('Textarea', defaultProps, props);
 
@@ -97,6 +100,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
+        errorProps={errorProps}
+        labelProps={labelProps}
+        descriptionProps={descriptionProps}
         {...systemStyles}
         {...wrapperProps}
       >

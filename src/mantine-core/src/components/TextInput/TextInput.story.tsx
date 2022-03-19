@@ -11,6 +11,6 @@ function Controlled(props: Partial<TextInputProps>) {
 
 storiesOf('@mantine/core/TextInput/stories', module).add('Controlled', () => (
   <div style={{ width: 300, padding: 20 }}>
-    <Controlled label="text" placeholder="text" type="text" />
+    <Controlled label="text" placeholder="text" type="text" labelProps={{ id: 'hello' }} />
   </div>
 ));

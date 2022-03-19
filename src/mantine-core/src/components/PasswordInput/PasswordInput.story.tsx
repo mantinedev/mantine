@@ -4,7 +4,7 @@ import { MANTINE_SIZES } from '@mantine/styles';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
 
 const sizes = MANTINE_SIZES.map((size) => (
-  <PasswordInput placeholder={size} key={size} size={size} style={{ marginTop: 20 }} />
+  <PasswordInput placeholder={size} key={size} size={size} mt={20} />
 ));
 
 function Controlled(props: Partial<PasswordInputProps>) {

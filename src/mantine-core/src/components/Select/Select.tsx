@@ -211,6 +211,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     name,
     dropdownPosition,
     allowDeselect,
+    errorProps,
+    descriptionProps,
+    labelProps,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -515,6 +518,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       styles={styles}
       __staticSelector="Select"
       sx={sx}
+      errorProps={errorProps}
+      descriptionProps={descriptionProps}
+      labelProps={labelProps}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -604,6 +610,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             nothingFound={nothingFound}
             creatable={isCreatable && !!createLabel}
             createLabel={createLabel}
+            aria-label={label}
           />
         </SelectDropdown>
       </div>

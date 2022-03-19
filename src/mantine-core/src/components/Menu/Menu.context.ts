@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react';
 import { MantineNumberSize, MantineTheme, CSSObject } from '@mantine/styles';
+import { createUseContext } from '../../utils';
 import type { MenuStylesNames } from './Menu';
 
 interface MenuContextValue {
@@ -14,14 +14,4 @@ interface MenuContextValue {
   onItemClick(): void;
 }
 
-export const MenuContext = createContext<MenuContextValue>(null);
-
-export function useMenuContext(component = 'Item') {
-  const ctx = useContext(MenuContext);
-
-  if (!ctx) {
-    throw new Error(`Menu.${component} component was rendered outside of Menu context`);
-  }
-
-  return ctx;
-}
+export const [MenuProvider, useMenuContext] = createUseContext<MenuContextValue>(null);

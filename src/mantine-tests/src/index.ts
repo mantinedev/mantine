@@ -17,4 +17,5 @@ export { itHandlesBooleanState } from './it-handles-boolean-state';
 export { itSupportsInputRightSection } from './it-supports-input-right-section';
 export { itSupportsInputIcon } from './it-supports-input-icon';
 export { itFiltersChildren } from './it-filters-children';
+export { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 export { renderWithAct, actAsync } from './render-with-act';

@@ -73,6 +73,9 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       classNames,
       styles,
       wrapperProps,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('RadioGroup', defaultProps, props);
 
@@ -108,6 +111,9 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         classNames={classNames}
         styles={styles}
         ref={ref}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...wrapperProps}
         {...others}
       >

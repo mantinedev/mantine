@@ -177,4 +177,7 @@ storiesOf('@mantine/spotlight', module)
       ]}
     />
   ))
-  .add('Highlight query', () => <Wrapper {...defaultProps} highlightQuery />);
+  .add('Highlight query', () => <Wrapper {...defaultProps} highlightQuery />)
+  .add('Highlight with custom color', () => (
+    <Wrapper {...defaultProps} highlightColor="red" highlightQuery />
+  ));

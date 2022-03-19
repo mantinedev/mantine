@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsWrapperProps,
+  itSupportsInputWrapperProps,
   itSupportsSystemProps,
   itFiltersChildren,
 } from '@mantine/tests';
@@ -18,7 +18,7 @@ const defaultProps: CheckboxGroupProps = {
 };
 
 describe('@mantine/core/CheckboxGroup', () => {
-  itSupportsWrapperProps(CheckboxGroup, defaultProps);
+  itSupportsInputWrapperProps(CheckboxGroup, defaultProps, 'CheckboxGroup');
   itSupportsSystemProps({
     component: CheckboxGroup,
     props: defaultProps,
