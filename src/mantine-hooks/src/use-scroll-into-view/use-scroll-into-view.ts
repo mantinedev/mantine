@@ -34,6 +34,13 @@ interface ScrollIntoViewParams {
   isList?: boolean;
 }
 
+export interface UseScrollIntoView<Target, Parent> {
+  scrollableRef: React.MutableRefObject<Parent>;
+  targetRef: React.MutableRefObject<Target>;
+  scrollIntoView: ({ alignment }?: ScrollIntoViewAnimation) => void;
+  cancel: () => void;
+}
+
 export function useScrollIntoView<
   Target extends HTMLElement,
   Parent extends HTMLElement | null = null
@@ -45,7 +52,7 @@ export function useScrollIntoView<
   offset = 0,
   cancelable = true,
   isList = false,
-}: ScrollIntoViewParams = {}) {
+}: ScrollIntoViewParams = {}): UseScrollIntoView<Target, Parent> {
   const frameID = useRef(0);
   const startTime = useRef(0);
   const shouldStop = useRef(false);

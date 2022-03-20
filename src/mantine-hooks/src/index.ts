@@ -55,3 +55,4 @@ export type { UseClipboard } from './use-clipboard/use-clipboard';
 export type { UseDisclosure } from './use-disclosure/use-disclosure';
 export type { UseInterval } from './use-interval/use-interval';
 export type { UseQueue } from './use-queue/use-queue';
+export type { UseScrollIntoView } from './use-scroll-into-view/use-scroll-into-view';
