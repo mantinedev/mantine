@@ -7,6 +7,7 @@ import {
   itSupportsWrapperProps,
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
+  itSupportsInputWrapperProps,
 } from '@mantine/tests';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
@@ -23,6 +24,7 @@ describe('@mantine/core/MultiSelect', () => {
   checkAccessibility([<MultiSelect {...defaultProps} initiallyOpened />]);
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);
+  itSupportsInputWrapperProps(MultiSelect, defaultProps, 'MultiSelect');
   itSupportsInputRightSection(MultiSelect, defaultProps);
   itSupportsWrapperProps(MultiSelect, defaultProps);
   itConnectsLabelAndInput(MultiSelect, defaultProps);

@@ -133,6 +133,9 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       disabled,
       sx,
       nextRef,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
     } = useMantineDefaultProps('TimeInput', defaultProps, props);
 
@@ -248,6 +251,9 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         __staticSelector="TimeInput"
         id={uuid}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

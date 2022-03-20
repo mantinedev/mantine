@@ -4,7 +4,7 @@ import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 import { DirectionContext } from './DirectionContext';
-import '../../fonts/GreycliffCF/styles.css';
+import { GreycliffCF } from '../../fonts/GreycliffCF/GreycliffCF';
 
 const THEME_KEY = 'mantine-color-scheme';
 
@@ -28,6 +28,7 @@ export default function Layout({ children, location }: LayoutProps) {
   return (
     <DirectionContext.Provider value={{ dir, toggleDirection }}>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <GreycliffCF />
         <MantineProvider
           withGlobalStyles
           withNormalizeCSS

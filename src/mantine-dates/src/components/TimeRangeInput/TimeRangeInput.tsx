@@ -130,6 +130,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       labelSeparator,
       disabled,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
     } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
 
@@ -201,6 +204,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         __staticSelector="TimeRangeInput"
         id={uuid}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

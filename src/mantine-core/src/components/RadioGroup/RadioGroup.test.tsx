@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsWrapperProps,
+  itSupportsInputWrapperProps,
   itSupportsSystemProps,
   itFiltersChildren,
 } from '@mantine/tests';
@@ -18,7 +18,7 @@ const defaultProps: RadioGroupProps = {
 };
 
 describe('@mantine/core/RadioGroup', () => {
-  itSupportsWrapperProps(RadioGroup, defaultProps);
+  itSupportsInputWrapperProps(RadioGroup, defaultProps, 'RadioGroup');
   itSupportsSystemProps({
     component: RadioGroup,
     props: defaultProps,

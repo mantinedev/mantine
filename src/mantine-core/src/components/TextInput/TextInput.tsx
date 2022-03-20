@@ -61,6 +61,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       size,
       classNames,
       styles,
+      errorProps,
+      labelProps,
+      descriptionProps,
       __staticSelector,
       sx,
       ...others
@@ -83,6 +86,9 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
+        errorProps={errorProps}
+        labelProps={labelProps}
+        descriptionProps={descriptionProps}
         {...systemStyles}
         {...wrapperProps}
       >

@@ -47,12 +47,13 @@ export default createStyles(
     },
 
     itemOpened: {
-      [`& .${getRef('icon')}`]: {
+      [`& > .${getRef('itemTitle')} > .${getRef('control')} .${getRef('icon')}`]: {
         transform: disableIconRotation ? 'none' : 'rotate(180deg)',
       },
     },
 
     itemTitle: {
+      ref: getRef('itemTitle'),
       margin: 0,
       padding: 0,
       fontWeight: 'normal',
@@ -61,6 +62,7 @@ export default createStyles(
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
+      ref: getRef('control'),
       width: '100%',
       display: 'flex',
       alignItems: 'center',

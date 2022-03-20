@@ -178,6 +178,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onDropdownOpen,
       clickOutsideEvents = ['mousedown', 'touchstart'],
       modalZIndex,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -271,6 +274,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         __staticSelector={__staticSelector}
         sx={sx}
         ref={setReferenceElement}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

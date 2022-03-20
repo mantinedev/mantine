@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
+  - name: Feature request
+    url: https://github.com/mantinedev/mantine/discussions/new
+    about: Request new feature
   - name: Ask a question, give feedback, share your project
     url: https://github.com/mantinedev/mantine/discussions
     about: Connect with other community members with GitHub discussions

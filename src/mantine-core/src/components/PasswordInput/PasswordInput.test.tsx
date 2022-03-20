@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import {
   checkAccessibility,
   itSupportsFocusEvents,
-  itSupportsWrapperProps,
   itSupportsSystemProps,
   itSupportsInputIcon,
   itConnectsLabelAndInput,
+  itSupportsInputWrapperProps,
 } from '@mantine/tests';
 import userEvent from '@testing-library/user-event';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
@@ -15,7 +15,7 @@ const defaultProps: PasswordInputProps = {};
 
 describe('@mantine/core/PasswordInput', () => {
   itSupportsFocusEvents(PasswordInput, defaultProps, 'input');
-  itSupportsWrapperProps(PasswordInput, defaultProps);
+  itSupportsInputWrapperProps(PasswordInput, defaultProps, 'PasswordInput');
   itSupportsInputIcon(PasswordInput, defaultProps);
   itConnectsLabelAndInput(PasswordInput, defaultProps);
   checkAccessibility([<PasswordInput label="test" />, <PasswordInput aria-label="test" />]);

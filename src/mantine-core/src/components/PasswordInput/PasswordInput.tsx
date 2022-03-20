@@ -83,6 +83,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       rightSectionWidth: _rightSectionWidth,
       rightSectionProps: _rightSectionProps,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
     } = useMantineDefaultProps('PasswordInput', defaultProps, props);
 
@@ -132,6 +135,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

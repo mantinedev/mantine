@@ -58,6 +58,7 @@ export function SelectItems({
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"
+        data-ignore-outside-clicks
         tabIndex={-1}
         aria-selected={hovered === index}
         ref={(node: HTMLDivElement) => {

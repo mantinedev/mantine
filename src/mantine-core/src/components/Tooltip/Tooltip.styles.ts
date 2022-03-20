@@ -11,16 +11,6 @@ export default createStyles((theme, { color, radius }: TooltipStylesParams) => (
     display: 'inline-block',
   },
 
-  wrapper: {
-    background: 'transparent',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    pointerEvents: 'none',
-  },
-
   body: {
     ...theme.fn.fontStyles(),
     backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
@@ -32,11 +22,6 @@ export default createStyles((theme, { color, radius }: TooltipStylesParams) => (
     position: 'relative',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-
-  tooltip: {
-    display: 'inline-block',
-    position: 'absolute',
   },
 
   arrow: {
