@@ -4,7 +4,7 @@ import { useMantineTheme } from '../theme/MantineProvider';
 import type { MantineTheme } from '../theme/types';
 
 interface GlobalStylesProps {
-  styles(theme: MantineTheme): CSSObject;
+  styles(theme: MantineTheme): CSSObject | CSSObject[];
 }
 
 export function Global({ styles }: GlobalStylesProps) {
