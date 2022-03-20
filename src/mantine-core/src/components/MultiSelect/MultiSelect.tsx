@@ -293,6 +293,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     useDidUpdate(() => {
       //using greater than equal to take into account creatable type.
       if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+
+      //for controlled input scenarios
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) valuesOverflow.current = false;
+      /*preventing the dropdown opening on backspace while controlled
+      where values length is greater than maxSelectedValues. */
+      if (!!maxSelectedValues && _value.length >= maxSelectedValues) {
+        valuesOverflow.current = true;
+        setDropdownOpened(false);
+      }
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
