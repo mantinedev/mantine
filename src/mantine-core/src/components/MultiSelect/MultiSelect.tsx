@@ -488,9 +488,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }
 
     const shouldRenderDropdown =
-      filteredData.length > 0 ||
-      isCreatable ||
-      (searchValue.length > 0 && !!nothingFound && filteredData.length === 0);
+      filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
     return (
       <InputWrapper

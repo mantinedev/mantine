@@ -501,8 +501,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   };
 
   const shouldShowDropdown =
-    dropdownOpened &&
-    (searchable && !creatable ? filteredData.length > 0 || !!nothingFound : dropdownOpened);
+    filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
   return (
     <InputWrapper
