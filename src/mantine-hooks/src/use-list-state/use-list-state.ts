@@ -77,7 +77,10 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
   const applyWhere = (
     condition: (item: T, index?: number) => boolean,
     fn: (item: T, index?: number) => T
-  ) => setState((current) => current.map((item) => (condition(item) ? fn(item) : item)));
+  ) =>
+    setState((current) =>
+      current.map((item, index) => (condition(item, index) ? fn(item, index) : item))
+    );
 
   return [
     state,
