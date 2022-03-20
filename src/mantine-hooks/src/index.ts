@@ -53,3 +53,4 @@ export type { HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UsePagination } from './use-pagination/use-pagination';
 export type { UseClipboard } from './use-clipboard/use-clipboard';
 export type { UseDisclosure } from './use-disclosure/use-disclosure';
+export type { UseInterval } from './use-interval/use-interval';
