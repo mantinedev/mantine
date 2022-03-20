@@ -6,7 +6,7 @@ import heavy from './GreycliffCF-Heavy.woff2';
 export function GreycliffCF() {
   return (
     <Global
-      styles={() => [
+      styles={[
         {
           '@font-face': {
             fontFamily: 'Greycliff CF',
