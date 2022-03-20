@@ -158,6 +158,52 @@ interface UseSpotlight {
 }
 ```
 
+## Event based functions
+
+`@mantine/spotlight` exports several functions which can be used to perform certain actions
+from any part of your application:
+
+```tsx
+// All functions can be called from anywhere (not only from components)
+import {
+  openSpotlight,
+  closeSpotlight,
+  toggleSpotlight,
+  triggerSpotlightAction,
+  registerSpotlightActions,
+  removeSpotlightActions,
+} from '@mantine/spotlight';
+
+// Opens spotlight
+openSpotlight();
+
+// Closes spotlight
+closeSpotlight();
+
+// Toggles spotlight opened state
+toggleSpotlight();
+
+// triggers action with given id
+triggerSpotlightAction('action-id');
+
+// registers additional actions
+registerSpotlightActions([
+  {
+    id: 'secret-action-1',
+    title: 'Secret action',
+    onTrigger: () => console.log('Secret'),
+  },
+  {
+    id: 'secret-action-2',
+    title: 'Another secret action',
+    onTrigger: () => console.log('Secret'),
+  },
+]);
+
+// removes actions
+removeSpotlightActions(['secret-action-1', 'secret-action-2']);
+```
+
 ## Spotlight actions
 
 `actions` is the only required prop of `SpotlightProvider`. Action shape:
