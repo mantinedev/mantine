@@ -21,7 +21,7 @@ function Demo() {
       <ThemeIcon size="lg" variant="gradient" gradient={{ from: 'orange', to: 'red' }}>
         <Photo size={20} />
       </ThemeIcon>
-      <ThemeIcon size="lg" variant="gradient" gradient={{ from: 'grape', to: 'pink', deg: 35 }}>
+      <ThemeIcon size="lg" variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>
         <Photo size={20} />
       </ThemeIcon>
     </>
@@ -44,7 +44,11 @@ function Demo() {
       <ThemeIcon size="lg" variant="gradient" gradient={{ from: 'orange', to: 'red' }}>
         <Photo size={20} />
       </ThemeIcon>
-      <ThemeIcon size="lg" variant="gradient" gradient={{ from: 'grape', to: 'pink', deg: 35 }}>
+      <ThemeIcon
+        size="lg"
+        variant="gradient"
+        gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
+      >
         <Photo size={20} />
       </ThemeIcon>
     </Group>

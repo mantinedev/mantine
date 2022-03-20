@@ -84,8 +84,9 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       background: `linear-gradient(${merged.deg}deg, ${theme.fn.themeColor(
         merged.from,
-        6
-      )} 0%, ${theme.fn.themeColor(merged.to, 6)} 100%)`,
+        6,
+        false
+      )} 0%, ${theme.fn.themeColor(merged.to, 6, false)} 100%)`,
       color: theme.white,
       border: 'transparent',
       hover: null,

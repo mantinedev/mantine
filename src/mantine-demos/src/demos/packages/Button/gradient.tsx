@@ -11,7 +11,7 @@ function Demo() {
       <Button variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }}>Lime green</Button>
       <Button variant="gradient" gradient={{ from: 'teal', to: 'blue', deg: 60 }}>Teal blue</Button>
       <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }}>Orange red</Button>
-      <Button variant="gradient" gradient={{ from: 'grape', to: 'pink', deg: 35 }}>Grape pink</Button>
+      <Button variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>Peach</Button>
     </>
   );
 }
@@ -32,8 +32,8 @@ function Demo() {
       <Button variant="gradient" gradient={{ from: 'orange', to: 'red' }}>
         Orange red
       </Button>
-      <Button variant="gradient" gradient={{ from: 'grape', to: 'pink', deg: 35 }}>
-        Grape pink
+      <Button variant="gradient" gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}>
+        Peach
       </Button>
     </Group>
   );
