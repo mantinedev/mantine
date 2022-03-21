@@ -1,9 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
+import { StylesAPIStory } from '@mantine/storybook';
 import { Anchor } from './Anchor';
 
 storiesOf('@mantine/core/Anchor/stories', module)
+  .add('Styles API', () => (
+    <StylesAPIStory component={Anchor} name="Anchor" props={{ children: 'Anchor' }} />
+  ))
   .add('Custom component', () => (
     <div style={{ padding: 40 }}>
       <Anchor component="button" type="button">

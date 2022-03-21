@@ -10,13 +10,13 @@ export interface AspectRatioProps extends DefaultProps, React.ComponentPropsWith
 
 export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>(
   (props: AspectRatioProps, ref) => {
-    const { className, ratio, children, ...others } = useMantineDefaultProps(
+    const { className, ratio, children, classNames, styles, ...others } = useMantineDefaultProps(
       'AspectRatio',
       {},
       props
     );
 
-    const { classes, cx } = useStyles({ ratio }, { name: 'AspectRatio' });
+    const { classes, cx } = useStyles({ ratio }, { name: 'AspectRatio', classNames, styles });
 
     return (
       <Box ref={ref} className={cx(classes.root, className)} {...others}>

@@ -24,7 +24,7 @@ function Section({ withDivider = true, name, children }: SectionProps) {
 }
 
 interface StylesAPIStoryProps {
-  name: keyof typeof StylesAPI;
+  name: string;
   props: Record<string, any>;
   component: any;
   maxWidth?: number;
@@ -45,7 +45,8 @@ export function StylesAPIStory({
   maxWidth = 400,
   withPadding = true,
 }: StylesAPIStoryProps) {
-  const styles = generateBorderStyles(StylesAPI[name]);
+  const selectors = name in StylesAPI ? StylesAPI[name] : { root: '' };
+  const styles = generateBorderStyles(selectors);
   const classNames = createStyles(styles)().classes;
   const { root } = useRootStyles().classes;
 
