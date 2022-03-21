@@ -9,7 +9,7 @@ export interface UseListStateHandler<T> {
   shift: () => void;
   apply: (fn: (item: T, index?: number) => T) => void;
   applyWhere: (
-    condition: (item: T, index?: number) => boolean,
+    condition: (item: T, index: number) => boolean,
     fn: (item: T, index?: number) => T
   ) => void;
   remove: (...indices: number[]) => void;
@@ -75,7 +75,7 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
     });
 
   const applyWhere = (
-    condition: (item: T, index?: number) => boolean,
+    condition: (item: T, index: number) => boolean,
     fn: (item: T, index?: number) => T
   ) =>
     setState((current) =>
