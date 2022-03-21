@@ -293,6 +293,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     useDidUpdate(() => {
       //using greater than equal to take into account creatable type.
       if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+
+      //for controlled input scenarios
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) valuesOverflow.current = false;
+      /*preventing the dropdown opening on backspace while controlled
+      where values length is greater than maxSelectedValues. */
+      if (!!maxSelectedValues && _value.length >= maxSelectedValues) {
+        valuesOverflow.current = true;
+        setDropdownOpened(false);
+      }
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
@@ -479,9 +488,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }
 
     const shouldRenderDropdown =
-      filteredData.length > 0 ||
-      isCreatable ||
-      (searchValue.length > 0 && !!nothingFound && filteredData.length === 0);
+      filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
     return (
       <InputWrapper
