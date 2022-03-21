@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
+import { StylesAPIStory } from '@mantine/storybook';
 import { TextInput } from '../TextInput';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -81,6 +82,19 @@ function Dynamic() {
 }
 
 storiesOf('@mantine/core/Accordion/stories', module)
+  .add('Styles API', () => (
+    <StylesAPIStory
+      name="Accordion"
+      props={{}}
+      component={(props: AccordionProps) => (
+        <Accordion {...props}>
+          <Accordion.Item label="First tab">First tab content</Accordion.Item>
+          <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
+          <Accordion.Item label="Third tab">Third tab content</Accordion.Item>
+        </Accordion>
+      )}
+    />
+  ))
   .add('With form', () => (
     <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
       <Accordion.Item label="First tab">{form}</Accordion.Item>
