@@ -11,7 +11,7 @@ const defaultProps: AlertProps = {
   icon: '$',
 };
 
-storiesOf('@mantine/core/Alert/stories', module)
+storiesOf('@mantine/core/Alert', module)
   .add('Styles API', () => <StylesAPIStory component={Alert} name="Alert" props={defaultProps} />)
   .add('Content overflow', () => (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>

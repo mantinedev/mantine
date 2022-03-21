@@ -27,6 +27,7 @@ interface StylesAPIStoryProps {
   name: string;
   props: Record<string, any>;
   component: any;
+  withInputProps?: boolean;
   maxWidth?: number;
   withPadding?: boolean;
 }
@@ -38,17 +39,27 @@ const rootStyles = {
 
 const useRootStyles = createStyles({ root: rootStyles });
 
+const inputProps = {
+  label: 'Label',
+  description: 'Description',
+  error: 'Error',
+  icon: '$',
+  placeholder: 'Placeholder',
+};
+
 export function StylesAPIStory({
   name,
   component: Component,
-  props,
+  props: _props,
   maxWidth = 400,
   withPadding = true,
+  withInputProps = false,
 }: StylesAPIStoryProps) {
   const selectors = name in StylesAPI ? StylesAPI[name] : { root: '' };
   const styles = generateBorderStyles(selectors);
   const classNames = createStyles(styles)().classes;
   const { root } = useRootStyles().classes;
+  const props = withInputProps ? { ...inputProps, ..._props } : _props;
 
   return (
     <Container py={withPadding ? 20 : 0} size={maxWidth}>

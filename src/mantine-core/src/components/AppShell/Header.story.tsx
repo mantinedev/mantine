@@ -12,7 +12,7 @@ const content = Array(30)
     </p>
   ));
 
-storiesOf('@mantine/core/AppShell/stories/Header', module)
+storiesOf('@mantine/core/AppShell/Header', module)
   .add('Header', () => (
     <>
       <Header height={50}>Just a header</Header>
