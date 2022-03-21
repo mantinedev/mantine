@@ -2,9 +2,17 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { XCircleFillIcon } from '@primer/octicons-react';
 import { MantineProvider } from '@mantine/styles';
-import { Alert } from './Alert';
+import { StylesAPIStory } from '@mantine/storybook';
+import { Alert, AlertProps } from './Alert';
+
+const defaultProps: AlertProps = {
+  title: 'Alert title',
+  children: 'Alert message',
+  icon: '$',
+};
 
 storiesOf('@mantine/core/Alert/stories', module)
+  .add('Styles API', () => <StylesAPIStory component={Alert} name="Alert" props={defaultProps} />)
   .add('Content overflow', () => (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
       <Alert title="Alert title that is too large and will definitely take more that one line to render">
