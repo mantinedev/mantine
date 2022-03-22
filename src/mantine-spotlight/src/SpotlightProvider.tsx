@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
 import { Spotlight, InnerSpotlightProps } from './Spotlight/Spotlight';
+import { useSpotlightEvents } from './events';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
@@ -67,22 +68,23 @@ export function SpotlightProvider({
     },
   });
 
+  const ctx = {
+    openSpotlight: open,
+    closeSpotlight: close,
+    toggleSpotlight: toggle,
+    registerActions,
+    removeActions,
+    triggerAction,
+    opened,
+    actions,
+    query,
+  };
+
   useSpotlightShortcuts(shortcut, open);
+  useSpotlightEvents(ctx);
 
   return (
-    <SpotlightContext.Provider
-      value={{
-        openSpotlight: open,
-        closeSpotlight: close,
-        toggleSpotlight: toggle,
-        registerActions,
-        removeActions,
-        triggerAction,
-        opened,
-        actions,
-        query,
-      }}
-    >
+    <SpotlightContext.Provider value={ctx}>
       <Spotlight
         actions={actions}
         onClose={close}
