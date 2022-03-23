@@ -26,7 +26,7 @@ Add `dir="rtl"` to `html` element:
 <html dir="rtl">...</html>
 ```
 
-Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
+Add `stylis-plugin-rtl` and `theme.dir` to your [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -34,7 +34,10 @@ import rtlPlugin from 'stylis-plugin-rtl';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+    <MantineProvider
+      emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}
+      theme={{ dir: 'rtl' }}
+    >
       <YourApp />
     </MantineProvider>
   );
