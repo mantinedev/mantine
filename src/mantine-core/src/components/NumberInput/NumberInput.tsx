@@ -345,6 +345,45 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
+    const getMobileOperatingSystem = () => {
+      const userAgent = navigator.userAgent || navigator.vendor;
+      if (/android/i.test(userAgent)) {
+        return 'Android';
+      }
+      if (/iPad|iPhone|iPod/.test(userAgent)) {
+        return 'iOS';
+      }
+      return 'unknown';
+    };
+
+    const handleInputMode = ():
+      | 'none'
+      | 'text'
+      | 'search'
+      | 'email'
+      | 'tel'
+      | 'url'
+      | 'numeric'
+      | 'decimal' => {
+      // check if positive integer
+      if (Number.isInteger(step) && step >= 0 && precision === 0) return 'numeric';
+      // check if positive decimal
+      if (!Number.isInteger(step) && step >= 0 && precision !== 0) return 'decimal';
+      // if negative integers and device config
+      if (Number.isInteger(step) && step < 0 && precision === 0) {
+        const os = getMobileOperatingSystem();
+        if (os === 'iOS') return 'text';
+        return 'decimal';
+      }
+      // if negative decimal and device config
+      if (!Number.isInteger(step) && step < 0 && precision !== 0) {
+        const os = getMobileOperatingSystem();
+        if (os === 'iOS') return 'text';
+        return 'decimal';
+      }
+      return 'numeric';
+    };
+
     return (
       <TextInput
         {...others}
@@ -369,7 +408,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
-        inputMode={Number.isInteger(step) && precision === 0 ? 'numeric' : 'decimal'}
+        inputMode={handleInputMode()}
         __staticSelector="NumberInput"
       />
     );

@@ -1,20 +1,18 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { showNotification } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { showNotification } from '@mantine/notifications';
 
 function Demo() {
-  const notifications = useNotifications();
-
   return (
     <Group position="center">
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             title: 'Default notification',
             message: 'Hey there, your code is awesome! 🤥',
           })
@@ -27,14 +25,12 @@ function Demo() {
 }`;
 
 function Demo() {
-  const notifications = useNotifications();
-
   return (
     <Group position="center">
       <Button
         variant="outline"
         onClick={() =>
-          notifications.showNotification({
+          showNotification({
             title: 'Default notification',
             message: 'Hey there, your code is awesome! 🤥',
           })
