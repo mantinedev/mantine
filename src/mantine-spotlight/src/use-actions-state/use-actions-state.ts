@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { randomId, useDidUpdate } from '@mantine/hooks';
+import { randomId } from '@mantine/hooks';
 import type { SpotlightAction } from '../types';
 
 function prepareAction(action: SpotlightAction) {
@@ -33,17 +33,14 @@ export function useActionsState(
     prepareActions(typeof initialActions === 'function' ? initialActions(query) : initialActions)
   );
 
-  useDidUpdate(() => {
-    setActions(
-      prepareActions(typeof initialActions === 'function' ? initialActions(query) : initialActions)
-    );
-  }, [initialActions]);
-
   useEffect(() => {
     if (typeof initialActions === 'function') {
       setActions(prepareActions(initialActions(query)));
     }
   }, [query]);
+
+  const updateActions = (payload: SpotlightAction[] | ((query: string) => SpotlightAction[])) =>
+    setActions(prepareActions(typeof payload === 'function' ? payload(query) : payload));
 
   const registerActions = (payload: SpotlightAction[]) =>
     setActions((current) => prepareActions([...current, ...payload]));
@@ -60,6 +57,7 @@ export function useActionsState(
     actions,
     {
       registerActions,
+      updateActions,
       removeActions,
       triggerAction,
     },
