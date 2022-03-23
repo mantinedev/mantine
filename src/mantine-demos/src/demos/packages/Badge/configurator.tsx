@@ -30,12 +30,12 @@ export const configurator: MantineDemo = {
     {
       name: 'variant',
       type: 'select',
-      initialValue: 'filled',
-      defaultValue: 'filled',
+      initialValue: 'light',
+      defaultValue: 'light',
       data: [
+        { value: 'light', label: 'Light' },
         { value: 'filled', label: 'Filled' },
         { value: 'outline', label: 'Outline' },
-        { value: 'light', label: 'Light' },
         { value: 'dot', label: 'Dot' },
       ],
     },
