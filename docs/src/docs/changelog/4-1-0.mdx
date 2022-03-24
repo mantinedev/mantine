@@ -43,6 +43,34 @@ function App() {
 }
 ```
 
+## Mantine CSS variables
+
+You can now set `withCSSVariables` prop on [MantineProvider](https://mantine.dev/theming/mantine-provider/) to add
+[Mantine CSS variables](https://mantine.dev/theming/mantine-provider/#mantine-css-variables) from theme to `:root`.
+This option is useful when you want to use Mantine theme values with CSS/SCSS or css-in-js libraries that do not have Mantine theme context.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider withCSSVariables>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+Then you will be able to use variables anywhere in your CSS:
+
+```css
+.my-button {
+  background-color: var(--mantine-color-blue-6);
+  font-family: var(--mantine-font-family);
+  line-height: var(--mantine-line-height);
+}
+```
+
 ## Other changes
 
 - [@mantine/spotlight](https://mantine.dev/others/spotlight/) now exports event based functions to open/close spotlight and perform other actions from anywhere in your application (not only in components)

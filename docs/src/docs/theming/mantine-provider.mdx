@@ -261,6 +261,51 @@ function App() {
 
 This approach is useful when you want to styles components with utility based CSS libraries.
 
+## Mantine CSS variables
+
+If you prefer to style components with CSS/SCSS or other styling solutions that do not have access to Mantine theme
+context, then you can use Mantine CSS variables. To add css variables set `withCSSVariables` prop on MantineProvider:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider withCSSVariables>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+Then you will be able to use variables anywhere in your CSS:
+
+```css
+.my-button {
+  background-color: var(--mantine-color-blue-6);
+  font-family: var(--mantine-font-family);
+  line-height: var(--mantine-line-height);
+}
+```
+
+Mantine exposes the following CSS variables based on `theme` you provide:
+
+- `--mantine-color-white`
+- `--mantine-color-black`
+- `--mantine-transition-timing-function`
+- `--mantine-line-height`
+- `--mantine-font-family`
+- `--mantine-font-family-monospace`
+- `--mantine-font-family-headings`
+- `--mantine-heading-font-weight`
+- `--mantine-shadow-{size}`, e.g. `--mantine-shadow-sm`, `--mantine-shadow-xl`
+- `--mantine-radius-{size}`, e.g. `--mantine-radius-sm`, `--mantine-radius-xl`
+- `--mantine-spacing-{size}`, e.g. `--mantine-spacing-sm`, `--mantine-spacing-xl`
+- `--mantine-font-size-{size}`, e.g. `--mantine-font-size-sm`, `--mantine-font-size-xl`
+- `--mantine-color-{color}-{shade}`, e.g. `--mantine-color-blue-6`, `--mantine-color-gray-0`
+- `--mantine-{heading}-font-size`, e.g. `--mantine-h1-font-size`
+- `--mantine-{heading}-line-height`, e.g, `--mantine-h3-line-height`
+
 ## Default props on MantineProvider
 
 All Mantine components support default props on MantineProvider:
