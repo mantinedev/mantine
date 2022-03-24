@@ -29,6 +29,7 @@ storiesOf('@mantine/styles/MantineProvider', module)
       theme={{ primaryColor: 'orange', colorScheme: 'light' }}
       styles={{ TestElement: { element: { fontSize: 50 } } }}
       defaultProps={{ TestElement: { children: 'Default test element' } }}
+      withCSSVariables
     >
       <TestElement />
 

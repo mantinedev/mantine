@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import type { Options as EmotionCacheOptions } from '@emotion/cache';
 import { DEFAULT_THEME } from './default-theme';
 import { GlobalStyles } from './GlobalStyles';
+import { MantineCssVariables } from './MantineCssVariables';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
 import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
@@ -63,6 +64,7 @@ export interface MantineProviderProps {
   emotionOptions?: EmotionCacheOptions;
   withNormalizeCSS?: boolean;
   withGlobalStyles?: boolean;
+  withCSSVariables?: boolean;
   children: React.ReactNode;
   inherit?: boolean;
 }
@@ -75,6 +77,7 @@ export function MantineProvider({
   emotionOptions,
   withNormalizeCSS = false,
   withGlobalStyles = false,
+  withCSSVariables = false,
   inherit = false,
   children,
 }: MantineProviderProps) {
@@ -101,6 +104,7 @@ export function MantineProvider({
     >
       {withNormalizeCSS && <NormalizeCSS />}
       {withGlobalStyles && <GlobalStyles theme={mergedTheme} />}
+      {withCSSVariables && <MantineCssVariables theme={mergedTheme} />}
       {children}
     </MantineProviderContext.Provider>
   );
