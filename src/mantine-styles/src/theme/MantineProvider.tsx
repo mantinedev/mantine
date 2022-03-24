@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import type { Options as EmotionCacheOptions } from '@emotion/cache';
-import { Global } from '@emotion/react';
 import { DEFAULT_THEME } from './default-theme';
+import { GlobalStyles } from './GlobalStyles';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import type { CSSObject } from '../tss';
 import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
@@ -55,27 +55,6 @@ export function useMantineDefaultProps<T extends Record<string, any>>(
   return { ...defaultProps, ...contextProps, ...filterProps(props) };
 }
 
-function GlobalStyles() {
-  const theme = useMantineTheme();
-  return (
-    <Global
-      styles={{
-        '*, *::before, *::after': {
-          boxSizing: 'border-box',
-        },
-
-        body: {
-          ...(theme.fn.fontStyles() as any),
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          lineHeight: theme.lineHeight,
-          fontSize: theme.fontSizes.md,
-        },
-      }}
-    />
-  );
-}
-
 export interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
@@ -108,10 +87,12 @@ export function MantineProvider({
     defaultProps: inherit ? { ...ctx.defaultProps, ...defaultProps } : defaultProps,
   };
 
+  const mergedTheme = mergeThemeWithFunctions(DEFAULT_THEME, overrides.themeOverride);
+
   return (
     <MantineProviderContext.Provider
       value={{
-        theme: mergeThemeWithFunctions(DEFAULT_THEME, overrides.themeOverride),
+        theme: mergedTheme,
         styles: overrides.styles,
         classNames: overrides.classNames,
         emotionOptions: overrides.emotionOptions,
@@ -119,7 +100,7 @@ export function MantineProvider({
       }}
     >
       {withNormalizeCSS && <NormalizeCSS />}
-      {withGlobalStyles && <GlobalStyles />}
+      {withGlobalStyles && <GlobalStyles theme={mergedTheme} />}
       {children}
     </MantineProviderContext.Provider>
   );
