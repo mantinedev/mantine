@@ -6,7 +6,6 @@ import { Notification, NotificationProps } from './Notification';
 const defaultProps: NotificationProps = {
   icon: 'test-icon',
   title: 'test-notification',
-  onClose: () => {},
   closeButtonProps: { title: 'test-close' },
 };
 
