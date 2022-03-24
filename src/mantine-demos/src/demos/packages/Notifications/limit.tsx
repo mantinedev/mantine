@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { useNotifications, NotificationsProvider } from '@mantine/notifications';
 
 const code = `
 import { Group, Button } from '@mantine/core';
@@ -59,5 +59,9 @@ function Demo() {
 export const limit: MantineDemo = {
   type: 'demo',
   code,
-  component: Demo,
+  component: () => (
+    <NotificationsProvider>
+      <Demo />
+    </NotificationsProvider>
+  ),
 };

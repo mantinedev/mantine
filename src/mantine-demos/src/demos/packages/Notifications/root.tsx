@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckIcon } from '@modulz/radix-icons';
 import { Group, Button } from '@mantine/core';
-import { useNotifications } from '@mantine/notifications';
+import { useNotifications, NotificationsProvider } from '@mantine/notifications';
 
 function Demo() {
   const notifications = useNotifications();
@@ -113,5 +113,9 @@ function Demo() {
 
 export const root: MantineDemo = {
   type: 'demo',
-  component: Demo,
+  component: () => (
+    <NotificationsProvider>
+      <Demo />
+    </NotificationsProvider>
+  ),
 };
