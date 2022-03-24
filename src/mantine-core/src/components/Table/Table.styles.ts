@@ -4,10 +4,15 @@ export interface TableStylesParams {
   captionSide: 'top' | 'bottom';
   horizontalSpacing: MantineNumberSize;
   verticalSpacing: MantineNumberSize;
+  fontSize: MantineNumberSize;
 }
 
 export default createStyles(
-  (theme, { captionSide, horizontalSpacing, verticalSpacing }: TableStylesParams, getRef) => {
+  (
+    theme,
+    { captionSide, horizontalSpacing, verticalSpacing, fontSize }: TableStylesParams,
+    getRef
+  ) => {
     const striped = { ref: getRef('striped') };
     const hover = { ref: getRef('hover') };
 
@@ -34,7 +39,7 @@ export default createStyles(
           textAlign: 'left',
           fontWeight: 'bold',
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-          fontSize: 14,
+          fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
           padding: `${theme.fn.size({
             size: verticalSpacing,
             sizes: theme.spacing,
@@ -61,7 +66,7 @@ export default createStyles(
           borderBottom: `1px solid ${
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
           }`,
-          fontSize: 14,
+          fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
         },
 
         '& tbody tr:last-of-type td': {

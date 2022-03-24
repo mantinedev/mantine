@@ -39,6 +39,9 @@ export function useActionsState(
     }
   }, [query]);
 
+  const updateActions = (payload: SpotlightAction[] | ((query: string) => SpotlightAction[])) =>
+    setActions(prepareActions(typeof payload === 'function' ? payload(query) : payload));
+
   const registerActions = (payload: SpotlightAction[]) =>
     setActions((current) => prepareActions([...current, ...payload]));
 
@@ -54,6 +57,7 @@ export function useActionsState(
     actions,
     {
       registerActions,
+      updateActions,
       removeActions,
       triggerAction,
     },

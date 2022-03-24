@@ -46,5 +46,6 @@ export const spacingConfigurator: MantineDemo = {
   configurator: [
     { name: 'horizontalSpacing', type: 'size', defaultValue: 'xs', initialValue: 'xs' },
     { name: 'verticalSpacing', type: 'size', initialValue: 'xs' },
+    { name: 'fontSize', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
   ],
 };

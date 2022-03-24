@@ -15,6 +15,8 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },
