@@ -107,6 +107,14 @@ function Demo() {
 `dateParser` function should always return Date object.
 If parsed date is invalid when input is blurred value will be restored to last valid value.
 
+Note that if you use the default dayjs parser, you will need to import and configure the
+`customParseFormat` dayjs plugin:
+
+```tsx
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+```
+
 ## Exclude dates
 
 To exclude dates set `excludeDate` prop with function that receives date as an argument and returns
