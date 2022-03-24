@@ -224,7 +224,7 @@ function App() {
 
 ## Styles on MantineProvider
 
-You can add context styles to components which support [Styles API](/theming/styles-api/) with MantineProvider.
+You can add context styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
 All components that are rendered inside MantineProvider will inherit those styles:
 
 <Demo data={ThemeDemos.providerStyles} />
@@ -242,6 +242,24 @@ function App() {
   );
 }
 ```
+
+## Classes on MantineProvider
+
+Same as with `styles` you can add classes to all components with `classNames` prop on MantineProvider:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider classNames={{ Button: { root: 'button-root', label: 'button-label' } }}>
+      <Button>All Button components will have the classes above</Button>
+    </MantineProvider>
+  );
+}
+```
+
+This approach is useful when you want to styles components with utility based CSS libraries.
 
 ## Default props on MantineProvider
 

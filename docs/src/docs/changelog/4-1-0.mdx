@@ -26,6 +26,23 @@ Old way with `useNotifications` hook will work until version 5.0 release.
 
 <Demo data={NotificationsDemos.base} />
 
+## classNames prop on MantineProvider
+
+Same as with `styles` you can now add classes to all components with `classNames` prop on MantineProvider.
+This approach is useful when you want to styles components with utility based CSS libraries.
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider classNames={{ Button: { root: 'button-root', label: 'button-label' } }}>
+      <Button>All Button components will have the classes above</Button>
+    </MantineProvider>
+  );
+}
+```
+
 ## Other changes
 
 - [@mantine/spotlight](https://mantine.dev/others/spotlight/) now exports event based functions to open/close spotlight and perform other actions from anywhere in your application (not only in components)
