@@ -74,6 +74,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
     <Box
       ref={ref}
       className={cx(
+        classes.root,
         {
           [classes.vertical]: vertical,
           [classes.horizontal]: horizontal,

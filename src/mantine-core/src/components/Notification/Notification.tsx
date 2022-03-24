@@ -18,7 +18,7 @@ export interface NotificationProps
   extends DefaultProps<NotificationStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Called when close button is clicked */
-  onClose(): void;
+  onClose?(): void;
 
   /** Notification line or icon color */
   color?: MantineColor;
