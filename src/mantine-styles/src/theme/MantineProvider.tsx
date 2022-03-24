@@ -14,11 +14,13 @@ type ProviderStyles = Record<
   | ((theme: MantineTheme, params: Record<string, any>) => Record<string, CSSObject>)
 >;
 
+type ProviderClassNames = Record<string, Record<string, string>>;
 type MantineDefaultProps = Record<string, Record<string, any>>;
 
 interface MantineProviderContextType {
   theme: MantineTheme;
   styles: ProviderStyles;
+  classNames: ProviderClassNames;
   emotionOptions: EmotionCacheOptions;
   defaultProps: MantineDefaultProps;
 }
@@ -26,6 +28,7 @@ interface MantineProviderContextType {
 const MantineProviderContext = createContext<MantineProviderContextType>({
   theme: DEFAULT_THEME,
   styles: {},
+  classNames: {},
   emotionOptions: { key: 'mantine', prepend: true },
   defaultProps: {},
 });
@@ -34,8 +37,9 @@ export function useMantineTheme() {
   return useContext(MantineProviderContext)?.theme || DEFAULT_THEME;
 }
 
-export function useMantineThemeStyles() {
-  return useContext(MantineProviderContext)?.styles || {};
+export function useMantineThemeStyles(component: string) {
+  const ctx = useContext(MantineProviderContext);
+  return { styles: ctx.styles[component] || {}, classNames: ctx.classNames[component] || {} };
 }
 
 export function useMantineEmotionOptions(): EmotionCacheOptions {
@@ -75,6 +79,7 @@ function GlobalStyles() {
 export interface MantineProviderProps {
   theme?: MantineThemeOverride;
   styles?: ProviderStyles;
+  classNames?: ProviderClassNames;
   defaultProps?: MantineDefaultProps;
   emotionOptions?: EmotionCacheOptions;
   withNormalizeCSS?: boolean;
@@ -86,6 +91,7 @@ export interface MantineProviderProps {
 export function MantineProvider({
   theme,
   styles = {},
+  classNames = {},
   defaultProps = {},
   emotionOptions,
   withNormalizeCSS = false,
@@ -98,6 +104,7 @@ export function MantineProvider({
     themeOverride: inherit ? { ...ctx.theme, ...theme } : theme,
     emotionOptions: inherit ? { ...ctx.emotionOptions, ...emotionOptions } : emotionOptions,
     styles: inherit ? { ...ctx.styles, ...styles } : styles,
+    classNames: inherit ? { ...ctx.classNames, ...classNames } : classNames,
     defaultProps: inherit ? { ...ctx.defaultProps, ...defaultProps } : defaultProps,
   };
 
@@ -106,6 +113,7 @@ export function MantineProvider({
       value={{
         theme: mergeThemeWithFunctions(DEFAULT_THEME, overrides.themeOverride),
         styles: overrides.styles,
+        classNames: overrides.classNames,
         emotionOptions: overrides.emotionOptions,
         defaultProps: overrides.defaultProps,
       }}

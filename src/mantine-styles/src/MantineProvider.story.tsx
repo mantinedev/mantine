@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider, useMantineDefaultProps } from './theme';
-import { createStyles } from './tss';
+import { createStyles, Global } from './tss';
 
 const useStyles = createStyles((theme) => ({
   element: {
@@ -22,17 +22,38 @@ function TestElement() {
   return <div className={classes.element}>{children}</div>;
 }
 
-storiesOf('@mantine/styles/MantineProvider', module).add('Inheritance: theme', () => (
-  <MantineProvider
-    inherit
-    theme={{ primaryColor: 'orange', colorScheme: 'light' }}
-    styles={{ TestElement: { element: { fontSize: 50 } } }}
-    defaultProps={{ TestElement: { children: 'Default test element' } }}
-  >
-    <TestElement />
+storiesOf('@mantine/styles/MantineProvider', module)
+  .add('Inheritance: theme', () => (
+    <MantineProvider
+      inherit
+      theme={{ primaryColor: 'orange', colorScheme: 'light' }}
+      styles={{ TestElement: { element: { fontSize: 50 } } }}
+      defaultProps={{ TestElement: { children: 'Default test element' } }}
+    >
+      <TestElement />
 
-    <MantineProvider theme={{ primaryColor: 'red' }} inherit>
+      <MantineProvider theme={{ primaryColor: 'red' }} inherit>
+        <TestElement />
+      </MantineProvider>
+    </MantineProvider>
+  ))
+  .add('ClassNames', () => (
+    <MantineProvider
+      defaultProps={{ TestElement: { children: 'Default test element' } }}
+      classNames={{
+        TestElement: {
+          element: 'test-class',
+        },
+      }}
+    >
+      <Global
+        styles={{
+          '.test-class': {
+            border: '1px solid orange',
+          },
+        }}
+      />
+      <TestElement />
       <TestElement />
     </MantineProvider>
-  </MantineProvider>
-));
+  ));

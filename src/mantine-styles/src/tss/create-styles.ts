@@ -29,7 +29,9 @@ export function createStyles<Key extends string = string, Params = void>(
 
   function useStyles(params: Params, options?: UseStylesOptions<Key>) {
     const theme = useMantineTheme();
-    const themeStyles = useMantineThemeStyles()[options?.name];
+    const { styles: themeStyles, classNames: themeClassNames } = useMantineThemeStyles(
+      options?.name
+    );
 
     const { css, cx } = useCss();
 
@@ -51,7 +53,11 @@ export function createStyles<Key extends string = string, Params = void>(
       })
     ) as Record<Key, string>;
 
-    return { classes: mergeClassNames(cx, classes, options?.classNames, options?.name), cx, theme };
+    return {
+      classes: mergeClassNames(cx, classes, themeClassNames, options?.classNames, options?.name),
+      cx,
+      theme,
+    };
   }
 
   return useStyles;
