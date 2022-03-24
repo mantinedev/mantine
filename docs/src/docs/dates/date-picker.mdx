@@ -57,7 +57,7 @@ Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` 
 
 <Demo data={DatePickerDemos.firstDaySunday} />
 
-## Open calendal within modal
+## Open calendar within modal
 
 You can change the way calendar pop up on the page.
 Default variant is `popover`, set it to `modal` to display calendar in modal:
@@ -106,6 +106,14 @@ function Demo() {
 
 `dateParser` function should always return Date object.
 If parsed date is invalid when input is blurred value will be restored to last valid value.
+
+Note that if you use the default dayjs parser, you will need to import and configure the
+`customParseFormat` dayjs plugin:
+
+```tsx
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+```
 
 ## Exclude dates
 

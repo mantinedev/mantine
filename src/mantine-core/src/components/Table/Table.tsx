@@ -18,6 +18,9 @@ export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Vertical cells spacing from theme.spacing or number to set value in px */
   verticalSpacing?: MantineNumberSize;
+
+  /** Sets font size of all text inside table */
+  fontSize?: MantineNumberSize;
 }
 
 const defaultProps: Partial<TableProps> = {
@@ -25,6 +28,7 @@ const defaultProps: Partial<TableProps> = {
   highlightOnHover: false,
   captionSide: 'top',
   horizontalSpacing: 'xs',
+  fontSize: 'sm',
   verticalSpacing: 7,
 };
 
@@ -37,11 +41,12 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps
     captionSide,
     horizontalSpacing,
     verticalSpacing,
+    fontSize,
     ...others
   } = useMantineDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { captionSide, verticalSpacing, horizontalSpacing },
+    { captionSide, verticalSpacing, horizontalSpacing, fontSize },
     { name: 'Table' }
   );
 

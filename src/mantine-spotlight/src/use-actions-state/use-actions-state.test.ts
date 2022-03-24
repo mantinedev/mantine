@@ -93,6 +93,21 @@ describe('@mantine/spotlight/use-actions-state', () => {
     ]);
   });
 
+  it('update actions', () => {
+    const hook = renderHook(() => useActionsState(ACTIONS, ''));
+    act(() =>
+      hook.result.current[1].updateActions([
+        { id: 'action-4', title: 'Action 4', onTrigger },
+        { id: 'action-5', title: 'Action 5', onTrigger },
+      ])
+    );
+
+    expect(hook.result.current[0]).toStrictEqual([
+      { id: 'action-4', title: 'Action 4', onTrigger },
+      { id: 'action-5', title: 'Action 5', onTrigger },
+    ]);
+  });
+
   it('generates unique ids for newly registered actions if action.id is not provided', () => {
     const hook = renderHook(() => useActionsState(ACTIONS, ''));
     act(() =>

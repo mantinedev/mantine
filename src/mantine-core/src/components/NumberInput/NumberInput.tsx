@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
+import { useMergedRef, assignRef, clamp, useOs } from '@mantine/hooks';
 import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { getInputMode } from '../../utils';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
@@ -369,7 +370,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
-        inputMode={Number.isInteger(step) && precision === 0 ? 'numeric' : 'decimal'}
+        inputMode={getInputMode(step, precision, useOs())}
         __staticSelector="NumberInput"
       />
     );
