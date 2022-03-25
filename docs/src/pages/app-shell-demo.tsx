@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { AppShell, Navbar, Header, Text, MediaQuery, Burger, useMantineTheme } from '@mantine/core';
+import {
+  AppShell,
+  Navbar,
+  Header,
+  Footer,
+  Aside,
+  Text,
+  MediaQuery,
+  Burger,
+  useMantineTheme,
+} from '@mantine/core';
 import Head from '../components/Head/Head';
 
 export default function AppShellDemo() {
@@ -15,11 +25,24 @@ export default function AppShellDemo() {
           },
         }}
         navbarOffsetBreakpoint="sm"
+        asideOffsetBreakpoint="md"
         fixed
         navbar={
-          <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 300, lg: 400 }}>
+          <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
             <Text>Application navbar</Text>
           </Navbar>
+        }
+        aside={
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+              <Text>Application sidebar</Text>
+            </Aside>
+          </MediaQuery>
+        }
+        footer={
+          <Footer height={60} p="md">
+            Application footer
+          </Footer>
         }
         header={
           <Header height={70} p="md">

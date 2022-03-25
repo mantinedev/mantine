@@ -16,6 +16,8 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Avatar/AvatarsGroup/AvatarsGroup.tsx',
   '../src/mantine-core/src/components/AppShell/Navbar/Navbar.tsx',
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',
+  '../src/mantine-core/src/components/AppShell/Footer/Footer.tsx',
+  '../src/mantine-core/src/components/AppShell/Aside/Aside.tsx',
   '../src/mantine-core/src/components/Grid/Col/Col.tsx',
   '../src/mantine-prism/src/Prism.tsx',
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
