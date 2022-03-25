@@ -8,6 +8,7 @@ import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { Footer } from './Footer/Footer';
+import { Aside } from './Aside/Aside';
 import { AppShell, AppShellProps } from './AppShell';
 
 const content = Array(30)
@@ -33,10 +34,10 @@ function NavbarToggle() {
       }}
       navbarOffsetBreakpoint="sm"
       fixed
-      navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
-          <Text>Application navbar</Text>
-        </Navbar>
+      aside={
+        <Aside p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
+          <Text>Application aside</Text>
+        </Aside>
       }
       header={
         <Header height={50} p="md">

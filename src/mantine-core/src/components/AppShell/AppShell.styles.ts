@@ -4,12 +4,18 @@ export interface AppShellStylesParams {
   padding: MantineNumberSize;
   fixed: boolean;
   navbarOffsetBreakpoint: MantineNumberSize;
+  asideOffsetBreakpoint: MantineNumberSize;
 }
 
 function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CSSObject {
   const padding = theme.fn.size({ size: props.padding, sizes: theme.spacing });
-  const offset = props.navbarOffsetBreakpoint
+
+  const navbarOffset = props.navbarOffsetBreakpoint
     ? theme.fn.size({ size: props.navbarOffsetBreakpoint, sizes: theme.breakpoints })
+    : null;
+
+  const asideOffset = props.asideOffsetBreakpoint
+    ? theme.fn.size({ size: props.asideOffsetBreakpoint, sizes: theme.breakpoints })
     : null;
 
   if (!props.fixed) {
@@ -21,9 +27,14 @@ function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CS
     paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding}px)`,
     paddingBottom: `calc(var(--mantine-footer-height, 0px) + ${padding}px)`,
     paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding}px)`,
-    paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
-    [`@media (max-width: ${offset}px)`]: {
+    paddingRight: `calc(var(--mantine-aside-width, 0px) + ${padding}px)`,
+
+    [`@media (max-width: ${navbarOffset}px)`]: {
       paddingLeft: padding,
+    },
+
+    [`@media (max-width: ${asideOffset}px)`]: {
+      paddingRight: padding,
     },
   };
 }
