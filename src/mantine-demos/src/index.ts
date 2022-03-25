@@ -71,7 +71,7 @@ export * as RadioGroupDemos from './demos/packages/RadioGroup';
 export * as RingProgressDemos from './demos/packages/RingProgress';
 export * as ScrollAreaDemos from './demos/packages/ScrollArea';
 export * as SegmentedControlDemos from './demos/packages/SegmentedControl';
-
+export * as StackDemos from './demos/packages/Stack';
 export * as SelectDemos from './demos/packages/Select';
 export * as SimpleGridDemos from './demos/packages/SimpleGrid';
 export * as SkeletonDemos from './demos/packages/Skeleton';
