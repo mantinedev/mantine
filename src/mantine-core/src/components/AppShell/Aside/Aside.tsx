@@ -9,32 +9,32 @@ import {
   HorizontalSectionSharedProps,
 } from '../HorizontalSection/HorizontalSection';
 
-export interface NavbarProps
+export interface AsideProps
   extends HorizontalSectionSharedProps,
     React.ComponentPropsWithRef<'nav'> {
-  /** Navbar content */
+  /** Aside content */
   children: React.ReactNode;
 }
 
-type NavbarComponent = ForwardRefWithStaticComponents<
-  NavbarProps,
+type AsideComponent = ForwardRefWithStaticComponents<
+  AsideProps,
   { Section: typeof HorizontalSection.Section }
 >;
 
-const defaultProps: Partial<NavbarProps> = {
+const defaultProps: Partial<AsideProps> = {
   fixed: false,
-  position: { top: 0, left: 0 },
+  position: { top: 0, right: 0 },
   zIndex: getDefaultZIndex('app'),
   hiddenBreakpoint: 'md',
   hidden: false,
 };
 
-export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
-  (props: NavbarProps, ref) => {
-    const _props = useMantineDefaultProps('Navbar', defaultProps, props);
+export const Aside: AsideComponent = forwardRef<HTMLElement, AsideProps>(
+  (props: AsideProps, ref) => {
+    const _props = useMantineDefaultProps('Aside', defaultProps, props);
     return <HorizontalSection section="navbar" ref={ref} {..._props} />;
   }
 ) as any;
 
-Navbar.Section = HorizontalSection.Section;
-Navbar.displayName = '@mantine/core/Navbar';
+Aside.Section = HorizontalSection.Section;
+Aside.displayName = '@mantine/core/Aside';

@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Box } from '../../../Box';
 
-interface _NavbarSectionProps extends DefaultProps {
+interface _SectionProps extends DefaultProps {
   /** Section children */
   children: React.ReactNode;
 
@@ -10,13 +10,13 @@ interface _NavbarSectionProps extends DefaultProps {
   grow?: boolean;
 }
 
-export type NavbarSectionProps<C> = PolymorphicComponentProps<C, _NavbarSectionProps>;
+export type SectionProps<C> = PolymorphicComponentProps<C, _SectionProps>;
 
-type NavbarSectionComponent = <C = 'div'>(props: NavbarSectionProps<C>) => React.ReactElement;
+type SectionComponent = <C = 'div'>(props: SectionProps<C>) => React.ReactElement;
 
-export const NavbarSection: NavbarSectionComponent & { displayName?: string } = forwardRef(
+export const Section: SectionComponent & { displayName?: string } = forwardRef(
   <C extends React.ElementType = 'div'>(
-    { component, children, grow = false, sx, ...others }: NavbarSectionProps<C>,
+    { component, children, grow = false, sx, ...others }: SectionProps<C>,
     ref: PolymorphicRef<C>
   ) => (
     <Box<any>
@@ -30,4 +30,4 @@ export const NavbarSection: NavbarSectionComponent & { displayName?: string } = 
   )
 );
 
-NavbarSection.displayName = '@mantine/core/NavbarSection';
+Section.displayName = '@mantine/core/Section';

@@ -3,7 +3,7 @@ import { Footer, FooterProps } from './Footer';
 
 const defaultProps: FooterProps = {
   height: 60,
-  children: 'test-header',
+  children: 'test-footer',
 };
 
 describe('@mantine/core/Footer', () => {
