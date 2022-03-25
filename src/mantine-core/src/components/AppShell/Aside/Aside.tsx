@@ -32,7 +32,7 @@ const defaultProps: Partial<AsideProps> = {
 export const Aside: AsideComponent = forwardRef<HTMLElement, AsideProps>(
   (props: AsideProps, ref) => {
     const _props = useMantineDefaultProps('Aside', defaultProps, props);
-    return <HorizontalSection section="aside" ref={ref} {..._props} />;
+    return <HorizontalSection section="aside" __staticSelector="Aside" ref={ref} {..._props} />;
   }
 ) as any;
 

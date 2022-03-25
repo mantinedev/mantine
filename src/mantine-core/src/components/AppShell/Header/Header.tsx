@@ -17,7 +17,7 @@ const defaultProps: Partial<HeaderProps> = {
 
 export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, ref) => {
   const _props = useMantineDefaultProps('Header', defaultProps, props);
-  return <VerticalSection section="header" {..._props} ref={ref} />;
+  return <VerticalSection section="header" __staticSelector="Header" {..._props} ref={ref} />;
 });
 
 Header.displayName = '@mantine/core/Header';

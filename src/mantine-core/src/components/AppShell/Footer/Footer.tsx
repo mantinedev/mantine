@@ -17,7 +17,7 @@ const defaultProps: Partial<FooterProps> = {
 
 export const Footer = forwardRef<HTMLElement, FooterProps>((props: FooterProps, ref) => {
   const { ...others } = useMantineDefaultProps('Footer', defaultProps, props);
-  return <VerticalSection section="footer" {...others} ref={ref} />;
+  return <VerticalSection section="footer" __staticSelector="Footer" {...others} ref={ref} />;
 });
 
 Footer.displayName = '@mantine/core/Footer';

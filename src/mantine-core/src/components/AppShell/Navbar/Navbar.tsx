@@ -32,7 +32,7 @@ const defaultProps: Partial<NavbarProps> = {
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   (props: NavbarProps, ref) => {
     const _props = useMantineDefaultProps('Navbar', defaultProps, props);
-    return <HorizontalSection section="navbar" ref={ref} {..._props} />;
+    return <HorizontalSection section="navbar" __staticSelector="Navbar" ref={ref} {..._props} />;
   }
 ) as any;
 

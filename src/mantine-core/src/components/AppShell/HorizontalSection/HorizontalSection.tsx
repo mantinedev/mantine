@@ -48,6 +48,7 @@ export interface HorizontalSectionProps
   extends HorizontalSectionSharedProps,
     Omit<React.ComponentPropsWithRef<'nav'>, 'children'> {
   section: 'navbar' | 'aside';
+  __staticSelector: string;
 }
 
 type HorizontalSectionComponent = ForwardRefWithStaticComponents<
@@ -73,6 +74,7 @@ export const HorizontalSection: HorizontalSectionComponent = forwardRef<
       styles,
       children,
       section,
+      __staticSelector,
       ...others
     }: HorizontalSectionProps,
     ref
@@ -88,7 +90,7 @@ export const HorizontalSection: HorizontalSectionComponent = forwardRef<
         hiddenBreakpoint,
         zIndex: ctx.zIndex || zIndex,
       },
-      { classNames, styles, name: 'HorizontalSection' }
+      { classNames, styles, name: __staticSelector }
     );
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(

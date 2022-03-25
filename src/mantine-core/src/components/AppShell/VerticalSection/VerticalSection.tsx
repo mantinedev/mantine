@@ -25,6 +25,7 @@ interface VerticalSectionProps
   extends VerticalSectionSharedProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   section: 'header' | 'footer';
+  __staticSelector: string;
 }
 
 export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
@@ -39,6 +40,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       position,
       zIndex = getDefaultZIndex('app'),
       section,
+      __staticSelector,
       ...others
     }: VerticalSectionProps,
     ref
@@ -53,7 +55,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         zIndex: ctx.zIndex || zIndex,
         borderPosition: section === 'header' ? 'bottom' : 'top',
       },
-      { name: 'VerticalSection', classNames, styles }
+      { name: __staticSelector, classNames, styles }
     );
 
     return (
