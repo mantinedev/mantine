@@ -42,16 +42,6 @@ export const configurator: MantineDemo = {
       initialValue: 'left',
       defaultValue: 'left',
     },
-    {
-      name: 'direction',
-      type: 'segmented',
-      data: [
-        { label: 'row', value: 'row' },
-        { label: 'column', value: 'column' },
-      ],
-      initialValue: 'row',
-      defaultValue: 'row',
-    },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'grow', type: 'boolean', initialValue: false, defaultValue: false },
   ],

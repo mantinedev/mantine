@@ -5,7 +5,7 @@ title: Group
 order: 1
 slug: /core/group/
 category: 'layout'
-description: 'Compose elements and components in flex container'
+description: 'Compose elements and components in a horizontal flex container'
 props: ['Group']
 import: "import { Group } from '@mantine/core';"
 source: 'mantine-core/src/components/Group/Group.tsx'
@@ -17,21 +17,11 @@ import { GroupDemos } from '@mantine/demos';
 
 ## Usage
 
-Group allows you to compose any elements and components in a flex container.
-Use these props to change elements position inside Group:
-
-- **position** controls `justify-content` property
-- **grow** `flex-grow` property, items will never wrap to next line if set to `true`
-- **spacing** controls space between elements – predefined values from `theme.spacing` or number for spacing in px
-- **noWrap** controls `flex-wrap` property and if set to true prevents elements from wrapping on next line once space on current line was exceeded
-- **direction** controls `flex-direction`: row (default) for horizontal orientation, column for vertical
-
 <Demo data={GroupDemos.configurator} />
 
 ## Group children
 
-Group component uses `className` prop to add styles,
-child components must accept it otherwise unexpected negative margins will be applied the element:
+Group component uses `className` prop to add styles to its children, child components must accept it::
 
 ```tsx
 // Will not work with Group – component does not handle className
