@@ -7,16 +7,17 @@ import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
+import { Footer } from './Footer/Footer';
 import { AppShell, AppShellProps } from './AppShell';
 
 const content = Array(30)
   .fill(0)
   .map(() => (
-    <p>
+    <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus officiis labore alias nam,
       voluptate aperiam non quidem consequuntur enim unde corrupti quaerat possimus facilis. Ipsa
       quos alias doloremque at veniam?
-    </p>
+    </div>
   ));
 
 function NavbarToggle() {
@@ -146,6 +147,7 @@ storiesOf('@mantine/core/AppShell/AppShell', module)
     <AppShell
       fixed
       header={<Header height={50}>Header</Header>}
+      footer={<Footer height={50}>Footer</Footer>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
       {content}

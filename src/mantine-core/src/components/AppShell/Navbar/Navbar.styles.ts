@@ -39,7 +39,9 @@ export default createStyles(
         ...position,
         top: position?.top || 'var(--mantine-header-height)',
         zIndex,
-        height: height || 'calc(100vh - var(--mantine-header-height, 0px))',
+        height:
+          height ||
+          'calc(100vh - var(--mantine-header-height, 0px) - var(--mantine-footer-height, 0px))',
         width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',

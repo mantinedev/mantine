@@ -1,24 +1,12 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, getDefaultZIndex, useMantineDefaultProps, Global } from '@mantine/styles';
-import { Box } from '../../Box';
-import { useAppShellContext } from '../AppShell.context';
-import useStyles, { HeaderPosition } from './Header.styles';
+import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { VerticalSection, VerticalSectionSharedProps } from '../VerticalSection/VerticalSection';
 
-export interface HeaderProps extends DefaultProps, React.ComponentPropsWithoutRef<'nav'> {
+export interface HeaderProps
+  extends VerticalSectionSharedProps,
+    React.ComponentPropsWithoutRef<'nav'> {
   /** Header content */
   children: React.ReactNode;
-
-  /** Header height */
-  height: number | string;
-
-  /** Changes position to fixed, controlled by AppShell component if rendered inside */
-  fixed?: boolean;
-
-  /** Control top, left, right or bottom position values, controlled by AppShell component if rendered inside */
-  position?: HeaderPosition;
-
-  /** z-index */
-  zIndex?: number;
 }
 
 const defaultProps: Partial<HeaderProps> = {
@@ -28,27 +16,8 @@ const defaultProps: Partial<HeaderProps> = {
 };
 
 export const Header = forwardRef<HTMLElement, HeaderProps>((props: HeaderProps, ref) => {
-  const { children, className, classNames, styles, height, fixed, position, zIndex, ...others } =
-    useMantineDefaultProps('Header', defaultProps, props);
-  const ctx = useAppShellContext();
-
-  const { classes, cx } = useStyles(
-    { height, fixed: ctx.fixed || fixed, position, zIndex: ctx.zIndex || zIndex },
-    { name: 'Header', classNames, styles }
-  );
-
-  return (
-    <Box component="nav" className={cx(classes.root, className)} ref={ref} {...others}>
-      {children}
-      <Global
-        styles={() => ({
-          ':root': {
-            '--mantine-header-height': `${height}px`,
-          },
-        })}
-      />
-    </Box>
-  );
+  const { ...others } = useMantineDefaultProps('Header', defaultProps, props);
+  return <VerticalSection section="header" {...others} ref={ref} />;
 });
 
 Header.displayName = '@mantine/core/Header';

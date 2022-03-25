@@ -21,6 +21,9 @@ export interface AppShellProps
   /** <Header /> component */
   header?: React.ReactElement;
 
+  /** <Footer /> component */
+  footer?: React.ReactElement;
+
   /** zIndex prop passed to Navbar and Header components */
   zIndex?: number;
 
@@ -48,6 +51,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     children,
     navbar,
     header,
+    footer,
     fixed = false,
     zIndex = getDefaultZIndex('app'),
     padding = 'md',
@@ -71,6 +75,8 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
           {navbar}
           <main className={classes.main}>{children}</main>
         </div>
+
+        {footer}
       </Box>
     </AppShellProvider>
   );
