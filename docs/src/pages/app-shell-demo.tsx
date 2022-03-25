@@ -25,7 +25,7 @@ export default function AppShellDemo() {
           },
         }}
         navbarOffsetBreakpoint="sm"
-        asideOffsetBreakpoint="md"
+        asideOffsetBreakpoint="sm"
         fixed
         navbar={
           <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
