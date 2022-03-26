@@ -302,8 +302,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       if (event.target.value === '') {
-        setTempValue('');
-        handleValueChange(undefined);
+        setTempValue('0');
+        handleValueChange(0);
       } else {
         const parsedVal = parseNum(event.target.value);
         const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
