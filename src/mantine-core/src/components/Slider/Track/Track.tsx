@@ -21,6 +21,7 @@ export interface TrackProps extends DefaultProps<TrackStylesNames> {
   onChange(value: number): void;
   onMouseEnter?(event?: React.MouseEvent<HTMLDivElement>): void;
   onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
+  disabled: boolean;
 }
 
 export function Track({
@@ -34,9 +35,13 @@ export function Track({
   offset,
   onMouseLeave,
   onMouseEnter,
+  disabled,
   ...others
 }: TrackProps) {
-  const { classes } = useStyles({ color, size, radius }, { classNames, styles, name: 'Slider' });
+  const { classes } = useStyles(
+    { color, size, radius, disabled },
+    { classNames, styles, name: 'Slider' }
+  );
 
   return (
     <div className={classes.track} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
@@ -57,6 +62,7 @@ export function Track({
         offset={offset}
         classNames={classNames}
         styles={styles}
+        disabled={disabled}
       />
     </div>
   );

@@ -16,6 +16,7 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   value: number;
   onChange(value: number): void;
   offset?: number;
+  disabled: boolean;
 }
 
 export function Marks({
@@ -29,8 +30,12 @@ export function Marks({
   styles,
   offset,
   onChange,
+  disabled,
 }: MarksProps) {
-  const { classes, cx } = useStyles({ size, color }, { classNames, styles, name: 'Slider' });
+  const { classes, cx } = useStyles(
+    { size, color, disabled },
+    { classNames, styles, name: 'Slider' }
+  );
 
   const items = marks.map((mark, index) => (
     <Box

@@ -25,6 +25,7 @@ export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onBlur?(): void;
   showLabelOnHover?: boolean;
   children?: React.ReactNode;
+  disabled: boolean;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -50,11 +51,12 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onBlur,
       showLabelOnHover,
       children = null,
+      disabled,
     }: ThumbProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size },
+      { color, size, disabled },
       { classNames, styles, name: 'Slider' }
     );
     const [focused, setFocused] = useState(false);

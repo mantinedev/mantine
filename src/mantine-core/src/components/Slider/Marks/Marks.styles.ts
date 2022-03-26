@@ -4,9 +4,10 @@ import { sizes } from '../SliderRoot/SliderRoot.styles';
 interface MarksStyles {
   color: MantineColor;
   size: MantineNumberSize;
+  disabled: boolean;
 }
 
-export default createStyles((theme, { size, color }: MarksStyles) => ({
+export default createStyles((theme, { size, color, disabled }: MarksStyles) => ({
   markWrapper: {
     position: 'absolute',
     top: 0,
@@ -26,7 +27,11 @@ export default createStyles((theme, { size, color }: MarksStyles) => ({
   },
 
   markFilled: {
-    borderColor: theme.fn.themeColor(color, 6),
+    borderColor: disabled
+      ? theme.colorScheme === 'dark'
+        ? theme.colors.dark[3]
+        : theme.colors.gray[4]
+      : theme.fn.themeColor(color, 6),
   },
 
   markLabel: {

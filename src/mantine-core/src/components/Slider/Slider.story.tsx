@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Heart } from 'tabler-icons-react';
+import { useDisclosure } from '@mantine/hooks';
 import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
+import { Button } from '../Button';
 
 const paragraph =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto magnam veniam excepturi numquam facere odio eveniet nihil quidem iure. Saepe et illo, earum quia tenetur incidunt quae cum iure iusto!';
@@ -19,6 +21,7 @@ function Wrapper(props: Omit<React.ComponentPropsWithoutRef<typeof Slider>, 'val
     </>
   );
 }
+
 function RangeWrapper(
   props: Omit<React.ComponentPropsWithoutRef<typeof RangeSlider>, 'value' | 'onChange'>
 ) {
@@ -30,6 +33,43 @@ function RangeWrapper(
         Set range
       </button>
     </>
+  );
+}
+
+function Disabled() {
+  const [disabled, handlers] = useDisclosure(true);
+
+  return (
+    <div style={{ width: 380, padding: 40 }}>
+      <Slider
+        disabled={disabled}
+        defaultValue={50}
+        marks={[
+          { value: 0, label: 'xs' },
+          { value: 25, label: 'sm' },
+          { value: 50, label: 'md' },
+          { value: 75, label: 'lg' },
+          { value: 100, label: 'xl' },
+        ]}
+      />
+
+      <RangeSlider
+        mt="xl"
+        step={25}
+        minRange={25}
+        disabled={disabled}
+        marks={[
+          { value: 0, label: 'xs' },
+          { value: 25, label: 'sm' },
+          { value: 50, label: 'md' },
+          { value: 75, label: 'lg' },
+          { value: 100, label: 'xl' },
+        ]}
+      />
+      <Button onClick={handlers.toggle} mt={30}>
+        Toggle
+      </Button>
+    </div>
   );
 }
 
@@ -63,6 +103,7 @@ storiesOf('@mantine/core/Slider/stories', module)
       />
     </div>
   ))
+  .add('Disabled', () => <Disabled />)
   .add('Near text: user-select', () => (
     <div style={{ maxWidth: 500, margin: 'auto' }}>
       <Slider mt="xl" />
