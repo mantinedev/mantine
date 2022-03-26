@@ -9,6 +9,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
+import { RadioIcon } from './RadioIcon';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
@@ -30,10 +31,14 @@ export interface RadioProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Replace default icon */
+  icon?: React.FC<React.ComponentPropsWithoutRef<'svg'>>;
 }
 
 const defaultProps: Partial<RadioProps> = {
   __staticSelector: 'Radio',
+  icon: RadioIcon,
 };
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps, ref) => {
@@ -50,6 +55,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
     styles,
     __staticSelector,
     sx,
+    icon: Icon,
     ...others
   } = useMantineDefaultProps('Radio', defaultProps, props);
 
@@ -68,7 +74,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
       sx={sx}
       {...systemStyles}
     >
-      <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+      <div className={classes.inner}>
         <input
           ref={ref}
           className={classes.radio}
@@ -77,8 +83,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
           disabled={disabled}
           {...rest}
         />
-        {label && <span>{label}</span>}
-      </label>
+        <Icon className={classes.icon} />
+      </div>
+
+      {label && (
+        <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+          {label}
+        </label>
+      )}
     </Box>
   );
 });

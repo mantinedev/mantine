@@ -30,6 +30,12 @@ function Controlled() {
 }
 
 storiesOf('@mantine/core/RadioGroup/stories', module)
+  .add('Usage', () => (
+    <RadioGroup p="xl">
+      <Radio label="React" value="1" />
+      <Radio label="Angular" value="2" />
+    </RadioGroup>
+  ))
   .add('Too many items in horizontal', () => (
     <RadioGroup
       style={{ padding: 40, maxWidth: 300, background: 'rgba(0, 0, 0, .1)' }}
