@@ -20,7 +20,7 @@ import { Button } from '@mantine/core';
 export function MyApp() {
   return <Button>Hello world!</Button>;
 }
-`.trim();
+`;
 
 function Guide({ dependencies, initScript, children, action, actionLink, withDone }: GuideProps) {
   const theme = useMantineTheme();
@@ -102,7 +102,7 @@ function ViteGuide({ dependencies }: GuideProps) {
 function NextGuide({ dependencies }: GuideProps) {
   return (
     <Guide
-      dependencies={dependencies}
+      dependencies={`${dependencies} @mantine/next`}
       initScript="npx create-next-app --ts"
       action="Get started with Next.js GitHub template"
       actionLink="https://github.com/mantinedev/mantine-next-template"

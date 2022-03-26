@@ -11,7 +11,7 @@ const code = `
 import { useState, useRef } from 'react';
 import { NumberInput, Group, ActionIcon, NumberInputHandlers } from '@mantine/core';
 
-function HandlersWrapper() {
+function Demo() {
   const [value, setValue] = useState(0);
   const handlers = useRef<NumberInputHandlers>();
 
@@ -20,6 +20,7 @@ function HandlersWrapper() {
       <ActionIcon size={42} variant="default" onClick={() => handlers.current.decrement()}>
         –
       </ActionIcon>
+
       <NumberInput
         hideControls
         value={value}
@@ -30,6 +31,7 @@ function HandlersWrapper() {
         step={2}
         styles={{ input: { width: 54, textAlign: 'center' } }}
       />
+
       <ActionIcon size={42} variant="default" onClick={() => handlers.current.increment()}>
         +
       </ActionIcon>

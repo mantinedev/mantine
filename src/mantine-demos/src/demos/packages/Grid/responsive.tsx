@@ -3,12 +3,18 @@ import { Grid } from '@mantine/core';
 import { ColWrapper as Col } from './_col-wrapper';
 
 const code = `
-<Grid>
-  <Grid.Col md={6} lg={3}>1</Grid.Col>
-  <Grid.Col md={6} lg={3}>2</Grid.Col>
-  <Grid.Col md={6} lg={3}>3</Grid.Col>
-  <Grid.Col md={6} lg={3}>4</Grid.Col>
-</Grid>
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid>
+      <Grid.Col md={6} lg={3}>1</Grid.Col>
+      <Grid.Col md={6} lg={3}>2</Grid.Col>
+      <Grid.Col md={6} lg={3}>3</Grid.Col>
+      <Grid.Col md={6} lg={3}>4</Grid.Col>
+    </Grid>
+  );
+}
 `;
 
 function Demo() {

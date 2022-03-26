@@ -27,6 +27,6 @@ describe('@mantine/dates/TimeField', () => {
   });
 
   it('has correct displayName', () => {
-    expect(TimeField.displayName).toEqual('@mantine/dates/TimeField');
+    expect(TimeField.displayName).toStrictEqual('@mantine/dates/TimeField');
   });
 });

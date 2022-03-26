@@ -1,6 +1,12 @@
 import React from 'react';
 import { useUncontrolled, useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineSize,
+  MantineColor,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { filterChildrenByType } from '../../utils';
 import { Group, GroupProps } from '../Group/Group';
 import { Chip, ChipStylesNames } from './Chip/Chip';
@@ -45,23 +51,31 @@ export interface ChipsProps<T extends boolean = false>
   name?: string;
 }
 
-export function Chips<T extends boolean>({
-  value,
-  defaultValue,
-  onChange,
-  color,
-  spacing = 'xs',
-  radius = 'xl',
-  size = 'sm',
-  name,
-  variant,
-  multiple,
-  children,
-  id,
-  classNames,
-  styles,
-  ...others
-}: ChipsProps<T>) {
+const defaultProps: Partial<ChipsProps<false>> = {
+  size: 'sm',
+  spacing: 'xs',
+  radius: 'xl',
+};
+
+export function Chips<T extends boolean>(props: ChipsProps<T>) {
+  const {
+    value,
+    defaultValue,
+    onChange,
+    color,
+    spacing,
+    radius,
+    size,
+    name,
+    variant,
+    multiple,
+    children,
+    id,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Chips', defaultProps as any, props);
+
   const uuid = useUuid(id);
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,

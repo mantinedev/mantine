@@ -77,7 +77,7 @@ export function AuthenticationForm({
 
   return (
     <Paper
-      padding={noPadding ? 0 : 'lg'}
+      p={noPadding ? 0 : 'lg'}
       shadow={noShadow ? null : 'sm'}
       style={{
         position: 'relative',

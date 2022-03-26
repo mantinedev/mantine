@@ -18,7 +18,7 @@ export type ButtonVariant =
   | 'default'
   | 'subtle';
 
-interface ButtonStylesProps {
+export interface ButtonStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
@@ -136,11 +136,9 @@ export default createStyles(
       gradientFrom,
       gradientTo,
       gradientDeg,
-    }: ButtonStylesProps,
+    }: ButtonStylesParams,
     getRef
   ) => {
-    const loading = getRef('loading');
-
     const gradient = getSharedColorScheme({
       theme,
       color,
@@ -150,7 +148,7 @@ export default createStyles(
 
     return {
       loading: {
-        ref: loading,
+        ref: getRef('loading'),
         pointerEvents: 'none',
 
         '&::before': {
@@ -164,7 +162,7 @@ export default createStyles(
             theme.colorScheme === 'dark'
               ? theme.fn.rgba(theme.colors.dark[7], 0.5)
               : 'rgba(255, 255, 255, .5)',
-          borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
+          borderRadius: theme.fn.radius(radius),
           cursor: 'not-allowed',
         },
       },
@@ -191,7 +189,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...theme.fn.focusStyles(),
         ...getWidthStyles(fullWidth),
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 600,
         position: 'relative',
         lineHeight: 1,
@@ -208,7 +206,7 @@ export default createStyles(
           transform: 'translateY(1px)',
         },
 
-        [`&:not(.${loading}):disabled`]: {
+        [`&:not(.${getRef('loading')}):disabled`]: {
           borderColor: 'transparent',
           backgroundColor:
             theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],

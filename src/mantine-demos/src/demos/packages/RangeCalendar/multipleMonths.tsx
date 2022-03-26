@@ -3,7 +3,11 @@ import { Group, MediaQuery, Text } from '@mantine/core';
 import { RangeCalendar } from '@mantine/dates';
 
 const code = `
-<RangeCalendar amountOfMonths={2} />
+import { RangeCalendar } from '@mantine/dates';
+
+function Demo() {
+  return <RangeCalendar amountOfMonths={2} />;
+}
 `;
 
 function Demo() {

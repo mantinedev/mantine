@@ -1,0 +1,107 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+title: 'use-local-storage'
+category: 'state'
+order: 1
+slug: /hooks/use-local-storage/
+description: 'Use localStorage value as react state, sync state across opened tabs'
+import: "import { useLocalStorage } from '@mantine/hooks';"
+docs: 'hooks/use-local-storage.mdx'
+source: 'mantine-hooks/src/use-local-storage/use-local-storage.ts'
+---
+
+## Usage
+
+use-local-storage allows you to use value from localStorage as react state.
+Hook works exactly the same as useState, but also writes value to local storage:
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+// hook will read value from localStorage.getItem('color-scheme')
+// if localStorage is not available or value at given key does not exist
+// 'dark' will be assigned to value variable
+const [value, setValue] = useLocalStorage({ key: 'color-scheme', defaultValue: 'dark' });
+
+// Value is set both to state and localStorage at 'color-scheme'
+setValue('light');
+
+// You can also use callback like in useState hook to set value
+setValue((current) => (current === 'dark' ? 'light' : 'dark'));
+```
+
+## Example
+
+Mantine docs website uses this hook to store color scheme information:
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+import { ActionIcon, ColorScheme } from '@mantine/core';
+import { Sun, MoonStars } from 'tabler-icons-react';
+
+function ColorSchemeToggle() {
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: 'color-scheme',
+    defaultValue: 'light',
+  });
+
+  const toggleColorScheme = () =>
+    setColorScheme((current) => (current === 'dark' ? 'light' : 'dark'));
+
+  return (
+    <ActionIcon onClick={toggleColorScheme}>
+      {colorScheme === 'dark' ? <Sun /> : <MoonStars />}
+    </ActionIcon>
+  );
+}
+```
+
+## Browser tabs synchronization
+
+use-local-storage subscribes to [storage event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
+When state changes in one tab it automatically updates value in all other opened browser tabs.
+You can test this feature by opening 2 tabs with Mantine docs side by side and changing color scheme
+(button on the top right or `⌘ + J` on mac and `Ctrl + J` on Windows and Linux).
+
+## Serialize/deserialize json
+
+By default, hook will serialize/deserialize data with `JSON.stringify`/`JSON.parse`.
+If you need to store data in local storage that cannot be serialized with `JSON.stringify`
+– provide your own serialization handlers:
+
+```tsx
+const [value, setValue] = useLocalStorage({
+  key: 'color-scheme',
+  serialize: (value) => {
+    /* return value serialized to string */
+  },
+  deserialize: (localStorageValue) => {
+    /* parse localStorage string value and return value */
+  },
+});
+```
+
+## TypeScript
+
+### Definition
+
+```tsx
+function useLocalStorage<T = string>({
+  key,
+  defaultValue,
+  deserialize,
+  serialize,
+}: UseLocalStorage<T>): readonly [T, (val: T | ((prevState: T) => T)) => void];
+```
+
+### Set value type
+
+You can specify value type same as in useState hook:
+
+```tsx
+const [value, setValue] = useLocalStorage<'dark' | 'light'>({
+  key: 'color-scheme',
+  defaultValue: 'light',
+});
+```

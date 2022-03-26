@@ -76,9 +76,15 @@ To open files browser from outside of component use `openRef` prop to get functi
 To specify specific file types provide an array of mime types to `accept` prop:
 
 ```tsx
-<Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
-  {/* children */}
-</Dropzone>
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone accept={['image/png', 'image/jpeg', 'image/sgv+xml', 'image/gif']}>
+      {/* children */}
+    </Dropzone>
+  );
+}
 ```
 
 To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
@@ -86,10 +92,13 @@ To save some research time you can use `MIME_TYPES` variable exported from `@man
 ```tsx
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 
-// Same as an example above
-<Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}>
-  {/* children */}
-</Dropzone>;
+function Demo() {
+  return (
+    <Dropzone accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg, MIME_TYPES.gif]}>
+      {/* children */}
+    </Dropzone>
+  );
+}
 ```
 
 `MIME_TYPES` includes following data:
@@ -115,8 +124,9 @@ Additionally you can use grouped mime types:
 ```tsx
 import { IMAGE_MIME_TYPE, Dropzone } from '@mantine/dropzone';
 
-// Same as an example above
-<Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+function Demo() {
+  return <Dropzone accept={IMAGE_MIME_TYPE}>{/* children */}</Dropzone>;
+}
 ```
 
 ## Get ref
@@ -126,10 +136,9 @@ import { useRef, useEffect } from 'react';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  const dropzoneRef = useRef(); // will contain div element
+  const dropzoneRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    // do anything with ref
     dropzoneRef.current.focus();
   }, []);
 

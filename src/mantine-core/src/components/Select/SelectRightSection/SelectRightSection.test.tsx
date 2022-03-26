@@ -29,6 +29,6 @@ describe('@mantine/core/SelectRightSection', () => {
   });
 
   it('has correct displayName', () => {
-    expect(SelectRightSection.displayName).toEqual('@mantine/core/SelectRightSection');
+    expect(SelectRightSection.displayName).toStrictEqual('@mantine/core/SelectRightSection');
   });
 });

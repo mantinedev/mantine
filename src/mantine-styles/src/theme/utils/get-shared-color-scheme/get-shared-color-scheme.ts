@@ -57,7 +57,7 @@ export function getSharedColorScheme({ color, theme, variant, gradient }: GetSha
     return {
       border: 'transparent',
       background: theme.white,
-      color: theme.fn.themeColor(color, 7),
+      color: theme.fn.themeColor(color, 6),
       hover: null,
     };
   }

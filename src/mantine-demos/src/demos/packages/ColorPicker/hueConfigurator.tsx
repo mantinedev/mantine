@@ -5,7 +5,9 @@ function Wrapper(props: HueSliderProps) {
   const [value, onChange] = useState(250);
   return (
     <div style={{ maxWidth: 300, marginLeft: 'auto', marginRight: 'auto' }}>
-      <Text style={{ marginBottom: 10 }}>Hue value: {value}</Text>
+      <Text mb="xs" ml={-6}>
+        Hue value: {value}
+      </Text>
       <HueSlider
         style={{ margin: 'auto' }}
         color={DEFAULT_THEME.colors.blue[7]}

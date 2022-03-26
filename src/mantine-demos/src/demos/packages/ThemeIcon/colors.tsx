@@ -1,5 +1,5 @@
 import React from 'react';
-import { MixIcon, RocketIcon } from '@modulz/radix-icons';
+import { Photo } from 'tabler-icons-react';
 import { MANTINE_COLORS, Group, ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const getThemes = (props?: ThemeIconProps) =>
@@ -8,9 +8,16 @@ const getThemes = (props?: ThemeIconProps) =>
 function Demo() {
   return (
     <>
-      <Group position="center">{getThemes({ children: <MixIcon />, variant: 'light' })}</Group>
+      <Group position="center">
+        {getThemes({ children: <Photo size={16} />, variant: 'outline' })}
+      </Group>
+
       <Group position="center" mt="md">
-        {getThemes({ children: <RocketIcon />, variant: 'filled' })}
+        {getThemes({ children: <Photo size={16} />, variant: 'light' })}
+      </Group>
+
+      <Group position="center" mt="md">
+        {getThemes({ children: <Photo size={16} />, variant: 'filled' })}
       </Group>
     </>
   );

@@ -3,7 +3,7 @@ import 'dayjs/locale/ru';
 
 describe('@mantine/dates/get-months-names', () => {
   it('returns months names with given locale and format', () => {
-    expect(getMonthsNames('en', 'MMMM')).toEqual([
+    expect(getMonthsNames('en', 'MMMM')).toStrictEqual([
       'January',
       'February',
       'March',
@@ -18,7 +18,7 @@ describe('@mantine/dates/get-months-names', () => {
       'December',
     ]);
 
-    expect(getMonthsNames('ru', 'MMMM')).toEqual([
+    expect(getMonthsNames('ru', 'MMMM')).toStrictEqual([
       'январь',
       'февраль',
       'март',

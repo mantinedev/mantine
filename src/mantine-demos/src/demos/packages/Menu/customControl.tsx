@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { ChevronRightIcon } from '@modulz/radix-icons';
+import { ChevronRight } from 'tabler-icons-react';
 import { Group, Avatar, Text, UnstyledButton, UnstyledButtonProps, Menu } from '@mantine/core';
 import { menuItems } from './_menu-items';
 
 const code = `
 import { forwardRef } from 'react';
-import { ChevronRightIcon } from '@modulz/radix-icons';
+import { ChevronRight } from 'tabler-icons-react';
 import { Group, Avatar, Text, Menu, UnstyledButton, UnstyledButtonProps } from '@mantine/core';
 
 interface UserButtonProps extends UnstyledButtonProps {
@@ -45,7 +45,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <ChevronRightIcon />}
+        {icon || <ChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )
@@ -65,7 +65,7 @@ function Demo() {
           />
         }
       >
-        {menuItems}
+        {/* ...menu items */}
       </Menu>
     </Group>
   );
@@ -109,7 +109,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <ChevronRightIcon />}
+        {icon || <ChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )

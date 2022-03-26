@@ -2,7 +2,11 @@ import React from 'react';
 import { Switch, Group } from '@mantine/core';
 
 const code = `
-<Switch onLabel="ON" offLabel="OFF" />
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  return <Switch onLabel="ON" offLabel="OFF" />;
+}
 `;
 
 function Label() {

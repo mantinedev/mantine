@@ -2,7 +2,11 @@ import React from 'react';
 import { NativeSelect } from '@mantine/core';
 
 const code = `
-<NativeSelect disabled />
+import { NativeSelect } from '@mantine/core';
+
+function Demo() {
+  return <NativeSelect disabled data={[]} />;
+}
 `;
 
 function Demo() {

@@ -10,13 +10,17 @@ function Demo() {
 `;
 
 const code = `
-<Prism colorScheme="dark" language="tsx">{code}</Prism>
+import { Prism } from '@mantine/prism';
+
+function Demo() {
+  return <Prism colorScheme="dark" language="tsx">{/* ...code */}</Prism>;
+}
 `;
 
 function Demo() {
   return (
     <Prism language="tsx" colorScheme="dark">
-      {demoCode.trim()}
+      {demoCode}
     </Prism>
   );
 }

@@ -8,6 +8,7 @@ import { size } from './size/size';
 import { cover } from './cover/cover';
 import { darken } from './darken/darken';
 import { lighten } from './lighten/lighten';
+import { radius } from './radius/radius';
 
 export const fns = {
   fontStyles,
@@ -22,4 +23,5 @@ export const fns = {
   cover,
   darken,
   lighten,
+  radius,
 } as const;

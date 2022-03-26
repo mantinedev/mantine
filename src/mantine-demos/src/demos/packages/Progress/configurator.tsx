@@ -9,7 +9,13 @@ function Wrapper(props: ProgressProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Progress${props} />`;
+const codeTemplate = (props: string) => `
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  return <Progress${props} />;
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

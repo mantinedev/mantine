@@ -1,0 +1,1 @@
+export { useIntervalDemo } from './usage';

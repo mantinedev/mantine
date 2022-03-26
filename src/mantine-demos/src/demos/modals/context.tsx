@@ -3,7 +3,7 @@ import { Group, Button } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 
 const code = `
-import { Group, Button, Text } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { useModals } from '@mantine/modals';
 
 function Demo() {
@@ -11,8 +11,10 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      modalBody:
-        'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      innerProps: {
+        modalBody:
+          'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      }
     });
 
   return <Button onClick={openContextModal}>Open demonstration context modal</Button>;
@@ -25,8 +27,10 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      modalBody:
-        'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      innerProps: {
+        modalBody:
+          'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      },
     });
 
   return (

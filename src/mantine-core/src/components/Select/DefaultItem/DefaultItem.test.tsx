@@ -29,6 +29,6 @@ describe('@mantine/core/Autocomplete/DefaultItem', () => {
   });
 
   it('has correct displayName', () => {
-    expect(DefaultItem.displayName).toEqual('@mantine/core/DefaultItem');
+    expect(DefaultItem.displayName).toStrictEqual('@mantine/core/DefaultItem');
   });
 });

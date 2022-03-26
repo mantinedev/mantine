@@ -2,7 +2,7 @@ import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@man
 
 export const WRAPPER_PADDING = 4;
 
-interface SegmentedControlStyles {
+export interface SegmentedControlStylesParams {
   fullWidth: boolean;
   color: MantineColor;
   radius: MantineNumberSize;
@@ -33,20 +33,18 @@ export default createStyles(
       transitionTimingFunction,
       size,
       orientation,
-    }: SegmentedControlStyles,
+    }: SegmentedControlStylesParams,
     getRef
   ) => {
-    const label = getRef('label');
-    const control = getRef('control');
     const vertical = orientation === 'vertical';
 
     return {
       label: {
-        ref: label,
+        ref: getRef('label'),
         ...theme.fn.focusStyles(),
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         fontWeight: 500,
         fontSize: size in theme.fontSizes ? theme.fontSizes[size] : theme.fontSizes.sm,
         cursor: 'pointer',
@@ -68,7 +66,7 @@ export default createStyles(
       },
 
       control: {
-        ref: control,
+        ref: getRef('control'),
         position: 'relative',
         boxSizing: 'border-box',
         flex: 1,
@@ -79,7 +77,7 @@ export default createStyles(
 
         '&:not(:first-of-type)': {
           borderStyle: 'solid',
-          borderWidth: orientation === 'vertical' ? '1px 0 0 0' : '0 0 0 1px',
+          borderWidth: vertical ? '1px 0 0 0' : '0 0 0 1px',
           borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
         },
       },
@@ -96,16 +94,22 @@ export default createStyles(
         '&:focus': {
           outline: 'none',
 
-          [`& + .${label}`]: {
+          [`& + .${getRef('label')}`]: {
             outline: 'none',
-            boxShadow: `0 0 0 2px ${
-              theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
-            }, 0 0 0 4px ${theme.colors[theme.primaryColor][5]}`,
+            boxShadow:
+              theme.focusRing === 'always' || theme.focusRing === 'auto'
+                ? `0 0 0 2px ${
+                    theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white
+                  }, 0 0 0 4px ${
+                    theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5]
+                  }`
+                : undefined,
           },
 
           '&:focus:not(:focus-visible)': {
-            [`& + .${label}`]: {
-              boxShadow: 'none',
+            [`& + .${getRef('label')}`]: {
+              boxShadow:
+                theme.focusRing === 'auto' || theme.focusRing === 'never' ? 'none' : undefined,
             },
           },
         },
@@ -117,7 +121,7 @@ export default createStyles(
         width: vertical && !fullWidth ? 'max-content' : 'inherit',
         flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         overflow: 'hidden',
         padding: WRAPPER_PADDING,
       },
@@ -126,7 +130,7 @@ export default createStyles(
         borderLeftColor: 'transparent !important',
         borderTopColor: 'transparent !important',
 
-        [`& + .${control}`]: {
+        [`& + .${getRef('control')}`]: {
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },
@@ -146,7 +150,7 @@ export default createStyles(
 
       active: {
         boxSizing: 'border-box',
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        borderRadius: theme.fn.radius(radius),
         position: 'absolute',
         zIndex: 1,
         boxShadow: color || theme.colorScheme === 'dark' ? 'none' : theme.shadows.xs,

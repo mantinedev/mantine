@@ -11,4 +11,13 @@ describe('@mantine/core/Slider/get-change-value', () => {
       80
     );
   });
+
+  it('rounds according to passed precision', () => {
+    expect(getChangeValue({ value: 30, containerWidth: 100, min: 0, max: 1, step: 0.1 })).not.toBe(
+      0.3
+    );
+    expect(
+      getChangeValue({ value: 30, containerWidth: 100, min: 0, max: 1, step: 0.1, precision: 1 })
+    ).toBe(0.3);
+  });
 });

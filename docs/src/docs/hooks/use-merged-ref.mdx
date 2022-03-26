@@ -40,7 +40,7 @@ across two renders. To fix that issue use `mergeRefs` function instead:
 
 ```tsx
 import { useRef } from 'react';
-import { useClickOutside, useFocusTrap, mergeRefs } from '@mantine/hooks';
+import { useClickOutside, mergeRefs } from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();

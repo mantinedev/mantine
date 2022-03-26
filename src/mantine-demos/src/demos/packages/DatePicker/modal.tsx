@@ -2,7 +2,11 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker dropdownType="modal" placeholder="Pick date" label="Event date" />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker dropdownType="modal" placeholder="Pick date" label="Event date" />;
+}
 `;
 
 function Demo() {

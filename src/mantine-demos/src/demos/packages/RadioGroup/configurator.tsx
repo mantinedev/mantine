@@ -1,22 +1,30 @@
 import React from 'react';
 import { RadioGroup, RadioGroupProps, Radio } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<RadioGroup
- ${props}
->
-  <Radio value="react">React</Radio>
-  <Radio value="svelte">Svelte</Radio>
-  <Radio value="ng">Angular</Radio>
-  <Radio value="vue">Vue</Radio>
-</RadioGroup>`;
+const codeTemplate = (props: string) => `
+import { RadioGroup, Radio } from '@mantine/core';
+
+function Demo() {
+  return (
+    <RadioGroup
+     ${props}
+    >
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
+    </RadioGroup>
+  );
+}
+`;
 
 function Wrapper(props: RadioGroupProps) {
   return (
     <RadioGroup defaultValue="react" {...props}>
-      <Radio value="react">React</Radio>
-      <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng">Angular</Radio>
-      <Radio value="vue">Vue</Radio>
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
     </RadioGroup>
   );
 }
@@ -25,10 +33,10 @@ export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
-      name: 'variant',
+      name: 'orientation',
       type: 'segmented',
       data: [
         { label: 'horizontal', value: 'horizontal' },

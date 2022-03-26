@@ -82,6 +82,6 @@ describe('@mantine/dates/CalendarHeader', () => {
   });
 
   it('has correct displayName', () => {
-    expect(CalendarHeader.displayName).toEqual('@mantine/dates/CalendarHeader');
+    expect(CalendarHeader.displayName).toStrictEqual('@mantine/dates/CalendarHeader');
   });
 });

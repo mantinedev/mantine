@@ -11,11 +11,19 @@ function Wrapper(props: TabsProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Tabs${props}>
-  <Tabs.Tab label="First">First tab content</Tabs.Tab>
-  <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
-  <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
-</Tabs>`;
+const codeTemplate = (props: string) => `
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs${props}>
+      <Tabs.Tab label="First">First tab content</Tabs.Tab>
+      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
+      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
+    </Tabs>
+  );
+}
+`;
 
 export const positionConfigurator: MantineDemo = {
   type: 'configurator',

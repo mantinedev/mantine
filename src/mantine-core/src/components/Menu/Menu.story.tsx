@@ -41,6 +41,55 @@ function WithScroll() {
   );
 }
 
+function ItemsAsFragments() {
+  return (
+    <Menu>
+      <>
+        <Menu.Item>Fragment 1</Menu.Item>
+        <Menu.Item>Fragment 2</Menu.Item>
+      </>
+      <Menu.Item>Regular 1</Menu.Item>
+      <Menu.Item>Regular 2</Menu.Item>
+      <>
+        <Menu.Item>Fragment 3</Menu.Item>
+        <Menu.Item>Fragment 4</Menu.Item>
+      </>
+    </Menu>
+  );
+}
+
+const variableItems = (
+  <>
+    <Menu.Item>Variable 1</Menu.Item>
+    <Menu.Item>Variable 2</Menu.Item>
+  </>
+);
+
+function ItemsAsVariables() {
+  return (
+    <Menu>
+      {variableItems}
+      <Menu.Item>Regular 1</Menu.Item>
+      <Menu.Item>Regular 2</Menu.Item>
+    </Menu>
+  );
+}
+
+function WrapperItem({ index }: { index: number }) {
+  return <Menu.Item>Wrapped Item {index}</Menu.Item>;
+}
+
+function WrappedItems() {
+  return (
+    <Menu>
+      <WrapperItem index={1} />
+      <WrapperItem index={2} />
+      <Menu.Item>Regular 1</Menu.Item>
+      <Menu.Item>Regular 2</Menu.Item>
+    </Menu>
+  );
+}
+
 storiesOf('@mantine/core/Menu/stories', module)
   .add('Focus behavior', () => (
     <div style={{ padding: 40 }}>
@@ -71,4 +120,19 @@ storiesOf('@mantine/core/Menu/stories', module)
       <Divider />
       <Menu.Item>Last Item</Menu.Item>
     </Menu>
+  ))
+  .add('Items in fragments', () => (
+    <div style={{ padding: 40 }}>
+      <ItemsAsFragments />
+    </div>
+  ))
+  .add('Items in a variable', () => (
+    <div style={{ padding: 40 }}>
+      <ItemsAsVariables />
+    </div>
+  ))
+  .add('Wrapped items', () => (
+    <div style={{ padding: 40 }}>
+      <WrappedItems />
+    </div>
   ));

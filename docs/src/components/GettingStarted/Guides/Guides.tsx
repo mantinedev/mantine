@@ -28,7 +28,7 @@ export function Guides({ dependencies }: GuideProps) {
       <Title
         order={2}
         mb="lg"
-        style={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
+        sx={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
       >
         And get started with
       </Title>

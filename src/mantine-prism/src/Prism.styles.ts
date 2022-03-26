@@ -1,11 +1,11 @@
 import { createStyles } from '@mantine/core';
 
-interface PrismStyles {
+export interface PrismStylesParams {
   colorScheme: 'light' | 'dark';
   native: boolean;
 }
 
-export default createStyles((theme, { colorScheme, native }: PrismStyles) => ({
+export default createStyles((theme, { colorScheme, native }: PrismStylesParams) => ({
   scrollArea: {},
 
   root: {

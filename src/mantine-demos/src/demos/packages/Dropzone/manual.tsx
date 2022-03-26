@@ -8,7 +8,8 @@ import { Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  const openRef = useRef();
+  const openRef = useRef<() => void>();
+
   return (
     <>
       <Dropzone openRef={openRef}>
@@ -21,8 +22,6 @@ function Demo() {
     </>
   );
 }
-
-
 `;
 
 function Demo() {

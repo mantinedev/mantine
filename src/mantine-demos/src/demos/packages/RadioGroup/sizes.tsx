@@ -4,9 +4,12 @@ import { Radio, RadioGroup, RadioProps } from '@mantine/core';
 const getSizes = (props?: RadioProps) =>
   (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size, index) => (
     <RadioGroup size={size} key={size}>
-      <Radio value={size} style={{ marginTop: index === 0 ? 0 : 15 }} {...props}>
-        {size} size radio
-      </Radio>
+      <Radio
+        value={size}
+        style={{ marginTop: index === 0 ? 0 : 15 }}
+        label={`${size} size radio`}
+        {...props}
+      />
     </RadioGroup>
   ));
 

@@ -12,6 +12,7 @@ import {
   MantineSize,
   MantineColor,
   ClassNames,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
@@ -66,142 +67,145 @@ export interface SegmentedControlProps
   orientation?: 'vertical' | 'horizontal';
 }
 
-export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(
-  (
+const defaultProps: Partial<SegmentedControlProps> = {
+  disabled: false,
+  size: 'sm',
+  transitionDuration: 200,
+};
+
+export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>((props, ref) => {
+  const {
+    className,
+    disabled,
+    data: _data,
+    name,
+    value,
+    onChange,
+    color,
+    fullWidth,
+    radius,
+    size,
+    transitionDuration,
+    transitionTimingFunction,
+    classNames,
+    styles,
+    defaultValue,
+    orientation,
+    ...others
+  } = useMantineDefaultProps('SegmentedControl', defaultProps, props);
+
+  const reduceMotion = useReducedMotion();
+  const data = _data.map((item: any) =>
+    typeof item === 'string' ? { label: item, value: item } : item
+  );
+
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [_value, handleValueChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: Array.isArray(data) ? data[0].value : null,
+    onChange,
+    rule: (val) => !!val,
+  });
+
+  const { classes, cx, theme } = useStyles(
     {
-      className,
-      disabled = false,
-      data: _data,
-      name,
-      value,
-      onChange,
-      color,
+      size,
       fullWidth,
-      radius = 'sm',
-      size = 'sm',
-      transitionDuration = 200,
+      color,
+      radius,
+      shouldAnimate: reduceMotion || !shouldAnimate,
+      transitionDuration,
       transitionTimingFunction,
-      classNames,
-      styles,
-      defaultValue,
       orientation,
-      ...others
     },
-    ref
-  ) => {
-    const reduceMotion = useReducedMotion();
-    const data = _data.map((item: any) =>
-      typeof item === 'string' ? { label: item, value: item } : item
-    );
+    { classNames, styles, name: 'SegmentedControl' }
+  );
 
-    const [shouldAnimate, setShouldAnimate] = useState(false);
-    const [_value, handleValueChange] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: Array.isArray(data) ? data[0].value : null,
-      onChange,
-      rule: (val) => !!val,
-    });
+  const [activePosition, setActivePosition] = useState({
+    width: 0,
+    height: 0,
+    translate: [0, 0],
+  });
+  const uuid = useUuid(name);
+  const refs = useRef<Record<string, HTMLLabelElement>>({});
+  const [observerRef, containerRect] = useResizeObserver();
 
-    const { classes, cx, theme } = useStyles(
-      {
-        size,
-        fullWidth,
-        color,
-        radius,
-        shouldAnimate: reduceMotion || !shouldAnimate,
-        transitionDuration,
-        transitionTimingFunction,
-        orientation,
-      },
-      { classNames, styles, name: 'SegmentedControl' }
-    );
+  useEffect(() => {
+    if (_value in refs.current && observerRef.current) {
+      const element = refs.current[_value];
+      const elementRect = element.getBoundingClientRect();
+      const scaledValue = element.offsetWidth / elementRect.width;
+      const width = elementRect.width * scaledValue || 0;
+      const height = elementRect.height * scaledValue || 0;
 
-    const [activePosition, setActivePosition] = useState({
-      width: 0,
-      height: 0,
-      translate: [0, 0],
-    });
-    const uuid = useUuid(name);
-    const refs = useRef<Record<string, HTMLLabelElement>>({});
-    const [observerRef, containerRect] = useResizeObserver();
+      const offsetRight =
+        containerRect.width - element.parentElement.offsetLeft + WRAPPER_PADDING - width;
+      const offsetLeft = element.parentElement.offsetLeft - WRAPPER_PADDING;
 
-    useEffect(() => {
-      if (_value in refs.current && observerRef.current) {
-        const element = refs.current[_value];
-        const elementRect = element.getBoundingClientRect();
-        const scaledValue = element.offsetWidth / elementRect.width;
-        const width = elementRect.width * scaledValue || 0;
-        const height = elementRect.height * scaledValue || 0;
+      setActivePosition({
+        width,
+        height,
+        translate: [
+          theme.dir === 'rtl' ? offsetRight : offsetLeft,
+          element.parentElement.offsetTop - WRAPPER_PADDING,
+        ],
+      });
+    }
+  }, [_value, containerRect]);
 
-        const offsetRight =
-          containerRect.width - element.parentElement.offsetLeft + WRAPPER_PADDING - width;
-        const offsetLeft = element.parentElement.offsetLeft - WRAPPER_PADDING;
+  useEffect(() => {
+    setShouldAnimate(true);
+  }, []);
 
-        setActivePosition({
-          width,
-          height,
-          translate: [
-            theme.dir === 'rtl' ? offsetRight : offsetLeft,
-            element.parentElement.offsetTop - WRAPPER_PADDING,
-          ],
-        });
-      }
-    }, [_value, containerRect]);
+  const controls = data.map((item) => (
+    <div
+      className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
+      key={item.value}
+    >
+      <input
+        className={classes.input}
+        disabled={disabled}
+        type="radio"
+        name={uuid}
+        value={item.value}
+        id={`${uuid}-${item.value}`}
+        checked={_value === item.value}
+        onChange={() => handleValueChange(item.value)}
+      />
 
-    useEffect(() => {
-      setShouldAnimate(true);
-    }, []);
-
-    const controls = data.map((item) => (
-      <div
-        className={cx(classes.control, { [classes.controlActive]: _value === item.value })}
-        key={item.value}
+      <label
+        className={cx(classes.label, {
+          [classes.labelActive]: _value === item.value,
+          [classes.disabled]: disabled,
+        })}
+        htmlFor={`${uuid}-${item.value}`}
+        ref={(node) => {
+          refs.current[item.value] = node;
+        }}
       >
-        <input
-          className={classes.input}
-          disabled={disabled}
-          type="radio"
-          name={uuid}
-          value={item.value}
-          id={`${uuid}-${item.value}`}
-          checked={_value === item.value}
-          onChange={() => handleValueChange(item.value)}
-        />
+        {item.label}
+      </label>
+    </div>
+  ));
 
-        <label
-          className={cx(classes.label, {
-            [classes.labelActive]: _value === item.value,
-            [classes.disabled]: disabled,
-          })}
-          htmlFor={`${uuid}-${item.value}`}
-          ref={(node) => {
-            refs.current[item.value] = node;
+  return (
+    <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
+      {!!_value && (
+        <Box
+          component="span"
+          className={classes.active}
+          sx={{
+            width: activePosition.width,
+            height: activePosition.height,
+            transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px )`,
           }}
-        >
-          {item.label}
-        </label>
-      </div>
-    ));
+        />
+      )}
 
-    return (
-      <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
-        {!!_value && (
-          <Box
-            component="span"
-            className={classes.active}
-            sx={{
-              width: activePosition.width,
-              height: activePosition.height,
-              transform: `translate(${activePosition.translate[0]}px, ${activePosition.translate[1]}px )`,
-            }}
-          />
-        )}
-
-        {controls}
-      </Box>
-    );
-  }
-);
+      {controls}
+    </Box>
+  );
+});
 
 SegmentedControl.displayName = '@mantine/core/SegmentedControl';

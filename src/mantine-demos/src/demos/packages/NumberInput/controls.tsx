@@ -2,18 +2,26 @@ import React from 'react';
 import { NumberInput } from '@mantine/core';
 
 const code = `
-<NumberInput label="By default controls are visible" />
+import { NumberInput } from '@mantine/core';
 
-<NumberInput
-  hideControls
-  label="Disable them with hideControls prop"
-/>
+function Demo() {
+  return (
+    <>
+      <NumberInput label="By default controls are visible" />
 
-<NumberInput
-  label="Disabled"
-  disabled
-  label="Controls also not rendered when input is disabled"
-/>
+      <NumberInput
+        hideControls
+        label="Disable them with hideControls prop"
+      />
+
+      <NumberInput
+        label="Disabled"
+        disabled
+        label="Controls also not rendered when input is disabled"
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {

@@ -28,7 +28,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
 
   return (
     <>
-      <Title order={3} className={classes.title} style={{ marginTop: 45 }}>
+      <Title order={3} className={classes.title} mt={45}>
         {component} styles API
       </Title>
 

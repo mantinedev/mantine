@@ -16,4 +16,5 @@ export interface Frontmatter {
   category: string;
   release: string;
   date: string;
+  search?: string;
 }

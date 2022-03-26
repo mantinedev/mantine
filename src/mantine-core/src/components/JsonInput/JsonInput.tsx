@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { validateJson } from './validate-json/validate-json';
 import { Textarea, TextareaProps } from '../Textarea';
 import { TextInputStylesNames } from '../TextInput';
@@ -27,23 +27,27 @@ export interface JsonInputProps
   validationError?: React.ReactNode;
 }
 
+const defaultProps: Partial<JsonInputProps> = {
+  formatOnBlur: false,
+  size: 'sm',
+};
+
 export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>(
-  (
-    {
+  (props: JsonInputProps, ref) => {
+    const {
       value,
       defaultValue,
       onChange,
       onFocus,
       onBlur,
       error,
-      formatOnBlur = false,
-      size = 'sm',
+      formatOnBlur,
+      size,
       validationError,
       classNames,
       ...others
-    }: JsonInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('JsonInput', defaultProps, props);
+
     const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });
     const [_value, setValue] = useUncontrolled({
       value,

@@ -53,6 +53,6 @@ describe('@mantine/core/Slider/Marks', () => {
   });
 
   it('has correct displayName', () => {
-    expect(Marks.displayName).toEqual('@mantine/core/SliderMarks');
+    expect(Marks.displayName).toStrictEqual('@mantine/core/SliderMarks');
   });
 });

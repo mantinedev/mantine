@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
 
-interface MenuStyles {
+export interface MenuStylesParams {
   size: MantineNumberSize | 'auto';
 }
 
@@ -14,7 +14,7 @@ export const sizes = {
 
 const MENU_PADDING = 4;
 
-export default createStyles((theme, { size }: MenuStyles) => ({
+export default createStyles((theme, { size }: MenuStylesParams) => ({
   root: {
     display: 'inline-block',
     position: 'relative',
@@ -34,11 +34,11 @@ export default createStyles((theme, { size }: MenuStyles) => ({
     }`,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
     padding: MENU_PADDING,
-  },
 
-  divider: {
-    borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
-    margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px`,
+    '& .mantine-Divider-horizontal': {
+      margin: `${theme.spacing.xs / 2}px -${MENU_PADDING}px`,
+      borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
+    },
   },
 
   label: {

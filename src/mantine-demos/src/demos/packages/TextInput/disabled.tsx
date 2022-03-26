@@ -2,7 +2,11 @@ import React from 'react';
 import { TextInput } from '@mantine/core';
 
 const code = `
-<TextInput disabled />
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return <TextInput disabled />
+}
 `;
 
 function Demo() {

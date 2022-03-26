@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const code = `
+import { forwardRef } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 const data = [
@@ -32,15 +33,20 @@ const data = [
   },
 ];
 
-// !important: Forwarding ref is required
-const SelectItem = forwardRef(
-  ({ image, label, description, ...others }, ref) => (
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+  image: string;
+  label: string;
+  description: string;
+}
+
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+  ({ image, label, description, ...others }: ItemProps, ref) => (
     <div ref={ref} {...others}>
       <Group noWrap>
         <Avatar src={image} />
 
         <div>
-          <Text>{label}</Text>
+          <Text size="sm">{label}</Text>
           <Text size="xs" color="dimmed">
             {description}
           </Text>

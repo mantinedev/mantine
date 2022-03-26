@@ -1,15 +1,15 @@
 import React from 'react';
+import { MANTINE_SIZES } from '@mantine/core';
 import { SegmentedControlWrapper } from './Wrapper';
 
-const getSizes = (props?: any) =>
-  ['xs', 'sm', 'md', 'lg', 'xl'].map((size, index) => (
+function Demo() {
+  const items = MANTINE_SIZES.map((size, index) => (
     <div style={{ marginTop: index === 0 ? 0 : 15 }} key={size}>
-      <SegmentedControlWrapper size={size} {...props} />
+      <SegmentedControlWrapper size={size} />
     </div>
   ));
 
-function Demo() {
-  return <>{getSizes()}</>;
+  return <>{items}</>;
 }
 
 export const sizes: MantineDemo = {

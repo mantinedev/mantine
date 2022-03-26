@@ -1,14 +1,21 @@
 import React from 'react';
-import { ArrowLeftIcon, ArrowRightIcon } from '@modulz/radix-icons';
-import { Center, useMantineTheme, Anchor } from '@mantine/core';
+import { ArrowLeft, ArrowRight } from 'tabler-icons-react';
+import { Center, useMantineTheme, Anchor, Box } from '@mantine/core';
 
 const code = `
-<Anchor href="https://mantine.dev" target="_blank">
-  <Center inline>
-    <ArrowLeftIcon style={{ marginRight: 5 }} />
-    <span>Back to Mantine website</span>
-  </Center>
-</Anchor>
+import { Center, Anchor, Box } from '@mantine/core';
+import { ArrowLeft } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Anchor href="https://mantine.dev" target="_blank">
+      <Center inline>
+        <ArrowLeft size={14} />
+        <Box ml={5}>Back to Mantine website</Box>
+      </Center>
+    </Anchor>
+  );
+}
 `;
 
 function Demo() {
@@ -16,12 +23,8 @@ function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        {theme.dir === 'ltr' ? (
-          <ArrowLeftIcon style={{ marginRight: 5 }} />
-        ) : (
-          <ArrowRightIcon style={{ marginLeft: 5 }} />
-        )}
-        <span>Back to Mantine website</span>
+        {theme.dir === 'ltr' ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
+        <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>
   );

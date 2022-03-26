@@ -2,7 +2,7 @@ import React from 'react';
 import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 
-const code = `import React from 'react';
+const code = `
 import { Group, Button } from '@mantine/core';
 import { useNotifications } from '@mantine/notifications';
 

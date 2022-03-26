@@ -6,6 +6,7 @@ import {
   ClassNames,
   DefaultProps,
   Box,
+  useMantineDefaultProps,
 } from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { DropzoneStatus } from '../Dropzone';
@@ -67,21 +68,30 @@ function isValidDrop(event: DragEvent, mime: string[]) {
   return true;
 }
 
-export function FullScreenDropzone({
-  className,
-  style,
-  offset = 'xl',
-  padding = 'md',
-  radius = 'sm',
-  classNames,
-  styles,
-  disabled,
-  accept = ['*'],
-  zIndex = 1000,
-  onDrop,
-  children,
-  ...others
-}: FullScreenDropzoneProps) {
+const defaultProps: Partial<FullScreenDropzoneProps> = {
+  offset: 'xl',
+  padding: 'md',
+  accept: ['*'],
+  zIndex: 1000,
+};
+
+export function FullScreenDropzone(props: FullScreenDropzoneProps) {
+  const {
+    className,
+    style,
+    offset,
+    padding,
+    radius,
+    classNames,
+    styles,
+    disabled,
+    accept,
+    zIndex,
+    onDrop,
+    children,
+    ...others
+  } = useMantineDefaultProps('FullScreenDropzone', defaultProps, props);
+
   const { classes, cx } = useStyles(
     { offset, padding, radius },
     { classNames, styles, name: 'FullScreenDropzone' }

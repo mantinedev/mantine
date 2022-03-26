@@ -1,27 +1,17 @@
 # Mantine SSR
 
-Server side rendering utilities for [Mantine](https://mantine.dev/)
+General purpose utilities for Mantine server side rendering
 
-## Documentation
+[View documentation](https://mantine.dev/)
 
-See server side rendering documentation on Mantine website:
-
-- [General purpose ssr](https://mantine.dev/theming/ssr/)
-- [Server side rendering with Next.js](https://mantine.dev/theming/next/)
-- [Server side rendering with Gatsby.js](https://mantine.dev/theming/gatsby/)
-
-## Installations
-
-Install with npm:
+## Installation
 
 ```sh
-npm install @mantine/ssr
-```
+# With yarn
+yarn add @mantine/hooks @mantine/core @mantine/ssr
 
-Install with yarn:
-
-```sh
-yarn add @mantine/ssr
+# With npm
+npm install @mantine/hooks @mantine/core @mantine/ssr
 ```
 
 ## License

@@ -1,6 +1,12 @@
 import React, { forwardRef } from 'react';
 import { useUuid } from '@mantine/hooks';
-import { DefaultProps, MantineSize, extractMargins, useMantineTheme } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineSize,
+  extractSystemStyles,
+  useMantineTheme,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import {
   InputWrapperBaseProps,
   InputWrapper,
@@ -36,9 +42,13 @@ export interface NativeSelectProps
   size?: MantineSize;
 }
 
+const defaultProps: Partial<NativeSelectProps> = {
+  size: 'sm',
+};
+
 export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
-  (
-    {
+  (props: NativeSelectProps, ref) => {
+    const {
       id,
       className,
       required,
@@ -50,22 +60,22 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
       wrapperProps,
       inputStyle,
       description,
-      defaultValue,
       onChange,
       value,
       classNames,
       styles,
-      size = 'sm',
+      size,
       rightSection,
       rightSectionWidth,
       sx,
+      errorProps,
+      descriptionProps,
+      labelProps,
       ...others
-    }: NativeSelectProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('NativeSelect', defaultProps, props);
     const uuid = useUuid(id);
     const theme = useMantineTheme();
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
@@ -99,7 +109,10 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
         classNames={classNames}
         sx={sx}
         __staticSelector="NativeSelect"
-        {...margins}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'select'>

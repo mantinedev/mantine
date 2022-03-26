@@ -1,0 +1,25 @@
+{
+  "name": "@mantine/spotlight",
+  "description": "Command center for your application",
+  "version": "4.0.8",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/others/spotlight/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-spotlight"
+  },
+  "peerDependencies": {
+    "@mantine/core": "4.0.8",
+    "@mantine/hooks": "4.0.8",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

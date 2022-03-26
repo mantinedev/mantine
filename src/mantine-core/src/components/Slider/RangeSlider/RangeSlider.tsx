@@ -1,6 +1,12 @@
 import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import { useMove, useUncontrolled, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, MantineNumberSize, MantineColor, useMantineTheme } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineColor,
+  useMantineTheme,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
 import { getPosition } from '../utils/get-position/get-position';
@@ -42,6 +48,9 @@ export interface RangeSliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
 
+  /** Amount of digits after the decimal point */
+  precision?: number;
+
   /** Current value for controlled slider */
   value?: Value;
 
@@ -50,6 +59,9 @@ export interface RangeSliderProps
 
   /** Called each time value changes */
   onChange?(value: Value): void;
+
+  /** Called when user stops dragging slider or changes value with arrows */
+  onChangeEnd?(value: Value): void;
 
   /** Hidden input name, use with uncontrolled variant */
   name?: string;
@@ -85,36 +97,54 @@ export interface RangeSliderProps
   thumbChildren?: React.ReactNode;
 }
 
+const defaultProps: Partial<RangeSliderProps> = {
+  size: 'md',
+  radius: 'xl',
+  min: 0,
+  max: 100,
+  minRange: 10,
+  step: 1,
+  marks: [],
+  label: (f) => f,
+  labelTransition: 'skew-down',
+  labelTransitionDuration: 0,
+  labelAlwaysOn: false,
+  thumbFromLabel: '',
+  thumbToLabel: '',
+  showLabelOnHover: true,
+};
+
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
-  (
-    {
+  (props: RangeSliderProps, ref) => {
+    const {
       classNames,
       styles,
       color,
       value,
       onChange,
-      size = 'md',
-      radius = 'xl',
-      min = 0,
-      max = 100,
-      minRange = 10,
-      step = 1,
+      onChangeEnd,
+      size,
+      radius,
+      min,
+      max,
+      minRange,
+      step,
+      precision,
       defaultValue,
       name,
-      marks = [],
-      label = (f) => f,
-      labelTransition = 'skew-down',
-      labelTransitionDuration = 0,
+      marks,
+      label,
+      labelTransition,
+      labelTransitionDuration,
       labelTransitionTimingFunction,
-      labelAlwaysOn = false,
-      thumbFromLabel = '',
-      thumbToLabel = '',
-      showLabelOnHover = true,
+      labelAlwaysOn,
+      thumbFromLabel,
+      thumbToLabel,
+      showLabelOnHover,
       thumbChildren,
       ...others
-    }: RangeSliderProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('RangeSlider', defaultProps, props);
+
     const theme = useMantineTheme();
     const [focused, setFocused] = useState(-1);
     const [hovered, setHovered] = useState(false);
@@ -125,7 +155,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       rule: (val) => Array.isArray(val),
       onChange,
     });
-    const _valueRef = useRef(_value);
+    const valueRef = useRef(_value);
     const thumbs = useRef<HTMLDivElement[]>([]);
     const thumbIndex = useRef<number>(undefined);
     const positions = [
@@ -135,20 +165,20 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     const _setValue = (val: Value) => {
       setValue(val);
-      _valueRef.current = val;
+      valueRef.current = val;
     };
 
     useEffect(
       () => {
         if (Array.isArray(value)) {
-          _valueRef.current = value;
+          valueRef.current = value;
         }
       },
       Array.isArray(value) ? [value[0], value[1]] : [null, null]
     );
 
-    const setRangedValue = (val: number, index: number) => {
-      const clone: Value = [..._valueRef.current];
+    const setRangedValue = (val: number, index: number, triggerChangeEnd: boolean) => {
+      const clone: Value = [...valueRef.current];
       clone[index] = val;
 
       if (index === 0) {
@@ -157,7 +187,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         }
 
         if (val > (max - minRange || min)) {
-          clone[index] = _valueRef.current[index];
+          clone[index] = valueRef.current[index];
         }
       }
 
@@ -167,18 +197,26 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         }
 
         if (val < (minRange || min)) {
-          clone[index] = _valueRef.current[index];
+          clone[index] = valueRef.current[index];
         }
       }
       _setValue(clone);
+
+      if (triggerChangeEnd) {
+        onChangeEnd?.(valueRef.current);
+      }
     };
 
     const handleChange = (val: number) => {
-      const nextValue = getChangeValue({ value: val, min, max, step });
-      setRangedValue(nextValue, thumbIndex.current);
+      const nextValue = getChangeValue({ value: val, min, max, step, precision });
+      setRangedValue(nextValue, thumbIndex.current, false);
     };
 
-    const { ref: container, active } = useMove(({ x }) => handleChange(x), undefined, theme.dir);
+    const { ref: container, active } = useMove(
+      ({ x }) => handleChange(x),
+      { onScrubEnd: () => onChangeEnd?.(valueRef.current) },
+      theme.dir
+    );
 
     function handleThumbMouseDown(
       event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -233,8 +271,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(Math.max(_valueRef.current[focusedIndex] + step, min), max),
-            focusedIndex
+            Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max),
+            focusedIndex,
+            true
           );
           break;
         }
@@ -246,13 +285,14 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             Math.min(
               Math.max(
                 theme.dir === 'rtl'
-                  ? _valueRef.current[focusedIndex] - step
-                  : _valueRef.current[focusedIndex] + step,
+                  ? valueRef.current[focusedIndex] - step
+                  : valueRef.current[focusedIndex] + step,
                 min
               ),
               max
             ),
-            focusedIndex
+            focusedIndex,
+            true
           );
           break;
         }
@@ -262,8 +302,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
           setRangedValue(
-            Math.min(Math.max(_valueRef.current[focusedIndex] - step, min), max),
-            focusedIndex
+            Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max),
+            focusedIndex,
+            true
           );
           break;
         }
@@ -275,13 +316,14 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             Math.min(
               Math.max(
                 theme.dir === 'rtl'
-                  ? _valueRef.current[focusedIndex] + step
-                  : _valueRef.current[focusedIndex] - step,
+                  ? valueRef.current[focusedIndex] + step
+                  : valueRef.current[focusedIndex] - step,
                 min
               ),
               max
             ),
-            focusedIndex
+            focusedIndex,
+            true
           );
           break;
         }

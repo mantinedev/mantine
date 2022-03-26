@@ -14,7 +14,7 @@ describe('@mantine/hooks/use-list-state', () => {
   it('returns initial state of no modifications were applied', () => {
     const hook = renderHook(() => useListState(TEST_STATE));
     const [state] = hook.result.current;
-    expect(state).toEqual(TEST_STATE);
+    expect(state).toStrictEqual(TEST_STATE);
   });
 
   it('sets state with given value or callback', () => {
@@ -32,8 +32,8 @@ describe('@mantine/hooks/use-list-state', () => {
     const [withValueState] = withValue.result.current;
     const [withCallbackState] = withCallback.result.current;
 
-    expect(withValueState).toEqual([TEST_ITEM_1]);
-    expect(withCallbackState).toEqual([TEST_ITEM_1, ...TEST_STATE, TEST_ITEM_2]);
+    expect(withValueState).toStrictEqual([TEST_ITEM_1]);
+    expect(withCallbackState).toStrictEqual([TEST_ITEM_1, ...TEST_STATE, TEST_ITEM_2]);
   });
 
   it('adds item to the end of the list with handlers.append', () => {
@@ -51,8 +51,8 @@ describe('@mantine/hooks/use-list-state', () => {
     const [singleState] = single.result.current;
     const [multipleState] = multiple.result.current;
 
-    expect(singleState).toEqual([...TEST_STATE, TEST_ITEM_1]);
-    expect(multipleState).toEqual([...TEST_STATE, TEST_ITEM_1, TEST_ITEM_2]);
+    expect(singleState).toStrictEqual([...TEST_STATE, TEST_ITEM_1]);
+    expect(multipleState).toStrictEqual([...TEST_STATE, TEST_ITEM_1, TEST_ITEM_2]);
   });
 
   it('adds item to the start of the list with handlers.prepend', () => {
@@ -70,8 +70,8 @@ describe('@mantine/hooks/use-list-state', () => {
     const [singleState] = single.result.current;
     const [multipleState] = multiple.result.current;
 
-    expect(singleState).toEqual([TEST_ITEM_1, ...TEST_STATE]);
-    expect(multipleState).toEqual([TEST_ITEM_1, TEST_ITEM_2, ...TEST_STATE]);
+    expect(singleState).toStrictEqual([TEST_ITEM_1, ...TEST_STATE]);
+    expect(multipleState).toStrictEqual([TEST_ITEM_1, TEST_ITEM_2, ...TEST_STATE]);
   });
 
   it('inserts item at given position with handlers.insert', () => {
@@ -97,10 +97,10 @@ describe('@mantine/hooks/use-list-state', () => {
     const [endState] = end.result.current;
     const [multipleState] = multiple.result.current;
 
-    expect(startState).toEqual([TEST_ITEM_1, ...TEST_STATE]);
-    expect(middleState).toEqual([TEST_STATE[0], TEST_ITEM_1, TEST_STATE[1], TEST_STATE[2]]);
-    expect(endState).toEqual([...TEST_STATE, TEST_ITEM_1]);
-    expect(multipleState).toEqual([
+    expect(startState).toStrictEqual([TEST_ITEM_1, ...TEST_STATE]);
+    expect(middleState).toStrictEqual([TEST_STATE[0], TEST_ITEM_1, TEST_STATE[1], TEST_STATE[2]]);
+    expect(endState).toStrictEqual([...TEST_STATE, TEST_ITEM_1]);
+    expect(multipleState).toStrictEqual([
       TEST_STATE[0],
       TEST_ITEM_1,
       TEST_ITEM_2,
@@ -124,8 +124,8 @@ describe('@mantine/hooks/use-list-state', () => {
     const [singleState] = single.result.current;
     const [multipleState] = multiple.result.current;
 
-    expect(singleState).toEqual([TEST_STATE[0], TEST_STATE[2]]);
-    expect(multipleState).toEqual([TEST_STATE[2]]);
+    expect(singleState).toStrictEqual([TEST_STATE[0], TEST_STATE[2]]);
+    expect(multipleState).toStrictEqual([TEST_STATE[2]]);
   });
 
   it('applies given function to all items with handlers.apply', () => {
@@ -137,7 +137,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual([
+    expect(state).toStrictEqual([
       TEST_STATE[0],
       { ...TEST_STATE[1], age: TEST_STATE[1].age + 1 },
       { ...TEST_STATE[2], age: TEST_STATE[2].age + 2 },
@@ -156,7 +156,11 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual([TEST_STATE[0], TEST_STATE[1], { ...TEST_STATE[2], experienced: true }]);
+    expect(state).toStrictEqual([
+      TEST_STATE[0],
+      TEST_STATE[1],
+      { ...TEST_STATE[2], experienced: true },
+    ]);
   });
 
   it('reorders item at given position with handlers.reorder', () => {
@@ -168,7 +172,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual([TEST_STATE[1], TEST_STATE[2], TEST_STATE[0]]);
+    expect(state).toStrictEqual([TEST_STATE[1], TEST_STATE[2], TEST_STATE[0]]);
   });
 
   it('sets item at given position with handlers.setItem', () => {
@@ -180,7 +184,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual([TEST_STATE[0], TEST_ITEM_1, TEST_STATE[2]]);
+    expect(state).toStrictEqual([TEST_STATE[0], TEST_ITEM_1, TEST_STATE[2]]);
   });
 
   it('sets given item property at given position with handlers.setItemProp', () => {
@@ -192,7 +196,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual([TEST_STATE[0], { ...TEST_STATE[1], age: 90 }, TEST_STATE[2]]);
+    expect(state).toStrictEqual([TEST_STATE[0], { ...TEST_STATE[1], age: 90 }, TEST_STATE[2]]);
   });
 
   it('works with primitive values', () => {
@@ -204,7 +208,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual(['test-1', 'test-3']);
+    expect(state).toStrictEqual(['test-1', 'test-3']);
   });
 
   it('removes last item with pop handler', () => {
@@ -215,7 +219,7 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual(['test-1', 'test-2']);
+    expect(state).toStrictEqual(['test-1', 'test-2']);
   });
 
   it('removes first item with shift handler', () => {
@@ -226,6 +230,6 @@ describe('@mantine/hooks/use-list-state', () => {
     });
 
     const [state] = hook.result.current;
-    expect(state).toEqual(['test-2', 'test-3']);
+    expect(state).toStrictEqual(['test-2', 'test-3']);
   });
 });

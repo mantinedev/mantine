@@ -10,9 +10,17 @@ function Wrapper(props: MenuProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Menu${props}>
-  {/* Menu items */}
-</Menu>`;
+const codeTemplate = (props: string) => `
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu${props}>
+      {/* Menu items */}
+    </Menu>
+  )
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

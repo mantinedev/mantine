@@ -1,6 +1,6 @@
 import { createStyles, MantineSize, MantineColor } from '@mantine/styles';
 
-interface RadioStyles {
+export interface RadioStylesParams {
   size: MantineSize;
   color: MantineColor;
 }
@@ -13,7 +13,7 @@ export const sizes = {
   xl: 36,
 };
 
-export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
+export default createStyles((theme, { size, color }: RadioStylesParams, getRef) => {
   const labelDisabled = { ref: getRef('labelDisabled') } as const;
 
   return {
@@ -70,13 +70,18 @@ export default createStyles((theme, { size, color }: RadioStyles, getRef) => {
     label: {
       ...theme.fn.fontStyles(),
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       fontSize: theme.fontSizes[size] || theme.fontSizes.md,
       lineHeight: `${theme.fn.size({ sizes, size })}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       [`&.${labelDisabled.ref}`]: {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+
+      '& > span': {
+        flexGrow: 1,
+        flexBasis: 0,
       },
     },
   };

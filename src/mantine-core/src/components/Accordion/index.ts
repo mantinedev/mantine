@@ -12,3 +12,4 @@ export type {
   AccordionItemStylesNames as AccordionStylesNames,
   AccordionIconPosition,
 } from './AccordionItem/AccordionItem';
+export type { AccordionStylesParams } from './AccordionItem/AccordionItem.styles';

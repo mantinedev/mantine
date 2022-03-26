@@ -5,7 +5,6 @@
     "src/mantine-*/demos",
     "./types",
     "./docs/src",
-    "./gallery/**/*",
     "./scripts",
     "./configuration",
     "./configuration/types",
@@ -19,8 +18,7 @@
     "node_modules",
     "src/mantine-*/esm/**/*",
     "src/mantine-*/lib/**/*",
-    "src/mantine-*/cjs/**/*",
-    "gallery/next.config.js"
+    "src/mantine-*/cjs/**/*"
   ],
   "compilerOptions": {
     "paths": {

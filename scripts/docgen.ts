@@ -18,6 +18,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',
   '../src/mantine-core/src/components/Grid/Col/Col.tsx',
   '../src/mantine-prism/src/Prism.tsx',
+  '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
   '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
 ];
@@ -26,6 +27,7 @@ const PATHS: DeclarationPath[] = [
   { type: 'package', path: path.join(__dirname, '../src/mantine-core/src/components') },
   { type: 'package', path: path.join(__dirname, '../src/mantine-dates/src/components') },
   { type: 'package', path: path.join(__dirname, '../src/mantine-dropzone/src') },
+  { type: 'package', path: path.join(__dirname, '../src/mantine-labs/src') },
   ...EXTRA_FILES_PATHS.map((filePath) => ({
     type: 'file' as const,
     path: path.join(__dirname, filePath),

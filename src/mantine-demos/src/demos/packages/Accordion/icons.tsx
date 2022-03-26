@@ -1,23 +1,30 @@
 import React from 'react';
-import { BlendingModeIcon, MarginIcon, ShuffleIcon } from '@modulz/radix-icons';
+import { Palette, CircleDashed, Bulb } from 'tabler-icons-react';
 import { ThemeIcon, Accordion, AccordionProps } from '@mantine/core';
 import { baseAccordionMockdata } from './_mockdata';
 
 const code = `
-<Accordion disableIconRotation>
-  <Accordion.Item
-    label="Customization"
-    icon={
-      <ThemeIcon color="violet" variant="light">
-        <BlendingModeIcon />
-      </ThemeIcon>
-    }
-  >
-    Colors, fonts, shadows and many other parts are customizable to fit your design needs
-  </Accordion.Item>
+import { ThemeIcon, Accordion } from '@mantine/core';
+import { Palette } from 'tabler-icons-react';
 
-  {/* ...other <Accordion.Item /> */}
-</Accordion>
+function Demo() {
+  return (
+    <Accordion disableIconRotation>
+      <Accordion.Item
+        label="Customization"
+        icon={
+          <ThemeIcon color="violet" variant="light">
+            <Palette size={14} />
+          </ThemeIcon>
+        }
+      >
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Item>
+
+      {/* ...other <Accordion.Item /> */}
+    </Accordion>
+  )
+}
 `;
 
 export function IconsReplacementDemo(props: Partial<AccordionProps>) {
@@ -27,7 +34,7 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
         label={baseAccordionMockdata[0].label}
         icon={
           <ThemeIcon color="violet" variant="light" size={28} radius="xl">
-            <BlendingModeIcon style={{ width: 14, height: 14 }} />
+            <Palette size={14} />
           </ThemeIcon>
         }
       >
@@ -38,7 +45,7 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
         label={baseAccordionMockdata[1].label}
         icon={
           <ThemeIcon color="orange" variant="light" size={28} radius="xl">
-            <ShuffleIcon style={{ width: 14, height: 14 }} />
+            <CircleDashed size={14} />
           </ThemeIcon>
         }
       >
@@ -49,7 +56,7 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
         label={baseAccordionMockdata[2].label}
         icon={
           <ThemeIcon color="blue" variant="light" size={28} radius="xl">
-            <MarginIcon style={{ width: 14, height: 14 }} />
+            <Bulb size={14} />
           </ThemeIcon>
         }
       >

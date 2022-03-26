@@ -1,6 +1,12 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
-import { ClassNames, DefaultProps, extractMargins, useMantineTheme } from '@mantine/styles';
+import {
+  ClassNames,
+  DefaultProps,
+  extractSystemStyles,
+  useMantineTheme,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
 import { Input } from '../Input';
@@ -44,13 +50,21 @@ const rightSectionSizes = {
   xl: 54,
 };
 
+const defaultProps: Partial<PasswordInputProps> = {
+  radius: 'sm',
+  size: 'sm',
+  toggleTabIndex: -1,
+  visibilityToggleIcon: PasswordToggleIcon,
+  __staticSelector: 'PasswordInput',
+};
+
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  (
-    {
-      radius = 'sm',
+  (props: PasswordInputProps, ref) => {
+    const {
+      radius,
       disabled,
-      size = 'sm',
-      toggleTabIndex = -1,
+      size,
+      toggleTabIndex,
       className,
       id,
       label,
@@ -63,21 +77,26 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       classNames,
       styles,
       variant,
-      visibilityToggleIcon: VisibilityToggleIcon = PasswordToggleIcon,
-      __staticSelector = 'PasswordInput',
+      visibilityToggleIcon: VisibilityToggleIcon,
+      __staticSelector,
       rightSection: _rightSection,
       rightSectionWidth: _rightSectionWidth,
       rightSectionProps: _rightSectionProps,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
-    }: PasswordInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('PasswordInput', defaultProps, props);
+
     const theme = useMantineTheme();
     const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
-    const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
+    const { classes, cx } = useStyles(
+      { size, rightSectionWidth },
+      { name: 'PasswordInput', classNames, styles }
+    );
     const uuid = useUuid(id);
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const [reveal, toggle] = useBooleanToggle(false);
 
     const rightSection = (
@@ -116,7 +135,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
-        {...margins}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input<'div'>
@@ -124,7 +146,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           invalid={!!error}
           icon={icon}
           size={size}
-          classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+          classNames={{ ...classNames, input: classes.input }}
           styles={styles}
           radius={radius}
           disabled={disabled}

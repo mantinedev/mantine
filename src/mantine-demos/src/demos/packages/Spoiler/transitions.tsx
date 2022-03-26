@@ -2,9 +2,15 @@ import React from 'react';
 import { Wrapper } from './_wrapper';
 
 const code = `
-<Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide" transitionDuration={0}>
-  {/* Content here */}
-</Spoiler>
+import { Spoiler } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide" transitionDuration={0}>
+      {/* Content here */}
+    </Spoiler>
+  );
+}
 `;
 
 function Demo() {

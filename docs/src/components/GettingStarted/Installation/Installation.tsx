@@ -54,7 +54,7 @@ export function Installation({ setDependencies }: InstallationProps) {
       <Title
         order={2}
         mb="lg"
-        style={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
+        sx={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}
       >
         Choose packages
       </Title>

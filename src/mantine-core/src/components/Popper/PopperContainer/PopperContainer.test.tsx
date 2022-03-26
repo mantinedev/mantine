@@ -4,11 +4,11 @@ import { itRendersChildren, itSupportsClassName } from '@mantine/tests';
 import { PopperContainer } from './PopperContainer';
 
 describe('@mantine/core/PopperContainer', () => {
-  itRendersChildren(PopperContainer, { withinPortal: false });
-  itSupportsClassName(PopperContainer, { withinPortal: false });
+  itRendersChildren(PopperContainer, { withinPortal: false, children: undefined });
+  itSupportsClassName(PopperContainer, { withinPortal: false, children: undefined });
 
   it('has correct displayName', () => {
-    expect(PopperContainer.displayName).toEqual('@mantine/core/PopperContainer');
+    expect(PopperContainer.displayName).toStrictEqual('@mantine/core/PopperContainer');
   });
 
   it('adds z-index styles from prop', () => {
@@ -42,7 +42,7 @@ describe('@mantine/core/PopperContainer', () => {
     const container = document.querySelector('.test-in-parent');
     const parent = document.querySelector('.virtual-dom-parent');
 
-    expect(container.parentNode).toEqual(parent);
+    expect(container.parentNode).toStrictEqual(parent);
     expect(parent.childNodes).toHaveLength(1);
   });
 
@@ -62,7 +62,7 @@ describe('@mantine/core/PopperContainer', () => {
     const container = document.querySelector('.test-in-portal');
     const parent = document.querySelector('.virtual-dom-parent');
 
-    expect(container.parentNode).not.toEqual(parent);
+    expect(container.parentNode).not.toStrictEqual(parent);
     expect(parent.childNodes).toHaveLength(0);
   });
 });

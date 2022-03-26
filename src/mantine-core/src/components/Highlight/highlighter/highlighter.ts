@@ -3,6 +3,10 @@ function escapeRegex(value: string) {
 }
 
 export function highlighter(value: string, _highlight: string | string[]) {
+  if (_highlight == null) {
+    return [{ chunk: value, highlighted: false }];
+  }
+
   const highlight = Array.isArray(_highlight)
     ? _highlight.map(escapeRegex)
     : escapeRegex(_highlight);

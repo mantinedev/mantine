@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, ClassNames, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -77,20 +77,28 @@ const SWATCH_SIZES = {
   xl: 54,
 };
 
+const defaultProps: Partial<ColorPickerProps> = {
+  swatchesPerRow: 10,
+  size: 'sm',
+  withPicker: true,
+  focusable: true,
+  __staticSelector: 'ColorPicker',
+};
+
 export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
-  (
-    {
+  (props: ColorPickerProps, ref) => {
+    const {
       value,
       defaultValue,
       onChange,
       format,
       swatches,
-      swatchesPerRow = 10,
-      size = 'sm',
-      withPicker = true,
-      fullWidth = false,
-      focusable = true,
-      __staticSelector = 'ColorPicker',
+      swatchesPerRow,
+      size,
+      withPicker,
+      fullWidth,
+      focusable,
+      __staticSelector,
       saturationLabel,
       hueLabel,
       alphaLabel,
@@ -98,9 +106,8 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       styles,
       classNames,
       ...others
-    }: ColorPickerProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('ColorPicker', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },
       { classNames, styles, name: __staticSelector }

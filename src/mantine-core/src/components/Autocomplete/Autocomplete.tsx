@@ -1,6 +1,12 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
-import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  ClassNames,
+  extractSystemStyles,
+  getDefaultZIndex,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
@@ -35,9 +41,24 @@ export function defaultFilter(value: string, item: AutocompleteItem) {
   return item.value.toLowerCase().trim().includes(value.toLowerCase().trim());
 }
 
+const defaultProps: Partial<AutocompleteProps> = {
+  required: false,
+  size: 'sm',
+  shadow: 'sm',
+  limit: 5,
+  itemComponent: DefaultItem,
+  transition: 'pop',
+  transitionDuration: 0,
+  initiallyOpened: false,
+  filter: defaultFilter,
+  switchDirectionOnFlip: false,
+  zIndex: getDefaultZIndex('popover'),
+  dropdownPosition: 'bottom',
+};
+
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
-  (
-    {
+  (props: AutocompleteProps, ref) => {
+    const {
       className,
       style,
       sx,
@@ -74,12 +95,13 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'bottom',
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
-    }: AutocompleteProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Autocomplete', defaultProps, props);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
@@ -192,7 +214,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         __staticSelector="Autocomplete"
         sx={sx}
         style={style}
-        {...margins}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div

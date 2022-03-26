@@ -9,9 +9,17 @@ function Wrapper(props: BlockquoteProps) {
   );
 }
 
-const codeTemplate = (props: string, children: string) => `<Blockquote${props}>
-  ${children}
-</Blockquote>`;
+const codeTemplate = (props: string, children: string) => `
+import { Blockquote } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Blockquote${props}>
+      ${children}
+    </Blockquote>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

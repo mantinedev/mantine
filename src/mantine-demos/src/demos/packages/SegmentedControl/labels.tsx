@@ -1,10 +1,10 @@
 import React from 'react';
-import { EyeOpenIcon, CodeIcon, ExternalLinkIcon } from '@modulz/radix-icons';
+import { Eye, Code, ExternalLink } from 'tabler-icons-react';
 import { Center, SegmentedControl, Box, Group } from '@mantine/core';
 
 const code = `
 import { Center, SegmentedControl, Box } from '@mantine/core';
-import { EyeOpenIcon, CodeIcon, ExternalLinkIcon } from '@modulz/radix-icons';
+import { Eye, Code, ExternalLink } from 'tabler-icons-react';
 
 function Demo() {
   return (
@@ -14,7 +14,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center>
-              <EyeOpenIcon />
+              <Eye size={16} />
               <Box ml={10}>Preview</Box>
             </Center>
           ),
@@ -23,7 +23,7 @@ function Demo() {
           value: 'code',
           label: (
             <Center>
-              <CodeIcon />
+              <Code size={16} />
               <Box ml={10}>Code</Box>
             </Center>
           ),
@@ -32,7 +32,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center>
-              <ExternalLinkIcon />
+              <ExternalLink size={16} />
               <Box ml={10}>Export</Box>
             </Center>
           ),
@@ -52,7 +52,7 @@ function Demo() {
             value: 'preview',
             label: (
               <Center>
-                <EyeOpenIcon />
+                <Eye size={16} />
                 <Box ml={10}>Preview</Box>
               </Center>
             ),
@@ -61,7 +61,7 @@ function Demo() {
             value: 'code',
             label: (
               <Center>
-                <CodeIcon />
+                <Code size={16} />
                 <Box ml={10}>Code</Box>
               </Center>
             ),
@@ -70,7 +70,7 @@ function Demo() {
             value: 'export',
             label: (
               <Center>
-                <ExternalLinkIcon />
+                <ExternalLink size={16} />
                 <Box ml={10}>Export</Box>
               </Center>
             ),

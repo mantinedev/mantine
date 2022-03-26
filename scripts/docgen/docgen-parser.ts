@@ -8,6 +8,7 @@ const EXCLUDE_PROPS = [
   'key',
   'ref',
   'style',
+  'sx',
   'm',
   'mx',
   'my',
@@ -15,7 +16,13 @@ const EXCLUDE_PROPS = [
   'ml',
   'mr',
   'mb',
-  'sx',
+  'p',
+  'px',
+  'py',
+  'pt',
+  'pl',
+  'pr',
+  'pb',
 ];
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {

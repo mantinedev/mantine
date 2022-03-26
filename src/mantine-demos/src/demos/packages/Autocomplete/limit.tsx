@@ -2,12 +2,18 @@ import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
-<Autocomplete
-  label="Only 2 options at a time"
-  placeholder="Your favorite framework"
-  limit={2}
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-/>
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Autocomplete
+      label="Only 2 options at a time"
+      placeholder="Your favorite framework"
+      limit={2}
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+    />
+  );
+}
 `;
 
 function Demo() {

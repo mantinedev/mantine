@@ -20,7 +20,7 @@ Generated random id is saved to ref and will not change unless component is unmo
 ```tsx
 import { useId } from '@mantine/hooks';
 
-function Input({ id }) {
+function Input({ id }: { id?: string }) {
   const uuid = useId(id);
 
   return (

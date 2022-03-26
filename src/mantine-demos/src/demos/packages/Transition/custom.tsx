@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { Transition, Paper, Button, useMantineTheme } from '@mantine/core';
 
-const code = `import React, { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { Transition, Paper, Button } from '@mantine/core';
 import { useClickOutside } from '@mantine/hooks';
 

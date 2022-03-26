@@ -1,10 +1,10 @@
 import { createStyles, getSharedColorScheme, MantineColor } from '@mantine/styles';
 
-interface CodeStyles {
+export interface CodeStylesParams {
   color: MantineColor;
 }
 
-export default createStyles((theme, { color }: CodeStyles) => {
+export default createStyles((theme, { color }: CodeStylesParams) => {
   const colors = getSharedColorScheme({ theme, color, variant: 'light' });
   return {
     root: {

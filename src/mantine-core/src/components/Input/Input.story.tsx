@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES } from '@mantine/styles';
+import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
@@ -104,4 +104,14 @@ storiesOf('@mantine/core/Input/stories', module)
       })}
     </>
   ))
-  .add('Invalid toggle', () => <ValidInvalid />);
+  .add('Invalid toggle', () => <ValidInvalid />)
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ Input: { variant: 'filled', size: 'xl' } }}>
+      <Input placeholder="Default props" />
+    </MantineProvider>
+  ))
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 'xl' }}>
+      <Input placeholder="Default radius" />
+    </MantineProvider>
+  ));

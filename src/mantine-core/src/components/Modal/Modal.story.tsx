@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
+import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
 import { Select } from '../Select/Select';
@@ -42,6 +43,7 @@ function WrappedModal(
 }
 
 storiesOf('@mantine/core/Modal/stories', module)
+  .add('Without portal', () => <WrappedModal withinPortal={false}>test</WrappedModal>)
   .add('Content overflow', () => (
     <WrappedModal title="This title is so large that there is no space to fit it all on single line and it will wrap on the second one or may be even on the third one">
       IDecidedToPutSoMuchUnbreakableContentInsideModalSoThatItWillOverflow
@@ -84,4 +86,9 @@ storiesOf('@mantine/core/Modal/stories', module)
         )}
       </>
     );
-  });
+  })
+  .add('Default radius on MantineProvider', () => (
+    <MantineProvider theme={{ defaultRadius: 0 }} inherit>
+      <WrappedModal title="Modal with default radius">default radius</WrappedModal>
+    </MantineProvider>
+  ));

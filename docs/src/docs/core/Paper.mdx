@@ -27,13 +27,8 @@ background with shadow, border-radius and padding from theme.
 You can use predefined shadows defined in [theme](/theming/extend-theme/#spacing-radius-and-shadows) or your own:
 
 ```tsx
-<Paper shadow="xs">
-  Paper with predefined shadow from theme
-</Paper>
-
-<Paper shadow="13px 18px 25px #e5e5e5, 1px 3px 3px #e5e5e5, -1px 3px 3px #e5e5e5">
-  Paper with custom shadow
-</Paper>
+<Paper shadow="xs" />
+<Paper shadow="13px 18px 25px #e5e5e5, 1px 3px 3px #e5e5e5, -1px 3px 3px #e5e5e5" />
 ```
 
 ## Padding
@@ -42,8 +37,8 @@ Paper has predefined padding: xs, sm, md, lg, xl defined in [theme.spacing](/the
 Alternatively, you can use a number to set padding in px:
 
 ```tsx
-<Paper padding="sm" /> // -> theme predefined small spacing
-<Paper padding={20} /> // -> { padding: '20px' }
+<Paper p="sm" /> // -> theme predefined small spacing
+<Paper p={20} /> // -> { padding: '20px' }
 ```
 
 ## Radius
@@ -65,7 +60,7 @@ import { useRef } from 'react';
 import { Paper } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>();
   return <Paper ref={ref} />;
 }
 ```

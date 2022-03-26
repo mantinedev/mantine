@@ -66,9 +66,10 @@ You can get hours input ref with `ref` prop:
 
 ```tsx
 import { useRef } from 'react';
+import { TimeInput } from '@mantine/dates';
 
 function Demo() {
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>();
   return <TimeInput ref={inputRef} />;
 }
 ```

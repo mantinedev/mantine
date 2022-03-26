@@ -11,7 +11,7 @@ describe('@mantine/core/RingProgress/get-curve-props', () => {
         offset: 20,
         root: false,
       })
-    ).toEqual({
+    ).toStrictEqual({
       cx: 175,
       cy: 175,
       r: 145.5,
@@ -30,7 +30,7 @@ describe('@mantine/core/RingProgress/get-curve-props', () => {
         offset: 20,
         root: true,
       })
-    ).toEqual({
+    ).toStrictEqual({
       cx: 175,
       cy: 175,
       r: 145.5,

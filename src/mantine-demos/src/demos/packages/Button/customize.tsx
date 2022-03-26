@@ -1,34 +1,41 @@
 import React from 'react';
-import { TwitterLogoIcon } from '@modulz/radix-icons';
+import { BrandTwitter } from 'tabler-icons-react';
 import { Button, Group } from '@mantine/core';
 
 const code = `
-<Button
-  component="a"
-  target="_blank"
-  rel="noopener noreferrer"
-  href="https://twitter.com/mantinedev"
-  leftIcon={<TwitterLogoIcon width={18} height={18} />}
-  styles={(theme) => ({
-    root: {
-      backgroundColor: '#00acee',
-      border: 0,
-      height: 42,
-      paddingLeft: 20,
-      paddingRight: 20,
+import { Button } from '@mantine/core';
+import { BrandTwitter } from 'tabler-icons-react';
 
-      '&:hover': {
-        backgroundColor: theme.fn.darken('#00acee', 0.05),
-      },
-    },
+function Demo() {
+  return (
+    <Button
+      component="a"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://twitter.com/mantinedev"
+      leftIcon={<BrandTwitter size={18} />}
+      styles={(theme) => ({
+        root: {
+          backgroundColor: '#00acee',
+          border: 0,
+          height: 42,
+          paddingLeft: 20,
+          paddingRight: 20,
 
-    leftIcon: {
-      marginRight: 15,
-    },
-  })}
->
-  Follow on Twitter
-</Button>
+          '&:hover': {
+            backgroundColor: theme.fn.darken('#00acee', 0.05),
+          },
+        },
+
+        leftIcon: {
+          marginRight: 15,
+        },
+      })}
+    >
+      Follow on Twitter
+    </Button>
+  );
+}
 `;
 
 function Demo() {
@@ -39,7 +46,7 @@ function Demo() {
         target="_blank"
         rel="noopener noreferrer"
         href="https://twitter.com/mantinedev"
-        leftIcon={<TwitterLogoIcon width={18} height={18} />}
+        leftIcon={<BrandTwitter size={18} />}
         styles={(theme) => ({
           root: {
             backgroundColor: '#00acee',

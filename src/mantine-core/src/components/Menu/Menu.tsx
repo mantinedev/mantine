@@ -13,20 +13,22 @@ import {
   ClassNames,
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
-import { Divider } from '../Divider';
 import { Paper } from '../Paper';
-import { Text } from '../Text';
 import { ActionIcon } from '../ActionIcon';
 import { Popper, SharedPopperProps } from '../Popper';
 import { MenuIcon } from './MenuIcon';
-import { MenuItem, MenuItemType, MenuItemStylesNames } from './MenuItem/MenuItem';
-import { MenuLabel } from './MenuLabel/MenuLabel';
+import { MenuItem, MenuItemStylesNames } from './MenuItem/MenuItem';
+import { MenuLabel, MenuLabelStylesNames } from './MenuLabel/MenuLabel';
+import { MenuProvider } from './Menu.context';
 import useStyles from './Menu.styles';
 
-export type MenuStylesNames = ClassNames<typeof useStyles> | MenuItemStylesNames;
+export type MenuStylesNames =
+  | ClassNames<typeof useStyles>
+  | MenuItemStylesNames
+  | MenuLabelStylesNames;
 
 export interface MenuProps
   extends DefaultProps<MenuStylesNames>,
@@ -101,9 +103,9 @@ type MenuComponent = ForwardRefWithStaticComponents<
   { Item: typeof MenuItem; Label: typeof MenuLabel }
 >;
 
-function getNextItem(active: number, items: MenuItemType[]) {
+function getNextItem(active: number, items: HTMLButtonElement[]) {
   for (let i = active + 1; i < items.length; i += 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
+    if (!items[i].disabled) {
       return i;
     }
   }
@@ -111,9 +113,9 @@ function getNextItem(active: number, items: MenuItemType[]) {
   return active;
 }
 
-function findInitialItem(items: MenuItemType[]) {
+function findInitialItem(items: HTMLButtonElement[]) {
   for (let i = 0; i < items.length; i += 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
+    if (!items[i].disabled) {
       return i;
     }
   }
@@ -121,68 +123,86 @@ function findInitialItem(items: MenuItemType[]) {
   return -1;
 }
 
-function getPreviousItem(active: number, items: MenuItemType[]) {
+function getPreviousItem(active: number, items: HTMLButtonElement[]) {
   for (let i = active - 1; i >= 0; i -= 1) {
-    if (!items[i].props.disabled && items[i].type === MenuItem) {
+    if (!items[i].disabled) {
       return i;
     }
   }
 
-  if (!items[active] || items[active].type !== MenuItem) {
+  if (!items[active]) {
     return findInitialItem(items);
   }
 
   return active;
 }
 
+const defaultProps: Partial<MenuProps> = {
+  control: defaultControl,
+  closeOnItemClick: true,
+  transitionDuration: 150,
+  size: 'md',
+  shadow: 'md',
+  position: 'bottom',
+  placement: 'start',
+  gutter: 5,
+  withArrow: false,
+  transition: 'pop-top-left',
+  controlRefProp: 'ref',
+  trigger: 'click',
+  radius: 'sm',
+  delay: 100,
+  zIndex: getDefaultZIndex('popover'),
+  withinPortal: true,
+  trapFocus: true,
+  closeOnScroll: false,
+  clickOutsideEvents: ['mousedown', 'touchstart'],
+};
+
 export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
-  (
-    {
-      control = defaultControl,
+  (props: MenuProps, ref) => {
+    const {
+      control,
       children,
       onClose,
       onOpen,
       opened,
       menuId,
-      closeOnItemClick = true,
-      transitionDuration = 250,
-      size = 'md',
-      shadow = 'md',
-      position = 'bottom',
-      placement = 'start',
-      gutter = 5,
-      withArrow = false,
-      transition = 'pop-top-left',
+      closeOnItemClick,
+      transitionDuration,
+      size,
+      shadow,
+      position,
+      placement,
+      gutter,
+      withArrow,
+      transition,
       transitionTimingFunction,
       menuButtonLabel,
-      controlRefProp = 'ref',
-      trigger = 'click',
-      radius = 'sm',
-      delay = 100,
-      zIndex = getDefaultZIndex('popover'),
-      withinPortal = true,
-      trapFocus = true,
+      controlRefProp,
+      trigger,
+      radius,
+      delay,
+      zIndex,
+      withinPortal,
+      trapFocus,
       classNames,
       styles,
-      closeOnScroll = false,
+      closeOnScroll,
       onMouseLeave,
       onMouseEnter,
       onChange,
       className,
       sx,
-      clickOutsideEvents = ['mouseup', 'touchstart'],
+      clickOutsideEvents,
       ...others
-    }: MenuProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Menu', defaultProps, props);
     const [hovered, setHovered] = useState(-1);
-    const buttonsRefs = useRef<Record<string, HTMLButtonElement>>({});
-    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'Menu' });
+    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Menu' });
     const delayTimeout = useRef<number>();
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement>(null);
     const [wrapperElement, setWrapperElement] = useState<HTMLDivElement>(null);
     const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-    const items = filterChildrenByType(children, [MenuItem, MenuLabel, Divider]);
     const uuid = useUuid(menuId);
 
     const focusReference = () => window.setTimeout(() => referenceElement?.focus(), 0);
@@ -245,24 +265,28 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       window.clearTimeout(delayTimeout.current);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
       if (_opened) {
+        const elements = Array.from(
+          dropdownElement.querySelectorAll<HTMLButtonElement>('.mantine-Menu-item')
+        );
+
         if (event.nativeEvent.code === 'Tab' && trapFocus) {
           event.preventDefault();
         }
 
         if (event.nativeEvent.code === 'ArrowDown') {
           event.preventDefault();
-          const prevIndex = getNextItem(hovered, items);
+          const prevIndex = getNextItem(hovered, elements);
           setHovered(prevIndex);
-          buttonsRefs.current[prevIndex].focus();
+          elements[prevIndex].focus();
         }
 
         if (event.nativeEvent.code === 'ArrowUp') {
           event.preventDefault();
-          const prevIndex = getPreviousItem(hovered, items);
+          const prevIndex = getPreviousItem(hovered, elements);
           setHovered(prevIndex);
-          buttonsRefs.current[prevIndex].focus();
+          elements[prevIndex].focus();
         }
 
         if (event.nativeEvent.code === 'Escape') {
@@ -288,95 +312,66 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
       onKeyDown: handleKeyDown,
     });
 
-    const content = items.map((item, index) => {
-      if (item.type === MenuItem) {
-        return (
-          <MenuItem<'button'>
-            {...item.props}
-            key={index}
-            hovered={hovered === index}
-            onHover={() => setHovered(index)}
-            radius={radius}
-            onMouseLeave={() => setHovered(-1)}
-            onKeyDown={handleKeyDown}
-            styles={styles}
-            classNames={classNames}
-            onClick={(event) => {
-              if (closeOnItemClick) {
-                handleClose();
-                trigger === 'click' && focusReference();
-              }
-
-              if (typeof item.props.onClick === 'function') {
-                item.props.onClick(event);
-              }
-            }}
-            ref={(node) => {
-              buttonsRefs.current[index] = node;
-            }}
-          />
-        );
+    const handleItemClick = () => {
+      if (closeOnItemClick) {
+        handleClose();
+        trigger === 'click' && focusReference();
       }
-
-      if (item.type === MenuLabel) {
-        return <Text key={index} className={classes.label} {...(item.props as any)} />;
-      }
-
-      if (item.type === Divider) {
-        return (
-          <Divider
-            variant="solid"
-            className={classes.divider}
-            my={theme.spacing.xs / 2}
-            key={index}
-          />
-        );
-      }
-
-      return null;
-    });
+    };
 
     return (
-      <Box
-        ref={setWrapperElement}
-        onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleMouseEnter}
-        className={cx(classes.root, className)}
-        sx={sx}
-        {...others}
+      <MenuProvider
+        value={{
+          hovered,
+          radius,
+          styles,
+          classNames,
+          onItemHover: setHovered,
+          onItemKeyDown: handleKeyDown,
+          onItemClick: handleItemClick,
+        }}
       >
-        {menuControl}
-
-        <Popper
-          referenceElement={referenceElement}
-          transitionDuration={transitionDuration}
-          transitionTimingFunction={transitionTimingFunction}
-          transition={transition}
-          mounted={_opened}
-          position={position}
-          placement={placement}
-          gutter={gutter}
-          withArrow={withArrow}
-          arrowSize={3}
-          zIndex={zIndex}
-          arrowClassName={classes.arrow}
-          withinPortal={withinPortal}
+        <Box
+          ref={setWrapperElement}
+          onMouseLeave={handleMouseLeave}
+          onMouseEnter={handleMouseEnter}
+          className={cx(classes.root, className)}
+          sx={sx}
+          {...others}
         >
-          <Paper
-            shadow={shadow}
-            className={classes.body}
-            role="menu"
-            aria-orientation="vertical"
-            radius={radius}
-            onMouseLeave={() => setHovered(-1)}
-            ref={setDropdownElement}
-            id={uuid}
-            {...others}
+          {menuControl}
+
+          <Popper
+            referenceElement={referenceElement}
+            transitionDuration={transitionDuration}
+            transitionTimingFunction={transitionTimingFunction}
+            transition={transition}
+            mounted={_opened}
+            position={position}
+            placement={placement}
+            gutter={gutter}
+            withArrow={withArrow}
+            arrowSize={3}
+            zIndex={zIndex}
+            arrowClassName={classes.arrow}
+            withinPortal={withinPortal}
           >
-            {content}
-          </Paper>
-        </Popper>
-      </Box>
+            <Paper
+              shadow={shadow}
+              className={classes.body}
+              role="menu"
+              aria-orientation="vertical"
+              radius={radius}
+              onMouseLeave={() => setHovered(-1)}
+              ref={setDropdownElement}
+              id={uuid}
+              {...others}
+            >
+              {children}
+            </Paper>
+          </Popper>
+        </Box>
+      </MenuProvider>
     );
   }
 ) as any;

@@ -17,9 +17,6 @@ import { DrawerDemos } from '@mantine/demos';
 
 ## Usage
 
-Drawer is wrapped in [Portal](/core/portal/) component,
-it can be rendered only on client as createPortal is not available during server side rendering:
-
 <Demo data={DrawerDemos.usage} />
 
 ## Position
@@ -41,29 +38,11 @@ Size cannot exceed 100% of width and 100vh of height.
 
 ```tsx
 <Drawer position="right" size="xl" /> // predefined xl width
-<Drawer position="top" size={200} /> // 200px height
+<Drawer position="top" size={200} /> // 200px width
 <Drawer position="left" size="75%" /> // 75% width
-<Drawer position="bottom" size="500vh" /> // 100vh height as max-height is 100vh
 ```
 
 <Demo data={DrawerDemos.sizes} />
-
-## Control behavior
-
-You can change drawer behavior with props:
-
-- `noOverlay` – removes overlay
-- `noFocusTrap` – removes focus trap inside drawer body
-- `noScrollLock` – disables scroll lock
-- `noCloseOnClickOutside` – do not trigger onClose for outside clicks
-- `noCloseOnEscape` – do not trigger onClose for escape key press
-
-<Demo data={DrawerDemos.behavior} />
-
-Try combining these props to achieve desired behavior.
-Note that disabling some parts will break accessibility and usability.
-
-<Demo data={DrawerDemos.configurator} />
 
 ## Change transition
 

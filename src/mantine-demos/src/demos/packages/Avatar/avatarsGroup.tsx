@@ -3,12 +3,18 @@ import { Avatar, Group, AvatarsGroup } from '@mantine/core';
 import { avatars } from './_mockdata';
 
 const code = `
-<AvatarsGroup limit={3}>
-  <Avatar src="avatar.png" component="a" href="https://github.com/rtivital" />
-  <Avatar src="avatar.png" />
-  <Avatar src="avatar.png" />
-  {/* ...other items */}
-</AvatarsGroup>
+import { Avatar, AvatarsGroup } from '@mantine/core';
+
+function Demo() {
+  return (
+    <AvatarsGroup limit={3}>
+      <Avatar src="avatar.png" component="a" href="https://github.com/rtivital" />
+      <Avatar src="avatar.png" />
+      <Avatar src="avatar.png" />
+      {/* ...other items */}
+    </AvatarsGroup>
+  );
+}
 `;
 
 function Demo() {

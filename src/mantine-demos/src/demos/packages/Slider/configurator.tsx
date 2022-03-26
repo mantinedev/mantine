@@ -19,21 +19,29 @@ function Wrapper(props: any) {
   );
 }
 
-const codeTemplate = (props: string) => `<${props.includes('range') ? 'RangeSlider' : 'Slider'}${
-  props ? `\n  ${props.replace('type="range"', '').trim()}` : '' // please don't judge, this works somehow
+const codeTemplate = (props: string) => `
+import { ${props.includes('range') ? 'RangeSlider' : 'Slider'} } from '@mantine/core';
+
+function Demo() {
+  return (
+    <${props.includes('range') ? 'RangeSlider' : 'Slider'}${
+  props ? `\n      ${props.replace('type="range"', '').trim()}` : '' // please don't judge, this works somehow
 }
-  marks={[
-    { value: 20, label: '20%' },
-    { value: 50, label: '50%' },
-    { value: 80, label: '80%' },
-  ]}
-/>`;
+      marks={[
+        { value: 20, label: '20%' },
+        { value: 50, label: '50%' },
+        { value: 80, label: '80%' },
+      ]}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'type',

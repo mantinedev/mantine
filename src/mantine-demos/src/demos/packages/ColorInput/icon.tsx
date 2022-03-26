@@ -1,21 +1,30 @@
 import React from 'react';
-import { BlendingModeIcon } from '@modulz/radix-icons';
+import { Paint } from 'tabler-icons-react';
 import { ColorInput } from '@mantine/core';
 
 const code = `
-// Remove color preview
-<ColorInput
-  label="Without preview"
-  placeholder="No color preview"
-  withPreview={false}
-/>
+import { Paint } from 'tabler-icons-react';
+import { ColorInput } from '@mantine/core';
 
-// Replace color preview with any React node
-<ColorInput
-  icon={<BlendingModeIcon />}
-  label="With icon"
-  placeholder="With icon"
-/>
+function Demo() {
+  return (
+    <>
+      {/* Remove color preview */}
+      <ColorInput
+        label="Without preview"
+        placeholder="No color preview"
+        withPreview={false}
+      />
+
+      {/* Replace color preview with any React node */}
+      <ColorInput
+        icon={<Paint size={16} />}
+        label="With icon"
+        placeholder="With icon"
+      />
+    </>
+  );
+}
 `;
 
 function Demo() {
@@ -23,12 +32,7 @@ function Demo() {
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <ColorInput label="Without preview" placeholder="No color preview" withPreview={false} />
 
-      <ColorInput
-        style={{ marginTop: 15 }}
-        icon={<BlendingModeIcon />}
-        label="With icon"
-        placeholder="With icon"
-      />
+      <ColorInput mt="md" icon={<Paint size={16} />} label="With icon" placeholder="With icon" />
     </div>
   );
 }

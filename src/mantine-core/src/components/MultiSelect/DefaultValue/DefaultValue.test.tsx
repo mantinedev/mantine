@@ -43,6 +43,6 @@ describe('@mantine/core/MultiSelect/DefaultValue', () => {
   });
 
   it('has correct displayName', () => {
-    expect(DefaultValue.displayName).toEqual('@mantine/core/MultiSelect/DefaultValue');
+    expect(DefaultValue.displayName).toStrictEqual('@mantine/core/MultiSelect/DefaultValue');
   });
 });

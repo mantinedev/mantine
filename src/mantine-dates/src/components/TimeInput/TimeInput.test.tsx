@@ -8,6 +8,7 @@ import {
   itSupportsInputIcon,
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
+  itSupportsInputWrapperProps,
 } from '@mantine/tests';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
@@ -20,6 +21,7 @@ const defaultProps: TimeInputProps = {
 
 describe('@mantine/dates/TimeInput', () => {
   itSupportsInputRightSection(TimeInput, defaultProps);
+  itSupportsInputWrapperProps(TimeInput, defaultProps, 'TimeInput');
   itSupportsInputIcon(TimeInput, defaultProps);
   itConnectsLabelAndInput(TimeInput, defaultProps);
   itSupportsFocusEvents(TimeInput, defaultProps, 'input');

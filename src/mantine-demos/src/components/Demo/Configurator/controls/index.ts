@@ -21,6 +21,7 @@ export type ControlType = keyof typeof controls;
 export interface ControlProps {
   type: ControlType;
   name: string;
+  label?: string;
   initialValue?: any;
   defaultValue?: any;
   capitalize?: boolean;

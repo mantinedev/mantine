@@ -1,10 +1,18 @@
 import React from 'react';
 import { MultiSelect } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<MultiSelect
- ${props}
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-/>`;
+const codeTemplate = (props: string) => `
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
@@ -12,7 +20,7 @@ export const configurator: MantineDemo = {
     <MultiSelect data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
   ),
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Pick all you like' },
     {

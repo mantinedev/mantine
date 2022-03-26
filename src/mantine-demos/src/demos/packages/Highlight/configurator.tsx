@@ -9,9 +9,17 @@ function Wrapper(props: HighlightProps<'div'>) {
   );
 }
 
-const codeTemplate = (props: string, children: string) => `<Highlight${props}>
-  ${children}
-</Highlight>`;
+const codeTemplate = (props: string, children: string) => `
+import { Highlight } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Highlight${props}>
+      ${children}
+    </Highlight>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

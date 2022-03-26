@@ -9,7 +9,13 @@ function Wrapper(props: LoaderProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Loader${props} />`;
+const codeTemplate = (props: string) => `
+import { Loader } from '@mantine/core';
+
+function Demo() {
+  return <Loader${props} />;
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

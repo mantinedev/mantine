@@ -2,13 +2,17 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker allowLevelChange={false} />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker allowLevelChange={false} placeholder="No level change" label="Event date" />;
+}
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="No level change" label="Event date" allowLevelChange={false} />
+      <DatePicker allowLevelChange={false} placeholder="No level change" label="Event date" />
     </div>
   );
 }

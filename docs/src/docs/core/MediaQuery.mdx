@@ -79,3 +79,15 @@ const MyButton => ({ label, className }) => <button className={className}>{label
 // Will work with MediaQuery – handle className
 const MyButton => ({ label, ...others }) => <button {...others}>{label}</button>
 ```
+
+**!important** MediaQuery will work only with React elements, strings, numbers, fragments and other parts will
+not have correct styles:
+
+```tsx
+// Invalid MediaQuery usage, do not do this
+import { MediaQuery } from '@mantine/core';
+
+function InvalidDemo() {
+  return <MediaQuery>No styles applied</MediaQuery>;
+}
+```

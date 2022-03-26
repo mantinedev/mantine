@@ -2,7 +2,7 @@ import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
   category: {
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.xl * 1.2,
   },
 
   categoryCollapsed: {
@@ -11,8 +11,7 @@ export default createStyles((theme) => ({
 
   header: {
     ...theme.fn.focusStyles(),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-    outline: 0,
+    backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
     width: `calc(100% + ${theme.spacing.md}px)`,
@@ -112,5 +111,7 @@ export default createStyles((theme) => ({
     lineHeight: 1,
     paddingTop: 4,
     color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[7],
+    letterSpacing: 0.5,
+    wordSpacing: 1,
   },
 }));

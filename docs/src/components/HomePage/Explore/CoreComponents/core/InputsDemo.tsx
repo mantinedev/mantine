@@ -77,7 +77,7 @@ export function InputsDemo() {
   const { classes } = useStyles();
 
   return (
-    <Paper className={classes.wrapper} shadow="md" padding={30} radius="md">
+    <Paper className={classes.wrapper} shadow="md" p={30} radius="md">
       <div className={classes.column}>
         <DatePicker
           label="Date picker"
@@ -87,28 +87,24 @@ export function InputsDemo() {
           inputFormat="MMMM D, YYYY"
         />
 
-        <DateRangePicker
-          label="Date range picker"
-          placeholder="Pick dates range"
-          style={{ marginTop: 15 }}
-        />
+        <DateRangePicker label="Date range picker" placeholder="Pick dates range" mt="md" />
 
         <CountriesSelect
           label="Multi select"
-          style={{ marginTop: 15 }}
+          mt="md"
           defaultValue={[]}
           styles={{ dropdown: { zIndex: 5 } }}
         />
 
-        <RadioGroup label="Radio group" style={{ marginTop: 15 }} defaultValue="react">
-          <Radio value="react">React</Radio>
-          <Radio value="svelte">Svelte</Radio>
-          <Radio value="vue">Vue</Radio>
+        <RadioGroup label="Radio group" mt="md" defaultValue="react">
+          <Radio value="react" label="React" />
+          <Radio value="svelte" label="Svelte" />
+          <Radio value="vue" label="Vue" />
         </RadioGroup>
 
-        <Checkbox style={{ marginTop: 20 }} label="Checkbox" defaultChecked />
+        <Checkbox mt={20} label="Checkbox" defaultChecked />
 
-        <Switch style={{ marginTop: 15 }} label="Switch" defaultChecked />
+        <Switch mt="md" label="Switch" defaultChecked />
       </div>
 
       <div className={classes.column}>
@@ -120,21 +116,21 @@ export function InputsDemo() {
           label="Autocomplete"
           placeholder="Your favorite library/framework"
           styles={{ dropdown: { zIndex: 4 } }}
-          style={{ marginTop: 15 }}
+          mt="md"
           data={[{ value: 'React' }, { value: 'Angular' }, { value: 'Svelte' }, { value: 'Vue' }]}
         />
 
-        <NumberInput label="Number input" defaultValue={18} style={{ marginTop: 15 }} />
+        <NumberInput label="Number input" defaultValue={18} mt="md" />
 
         <ColorInput
           label="Color input"
           defaultValue="rgba(97, 168, 255, 0.88)"
           format="rgba"
-          style={{ marginTop: 15 }}
+          mt="md"
         />
 
-        <InputWrapper labelElement="div" label="Slider and RangeSlider" style={{ marginTop: 15 }}>
-          <Slider defaultValue={40} style={{ marginTop: 10 }} />
+        <InputWrapper labelElement="div" label="Slider and RangeSlider" mt="md">
+          <Slider defaultValue={40} mt="xs" />
           <RangeSlider
             mt={10}
             step={25}

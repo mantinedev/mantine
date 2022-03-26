@@ -33,7 +33,7 @@ import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState([]);
-  return <MultiSelect value={value} onChange={setValue} />;
+  return <MultiSelect value={value} onChange={setValue} data={[]} />;
 }
 ```
 
@@ -141,51 +141,7 @@ To do so you will need to:
 
 - Add extra props to `data` objects
 - Create `filter` function which determines whether item should be added to the search results
-- Provide `itemComponent` and `valueComponent` which will consume `data` objects
-
-```tsx
-// Minimum data used in previous examples
-[
-  { value: 'react', label: 'React' },
-  { value: 'ng', label: 'Angular' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'vue', label: 'Vue' },
-];
-```
-
-You can add any other fields to your data:
-
-```tsx
-[
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
-    label: 'Bender Bending Rodríguez',
-    value: 'Bender Bending Rodríguez',
-    description: 'Fascinated with cooking',
-  },
-
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
-    label: 'Carol Miller',
-    value: 'Carol Miller',
-    description: 'One of the richest people on Earth',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
-    label: 'Homer Simpson',
-    value: 'Homer Simpson',
-    description: 'Overweight, lazy, and often ignorant',
-  },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    value: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-  },
-];
-```
-
-Based on this data shape you can create custom `filter` function and `itemComponent`:
+- Provide `itemComponent` which will consume `data` objects
 
 <Demo data={MultiSelectDemos.users} />
 
@@ -219,7 +175,7 @@ The best strategy is to use `searchable` option with `limit`:
 
 ## Animations
 
-By default dropdown animations are turned off to increase responsiveness.
+By default, dropdown animations are turned off to increase responsiveness.
 You can enable them by setting optional props:
 
 - `transition` – premade transition name or custom transition styles object, see [Transition](/core/transition/) component for all available options
@@ -264,21 +220,17 @@ Note that in this case `clearable` option will not work and will need to handle 
 
 ## Input props
 
-Component supports all props from [Input](/core/input/) and [InputWrapper](/core/input-wrapper/) components:
-
 <Demo data={MultiSelectDemos.configurator} />
 
 ## Get input ref
-
-You can get input ref by passing `ref` prop to Select component:
 
 ```tsx
 import { useRef } from 'react';
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef(null);
-  return <MultiSelect ref={ref} />;
+  const ref = useRef<HTMLInputElement>();
+  return <MultiSelect ref={ref} data={[]} />;
 }
 ```
 

@@ -97,6 +97,13 @@ You can use Button component both as `button` and `a` elements:
 
 <Demo data={ButtonDemos.component} />
 
+## Unstyled button
+
+To create custom buttons not related to Button component, use UnstyledButton component,
+it renders regular button without default browser styles and with Mantine focus styles:
+
+<Demo data={ButtonDemos.unstyled} />
+
 ## Usage with react-router and other libraries
 
 You can use Button component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
@@ -118,23 +125,17 @@ function Demo() {
 Provide type to use custom element with TypeScript:
 
 ```tsx
-// With element
-<Button<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { Button } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
-// With component
-<Button<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <>
+      <Button<'a'> component="a" href="#" />
+      <Button<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
 
 ## Get button ref
@@ -144,14 +145,7 @@ import { useRef } from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLButtonElement>();
   return <Button ref={ref} />;
 }
 ```
-
-## Unstyled button
-
-To create custom buttons not related to Button component, use UnstyledButton component,
-it renders regular button without default browser styles and with Mantine focus styles:
-
-<Demo data={ButtonDemos.unstyled} />

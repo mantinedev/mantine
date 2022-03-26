@@ -1,15 +1,12 @@
 import { createStyles, MantineNumberSize, MantineTheme, CSSObject } from '@mantine/styles';
 
-interface AppShellStyles {
+export interface AppShellStylesParams {
   padding: MantineNumberSize;
   fixed: boolean;
-  headerHeight: string;
-  navbarBreakpoints: [number, { width: string | number }][];
-  navbarWidth: string;
   navbarOffsetBreakpoint: MantineNumberSize;
 }
 
-function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObject {
+function getPositionStyles(props: AppShellStylesParams, theme: MantineTheme): CSSObject {
   const padding = theme.fn.size({ size: props.padding, sizes: theme.spacing });
   const offset = props.navbarOffsetBreakpoint
     ? theme.fn.size({ size: props.navbarOffsetBreakpoint, sizes: theme.breakpoints })
@@ -19,31 +16,19 @@ function getPositionStyles(props: AppShellStyles, theme: MantineTheme): CSSObjec
     return { padding };
   }
 
-  const queries = props.navbarBreakpoints.reduce((acc, [breakpoint, breakpointSize]) => {
-    acc[`@media (min-width: ${breakpoint + 1}px)`] = {
-      paddingLeft: `calc(${breakpointSize}px + ${padding}px)`,
-    };
-
-    return acc;
-  }, {});
-
-  if (offset) {
-    queries[`@media (max-width: ${offset}px)`] = {
-      paddingLeft: padding,
-    };
-  }
-
   return {
     minHeight: '100vh',
-    paddingTop: `calc(${props.headerHeight} + ${padding}px)`,
-    paddingLeft: `calc(${props.navbarWidth} + ${padding}px)`,
+    paddingTop: `calc(var(--mantine-header-height, 0px) + ${padding}px)`,
+    paddingLeft: `calc(var(--mantine-navbar-width, 0px) + ${padding}px)`,
     paddingRight: theme.fn.size({ size: padding, sizes: theme.spacing }),
     paddingBottom: theme.fn.size({ size: padding, sizes: theme.spacing }),
-    ...queries,
+    [`@media (max-width: ${offset}px)`]: {
+      paddingLeft: padding,
+    },
   };
 }
 
-export default createStyles((theme, props: AppShellStyles) => ({
+export default createStyles((theme, props: AppShellStylesParams) => ({
   root: {
     boxSizing: 'border-box',
   },

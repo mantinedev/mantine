@@ -2,7 +2,11 @@ import React from 'react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-<TimeInput clearable defaultValue={new Date()} />
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  return <TimeInput clearable defaultValue={new Date()} />;
+}
 `;
 
 function Demo() {

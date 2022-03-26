@@ -3,6 +3,7 @@ group: 'theming'
 title: Theme functions
 slug: /theming/functions/
 order: 3
+search: 'rgba, lighten, darken, smallerThan, gradient'
 ---
 
 # Theme functions
@@ -29,19 +30,35 @@ const useStyles = createStyles((theme) => ({
 - `sx` component prop
 
 ```tsx
-<Box sx={(theme) => ({ [theme.fn.largerThan('md')]: { color: 'red' } })} />
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme) => ({
+        [theme.fn.largerThan('md')]: { color: 'red' },
+      })}
+    />
+  );
+}
 ```
 
 - `styles` component prop
 
 ```tsx
-<Slider
-  styles={(theme) => ({
-    track: {
-      background: theme.fn.linearGradient(45, 'red', 'blue'),
-    },
-  })}
-/>
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      styles={(theme) => ({
+        track: {
+          background: theme.fn.linearGradient(45, 'red', 'blue'),
+        },
+      })}
+    />
+  );
+}
 ```
 
 - `useMantineTheme` hook
@@ -73,7 +90,11 @@ const useStyles = createStyles((theme) => ({
 
 function MyCustomButton() {
   const { classes } = useStyles();
-  return <button className={classes.myCustomButton}>My custom button</button>;
+  return (
+    <button className={classes.myCustomButton} type="button">
+      My custom button
+    </button>
+  );
 }
 ```
 

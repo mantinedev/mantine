@@ -2,7 +2,11 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker disabled />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker disabled />;
+}
 `;
 
 function Demo() {
@@ -11,7 +15,7 @@ function Demo() {
       <DatePicker label="Disabled without value" placeholder="Your birthday" disabled />
 
       <DatePicker
-        style={{ marginTop: 15 }}
+        mt="md"
         label="Disabled with value"
         placeholder="Your birthday"
         disabled

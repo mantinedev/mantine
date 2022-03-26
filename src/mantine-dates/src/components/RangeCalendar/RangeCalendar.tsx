@@ -1,5 +1,6 @@
-import React, { useState, forwardRef } from 'react';
 import dayjs from 'dayjs';
+import React, { useState, forwardRef } from 'react';
+import { useMantineDefaultProps } from '@mantine/core';
 import { isSameDate } from '../../utils';
 import { DayModifiers } from '../Month';
 import { CalendarBase, CalendarBaseProps } from '../CalendarBase/CalendarBase';
@@ -15,20 +16,25 @@ export interface RangeCalendarProps extends Omit<CalendarBaseProps, 'value' | 'o
   allowSingleDateInRange?: boolean;
 }
 
+const defaultProps: Partial<RangeCalendarProps> = {
+  __staticSelector: 'RangeCalendar',
+  allowSingleDateInRange: false,
+  amountOfMonths: 1,
+};
+
 export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
-  (
-    {
+  (props: RangeCalendarProps, ref) => {
+    const {
       value,
       onChange,
       dayStyle,
       onMouseLeave,
-      __staticSelector = 'RangeCalendar',
-      allowSingleDateInRange = false,
-      amountOfMonths = 1,
+      __staticSelector,
+      allowSingleDateInRange,
+      amountOfMonths,
       ...others
-    }: RangeCalendarProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('RangeCalendar', defaultProps, props);
+
     const [hoveredDay, setHoveredDay] = useState<Date>(null);
     const [pickedDate, setPickedDate] = useState<Date>(null);
 

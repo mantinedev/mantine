@@ -2,9 +2,11 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker
-  excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6}
-/>
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return <DatePicker excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6} />;
+}
 `;
 
 function Demo() {

@@ -2,9 +2,17 @@ import React from 'react';
 import { Divider } from '@mantine/core';
 
 const code = `
-<Divider />
-<Divider variant="dashed" />
-<Divider variant="dotted" />
+import { Divider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Divider my="sm" />
+      <Divider my="sm" variant="dashed" />
+      <Divider my="sm" variant="dotted" />
+    </>
+  );
+}
 `;
 
 function Demo() {

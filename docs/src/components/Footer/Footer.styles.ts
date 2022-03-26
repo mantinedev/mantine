@@ -57,7 +57,7 @@ export default createStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
 
-    '@media (max-width: 800px)': {
+    '@media (max-width: 1000px)': {
       flexDirection: 'column',
     },
 
@@ -69,7 +69,7 @@ export default createStyles((theme) => ({
   logoSection: {
     maxWidth: 300,
 
-    '@media (max-width: 800px)': {
+    '@media (max-width: 1000px)': {
       marginBottom: theme.spacing.xl,
     },
 
@@ -112,20 +112,6 @@ export default createStyles((theme) => ({
     },
   },
 
-  feedback: {
-    maxWidth: 260,
-    marginLeft: 80,
-
-    '@media (max-width: 1000px)': {
-      marginLeft: 40,
-    },
-  },
-
-  feedbackDescription: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
-    marginBottom: theme.spacing.sm,
-  },
-
   social: {
     display: 'flex',
 
@@ -147,13 +133,5 @@ export default createStyles((theme) => ({
         marginTop: theme.spacing.md,
       },
     },
-  },
-
-  feedbackTitle: {
-    fontSize: theme.fontSizes.lg,
-    fontWeight: 700,
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    marginBottom: theme.spacing.xs / 2,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 }));

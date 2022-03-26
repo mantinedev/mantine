@@ -15,7 +15,7 @@ describe('@mantine/notifications/use-notifications-state', () => {
     act(() => {
       hook.result.current.showNotification(TEST_NOTIFICATION);
     });
-    expect(hook.result.current.notifications).toEqual([TEST_NOTIFICATION]);
+    expect(hook.result.current.notifications).toStrictEqual([TEST_NOTIFICATION]);
   });
 
   it('returns notification id with showNotification handler', () => {
@@ -70,10 +70,10 @@ describe('@mantine/notifications/use-notifications-state', () => {
     expect(hook.result.current.notifications).toHaveLength(2);
 
     act(() => hook.result.current.hideNotification('1'));
-    expect(hook.result.current.notifications).toEqual([TEST_NOTIFICATION]);
+    expect(hook.result.current.notifications).toStrictEqual([TEST_NOTIFICATION]);
 
     act(() => hook.result.current.hideNotification(TEST_NOTIFICATION.id));
-    expect(hook.result.current.notifications).toEqual([]);
+    expect(hook.result.current.notifications).toStrictEqual([]);
   });
 
   it('updates notification with updateNotification handler', () => {
@@ -91,7 +91,7 @@ describe('@mantine/notifications/use-notifications-state', () => {
         message: 'update-test',
       })
     );
-    expect(hook.result.current.notifications).toEqual([
+    expect(hook.result.current.notifications).toStrictEqual([
       { ...TEST_NOTIFICATION, message: 'update-test' },
       { ...TEST_NOTIFICATION, id: '1' },
     ]);

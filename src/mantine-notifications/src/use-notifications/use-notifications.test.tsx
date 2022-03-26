@@ -18,12 +18,12 @@ describe('@mantine/notifications/use-notifications', () => {
 
   it('throws error if called outside of NotificationsProvider', () => {
     const hook = renderHook(() => useNotifications());
-    expect(hook.result.error).toEqual(
+    expect(hook.result.error).toStrictEqual(
       Error('@mantine/notifications: NotificationsProvider was not found in tree')
     );
   });
 
-  it('returns context value of MantineProvider', () => {
+  it('returns context value of NotificationsProvider', () => {
     const wrapper = ({ children }) => (
       <MantineProvider>
         <NotificationsProvider>{children}</NotificationsProvider>

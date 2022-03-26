@@ -10,7 +10,8 @@ import {
   MantineSize,
   ClassNames,
   CloseButton,
-  extractMargins,
+  extractSystemStyles,
+  useMantineDefaultProps,
 } from '@mantine/core';
 import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
@@ -91,16 +92,26 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
+const defaultProps: Partial<TimeInputProps> = {
+  size: 'sm',
+  withSeconds: false,
+  clearable: false,
+  format: '24',
+  timePlaceholder: '--',
+  amPmPlaceholder: 'am',
+  disabled: false,
+};
+
 export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
-  (
-    {
+  (props: TimeInputProps, ref) => {
+    const {
       required,
       label,
       error,
       description,
       className,
       style,
-      size = 'sm',
+      size,
       wrapperProps,
       classNames,
       styles,
@@ -108,26 +119,28 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       value,
       defaultValue,
       onChange,
-      withSeconds = false,
-      clearable = false,
+      withSeconds,
+      clearable,
       clearButtonLabel,
-      format = '24',
+      format,
       name,
       hoursLabel,
       minutesLabel,
       secondsLabel,
       amPmLabel,
-      timePlaceholder = '--',
-      amPmPlaceholder = 'am',
-      disabled = false,
+      timePlaceholder,
+      amPmPlaceholder,
+      disabled,
       sx,
       nextRef,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
-    }: TimeInputProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('TimeInput', defaultProps, props);
+
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useUuid(id);
 
     const hoursRef = useRef<HTMLInputElement>();
@@ -167,23 +180,29 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     };
 
     const handleHoursChange = createTimeHandler({
-      onChange: (val) => {
-        setDate({ hours: val });
+      onChange: (val, carryOver) => {
+        setDate({
+          hours: val,
+          minutes: carryOver ?? time.minutes,
+        });
       },
       min: format === '12' ? 1 : 0,
       max: format === '12' ? 12 : 23,
-      maxValue: 2,
       nextRef: minutesRef,
+      nextMax: 59,
     });
 
     const handleMinutesChange = createTimeHandler({
-      onChange: (val) => {
-        setDate({ minutes: val });
+      onChange: (val, carryOver) => {
+        setDate({
+          minutes: val,
+          seconds: carryOver ?? time.seconds,
+        });
       },
       min: 0,
       max: 59,
-      maxValue: 5,
       nextRef: withSeconds ? secondsRef : format === '12' ? amPmRef : nextRef,
+      nextMax: withSeconds ? 59 : undefined,
     });
 
     const handleSecondsChange = createTimeHandler({
@@ -192,7 +211,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       },
       min: 0,
       max: 59,
-      maxValue: 5,
       nextRef: format === '12' ? amPmRef : nextRef,
     });
 
@@ -233,7 +251,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         __staticSelector="TimeInput"
         id={uuid}
         sx={sx}
-        {...margins}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        {...systemStyles}
         {...wrapperProps}
       >
         <Input

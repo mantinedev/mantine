@@ -1,7 +1,13 @@
 import React from 'react';
 import { Select } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Select${props} />`;
+const codeTemplate = (props: string) => `
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return <Select${props} />;
+}
+`;
 
 export const flip: MantineDemo = {
   type: 'configurator',

@@ -28,13 +28,27 @@ You can change overlay opacity (from 0 to 1), color (CSS color value, not connec
 
 <Demo data={OverlayDemos.gradient} />
 
+## With blur
+
+To blur the overlay backdrop, set the `blur` prop with a number. This will set the backdrop blur in px.
+Note that blur [is not supported in Firefox](https://caniuse.com/css-backdrop-filter).
+
+<Demo data={OverlayDemos.blur} />
+
 ## Custom component
 
 You can pass custom tag or component that will be used as root element:
 
 ```tsx
+import { Overlay } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
-<Overlay component="a" href="https://mantine.dev" />
-<Overlay component={Link} to="/mantine" />
+function Demo() {
+  return (
+    <>
+      <Overlay<'a'> component="a" href="#" />
+      <Overlay<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```

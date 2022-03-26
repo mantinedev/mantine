@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { Calendar } from '../Calendar/Calendar';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
@@ -41,23 +41,39 @@ export interface DatePickerProps
   allowFreeInput?: boolean;
 }
 
+const defaultProps: Partial<DatePickerProps> = {
+  shadow: 'sm',
+  transitionDuration: 200,
+  closeCalendarOnChange: true,
+  labelFormat: 'MMMM YYYY',
+  initiallyOpened: false,
+  name: 'date',
+  size: 'sm',
+  dropdownType: 'popover',
+  clearable: true,
+  disabled: false,
+  fixOnBlur: true,
+  withinPortal: true,
+  firstDayOfWeek: 'monday',
+};
+
 export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
-  (
-    {
+  (props: DatePickerProps, ref) => {
+    const {
       value,
       onChange,
       defaultValue,
       classNames,
       styles,
-      shadow = 'sm',
+      shadow,
       locale,
       inputFormat,
-      transitionDuration = 200,
+      transitionDuration,
       transitionTimingFunction,
       nextMonthLabel,
       previousMonthLabel,
-      closeCalendarOnChange = true,
-      labelFormat = 'MMMM YYYY',
+      closeCalendarOnChange,
+      labelFormat,
       dayClassName,
       dayStyle,
       disableOutsideEvents,
@@ -65,18 +81,18 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       maxDate,
       excludeDate,
       initialMonth,
-      initiallyOpened = false,
-      name = 'date',
-      size = 'sm',
-      dropdownType = 'popover',
-      clearable = true,
-      disabled = false,
+      initiallyOpened,
+      name,
+      size,
+      dropdownType,
+      clearable,
+      disabled,
       clearButtonLabel,
-      fixOnBlur = true,
+      fixOnBlur,
       allowFreeInput,
-      withinPortal = true,
+      withinPortal,
       dateParser,
-      firstDayOfWeek = 'monday',
+      firstDayOfWeek,
       onFocus,
       onBlur,
       amountOfMonths,
@@ -87,9 +103,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       hideOutsideDates,
       hideWeekdays,
       ...others
-    }: DatePickerProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('DatePicker', defaultProps, props);
+
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
     const dateFormat = inputFormat || theme.dateFormat;

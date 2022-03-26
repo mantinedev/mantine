@@ -57,7 +57,7 @@ Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` 
 
 <Demo data={DatePickerDemos.firstDaySunday} />
 
-## Open calendal within modal
+## Open calendar within modal
 
 You can change the way calendar pop up on the page.
 Default variant is `popover`, set it to `modal` to display calendar in modal:
@@ -95,16 +95,29 @@ By default, DatePicker will try to parse date using dayjs with given `inputForma
 to change that provide `dateParser` function:
 
 ```tsx
-const dateParser = (dateString) => new Date(Date.parse(dateString));
-<DatePicker allowFreeInput dateParser={dateParser} />;
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker allowFreeInput dateParser={(dateString) => new Date(Date.parse(dateString))} />
+  );
+}
 ```
 
 `dateParser` function should always return Date object.
 If parsed date is invalid when input is blurred value will be restored to last valid value.
 
+Note that if you use the default dayjs parser, you will need to import and configure the
+`customParseFormat` dayjs plugin:
+
+```tsx
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+```
+
 ## Exclude dates
 
-To exclude dates set `excludeDates` prop with function that receives date as an argument and returns
+To exclude dates set `excludeDate` prop with function that receives date as an argument and returns
 `true` if date should be disabled. For example, to disable weekends, check if date day is 0 or 6:
 
 <Demo data={DatePickerDemos.exclude} />
@@ -204,7 +217,7 @@ import { useRef } from 'react';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>();
   return <DatePicker ref={ref} />;
 }
 ```

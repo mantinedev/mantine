@@ -17,7 +17,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
         duration: 625,
         timingFunction: 'ease',
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...transitions['slide-up'].in,
       ...transitions['slide-up'].common,
       transitionProperty: transitions['slide-up'].transitionProperty,
@@ -32,7 +32,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
         duration: 625,
         timingFunction: 'ease',
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...transitions['slide-up'].out,
       ...transitions['slide-up'].common,
       transitionProperty: transitions['slide-up'].transitionProperty,
@@ -49,7 +49,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
         duration: 625,
         timingFunction: 'ease',
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...customTransition.in,
       ...customTransition.common,
       transitionProperty: customTransition.transitionProperty,
@@ -64,7 +64,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
         duration: 625,
         timingFunction: 'ease',
       })
-    ).toEqual({
+    ).toStrictEqual({
       ...customTransition.out,
       ...customTransition.common,
       transitionProperty: customTransition.transitionProperty,

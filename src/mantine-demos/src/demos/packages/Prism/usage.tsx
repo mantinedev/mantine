@@ -24,7 +24,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return <Prism language="tsx">{demoCode.trim()}</Prism>;
+  return <Prism language="tsx">{demoCode}</Prism>;
 }
 
 export const usage: MantineDemo = {

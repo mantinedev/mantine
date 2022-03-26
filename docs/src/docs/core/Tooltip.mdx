@@ -85,10 +85,10 @@ Tooltip supports all colors defined in [theme.colors](/theming/extend-theme/#def
 
 <Demo data={TooltipDemos.colors} />
 
-## Close delay
+## Close and open delay
 
-Delay tooltip unmount on mouse leave with `delay` prop: set delay in ms.
-Delay defaults to 0 and reset if user hovers over target element before delay is expired:
+You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms.
+Both props default to 0 and reset if user moves mouse over/out of target element before delay is expired:
 
 <Demo data={TooltipDemos.delay} />
 

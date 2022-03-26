@@ -1,15 +1,22 @@
 import React from 'react';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { Search } from 'tabler-icons-react';
 import { Menu, Group } from '@mantine/core';
 import { menuItems } from './_menu-items';
 
 const code = `
-<Menu>
-  <Menu.Item disabled icon={<MagnifyingGlassIcon width={14} height={14} />}>
-    Search
-  </Menu.Item>
-  {/* ...other items */}
-</Menu>
+import { Menu } from '@mantine/core';
+import { Search } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Item disabled icon={<Search size={14} />}>
+        Search
+      </Menu.Item>
+      {/* ...other items */}
+    </Menu>
+  );
+}
 `;
 
 function Demo() {
@@ -17,7 +24,7 @@ function Demo() {
     <Group position="center">
       <Menu>
         {menuItems.slice(0, 4)}
-        <Menu.Item disabled icon={<MagnifyingGlassIcon width={14} height={14} />}>
+        <Menu.Item disabled icon={<Search size={14} />}>
           Search
         </Menu.Item>
         {menuItems.slice(5)}

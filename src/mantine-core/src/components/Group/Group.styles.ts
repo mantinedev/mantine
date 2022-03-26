@@ -3,7 +3,7 @@ import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 export type GroupPosition = 'right' | 'center' | 'left' | 'apart';
 
-interface GroupStyles {
+export interface GroupStylesParams {
   position: GroupPosition;
   noWrap: boolean;
   grow: boolean;
@@ -21,7 +21,7 @@ const POSITIONS = {
 };
 
 export default createStyles(
-  (theme, { spacing, position, noWrap, direction, grow, align, count }: GroupStyles) => ({
+  (theme, { spacing, position, noWrap, direction, grow, align, count }: GroupStylesParams) => ({
     root: {
       boxSizing: 'border-box',
       display: 'flex',

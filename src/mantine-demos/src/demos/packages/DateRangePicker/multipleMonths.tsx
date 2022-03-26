@@ -2,8 +2,16 @@ import React from 'react';
 import { DateRangePicker } from '@mantine/dates';
 
 const code = `
-<DateRangePicker amountOfMonths={2} label="2 months" />
-<DateRangePicker amountOfMonths={3} label="3 months" />
+import { DateRangePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <>
+      <DateRangePicker amountOfMonths={2} label="2 months" />
+      <DateRangePicker amountOfMonths={3} label="3 months" />
+    </>
+  );
+}
 `;
 
 function Demo() {

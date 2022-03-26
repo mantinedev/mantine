@@ -18,9 +18,17 @@ function Wrapper(props: TextProps<'div'>) {
   );
 }
 
-const codeTemplate = (props: string) => `<Text${props}>
-  {/* Text content */}
-</Text>`;
+const codeTemplate = (props: string) => `
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text${props}>
+      {/* Text content */}
+    </Text>
+  );
+}
+`;
 
 export const linesConfigurator: MantineDemo = {
   type: 'configurator',

@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   getSharedColorScheme,
@@ -8,6 +7,7 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   ClassNames,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
@@ -17,12 +17,12 @@ export type ActionIconStylesNames = ClassNames<typeof useStyles>;
 
 interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Icon rendered inside button */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Controls appearance */
   variant?: ActionIconVariant;
 
-  /** Button hover, active and icon colors from theme */
+  /** Button hover, active and icon colors from theme, defaults to gray */
   color?: MantineColor;
 
   /** Button border-radius from theme or number to set border-radius in px */
@@ -44,27 +44,33 @@ type ActionIconComponent = (<C = 'button'>(props: ActionIconProps<C>) => React.R
   displayName?: string;
 };
 
+const defaultProps: Partial<ActionIconProps<any>> = {
+  color: 'gray',
+  size: 'md',
+  variant: 'hover',
+  disabled: false,
+  loading: false,
+};
+
 export const ActionIcon: ActionIconComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
+  <C extends React.ElementType = 'button'>(props: ActionIconProps<C>, ref: PolymorphicRef<C>) => {
+    const {
       className,
-      color = 'gray',
+      color,
       children,
-      radius = 'sm',
-      size = 'md',
-      variant = 'hover',
+      radius,
+      size,
+      variant,
       disabled,
       loaderProps,
-      loading = false,
+      loading,
       component,
       styles,
       classNames,
       ...others
-    }: any,
-    ref: PolymorphicRef<C>
-  ) => {
-    const theme = useMantineTheme();
-    const { classes, cx } = useStyles(
+    } = useMantineDefaultProps('ActionIcon', defaultProps, props);
+
+    const { classes, cx, theme } = useStyles(
       { size, radius, color },
       { name: 'ActionIcon', classNames, styles }
     );

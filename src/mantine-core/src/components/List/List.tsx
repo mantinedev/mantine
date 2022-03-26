@@ -4,10 +4,11 @@ import {
   MantineNumberSize,
   ClassNames,
   ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
+import { ListContext } from './List.context';
 import useStyles from './List.styles';
 
 export type ListStylesNames = ListItemStylesNames | ClassNames<typeof useStyles>;
@@ -19,7 +20,7 @@ export interface ListProps
   children: React.ReactNode;
 
   /** List type: ol or ul */
-  type?: 'order' | 'unordered';
+  type?: 'ordered' | 'unordered';
 
   /** Include padding-left to offset list from main content */
   withPadding?: boolean;
@@ -42,48 +43,45 @@ export interface ListProps
 
 type ListComponent = ForwardRefWithStaticComponents<ListProps, { Item: typeof ListItem }>;
 
+const defaultProps: Partial<ListProps> = {
+  type: 'unordered',
+  size: 'md',
+  spacing: 0,
+};
+
 export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
-  (
-    {
+  (props: ListProps, ref) => {
+    const {
       children,
-      type = 'unordered',
-      size = 'md',
+      type,
+      size,
       listStyleType,
-      withPadding = false,
-      center = false,
-      spacing = 0,
+      withPadding,
+      center,
+      spacing,
       icon,
       className,
       styles,
       classNames,
       ...others
-    }: ListProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('List', defaultProps, props);
+
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType },
       { classNames, styles, name: 'List' }
     );
 
-    const items = filterChildrenByType(children, ListItem).map((item) =>
-      React.cloneElement(item, {
-        classNames,
-        styles,
-        spacing,
-        center,
-        icon: item.props?.icon || icon,
-      })
-    );
-
     return (
-      <Box<any>
-        component={type === 'unordered' ? 'ul' : 'ol'}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        {items}
-      </Box>
+      <ListContext.Provider value={{ classNames, styles, spacing, center, icon }}>
+        <Box<any>
+          component={type === 'unordered' ? 'ul' : 'ol'}
+          className={cx(classes.root, className)}
+          ref={ref}
+          {...others}
+        >
+          {children}
+        </Box>
+      </ListContext.Provider>
     );
   }
 ) as any;

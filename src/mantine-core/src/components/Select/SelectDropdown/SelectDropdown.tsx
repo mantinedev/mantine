@@ -117,6 +117,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       >
         <div style={{ maxHeight: maxDropdownHeight, display: 'flex' }}>
           <Paper<'div'>
+            radius="sm"
             component={(dropdownComponent || 'div') as any}
             id={`${uuid}-items`}
             aria-labelledby={`${uuid}-label`}

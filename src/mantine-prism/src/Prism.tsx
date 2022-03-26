@@ -11,6 +11,7 @@ import {
   TabProps,
   TabsProps,
   ScrollArea,
+  useMantineDefaultProps,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -32,25 +33,36 @@ type PrismComponent = ((props: PrismProps) => React.ReactElement) & {
   Tabs: typeof PrismTabs;
 };
 
+const prismDefaultProps: Partial<PrismProps> = {
+  noCopy: false,
+  copyLabel: 'Copy code',
+  copiedLabel: 'Copied',
+  withLineNumbers: false,
+  trim: true,
+  highlightLines: {},
+  scrollAreaComponent: ScrollArea,
+};
+
 export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
-  (
-    {
+  (props: PrismProps, ref) => {
+    const {
       className,
       children,
       language,
-      noCopy = false,
+      noCopy,
       classNames,
       styles,
-      copyLabel = 'Copy code',
-      copiedLabel = 'Copied',
-      withLineNumbers = false,
-      highlightLines = {},
-      scrollAreaComponent: ScrollAreaComponent = ScrollArea,
+      copyLabel,
+      copiedLabel,
+      withLineNumbers,
+      highlightLines,
+      scrollAreaComponent: ScrollAreaComponent,
       colorScheme,
+      trim,
       ...others
-    }: PrismProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Prism', prismDefaultProps, props);
+    const code = trim && typeof children === 'string' ? children.trim() : children;
+
     const theme = useMantineTheme();
     const clipboard = useClipboard();
     const { classes, cx } = useStyles(
@@ -70,11 +82,11 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
             withArrow
             arrowSize={4}
             gutter={8}
-            color={clipboard.copied ? 'teal' : undefined}
+            color={clipboard.copied ? 'teal' : 'gray'}
           >
             <ActionIcon
               aria-label={clipboard.copied ? copiedLabel : copyLabel}
-              onClick={() => clipboard.copy(children)}
+              onClick={() => clipboard.copy(code)}
             >
               <CopyIcon copied={clipboard.copied} />
             </ActionIcon>
@@ -84,7 +96,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
         <Highlight
           {...defaultProps}
           theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
-          code={children}
+          code={code}
           language={language}
         >
           {({
@@ -188,7 +200,12 @@ export interface PrismTabsProps
     Omit<TabsProps, 'classNames' | 'styles'> {}
 
 export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  ({ children, classNames, styles, ...others }: PrismTabsProps, ref) => {
+  (props: PrismTabsProps, ref) => {
+    const { children, classNames, styles, ...others } = useMantineDefaultProps(
+      'PrismTabs',
+      {},
+      props
+    );
     const { classes, cx } = useTabsStyles(null, { name: 'PrismTabs', classNames, styles });
 
     const tabs = (Children.toArray(children) as React.ReactElement[])

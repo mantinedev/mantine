@@ -33,18 +33,16 @@ export function createStyles<Key extends string = string, Params = void>(
 
     const { css, cx } = useCss();
 
-    let count = 0;
-
     function createRef(refName: string) {
-      count += 1;
-      return `mantine-ref_${refName || ''}_${count}`;
+      return `__mantine-ref-${refName || ''}`;
     }
 
     const cssObject = getCssObject(theme, params, createRef);
 
     const _styles =
       typeof options?.styles === 'function' ? options?.styles(theme) : options?.styles || {};
-    const _themeStyles = typeof themeStyles === 'function' ? themeStyles(theme) : themeStyles || {};
+    const _themeStyles =
+      typeof themeStyles === 'function' ? themeStyles(theme, params || {}) : themeStyles || {};
 
     const classes = fromEntries(
       Object.keys(cssObject).map((key) => {

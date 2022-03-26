@@ -17,9 +17,7 @@ import { CardDemos } from '@mantine/demos';
 
 ## Usage
 
-Card component is a wrapper around [Paper](/core/paper/) component
-with context styles for Card.Section component.
-Combine Card component with other Mantine components to create cards with your design requirements:
+Card component is a wrapper around [Paper](/core/paper/) component with context styles for `Card.Section` component:
 
 <Demo data={CardDemos.usage} />
 
@@ -33,7 +31,7 @@ Card.Section works the following way:
 - If it is in the middle then only left and right margins will be negative
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   {/* top, right, left margins are negative – -1 * theme.spacing.xl */}
   <Card.Section>First section</Card.Section>
 
@@ -48,10 +46,10 @@ Card.Section works the following way:
 </Card>
 ```
 
-Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for Card.Section:
+Note that Card relies on mapping direct children and you cannot use fragments or others wrappers for `Card.Section`:
 
 ```tsx
-<Card padding="xl">
+<Card p="xl">
   <div>
     <Card.Section>Won't work</Card.Section>
   </div>
@@ -85,41 +83,21 @@ function Demo() {
 To use custom component with TypeScript provide type:
 
 ```tsx
-// With element
-<Card<'a'>
-  component="a"
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+import { Card } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
-// With component
-<Card<typeof Link>
-  component={Link}
-  onClick={(event) => console.log(event)}
-  ref={(node) => {
-    window.myRef = node;
-  }}
-/>
+function Demo() {
+  return (
+    <>
+      <Card<'a'> component="a" href="#" />
+      <Card<typeof Link> component={Link} to="/hello" />
+    </>
+  );
+}
 ```
 
 ## Custom Card.Section root element
 
-Card.Section root element can be changed the same way as with Card:
+`Card.Section` root element can be changed the same way as with Card:
 
 <Demo data={CardDemos.linkSection} />
-
-## Get root element ref
-
-You can get root element ref by setting `ref` prop:
-
-```tsx
-import { useRef } from 'react';
-import { Card } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef();
-  return <Card ref={ref} />;
-}
-```

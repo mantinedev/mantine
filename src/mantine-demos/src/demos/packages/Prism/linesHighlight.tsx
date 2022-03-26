@@ -14,23 +14,29 @@ function Usage() {
 `;
 
 const code = `
+import { Prism } from '@mantine/prism';
+
 const deleted = { color: 'red', label: '-' };
 const added = { color: 'green', label: '+' };
 
-<Prism
-  language="tsx"
-  withLineNumbers
-  highlightLines={{
-    3: deleted,
-    4: deleted,
-    5: deleted,
-    7: added,
-    8: added,
-    9: added,
-  }}
->
-  {code}
-</Prism>
+function Demo() {
+  return (
+    <Prism
+      language="tsx"
+      withLineNumbers
+      highlightLines={{
+        3: deleted,
+        4: deleted,
+        5: deleted,
+        7: added,
+        8: added,
+        9: added,
+      }}
+    >
+      {/* ...code */}
+    </Prism>
+  );
+}
 `;
 
 function Demo() {
@@ -50,7 +56,7 @@ function Demo() {
         9: added,
       }}
     >
-      {demoCode.trim()}
+      {demoCode}
     </Prism>
   );
 }

@@ -43,7 +43,7 @@ function Demo() {
         width={260}
         position="bottom"
         withArrow
-        noFocusTrap
+        trapFocus={false}
       >
         <div style={{ display: 'flex' }}>
           <Image

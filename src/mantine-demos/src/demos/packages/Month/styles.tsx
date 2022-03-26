@@ -3,14 +3,22 @@ import { Group, useMantineTheme } from '@mantine/core';
 import { Month } from '@mantine/dates';
 
 const code = `
-<Month
-  month={new Date(2021, 7)}
-  dayStyle={(date) =>
-    date.getDay() === 5 && date.getDate() === 13
-      ? { backgroundColor: theme.colors.red[9], color: theme.white }
-      : null
-  }
-/>
+import { useMantineTheme } from '@mantine/core';
+import { Month } from '@mantine/dates';
+
+function Demo() {
+  const theme = useMantineTheme();
+  return (
+    <Month
+      month={new Date(2021, 7)}
+      dayStyle={(date) =>
+        date.getDay() === 5 && date.getDate() === 13
+          ? { backgroundColor: theme.colors.red[9], color: theme.white }
+          : null
+      }
+    />
+  );
+}
 `;
 
 function Demo() {

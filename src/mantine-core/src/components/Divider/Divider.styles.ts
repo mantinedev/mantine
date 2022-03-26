@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
-interface DividerStyles {
+export interface DividerStylesParams {
   size: MantineNumberSize;
   variant: 'solid' | 'dashed' | 'dotted';
   color: MantineColor;
@@ -14,7 +14,9 @@ export const sizes = {
   xl: 5,
 };
 
-export default createStyles((theme, { size, variant, color }: DividerStyles) => ({
+export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },

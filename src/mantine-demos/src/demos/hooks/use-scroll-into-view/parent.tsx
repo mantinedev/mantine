@@ -12,7 +12,7 @@ function Demo() {
   return (
     <>
       <Paper ref={scrollableRef} style={{ overflowY: 'scroll', height: 300, flex: 1 }}>
-        <Paper ref={targetRef}>Scroll me into view<</Paper>
+        <Paper ref={targetRef}>Scroll me into view</Paper>
       </Paper>
 
       <Button onClick={() => scrollIntoView()}>Scroll to target</Button>
@@ -35,7 +35,7 @@ function Demo() {
         <div style={{ paddingTop: 260, paddingBottom: 450 }}>
           <Paper
             ref={targetRef}
-            padding="xl"
+            p="xl"
             style={{
               backgroundColor:
                 theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2],

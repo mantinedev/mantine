@@ -1,9 +1,21 @@
 import React from 'react';
-import { ClockIcon } from '@modulz/radix-icons';
+import { Clock } from 'tabler-icons-react';
 import { TimeInput } from '@mantine/dates';
 
 const code = `
-<TimeInput icon={<ClockIcon />} />
+import { TimeInput } from '@mantine/dates';
+import { Clock } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <TimeInput
+      label="Pick time"
+      placeholder="Pick time"
+      icon={<Clock size={16} />}
+      defaultValue={new Date()}
+    />
+  );
+}
 `;
 
 function Demo() {
@@ -12,7 +24,7 @@ function Demo() {
       <TimeInput
         label="Pick time"
         placeholder="Pick time"
-        icon={<ClockIcon />}
+        icon={<Clock size={16} />}
         defaultValue={new Date()}
       />
     </div>

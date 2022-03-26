@@ -2,7 +2,15 @@ import React from 'react';
 import { Anchor } from '@mantine/core';
 
 const code = `
-<Anchor href="https://mantine.dev/" target="_blank">Mantine docs</Anchor>
+import { Anchor } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Anchor href="https://mantine.dev/" target="_blank">
+      Mantine docs
+    </Anchor>
+  );
+}
 `;
 
 function Demo() {

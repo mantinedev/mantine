@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text, Button } from '@mantine/core';
-import { CodeDemo } from '../../../components/Demo/Demo';
 
-const code = `import { useState } from 'react';
+const code = `
+import { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { TextInput, Text, Button } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   const [value, setValue] = useState('');
   const [debounced, cancel] = useDebouncedValue(value, 1000);
 
@@ -27,14 +27,15 @@ export function Demo() {
       <Text>Debounced value: {debounced}</Text>
     </>
   );
-}`;
+}
+`;
 
-export function UseDebouncedValueCancelDemo() {
+function Demo() {
   const [value, setValue] = useState('');
   const [debounced, cancel] = useDebouncedValue(value, 1000);
 
   return (
-    <CodeDemo code={code} language="tsx">
+    <>
       <div
         style={{
           display: 'flex',
@@ -70,6 +71,12 @@ export function UseDebouncedValueCancelDemo() {
           {debounced.trim() || '[empty string]'}
         </Text>
       </div>
-    </CodeDemo>
+    </>
   );
 }
+
+export const useDebouncedValueCancel: MantineDemo = {
+  type: 'demo',
+  component: Demo,
+  code,
+};

@@ -1,5 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ForwardRefWithStaticComponents } from '@mantine/styles';
+import {
+  DefaultProps,
+  ForwardRefWithStaticComponents,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { useUuid, mergeRefs } from '@mantine/hooks';
 import { Box } from '../Box';
 import { filterChildrenByType } from '../../utils';
@@ -29,10 +33,10 @@ export interface AccordionProps
   /** onChange handler for controlled component */
   onChange?(state: AccordionState): void;
 
-  /** Allow multiple items to be opened at the same time */
+  /** Allow multiple items to be opened at the same time, defaults to false */
   multiple?: boolean;
 
-  /** Open/close item transition duration in ms */
+  /** Open/close item transition duration in ms, defaults to 200 */
   transitionDuration?: number;
 
   /** Used to connect accordion items controls to related content */
@@ -41,19 +45,19 @@ export interface AccordionProps
   /** Replace icon on all items */
   icon?: React.ReactNode;
 
-  /** Should icon rotation be disabled */
+  /** Should icon rotation be disabled, defaults to false */
   disableIconRotation?: boolean;
 
-  /** Change icon position: left or right */
+  /** Change icon position: left or right, defaults to 'left' */
   iconPosition?: AccordionIconPosition;
 
-  /** Should icon be offset with padding, applicable only when iconPosition is right */
+  /** Should icon be offset with padding, applicable only when iconPosition is right, defaults to true */
   offsetIcon?: boolean;
 
-  /** Icon width in px */
+  /** Icon width in px, defaults to 24 */
   iconSize?: number;
 
-  /** Heading level used for items */
+  /** Heading level used for items, defaults to 3 */
   order?: 2 | 3 | 4 | 5 | 6;
 }
 
@@ -62,29 +66,38 @@ type AccordionComponent = ForwardRefWithStaticComponents<
   { Item: typeof AccordionItem }
 >;
 
+const defaultProps: Partial<AccordionProps> = {
+  initialItem: -1,
+  multiple: false,
+  disableIconRotation: false,
+  transitionDuration: 200,
+  iconPosition: 'left',
+  offsetIcon: true,
+  iconSize: 24,
+  order: 3,
+};
+
 export const Accordion: AccordionComponent = forwardRef<HTMLDivElement, AccordionProps>(
-  (
-    {
+  (props: AccordionProps, ref) => {
+    const {
       children,
-      initialItem = -1,
+      initialItem,
       initialState,
       state,
       onChange,
-      multiple = false,
-      disableIconRotation = false,
-      transitionDuration = 200,
-      iconPosition = 'left',
-      offsetIcon = true,
-      iconSize = 24,
-      order = 3,
+      multiple,
+      disableIconRotation,
+      transitionDuration,
+      iconPosition,
+      offsetIcon,
+      iconSize,
+      order,
       icon,
       classNames,
       styles,
       id,
       ...others
-    }: AccordionProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('Accordion', defaultProps, props);
     const uuid = useUuid(id);
     const items = filterChildrenByType(children, AccordionItem);
 

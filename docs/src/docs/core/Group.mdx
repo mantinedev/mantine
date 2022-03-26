@@ -43,3 +43,28 @@ const MyButton = ({ label, className }) => <button className={className}>{label}
 // Will work with Group – handle className
 const MyButton = ({ label, ...others }) => <button {...others}>{label}</button>;
 ```
+
+**!important** Group will work only with React elements, strings, numbers, fragments and other parts will
+not have correct styles:
+
+```tsx
+// Invalid Group usage, do not do this
+import { Group } from '@mantine/core';
+
+function InvalidDemo() {
+  return (
+    <Group>
+      First string
+      <>
+        <div>element inside fragment</div>
+      </>
+      {20}
+    </Group>
+  );
+}
+```
+
+## Browser support
+
+Group uses [flexbox gap](https://caniuse.com/flexbox-gap) to add spacing between children.
+in older browsers Group children will not have spacing.

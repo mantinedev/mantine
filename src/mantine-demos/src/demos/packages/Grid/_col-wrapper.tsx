@@ -1,17 +1,12 @@
 import React from 'react';
-import { Col, ColProps, Text, useMantineTheme } from '@mantine/core';
+import { Col, ColProps, Text, useMantineTheme, Box } from '@mantine/core';
 
 export function ColWrapper(props: ColProps) {
   const theme = useMantineTheme();
   return (
-    <Col
-      {...props}
-      style={{
-        ...props.style,
-      }}
-    >
-      <div
-        style={{
+    <Col {...props}>
+      <Box
+        sx={{
           minHeight: props.style?.minHeight ? props.style.minHeight : null,
           height: '100%',
           backgroundColor:
@@ -27,7 +22,7 @@ export function ColWrapper(props: ColProps) {
         >
           {props.children}
         </Text>
-      </div>
+      </Box>
     </Col>
   );
 }

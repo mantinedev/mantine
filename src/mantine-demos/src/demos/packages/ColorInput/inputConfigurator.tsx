@@ -1,14 +1,22 @@
 import { ColorInput } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<ColorInput
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ColorInput
+     ${props}
+    />
+  );
+}
+`;
 
 export const inputConfigurator: MantineDemo = {
   type: 'configurator',
   component: ColorInput,
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Pick color' },
     {

@@ -5,6 +5,7 @@ import {
   MantineNumberSize,
   MantineColor,
   ClassNames,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Burger.styles';
@@ -24,27 +25,38 @@ export interface BurgerProps
   size?: MantineNumberSize;
 }
 
-export const Burger = forwardRef<HTMLButtonElement, BurgerProps>(
-  ({ className, opened, color, size = 'md', classNames, styles, ...others }: BurgerProps, ref) => {
-    const theme = useMantineTheme();
-    const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
-    const { classes, cx } = useStyles(
-      { color: _color, size },
-      { classNames, styles, name: 'Burger' }
-    );
+const defaultProps: Partial<BurgerProps> = {
+  size: 'md',
+};
 
-    return (
-      <Box
-        component="button"
-        type="button"
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        <div className={cx(classes.burger, { [classes.opened]: opened })} />
-      </Box>
-    );
-  }
-);
+export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerProps, ref) => {
+  const {
+    className,
+    opened,
+    color,
+    size = 'md',
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Burger', defaultProps, props);
+  const theme = useMantineTheme();
+  const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
+  const { classes, cx } = useStyles(
+    { color: _color, size },
+    { classNames, styles, name: 'Burger' }
+  );
+
+  return (
+    <Box
+      component="button"
+      type="button"
+      className={cx(classes.root, className)}
+      ref={ref}
+      {...others}
+    >
+      <div className={cx(classes.burger, { [classes.opened]: opened })} />
+    </Box>
+  );
+});
 
 Burger.displayName = '@mantine/core/Burger';

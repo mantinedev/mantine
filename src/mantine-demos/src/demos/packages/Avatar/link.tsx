@@ -3,13 +3,19 @@ import { Avatar, Group } from '@mantine/core';
 import { avatars } from './_mockdata';
 
 const code = `
-<Avatar
-  component="a"
-  href="https://github.com/rtivital"
-  target="_blank"
-  src="avatar.png"
-  alt="it's me"
-/>
+import { Avatar } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Avatar
+      component="a"
+      href="https://github.com/rtivital"
+      target="_blank"
+      src="avatar.png"
+      alt="it's me"
+    />
+  );
+}
 `;
 
 function Demo() {

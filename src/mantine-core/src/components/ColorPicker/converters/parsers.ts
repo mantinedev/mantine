@@ -64,7 +64,7 @@ function rgbaToHsva({ r, g, b, a }: RgbaColor): HsvaColor {
 }
 
 export function parseHex(color: string): HsvaColor {
-  const hex = color[0] === '#' ? color.substr(1) : color;
+  const hex = color[0] === '#' ? color.slice(1) : color;
 
   if (hex.length === 3) {
     return rgbaToHsva({
@@ -76,9 +76,9 @@ export function parseHex(color: string): HsvaColor {
   }
 
   return rgbaToHsva({
-    r: parseInt(hex.substr(0, 2), 16),
-    g: parseInt(hex.substr(2, 2), 16),
-    b: parseInt(hex.substr(4, 2), 16),
+    r: parseInt(hex.slice(0, 2), 16),
+    g: parseInt(hex.slice(2, 4), 16),
+    b: parseInt(hex.slice(4, 6), 16),
     a: 1,
   });
 }

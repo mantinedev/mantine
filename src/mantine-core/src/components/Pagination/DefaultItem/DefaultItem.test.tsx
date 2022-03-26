@@ -18,6 +18,6 @@ describe('@mantine/core/Pagination/DefaultItem', () => {
   });
 
   it('has correct displayName', () => {
-    expect(DefaultItem.displayName).toEqual('@mantine/core/Pagination/DefaultItem');
+    expect(DefaultItem.displayName).toStrictEqual('@mantine/core/Pagination/DefaultItem');
   });
 });

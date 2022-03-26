@@ -5,7 +5,7 @@ import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 const code = `
 import { useState } from 'react';
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
-import { PasswordInput, Progress, Text, Popover } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
@@ -56,7 +56,7 @@ export function PasswordStrength() {
       placement="start"
       withArrow
       styles={{ popover: { width: '100%' } }}
-      noFocusTrap
+      trapFocus={false}
       transition="pop-top-left"
       onFocusCapture={() => setPopoverOpened(true)}
       onBlurCapture={() => setPopoverOpened(false)}
@@ -127,7 +127,7 @@ function Demo() {
         opened={popoverOpened}
         position="bottom"
         placement="start"
-        noFocusTrap
+        trapFocus={false}
         transition="pop-top-left"
         onFocusCapture={() => setPopoverOpened(true)}
         onBlurCapture={() => setPopoverOpened(false)}

@@ -2,12 +2,20 @@ import React from 'react';
 import { Checkbox, Group } from '@mantine/core';
 
 const code = `
-<Checkbox checked={false} label="Default checkbox" />
-<Checkbox checked={false} indeterminate label="Indeterminate checkbox" />
-<Checkbox checked label="Checked checkbox" />
-<Checkbox disabled label="Disabled checkbox" />
-<Checkbox disabled checked label="Disabled checked checkbox" />
-<Checkbox disabled indeterminate label="Disabled indeterminate checkbox" />
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Checkbox checked={false} label="Default checkbox" />
+      <Checkbox checked={false} indeterminate label="Indeterminate checkbox" />
+      <Checkbox checked label="Checked checkbox" />
+      <Checkbox disabled label="Disabled checkbox" />
+      <Checkbox disabled checked label="Disabled checked checkbox" />
+      <Checkbox disabled indeterminate label="Disabled indeterminate checkbox" />
+    </>
+  );
+}
 `;
 
 function Demo() {

@@ -9,7 +9,13 @@ function Wrapper(props: any) {
   );
 }
 
-const codeTemplate = (props: string) => `<Pagination total={10}${props} />`;
+const codeTemplate = (props: string) => `
+import { Pagination } from '@mantine/core';
+
+function Demo() {
+  return <Pagination total={10}${props} />;
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

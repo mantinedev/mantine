@@ -1,6 +1,12 @@
 import { SegmentedControlWrapper } from './Wrapper';
 
-const codeTemplate = (props: string) => `<SegmentedControl${props} />`;
+const codeTemplate = (props: string) => `
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return <SegmentedControl${props} />;
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

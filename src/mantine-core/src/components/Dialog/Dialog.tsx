@@ -4,8 +4,9 @@ import {
   DefaultProps,
   MantineNumberSize,
   ClassNames,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../ActionIcon';
@@ -16,7 +17,7 @@ import useStyles from './Dialog.styles';
 export type DialogStylesNames = ClassNames<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames>, MantineMargin>,
+  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
     Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
@@ -54,25 +55,35 @@ export interface DialogProps
   size?: MantineNumberSize;
 }
 
-export function MantineDialog({
-  withCloseButton,
-  onClose,
-  position,
-  shadow = 'md',
-  padding = 'md',
-  children,
-  className,
-  style,
-  classNames,
-  styles,
-  opened,
-  withBorder = true,
-  size = 'md',
-  transition = 'pop-top-right',
-  transitionDuration = 200,
-  transitionTimingFunction,
-  ...others
-}: DialogProps) {
+const defaultProps: Partial<DialogProps> = {
+  shadow: 'md',
+  p: 'md',
+  withBorder: true,
+  size: 'md',
+  transition: 'pop-top-right',
+  transitionDuration: 200,
+};
+
+export function MantineDialog(props: DialogProps) {
+  const {
+    withCloseButton,
+    onClose,
+    position,
+    shadow,
+    children,
+    className,
+    style,
+    classNames,
+    styles,
+    opened,
+    withBorder,
+    size,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    ...others
+  } = useMantineDefaultProps('Dialog', defaultProps, props);
+
   const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
 
   return (
@@ -87,7 +98,6 @@ export function MantineDialog({
           className={cx(classes.root, className)}
           style={{ ...style, ...transitionStyles }}
           shadow={shadow}
-          padding={padding}
           withBorder={withBorder}
           {...others}
         >

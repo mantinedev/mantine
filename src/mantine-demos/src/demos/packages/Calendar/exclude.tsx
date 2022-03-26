@@ -3,9 +3,19 @@ import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
-<Calendar
-  excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6}
-/>
+import { useState } from 'react';
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState(null);
+  return (
+    <Calendar
+      value={value}
+      onChange={setValue}
+      excludeDate={(date) => date.getDay() === 0 || date.getDay() === 6}
+    />
+  );
+}
 `;
 
 function Demo() {

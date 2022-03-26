@@ -16,7 +16,7 @@ export function NextSteps() {
     return (
       <LinkComponent className={classes.link} key={index} {...linkProps}>
         <Group>
-          <ThemeIcon size={34} style={{ backgroundColor: item.color }}>
+          <ThemeIcon size={34} sx={{ backgroundColor: item.color }}>
             <item.icon width={22} height={22} size={22} />
           </ThemeIcon>
 
@@ -24,7 +24,7 @@ export function NextSteps() {
             {item.title}
           </Text>
         </Group>
-        <Text size="sm" color="dimmed" mt="md" style={{ lineHeight: 1.6 }}>
+        <Text size="sm" color="dimmed" mt="md" sx={{ lineHeight: 1.6 }}>
           {item.description}
         </Text>
       </LinkComponent>
@@ -33,7 +33,7 @@ export function NextSteps() {
 
   return (
     <div className={classes.wrapper}>
-      <Title order={2} style={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}>
+      <Title order={2} sx={{ color: theme.colorScheme === 'dark' ? theme.white : theme.black }}>
         Next steps
       </Title>
       <SimpleGrid cols={3} mt={15} breakpoints={[{ maxWidth: 960, cols: 1 }]}>

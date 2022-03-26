@@ -16,7 +16,7 @@ function Demo() {
         onScrollPositionChange={onScrollPositionChange}
       >
         <div style={{ width: 600 }}>
-          <Content />
+          {/* ... content */}
         </div>
       </ScrollArea>
 

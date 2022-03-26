@@ -2,7 +2,17 @@ import React from 'react';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
-<DatePicker firstDayOfWeek="sunday" />
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatePicker
+      label="Sunday as first day of week"
+      placeholder="Pick date"
+      firstDayOfWeek="sunday"
+    />
+  );
+}
 `;
 
 function Demo() {

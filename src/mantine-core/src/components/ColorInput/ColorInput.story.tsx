@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
+import { DEFAULT_THEME, MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { WithinOverlays } from '@mantine/storybook';
 import { ColorInput } from './ColorInput';
 
@@ -54,4 +54,9 @@ storiesOf('@mantine/core/ColorInput/stories', module)
         withinPortal={false}
       />
     </WithinOverlays>
+  ))
+  .add('Default props on MantineProvider', () => (
+    <MantineProvider defaultProps={{ ColorInput: { format: 'rgba' } }}>
+      <ColorInput />
+    </MantineProvider>
   ));

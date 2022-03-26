@@ -15,7 +15,7 @@ export { useIdle } from './use-idle/use-idle';
 export { useInterval } from './use-interval/use-interval';
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect';
 export { useListState } from './use-list-state/use-list-state';
-export { useLocalStorageValue } from './use-local-storage-value/use-local-storage-value';
+export { useLocalStorageValue, useLocalStorage } from './use-local-storage/use-local-storage';
 export { useMediaQuery } from './use-media-query/use-media-query';
 export { useMergedRef, mergeRefs } from './use-merged-ref/use-merged-ref';
 export { useMouse } from './use-mouse/use-mouse';
@@ -45,6 +45,8 @@ export { useOs } from './use-os/use-os';
 export { useSetState } from './use-set-state/use-set-state';
 export { useInputState } from './use-input-state/use-input-state';
 export { useEventListener } from './use-event-listener/use-event-listener';
+export { useDisclosure } from './use-disclosure/use-disclosure';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
+export type { HotkeyItem } from './use-hotkeys/use-hotkeys';

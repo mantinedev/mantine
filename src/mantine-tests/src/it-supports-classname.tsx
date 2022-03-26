@@ -1,10 +1,7 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itSupportsClassName(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>
-) {
+export function itSupportsClassName<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports className prop', async () => {
     const { container } = await renderWithAct(
       <Component {...requiredProps} className="test-class-name" />

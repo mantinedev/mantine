@@ -1,10 +1,18 @@
 import React from 'react';
 import { Autocomplete } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Autocomplete
- ${props}
-  data={['React', 'Angular', 'Svelte', 'Vue']}
-/>`;
+const codeTemplate = (props: string) => `
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Autocomplete
+     ${props}
+      data={['React', 'Angular', 'Svelte', 'Vue']}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
@@ -12,7 +20,7 @@ export const configurator: MantineDemo = {
     <Autocomplete data={['React', 'Angular', 'Svelte', 'Vue']} {...props} />
   ),
   codeTemplate,
-  configuratorProps: { multiline: true },
+  configuratorProps: { multiline: 3 },
   configurator: [
     { name: 'placeholder', type: 'string', initialValue: 'Pick one' },
     {

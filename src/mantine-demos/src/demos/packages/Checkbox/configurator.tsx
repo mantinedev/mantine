@@ -1,16 +1,24 @@
 import React from 'react';
 import { Checkbox, CheckboxProps } from '@mantine/core';
 
-const codeTemplate = (props: string) => `<Checkbox
- ${props}
-/>`;
+const codeTemplate = (props: string) => `
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Checkbox
+     ${props}
+    />
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: (props: CheckboxProps) => <Checkbox {...props} defaultChecked />,
   codeTemplate,
   configuratorProps: {
-    multiline: true,
+    multiline: 3,
   },
   configurator: [
     {

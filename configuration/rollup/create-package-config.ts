@@ -100,7 +100,7 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
     };
   }
 
-  if (config.analyze && config.format === 'umd') {
+  if (config.analyze && config.format === 'es') {
     plugins.push(
       visualizer({
         title: packageJson.name,

@@ -3,7 +3,11 @@ import { Group } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
 const code = `
-<Calendar firstDayOfWeek="sunday" />
+import { Calendar } from '@mantine/dates';
+
+function Demo() {
+  return <Calendar firstDayOfWeek="sunday" />;
+}
 `;
 
 function Demo() {

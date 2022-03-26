@@ -3,6 +3,7 @@ group: 'theming'
 title: Styles API
 slug: /theming/styles-api/
 order: 4
+search: 'Style components internals with inline styles or classNames'
 ---
 
 import {
@@ -17,11 +18,11 @@ import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/s
 
 # Styles API
 
-All Mantine components support styling of each component part with inline styles or by passing classNames.
+All Mantine components support styling of each component part with inline styles or by passing classes.
 
 ## Styling with classNames
 
-Let's say you want to make [Slider](/core/slider/) component look something like this:
+Let's say you want to make [Slider](/core/slider/) component look like this:
 
 <Demo data={SliderDemos.customize} demoProps={{ code: null }} />
 
@@ -30,7 +31,7 @@ But default slider has completely different styles:
 <Demo data={SliderDemos.configurator} configuratorProps={{ includeCode: false }} />
 
 To apply your styles to Slider component, go to "Styles API" tab under component documentation and find
-styles names table. Name column will tell you how to target specific element in component:
+styles names table. The name column will tell you how to target a specific element inside the component:
 
 <DataTable
   head={['Name', 'Static selector', 'Description']}
@@ -88,11 +89,9 @@ function MyCustomSlider() {
     <Slider
       classNames={{
         track: classes.track,
-        label: classes.label,
         mark: classes.mark,
         markFilled: classes.markFilled,
         markLabel: classes.markLabel,
-        markWrapper: classes.markWrapper,
         thumb: classes.thumb,
       }}
     />
@@ -117,7 +116,7 @@ Styles names for button component:
   ])}
 />
 
-Here extra styles are required only for root element and left icon:
+For this button, extra styles are required only for root element and left icon:
 
 <Demo data={ButtonDemos.customize} />
 
@@ -131,7 +130,7 @@ All styles defined there will be added to each component rendered inside provide
 ## Static class names
 
 Apart from `classNames` and `styles` props, each component also has static classes on each element.
-You can use them to apply your styles if you do not use css modules or just do not want to pass `classNames` prop.
+You can use them to apply your styles if you do not use CSS modules or just do not want to pass `classNames` prop.
 
 ## More examples
 

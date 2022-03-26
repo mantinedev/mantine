@@ -6,7 +6,7 @@ order: 1
 slug: /core/radio-group/
 category: 'inputs'
 description: 'Capture user feedback limited to small set of options'
-props: ['RadioGroup', 'Radio']
+props: ['RadioGroup']
 import: "import { RadioGroup, Radio } from '@mantine/core';"
 source: 'mantine-core/src/components/RadioGroup/RadioGroup.tsx'
 docs: 'core/RadioGroup.mdx'
@@ -17,20 +17,7 @@ import { RadioGroupDemos } from '@mantine/demos';
 
 ## Usage
 
-Use RadioGroup when you need to capture user feedback limited to certain options.
-If you more that 5 options consider using [Select](/core/select/) instead of RadioGroup,
-as it provides better UX for large data sets.
-
-Component supports all props from [InputWrapper](/core/input-wrapper/) component.
-
 <Demo data={RadioGroupDemos.configurator} />
-
-## Size
-
-Checkbox has 5 predefined sizes: xs, sm, md, lg, xl.
-Size defines label font-size, input width and height.
-
-<Demo data={RadioGroupDemos.sizes} />
 
 ## Controlled
 
@@ -49,32 +36,34 @@ function Demo() {
       description="This is anonymous"
       required
     >
-      <Radio value="react">React</Radio>
-      <Radio value="svelte">Svelte</Radio>
-      <Radio value="ng">Angular</Radio>
-      <Radio value="vue">Vue</Radio>
+      <Radio value="react" label="React" />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
     </RadioGroup>
   );
 }
 ```
 
-## Get input ref
+## Size
 
-You can get input ref with `ref` prop on Radio component:
+<Demo data={RadioGroupDemos.sizes} />
+
+## Get input ref
 
 ```tsx
 import { useRef } from 'react';
-import { Select } from '@mantine/core';
+import { RadioGroup, Radio } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>();
 
   return (
     <RadioGroup>
-      <Radio value="react">React</Radio>
-      <Radio value="svelte" ref={ref}>
-        Svelte
-      </Radio>
+      <Radio value="react" label="React" ref={ref} />
+      <Radio value="svelte" label="Svelte" />
+      <Radio value="ng" label="Angular" />
+      <Radio value="vue" label="Vue" />
     </RadioGroup>
   );
 }

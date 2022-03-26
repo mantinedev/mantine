@@ -2,14 +2,20 @@ import React from 'react';
 import { NumberInput } from '@mantine/core';
 
 const code = `
-<NumberInput
-  label="Number input with decimal steps"
-  defaultValue={0.05}
-  precision={2}
-  min={-1}
-  step={0.05}
-  max={1}
-/>
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NumberInput
+      label="Number input with decimal steps"
+      defaultValue={0.05}
+      precision={2}
+      min={-1}
+      step={0.05}
+      max={1}
+    />
+  );
+}
 `;
 
 function Demo() {

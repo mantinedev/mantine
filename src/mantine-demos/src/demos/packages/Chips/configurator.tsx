@@ -12,12 +12,20 @@ function Wrapper(props: ChipsProps) {
   );
 }
 
-const codeTemplate = (props: string) => `<Chips${props}>
-  <Chip value="react">React</Chip>
-  <Chip value="ng">Angular</Chip>
-  <Chip value="svelte">Svelte</Chip>
-  <Chip value="vue">Vue</Chip>
-</Chips>`;
+const codeTemplate = (props: string) => `
+import { Chips, Chip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Chips${props}>
+      <Chip value="react">React</Chip>
+      <Chip value="ng">Angular</Chip>
+      <Chip value="svelte">Svelte</Chip>
+      <Chip value="vue">Vue</Chip>
+    </Chips>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

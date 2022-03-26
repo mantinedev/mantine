@@ -6,7 +6,13 @@ import {
   useScrollIntoView,
   useUuid,
 } from '@mantine/hooks';
-import { DefaultProps, ClassNames, extractMargins, getDefaultZIndex } from '@mantine/styles';
+import {
+  DefaultProps,
+  ClassNames,
+  extractSystemStyles,
+  getDefaultZIndex,
+  useMantineDefaultProps,
+} from '@mantine/styles';
 import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
@@ -93,15 +99,39 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
+const defaultProps: Partial<MultiSelectProps> = {
+  size: 'sm',
+  valueComponent: DefaultValue,
+  itemComponent: DefaultItem,
+  transition: 'pop-top-left',
+  transitionDuration: 0,
+  maxDropdownHeight: 220,
+  shadow: 'sm',
+  searchable: false,
+  filter: defaultFilter,
+  limit: Infinity,
+  clearSearchOnChange: true,
+  clearable: false,
+  clearSearchOnBlur: false,
+  disabled: false,
+  initiallyOpened: false,
+  radius: 'sm',
+  creatable: false,
+  shouldCreate: defaultShouldCreate,
+  switchDirectionOnFlip: false,
+  zIndex: getDefaultZIndex('popover'),
+  selectOnBlur: false,
+};
+
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
-  (
-    {
+  (props: MultiSelectProps, ref) => {
+    const {
       className,
       style,
       required,
       label,
       description,
-      size = 'sm',
+      size,
       error,
       classNames,
       styles,
@@ -110,36 +140,36 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       defaultValue,
       data,
       onChange,
-      valueComponent: Value = DefaultValue,
-      itemComponent = DefaultItem,
+      valueComponent: Value,
+      itemComponent,
       id,
-      transition = 'pop-top-left',
-      transitionDuration = 0,
+      transition,
+      transitionDuration,
       transitionTimingFunction,
-      maxDropdownHeight = 220,
-      shadow = 'sm',
+      maxDropdownHeight,
+      shadow,
       nothingFound,
       onFocus,
       onBlur,
-      searchable = false,
+      searchable,
       placeholder,
-      filter = defaultFilter,
-      limit = Infinity,
-      clearSearchOnChange = true,
-      clearable = false,
-      clearSearchOnBlur = false,
+      filter,
+      limit,
+      clearSearchOnChange,
+      clearable,
+      clearSearchOnBlur,
       clearButtonLabel,
       variant,
       onSearchChange,
-      disabled = false,
-      initiallyOpened = false,
-      radius = 'sm',
+      disabled,
+      initiallyOpened,
+      radius,
       icon,
       rightSection,
       rightSectionWidth,
-      creatable = false,
+      creatable,
       getCreateLabel,
-      shouldCreate = defaultShouldCreate,
+      shouldCreate,
       onCreate,
       sx,
       dropdownComponent,
@@ -147,20 +177,22 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       onDropdownOpen,
       maxSelectedValues,
       withinPortal,
-      switchDirectionOnFlip = false,
-      zIndex = getDefaultZIndex('popover'),
-      selectOnBlur = false,
+      switchDirectionOnFlip,
+      zIndex,
+      selectOnBlur,
       name,
       dropdownPosition,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
-    }: MultiSelectProps,
-    ref
-  ) => {
+    } = useMantineDefaultProps('MultiSelect', defaultProps, props);
+
     const { classes, cx, theme } = useStyles(
       { size, invalid: !!error },
       { classNames, styles, name: 'MultiSelect' }
     );
-    const { margins, rest } = extractMargins(others);
+    const { systemStyles, rest } = extractSystemStyles(others);
     const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
@@ -261,6 +293,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     useDidUpdate(() => {
       //using greater than equal to take into account creatable type.
       if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+
+      //for controlled input scenarios
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) valuesOverflow.current = false;
+      /*preventing the dropdown opening on backspace while controlled
+      where values length is greater than maxSelectedValues. */
+      if (!!maxSelectedValues && _value.length >= maxSelectedValues) {
+        valuesOverflow.current = true;
+        setDropdownOpened(false);
+      }
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
@@ -292,6 +333,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.nativeEvent.code !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
+        return;
+      }
       const isColumn = direction === 'column';
 
       const handleNext = () => {
@@ -382,6 +426,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           if (_value.length > 0 && searchValue.length === 0) {
             setValue(_value.slice(0, -1));
             setDropdownOpened(true);
+            if (maxSelectedValues) {
+              valuesOverflow.current = false;
+            }
           }
 
           break;
@@ -430,6 +477,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       handleSearchChange('');
       setValue([]);
       inputRef.current?.focus();
+      if (maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
     };
 
     if (isCreatable && shouldCreate(searchValue, sortedData)) {
@@ -438,9 +488,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }
 
     const shouldRenderDropdown =
-      filteredData.length > 0 ||
-      isCreatable ||
-      (searchValue.length > 0 && !!nothingFound && filteredData.length === 0);
+      filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
     return (
       <InputWrapper
@@ -456,7 +504,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         styles={styles}
         __staticSelector="MultiSelect"
         sx={sx}
-        {...margins}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        {...systemStyles}
         {...wrapperProps}
       >
         <div

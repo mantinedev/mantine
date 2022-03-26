@@ -39,7 +39,7 @@ export default function CodeDemo({
   return (
     <div style={{ marginBottom: theme.spacing.xl, marginTop: theme.spacing.md }}>
       <Paper
-        padding={spacing ? 'md' : 0}
+        p={spacing ? 'md' : 0}
         className={cx(classes.demo, { [classes.withToggle]: toggle })}
         style={{
           backgroundColor:

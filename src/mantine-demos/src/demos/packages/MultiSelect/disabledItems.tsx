@@ -2,16 +2,22 @@ import React from 'react';
 import { MultiSelect } from '@mantine/core';
 
 const code = `
-<MultiSelect
-  label="MultiSelect with disabled items"
-  placeholder="Select items"
-  data={[
-    { value: 'react', label: 'React' },
-    { value: 'ng', label: 'Angular', disabled: true },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue', disabled: true },
-  ]}
-/>
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      label="MultiSelect with disabled items"
+      placeholder="Select items"
+      data={[
+        { value: 'react', label: 'React' },
+        { value: 'ng', label: 'Angular', disabled: true },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'vue', label: 'Vue', disabled: true },
+      ]}
+    />
+  );
+}
 `;
 
 export function Demo() {

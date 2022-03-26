@@ -2,7 +2,11 @@ import React from 'react';
 import { Highlight } from '@mantine/core';
 
 const code = `
-<Highlight highlight={['this', 'that']}>Highlight this and also that</Highlight>
+import { Highlight } from '@mantine/core';
+
+function Demo() {
+  return <Highlight highlight={['this', 'that']}>Highlight this and also that</Highlight>;
+}
 `;
 
 function Demo() {

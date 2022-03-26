@@ -15,7 +15,7 @@ describe('@mantine/hooks/use-id', () => {
   it('returns random id when called without arguments', () => {
     const hook1 = renderHook(() => useId());
     const hook2 = renderHook(() => useId());
-    expect(hook1.result.current).not.toEqual(hook2.result.current);
+    expect(hook1.result.current).not.toStrictEqual(hook2.result.current);
   });
 
   it('returns generated id if id was not provided', () => {

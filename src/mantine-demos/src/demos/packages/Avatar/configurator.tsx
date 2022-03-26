@@ -10,7 +10,13 @@ function Wrapper(props: AvatarProps<'div'>) {
   );
 }
 
-const codeTemplate = (props: string) => `<Avatar${props} />`;
+const codeTemplate = (props: string) => `
+import { Avatar } from '@mantine/core';
+
+function Demo() {
+  return <Avatar${props} />;
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',

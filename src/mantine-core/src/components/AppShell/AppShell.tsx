@@ -2,18 +2,19 @@ import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
-  useMantineTheme,
   ClassNames,
-  MantineMargin,
+  MantineStyleSystemSize,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import { getElementHeight, getNavbarBreakpoints, getNavbarBaseWidth } from './utils';
+import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
 export type AppShellStylesNames = ClassNames<typeof useStyles>;
 
-export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, MantineMargin> {
+export interface AppShellProps
+  extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 
@@ -36,60 +37,43 @@ export interface AppShellProps extends Omit<DefaultProps<AppShellStylesNames>, M
   navbarOffsetBreakpoint?: MantineNumberSize;
 }
 
-export const AppShell = forwardRef<HTMLDivElement, AppShellProps>(
-  (
-    {
-      children,
-      navbar,
-      header,
-      fixed = false,
-      zIndex = getDefaultZIndex('app'),
-      padding = 'md',
-      navbarOffsetBreakpoint,
-      className,
-      styles,
-      classNames,
-      ...others
-    }: AppShellProps,
-    ref
-  ) => {
-    const theme = useMantineTheme();
-    const navbarBreakpoints = getNavbarBreakpoints(navbar, theme);
-    const navbarWidth = getNavbarBaseWidth(navbar);
-    const headerHeight = getElementHeight(header);
-    const navbarHeight = getElementHeight(navbar);
-    const { classes, cx } = useStyles(
-      {
-        padding,
-        fixed,
-        navbarWidth,
-        headerHeight,
-        navbarBreakpoints,
-        navbarOffsetBreakpoint,
-      },
-      { styles, classNames, name: 'AppShell' }
-    );
-    const _header = header ? React.cloneElement(header, { fixed, zIndex }) : null;
-    const _navbar = navbar
-      ? React.cloneElement(navbar, {
-          fixed,
-          zIndex,
-          height: navbarHeight !== '0px' ? navbarHeight : `calc(100vh - ${headerHeight})`,
-          position: { top: headerHeight, left: 0 },
-        })
-      : null;
+const defaultProps: Partial<AppShellProps> = {
+  fixed: false,
+  zIndex: getDefaultZIndex('app'),
+  padding: 'md',
+};
 
-    return (
+export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShellProps, ref) => {
+  const {
+    children,
+    navbar,
+    header,
+    fixed = false,
+    zIndex = getDefaultZIndex('app'),
+    padding = 'md',
+    navbarOffsetBreakpoint,
+    className,
+    styles,
+    classNames,
+    ...others
+  } = useMantineDefaultProps('AppShell', defaultProps, props);
+  const { classes, cx } = useStyles(
+    { padding, fixed, navbarOffsetBreakpoint },
+    { styles, classNames, name: 'AppShell' }
+  );
+
+  return (
+    <AppShellProvider value={{ fixed, zIndex }}>
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {_header}
+        {header}
 
         <div className={classes.body}>
-          {_navbar}
+          {navbar}
           <main className={classes.main}>{children}</main>
         </div>
       </Box>
-    );
-  }
-);
+    </AppShellProvider>
+  );
+});
 
 AppShell.displayName = '@mantine/core/AppShell';

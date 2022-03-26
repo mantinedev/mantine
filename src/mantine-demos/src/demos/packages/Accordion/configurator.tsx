@@ -6,19 +6,27 @@ function Wrapper(props: Partial<AccordionProps>) {
   return <BaseDemo {...props} initialItem={0} />;
 }
 
-const codeTemplate = (props: string) => `<Accordion${props}>
-  <Accordion.Item label="Customization">
-    Colors, fonts, shadows and many other parts are customizable to fit your design needs
-  </Accordion.Item>
+const codeTemplate = (props: string) => `
+import { Accordion } from '@mantine/core';
 
-  <Accordion.Item label="Flexibility">
-    Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles
-  </Accordion.Item>
+function Demo() {
+  return (
+    <Accordion${props}>
+      <Accordion.Item label="Customization">
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Item>
 
-  <Accordion.Item label="No annoying focus ring">
-    With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
-  </Accordion.Item>
-</Accordion>`;
+      <Accordion.Item label="Flexibility">
+        Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles
+      </Accordion.Item>
+
+      <Accordion.Item label="No annoying focus ring">
+        With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+`;
 
 export const configurator: MantineDemo = {
   type: 'configurator',
