@@ -4,3 +4,4 @@ export { marks } from './marks';
 export { label } from './label';
 export { step } from './step';
 export { changeEnd } from './changeEnd';
+export { disabled } from './disabled';
