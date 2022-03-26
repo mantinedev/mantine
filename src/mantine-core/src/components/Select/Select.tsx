@@ -419,6 +419,34 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         break;
       }
 
+      case 'Home': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          setHovered(0);
+          scrollSelectedItemIntoView();
+        }
+        break;
+      }
+
+      case 'End': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          setHovered(filteredData.length - 1);
+          scrollSelectedItemIntoView();
+        }
+        break;
+      }
+
       case 'Escape': {
         event.preventDefault();
         setDropdownOpened(false);
