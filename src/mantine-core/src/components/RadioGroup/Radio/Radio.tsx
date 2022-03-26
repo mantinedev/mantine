@@ -34,11 +34,15 @@ export interface RadioProps
 
   /** Replace default icon */
   icon?: React.FC<React.ComponentPropsWithoutRef<'svg'>>;
+
+  /** Animation duration in ms */
+  transitionDuration?: number;
 }
 
 const defaultProps: Partial<RadioProps> = {
   __staticSelector: 'Radio',
   icon: RadioIcon,
+  transitionDuration: 100,
 };
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps, ref) => {
@@ -56,11 +60,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
     __staticSelector,
     sx,
     icon: Icon,
+    transitionDuration,
     ...others
   } = useMantineDefaultProps('Radio', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, size },
+    { color, size, transitionDuration },
     { classNames, styles, name: __staticSelector }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
