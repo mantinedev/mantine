@@ -175,7 +175,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
               style={{
                 ...styles.popper,
                 pointerEvents: 'none',
-                ...(coordinates && { top: coordinates.y, left: coordinates.x }),
+                ...(coordinates && { top: coordinates.y || 0, left: coordinates.x || 0 }),
               }}
               {...attributes.popper}
             >

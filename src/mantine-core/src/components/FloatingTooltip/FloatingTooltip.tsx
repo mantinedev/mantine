@@ -67,7 +67,6 @@ const defaultProps: Partial<FloatingTooltipProps> = {
   gutter: 5,
   color: 'gray',
   disabled: false,
-  withArrow: false,
   position: 'top',
   transition: 'pop-top-left',
   transitionDuration: 100,
@@ -129,9 +128,9 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
         case 'top':
           return { x: x - estimatedCursorSize, y: y - estimatedCursorSize };
         case 'left':
-          return { x: x - estimatedCursorSize * 2, y: y };
+          return { x: x - estimatedCursorSize * 2, y };
         case 'right':
-          return { x: x + estimatedCursorSize / 2, y: y };
+          return { x: x + estimatedCursorSize / 2, y };
         case 'bottom':
           return { x: x - estimatedCursorSize, y: y + estimatedCursorSize };
         default:
