@@ -111,7 +111,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
         ref.current.removeEventListener('touchstart', onTouchStart);
       }
     };
-  }, [ref.current, dir]);
+  }, [dir, onChange]);
 
   return { ref, active };
 }
