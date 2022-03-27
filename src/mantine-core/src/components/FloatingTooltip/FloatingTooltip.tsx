@@ -77,10 +77,6 @@ const defaultProps: Partial<FloatingTooltipProps> = {
   withinPortal: true,
 };
 
-// There's no way to get the exact size of the
-// cursor using JS however most OS's use 32x32
-const estimatedCursorSize = 32;
-
 export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
   (props: FloatingTooltipProps, ref) => {
     const {
@@ -126,7 +122,11 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
     const [referenceElement, setReferenceElement] = useState(null);
     const mergedRefs = useMergedRef(ref, setReferenceElement, mouseRef);
     const coordinates = useMemo(() => {
+      // There's no way to get the exact size of the
+      // cursor using JS, however most OS's use 32x32
+      const estimatedCursorSize = 32;
       const tooltipWidth = _tooltipRef.current?.offsetWidth || 0;
+
       switch (position) {
         case 'top':
           return { x: x - tooltipWidth / 2, y: y - estimatedCursorSize };
