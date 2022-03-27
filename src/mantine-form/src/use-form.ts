@@ -13,10 +13,10 @@ import type {
   GetInputPropsFieldType,
 } from './types';
 
-export interface UseFormInput<T, K extends keyof T> {
+export interface UseFormInput<T> {
   initialValues: T;
   initialErrors?: FormErrors;
-  validate?: FormRules<T, K>;
+  validate?: FormRules<T>;
   schema?: (values: Record<string, any>) => FormErrors;
 }
 
@@ -63,12 +63,12 @@ export interface UseFormReturnType<T> {
   ) => GetInputProps<L>;
 }
 
-export function useForm<T extends { [key: string]: any }, KK extends keyof T = string>({
+export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
   validate: rules,
   schema,
-}: UseFormInput<T, KK>): UseFormReturnType<T> {
+}: UseFormInput<T>): UseFormReturnType<T> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues] = useState(initialValues);
 
