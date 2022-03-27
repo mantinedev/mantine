@@ -118,21 +118,24 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
     );
     const openTimeoutRef = useRef<number>();
     const closeTimeoutRef = useRef<number>();
+    const _tooltipRef = useRef<HTMLDivElement>();
+    const mergedTooltipRefs = useMergedRef(_tooltipRef, tooltipRef);
     const [_opened, setOpened] = useState(false);
     const { ref: mouseRef, x, y } = useMouse();
     const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
     const [referenceElement, setReferenceElement] = useState(null);
     const mergedRefs = useMergedRef(ref, setReferenceElement, mouseRef);
     const coordinates = useMemo(() => {
+      const tooltipWidth = _tooltipRef.current?.offsetWidth || 0;
       switch (position) {
         case 'top':
-          return { x: x - estimatedCursorSize, y: y - estimatedCursorSize };
+          return { x: x - tooltipWidth / 2, y: y - estimatedCursorSize };
         case 'left':
-          return { x: x - estimatedCursorSize * 2, y };
+          return { x: x - estimatedCursorSize / 2 - tooltipWidth, y };
         case 'right':
           return { x: x + estimatedCursorSize / 2, y };
         case 'bottom':
-          return { x: x - estimatedCursorSize, y: y + estimatedCursorSize };
+          return { x: x - tooltipWidth / 2, y: y + estimatedCursorSize };
         default:
           return { x: x || 0, y: y || 0 };
       }
@@ -201,7 +204,7 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
         >
           <Box
             className={classes.body}
-            ref={tooltipRef}
+            ref={mergedTooltipRefs}
             sx={{
               whiteSpace: wrapLines ? 'normal' : 'nowrap',
               width,
