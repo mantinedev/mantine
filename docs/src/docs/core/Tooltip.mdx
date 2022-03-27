@@ -65,11 +65,13 @@ Note that, multiline tooltips may require different transitions for better UX.
 
 ## Floating
 
-A floating tooltip will always be placed on the cursor.
+A floating tooltip will always be placed on the cursor. The following props are used differently:
 
 - **position** – tooltip position relative to the cursor – top, bottom, right or left, defaults to top
 - **placement** – not available – always placed on the cursor
-- **withArrow** – not available
+- **arrow** – arrow related props are not available – includes `withArrow`, `arrowDistance`, and `arrowSize`
+- **controlled** – not able to override using the `opened` prop
+- **allowPointerEvents** – not available
 
 ```tsx
 <FloatingTooltip position="right" />

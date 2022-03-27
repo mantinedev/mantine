@@ -24,9 +24,6 @@ export interface FloatingTooltipProps
   /** Any react node that should trigger tooltip */
   children: React.ReactNode;
 
-  /** Tooltip opened state for controlled variant */
-  opened?: boolean;
-
   /** Open delay in ms, 0 to disable delay */
   openDelay?: number;
 
@@ -83,7 +80,6 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
       className,
       label,
       children,
-      opened,
       openDelay,
       closeDelay,
       gutter,
@@ -116,9 +112,9 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
     const closeTimeoutRef = useRef<number>();
     const _tooltipRef = useRef<HTMLDivElement>();
     const mergedTooltipRefs = useMergedRef(_tooltipRef, tooltipRef);
-    const [_opened, setOpened] = useState(false);
+    const [opened, setOpened] = useState(false);
     const { ref: mouseRef, x, y } = useMouse();
-    const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
+    const visible = opened && !disabled;
     const [referenceElement, setReferenceElement] = useState(null);
     const mergedRefs = useMergedRef(ref, setReferenceElement, mouseRef);
     const coordinates = useMemo(() => {
