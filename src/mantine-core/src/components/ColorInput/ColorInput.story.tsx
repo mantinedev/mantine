@@ -34,6 +34,9 @@ function ControlledInput() {
       <button type="button" onClick={() => setValue('rgba(242, 165, 201, 0.54)')}>
         Set value
       </button>
+      <button type="button" onClick={() => setValue('')}>
+        Set empty
+      </button>
     </div>
   );
 }
