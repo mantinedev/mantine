@@ -3,18 +3,15 @@ import type { FormList } from './form-list/form-list';
 
 export type FormErrors = Record<string, React.ReactNode>;
 
-export type FormRulesRecord<T, K extends keyof T = any> = Record<
-  K,
-  T[K] extends FormList<infer U>
+export type FormRulesRecord<T> = Partial<{
+  [P in keyof T]: T[P] extends FormList<infer U>
     ? {
-        [P in keyof U]?: (value: U[P], values: T) => React.ReactNode;
+        [L in keyof U]?: (value: U[L], values: T) => React.ReactNode;
       }
-    : (value: T[K], values: T) => React.ReactNode
->;
+    : (value: T[P], values: T) => React.ReactNode;
+}>;
 
-export type FormRules<T, K extends keyof T = any> =
-  | ((values: T) => FormErrors)
-  | FormRulesRecord<T, K>;
+export type FormRules<T> = ((values: T) => FormErrors) | FormRulesRecord<T>;
 
 export interface FormValidationResult {
   hasErrors: boolean;

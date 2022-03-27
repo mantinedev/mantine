@@ -4,10 +4,11 @@ import { useForm } from '../index';
 describe('@mantine/form/use-form object rules validation', () => {
   it('validates all fields with validate handler', () => {
     const hook = renderHook(() =>
-      useForm({
+      useForm<{ banana: string; orange: string; bar: number }>({
         initialValues: {
           banana: '',
           orange: '',
+          bar: 42,
         },
 
         validate: {

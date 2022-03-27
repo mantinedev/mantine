@@ -9,10 +9,7 @@ import { isFormList } from '../form-list/form-list';
 import { filterErrors } from '../filter-errors/filter-errors';
 import { validateListValues } from './validate-list-values';
 
-function validateRecordRules(
-  rules: FormRulesRecord<any, any>,
-  values: Record<string, any>
-): FormErrors {
+function validateRecordRules(rules: FormRulesRecord<any>, values: Record<string, any>): FormErrors {
   return Object.keys(rules).reduce<FormErrors>((acc, key) => {
     const rule = rules[key];
 
@@ -34,7 +31,7 @@ function getValidationResults(errors: FormErrors) {
 }
 
 export function validateValues(
-  rules: FormRules<any, any>,
+  rules: FormRules<any>,
   values: Record<string, any>
 ): FormValidationResult {
   if (rules === undefined || rules === null) {
@@ -50,7 +47,7 @@ export function validateValues(
 
 export function validateFieldValue(
   field: string,
-  rules: FormRules<any, any>,
+  rules: FormRules<any>,
   values: Record<string, any>
 ): FormFieldValidationResult {
   const results = validateValues(rules, values);
