@@ -1,13 +1,7 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  itRendersChildren,
-  itSupportsRef,
-  itSupportsSystemProps,
-  renderWithAct,
-  actAsync,
-} from '@mantine/tests';
+import { itRendersChildren, itSupportsSystemProps, renderWithAct, actAsync } from '@mantine/tests';
 import { FloatingTooltip, FloatingTooltipProps } from './FloatingTooltip';
 
 const defaultProps: FloatingTooltipProps = {
@@ -21,7 +15,7 @@ describe('@mantine/core/FloatingTooltip', () => {
   afterEach(() => jest.useRealTimers());
 
   itRendersChildren(FloatingTooltip, defaultProps);
-  itSupportsRef(FloatingTooltip, { ...defaultProps, opened: true }, HTMLDivElement, 'tooltipRef');
+
   itSupportsSystemProps({
     component: FloatingTooltip,
     props: defaultProps,
@@ -29,8 +23,20 @@ describe('@mantine/core/FloatingTooltip', () => {
     refType: HTMLDivElement,
   });
 
+  it('supports getting ref with tooltipRef prop', async () => {
+    const ref = React.createRef<typeof HTMLDivElement>();
+    await act(async () => {
+      await renderWithAct(<FloatingTooltip {...defaultProps} {...{ tooltipRef: ref as any }} />);
+      userEvent.hover(screen.getByText(/test-target/i));
+    });
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
   it('renders given label', async () => {
-    await renderWithAct(<FloatingTooltip {...defaultProps} opened />);
+    await act(async () => {
+      await renderWithAct(<FloatingTooltip {...defaultProps} />);
+      userEvent.hover(screen.getByText(/test-target/i));
+    });
     expect(screen.getByText('test-tooltip')).toBeInTheDocument();
   });
 
