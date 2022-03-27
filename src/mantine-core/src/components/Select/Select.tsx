@@ -427,8 +427,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             setDropdownOpened(true);
           }
 
-          setHovered(0);
-          scrollSelectedItemIntoView();
+          const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
+          setHovered(firstItemIndex);
+          scrollIntoView({
+            alignment: isColumn ? 'end' : 'start',
+          });
         }
         break;
       }
@@ -441,8 +444,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             setDropdownOpened(true);
           }
 
-          setHovered(filteredData.length - 1);
-          scrollSelectedItemIntoView();
+          const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
+          setHovered(lastItemIndex);
+          scrollIntoView({
+            alignment: isColumn ? 'end' : 'start',
+          });
         }
         break;
       }
