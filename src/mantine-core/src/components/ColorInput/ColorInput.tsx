@@ -139,7 +139,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       value,
       defaultValue,
       finalValue: '',
-      rule: (val) => !!val && val.trim().length > 0,
+      rule: (val) => typeof val === 'string',
       onChange,
     });
 
@@ -155,7 +155,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     };
 
     useEffect(() => {
-      if (isColorValid(_value)) {
+      if (isColorValid(_value) || _value.trim() === '') {
         setLastValidValue(_value);
       }
     }, [_value]);

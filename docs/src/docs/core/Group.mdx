@@ -34,7 +34,7 @@ const MyButton = ({ label, className }) => <button className={className}>{label}
 const MyButton = ({ label, ...others }) => <button {...others}>{label}</button>;
 ```
 
-**!important** Group will work only with React elements, strings, numbers, fragments and other parts will
+**!important** Group will work only with React elements. Strings, numbers, fragments and other parts will
 not have correct styles:
 
 ```tsx
