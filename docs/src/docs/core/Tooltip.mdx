@@ -7,13 +7,13 @@ slug: /core/tooltip/
 category: 'overlay'
 description: 'Renders tooltip at given element on mouse over or any other event'
 props: ['Tooltip']
-import: "import { Tooltip } from '@mantine/core';"
+import: "import { Tooltip, FloatingTooltip } from '@mantine/core';"
 source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
 docs: 'core/Tooltip.mdx'
 styles: ['Tooltip']
 ---
 
-import { TooltipDemos } from '@mantine/demos';
+import { TooltipDemos, FloatingTooltipDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -62,6 +62,24 @@ By default, tooltip white-space property is set to nowrap. To change that use:
 Note that, multiline tooltips may require different transitions for better UX.
 
 <Demo data={TooltipDemos.multiline} />
+
+## Floating
+
+A floating tooltip will always be placed on the cursor. The following props are used differently:
+
+- **position** – tooltip position relative to the cursor – top, bottom, right or left, defaults to top
+- **placement** – not available – always placed on the cursor
+- **arrow** – arrow related props are not available – includes `withArrow`, `arrowDistance`, and `arrowSize`
+- **controlled** – not able to override using the `opened` prop
+- **allowPointerEvents** – not available
+
+```tsx
+<FloatingTooltip position="right" />
+```
+
+All available positions:
+
+<Demo data={FloatingTooltipDemos.positions} />
 
 ## Change transition
 

@@ -41,6 +41,7 @@ export * as ContainerDemos from './demos/packages/Container';
 export * as DialogDemos from './demos/packages/Dialog';
 export * as DividerDemos from './demos/packages/Divider';
 export * as DrawerDemos from './demos/packages/Drawer';
+export * as FloatingTooltipDemos from './demos/packages/FloatingTooltip';
 export * as GridDemos from './demos/packages/Grid';
 export * as GroupDemos from './demos/packages/Group';
 export * as HighlightDemos from './demos/packages/Highlight';
