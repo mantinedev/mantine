@@ -13,15 +13,16 @@ const Target: React.FunctionComponent<any> = () => {
 };
 
 describe('@mantine/hooks/use-hover', () => {
-  render(<Target />);
-  const target = screen.getByTestId('target');
   it('changes "hovered" on mouseenter/mouseleave correctly', () => {
-    expect(target).toHaveTextContent(/false/i);
+    render(<Target />);
+    const target = screen.getByTestId('target');
+
+    expect(target).toHaveTextContent('false');
 
     fireEvent.mouseEnter(target);
-    expect(target).toHaveTextContent(/true/i);
+    expect(target).toHaveTextContent('true');
 
     fireEvent.mouseLeave(target);
-    expect(target).toHaveTextContent(/false/i);
+    expect(target).toHaveTextContent('false');
   });
 });
