@@ -41,7 +41,7 @@ export function useNotificationsEvents(ctx: NotificationsContextProps) {
     hide: (event: any) => ctx.hideNotification(event.detail),
     update: (event: any) => ctx.updateNotification(event.detail.id, event.detail),
     clean: ctx.clean,
-    cleanQuery: ctx.cleanQueue,
+    cleanQueue: ctx.cleanQueue,
   };
 
   useEffect(() => {
