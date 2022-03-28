@@ -7,3 +7,4 @@ export { transitions } from './transitions';
 export { colors } from './colors';
 export { delay } from './delay';
 export { pointerEvents } from './pointerEvents';
+export { floating } from './floating';

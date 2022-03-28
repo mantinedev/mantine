@@ -31,7 +31,6 @@ attachDemos(storiesOf('@mantine/core/Container/demos', module), demos.ContainerD
 attachDemos(storiesOf('@mantine/core/Dialog/demos', module), demos.DialogDemos);
 attachDemos(storiesOf('@mantine/core/Divider/demos', module), demos.DividerDemos);
 attachDemos(storiesOf('@mantine/core/Drawer/demos', module), demos.DrawerDemos);
-attachDemos(storiesOf('@mantine/core/FloatingTooltip/demos', module), demos.FloatingTooltipDemos);
 attachDemos(storiesOf('@mantine/core/Grid/demos', module), demos.GridDemos);
 attachDemos(storiesOf('@mantine/core/Group/demos', module), demos.GroupDemos);
 attachDemos(storiesOf('@mantine/core/Highlight/demos', module), demos.HighlightDemos);

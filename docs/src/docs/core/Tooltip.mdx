@@ -63,24 +63,6 @@ Note that, multiline tooltips may require different transitions for better UX.
 
 <Demo data={TooltipDemos.multiline} />
 
-## Floating
-
-A floating tooltip will always be placed on the cursor. The following props are used differently:
-
-- **position** – tooltip position relative to the cursor – top, bottom, right or left, defaults to top
-- **placement** – not available – always placed on the cursor
-- **arrow** – arrow related props are not available – includes `withArrow`, `arrowDistance`, and `arrowSize`
-- **controlled** – not able to override using the `opened` prop
-- **allowPointerEvents** – not available
-
-```tsx
-<FloatingTooltip position="right" />
-```
-
-All available positions:
-
-<Demo data={FloatingTooltipDemos.positions} />
-
 ## Change transition
 
 Tooltip is built with [Transition](/core/transition/) component, it supports the following props:
@@ -119,6 +101,10 @@ In this example tooltip acts more like popover –
 it is controlled and can be closed with control inside tooltip:
 
 <Demo data={TooltipDemos.pointerEvents} />
+
+## FloatingTooltip component
+
+<Demo data={TooltipDemos.floating} />
 
 ## Accessibility
 

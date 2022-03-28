@@ -18,9 +18,7 @@ import { FloatingTooltip, Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <FloatingTooltip
-     ${props}
-    >
+    <FloatingTooltip${props}>
       <Button variant="outline" color="gray" size="xl">
         With tooltip
       </Button>
@@ -29,11 +27,10 @@ function Demo() {
 }
 `;
 
-export const configurator: MantineDemo = {
+export const floating: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
-  configuratorProps: { multiline: 3 },
   configurator: [
     {
       name: 'label',
@@ -56,8 +53,8 @@ export const configurator: MantineDemo = {
         { label: 'right', value: 'right' },
         { label: 'bottom', value: 'bottom' },
       ],
-      initialValue: 'top',
-      defaultValue: 'top',
+      initialValue: 'right',
+      defaultValue: 'right',
     },
   ],
 };
