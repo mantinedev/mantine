@@ -3,7 +3,7 @@ import type { MantineStyleSystemProps } from './MantineStyleSystem';
 import type { MantineTheme } from './MantineTheme';
 import type { CSSObject } from '../../tss';
 
-type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
+export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
 
 export interface DefaultProps<T extends string = never> extends MantineStyleSystemProps {
   className?: string;

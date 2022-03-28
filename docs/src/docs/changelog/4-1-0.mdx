@@ -13,6 +13,8 @@ import { Anchor, Center } from '@mantine/core';
 
 ## @mantine/notifications improvements
 
+### Events based functions
+
 [Notifications system](https://mantine.dev/others/notifications/) functions were migrated to
 [custom events](https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events),
 they are no longer depend on context and can be called in any part of application.
@@ -27,6 +29,12 @@ Old way with `useNotifications` hook will work until version 5.0 release.
 - `cleanNotificationsQueue` – removes all notifications from queue
 
 <Demo data={NotificationsDemos.base} />
+
+### Notifications customization
+
+You can now use `sx`, `style`, `className`, `classNames` and `styles` props to customize notification styles:
+
+<Demo data={NotificationsDemos.customize} />
 
 ## classNames prop on MantineProvider
 

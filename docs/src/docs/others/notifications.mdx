@@ -95,7 +95,7 @@ import { showNotification } from '@mantine/notifications';
 // Bare minimum – message is required for all notifications
 showNotification({ message: 'Hello' });
 
-// All possible notification props
+// Most used notification props
 showNotification({
   id: 'hello-there',
   disallowClose: true,
@@ -116,6 +116,12 @@ showNotification({
 Notifications preview (`message` prop used as `children`):
 
 <Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
+
+## Customize notification styles
+
+You can use `sx`, `style`, `className` or [Styles API](/theming/styles-api/) `classNames`, `styles` props to customize notification styles:
+
+<Demo data={NotificationsDemos.customize} />
 
 ## Notifications container position
 
