@@ -1,8 +1,8 @@
-export { clearable } from './clearable';
-export { controlable } from './controlable';
-export { usage } from './usage';
-export { maxTags } from './maxTags';
-export { onlyUnique } from './onlyUnique';
-export { pasteSplit } from './pasteSplit';
-export { rightSection } from './rightSection';
-export { validationRegex } from './validationRegex';
+export { clearable } from './TagInput.demo.clearable';
+export { controlable } from './TagInput.demo.controlable';
+export { usage } from './TagInput.demo.usage';
+export { maxTags } from './TagInput.demo.maxTags';
+export { onlyUnique } from './TagInput.demo.onlyUnique';
+export { pasteSplit } from './TagInput.demo.pasteSplit';
+export { rightSection } from './TagInput.demo.rightSection';
+export { validationRegex } from './TagInput.demo.validationRegex';

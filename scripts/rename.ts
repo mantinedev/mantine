@@ -3,13 +3,13 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-const base = 'src/mantine-demos/src/demos/core';
+const base = 'src/mantine-demos/src/demos/labs';
 
 function isUppercase(str: string) {
   return str[0].toUpperCase() === str[0];
 }
 
-fs.readdirSync('src/mantine-demos/src/demos/core').forEach((component) => {
+fs.readdirSync(base).forEach((component) => {
   const folder = path.join(base, component);
   const files = fs
     .readdirSync(folder)
