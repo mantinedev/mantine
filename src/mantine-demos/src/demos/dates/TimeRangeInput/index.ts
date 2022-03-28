@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { withSeconds } from './withSeconds';
+export { usage } from './TimeRangeInput.demo.usage';
+export { withSeconds } from './TimeRangeInput.demo.withSeconds';
