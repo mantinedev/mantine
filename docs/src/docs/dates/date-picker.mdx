@@ -4,19 +4,25 @@ package: '@mantine/dates'
 title: DatePicker
 order: 1
 slug: /dates/date-picker/
-description: 'Capture date input from user'
-props: ['DatePicker']
-import: "import { DatePicker } from '@mantine/dates';"
+description: 'Capture date or dates range from user'
+props: ['DatePicker', 'DateRangePicker']
+import: "import { DatePicker, DateRangePicker } from '@mantine/dates';"
 source: 'mantine-dates/src/components/DatePicker/DatePicker.tsx'
 docs: 'dates/DatePicker.mdx'
-styles: ['DatePicker']
+styles: ['DatePicker', 'DateRangePicker']
 ---
 
-import { DatePickerDemos } from '@mantine/demos';
+import { DatePickerDemos, DateRangePickerDemos } from '@mantine/demos';
 
 ## Usage
 
+DatePicker component:
+
 <Demo data={DatePickerDemos.usage} />
+
+DateRangePicker component (supports the same props as DatePicker component):
+
+<Demo data={DateRangePickerDemos.usage} />
 
 ## Controlled
 

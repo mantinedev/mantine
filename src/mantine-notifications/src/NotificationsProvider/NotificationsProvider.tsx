@@ -118,14 +118,17 @@ export function NotificationsProvider({
           onHide={hideNotification}
           className={classes.notification}
           autoClose={autoClose}
-          sx={{
-            ...getNotificationStateStyles({
-              state,
-              positioning,
-              transitionDuration: duration,
-              maxHeight: notificationMaxHeight,
-            }),
-          }}
+          sx={[
+            {
+              ...getNotificationStateStyles({
+                state,
+                positioning,
+                transitionDuration: duration,
+                maxHeight: notificationMaxHeight,
+              }),
+            },
+            ...(Array.isArray(notification.sx) ? notification.sx : [notification.sx]),
+          ]}
         />
       )}
     </Transition>

@@ -95,7 +95,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
     return (
-      <Box ref={ref} sx={[offset, sx]} {...others}>
+      <Box ref={ref} sx={[offset, ...(Array.isArray(sx) ? sx : [sx])]} {...others}>
         {items}
       </Box>
     );

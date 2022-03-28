@@ -22,7 +22,7 @@ export const Section: SectionComponent & { displayName?: string } = forwardRef(
     <Box<any>
       component={component || 'div'}
       ref={ref}
-      sx={[{ flex: grow ? 1 : 0, boxSizing: 'border-box' }, sx]}
+      sx={[{ flex: grow ? 1 : 0, boxSizing: 'border-box' }, ...(Array.isArray(sx) ? sx : [sx])]}
       {...others}
     >
       {children}

@@ -4,19 +4,25 @@ package: '@mantine/dates'
 title: TimeInput
 order: 1
 slug: /dates/time-input/
-description: 'Capture time input from user'
-props: ['TimeInput']
-import: "import { TimeInput } from '@mantine/dates';"
+description: 'Capture time or time range from user'
+props: ['TimeInput', 'TimeRangeInput']
+import: "import { TimeInput, TimeRangeInput } from '@mantine/dates';"
 source: 'mantine-dates/src/components/TimeInput/TimeInput.tsx'
 docs: 'dates/TimeInput.mdx'
-styles: ['TimeInput']
+styles: ['TimeInput', 'TimeRangeInput']
 ---
 
-import { TimeInputDemos } from '@mantine/demos';
+import { TimeInputDemos, TimeRangeInputDemos } from '@mantine/demos';
 
 ## Usage
 
+TimeInput component:
+
 <Demo data={TimeInputDemos.usage} />
+
+TimeRangeInput component (supports the same props as TimeInput component):
+
+<Demo data={TimeRangeInputDemos.usage} />
 
 ## Controlled
 

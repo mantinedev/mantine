@@ -41,6 +41,9 @@ export interface SharedPopperProps {
 
   /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
   transitionTimingFunction?: string;
+
+  /** Exact coordinates where to position popper on page */
+  coordinates?: { x: number; y: number };
 }
 
 export interface PopperProps<T extends HTMLElement> extends SharedPopperProps {
@@ -125,6 +128,7 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
   modifiers = [],
   onTransitionEnd,
   withinPortal = true,
+  coordinates,
 }: PopperProps<T>) {
   const padding = withArrow ? gutter + arrowSize : gutter;
   const { classes, cx, theme } = useStyles({ arrowSize, arrowDistance }, { name: 'Popper' });
@@ -168,7 +172,11 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
           <PopperContainer withinPortal={withinPortal} zIndex={zIndex}>
             <div
               ref={setPopperElement}
-              style={{ ...styles.popper, pointerEvents: 'none' }}
+              style={{
+                ...styles.popper,
+                pointerEvents: 'none',
+                ...(coordinates && { top: coordinates.y || 0, left: coordinates.x || 0 }),
+              }}
               {...attributes.popper}
             >
               <div style={transitionStyles}>

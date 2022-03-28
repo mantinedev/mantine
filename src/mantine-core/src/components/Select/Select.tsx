@@ -419,6 +419,40 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         break;
       }
 
+      case 'Home': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
+          setHovered(firstItemIndex);
+          scrollIntoView({
+            alignment: isColumn ? 'end' : 'start',
+          });
+        }
+        break;
+      }
+
+      case 'End': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
+          setHovered(lastItemIndex);
+          scrollIntoView({
+            alignment: isColumn ? 'end' : 'start',
+          });
+        }
+        break;
+      }
+
       case 'Escape': {
         event.preventDefault();
         setDropdownOpened(false);

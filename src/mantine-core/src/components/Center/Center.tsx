@@ -33,7 +33,7 @@ export const Center: CenterComponent = forwardRef(
             alignItems: 'center',
             justifyContent: 'center',
           },
-          sx,
+          ...(Array.isArray(sx) ? sx : [sx]),
         ]}
         {...others}
       />
