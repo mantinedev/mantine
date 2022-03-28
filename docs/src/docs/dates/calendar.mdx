@@ -4,19 +4,25 @@ package: '@mantine/dates'
 title: Calendar
 order: 1
 slug: /dates/calendar/
-description: 'Display calendar with selected date'
-props: ['Calendar']
-import: "import { Calendar } from '@mantine/dates';"
+description: 'Display inline calendar to pick single date or dates range'
+props: ['Calendar', 'RangeCalendar']
+import: "import { Calendar, RangeCalendar } from '@mantine/dates';"
 source: 'mantine-dates/src/components/Calendar/Calendar.tsx'
 docs: 'dates/Calendar.mdx'
-styles: ['Calendar']
+styles: ['Calendar', 'RangeCalendar']
 ---
 
-import { CalendarDemos } from '@mantine/demos';
+import { CalendarDemos, RangeCalendarDemos } from '@mantine/demos';
 
 ## Usage
 
+Calendar component:
+
 <Demo data={CalendarDemos.usage} />
+
+RangeCalendar component (supports the same props as Calendar component):
+
+<Demo data={RangeCalendarDemos.usage} />
 
 ## Controlled month
 
