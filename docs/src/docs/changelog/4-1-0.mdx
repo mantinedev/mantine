@@ -200,3 +200,9 @@ export default function AppShellDemo() {
 - [@mantine/spotlight](https://mantine.dev/others/spotlight/) now exports event based functions to open/close spotlight and perform other actions from anywhere in your application (not only in components)
 - [Button](https://mantine.dev/core/button/), [Badge](https://mantine.dev/core/badge/), [ThemeIcon](https://mantine.dev/core/theme-icon/) and [Text](https://mantine.dev/core/text/) components now support hex color values in `gradient` prop
 - [Radio](https://mantine.dev/core/radio-group/) now supports setting transition duration and icon customization via props
+- [Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `precision` prop
+- [Menu](https://mantine.dev/core/menu/), [List](https://mantine.dev/core/list/) and [Grid](https://mantine.dev/core/grid/) components were migrated to context, associated components (`Menu.Item`, `List.Item`, `Grid.Col`, etc.) can now be wrapper with other components and fragments
+- `useLocalStorageValue` hook was renamed to `useLocalStorage` (old hook is still exported from `@mantine/hooks`)
+- [AppShell](https://mantine.dev/core/app-shell/) no longer parses props of Navbar and Header components, AppShell positioning logic was migrated to context and CSS variables, Navbar and Header components can now be wrapped with other components
+- NextLink component was added to `@mantine/next` package to simplify Next.js Link usage with [Menu](https://mantine.dev/core/menu/#menuitem-as-nextjs-link)
+- [Global](https://mantine.dev/theming/global-styles/#global-component) component now supports array syntax for `styles`
