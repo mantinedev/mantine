@@ -3,8 +3,8 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-const base = 'src/mantine-demos/src/demos/theme';
-const NAME = 'Theme';
+const base = 'src/mantine-demos/src/demos/spotlight';
+const NAME = 'Spotlight';
 
 function isUppercase(str: string) {
   return str[0].toUpperCase() === str[0];
