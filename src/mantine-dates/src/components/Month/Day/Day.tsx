@@ -25,6 +25,7 @@ export interface DayProps
   firstInMonth: boolean;
   focusable?: boolean;
   hideOutsideDates?: boolean;
+  calendarEvent?(date: Date): React.ReactNode | null;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -48,6 +49,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       firstInMonth,
       focusable,
       hideOutsideDates,
+      calendarEvent,
       ...others
     }: DayProps,
     ref
@@ -80,6 +82,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         )}
       >
         {value.getDate()}
+        {calendarEvent && calendarEvent(value)}
       </button>
     );
   }

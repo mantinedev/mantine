@@ -98,6 +98,10 @@ export interface MonthProps
 
   /** Called when keydown event is registered on day */
   onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
+
+  calendarEvent?(date: Date): React.ReactNode | null;
+
+  weekdayLabelFormat?: string;
 }
 
 const no = () => false;
@@ -144,6 +148,8 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     isDateInRange = no,
     isDateFirstInRange = no,
     isDateLastInRange = no,
+    calendarEvent,
+    weekdayLabelFormat,
     ...others
   } = useMantineDefaultProps('Month', defaultProps, props);
 
@@ -154,13 +160,15 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
 
-  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
-    <th className={classes.weekdayCell} key={weekday}>
-      <Text size={size} className={classes.weekday}>
-        {upperFirst(weekday)}
-      </Text>
-    </th>
-  ));
+  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek, weekdayLabelFormat).map(
+    (weekday) => (
+      <th className={classes.weekdayCell} key={weekday}>
+        <Text size={size} className={classes.weekday}>
+          {weekday.length >= 2 ? upperFirst(weekday) : weekday}
+        </Text>
+      </th>
+    )
+  );
 
   const hasValue = value instanceof Date;
   const hasValueInMonthRange =
@@ -227,6 +235,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             __staticSelector={__staticSelector}
             styles={styles}
             classNames={classNames}
+            calendarEvent={calendarEvent}
           />
         </td>
       );
