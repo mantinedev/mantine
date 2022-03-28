@@ -8,8 +8,8 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { useMergedRef, useMouse } from '@mantine/hooks';
-import { Box } from '../Box';
-import { Popper, SharedPopperProps } from '../Popper';
+import { Box } from '../../Box';
+import { Popper, SharedPopperProps } from '../../Popper';
 import useStyles from './FloatingTooltip.styles';
 
 export type FloatingTooltipStylesNames = ClassNames<typeof useStyles>;
