@@ -17,8 +17,6 @@ import { NotificationDemos, NotificationsDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [@mantine/core](https://www.npmjs.com/package/@mantine/core).
-
 Install with npm:
 
 ```sh
@@ -37,8 +35,7 @@ yarn add @mantine/notifications @mantine/core @mantine/hooks
 
 ## Usage
 
-Wrap your application with NotificationsProvider.
-**Important:** if you use MantineProvider, NotificationsProvider must be placed inside:
+Wrap your application with NotificationsProvider:
 
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
@@ -172,7 +169,7 @@ and displayed when notification from current state is closed.
 
 ## Remove notifications from state and queue
 
-To remove specific notification from state or queue use `hideNotification` handler:
+To remove specific notification from state or queue use `hideNotification` function:
 
 ```tsx
 import { showNotification, hideNotification } from '@mantine/notifications';
@@ -181,20 +178,18 @@ showNotification({ id: 'hello', message: 'Hello!' });
 hideNotification('hello');
 ```
 
-Use `cleanQueue` handler to remove all notifications that are not currently displayed and
-`clean` handler to remove all notifications from state and queue:
+Use `cleanNotificationsQueue` function to remove all notifications that are not currently displayed and
+`cleanNotifications` function to remove all notifications from state and queue:
 
 <Demo data={NotificationsDemos.clean} />
 
 ## Update notification
 
-showNotification handler returns notification id, you can use it to update notification:
-
 <Demo data={NotificationsDemos.update} />
 
 ## Auto close
 
-You can configure auto close timeout in NotificationsProvider:
+You can configure auto close timeout with NotificationsProvider:
 
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
