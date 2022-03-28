@@ -5,14 +5,6 @@ export default createStyles((theme) => ({
     paddingTop: theme.spacing.xl,
   },
 
-  controls: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: -theme.spacing.md / 2,
-    marginRight: -theme.spacing.md / 2,
-    marginTop: theme.spacing.xs,
-  },
-
   control: {
     display: 'flex',
     flexDirection: 'column',
@@ -27,6 +19,8 @@ export default createStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
     },
+    minWidth: 180,
+    flex: 1,
   },
 
   active: {

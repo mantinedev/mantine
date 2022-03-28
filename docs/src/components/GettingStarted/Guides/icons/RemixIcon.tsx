@@ -9,7 +9,7 @@ export function RemixIcon() {
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid"
         viewBox="0 0 512 128"
-        style={{ flex: 1 }}
+        style={{ flex: 1, maxWidth: 120 }}
       >
         <path
           fill={theme.colorScheme === 'dark' ? theme.white : theme.black}
