@@ -73,6 +73,22 @@ Then you will be able to use variables anywhere in your CSS:
 }
 ```
 
+## sx array syntax
+
+All components now support arrays in [sx prop](https://mantine.dev/theming/sx/). It can be to simultaneously use `sx` prop and add it from props:
+
+```tsx
+import { Button, Sx } from '@mantine/core';
+
+interface MyButtonProps {
+  sx?: Sx;
+}
+
+function MyButton({ sx }) {
+  return <Button sx={[{ color: 'red' }, sx]}>My Button</Button>;
+}
+```
+
 ## Stack component
 
 New [Stack](https://mantine.dev/core/stack/) component is a replacement for [Group](https://mantine.dev/core/group/) with vertical direction:

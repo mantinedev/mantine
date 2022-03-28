@@ -76,6 +76,22 @@ function Demo() {
 }
 ```
 
+## sx array
+
+Array syntax can be used to simultaneously use `sx` prop and add it from props:
+
+```tsx
+import { Button, Sx } from '@mantine/core';
+
+interface MyButtonProps {
+  sx?: Sx;
+}
+
+function MyButton({ sx }) {
+  return <Button sx={[{ color: 'red' }, sx]}>My Button</Button>;
+}
+```
+
 ## Box component
 
 [Box](/core/box/) is an utility polymorphic component that can be used to style non Mantine components or elements with sx:
