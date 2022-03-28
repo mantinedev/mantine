@@ -1,7 +1,7 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
-import { py, css } from './languages';
-import { demoCode } from './usage';
+import { py, css } from './Prism.demo.languages';
+import { demoCode } from './Prism.demo.usage';
 
 function CSSIcon(props: React.ComponentProps<'svg'>) {
   return (

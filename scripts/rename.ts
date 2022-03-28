@@ -3,8 +3,8 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-const base = 'src/mantine-demos/src/demos/spotlight';
-const NAME = 'Spotlight';
+const base = 'src/mantine-demos/src/demos/create-styles';
+const NAME = 'CreateStyles';
 
 function isUppercase(str: string) {
   return str[0].toUpperCase() === str[0];
@@ -19,7 +19,10 @@ fs.readdirSync(base)
       !isUppercase(file)
   )
   .forEach((file) => {
-    fs.renameSync(path.join(base, file), path.join(base, `${NAME}.demo.${file}`));
+    fs.renameSync(
+      path.join(base, file),
+      path.join(base, `${NAME}.demo.${file.replace('createStyles', '').toLowerCase()}`)
+    );
   });
 
 const index = fs.readFileSync(path.join(base, 'index.ts')).toString('utf-8');

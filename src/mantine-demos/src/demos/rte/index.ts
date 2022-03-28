@@ -1,6 +1,6 @@
-export { usage } from './usage';
-export { toolbar } from './toolbar';
-export { simple } from './simple';
-export { embeds } from './embeds';
-export { mentions } from './mentions';
-export { readOnly } from './readOnly';
+export { usage } from './RichTextEditor.demo.usage';
+export { toolbar } from './RichTextEditor.demo.toolbar';
+export { simple } from './RichTextEditor.demo.simple';
+export { embeds } from './RichTextEditor.demo.embeds';
+export { mentions } from './RichTextEditor.demo.mentions';
+export { readOnly } from './RichTextEditor.demo.readOnly';
