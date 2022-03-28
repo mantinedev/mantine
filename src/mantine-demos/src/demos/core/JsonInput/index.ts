@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { configurator } from './configurator';
+export { usage } from './JsonInput.demo.usage';
+export { configurator } from './JsonInput.demo.configurator';

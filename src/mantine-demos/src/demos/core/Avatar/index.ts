@@ -1,6 +1,6 @@
-export { usage } from './usage';
-export { placeholders } from './placeholders';
-export { configurator } from './configurator';
-export { link } from './link';
-export { avatarsGroup } from './avatarsGroup';
-export { total } from './total';
+export { usage } from './Avatar.demo.usage';
+export { placeholders } from './Avatar.demo.placeholders';
+export { configurator } from './Avatar.demo.configurator';
+export { link } from './Avatar.demo.link';
+export { avatarsGroup } from './Avatar.demo.avatarsGroup';
+export { total } from './Avatar.demo.total';

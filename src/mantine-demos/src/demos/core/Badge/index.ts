@@ -1,6 +1,6 @@
-export { dots } from './dots';
-export { overflow } from './overflow';
-export { sections } from './sections';
-export { component } from './component';
-export { gradient } from './gradient';
-export { configurator } from './configurator';
+export { dots } from './Badge.demo.dots';
+export { overflow } from './Badge.demo.overflow';
+export { sections } from './Badge.demo.sections';
+export { component } from './Badge.demo.component';
+export { gradient } from './Badge.demo.gradient';
+export { configurator } from './Badge.demo.configurator';

@@ -1,3 +1,3 @@
-export { usage } from './usage';
-export { link } from './link';
-export { linkSection } from './linkSection';
+export { usage } from './Card.demo.usage';
+export { link } from './Card.demo.link';
+export { linkSection } from './Card.demo.linkSection';

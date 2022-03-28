@@ -3,10 +3,10 @@ export { Demo, CodeDemo, Configurator } from './components/Demo/Demo';
 
 // Inline demos
 export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
-export { AccordionDemo } from './demos/core/Accordion/label';
+export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
 export { TimelineBase } from './demos/core/Timeline/_base';
-export { CustomSelectDemo } from './demos/core/Select/itemComponent';
-export { CountriesSelect } from './demos/core/MultiSelect/countries';
+export { CustomSelectDemo } from './demos/core/Select/Select.demo.itemComponent';
+export { CountriesSelect } from './demos/core/MultiSelect/MultiSelect.demo.countries';
 
 // Meta demos
 export * as CreateStylesDemos from './demos/create-styles';

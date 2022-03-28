@@ -1,3 +1,3 @@
-export { usage } from './usage';
-export { labels } from './labels';
-export { sizes } from './sizes';
+export { usage } from './Divider.demo.usage';
+export { labels } from './Divider.demo.labels';
+export { sizes } from './Divider.demo.sizes';

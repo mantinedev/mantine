@@ -1,5 +1,5 @@
-export { states } from './states';
-export { configurator } from './configurator';
-export { type } from './type';
-export { chip } from './chip';
-export { stylesApi } from './stylesApi';
+export { states } from './Chips.demo.states';
+export { configurator } from './Chips.demo.configurator';
+export { type } from './Chips.demo.type';
+export { chip } from './Chips.demo.chip';
+export { stylesApi } from './Chips.demo.stylesApi';

@@ -1,5 +1,5 @@
-export { usage } from './usage';
-export { sizes } from './sizes';
-export { placeholders } from './placeholders';
-export { caption } from './caption';
-export { background } from './background';
+export { usage } from './Image.demo.usage';
+export { sizes } from './Image.demo.sizes';
+export { placeholders } from './Image.demo.placeholders';
+export { caption } from './Image.demo.caption';
+export { background } from './Image.demo.background';

@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { loader } from './loader';
+export { usage } from './LoadingOverlay.demo.usage';
+export { loader } from './LoadingOverlay.demo.loader';

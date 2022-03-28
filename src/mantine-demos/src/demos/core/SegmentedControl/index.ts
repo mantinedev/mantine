@@ -1,7 +1,7 @@
-export { usage } from './usage';
-export { fullWidth } from './fullWidth';
-export { sizes } from './sizes';
-export { radius } from './radius';
-export { configurator } from './configurator';
-export { transitions } from './transitions';
-export { labels } from './labels';
+export { usage } from './SegmentedControl.demo.usage';
+export { fullWidth } from './SegmentedControl.demo.fullWidth';
+export { sizes } from './SegmentedControl.demo.sizes';
+export { radius } from './SegmentedControl.demo.radius';
+export { configurator } from './SegmentedControl.demo.configurator';
+export { transitions } from './SegmentedControl.demo.transitions';
+export { labels } from './SegmentedControl.demo.labels';

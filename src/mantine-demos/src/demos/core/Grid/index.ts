@@ -1,7 +1,7 @@
-export { usage } from './usage';
-export { growConfigurator } from './growConfigurator';
-export { offset } from './offset';
-export { rows } from './rows';
-export { flexConfigurator } from './flexConfigurator';
-export { responsive } from './responsive';
-export { columns } from './columns';
+export { usage } from './Grid.demo.usage';
+export { growConfigurator } from './Grid.demo.growConfigurator';
+export { offset } from './Grid.demo.offset';
+export { rows } from './Grid.demo.rows';
+export { flexConfigurator } from './Grid.demo.flexConfigurator';
+export { responsive } from './Grid.demo.responsive';
+export { columns } from './Grid.demo.columns';

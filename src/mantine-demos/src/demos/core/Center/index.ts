@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { inline } from './inline';
+export { usage } from './Center.demo.usage';
+export { inline } from './Center.demo.inline';

@@ -1,4 +1,4 @@
-export { usage } from './usage';
-export { captions } from './captions';
-export { configurator } from './configurator';
-export { spacingConfigurator } from './spacingConfigurator';
+export { usage } from './Table.demo.usage';
+export { captions } from './Table.demo.captions';
+export { configurator } from './Table.demo.configurator';
+export { spacingConfigurator } from './Table.demo.spacingConfigurator';

@@ -1,2 +1,2 @@
-export { configurator } from './configurator';
-export { labels } from './labels';
+export { configurator } from './Switch.demo.configurator';
+export { labels } from './Switch.demo.labels';

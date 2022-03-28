@@ -11,6 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "rename": "esno scripts/rename",
     "sync-branches": "sh scripts/sync-branches.sh",
     "merge-dev": "sh scripts/merge-dev.sh",
     "postinstall": "npm run docs:docgen && cd docs && yarn",

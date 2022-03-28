@@ -1,3 +1,3 @@
-export { usage } from './usage';
-export { gradient } from './gradient';
-export { blur } from './blur';
+export { usage } from './Overlay.demo.usage';
+export { gradient } from './Overlay.demo.gradient';
+export { blur } from './Overlay.demo.blur';

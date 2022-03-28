@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { configurator } from './configurator';
+export { usage } from './Notification.demo.usage';
+export { configurator } from './Notification.demo.configurator';

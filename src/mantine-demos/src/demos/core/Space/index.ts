@@ -1,2 +1,2 @@
-export { horizontal } from './horizontal';
-export { vertical } from './vertical';
+export { horizontal } from './Space.demo.horizontal';
+export { vertical } from './Space.demo.vertical';

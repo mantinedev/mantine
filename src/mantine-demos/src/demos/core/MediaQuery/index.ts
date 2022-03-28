@@ -1,2 +1,2 @@
-export { usage } from './usage';
-export { query } from './query';
+export { usage } from './MediaQuery.demo.usage';
+export { query } from './MediaQuery.demo.query';

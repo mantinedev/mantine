@@ -1,3 +1,3 @@
-export { image } from './image';
-export { map } from './map';
-export { video } from './video';
+export { image } from './AspectRatio.demo.image';
+export { map } from './AspectRatio.demo.map';
+export { video } from './AspectRatio.demo.video';

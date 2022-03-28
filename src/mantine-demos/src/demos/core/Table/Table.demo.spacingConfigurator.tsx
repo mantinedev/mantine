@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, TableProps } from '@mantine/core';
-import { elements } from './data';
+import { elements } from './_data';
 
 function Wrapper(props: TableProps) {
   return (

@@ -1,6 +1,6 @@
-export { usage } from './usage';
-export { dimmed } from './dimmed';
-export { linesConfigurator } from './linesConfigurator';
-export { lineClamp } from './lineClamp';
-export { gradient } from './gradient';
-export { inherit } from './inherit';
+export { usage } from './Text.demo.usage';
+export { dimmed } from './Text.demo.dimmed';
+export { linesConfigurator } from './Text.demo.linesConfigurator';
+export { lineClamp } from './Text.demo.lineClamp';
+export { gradient } from './Text.demo.gradient';
+export { inherit } from './Text.demo.inherit';
