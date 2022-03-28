@@ -70,7 +70,7 @@ export const Overlay: OverlayComponent = forwardRef(
             opacity,
             borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
           }),
-          sx,
+          ...(Array.isArray(sx) ? sx : [sx]),
         ]}
         {...otherProps}
       />
@@ -84,7 +84,7 @@ export const Overlay: OverlayComponent = forwardRef(
               ...baseStyles,
               backdropFilter: `blur(${blur}px)`,
             }),
-            sx,
+            ...(Array.isArray(sx) ? sx : [sx]),
           ]}
           {...others}
         >

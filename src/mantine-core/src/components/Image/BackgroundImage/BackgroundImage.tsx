@@ -52,7 +52,7 @@ export const BackgroundImage: BackgroundImageComponent = forwardRef(
             backgroundImage: `url(${src})`,
             borderRadius: theme.fn.radius(radius),
           }),
-          sx,
+          ...(Array.isArray(sx) ? sx : [sx]),
         ]}
       />
     );

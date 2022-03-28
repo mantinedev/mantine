@@ -27,7 +27,7 @@ export const Space = forwardRef<HTMLDivElement, SpaceProps>((props: SpaceProps, 
           const height = theme.fn.size({ size: h, sizes: theme.spacing });
           return { width, height, minWidth: width, minHeight: height };
         },
-        sx,
+        ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...others}
     />
