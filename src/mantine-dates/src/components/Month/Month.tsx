@@ -99,8 +99,10 @@ export interface MonthProps
   /** Called when keydown event is registered on day */
   onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 
+  /** Render day based on the date */
   renderDay?(date: Date): React.ReactNode;
 
+  /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
 }
 

@@ -81,7 +81,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
           className
         )}
       >
-        {renderDay ? renderDay(value) : value.getDate()}
+        {typeof renderDay === 'function' ? renderDay(value) : value.getDate()}
       </button>
     );
   }

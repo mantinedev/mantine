@@ -50,7 +50,7 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Selected range */
   range?: [Date, Date];
 
-  /** Function to render the day */
+  /** Render day based on the date */
   renderDay?(date: Date): React.ReactNode;
 
   /** Called when day is selected */
