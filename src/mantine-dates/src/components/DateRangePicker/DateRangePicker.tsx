@@ -42,6 +42,9 @@ export interface DateRangePickerProps
 
   /** Allows to show multiple months */
   amountOfMonths?: number;
+
+  /** Render day based on the date */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 const validationRule = (val: any) =>
@@ -105,6 +108,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       onDropdownOpen,
       hideOutsideDates,
       hideWeekdays,
+      renderDay,
       ...others
     } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -204,6 +208,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           initialLevel={initialLevel}
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
+          renderDay={renderDay}
         />
       </DatePickerBase>
     );
