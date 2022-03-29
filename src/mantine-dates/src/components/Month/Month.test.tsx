@@ -150,4 +150,14 @@ describe('@mantine/dates/Month', () => {
     expect(en.querySelector('th').textContent).toBe('Mo');
     expect(ru.querySelector('th').textContent).toBe('Пн');
   });
+
+  it('renders weekday labels with custom format in given locale', () => {
+    const { container: en } = render(<Month {...defaultProps} weekdayLabelFormat="ddd" />);
+    const { container: ru } = render(
+      <Month {...defaultProps} locale="ru" weekdayLabelFormat="dddd" />
+    );
+
+    expect(en.querySelector('th').textContent).toBe('Mon');
+    expect(ru.querySelector('th').textContent).toBe('Понедельник');
+  });
 });

@@ -28,7 +28,7 @@ export interface MonthsListProps
   previousMonthLabel?: string;
   labelFormat?: string;
   weekdayLabelFormat?: string;
-  calendarEvent?(date: Date): React.ReactNode | null;
+  renderDay?(date: Date): React.ReactNode;
 }
 
 export function MonthsList({
@@ -51,7 +51,7 @@ export function MonthsList({
   labelFormat,
   weekdayLabelFormat,
   preventFocus,
-  calendarEvent,
+  renderDay,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -98,7 +98,7 @@ export function MonthsList({
             locale={locale}
             focusable={index === 0}
             preventFocus={preventFocus}
-            calendarEvent={calendarEvent}
+            renderDay={renderDay}
             weekdayLabelFormat={weekdayLabelFormat}
             {...others}
           />

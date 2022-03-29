@@ -50,8 +50,8 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Selected range */
   range?: [Date, Date];
 
-  /** Function to render an event to date */
-  calendarEvent?(date: Date): React.ReactNode | null;
+  /** Function to render the day */
+  renderDay?(date: Date): React.ReactNode;
 
   /** Called when day is selected */
   onChange?(value: Date): void;
@@ -129,7 +129,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       isDateInRange,
       isDateFirstInRange,
       isDateLastInRange,
-      calendarEvent,
+      renderDay,
       ...others
     }: CalendarBaseProps,
     ref
@@ -287,7 +287,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             labelFormat={labelFormat}
             weekdayLabelFormat={weekdayLabelFormat}
             onDayMouseEnter={onDayMouseEnter}
-            calendarEvent={calendarEvent}
+            renderDay={renderDay}
             hideOutsideDates={hideOutsideDates}
             isDateInRange={isDateInRange}
             isDateFirstInRange={isDateFirstInRange}

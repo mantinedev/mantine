@@ -99,7 +99,7 @@ export interface MonthProps
   /** Called when keydown event is registered on day */
   onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
 
-  calendarEvent?(date: Date): React.ReactNode | null;
+  renderDay?(date: Date): React.ReactNode;
 
   weekdayLabelFormat?: string;
 }
@@ -148,7 +148,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     isDateInRange = no,
     isDateFirstInRange = no,
     isDateLastInRange = no,
-    calendarEvent,
+    renderDay,
     weekdayLabelFormat,
     ...others
   } = useMantineDefaultProps('Month', defaultProps, props);
@@ -235,7 +235,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             __staticSelector={__staticSelector}
             styles={styles}
             classNames={classNames}
-            calendarEvent={calendarEvent}
+            renderDay={renderDay}
           />
         </td>
       );
