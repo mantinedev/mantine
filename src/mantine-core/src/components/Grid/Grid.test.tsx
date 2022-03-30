@@ -1,4 +1,5 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Grid, GridProps } from './Grid';
 import { Col } from './Col/Col';
@@ -17,5 +18,16 @@ describe('@mantine/core/Grid', () => {
 
   it('exposes Col as Grid.Col', () => {
     expect(Grid.Col).toBe(Col);
+  });
+
+  it('should render with props', () => {
+    const { baseElement } = render(
+      <Grid grow align="center" columns={1} gutter="sm" justify="center">
+        <Grid.Col>Test 1</Grid.Col>
+        <Grid.Col>Test 2</Grid.Col>
+      </Grid>
+    );
+
+    expect(baseElement).toBeTruthy();
   });
 });
