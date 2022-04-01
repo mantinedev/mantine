@@ -11,8 +11,6 @@ import { Group, Button } from '@mantine/core';
 import { showNotification, cleanNotificationsQueue, cleanNotifications } from '@mantine/notifications';
 
 function Demo() {
-  const notifications = useNotifications();
-
   return (
     <Group position="center">
       <Button
