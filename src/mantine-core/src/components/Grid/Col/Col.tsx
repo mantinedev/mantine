@@ -48,7 +48,7 @@ function isValidSpan(span: number) {
 
 export function Col({
   children,
-  span,
+  span = 12,
   offset = 0,
   offsetXs = 0,
   offsetSm = 0,

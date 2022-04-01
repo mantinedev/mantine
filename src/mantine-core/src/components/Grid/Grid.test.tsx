@@ -4,7 +4,7 @@ import { Grid, GridProps } from './Grid';
 import { Col } from './Col/Col';
 
 const defaultProps: GridProps = {
-  children: [<Col span={1}>1</Col>, <Col span={1}>2</Col>],
+  children: [<Col key={1}>1</Col>, <Col key={2}>2</Col>],
 };
 
 describe('@mantine/core/Grid', () => {
