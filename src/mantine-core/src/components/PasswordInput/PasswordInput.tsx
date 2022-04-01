@@ -51,7 +51,6 @@ const rightSectionSizes = {
 };
 
 const defaultProps: Partial<PasswordInputProps> = {
-  radius: 'sm',
   size: 'sm',
   toggleTabIndex: -1,
   visibilityToggleIcon: PasswordToggleIcon,
