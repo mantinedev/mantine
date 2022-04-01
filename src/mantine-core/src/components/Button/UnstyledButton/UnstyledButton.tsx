@@ -1,21 +1,30 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
 import { Box } from '../../Box';
 import useStyles from './UnstyledButton.styles';
 
-export interface UnstyledButtonProps
-  extends DefaultProps,
-    React.ComponentPropsWithoutRef<'button'> {}
+interface _UnstyledButtonProps extends DefaultProps {}
 
-export const UnstyledButton = forwardRef<HTMLButtonElement, UnstyledButtonProps>(
-  ({ className, ...others }: UnstyledButtonProps, ref) => {
+export type UnstyledButtonProps<C> = PolymorphicComponentProps<C, _UnstyledButtonProps>;
+
+type UnstyledButtonComponent = (<C = 'button'>(
+  props: UnstyledButtonProps<C>
+) => React.ReactElement) & {
+  displayName?: string;
+};
+
+export const UnstyledButton: UnstyledButtonComponent = forwardRef(
+  <C extends React.ElementType = 'button'>(
+    { className, component, ...others }: UnstyledButtonProps<C>,
+    ref: PolymorphicRef<C>
+  ) => {
     const { classes, cx } = useStyles(null, { name: 'UnstyledButton' });
     return (
-      <Box
-        component="button"
+      <Box<any>
+        component={component || 'button'}
         ref={ref}
         className={cx(classes.root, className)}
-        type="button"
+        type={component === 'button' ? 'button' : undefined}
         {...others}
       />
     );

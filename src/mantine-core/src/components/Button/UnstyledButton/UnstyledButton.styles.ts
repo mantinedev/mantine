@@ -12,5 +12,6 @@ export default createStyles((theme) => ({
     backgroundColor: 'transparent',
     textAlign: 'left',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    textDecoration: 'none',
   },
 }));
