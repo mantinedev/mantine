@@ -214,6 +214,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     errorProps,
     descriptionProps,
     labelProps,
+    placeholder,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -429,9 +430,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
 
           const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
           setHovered(firstItemIndex);
-          scrollIntoView({
-            alignment: isColumn ? 'end' : 'start',
-          });
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -446,9 +445,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
 
           const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
           setHovered(lastItemIndex);
-          scrollIntoView({
-            alignment: isColumn ? 'end' : 'start',
-          });
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
         }
         break;
       }
@@ -466,7 +463,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
-            setDropdownOpened(!dropdownOpened);
             setHovered(selectedItemIndex);
             scrollSelectedItemIntoView();
           }
@@ -476,15 +472,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       }
 
       case 'Enter': {
-        event.preventDefault();
+        if (!searchable) {
+          event.preventDefault();
+        }
 
         if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
           handleItemSelect(filteredData[hovered]);
-        } else {
-          setDropdownOpened(true);
-          setHovered(selectedItemIndex);
-          scrollSelectedItemIntoView();
         }
       }
     }
@@ -569,7 +563,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         <Input<'input'>
           autoComplete="nope"
           {...rest}
-          type="text"
+          type={searchable ? 'text' : 'button'}
           required={required}
           ref={useMergedRef(ref, inputRef)}
           id={uuid}
@@ -577,7 +571,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           size={size}
           onKeyDown={handleInputKeydown}
           __staticSelector="Select"
-          value={inputValue}
+          value={searchable ? inputValue : inputValue || placeholder}
+          placeholder={placeholder}
           onChange={handleInputChange}
           aria-autocomplete="list"
           aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
@@ -591,7 +586,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           name={name}
           classNames={{
             ...classNames,
-            input: cx({ [classes.input]: !searchable }, classNames?.input),
+            input: cx(
+              {
+                [classes.input]: !searchable,
+                [classes.withPlaceholder]: !searchable && !inputValue,
+              },
+              classNames?.input
+            ),
           }}
           {...getSelectRightSectionProps({
             theme,
