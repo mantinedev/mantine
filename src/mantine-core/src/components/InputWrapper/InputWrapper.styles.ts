@@ -24,7 +24,7 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
   error: {
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
-    color: `${theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]} !important`,
+    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
   },
 
   description: {
@@ -34,7 +34,7 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
     color: `${
       theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6]
     } !important`,
-    fontSize: `${theme.fn.size({ size, sizes: theme.fontSizes }) - 2}px !important`,
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
     lineHeight: 1.2,
   },
 
