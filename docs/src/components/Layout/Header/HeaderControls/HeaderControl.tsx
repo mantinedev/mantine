@@ -1,9 +1,9 @@
 import React from 'react';
-import { UnstyledButton, UnstyledButtonProps, Tooltip } from '@mantine/core';
+import { UnstyledButton, Tooltip } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import useStyles from './HeaderControl.styles';
 
-interface HeaderControlProps extends UnstyledButtonProps {
+interface HeaderControlProps extends React.ComponentPropsWithoutRef<'button'> {
   tooltip: string;
   link?: string;
   variant?: 'default' | 'discord' | 'twitter';

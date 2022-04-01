@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
 import { ChevronRight } from 'tabler-icons-react';
-import { Group, Avatar, Text, UnstyledButton, UnstyledButtonProps, Menu } from '@mantine/core';
+import { Group, Avatar, Text, UnstyledButton, Menu } from '@mantine/core';
 import { menuItems } from './_menu-items';
 
 const code = `
 import { forwardRef } from 'react';
 import { ChevronRight } from 'tabler-icons-react';
-import { Group, Avatar, Text, Menu, UnstyledButton, UnstyledButtonProps } from '@mantine/core';
+import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
-interface UserButtonProps extends UnstyledButtonProps {
+interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   image: string;
   name: string;
   email: string;
@@ -72,7 +72,7 @@ function Demo() {
 }
 `;
 
-interface UserButtonProps extends UnstyledButtonProps {
+interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   image: string;
   name: string;
   email: string;
