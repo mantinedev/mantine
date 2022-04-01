@@ -97,6 +97,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       clearable,
       clearButtonLabel,
       firstDayOfWeek,
+      allowLevelChange,
       allowSingleDateInRange,
       amountOfMonths,
       withinPortal,
@@ -199,6 +200,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           fullWidth={dropdownType === 'modal'}
           firstDayOfWeek={firstDayOfWeek}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          allowLevelChange={allowLevelChange}
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
           initialLevel={initialLevel}
