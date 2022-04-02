@@ -7,10 +7,10 @@ import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
+  | Exclude<ClassNames<typeof useStyles>, 'saturationThumb'>
   | ThumbStylesNames;
 
-interface SaturationProps extends DefaultProps<SaturationStylesNames> {
+export interface SaturationProps extends DefaultProps<SaturationStylesNames> {
   value: HsvaColor;
   onChange(color: Partial<HsvaColor>): void;
   saturationLabel?: string;
