@@ -115,7 +115,6 @@
     "storybook-addon-turbo-build": "^1.1.0",
     "storybook-dark-mode": "^1.0.9",
     "stylis": "^4.0.10",
-    "surge": "^0.23.0",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "typescript": "4.6.3",

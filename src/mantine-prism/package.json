@@ -35,7 +35,6 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
     "prism-react-renderer": "^1.2.1"
   },
   "devDependencies": {}

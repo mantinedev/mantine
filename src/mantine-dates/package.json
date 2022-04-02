@@ -28,10 +28,6 @@
     "dayjs": "^1.10.5",
     "react": ">=16.8.0"
   },
-  "dependencies": {
-    "clsx": "^1.1.1",
-    "@popperjs/core": "^2.9.3",
-    "react-popper": "^2.2.5"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

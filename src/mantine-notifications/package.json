@@ -34,7 +34,6 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "clsx": "^1.1.1",
     "react-transition-group": "^4.4.2"
   },
   "devDependencies": {}
