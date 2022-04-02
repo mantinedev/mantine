@@ -563,7 +563,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         <Input<'input'>
           autoComplete="nope"
           {...rest}
-          type={searchable ? 'text' : 'button'}
+          type="text"
           required={required}
           ref={useMergedRef(ref, inputRef)}
           id={uuid}
@@ -571,7 +571,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           size={size}
           onKeyDown={handleInputKeydown}
           __staticSelector="Select"
-          value={searchable ? inputValue : inputValue || placeholder}
+          value={inputValue}
           placeholder={placeholder}
           onChange={handleInputChange}
           aria-autocomplete="list"
@@ -586,13 +586,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           name={name}
           classNames={{
             ...classNames,
-            input: cx(
-              {
-                [classes.input]: !searchable,
-                [classes.withPlaceholder]: !searchable && !inputValue,
-              },
-              classNames?.input
-            ),
+            input: cx({ [classes.input]: !searchable }, classNames?.input),
           }}
           {...getSelectRightSectionProps({
             theme,
