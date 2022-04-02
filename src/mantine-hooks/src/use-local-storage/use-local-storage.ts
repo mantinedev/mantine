@@ -2,9 +2,19 @@ import { useState, useCallback, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface UseLocalStorage<T> {
+  /** Local storage key */
   key: string;
+
+  /** Default value that will be set if value is not found in local storage */
   defaultValue?: T;
+
+  /** If set to true, value will be update is useEffect after mount */
+  getInitialValueInEffect: boolean;
+
+  /** Function to serialize value into string to be save in local storage */
   serialize?(value: T): string;
+
+  /** Function to deserialize string value from local storage to value */
   deserialize?(value: string): T;
 }
 
@@ -27,11 +37,12 @@ function deserializeJSON(value: string) {
 export function useLocalStorage<T = string>({
   key,
   defaultValue = undefined,
+  getInitialValueInEffect = false,
   deserialize = deserializeJSON,
   serialize = serializeJSON,
 }: UseLocalStorage<T>) {
   const [value, setValue] = useState<T>(
-    typeof window !== 'undefined' && 'localStorage' in window
+    typeof window !== 'undefined' && 'localStorage' in window && !getInitialValueInEffect
       ? deserialize(window.localStorage.getItem(key) ?? undefined)
       : ((defaultValue ?? '') as T)
   );
@@ -63,6 +74,14 @@ export function useLocalStorage<T = string>({
       setLocalStorageValue(defaultValue);
     }
   }, [defaultValue, value, setLocalStorageValue]);
+
+  useEffect(() => {
+    if (getInitialValueInEffect) {
+      setValue(
+        deserialize(window.localStorage.getItem(key) ?? undefined) || ((defaultValue ?? '') as T)
+      );
+    }
+  }, []);
 
   return [value === undefined ? defaultValue : value, setLocalStorageValue] as const;
 }
