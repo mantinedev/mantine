@@ -463,6 +463,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
+            setDropdownOpened(true);
             setHovered(selectedItemIndex);
             scrollSelectedItemIntoView();
           }
