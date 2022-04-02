@@ -17,7 +17,8 @@ export default function NotificationContainer({
   innerRef,
   ...others
 }: NotificationContainerProps) {
-  const autoCloseTimeout = getAutoClose(autoClose, notification);
+  const { autoClose: notificationAutoClose, ...notificationProps } = notification;
+  const autoCloseTimeout = getAutoClose(autoClose, notificationAutoClose);
   const hideTimeout = useRef<number>();
 
   const handleHide = () => {
@@ -48,7 +49,7 @@ export default function NotificationContainer({
 
   return (
     <Notification
-      {...notification}
+      {...notificationProps}
       {...others}
       onClose={handleHide}
       onMouseEnter={cancelDelayedHide}
