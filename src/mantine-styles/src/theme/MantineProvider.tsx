@@ -11,8 +11,7 @@ import { NormalizeCSS } from './NormalizeCSS';
 
 type ProviderStyles = Record<
   string,
-  | Record<string, CSSObject>
-  | ((theme: MantineTheme, params: Record<string, any>) => Record<string, CSSObject>)
+  Record<string, CSSObject> | ((theme: MantineTheme, params: any) => Record<string, CSSObject>)
 >;
 
 type ProviderClassNames = Record<string, Record<string, string>>;
