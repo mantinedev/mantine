@@ -82,7 +82,7 @@ const defaultProps: Partial<ButtonProps<any>> = {
 };
 
 export const Button: ButtonComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(props: ButtonProps<C>, ref: PolymorphicRef<C>) => {
+  (props: ButtonProps<'button'>, ref: PolymorphicRef<'button'>) => {
     const {
       className,
       size,
@@ -130,7 +130,7 @@ export const Button: ButtonComponent = forwardRef(
     );
 
     return (
-      <Box<any>
+      <Box
         component={component || 'button'}
         className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
@@ -162,6 +162,6 @@ export const Button: ButtonComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Button.displayName = '@mantine/core/Button';

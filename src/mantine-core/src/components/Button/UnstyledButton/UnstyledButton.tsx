@@ -14,9 +14,9 @@ type UnstyledButtonComponent = (<C = 'button'>(
 };
 
 export const UnstyledButton: UnstyledButtonComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { className, component = 'button', ...others }: UnstyledButtonProps<C>,
-    ref: PolymorphicRef<C>
+  (
+    { className, component = 'button', ...others }: UnstyledButtonProps<'button'>,
+    ref: PolymorphicRef<'button'>
   ) => {
     const { classes, cx } = useStyles(null, { name: 'UnstyledButton' });
     return (
@@ -29,6 +29,6 @@ export const UnstyledButton: UnstyledButtonComponent = forwardRef(
       />
     );
   }
-);
+) as any;
 
 UnstyledButton.displayName = '@mantine/core/UnstyledButton';

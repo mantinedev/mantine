@@ -12,7 +12,7 @@ type AnchorComponent = (<C = 'a'>(props: AnchorProps<C>) => React.ReactElement) 
 const defaultProps: Partial<AnchorProps<any>> = {};
 
 export const Anchor: AnchorComponent = forwardRef(
-  <C extends React.ElementType = 'a'>(props: AnchorProps<C>, ref: PolymorphicRef<C>) => {
+  (props: AnchorProps<'a'>, ref: PolymorphicRef<'a'>) => {
     const { component, className, classNames, styles, ...others } = useMantineDefaultProps(
       'Anchor',
       defaultProps,
@@ -23,7 +23,7 @@ export const Anchor: AnchorComponent = forwardRef(
 
     return (
       <Text
-        component={(component || 'a') as any}
+        component={component || 'a'}
         variant="link"
         ref={ref}
         className={cx(classes.root, className)}
@@ -32,6 +32,6 @@ export const Anchor: AnchorComponent = forwardRef(
       />
     );
   }
-);
+) as any;
 
 Anchor.displayName = '@mantine/core/Anchor';

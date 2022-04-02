@@ -15,11 +15,11 @@ export type SectionProps<C> = PolymorphicComponentProps<C, _SectionProps>;
 type SectionComponent = <C = 'div'>(props: SectionProps<C>) => React.ReactElement;
 
 export const Section: SectionComponent & { displayName?: string } = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { component, children, grow = false, sx, ...others }: SectionProps<C>,
-    ref: PolymorphicRef<C>
+  (
+    { component, children, grow = false, sx, ...others }: SectionProps<'div'>,
+    ref: PolymorphicRef<'div'>
   ) => (
-    <Box<any>
+    <Box
       component={component || 'div'}
       ref={ref}
       sx={[{ flex: grow ? 1 : 0, boxSizing: 'border-box' }, ...(Array.isArray(sx) ? sx : [sx])]}
@@ -28,6 +28,6 @@ export const Section: SectionComponent & { displayName?: string } = forwardRef(
       {children}
     </Box>
   )
-);
+) as any;
 
 Section.displayName = '@mantine/core/Section';

@@ -61,7 +61,7 @@ const defaultProps: Partial<TextProps<any>> = {
 };
 
 export const Text: TextComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: TextProps<C>, ref: PolymorphicRef<C>) => {
+  (props: TextProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const {
       className,
       component,
@@ -101,7 +101,7 @@ export const Text: TextComponent = forwardRef(
     );
 
     return (
-      <Box<any>
+      <Box
         ref={ref}
         component={component || 'div'}
         className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
@@ -109,6 +109,6 @@ export const Text: TextComponent = forwardRef(
       />
     );
   }
-);
+) as any;
 
 Text.displayName = '@mantine/core/Text';

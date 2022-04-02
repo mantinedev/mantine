@@ -18,16 +18,13 @@ type BoxComponent = (<C = 'div'>(props: BoxProps<C>) => React.ReactElement) & {
 };
 
 export const Box: BoxComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { className, component, style, sx, ...others }: BoxProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  ({ className, component, style, sx, ...others }: BoxProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { systemStyles, rest } = extractSystemStyles(others);
     const Element = component || 'div';
     return (
       <Element ref={ref} className={useSx(sx, systemStyles, className)} style={style} {...rest} />
     );
   }
-);
+) as any;
 
 Box.displayName = '@mantine/core/Box';

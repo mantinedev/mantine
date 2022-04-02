@@ -74,7 +74,7 @@ const defaultProps: Partial<InputProps<any>> = {
 };
 
 export const Input: InputComponent = forwardRef(
-  <C extends React.ElementType = 'input'>(props: InputProps<C>, ref: PolymorphicRef<C>) => {
+  (props: InputProps<'input'>, ref: PolymorphicRef<'input'>) => {
     const {
       component,
       className,
@@ -148,6 +148,6 @@ export const Input: InputComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Input.displayName = '@mantine/core/Input';

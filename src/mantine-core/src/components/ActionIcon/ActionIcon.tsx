@@ -53,7 +53,7 @@ const defaultProps: Partial<ActionIconProps<any>> = {
 };
 
 export const ActionIcon: ActionIconComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(props: ActionIconProps<C>, ref: PolymorphicRef<C>) => {
+  (props: ActionIconProps<'button'>, ref: PolymorphicRef<'button'>) => {
     const {
       className,
       color,
@@ -93,6 +93,6 @@ export const ActionIcon: ActionIconComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 ActionIcon.displayName = '@mantine/core/ActionIcon';
