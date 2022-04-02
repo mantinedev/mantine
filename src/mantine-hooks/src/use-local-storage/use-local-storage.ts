@@ -9,7 +9,7 @@ interface UseLocalStorage<T> {
   defaultValue?: T;
 
   /** If set to true, value will be update is useEffect after mount */
-  getInitialValueInEffect: boolean;
+  getInitialValueInEffect?: boolean;
 
   /** Function to serialize value into string to be save in local storage */
   serialize?(value: T): string;
