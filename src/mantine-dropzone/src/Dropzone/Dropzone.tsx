@@ -51,6 +51,9 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Set maximum file size in bytes */
   maxSize?: number;
+
+  /** Name of the form control. Submitted with the form as part of a name/value pair. */
+  name?: string;
 }
 
 const defaultProps: Partial<DropzoneProps> = {
@@ -76,6 +79,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     onDrop,
     onReject,
     openRef,
+    name,
     ...others
   } = useMantineDefaultProps('Dropzone', defaultProps, props);
 
@@ -107,7 +111,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
       )}
     >
       <LoadingOverlay visible={loading} radius={radius} />
-      <input {...getInputProps()} />
+      <input {...getInputProps()} name={name} />
       {children({ accepted: isDragAccept, rejected: isDragReject })}
     </Box>
   );
