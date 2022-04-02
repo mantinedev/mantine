@@ -91,7 +91,7 @@ export function SelectItems({
       if (groupName !== item.group) {
         groupName = item.group;
         groupedItems.push(
-          <div className={classes.separator} key={index}>
+          <div className={classes.separator} key={`__mantine-divider-${index}`}>
             <Divider classNames={{ label: classes.separatorLabel }} label={item.group} />
           </div>
         );
