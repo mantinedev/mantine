@@ -128,6 +128,9 @@ export interface SelectProps
 
   /** Allow deselecting items on click */
   allowDeselect?: boolean;
+
+  /** Should data be filtered when search value exactly matches selected item */
+  filterDataOnExactSearchMatch?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -156,6 +159,7 @@ const defaultProps: Partial<SelectProps> = {
   shouldCreate: defaultShouldCreate,
   selectOnBlur: false,
   switchDirectionOnFlip: false,
+  filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
 };
 
@@ -215,6 +219,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     descriptionProps,
     labelProps,
     placeholder,
+    filterDataOnExactSearchMatch,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -322,6 +327,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     limit,
     searchValue: inputValue,
     filter,
+    filterDataOnExactSearchMatch,
+    value: _value,
   });
 
   if (isCreatable && shouldCreate(inputValue, filteredData)) {

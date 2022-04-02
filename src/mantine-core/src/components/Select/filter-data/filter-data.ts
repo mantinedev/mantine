@@ -5,11 +5,27 @@ interface FilterData {
   limit: number;
   searchable: boolean;
   searchValue: string;
+  filterDataOnExactSearchMatch: boolean;
+  value: string;
   filter(value: string, item: SelectItem): boolean;
 }
 
-export function filterData({ data, searchable, limit, searchValue, filter }: FilterData) {
+export function filterData({
+  data,
+  searchable,
+  limit,
+  searchValue,
+  filter,
+  value,
+  filterDataOnExactSearchMatch,
+}: FilterData) {
   if (!searchable) {
+    return data;
+  }
+
+  const selected = value != null ? data.find((item) => item.value === value) || null : null;
+
+  if (selected && !filterDataOnExactSearchMatch && selected?.label === searchValue) {
     return data;
   }
 
