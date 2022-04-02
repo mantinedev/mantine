@@ -555,6 +555,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
           ref={wrapperRef}
         >
+          <input type="hidden" name={name} value={_value.join(',')} />
+
           <Input<'div'>
             __staticSelector="MultiSelect"
             style={{ overflow: 'hidden' }}
@@ -611,7 +613,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
-                name={name}
                 autoComplete="nope"
                 {...rest}
               />

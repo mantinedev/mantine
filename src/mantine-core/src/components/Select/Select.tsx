@@ -568,6 +568,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
+        <input type="hidden" name={name} value={_value || ''} />
+
         <Input<'input'>
           autoComplete="nope"
           {...rest}
@@ -591,7 +593,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           readOnly={!searchable}
           disabled={disabled}
           data-mantine-stop-propagation={shouldShowDropdown}
-          name={name}
+          name={null}
           classNames={{
             ...classNames,
             input: cx({ [classes.input]: !searchable }, classNames?.input),

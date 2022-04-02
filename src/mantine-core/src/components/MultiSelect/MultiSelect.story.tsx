@@ -287,6 +287,7 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         defaultValue={['react', 'ng']}
         placeholder="Select items"
         searchable
+        name="test"
       />
     </SubmitForm>
   ))

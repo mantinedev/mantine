@@ -222,7 +222,13 @@ storiesOf('@mantine/core/Select/stories', module)
   ))
   .add('Within form', () => (
     <SubmitForm>
-      <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
+      <Select
+        label="Submit with enter"
+        data={data}
+        placeholder="Select items"
+        searchable
+        name="test"
+      />
     </SubmitForm>
   ))
   .add('Out of viewport', () => (
