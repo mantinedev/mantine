@@ -28,7 +28,7 @@ const getThemes = (props?: any) =>
     <Progress key={color} color={color} value={50} mt="md" {...props} />
   ));
 
-storiesOf('@mantine/core/Progress/stories', module)
+storiesOf('Progress', module)
   .add('Sizes', () => <div style={{ maxWidth: 500, padding: 50 }}>{sizes}</div>)
   .add('Colors', () => <div style={{ maxWidth: 500, padding: 50 }}>{getThemes()}</div>)
   .add('Striped', () => (

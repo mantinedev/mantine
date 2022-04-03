@@ -19,7 +19,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   </InputWrapper>
 ));
 
-storiesOf('@mantine/core/InputWrapper/stories', module)
+storiesOf('InputWrapper', module)
   .add('Sizes', () => <div style={{ padding: 15, maxWidth: 400 }}>{sizes}</div>)
   .add('Error overflow', () => (
     <div style={{ padding: 15, maxWidth: 300, backgroundColor: 'rgba(0, 0, 0, .1)' }}>

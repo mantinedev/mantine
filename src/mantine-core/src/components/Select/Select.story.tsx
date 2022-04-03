@@ -119,7 +119,7 @@ function DynamicLabels(props: Partial<SelectProps>) {
   );
 }
 
-storiesOf('@mantine/core/Select/stories', module)
+storiesOf('Select', module)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />

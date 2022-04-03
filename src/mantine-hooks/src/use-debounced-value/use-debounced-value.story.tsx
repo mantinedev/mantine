@@ -13,7 +13,7 @@ function Example() {
   );
 }
 
-storiesOf('@mantine/hooks/use-debounced-value', module).add('Usage', () => (
+storiesOf('Hooks/use-debounced-value', module).add('Usage', () => (
   <div style={{ padding: 40 }}>
     <Example />
   </div>

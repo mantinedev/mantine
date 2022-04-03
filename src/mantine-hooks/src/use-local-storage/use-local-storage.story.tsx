@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocalStorage } from './use-local-storage';
 
 export default {
-  title: '@mantine/hooks/use-local-storage',
+  title: 'Hooks/use-local-storage',
 };
 
 export function Usage() {

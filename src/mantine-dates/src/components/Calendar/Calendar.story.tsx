@@ -12,7 +12,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   <WrappedCalendar size={size} key={size} style={{ marginTop: 30 }} />
 ));
 
-storiesOf('@mantine/dates/Calendar/stories', module)
+storiesOf('Calendar', module)
   .add('No outside events', () => (
     <div style={{ padding: 40, width: 400 }}>
       <WrappedCalendar disableOutsideEvents />

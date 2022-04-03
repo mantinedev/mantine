@@ -42,7 +42,7 @@ function WrappedModal(
   );
 }
 
-storiesOf('@mantine/core/Modal/stories', module)
+storiesOf('Modal', module)
   .add('Without portal', () => <WrappedModal withinPortal={false}>test</WrappedModal>)
   .add('Content overflow', () => (
     <WrappedModal title="This title is so large that there is no space to fit it all on single line and it will wrap on the second one or may be even on the third one">

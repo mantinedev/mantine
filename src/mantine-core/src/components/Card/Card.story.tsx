@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
 import { Card } from './Card';
 
-storiesOf('@mantine/core/Card/stories', module)
+storiesOf('Card', module)
   .add('Default props on MantineProvider', () => (
     <MantineProvider defaultProps={{ Card: { shadow: 'xl', padding: 0, withBorder: true } }}>
       <Card sx={{ maxWidth: 400 }} mx="auto" my={50}>

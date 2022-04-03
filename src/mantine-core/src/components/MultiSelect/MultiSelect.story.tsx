@@ -122,7 +122,7 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   </Group>
 ));
 
-storiesOf('@mantine/core/MultiSelect/stories', module)
+storiesOf('MultiSelect', module)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">

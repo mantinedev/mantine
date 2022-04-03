@@ -91,7 +91,7 @@ const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
   nothingFoundMessage: 'Nothing found...',
 };
 
-storiesOf('@mantine/spotlight', module)
+storiesOf('Spotlight', module)
   .add('Default', () => <Wrapper {...defaultProps} />)
   .add('Centered', () => <Wrapper {...defaultProps} centered />)
   .add('With search icon', () => <Wrapper {...defaultProps} searchIcon={<Search size={18} />} />)

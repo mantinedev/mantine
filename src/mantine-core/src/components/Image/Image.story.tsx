@@ -19,7 +19,7 @@ function ImageChangesOverTime() {
   return <Image src={images[current]} withPlaceholder />;
 }
 
-storiesOf('@mantine/core/Image/stories', module)
+storiesOf('Image', module)
   .add('Caption with fixed height', () => (
     <>
       <Image

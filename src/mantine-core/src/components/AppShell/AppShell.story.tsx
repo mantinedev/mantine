@@ -110,7 +110,7 @@ function WrappedAppShell() {
   );
 }
 
-storiesOf('@mantine/core/AppShell/AppShell', module)
+storiesOf('AppShell/AppShell', module)
   .add('Styles API', () => (
     <StylesAPIStory
       name="AppShell"

@@ -73,7 +73,7 @@ function Disabled() {
   );
 }
 
-storiesOf('@mantine/core/Slider/stories', module)
+storiesOf('Slider', module)
   .add('Controlled', () => (
     <div style={{ width: 380, padding: 40 }}>
       <Wrapper

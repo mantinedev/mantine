@@ -26,7 +26,7 @@ function OnScrollChange() {
   );
 }
 
-storiesOf('@mantine/core/ScrollArea/stories', module)
+storiesOf('ScrollArea', module)
   .add('Max height', () => (
     <div style={{ padding: 40, maxWidth: 300 }}>
       <div style={{ maxHeight: 300, display: 'flex' }}>

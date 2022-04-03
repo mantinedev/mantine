@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { SimpleGrid } from './SimpleGrid';
 
-storiesOf('@mantine/core/SimpleGrid/stories', module)
+storiesOf('SimpleGrid', module)
   .add('With max-width', () => (
     <>
       <div style={{ backgroundColor: 'gray' }}>

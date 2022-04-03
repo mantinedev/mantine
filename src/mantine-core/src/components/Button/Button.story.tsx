@@ -44,7 +44,7 @@ const loading = MANTINE_SIZES.map((size) => (
   </Button>
 ));
 
-storiesOf('@mantine/core/Button/stories', module)
+storiesOf('Button', module)
   .add('UnstyledButton', () => (
     <div style={{ padding: 20 }}>
       <UnstyledButton>unstyled</UnstyledButton>

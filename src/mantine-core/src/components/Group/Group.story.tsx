@@ -23,7 +23,7 @@ const spacings = ([0, 'xs', 'sm', 'md', 'lg', 'xl', 50] as const).map((spacing) 
   </div>
 ));
 
-storiesOf('@mantine/core/Group/stories', module)
+storiesOf('Group', module)
   .add('Positions', () => <>{positions}</>)
   .add('Spacing', () => <>{spacings}</>)
   .add('No wrap', () => (

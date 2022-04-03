@@ -3,7 +3,7 @@ import { StylesAPIStory } from '@mantine/storybook';
 import { AspectRatio } from './AspectRatio';
 
 export default {
-  title: '@mantine/core/AspectRatio',
+  title: 'AspectRatio',
 };
 
 export function StylesApi() {
