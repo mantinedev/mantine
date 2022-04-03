@@ -62,11 +62,16 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       ...others
     } = useMantineDefaultProps('Prism', prismDefaultProps, props);
     const code = trim && typeof children === 'string' ? children.trim() : children;
+    const maxLineSize = code.split('\n').length.toString().length;
 
     const theme = useMantineTheme();
     const clipboard = useClipboard();
     const { classes, cx } = useStyles(
-      { colorScheme: colorScheme || theme.colorScheme, native: ScrollAreaComponent !== ScrollArea },
+      {
+        colorScheme: colorScheme || theme.colorScheme,
+        native: ScrollAreaComponent !== ScrollArea,
+        maxLineSize,
+      },
       { classNames, styles, name: 'Prism' }
     );
 
