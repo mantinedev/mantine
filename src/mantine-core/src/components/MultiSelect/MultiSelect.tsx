@@ -434,6 +434,40 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           break;
         }
 
+        case 'Home': {
+          if (!searchable) {
+            event.preventDefault();
+
+            if (!dropdownOpened) {
+              setDropdownOpened(true);
+            }
+
+            const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
+            setHovered(firstItemIndex);
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
+          break;
+        }
+
+        case 'End': {
+          if (!searchable) {
+            event.preventDefault();
+
+            if (!dropdownOpened) {
+              setDropdownOpened(true);
+            }
+
+            const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
+            setHovered(lastItemIndex);
+            scrollIntoView({
+              alignment: isColumn ? 'end' : 'start',
+            });
+          }
+          break;
+        }
+
         case 'Escape': {
           setDropdownOpened(false);
         }
@@ -521,6 +555,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
           ref={wrapperRef}
         >
+          <input type="hidden" name={name} value={_value.join(',')} />
+
           <Input<'div'>
             __staticSelector="MultiSelect"
             style={{ overflow: 'hidden' }}
@@ -577,7 +613,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
-                name={name}
                 autoComplete="nope"
                 {...rest}
               />

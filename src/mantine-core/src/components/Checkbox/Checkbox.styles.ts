@@ -82,7 +82,6 @@ export default createStyles(
         height: _size,
         borderRadius: theme.fn.radius(radius),
         padding: 0,
-        outline: 0,
         display: 'block',
         margin: 0,
         transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,

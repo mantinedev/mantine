@@ -1,11 +1,12 @@
-import { NotificationProps } from '../../types';
-
-export default function getAutoClose(autoClose: boolean | number, notification: NotificationProps) {
-  if (typeof notification.autoClose === 'number') {
-    return notification.autoClose;
+export default function getAutoClose(
+  autoClose: boolean | number,
+  notificationAutoClose: boolean | number
+) {
+  if (typeof notificationAutoClose === 'number') {
+    return notificationAutoClose;
   }
 
-  if (notification.autoClose === false || autoClose === false) {
+  if (notificationAutoClose === false || autoClose === false) {
     return false;
   }
 

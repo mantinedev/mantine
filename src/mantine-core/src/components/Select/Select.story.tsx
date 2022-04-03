@@ -222,7 +222,13 @@ storiesOf('@mantine/core/Select/stories', module)
   ))
   .add('Within form', () => (
     <SubmitForm>
-      <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
+      <Select
+        label="Submit with enter"
+        data={data}
+        placeholder="Select items"
+        searchable
+        name="test"
+      />
     </SubmitForm>
   ))
   .add('Out of viewport', () => (
@@ -307,4 +313,24 @@ storiesOf('@mantine/core/Select/stories', module)
         <Select data={data} value={value} onChange={setValue} disabled clearable />
       </div>
     );
-  });
+  })
+  .add('Filter searchable data', () => (
+    <div style={{ padding: 40 }}>
+      <Select
+        filterDataOnExactSearchMatch
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Filter"
+        searchable
+      />
+      <Select
+        mt="md"
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Do not filter (default)"
+        searchable
+      />
+    </div>
+  ));

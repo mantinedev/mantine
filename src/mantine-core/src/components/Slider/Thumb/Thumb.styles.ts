@@ -4,9 +4,10 @@ import { sizes } from '../SliderRoot/SliderRoot.styles';
 interface ThumbStyles {
   color: MantineColor;
   size: MantineNumberSize;
+  disabled: boolean;
 }
 
-export default createStyles((theme, { color, size }: ThumbStyles) => ({
+export default createStyles((theme, { color, size, disabled }: ThumbStyles) => ({
   label: {
     position: 'absolute',
     top: -36,
@@ -23,6 +24,7 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     ...theme.fn.focusStyles(),
     boxSizing: 'border-box',
     position: 'absolute',
+    display: disabled ? 'none' : 'flex',
     height: theme.fn.size({ sizes, size }) * 2,
     width: theme.fn.size({ sizes, size }) * 2,
     backgroundColor: theme.colorScheme === 'dark' ? theme.fn.themeColor(color, 6) : theme.white,
@@ -34,7 +36,6 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     top: '50%',
     cursor: 'pointer',
     borderRadius: 1000,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     transitionDuration: '100ms',

@@ -1,21 +1,25 @@
-import React from 'react';
-import { Box } from '@mantine/core';
+import React, { useState } from 'react';
+import { Box, Button } from '@mantine/core';
 
 interface SubmitFormProps {
   children: React.ReactNode;
 }
 
 export function SubmitForm({ children }: SubmitFormProps) {
+  const [value, setValue] = useState(null);
   return (
     <Box sx={{ maxWidth: 500 }} mx="auto" mt="xl">
       <form
-        onSubmit={(event) => {
+        onSubmit={(event: any) => {
           event.preventDefault();
-          // eslint-disable-next-line no-alert
-          alert('Form submitted');
+          setValue(event.target.elements.test?.value);
         }}
       >
         {children}
+        <Button type="submit" mt="md" mb="md">
+          Submit
+        </Button>
+        <div>{value && `Submitted value: ${value}`}</div>
       </form>
     </Box>
   );

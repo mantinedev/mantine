@@ -33,7 +33,7 @@ type PaperComponent = (<C = 'div'>(props: PaperProps<C>) => React.ReactElement) 
 const defaultProps: Partial<PaperProps<any>> = {};
 
 export const Paper: PaperComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: PaperProps<C>, ref: PolymorphicRef<C>) => {
+  (props: PaperProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { component, className, children, radius, withBorder, shadow, ...others } =
       useMantineDefaultProps('Paper', defaultProps, props);
     const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
@@ -49,6 +49,6 @@ export const Paper: PaperComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Paper.displayName = '@mantine/core/Paper';

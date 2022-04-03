@@ -10,11 +10,12 @@ export interface SliderRootProps
     React.ComponentPropsWithoutRef<'div'> {
   size: MantineNumberSize;
   children: React.ReactNode;
+  disabled: boolean;
 }
 
 export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
-  ({ className, size, classNames, styles, ...others }: SliderRootProps, ref) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Slider' });
+  ({ className, size, classNames, styles, disabled, ...others }: SliderRootProps, ref) => {
+    const { classes, cx } = useStyles({ size, disabled }, { classNames, styles, name: 'Slider' });
     return <Box {...others} tabIndex={-1} className={cx(classes.root, className)} ref={ref} />;
   }
 );

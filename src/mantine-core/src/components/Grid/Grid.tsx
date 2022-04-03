@@ -1,4 +1,4 @@
-import React, { Children, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -60,20 +60,10 @@ export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
       { classNames, styles, name: 'Grid' }
     );
 
-    const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-      React.cloneElement(col, {
-        gutter,
-        grow,
-        columns,
-        span: col.props.span || columns,
-        key: index,
-      })
-    );
-
     return (
       <GridProvider value={{ gutter, grow, columns }}>
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
-          {cols}
+          {children}
         </Box>
       </GridProvider>
     );

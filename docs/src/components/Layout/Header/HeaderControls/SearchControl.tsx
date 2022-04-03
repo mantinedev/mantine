@@ -1,10 +1,10 @@
 import React from 'react';
 import { Search } from 'tabler-icons-react';
-import { UnstyledButton, UnstyledButtonProps, Text, Group } from '@mantine/core';
+import { UnstyledButton, Text, Group } from '@mantine/core';
 import { useOs } from '@mantine/hooks';
 import { useSpotlight } from '@mantine/spotlight';
 
-export function SearchControl(props: UnstyledButtonProps) {
+export function SearchControl(props: React.ComponentPropsWithoutRef<'button'>) {
   const os = useOs();
   const spotlight = useSpotlight();
 

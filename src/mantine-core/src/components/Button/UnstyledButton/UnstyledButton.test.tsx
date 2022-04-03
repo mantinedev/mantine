@@ -1,10 +1,16 @@
-import { itRendersChildren, itSupportsFocusEvents, itSupportsSystemProps } from '@mantine/tests';
+import {
+  itRendersChildren,
+  itSupportsFocusEvents,
+  itSupportsSystemProps,
+  itIsPolymorphic,
+} from '@mantine/tests';
 import { UnstyledButton, UnstyledButtonProps } from './UnstyledButton';
 
-const defaultProps: UnstyledButtonProps = {};
+const defaultProps: UnstyledButtonProps<'button'> = {};
 
 describe('@mantine/core/UnstyledButton', () => {
   itRendersChildren(UnstyledButton, defaultProps);
+  itIsPolymorphic(UnstyledButton, defaultProps);
   itSupportsFocusEvents(UnstyledButton, defaultProps, 'button');
   itSupportsSystemProps({
     component: UnstyledButton,

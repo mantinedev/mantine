@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, useMantineTheme, MantineProvider } from '@mantine/styles';
+import { StylesAPIStory } from '@mantine/storybook';
 import { Burger } from '../Burger';
 import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
-import { AppShell } from './AppShell';
+import { Footer } from './Footer/Footer';
+import { Aside } from './Aside/Aside';
+import { AppShell, AppShellProps } from './AppShell';
 
 const content = Array(30)
   .fill(0)
   .map(() => (
-    <p>
+    <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus officiis labore alias nam,
       voluptate aperiam non quidem consequuntur enim unde corrupti quaerat possimus facilis. Ipsa
       quos alias doloremque at veniam?
-    </p>
+    </div>
   ));
 
 function NavbarToggle() {
@@ -31,10 +34,10 @@ function NavbarToggle() {
       }}
       navbarOffsetBreakpoint="sm"
       fixed
-      navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
-          <Text>Application navbar</Text>
-        </Navbar>
+      aside={
+        <Aside p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
+          <Text>Application aside</Text>
+        </Aside>
       }
       header={
         <Header height={50} p="md">
@@ -107,7 +110,26 @@ function WrappedAppShell() {
   );
 }
 
-storiesOf('@mantine/core/AppShell/stories/AppShell', module)
+storiesOf('@mantine/core/AppShell/AppShell', module)
+  .add('Styles API', () => (
+    <StylesAPIStory
+      name="AppShell"
+      props={{}}
+      component={(props: AppShellProps) => (
+        <AppShell
+          {...props}
+          navbar={
+            <Navbar height={60} width={{ base: 100 }}>
+              navbar
+            </Navbar>
+          }
+          header={<Header height={30}>Header</Header>}
+        >
+          Content
+        </AppShell>
+      )}
+    />
+  ))
   .add('Static', () => (
     <AppShell
       header={<Header height={50}>Header</Header>}
@@ -126,6 +148,7 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
     <AppShell
       fixed
       header={<Header height={50}>Header</Header>}
+      footer={<Footer height={50}>Footer</Footer>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
       {content}

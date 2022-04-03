@@ -48,6 +48,9 @@ storiesOf('@mantine/core/Button/stories', module)
   .add('UnstyledButton', () => (
     <div style={{ padding: 20 }}>
       <UnstyledButton>unstyled</UnstyledButton>
+      <UnstyledButton component="a" href="https://mantine.dev">
+        Unstyled link
+      </UnstyledButton>
     </div>
   ))
   .add('Themes', () => (

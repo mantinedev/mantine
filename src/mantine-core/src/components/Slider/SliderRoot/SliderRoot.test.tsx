@@ -5,6 +5,7 @@ import { SliderRoot, SliderRootProps } from './SliderRoot';
 const defaultProps: SliderRootProps = {
   size: 10,
   children: <div />,
+  disabled: false,
 };
 
 describe('@mantine/core/SliderRoot', () => {

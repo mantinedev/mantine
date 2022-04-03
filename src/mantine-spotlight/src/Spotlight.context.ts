@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import type { SpotlightAction } from './types';
 
-export interface SpotlightContextProps {
+export interface SpotlightContextValue {
   /** Opens spotlight */
   openSpotlight(): void;
 
@@ -15,7 +15,7 @@ export interface SpotlightContextProps {
   triggerAction(actionId: string): void;
 
   /** Registers additional actions */
-  registerActions(action: SpotlightAction[]): void;
+  registerActions(actions: SpotlightAction[]): void;
 
   /** Removes actions with given ids */
   removeActions(actionIds: string[]): void;
@@ -30,7 +30,7 @@ export interface SpotlightContextProps {
   query: string;
 }
 
-export const SpotlightContext = createContext<SpotlightContextProps>(null);
+export const SpotlightContext = createContext<SpotlightContextValue>(null);
 
 export function useSpotlight() {
   const ctx = useContext(SpotlightContext);

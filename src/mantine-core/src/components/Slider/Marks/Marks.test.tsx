@@ -14,6 +14,7 @@ const defaultProps: MarksProps = {
   max: 100,
   value: 80,
   onChange: () => {},
+  disabled: false,
 };
 
 describe('@mantine/core/Slider/Marks', () => {

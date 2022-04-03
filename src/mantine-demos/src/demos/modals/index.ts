@@ -1,5 +1,5 @@
-export { confirm } from './confirm';
-export { context } from './context';
-export { confirmCustomize } from './confirmCustomize';
-export { multipleSteps } from './multipleSteps';
-export { content } from './content';
+export { confirm } from './Modals.demo.confirm';
+export { context } from './Modals.demo.context';
+export { confirmCustomize } from './Modals.demo.confirmCustomize';
+export { multipleSteps } from './Modals.demo.multipleSteps';
+export { content } from './Modals.demo.content';

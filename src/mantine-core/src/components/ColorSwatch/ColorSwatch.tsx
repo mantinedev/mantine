@@ -35,7 +35,7 @@ const defaultProps: Partial<ColorSwatchProps<any>> = {
 };
 
 export const ColorSwatch: ColorSwatchComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: ColorSwatchProps<C>, ref: PolymorphicRef<C>) => {
+  (props: ColorSwatchProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { component, color, size, radius, className, children, classNames, styles, ...others } =
       useMantineDefaultProps('ColorSwatch', defaultProps, props);
 
@@ -45,7 +45,7 @@ export const ColorSwatch: ColorSwatchComponent = forwardRef(
     );
 
     return (
-      <Box<any>
+      <Box
         component={component || 'div'}
         className={cx(classes.root, className)}
         ref={ref}
@@ -58,6 +58,6 @@ export const ColorSwatch: ColorSwatchComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 ColorSwatch.displayName = '@mantine/core/ColorSwatch';

@@ -128,6 +128,9 @@ export interface SelectProps
 
   /** Allow deselecting items on click */
   allowDeselect?: boolean;
+
+  /** Should data be filtered when search value exactly matches selected item */
+  filterDataOnExactSearchMatch?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -156,6 +159,7 @@ const defaultProps: Partial<SelectProps> = {
   shouldCreate: defaultShouldCreate,
   selectOnBlur: false,
   switchDirectionOnFlip: false,
+  filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
 };
 
@@ -214,6 +218,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     errorProps,
     descriptionProps,
     labelProps,
+    placeholder,
+    filterDataOnExactSearchMatch,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -321,6 +327,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     limit,
     searchValue: inputValue,
     filter,
+    filterDataOnExactSearchMatch,
+    value: _value,
   });
 
   if (isCreatable && shouldCreate(inputValue, filteredData)) {
@@ -419,6 +427,36 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         break;
       }
 
+      case 'Home': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
+          setHovered(firstItemIndex);
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        }
+        break;
+      }
+
+      case 'End': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
+          setHovered(lastItemIndex);
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        }
+        break;
+      }
+
       case 'Escape': {
         event.preventDefault();
         setDropdownOpened(false);
@@ -432,7 +470,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
-            setDropdownOpened(!dropdownOpened);
+            setDropdownOpened(true);
             setHovered(selectedItemIndex);
             scrollSelectedItemIntoView();
           }
@@ -442,15 +480,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       }
 
       case 'Enter': {
-        event.preventDefault();
+        if (!searchable) {
+          event.preventDefault();
+        }
 
         if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
           handleItemSelect(filteredData[hovered]);
-        } else {
-          setDropdownOpened(true);
-          setHovered(selectedItemIndex);
-          scrollSelectedItemIntoView();
         }
       }
     }
@@ -532,6 +568,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
+        <input type="hidden" name={name} value={_value || ''} />
+
         <Input<'input'>
           autoComplete="nope"
           {...rest}
@@ -544,6 +582,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           onKeyDown={handleInputKeydown}
           __staticSelector="Select"
           value={inputValue}
+          placeholder={placeholder}
           onChange={handleInputChange}
           aria-autocomplete="list"
           aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
@@ -554,7 +593,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           readOnly={!searchable}
           disabled={disabled}
           data-mantine-stop-propagation={shouldShowDropdown}
-          name={name}
+          name={null}
           classNames={{
             ...classNames,
             input: cx({ [classes.input]: !searchable }, classNames?.input),

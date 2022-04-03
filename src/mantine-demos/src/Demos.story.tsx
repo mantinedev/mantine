@@ -79,6 +79,7 @@ attachDemos(storiesOf('@mantine/core/Title/demos', module), demos.TitleDemos);
 attachDemos(storiesOf('@mantine/core/Tooltip/demos', module), demos.TooltipDemos);
 attachDemos(storiesOf('@mantine/core/TransferList/demos', module), demos.TransferListDemos);
 attachDemos(storiesOf('@mantine/core/Transition/demos', module), demos.TransitionDemos);
+attachDemos(storiesOf('@mantine/core/Stack/demos', module), demos.StackDemos);
 attachDemos(
   storiesOf('@mantine/core/TypographyStylesProvider/demos', module),
   demos.TypographyStylesProviderDemos

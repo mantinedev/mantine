@@ -42,8 +42,9 @@ export default createStyles((theme, { colorScheme, native }: PrismStylesParams) 
   lineNumber: {
     color: colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     textAlign: 'right',
-    paddingRight: theme.dir === 'ltr' ? theme.spacing.xl : undefined,
-    paddingLeft: theme.dir === 'rtl' ? theme.spacing.xl : undefined,
+    width: 43,
+    marginRight: theme.dir === 'ltr' ? theme.spacing.xs : undefined,
+    marginLeft: theme.dir === 'rtl' ? theme.spacing.xs : undefined,
     userSelect: 'none',
   },
 

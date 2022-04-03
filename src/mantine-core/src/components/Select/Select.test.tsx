@@ -26,7 +26,7 @@ const data = Array(50)
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
-  itSupportsFocusEvents(Select, defaultProps, 'input');
+  itSupportsFocusEvents(Select, defaultProps, 'input[type="text"]');
   itSupportsInputProps(Select, defaultProps, 'Select');
   itSupportsSystemProps({
     component: Select,
@@ -91,6 +91,6 @@ describe('@mantine/core/Select', () => {
     const { container } = await renderWithAct(
       <Select {...defaultProps} name="custom-select" value="test-1" />
     );
-    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('Test 1');
+    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('test-1');
   });
 });

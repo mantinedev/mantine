@@ -5,9 +5,10 @@ interface TrackStyles {
   radius: MantineNumberSize;
   size: MantineNumberSize;
   color: MantineColor;
+  disabled: boolean;
 }
 
-export default createStyles((theme, { radius, size, color }: TrackStyles) => ({
+export default createStyles((theme, { radius, size, color, disabled }: TrackStyles) => ({
   track: {
     position: 'relative',
     height: theme.fn.size({ sizes, size }),
@@ -33,7 +34,11 @@ export default createStyles((theme, { radius, size, color }: TrackStyles) => ({
     zIndex: 1,
     top: 0,
     bottom: 0,
-    backgroundColor: theme.fn.themeColor(color, 6),
+    backgroundColor: disabled
+      ? theme.colorScheme === 'dark'
+        ? theme.colors.dark[3]
+        : theme.colors.gray[4]
+      : theme.fn.themeColor(color, 6),
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
   },
 }));
