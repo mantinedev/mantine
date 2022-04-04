@@ -7,7 +7,7 @@ interface ContextType {
   onChange(value: number): void;
 }
 
-describe('createSafeContext', () => {
+describe('@mantine/utils/create-safe-context', () => {
   it('throws error if useSafeContext hook was called without Provider', () => {
     const [, useContext] = createSafeContext<ContextType>('test-error');
     const view = renderHook(() => useContext());

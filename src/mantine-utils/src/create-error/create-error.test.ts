@@ -1,6 +1,6 @@
 import { createError } from './create-error';
 
-describe('create-error', () => {
+describe('@mantine/utils/create-error', () => {
   it('creates correct error with default scope', () => {
     expect(
       createError({ message: 'Tabs component was not found in tree', code: 'tabs-context' })
