@@ -28,6 +28,7 @@ export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[role="tab"]',
         parentSelector: '[role="tablist"]',
+        activateOnFocus: ctx.activateTabWithKeyboardEvents,
         onKeyDown,
         loop: ctx.loop,
         dir: theme.dir,

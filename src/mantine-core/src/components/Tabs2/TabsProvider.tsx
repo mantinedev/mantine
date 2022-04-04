@@ -12,6 +12,7 @@ export interface TabsProviderProps {
   orientation?: TabsOrientation;
   id?: string;
   loop?: boolean;
+  activateTabWithKeyboardEvents?: boolean;
   children: React.ReactNode;
 }
 
@@ -23,6 +24,7 @@ export function TabsProvider({
   children,
   loop,
   id,
+  activateTabWithKeyboardEvents,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -38,12 +40,13 @@ export function TabsProvider({
     <TabsContextProvider
       value={{
         value: _value,
-        onTabChange: onChange,
         orientation,
         id: uid,
+        loop,
+        activateTabWithKeyboardEvents,
         getTabId: getId(uid, 'tab'),
         getPanelId: getId(uid, 'panel'),
-        loop,
+        onTabChange: onChange,
       }}
     >
       {children}

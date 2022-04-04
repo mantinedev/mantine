@@ -54,6 +54,9 @@ interface GetElementsSiblingsInput {
   /** Text direction */
   dir?: 'rtl' | 'ltr';
 
+  /** Determines whether element should be clicked when focused with keyboard event */
+  activateOnFocus?: boolean;
+
   /** External keydown event */
   onKeyDown?(event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
@@ -63,6 +66,7 @@ export function createScopedKeydownHandler({
   siblingSelector,
   onKeyDown,
   loop = true,
+  activateOnFocus = false,
   dir = 'rtl',
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -82,12 +86,14 @@ export function createScopedKeydownHandler({
       case 'ArrowRight': {
         event.preventDefault();
         elements[nextIndex].focus();
+        activateOnFocus && elements[nextIndex].click();
         break;
       }
 
       case 'ArrowLeft': {
         event.preventDefault();
         elements[previousIndex].focus();
+        activateOnFocus && elements[previousIndex].click();
         break;
       }
 

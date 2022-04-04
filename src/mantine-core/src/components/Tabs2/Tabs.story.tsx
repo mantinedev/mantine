@@ -23,8 +23,15 @@ const base = (
 );
 
 export const Usage = () => <Tabs defaultValue="react">{base}</Tabs>;
+
 export const NoLoop = () => (
   <Tabs defaultValue="react" loop={false}>
+    {base}
+  </Tabs>
+);
+
+export const NoKeyboardActivation = () => (
+  <Tabs defaultValue="react" activateTabWithKeyboardEvents={false}>
     {base}
   </Tabs>
 );

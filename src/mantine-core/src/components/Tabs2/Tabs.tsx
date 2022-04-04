@@ -24,19 +24,21 @@ export const Tabs: TabsComponent = forwardRef(
   ({
     defaultValue,
     value,
-    onTabChange,
     orientation = 'horizontal',
     loop = true,
+    activateTabWithKeyboardEvents = true,
     children,
     id,
+    onTabChange,
     ...others
   }: TabsProps) => (
     <TabsProvider
+      activateTabWithKeyboardEvents={activateTabWithKeyboardEvents}
+      defaultValue={defaultValue}
+      orientation={orientation}
+      onTabChange={onTabChange}
       value={value}
       id={id}
-      defaultValue={defaultValue}
-      onTabChange={onTabChange}
-      orientation={orientation}
       loop={loop}
     >
       <Box {...others}>{children}</Box>

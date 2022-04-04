@@ -7,6 +7,7 @@ interface TabsContext {
   value: TabsValue;
   orientation: TabsOrientation;
   loop: boolean;
+  activateTabWithKeyboardEvents: boolean;
   onTabChange(value: TabsValue): void;
   getTabId(value: string): string;
   getPanelId(value: string): string;
