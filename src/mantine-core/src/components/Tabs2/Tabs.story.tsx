@@ -6,7 +6,7 @@ export default {
 };
 
 export const Usage = () => (
-  <Tabs>
+  <Tabs defaultValue="react">
     <Tabs.List>
       <Tabs.Tab value="react">React</Tabs.Tab>
       <Tabs.Tab value="sv">Svelte</Tabs.Tab>

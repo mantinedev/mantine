@@ -6,6 +6,7 @@ import type { TabsValue, TabsOrientation } from './Tabs.types';
 import { TabsList } from './TabsList/TabsList';
 import { TabsPanel } from './TabsPanel/TabsPanel';
 import { Tab } from './Tab/Tab';
+import { getId } from './get-id/get-id';
 
 interface TabsProps {
   defaultValue?: TabsValue;
@@ -25,6 +26,7 @@ export function Tabs({
   id,
 }: TabsProps) {
   const uid = useId(id);
+
   const [_value, onChange] = useUncontrolled<TabsValue>({
     value,
     defaultValue,
@@ -34,7 +36,16 @@ export function Tabs({
   });
 
   return (
-    <TabsProvider value={{ value: _value, onTabChange: onChange, orientation, id: uid }}>
+    <TabsProvider
+      value={{
+        value: _value,
+        onTabChange: onChange,
+        orientation,
+        id: uid,
+        getTabId: getId(uid, 'tab'),
+        getPanelId: getId(uid, 'panel'),
+      }}
+    >
       {children}
     </TabsProvider>
   );
