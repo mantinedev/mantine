@@ -10,7 +10,10 @@ export const Usage = () => (
     <Tabs.List>
       <Tabs.Tab value="react">React</Tabs.Tab>
       <Tabs.Tab value="sv">Svelte</Tabs.Tab>
-      <Tabs.Tab value="ng">Angular</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
     </Tabs.List>
 
     <Tabs.Panel value="react">React Panel</Tabs.Panel>
