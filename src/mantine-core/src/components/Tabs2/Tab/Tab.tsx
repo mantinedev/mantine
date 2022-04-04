@@ -26,3 +26,5 @@ export function Tab({ value, children, ...others }: TabProps) {
     </UnstyledButton>
   );
 }
+
+Tab.displayName = '@mantine/core/Tab';

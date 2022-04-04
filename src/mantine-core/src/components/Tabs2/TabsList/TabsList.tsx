@@ -16,3 +16,5 @@ export function TabsList({ children, ...others }: TabsListProps) {
     </Box>
   );
 }
+
+TabsList.displayName = '@mantine/core/TabsList';

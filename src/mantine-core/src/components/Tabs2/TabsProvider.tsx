@@ -47,3 +47,5 @@ export function TabsProvider({
     </TabsContextProvider>
   );
 }
+
+TabsProvider.displayName = '@mantine/core/TabsProvider';

@@ -19,3 +19,5 @@ export function TabsPanel({ value, children, ...others }: TabsPanelProps) {
     </Box>
   );
 }
+
+TabsPanel.displayName = '@mantine/core/TabsPanel';

@@ -45,3 +45,5 @@ export const Tabs: TabsComponent = forwardRef(
 Tabs.List = TabsList;
 Tabs.Tab = Tab;
 Tabs.Panel = TabsPanel;
+
+Tabs.displayName = '@mantine/core/Tabs';
