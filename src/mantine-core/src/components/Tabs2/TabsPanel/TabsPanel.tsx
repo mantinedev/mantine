@@ -3,7 +3,7 @@ import { DefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
 
-interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Panel content */
   children: React.ReactNode;
 

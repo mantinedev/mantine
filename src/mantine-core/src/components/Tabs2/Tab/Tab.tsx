@@ -3,7 +3,7 @@ import { DefaultProps } from '@mantine/styles';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
 
-interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   value: string;
   children: React.ReactNode;
 }
