@@ -51,6 +51,9 @@ interface GetElementsSiblingsInput {
   /** Determines whether next/previous indices should loop */
   loop?: boolean;
 
+  /** Text direction */
+  dir?: 'rtl' | 'ltr';
+
   /** External keydown event */
   onKeyDown?(event: React.KeyboardEvent<HTMLButtonElement>): void;
 }
@@ -60,6 +63,7 @@ export function createScopedKeydownHandler({
   siblingSelector,
   onKeyDown,
   loop = true,
+  dir = 'rtl',
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
@@ -69,17 +73,34 @@ export function createScopedKeydownHandler({
     );
 
     const current = elements.findIndex((el) => event.currentTarget === el);
+    const _nextIndex = getNextIndex(current, elements, loop);
+    const _previousIndex = getPreviousIndex(current, elements, loop);
+    const nextIndex = dir === 'rtl' ? _previousIndex : _nextIndex;
+    const previousIndex = dir === 'rtl' ? _nextIndex : _previousIndex;
 
     switch (event.key) {
       case 'ArrowRight': {
         event.preventDefault();
-        elements[getNextIndex(current, elements, loop)].focus();
+        elements[nextIndex].focus();
         break;
       }
 
       case 'ArrowLeft': {
         event.preventDefault();
-        elements[getPreviousIndex(current, elements, loop)].focus();
+        elements[previousIndex].focus();
+        break;
+      }
+
+      case 'Home': {
+        event.preventDefault();
+        !elements[0].disabled && elements[0].focus();
+        break;
+      }
+
+      case 'End': {
+        event.preventDefault();
+        const last = elements.length - 1;
+        !elements[last].disabled && elements[last].focus();
         break;
       }
     }

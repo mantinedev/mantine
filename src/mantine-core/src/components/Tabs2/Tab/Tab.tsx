@@ -3,6 +3,7 @@ import { DefaultProps } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
+import useStyles from './Tab.styles';
 
 export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   value: string;
@@ -10,6 +11,7 @@ export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 }
 
 export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
+  const { theme } = useStyles();
   const ctx = useTabsContext();
   const isActive = value === ctx.value;
   const activateTab = () => ctx.onTabChange(value);
@@ -28,6 +30,7 @@ export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
         parentSelector: '[role="tablist"]',
         onKeyDown,
         loop: ctx.loop,
+        dir: theme.dir,
       })}
       {...others}
     >
