@@ -53,7 +53,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   filter: defaultFilter,
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
-  dropdownPosition: 'bottom',
+  dropdownPosition: 'flip',
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
