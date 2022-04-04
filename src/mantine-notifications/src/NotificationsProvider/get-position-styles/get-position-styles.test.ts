@@ -6,7 +6,8 @@ describe('@mantine/notifications/get-position-styles', () => {
     expect(getPositionStyles(['top', 'right'], 400, 20)).toStrictEqual({ top: 20, right: 20 });
     expect(getPositionStyles(['top', 'center'], 400, 20)).toStrictEqual({
       top: 20,
-      left: 'calc(50% - 200px)',
+      left: '50%',
+      transform: 'translateX(-50%)',
     });
 
     expect(getPositionStyles(['bottom', 'left'], 400, 20)).toStrictEqual({ bottom: 20, left: 20 });
@@ -16,7 +17,8 @@ describe('@mantine/notifications/get-position-styles', () => {
     });
     expect(getPositionStyles(['bottom', 'center'], 400, 20)).toStrictEqual({
       bottom: 20,
-      left: 'calc(50% - 200px)',
+      left: '50%',
+      transform: 'translateX(-50%)',
     });
   });
 });
