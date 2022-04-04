@@ -1,21 +1,15 @@
 import React from 'react';
-import { useUncontrolled, useId } from '@mantine/utils';
-import { TabsProvider } from './Tabs.context';
-import { TABS_ERRORS } from './Tabs.errors';
-import type { TabsValue, TabsOrientation } from './Tabs.types';
+import { DefaultProps } from '@mantine/styles';
+import { Box } from '../Box';
 import { TabsList } from './TabsList/TabsList';
 import { TabsPanel } from './TabsPanel/TabsPanel';
 import { Tab } from './Tab/Tab';
-import { getId } from './get-id/get-id';
+import { TabsProvider, TabsProviderProps } from './TabsProvider';
 
-interface TabsProps {
-  defaultValue?: TabsValue;
-  value?: TabsValue;
-  onTabChange?(value: TabsValue): void;
-  orientation?: TabsOrientation;
-  id?: string;
-  children: React.ReactNode;
-}
+interface TabsProps
+  extends TabsProviderProps,
+    DefaultProps,
+    Omit<React.ComponentPropsWithoutRef<'div'>, keyof TabsProviderProps> {}
 
 export function Tabs({
   defaultValue,
@@ -24,29 +18,17 @@ export function Tabs({
   orientation = 'horizontal',
   children,
   id,
+  ...others
 }: TabsProps) {
-  const uid = useId(id);
-
-  const [_value, onChange] = useUncontrolled<TabsValue>({
-    value,
-    defaultValue,
-    finalValue: null,
-    onChange: onTabChange,
-    errorMessage: TABS_ERRORS.onChange.message,
-  });
-
   return (
     <TabsProvider
-      value={{
-        value: _value,
-        onTabChange: onChange,
-        orientation,
-        id: uid,
-        getTabId: getId(uid, 'tab'),
-        getPanelId: getId(uid, 'panel'),
-      }}
+      value={value}
+      id={id}
+      defaultValue={defaultValue}
+      onTabChange={onTabChange}
+      orientation={orientation}
     >
-      {children}
+      <Box {...others}>{children}</Box>
     </TabsProvider>
   );
 }

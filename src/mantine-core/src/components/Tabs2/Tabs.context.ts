@@ -11,6 +11,6 @@ interface TabsContext {
   getPanelId(value: string): string;
 }
 
-export const [TabsProvider, useTabsContext] = createSafeContext<TabsContext>(
+export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(
   TABS_ERRORS.context.message
 );
