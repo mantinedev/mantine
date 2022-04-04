@@ -5,20 +5,36 @@ function findElementAncestor(element: HTMLElement, selector: string) {
   return _element;
 }
 
-function getPreviousIndex(current: number, elements: HTMLButtonElement[]) {
+function getPreviousIndex(current: number, elements: HTMLButtonElement[], loop: boolean) {
   for (let i = current - 1; i >= 0; i -= 1) {
     if (!elements[i].disabled) {
       return i;
     }
   }
 
+  if (loop) {
+    for (let i = elements.length - 1; i > -1; i -= 1) {
+      if (!elements[i].disabled) {
+        return i;
+      }
+    }
+  }
+
   return current;
 }
 
-function getNextIndex(current: number, collection: HTMLButtonElement[]) {
-  for (let i = current + 1; i < collection.length; i += 1) {
-    if (!collection[i].disabled) {
+function getNextIndex(current: number, elements: HTMLButtonElement[], loop: boolean) {
+  for (let i = current + 1; i < elements.length; i += 1) {
+    if (!elements[i].disabled) {
       return i;
+    }
+  }
+
+  if (loop) {
+    for (let i = 0; i < elements.length; i += 1) {
+      if (!elements[i].disabled) {
+        return i;
+      }
     }
   }
 
@@ -32,7 +48,7 @@ interface GetElementsSiblingsInput {
   /** Selector used to find element siblings, e.g. '[data-tab]' */
   siblingSelector: string;
 
-  /** Determines whether next/previous indices should be in the loop */
+  /** Determines whether next/previous indices should loop */
   loop?: boolean;
 
   /** External keydown event */
@@ -43,6 +59,7 @@ export function createScopedKeydownHandler({
   parentSelector,
   siblingSelector,
   onKeyDown,
+  loop = true,
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
@@ -56,13 +73,13 @@ export function createScopedKeydownHandler({
     switch (event.key) {
       case 'ArrowRight': {
         event.preventDefault();
-        elements[getNextIndex(current, elements)].focus();
+        elements[getNextIndex(current, elements, loop)].focus();
         break;
       }
 
       case 'ArrowLeft': {
         event.preventDefault();
-        elements[getPreviousIndex(current, elements)].focus();
+        elements[getPreviousIndex(current, elements, loop)].focus();
         break;
       }
     }
