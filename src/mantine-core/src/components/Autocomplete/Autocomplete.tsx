@@ -33,6 +33,9 @@ export interface AutocompleteProps
     InputWrapperBaseProps,
     SelectSharedProps<AutocompleteItem, string>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
+
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
 }
@@ -54,6 +57,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   dropdownPosition: 'flip',
+  maxDropdownHeight: 'auto',
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -94,7 +98,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       withinPortal,
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
-      dropdownPosition = 'bottom',
+      dropdownPosition,
+      maxDropdownHeight,
       errorProps,
       labelProps,
       descriptionProps,
@@ -264,7 +269,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             transitionTimingFunction={transitionTimingFunction}
             uuid={uuid}
             shadow={shadow}
-            maxDropdownHeight="auto"
+            maxDropdownHeight={maxDropdownHeight}
             classNames={classNames}
             styles={styles}
             __staticSelector="Autocomplete"
