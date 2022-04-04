@@ -12,5 +12,9 @@ export const Usage = () => (
       <Tabs.Tab value="sv">Svelte</Tabs.Tab>
       <Tabs.Tab value="ng">Angular</Tabs.Tab>
     </Tabs.List>
+
+    <Tabs.Panel value="react">React Panel</Tabs.Panel>
+    <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
+    <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
   </Tabs>
 );

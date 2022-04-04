@@ -4,6 +4,7 @@ import { TabsProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
 import type { TabsValue, TabsOrientation } from './Tabs.types';
 import { TabsList } from './TabsList/TabsList';
+import { TabsPanel } from './TabsPanel/TabsPanel';
 import { Tab } from './Tab/Tab';
 
 interface TabsProps {
@@ -41,3 +42,4 @@ export function Tabs({
 
 Tabs.List = TabsList;
 Tabs.Tab = Tab;
+Tabs.Panel = TabsPanel;
