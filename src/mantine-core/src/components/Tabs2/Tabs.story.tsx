@@ -5,8 +5,8 @@ export default {
   title: 'Tabs2',
 };
 
-export const Usage = () => (
-  <Tabs defaultValue="react">
+const base = (
+  <>
     <Tabs.List>
       <Tabs.Tab value="react">React</Tabs.Tab>
       <Tabs.Tab value="sv">Svelte</Tabs.Tab>
@@ -19,5 +19,12 @@ export const Usage = () => (
     <Tabs.Panel value="react">React Panel</Tabs.Panel>
     <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
     <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
+  </>
+);
+
+export const Usage = () => <Tabs defaultValue="react">{base}</Tabs>;
+export const NoLoop = () => (
+  <Tabs defaultValue="react" loop={false}>
+    {base}
   </Tabs>
 );

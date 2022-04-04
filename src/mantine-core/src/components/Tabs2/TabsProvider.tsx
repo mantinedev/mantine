@@ -11,6 +11,7 @@ export interface TabsProviderProps {
   onTabChange?(value: TabsValue): void;
   orientation?: TabsOrientation;
   id?: string;
+  loop?: boolean;
   children: React.ReactNode;
 }
 
@@ -18,8 +19,9 @@ export function TabsProvider({
   defaultValue,
   value,
   onTabChange,
-  orientation = 'horizontal',
+  orientation,
   children,
+  loop,
   id,
 }: TabsProviderProps) {
   const uid = useId(id);
@@ -41,6 +43,7 @@ export function TabsProvider({
         id: uid,
         getTabId: getId(uid, 'tab'),
         getPanelId: getId(uid, 'panel'),
+        loop,
       }}
     >
       {children}

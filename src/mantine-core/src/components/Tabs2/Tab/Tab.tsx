@@ -27,6 +27,7 @@ export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
         siblingSelector: '[role="tab"]',
         parentSelector: '[role="tablist"]',
         onKeyDown,
+        loop: ctx.loop,
       })}
       {...others}
     >

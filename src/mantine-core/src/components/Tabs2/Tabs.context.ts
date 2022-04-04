@@ -6,6 +6,7 @@ interface TabsContext {
   id: string;
   value: TabsValue;
   orientation: TabsOrientation;
+  loop: boolean;
   onTabChange(value: TabsValue): void;
   getTabId(value: string): string;
   getPanelId(value: string): string;

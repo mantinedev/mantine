@@ -26,6 +26,7 @@ export const Tabs: TabsComponent = forwardRef(
     value,
     onTabChange,
     orientation = 'horizontal',
+    loop = true,
     children,
     id,
     ...others
@@ -36,6 +37,7 @@ export const Tabs: TabsComponent = forwardRef(
       defaultValue={defaultValue}
       onTabChange={onTabChange}
       orientation={orientation}
+      loop={loop}
     >
       <Box {...others}>{children}</Box>
     </TabsProvider>
