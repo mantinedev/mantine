@@ -20,19 +20,22 @@ type TabsComponent = ForwardRefWithStaticComponents<
   }
 >;
 
-export const Tabs: TabsComponent = forwardRef(
-  ({
-    defaultValue,
-    value,
-    orientation = 'horizontal',
-    loop = true,
-    activateTabWithKeyboardEvents = true,
-    allowTabDeactivation = false,
-    children,
-    id,
-    onTabChange,
-    ...others
-  }: TabsProps) => (
+export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
+  (
+    {
+      defaultValue,
+      value,
+      orientation = 'horizontal',
+      loop = true,
+      activateTabWithKeyboardEvents = true,
+      allowTabDeactivation = false,
+      children,
+      id,
+      onTabChange,
+      ...others
+    },
+    ref
+  ) => (
     <TabsProvider
       activateTabWithKeyboardEvents={activateTabWithKeyboardEvents}
       defaultValue={defaultValue}
@@ -43,7 +46,9 @@ export const Tabs: TabsComponent = forwardRef(
       loop={loop}
       allowTabDeactivation={allowTabDeactivation}
     >
-      <Box {...others}>{children}</Box>
+      <Box {...others} ref={ref}>
+        {children}
+      </Box>
     </TabsProvider>
   )
 ) as any;
