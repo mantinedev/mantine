@@ -12,12 +12,22 @@ export interface TabProps
     React.ComponentPropsWithoutRef<'button'> {
   value: string;
   children: React.ReactNode;
+  rightSection?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 export const Tab = forwardRef<HTMLButtonElement, TabProps>(
-  ({ value, children, onKeyDown, onClick, className, ...others }, ref) => {
+  ({ value, children, onKeyDown, onClick, className, icon, rightSection, ...others }, ref) => {
     const ctx = useTabsContext();
-    const { theme, classes, cx } = useStyles(ctx);
+
+    const { theme, classes, cx } = useStyles({
+      withIcon: !!icon,
+      withRightSection: !!rightSection,
+      orientation: ctx.orientation,
+      color: ctx.color,
+      variant: ctx.variant,
+    });
+
     const isActive = value === ctx.value;
     const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
@@ -46,7 +56,9 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
           onKeyDown,
         })}
       >
-        {children}
+        {icon && <div className={classes.tabIcon}>{icon}</div>}
+        {children && <div className={classes.tabLabel}>{children}</div>}
+        {rightSection && <div className={classes.tabRightSection}>{rightSection}</div>}
       </UnstyledButton>
     );
   }

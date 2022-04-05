@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Package } from 'tabler-icons-react';
 import { Tabs, TabsProps } from './Tabs';
+import { Badge } from '../Badge';
 import { Box } from '../Box';
 
 export default {
@@ -96,4 +98,38 @@ export const Variants = () => (
       {base}
     </Wrapper>
   </Box>
+);
+
+export const WithIcon = () => (
+  <Wrapper defaultValue="react" variant="outline">
+    <Tabs.List>
+      <Tabs.Tab value="react" icon={<Package size={14} />}>
+        React
+      </Tabs.Tab>
+      <Tabs.Tab
+        value="sv"
+        rightSection={
+          <Badge size="xs" sx={{ width: 16, height: 16, padding: 0 }}>
+            6
+          </Badge>
+        }
+      >
+        Svelte
+      </Tabs.Tab>
+      <Tabs.Tab value="ng">Angular</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="react" pt="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pt="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pt="sm">
+      Angular Panel
+    </Tabs.Panel>
+  </Wrapper>
 );

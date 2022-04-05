@@ -5,6 +5,8 @@ interface TabStylesParams {
   variant: TabsVariant;
   color: MantineColor;
   orientation: TabsOrientation;
+  withIcon: boolean;
+  withRightSection: boolean;
 }
 
 interface GetVariantReturnType {
@@ -76,13 +78,20 @@ export default createStyles((theme, params: TabStylesParams) => {
   const variantStyles = getVariantStyles(theme, params);
 
   return {
+    tabLabel: {},
+
     tab: {
       position: 'relative',
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+      paddingLeft: params.withIcon ? theme.spacing.xs : undefined,
+      paddingRight: params.withRightSection ? theme.spacing.xs : undefined,
       fontSize: theme.fontSizes.sm,
       whiteSpace: 'nowrap',
       textAlign: 'center',
       zIndex: 0,
+      display: 'flex',
+      alignItems: 'center',
+      lineHeight: 1,
 
       '&:disabled': {
         opacity: 0.5,
@@ -101,5 +110,25 @@ export default createStyles((theme, params: TabStylesParams) => {
     },
 
     tabActive: variantStyles.tabActive,
+
+    tabRightSection: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      '&:not(:only-child)': {
+        marginLeft: 7,
+      },
+    },
+
+    tabIcon: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      '&:not(:only-child)': {
+        marginRight: 7,
+      },
+    },
   };
 });
