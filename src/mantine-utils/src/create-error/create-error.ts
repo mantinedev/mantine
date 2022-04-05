@@ -17,7 +17,7 @@ interface CreateErrorInput {
 export function createError({
   message,
   code,
-  scope = '@mantine/headless',
+  scope = '@mantine/core',
 }: CreateErrorInput): MantineError {
   return {
     message: `[${scope}] ${

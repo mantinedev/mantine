@@ -77,7 +77,8 @@ export function createScopedKeydownHandler({
     onKeyDown?.(event);
 
     const elements: HTMLButtonElement[] = Array.from(
-      findElementAncestor(event.currentTarget, parentSelector).querySelectorAll(siblingSelector)
+      findElementAncestor(event.currentTarget, parentSelector)?.querySelectorAll(siblingSelector) ||
+        []
     );
 
     const current = elements.findIndex((el) => event.currentTarget === el);

@@ -19,3 +19,4 @@ export { itSupportsInputIcon } from './it-supports-input-icon';
 export { itFiltersChildren } from './it-filters-children';
 export { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 export { renderWithAct, actAsync } from './render-with-act';
+export { createContextContainer } from './create-context-container';
