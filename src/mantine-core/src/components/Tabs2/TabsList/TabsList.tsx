@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
@@ -8,13 +8,15 @@ export interface TabsListProps extends DefaultProps, React.ComponentPropsWithout
   children: React.ReactNode;
 }
 
-export function TabsList({ children, ...others }: TabsListProps) {
-  const { orientation } = useTabsContext();
-  return (
-    <Box {...others} role="tablist" aria-orientation={orientation}>
-      {children}
-    </Box>
-  );
-}
+export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
+  ({ children, ...others }, ref) => {
+    const { orientation } = useTabsContext();
+    return (
+      <Box {...others} ref={ref} role="tablist" aria-orientation={orientation}>
+        {children}
+      </Box>
+    );
+  }
+);
 
 TabsList.displayName = '@mantine/core/TabsList';
