@@ -43,4 +43,10 @@ describe('@mantine/core/Tab', () => {
     userEvent.type(screen.getByRole('tab'), 'R');
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('renders given right section and icon', () => {
+    render(<TestContainer {...defaultProps} rightSection="test-right-section" icon="test-icon" />);
+    expect(screen.getByText('test-right-section')).toBeInTheDocument();
+    expect(screen.getByText('test-icon')).toBeInTheDocument();
+  });
 });
