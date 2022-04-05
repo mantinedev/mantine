@@ -41,3 +41,11 @@ export const VerticalOrientation = () => (
     {base}
   </Tabs>
 );
+
+export const NoDefaultValue = () => <Tabs defaultValue={null}>{base}</Tabs>;
+
+export const AllowDeactivation = () => (
+  <Tabs defaultValue="react" allowTabDeactivation>
+    {base}
+  </Tabs>
+);

@@ -13,6 +13,7 @@ export interface TabsProviderProps {
   id?: string;
   loop?: boolean;
   activateTabWithKeyboardEvents?: boolean;
+  allowTabDeactivation?: boolean;
   children: React.ReactNode;
 }
 
@@ -25,6 +26,7 @@ export function TabsProvider({
   loop,
   id,
   activateTabWithKeyboardEvents,
+  allowTabDeactivation,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -47,6 +49,7 @@ export function TabsProvider({
         getTabId: getId(uid, 'tab'),
         getPanelId: getId(uid, 'panel'),
         onTabChange: onChange,
+        allowTabDeactivation,
       }}
     >
       {children}

@@ -10,11 +10,14 @@ export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   children: React.ReactNode;
 }
 
-export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
+export function Tab({ value, children, onKeyDown, onClick, ...others }: TabProps) {
   const { theme } = useStyles();
   const ctx = useTabsContext();
   const isActive = value === ctx.value;
-  const activateTab = () => ctx.onTabChange(value);
+  const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
+    onClick?.(event);
+  };
 
   return (
     <UnstyledButton<'button'>
@@ -22,17 +25,17 @@ export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
       role="tab"
       id={ctx.getTabId(value)}
       aria-selected={isActive}
-      tabIndex={isActive ? 0 : -1}
+      tabIndex={isActive || ctx.value === null ? 0 : -1}
       aria-controls={ctx.getPanelId(value)}
       onClick={activateTab}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[role="tab"]',
         parentSelector: '[role="tablist"]',
         activateOnFocus: ctx.activateTabWithKeyboardEvents,
-        onKeyDown,
         loop: ctx.loop,
         dir: theme.dir,
         orientation: ctx.orientation,
+        onKeyDown,
       })}
       {...others}
     >

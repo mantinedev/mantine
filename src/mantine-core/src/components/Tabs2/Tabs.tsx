@@ -27,6 +27,7 @@ export const Tabs: TabsComponent = forwardRef(
     orientation = 'horizontal',
     loop = true,
     activateTabWithKeyboardEvents = true,
+    allowTabDeactivation = false,
     children,
     id,
     onTabChange,
@@ -40,6 +41,7 @@ export const Tabs: TabsComponent = forwardRef(
       value={value}
       id={id}
       loop={loop}
+      allowTabDeactivation={allowTabDeactivation}
     >
       <Box {...others}>{children}</Box>
     </TabsProvider>
