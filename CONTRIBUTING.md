@@ -14,7 +14,7 @@ Thank you for showing interest in contributing to Mantine. All of your contribut
 
 - After deciding which [GitHub issue](https://github.com/mantinedev/mantine/labels/help%20wanted) or feature you'd like to work on, create a local branch to track your changes
 - If applicable, add unit tests while implementing your code
-- Ensure that all commits follow our [commit convention](##commit-convention)
+- Ensure that all commits follow our [commit convention](#commit-convention)
 - It is highly recommended that you run the `npm test` command to ensure new contributions integrate with the old before initiating a merge request
 - Create a merge request and keep up-to-date with any feedback you receive from a maintainer
 
