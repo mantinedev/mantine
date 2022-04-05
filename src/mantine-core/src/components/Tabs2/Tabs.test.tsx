@@ -11,7 +11,7 @@ import { Tabs, TabsProps } from './Tabs';
 const defaultProps: TabsProps = {
   children: (
     <>
-      <Tabs.List>
+      <Tabs.List aria-label="test-tabs">
         <Tabs.Tab value="tab-1">tab-1</Tabs.Tab>
         <Tabs.Tab value="tab-2">tab-2</Tabs.Tab>
         <Tabs.Tab value="tab-3">tab-3</Tabs.Tab>
@@ -163,6 +163,30 @@ describe('@mantine/core/Tabs', () => {
 
     userEvent.type(getTab('tab-2'), '{arrowleft}');
     expectActiveTab('tab-2');
+  });
+
+  it('handles arrow events correctly (disabled tab)', () => {
+    render(
+      <Tabs defaultValue="tab-1">
+        <Tabs.List aria-label="test-tabs">
+          <Tabs.Tab value="tab-1">tab-1</Tabs.Tab>
+          <Tabs.Tab value="tab-2" disabled>
+            tab-2
+          </Tabs.Tab>
+          <Tabs.Tab value="tab-3">tab-3</Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="tab-1">tab-1 panel</Tabs.Panel>
+        <Tabs.Panel value="tab-2">tab-2 panel</Tabs.Panel>
+        <Tabs.Panel value="tab-3">tab-3 panel</Tabs.Panel>
+      </Tabs>
+    );
+
+    userEvent.type(getTab('tab-1'), '{arrowright}');
+    expectActiveTab('tab-3');
+
+    userEvent.type(getTab('tab-3'), '{arrowleft}');
+    expectActiveTab('tab-1');
   });
 
   it('does not display any tab if value in null', () => {
