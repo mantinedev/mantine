@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, TabsProps } from './Tabs';
+import { Box } from '../Box';
 
 export default {
   title: 'Tabs2',
@@ -16,9 +17,15 @@ const base = (
       </Tabs.Tab>
     </Tabs.List>
 
-    <Tabs.Panel value="react">React Panel</Tabs.Panel>
-    <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
-    <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
+    <Tabs.Panel value="react" pt="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pt="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pt="sm">
+      Angular Panel
+    </Tabs.Panel>
   </>
 );
 
@@ -76,4 +83,17 @@ export const Grow = () => (
     <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
     <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
   </Wrapper>
+);
+
+export const Variants = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    Default:
+    <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
+      {base}
+    </Wrapper>
+    Outline:
+    <Wrapper defaultValue="react" variant="outline" mt={10}>
+      {base}
+    </Wrapper>
+  </Box>
 );

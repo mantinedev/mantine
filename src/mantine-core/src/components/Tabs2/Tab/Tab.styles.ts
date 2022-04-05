@@ -17,6 +17,7 @@ function getVariantStyles(
   { variant, orientation, color }: TabStylesParams
 ): GetVariantReturnType {
   const vertical = orientation === 'vertical';
+
   if (variant === 'default') {
     return {
       tab: {
@@ -42,6 +43,32 @@ function getVariantStyles(
     };
   }
 
+  if (variant === 'outline') {
+    return {
+      tab: {
+        background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        borderTopRightRadius: theme.radius.sm,
+        borderTopLeftRadius: theme.radius.sm,
+        border: '1px solid transparent',
+        borderBottom: 'none',
+      },
+
+      tabActive: {
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+
+        '&::before': {
+          content: '""',
+          backgroundColor: theme.white,
+          position: 'absolute',
+          bottom: -1,
+          height: 1,
+          right: 0,
+          left: 0,
+        },
+      },
+    };
+  }
+
   return { tab: {}, tabActive: {} };
 }
 
@@ -50,10 +77,12 @@ export default createStyles((theme, params: TabStylesParams) => {
 
   return {
     tab: {
+      position: 'relative',
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       fontSize: theme.fontSizes.sm,
       whiteSpace: 'nowrap',
       textAlign: 'center',
+      zIndex: 0,
 
       '&:disabled': {
         opacity: 0.5,
@@ -62,6 +91,10 @@ export default createStyles((theme, params: TabStylesParams) => {
         '&:hover': {
           backgroundColor: 'transparent',
         },
+      },
+
+      '&:focus': {
+        zIndex: 1,
       },
 
       ...variantStyles.tab,
