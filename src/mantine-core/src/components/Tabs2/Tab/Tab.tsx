@@ -32,6 +32,7 @@ export function Tab({ value, children, onKeyDown, ...others }: TabProps) {
         onKeyDown,
         loop: ctx.loop,
         dir: theme.dir,
+        orientation: ctx.orientation,
       })}
       {...others}
     >

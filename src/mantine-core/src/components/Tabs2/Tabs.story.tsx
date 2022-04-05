@@ -35,3 +35,9 @@ export const NoKeyboardActivation = () => (
     {base}
   </Tabs>
 );
+
+export const VerticalOrientation = () => (
+  <Tabs defaultValue="react" orientation="vertical">
+    {base}
+  </Tabs>
+);

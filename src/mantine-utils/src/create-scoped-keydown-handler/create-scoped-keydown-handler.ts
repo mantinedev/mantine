@@ -51,6 +51,9 @@ interface GetElementsSiblingsInput {
   /** Determines whether next/previous indices should loop */
   loop?: boolean;
 
+  /** Determines which arrow keys will be used */
+  orientation: 'vertical' | 'horizontal';
+
   /** Text direction */
   dir?: 'rtl' | 'ltr';
 
@@ -68,6 +71,7 @@ export function createScopedKeydownHandler({
   loop = true,
   activateOnFocus = false,
   dir = 'rtl',
+  orientation,
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
@@ -84,16 +88,42 @@ export function createScopedKeydownHandler({
 
     switch (event.key) {
       case 'ArrowRight': {
-        event.preventDefault();
-        elements[nextIndex].focus();
-        activateOnFocus && elements[nextIndex].click();
+        if (orientation === 'horizontal') {
+          event.preventDefault();
+          elements[nextIndex].focus();
+          activateOnFocus && elements[nextIndex].click();
+        }
+
         break;
       }
 
       case 'ArrowLeft': {
-        event.preventDefault();
-        elements[previousIndex].focus();
-        activateOnFocus && elements[previousIndex].click();
+        if (orientation === 'horizontal') {
+          event.preventDefault();
+          elements[previousIndex].focus();
+          activateOnFocus && elements[previousIndex].click();
+        }
+
+        break;
+      }
+
+      case 'ArrowUp': {
+        if (orientation === 'vertical') {
+          event.preventDefault();
+          elements[_previousIndex].focus();
+          activateOnFocus && elements[_previousIndex].click();
+        }
+
+        break;
+      }
+
+      case 'ArrowDown': {
+        if (orientation === 'vertical') {
+          event.preventDefault();
+          elements[_nextIndex].focus();
+          activateOnFocus && elements[_nextIndex].click();
+        }
+
         break;
       }
 
