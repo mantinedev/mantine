@@ -19,7 +19,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
       <Box
         {...others}
         ref={ref}
-        sx={[{ display: ctx.value !== value ? 'none' : undefined }, ...packSx(sx)]}
+        sx={[{ display: ctx.value !== value ? 'none' : undefined, flex: 1 }, ...packSx(sx)]}
         role="tabpanel"
         id={ctx.getPanelId(value)}
         aria-labelledby={ctx.getTabId(value)}

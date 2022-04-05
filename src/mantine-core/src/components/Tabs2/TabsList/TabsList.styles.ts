@@ -3,14 +3,24 @@ import { TabsOrientation } from '../Tabs.types';
 
 interface TabsListStylesParams {
   orientation: TabsOrientation;
+  grow: boolean;
 }
 
-export default createStyles((theme, { orientation }: TabsListStylesParams) => ({
-  tabsList: {
-    display: 'flex',
-    flexDirection: orientation === 'vertical' ? 'column' : 'row',
-    borderBottom: `2px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
-    }`,
-  },
-}));
+export default createStyles((theme, { orientation, grow }: TabsListStylesParams) => {
+  const vertical = orientation === 'vertical';
+
+  return {
+    tabsList: {
+      display: 'flex',
+      flexDirection: vertical ? 'column' : 'row',
+
+      [vertical ? 'borderRight' : 'borderBottom']: `2px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
+      }`,
+
+      '& [role="tab"]': {
+        flex: grow ? 1 : undefined,
+      },
+    },
+  };
+});

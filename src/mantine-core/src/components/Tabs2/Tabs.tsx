@@ -9,6 +9,7 @@ import { TabsList } from './TabsList/TabsList';
 import { TabsPanel } from './TabsPanel/TabsPanel';
 import { Tab } from './Tab/Tab';
 import { TabsProvider, TabsProviderProps } from './TabsProvider';
+import useStyles from './Tabs.styles';
 
 export interface TabsProps
   extends TabsProviderProps,
@@ -44,8 +45,10 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     id,
     onTabChange,
     variant,
+    className,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
+  const { classes, cx } = useStyles({ orientation });
 
   return (
     <TabsProvider
@@ -59,7 +62,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
       allowTabDeactivation={allowTabDeactivation}
       variant={variant}
     >
-      <Box {...others} id={id} ref={ref}>
+      <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
         {children}
       </Box>
     </TabsProvider>

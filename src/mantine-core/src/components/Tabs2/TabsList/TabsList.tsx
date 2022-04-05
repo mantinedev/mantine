@@ -11,12 +11,15 @@ export interface TabsListProps
     React.ComponentPropsWithoutRef<'div'> {
   /** <Tabs.Tab /> components */
   children: React.ReactNode;
+
+  /** Determines whether tabs should take the whole space */
+  grow?: boolean;
 }
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
-  ({ children, className, ...others }, ref) => {
+  ({ children, className, grow = false, ...others }, ref) => {
     const { orientation } = useTabsContext();
-    const { classes, cx } = useStyles({ orientation });
+    const { classes, cx } = useStyles({ orientation, grow });
 
     return (
       <Box
