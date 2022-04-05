@@ -4,11 +4,13 @@ import {
   createContextContainer,
   itRendersChildren,
   itSupportsFocusEvents,
+  itThrowsContextError,
 } from '@mantine/tests';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Tab, TabProps } from './Tab';
 import { TabsProvider } from '../TabsProvider';
+import { TABS_ERRORS } from '../Tabs.errors';
 
 const defaultProps: TabProps = {
   value: 'test',
@@ -18,6 +20,7 @@ const defaultProps: TabProps = {
 const TestContainer = createContextContainer(Tab, TabsProvider);
 
 describe('@mantine/core/Tab', () => {
+  itThrowsContextError(Tab, defaultProps, TABS_ERRORS.context.message);
   itRendersChildren(TestContainer, defaultProps);
   itSupportsFocusEvents(TestContainer, defaultProps, '[role="tab"]');
   itSupportsSystemProps({

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
+import { packSx } from '@mantine/utils';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
 
@@ -11,19 +12,22 @@ export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithou
   value: string;
 }
 
-export function TabsPanel({ value, children, ...others }: TabsPanelProps) {
-  const ctx = useTabsContext();
-  return (
-    <Box
-      {...others}
-      sx={{ display: ctx.value !== value ? 'none' : undefined }}
-      role="tabpanel"
-      id={ctx.getPanelId(value)}
-      aria-labelledby={ctx.getTabId(value)}
-    >
-      {children}
-    </Box>
-  );
-}
+export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
+  ({ value, children, sx, ...others }, ref) => {
+    const ctx = useTabsContext();
+    return (
+      <Box
+        {...others}
+        ref={ref}
+        sx={[{ display: ctx.value !== value ? 'none' : undefined }, ...packSx(sx)]}
+        role="tabpanel"
+        id={ctx.getPanelId(value)}
+        aria-labelledby={ctx.getTabId(value)}
+      >
+        {children}
+      </Box>
+    );
+  }
+);
 
 TabsPanel.displayName = '@mantine/core/TabsPanel';

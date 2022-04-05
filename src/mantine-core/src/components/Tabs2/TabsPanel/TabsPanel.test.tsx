@@ -4,23 +4,24 @@ import {
   itRendersChildren,
   itThrowsContextError,
 } from '@mantine/tests';
-import { TabsList, TabsListProps } from './TabsList';
+import { TabsPanel, TabsPanelProps } from './TabsPanel';
 import { TabsProvider } from '../TabsProvider';
 import { TABS_ERRORS } from '../Tabs.errors';
 
-const defaultProps: TabsListProps = {
+const defaultProps: TabsPanelProps = {
+  value: 'test',
   children: 'Test children',
 };
 
-const TestContainer = createContextContainer(TabsList, TabsProvider);
+const TestContainer = createContextContainer(TabsPanel, TabsProvider);
 
-describe('@mantine/core/TabsList', () => {
-  itThrowsContextError(TabsList, defaultProps, TABS_ERRORS.context.message);
+describe('@mantine/core/TabsPanel', () => {
+  itThrowsContextError(TabsPanel, defaultProps, TABS_ERRORS.context.message);
   itRendersChildren(TestContainer, defaultProps);
   itSupportsSystemProps({
     component: TestContainer,
     props: defaultProps,
     refType: HTMLDivElement,
-    displayName: '@mantine/core/TabsList',
+    displayName: '@mantine/core/TabsPanel',
   });
 });
