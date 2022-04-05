@@ -21,6 +21,7 @@ export function Tab({ value, children, onKeyDown, onClick, ...others }: TabProps
 
   return (
     <UnstyledButton<'button'>
+      {...others}
       type="button"
       role="tab"
       id={ctx.getTabId(value)}
@@ -37,7 +38,6 @@ export function Tab({ value, children, onKeyDown, onClick, ...others }: TabProps
         orientation: ctx.orientation,
         onKeyDown,
       })}
-      {...others}
     >
       {children}
     </UnstyledButton>

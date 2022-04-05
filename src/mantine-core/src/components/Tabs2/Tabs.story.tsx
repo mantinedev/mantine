@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs } from './Tabs';
 
 export default {
@@ -49,3 +49,12 @@ export const AllowDeactivation = () => (
     {base}
   </Tabs>
 );
+
+export const Controlled = () => {
+  const [tab, setTab] = useState('react');
+  return (
+    <Tabs value={tab} onTabChange={setTab} allowTabDeactivation>
+      {base}
+    </Tabs>
+  );
+};

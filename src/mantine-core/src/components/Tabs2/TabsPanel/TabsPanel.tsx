@@ -14,7 +14,13 @@ export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithou
 export function TabsPanel({ value, children, ...others }: TabsPanelProps) {
   const ctx = useTabsContext();
   return (
-    <Box sx={{ display: ctx.value !== value ? 'none' : undefined }} {...others}>
+    <Box
+      {...others}
+      sx={{ display: ctx.value !== value ? 'none' : undefined }}
+      role="tabpanel"
+      id={ctx.getPanelId(value)}
+      aria-labelledby={ctx.getTabId(value)}
+    >
       {children}
     </Box>
   );
