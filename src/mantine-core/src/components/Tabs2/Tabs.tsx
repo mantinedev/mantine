@@ -29,6 +29,7 @@ const defaultProps: Partial<TabsProps> = {
   loop: true,
   activateTabWithKeyboardEvents: true,
   allowTabDeactivation: false,
+  variant: 'default',
 };
 
 export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props, ref) => {
@@ -42,6 +43,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     children,
     id,
     onTabChange,
+    variant,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
 
@@ -55,6 +57,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
       id={id}
       loop={loop}
       allowTabDeactivation={allowTabDeactivation}
+      variant={variant}
     >
       <Box {...others} id={id} ref={ref}>
         {children}

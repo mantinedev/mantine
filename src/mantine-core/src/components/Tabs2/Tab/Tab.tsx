@@ -1,19 +1,23 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
 import useStyles from './Tab.styles';
 
-export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+export type TabStylesNames = ClassNames<typeof useStyles>;
+
+export interface TabProps
+  extends DefaultProps<TabStylesNames>,
+    React.ComponentPropsWithoutRef<'button'> {
   value: string;
   children: React.ReactNode;
 }
 
 export const Tab = forwardRef<HTMLButtonElement, TabProps>(
-  ({ value, children, onKeyDown, onClick, ...others }, ref) => {
-    const { theme } = useStyles();
+  ({ value, children, onKeyDown, onClick, className, ...others }, ref) => {
     const ctx = useTabsContext();
+    const { theme, classes, cx } = useStyles(ctx);
     const isActive = value === ctx.value;
     const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       ctx.onTabChange(ctx.allowTabDeactivation ? (value === ctx.value ? null : value) : value);
@@ -23,6 +27,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
     return (
       <UnstyledButton<'button'>
         {...others}
+        className={cx(classes.tab, { [classes.tabActive]: isActive }, className)}
         ref={ref}
         type="button"
         role="tab"

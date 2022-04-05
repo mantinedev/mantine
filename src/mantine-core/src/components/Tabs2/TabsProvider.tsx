@@ -1,8 +1,9 @@
 import React from 'react';
 import { useUncontrolled, useId } from '@mantine/utils';
+import { MantineColor } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
-import type { TabsValue, TabsOrientation } from './Tabs.types';
+import { TabsValue, TabsOrientation, TabsVariant } from './Tabs.types';
 import { getId } from './get-id/get-id';
 
 export interface TabsProviderProps {
@@ -15,6 +16,8 @@ export interface TabsProviderProps {
   activateTabWithKeyboardEvents?: boolean;
   allowTabDeactivation?: boolean;
   children: React.ReactNode;
+  variant?: TabsVariant;
+  color?: MantineColor;
 }
 
 export function TabsProvider({
@@ -27,6 +30,8 @@ export function TabsProvider({
   id,
   activateTabWithKeyboardEvents,
   allowTabDeactivation,
+  variant,
+  color,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -50,6 +55,8 @@ export function TabsProvider({
         getPanelId: getId(uid, 'panel'),
         onTabChange: onChange,
         allowTabDeactivation,
+        variant,
+        color,
       }}
     >
       {children}

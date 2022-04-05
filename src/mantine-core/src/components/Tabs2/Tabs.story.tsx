@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs } from './Tabs';
+import { Tabs, TabsProps } from './Tabs';
 
 export default {
   title: 'Tabs2',
@@ -10,10 +10,10 @@ const base = (
     <Tabs.List>
       <Tabs.Tab value="react">React</Tabs.Tab>
       <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
       <Tabs.Tab value="ds" disabled>
         Disabled
       </Tabs.Tab>
-      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
     </Tabs.List>
 
     <Tabs.Panel value="react">React Panel</Tabs.Panel>
@@ -22,39 +22,41 @@ const base = (
   </>
 );
 
-export const Usage = () => <Tabs defaultValue="react">{base}</Tabs>;
+const Wrapper = (props: TabsProps) => <Tabs sx={{ maxWidth: 500 }} mx="auto" mt={40} {...props} />;
+
+export const Usage = () => <Wrapper defaultValue="react">{base}</Wrapper>;
 
 export const NoLoop = () => (
-  <Tabs defaultValue="react" loop={false}>
+  <Wrapper defaultValue="react" loop={false}>
     {base}
-  </Tabs>
+  </Wrapper>
 );
 
 export const NoKeyboardActivation = () => (
-  <Tabs defaultValue="react" activateTabWithKeyboardEvents={false}>
+  <Wrapper defaultValue="react" activateTabWithKeyboardEvents={false}>
     {base}
-  </Tabs>
+  </Wrapper>
 );
 
 export const VerticalOrientation = () => (
-  <Tabs defaultValue="react" orientation="vertical">
+  <Wrapper defaultValue="react" orientation="vertical">
     {base}
-  </Tabs>
+  </Wrapper>
 );
 
-export const NoDefaultValue = () => <Tabs defaultValue={null}>{base}</Tabs>;
+export const NoDefaultValue = () => <Wrapper defaultValue={null}>{base}</Wrapper>;
 
 export const AllowDeactivation = () => (
-  <Tabs defaultValue="react" allowTabDeactivation>
+  <Wrapper defaultValue="react" allowTabDeactivation>
     {base}
-  </Tabs>
+  </Wrapper>
 );
 
 export const Controlled = () => {
   const [tab, setTab] = useState('react');
   return (
-    <Tabs value={tab} onTabChange={setTab} allowTabDeactivation>
+    <Wrapper value={tab} onTabChange={setTab} allowTabDeactivation>
       {base}
-    </Tabs>
+    </Wrapper>
   );
 };

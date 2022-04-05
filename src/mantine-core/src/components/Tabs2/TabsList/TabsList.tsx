@@ -1,18 +1,31 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, ClassNames } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
+import useStyles from './TabsList.styles';
 
-export interface TabsListProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export type TabsListStylesNames = ClassNames<typeof useStyles>;
+
+export interface TabsListProps
+  extends DefaultProps<TabsListStylesNames>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Tabs.Tab /> components */
   children: React.ReactNode;
 }
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
-  ({ children, ...others }, ref) => {
+  ({ children, className, ...others }, ref) => {
     const { orientation } = useTabsContext();
+    const { classes, cx } = useStyles({ orientation });
+
     return (
-      <Box {...others} ref={ref} role="tablist" aria-orientation={orientation}>
+      <Box
+        {...others}
+        className={cx(classes.tabsList, className)}
+        ref={ref}
+        role="tablist"
+        aria-orientation={orientation}
+      >
         {children}
       </Box>
     );
