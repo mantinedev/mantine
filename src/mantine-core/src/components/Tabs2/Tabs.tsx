@@ -46,7 +46,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>(
       loop={loop}
       allowTabDeactivation={allowTabDeactivation}
     >
-      <Box {...others} ref={ref}>
+      <Box {...others} id={id} ref={ref}>
         {children}
       </Box>
     </TabsProvider>

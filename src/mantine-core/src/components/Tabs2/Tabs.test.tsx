@@ -3,6 +3,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MantineProvider } from '@mantine/styles';
 import { itSupportsSystemProps, itRendersChildren, checkAccessibility } from '@mantine/tests';
+import { Tab } from './Tab/Tab';
+import { TabsList } from './TabsList/TabsList';
+import { TabsPanel } from './TabsPanel/TabsPanel';
 import { Tabs, TabsProps } from './Tabs';
 
 const defaultProps: TabsProps = {
@@ -24,13 +27,15 @@ const defaultProps: TabsProps = {
 const TAB_VALUES = ['tab-1', 'tab-2', 'tab-3'] as const;
 type TabValue = typeof TAB_VALUES[number];
 
-const expectActiveTab = (value: TabValue) => {
+const expectActiveTab = (value: TabValue | null) => {
   const hidden = ['tab-1', 'tab-2', 'tab-3'].filter((panel) => panel !== value);
   hidden.forEach((panel) => {
     expect(screen.getByText(`${panel} panel`)).not.toBeVisible();
   });
 
-  expect(screen.getByText(`${value} panel`)).toBeVisible();
+  if (value) {
+    expect(screen.getByText(`${value} panel`)).toBeVisible();
+  }
 };
 
 const getTab = (value: TabValue) => {
@@ -39,7 +44,7 @@ const getTab = (value: TabValue) => {
   return tabs[index];
 };
 
-const activateTab = (value: TabValue) => userEvent.click(getTab(value));
+const clickTab = (value: TabValue) => userEvent.click(getTab(value));
 
 describe('@mantine/core/Tabs', () => {
   checkAccessibility([<Tabs {...defaultProps} defaultValue="tab-1" />]);
@@ -56,7 +61,7 @@ describe('@mantine/core/Tabs', () => {
     render(<Tabs {...defaultProps} value="tab-1" onTabChange={spy} />);
     expectActiveTab('tab-1');
 
-    activateTab('tab-2');
+    clickTab('tab-2');
     expectActiveTab('tab-1');
 
     expect(spy).toHaveBeenCalledTimes(1);
@@ -68,7 +73,7 @@ describe('@mantine/core/Tabs', () => {
     render(<Tabs {...defaultProps} defaultValue="tab-1" onTabChange={spy} />);
     expectActiveTab('tab-1');
 
-    activateTab('tab-2');
+    clickTab('tab-2');
     expectActiveTab('tab-2');
 
     expect(spy).not.toHaveBeenCalled();
@@ -99,7 +104,7 @@ describe('@mantine/core/Tabs', () => {
     userEvent.type(getTab('tab-3'), '{arrowright}');
     expectActiveTab('tab-3');
 
-    activateTab('tab-1');
+    clickTab('tab-1');
     userEvent.type(getTab('tab-1'), '{arrowleft}');
     expectActiveTab('tab-1');
   });
@@ -148,5 +153,46 @@ describe('@mantine/core/Tabs', () => {
 
     userEvent.type(getTab('tab-3'), '{arrowup}');
     expectActiveTab('tab-2');
+  });
+
+  it('handles arrow events correctly (activateTabWithKeyboardEvents = false)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-2" activateTabWithKeyboardEvents={false} />);
+
+    userEvent.type(getTab('tab-2'), '{arrowright}');
+    expectActiveTab('tab-2');
+
+    userEvent.type(getTab('tab-2'), '{arrowleft}');
+    expectActiveTab('tab-2');
+  });
+
+  it('does not display any tab if value in null', () => {
+    render(<Tabs {...defaultProps} value={null} />);
+    expectActiveTab(null);
+  });
+
+  it('does not display any tab if defaultValue in null', () => {
+    render(<Tabs {...defaultProps} defaultValue={null} />);
+    expectActiveTab(null);
+
+    clickTab('tab-1');
+    expectActiveTab('tab-1');
+  });
+
+  it('allows to deactivate tab when allowTabDeactivation is true', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" allowTabDeactivation />);
+    expectActiveTab('tab-1');
+    clickTab('tab-1');
+    expectActiveTab(null);
+  });
+
+  it('allows to set root element id', () => {
+    const view = render(<Tabs {...defaultProps} defaultValue="tab-1" id="test-id" />);
+    expect(view.container.querySelector('#test-id')).toBeInTheDocument();
+  });
+
+  it('exposes TabsList, Tab and TabsPanel component with as static properties', () => {
+    expect(Tabs.Tab).toBe(Tab);
+    expect(Tabs.List).toBe(TabsList);
+    expect(Tabs.Panel).toBe(TabsPanel);
   });
 });
