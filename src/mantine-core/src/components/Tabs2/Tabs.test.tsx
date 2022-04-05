@@ -60,4 +60,15 @@ describe('@mantine/core/Tabs', () => {
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('orange');
   });
+
+  it('supports uncontrolled state', () => {
+    const spy = jest.fn();
+    render(<Tabs {...defaultProps} defaultValue="apple" onTabChange={spy} />);
+    expectActiveTab('apple');
+
+    activateTab('orange');
+    expectActiveTab('orange');
+
+    expect(spy).not.toHaveBeenCalled();
+  });
 });
