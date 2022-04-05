@@ -1,7 +1,7 @@
 import React from 'react';
-import { upperFirst } from '@mantine/hooks';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MantineProvider } from '@mantine/styles';
 import { itSupportsSystemProps, itRendersChildren, checkAccessibility } from '@mantine/tests';
 import { Tabs, TabsProps } from './Tabs';
 
@@ -9,38 +9,40 @@ const defaultProps: TabsProps = {
   children: (
     <>
       <Tabs.List>
-        <Tabs.Tab value="apple">Apple tab</Tabs.Tab>
-        <Tabs.Tab value="orange">Orange tab</Tabs.Tab>
-        <Tabs.Tab value="banana">Banana tab</Tabs.Tab>
+        <Tabs.Tab value="tab-1">tab-1</Tabs.Tab>
+        <Tabs.Tab value="tab-2">tab-2</Tabs.Tab>
+        <Tabs.Tab value="tab-3">tab-3</Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel value="apple">Apple panel</Tabs.Panel>
-      <Tabs.Panel value="orange">Orange panel</Tabs.Panel>
-      <Tabs.Panel value="banana">Banana panel</Tabs.Panel>
+      <Tabs.Panel value="tab-1">tab-1 panel</Tabs.Panel>
+      <Tabs.Panel value="tab-2">tab-2 panel</Tabs.Panel>
+      <Tabs.Panel value="tab-3">tab-3 panel</Tabs.Panel>
     </>
   ),
 };
 
-const TAB_VALUES = ['apple', 'orange', 'banana'] as const;
+const TAB_VALUES = ['tab-1', 'tab-2', 'tab-3'] as const;
 type TabValue = typeof TAB_VALUES[number];
 
 const expectActiveTab = (value: TabValue) => {
-  const hidden = ['apple', 'orange', 'banana'].filter((panel) => panel !== value);
+  const hidden = ['tab-1', 'tab-2', 'tab-3'].filter((panel) => panel !== value);
   hidden.forEach((panel) => {
-    expect(screen.getByText(`${upperFirst(panel)} panel`)).not.toBeVisible();
+    expect(screen.getByText(`${panel} panel`)).not.toBeVisible();
   });
 
-  expect(screen.getByText(`${upperFirst(value)} panel`)).toBeVisible();
+  expect(screen.getByText(`${value} panel`)).toBeVisible();
 };
 
-const activateTab = (value: TabValue) => {
+const getTab = (value: TabValue) => {
   const index = TAB_VALUES.indexOf(value);
   const tabs = screen.getAllByRole('tab');
-  userEvent.click(tabs[index]);
+  return tabs[index];
 };
 
+const activateTab = (value: TabValue) => userEvent.click(getTab(value));
+
 describe('@mantine/core/Tabs', () => {
-  checkAccessibility([<Tabs {...defaultProps} defaultValue="apple" />]);
+  checkAccessibility([<Tabs {...defaultProps} defaultValue="tab-1" />]);
   itRendersChildren(Tabs, defaultProps);
   itSupportsSystemProps({
     component: Tabs,
@@ -51,24 +53,100 @@ describe('@mantine/core/Tabs', () => {
 
   it('supports controlled state', () => {
     const spy = jest.fn();
-    render(<Tabs {...defaultProps} value="apple" onTabChange={spy} />);
-    expectActiveTab('apple');
+    render(<Tabs {...defaultProps} value="tab-1" onTabChange={spy} />);
+    expectActiveTab('tab-1');
 
-    activateTab('orange');
-    expectActiveTab('apple');
+    activateTab('tab-2');
+    expectActiveTab('tab-1');
 
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith('orange');
+    expect(spy).toHaveBeenCalledWith('tab-2');
   });
 
   it('supports uncontrolled state', () => {
     const spy = jest.fn();
-    render(<Tabs {...defaultProps} defaultValue="apple" onTabChange={spy} />);
-    expectActiveTab('apple');
+    render(<Tabs {...defaultProps} defaultValue="tab-1" onTabChange={spy} />);
+    expectActiveTab('tab-1');
 
-    activateTab('orange');
-    expectActiveTab('orange');
+    activateTab('tab-2');
+    expectActiveTab('tab-2');
 
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('handles arrow events correctly (default)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" />);
+
+    userEvent.type(getTab('tab-1'), '{arrowright}');
+    expectActiveTab('tab-2');
+
+    userEvent.type(getTab('tab-2'), '{arrowright}');
+    expectActiveTab('tab-3');
+
+    userEvent.type(getTab('tab-3'), '{arrowright}');
+    expectActiveTab('tab-1');
+
+    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    expectActiveTab('tab-3');
+
+    userEvent.type(getTab('tab-2'), '{arrowleft}');
+    expectActiveTab('tab-1');
+  });
+
+  it('handles arrows events correctly (loop = false)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-3" loop={false} />);
+
+    userEvent.type(getTab('tab-3'), '{arrowright}');
+    expectActiveTab('tab-3');
+
+    activateTab('tab-1');
+    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    expectActiveTab('tab-1');
+  });
+
+  it('handles arrow events correctly (RTL direction)', () => {
+    render(
+      <MantineProvider theme={{ dir: 'rtl' }}>
+        <Tabs {...defaultProps} defaultValue="tab-2" loop={false} />
+      </MantineProvider>
+    );
+
+    userEvent.type(getTab('tab-2'), '{arrowright}');
+    expectActiveTab('tab-1');
+
+    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    expectActiveTab('tab-2');
+  });
+
+  it('handles arrow events correctly (vertical orientation, loop = true)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-2" orientation="vertical" />);
+
+    userEvent.type(getTab('tab-2'), '{arrowup}');
+    expectActiveTab('tab-1');
+
+    userEvent.type(getTab('tab-1'), '{arrowup}');
+    expectActiveTab('tab-3');
+
+    userEvent.type(getTab('tab-3'), '{arrowdown}');
+    expectActiveTab('tab-1');
+
+    userEvent.type(getTab('tab-1'), '{arrowdown}');
+    expectActiveTab('tab-2');
+  });
+
+  it('handles arrow events correctly (vertical orientation, loop = false)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-2" orientation="vertical" loop={false} />);
+
+    userEvent.type(getTab('tab-1'), '{arrowup}');
+    expectActiveTab('tab-1');
+
+    userEvent.type(getTab('tab-1'), '{arrowdown}');
+    expectActiveTab('tab-2');
+
+    userEvent.type(getTab('tab-3'), '{arrowdown}');
+    expectActiveTab('tab-3');
+
+    userEvent.type(getTab('tab-3'), '{arrowup}');
+    expectActiveTab('tab-2');
   });
 });
