@@ -30,6 +30,12 @@ function getVariantStyles(
     };
   }
 
+  if (variant === 'pills') {
+    return {
+      gap: theme.spacing.sm / 2,
+    };
+  }
+
   return {};
 }
 

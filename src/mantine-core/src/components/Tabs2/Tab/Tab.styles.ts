@@ -1,4 +1,10 @@
-import { createStyles, CSSObject, MantineColor, MantineTheme } from '@mantine/styles';
+import {
+  createStyles,
+  CSSObject,
+  getSharedColorScheme,
+  MantineColor,
+  MantineTheme,
+} from '@mantine/styles';
 import { TabsVariant, TabsOrientation } from '../Tabs.types';
 
 interface TabStylesParams {
@@ -19,6 +25,7 @@ function getVariantStyles(
   { variant, orientation, color }: TabStylesParams
 ): GetVariantReturnType {
   const vertical = orientation === 'vertical';
+  const filledScheme = getSharedColorScheme({ color, theme, variant: 'filled' });
 
   if (variant === 'default') {
     return {
@@ -36,10 +43,11 @@ function getVariantStyles(
       },
 
       tabActive: {
-        borderColor: theme.fn.themeColor(color, 6),
+        borderColor: filledScheme.background,
+        color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
         '&:hover': {
-          borderColor: theme.fn.themeColor(color, 6),
+          borderColor: filledScheme.background,
         },
       },
     };
@@ -60,12 +68,34 @@ function getVariantStyles(
 
         '&::before': {
           content: '""',
-          backgroundColor: theme.white,
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           position: 'absolute',
           bottom: -1,
           height: 1,
           right: 0,
           left: 0,
+        },
+      },
+    };
+  }
+
+  if (variant === 'pills') {
+    return {
+      tab: {
+        borderRadius: theme.radius.sm,
+
+        '&:hover': {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        },
+      },
+
+      tabActive: {
+        backgroundColor: filledScheme.background,
+        color: theme.white,
+
+        '&:hover': {
+          backgroundColor: filledScheme.background,
         },
       },
     };

@@ -89,12 +89,15 @@ export const Grow = () => (
 
 export const Variants = () => (
   <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
-    Default:
     <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
       {base}
     </Wrapper>
-    Outline:
-    <Wrapper defaultValue="react" variant="outline" mt={10}>
+
+    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50}>
+      {base}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" variant="pills" mt={10}>
       {base}
     </Wrapper>
   </Box>
