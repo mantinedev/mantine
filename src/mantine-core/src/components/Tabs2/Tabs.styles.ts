@@ -1,9 +1,5 @@
 import { createStyles } from '@mantine/styles';
-import { TabsOrientation } from './Tabs.types';
-
-interface TabsStylesParams {
-  orientation: TabsOrientation;
-}
+import { TabsStylesParams } from './Tabs.types';
 
 export default createStyles((theme, { orientation }: TabsStylesParams) => ({
   root: {

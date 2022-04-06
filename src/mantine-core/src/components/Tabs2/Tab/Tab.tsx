@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
@@ -7,9 +7,7 @@ import useStyles from './Tab.styles';
 
 export type TabStylesNames = ClassNames<typeof useStyles>;
 
-export interface TabProps
-  extends DefaultProps<TabStylesNames>,
-    React.ComponentPropsWithoutRef<'button'> {
+export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   value: string;
   children: React.ReactNode;
   rightSection?: React.ReactNode;
@@ -19,6 +17,7 @@ export interface TabProps
 export const Tab = forwardRef<HTMLButtonElement, TabProps>(
   ({ value, children, onKeyDown, onClick, className, icon, rightSection, ...others }, ref) => {
     const ctx = useTabsContext();
+    const { classNames, styles } = useContextStylesApi();
 
     const { theme, classes, cx } = useStyles(
       {
@@ -28,7 +27,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         color: ctx.color,
         variant: ctx.variant,
       },
-      { name: 'Tabs', unstyled: ctx.unstyled }
+      { name: 'Tabs', unstyled: ctx.unstyled, classNames, styles }
     );
 
     const isActive = value === ctx.value;

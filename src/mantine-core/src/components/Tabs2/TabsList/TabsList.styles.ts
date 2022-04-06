@@ -1,10 +1,8 @@
 import { createStyles } from '@mantine/core';
 import { CSSObject, MantineTheme } from '@mantine/styles';
-import { TabsOrientation, TabsVariant } from '../Tabs.types';
+import { TabsStylesParams } from '../Tabs.types';
 
-interface TabsListStylesParams {
-  orientation: TabsOrientation;
-  variant: TabsVariant;
+interface TabsListStylesParams extends TabsStylesParams {
   grow: boolean;
 }
 
