@@ -20,13 +20,16 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
   ({ value, children, onKeyDown, onClick, className, icon, rightSection, ...others }, ref) => {
     const ctx = useTabsContext();
 
-    const { theme, classes, cx } = useStyles({
-      withIcon: !!icon,
-      withRightSection: !!rightSection,
-      orientation: ctx.orientation,
-      color: ctx.color,
-      variant: ctx.variant,
-    });
+    const { theme, classes, cx } = useStyles(
+      {
+        withIcon: !!icon,
+        withRightSection: !!rightSection,
+        orientation: ctx.orientation,
+        color: ctx.color,
+        variant: ctx.variant,
+      },
+      { name: 'Tabs', unstyled: true }
+    );
 
     const isActive = value === ctx.value;
     const activateTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

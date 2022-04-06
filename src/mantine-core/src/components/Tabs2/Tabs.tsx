@@ -48,7 +48,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     className,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
-  const { classes, cx } = useStyles({ orientation });
+  const { classes, cx } = useStyles({ orientation }, { unstyled: true, name: 'Tabs' });
 
   return (
     <TabsProvider

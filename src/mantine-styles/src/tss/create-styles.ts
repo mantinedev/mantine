@@ -11,6 +11,7 @@ export interface UseStylesOptions<Key extends string> {
     | Partial<Record<Key, CSSObject>>
     | ((theme: MantineTheme) => Partial<Record<Key, CSSObject>>);
   name: string;
+  unstyled?: boolean;
 }
 
 export function createStyles<Key extends string = string, Params = void>(
@@ -54,7 +55,13 @@ export function createStyles<Key extends string = string, Params = void>(
     ) as Record<Key, string>;
 
     return {
-      classes: mergeClassNames(cx, classes, themeClassNames, options?.classNames, options?.name),
+      classes: mergeClassNames(
+        cx,
+        options?.unstyled ? ({} as Record<Key, string>) : classes,
+        themeClassNames,
+        options?.classNames,
+        options?.name
+      ),
       cx,
       theme,
     };
