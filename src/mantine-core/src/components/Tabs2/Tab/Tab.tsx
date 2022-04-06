@@ -28,7 +28,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         color: ctx.color,
         variant: ctx.variant,
       },
-      { name: 'Tabs', unstyled: true }
+      { name: 'Tabs', unstyled: ctx.unstyled }
     );
 
     const isActive = value === ctx.value;

@@ -167,3 +167,9 @@ export const WithIcon = () => (
     </Tabs.Panel>
   </Wrapper>
 );
+
+export const Unstyled = () => (
+  <Wrapper defaultValue="react" unstyled>
+    {base}
+  </Wrapper>
+);

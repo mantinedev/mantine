@@ -30,6 +30,7 @@ const defaultProps: Partial<TabsProps> = {
   loop: true,
   activateTabWithKeyboardEvents: true,
   allowTabDeactivation: false,
+  unstyled: false,
   variant: 'default',
 };
 
@@ -46,9 +47,11 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     onTabChange,
     variant,
     className,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
-  const { classes, cx } = useStyles({ orientation }, { unstyled: true, name: 'Tabs' });
+
+  const { classes, cx } = useStyles({ orientation }, { unstyled, name: 'Tabs' });
 
   return (
     <TabsProvider
@@ -61,6 +64,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
       loop={loop}
       allowTabDeactivation={allowTabDeactivation}
       variant={variant}
+      unstyled={unstyled}
     >
       <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
         {children}

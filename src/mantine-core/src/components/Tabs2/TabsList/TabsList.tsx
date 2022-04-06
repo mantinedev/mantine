@@ -18,11 +18,8 @@ export interface TabsListProps
 
 export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
   ({ children, className, grow = false, ...others }, ref) => {
-    const { orientation, variant } = useTabsContext();
-    const { classes, cx } = useStyles(
-      { orientation, grow, variant },
-      { name: 'Tabs', unstyled: true }
-    );
+    const { orientation, variant, unstyled } = useTabsContext();
+    const { classes, cx } = useStyles({ orientation, grow, variant }, { name: 'Tabs', unstyled });
 
     return (
       <Box
