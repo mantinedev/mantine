@@ -16,7 +16,6 @@ interface TabsContext {
   getPanelId(value: string): string;
   variant: TabsVariant;
   color: MantineColor;
-  unstyled: boolean;
 }
 
 export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(

@@ -68,7 +68,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
   );
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles}>
+    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
       <TabsProvider
         activateTabWithKeyboardEvents={activateTabWithKeyboardEvents}
         defaultValue={defaultValue}
@@ -79,7 +79,6 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         loop={loop}
         allowTabDeactivation={allowTabDeactivation}
         variant={variant}
-        unstyled={unstyled}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

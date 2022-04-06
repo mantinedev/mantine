@@ -18,10 +18,10 @@ export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithou
 export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
   ({ value, children, sx, className, ...others }, ref) => {
     const ctx = useTabsContext();
-    const { classNames, styles } = useContextStylesApi();
+    const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
       { orientation: ctx.orientation, variant: ctx.variant, color: ctx.color },
-      { name: 'Tabs', unstyled: ctx.unstyled, classNames, styles }
+      { name: 'Tabs', unstyled, classNames, styles }
     );
 
     return (

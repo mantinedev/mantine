@@ -118,10 +118,10 @@ export default createStyles((theme, params: TabStylesParams) => {
       paddingRight: params.withRightSection ? theme.spacing.xs : undefined,
       fontSize: theme.fontSizes.sm,
       whiteSpace: 'nowrap',
-      textAlign: 'center',
       zIndex: 0,
       display: 'flex',
       alignItems: 'center',
+      justifyContent: params.orientation === 'horizontal' ? 'center' : undefined,
       lineHeight: 1,
 
       '&:disabled': {

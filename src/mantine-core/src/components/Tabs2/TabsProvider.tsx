@@ -18,7 +18,6 @@ export interface TabsProviderProps {
   children: React.ReactNode;
   variant?: TabsVariant;
   color?: MantineColor;
-  unstyled?: boolean;
 }
 
 export function TabsProvider({
@@ -33,7 +32,6 @@ export function TabsProvider({
   allowTabDeactivation,
   variant,
   color,
-  unstyled,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -59,7 +57,6 @@ export function TabsProvider({
         allowTabDeactivation,
         variant,
         color,
-        unstyled,
       }}
     >
       {children}

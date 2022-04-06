@@ -17,7 +17,7 @@ export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'
 export const Tab = forwardRef<HTMLButtonElement, TabProps>(
   ({ value, children, onKeyDown, onClick, className, icon, rightSection, ...others }, ref) => {
     const ctx = useTabsContext();
-    const { classNames, styles } = useContextStylesApi();
+    const { classNames, styles, unstyled } = useContextStylesApi();
 
     const { theme, classes, cx } = useStyles(
       {
@@ -27,7 +27,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         color: ctx.color,
         variant: ctx.variant,
       },
-      { name: 'Tabs', unstyled: ctx.unstyled, classNames, styles }
+      { name: 'Tabs', unstyled, classNames, styles }
     );
 
     const isActive = value === ctx.value;
@@ -39,7 +39,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
     return (
       <UnstyledButton<'button'>
         {...others}
-        unstyled={ctx.unstyled}
+        unstyled={unstyled}
         className={cx(classes.tab, { [classes.tabActive]: isActive }, className)}
         ref={ref}
         type="button"
