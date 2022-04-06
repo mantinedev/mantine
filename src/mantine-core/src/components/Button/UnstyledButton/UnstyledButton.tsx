@@ -15,10 +15,10 @@ type UnstyledButtonComponent = (<C = 'button'>(
 
 export const UnstyledButton: UnstyledButtonComponent = forwardRef(
   (
-    { className, component = 'button', ...others }: UnstyledButtonProps<'button'>,
+    { className, component = 'button', unstyled, ...others }: UnstyledButtonProps<'button'>,
     ref: PolymorphicRef<'button'>
   ) => {
-    const { classes, cx } = useStyles(null, { name: 'UnstyledButton' });
+    const { classes, cx } = useStyles(null, { name: 'UnstyledButton', unstyled });
     return (
       <Box<any>
         component={component}

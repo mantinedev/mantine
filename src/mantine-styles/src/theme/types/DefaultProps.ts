@@ -11,4 +11,5 @@ export interface DefaultProps<T extends string = never> extends MantineStyleSyst
   sx?: Sx | Sx[];
   classNames?: Partial<Record<T, string>>;
   styles?: Partial<Record<T, CSSObject>> | ((theme: MantineTheme) => Partial<Record<T, CSSObject>>);
+  unstyled?: boolean;
 }

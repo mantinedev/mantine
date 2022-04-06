@@ -40,6 +40,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
     return (
       <UnstyledButton<'button'>
         {...others}
+        unstyled={ctx.unstyled}
         className={cx(classes.tab, { [classes.tabActive]: isActive }, className)}
         ref={ref}
         type="button"
