@@ -6,7 +6,7 @@ describe('@mantine/utils/create-error', () => {
       createError({ message: 'Tabs component was not found in tree', code: 'tabs-context' })
     ).toStrictEqual({
       message:
-        '[@mantine/headless] Tabs component was not found in tree. Learn more – https://mantine.dev/error/tabs-context/',
+        '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/tabs-context/',
       code: 'tabs-context',
     });
   });
