@@ -11,7 +11,7 @@ export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithou
   /** Panel content */
   children: React.ReactNode;
 
-  /** Value of associated <Tab /> component */
+  /** Value of associated control */
   value: string;
 }
 

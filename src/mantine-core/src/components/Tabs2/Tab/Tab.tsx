@@ -8,9 +8,16 @@ import useStyles from './Tab.styles';
 export type TabStylesNames = ClassNames<typeof useStyles>;
 
 export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
+  /** Value that is used to connect Tab with associated panel */
   value: string;
+
+  /** Tab label */
   children: React.ReactNode;
+
+  /** Section of content displayed after label */
   rightSection?: React.ReactNode;
+
+  /** Section of content displayed before label */
   icon?: React.ReactNode;
 }
 
