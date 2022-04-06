@@ -49,19 +49,17 @@ export function createStyles<Key extends string = string, Params = void>(
 
     const classes = fromEntries(
       Object.keys(cssObject).map((key) => {
-        const mergedStyles = cx(css(cssObject[key]), css(_themeStyles[key]), css(_styles[key]));
+        const mergedStyles = cx(
+          { [css(cssObject[key])]: !options?.unstyled },
+          css(_themeStyles[key]),
+          css(_styles[key])
+        );
         return [key, mergedStyles];
       })
     ) as Record<Key, string>;
 
     return {
-      classes: mergeClassNames(
-        cx,
-        options?.unstyled ? ({} as Record<Key, string>) : classes,
-        themeClassNames,
-        options?.classNames,
-        options?.name
-      ),
+      classes: mergeClassNames(cx, classes, themeClassNames, options?.classNames, options?.name),
       cx,
       theme,
     };
