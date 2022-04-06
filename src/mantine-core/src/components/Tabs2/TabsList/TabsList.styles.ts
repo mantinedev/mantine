@@ -1,9 +1,11 @@
 import { createStyles } from '@mantine/core';
 import { CSSObject, MantineTheme } from '@mantine/styles';
-import { TabsStylesParams } from '../Tabs.types';
+import { GROUP_POSITIONS } from '../../Group/Group.styles';
+import { TabsStylesParams, TabsPosition } from '../Tabs.types';
 
 interface TabsListStylesParams extends TabsStylesParams {
   grow: boolean;
+  position: TabsPosition;
 }
 
 function getVariantStyles(
@@ -44,6 +46,7 @@ export default createStyles((theme, params: TabsListStylesParams) => {
     tabsList: {
       display: 'flex',
       flexDirection: vertical ? 'column' : 'row',
+      justifyContent: GROUP_POSITIONS[params.position],
 
       '& [role="tab"]': {
         flex: params.grow ? 1 : undefined,

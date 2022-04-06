@@ -13,7 +13,7 @@ export interface GroupStylesParams {
   count: number;
 }
 
-const POSITIONS = {
+export const GROUP_POSITIONS = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
@@ -34,9 +34,9 @@ export default createStyles(
           ? 'stretch'
           : position === 'apart'
           ? 'flex-start'
-          : POSITIONS[position]),
+          : GROUP_POSITIONS[position]),
       flexWrap: noWrap ? 'nowrap' : 'wrap',
-      justifyContent: direction === 'row' ? POSITIONS[position] : undefined,
+      justifyContent: direction === 'row' ? GROUP_POSITIONS[position] : undefined,
       gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
 
