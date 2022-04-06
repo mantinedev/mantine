@@ -57,10 +57,10 @@ function getVariantStyles(
     return {
       tab: {
         background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        borderTopRightRadius: theme.radius.sm,
+        [vertical ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: theme.radius.sm,
         borderTopLeftRadius: theme.radius.sm,
         border: '1px solid transparent',
-        borderBottom: 'none',
+        [vertical ? 'borderRight' : 'borderBottom']: 'none',
       },
 
       tabActive: {
@@ -70,10 +70,11 @@ function getVariantStyles(
           content: '""',
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
           position: 'absolute',
-          bottom: -1,
-          height: 1,
-          right: 0,
-          left: 0,
+          bottom: vertical ? 0 : -1,
+          top: vertical ? 0 : 'unset',
+          [vertical ? 'width' : 'height']: 1,
+          right: vertical ? -1 : 0,
+          left: vertical ? 'unset' : 0,
         },
       },
     };

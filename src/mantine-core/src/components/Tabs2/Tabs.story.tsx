@@ -19,21 +19,42 @@ const base = (
       </Tabs.Tab>
     </Tabs.List>
 
-    <Tabs.Panel value="react" pt="sm">
+    <Tabs.Panel value="react" pr="sm">
       React Panel
     </Tabs.Panel>
-    <Tabs.Panel value="sv" pt="sm">
+    <Tabs.Panel value="sv" pr="sm">
       Svelte Panel
     </Tabs.Panel>
-    <Tabs.Panel value="ng" pt="sm">
+    <Tabs.Panel value="ng" pr="sm">
+      Angular Panel
+    </Tabs.Panel>
+  </>
+);
+
+const verticalBase = (
+  <>
+    <Tabs.List>
+      <Tabs.Tab value="react">React</Tabs.Tab>
+      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="react" pl="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pl="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pl="sm">
       Angular Panel
     </Tabs.Panel>
   </>
 );
 
 const Wrapper = (props: TabsProps) => <Tabs sx={{ maxWidth: 500 }} mx="auto" mt={40} {...props} />;
-
-export const Usage = () => <Wrapper defaultValue="react">{base}</Wrapper>;
 
 export const NoLoop = () => (
   <Wrapper defaultValue="react" loop={false}>
@@ -43,12 +64,6 @@ export const NoLoop = () => (
 
 export const NoKeyboardActivation = () => (
   <Wrapper defaultValue="react" activateTabWithKeyboardEvents={false}>
-    {base}
-  </Wrapper>
-);
-
-export const VerticalOrientation = () => (
-  <Wrapper defaultValue="react" orientation="vertical">
     {base}
   </Wrapper>
 );
@@ -99,6 +114,22 @@ export const Variants = () => (
 
     <Wrapper defaultValue="react" variant="pills" mt={10}>
       {base}
+    </Wrapper>
+  </Box>
+);
+
+export const VerticalVariants = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    <Wrapper defaultValue="react" orientation="vertical" variant="default" mt={10} mb={50}>
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" orientation="vertical" variant="outline" mt={10} mb={50}>
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10}>
+      {verticalBase}
     </Wrapper>
   </Box>
 );
