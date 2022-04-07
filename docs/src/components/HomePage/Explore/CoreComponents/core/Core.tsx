@@ -1,6 +1,6 @@
 import React from 'react';
 import { InputIcon, StackIcon, DashboardIcon } from '@modulz/radix-icons';
-import { Tabs, Tab, createStyles } from '@mantine/core';
+import { Tabs, createStyles } from '@mantine/core';
 import { InputsDemo } from './InputsDemo';
 import { ContentDemos } from './ContentDemos';
 import { OverlaysDemos } from './OverlaysDemos';
@@ -34,16 +34,30 @@ export function CoreDemo() {
   const { classes } = useStyles();
 
   return (
-    <Tabs grow variant="pills" classNames={classes}>
-      <Tab label="Inputs" icon={<InputIcon style={iconStyles} />}>
+    <Tabs variant="pills" defaultValue="inputs" classNames={classes}>
+      <Tabs.List grow>
+        <Tabs.Tab value="inputs" icon={<InputIcon style={iconStyles} />}>
+          Inputs
+        </Tabs.Tab>
+        <Tabs.Tab value="overlays" icon={<StackIcon style={iconStyles} />}>
+          Overlays
+        </Tabs.Tab>
+        <Tabs.Tab value="content" icon={<DashboardIcon style={iconStyles} />}>
+          Content
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="inputs" pt="xs">
         <InputsDemo />
-      </Tab>
-      <Tab label="Overlays" icon={<StackIcon style={iconStyles} />}>
+      </Tabs.Panel>
+
+      <Tabs.Panel value="overlays" pt="xs">
         <OverlaysDemos />
-      </Tab>
-      <Tab label="Content" icon={<DashboardIcon style={iconStyles} />}>
+      </Tabs.Panel>
+
+      <Tabs.Panel value="content" pt="xs">
         <ContentDemos />
-      </Tab>
+      </Tabs.Panel>
     </Tabs>
   );
 }
