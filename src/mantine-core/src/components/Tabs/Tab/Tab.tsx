@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
+import { DefaultProps, ClassNames, useContextStylesApi, MantineColor } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
@@ -12,26 +12,35 @@ export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   value: string;
 
   /** Tab label */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Section of content displayed after label */
   rightSection?: React.ReactNode;
 
   /** Section of content displayed before label */
   icon?: React.ReactNode;
+
+  /** Key of theme.colors */
+  color?: MantineColor;
 }
 
 export const Tab = forwardRef<HTMLButtonElement, TabProps>(
-  ({ value, children, onKeyDown, onClick, className, icon, rightSection, ...others }, ref) => {
+  (
+    { value, children, onKeyDown, onClick, className, icon, rightSection, color, ...others },
+    ref
+  ) => {
     const ctx = useTabsContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
 
+    const hasIcon = !!icon;
+    const hasRightSection = !!rightSection;
+
     const { theme, classes, cx } = useStyles(
       {
-        withIcon: !!icon,
-        withRightSection: !!rightSection,
+        withIcon: hasIcon || (hasRightSection && !children),
+        withRightSection: hasRightSection || (hasIcon && !children),
         orientation: ctx.orientation,
-        color: ctx.color,
+        color: color || ctx.color,
         variant: ctx.variant,
       },
       { name: 'Tabs', unstyled, classNames, styles }

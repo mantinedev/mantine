@@ -78,6 +78,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         id={id}
         loop={loop}
         allowTabDeactivation={allowTabDeactivation}
+        color={color}
         variant={variant}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>

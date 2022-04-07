@@ -8,10 +8,16 @@ import { Settings, MessageCircle, Coin } from 'tabler-icons-react';
 
 function Demo() {
   return (
-    <Tabs>
-      <Tabs.Tab label="Chat" icon={<MessageCircle size={14} />}>Chat here</Tabs.Tab>
-      <Tabs.Tab label="Settings" icon={<Settings size={14} />}>Settings</Tabs.Tab>
-      <Tabs.Tab icon={<Coin size={14} />}>Get money!</Tabs.Tab>
+    <Tabs defaultValue="chat">
+      <Tabs.List>
+        <Tabs.Tab icon={<MessageCircle size={14} />} value="chat">
+          Chat
+        </Tabs.Tab>
+        <Tabs.Tab icon={<Settings size={14} />} value="settings">
+          Settings
+        </Tabs.Tab>
+        <Tabs.Tab icon={<Coin size={14} />} value="money" />
+      </Tabs.List>
     </Tabs>
   );
 }
@@ -19,14 +25,16 @@ function Demo() {
 
 function Demo() {
   return (
-    <Tabs styles={{ body: { paddingTop: 5 } }}>
-      <Tabs.Tab label="Chat" icon={<MessageCircle size={14} />}>
-        Chat here
-      </Tabs.Tab>
-      <Tabs.Tab label="Settings" icon={<Settings size={14} />}>
-        Settings
-      </Tabs.Tab>
-      <Tabs.Tab icon={<Coin size={14} />}>Get money!</Tabs.Tab>
+    <Tabs defaultValue="chat">
+      <Tabs.List>
+        <Tabs.Tab icon={<MessageCircle size={14} />} value="chat">
+          Chat
+        </Tabs.Tab>
+        <Tabs.Tab icon={<Settings size={14} />} value="settings">
+          Settings
+        </Tabs.Tab>
+        <Tabs.Tab icon={<Coin size={14} />} value="money" />
+      </Tabs.List>
     </Tabs>
   );
 }

@@ -137,9 +137,7 @@ export const VerticalVariants = () => (
 export const WithIcon = () => (
   <Wrapper defaultValue="react" variant="outline">
     <Tabs.List>
-      <Tabs.Tab value="react" icon={<Package size={14} />}>
-        React
-      </Tabs.Tab>
+      <Tabs.Tab value="react" icon={<Package size={14} />} />
       <Tabs.Tab
         value="sv"
         rightSection={
