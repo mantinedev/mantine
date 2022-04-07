@@ -46,6 +46,7 @@ export default createStyles((theme) => ({
     paddingRight: theme.spacing.lg,
     marginBottom: -1,
     borderColor: theme.colorScheme === 'dark' ? `${theme.colors.dark[8]} !important` : undefined,
+    backgroundColor: 'transparent',
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       paddingLeft: theme.spacing.lg,
@@ -55,9 +56,14 @@ export default createStyles((theme) => ({
     },
   },
 
+  tabActive: {
+    backgroundColor: theme.white,
+  },
+
   tabContent: {
     paddingLeft: theme.spacing.xl * 2,
     paddingRight: theme.spacing.xl * 2,
+    paddingTop: theme.spacing.xs,
 
     [`@media (max-width: ${BREAKPOINT}px)`]: {
       paddingLeft: theme.spacing.xl,
