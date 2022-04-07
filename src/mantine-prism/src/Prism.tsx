@@ -1,4 +1,4 @@
-import React, { forwardRef, Children } from 'react';
+import React, { forwardRef } from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import {
   ActionIcon,
@@ -7,9 +7,6 @@ import {
   DefaultProps,
   ClassNames,
   Box,
-  Tabs,
-  TabProps,
-  TabsProps,
   ScrollArea,
   useMantineDefaultProps,
 } from '@mantine/core';
@@ -18,7 +15,6 @@ import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
-import useTabsStyles from './PrismTabs.styles';
 
 export type PrismStylesNames = ClassNames<typeof useStyles>;
 
@@ -29,8 +25,6 @@ export interface PrismProps
 
 type PrismComponent = ((props: PrismProps) => React.ReactElement) & {
   displayName: string;
-  Tab: typeof PrismTab;
-  Tabs: typeof PrismTabs;
 };
 
 const prismDefaultProps: Partial<PrismProps> = {
@@ -192,62 +186,4 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
   }
 ) as any;
 
-export interface PrismTabProps extends PrismSharedProps, Omit<TabProps, 'children'> {}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function PrismTab(_props: PrismTabProps) {
-  return null;
-}
-
-export type PrismTabsStylesNames = ClassNames<typeof useTabsStyles> | PrismStylesNames;
-export interface PrismTabsProps
-  extends DefaultProps<PrismTabsStylesNames>,
-    Omit<TabsProps, 'classNames' | 'styles'> {}
-
-export const PrismTabs = forwardRef<HTMLDivElement, PrismTabsProps>(
-  (props: PrismTabsProps, ref) => {
-    const { children, classNames, styles, ...others } = useMantineDefaultProps(
-      'PrismTabs',
-      {},
-      props
-    );
-    const { classes, cx } = useTabsStyles(null, { name: 'PrismTabs', classNames, styles });
-
-    const tabs = (Children.toArray(children) as React.ReactElement[])
-      .filter((child) => child.type === PrismTab)
-      .map((child, index) => {
-        const { label, icon, ...prismProps } = child.props;
-        return (
-          <Tabs.Tab label={label} icon={icon} key={index}>
-            <Prism
-              {...prismProps}
-              styles={styles}
-              classNames={{ ...classNames, code: cx(classes.code, classNames?.code) }}
-            />
-          </Tabs.Tab>
-        );
-      });
-
-    return (
-      <Tabs
-        ref={ref}
-        variant="unstyled"
-        tabPadding={0}
-        classNames={{
-          tabsList: cx(classes.tabs, classNames?.tabs),
-          tabActive: cx(classes.tabActive, classNames?.tabActive),
-          tabControl: cx(classes.tab, classNames?.tab),
-        }}
-        {...others}
-      >
-        {tabs}
-      </Tabs>
-    );
-  }
-);
-
-Prism.Tabs = PrismTabs;
-Prism.Tab = PrismTab;
 Prism.displayName = '@mantine/prism/Prism';
-PrismTabs.displayName = '@mantine/prism/Tabs';
-PrismTab.displayName = '@mantine/prism/Tab';

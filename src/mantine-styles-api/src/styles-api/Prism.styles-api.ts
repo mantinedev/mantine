@@ -1,4 +1,4 @@
-import type { PrismStylesNames, PrismTabsStylesNames } from '@mantine/prism';
+import type { PrismStylesNames } from '@mantine/prism';
 
 export const Prism: Record<PrismStylesNames, string> = {
   root: 'Root element',
@@ -10,10 +10,10 @@ export const Prism: Record<PrismStylesNames, string> = {
   lineContent: 'Line content',
 };
 
-export const PrismTabs: Record<PrismTabsStylesNames, string> = {
-  tabs: 'Tabs list',
-  tab: 'Tab control',
-  tabActive: 'Active tab control',
-  code: 'Code wrapper',
-  ...Prism,
-};
+// export const PrismTabs: Record<PrismTabsStylesNames, string> = {
+//   tabs: 'Tabs list',
+//   tab: 'Tab control',
+//   tabActive: 'Active tab control',
+//   code: 'Code wrapper',
+//   ...Prism,
+// };

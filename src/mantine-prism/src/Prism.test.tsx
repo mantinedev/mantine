@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
-import { Prism, PrismTab, PrismTabs, PrismProps, PrismTabsProps } from './Prism';
+import { Prism, PrismProps } from './Prism';
 
 const defaultProps: PrismProps = {
   children: 'test',
@@ -34,27 +34,5 @@ describe('@mantine/prism/Prism', () => {
       defaultProps.children.split('\n').length
     );
     expect(withoutLineNumbers.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(0);
-  });
-
-  it('exposes PrismTabs and PrismTab components', () => {
-    expect(Prism.Tabs).toBe(PrismTabs);
-    expect(Prism.Tab).toBe(PrismTab);
-  });
-});
-
-const defaultTabsProps: PrismTabsProps = {
-  children: [
-    <Prism.Tab language="tsx" key="1">
-      code
-    </Prism.Tab>,
-  ],
-};
-
-describe('@mantine/prism/Prism.Tabs', () => {
-  itSupportsSystemProps({
-    component: Prism.Tabs,
-    props: defaultTabsProps,
-    displayName: '@mantine/prism/Tabs',
-    refType: HTMLDivElement,
   });
 });

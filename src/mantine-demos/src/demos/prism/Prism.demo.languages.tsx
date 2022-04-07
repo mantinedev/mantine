@@ -1,5 +1,5 @@
-import React from 'react';
-import { Prism } from '@mantine/prism';
+// import React from 'react';
+// import { Prism } from '@mantine/prism';
 
 export const go = `
 package main
@@ -66,22 +66,23 @@ values (2, 'D''artagnian');
 `;
 
 function Demo() {
-  return (
-    <Prism.Tabs>
-      <Prism.Tab label="Go" language="go">
-        {go}
-      </Prism.Tab>
-      <Prism.Tab label="Python" language="python">
-        {py}
-      </Prism.Tab>
-      <Prism.Tab label="CSS" language="css">
-        {css}
-      </Prism.Tab>
-      <Prism.Tab label="SQL" language="sql">
-        {sql}
-      </Prism.Tab>
-    </Prism.Tabs>
-  );
+  return null;
+  // return (
+  //   // <Prism.Tabs>
+  //   //   <Prism.Tab label="Go" language="go">
+  //   //     {go}
+  //   //   </Prism.Tab>
+  //   //   <Prism.Tab label="Python" language="python">
+  //   //     {py}
+  //   //   </Prism.Tab>
+  //   //   <Prism.Tab label="CSS" language="css">
+  //   //     {css}
+  //   //   </Prism.Tab>
+  //   //   <Prism.Tab label="SQL" language="sql">
+  //   //     {sql}
+  //   //   </Prism.Tab>
+  //   // </Prism.Tabs>
+  // );
 }
 
 export const languages: MantineDemo = {
