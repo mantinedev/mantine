@@ -3,6 +3,7 @@ import { Package } from 'tabler-icons-react';
 import { Tabs, TabsProps } from './Tabs';
 import { Badge } from '../Badge';
 import { Box } from '../Box';
+import { Button } from '../Button';
 
 export default {
   title: 'Tabs',
@@ -217,3 +218,21 @@ export const StylesApi = () => (
     {base}
   </Wrapper>
 );
+
+export const DynamicTabs = () => {
+  const [count, setCount] = useState(1);
+  const list = Array(count)
+    .fill(0)
+    .map((_, index) => index.toString());
+  const tabs = list.map((item) => <Tabs.Tab value={item}>Tab {item}</Tabs.Tab>);
+  const panels = list.map((item) => <Tabs.Panel value={item}>Panel {item}</Tabs.Panel>);
+
+  return (
+    <Tabs>
+      <Tabs.List>{tabs}</Tabs.List>
+      {panels}
+      <Button onClick={() => setCount(count + 1)}>Add</Button>
+      <Button onClick={() => setCount(count - 1)}>Remove</Button>
+    </Tabs>
+  );
+};
