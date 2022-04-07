@@ -1,5 +1,4 @@
-import { createStyles } from '@mantine/core';
-import { CSSObject, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
 import { GROUP_POSITIONS } from '../../Group/Group.styles';
 import { TabsStylesParams, TabsPosition } from '../Tabs.types';
 
