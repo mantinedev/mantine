@@ -69,7 +69,6 @@ attachDemos(storiesOf('Spoiler', module), demos.SpoilerDemos);
 attachDemos(storiesOf('Stepper', module), demos.StepperDemos);
 attachDemos(storiesOf('Switch', module), demos.SwitchDemos);
 attachDemos(storiesOf('Table', module), demos.TableDemos);
-attachDemos(storiesOf('Tabs', module), demos.TabsDemos);
 attachDemos(storiesOf('Text', module), demos.TextDemos);
 attachDemos(storiesOf('Textarea', module), demos.TextareaDemos);
 attachDemos(storiesOf('TextInput', module), demos.TextInputDemos);
