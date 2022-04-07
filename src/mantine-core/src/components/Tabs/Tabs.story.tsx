@@ -1,62 +1,221 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { Tabs, Tab, TabProps } from './index';
+import { Package } from 'tabler-icons-react';
+import { Tabs, TabsProps } from './Tabs';
+import { Badge } from '../Badge';
+import { Box } from '../Box';
 
-function Wrapped(props: TabProps) {
-  return <Tabs.Tab {...props} />;
-}
+export default {
+  title: 'Tabs',
+};
 
-function Controlled() {
-  const [activeTab, setActiveTab] = useState(1);
+const base = (
+  <>
+    <Tabs.List>
+      <Tabs.Tab value="react">React</Tabs.Tab>
+      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
 
+    <Tabs.Panel value="react" pr="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pr="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pr="sm">
+      Angular Panel
+    </Tabs.Panel>
+  </>
+);
+
+const verticalBase = (
+  <>
+    <Tabs.List>
+      <Tabs.Tab value="react">React</Tabs.Tab>
+      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="react" pl="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pl="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pl="sm">
+      Angular Panel
+    </Tabs.Panel>
+  </>
+);
+
+const Wrapper = (props: TabsProps) => <Tabs sx={{ maxWidth: 500 }} mx="auto" mt={40} {...props} />;
+
+export const NoLoop = () => (
+  <Wrapper defaultValue="react" loop={false}>
+    {base}
+  </Wrapper>
+);
+
+export const NoKeyboardActivation = () => (
+  <Wrapper defaultValue="react" activateTabWithKeyboardEvents={false}>
+    {base}
+  </Wrapper>
+);
+
+export const NoDefaultValue = () => <Wrapper defaultValue={null}>{base}</Wrapper>;
+
+export const AllowDeactivation = () => (
+  <Wrapper defaultValue="react" allowTabDeactivation>
+    {base}
+  </Wrapper>
+);
+
+export const Controlled = () => {
+  const [tab, setTab] = useState('react');
   return (
-    <Tabs active={activeTab} onTabChange={setActiveTab}>
-      <Tab label="First">First tab content</Tab>
-      <Tab label="Second">Second tab content</Tab>
-      <Wrapped label="wrapped" />
-      <Tab label="Third">Third tab content</Tab>
-    </Tabs>
+    <Wrapper value={tab} onTabChange={setTab} allowTabDeactivation>
+      {base}
+    </Wrapper>
   );
-}
+};
 
-function Dynamic() {
-  const [tabs, setTabs] = useState([1, 2, 3, 4]);
-  const increment = () => setTabs((current) => [...current, current[current.length - 1] + 1]);
-  const children = tabs.map((tab) => <Tab key={tab} label={`tab ${tab}`} />);
+export const Grow = () => (
+  <Wrapper defaultValue="react">
+    <Tabs.List grow>
+      <Tabs.Tab value="react">React</Tabs.Tab>
+      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
 
-  return (
-    <div>
-      <Tabs>{children}</Tabs>
-      <button type="button" onClick={increment}>
-        increment
-      </button>
-    </div>
-  );
-}
+    <Tabs.Panel value="react">React Panel</Tabs.Panel>
+    <Tabs.Panel value="sv">Svelte Panel</Tabs.Panel>
+    <Tabs.Panel value="ng">Angular Panel</Tabs.Panel>
+  </Wrapper>
+);
 
-storiesOf('Tabs', module)
-  .add('Dynamic children', () => <Dynamic />)
-  .add('Controlled', () => <Controlled />)
-  .add('Disabled', () => (
-    <div style={{ padding: 50 }}>
-      <Tabs style={{ marginTop: 20 }}>
-        <Tab label="First Disabled" disabled />
-        <Tab label="Only tabs" />
-        <Tab label="Nothing here" />
-      </Tabs>
+export const Variants = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
+      {base}
+    </Wrapper>
 
-      <Tabs style={{ marginTop: 20 }}>
-        <Tab label="Multiple disabled" />
-        <Tab label="2" disabled />
-        <Tab label="3" disabled />
-        <Tab label="4" />
-        <Tab label="5" />
-        <Tab label="5" disabled />
-        <Tab label="6a" disabled />
-        <Tab label="6b" disabled />
-        <Tab label="6c" />
-        <Tab label="7" disabled />
-        <Tab label="8" />
-      </Tabs>
-    </div>
-  ));
+    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50}>
+      {base}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" variant="pills" mt={10}>
+      {base}
+    </Wrapper>
+  </Box>
+);
+
+export const VerticalVariants = () => (
+  <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
+    <Wrapper defaultValue="react" orientation="vertical" variant="default" mt={10} mb={50}>
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" orientation="vertical" variant="outline" mt={10} mb={50}>
+      {verticalBase}
+    </Wrapper>
+
+    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10}>
+      {verticalBase}
+    </Wrapper>
+  </Box>
+);
+
+export const WithIcon = () => (
+  <Wrapper defaultValue="react" variant="outline">
+    <Tabs.List>
+      <Tabs.Tab value="react" icon={<Package size={14} />}>
+        React
+      </Tabs.Tab>
+      <Tabs.Tab
+        value="sv"
+        rightSection={
+          <Badge size="xs" sx={{ width: 16, height: 16, padding: 0 }}>
+            6
+          </Badge>
+        }
+      >
+        Svelte
+      </Tabs.Tab>
+      <Tabs.Tab value="ng">Angular</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
+
+    <Tabs.Panel value="react" pt="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pt="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pt="sm">
+      Angular Panel
+    </Tabs.Panel>
+  </Wrapper>
+);
+
+export const Unstyled = () => (
+  <Wrapper defaultValue="react" unstyled>
+    {base}
+  </Wrapper>
+);
+
+export const StylesApi = () => (
+  <Wrapper
+    defaultValue="react"
+    unstyled
+    styles={(theme) => ({
+      tab: {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[4]
+        }`,
+        padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+        cursor: 'pointer',
+        fontSize: theme.fontSizes.sm,
+
+        '&:disabled': {
+          opacity: 0.5,
+          cursor: 'not-allowed',
+        },
+
+        '&:not(:first-of-type)': {
+          borderLeft: 0,
+        },
+
+        '&:first-of-type': {
+          borderTopLeftRadius: theme.radius.md,
+          borderBottomLeftRadius: theme.radius.md,
+        },
+
+        '&:last-of-type': {
+          borderTopRightRadius: theme.radius.md,
+          borderBottomRightRadius: theme.radius.md,
+        },
+      },
+
+      tabActive: {
+        backgroundColor: theme.colors.blue[7],
+        borderColor: theme.colors.blue[7],
+        color: theme.white,
+      },
+    })}
+  >
+    {base}
+  </Wrapper>
+);

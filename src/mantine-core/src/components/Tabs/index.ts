@@ -1,6 +1,7 @@
-export { TabControl as Tab } from './TabControl/TabControl';
 export { Tabs } from './Tabs';
 
-export type { TabControlProps as TabProps } from './TabControl/TabControl';
-export type { TabsProps, TabsVariant, TabsStylesNames } from './Tabs';
-export type { TabsStylesParams } from './Tabs.styles';
+export type { TabsProps, TabsStylesNames } from './Tabs';
+export type { TabsPanelProps } from './TabsPanel/TabsPanel';
+export type { TabProps } from './Tab/Tab';
+export type { TabsListProps } from './TabsList/TabsList';
+export type { TabsStylesParams, TabsOrientation, TabsValue, TabsVariant } from './Tabs.types';
