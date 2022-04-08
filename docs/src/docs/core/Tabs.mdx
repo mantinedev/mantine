@@ -97,6 +97,20 @@ Disabled tab cannot be activated with mouse or keyboard, will be skipped when us
 
 <Demo data={TabsDemos.disabled} />
 
+## Activation mode
+
+By default, tabs are activated when user presses arrows and Home/End keys.
+To disable that set `activateTabWithKeyboard={false}` on `Tabs` component,
+then user will be able to deactivate active tab by clicking on it:
+
+<Demo data={TabsDemos.keyboardActivation} demoProps={{ toggle: true }} />
+
+## Tab deactivation
+
+By default, active cannot be deactivated. To allow that set `allowTabDeactivation` on `Tabs` component:
+
+<Demo data={TabsDemos.deactivate} demoProps={{ toggle: true }} />
+
 ## Unstyled Tabs
 
 Set `unstyled` prop on Tabs component to remove all non-essential library styles.
