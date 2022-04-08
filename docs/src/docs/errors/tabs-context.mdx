@@ -1,5 +1,43 @@
 ---
+title: 'Tabs component error'
 error: 'Tabs component was not found in the tree'
 ---
 
-# tabs error
+## Error source
+
+You have rendered `Tabs.List`, `Tabs.Tab` or `Tabs.Panel` component outside of [Tabs](/core/tabs/) component context:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function DemoWithError() {
+  return (
+    <>
+      <Tabs.List>
+        <Tabs.Tab value="tab-1">Tab 1</Tabs.Tab>
+        <Tabs.Tab value="tab-2">Tab 2</Tabs.Tab>
+      </Tabs.List>
+    </>
+  );
+}
+```
+
+## How to fix
+
+Make sure that all `Tabs.List`, `Tabs.Tab` and `Tabs.Panel` are rendered within [Tabs](/core/tabs/) component
+– all of them require Tabs context to work correctly:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function DemoWithError() {
+  return (
+    <Tabs defaultValue="tab-1">
+      <Tabs.List>
+        <Tabs.Tab value="tab-1">Tab 1</Tabs.Tab>
+        <Tabs.Tab value="tab-2">Tab 2</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```

@@ -1,5 +1,49 @@
 ---
+title: 'Tabs component error'
 error: 'Tabs.Tab or Tabs.Panel component was rendered with invalid value or without value'
 ---
 
-## tabs error
+## Error source
+
+`value` is a required prop for `Tabs.Tab` and `Tabs.Panel` component.
+`value` prop should be a string, other types are not supported:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function DemoWithError() {
+  return (
+    <Tabs>
+      <Tabs.List>
+        <Tabs.Tab>Tab without value</Tabs.Tab>
+        <Tabs.Tab value={null}>Tab with invalid value</Tabs.Tab>
+        <Tabs.Tab value={10}>Tab with invalid value</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel>Panel without value</Tabs.Panel>
+      <Tabs.Panel value={null}>Panel with invalid value</Tabs.Panel>
+      <Tabs.Panel value={10}>Panel with invalid value</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
+## How to fix
+
+Add string `value` to `Tabs.Tab` and `Tabs.Panel` components:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs>
+      <Tabs.List>
+        <Tabs.Tab value="tab-1">Tab without error</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="tab-1">Panel without error</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
