@@ -128,6 +128,79 @@ function Demo() {
 }
 ```
 
-## Accessibility and usability
+## Accessibility
 
 Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
+
+### Notes
+
+If you use `Tabs.Tab` without text content, for example, only with icon, then set `aria-label`:
+
+```tsx
+import { Tabs } from '@mantine/core';
+import { MessageCircle, Coin } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="chat">
+      <Tabs.List>
+        {/* aria-label is not required, tab is labelled by children */}
+        <Tabs.Tab icon={<MessageCircle size={14} />} value="chat">
+          Chat
+        </Tabs.Tab>
+        {/* aria-label is required, tab is not labelled by children */}
+        <Tabs.Tab icon={<Coin size={14} />} value="money" aria-label="Get money" />
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+To set tabs list label, set `aria-label` on `Tabs.List` component, it will be announced by screen reader:
+
+```tsx
+import { Tabs } from '@mantine/core';
+import { MessageCircle, Coin } from 'tabler-icons-react';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="recent">
+      {/* Tabs.List aria-label will be announced when tab is focused for the first time */}
+      <Tabs.List aria-label="Chats">
+        <Tabs.Tab value="recent">Most recent</Tabs.Tab>
+        <Tabs.Tab value="recent">Unanswered</Tabs.Tab>
+        <Tabs.Tab value="archived">Archived</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    { key: 'Home', description: 'Focuses and activates first tab' },
+    { key: 'End', description: 'Focuses and activates last tab' },
+  ]}
+/>

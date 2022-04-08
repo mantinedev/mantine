@@ -3,6 +3,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { Code, Text } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Demo } from '@mantine/demos';
+import { KeyboardEventsTable } from './KeyboardEventsTable/KeyboardEventsTable';
 import GatsbyLink from './GatsbyLink/GatsbyLink';
 import DataTable from './DataTable/DataTable';
 import MdxTitle from './MdxTitle/MdxTitle';
@@ -13,6 +14,7 @@ export const components = {
   GatsbyLink,
   DataTable,
   Demo,
+  KeyboardEventsTable,
   h1: h(1),
   h2: h(2),
   h3: h(3),
