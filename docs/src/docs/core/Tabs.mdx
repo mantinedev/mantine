@@ -179,16 +179,15 @@ If you use `Tabs.Tab` without text content, for example, only with icon, then se
 
 ```tsx
 import { Tabs } from '@mantine/core';
-import { MessageCircle, Coin } from 'tabler-icons-react';
+import { Coin } from 'tabler-icons-react';
 
 function Demo() {
   return (
     <Tabs defaultValue="chat">
       <Tabs.List>
         {/* aria-label is not required, tab is labelled by children */}
-        <Tabs.Tab icon={<MessageCircle size={14} />} value="chat">
-          Chat
-        </Tabs.Tab>
+        <Tabs.Tab value="chat">Chat</Tabs.Tab>
+
         {/* aria-label is required, tab is not labelled by children */}
         <Tabs.Tab icon={<Coin size={14} />} value="money" aria-label="Get money" />
       </Tabs.List>
@@ -201,7 +200,6 @@ To set tabs list label, set `aria-label` on `Tabs.List` component, it will be an
 
 ```tsx
 import { Tabs } from '@mantine/core';
-import { MessageCircle, Coin } from 'tabler-icons-react';
 
 function Demo() {
   return (
