@@ -26,7 +26,7 @@ export interface TabsProviderProps {
   loop?: boolean;
 
   /** Determines whether tab should be activated with arrow key press, defaults to true */
-  activateTabWithKeyboardEvents?: boolean;
+  activateTabWithKeyboard?: boolean;
 
   /** Determines whether tab can be deactivated, defaults to false */
   allowTabDeactivation?: boolean;
@@ -52,7 +52,7 @@ export function TabsProvider({
   children,
   loop,
   id,
-  activateTabWithKeyboardEvents,
+  activateTabWithKeyboard,
   allowTabDeactivation,
   variant,
   color,
@@ -75,7 +75,7 @@ export function TabsProvider({
         orientation,
         id: uid,
         loop,
-        activateTabWithKeyboardEvents,
+        activateTabWithKeyboard,
         getTabId: getId(uid, 'tab'),
         getPanelId: getId(uid, 'panel'),
         onTabChange: onChange,

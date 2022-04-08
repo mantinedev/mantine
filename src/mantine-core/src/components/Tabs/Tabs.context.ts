@@ -9,7 +9,7 @@ interface TabsContext {
   value: TabsValue;
   orientation: TabsOrientation;
   loop: boolean;
-  activateTabWithKeyboardEvents: boolean;
+  activateTabWithKeyboard: boolean;
   allowTabDeactivation: boolean;
   onTabChange(value: TabsValue): void;
   getTabId(value: string): string;

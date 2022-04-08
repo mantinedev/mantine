@@ -69,7 +69,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
         onKeyDown={createScopedKeydownHandler({
           siblingSelector: '[role="tab"]',
           parentSelector: '[role="tablist"]',
-          activateOnFocus: ctx.activateTabWithKeyboardEvents,
+          activateOnFocus: ctx.activateTabWithKeyboard,
           loop: ctx.loop,
           dir: theme.dir,
           orientation: ctx.orientation,

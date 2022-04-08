@@ -155,8 +155,8 @@ describe('@mantine/core/Tabs', () => {
     expectActiveTab('tab-2');
   });
 
-  it('handles arrow events correctly (activateTabWithKeyboardEvents = false)', () => {
-    render(<Tabs {...defaultProps} defaultValue="tab-2" activateTabWithKeyboardEvents={false} />);
+  it('handles arrow events correctly (activateTabWithKeyboard = false)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-2" activateTabWithKeyboard={false} />);
 
     userEvent.type(getTab('tab-2'), '{arrowright}');
     expectActiveTab('tab-2');

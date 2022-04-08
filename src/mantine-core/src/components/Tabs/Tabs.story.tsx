@@ -64,7 +64,7 @@ export const NoLoop = () => (
 );
 
 export const NoKeyboardActivation = () => (
-  <Wrapper defaultValue="react" activateTabWithKeyboardEvents={false}>
+  <Wrapper defaultValue="react" activateTabWithKeyboard={false}>
     {base}
   </Wrapper>
 );

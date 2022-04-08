@@ -36,7 +36,7 @@ type TabsComponent = ForwardRefWithStaticComponents<
 const defaultProps: Partial<TabsProps> = {
   orientation: 'horizontal',
   loop: true,
-  activateTabWithKeyboardEvents: true,
+  activateTabWithKeyboard: true,
   allowTabDeactivation: false,
   unstyled: false,
   variant: 'default',
@@ -48,7 +48,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     value,
     orientation,
     loop,
-    activateTabWithKeyboardEvents,
+    activateTabWithKeyboard,
     allowTabDeactivation,
     children,
     id,
@@ -71,7 +71,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
       <TabsProvider
-        activateTabWithKeyboardEvents={activateTabWithKeyboardEvents}
+        activateTabWithKeyboard={activateTabWithKeyboard}
         defaultValue={defaultValue}
         orientation={orientation}
         onTabChange={onTabChange}
