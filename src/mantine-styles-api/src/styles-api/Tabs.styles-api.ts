@@ -2,11 +2,11 @@ import type { TabsStylesNames } from '@mantine/core';
 
 export const Tabs: Record<TabsStylesNames, string> = {
   root: 'Root element',
-  tabsList: 'Tabs control list',
-  tab: 'Tab control wrapper',
-  tabActive: 'Active tab control',
-  tabRightSection: 'Tab control wrapper, contains tabLabel and tabIcon',
+  tabsList: 'Controls list (Tabs.List component)',
+  tab: 'Tab control (Tabs.Tab component)',
+  tabActive: 'Active tab control modifier',
+  tabRightSection: 'Tab control right section',
   tabLabel: 'Tab control label',
-  tabIcon: 'Tab icon',
-  panel: '',
+  tabIcon: 'Tab control icon',
+  panel: 'Tab panel (Tabs.Panel component)',
 };
