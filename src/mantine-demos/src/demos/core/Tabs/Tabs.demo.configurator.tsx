@@ -82,6 +82,7 @@ export const configurator: MantineDemo = {
         { value: 'pills', label: 'Pills' },
       ],
     },
+    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
       name: 'orientation',
       type: 'segmented',

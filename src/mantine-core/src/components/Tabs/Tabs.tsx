@@ -59,11 +59,12 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     unstyled,
     classNames,
     styles,
+    radius,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { orientation, color, variant },
+    { orientation, color, variant, radius },
     { unstyled, name: 'Tabs', classNames, styles }
   );
 
@@ -80,6 +81,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         allowTabDeactivation={allowTabDeactivation}
         color={color}
         variant={variant}
+        radius={radius}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

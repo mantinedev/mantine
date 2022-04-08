@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUncontrolled, useId } from '@mantine/utils';
-import { MantineColor } from '@mantine/styles';
+import { MantineColor, MantineNumberSize } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
 import { TabsValue, TabsOrientation, TabsVariant } from './Tabs.types';
@@ -39,6 +39,9 @@ export interface TabsProviderProps {
 
   /** Key of theme.colors */
   color?: MantineColor;
+
+  /** Tabs border-radius from theme.radius or number ti set value from theme, defaults to theme.defaultRadius */
+  radius?: MantineNumberSize;
 }
 
 export function TabsProvider({
@@ -53,6 +56,7 @@ export function TabsProvider({
   allowTabDeactivation,
   variant,
   color,
+  radius,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -78,6 +82,7 @@ export function TabsProvider({
         allowTabDeactivation,
         variant,
         color,
+        radius,
       }}
     >
       {children}

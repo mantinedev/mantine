@@ -1,16 +1,7 @@
-import {
-  createStyles,
-  CSSObject,
-  getSharedColorScheme,
-  MantineColor,
-  MantineTheme,
-} from '@mantine/styles';
-import { TabsVariant, TabsOrientation } from '../Tabs.types';
+import { createStyles, CSSObject, getSharedColorScheme, MantineTheme } from '@mantine/styles';
+import { TabsStylesParams } from '../Tabs.types';
 
-interface TabStylesParams {
-  variant: TabsVariant;
-  color: MantineColor;
-  orientation: TabsOrientation;
+interface TabStylesParams extends TabsStylesParams {
   withIcon: boolean;
   withRightSection: boolean;
 }
@@ -22,7 +13,7 @@ interface GetVariantReturnType {
 
 function getVariantStyles(
   theme: MantineTheme,
-  { variant, orientation, color }: TabStylesParams
+  { variant, orientation, color, radius }: TabStylesParams
 ): GetVariantReturnType {
   const vertical = orientation === 'vertical';
   const filledScheme = getSharedColorScheme({ color, theme, variant: 'filled' });
@@ -32,8 +23,8 @@ function getVariantStyles(
       tab: {
         [vertical ? 'borderRight' : 'borderBottom']: '2px solid transparent',
         [vertical ? 'marginRight' : 'marginBottom']: -2,
-        [vertical ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: theme.radius.sm,
-        borderTopLeftRadius: theme.radius.sm,
+        [vertical ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: theme.fn.radius(radius),
+        borderTopLeftRadius: theme.fn.radius(radius),
 
         '&:hover': {
           backgroundColor:
@@ -57,8 +48,8 @@ function getVariantStyles(
     return {
       tab: {
         background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        [vertical ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: theme.radius.sm,
-        borderTopLeftRadius: theme.radius.sm,
+        [vertical ? 'borderBottomLeftRadius' : 'borderTopRightRadius']: theme.fn.radius(radius),
+        borderTopLeftRadius: theme.fn.radius(radius),
         border: '1px solid transparent',
         [vertical ? 'borderRight' : 'borderBottom']: 'none',
       },
@@ -83,7 +74,7 @@ function getVariantStyles(
   if (variant === 'pills') {
     return {
       tab: {
-        borderRadius: theme.radius.sm,
+        borderRadius: theme.fn.radius(radius),
 
         '&:hover': {
           backgroundColor:

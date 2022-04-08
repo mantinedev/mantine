@@ -20,7 +20,7 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
     const ctx = useTabsContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
-      { orientation: ctx.orientation, variant: ctx.variant, color: ctx.color },
+      { orientation: ctx.orientation, variant: ctx.variant, color: ctx.color, radius: ctx.radius },
       { name: 'Tabs', unstyled, classNames, styles }
     );
 

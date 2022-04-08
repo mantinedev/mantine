@@ -1,5 +1,5 @@
 import { createSafeContext } from '@mantine/utils';
-import { MantineColor } from '@mantine/styles';
+import { MantineColor, MantineNumberSize } from '@mantine/styles';
 import { TabsVariant } from './Tabs.types';
 import { TABS_ERRORS } from './Tabs.errors';
 import type { TabsOrientation, TabsValue } from './Tabs.types';
@@ -16,6 +16,7 @@ interface TabsContext {
   getPanelId(value: string): string;
   variant: TabsVariant;
   color: MantineColor;
+  radius: MantineNumberSize;
 }
 
 export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(

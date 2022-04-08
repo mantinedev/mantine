@@ -105,15 +105,15 @@ export const Grow = () => (
 
 export const Variants = () => (
   <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
-    <Wrapper defaultValue="react" variant="default" mt={10} mb={50}>
+    <Wrapper defaultValue="react" variant="default" mt={10} mb={50} radius="md">
       {base}
     </Wrapper>
 
-    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50}>
+    <Wrapper defaultValue="react" variant="outline" mt={10} mb={50} radius="md">
       {base}
     </Wrapper>
 
-    <Wrapper defaultValue="react" variant="pills" mt={10}>
+    <Wrapper defaultValue="react" variant="pills" mt={10} radius="md">
       {base}
     </Wrapper>
   </Box>
@@ -121,15 +121,29 @@ export const Variants = () => (
 
 export const VerticalVariants = () => (
   <Box sx={{ maxWidth: 400 }} mx="auto" mt={40}>
-    <Wrapper defaultValue="react" orientation="vertical" variant="default" mt={10} mb={50}>
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="default"
+      mt={10}
+      mb={50}
+      radius="md"
+    >
       {verticalBase}
     </Wrapper>
 
-    <Wrapper defaultValue="react" orientation="vertical" variant="outline" mt={10} mb={50}>
+    <Wrapper
+      defaultValue="react"
+      orientation="vertical"
+      variant="outline"
+      mt={10}
+      mb={50}
+      radius="md"
+    >
       {verticalBase}
     </Wrapper>
 
-    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10}>
+    <Wrapper defaultValue="react" orientation="vertical" variant="pills" mt={10} radius="md">
       {verticalBase}
     </Wrapper>
   </Box>
