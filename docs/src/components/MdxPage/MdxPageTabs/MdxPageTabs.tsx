@@ -27,14 +27,22 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
   }
 
   const propsTables = hasProps
-    ? frontmatter.props.map((component) => (
-        <div key={component}>
-          <Title order={2} sx={{ fontWeight: 600 }} mb={20}>
-            {component} component props
-          </Title>
-          <PropsTable key={component} component={component} query={query} />
-        </div>
-      ))
+    ? frontmatter.props.map((component) => {
+        const prefix = frontmatter.componentPrefix;
+        const componentName = prefix
+          ? prefix === component
+            ? component
+            : `${prefix}.${component.replace(prefix, '')}`
+          : component;
+        return (
+          <div key={component}>
+            <Title order={2} sx={{ fontWeight: 600 }} mb={20}>
+              {componentName} component props
+            </Title>
+            <PropsTable key={component} component={component} query={query} />
+          </div>
+        );
+      })
     : null;
 
   return (

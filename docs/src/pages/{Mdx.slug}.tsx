@@ -61,6 +61,7 @@ export const query = graphql`
         release
         date
         error
+        componentPrefix
       }
       body
     }
