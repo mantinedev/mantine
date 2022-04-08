@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import { Tabs, Title, TextInput } from '@mantine/core';
@@ -18,9 +18,13 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
   const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const location = useLocation();
-  const initialTab = location.search.replace('?t=', '') || 'docs';
+  const [activeTab, setActiveTab] = useState('docs');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);
+
+  useEffect(() => {
+    setActiveTab(location.search.replace('?t=', '') || 'docs');
+  }, []);
 
   if (!hasProps && !hasStyles) {
     return null;
@@ -49,9 +53,10 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
     <MdxPageBase>
       <Tabs
         variant="outline"
-        defaultValue={initialTab}
+        value={activeTab}
         onTabChange={(value) => {
           navigate(`${location.pathname}?t=${value}`, { replace: true });
+          setActiveTab(value);
         }}
         classNames={{ tabsList: classes.tabsList, tab: classes.tab, tabActive: classes.tabActive }}
       >
