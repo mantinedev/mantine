@@ -1,0 +1,46 @@
+---
+title: 'Tabs component error'
+error: 'Controlled Tabs component did not receive onTabChange handler, either remove value or add onChange'
+---
+
+## Error source
+
+Controlled [Tabs](/core/tabs/) component was used without `onTabChange` handler.
+You have set `value` prop (thus making component controlled) and did not provide `onTabChange` function
+to handle changes, for example:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function DemoWithError() {
+  return <Tabs value="some-value">{/* ...children */}</Tabs>;
+}
+```
+
+## How to fix
+
+If you do not need to control [Tabs](/core/tabs/) state, use `defaultValue` instead of the `value` prop:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return <Tabs defaultValue="some-value">{/* ...children */}</Tabs>;
+}
+```
+
+To control [Tabs](/core/tabs/) state on your side, provider `value` and `onTabChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const [activeTab, setActiveTab] = useState('some-value');
+  return (
+    <Tabs value={activeTab} onTabChange={setActiveTab}>
+      {/* ...children */}
+    </Tabs>
+  );
+}
+```
