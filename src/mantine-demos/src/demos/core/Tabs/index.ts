@@ -6,3 +6,4 @@ export { stylesApi } from './Tabs.demo.stylesApi';
 export { pull } from './Tabs.demo.pull';
 export { disabled } from './Tabs.demo.disabled';
 export { unstyled } from './Tabs.demo.unstyled';
+export { rightSection } from './Tabs.demo.rightSection';
