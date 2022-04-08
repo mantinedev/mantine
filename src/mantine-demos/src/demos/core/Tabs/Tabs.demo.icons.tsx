@@ -16,7 +16,7 @@ function Demo() {
         <Tabs.Tab icon={<Settings size={14} />} value="settings">
           Settings
         </Tabs.Tab>
-        <Tabs.Tab icon={<Coin size={14} />} value="money" />
+        <Tabs.Tab icon={<Coin size={14} />} value="money" aria-label="Get money" />
       </Tabs.List>
     </Tabs>
   );
@@ -33,7 +33,7 @@ function Demo() {
         <Tabs.Tab icon={<Settings size={14} />} value="settings">
           Settings
         </Tabs.Tab>
-        <Tabs.Tab icon={<Coin size={14} />} value="money" />
+        <Tabs.Tab icon={<Coin size={14} />} value="money" aria-label="Get money" />
       </Tabs.List>
     </Tabs>
   );

@@ -22,47 +22,46 @@ import { TabsDemos } from '@mantine/demos';
 
 ## Controlled Tabs
 
+To control Tabs state provide `value` and `onTabChange` props:
+
 ```tsx
 import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [activeTab, setActiveTab] = useState(1);
+  const [tab, setTab] = useState('first');
 
   return (
-    <Tabs active={activeTab} onTabChange={setActiveTab}>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
-      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
-      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
+    <Tabs value={activeTab} onTabChange={onChange}>
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
     </Tabs>
   );
 }
 ```
 
-`Tabs.Tab` accepts an optional `tabKey` prop, if included the `tabKey` will be included as second argument in the `onTabChange` callback:
+## Uncontrolled Tabs
+
+If you do need to subscribe to Tabs state changes use `defaultValue`:
 
 ```tsx
-import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [activeTab, setActiveTab] = useState(1);
-  const onChange = (active: number, tabKey: string) => {
-    setActiveTab(active);
-    console.log('tabKey', tabKey);
-  };
-
   return (
-    <Tabs active={activeTab} onTabChange={onChange}>
-      <Tabs.Tab label="First" tabKey="First">
-        First tab content
-      </Tabs.Tab>
-      <Tabs.Tab label="Second" tabKey="Second">
-        Second tab content
-      </Tabs.Tab>
-      <Tabs.Tab label="Third" tabKey="Third">
-        Third tab content
-      </Tabs.Tab>
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
     </Tabs>
   );
 }
@@ -70,8 +69,7 @@ function Demo() {
 
 ## Tabs with icons
 
-Add any React node as icon by setting `icon` prop on `Tabs.Tab` component.
-If `icon` prop is set, it is not necessary to pass `label`:
+You can use any React node as `icon`:
 
 <Demo data={TabsDemos.icons} />
 
