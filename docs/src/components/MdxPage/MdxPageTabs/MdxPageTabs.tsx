@@ -55,7 +55,8 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
         variant="outline"
         value={activeTab}
         onTabChange={(value) => {
-          navigate(`${location.pathname}?t=${value}`, { replace: true });
+          const nextPath = value === 'docs' ? location.pathname : `${location.pathname}?t=${value}`;
+          navigate(nextPath, { replace: true });
           setActiveTab(value);
         }}
         classNames={{ tabsList: classes.tabsList, tab: classes.tab, tabActive: classes.tabActive }}
