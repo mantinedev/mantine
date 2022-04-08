@@ -11,6 +11,8 @@ describe('@mantine/core/Tabs/get-id', () => {
     expect(() => factory(undefined)).toThrow(new Error(TABS_ERRORS.value.message));
     expect(() => factory(null)).toThrow(new Error(TABS_ERRORS.value.message));
     expect(() => factory('')).toThrow(new Error(TABS_ERRORS.value.message));
+    expect(() => factory(1 as any)).toThrow(new Error(TABS_ERRORS.value.message));
+    expect(() => factory({} as any)).toThrow(new Error(TABS_ERRORS.value.message));
     expect(() => factory('  \n')).toThrow(new Error(TABS_ERRORS.value.message));
   });
 });
