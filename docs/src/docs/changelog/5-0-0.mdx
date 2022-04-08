@@ -1,0 +1,22 @@
+---
+group: 'changelog'
+title: 'Version 5.0.0'
+order: 1
+slug: /changelog/5-0-0/
+release: https://github.com/mantinedev/mantine/releases/tag/5.0.0
+date: 'March 29th, 2022'
+---
+
+import { TabsDemos } from '@mantine/demos';
+
+## Breaking changes
+
+### Tabs component API changes
+
+[Tabs](https://mantine.dev/core/tabs/) component now has new API:
+
+- Tabs are now more accessible
+- It is now easier to manage controlled tabs state with string value instead of index
+- With new component structure it is now easier to modify styles of each part with `sx` or `classname` props
+
+<Demo data={TabsDemos.configurator} />
