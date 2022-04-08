@@ -1,5 +1,4 @@
 import React from 'react';
-import { StylesApiHeader } from './StylesApiHeader/StylesApiHeader';
 import { StylesApiItem } from './StylesApiItem/StylesApiItem';
 
 interface StylesApiProps {
@@ -17,10 +16,5 @@ export function StylesApi({ components }: StylesApiProps) {
     <StylesApiItem key={component} component={component} />
   ));
 
-  return (
-    <>
-      <StylesApiHeader component={components[0]} singleNode={singleNode} />
-      {singleNode ? null : items}
-    </>
-  );
+  return <>{singleNode ? null : items}</>;
 }

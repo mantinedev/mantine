@@ -1,8 +1,6 @@
 import React from 'react';
-import { Table, Title, Text } from '@mantine/core';
-import { Prism } from '@mantine/prism';
+import { Table, Title } from '@mantine/core';
 import * as STYLES_API from '@mantine/styles-api';
-import { generateStylesCode, generateClassNamesCode } from '../generate-styles-code';
 import useStyles from './StylesApiItem.styles';
 
 interface StylesApiItemProps {
@@ -28,8 +26,8 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
 
   return (
     <>
-      <Title order={3} className={classes.title} mt={45}>
-        {component} styles API
+      <Title order={3} className={classes.title}>
+        {component} component Styles API
       </Title>
 
       <Table>
@@ -42,24 +40,6 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-
-      <div className={classes.codeSections}>
-        <div className={classes.codeSection}>
-          <Text weight={500} className={classes.title}>
-            Inline styles
-          </Text>
-
-          <Prism language="tsx">{generateStylesCode(CLASS_NAMES, component)}</Prism>
-        </div>
-
-        <div className={classes.codeSection}>
-          <Text weight={500} className={classes.title}>
-            classNames
-          </Text>
-
-          <Prism language="tsx">{generateClassNamesCode(CLASS_NAMES, component)}</Prism>
-        </div>
-      </div>
     </>
   );
 }
