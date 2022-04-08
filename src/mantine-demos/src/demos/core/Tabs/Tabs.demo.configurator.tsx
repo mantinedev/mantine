@@ -65,7 +65,7 @@ function Demo() {
   `;
 };
 
-export const colorsConfigurator: MantineDemo = {
+export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
