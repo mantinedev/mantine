@@ -9,7 +9,7 @@ import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
 function StyledTabs(props: TabsProps) {
   return (
     <Tabs
-      variant="unstyled"
+      unstyled
       styles={(theme) => ({
         tabControl: {
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
@@ -58,7 +58,6 @@ function Demo() {
 function StyledTabs(props: TabsProps) {
   return (
     <Tabs
-      defaultValue="react"
       unstyled
       styles={(theme) => ({
         tab: {
