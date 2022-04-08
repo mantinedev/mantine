@@ -40,7 +40,7 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
           : component;
         return (
           <div key={component}>
-            <Title order={2} sx={{ fontWeight: 600 }} mb={20}>
+            <Title order={2} sx={{ fontWeight: 600 }} mb={20} className={classes.title}>
               {componentName} component props
             </Title>
             <PropsTable key={component} component={component} query={query} />

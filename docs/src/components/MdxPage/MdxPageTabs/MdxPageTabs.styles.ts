@@ -90,4 +90,8 @@ export default createStyles((theme) => ({
       display: 'none',
     },
   },
+
+  title: {
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
 }));

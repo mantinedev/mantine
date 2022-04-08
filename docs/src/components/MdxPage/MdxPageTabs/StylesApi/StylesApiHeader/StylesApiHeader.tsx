@@ -12,7 +12,14 @@ interface StylesApiHeaderProps {
 export function StylesApiHeader({ component, singleNode }: StylesApiHeaderProps) {
   return (
     <>
-      <Title order={2} sx={{ fontWeight: 600 }} mb="md">
+      <Title
+        order={2}
+        sx={(theme) => ({
+          fontWeight: 600,
+          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+        })}
+        mb="md"
+      >
         {singleNode ? `${component} styles API` : 'Mantine styles API'}
       </Title>
 

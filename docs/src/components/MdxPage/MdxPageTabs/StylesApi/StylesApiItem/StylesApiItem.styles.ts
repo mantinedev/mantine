@@ -6,6 +6,7 @@ export default createStyles((theme) => ({
   title: {
     fontWeight: 600,
     marginBottom: 15,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   codeSections: {
