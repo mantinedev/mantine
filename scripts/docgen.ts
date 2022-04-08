@@ -4,10 +4,17 @@ import { DeclarationPath } from './docgen/get-declarations-list';
 import { generateDeclarations } from './docgen/generate-declarations';
 
 const EXTRA_FILES_PATHS = [
+  // Tabs
+  '../src/mantine-core/src/components/Tabs/TabsList/TabsList.tsx',
+  '../src/mantine-core/src/components/Tabs/Tab/Tab.tsx',
+  '../src/mantine-core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
+  '../src/mantine-core/src/components/Tabs/Tabs.tsx',
+
+  // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
-  '../src/mantine-core/src/Menu/MenuItem/MenuItem.tsx',
-  '../src/mantine-core/src/Menu/MenuLabel/MenuLabel.tsx',
-  '../src/mantine-core/src/RadioGroup/Radio/Radio.tsx',
+  '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
+  '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
+  '../src/mantine-core/src/components/RadioGroup/Radio/Radio.tsx',
   '../src/mantine-core/src/components/Chips/Chip/Chip.tsx',
   '../src/mantine-core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',

@@ -5,6 +5,7 @@ const EXCLUDE_PROPS = [
   'className',
   'classNames',
   'styles',
+  'unstyled',
   'key',
   'ref',
   'style',
@@ -27,6 +28,7 @@ const EXCLUDE_PROPS = [
 
 export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfig.json'), {
   savePropValueAsString: true,
+  shouldExtractLiteralValuesFromEnum: true,
   propFilter: (prop: PropItem) => {
     if (EXCLUDE_PROPS.includes(prop.name)) {
       return false;
