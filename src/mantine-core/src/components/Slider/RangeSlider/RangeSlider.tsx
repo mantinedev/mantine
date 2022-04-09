@@ -201,10 +201,11 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           clone[0] = Math.max(val - minRange, min);
         }
 
-        if (val < (minRange || min)) {
+        if (val < clone[0] + minRange) {
           clone[index] = valueRef.current[index];
         }
       }
+
       _setValue(clone);
 
       if (triggerChangeEnd) {
@@ -379,6 +380,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       >
         <Track
           offset={positions[0]}
+          marksOffset={_value[0]}
           filled={positions[1] - positions[0]}
           marks={marks}
           size={size}

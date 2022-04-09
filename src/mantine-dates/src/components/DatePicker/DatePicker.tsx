@@ -106,12 +106,13 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       hideOutsideDates,
       hideWeekdays,
       renderDay,
+      type,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
-    const dateFormat = inputFormat || theme.dateFormat;
+    const dateFormat = type === 'date' ? 'YYYY-MM-DD' : inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
@@ -243,7 +244,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         inputLabel={inputState}
         __staticSelector="DatePicker"
         dropdownType={dropdownType}
-        clearable={clearable && !!_value && !disabled}
+        clearable={type === 'date' ? false : clearable && !!_value && !disabled}
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         disabled={disabled}
@@ -251,6 +252,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        type={type}
         {...others}
       >
         <Calendar

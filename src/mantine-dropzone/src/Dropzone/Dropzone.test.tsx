@@ -29,4 +29,12 @@ describe('@mantine/dropzone/Dropzone', () => {
     render(<Dropzone {...defaultProps} openRef={ref} />);
     expect(ref.current).toBeInstanceOf(Function);
   });
+
+  it('has a name attribute on the internal input element', () => {
+    const { container: withName } = render(<Dropzone {...defaultProps} name="a-custom-name" />);
+    const { container: withoutName } = render(<Dropzone {...defaultProps} />);
+
+    expect(withName.querySelector("input[type='file']")).toHaveAttribute('name', 'a-custom-name');
+    expect(withoutName.querySelector("input[type='file']")).not.toHaveAttribute('name');
+  });
 });

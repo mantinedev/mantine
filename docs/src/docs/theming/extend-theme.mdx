@@ -52,7 +52,6 @@ You can use some of these tools to generate or copy ready color palettes:
 - [Material Design Colors](https://www.materialui.co/colors)
 - [Omatsuri](https://omatsuri.app/color-shades-generator)
 - [Smart Swatch](https://smart-swatch.netlify.app/)
-- [Palx](https://palx.jxnblk.com/)
 
 <Demo data={ThemeDemos.themeColorsExtend} />
 
@@ -202,23 +201,24 @@ function App() {
 ### Adding custom colors
 
 TypeScript will only autocomplete Mantine's default colors when accessing the theme. To add your custom colors to the MantineColor type, you can use TypeScript module declaration:
+
 ```ts
-import { Tuple } from "@mantine/core";
+import { Tuple } from '@mantine/core';
 
-type CustomColors = "primaryColorName" | "secondaryColorName";
+type CustomColors = 'primaryColorName' | 'secondaryColorName';
 
-declare module "@mantine/core" {
+declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
     colors: Record<CustomColors, Tuple<string, 10>>;
   }
 }
 
 // or if you want to "extend" standard colors
-import { Tuple, DefaultMantineColor } from '@mantine/core'
+import { Tuple, DefaultMantineColor } from '@mantine/core';
 
-type ExtendedCustomColors = "primaryColorName" | "secondaryColorName" | DefaultMantineColor;
+type ExtendedCustomColors = 'primaryColorName' | 'secondaryColorName' | DefaultMantineColor;
 
-declare module "@mantine/core" {
+declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
     colors: Record<ExtendedCustomColors, Tuple<string, 10>>;
   }
@@ -228,11 +228,12 @@ declare module "@mantine/core" {
 ### Adding custom 'other' properties
 
 Similar to how you can extend/set custom colors, you can add your own properties to the `theme.other` type using TypeScript module declaration:
+
 ```ts
-declare module "@mantine/core" {
+declare module '@mantine/core' {
   export interface MantineThemeOther {
-    myCustomProperty: string
-    myCustomFunction: () => void
+    myCustomProperty: string;
+    myCustomFunction: () => void;
   }
 }
 ```

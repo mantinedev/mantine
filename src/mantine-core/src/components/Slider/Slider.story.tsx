@@ -145,4 +145,41 @@ storiesOf('Slider', module)
         />
       </div>
     </div>
+  ))
+  .add('Negative marks', () => (
+    <div style={{ width: 380, padding: 40 }}>
+      {/* <Slider
+        min={-100}
+        max={100}
+        marks={[
+          { value: -100, label: '-100' },
+          { value: -75, label: '-75' },
+          { value: -50, label: '-50' },
+          { value: -25, label: '-25' },
+          { value: 0 },
+          { value: 25, label: '25' },
+          { value: 50, label: '50' },
+          { value: 75, label: '75' },
+          { value: 100, label: '100' },
+        ]}
+      /> */}
+
+      <RangeSlider
+        mt="xl"
+        min={-100}
+        max={100}
+        defaultValue={[-100, 100]}
+        marks={[
+          { value: -100, label: '-100' },
+          { value: -75, label: '-75' },
+          { value: -50, label: '-50' },
+          { value: -25, label: '-25' },
+          { value: 0 },
+          { value: 25, label: '25' },
+          { value: 50, label: '50' },
+          { value: 75, label: '75' },
+          { value: 100, label: '100' },
+        ]}
+      />
+    </div>
   ));

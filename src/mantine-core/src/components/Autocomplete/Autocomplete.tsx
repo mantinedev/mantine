@@ -12,6 +12,7 @@ import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
 import { SelectSharedProps } from '../Select/Select';
@@ -33,6 +34,12 @@ export interface AutocompleteProps
     InputWrapperBaseProps,
     SelectSharedProps<AutocompleteItem, string>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
+
+  /** Change dropdown component, can be used to add native scrollbars */
+  dropdownComponent?: any;
+
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
 }
@@ -53,7 +60,8 @@ const defaultProps: Partial<AutocompleteProps> = {
   filter: defaultFilter,
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
-  dropdownPosition: 'bottom',
+  dropdownPosition: 'flip',
+  maxDropdownHeight: 'auto',
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -94,7 +102,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       withinPortal,
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
-      dropdownPosition = 'bottom',
+      dropdownPosition,
+      maxDropdownHeight,
+      dropdownComponent,
       errorProps,
       labelProps,
       descriptionProps,
@@ -264,7 +274,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             transitionTimingFunction={transitionTimingFunction}
             uuid={uuid}
             shadow={shadow}
-            maxDropdownHeight="auto"
+            maxDropdownHeight={maxDropdownHeight}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             classNames={classNames}
             styles={styles}
             __staticSelector="Autocomplete"
