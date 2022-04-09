@@ -93,7 +93,6 @@ attachDemos(storiesOf('TimeRangeInput', module), demos.TimeRangeInputDemos);
 // Other packages
 attachDemos(storiesOf('Dropzone', module), demos.DropzoneDemos);
 attachDemos(storiesOf('Notifications System', module), demos.NotificationsDemos);
-attachDemos(storiesOf('Prism', module), demos.PrismDemos);
 attachDemos(storiesOf('RichTextEditor', module), demos.RichTextEditorDemos);
 attachDemos(storiesOf('Styles', module), demos.CreateStylesDemos);
 attachDemos(storiesOf('Theme', module), demos.ThemeDemos);

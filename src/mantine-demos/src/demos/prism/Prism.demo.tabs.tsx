@@ -1,7 +1,7 @@
 import React from 'react';
-// import { Prism } from '@mantine/prism';
-// import { py, css } from './Prism.demo.languages';
-// import { demoCode } from './Prism.demo.usage';
+import { Prism } from '@mantine/prism';
+import { py, css } from './Prism.demo.languages';
+import { demoCode } from './Prism.demo.usage';
 
 function CSSIcon(props: React.ComponentProps<'svg'>) {
   return (
@@ -90,42 +90,59 @@ function TsIcon(props: React.ComponentProps<'svg'>) {
 
 function Demo() {
   return (
-    <Prism.Tabs>
-      <Prism.Tab label="styles.css" language="css" icon={<CSSIcon />}>
-        {/* ...cssCode */}
-      </Prism.Tab>
+    <Prism.Tabs defaultValue="styles.css">
+      <Prism.TabsList>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+          styles.css
+        </Prism.Tab>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+          decorator.py
+        </Prism.Tab>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+          component.tsx
+        </Prism.Tab>
+      </Prism.TabsList>
 
-      <Prism.Tab label="decorator.py" language="python" icon={<PythonIcon />}>
-        {/* ...pythonCode */}
-      </Prism.Tab>
-
-      <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon />}>
-        {/* ...tsCode */}
-      </Prism.Tab>
+      <Prism.Panel language="css" value="styles.css">
+        {css}
+      </Prism.Panel>
+      <Prism.Panel language="python" value="decorator.py">
+        {css}
+      </Prism.Panel>
+      <Prism.Panel language="tsx" value="component.tsx">
+        {demoCode}
+      </Prism.Panel>
     </Prism.Tabs>
   );
 }
 `;
 
 function Demo() {
-  return null;
-  // return (
-  //   <Prism.Tabs>
-  //     <Prism.Tab label="styles.css" language="css" icon={<CSSIcon width={16} height={16} />}>
-  //       {css}
-  //     </Prism.Tab>
-  //     <Prism.Tab
-  //       label="decorator.py"
-  //       language="python"
-  //       icon={<PythonIcon width={16} height={16} />}
-  //     >
-  //       {py}
-  //     </Prism.Tab>
-  //     <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon width={16} height={16} />}>
-  //       {demoCode}
-  //     </Prism.Tab>
-  //   </Prism.Tabs>
-  // );
+  return (
+    <Prism.Tabs defaultValue="styles.css">
+      <Prism.TabsList>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+          styles.css
+        </Prism.Tab>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+          decorator.py
+        </Prism.Tab>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+          component.tsx
+        </Prism.Tab>
+      </Prism.TabsList>
+
+      <Prism.Panel language="css" value="styles.css">
+        {css}
+      </Prism.Panel>
+      <Prism.Panel language="python" value="decorator.py">
+        {py}
+      </Prism.Panel>
+      <Prism.Panel language="tsx" value="component.tsx">
+        {demoCode}
+      </Prism.Panel>
+    </Prism.Tabs>
+  );
 }
 
 export const tabs: MantineDemo = {
