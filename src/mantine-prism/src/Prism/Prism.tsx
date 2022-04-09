@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import Highlight, { defaultProps } from 'prism-react-renderer';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import {
   ActionIcon,
   useMantineTheme,
@@ -9,19 +9,48 @@ import {
   Box,
   ScrollArea,
   useMantineDefaultProps,
+  MantineColor,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
-import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
 
 export type PrismStylesNames = ClassNames<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
-    PrismSharedProps,
-    Omit<React.ComponentPropsWithRef<'div'>, 'children'> {}
+    Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
+  /** Code which will be highlighted */
+  children: string;
+
+  /** Programming language that should be highlighted */
+  language: Language;
+
+  /** True to remove copy to clipboard button */
+  noCopy?: boolean;
+
+  /** Copy button tooltip */
+  copyLabel?: string;
+
+  /** Copy button tooltip in copied state */
+  copiedLabel?: string;
+
+  /** Display line numbers */
+  withLineNumbers?: boolean;
+
+  /** Highlight line at given line number with color from theme.colors */
+  highlightLines?: Record<string, { color: MantineColor; label?: string }>;
+
+  /** Force color scheme, defaults to theme.colorScheme */
+  colorScheme?: 'dark' | 'light';
+
+  /** Change scroll area component */
+  scrollAreaComponent?: any;
+
+  /** Defines whether the code should be trimmed, defaults to true */
+  trim?: boolean;
+}
 
 const prismDefaultProps: Partial<PrismProps> = {
   noCopy: false,

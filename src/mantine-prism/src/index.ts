@@ -1,9 +1,9 @@
 import { ForwardRefWithStaticComponents, Tabs } from '@mantine/core';
 import { PrismTabs, PrismPanel } from './PrismTabs/PrismTabs';
-import { Prism, PrismProps } from './Prism';
+import { Prism, PrismProps } from './Prism/Prism';
 
-export type { PrismProps, PrismStylesNames } from './Prism';
-export type { PrismStylesParams } from './Prism.styles';
+export type { PrismProps, PrismStylesNames } from './Prism/Prism';
+export type { PrismStylesParams } from './Prism/Prism.styles';
 
 type PrismComponent = ForwardRefWithStaticComponents<
   PrismProps,

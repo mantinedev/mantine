@@ -1,25 +1,25 @@
 import React from 'react';
 import { Tabs, TabsProps, TabsPanelProps } from '@mantine/core';
-import { Prism, PrismProps } from '../Prism';
+import { Prism, PrismProps } from '../Prism/Prism';
 import useStyles from './PrismTabs.styles';
 
-export function PrismTabs({ variant = 'outline', ...others }: TabsProps) {
+export function PrismTabs(props: TabsProps) {
   const { classes } = useStyles();
   return (
     <Tabs
-      variant={variant}
+      {...props}
+      variant="outline"
       classNames={{ tabsList: classes.tabs, tab: classes.tab, tabActive: classes.tabActive }}
-      {...others}
     />
   );
 }
 
-export function PrismPanel(props: PrismProps & TabsPanelProps) {
+export function PrismPanel({ language, children, ...others }: PrismProps & TabsPanelProps) {
   const { classes } = useStyles();
   return (
-    <Tabs.Panel value={props.value}>
-      <Prism language={props.language} classNames={{ code: classes.code }}>
-        {props.children}
+    <Tabs.Panel {...others}>
+      <Prism language={language} classNames={{ code: classes.code }}>
+        {children}
       </Prism>
     </Tabs.Panel>
   );

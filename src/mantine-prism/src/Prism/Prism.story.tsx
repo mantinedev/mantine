@@ -1,5 +1,5 @@
 import React from 'react';
-import { Prism } from './index';
+import { Prism } from '../index';
 
 const code2 = Array(20)
   .fill(0)
