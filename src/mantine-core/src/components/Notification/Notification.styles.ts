@@ -3,11 +3,10 @@ import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 export interface NotificationStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
-  disallowClose: boolean;
 }
 
 export default createStyles(
-  (theme, { color, radius, disallowClose }: NotificationStylesParams, getRef) => {
+  (theme, { color, radius }: NotificationStylesParams, getRef) => {
     const _radius = theme.fn.radius(radius) as number;
     const topBottom = Math.min(Math.max(_radius / 1.2, 4), 30);
 
@@ -22,6 +21,7 @@ export default createStyles(
         height: 28,
         borderRadius: 28,
         display: 'flex',
+        flex: 'none',
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.white,
@@ -71,7 +71,7 @@ export default createStyles(
 
       body: {
         flex: 1,
-        maxWidth: !disallowClose ? 'calc(100% - 40px)' : '100%', // space for close button and margin
+        overflow: 'hidden',
         marginRight: 10,
       },
 
