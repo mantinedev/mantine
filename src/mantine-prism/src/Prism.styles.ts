@@ -3,9 +3,10 @@ import { createStyles } from '@mantine/core';
 export interface PrismStylesParams {
   colorScheme: 'light' | 'dark';
   native: boolean;
+  maxLineSize: number;
 }
 
-export default createStyles((theme, { colorScheme, native }: PrismStylesParams) => ({
+export default createStyles((theme, { colorScheme, native, maxLineSize }: PrismStylesParams) => ({
   scrollArea: {},
 
   root: {
@@ -42,7 +43,7 @@ export default createStyles((theme, { colorScheme, native }: PrismStylesParams) 
   lineNumber: {
     color: colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     textAlign: 'right',
-    width: 43,
+    width: 8 * maxLineSize,
     marginRight: theme.dir === 'ltr' ? theme.spacing.xs : undefined,
     marginLeft: theme.dir === 'rtl' ? theme.spacing.xs : undefined,
     userSelect: 'none',

@@ -3,7 +3,7 @@ import type { MantineColor } from '@mantine/core';
 
 export interface PrismSharedProps {
   /** Code which will be highlighted */
-  children: any;
+  children: string;
 
   /** Programming language that should be highlighted */
   language: Language;

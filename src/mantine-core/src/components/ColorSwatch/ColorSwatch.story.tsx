@@ -16,7 +16,7 @@ const transparent = Object.keys(DEFAULT_THEME.colors).map((theme) => (
   />
 ));
 
-storiesOf('@mantine/core/ColorSwatch/stories', module)
+storiesOf('ColorSwatch', module)
   .add('Colors', () => <Group style={{ padding: 15 }}>{swatches}</Group>)
   .add('Opaque colors', () => <Group style={{ padding: 15 }}>{transparent}</Group>)
   .add('Custom components', () => (

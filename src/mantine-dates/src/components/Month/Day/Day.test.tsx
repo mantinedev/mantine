@@ -55,4 +55,18 @@ describe('@mantine/core/Month/Day', () => {
   it('has correct displayName', () => {
     expect(Day.displayName).toStrictEqual('@mantine/core/Day');
   });
+
+  it('renders correctly with a renderDay function', () => {
+    const renderDay = (date: Date) => (
+      <div>
+        <span>{date.getDate()}</span>
+        <span>Rendered custom day</span>
+      </div>
+    );
+    render(<Day {...defaultProps} renderDay={renderDay} />);
+
+    const today = new Date().getDate();
+    expect(screen.getByText(today)).toBeInTheDocument();
+    expect(screen.getByText('Rendered custom day')).toBeInTheDocument();
+  });
 });

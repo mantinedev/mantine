@@ -39,6 +39,9 @@ export interface DatePickerProps
 
   /** Allow free input */
   allowFreeInput?: boolean;
+
+  /** Render day based on the date */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 const defaultProps: Partial<DatePickerProps> = {
@@ -102,6 +105,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       onDropdownOpen,
       hideOutsideDates,
       hideWeekdays,
+      renderDay,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
@@ -277,6 +281,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           initialLevel={initialLevel}
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
+          renderDay={renderDay}
         />
       </DatePickerBase>
     );

@@ -41,7 +41,7 @@ function ControlledInput() {
   );
 }
 
-storiesOf('@mantine/core/ColorInput/stories', module)
+storiesOf('ColorInput', module)
   .add('Controlled', () => <ControlledInput />)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Within overlays', () => (

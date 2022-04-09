@@ -70,7 +70,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   />
 ));
 
-storiesOf('@mantine/dates/DatePicker/stories', module)
+storiesOf('DatePicker', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 40 }}>{sizes}</div>)
   .add('Hide week days', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>

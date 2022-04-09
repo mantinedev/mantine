@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
 import { Grid } from './Grid';
 
-storiesOf('@mantine/core/Grid/stories', module).add('Default props on MantineProvider', () => (
+storiesOf('Grid', module).add('Default props on MantineProvider', () => (
   <MantineProvider defaultProps={{ Grid: { columns: 24 } }}>
     <Grid>
       <Grid.Col span={12} sx={{ background: 'blue' }}>

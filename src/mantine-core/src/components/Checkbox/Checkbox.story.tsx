@@ -37,7 +37,7 @@ const getThemes = (props?: Partial<CheckboxProps>) =>
     <Checkbox key={color} color={color} {...props} label={color} mt={15} />
   ));
 
-storiesOf('@mantine/core/Checkbox/stories', module)
+storiesOf('Checkbox', module)
   .add('Colors', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Controlled', () => <Controlled label="Controlled" style={{ padding: 15 }} />)
   .add('CheckboxGroup: uncontrolled', () => (

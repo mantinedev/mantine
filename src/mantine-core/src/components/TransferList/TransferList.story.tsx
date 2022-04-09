@@ -13,7 +13,7 @@ function Wrapper({ count = 1000, ...props }: Partial<TransferListProps> & { coun
   return <TransferList value={data} onChange={setData} {...props} />;
 }
 
-storiesOf('@mantine/core/TransferList/stories', module)
+storiesOf('TransferList', module)
   .add('Large data set', () => (
     <div style={{ padding: 40 }}>
       <Wrapper count={500} limit={100} />

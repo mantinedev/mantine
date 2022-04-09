@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
 import { Navbar } from './Navbar/Navbar';
 
-storiesOf('@mantine/core/AppShell/Navbar', module)
+storiesOf('AppShell/Navbar', module)
   .add('Navbar', () => (
     <Navbar width={{ base: 300 }}>
       <Navbar.Section>First section</Navbar.Section>

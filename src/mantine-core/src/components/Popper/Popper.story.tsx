@@ -55,6 +55,4 @@ function RemoveOnUnmount() {
   );
 }
 
-storiesOf('@mantine/core/Popper/stories', module).add('Remove on unmount', () => (
-  <RemoveOnUnmount />
-));
+storiesOf('Popper', module).add('Remove on unmount', () => <RemoveOnUnmount />);

@@ -18,7 +18,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/dates/DateRangePicker/stories', module)
+storiesOf('DateRangePicker', module)
   .add('First day of week sunday', () => (
     <div style={{ padding: 40 }}>
       <DateRangePicker

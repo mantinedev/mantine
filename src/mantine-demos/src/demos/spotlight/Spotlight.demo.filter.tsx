@@ -31,7 +31,7 @@ function Demo() {
       filter={(query, actions) =>
         actions.filter((action) => action.title.toLowerCase().includes(query.toLowerCase()))
       }
-      buttonLabel="Open spotlight without transition"
+      buttonLabel="Open spotlight"
     />
   );
 }

@@ -8,7 +8,7 @@ import { IMAGE_MIME_TYPE } from '../mime-types';
 const children = (status: DropzoneStatus) =>
   status.accepted ? <div>Drop files here</div> : <div>Drag and drop files here</div>;
 
-storiesOf('@mantine/dropzone/FullScreenDropzone/stories', module).add('With other content', () => (
+storiesOf('FullScreenDropzone', module).add('With other content', () => (
   <div>
     <p>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium dolores expedita

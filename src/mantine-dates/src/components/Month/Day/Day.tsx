@@ -25,6 +25,7 @@ export interface DayProps
   firstInMonth: boolean;
   focusable?: boolean;
   hideOutsideDates?: boolean;
+  renderDay?(date: Date): React.ReactNode;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -48,6 +49,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       firstInMonth,
       focusable,
       hideOutsideDates,
+      renderDay,
       ...others
     }: DayProps,
     ref
@@ -79,7 +81,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
           className
         )}
       >
-        {value.getDate()}
+        {typeof renderDay === 'function' ? renderDay(value) : value.getDate()}
       </button>
     );
   }

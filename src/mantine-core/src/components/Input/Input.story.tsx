@@ -69,7 +69,7 @@ const getStates = (props?: any) => (
   </div>
 );
 
-storiesOf('@mantine/core/Input/stories', module)
+storiesOf('Input', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 50 }}>{sizes}</div>)
   .add('Default variant', () => <>{getStates({ variant: 'default' })}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)

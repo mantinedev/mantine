@@ -30,7 +30,7 @@ const Demo = () => {
   );
 };
 
-storiesOf('@mantine/hooks/use-move', module).add('General usage', () => (
+storiesOf('Hooks/use-move', module).add('General usage', () => (
   <div style={{ padding: 40 }}>
     <Demo />
   </div>

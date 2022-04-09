@@ -20,7 +20,7 @@ const getSizes = (props: Partial<CalendarBaseProps>) =>
 
 const today = new Date();
 
-storiesOf('@mantine/dates/CalendarBase/stories', module)
+storiesOf('CalendarBase', module)
   .add('Single month', () => <Wrapper />)
   .add('2 months', () => <Wrapper amountOfMonths={2} />)
   .add('3 months', () => <Wrapper amountOfMonths={3} />)

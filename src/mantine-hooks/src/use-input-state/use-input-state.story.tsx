@@ -49,7 +49,7 @@ function ValueInput() {
   );
 }
 
-storiesOf('@mantine/hooks/use-input-state', module)
+storiesOf('Hooks/use-input-state', module)
   .add('Native input events', () => (
     <div style={{ padding: 40 }}>
       <InputEvent />

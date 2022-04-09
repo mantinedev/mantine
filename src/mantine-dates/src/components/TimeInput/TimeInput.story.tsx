@@ -20,7 +20,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/dates/TimeInput/stories', module)
+storiesOf('TimeInput', module)
   .add('Controlled', () => (
     <div style={{ width: 400, padding: 40 }}>
       <Controlled />

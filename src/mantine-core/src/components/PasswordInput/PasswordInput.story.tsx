@@ -22,7 +22,7 @@ function Controlled(props: Partial<PasswordInputProps>) {
   );
 }
 
-storiesOf('@mantine/core/PasswordInput/stories', module)
+storiesOf('PasswordInput', module)
   .add('Controlled', () => <Controlled />)
   .add('Sizes', () => <div style={{ width: 400, padding: 20 }}>{sizes}</div>)
   .add('Invalid', () => <Controlled error="error" />)
