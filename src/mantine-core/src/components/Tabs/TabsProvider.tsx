@@ -1,10 +1,9 @@
 import React from 'react';
-import { useUncontrolled, useId } from '@mantine/utils';
+import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { MantineColor, MantineNumberSize } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';
 import { TabsValue, TabsOrientation, TabsVariant } from './Tabs.types';
-import { getId } from './get-id/get-id';
 
 export interface TabsProviderProps {
   /** Default value for uncontrolled component */
@@ -80,8 +79,8 @@ export function TabsProvider({
         id: uid,
         loop,
         activateTabWithKeyboard,
-        getTabId: getId(uid, 'tab'),
-        getPanelId: getId(uid, 'panel'),
+        getTabId: getSafeId(`${uid}-tab`, TABS_ERRORS.value.message),
+        getPanelId: getSafeId(`${uid}-panel`, TABS_ERRORS.value.message),
         onTabChange: onChange,
         allowTabDeactivation,
         variant,
