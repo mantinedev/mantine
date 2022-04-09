@@ -8,7 +8,7 @@ export const TABS_ERRORS = {
 
   onChange: createError({
     message:
-      'Controlled Tabs component did not receive onTabChange handler, either remove value or add onChange',
+      'Controlled Tabs component did not receive onTabChange handler, either remove value or add onTabChange',
     code: 'tabs-on-change',
   }),
 
