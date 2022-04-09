@@ -2,7 +2,7 @@ import React from 'react';
 import NextDocument, { DocumentContext } from 'next/document';
 import { ServerStyles, createStylesServer } from '@mantine/ssr';
 
-export function createGetInitialProps() {
+export function createGetInitialProps(): (ctx: DocumentContext) => any {
   const stylesServer = createStylesServer();
 
   return async function getInitialProps(ctx: DocumentContext) {
