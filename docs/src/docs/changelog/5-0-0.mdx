@@ -19,6 +19,13 @@ import { TabsDemos } from '@mantine/demos';
 - Tabs content no longer unmounts on tab change, it is hidden with `display: none`
 - It is now easier to manage controlled tabs state with string value instead of index
 - With new component structure it is now easier to modify styles of each part with `sx` or `classname` props
-- Tabs component now support more props to customize behavior and appearance
+
+Tabs component now supports the following new props:
+
+- `radius` prop (defaults to `theme.defaultRadius`)
+- `inverted` prop allows to display panels before controls
+- `loop` prop control arrow keys behavior (allows to go from first to last and vice versa)
+- `activateTabWithKeyboard` prop controls how tabs respond to arrows and Home/End key presses
+- `allowTabDeactivation` prop allows user to deactivate current active tab
 
 <Demo data={TabsDemos.configurator} />
