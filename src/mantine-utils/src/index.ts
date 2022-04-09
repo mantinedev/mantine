@@ -4,5 +4,6 @@ export { createScopedKeydownHandler } from './create-scoped-keydown-handler/crea
 export { useId } from './use-id/use-id';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { packSx } from './pack-sx/pack-sx';
+export { getSafeId } from './get-safe-id/get-safe-id';
 
 export type { MantineError } from './create-error/create-error';
