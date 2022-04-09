@@ -9,7 +9,8 @@ export type TrackStylesNames = ClassNames<typeof useStyles> | MarksStylesNames;
 
 export interface TrackProps extends DefaultProps<TrackStylesNames> {
   filled: number;
-  offset: number;
+  offset?: number;
+  marksOffset?: number;
   marks: { value: number; label?: React.ReactNode }[];
   size: MantineNumberSize;
   radius: MantineNumberSize;
@@ -36,6 +37,7 @@ export function Track({
   onMouseLeave,
   onMouseEnter,
   disabled,
+  marksOffset,
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
@@ -59,7 +61,7 @@ export function Track({
         {...others}
         size={size}
         color={color}
-        offset={offset}
+        offset={marksOffset}
         classNames={classNames}
         styles={styles}
         disabled={disabled}

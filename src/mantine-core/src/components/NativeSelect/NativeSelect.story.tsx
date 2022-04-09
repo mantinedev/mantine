@@ -17,7 +17,7 @@ function Controlled(props: Partial<NativeSelectProps>) {
   );
 }
 
-storiesOf('@mantine/core/NativeSelect/stories', module)
+storiesOf('NativeSelect', module)
   .add('Controlled', () => (
     <div style={{ maxWidth: 300, padding: 20 }}>
       <Controlled label="Your favorite library" placeholder="Your favorite library" />

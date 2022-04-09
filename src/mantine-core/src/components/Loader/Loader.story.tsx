@@ -12,7 +12,7 @@ const sizes = ([10, 'xs', 'sm', 'md', 'lg', 'xl', 100] as const).map((size) => (
   <Loader key={size} size={size} style={{ display: 'block', marginTop: 15 }} />
 ));
 
-storiesOf('@mantine/core/Loader/stories', module)
+storiesOf('Loader', module)
   .add('Oval', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'oval' })}</div>)
   .add('Dots', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'dots' })}</div>)
   .add('Bars', () => <div style={{ padding: 15 }}>{getThemes({ variant: 'bars' })}</div>)

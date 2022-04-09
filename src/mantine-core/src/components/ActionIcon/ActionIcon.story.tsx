@@ -4,7 +4,7 @@ import { MantineProvider } from '@mantine/styles';
 import { StylesAPIStory } from '@mantine/storybook';
 import { ActionIcon } from './ActionIcon';
 
-storiesOf('@mantine/core/ActionIcon', module)
+storiesOf('ActionIcon', module)
   .add('Styles API', () => (
     <StylesAPIStory name="ActionIcon" component={ActionIcon} props={{ children: '$' }} />
   ))

@@ -4,7 +4,7 @@ import { StylesAPIStory } from '@mantine/storybook';
 import { MantineProvider } from '@mantine/styles';
 import { Badge } from './Badge';
 
-storiesOf('@mantine/core/Badge', module)
+storiesOf('Badge', module)
   .add('Styles API', () => (
     <StylesAPIStory
       name="Badge"

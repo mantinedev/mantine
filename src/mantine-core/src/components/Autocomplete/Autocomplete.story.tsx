@@ -18,7 +18,7 @@ function DynamicData() {
   );
 }
 
-storiesOf('@mantine/core/Autocomplete/stories', module)
+storiesOf('Autocomplete', module)
   .add('Styles API', () => (
     <StylesAPIStory
       component={Autocomplete}

@@ -43,7 +43,7 @@ const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   </div>
 ));
 
-storiesOf('@mantine/core/SegmentedControl/stories', module)
+storiesOf('SegmentedControl', module)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('String data', () => (
     <div style={{ padding: 40 }}>

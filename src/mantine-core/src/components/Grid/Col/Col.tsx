@@ -48,7 +48,7 @@ function isValidSpan(span: number) {
 
 export function Col({
   children,
-  span = 12,
+  span,
   offset = 0,
   offsetXs = 0,
   offsetSm = 0,
@@ -67,6 +67,7 @@ export function Col({
   ...others
 }: ColProps) {
   const { columns, gutter, grow } = useGridContext('Grid.Col');
+  const colSpan = span || columns;
   const { classes, cx } = useStyles(
     {
       gutter,
@@ -83,12 +84,12 @@ export function Col({
       xl,
       grow,
       columns,
-      span,
+      span: colSpan,
     },
     { classNames, styles, name: 'Col' }
   );
 
-  if (!isValidSpan(span) || span > columns) {
+  if (!isValidSpan(colSpan) || colSpan > columns) {
     return null;
   }
 

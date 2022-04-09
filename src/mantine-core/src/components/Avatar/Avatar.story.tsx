@@ -4,7 +4,7 @@ import { StylesAPIStory } from '@mantine/storybook';
 import { MantineProvider } from '@mantine/styles';
 import { Avatar } from './Avatar';
 
-storiesOf('@mantine/core/Avatar', module)
+storiesOf('Avatar', module)
   .add('Styles API', () => <StylesAPIStory name="Avatar" component={Avatar} props={{}} />)
   .add('Default props on MantineProvider', () => (
     <MantineProvider defaultProps={{ Avatar: { color: 'cyan' } }}>

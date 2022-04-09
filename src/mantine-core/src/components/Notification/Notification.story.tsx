@@ -157,4 +157,4 @@ const demo = (
   </div>
 );
 
-storiesOf('@mantine/core/Notification/stories', module).add('All variants', () => demo);
+storiesOf('Notification', module).add('All variants', () => demo);

@@ -81,7 +81,7 @@ function Dynamic() {
   );
 }
 
-storiesOf('@mantine/core/Accordion', module)
+storiesOf('Accordion', module)
   .add('Styles API', () => (
     <StylesAPIStory
       name="Accordion"

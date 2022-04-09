@@ -23,7 +23,7 @@ const getThemes = (props?: Partial<SwitchProps>) =>
     <Switch key={color} color={color} {...props} label={color} style={{ marginTop: 15 }} />
   ));
 
-storiesOf('@mantine/core/Switch/stories', module)
+storiesOf('Switch', module)
   .add('Themes', () => <div style={{ padding: 15 }}>{getThemes({ checked: true })}</div>)
   .add('Sizes', () => <div style={{ padding: 15 }}>{sizes}</div>)
   .add('Controlled', () => <SwitchWrapper label="Controlled" style={{ padding: 15 }} />);

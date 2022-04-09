@@ -36,7 +36,7 @@ function ControlledAlphaSlider(props: Partial<AlphaSliderProps>) {
   );
 }
 
-storiesOf('@mantine/core/ColorPicker/stories', module)
+storiesOf('ColorPicker', module)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Controlled HueSlider', () => <ControlledHueSlider />)
   .add('Controlled AlphaSlider', () => <ControlledAlphaSlider />)

@@ -22,7 +22,7 @@ function TestElement() {
   return <div className={classes.element}>{children}</div>;
 }
 
-storiesOf('@mantine/styles/MantineProvider', module)
+storiesOf('Styles', module)
   .add('Inheritance: theme', () => (
     <MantineProvider
       inherit

@@ -150,7 +150,11 @@ export default createStyles(
       },
 
       '& .ql-clipboard': {
-        display: 'none',
+        left: '-100000px',
+        height: '1px',
+        overflowY: 'hidden',
+        position: 'absolute',
+        top: '50%',
       },
 
       '& .ql-align-center': {
