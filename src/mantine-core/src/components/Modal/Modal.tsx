@@ -179,6 +179,8 @@ export function Modal(props: ModalProps) {
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
         mounted={opened}
+        duration={transitionDuration}
+        exitDuration={transitionDuration}
         transitions={{
           modal: { duration: transitionDuration, transition },
           overlay: {
