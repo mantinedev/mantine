@@ -72,7 +72,7 @@ to replace it with native scrollbars set `scrollAreaComponent="div"`:
 
 To display multiple files use `Prism.Tabs` component, it supports the same props as [Tabs](/core/tabs/) component:
 
-<Demo data={PrismDemos.tabs} />
+<Demo data={PrismDemos.tabs} demoProps={{ toggle: true }} />
 
 ## Force dark/light theme
 
@@ -85,3 +85,19 @@ You can force dark/light color scheme by setting `colorScheme` prop:
 Component supports all languages which are supported by [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer):
 
 <Demo data={PrismDemos.languages} />
+
+## Load additional languages
+
+[View Java language example on codesandbox](https://codesandbox.io/s/stupefied-hellman-lfudm?file=/src/App.tsx)
+
+By default, `prism-react-renderer` only includes an [arbitrary subset of the languages](https://github.com/FormidableLabs/prism-react-renderer/blob/master/src/vendor/prism/includeLangs.js) that Prism supports.
+You can add support for more by including their definitions from the main `prismjs` package:
+
+```tsx
+import Prism from 'prism-react-renderer/prism';
+
+(typeof global !== 'undefined' ? global : window).Prism = Prism;
+
+require('prismjs/components/prism-kotlin');
+require('prismjs/components/prism-csharp');
+```
