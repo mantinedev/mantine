@@ -39,6 +39,7 @@ const defaultProps: Partial<TabsProps> = {
   activateTabWithKeyboard: true,
   allowTabDeactivation: false,
   unstyled: false,
+  inverted: false,
   variant: 'default',
 };
 
@@ -60,11 +61,12 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     classNames,
     styles,
     radius,
+    inverted,
     ...others
   } = useMantineDefaultProps('Tabs', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { orientation, color, variant, radius },
+    { orientation, color, variant, radius, inverted },
     { unstyled, name: 'Tabs', classNames, styles }
   );
 
@@ -82,6 +84,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         color={color}
         variant={variant}
         radius={radius}
+        inverted={inverted}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

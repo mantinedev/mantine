@@ -250,3 +250,26 @@ export const DynamicTabs = () => {
     </Tabs>
   );
 };
+
+export const Inverted = () => (
+  <Wrapper defaultValue="react" variant="outline" inverted>
+    <Tabs.Panel value="react" pb="sm">
+      React Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="sv" pb="sm">
+      Svelte Panel
+    </Tabs.Panel>
+    <Tabs.Panel value="ng" pb="sm">
+      Angular Panel
+    </Tabs.Panel>
+
+    <Tabs.List>
+      <Tabs.Tab value="react">React</Tabs.Tab>
+      <Tabs.Tab value="sv">Svelte</Tabs.Tab>
+      <Tabs.Tab value="ng">Wrapped tab</Tabs.Tab>
+      <Tabs.Tab value="ds" disabled>
+        Disabled
+      </Tabs.Tab>
+    </Tabs.List>
+  </Wrapper>
+);

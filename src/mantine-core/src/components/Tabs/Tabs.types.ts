@@ -9,5 +9,6 @@ export interface TabsStylesParams {
   orientation: TabsOrientation;
   color?: MantineColor;
   radius?: MantineNumberSize;
+  inverted: boolean;
   variant: TabsVariant;
 }

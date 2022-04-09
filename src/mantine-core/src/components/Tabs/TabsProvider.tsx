@@ -42,6 +42,9 @@ export interface TabsProviderProps {
 
   /** Tabs border-radius from theme.radius or number ti set value from theme, defaults to theme.defaultRadius */
   radius?: MantineNumberSize;
+
+  /** Determines whether tabs should have inverted styles */
+  inverted?: boolean;
 }
 
 export function TabsProvider({
@@ -57,6 +60,7 @@ export function TabsProvider({
   variant,
   color,
   radius,
+  inverted,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -83,6 +87,7 @@ export function TabsProvider({
         variant,
         color,
         radius,
+        inverted,
       }}
     >
       {children}

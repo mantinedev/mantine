@@ -17,6 +17,7 @@ interface TabsContext {
   variant: TabsVariant;
   color: MantineColor;
   radius: MantineNumberSize;
+  inverted: boolean;
 }
 
 export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(
