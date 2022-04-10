@@ -121,19 +121,36 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
       // There's no way to get the exact size of the
       // cursor using JS, however most OS's use 32x32
       const estimatedCursorSize = 32;
-      const tooltipWidth = _tooltipRef.current?.offsetWidth || 0;
+      const tooltipWidth =
+        typeof width === 'number' ? width : _tooltipRef.current?.offsetWidth || 0;
+      const tooltipHeight = _tooltipRef.current?.offsetHeight || 0;
 
       switch (position) {
         case 'top':
-          return { x: x - tooltipWidth / 2, y: y - estimatedCursorSize };
+          return {
+            left: x - tooltipWidth / 2,
+            top: y,
+          };
         case 'left':
-          return { x: x - estimatedCursorSize / 2 - tooltipWidth, y };
+          return {
+            left: x - tooltipWidth - estimatedCursorSize / 2,
+            top: y + estimatedCursorSize,
+          };
         case 'right':
-          return { x: x + estimatedCursorSize / 2, y };
+          return {
+            left: x + estimatedCursorSize / 2,
+            top: y + estimatedCursorSize,
+          };
         case 'bottom':
-          return { x: x - tooltipWidth / 2, y: y + estimatedCursorSize };
+          return {
+            left: x - tooltipWidth / 2,
+            top: y + tooltipHeight + estimatedCursorSize,
+          };
         default:
-          return { x: x || 0, y: y || 0 };
+          return {
+            left: x || 0,
+            top: y || 0,
+          };
       }
     }, [x, y]);
 
@@ -196,7 +213,6 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
           zIndex={zIndex}
           forceUpdateDependencies={[color, radius, ...positionDependencies]}
           withinPortal={withinPortal}
-          coordinates={coordinates}
         >
           <Box
             className={classes.body}
@@ -204,6 +220,7 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
             sx={{
               whiteSpace: wrapLines ? 'normal' : 'nowrap',
               width,
+              ...coordinates,
             }}
           >
             {label}
