@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { AccordionContextProvider } from './Accordion.context';
-import { AccordionValue } from './Accordion.types';
+import { AccordionValue, AccordionIconPosition, AccordionOrder } from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
@@ -25,6 +25,27 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
 
   /** Callback for controlled component */
   onChange?(value: AccordionValue<Multiple>): void;
+
+  /** Transition duration in ms, set 0 to disable transitions */
+  transitionDuration?: number;
+
+  /** Determines whether icon rotation should be disabled */
+  disableIconRotation?: boolean;
+
+  /** Determines position of the icon */
+  iconPosition?: AccordionIconPosition;
+
+  /** Determines whether icon should be offset with padding */
+  offsetIcon?: boolean;
+
+  /** Icon size in px */
+  iconSize?: number;
+
+  /** Heading order, has no effect on visuals */
+  order?: AccordionOrder;
+
+  /** Replaces icon on all items */
+  icon?: React.ReactNode;
 }
 
 export function AccordionProvider<Multiple extends boolean = false>({
@@ -35,6 +56,13 @@ export function AccordionProvider<Multiple extends boolean = false>({
   onChange,
   id,
   loop,
+  transitionDuration,
+  disableIconRotation,
+  iconPosition,
+  offsetIcon,
+  iconSize,
+  order,
+  icon,
 }: AccordionProviderProps<Multiple>) {
   const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
@@ -66,6 +94,13 @@ export function AccordionProvider<Multiple extends boolean = false>({
         getControlId: getSafeId(`${uid}-tab`, ACCORDION_ERRORS.value.message),
         getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value.message),
         id: uid,
+        transitionDuration,
+        disableIconRotation,
+        iconPosition,
+        offsetIcon,
+        iconSize,
+        order,
+        icon,
         loop,
       }}
     >
