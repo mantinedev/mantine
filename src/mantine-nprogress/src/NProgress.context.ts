@@ -1,4 +1,5 @@
-import { createContext, useContext } from 'react';
+import { createSafeContext } from '@mantine/utils';
+import { NPROGRESS_ERRORS } from './NProgress.errors';
 
 export interface NProgressContext {
   start: () => void;
@@ -8,22 +9,6 @@ export interface NProgressContext {
   decrease: (progress: number) => void;
 }
 
-export const nprogressContext = createContext<NProgressContext>({
-  start: () => null,
-  stop: () => null,
-  set: () => null,
-  add: () => null,
-  decrease: () => null,
-});
-
-export function useNProgress() {
-  const ctx = useContext(nprogressContext);
-
-  if (!ctx) {
-    throw new Error(
-      '[@mantine/nprogress] useNProgress hook was called outside of context, wrap your app with NProgressProvider component'
-    );
-  }
-
-  return ctx;
-}
+export const [NProgressContextProvider, useNProgress] = createSafeContext<NProgressContext>(
+  NPROGRESS_ERRORS.context.message
+);
