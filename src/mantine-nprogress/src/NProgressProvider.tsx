@@ -1,8 +1,8 @@
-import { MantineTransition, Progress, Transition } from '@mantine/core';
+import { MantineTransition, OptionalPortal, Progress, Transition } from '@mantine/core';
 import { useDebouncedValue, useDidUpdate, useInterval } from '@mantine/hooks';
 import { MantineColor } from '@mantine/styles';
 import React, { useState } from 'react';
-import { nprogressContext } from './NProgress.context';
+import { NProgressContextProvider } from './NProgress.context';
 
 export interface NProgressProviderProps {
   /** Your app */
@@ -11,20 +11,30 @@ export interface NProgressProviderProps {
   color?: MantineColor;
   size?: number;
   onFinish?: () => void;
+
   /** Transition duration in ms */
   transitionDuration?: number;
+
   /** Predefined transition name */
   transition?: string;
+
   /** Interval time in ms */
   intervalTime?: number;
+
   /** Interval step size */
   intervalStep?: number;
+
   /** Unmounted time after progress is 100% */
   unmountTime?: number;
+
   /** Unmount duration in ms */
   unmountDuration?: number;
+
   /** Unmount transition function */
   unmountTransition?: MantineTransition;
+
+  /** Determines whether modal should be rendered within Portal, defaults to true */
+  withinPortal?: boolean;
 }
 
 export function NProgressProvider({
@@ -40,6 +50,7 @@ export function NProgressProvider({
   unmountDuration: exitDuration = 600,
   unmountTransition = 'fade',
   onFinish,
+  withinPortal = true,
 }: NProgressProviderProps) {
   const [_progress, setProgress] = useState(progress);
   const [mounted] = useDebouncedValue(_progress !== 100, unmountTime);
@@ -71,32 +82,36 @@ export function NProgressProvider({
   }, [_progress]);
 
   return (
-    <nprogressContext.Provider value={ctx}>
-      <Transition
-        mounted={mounted}
-        stayMounted
-        duration={1}
-        exitDuration={exitDuration}
-        transition={unmountTransition}
-      >
-        {(styles) => (
-          <Progress
-            radius={0}
-            value={_progress}
-            size={size}
-            color={color}
-            style={styles}
-            styles={{
-              bar: { transition: `width ${transitionDuration}ms ${transition}` },
-              root: {
-                backgroundColor: 'transparent',
-              },
-            }}
-          />
-        )}
-      </Transition>
+    <NProgressContextProvider value={ctx}>
+      <OptionalPortal withinPortal={withinPortal} zIndex={9999}>
+        <Transition
+          mounted={mounted}
+          duration={1}
+          exitDuration={exitDuration}
+          transition={unmountTransition}
+        >
+          {(styles) => (
+            <Progress
+              radius={0}
+              value={_progress}
+              size={size}
+              color={color}
+              style={styles}
+              styles={{
+                bar: { transition: `width ${transitionDuration}ms ${transition}` },
+                root: {
+                  position: 'fixed',
+                  top: 0,
+                  width: '100vw',
+                  backgroundColor: 'transparent',
+                },
+              }}
+            />
+          )}
+        </Transition>
+      </OptionalPortal>
 
       {children}
-    </nprogressContext.Provider>
+    </NProgressContextProvider>
   );
 }
