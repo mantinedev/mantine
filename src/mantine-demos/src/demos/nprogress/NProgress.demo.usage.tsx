@@ -49,7 +49,7 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <NProgress defaultProgress={60} />
+      <NProgress />
       <Group position="center">
         <Button onClick={() => addNProgress(10)}>Add 10%</Button>
         <Button color="red" onClick={() => decreaseNProgress(10)}>
@@ -71,7 +71,7 @@ function Demo() {
   );
 }
 
-export const show: MantineDemo = {
+export const usage: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

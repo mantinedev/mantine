@@ -1,4 +1,4 @@
-export { NProgress, NProgressProps } from './NProgress';
+export { NProgress } from './NProgress';
 export {
   addNProgress,
   decreaseNProgress,
@@ -6,3 +6,5 @@ export {
   startNProgress,
   stopNProgress,
 } from './events';
+
+export type { NProgressProps } from './NProgress';

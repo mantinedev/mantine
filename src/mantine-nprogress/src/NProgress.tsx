@@ -46,8 +46,8 @@ export interface NProgressProps {
 }
 
 export function NProgress({
-  color = 'blue',
   defaultProgress = 0,
+  color = 'blue',
   size = 2,
   intervalTime = 500,
   intervalStep = 1,

@@ -1,6 +1,6 @@
 {
   "name": "@mantine/nprogress",
-  "description": "TODO",
+  "description": "A navigation progress bar",
   "version": "4.1.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -17,6 +17,7 @@
   "peerDependencies": {
     "@mantine/core": "4.1.3",
     "@mantine/hooks": "4.1.3",
+    "@mantine/styles": "4.1.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

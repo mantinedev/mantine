@@ -1,1 +1,1 @@
-export { show } from './NProgress.demo.show';
+export { usage } from './NProgress.demo.usage';

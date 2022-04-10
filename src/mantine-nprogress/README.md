@@ -1,6 +1,6 @@
 # Mantine NProgress
 
-TODO
+A navigation progress bar
 
 [Documentation](https://mantine.dev/)
 

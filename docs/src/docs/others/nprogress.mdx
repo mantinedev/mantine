@@ -3,9 +3,9 @@ group: 'Other packages'
 package: '@mantine/nprogress'
 title: 'Navigation progress'
 order: 1
-slug: /others/nprogres/
-description: 'A nvaigation progress bar'
-props: ['ModalsProvider']
+slug: /others/nprogress/
+description: 'A navigation progress bar'
+props: ['NProgress']
 import: "import { NProgress } from '@mantine/nprogress';"
 source: 'mantine-nprogress/src'
 docs: 'others/nprogress.mdx'
@@ -47,4 +47,39 @@ function App() {
     </MantineProvider>
   );
 }
+```
+
+## Usage
+
+<Demo data={NProgressDemos.usage} />
+
+## Event based functions
+
+`@mantine/nprogress` exports several functions which can be used to perform certain actions
+from any part of your application:
+
+```tsx
+// All functions can be called from anywhere (not only from components)
+import {
+  addNProgress,
+  decreaseNProgress,
+  setNProgress,
+  startNProgress,
+  stopNProgress,
+} from '@mantine/nprogress';
+
+// Adds progress to the current progress
+addNProgress(10);
+
+// Decreases the current progress
+decreaseNProgress(10);
+
+// Sets a custom progress
+setNProgress(50);
+
+// Starts the progress bar
+startNProgress();
+
+// Stops the progress bar
+stopNProgress();
 ```
