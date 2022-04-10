@@ -1,10 +1,16 @@
 import React from 'react';
-import { useUncontrolled } from '@mantine/utils';
+import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { AccordionContextProvider } from './Accordion.context';
 import { AccordionValue } from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
+  /** Base id, used to generate ids that connect labels with controls, by default generated randomly */
+  id?: string;
+
+  /** Determines whether arrow key presses should loop though items (first to last and last to first) */
+  loop?: boolean;
+
   /** Accordion content */
   children: React.ReactNode;
 
@@ -27,7 +33,10 @@ export function AccordionProvider<Multiple extends boolean = false>({
   value,
   defaultValue,
   onChange,
+  id,
+  loop,
 }: AccordionProviderProps<Multiple>) {
+  const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
@@ -51,7 +60,14 @@ export function AccordionProvider<Multiple extends boolean = false>({
 
   return (
     <AccordionContextProvider
-      value={{ isItemActive, onChange: handleItemChange, loop: false, id: 'test' }}
+      value={{
+        isItemActive,
+        onChange: handleItemChange,
+        getControlId: getSafeId(`${uid}-tab`, ACCORDION_ERRORS.value.message),
+        getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value.message),
+        id: uid,
+        loop,
+      }}
     >
       {children}
     </AccordionContextProvider>
