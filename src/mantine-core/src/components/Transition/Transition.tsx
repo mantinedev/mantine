@@ -19,6 +19,9 @@ export interface TransitionProps {
   /** When true, component will be mounted */
   mounted: boolean;
 
+  /** When true, component will never unmounted */
+  stayMounted?: boolean;
+
   /** Render function with transition styles argument */
   children(styles: React.CSSProperties): React.ReactElement<any, any>;
 
@@ -40,6 +43,7 @@ export function Transition({
   duration = 250,
   exitDuration = duration,
   mounted,
+  stayMounted = false,
   children,
   timingFunction,
   onExit,
@@ -59,10 +63,10 @@ export function Transition({
   });
 
   if (transitionDuration === 0) {
-    return mounted ? <>{children({})}</> : null;
+    return mounted || stayMounted ? <>{children({})}</> : null;
   }
 
-  return transitionStatus === 'exited' ? null : (
+  return transitionStatus === 'exited' && !stayMounted ? null : (
     <>
       {children(
         getTransitionStyles({
