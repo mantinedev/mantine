@@ -50,6 +50,9 @@ export interface FloatingTooltipProps
   /** Tooltip id to bind aria-describedby */
   tooltipId?: string;
 
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies?: any[];
+
   /** Position of the tooltip relative to the cursor */
   position?: 'top' | 'left' | 'bottom' | 'right';
 
@@ -80,6 +83,7 @@ const defaultProps: Partial<FloatingTooltipProps> = {
   zIndex: getDefaultZIndex('popover'),
   width: 'auto',
   wrapLines: false,
+  positionDependencies: [],
 };
 
 export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
@@ -100,6 +104,7 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
       transitionTimingFunction,
       width,
       wrapLines,
+      positionDependencies,
       tooltipRef,
       tooltipId,
       classNames,
@@ -156,7 +161,7 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
             top: y || 0,
           };
       }
-    }, [x, y]);
+    }, [x, y, ...positionDependencies]);
 
     const handleOpen = () => {
       window.clearTimeout(closeTimeoutRef.current);
