@@ -98,6 +98,7 @@ attachDemos(storiesOf('Styles', module), demos.CreateStylesDemos);
 attachDemos(storiesOf('Theme', module), demos.ThemeDemos);
 attachDemos(storiesOf('Spotlight', module), demos.SpotlightDemos);
 attachDemos(storiesOf('Form', module), demos.FormDemos);
+attachDemos(storiesOf('NProgress', module), demos.NProgressDemos);
 
 // @mantine/labs
 attachDemos(storiesOf('PinInput', module), demos.PinInputDemos);

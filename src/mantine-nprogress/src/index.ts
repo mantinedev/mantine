@@ -1,2 +1,8 @@
-export { useNProgress } from './NProgress.context';
-export { NProgressProvider } from './NProgressProvider';
+export { NProgress, NProgressProps } from './NProgress';
+export {
+  addNProgress,
+  decreaseNProgress,
+  setNProgress,
+  startNProgress,
+  stopNProgress,
+} from './events';

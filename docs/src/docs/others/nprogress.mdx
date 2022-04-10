@@ -1,0 +1,50 @@
+---
+group: 'Other packages'
+package: '@mantine/nprogress'
+title: 'Navigation progress'
+order: 1
+slug: /others/nprogres/
+description: 'A nvaigation progress bar'
+props: ['ModalsProvider']
+import: "import { NProgress } from '@mantine/nprogress';"
+source: 'mantine-nprogress/src'
+docs: 'others/nprogress.mdx'
+installation: '@mantine/nprogress'
+license: MIT
+---
+
+import { NProgressDemos } from '@mantine/demos';
+
+## Installation
+
+Package depends on @mantine/core and @mantine/hooks.
+
+Install with npm:
+
+```sh
+npm install @mantine/nprogress @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/nprogress @mantine/core @mantine/hooks
+```
+
+## Setup NProgress
+
+Add `NProgress` to your app:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { NProgress } from '@mantine/nprogress';
+
+function App() {
+  return (
+    <MantineProvider>
+      <NProgress />
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
