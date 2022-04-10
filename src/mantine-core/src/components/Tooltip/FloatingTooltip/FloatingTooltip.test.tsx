@@ -5,7 +5,6 @@ import { itRendersChildren, itSupportsSystemProps, renderWithAct, actAsync } fro
 import { FloatingTooltip, FloatingTooltipProps } from './FloatingTooltip';
 
 const defaultProps: FloatingTooltipProps = {
-  withinPortal: false,
   label: 'test-tooltip',
   children: 'test-target',
   transitionDuration: 0,
