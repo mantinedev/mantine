@@ -219,20 +219,18 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
           timingFunction={transitionTimingFunction}
         >
           {(transitionStyles) => (
-            <div style={{ zIndex, position: 'relative' }}>
-              <div style={transitionStyles}>
-                <Box
-                  className={classes.body}
-                  ref={mergedTooltipRefs}
-                  sx={{
-                    whiteSpace: wrapLines ? 'normal' : 'nowrap',
-                    width,
-                    ...coordinates,
-                  }}
-                >
-                  {label}
-                </Box>
-              </div>
+            <div style={{ ...transitionStyles, zIndex, position: 'relative' }}>
+              <Box
+                className={classes.body}
+                ref={mergedTooltipRefs}
+                sx={{
+                  whiteSpace: wrapLines ? 'normal' : 'nowrap',
+                  width,
+                  ...coordinates,
+                }}
+              >
+                {label}
+              </Box>
             </div>
           )}
         </Transition>
