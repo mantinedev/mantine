@@ -1,19 +1,31 @@
 import React from 'react';
-import { FloatingTooltip, Box, Group } from '@mantine/core';
+import { Tooltip, Badge, Group } from '@mantine/core';
 
 function Demo() {
-  return (
-    <div style={{ width: 1200 }}>
-      <Group position="right" mt={200} sx={{ width: '100%' }}>
-        <FloatingTooltip position="right" gutter={15} width={150} wrapLines label="TOOLTIP LABEL">
-          <Box>Ok Tooltip</Box>
-        </FloatingTooltip>
-        <FloatingTooltip position="right" gutter={15} width={150} label="WEIRD TOOLTIP LABEL">
-          <Box>Weird Tooltip</Box>
-        </FloatingTooltip>
+  const tooltips = (['top', 'right', 'bottom', 'left'] as const).map((position, index) => {
+    const placements = (['start', 'center', 'end'] as const).map((placement) => (
+      <Tooltip
+        key={placement}
+        placement={placement}
+        position={position}
+        label={`${position}-${placement}`}
+        withArrow
+        gutter={10}
+      >
+        <Badge color="blue" size="lg">
+          {`${position}-${placement}`}
+        </Badge>
+      </Tooltip>
+    ));
+
+    return (
+      <Group key={position} position="center" style={{ marginTop: index !== 0 && 10 }}>
+        {placements}
       </Group>
-    </div>
-  );
+    );
+  });
+
+  return <>{tooltips}</>;
 }
 
 export const positions: MantineDemo = {
