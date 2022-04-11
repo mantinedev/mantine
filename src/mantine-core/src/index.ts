@@ -1,6 +1,4 @@
 export * from '@mantine/styles';
-export * from './utils';
-
 export * from './components/Accordion';
 export * from './components/ActionIcon';
 export * from './components/Affix';
@@ -68,6 +66,7 @@ export * from './components/Space';
 export * from './components/Spoiler';
 export * from './components/Stack';
 export * from './components/Stepper';
+export * from './components/StepperProgress';
 export * from './components/Switch';
 export * from './components/Table';
 export * from './components/Tabs';
@@ -81,3 +80,4 @@ export * from './components/Tooltip';
 export * from './components/TransferList';
 export * from './components/Transition';
 export * from './components/TypographyStylesProvider';
+export * from './utils';

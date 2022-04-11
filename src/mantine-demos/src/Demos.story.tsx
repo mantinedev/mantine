@@ -67,6 +67,7 @@ attachDemos(storiesOf('Skeleton', module), demos.SkeletonDemos);
 attachDemos(storiesOf('Slider', module), demos.SliderDemos);
 attachDemos(storiesOf('Spoiler', module), demos.SpoilerDemos);
 attachDemos(storiesOf('Stepper', module), demos.StepperDemos);
+attachDemos(storiesOf('StepperProgress', module), demos.StepperProgressDemos);
 attachDemos(storiesOf('Switch', module), demos.SwitchDemos);
 attachDemos(storiesOf('Table', module), demos.TableDemos);
 attachDemos(storiesOf('Tabs', module), demos.TabsDemos);

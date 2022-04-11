@@ -1,19 +1,8 @@
 // Demos components
-export { Demo, CodeDemo, Configurator } from './components/Demo/Demo';
-
-// Inline demos
-export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
-export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
-export { TimelineBase } from './demos/core/Timeline/_base';
-export { CustomSelectDemo } from './demos/core/Select/Select.demo.itemComponent';
-export { CountriesSelect } from './demos/core/MultiSelect/MultiSelect.demo.countries';
-
-// Meta demos
-export * as CreateStylesDemos from './demos/create-styles';
-export * as ThemeDemos from './demos/theme';
-
+export { CodeDemo, Configurator, Demo } from './components/Demo/Demo';
 // @mantine/core
 export * as AccordionDemos from './demos/core/Accordion';
+export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
 export * as ActionIconDemos from './demos/core/ActionIcon';
 export * as AffixDemos from './demos/core/Affix';
 export * as AlertDemos from './demos/core/Alert';
@@ -57,6 +46,7 @@ export * as MediaQueryDemos from './demos/core/MediaQuery';
 export * as MenuDemos from './demos/core/Menu';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
+export { CountriesSelect } from './demos/core/MultiSelect/MultiSelect.demo.countries';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
 export * as NotificationDemos from './demos/core/Notification';
 export * as NumberInputDemos from './demos/core/NumberInput';
@@ -71,13 +61,14 @@ export * as RadioGroupDemos from './demos/core/RadioGroup';
 export * as RingProgressDemos from './demos/core/RingProgress';
 export * as ScrollAreaDemos from './demos/core/ScrollArea';
 export * as SegmentedControlDemos from './demos/core/SegmentedControl';
-export * as StackDemos from './demos/core/Stack';
 export * as SelectDemos from './demos/core/Select';
+export { CustomSelectDemo } from './demos/core/Select/Select.demo.itemComponent';
 export * as SimpleGridDemos from './demos/core/SimpleGrid';
 export * as SkeletonDemos from './demos/core/Skeleton';
 export * as SliderDemos from './demos/core/Slider';
 export * as SpaceDemos from './demos/core/Space';
 export * as SpoilerDemos from './demos/core/Spoiler';
+export * as StackDemos from './demos/core/Stack';
 export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
@@ -87,12 +78,14 @@ export * as TextareaDemos from './demos/core/Textarea';
 export * as TextInputDemos from './demos/core/TextInput';
 export * as ThemeIconDemos from './demos/core/ThemeIcon';
 export * as TimelineDemos from './demos/core/Timeline';
+export { TimelineBase } from './demos/core/Timeline/_base';
 export * as TitleDemos from './demos/core/Title';
 export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransferListDemos from './demos/core/TransferList';
 export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
-
+// Meta demos
+export * as CreateStylesDemos from './demos/create-styles';
 // @mantine/dates
 export * as CalendarDemos from './demos/dates/Calendar';
 export * as DatePickerDemos from './demos/dates/DatePicker';
@@ -101,17 +94,18 @@ export * as MonthDemos from './demos/dates/Month';
 export * as RangeCalendarDemos from './demos/dates/RangeCalendar';
 export * as TimeInputDemos from './demos/dates/TimeInput';
 export * as TimeRangeInputDemos from './demos/dates/TimeRangeInput';
-
 // Other packages
 export * as DropzoneDemos from './demos/dropzone';
-export * as NotificationsDemos from './demos/notifications';
-export * as PrismDemos from './demos/prism';
-export * as RichTextEditorDemos from './demos/rte';
-export * as ModalsDemos from './demos/modals';
-export * as HooksDemos from './demos/hooks';
-export * as SpotlightDemos from './demos/spotlight';
 export * as FormDemos from './demos/form';
-
+export * as HooksDemos from './demos/hooks';
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';
 export * as TagInputDemos from './demos/labs/TagInput';
+export * as ModalsDemos from './demos/modals';
+export * as NotificationsDemos from './demos/notifications';
+export * as PrismDemos from './demos/prism';
+export * as RichTextEditorDemos from './demos/rte';
+export * as SpotlightDemos from './demos/spotlight';
+export * as ThemeDemos from './demos/theme';
+// Inline demos
+export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
