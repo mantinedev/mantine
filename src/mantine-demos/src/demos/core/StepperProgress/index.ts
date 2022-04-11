@@ -1,0 +1,13 @@
+export { usage } from './StepperProgress.demo.usage';
+export { configurator } from './StepperProgress.demo.configurator';
+export { icons } from './StepperProgress.demo.icons';
+export { iconSizeConfigurator } from './StepperProgress.demo.iconSizeConfigurator';
+export { iconsOnly } from './StepperProgress.demo.iconsOnly';
+export { orientation } from './StepperProgress.demo.orientation';
+export { iconPosition } from './StepperProgress.demo.iconPosition';
+export { loading } from './StepperProgress.demo.loading';
+export { stepColor } from './StepperProgress.demo.stepColor';
+export { stylesApi } from './StepperProgress.demo.stylesApi';
+export { stylesApi2 } from './StepperProgress.demo.stylesApi2';
+export { allowStepSelect } from './StepperProgress.demo.allowStepSelect';
+export { controlled } from './StepperProgress.demo.controlled';

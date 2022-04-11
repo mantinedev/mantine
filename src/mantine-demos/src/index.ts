@@ -70,6 +70,7 @@ export * as SpaceDemos from './demos/core/Space';
 export * as SpoilerDemos from './demos/core/Spoiler';
 export * as StackDemos from './demos/core/Stack';
 export * as StepperDemos from './demos/core/Stepper';
+export * as StepperProgressDemos from './demos/core/StepperProgress';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
 export * as TabsDemos from './demos/core/Tabs';
