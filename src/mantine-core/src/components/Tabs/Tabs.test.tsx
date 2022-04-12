@@ -54,6 +54,7 @@ describe('@mantine/core/Tabs', () => {
     props: defaultProps,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Tabs',
+    name: 'Tabs',
   });
 
   it('supports controlled state', () => {

@@ -28,6 +28,7 @@ describe('@mantine/core/Accordion', () => {
     component: Accordion,
     props: defaultProps,
     displayName: '@mantine/core/Accordion',
+    name: 'Accordion',
   });
 
   it('renders correct amount of items', () => {
