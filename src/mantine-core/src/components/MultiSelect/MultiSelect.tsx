@@ -302,7 +302,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         valuesOverflow.current = true;
         setDropdownOpened(false);
       }
-    }, [_value]);
+    }, _value);
 
     const handleItemSelect = (item: SelectItem) => {
       clearSearchOnChange && handleSearchChange('');
