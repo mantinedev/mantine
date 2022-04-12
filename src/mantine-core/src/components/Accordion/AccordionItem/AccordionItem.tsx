@@ -26,7 +26,6 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
     const { classes, cx } = useStyles(
       {
         transitionDuration: ctx.transitionDuration,
-        disableIconRotation: ctx.disableIconRotation,
         iconPosition: ctx.iconPosition,
         offsetIcon: ctx.offsetIcon,
         iconSize: ctx.iconSize,
@@ -59,7 +58,9 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
               orientation: 'vertical',
             })}
           >
-            <Center className={classes.icon}>{icon || ctx.icon}</Center>
+            <Center className={classes.icon} data-rotate={!ctx.disableIconRotation && isActive}>
+              {icon || ctx.icon}
+            </Center>
             <div className={classes.label}>{label}</div>
           </UnstyledButton>
         </Heading>

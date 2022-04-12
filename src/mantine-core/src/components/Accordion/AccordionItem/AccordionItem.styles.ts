@@ -4,31 +4,23 @@ export type AccordionIconPosition = 'right' | 'left';
 
 export interface AccordionStylesParams {
   transitionDuration: number;
-  disableIconRotation: boolean;
   iconPosition: AccordionIconPosition;
   offsetIcon: boolean;
   iconSize: number;
 }
 
 export default createStyles(
-  (
-    theme,
-    {
-      transitionDuration,
-      disableIconRotation,
-      iconPosition,
-      offsetIcon,
-      iconSize,
-    }: AccordionStylesParams,
-    getRef
-  ) => ({
+  (theme, { transitionDuration, iconPosition, offsetIcon, iconSize }: AccordionStylesParams) => ({
     icon: {
-      ref: getRef('icon'),
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
       marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
       width: iconSize,
       minWidth: iconSize,
+
+      '&[data-rotate="true"]': {
+        transform: 'rotate(180deg)',
+      },
     },
 
     label: {
@@ -46,14 +38,9 @@ export default createStyles(
       }`,
     },
 
-    itemOpened: {
-      [`& > .${getRef('itemTitle')} > .${getRef('control')} .${getRef('icon')}`]: {
-        transform: disableIconRotation ? 'none' : 'rotate(180deg)',
-      },
-    },
+    itemOpened: {},
 
     itemTitle: {
-      ref: getRef('itemTitle'),
       margin: 0,
       padding: 0,
       fontWeight: 'normal',
@@ -62,7 +49,6 @@ export default createStyles(
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
-      ref: getRef('control'),
       width: '100%',
       display: 'flex',
       alignItems: 'center',
