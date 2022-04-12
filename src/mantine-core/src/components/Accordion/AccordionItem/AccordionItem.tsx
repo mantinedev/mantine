@@ -16,10 +16,11 @@ export interface AccordionItemProps
   label?: React.ReactNode;
   value: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
-  ({ label, children, className, value, disabled, ...others }, ref) => {
+  ({ label, children, className, value, disabled, icon, ...others }, ref) => {
     const ctx = useAccordionContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
@@ -58,7 +59,7 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
               orientation: 'vertical',
             })}
           >
-            <Center className={classes.icon}>{ctx.icon}</Center>
+            <Center className={classes.icon}>{icon || ctx.icon}</Center>
             <div className={classes.label}>{label}</div>
           </UnstyledButton>
         </Heading>

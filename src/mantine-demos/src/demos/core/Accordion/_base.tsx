@@ -3,7 +3,7 @@ import { Accordion, AccordionProps } from '@mantine/core';
 import { baseAccordionMockdata } from './_mockdata';
 
 export const baseDemoItems = baseAccordionMockdata.map((item) => (
-  <Accordion.Item label={item.label} key={item.label}>
+  <Accordion.Item label={item.label} key={item.label} value={item.id}>
     {item.content}
   </Accordion.Item>
 ));

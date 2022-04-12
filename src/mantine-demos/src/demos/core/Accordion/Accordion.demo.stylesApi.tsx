@@ -39,7 +39,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     },
 
     [\`& .\${getRef('icon')}\`]: {
-      transform: 'rotate(45deg)',
+      transform: 'rotate(45deg) !important',
     },
   },
 
@@ -55,7 +55,7 @@ function StyledAccordion(props: AccordionProps) {
 
 function Demo() {
   return (
-    <StyledAccordion initialItem={0}>
+    <StyledAccordion defaultValue="customization">
       {/* <Accordion.Item /> components */}
     </StyledAccordion>
   );
@@ -94,7 +94,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
     },
 
     [`& .${getRef('icon')}`]: {
-      transform: 'rotate(45deg)',
+      transform: 'rotate(45deg) !important',
     },
   },
 
@@ -111,7 +111,7 @@ export function StyledAccordion(props: AccordionProps) {
 function Demo() {
   return (
     <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
-      <StyledAccordion initialItem={0}>{baseDemoItems}</StyledAccordion>
+      <StyledAccordion defaultValue="customization">{baseDemoItems}</StyledAccordion>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { AccordionProps } from '@mantine/core';
 import { BaseDemo } from './_base';
 
 function Wrapper(props: Partial<AccordionProps>) {
-  return <BaseDemo {...props} initialItem={0} />;
+  return <BaseDemo {...props} defaultValue="customization" />;
 }
 
 const codeTemplate = (props: string) => `
@@ -11,16 +11,16 @@ import { Accordion } from '@mantine/core';
 
 function Demo() {
   return (
-    <Accordion${props}>
-      <Accordion.Item label="Customization">
+    <Accordion${props} defaultValue="customization">
+      <Accordion.Item label="Customization" value="customization">
         Colors, fonts, shadows and many other parts are customizable to fit your design needs
       </Accordion.Item>
 
-      <Accordion.Item label="Flexibility">
+      <Accordion.Item label="Flexibility" value="flexibility">
         Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles
       </Accordion.Item>
 
-      <Accordion.Item label="No annoying focus ring">
+      <Accordion.Item label="No annoying focus ring" value="focus-ring">
         With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
       </Accordion.Item>
     </Accordion>
@@ -54,6 +54,5 @@ export const configurator: MantineDemo = {
     },
     { name: 'offsetIcon', type: 'boolean', initialValue: true, defaultValue: true },
     { name: 'disableIconRotation', type: 'boolean', initialValue: false, defaultValue: false },
-    { name: 'multiple', type: 'boolean', initialValue: false, defaultValue: false },
   ],
 };

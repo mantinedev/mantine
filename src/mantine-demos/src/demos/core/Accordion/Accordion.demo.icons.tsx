@@ -31,6 +31,7 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
   return (
     <Accordion disableIconRotation {...props}>
       <Accordion.Item
+        value={baseAccordionMockdata[0].id}
         label={baseAccordionMockdata[0].label}
         icon={
           <ThemeIcon color="violet" variant="light" size={28} radius="xl">
@@ -42,10 +43,11 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
       </Accordion.Item>
 
       <Accordion.Item
+        value={baseAccordionMockdata[1].id}
         label={baseAccordionMockdata[1].label}
         icon={
-          <ThemeIcon color="orange" variant="light" size={28} radius="xl">
-            <CircleDashed size={14} />
+          <ThemeIcon color="blue" variant="light" size={28} radius="xl">
+            <Bulb size={14} />
           </ThemeIcon>
         }
       >
@@ -53,10 +55,11 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
       </Accordion.Item>
 
       <Accordion.Item
+        value={baseAccordionMockdata[2].id}
         label={baseAccordionMockdata[2].label}
         icon={
-          <ThemeIcon color="blue" variant="light" size={28} radius="xl">
-            <Bulb size={14} />
+          <ThemeIcon color="orange" variant="light" size={28} radius="xl">
+            <CircleDashed size={14} />
           </ThemeIcon>
         }
       >
