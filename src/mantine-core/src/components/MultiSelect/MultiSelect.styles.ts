@@ -28,7 +28,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
 
   searchInput: {
     flex: 1,
-    width: 60,
+    minWidth: 60,
     backgroundColor: 'transparent',
     border: 0,
     outline: 0,
