@@ -1,13 +1,15 @@
 import React from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useMantineDefaultProps, StylesApiProvider } from '@mantine/styles';
 import { Box } from '../Box';
 import { AccordionProviderProps, AccordionProvider } from './AccordionProvider';
-import { AccordionItem } from './AccordionItem/AccordionItem';
+import { AccordionItem, AccordionItemStylesNames } from './AccordionItem/AccordionItem';
 import { ChevronIcon } from './ChevronIcon';
+
+export type AccordionStylesNames = AccordionItemStylesNames;
 
 export interface AccordionProps<Multiple extends boolean = false>
   extends AccordionProviderProps<Multiple>,
-    DefaultProps,
+    DefaultProps<AccordionItemStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof AccordionProviderProps<Multiple>> {}
 
 const defaultProps: Partial<AccordionProps> = {
@@ -37,6 +39,9 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
     iconSize,
     order,
     icon,
+    classNames,
+    styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps<AccordionProps<Multiple>>(
     'Accordion',
@@ -60,9 +65,11 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
       order={order}
       icon={icon}
     >
-      <Box {...others} data-accordion>
-        {children}
-      </Box>
+      <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+        <Box {...others} data-accordion>
+          {children}
+        </Box>
+      </StylesApiProvider>
     </AccordionProvider>
   );
 }

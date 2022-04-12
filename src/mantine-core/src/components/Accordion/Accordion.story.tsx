@@ -72,3 +72,9 @@ export const Disabled = () => (
     </Accordion.Item>
   </Accordion>
 );
+
+export const Unstyled = () => (
+  <Accordion unstyled sx={{ maxWidth: 400 }} mx="auto">
+    {_items}
+  </Accordion>
+);

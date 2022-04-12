@@ -93,7 +93,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
       value={{
         isItemActive,
         onChange: handleItemChange,
-        getControlId: getSafeId(`${uid}-tab`, ACCORDION_ERRORS.value.message),
+        getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS.value.message),
         getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value.message),
         id: uid,
         transitionDuration,

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
@@ -21,6 +21,7 @@ export interface AccordionItemProps
 export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
   ({ label, children, className, value, disabled, ...others }, ref) => {
     const ctx = useAccordionContext();
+    const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
       {
         transitionDuration: ctx.transitionDuration,
@@ -29,11 +30,10 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
         offsetIcon: ctx.offsetIcon,
         iconSize: ctx.iconSize,
       },
-      { name: 'Accordion' }
+      { name: 'Accordion', classNames, styles, unstyled }
     );
 
-    const cappedOrder = Math.min(6, Math.max(2, ctx.order)) as 2 | 3 | 4 | 5 | 6;
-    const Heading = `h${cappedOrder}` as const;
+    const Heading = `h${ctx.order}` as const;
     const isActive = ctx.isItemActive(value);
 
     return (
@@ -49,6 +49,7 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
             aria-expanded={isActive}
             aria-controls={ctx.getRegionId(value)}
             id={ctx.getControlId(value)}
+            unstyled={unstyled}
             onKeyDown={createScopedKeydownHandler({
               siblingSelector: '[data-accordion-control]',
               parentSelector: '[data-accordion]',
