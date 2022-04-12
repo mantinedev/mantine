@@ -68,3 +68,4 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
 }
 
 Accordion.Item = AccordionItem;
+Accordion.displayName = '@mantine/core/Accordion';
