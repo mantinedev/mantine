@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
+import { createScopedKeydownHandler } from '@mantine/utils';
 import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
@@ -43,12 +44,20 @@ export function AccordionItem({
     <Box className={cx(classes.item, { [classes.itemOpened]: isActive }, className)} {...others}>
       <Heading className={classes.itemTitle}>
         <UnstyledButton
+          data-accordion-control
           className={classes.control}
           onClick={() => ctx.onChange(value)}
           type="button"
           aria-expanded={isActive}
           aria-controls={ctx.getRegionId(value)}
           id={ctx.getControlId(value)}
+          onKeyDown={createScopedKeydownHandler({
+            siblingSelector: '[data-accordion-control]',
+            parentSelector: '[data-accordion]',
+            activateOnFocus: false,
+            loop: ctx.loop,
+            orientation: 'vertical',
+          })}
         >
           <Center className={classes.icon}>{ctx.icon}</Center>
           <div className={classes.label}>{label}</div>

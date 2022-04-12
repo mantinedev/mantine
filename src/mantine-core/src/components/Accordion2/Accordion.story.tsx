@@ -49,3 +49,9 @@ export const ControlledMultiple = () => {
     </Accordion>
   );
 };
+
+export const NoLoop = () => (
+  <Accordion loop={false} sx={{ maxWidth: 400 }} mx="auto">
+    {_items}
+  </Accordion>
+);

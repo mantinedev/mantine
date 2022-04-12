@@ -60,7 +60,9 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
       order={order}
       icon={icon}
     >
-      <Box {...others}>{children}</Box>
+      <Box {...others} data-accordion>
+        {children}
+      </Box>
     </AccordionProvider>
   );
 }
