@@ -15,6 +15,7 @@ export interface AccordionItemProps
     React.ComponentPropsWithoutRef<'div'> {
   label?: React.ReactNode;
   value: string;
+  disabled?: boolean;
 }
 
 export function AccordionItem({
@@ -22,6 +23,7 @@ export function AccordionItem({
   children,
   className,
   value,
+  disabled,
   ...others
 }: AccordionItemProps) {
   const ctx = useAccordionContext();
@@ -45,6 +47,7 @@ export function AccordionItem({
       <Heading className={classes.itemTitle}>
         <UnstyledButton
           data-accordion-control
+          disabled={disabled}
           className={classes.control}
           onClick={() => ctx.onChange(value)}
           type="button"
