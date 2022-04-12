@@ -14,13 +14,12 @@ export interface AccordionProps<Multiple extends boolean = false>
 
 const defaultProps: Partial<AccordionProps> = {
   multiple: false,
-  disableIconRotation: false,
+  disableChevronRotation: false,
   transitionDuration: 200,
-  iconPosition: 'left',
-  offsetIcon: true,
-  iconSize: 24,
+  chevronPosition: 'right',
+  chevronSize: 24,
   order: 3,
-  icon: <ChevronIcon />,
+  chevron: <ChevronIcon />,
 };
 
 export function Accordion<Multiple extends boolean = false>(props: AccordionProps<Multiple>) {
@@ -33,12 +32,11 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
     defaultValue,
     onChange,
     transitionDuration,
-    disableIconRotation,
-    iconPosition,
-    offsetIcon,
-    iconSize,
+    disableChevronRotation,
+    chevronPosition,
+    chevronSize,
     order,
-    icon,
+    chevron,
     classNames,
     styles,
     unstyled,
@@ -58,12 +56,11 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
       onChange={onChange}
       loop={loop}
       transitionDuration={transitionDuration}
-      disableIconRotation={disableIconRotation}
-      iconPosition={iconPosition}
-      offsetIcon={offsetIcon}
-      iconSize={iconSize}
+      disableChevronRotation={disableChevronRotation}
+      chevronPosition={chevronPosition}
+      chevronSize={chevronSize}
       order={order}
-      icon={icon}
+      chevron={chevron}
     >
       <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
         <Box {...others} data-accordion>

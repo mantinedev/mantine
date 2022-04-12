@@ -1,22 +1,21 @@
 import { createStyles } from '@mantine/styles';
 
-export type AccordionIconPosition = 'right' | 'left';
+export type AccordionChevronPosition = 'right' | 'left';
 
 export interface AccordionStylesParams {
   transitionDuration: number;
-  iconPosition: AccordionIconPosition;
-  offsetIcon: boolean;
-  iconSize: number;
+  chevronPosition: AccordionChevronPosition;
+  chevronSize: number;
 }
 
 export default createStyles(
-  (theme, { transitionDuration, iconPosition, offsetIcon, iconSize }: AccordionStylesParams) => ({
-    icon: {
+  (theme, { transitionDuration, chevronPosition, chevronSize }: AccordionStylesParams) => ({
+    chevron: {
       transition: `transform ${transitionDuration}ms ease`,
-      marginRight: iconPosition === 'right' ? 0 : theme.spacing.sm,
-      marginLeft: iconPosition === 'right' ? theme.spacing.lg : 0,
-      width: iconSize,
-      minWidth: iconSize,
+      marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,
+      marginLeft: chevronPosition === 'right' ? theme.spacing.lg : 0,
+      width: chevronSize,
+      minWidth: chevronSize,
 
       '&[data-rotate="true"]': {
         transform: 'rotate(180deg)',
@@ -52,9 +51,9 @@ export default createStyles(
       width: '100%',
       display: 'flex',
       alignItems: 'center',
-      flexDirection: iconPosition === 'right' ? 'row-reverse' : 'row',
+      flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
       padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
-      paddingLeft: iconPosition === 'right' ? theme.spacing.sm + 4 : null,
+      paddingLeft: chevronPosition === 'right' ? theme.spacing.sm + 4 : null,
       fontWeight: 500,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
@@ -77,7 +76,6 @@ export default createStyles(
       ...theme.fn.fontStyles(),
       wordBreak: 'break-word',
       lineHeight: theme.lineHeight,
-      paddingLeft: iconPosition === 'right' ? 0 : offsetIcon ? iconSize + theme.spacing.xs / 2 : 0,
     },
 
     contentInner: {

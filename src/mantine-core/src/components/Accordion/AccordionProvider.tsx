@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { AccordionContextProvider } from './Accordion.context';
-import { AccordionValue, AccordionIconPosition, AccordionHeadingOrder } from './Accordion.types';
+import { AccordionValue, AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
@@ -29,23 +29,20 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   /** Transition duration in ms, set 0 to disable transitions */
   transitionDuration?: number;
 
-  /** Determines whether icon rotation should be disabled */
-  disableIconRotation?: boolean;
+  /** Determines whether chevron rotation should be disabled */
+  disableChevronRotation?: boolean;
 
-  /** Determines position of the icon */
-  iconPosition?: AccordionIconPosition;
+  /** Determines position of the chevron */
+  chevronPosition?: AccordionChevronPosition;
 
-  /** Determines whether icon should be offset with padding */
-  offsetIcon?: boolean;
-
-  /** Icon size in px */
-  iconSize?: number;
+  /** Chevron size in px */
+  chevronSize?: number;
 
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;
 
-  /** Replaces icon on all items */
-  icon?: React.ReactNode;
+  /** Replaces chevron on all items */
+  chevron?: React.ReactNode;
 }
 
 export function AccordionProvider<Multiple extends boolean = false>({
@@ -57,12 +54,11 @@ export function AccordionProvider<Multiple extends boolean = false>({
   id,
   loop,
   transitionDuration,
-  disableIconRotation,
-  iconPosition,
-  offsetIcon,
-  iconSize,
+  disableChevronRotation,
+  chevronPosition,
+  chevronSize,
   order,
-  icon,
+  chevron,
 }: AccordionProviderProps<Multiple>) {
   const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
@@ -97,12 +93,11 @@ export function AccordionProvider<Multiple extends boolean = false>({
         getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value.message),
         id: uid,
         transitionDuration,
-        disableIconRotation,
-        iconPosition,
-        offsetIcon,
-        iconSize,
+        disableChevronRotation,
+        chevronPosition,
+        chevronSize,
         order,
-        icon,
+        chevron,
         loop,
       }}
     >

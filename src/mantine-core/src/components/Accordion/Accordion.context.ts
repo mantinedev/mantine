@@ -1,17 +1,16 @@
 import { createSafeContext } from '@mantine/utils';
 import { ACCORDION_ERRORS } from './Accordion.errors';
-import { AccordionIconPosition, AccordionHeadingOrder } from './Accordion.types';
+import { AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
 
 interface AccordionContext {
   id: string;
   loop: boolean;
   transitionDuration: number;
-  disableIconRotation: boolean;
-  iconPosition: AccordionIconPosition;
-  offsetIcon: boolean;
-  iconSize: number;
+  disableChevronRotation: boolean;
+  chevronPosition: AccordionChevronPosition;
+  chevronSize: number;
   order: AccordionHeadingOrder;
-  icon: React.ReactNode;
+  chevron: React.ReactNode;
   onChange(value: string): void;
   isItemActive(value: string): boolean;
   getControlId(value: string): string;

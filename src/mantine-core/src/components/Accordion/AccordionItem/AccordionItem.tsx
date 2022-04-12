@@ -16,19 +16,18 @@ export interface AccordionItemProps
   label?: React.ReactNode;
   value: string;
   disabled?: boolean;
-  icon?: React.ReactNode;
+  chevron?: React.ReactNode;
 }
 
 export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
-  ({ label, children, className, value, disabled, icon, ...others }, ref) => {
+  ({ label, children, className, value, disabled, chevron, ...others }, ref) => {
     const ctx = useAccordionContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
       {
         transitionDuration: ctx.transitionDuration,
-        iconPosition: ctx.iconPosition,
-        offsetIcon: ctx.offsetIcon,
-        iconSize: ctx.iconSize,
+        chevronPosition: ctx.chevronPosition,
+        chevronSize: ctx.chevronSize,
       },
       { name: 'Accordion', classNames, styles, unstyled }
     );
@@ -58,8 +57,11 @@ export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
               orientation: 'vertical',
             })}
           >
-            <Center className={classes.icon} data-rotate={!ctx.disableIconRotation && isActive}>
-              {icon || ctx.icon}
+            <Center
+              className={classes.chevron}
+              data-rotate={!ctx.disableChevronRotation && isActive}
+            >
+              {chevron || ctx.chevron}
             </Center>
             <div className={classes.label}>{label}</div>
           </UnstyledButton>
