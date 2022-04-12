@@ -76,6 +76,15 @@ export default createStyles(
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       },
+
+      '&:disabled': {
+        opacity: 0.4,
+        cursor: 'not-allowed',
+
+        '&:hover': {
+          backgroundColor: 'transparent',
+        },
+      },
     },
 
     content: {

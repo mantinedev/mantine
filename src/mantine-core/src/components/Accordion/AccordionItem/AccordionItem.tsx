@@ -1,93 +1,80 @@
-import React from 'react';
-import { useReducedMotion } from '@mantine/hooks';
+import React, { forwardRef } from 'react';
 import { DefaultProps, ClassNames } from '@mantine/styles';
+import { createScopedKeydownHandler } from '@mantine/utils';
 import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
 import { Center } from '../../Center';
-import { ChevronIcon } from './ChevronIcon';
-import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
+import { useAccordionContext } from '../Accordion.context';
+import useStyles from './AccordionItem.styles';
 
-export type { AccordionIconPosition };
 export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 
-export interface PublicAccordionItemProps
+export interface AccordionItemProps
   extends DefaultProps<AccordionItemStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
   label?: React.ReactNode;
-  icon?: React.ReactNode;
-  children?: React.ReactNode;
-  disableIconRotation?: boolean;
-  iconPosition?: AccordionIconPosition;
-  controlRef?: React.ForwardedRef<HTMLButtonElement>;
+  value: string;
+  disabled?: boolean;
 }
 
-export interface AccordionItemProps extends PublicAccordionItemProps {
-  opened?: boolean;
-  onToggle?(): void;
-  transitionDuration?: number;
-  id?: string;
-  onControlKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
-  offsetIcon?: boolean;
-  iconSize?: number;
-  order?: 2 | 3 | 4 | 5 | 6;
-}
+export const AccordionItem = forwardRef<HTMLButtonElement, AccordionItemProps>(
+  ({ label, children, className, value, disabled, ...others }, ref) => {
+    const ctx = useAccordionContext();
+    const { classes, cx } = useStyles(
+      {
+        transitionDuration: ctx.transitionDuration,
+        disableIconRotation: ctx.disableIconRotation,
+        iconPosition: ctx.iconPosition,
+        offsetIcon: ctx.offsetIcon,
+        iconSize: ctx.iconSize,
+      },
+      { name: 'Accordion' }
+    );
 
-export function AccordionItem({
-  opened,
-  onToggle,
-  label,
-  children,
-  className,
-  classNames,
-  styles,
-  transitionDuration,
-  icon = <ChevronIcon />,
-  disableIconRotation = false,
-  offsetIcon = true,
-  iconSize = 24,
-  iconPosition = 'left',
-  order = 3,
-  id,
-  controlRef,
-  onControlKeyDown,
-  ...others
-}: AccordionItemProps) {
-  const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 0 : transitionDuration;
-  const { classes, cx } = useStyles(
-    { transitionDuration: duration, disableIconRotation, iconPosition, offsetIcon, iconSize },
-    { classNames, styles, name: 'Accordion' }
-  );
+    const cappedOrder = Math.min(6, Math.max(2, ctx.order)) as 2 | 3 | 4 | 5 | 6;
+    const Heading = `h${cappedOrder}` as const;
+    const isActive = ctx.isItemActive(value);
 
-  const cappedOrder = Math.min(6, Math.max(2, order)) as 2 | 3 | 4 | 5 | 6;
-  const Heading = `h${cappedOrder}` as const;
+    return (
+      <Box className={cx(classes.item, { [classes.itemOpened]: isActive }, className)} {...others}>
+        <Heading className={classes.itemTitle}>
+          <UnstyledButton
+            ref={ref}
+            data-accordion-control
+            disabled={disabled}
+            className={classes.control}
+            onClick={() => ctx.onChange(value)}
+            type="button"
+            aria-expanded={isActive}
+            aria-controls={ctx.getRegionId(value)}
+            id={ctx.getControlId(value)}
+            onKeyDown={createScopedKeydownHandler({
+              siblingSelector: '[data-accordion-control]',
+              parentSelector: '[data-accordion]',
+              activateOnFocus: false,
+              loop: ctx.loop,
+              orientation: 'vertical',
+            })}
+          >
+            <Center className={classes.icon}>{ctx.icon}</Center>
+            <div className={classes.label}>{label}</div>
+          </UnstyledButton>
+        </Heading>
 
-  return (
-    <Box className={cx(classes.item, { [classes.itemOpened]: opened }, className)} {...others}>
-      <Heading className={classes.itemTitle}>
-        <UnstyledButton
-          className={classes.control}
-          onClick={onToggle}
-          type="button"
-          aria-expanded={opened}
-          aria-controls={`${id}-body`}
-          id={id}
-          ref={controlRef}
-          onKeyDown={onControlKeyDown}
-        >
-          <Center className={classes.icon}>{icon}</Center>
-          <div className={classes.label}>{label}</div>
-        </UnstyledButton>
-      </Heading>
-
-      <Collapse in={opened} transitionDuration={duration}>
-        <div className={classes.content} role="region" id={`${id}-body`} aria-labelledby={id}>
-          <div className={classes.contentInner}>{children}</div>
-        </div>
-      </Collapse>
-    </Box>
-  );
-}
+        <Collapse in={isActive} transitionDuration={ctx.transitionDuration}>
+          <div
+            className={classes.content}
+            role="region"
+            id={ctx.getRegionId(value)}
+            aria-labelledby={ctx.getControlId(value)}
+          >
+            <div className={classes.contentInner}>{children}</div>
+          </div>
+        </Collapse>
+      </Box>
+    );
+  }
+);
 
 AccordionItem.displayName = '@mantine/core/AccordionItem';
