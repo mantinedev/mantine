@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { AccordionContextProvider } from './Accordion.context';
-import { AccordionValue, AccordionIconPosition, AccordionOrder } from './Accordion.types';
+import { AccordionValue, AccordionIconPosition, AccordionHeadingOrder } from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
@@ -42,7 +42,7 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
   iconSize?: number;
 
   /** Heading order, has no effect on visuals */
-  order?: AccordionOrder;
+  order?: AccordionHeadingOrder;
 
   /** Replaces icon on all items */
   icon?: React.ReactNode;

@@ -1,6 +1,6 @@
 import { createSafeContext } from '@mantine/utils';
 import { ACCORDION_ERRORS } from './Accordion.errors';
-import { AccordionIconPosition, AccordionOrder } from './Accordion.types';
+import { AccordionIconPosition, AccordionHeadingOrder } from './Accordion.types';
 
 interface AccordionContext {
   id: string;
@@ -10,7 +10,7 @@ interface AccordionContext {
   iconPosition: AccordionIconPosition;
   offsetIcon: boolean;
   iconSize: number;
-  order: AccordionOrder;
+  order: AccordionHeadingOrder;
   icon: React.ReactNode;
   onChange(value: string): void;
   isItemActive(value: string): boolean;
