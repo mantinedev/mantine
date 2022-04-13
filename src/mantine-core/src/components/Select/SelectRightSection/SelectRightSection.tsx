@@ -11,7 +11,7 @@ export interface SelectRightSectionProps {
   error?: any;
   // eslint-disable-next-line react/no-unused-prop-types
   disabled?: boolean;
-  clearButtonTabIndex: number;
+  clearButtonTabIndex?: number;
 }
 
 export function SelectRightSection({
