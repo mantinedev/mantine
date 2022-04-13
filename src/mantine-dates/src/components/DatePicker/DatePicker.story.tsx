@@ -154,4 +154,9 @@ storiesOf('DatePicker', module)
         allowFreeInput
       />
     </SubmitForm>
+  ))
+  .add('Clear button tab index disabled', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePicker placeholder="Submit with enter" label="Event date" clearButtonTabIndex={-1} />
+    </div>
   ));
