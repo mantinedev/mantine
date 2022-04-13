@@ -41,6 +41,17 @@ function getNextIndex(current: number, elements: HTMLButtonElement[], loop: bool
   return current;
 }
 
+/** Validates that target element is on the same level as sibling, used to filter out children that have the same sibling selector */
+function onSameLevel(
+  target: HTMLButtonElement,
+  sibling: HTMLButtonElement,
+  parentSelector: string
+) {
+  return (
+    findElementAncestor(target, parentSelector) === findElementAncestor(sibling, parentSelector)
+  );
+}
+
 interface GetElementsSiblingsInput {
   /** Selector used to find parent node, e.g. '[role="tablist"]', '.mantine-Text-root' */
   parentSelector: string;
@@ -76,10 +87,11 @@ export function createScopedKeydownHandler({
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
-    const elements: HTMLButtonElement[] = Array.from(
-      findElementAncestor(event.currentTarget, parentSelector)?.querySelectorAll(siblingSelector) ||
-        []
-    );
+    const elements = Array.from(
+      findElementAncestor(event.currentTarget, parentSelector)?.querySelectorAll<HTMLButtonElement>(
+        siblingSelector
+      ) || []
+    ).filter((node) => onSameLevel(event.currentTarget, node, parentSelector));
 
     const current = elements.findIndex((el) => event.currentTarget === el);
     const _nextIndex = getNextIndex(current, elements, loop);
