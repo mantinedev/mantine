@@ -11,6 +11,7 @@ export interface SelectRightSectionProps {
   error?: any;
   // eslint-disable-next-line react/no-unused-prop-types
   disabled?: boolean;
+  tabIndex?: number;
 }
 
 export function SelectRightSection({
@@ -19,6 +20,7 @@ export function SelectRightSection({
   onClear,
   size,
   error,
+  tabIndex,
 }: SelectRightSectionProps) {
   return shouldClear ? (
     <CloseButton
@@ -26,6 +28,7 @@ export function SelectRightSection({
       aria-label={clearButtonLabel}
       onClick={onClear}
       size={size}
+      tabIndex={tabIndex}
     />
   ) : (
     <ChevronIcon error={error} size={size} />
