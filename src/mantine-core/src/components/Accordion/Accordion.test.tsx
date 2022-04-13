@@ -4,26 +4,31 @@ import userEvent from '@testing-library/user-event';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { Accordion } from './Accordion';
 import { AccordionItem } from './AccordionItem/AccordionItem';
+import { AccordionControl } from './AccordionControl/AccordionControl';
+import { AccordionPanel } from './AccordionPanel/AccordionPanel';
 
 const defaultProps = {
   transitionDuration: 0,
   children: (
     <>
-      <Accordion.Item label="Label 1" value="item-1">
-        test-item-1
+      <Accordion.Item value="item-1">
+        <Accordion.Control>Label 1</Accordion.Control>
+        <Accordion.Panel>test-item-1</Accordion.Panel>
       </Accordion.Item>
-      <Accordion.Item label="Label 2" value="item-2">
-        test-item-2
+      <Accordion.Item value="item-2">
+        <Accordion.Control>Label 2</Accordion.Control>
+        <Accordion.Panel>test-item-2</Accordion.Panel>
       </Accordion.Item>
-      <Accordion.Item label="Label 3" value="item-3">
-        test-item-3
+      <Accordion.Item value="item-3">
+        <Accordion.Control>Label 3</Accordion.Control>
+        <Accordion.Panel>test-item-3</Accordion.Panel>
       </Accordion.Item>
     </>
   ),
 };
 
 describe('@mantine/core/Accordion', () => {
-  checkAccessibility([<Accordion {...defaultProps} />]);
+  checkAccessibility([<Accordion {...defaultProps} />, <Accordion {...defaultProps} order={2} />]);
   itSupportsSystemProps({
     component: Accordion,
     props: defaultProps,
@@ -130,7 +135,9 @@ describe('@mantine/core/Accordion', () => {
     expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
   });
 
-  it('exposes AccordionItem component as Accordion.Item', () => {
+  it('exposes internal components as static properties', () => {
     expect(Accordion.Item).toBe(AccordionItem);
+    expect(Accordion.Control).toBe(AccordionControl);
+    expect(Accordion.Panel).toBe(AccordionPanel);
   });
 });
