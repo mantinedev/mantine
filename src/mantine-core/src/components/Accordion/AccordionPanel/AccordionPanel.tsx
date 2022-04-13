@@ -30,3 +30,5 @@ export function AccordionPanel({ children, className, ...others }: AccordionPane
     </Collapse>
   );
 }
+
+AccordionPanel.displayName = '@mantine/core/AccordionPanel';

@@ -20,7 +20,6 @@ const defaultProps: Partial<AccordionProps> = {
   transitionDuration: 200,
   chevronPosition: 'right',
   chevronSize: 24,
-  order: 3,
   chevron: <ChevronIcon />,
 };
 

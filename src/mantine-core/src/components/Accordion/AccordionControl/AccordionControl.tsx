@@ -17,7 +17,15 @@ export interface AccordionControlProps
 
 export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlProps>(
   (
-    { disabled, onKeyDown, chevron, children, className, ...others }: AccordionControlProps,
+    {
+      disabled,
+      onKeyDown,
+      onClick,
+      chevron,
+      children,
+      className,
+      ...others
+    }: AccordionControlProps,
     ref
   ) => {
     const ctx = useAccordionContext();
@@ -33,37 +41,47 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
     );
 
     const isActive = ctx.isItemActive(value);
+    const shouldWrapWithHeading = typeof ctx.order === 'number';
     const Heading = `h${ctx.order}` as const;
 
-    return (
-      <Heading className={classes.itemTitle}>
-        <UnstyledButton
-          {...others}
-          ref={ref}
-          data-accordion-control
-          disabled={disabled}
-          className={cx(classes.control, className)}
-          onClick={() => ctx.onChange(value)}
-          type="button"
-          aria-expanded={isActive}
-          aria-controls={ctx.getRegionId(value)}
-          id={ctx.getControlId(value)}
-          unstyled={unstyled}
-          onKeyDown={createScopedKeydownHandler({
-            siblingSelector: '[data-accordion-control]',
-            parentSelector: '[data-accordion]',
-            activateOnFocus: false,
-            loop: ctx.loop,
-            orientation: 'vertical',
-            onKeyDown,
-          })}
-        >
-          <Center className={classes.chevron} data-rotate={!ctx.disableChevronRotation && isActive}>
-            {chevron || ctx.chevron}
-          </Center>
-          <div className={classes.label}>{children}</div>
-        </UnstyledButton>
-      </Heading>
+    const content = (
+      <UnstyledButton
+        {...others}
+        ref={ref}
+        data-accordion-control
+        disabled={disabled}
+        className={cx(classes.control, className)}
+        onClick={(event) => {
+          onClick?.(event);
+          ctx.onChange(value);
+        }}
+        type="button"
+        aria-expanded={isActive}
+        aria-controls={ctx.getRegionId(value)}
+        id={ctx.getControlId(value)}
+        unstyled={unstyled}
+        onKeyDown={createScopedKeydownHandler({
+          siblingSelector: '[data-accordion-control]',
+          parentSelector: '[data-accordion]',
+          activateOnFocus: false,
+          loop: ctx.loop,
+          orientation: 'vertical',
+          onKeyDown,
+        })}
+      >
+        <Center className={classes.chevron} data-rotate={!ctx.disableChevronRotation && isActive}>
+          {chevron || ctx.chevron}
+        </Center>
+        <div className={classes.label}>{children}</div>
+      </UnstyledButton>
+    );
+
+    return shouldWrapWithHeading ? (
+      <Heading className={classes.itemTitle}>{content}</Heading>
+    ) : (
+      content
     );
   }
 );
+
+AccordionControl.displayName = '@mantine/core/AccordionControl';
