@@ -101,6 +101,9 @@ export interface DatePickerBaseSharedProps
 
   /** Modal z-index */
   modalZIndex?: number;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -181,6 +184,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      clearButtonTabIndex = 0,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -234,6 +238,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         aria-label={clearButtonLabel}
         onClick={onClear}
         size={size}
+        tabIndex={clearButtonTabIndex}
       />
     ) : null;
 
