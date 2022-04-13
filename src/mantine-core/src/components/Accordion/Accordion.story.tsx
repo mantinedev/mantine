@@ -30,10 +30,24 @@ const _items = (
   </>
 );
 
-export const Usage = () => (
-  <Accordion defaultValue="flex" sx={{ maxWidth: 400 }} mx="auto">
-    {_items}
-  </Accordion>
+export const Variants = () => (
+  <>
+    <Accordion defaultValue="flex" sx={{ maxWidth: 400 }} mx="auto" mt="xl" variant="default">
+      {_items}
+    </Accordion>
+
+    <Accordion defaultValue="flex" sx={{ maxWidth: 400 }} mx="auto" mt={50} variant="contained">
+      {_items}
+    </Accordion>
+
+    <Accordion defaultValue="flex" sx={{ maxWidth: 400 }} mx="auto" mt={50} variant="filled">
+      {_items}
+    </Accordion>
+
+    <Accordion defaultValue="flex" sx={{ maxWidth: 400 }} mx="auto" mt={50} variant="separated">
+      {_items}
+    </Accordion>
+  </>
 );
 
 export const Multiple = () => (

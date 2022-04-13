@@ -1,15 +1,31 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineTheme, CSSObject } from '@mantine/styles';
+import { AccordionStylesParams } from '../Accordion.types';
 
 export type AccordionChevronPosition = 'right' | 'left';
 
-export interface AccordionStylesParams {
+export interface AccordionControlStylesParams extends AccordionStylesParams {
   transitionDuration: number;
   chevronPosition: AccordionChevronPosition;
   chevronSize: number;
 }
 
+function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
+  if (variant === 'default' || variant === 'contained') {
+    return {
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+      },
+    };
+  }
+
+  return {};
+}
+
 export default createStyles(
-  (theme, { transitionDuration, chevronPosition, chevronSize }: AccordionStylesParams) => ({
+  (
+    theme,
+    { transitionDuration, chevronPosition, chevronSize, ...params }: AccordionControlStylesParams
+  ) => ({
     chevron: {
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,
@@ -24,43 +40,29 @@ export default createStyles(
 
     label: {
       color: 'inherit',
-      fontWeight: 500,
+      fontWeight: 400,
       flex: 1,
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },
 
-    item: {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
-    },
-
-    itemOpened: {},
-
     itemTitle: {
       margin: 0,
       padding: 0,
-      fontWeight: 'normal',
     },
 
     control: {
       ...theme.fn.focusStyles(),
       ...theme.fn.fontStyles(),
+      ...getVariantStyles(theme, params),
       width: '100%',
       display: 'flex',
       alignItems: 'center',
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
       padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
       paddingLeft: chevronPosition === 'right' ? theme.spacing.sm + 4 : null,
-      fontWeight: 500,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      },
 
       '&:disabled': {
         opacity: 0.4,
@@ -70,17 +72,6 @@ export default createStyles(
           backgroundColor: 'transparent',
         },
       },
-    },
-
-    content: {
-      ...theme.fn.fontStyles(),
-      wordBreak: 'break-word',
-      lineHeight: theme.lineHeight,
-    },
-
-    contentInner: {
-      padding: theme.spacing.md,
-      paddingTop: theme.spacing.xs / 2,
     },
   })
 );

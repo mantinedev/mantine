@@ -1,7 +1,12 @@
 import React from 'react';
 import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
 import { AccordionContextProvider } from './Accordion.context';
-import { AccordionValue, AccordionChevronPosition, AccordionHeadingOrder } from './Accordion.types';
+import {
+  AccordionValue,
+  AccordionChevronPosition,
+  AccordionHeadingOrder,
+  AccordionVariant,
+} from './Accordion.types';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 
 export interface AccordionProviderProps<Multiple extends boolean = false> {
@@ -43,6 +48,9 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
 
   /** Replaces chevron on all items */
   chevron?: React.ReactNode;
+
+  /** Controls visuals */
+  variant?: AccordionVariant;
 }
 
 export function AccordionProvider<Multiple extends boolean = false>({
@@ -59,6 +67,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
   chevronSize,
   order,
   chevron,
+  variant,
 }: AccordionProviderProps<Multiple>) {
   const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
@@ -99,6 +108,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
         order,
         chevron,
         loop,
+        variant,
       }}
     >
       {children}

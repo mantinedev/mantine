@@ -3,6 +3,7 @@ import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
 import { Box } from '../../Box';
 import { AccordionItemContextProvider } from '../AccordionItem.context';
 import useStyles from './AccordionItem.styles';
+import { useAccordionContext } from '../Accordion.context';
 
 export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 
@@ -15,11 +16,20 @@ export interface AccordionItemProps
 export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
   ({ children, className, value, ...others }, ref) => {
     const { classNames, styles, unstyled } = useContextStylesApi();
-    const { classes, cx } = useStyles(null, { name: 'Accordion', classNames, styles, unstyled });
+    const ctx = useAccordionContext();
+    const { classes, cx } = useStyles(
+      { variant: ctx.variant },
+      { name: 'Accordion', classNames, styles, unstyled }
+    );
 
     return (
       <AccordionItemContextProvider value={{ value }}>
-        <Box ref={ref} className={cx(classes.item, className)} {...others}>
+        <Box
+          ref={ref}
+          className={cx(classes.item, className)}
+          data-active={ctx.isItemActive(value) || undefined}
+          {...others}
+        >
           {children}
         </Box>
       </AccordionItemContextProvider>

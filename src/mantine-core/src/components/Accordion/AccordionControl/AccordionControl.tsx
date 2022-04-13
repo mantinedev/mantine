@@ -36,6 +36,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
         transitionDuration: ctx.transitionDuration,
         chevronPosition: ctx.chevronPosition,
         chevronSize: ctx.chevronSize,
+        variant: ctx.variant,
       },
       { name: 'Accordion', classNames, styles, unstyled }
     );
@@ -45,7 +46,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
     const Heading = `h${ctx.order}` as const;
 
     const content = (
-      <UnstyledButton
+      <UnstyledButton<'button'>
         {...others}
         ref={ref}
         data-accordion-control

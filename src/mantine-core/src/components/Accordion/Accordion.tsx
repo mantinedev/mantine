@@ -19,6 +19,7 @@ const defaultProps: Partial<AccordionProps> = {
   disableChevronRotation: false,
   transitionDuration: 200,
   chevronPosition: 'right',
+  variant: 'default',
   chevronSize: 24,
   chevron: <ChevronIcon />,
 };
@@ -41,6 +42,7 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
     classNames,
     styles,
     unstyled,
+    variant,
     ...others
   } = useMantineDefaultProps<AccordionProps<Multiple>>(
     'Accordion',
@@ -62,6 +64,7 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
       chevronSize={chevronSize}
       order={order}
       chevron={chevron}
+      variant={variant}
     >
       <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
         <Box {...others} data-accordion>
