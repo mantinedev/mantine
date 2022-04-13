@@ -3,6 +3,8 @@ import { DefaultProps, useMantineDefaultProps, StylesApiProvider } from '@mantin
 import { Box } from '../Box';
 import { AccordionProviderProps, AccordionProvider } from './AccordionProvider';
 import { AccordionItem, AccordionItemStylesNames } from './AccordionItem/AccordionItem';
+import { AccordionControl } from './AccordionControl/AccordionControl';
+import { AccordionPanel } from './AccordionPanel/AccordionPanel';
 import { ChevronIcon } from './ChevronIcon';
 
 export type AccordionStylesNames = AccordionItemStylesNames;
@@ -72,4 +74,6 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
 }
 
 Accordion.Item = AccordionItem;
+Accordion.Control = AccordionControl;
+Accordion.Panel = AccordionPanel;
 Accordion.displayName = '@mantine/core/Accordion';

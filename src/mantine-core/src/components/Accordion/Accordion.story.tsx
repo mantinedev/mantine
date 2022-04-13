@@ -5,17 +5,27 @@ export default { title: 'Accordion' };
 
 const _items = (
   <>
-    <Accordion.Item label="Customization" value="customize">
-      Colors, fonts, shadows and many other parts are customizable to fit your design needs
+    <Accordion.Item value="customize">
+      <Accordion.Control>Customization</Accordion.Control>
+      <Accordion.Panel>
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Panel>
     </Accordion.Item>
 
-    <Accordion.Item label="Flexibility" value="flex">
-      Configure components appearance and behavior with vast amount of settings or overwrite any
-      part of component styles
+    <Accordion.Item value="flex">
+      <Accordion.Control>Flexibility</Accordion.Control>
+      <Accordion.Panel>
+        Configure components appearance and behavior with vast amount of settings or overwrite any
+        part of component styles
+      </Accordion.Panel>
     </Accordion.Item>
 
-    <Accordion.Item label="No annoying focus ring" value="focus">
-      With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
+    <Accordion.Item value="focus">
+      <Accordion.Control>No annoying focus ring</Accordion.Control>
+      <Accordion.Panel>
+        With new :focus-visible pseudo-class focus ring appears only when user navigates with
+        keyboard
+      </Accordion.Panel>
     </Accordion.Item>
   </>
 );
@@ -58,17 +68,27 @@ export const NoLoop = () => (
 
 export const Disabled = () => (
   <Accordion loop={false} sx={{ maxWidth: 400 }} mx="auto">
-    <Accordion.Item label="Customization" value="customize">
-      Colors, fonts, shadows and many other parts are customizable to fit your design needs
+    <Accordion.Item value="customize">
+      <Accordion.Control>Customization</Accordion.Control>
+      <Accordion.Panel>
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Panel>
     </Accordion.Item>
 
-    <Accordion.Item label="Flexibility" value="flex" disabled>
-      Configure components appearance and behavior with vast amount of settings or overwrite any
-      part of component styles
+    <Accordion.Item value="flex">
+      <Accordion.Control disabled>Flexibility</Accordion.Control>
+      <Accordion.Panel>
+        Configure components appearance and behavior with vast amount of settings or overwrite any
+        part of component styles
+      </Accordion.Panel>
     </Accordion.Item>
 
-    <Accordion.Item label="No annoying focus ring" value="focus">
-      With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
+    <Accordion.Item value="focus">
+      <Accordion.Control>No annoying focus ring</Accordion.Control>
+      <Accordion.Panel>
+        With new :focus-visible pseudo-class focus ring appears only when user navigates with
+        keyboard
+      </Accordion.Panel>
     </Accordion.Item>
   </Accordion>
 );
@@ -76,5 +96,23 @@ export const Disabled = () => (
 export const Unstyled = () => (
   <Accordion unstyled sx={{ maxWidth: 400 }} mx="auto">
     {_items}
+  </Accordion>
+);
+
+export const Nested = () => (
+  <Accordion multiple sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion.Item value="item-1">
+      <Accordion.Control>Nested 1</Accordion.Control>
+      <Accordion.Panel>
+        <Accordion>{_items}</Accordion>
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="item-2">
+      <Accordion.Control>Nested 2</Accordion.Control>
+      <Accordion.Panel>
+        <Accordion>{_items}</Accordion>
+      </Accordion.Panel>
+    </Accordion.Item>
   </Accordion>
 );

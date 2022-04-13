@@ -6,6 +6,11 @@ export const ACCORDION_ERRORS = {
     code: 'accordion-context',
   }),
 
+  itemContext: createError({
+    message: 'Accordion.Item component was not found in the tree',
+    code: 'accordion-item-context',
+  }),
+
   onChange: createError({
     message:
       'Controlled Accordion component did not receive onChange handler, either remove value or add onChange',
