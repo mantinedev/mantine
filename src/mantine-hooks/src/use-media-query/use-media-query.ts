@@ -16,15 +16,27 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
   }
 }
 
-function getInitialValue(query: string) {
+function getInitialValue(query: string, ssrInitialValue?: boolean) {
+  // server side render must have a default value to prevent a React hydration mismatch
+  if (ssrInitialValue !== undefined) {
+    return ssrInitialValue;
+  }
+
+  // client side render
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
     return window.matchMedia(query).matches;
   }
+
+  // eslint-disable-next-line no-console
+  console.error(
+    '[@mantine/hooks] use-media-query: Please provide a default value when using server side rendering to prevent a hydration mismatch.'
+  );
+
   return false;
 }
 
-export function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(getInitialValue(query));
+export function useMediaQuery(query: string, ssrInitialValue?: boolean) {
+  const [matches, setMatches] = useState(getInitialValue(query, ssrInitialValue));
   const queryRef = useRef<MediaQueryList>();
 
   // eslint-disable-next-line consistent-return

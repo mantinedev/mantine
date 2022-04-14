@@ -19,7 +19,9 @@ use-media-query hook allows to subscribe to media queries.
 It receives media query as an argument and returns true
 if given media query matches current state.
 Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
-and will always return false if api is not available (e.g. during server side rendering).
+and will return false if api is not available.
+When server side rendering, it is important to pass ssrInitialValue because without it the server's initial state will fallback to false, but the client will initialize to the result of the media query. 
+When React hydrates the server render, it may not match the client's state. See the [React docs](https://reactjs.org/docs/react-dom.html#hydrate) for more on why this is can lead to costly bugs 🐛.
 
 Hook takes media query as first argument and returns true if query is satisfied.
 Resize browser window to trigger `window.matchMedia` event:
