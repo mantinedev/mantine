@@ -89,6 +89,9 @@ export interface MultiSelectProps
 
   /** Set the clear button tab index to disabled or default after input field */
   clearButtonTabIndex?: -1 | 0;
+
+  /** Clear all values when the escape key is pressed and the dropdown is closed */
+  escapeClearsValue?: boolean;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -125,6 +128,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
   clearButtonTabIndex: 0,
+  escapeClearsValue: false,
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
@@ -190,6 +194,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       labelProps,
       descriptionProps,
       clearButtonTabIndex,
+      escapeClearsValue,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -337,6 +342,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       setDropdownOpened(false);
     };
 
+    const handleClear = () => {
+      handleSearchChange('');
+      setValue([]);
+      inputRef.current?.focus();
+      if (maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
+    };
+
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.nativeEvent.code !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
         return;
@@ -474,7 +488,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         }
 
         case 'Escape': {
-          setDropdownOpened(false);
+          if (dropdownOpened) {
+            setDropdownOpened(false);
+          } else if (clearable && escapeClearsValue) {
+            handleClear();
+          }
         }
       }
     };
@@ -511,15 +529,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           radius={radius}
         />
       ));
-
-    const handleClear = () => {
-      handleSearchChange('');
-      setValue([]);
-      inputRef.current?.focus();
-      if (maxSelectedValues) {
-        valuesOverflow.current = false;
-      }
-    };
 
     if (isCreatable && shouldCreate(searchValue, sortedData)) {
       createLabel = getCreateLabel(searchValue);

@@ -316,4 +316,16 @@ storiesOf('MultiSelect', module)
         nothingFound="Nothing found"
       />
     </div>
+  ))
+  .add('Escape clear all values when dropdown closed', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        clearable
+        escapeClearsValue
+      />
+    </div>
   ));
