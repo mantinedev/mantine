@@ -134,6 +134,9 @@ export interface SelectProps
 
   /** Set the clear button tab index to disabled or default after input field */
   clearButtonTabIndex?: -1 | 0;
+
+  /** Clear value when the escape key is pressed and the dropdown is closed */
+  escapeClearsValue?: boolean;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -165,6 +168,7 @@ const defaultProps: Partial<SelectProps> = {
   filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
   clearButtonTabIndex: 0,
+  escapeClearsValue: false,
 };
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
@@ -225,6 +229,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     placeholder,
     filterDataOnExactSearchMatch,
     clearButtonTabIndex,
+    escapeClearsValue,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -463,9 +468,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       }
 
       case 'Escape': {
-        event.preventDefault();
-        setDropdownOpened(false);
-        setHovered(-1);
+        if (dropdownOpened) {
+          event.preventDefault();
+          setDropdownOpened(false);
+          setHovered(-1);
+        } else if (clearable && escapeClearsValue) {
+          handleClear();
+        }
         break;
       }
 

@@ -353,4 +353,15 @@ storiesOf('Select', module)
         clearButtonTabIndex={-1}
       />
     </div>
+  ))
+  .add('Escape clear value when dropdown closed', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Search in first select"
+        placeholder="Choose value"
+        data={stringData}
+        clearable
+        escapeClearsValue
+      />
+    </div>
   ));
