@@ -17,12 +17,10 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
 }
 
 function getInitialValue(query: string, ssrInitialValue?: boolean) {
-  // server side render must have a default value to prevent a React hydration mismatch
   if (ssrInitialValue !== undefined) {
     return ssrInitialValue;
   }
 
-  // client side render
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
     return window.matchMedia(query).matches;
   }
