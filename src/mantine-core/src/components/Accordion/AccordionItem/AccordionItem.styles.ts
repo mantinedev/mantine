@@ -2,22 +2,23 @@ import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
 import { AccordionStylesParams } from '../Accordion.types';
 
 function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
+  const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
+  const filledColor = theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0];
+
   if (variant === 'default') {
     return {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      borderBottom: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
-      }`,
+      borderBottom: `1px solid ${borderColor}`,
     };
   }
 
   if (variant === 'contained') {
     return {
-      border: `1px solid ${theme.colors.gray[3]}`,
+      border: `1px solid ${borderColor}`,
       transition: 'background-color 150ms ease',
 
       '&[data-active]': {
-        backgroundColor: theme.colors.gray[0],
+        backgroundColor: filledColor,
       },
 
       '&:first-of-type': {
@@ -41,7 +42,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
       borderRadius: theme.radius.sm,
 
       '&[data-active]': {
-        backgroundColor: theme.colors.gray[0],
+        backgroundColor: filledColor,
       },
     };
   }
@@ -49,7 +50,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
   if (variant === 'separated') {
     return {
       borderRadius: theme.radius.sm,
-      backgroundColor: theme.colors.gray[0],
+      backgroundColor: filledColor,
       border: '1px solid transparent',
       transition: 'background-color 150ms ease',
 
@@ -58,8 +59,8 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
       },
 
       '&[data-active]': {
-        backgroundColor: theme.white,
-        borderColor: theme.colors.gray[3],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        borderColor,
       },
     };
   }
@@ -68,5 +69,8 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
 }
 
 export default createStyles((theme, params: AccordionStylesParams) => ({
-  item: getVariantStyles(theme, params),
+  item: {
+    overflow: 'hidden',
+    ...getVariantStyles(theme, params),
+  },
 }));
