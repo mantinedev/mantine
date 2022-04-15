@@ -1,4 +1,4 @@
-import { MantineTransition, OptionalPortal, Progress, Transition } from '@mantine/core';
+import { OptionalPortal, Progress } from '@mantine/core';
 import { useDebouncedValue, useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import { getDefaultZIndex, MantineColor } from '@mantine/styles';
 import React, { useState } from 'react';
@@ -17,26 +17,26 @@ export interface NProgressProps {
   /** Called when the progress is 100% */
   onFinish?: () => void;
 
-  /** Interval time in ms */
-  intervalTime?: number;
+  /** Step delay in ms */
+  stepIntervalTime?: number;
 
-  /** Interval step size */
-  intervalStep?: number;
+  /** Step size */
+  stepSize?: number;
 
   /** Transition function (transition-timing-function) */
-  barTransition?: string;
+  progressTransition?: string;
 
   /** Transition duration in ms */
-  barTransitionDuration?: number;
+  progressTransitionDuration?: number;
 
   /** The time when the component should be unmounted after progress is 100% */
-  unmountTime?: number;
+  exitTimeout?: number;
 
-  /** Unmount transition duration in ms after progress is 100% */
-  unmountDuration?: number;
+  /** Exit transition duration in ms */
+  exitTransitionDuration?: number;
 
-  /** Unmount transition function */
-  unmountTransition?: MantineTransition;
+  /** Exit transition function (transition-timing-function)*/
+  exitTransition?: string;
 
   /** Determines whether NProgress should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
@@ -49,29 +49,27 @@ export function NProgress({
   defaultProgress = 0,
   color = 'blue',
   size = 2,
-  intervalTime = 500,
-  intervalStep = 1,
-  barTransition = 'ease',
-  barTransitionDuration = 600,
-  unmountTime = 700,
-  unmountDuration = 600,
-  unmountTransition = 'fade',
+  stepIntervalTime = 500,
+  stepSize = 1,
+  progressTransition = 'ease',
+  progressTransitionDuration = 600,
+  exitTimeout = 700,
+  exitTransitionDuration = 600,
+  exitTransition = 'ease',
   onFinish,
   withinPortal = true,
   zIndex = getDefaultZIndex('nprogress'),
 }: NProgressProps) {
   const reducedMotion = useReducedMotion();
   const [_progress, setProgress] = useState(defaultProgress);
-  const [mounted] = useDebouncedValue(_progress !== 100, unmountTime);
-
-  const interval = useInterval(
-    () => setProgress((c) => Math.min(c + intervalStep, intervalTime)),
-    intervalTime
-  );
+  const [mounted] = useDebouncedValue(_progress !== 100, exitTimeout);
 
   const set = (value: React.SetStateAction<number>) => setProgress(value);
   const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
   const decrease = (value: number) => setProgress((c) => Math.max(c - value, 0));
+
+  const interval = useInterval(() => add(stepSize), stepIntervalTime);
+
   const start = () => interval.start();
   const stop = () => interval.stop();
 
@@ -94,33 +92,29 @@ export function NProgress({
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
-      <Transition
-        mounted={mounted}
-        duration={1}
-        exitDuration={unmountDuration}
-        transition={unmountTransition}
-      >
-        {(styles) => (
-          <Progress
-            radius={0}
-            value={_progress}
-            size={size}
-            color={color}
-            style={styles}
-            styles={{
-              root: {
-                top: 0,
-                position: 'fixed',
-                width: '100vw',
-                backgroundColor: 'transparent',
-              },
-              bar: {
-                transition: `width ${reducedMotion ? 0 : barTransitionDuration}ms ${barTransition}`,
-              },
-            }}
-          />
-        )}
-      </Transition>
+      <Progress
+        radius={0}
+        value={_progress}
+        size={size}
+        color={color}
+        styles={{
+          root: {
+            top: 0,
+            position: 'fixed',
+            width: '100vw',
+            backgroundColor: 'transparent',
+            transitionTimingFunction: exitTransition,
+            transitionProperty: 'opacity',
+            transitionDuration: _progress === 100 ? `${exitTransitionDuration}ms` : '0ms',
+            opacity: mounted ? 1 : 0,
+          },
+          bar: {
+            transition: `width ${
+              reducedMotion ? 0 : progressTransitionDuration
+            }ms ${progressTransition}`,
+          },
+        }}
+      />
     </OptionalPortal>
   );
 }
