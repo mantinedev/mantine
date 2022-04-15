@@ -110,3 +110,32 @@ import type { AccordionProps } from '@mantine/core';
 type MultipleAccordionProps = AccordionProps<true>;
 type DefaultAccordionProps = AccordionProps<false>;
 ```
+
+## Accessibility
+
+Accordion component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html) on accessibility.
+
+### Notes
+
+Set `order` on `Accordion` component to wrap accordion controls with h2-h6 heading.
+The following example will wrap controls with h3 tag:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return <Accordion order={3}>{/* ...items */}</Accordion>;
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowDown', description: 'Moves focus to next item' },
+    { key: 'ArrowUp', description: 'Moves focus to previous item' },
+    { key: 'Home', description: 'Moves focus to first item' },
+    { key: 'End', description: 'Moves focus to last item' },
+    { key: 'Space/Enter', description: 'Toggles focused item opened state' },
+  ]}
+/>

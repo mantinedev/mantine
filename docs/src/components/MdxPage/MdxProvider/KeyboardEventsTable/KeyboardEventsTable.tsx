@@ -6,13 +6,14 @@ interface KeyboardEventsTableProps {
 }
 
 export function KeyboardEventsTable({ data }: KeyboardEventsTableProps) {
+  const hasCondition = data.some((item) => item.condition);
   const rows = data.map((item, index) => (
     <tr key={index}>
       <td>
         <Kbd>{item.key}</Kbd>
       </td>
       <td>{item.description}</td>
-      <td>{item.condition ? <Code>{item.condition}</Code> : '–'}</td>
+      {hasCondition && <td>{item.condition ? <Code>{item.condition}</Code> : '–'}</td>}
     </tr>
   ));
 
@@ -22,7 +23,7 @@ export function KeyboardEventsTable({ data }: KeyboardEventsTableProps) {
         <tr>
           <th>Key</th>
           <th>Description</th>
-          <th>Condition</th>
+          {hasCondition && <th>Condition</th>}
         </tr>
       </thead>
       <tbody>{rows}</tbody>
