@@ -1,7 +1,7 @@
 import { OptionalPortal, Progress } from '@mantine/core';
-import { useDebouncedValue, useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
+import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import { getDefaultZIndex, MantineColor } from '@mantine/styles';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNProgressEvents } from './events';
 
 export interface NProgressProps {
@@ -19,9 +19,6 @@ export interface NProgressProps {
 
   /** Step delay in ms */
   stepIntervalTime?: number;
-
-  /** Step size */
-  stepSize?: number;
 
   /** Transition function (transition-timing-function) */
   progressTransition?: string;
@@ -50,7 +47,6 @@ export function NProgress({
   color = 'blue',
   size = 2,
   stepIntervalTime = 500,
-  stepSize = 1,
   progressTransition = 'ease',
   progressTransitionDuration = 600,
   exitTimeout = 700,
@@ -62,16 +58,45 @@ export function NProgress({
 }: NProgressProps) {
   const reducedMotion = useReducedMotion();
   const [_progress, setProgress] = useState(defaultProgress);
-  const [mounted] = useDebouncedValue(_progress !== 100, exitTimeout);
+  const [mounted, setMounted] = useState(true);
+  const unmountRef = useRef<number>();
+
+  const interval = useInterval(() => {
+    setProgress((amount) => {
+      let next = 0;
+      if (amount >= 0 && amount <= 20) {
+        next = 10;
+      } else if (amount >= 20 && amount <= 50) {
+        next = 4;
+      } else if (amount >= 50 && amount <= 80) {
+        next = 2;
+      } else if (amount >= 80 && amount <= 99) {
+        next = 0.5;
+      }
+
+      return amount + next;
+    });
+  }, stepIntervalTime);
+
+  const cancelUnmount = () => {
+    if (unmountRef.current) {
+      clearTimeout(unmountRef.current);
+    }
+    setMounted(true);
+  };
 
   const set = (value: React.SetStateAction<number>) => setProgress(value);
   const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
   const decrease = (value: number) => setProgress((c) => Math.max(c - value, 0));
-
-  const interval = useInterval(() => add(stepSize), stepIntervalTime);
-
-  const start = () => interval.start();
+  const start = () => {
+    interval.stop();
+    interval.start();
+  };
   const stop = () => interval.stop();
+  const reset = () => {
+    interval.stop();
+    setProgress(0);
+  };
 
   const ctx = {
     set,
@@ -79,12 +104,16 @@ export function NProgress({
     decrease,
     start,
     stop,
+    reset,
   };
 
   useDidUpdate(() => {
-    if (_progress === 100) {
-      onFinish && onFinish();
+    if (_progress >= 100) {
       stop();
+      onFinish && onFinish();
+      unmountRef.current = window.setTimeout(() => setMounted(false), exitTimeout);
+    } else if (!mounted) {
+      cancelUnmount();
     }
   }, [_progress]);
 
@@ -103,17 +132,17 @@ export function NProgress({
             position: 'fixed',
             width: '100vw',
             backgroundColor: 'transparent',
-            transitionTimingFunction: exitTransition,
             transitionProperty: 'opacity',
+            transitionTimingFunction: exitTransition,
             transitionDuration: `${
               reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
             }ms`,
             opacity: mounted ? 1 : 0,
           },
           bar: {
-            transition: `width ${
-              reducedMotion ? 0 : progressTransitionDuration
-            }ms ${progressTransition}`,
+            transitionProperty: 'width',
+            transitionTimingFunction: progressTransition,
+            transitionDuration: `${reducedMotion || !mounted ? 0 : progressTransitionDuration}ms`,
           },
         }}
       />

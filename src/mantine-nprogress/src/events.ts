@@ -8,6 +8,7 @@ interface NProgressProps {
   set: (progress: number) => void;
   add: (progress: number) => void;
   decrease: (progress: number) => void;
+  reset: () => void;
 }
 
 export const NPROGRESS_EVENTS = {
@@ -16,6 +17,7 @@ export const NPROGRESS_EVENTS = {
   set: 'mantine:set-nprogress',
   start: 'mantine:start-nprogress',
   stop: 'mantine:stop-nprogress',
+  reset: 'mantine:reset-nprogress',
 } as const;
 
 export function createEvent(type: ValueOf<typeof NPROGRESS_EVENTS>, detail?: any) {
@@ -42,6 +44,10 @@ export function stopNProgress() {
   window.dispatchEvent(createEvent(NPROGRESS_EVENTS.stop));
 }
 
+export function resetNProgress() {
+  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.reset));
+}
+
 export function useNProgressEvents(ctx: NProgressProps) {
   const events = {
     add: (event: any) => ctx.add(event.detail),
@@ -49,6 +55,7 @@ export function useNProgressEvents(ctx: NProgressProps) {
     set: (event: any) => ctx.set(event.detail),
     start: ctx.start,
     stop: ctx.stop,
+    reset: ctx.reset,
   };
 
   useEffect(() => {

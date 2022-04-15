@@ -6,6 +6,7 @@ import {
   setNProgress,
   startNProgress,
   stopNProgress,
+  resetNProgress,
 } from '@mantine/nprogress';
 import React from 'react';
 
@@ -18,6 +19,7 @@ import {
   setNProgress,
   startNProgress,
   stopNProgress,
+  resetNProgress,
 } from '@mantine/nprogress';
 
 function Demo() {
@@ -32,14 +34,7 @@ function Demo() {
         <Button onClick={() => setNProgress(50)}>Set 50%</Button>
         <Button onClick={() => startNProgress()}>Start</Button>
         <Button onClick={() => stopNProgress()}>Stop</Button>
-        <Button
-          onClick={() => {
-            setNProgress(0);
-            stopNProgress();
-          }}
-        >
-          Reset
-        </Button>
+        <Button onClick={() => resetNProgress()}>Reset</Button>
       </Group>
     </>
   );
@@ -58,14 +53,7 @@ function Demo() {
         <Button onClick={() => setNProgress(50)}>Set 50%</Button>
         <Button onClick={() => startNProgress()}>Start</Button>
         <Button onClick={() => stopNProgress()}>Stop</Button>
-        <Button
-          onClick={() => {
-            stopNProgress();
-            setNProgress(0);
-          }}
-        >
-          Reset
-        </Button>
+        <Button onClick={() => resetNProgress()}>Reset</Button>
       </Group>
     </>
   );
