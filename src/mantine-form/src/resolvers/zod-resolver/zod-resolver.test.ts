@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zodResolver } from './zod-resolver';
-import { testResolver, RESOLVER_ERROR_MESSAGES } from '../test-resolver';
+import { testResolver, RESOLVER_ERROR_MESSAGES } from '../async-test-resolver';
 
 describe('@mantine/form zod resolver', () => {
   testResolver(

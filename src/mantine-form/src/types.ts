@@ -12,6 +12,7 @@ export type FormRulesRecord<T> = Partial<{
 }>;
 
 export type FormRules<T> = ((values: T) => FormErrors) | FormRulesRecord<T>;
+export type AsyncFormRules<T> = ((values: T) => Promise<FormErrors>) | FormRulesRecord<T>;
 
 export interface FormValidationResult {
   hasErrors: boolean;

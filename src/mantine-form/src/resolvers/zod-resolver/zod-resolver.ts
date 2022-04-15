@@ -13,15 +13,14 @@ interface ZodResults {
 }
 
 interface ZodSchema {
-  safeParse(values: Record<string, any>): ZodResults;
+  safeParseAsync(values: Record<string, any>): Promise<ZodResults>;
 }
 
 export function zodResolver<T extends Record<string, any>>(schema: any) {
   const _schema: ZodSchema = schema;
 
-  return (values: T): FormErrors => {
-    const parsed = _schema.safeParse(values);
-
+  return async (values: T): Promise<FormErrors> => {
+    const parsed = await _schema.safeParseAsync(values);
     if (parsed.success) {
       return {};
     }

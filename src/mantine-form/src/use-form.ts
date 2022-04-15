@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { formList, isFormList, FormList } from './form-list/form-list';
-import { validateValues, validateFieldValue } from './validate-values/validate-values';
+import {
+  validateValues,
+  validateFieldValue,
+  asyncValidateValues,
+  asyncValidateFieldValue,
+} from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import { getInputOnChange } from './get-input-on-change/get-input-on-change';
 import { getErrorPath } from './get-error-path/get-error-path';
@@ -18,6 +23,7 @@ export interface UseFormInput<T> {
   initialErrors?: FormErrors;
   validate?: FormRules<T>;
   schema?: (values: Record<string, any>) => FormErrors;
+  asyncResolver?: boolean;
 }
 
 export interface UseFormReturnType<T> {
@@ -41,7 +47,9 @@ export interface UseFormReturnType<T> {
   removeListItem: <K extends keyof T>(field: K, indices: number[] | number) => void;
   reorderListItem: <K extends keyof T>(field: K, payload: { from: number; to: number }) => void;
   validate(): FormValidationResult;
+  asyncValidate(): Promise<FormValidationResult>;
   validateField: (field: string) => FormFieldValidationResult;
+  asyncValidateField: (field: string) => Promise<FormFieldValidationResult>;
   onSubmit(
     handleSubmit: (values: T, event: React.FormEvent) => void
   ): (event?: React.FormEvent) => void;
@@ -67,6 +75,7 @@ export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
   validate: rules,
+  asyncResolver,
   schema,
 }: UseFormInput<T>): UseFormReturnType<T> {
   const [errors, setErrors] = useState(filterErrors(initialErrors));
@@ -146,8 +155,20 @@ export function useForm<T extends { [key: string]: any }>({
     return results;
   };
 
+  const asyncValidate = async () => {
+    const results = await asyncValidateValues((schema || rules) as any, values);
+    setErrors(results.errors);
+    return results;
+  };
+
   const validateField = (field: string) => {
     const results = validateFieldValue(field, schema || rules, values);
+    results.hasError ? setFieldError(field, results.error) : clearFieldError(field);
+    return results;
+  };
+
+  const asyncValidateField = async (field: string) => {
+    const results = await asyncValidateFieldValue(field, (schema || rules) as any, values);
     results.hasError ? setFieldError(field, results.error) : clearFieldError(field);
     return results;
   };
@@ -155,6 +176,13 @@ export function useForm<T extends { [key: string]: any }>({
   const onSubmit =
     (handleSubmit: (values: T, event: React.FormEvent) => void) => (event: React.FormEvent) => {
       event.preventDefault();
+
+      if (asyncResolver) {
+        asyncValidate().then((results) => {
+          !results.hasErrors && handleSubmit(values, event);
+        });
+        return;
+      }
       const results = validate();
       !results.hasErrors && handleSubmit(values, event);
     };
@@ -230,7 +258,9 @@ export function useForm<T extends { [key: string]: any }>({
     addListItem,
     reorderListItem,
     validate,
+    asyncValidate,
     validateField,
+    asyncValidateField,
     onSubmit,
     reset,
     getInputProps,
