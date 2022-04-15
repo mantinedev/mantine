@@ -1,0 +1,48 @@
+---
+group: 'theming'
+title: Colors
+slug: /theming/colors/
+order: 1
+search: 'Default colors, primary colors, add additional colors'
+---
+
+import { ThemeDemos } from '@mantine/demos';
+import { ThemeColors } from '../../components/ThemeColors/ThemeColors';
+
+# Colors
+
+Mantine uses [open-color](https://yeun.github.io/open-color/) in default theme with some additions.
+Each color has 10 shades.
+
+Colors are exposed on theme object as an array of strings,
+you can access color shade by color name and index (0-9), colors with larger index are darker:
+
+```tsx
+theme.colors.red[5];
+theme.colors.gray[9];
+theme.colors.blue[0];
+```
+
+## Adding extra colors
+
+You can add extra colors. This will allow you to use these colors with all components which support color change,
+for example, [Button](/core/button/), [Badge](/core/badge/) or [Switch](/core/switch/).
+
+Note that all colors should **always have 10 shades**.
+You can use some of these tools to generate or copy ready color palettes:
+
+- [Themera](https://themera.vercel.app/)
+- [Material Design Colors](https://www.materialui.co/colors)
+- [Omatsuri](https://omatsuri.app/color-shades-generator)
+- [Smart Swatch](https://smart-swatch.netlify.app/)
+
+<Demo data={ThemeDemos.themeColorsExtend} />
+
+## Colors resolving
+
+Mantine components support different variants, each variant utilizes different color shades
+from `theme.colors`.
+
+## Default colors
+
+<ThemeColors />
