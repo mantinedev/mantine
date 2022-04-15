@@ -98,3 +98,15 @@ function Demo() {
   );
 }
 ```
+
+## TypeScript
+
+`AccordionProps` type exported from `@mantine/core` is a generic, it accepts boolean type that
+describes `multiple` state:
+
+```tsx
+import type { AccordionProps } from '@mantine/core';
+
+type MultipleAccordionProps = AccordionProps<true>;
+type DefaultAccordionProps = AccordionProps<false>;
+```
