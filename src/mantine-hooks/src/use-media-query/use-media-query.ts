@@ -16,9 +16,9 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
   }
 }
 
-function getInitialValue(query: string, ssrInitialValue?: boolean) {
-  if (ssrInitialValue !== undefined) {
-    return ssrInitialValue;
+function getInitialValue(query: string, initialValue?: boolean) {
+  if (initialValue !== undefined) {
+    return initialValue;
   }
 
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
@@ -33,8 +33,8 @@ function getInitialValue(query: string, ssrInitialValue?: boolean) {
   return false;
 }
 
-export function useMediaQuery(query: string, ssrInitialValue?: boolean) {
-  const [matches, setMatches] = useState(getInitialValue(query, ssrInitialValue));
+export function useMediaQuery(query: string, initialValue?: boolean) {
+  const [matches, setMatches] = useState(getInitialValue(query, initialValue));
   const queryRef = useRef<MediaQueryList>();
 
   // eslint-disable-next-line consistent-return
