@@ -10,6 +10,11 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
   '../src/mantine-core/src/components/Tabs/Tabs.tsx',
 
+  // Accordion
+  '../src/mantine-core/src/components/Accordion/AccordionControl/AccordionControl.tsx',
+  '../src/mantine-core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
+  '../src/mantine-core/src/components/Accordion/AccordionPanel/AccordionPanel.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
@@ -26,7 +31,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/AppShell/Footer/Footer.tsx',
   '../src/mantine-core/src/components/AppShell/Aside/Aside.tsx',
   '../src/mantine-core/src/components/Grid/Col/Col.tsx',
-  '../src/mantine-prism/src/Prism.tsx',
+  '../src/mantine-prism/src/Prism/Prism.tsx',
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
   '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',

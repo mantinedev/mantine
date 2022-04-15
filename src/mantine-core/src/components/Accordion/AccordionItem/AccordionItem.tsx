@@ -10,6 +10,7 @@ export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
 export interface AccordionItemProps
   extends DefaultProps<AccordionItemStylesNames>,
     React.ComponentPropsWithoutRef<'div'> {
+  /** Value that is used to manage accordion state */
   value: string;
 }
 

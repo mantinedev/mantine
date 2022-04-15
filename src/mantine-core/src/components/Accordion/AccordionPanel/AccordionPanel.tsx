@@ -10,6 +10,7 @@ export type AccordionPanelStylesNames = ClassNames<typeof useStyles>;
 export interface AccordionPanelProps
   extends DefaultProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onTransitionEnd'> {
+  /** Panel content */
   children?: React.ReactNode;
 }
 

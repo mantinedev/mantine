@@ -6,7 +6,7 @@ order: 1
 slug: /core/accordion/
 category: 'data-display'
 description: 'Divide content into collapsible sections'
-props: ['Accordion']
+props: ['Accordion', 'AccordionControl', 'AccordionItem', 'AccordionPanel']
 import: "import { Accordion } from '@mantine/core';"
 source: 'mantine-core/src/components/Accordion/Accordion.tsx'
 docs: 'core/Accordion.mdx'
@@ -19,19 +19,17 @@ import { AccordionDemos } from '@mantine/demos';
 
 <Demo data={AccordionDemos.configurator} />
 
-## Change labels
+## Custom controls
 
-<Demo data={AccordionDemos.label} />
+<Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
 
-## Change icons
+## Change chevron
 
-To change icon for all items set `icon` prop on Accordion component:
+<Demo data={AccordionDemos.chevron} />
 
-<Demo data={AccordionDemos.icon} />
+## With icons
 
-To change icon individually for each item, set `icon` prop on `Accordion.Item` component:
-
-<Demo data={AccordionDemos.icons} />
+<Demo data={AccordionDemos.icons} demoProps={{ toggle: true }} />
 
 ## Change transition
 
@@ -43,60 +41,60 @@ To disable transitions, set `transitionDuration` to 0:
 
 <Demo data={AccordionDemos.disableTransitions} />
 
-## Customize styles
+## Styles API
 
-By default, Accordion has bare minimum styles to make customization simple,
-add additional styles with [Styles API](/theming/styles-api/):
+Use [Styles API](/theming/styles-api/) to customize Accordion styles:
 
 <Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## Control state
 
-In most cases, Accordion can be uncontrolled, to change initial opened item use `initialItem` prop:
+When `multiple={false}`, set `value` as string:
 
 ```tsx
-// -> Third element will be opened initially
-<Accordion initialItem={2} />;
-
-// -> No element will be opened initially (default)
-<Accordion initialItem={-1} />;
-```
-
-In more advanced cases, Accordion state can be controlled with `useAccordionState` hook:
-
-<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
-
-## Get control ref
-
-Use `controlRef` prop on Accordion.Item component to get control button ref:
-
-```tsx
-import { useRef } from 'react';
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLButtonElement>();
+  const [value, setValue] = useState<string | null>(null);
+
   return (
-    <Accordion>
-      <Accordion.Item label="First item" controlRef={ref} />
+    <Accordion value={value} onChange={setValue}>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
     </Accordion>
   );
 }
 ```
 
-## Accessibility
-
-Accordion component is accessible by default, it follows [WAI ARIA guidelines](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html):
-
-- All controls are included in `Tab` sequence
-- `Up` and `Down` arrows move focus to previous/next control
-- Item body has `role="region"` attribute
-- Item control has `aria-expanded`, `aria-controls`, `aria-labelledby` attributes
-- When user prefers to reduce motion, `transitionDuration` is automatically set to 0
-
-To make the component visible for screen reader, include descriptive in `Accordion.Item` label:
+When `multiple={true}`, set `value` as an array of stings:
 
 ```tsx
-<Accordion.Item label={<div />}>Content</Accordion.Item> // -> not ok
-<Accordion.Item label="First item">Content</Accordion.Item> // -> ok
-<Accordion.Item label={<div>First item</div>}>Content</Accordion.Item> // -> ok
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Accordion multiple value={value} onChange={setValue}>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
 ```
