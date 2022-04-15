@@ -13,7 +13,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
   if (variant === 'default' || variant === 'contained') {
     return {
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
       },
     };
   }
