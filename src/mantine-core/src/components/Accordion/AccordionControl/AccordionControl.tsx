@@ -70,7 +70,10 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           onKeyDown,
         })}
       >
-        <Center className={classes.chevron} data-rotate={!ctx.disableChevronRotation && isActive}>
+        <Center
+          className={classes.chevron}
+          data-rotate={(!ctx.disableChevronRotation && isActive) || undefined}
+        >
           {chevron || ctx.chevron}
         </Center>
         <div className={classes.label}>{children}</div>

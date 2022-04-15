@@ -33,7 +33,7 @@ export default createStyles(
       width: chevronSize,
       minWidth: chevronSize,
 
-      '&[data-rotate="true"]': {
+      '&[data-rotate]': {
         transform: 'rotate(180deg)',
       },
     },
