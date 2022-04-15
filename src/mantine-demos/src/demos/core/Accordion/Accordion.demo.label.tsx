@@ -61,12 +61,17 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 
 function Demo() {
   const items = charactersList.map((item) => (
-    <Accordion.Item label={<AccordionLabel {...item} />} value={item.id} key={item.label}>
-      <Text size="sm">{item.content}</Text>
+    <Accordion.Item value={item.id} key={item.label}>
+      <Accordion.Control>
+        <AccordionLabel {...item} />
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Text size="sm">{item.content}</Text>
+      </Accordion.Panel>
     </Accordion.Item>
   ));
 
-  return <Accordion iconPosition="right">{items}</Accordion>;
+  return <Accordion chevronPosition="right" variant="contained">{items}</Accordion>;
 }
 `;
 
@@ -92,13 +97,18 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 
 export function AccordionDemo(props: Partial<AccordionProps>) {
   const items = charactersList.map((item) => (
-    <Accordion.Item label={<AccordionLabel {...item} />} value={item.id} key={item.label}>
-      <Text size="sm">{item.content}</Text>
+    <Accordion.Item value={item.id} key={item.label}>
+      <Accordion.Control>
+        <AccordionLabel {...item} />
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Text size="sm">{item.content}</Text>
+      </Accordion.Panel>
     </Accordion.Item>
   ));
 
   return (
-    <Accordion iconPosition="right" {...props}>
+    <Accordion chevronPosition="right" variant="contained" {...props}>
       {items}
     </Accordion>
   );
