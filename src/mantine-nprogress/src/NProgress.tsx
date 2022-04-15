@@ -105,7 +105,9 @@ export function NProgress({
             backgroundColor: 'transparent',
             transitionTimingFunction: exitTransition,
             transitionProperty: 'opacity',
-            transitionDuration: _progress === 100 ? `${exitTransitionDuration}ms` : '0ms',
+            transitionDuration: `${
+              reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
+            }ms`,
             opacity: mounted ? 1 : 0,
           },
           bar: {
