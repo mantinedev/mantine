@@ -66,8 +66,7 @@ const schema = z.object({
 
 function Demo() {
   const form = useForm({
-    asyncResolver: true,
-    schema: zodResolver(schema) as any,
+    schema: zodResolver(schema),
     initialValues: {
       name: '',
       email: '',
