@@ -1,7 +1,10 @@
 import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
 import { AccordionStylesParams } from '../Accordion.types';
 
-function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
+function getVariantStyles(
+  theme: MantineTheme,
+  { variant, radius }: AccordionStylesParams
+): CSSObject {
   const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
   const filledColor = theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0];
 
@@ -22,13 +25,13 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
       },
 
       '&:first-of-type': {
-        borderTopRightRadius: theme.radius.sm,
-        borderTopLeftRadius: theme.radius.sm,
+        borderTopRightRadius: theme.fn.radius(radius),
+        borderTopLeftRadius: theme.fn.radius(radius),
       },
 
       '&:last-of-type': {
-        borderBottomRightRadius: theme.radius.sm,
-        borderBottomLeftRadius: theme.radius.sm,
+        borderBottomRightRadius: theme.fn.radius(radius),
+        borderBottomLeftRadius: theme.fn.radius(radius),
       },
 
       '& + &': {
@@ -39,7 +42,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
 
   if (variant === 'filled') {
     return {
-      borderRadius: theme.radius.sm,
+      borderRadius: theme.fn.radius(radius),
 
       '&[data-active]': {
         backgroundColor: filledColor,
@@ -49,7 +52,7 @@ function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParam
 
   if (variant === 'separated') {
     return {
-      borderRadius: theme.radius.sm,
+      borderRadius: theme.fn.radius(radius),
       backgroundColor: filledColor,
       border: '1px solid transparent',
       transition: 'background-color 150ms ease',

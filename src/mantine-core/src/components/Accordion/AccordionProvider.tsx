@@ -1,5 +1,6 @@
 import React from 'react';
 import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
+import { MantineNumberSize } from '@mantine/styles';
 import { AccordionContextProvider } from './Accordion.context';
 import {
   AccordionValue,
@@ -51,6 +52,9 @@ export interface AccordionProviderProps<Multiple extends boolean = false> {
 
   /** Controls visuals */
   variant?: AccordionVariant;
+
+  /** border-radius from theme.radius or number to set value in px, will not be applied to default variant  */
+  radius?: MantineNumberSize;
 }
 
 export function AccordionProvider<Multiple extends boolean = false>({
@@ -68,6 +72,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
   order,
   chevron,
   variant,
+  radius,
 }: AccordionProviderProps<Multiple>) {
   const uid = useId(id);
   const [_value, handleChange] = useUncontrolled({
@@ -100,7 +105,6 @@ export function AccordionProvider<Multiple extends boolean = false>({
         onChange: handleItemChange,
         getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS.value.message),
         getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value.message),
-        id: uid,
         transitionDuration,
         disableChevronRotation,
         chevronPosition,
@@ -109,6 +113,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
         chevron,
         loop,
         variant,
+        radius,
       }}
     >
       {children}

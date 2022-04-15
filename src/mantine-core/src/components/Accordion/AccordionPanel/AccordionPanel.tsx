@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useContextStylesApi } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { useAccordionContext } from '../Accordion.context';
 import { useAccordionItemContext } from '../AccordionItem.context';
@@ -14,7 +14,11 @@ export interface AccordionPanelProps
 export function AccordionPanel({ children, className, ...others }: AccordionPanelProps) {
   const ctx = useAccordionContext();
   const { value } = useAccordionItemContext();
-  const { classes, cx } = useStyles();
+  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classes, cx } = useStyles(
+    { variant: ctx.variant, radius: ctx.radius },
+    { name: 'Accordion', classNames, styles, unstyled }
+  );
 
   return (
     <Collapse

@@ -43,6 +43,7 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
     styles,
     unstyled,
     variant,
+    radius,
     ...others
   } = useMantineDefaultProps<AccordionProps<Multiple>>(
     'Accordion',
@@ -65,6 +66,7 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
       order={order}
       chevron={chevron}
       variant={variant}
+      radius={radius}
     >
       <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
         <Box {...others} data-accordion>

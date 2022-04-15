@@ -37,6 +37,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
         chevronPosition: ctx.chevronPosition,
         chevronSize: ctx.chevronSize,
         variant: ctx.variant,
+        radius: ctx.radius,
       },
       { name: 'Accordion', classNames, styles, unstyled }
     );

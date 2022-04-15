@@ -1,6 +1,8 @@
 import { createStyles } from '@mantine/styles';
+import { AccordionStylesParams } from '../Accordion.types';
 
-export default createStyles((theme) => ({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default createStyles((theme, _params: AccordionStylesParams) => ({
   panel: {
     ...theme.fn.fontStyles(),
     wordBreak: 'break-word',

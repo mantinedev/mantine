@@ -1,3 +1,4 @@
+import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { ACCORDION_ERRORS } from './Accordion.errors';
 import {
@@ -7,7 +8,6 @@ import {
 } from './Accordion.types';
 
 interface AccordionContext {
-  id: string;
   loop: boolean;
   transitionDuration: number;
   disableChevronRotation: boolean;
@@ -16,6 +16,7 @@ interface AccordionContext {
   order: AccordionHeadingOrder;
   chevron: React.ReactNode;
   variant: AccordionVariant;
+  radius: MantineNumberSize;
   onChange(value: string): void;
   isItemActive(value: string): boolean;
   getControlId(value: string): string;

@@ -18,7 +18,7 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
     const { classNames, styles, unstyled } = useContextStylesApi();
     const ctx = useAccordionContext();
     const { classes, cx } = useStyles(
-      { variant: ctx.variant },
+      { variant: ctx.variant, radius: ctx.radius },
       { name: 'Accordion', classNames, styles, unstyled }
     );
 
