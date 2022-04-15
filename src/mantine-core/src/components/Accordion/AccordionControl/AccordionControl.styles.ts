@@ -26,6 +26,11 @@ export default createStyles(
     theme,
     { transitionDuration, chevronPosition, chevronSize, ...params }: AccordionControlStylesParams
   ) => ({
+    icon: {
+      marginRight: chevronPosition === 'left' ? 0 : theme.spacing.sm,
+      marginLeft: chevronPosition === 'left' ? theme.spacing.lg : 0,
+    },
+
     chevron: {
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,

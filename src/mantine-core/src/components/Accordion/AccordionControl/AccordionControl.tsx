@@ -13,6 +13,7 @@ export interface AccordionControlProps
   disabled?: boolean;
   chevron?: React.ReactNode;
   children?: React.ReactNode;
+  icon?: React.ReactNode;
 }
 
 export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlProps>(
@@ -24,6 +25,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
       chevron,
       children,
       className,
+      icon,
       ...others
     }: AccordionControlProps,
     ref
@@ -78,6 +80,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           {chevron || ctx.chevron}
         </Center>
         <div className={classes.label}>{children}</div>
+        {icon && <Center className={classes.icon}>{icon}</Center>}
       </UnstyledButton>
     );
 
