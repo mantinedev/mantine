@@ -1,11 +1,9 @@
 import { createStyles, MantineTheme, CSSObject } from '@mantine/styles';
-import { AccordionStylesParams } from '../Accordion.types';
-
-export type AccordionChevronPosition = 'right' | 'left';
+import { AccordionStylesParams, AccordionChevronPosition } from '../Accordion.types';
 
 export interface AccordionControlStylesParams extends AccordionStylesParams {
-  transitionDuration: number;
   chevronPosition: AccordionChevronPosition;
+  transitionDuration: number;
   chevronSize: number;
 }
 

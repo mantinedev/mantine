@@ -3,15 +3,18 @@ import { DefaultProps, useMantineDefaultProps, StylesApiProvider } from '@mantin
 import { Box } from '../Box';
 import { AccordionProviderProps, AccordionProvider } from './AccordionProvider';
 import { AccordionItem, AccordionItemStylesNames } from './AccordionItem/AccordionItem';
-import { AccordionControl } from './AccordionControl/AccordionControl';
-import { AccordionPanel } from './AccordionPanel/AccordionPanel';
+import { AccordionControl, AccordionControlStylesNames } from './AccordionControl/AccordionControl';
+import { AccordionPanel, AccordionPanelStylesNames } from './AccordionPanel/AccordionPanel';
 import { ChevronIcon } from './ChevronIcon';
 
-export type AccordionStylesNames = AccordionItemStylesNames;
+export type AccordionStylesNames =
+  | AccordionItemStylesNames
+  | AccordionPanelStylesNames
+  | AccordionControlStylesNames;
 
 export interface AccordionProps<Multiple extends boolean = false>
   extends AccordionProviderProps<Multiple>,
-    DefaultProps<AccordionItemStylesNames>,
+    DefaultProps<AccordionStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof AccordionProviderProps<Multiple>> {}
 
 const defaultProps: Partial<AccordionProps> = {

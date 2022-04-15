@@ -10,7 +10,13 @@ function Demo() {
   return (
     <Accordion
       icon={<Plus size={16} />}
-      styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(45deg)' } } }}
+      styles={{
+        chevron: {
+          '&[data-rotate]': {
+            transform: 'rotate(45deg)',
+          },
+        },
+      }}
     >
       {/* <Accordion.Item /> components */}
     </Accordion>
@@ -22,7 +28,13 @@ export function IconReplaceDemo() {
   return (
     <BaseDemo
       chevron={<Plus size={16} />}
-      styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(45deg)' } } }}
+      styles={{
+        chevron: {
+          '&[data-rotate]': {
+            transform: 'rotate(45deg)',
+          },
+        },
+      }}
     />
   );
 }
