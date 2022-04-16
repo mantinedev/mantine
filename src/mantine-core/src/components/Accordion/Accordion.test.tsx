@@ -29,6 +29,7 @@ const defaultProps = {
 
 describe('@mantine/core/Accordion', () => {
   checkAccessibility([<Accordion {...defaultProps} />, <Accordion {...defaultProps} order={2} />]);
+
   itSupportsSystemProps({
     component: Accordion,
     props: defaultProps,

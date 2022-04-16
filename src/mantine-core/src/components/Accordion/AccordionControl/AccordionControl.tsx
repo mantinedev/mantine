@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import { useContextStylesApi, DefaultProps, ClassNames } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
-import { Center } from '../../Center';
 import { useAccordionContext } from '../Accordion.context';
 import { useAccordionItemContext } from '../AccordionItem.context';
 import useStyles from './AccordionControl.styles';
@@ -82,14 +81,14 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           onKeyDown,
         })}
       >
-        <Center
+        <div
           className={classes.chevron}
           data-rotate={(!ctx.disableChevronRotation && isActive) || undefined}
         >
           {chevron || ctx.chevron}
-        </Center>
+        </div>
         <div className={classes.label}>{children}</div>
-        {icon && <Center className={classes.icon}>{icon}</Center>}
+        {icon && <div className={classes.icon}>{icon}</div>}
       </UnstyledButton>
     );
 

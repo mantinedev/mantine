@@ -25,11 +25,17 @@ export default createStyles(
     { transitionDuration, chevronPosition, chevronSize, ...params }: AccordionControlStylesParams
   ) => ({
     icon: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       marginRight: chevronPosition === 'left' ? 0 : theme.spacing.sm,
       marginLeft: chevronPosition === 'left' ? theme.spacing.lg : 0,
     },
 
     chevron: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       transition: `transform ${transitionDuration}ms ease`,
       marginRight: chevronPosition === 'right' ? 0 : theme.spacing.sm,
       marginLeft: chevronPosition === 'right' ? theme.spacing.lg : 0,
