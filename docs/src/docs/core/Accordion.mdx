@@ -106,6 +106,45 @@ Use [Styles API](/theming/styles-api/) to customize Accordion styles:
 
 <Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
+## Data attributes
+
+Accordion elements have `data-` attributes that can be used with [Styles API](/theming/styles-api/):
+
+- `data-active` attribute is added to `Accordion.Item` root element when associated panel is expanded
+- `data-rotate` attribute is added to chevron icon when icon should rotate (controlled by `disableChevronRotation` and expanded state of associated panel)
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion
+      styles={{
+        item: {
+          // styles added to all items
+          backgroundColor: '#fff',
+          border: '1px solid #ededed',
+
+          // styles added to expanded item
+          '&[data-active]': {
+            backgroundColor: '#ccc',
+          },
+        },
+
+        chevron: {
+          // styles added to chevron when it should rotate
+          '&[data-rotate]': {
+            transform: 'rotate(-90deg)',
+          },
+        },
+      }}
+    >
+      {/* ... Accordion items */}
+    </Accordion>
+  );
+}
+```
+
 ## TypeScript
 
 `AccordionProps` type exported from `@mantine/core` is a generic, it accepts boolean type that
