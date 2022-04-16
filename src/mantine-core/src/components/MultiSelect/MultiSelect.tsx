@@ -86,6 +86,9 @@ export interface MultiSelectProps
 
   /** Select highlighted item on blur */
   selectOnBlur?: boolean;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -121,6 +124,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
+  clearButtonTabIndex: 0,
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
@@ -185,6 +189,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      clearButtonTabIndex,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -589,6 +594,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               onClear: handleClear,
               error,
               disabled,
+              clearButtonTabIndex,
             })}
           >
             <div className={classes.values}>

@@ -9,14 +9,13 @@ import {
 } from '@mantine/styles';
 import { useMergedRef, useMouse } from '@mantine/hooks';
 import { Box } from '../../Box';
-import { Popper, SharedPopperProps } from '../../Popper';
+import { MantineTransition, Transition } from '../../Transition';
 import useStyles from './FloatingTooltip.styles';
 
 export type FloatingTooltipStylesNames = ClassNames<typeof useStyles>;
 
 export interface FloatingTooltipProps
   extends DefaultProps<FloatingTooltipStylesNames>,
-    SharedPopperProps,
     React.ComponentPropsWithoutRef<'div'> {
   /** Tooltip content */
   label: React.ReactNode;
@@ -54,14 +53,28 @@ export interface FloatingTooltipProps
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
 
-  /** Whether to render the target element in a Portal */
-  withinPortal?: boolean;
+  /** Position of the tooltip relative to the cursor */
+  position?: 'top' | 'left' | 'bottom' | 'right';
+
+  /** Customize mount/unmount transition */
+  transition?: MantineTransition;
+
+  /** Mount transition duration in ms */
+  transitionDuration?: number;
+
+  /** Unmount transition duration in ms */
+  exitTransitionDuration?: number;
+
+  /** Mount/unmount transition timing function, defaults to theme.transitionTimingFunction */
+  transitionTimingFunction?: string;
+
+  /** Tooltip z-index */
+  zIndex?: number;
 }
 
 const defaultProps: Partial<FloatingTooltipProps> = {
   openDelay: 0,
   closeDelay: 0,
-  gutter: 0,
   color: 'gray',
   disabled: false,
   position: 'right',
@@ -71,7 +84,6 @@ const defaultProps: Partial<FloatingTooltipProps> = {
   width: 'auto',
   wrapLines: false,
   positionDependencies: [],
-  withinPortal: true,
 };
 
 export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
@@ -82,7 +94,6 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
       children,
       openDelay,
       closeDelay,
-      gutter,
       color,
       radius,
       disabled,
@@ -94,7 +105,6 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
       width,
       wrapLines,
       positionDependencies,
-      withinPortal,
       tooltipRef,
       tooltipId,
       classNames,
@@ -115,27 +125,43 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
     const [opened, setOpened] = useState(false);
     const { ref: mouseRef, x, y } = useMouse();
     const visible = opened && !disabled;
-    const [referenceElement, setReferenceElement] = useState(null);
-    const mergedRefs = useMergedRef(ref, setReferenceElement, mouseRef);
+    const mergedRefs = useMergedRef(ref, mouseRef);
     const coordinates = useMemo(() => {
       // There's no way to get the exact size of the
       // cursor using JS, however most OS's use 32x32
       const estimatedCursorSize = 32;
-      const tooltipWidth = _tooltipRef.current?.offsetWidth || 0;
+      const tooltipWidth =
+        typeof width === 'number' ? width : _tooltipRef.current?.offsetWidth || 0;
+      const tooltipHeight = _tooltipRef.current?.offsetHeight || 0;
 
       switch (position) {
         case 'top':
-          return { x: x - tooltipWidth / 2, y: y - estimatedCursorSize };
+          return {
+            left: x - tooltipWidth / 2,
+            top: y - tooltipHeight,
+          };
         case 'left':
-          return { x: x - estimatedCursorSize / 2 - tooltipWidth, y };
+          return {
+            left: x - tooltipWidth - estimatedCursorSize / 2,
+            top: y,
+          };
         case 'right':
-          return { x: x + estimatedCursorSize / 2, y };
+          return {
+            left: x + estimatedCursorSize / 2,
+            top: y,
+          };
         case 'bottom':
-          return { x: x - tooltipWidth / 2, y: y + estimatedCursorSize };
+          return {
+            left: x - tooltipWidth / 2,
+            top: y + tooltipHeight,
+          };
         default:
-          return { x: x || 0, y: y || 0 };
+          return {
+            left: x || 0,
+            top: y || 0,
+          };
       }
-    }, [x, y]);
+    }, [x, y, ...positionDependencies]);
 
     const handleOpen = () => {
       window.clearTimeout(closeTimeoutRef.current);
@@ -185,30 +211,29 @@ export const FloatingTooltip = forwardRef<HTMLDivElement, FloatingTooltipProps>(
         ref={mergedRefs}
         {...others}
       >
-        <Popper
-          referenceElement={referenceElement}
-          transitionDuration={transitionDuration}
-          transition={transition}
+        <Transition
           mounted={visible}
-          position="top"
-          placement="start" // fixed because we are following the cursor
-          gutter={gutter}
-          zIndex={zIndex}
-          forceUpdateDependencies={[color, radius, ...positionDependencies]}
-          withinPortal={withinPortal}
-          coordinates={coordinates}
+          duration={transitionDuration}
+          transition={transition}
+          exitDuration={transitionDuration}
+          timingFunction={transitionTimingFunction}
         >
-          <Box
-            className={classes.body}
-            ref={mergedTooltipRefs}
-            sx={{
-              whiteSpace: wrapLines ? 'normal' : 'nowrap',
-              width,
-            }}
-          >
-            {label}
-          </Box>
-        </Popper>
+          {(transitionStyles) => (
+            <div style={{ ...transitionStyles, zIndex, position: 'relative' }}>
+              <Box
+                className={classes.body}
+                ref={mergedTooltipRefs}
+                sx={{
+                  whiteSpace: wrapLines ? 'normal' : 'nowrap',
+                  width,
+                  ...coordinates,
+                }}
+              >
+                {label}
+              </Box>
+            </div>
+          )}
+        </Transition>
         {children}
       </Box>
     );

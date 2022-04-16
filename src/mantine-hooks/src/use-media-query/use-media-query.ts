@@ -16,15 +16,25 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
   }
 }
 
-function getInitialValue(query: string) {
+function getInitialValue(query: string, initialValue?: boolean) {
+  if (initialValue !== undefined) {
+    return initialValue;
+  }
+
   if (typeof window !== 'undefined' && 'matchMedia' in window) {
     return window.matchMedia(query).matches;
   }
+
+  // eslint-disable-next-line no-console
+  console.error(
+    '[@mantine/hooks] use-media-query: Please provide a default value when using server side rendering to prevent a hydration mismatch.'
+  );
+
   return false;
 }
 
-export function useMediaQuery(query: string) {
-  const [matches, setMatches] = useState(getInitialValue(query));
+export function useMediaQuery(query: string, initialValue?: boolean) {
+  const [matches, setMatches] = useState(getInitialValue(query, initialValue));
   const queryRef = useRef<MediaQueryList>();
 
   // eslint-disable-next-line consistent-return

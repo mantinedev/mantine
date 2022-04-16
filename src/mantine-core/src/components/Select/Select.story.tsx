@@ -333,4 +333,24 @@ storiesOf('Select', module)
         searchable
       />
     </div>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Search in first select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <Select
+        label="Tab directly to next select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+    </div>
   ));

@@ -295,4 +295,25 @@ storiesOf('MultiSelect', module)
     <MantineProvider defaultProps={{ MultiSelect: { radius: 0, label: 'Default label' } }}>
       <MultiSelect data={data} placeholder="Select items" />
     </MantineProvider>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+      />
+    </div>
   ));
