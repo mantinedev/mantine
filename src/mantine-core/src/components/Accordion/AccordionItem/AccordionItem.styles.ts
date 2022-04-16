@@ -7,6 +7,7 @@ function getVariantStyles(
 ): CSSObject {
   const borderColor = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
   const filledColor = theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0];
+  const borderRadius = theme.fn.radius(radius);
 
   if (variant === 'default') {
     return {
@@ -25,22 +26,22 @@ function getVariantStyles(
       },
 
       '&:first-of-type': {
-        borderTopRightRadius: theme.fn.radius(radius),
-        borderTopLeftRadius: theme.fn.radius(radius),
+        borderTopRightRadius: borderRadius,
+        borderTopLeftRadius: borderRadius,
 
         '& > [data-accordion-control]': {
-          borderTopRightRadius: theme.fn.radius(radius),
-          borderTopLeftRadius: theme.fn.radius(radius),
+          borderTopRightRadius: borderRadius,
+          borderTopLeftRadius: borderRadius,
         },
       },
 
       '&:last-of-type': {
-        borderBottomRightRadius: theme.fn.radius(radius),
-        borderBottomLeftRadius: theme.fn.radius(radius),
+        borderBottomRightRadius: borderRadius,
+        borderBottomLeftRadius: borderRadius,
 
         '& > [data-accordion-control]': {
-          borderBottomRightRadius: theme.fn.radius(radius),
-          borderBottomLeftRadius: theme.fn.radius(radius),
+          borderBottomRightRadius: borderRadius,
+          borderBottomLeftRadius: borderRadius,
         },
       },
 
@@ -52,7 +53,7 @@ function getVariantStyles(
 
   if (variant === 'filled') {
     return {
-      borderRadius: theme.fn.radius(radius),
+      borderRadius,
 
       '&[data-active]': {
         backgroundColor: filledColor,
@@ -62,7 +63,7 @@ function getVariantStyles(
 
   if (variant === 'separated') {
     return {
-      borderRadius: theme.fn.radius(radius),
+      borderRadius,
       backgroundColor: filledColor,
       border: '1px solid transparent',
       transition: 'background-color 150ms ease',
