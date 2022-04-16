@@ -4,7 +4,6 @@ export const Tabs: Record<TabsStylesNames, string> = {
   root: 'Root element',
   tabsList: 'Controls list (Tabs.List component)',
   tab: 'Tab control (Tabs.Tab component)',
-  tabActive: 'Active tab control modifier',
   tabRightSection: 'Tab control right section',
   tabLabel: 'Tab control label',
   tabIcon: 'Tab control icon',

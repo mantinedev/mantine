@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
     paddingTop: 20,
   },
 
-  tabControl: {
+  tab: {
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
     }`,
@@ -21,11 +21,11 @@ const useStyles = createStyles((theme) => ({
     '@media (max-width: 755px)': {
       fontSize: theme.fontSizes.xs,
     },
-  },
 
-  tabActive: {
-    backgroundColor: `${theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6]} !important`,
-    color: `${theme.white} !important`,
+    '&[data-active]': {
+      backgroundColor: `${theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6]} !important`,
+      color: `${theme.white} !important`,
+    },
   },
 }));
 

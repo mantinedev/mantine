@@ -59,7 +59,7 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
           navigate(nextPath, { replace: true });
           setActiveTab(value);
         }}
-        classNames={{ tabsList: classes.tabsList, tab: classes.tab, tabActive: classes.tabActive }}
+        classNames={{ tabsList: classes.tabsList, tab: classes.tab }}
       >
         <div className={classes.tabsWrapper}>
           <Tabs.List>

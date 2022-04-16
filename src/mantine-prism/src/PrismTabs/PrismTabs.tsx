@@ -5,13 +5,7 @@ import useStyles from './PrismTabs.styles';
 
 export function PrismTabs(props: TabsProps) {
   const { classes } = useStyles();
-  return (
-    <Tabs
-      {...props}
-      variant="outline"
-      classNames={{ tabsList: classes.tabs, tab: classes.tab, tabActive: classes.tabActive }}
-    />
-  );
+  return <Tabs {...props} variant="outline" classNames={{ tab: classes.tab }} />;
 }
 
 export function PrismPanel({ language, children, ...others }: PrismProps & TabsPanelProps) {

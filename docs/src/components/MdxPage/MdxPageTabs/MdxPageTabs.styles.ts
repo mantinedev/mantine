@@ -52,11 +52,11 @@ export default createStyles((theme) => ({
       fontSize: theme.fontSizes.sm,
       height: TAB_HEIGHT_MOBILE,
     },
-  },
 
-  tabActive: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    '&[data-active]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    },
   },
 
   tabContent: {

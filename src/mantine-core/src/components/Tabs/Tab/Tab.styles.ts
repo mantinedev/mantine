@@ -6,15 +6,10 @@ interface TabStylesParams extends TabsStylesParams {
   withRightSection: boolean;
 }
 
-interface GetVariantReturnType {
-  tab: CSSObject;
-  tabActive: CSSObject;
-}
-
 function getVariantStyles(
   theme: MantineTheme,
   { variant, orientation, color, radius, inverted }: TabStylesParams
-): GetVariantReturnType {
+): CSSObject {
   const vertical = orientation === 'vertical';
   const filledScheme = getSharedColorScheme({ color, theme, variant: 'filled' });
   const radiusValue = theme.fn.radius(radius);
@@ -27,20 +22,16 @@ function getVariantStyles(
 
   if (variant === 'default') {
     return {
-      tab: {
-        [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']:
-          '2px solid transparent',
-        [vertical ? 'marginRight' : inverted ? 'marginTop' : 'marginBottom']: -2,
-        borderRadius,
+      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: '2px solid transparent',
+      [vertical ? 'marginRight' : inverted ? 'marginTop' : 'marginBottom']: -2,
+      borderRadius,
 
-        '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-          borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-        },
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
       },
 
-      tabActive: {
+      '&[data-active]': {
         borderColor: filledScheme.background,
         color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
@@ -53,14 +44,12 @@ function getVariantStyles(
 
   if (variant === 'outline') {
     return {
-      tab: {
-        background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        borderRadius,
-        border: '1px solid transparent',
-        [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: 'none',
-      },
+      background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      borderRadius,
+      border: '1px solid transparent',
+      [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: 'none',
 
-      tabActive: {
+      '&[data-active]': {
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
 
         '&::before': {
@@ -79,16 +68,13 @@ function getVariantStyles(
 
   if (variant === 'pills') {
     return {
-      tab: {
-        borderRadius: theme.fn.radius(radius),
+      borderRadius: theme.fn.radius(radius),
 
-        '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-        },
+      '&:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
       },
 
-      tabActive: {
+      '&[data-active]': {
         backgroundColor: filledScheme.background,
         color: theme.white,
 
@@ -99,64 +85,58 @@ function getVariantStyles(
     };
   }
 
-  return { tab: {}, tabActive: {} };
+  return {};
 }
 
-export default createStyles((theme, params: TabStylesParams) => {
-  const variantStyles = getVariantStyles(theme, params);
+export default createStyles((theme, params: TabStylesParams) => ({
+  tabLabel: {},
 
-  return {
-    tabLabel: {},
+  tab: {
+    position: 'relative',
+    padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
+    paddingLeft: params.withIcon ? theme.spacing.xs : undefined,
+    paddingRight: params.withRightSection ? theme.spacing.xs : undefined,
+    fontSize: theme.fontSizes.sm,
+    whiteSpace: 'nowrap',
+    zIndex: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: params.orientation === 'horizontal' ? 'center' : undefined,
+    lineHeight: 1,
 
-    tab: {
-      position: 'relative',
-      padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-      paddingLeft: params.withIcon ? theme.spacing.xs : undefined,
-      paddingRight: params.withRightSection ? theme.spacing.xs : undefined,
-      fontSize: theme.fontSizes.sm,
-      whiteSpace: 'nowrap',
-      zIndex: 0,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: params.orientation === 'horizontal' ? 'center' : undefined,
-      lineHeight: 1,
+    '&:disabled': {
+      opacity: 0.5,
+      cursor: 'not-allowed',
 
-      '&:disabled': {
-        opacity: 0.5,
-        cursor: 'not-allowed',
-
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
-      },
-
-      '&:focus': {
-        zIndex: 1,
-      },
-
-      ...variantStyles.tab,
-    },
-
-    tabActive: variantStyles.tabActive,
-
-    tabRightSection: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      '&:not(:only-child)': {
-        marginLeft: 7,
+      '&:hover': {
+        backgroundColor: 'transparent',
       },
     },
 
-    tabIcon: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      '&:not(:only-child)': {
-        marginRight: 7,
-      },
+    '&:focus': {
+      zIndex: 1,
     },
-  };
-});
+
+    ...getVariantStyles(theme, params),
+  },
+
+  tabRightSection: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '&:not(:only-child)': {
+      marginLeft: 7,
+    },
+  },
+
+  tabIcon: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '&:not(:only-child)': {
+      marginRight: 7,
+    },
+  },
+}));

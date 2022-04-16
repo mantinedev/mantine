@@ -1,12 +1,6 @@
 import { createStyles } from '@mantine/core';
 
 export default createStyles((theme) => ({
-  tabs: {
-    // borderBottom: `1px solid ${
-    //   theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
-    // }`,
-  },
-
   tab: {
     paddingLeft: theme.spacing.sm,
     paddingRight: theme.spacing.sm,
@@ -35,17 +29,17 @@ export default createStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
     },
-  },
 
-  tabActive: {
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[8]
-        : theme.fn.rgba(theme.colors.gray[0], 0.65),
+    '&[data-active]': {
+      color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[8]
+          : theme.fn.rgba(theme.colors.gray[0], 0.65),
 
-    '&::before': {
-      backgroundColor: 'transparent',
+      '&::before': {
+        backgroundColor: 'transparent',
+      },
     },
   },
 
