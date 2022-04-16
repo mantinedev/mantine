@@ -88,7 +88,11 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       },
       <>
         {label}
-        {required && <span className={classes.required}> *</span>}
+        {required && (
+          <span className={classes.required} aria-hidden>
+            {' *'}
+          </span>
+        )}
       </>
     );
 
