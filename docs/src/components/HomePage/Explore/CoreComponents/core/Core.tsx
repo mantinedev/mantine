@@ -14,17 +14,15 @@ const useStyles = createStyles((theme) => ({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[2]
     }`,
-    backgroundColor: `${
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white
-    } !important`,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
 
     '@media (max-width: 755px)': {
       fontSize: theme.fontSizes.xs,
     },
 
     '&[data-active]': {
-      backgroundColor: `${theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6]} !important`,
-      color: `${theme.white} !important`,
+      backgroundColor: theme.colors.blue[theme.colorScheme === 'dark' ? 8 : 6],
+      color: theme.white,
     },
   },
 }));
