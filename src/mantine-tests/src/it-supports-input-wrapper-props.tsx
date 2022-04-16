@@ -14,7 +14,9 @@ export function itSupportsInputWrapperProps<P>(
     const { container } = await renderWithAct(
       <Component {...requiredProps} required id="secret-test-id" label="Test label" />
     );
-    expect(container.querySelector(`.mantine-${name}-required`)).toBeInTheDocument();
+    const requiredGlyph = container.querySelector(`.mantine-${name}-required`);
+    expect(requiredGlyph).toBeInTheDocument();
+    expect(requiredGlyph).toHaveAttribute('aria-hidden');
   });
 
   it('supports description prop', async () => {
