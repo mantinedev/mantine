@@ -190,6 +190,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       labelProps,
       descriptionProps,
       clearButtonTabIndex,
+      form,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -296,13 +297,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [searchValue]);
 
     useDidUpdate(() => {
-      //using greater than equal to take into account creatable type.
-      if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+      if (!disabled && _value.length >= data.length) {
+        setDropdownOpened(false);
+      }
 
-      //for controlled input scenarios
-      if (!!maxSelectedValues && _value.length < maxSelectedValues) valuesOverflow.current = false;
-      /*preventing the dropdown opening on backspace while controlled
-      where values length is greater than maxSelectedValues. */
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
+
       if (!!maxSelectedValues && _value.length >= maxSelectedValues) {
         valuesOverflow.current = true;
         setDropdownOpened(false);
@@ -560,7 +562,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
           ref={wrapperRef}
         >
-          <input type="hidden" name={name} value={_value.join(',')} />
+          <input type="hidden" name={name} value={_value.join(',')} form={form} />
 
           <Input<'div'>
             __staticSelector="MultiSelect"
