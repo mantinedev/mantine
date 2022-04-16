@@ -19,7 +19,7 @@ import { AccordionDemos } from '@mantine/demos';
 
 <Demo data={AccordionDemos.configurator} />
 
-## Custom controls
+## Custom control label
 
 <Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
 
@@ -40,12 +40,6 @@ To change transition duration, set `transitionDuration` prop:
 To disable transitions, set `transitionDuration` to 0:
 
 <Demo data={AccordionDemos.disableTransitions} />
-
-## Styles API
-
-Use [Styles API](/theming/styles-api/) to customize Accordion styles:
-
-<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## Control state
 
@@ -98,6 +92,19 @@ function Demo() {
   );
 }
 ```
+
+## Unstyled Accordion
+
+Set `unstyled` prop on Accordion component to remove all non-essential library styles.
+It can be used to style component with [Styles API](/theming/styles-api/) without overriding any styles.
+
+<Demo data={AccordionDemos.unstyled} />
+
+## Styles API
+
+Use [Styles API](/theming/styles-api/) to customize Accordion styles:
+
+<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## TypeScript
 
