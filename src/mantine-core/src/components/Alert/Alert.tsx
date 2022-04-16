@@ -71,7 +71,12 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
   );
 
   return (
-    <Box className={cx(classes.root, classes[variant], className)} ref={ref} {...others}>
+    <Box
+      className={cx(classes.root, classes[variant], className)}
+      ref={ref}
+      role="alert"
+      {...others}
+    >
       <div className={classes.wrapper}>
         {icon && <div className={classes.icon}>{icon}</div>}
 
