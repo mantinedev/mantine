@@ -118,7 +118,7 @@ export default createStyles(
       root: {
         position: 'relative',
         display: fullWidth || vertical ? 'flex' : 'inline-flex',
-        width: vertical && !fullWidth ? 'max-content' : 'inherit',
+        width: vertical && !fullWidth ? 'max-content' : 'auto',
         flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
         borderRadius: theme.fn.radius(radius),
