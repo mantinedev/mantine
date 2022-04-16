@@ -27,11 +27,21 @@ function getVariantStyles(
       '&:first-of-type': {
         borderTopRightRadius: theme.fn.radius(radius),
         borderTopLeftRadius: theme.fn.radius(radius),
+
+        '& > [data-accordion-control]': {
+          borderTopRightRadius: theme.fn.radius(radius),
+          borderTopLeftRadius: theme.fn.radius(radius),
+        },
       },
 
       '&:last-of-type': {
         borderBottomRightRadius: theme.fn.radius(radius),
         borderBottomLeftRadius: theme.fn.radius(radius),
+
+        '& > [data-accordion-control]': {
+          borderBottomRightRadius: theme.fn.radius(radius),
+          borderBottomLeftRadius: theme.fn.radius(radius),
+        },
       },
 
       '& + &': {
@@ -72,8 +82,5 @@ function getVariantStyles(
 }
 
 export default createStyles((theme, params: AccordionStylesParams) => ({
-  item: {
-    overflow: 'hidden',
-    ...getVariantStyles(theme, params),
-  },
+  item: getVariantStyles(theme, params),
 }));
