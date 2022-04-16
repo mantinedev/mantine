@@ -1,0 +1,46 @@
+---
+title: 'Accordion component error'
+error: 'Controlled Accordion component did not receive onChange handler, either remove value or add onChange'
+---
+
+## Error source
+
+Controlled [Accordion](/core/accordion/) component was used without `onChange` handler.
+You have set `value` prop (thus making component controlled) and did not provide `onChange` function
+to handle changes, for example:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function DemoWithError() {
+  return <Accordion value="some-value">{/* ...children */}</Accordion>;
+}
+```
+
+## How to fix
+
+If you do not need to control [Accordion](/core/accordion/) state, use `defaultValue` instead of the `value` prop:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return <Accordion defaultValue="some-value">{/* ...children */}</Accordion>;
+}
+```
+
+To control [Accordion](/core/accordion/) state on your side, provide `value` and `onChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  const [activeItem, setActiveItem] = useState('some-value');
+  return (
+    <Accordion value={activeItem} onChange={setActiveItem}>
+      {/* ...children */}
+    </Accordion>
+  );
+}
+```

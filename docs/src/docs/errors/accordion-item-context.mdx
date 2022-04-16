@@ -1,0 +1,39 @@
+---
+title: 'Accordion component error'
+error: 'Accordion.Item component was not found in the tree'
+---
+
+## Error source
+
+You have rendered `Accordion.Control` or `Accordion.Panel` component outside of `Accordion.Item` component context:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function DemoWithError() {
+  return (
+    <>
+      <Accordion.Control>Item 1</Accordion.Control>
+      <Accordion.Panel>Panel 1</Accordion.Panel>
+    </>
+  );
+}
+```
+
+## How to fix
+
+Make sure that all `Accordion.Control` and `Accordion.Panel` components
+are rendered within `Accordion.Item` component – all of them require context to work correctly:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion.Item value="item-1">
+      <Accordion.Control>Item 1</Accordion.Control>
+      <Accordion.Panel>Panel 1</Accordion.Panel>
+    </Accordion.Item>
+  );
+}
+```
