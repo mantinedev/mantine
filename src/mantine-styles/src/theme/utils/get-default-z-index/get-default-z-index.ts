@@ -3,6 +3,7 @@ const elevations = {
   modal: 200,
   popover: 300,
   overlay: 400,
+  nprogress: 9999,
 } as const;
 
 export function getDefaultZIndex(level: keyof typeof elevations) {

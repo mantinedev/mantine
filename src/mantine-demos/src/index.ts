@@ -111,6 +111,7 @@ export * as ModalsDemos from './demos/modals';
 export * as HooksDemos from './demos/hooks';
 export * as SpotlightDemos from './demos/spotlight';
 export * as FormDemos from './demos/form';
+export * as NProgressDemos from './demos/nprogress';
 
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';
