@@ -90,6 +90,7 @@ export default createStyles(
         ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
         : undefined,
       color: theme.white,
+      whiteSpace: 'nowrap',
     },
   })
 );
