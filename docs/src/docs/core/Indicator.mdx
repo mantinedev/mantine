@@ -18,3 +18,18 @@ import { IndicatorDemos } from '@mantine/demos';
 ## Usage
 
 <Demo data={IndicatorDemos.configurator} />
+
+## Inline
+
+When target element has fixed width, set `inline` prop to add `display: inline-block;` styles to
+Indicator container. Alternatively you can set width and height with `sx` prop if you still want root
+element to keep `display: block`.
+
+<Demo data={IndicatorDemos.inline} />
+
+## Offset
+
+Set `offset` to change indicator position. It is useful when Indicator component is
+used with children that have border-radius:
+
+<Demo data={IndicatorDemos.offset} />
