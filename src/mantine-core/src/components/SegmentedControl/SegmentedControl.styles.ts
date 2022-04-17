@@ -134,6 +134,19 @@ export default createStyles(
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },
+        borderRadius: theme.fn.radius(radius),
+        boxShadow: shouldAnimate
+          ? color || theme.colorScheme === 'dark'
+            ? 'none'
+            : theme.shadows.xs
+          : undefined,
+        backgroundColor: shouldAnimate
+          ? color in theme.colors
+            ? theme.fn.themeColor(color, 6)
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[5]
+            : theme.white
+          : undefined,
       },
 
       labelActive: {
