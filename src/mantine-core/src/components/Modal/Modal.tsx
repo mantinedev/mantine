@@ -191,9 +191,8 @@ export function Modal(props: ModalProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box className={cx(classes.root, className)} {...others}>
+          <Box id={baseId} className={cx(classes.root, className)} {...others}>
             <div
-              id={baseId}
               className={classes.inner}
               onKeyDownCapture={(event) => {
                 const shouldTrigger =
