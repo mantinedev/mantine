@@ -82,3 +82,5 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     </Box>
   );
 });
+
+Indicator.displayName = '@mantine/core/Indicator';
