@@ -66,9 +66,11 @@ function App() {
             { key: 'mantine' }
       }
     >
-      <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
+      <div dir={rtl ? 'rtl' : 'ltr'}>
+        <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
 
-      <YourApp />
+        <YourApp />
+      </div>
     </MantineProvider>
   );
 }
