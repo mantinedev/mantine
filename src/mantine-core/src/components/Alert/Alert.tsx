@@ -6,8 +6,9 @@ import {
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { Box } from '../Box';
+import { useUuid } from '@mantine/hooks';
 import { CloseButton } from '../ActionIcon';
+import { Box } from '../Box';
 import useStyles from './Alert.styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
@@ -50,6 +51,7 @@ const defaultProps: Partial<AlertProps> = {
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, ref) => {
   const {
+    id,
     className,
     title,
     variant,
@@ -70,11 +72,19 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
     { classNames, styles, name: 'Alert' }
   );
 
+  const rootId = useUuid(id);
+
+  const titleId = title && id && `${rootId}-title`;
+  const bodyId = `${rootId}-body`;
+
   return (
     <Box
+      id={rootId}
+      role="alert"
+      aria-labelledby={titleId}
+      aria-describedby={bodyId}
       className={cx(classes.root, classes[variant], className)}
       ref={ref}
-      role="alert"
       {...others}
     >
       <div className={classes.wrapper}>
@@ -83,7 +93,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
         <div className={classes.body}>
           {title && (
             <div className={classes.title}>
-              <span className={classes.label}>{title}</span>
+              <span id={titleId} className={classes.label}>
+                {title}
+              </span>
 
               {withCloseButton && (
                 <CloseButton
@@ -98,7 +110,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
             </div>
           )}
 
-          <div className={classes.message}>{children}</div>
+          <div id={bodyId} className={classes.message}>
+            {children}
+          </div>
         </div>
       </div>
     </Box>

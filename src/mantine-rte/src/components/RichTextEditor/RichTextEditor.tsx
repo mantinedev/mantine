@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
+import type { Delta, Sources } from 'quill';
 import 'quill-mention';
 import {
   DefaultProps,
@@ -44,10 +45,10 @@ export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
-  value: string;
+  value: string | Delta;
 
   /** Called each time value changes */
-  onChange(value: string): void;
+  onChange(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
 
   /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;

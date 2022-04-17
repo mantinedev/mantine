@@ -52,4 +52,14 @@ describe('@mantine/core/Alert', () => {
     const { container } = render(<Alert>test-alert</Alert>);
     expect(container.querySelectorAll('.mantine-Alert-title')).toHaveLength(0);
   });
+
+  it('renders with the alert role', () => {
+    const rendered = render(
+      <Alert id="my-alert" title="My Alert">
+        test-alert
+      </Alert>
+    );
+    const alert = rendered.getByRole('alert');
+    expect(alert).toHaveAccessibleName('My Alert');
+  });
 });

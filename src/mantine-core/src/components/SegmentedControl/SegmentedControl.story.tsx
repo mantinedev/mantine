@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
+import { Button } from '../Button/Button';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
 const stringData = ['React', 'Angular', 'Vue', 'Very long label'];
@@ -37,6 +38,25 @@ function Scaled() {
   );
 }
 
+function Conditional(props: Partial<SegmentedControlProps>) {
+  const [visible, setVisible] = useState<Boolean>(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setVisible(!visible)}>
+        {!visible ? 'Show' : 'Hide'} Segmented Control
+      </Button>
+      <div
+        style={{
+          paddingTop: 20,
+        }}
+      >
+        {visible && <SegmentedControl {...props} data={stringData} defaultValue="Vue" />}
+      </div>
+    </div>
+  );
+}
+
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <div key={size}>
     <Controlled size={size} mt="md" disabled />
@@ -59,5 +79,10 @@ storiesOf('SegmentedControl', module)
   .add('Default radius on MantineProvider', () => (
     <MantineProvider theme={{ defaultRadius: 0 }}>
       <Controlled />
+    </MantineProvider>
+  ))
+  .add('Conditional Rendering without initial transition', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <Conditional />
     </MantineProvider>
   ));
