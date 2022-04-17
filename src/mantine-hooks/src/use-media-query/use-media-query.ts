@@ -25,11 +25,6 @@ function getInitialValue(query: string, initialValue?: boolean) {
     return window.matchMedia(query).matches;
   }
 
-  // eslint-disable-next-line no-console
-  console.error(
-    '[@mantine/hooks] use-media-query: Please provide a default value when using server side rendering to prevent a hydration mismatch.'
-  );
-
   return false;
 }
 
@@ -37,13 +32,14 @@ export function useMediaQuery(query: string, initialValue?: boolean) {
   const [matches, setMatches] = useState(getInitialValue(query, initialValue));
   const queryRef = useRef<MediaQueryList>();
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if ('matchMedia' in window) {
       queryRef.current = window.matchMedia(query);
       setMatches(queryRef.current.matches);
       return attachMediaListener(queryRef.current, (event) => setMatches(event.matches));
     }
+
+    return undefined;
   }, [query]);
 
   return matches;
