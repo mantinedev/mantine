@@ -225,6 +225,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     placeholder,
     filterDataOnExactSearchMatch,
     clearButtonTabIndex,
+    form,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -573,7 +574,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
-        <input type="hidden" name={name} value={_value || ''} />
+        <input type="hidden" name={name} value={_value || ''} form={form} />
 
         <Input<'input'>
           autoComplete="nope"

@@ -17,12 +17,13 @@ interface HorizontalSectionStyles {
   hiddenBreakpoint: MantineNumberSize;
   fixed: boolean;
   zIndex: number;
+  section: 'navbar' | 'aside';
 }
 
 export default createStyles(
   (
     theme,
-    { height, width, fixed, position, hiddenBreakpoint, zIndex }: HorizontalSectionStyles
+    { height, width, fixed, position, hiddenBreakpoint, zIndex, section }: HorizontalSectionStyles
   ) => {
     const breakpoints =
       typeof width === 'object' && width !== null
@@ -51,7 +52,7 @@ export default createStyles(
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        borderRight: `1px solid ${
+        [section === 'navbar' ? 'borderRight' : 'borderLeft']: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
         ...breakpoints,
