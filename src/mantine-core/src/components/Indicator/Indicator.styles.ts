@@ -15,6 +15,7 @@ export interface IndicatorStylesParams {
   offset: number;
   inline: boolean;
   withBorder: boolean;
+  withLabel: boolean;
 }
 
 function getPositionStyles(_position: IndicatorPosition, offset = 0) {
@@ -61,7 +62,7 @@ function getPositionStyles(_position: IndicatorPosition, offset = 0) {
 export default createStyles(
   (
     theme,
-    { radius, size, color, position, offset, inline, withBorder }: IndicatorStylesParams
+    { radius, size, color, position, offset, inline, withBorder, withLabel }: IndicatorStylesParams
   ) => ({
     root: {
       position: 'relative',
@@ -71,14 +72,14 @@ export default createStyles(
     indicator: {
       ...getPositionStyles(position, offset),
       position: 'absolute',
-      minWidth: size,
+      [withLabel ? 'minWidth' : 'width']: size,
       height: size,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       fontSize: theme.fontSizes.xs,
-      paddingLeft: theme.spacing.xs / 2,
-      paddingRight: theme.spacing.xs / 2,
+      paddingLeft: withLabel ? theme.spacing.xs / 2 : 0,
+      paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       zIndex: getDefaultZIndex('overlay'),
       backgroundColor: theme.fn.themeColor(

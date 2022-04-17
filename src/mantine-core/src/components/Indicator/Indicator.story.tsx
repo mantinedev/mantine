@@ -25,7 +25,7 @@ export const Positions = () => {
 
 export const Inline = () => (
   <Box sx={{ padding: 40 }}>
-    <Indicator inline>
+    <Indicator inline withBorder>
       <Avatar radius={0} />
     </Indicator>
   </Box>

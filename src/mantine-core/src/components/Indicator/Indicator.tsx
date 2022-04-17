@@ -71,7 +71,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
   } = useMantineDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { position, offset, size, radius, inline, color, withBorder },
+    { position, offset, size, radius, inline, color, withBorder, withLabel: !!label },
     { name: 'Indicator', classNames, styles }
   );
 
