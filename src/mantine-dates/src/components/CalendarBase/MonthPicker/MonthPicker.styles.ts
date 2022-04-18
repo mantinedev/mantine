@@ -1,4 +1,4 @@
-import { createStyles, getSharedColorScheme, MantineSize } from '@mantine/core';
+import { createStyles, MantineSize } from '@mantine/core';
 
 interface MonthPickerStyles {
   size: MantineSize;
@@ -13,7 +13,8 @@ const sizes = {
 };
 
 export default createStyles((theme, { size }: MonthPickerStyles) => {
-  const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
+  const colors = theme.fn.variant({ color: theme.primaryColor, variant: 'filled' });
+
   return {
     monthPicker: {
       width: '100%',

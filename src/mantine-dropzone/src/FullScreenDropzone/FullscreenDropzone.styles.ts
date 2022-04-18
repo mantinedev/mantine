@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, getSharedColorScheme } from '@mantine/core';
+import { createStyles, MantineNumberSize } from '@mantine/core';
 
 export interface FullScreenDropzoneStylesParams {
   offset: MantineNumberSize;
@@ -9,8 +9,8 @@ export interface FullScreenDropzoneStylesParams {
 export default createStyles(
   (theme, { offset, padding, radius }: FullScreenDropzoneStylesParams) => {
     const spacing = theme.fn.size({ size: offset, sizes: theme.spacing });
-    const rejected = getSharedColorScheme({ color: 'red', theme, variant: 'light' });
-    const accepted = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'light' });
+    const rejected = theme.fn.variant({ color: 'red', variant: 'light' });
+    const accepted = theme.fn.variant({ color: theme.primaryColor, variant: 'light' });
 
     return {
       root: {

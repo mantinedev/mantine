@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSharedColorScheme,
-  MantineColor,
-  MantineTheme,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
 
 export type ActionIconVariant =
   | 'hover'
@@ -51,7 +45,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
     };
   }
 
-  const colors = getSharedColorScheme({ theme, color, variant });
+  const colors = theme.fn.variant({ color, variant });
 
   return {
     backgroundColor: colors.background,

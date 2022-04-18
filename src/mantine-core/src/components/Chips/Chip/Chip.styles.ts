@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  MantineSize,
-  getSharedColorScheme,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 
 export const sizes = {
   xs: 24,
@@ -91,7 +85,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
 
   iconWrapper: {
     ref: getRef('iconWrapper'),
-    color: theme.fn.themeColor(color, 6),
+    color: theme.fn.variant({ variant: 'filled', color }).background,
     width:
       theme.fn.size({ size, sizes: iconSizes }) +
       theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
@@ -128,15 +122,12 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
 
     [`&.${getRef('outline')}`]: {
-      border: `1px solid ${theme.fn.themeColor(color, 6)}`,
+      border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
     },
 
     [`&.${getRef('filled')}`]: {
       '&, &:hover': {
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? getSharedColorScheme({ color, theme, variant: 'light' }).background
-            : theme.fn.themeColor(color, 1),
+        backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
       },
     },
   },

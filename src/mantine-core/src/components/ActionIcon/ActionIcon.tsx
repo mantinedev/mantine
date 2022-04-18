@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineColor,
   PolymorphicComponentProps,
   PolymorphicRef,
@@ -74,7 +73,7 @@ export const ActionIcon: ActionIconComponent = forwardRef(
       { size, radius, color },
       { name: 'ActionIcon', classNames, styles }
     );
-    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
+    const colors = theme.fn.variant({ color, variant: 'light' });
 
     const loader = (
       <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
