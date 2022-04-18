@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { Modal, Group, Button, useMantineTheme } from '@mantine/core';
+import { Drawer, Group, Button, useMantineTheme } from '@mantine/core';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
-import { Modal, useMantineTheme } from '@mantine/core';
+import { Drawer, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
 
   return (
-    <Modal
+    <Drawer
       overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
       overlayOpacity={0.55}
       overlayBlur={3}
     >
-      {/* Modal content */}
-    </Modal>
+      {/* Drawer content */}
+    </Drawer>
   );
 }
 `;
@@ -26,19 +26,21 @@ function Demo() {
 
   return (
     <>
-      <Modal
+      <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
+        padding="xl"
+        size="xl"
         title="Introduce yourself!"
         overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
         overlayOpacity={0.55}
         overlayBlur={3}
       >
         <AuthenticationForm noPadding noShadow />
-      </Modal>
+      </Drawer>
 
       <Group position="center">
-        <Button onClick={() => setOpened(true)}>Open Modal</Button>
+        <Button onClick={() => setOpened(true)}>Open Drawer</Button>
       </Group>
     </>
   );

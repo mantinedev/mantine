@@ -68,11 +68,14 @@ export interface DrawerProps
   /** Removes overlay entirely */
   withOverlay?: boolean;
 
-  /** Sets overlay opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity, number from 0 to 1 */
   overlayOpacity?: number;
 
-  /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color, for example, #000 */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
 
   /** Drawer title, displayed in header before close button */
   title?: React.ReactNode;
@@ -119,6 +122,7 @@ const defaultProps: Partial<DrawerProps> = {
   withOverlay: true,
   withCloseButton: true,
   withinPortal: true,
+  overlayBlur: 0,
 };
 
 export function Drawer(props: DrawerProps) {
@@ -149,6 +153,7 @@ export function Drawer(props: DrawerProps) {
     styles,
     target,
     withinPortal,
+    overlayBlur,
     ...others
   } = useMantineDefaultProps('Drawer', defaultProps, props);
 
@@ -245,6 +250,7 @@ export function Drawer(props: DrawerProps) {
             {withOverlay && (
               <div style={transitionStyles.overlay}>
                 <Overlay
+                  blur={overlayBlur}
                   onMouseDown={() => closeOnClickOutside && onClose()}
                   className={classes.overlay}
                   opacity={_overlayOpacity}
