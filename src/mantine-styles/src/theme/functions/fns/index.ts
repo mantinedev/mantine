@@ -9,6 +9,7 @@ import { cover } from './cover/cover';
 import { darken } from './darken/darken';
 import { lighten } from './lighten/lighten';
 import { radius } from './radius/radius';
+import { variant } from './variant/variant';
 
 export const fns = {
   fontStyles,
@@ -24,4 +25,5 @@ export const fns = {
   darken,
   lighten,
   radius,
+  variant,
 } as const;
