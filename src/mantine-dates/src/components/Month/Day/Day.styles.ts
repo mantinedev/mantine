@@ -42,7 +42,7 @@ export default createStyles((theme, { size, fullWidth, hideOutsideDates }: DaySt
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       padding: 0,
       borderRadius: theme.radius.sm,
-      border: '1px dotted transparent',
+      border: 'none',
       cursor: 'pointer',
       userSelect: 'none',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
@@ -68,15 +68,12 @@ export default createStyles((theme, { size, fullWidth, hideOutsideDates }: DaySt
       },
 
       [`&.${inRange.ref}:not(:disabled)`]: {
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.3)
-            : theme.colors[theme.primaryColor][0],
+        backgroundColor: theme.fn.variant({ variant: 'light' }).background,
         borderRadius: 0,
       },
 
       [`&.${selected.ref}:not(:disabled)`]: {
-        backgroundColor: theme.colors[theme.primaryColor][6],
+        backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
         color: theme.white,
       },
 
