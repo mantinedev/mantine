@@ -4,3 +4,4 @@ export * from './Theme.demo.primary-color';
 export * from './Theme.demo.theme-colors-extend';
 export * from './Theme.demo.theme-fonts-extend';
 export * from './Theme.demo.provider-styles';
+export * from './Theme.demo.primary-shade';

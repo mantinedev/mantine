@@ -54,8 +54,11 @@ interface MantineTheme {
   // Object of arrays with 10 colors
   colors: Record<string, Tuple<string, 10>>;
 
-  // Should be key of theme.colors, cannot be actual color value
+  // Key of theme.colors
   primaryColor: string;
+
+  // Index of color from theme.colors that is considered primary
+  primaryShade: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
   // font-family and line-height used in most components
   fontFamily: string;
