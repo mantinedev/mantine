@@ -1,4 +1,5 @@
 import { createStyles, MantineTheme, MantineSize, MantineColor, CSSObject } from '@mantine/styles';
+import { applyHoverStyleForTouch } from '../../utils';
 
 export interface TextStylesParams {
   color: MantineColor;
@@ -87,12 +88,13 @@ export default createStyles(
         textTransform: transform,
         textAlign: align,
 
-        '&:hover':
+        ...applyHoverStyleForTouch(
           variant === 'link' && underline === undefined
             ? {
                 textDecoration: 'underline',
               }
-            : undefined,
+            : undefined
+        ),
       },
 
       gradient: {

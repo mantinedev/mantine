@@ -7,6 +7,7 @@ import {
   MantineTheme,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
+import { applyHoverStyleForTouch } from '../../utils';
 
 export type ButtonVariant =
   | 'filled'
@@ -112,10 +113,9 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
     backgroundColor: colors.background,
     backgroundImage: colors.background,
     color: colors.color,
-
-    '&:hover': {
+    ...applyHoverStyleForTouch({
       backgroundColor: colors.hover,
-    },
+    }),
   };
 }
 
@@ -173,9 +173,9 @@ export default createStyles(
         backgroundImage: gradient.background,
         color: gradient.color,
 
-        '&:hover': {
+        '&:hover': applyHoverStyleForTouch({
           backgroundSize: '200%',
-        },
+        }),
       },
 
       root: {
