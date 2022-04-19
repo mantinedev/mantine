@@ -7,7 +7,10 @@ export const MANTINE_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export const _DEFAULT_THEME: MantineThemeBase = {
   dir: 'ltr',
-  primaryShade: 6,
+  primaryShade: {
+    light: 6,
+    dark: 8,
+  },
   focusRing: 'auto',
   loader: 'oval',
   dateFormat: 'MMMM D, YYYY',

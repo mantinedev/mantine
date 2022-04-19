@@ -28,12 +28,18 @@ export default createStyles((theme, { color, size, disabled }: ThumbStyles) => (
     height: theme.fn.size({ sizes, size }) * 2,
     width: theme.fn.size({ sizes, size }) * 2,
     backgroundColor:
-      theme.colorScheme === 'dark' ? theme.fn.themeColor(color, theme.primaryShade) : theme.white,
+      theme.colorScheme === 'dark'
+        ? theme.fn.themeColor(color, theme.fn.primaryShade())
+        : theme.white,
     border: `4px solid ${
-      theme.colorScheme === 'dark' ? theme.white : theme.fn.themeColor(color, theme.primaryShade)
+      theme.colorScheme === 'dark'
+        ? theme.white
+        : theme.fn.themeColor(color, theme.fn.primaryShade())
     }`,
     color:
-      theme.colorScheme === 'dark' ? theme.white : theme.fn.themeColor(color, theme.primaryShade),
+      theme.colorScheme === 'dark'
+        ? theme.white
+        : theme.fn.themeColor(color, theme.fn.primaryShade()),
     transform: 'translate(-50%, -50%)',
     top: '50%',
     cursor: 'pointer',

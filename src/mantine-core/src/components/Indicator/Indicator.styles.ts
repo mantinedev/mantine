@@ -82,7 +82,11 @@ export default createStyles(
       paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       zIndex: getDefaultZIndex('overlay'),
-      backgroundColor: theme.fn.themeColor(color || theme.primaryColor, theme.primaryShade, false),
+      backgroundColor: theme.fn.themeColor(
+        color || theme.primaryColor,
+        theme.fn.primaryShade(),
+        false
+      ),
       border: withBorder
         ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
         : undefined,

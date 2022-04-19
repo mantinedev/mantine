@@ -91,10 +91,24 @@ function App() {
 
 ## Primary shade
 
-`theme.primaryShade` is used to determine which shade will be used for the components that have `color` prop,
-it defaults to 6. Note that for some variants with dark color scheme `primaryShade` will not be used as it will cause contrast issues.
+`theme.primaryShade` is used to determine which shade will be used for the components that have `color` prop.
+Note that for some variants with dark color scheme `primaryShade` will not be used as it will cause contrast issues.
 
 <Demo data={ThemeDemos.primaryShade} />
+
+`primaryShade` can also be customized for dark and light color scheme separately:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ primaryShade: { light: 6, dark: 8 } }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
 
 ## Spacing, radius and shadows
 

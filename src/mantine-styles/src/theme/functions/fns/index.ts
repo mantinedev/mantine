@@ -10,6 +10,7 @@ import { darken } from './darken/darken';
 import { lighten } from './lighten/lighten';
 import { radius } from './radius/radius';
 import { variant } from './variant/variant';
+import { primaryShade } from './primary-shade/primary-shade';
 
 export const fns = {
   fontStyles,
@@ -26,4 +27,5 @@ export const fns = {
   lighten,
   radius,
   variant,
+  primaryShade,
 } as const;

@@ -16,6 +16,20 @@ it defaults to 6. Note that for some variants with dark color scheme `primarySha
 
 <Demo data={ThemeDemos.primaryShade} />
 
+`primaryShade` can also be customized for dark and light color scheme separately:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ primaryShade: { light: 6, dark: 8 } }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Indicator component
 
 New [Indicator](https://mantine.dev/core/indicator/) component:

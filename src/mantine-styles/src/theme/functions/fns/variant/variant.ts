@@ -1,6 +1,7 @@
 import type { MantineColor, MantineGradient, MantineThemeBase } from '../../../types';
 import { rgba } from '../rgba/rgba';
 import { themeColor } from '../theme-color/theme-color';
+import { primaryShade } from '../primary-shade/primary-shade';
 
 export interface VariantInput {
   variant: 'filled' | 'light' | 'outline' | 'default' | 'gradient' | 'white' | 'subtle';
@@ -23,6 +24,7 @@ const DEFAULT_GRADIENT = {
 
 export function variant(theme: MantineThemeBase) {
   const getThemeColor = themeColor(theme);
+  const getPrimaryShade = primaryShade(theme);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   return ({ variant, color, gradient }: VariantInput): VariantOutput => {
@@ -38,7 +40,7 @@ export function variant(theme: MantineThemeBase) {
             ? theme.colorScheme === 'dark'
               ? theme.colors.dark[0]
               : theme.colors.dark[9]
-            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : theme.primaryShade),
+            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
           getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
           theme.colorScheme === 'dark' ? 0.45 : 0.65
@@ -59,16 +61,16 @@ export function variant(theme: MantineThemeBase) {
       return {
         border: 'transparent',
         background: theme.white,
-        color: getThemeColor(color, theme.primaryShade),
+        color: getThemeColor(color, getPrimaryShade()),
         hover: null,
       };
     }
 
     if (variant === 'outline') {
       return {
-        border: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : theme.primaryShade),
+        border: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : getPrimaryShade('light')),
         background: 'transparent',
-        color: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : theme.primaryShade),
+        color: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : getPrimaryShade('light')),
         hover:
           theme.colorScheme === 'dark'
             ? rgba(getThemeColor(color, 4), 0.05)
@@ -86,9 +88,9 @@ export function variant(theme: MantineThemeBase) {
       return {
         background: `linear-gradient(${merged.deg}deg, ${getThemeColor(
           merged.from,
-          theme.primaryShade,
+          getPrimaryShade(),
           false
-        )} 0%, ${getThemeColor(merged.to, theme.primaryShade, false)} 100%)`,
+        )} 0%, ${getThemeColor(merged.to, getPrimaryShade(), false)} 100%)`,
         color: theme.white,
         border: 'transparent',
         hover: null,
@@ -104,7 +106,7 @@ export function variant(theme: MantineThemeBase) {
             ? theme.colorScheme === 'dark'
               ? theme.colors.dark[0]
               : theme.colors.dark[9]
-            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : theme.primaryShade),
+            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
           getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
           theme.colorScheme === 'dark' ? 0.35 : 1
@@ -114,9 +116,9 @@ export function variant(theme: MantineThemeBase) {
 
     return {
       border: 'transparent',
-      background: getThemeColor(color, theme.primaryShade),
+      background: getThemeColor(color, getPrimaryShade()),
       color: theme.white,
-      hover: getThemeColor(color, theme.primaryShade === 9 ? 8 : theme.primaryShade + 1),
+      hover: getThemeColor(color, getPrimaryShade() === 9 ? 8 : getPrimaryShade() + 1),
     };
   };
 }

@@ -139,7 +139,7 @@ export default createStyles(
           borderRadius: dotSize,
           backgroundColor: theme.fn.themeColor(
             color,
-            theme.colorScheme === 'dark' ? 4 : theme.primaryShade
+            theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light')
           ),
           marginRight: dotSize,
         },
