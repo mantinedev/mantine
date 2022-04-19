@@ -18,6 +18,7 @@ export * from './Dialog.styles-api';
 export * from './Divider.styles-api';
 export * from './Drawer.styles-api';
 export * from './Image.styles-api';
+export * from './Indicator.styles-api';
 export * from './Input.styles-api';
 export * from './InputWrapper.styles-api';
 export * from './JsonInput.styles-api';

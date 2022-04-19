@@ -2,6 +2,8 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { DeepPartial } from './DeepPartial';
 import type { MantineThemeColors } from './MantineColor';
+import type { VariantInput, VariantOutput } from '../functions/fns/variant/variant';
+import type { ColorScheme } from './ColorScheme';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
@@ -9,6 +11,13 @@ export type MantineThemeOther = Record<string, any>;
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
   lineHeight: CSSProperties['lineHeight'];
+}
+
+type Shade = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+export interface MantinePrimaryShade {
+  light: Shade;
+  dark: Shade;
 }
 
 interface MantineThemeFunctions {
@@ -25,15 +34,18 @@ interface MantineThemeFunctions {
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
   radius(size: MantineNumberSize | (string & {})): string | number;
+  variant(payload: VariantInput): VariantOutput;
+  primaryShade(colorScheme?: ColorScheme): Shade;
 }
 
 export interface MantineTheme {
   dir: 'ltr' | 'rtl';
+  primaryShade: Shade | MantinePrimaryShade;
   focusRing: 'auto' | 'always' | 'never';
   defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;
   dateFormat: string;
-  colorScheme: 'light' | 'dark';
+  colorScheme: ColorScheme;
   white: string;
   black: string;
   colors: MantineThemeColors;

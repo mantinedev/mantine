@@ -1,0 +1,47 @@
+---
+group: 'changelog'
+title: 'Version 4.2.0'
+order: 1
+slug: /changelog/4-2-0/
+release: https://github.com/mantinedev/mantine/releases/tag/4.2.0
+date: 'March 29th, 2022'
+---
+
+import { ThemeDemos, IndicatorDemos, CalendarDemos, ModalDemos } from '@mantine/demos';
+
+## primaryShade on theme
+
+New `theme.primaryShade` property is used to determine which shade will be used for the components that have `color` prop,
+it defaults to 6. Note that for some variants with dark color scheme `primaryShade` will not be used as it will cause contrast issues.
+
+<Demo data={ThemeDemos.primaryShade} />
+
+`primaryShade` can also be customized for dark and light color scheme separately:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ primaryShade: { light: 6, dark: 8 } }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+## Indicator component
+
+New [Indicator](https://mantine.dev/core/indicator/) component:
+
+<Demo data={IndicatorDemos.configurator} />
+
+## New features
+
+[Calendar](https://mantine.dev/dates/caledar/) component now supports multiple selected dates:
+
+<Demo data={CalendarDemos.multiple} />
+
+[Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components now support setting overlay blur:
+
+<Demo data={ModalDemos.overlay} />

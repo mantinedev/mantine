@@ -30,10 +30,7 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   amountOfMonths?: number;
 
   /** Selected value */
-  value?: Date | null;
-
-  /** Called when day is selected */
-  onChange?(value: Date): void;
+  value?: Date | Date[] | null;
 
   /** Calendar size */
   size?: MantineSize;
@@ -54,7 +51,7 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   renderDay?(date: Date): React.ReactNode;
 
   /** Called when day is selected */
-  onChange?(value: Date): void;
+  onChange?(value: Date | Date[]): void;
 
   /** Called when onMouseEnter event fired on day button */
   onDayMouseEnter?(date: Date, event: React.MouseEvent): void;

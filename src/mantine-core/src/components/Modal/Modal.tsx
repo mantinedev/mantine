@@ -42,11 +42,14 @@ export interface ModalProps
   /** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
   withCloseButton?: boolean;
 
-  /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity */
   overlayOpacity?: number;
 
-  /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
 
   /** Modal radius */
   radius?: MantineNumberSize;
@@ -106,6 +109,7 @@ const defaultProps: Partial<ModalProps> = {
   trapFocus: true,
   withCloseButton: true,
   withinPortal: true,
+  overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
 };
 
@@ -137,6 +141,7 @@ export function Modal(props: ModalProps) {
     target,
     withinPortal,
     zIndex,
+    overlayBlur,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useUuid(id);
@@ -240,6 +245,7 @@ export function Modal(props: ModalProps) {
                   sx={{ position: 'fixed' }}
                   zIndex={0}
                   onMouseDown={() => closeOnClickOutside && onClose()}
+                  blur={overlayBlur}
                   color={
                     overlayColor ||
                     (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)

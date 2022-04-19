@@ -11,7 +11,8 @@ function Demo() {
   return (
     <Modal
       overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-      overlayOpacity={0.95}
+      overlayOpacity={0.55}
+      overlayBlur={3}
     >
       {/* Modal content */}
     </Modal>
@@ -30,7 +31,8 @@ function Demo() {
         onClose={() => setOpened(false)}
         title="Introduce yourself!"
         overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-        overlayOpacity={0.95}
+        overlayOpacity={0.55}
+        overlayBlur={3}
       >
         <AuthenticationForm noPadding noShadow />
       </Modal>

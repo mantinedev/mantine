@@ -3,7 +3,6 @@ import {
   MantineSize,
   MantineNumberSize,
   MantineSizes,
-  getSharedColorScheme,
   MantineColor,
   MantineTheme,
 } from '@mantine/styles';
@@ -106,11 +105,7 @@ interface GetVariantStyles {
 }
 
 function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
-  const colors = getSharedColorScheme({
-    theme,
-    color,
-    variant,
-  });
+  const colors = theme.fn.variant({ color, variant });
 
   return {
     border: `1px solid ${colors.border}`,
@@ -139,8 +134,7 @@ export default createStyles(
     }: ButtonStylesParams,
     getRef
   ) => {
-    const gradient = getSharedColorScheme({
-      theme,
+    const gradient = theme.fn.variant({
       color,
       variant: 'gradient',
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },

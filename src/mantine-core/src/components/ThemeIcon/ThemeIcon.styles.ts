@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSharedColorScheme,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient' | 'outline';
 
@@ -30,10 +25,9 @@ export default createStyles(
     theme,
     { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStylesParams
   ) => {
-    const colors = getSharedColorScheme({
-      theme,
-      color,
+    const colors = theme.fn.variant({
       variant,
+      color,
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });
 

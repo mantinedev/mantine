@@ -3,7 +3,6 @@ import {
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineGradient,
   MantineColor,
   ClassNames,
@@ -120,7 +119,7 @@ export const Button: ButtonComponent = forwardRef(
       },
       { classNames, styles, name: 'Button' }
     );
-    const colors = getSharedColorScheme({ color, theme, variant });
+    const colors = theme.fn.variant({ color, variant });
     const loader = (
       <Loader
         color={colors.color}
