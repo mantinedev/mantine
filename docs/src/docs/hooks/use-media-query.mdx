@@ -16,12 +16,39 @@ import { HooksDemos } from '@mantine/demos';
 ## Usage
 
 use-media-query hook allows to subscribe to media queries.
-It receives media query as an argument and returns true
-if given media query matches current state.
+It receives media query as an argument and returns true if given media query matches current state.
 Hook relies on `window.matchMedia()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
-and will always return false if api is not available (e.g. during server side rendering).
+and will return false if api is not available unless initial value is provided in the second argument.
 
-Hook takes media query as first argument and returns true if query is satisfied.
 Resize browser window to trigger `window.matchMedia` event:
 
 <Demo data={HooksDemos.useMediaQueryDemo} />
+
+## Server Side Rendering
+
+When rendering a component on the server that uses useMediaQuery, it is important to pass the second argument `initialValue`,
+without it the server may generate html that cannot be correctly hydrated on client.
+
+For example, the server will generate the html for clients using a smaller device.
+After the hydration, the hook will render again and return the result of the media query:
+
+```tsx
+import { Badge } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  const matches = useMediaQuery('(min-width: 900px)', false);
+
+  return (
+    <Badge color={matches ? 'teal' : 'red'} variant="filled">
+      Breakpoint {matches ? 'matches' : 'does not match'}
+    </Badge>
+  );
+}`
+```
+
+## Definition
+
+```tsx
+function useMediaQuery(query: string, initialValue?: boolean): boolean;
+```

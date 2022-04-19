@@ -4,7 +4,7 @@ import { MantineProvider } from '@mantine/styles';
 import { StylesAPIStory } from '@mantine/storybook';
 import { Anchor } from './Anchor';
 
-storiesOf('@mantine/core/Anchor', module)
+storiesOf('Anchor', module)
   .add('Styles API', () => (
     <StylesAPIStory component={Anchor} name="Anchor" props={{ children: 'Anchor' }} />
   ))

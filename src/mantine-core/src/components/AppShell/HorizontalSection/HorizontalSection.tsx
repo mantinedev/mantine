@@ -89,6 +89,7 @@ export const HorizontalSection: HorizontalSectionComponent = forwardRef<
         position,
         hiddenBreakpoint,
         zIndex: ctx.zIndex || zIndex,
+        section,
       },
       { classNames, styles, name: __staticSelector }
     );

@@ -82,6 +82,21 @@ const [value, setValue] = useLocalStorage({
 });
 ```
 
+## Usage with superjson
+
+[superjson](https://github.com/blitz-js/superjson) is compatible with `JSON.stringify`/`JSON.parse` but works for Date, Map, Set and BigInt:
+
+```tsx
+import superjson from 'superjson';
+
+const [value, setValue] = useLocalStorage({
+  key,
+  defaultValue,
+  serialize: superjson.stringify,
+  deserialize: (str) => (str === undefined ? defaultValue : superjson.parse(str)),
+});
+```
+
 ## TypeScript
 
 ### Definition

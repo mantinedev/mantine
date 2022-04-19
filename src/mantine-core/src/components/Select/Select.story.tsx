@@ -119,7 +119,7 @@ function DynamicLabels(props: Partial<SelectProps>) {
   );
 }
 
-storiesOf('@mantine/core/Select/stories', module)
+storiesOf('Select', module)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
@@ -331,6 +331,26 @@ storiesOf('@mantine/core/Select/stories', module)
         defaultValue="React"
         label="Do not filter (default)"
         searchable
+      />
+    </div>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Search in first select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <Select
+        label="Tab directly to next select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
       />
     </div>
   ));

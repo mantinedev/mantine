@@ -41,4 +41,4 @@ function Example() {
   );
 }
 
-storiesOf('@mantine/hooks/use-uncontrolled', module).add('Usage', () => <Example />);
+storiesOf('Hooks/use-uncontrolled', module).add('Usage', () => <Example />);

@@ -53,7 +53,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/core/Chips/stories', module)
+storiesOf('Chips', module)
   .add('Sizes', () => (
     <Group style={{ padding: 40 }} direction="column">
       <Chip value="1" size="xs">

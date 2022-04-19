@@ -14,7 +14,7 @@ function Controlled(
   return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
 }
 
-storiesOf('@mantine/core/NumberInput/stories', module)
+storiesOf('NumberInput', module)
   .add('Sizes', () => <div style={{ padding: 40, maxWidth: 400 }}>{sizes}</div>)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>

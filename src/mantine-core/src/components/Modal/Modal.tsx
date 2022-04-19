@@ -179,6 +179,8 @@ export function Modal(props: ModalProps) {
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
         mounted={opened}
+        duration={transitionDuration}
+        exitDuration={transitionDuration}
         transitions={{
           modal: { duration: transitionDuration, transition },
           overlay: {
@@ -189,7 +191,7 @@ export function Modal(props: ModalProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box className={cx(classes.root, className)} {...others}>
+          <Box id={baseId} className={cx(classes.root, className)} {...others}>
             <div
               className={classes.inner}
               onKeyDownCapture={(event) => {

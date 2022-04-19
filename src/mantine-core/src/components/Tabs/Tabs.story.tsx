@@ -34,7 +34,7 @@ function Dynamic() {
   );
 }
 
-storiesOf('@mantine/core/Tabs/stories', module)
+storiesOf('Tabs', module)
   .add('Dynamic children', () => <Dynamic />)
   .add('Controlled', () => <Controlled />)
   .add('Disabled', () => (

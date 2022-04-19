@@ -118,7 +118,7 @@ export default createStyles(
       root: {
         position: 'relative',
         display: fullWidth || vertical ? 'flex' : 'inline-flex',
-        width: vertical && !fullWidth ? 'max-content' : 'inherit',
+        width: vertical && !fullWidth ? 'max-content' : 'auto',
         flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
         borderRadius: theme.fn.radius(radius),
@@ -134,6 +134,19 @@ export default createStyles(
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },
+        borderRadius: theme.fn.radius(radius),
+        boxShadow: shouldAnimate
+          ? color || theme.colorScheme === 'dark'
+            ? 'none'
+            : theme.shadows.xs
+          : undefined,
+        backgroundColor: shouldAnimate
+          ? color in theme.colors
+            ? theme.fn.themeColor(color, 6)
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[5]
+            : theme.white
+          : undefined,
       },
 
       labelActive: {

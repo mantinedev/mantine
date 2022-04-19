@@ -48,7 +48,7 @@ const customLoader = (
   </svg>
 );
 
-storiesOf('@mantine/core/LoadingOverlay/stories', module)
+storiesOf('LoadingOverlay', module)
   .add('General usage', () => <LoadingOverlayDemo />)
   .add('Custom Loader props', () => (
     <MantineProvider theme={{ loader: 'bars' }}>

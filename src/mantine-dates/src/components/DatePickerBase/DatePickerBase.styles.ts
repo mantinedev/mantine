@@ -5,7 +5,7 @@ interface DatePickerBaseStyles {
   invalid: boolean;
 }
 
-export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => ({
+export default createStyles((theme, { size, invalid }: DatePickerBaseStyles, getRef) => ({
   wrapper: {
     ...theme.fn.fontStyles(),
     position: 'relative',
@@ -37,9 +37,14 @@ export default createStyles((theme, { size, invalid }: DatePickerBaseStyles) => 
   input: {
     cursor: 'pointer',
     whiteSpace: 'nowrap',
+
+    [`&:not(.${getRef('freeInput')})::selection`]: {
+      backgroundColor: 'transparent',
+    },
   },
 
   freeInput: {
+    ref: getRef('freeInput'),
     cursor: 'text',
   },
 

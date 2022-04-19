@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, forwardRef } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useLayoutEffect } from 'react';
 import {
   useReducedMotion,
   useResizeObserver,
@@ -98,6 +98,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const data = _data.map((item: any) =>
     typeof item === 'string' ? { label: item, value: item } : item
   );
+  const mounted = useRef<Boolean>();
 
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [_value, handleValueChange] = useUncontrolled({
@@ -131,6 +132,15 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const [observerRef, containerRect] = useResizeObserver();
 
+  useLayoutEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      setShouldAnimate(false);
+    } else {
+      setShouldAnimate(true);
+    }
+  });
+
   useEffect(() => {
     if (_value in refs.current && observerRef.current) {
       const element = refs.current[_value];
@@ -153,10 +163,6 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       });
     }
   }, [_value, containerRect]);
-
-  useEffect(() => {
-    setShouldAnimate(true);
-  }, []);
 
   const controls = data.map((item) => (
     <div
@@ -191,7 +197,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
 
   return (
     <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
-      {!!_value && (
+      {!!_value && shouldAnimate && (
         <Box
           component="span"
           className={classes.active}

@@ -72,7 +72,7 @@ function Demo() {
   );
 }
 
-storiesOf('@mantine/modals', module).add('Custom modal', () => (
+storiesOf('Modals Manager', module).add('Custom modal', () => (
   <ModalsProvider
     modals={{
       hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {

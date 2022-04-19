@@ -16,7 +16,7 @@ const sizes = MANTINE_SIZES.map((size) => (
   <WrappedMonth size={size} key={size} style={{ marginTop: 30 }} />
 ));
 
-storiesOf('@mantine/dates/Month/stories', module)
+storiesOf('Month', module)
   .add('First day of the week - Sunday', () => (
     <div style={{ maxWidth: 240, padding: 40 }}>
       <Month

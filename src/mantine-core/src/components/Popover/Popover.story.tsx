@@ -42,7 +42,7 @@ function WithinModal() {
   );
 }
 
-storiesOf('@mantine/core/Popover/stories', module)
+storiesOf('Popover', module)
   .add('Focus behavior', () => (
     <div style={{ padding: 100 }}>
       <Wrapper />

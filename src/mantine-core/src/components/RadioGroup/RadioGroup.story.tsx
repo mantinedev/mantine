@@ -29,7 +29,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/core/RadioGroup/stories', module)
+storiesOf('RadioGroup', module)
   .add('Usage', () => (
     <RadioGroup p="xl">
       <Radio label="React" value="1" />

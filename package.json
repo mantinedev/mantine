@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "4.1.2",
+  "version": "4.1.4",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -99,7 +99,7 @@
     "jest": "^27.4.5",
     "jest-axe": "^4.1.0",
     "new-github-release-url": "^1.0.0",
-    "next": "^12.0.7",
+    "next": "^12.1.4",
     "open": "^8.2.0",
     "prettier": "^2.4.1",
     "react-beautiful-dnd": "^13.1.0",

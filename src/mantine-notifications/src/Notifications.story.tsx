@@ -110,7 +110,7 @@ function NotificationsDemo() {
   );
 }
 
-storiesOf('@mantine/notifications', module)
+storiesOf('Notifications System', module)
   .add('bottom-right (default)', () => (
     <React.StrictMode>
       <MantineProvider>

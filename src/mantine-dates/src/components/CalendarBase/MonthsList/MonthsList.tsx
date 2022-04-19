@@ -27,6 +27,8 @@ export interface MonthsListProps
   nextMonthLabel?: string;
   previousMonthLabel?: string;
   labelFormat?: string;
+  weekdayLabelFormat?: string;
+  renderDay?(date: Date): React.ReactNode;
 }
 
 export function MonthsList({
@@ -47,7 +49,9 @@ export function MonthsList({
   nextMonthLabel,
   previousMonthLabel,
   labelFormat,
+  weekdayLabelFormat,
   preventFocus,
+  renderDay,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -94,6 +98,8 @@ export function MonthsList({
             locale={locale}
             focusable={index === 0}
             preventFocus={preventFocus}
+            renderDay={renderDay}
+            weekdayLabelFormat={weekdayLabelFormat}
             {...others}
           />
         </div>

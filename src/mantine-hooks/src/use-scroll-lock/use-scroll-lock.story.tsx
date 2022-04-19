@@ -23,4 +23,4 @@ function Example() {
   );
 }
 
-storiesOf('@mantine/hooks/use-scroll-lock', module).add('Usage', () => <Example />);
+storiesOf('Hooks/use-scroll-lock', module).add('Usage', () => <Example />);
