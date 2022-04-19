@@ -57,8 +57,8 @@ interface MantineTheme {
   // Key of theme.colors
   primaryColor: string;
 
-  // Index of color from theme.colors that is considered primary
-  primaryShade: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+  // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  primaryShade: Shade | { light: Shade; dark: Shade };
 
   // font-family and line-height used in most components
   fontFamily: string;
