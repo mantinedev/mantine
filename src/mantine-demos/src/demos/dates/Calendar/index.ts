@@ -9,3 +9,4 @@ export { stylesApi } from './Calendar.demo.stylesApi';
 export { format } from './Calendar.demo.format';
 export { multipleMonths } from './Calendar.demo.multipleMonths';
 export { noLevel } from './Calendar.demo.noLevel';
+export { multiple } from './Calendar.demo.multiple';

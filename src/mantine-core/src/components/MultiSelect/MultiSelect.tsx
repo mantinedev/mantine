@@ -86,6 +86,9 @@ export interface MultiSelectProps
 
   /** Select highlighted item on blur */
   selectOnBlur?: boolean;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export function defaultFilter(value: string, selected: boolean, item: SelectItem) {
@@ -121,6 +124,7 @@ const defaultProps: Partial<MultiSelectProps> = {
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
+  clearButtonTabIndex: 0,
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
@@ -185,6 +189,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      clearButtonTabIndex,
+      form,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -291,13 +297,14 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [searchValue]);
 
     useDidUpdate(() => {
-      //using greater than equal to take into account creatable type.
-      if (!disabled && _value.length >= data.length) setDropdownOpened(false);
+      if (!disabled && _value.length >= data.length) {
+        setDropdownOpened(false);
+      }
 
-      //for controlled input scenarios
-      if (!!maxSelectedValues && _value.length < maxSelectedValues) valuesOverflow.current = false;
-      /*preventing the dropdown opening on backspace while controlled
-      where values length is greater than maxSelectedValues. */
+      if (!!maxSelectedValues && _value.length < maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
+
       if (!!maxSelectedValues && _value.length >= maxSelectedValues) {
         valuesOverflow.current = true;
         setDropdownOpened(false);
@@ -555,7 +562,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           tabIndex={-1}
           ref={wrapperRef}
         >
-          <input type="hidden" name={name} value={_value.join(',')} />
+          <input type="hidden" name={name} value={_value.join(',')} form={form} />
 
           <Input<'div'>
             __staticSelector="MultiSelect"
@@ -589,6 +596,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               onClear: handleClear,
               error,
               disabled,
+              clearButtonTabIndex,
             })}
           >
             <div className={classes.values}>

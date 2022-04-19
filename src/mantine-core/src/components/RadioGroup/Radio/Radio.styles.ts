@@ -17,6 +17,7 @@ export const sizes = {
 export default createStyles(
   (theme, { size, color, transitionDuration }: RadioStylesParams, getRef) => {
     const labelDisabled = { ref: getRef('labelDisabled') } as const;
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       labelDisabled,
@@ -65,8 +66,8 @@ export default createStyles(
         transitionDuration: `${transitionDuration}ms`,
 
         '&:checked': {
-          background: theme.fn.themeColor(color, 6),
-          borderColor: theme.fn.themeColor(color, 6),
+          background: colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,

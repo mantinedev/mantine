@@ -64,7 +64,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
     } = useMantineDefaultProps('Notification', {}, props);
 
     const { classes, cx } = useStyles(
-      { color, radius, disallowClose },
+      { color, radius },
       { classNames, styles, name: 'Notification' }
     );
     const withIcon = icon || loading;

@@ -18,6 +18,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       lighten: fns.lighten,
       darken: fns.darken,
       radius: fns.radius(themeBase),
+      variant: fns.variant(themeBase),
     },
   };
 }

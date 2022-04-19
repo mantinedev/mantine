@@ -19,8 +19,8 @@ interface GetDayProps {
   maxDate: Date;
   minDate: Date;
 
-  /** Currently selected date */
-  value: Date;
+  /** Currently selected date or an array of dates */
+  value: Date | Date[];
 
   /** Function to determine if date should be excluded */
   excludeDate(date: Date): boolean;
@@ -44,7 +44,9 @@ export function getDayProps({
   range,
 }: GetDayProps): DayModifiers {
   const outside = isOutside(date, month);
-  const selected = hasValue && isSameDate(date, value);
+  const selected =
+    hasValue &&
+    (Array.isArray(value) ? value.some((val) => isSameDate(val, date)) : isSameDate(date, value));
   const { inRange, lastInRange, firstInRange, selectedInRange } = getRangeProps(date, range);
 
   return {

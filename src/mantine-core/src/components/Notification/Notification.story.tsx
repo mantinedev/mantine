@@ -146,8 +146,33 @@ const demo = (
         doloremque. Cumque.
       </Notification>
 
+      <Notification
+        color="orange"
+        onClose={() => {}}
+        mt="xl"
+        icon={<FaceIcon />}
+        title="NotificationWithIconAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
+      >
+        NotificationWithIconAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
+      </Notification>
+
+      <Notification
+        color="pink"
+        onClose={() => {}}
+        disallowClose
+        mt="xl"
+        icon={<FaceIcon />}
+        title="NotificationWithIconDisallowCloseAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
+      >
+        NotificationWithIconDisallowCloseAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
+      </Notification>
+
       <Notification color="grape" onClose={() => {}} mt="xl">
         Notification without title
+      </Notification>
+
+      <Notification color="grape" onClose={() => {}} mt="xl">
+        NotificationWithoutTitleAndTheDescriptionSoLargeThatItShouldUseOverflowEllipsis
       </Notification>
 
       <Notification color="pink" onClose={() => {}} mt="xl" icon={<CheckIcon />}>

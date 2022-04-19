@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineSize,
-  MantineNumberSize,
-  getSharedColorScheme,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineSize, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export interface BadgeStylesParams {
   color: MantineColor;
@@ -59,11 +53,10 @@ export default createStyles(
   ) => {
     const dotSize = theme.fn.size({ size, sizes: dotSizes });
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
-    const lightColors = getSharedColorScheme({ color, theme, variant: 'light' });
-    const filledColors = getSharedColorScheme({ theme, color, variant: 'filled' });
-    const outlineColors = getSharedColorScheme({ theme, color, variant: 'outline' });
-    const gradientColors = getSharedColorScheme({
-      theme,
+    const lightColors = theme.fn.variant({ color, variant: 'light' });
+    const filledColors = theme.fn.variant({ color, variant: 'filled' });
+    const outlineColors = theme.fn.variant({ color, variant: 'outline' });
+    const gradientColors = theme.fn.variant({
       variant: 'gradient',
       gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
     });

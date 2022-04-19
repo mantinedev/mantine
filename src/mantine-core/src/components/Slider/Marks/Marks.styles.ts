@@ -23,7 +23,7 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
     width: theme.fn.size({ sizes, size }),
     borderRadius: 1000,
     transform: `translateX(-${theme.fn.size({ sizes, size }) / 2}px)`,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.white,
+    backgroundColor: theme.white,
   },
 
   markFilled: {
@@ -31,7 +31,7 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
       ? theme.colorScheme === 'dark'
         ? theme.colors.dark[3]
         : theme.colors.gray[4]
-      : theme.fn.themeColor(color, 6),
+      : theme.fn.variant({ variant: 'filled', color }).background,
   },
 
   markLabel: {
@@ -39,5 +39,6 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     marginTop: theme.spacing.xs / 2,
+    whiteSpace: 'nowrap',
   },
 }));

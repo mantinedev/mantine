@@ -15,7 +15,7 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
-Hook accepts an array with hotkey and handler tuples:
+use-hotkeys accepts an array of hotkeys and handler tuples:
 
 - `hotkey` - hotkey string e.g. `ctrl+E`, `shift+alt+L`, `mod+S`
 - `handler` - event handler called when given combination was pressed
@@ -54,5 +54,5 @@ which should be used with `onKeyDown`:
 ## Definition
 
 ```tsx
-function useHotkeys(hotkey: string, handler: (event: KeyboardEvent) => void): void;
+function useHotkeys(hotKeyItem: Array<[hotkey: string, handler: (event: KeyboardEvent) => void]>): void;
 ```

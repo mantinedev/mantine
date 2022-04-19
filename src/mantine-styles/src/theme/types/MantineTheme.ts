@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { DeepPartial } from './DeepPartial';
 import type { MantineThemeColors } from './MantineColor';
+import type { VariantInput, VariantOutput } from '../functions/fns/variant/variant';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
@@ -25,6 +26,7 @@ interface MantineThemeFunctions {
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
   radius(size: MantineNumberSize | (string & {})): string | number;
+  variant(payload: VariantInput): VariantOutput;
 }
 
 export interface MantineTheme {

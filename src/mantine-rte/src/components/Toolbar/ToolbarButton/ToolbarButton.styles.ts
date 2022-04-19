@@ -1,11 +1,12 @@
-import { createStyles, getSharedColorScheme } from '@mantine/core';
+import { createStyles } from '@mantine/core';
 
 interface ToolbarButtonStyles {
   noActive: boolean;
 }
 
 export default createStyles((theme, { noActive }: ToolbarButtonStyles) => {
-  const colors = getSharedColorScheme({ color: theme.primaryColor, variant: 'light', theme });
+  const colors = theme.fn.variant({ color: theme.primaryColor, variant: 'light' });
+
   return {
     control: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,

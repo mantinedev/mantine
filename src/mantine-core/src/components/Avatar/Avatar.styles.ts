@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  MantineColor,
-  getSharedColorScheme,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 
 export interface AvatarStylesParams {
   size: MantineNumberSize;
@@ -19,44 +14,47 @@ export const sizes = {
   xl: 84,
 };
 
-export default createStyles((theme, { size, radius, color }: AvatarStylesParams) => ({
-  root: {
-    ...theme.fn.focusStyles(),
-    WebkitTapHighlightColor: 'transparent',
-    boxSizing: 'border-box',
-    position: 'relative',
-    userSelect: 'none',
-    overflow: 'hidden',
-    width: theme.fn.size({ size, sizes }),
-    minWidth: theme.fn.size({ size, sizes }),
-    height: theme.fn.size({ size, sizes }),
-    borderRadius: theme.fn.radius(radius),
-  },
+export default createStyles((theme, { size, radius, color }: AvatarStylesParams) => {
+  const colors = theme.fn.variant({ variant: 'light', color });
+  return {
+    root: {
+      ...theme.fn.focusStyles(),
+      WebkitTapHighlightColor: 'transparent',
+      boxSizing: 'border-box',
+      position: 'relative',
+      userSelect: 'none',
+      overflow: 'hidden',
+      width: theme.fn.size({ size, sizes }),
+      minWidth: theme.fn.size({ size, sizes }),
+      height: theme.fn.size({ size, sizes }),
+      borderRadius: theme.fn.radius(radius),
+    },
 
-  image: {
-    objectFit: 'cover',
-    width: '100%',
-    height: '100%',
-    display: 'block',
-  },
+    image: {
+      objectFit: 'cover',
+      width: '100%',
+      height: '100%',
+      display: 'block',
+    },
 
-  placeholder: {
-    ...theme.fn.fontStyles(),
-    fontSize: theme.fn.size({ size, sizes }) / 2.5,
-    color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
-    fontWeight: 700,
-    backgroundColor: getSharedColorScheme({ theme, color, variant: 'light' }).background,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    userSelect: 'none',
-  },
+    placeholder: {
+      ...theme.fn.fontStyles(),
+      fontSize: theme.fn.size({ size, sizes }) / 2.5,
+      color: colors.color,
+      fontWeight: 700,
+      backgroundColor: colors.background,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      height: '100%',
+      userSelect: 'none',
+    },
 
-  placeholderIcon: {
-    width: '70%',
-    height: '70%',
-    color: getSharedColorScheme({ theme, color, variant: 'light' }).color,
-  },
-}));
+    placeholderIcon: {
+      width: '70%',
+      height: '70%',
+      color: colors.color,
+    },
+  };
+});

@@ -107,6 +107,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       <>
         <input
           type="text"
+          inputMode="numeric"
           ref={useMergedRef(inputRef, ref)}
           onChange={handleChange}
           onClick={handleClick}

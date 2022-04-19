@@ -131,6 +131,9 @@ export interface SelectProps
 
   /** Should data be filtered when search value exactly matches selected item */
   filterDataOnExactSearchMatch?: boolean;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -161,6 +164,7 @@ const defaultProps: Partial<SelectProps> = {
   switchDirectionOnFlip: false,
   filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
+  clearButtonTabIndex: 0,
 };
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
@@ -220,6 +224,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     labelProps,
     placeholder,
     filterDataOnExactSearchMatch,
+    clearButtonTabIndex,
+    form,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -568,7 +574,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
-        <input type="hidden" name={name} value={_value || ''} />
+        <input type="hidden" name={name} value={_value || ''} form={form} />
 
         <Input<'input'>
           autoComplete="nope"
@@ -608,6 +614,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             clearButtonLabel,
             onClear: handleClear,
             error,
+            clearButtonTabIndex,
           })}
         />
 

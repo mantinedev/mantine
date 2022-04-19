@@ -26,6 +26,7 @@ export default createStyles(
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       stepLoader: {},
@@ -68,14 +69,14 @@ export default createStyles(
 
       stepProgress: {
         [`& .${getRef('stepIcon')}`]: {
-          borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
+          borderColor: colors.background,
         },
       },
 
       stepCompleted: {
         [`& .${getRef('stepIcon')}`]: {
-          backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
-          borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
           color: theme.white,
         },
       },
