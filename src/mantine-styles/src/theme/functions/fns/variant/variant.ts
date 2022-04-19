@@ -114,7 +114,7 @@ export function variant(theme: MantineThemeBase) {
 
     return {
       border: 'transparent',
-      background: getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 6),
+      background: getThemeColor(color, 6),
       color: theme.white,
       hover: getThemeColor(color, 7),
     };
