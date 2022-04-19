@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState, forwardRef, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import {
   useReducedMotion,
   useResizeObserver,
   useUncontrolled,
   useUuid,
   useMergedRef,
+  useIsomorphicEffect,
 } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -132,7 +133,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const [observerRef, containerRect] = useResizeObserver();
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
       setShouldAnimate(false);
