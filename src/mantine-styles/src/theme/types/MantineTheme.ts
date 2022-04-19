@@ -31,6 +31,7 @@ interface MantineThemeFunctions {
 
 export interface MantineTheme {
   dir: 'ltr' | 'rtl';
+  primaryShade: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   focusRing: 'auto' | 'always' | 'never';
   defaultRadius: MantineNumberSize | (string & {});
   loader: LoaderType;

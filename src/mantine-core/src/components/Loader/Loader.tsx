@@ -60,7 +60,7 @@ export function Loader(props: LoaderProps) {
       size={theme.fn.size({ size, sizes: LOADER_SIZES })}
       color={
         _color in theme.colors
-          ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : 6)
+          ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : theme.primaryShade)
           : color
       }
       {...others}

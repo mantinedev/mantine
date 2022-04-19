@@ -38,7 +38,7 @@ export function variant(theme: MantineThemeBase) {
             ? theme.colorScheme === 'dark'
               ? theme.colors.dark[0]
               : theme.colors.dark[9]
-            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
+            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : theme.primaryShade),
         hover: rgba(
           getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
           theme.colorScheme === 'dark' ? 0.45 : 0.65
@@ -59,16 +59,16 @@ export function variant(theme: MantineThemeBase) {
       return {
         border: 'transparent',
         background: theme.white,
-        color: getThemeColor(color, 6),
+        color: getThemeColor(color, theme.primaryShade),
         hover: null,
       };
     }
 
     if (variant === 'outline') {
       return {
-        border: rgba(getThemeColor(color, theme.colorScheme === 'dark' ? 4 : 7), 0.75),
+        border: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : theme.primaryShade),
         background: 'transparent',
-        color: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+        color: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : theme.primaryShade),
         hover:
           theme.colorScheme === 'dark'
             ? rgba(getThemeColor(color, 4), 0.05)
@@ -86,9 +86,9 @@ export function variant(theme: MantineThemeBase) {
       return {
         background: `linear-gradient(${merged.deg}deg, ${getThemeColor(
           merged.from,
-          6,
+          theme.primaryShade,
           false
-        )} 0%, ${getThemeColor(merged.to, 6, false)} 100%)`,
+        )} 0%, ${getThemeColor(merged.to, theme.primaryShade, false)} 100%)`,
         color: theme.white,
         border: 'transparent',
         hover: null,
@@ -104,7 +104,7 @@ export function variant(theme: MantineThemeBase) {
             ? theme.colorScheme === 'dark'
               ? theme.colors.dark[0]
               : theme.colors.dark[9]
-            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : 6),
+            : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : theme.primaryShade),
         hover: rgba(
           getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
           theme.colorScheme === 'dark' ? 0.35 : 1
@@ -114,9 +114,9 @@ export function variant(theme: MantineThemeBase) {
 
     return {
       border: 'transparent',
-      background: getThemeColor(color, 6),
+      background: getThemeColor(color, theme.primaryShade),
       color: theme.white,
-      hover: getThemeColor(color, 7),
+      hover: getThemeColor(color, theme.primaryShade === 9 ? 8 : theme.primaryShade + 1),
     };
   };
 }
