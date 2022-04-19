@@ -1,4 +1,4 @@
-import { createStyles, CSSObject, getSharedColorScheme, MantineTheme } from '@mantine/styles';
+import { createStyles, CSSObject, MantineTheme } from '@mantine/styles';
 import { TabsStylesParams } from '../Tabs.types';
 
 interface TabStylesParams extends TabsStylesParams {
@@ -11,7 +11,7 @@ function getVariantStyles(
   { variant, orientation, color, radius, inverted }: TabStylesParams
 ): CSSObject {
   const vertical = orientation === 'vertical';
-  const filledScheme = getSharedColorScheme({ color, theme, variant: 'filled' });
+  const filledScheme = theme.fn.variant({ color, variant: 'filled' });
   const radiusValue = theme.fn.radius(radius);
   const borderRadius =
     orientation === 'vertical'
