@@ -46,6 +46,7 @@ export { useSetState } from './use-set-state/use-set-state';
 export { useInputState } from './use-input-state/use-input-state';
 export { useEventListener } from './use-event-listener/use-event-listener';
 export { useDisclosure } from './use-disclosure/use-disclosure';
+export { useFocusWithin } from './use-focus-within/use-focus-within';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
