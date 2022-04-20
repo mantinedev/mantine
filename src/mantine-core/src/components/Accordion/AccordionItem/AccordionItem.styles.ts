@@ -1,5 +1,4 @@
 import { createStyles } from '@mantine/styles';
-import { applyHoverStyleForTouch } from '../../../utils';
 
 export type AccordionIconPosition = 'right' | 'left';
 
@@ -74,7 +73,7 @@ export default createStyles(
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
-      ...applyHoverStyleForTouch({
+      ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       }),
     },

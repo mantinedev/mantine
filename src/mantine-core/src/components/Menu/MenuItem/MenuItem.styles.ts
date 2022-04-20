@@ -1,5 +1,4 @@
 import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
-import { applyHoverStyleForTouch } from '../../../utils';
 
 export interface MenuItemStylesParams {
   radius: MantineNumberSize;
@@ -34,7 +33,7 @@ export default createStyles((theme, { radius, color }: MenuItemStylesParams) => 
     },
   },
 
-  itemHovered: applyHoverStyleForTouch({
+  itemHovered: theme.fn.hover({
     backgroundColor: color
       ? theme.fn.variant({ variant: 'light', color }).background
       : theme.colorScheme === 'dark'

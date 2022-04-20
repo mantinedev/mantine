@@ -5,4 +5,3 @@ export { groupOptions, getGroupedOptions } from './group-options/group-options';
 export { getContextItemIndex } from './get-context-item-index/get-context-item-index';
 export { createUseContext } from './create-use-context/create-use-context';
 export { getInputMode } from './get-input-mode/get-input-mode';
-export { applyHoverStyleForTouch } from './apply-hover-style-for-touch/apply-hover-style-for-touch';

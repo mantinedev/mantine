@@ -1,5 +1,4 @@
 import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
-import { applyHoverStyleForTouch } from '../../../utils';
 
 export const sizes = {
   xs: 24,
@@ -69,7 +68,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     ref: getRef('outline'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
-    ...applyHoverStyleForTouch({
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
     }),
   },
@@ -79,7 +78,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     borderColor: 'transparent',
 
-    ...applyHoverStyleForTouch({
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     }),
   },
@@ -109,7 +108,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     cursor: 'not-allowed',
 
-    ...applyHoverStyleForTouch({
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     }),
 

@@ -1,5 +1,4 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
-import { applyHoverStyleForTouch } from '../../../utils';
 
 interface RenderListStyles {
   reversed: boolean;
@@ -33,7 +32,7 @@ export default createStyles((theme, { reversed, native, radius }: RenderListStyl
     },
   },
 
-  transferListItemHovered: applyHoverStyleForTouch({
+  transferListItemHovered: theme.fn.hover({
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
   }),
 
