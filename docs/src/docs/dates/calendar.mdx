@@ -30,6 +30,13 @@ Set `multiple` on Calendar component to allow multiple dates selection:
 
 <Demo data={CalendarDemos.multiple} />
 
+## Custom day renderer
+
+You can provide your own day renderer function with `renderDay` prop.
+For example, it can be used to wrap day with [Indicator](/core/indicator/):
+
+<Demo data={CalendarDemos.renderDay} />
+
 ## Controlled month
 
 Control month that is currently displayed with `month` and `onMonthChange` props:
