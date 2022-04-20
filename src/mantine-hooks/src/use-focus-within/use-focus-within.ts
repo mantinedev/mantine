@@ -45,8 +45,8 @@ export function useFocusWithin<T extends HTMLElement = any>({
       ref.current.addEventListener('focusout', handleFocusOut);
 
       return () => {
-        ref.current.removeEventListener('focusin', handleFocusIn);
-        ref.current.removeEventListener('focusout', handleFocusOut);
+        ref.current?.removeEventListener('focusin', handleFocusIn);
+        ref.current?.removeEventListener('focusout', handleFocusOut);
       };
     }
 
