@@ -52,9 +52,9 @@ export default createStyles((theme, { size, fullWidth, hideOutsideDates }: DaySt
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
       },
 
-      '&:hover': {
+      ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-      },
+      }),
 
       [`&.${weekend.ref}:not(:disabled)`]: {
         color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],

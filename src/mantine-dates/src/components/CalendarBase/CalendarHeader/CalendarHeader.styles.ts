@@ -43,16 +43,14 @@ export default createStyles((theme, { size }: CalendarHeaderStyles) => ({
     textAlign: 'center',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
-    '&:hover': {
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    },
+    }),
 
-    '&:disabled': {
-      '&:hover': {
-        backgroundColor: 'transparent',
-        cursor: 'default',
-      },
-    },
+    '&:disabled': theme.fn.hover({
+      backgroundColor: 'transparent',
+      cursor: 'default',
+    }),
   },
 
   calendarHeaderLevelIcon: {
