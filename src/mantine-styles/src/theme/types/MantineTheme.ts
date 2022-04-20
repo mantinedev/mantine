@@ -36,6 +36,7 @@ interface MantineThemeFunctions {
   radius(size: MantineNumberSize | (string & {})): string | number;
   variant(payload: VariantInput): VariantOutput;
   primaryShade(colorScheme?: ColorScheme): Shade;
+  hover(hoverStyle: any): any;
 }
 
 export interface MantineTheme {
