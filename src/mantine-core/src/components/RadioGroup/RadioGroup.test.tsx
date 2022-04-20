@@ -50,6 +50,18 @@ describe('@mantine/core/RadioGroup', () => {
     expect(withName.querySelector('input[type="radio"]').getAttribute('name')).toBe('test-name');
   });
 
+  it('has an accessible label', () => {
+    const radioGroup = render(
+      <RadioGroup label="Select a Framework">
+        <Radio value="mantine" label="Mantine" />
+        <Radio value="mui" label="MUI" />
+        <Radio value="chakra" label="ChakraUI" />
+      </RadioGroup>
+    );
+
+    expect(radioGroup.queryByLabelText('Select a Framework')).not.toEqual(null);
+  });
+
   it('supports uncontrolled state', () => {
     render(<RadioGroup {...defaultProps} defaultValue="test-value-1" />);
     expect(screen.getAllByRole('radio')[0]).toBeChecked();
