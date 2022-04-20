@@ -25,22 +25,32 @@ export function useFocusWithin<T extends HTMLElement = any>({
     focusedRef.current = value;
   };
 
+  const handleFocusIn = (event: FocusEvent) => {
+    if (!focusedRef.current) {
+      setFocused(true);
+      onFocus?.(event);
+    }
+  };
+
+  const handleFocusOut = (event: FocusEvent) => {
+    if (focusedRef.current && !containsRelatedTarget(event)) {
+      setFocused(false);
+      onBlur?.(event);
+    }
+  };
+
   useEffect(() => {
     if (ref.current) {
-      ref.current.addEventListener('focusin', (event) => {
-        if (!focusedRef.current) {
-          setFocused(true);
-          onFocus?.(event);
-        }
-      });
+      ref.current.addEventListener('focusin', handleFocusIn);
+      ref.current.addEventListener('focusout', handleFocusOut);
 
-      ref.current.addEventListener('focusout', (event) => {
-        if (focusedRef.current && !containsRelatedTarget(event)) {
-          setFocused(false);
-          onBlur?.(event);
-        }
-      });
+      return () => {
+        ref.current.removeEventListener('focusin', handleFocusIn);
+        ref.current.removeEventListener('focusout', handleFocusOut);
+      };
     }
+
+    return undefined;
   }, []);
 
   return { ref, focused };
