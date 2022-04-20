@@ -34,14 +34,14 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
       border: '1px solid transparent',
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       backgroundColor: 'transparent',
-
-      '&:hover':
+      ...theme.fn.hover(
         variant === 'transparent'
           ? {}
           : {
               backgroundColor:
                 theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.fn.themeColor(color, 0),
-            },
+            }
+      ),
     };
   }
 
@@ -51,10 +51,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
     backgroundColor: colors.background,
     color: colors.color,
     border: `1px solid ${colors.border}`,
-
-    '&:hover': {
-      backgroundColor: colors.hover,
-    },
+    ...theme.fn.hover({ backgroundColor: colors.hover }),
   };
 }
 

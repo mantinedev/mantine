@@ -20,6 +20,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       primaryShade: fns.primaryShade(themeBase),
       radius: fns.radius(themeBase),
       variant: fns.variant(themeBase),
+      hover: fns.hover,
     },
   };
 }

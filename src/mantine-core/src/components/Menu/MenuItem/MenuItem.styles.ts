@@ -33,13 +33,13 @@ export default createStyles((theme, { radius, color }: MenuItemStylesParams) => 
     },
   },
 
-  itemHovered: {
+  itemHovered: theme.fn.hover({
     backgroundColor: color
       ? theme.fn.variant({ variant: 'light', color }).background
       : theme.colorScheme === 'dark'
       ? theme.fn.rgba(theme.colors.dark[3], 0.35)
       : theme.colors.gray[0],
-  },
+  }),
 
   itemInner: {
     display: 'flex',

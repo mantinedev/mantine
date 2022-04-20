@@ -87,12 +87,13 @@ export default createStyles(
         textTransform: transform,
         textAlign: align,
 
-        '&:hover':
+        ...theme.fn.hover(
           variant === 'link' && underline === undefined
             ? {
                 textDecoration: 'underline',
               }
-            : undefined,
+            : undefined
+        ),
       },
 
       gradient: {
