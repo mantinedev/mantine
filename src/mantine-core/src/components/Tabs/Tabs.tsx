@@ -11,6 +11,7 @@ import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
 import { TabsPanel, TabsPanelStylesNames } from './TabsPanel/TabsPanel';
 import { Tab, TabStylesNames } from './Tab/Tab';
 import { TabsProvider, TabsProviderProps } from './TabsProvider';
+import { TabsStylesParams } from './Tabs.types';
 import useStyles from './Tabs.styles';
 
 export type TabsStylesNames =
@@ -21,7 +22,7 @@ export type TabsStylesNames =
 
 export interface TabsProps
   extends TabsProviderProps,
-    DefaultProps<TabsStylesNames>,
+    DefaultProps<TabsStylesNames, TabsStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof TabsProviderProps> {}
 
 type TabsComponent = ForwardRefWithStaticComponents<
