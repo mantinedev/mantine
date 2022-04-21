@@ -6,4 +6,4 @@ interface AccordionItemContext {
 }
 
 export const [AccordionItemContextProvider, useAccordionItemContext] =
-  createSafeContext<AccordionItemContext>(ACCORDION_ERRORS.itemContext.message);
+  createSafeContext<AccordionItemContext>(ACCORDION_ERRORS.itemContext);

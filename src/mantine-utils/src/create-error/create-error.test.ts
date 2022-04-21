@@ -4,11 +4,9 @@ describe('@mantine/utils/create-error', () => {
   it('creates correct error with default scope', () => {
     expect(
       createError({ message: 'Tabs component was not found in tree', code: 'tabs-context' })
-    ).toStrictEqual({
-      message:
-        '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/tabs-context/',
-      code: 'tabs-context',
-    });
+    ).toBe(
+      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/tabs-context/'
+    );
   });
 
   it('creates correct error with custom scope', () => {
@@ -18,10 +16,8 @@ describe('@mantine/utils/create-error', () => {
         code: 'core-context',
         scope: '@mantine/core',
       })
-    ).toStrictEqual({
-      message:
-        '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/core-context/',
-      code: 'core-context',
-    });
+    ).toBe(
+      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/core-context/'
+    );
   });
 });

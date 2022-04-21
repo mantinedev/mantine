@@ -24,7 +24,7 @@ describe('@mantine/core/AccordionPanel', () => {
       value: { value: 'test-value' },
     }),
     defaultProps,
-    ACCORDION_ERRORS.context.message
+    ACCORDION_ERRORS.context
   );
 
   itRendersChildren(TestContainer, defaultProps);

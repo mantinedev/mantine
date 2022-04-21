@@ -21,5 +21,5 @@ interface TabsContext {
 }
 
 export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(
-  TABS_ERRORS.context.message
+  TABS_ERRORS.context
 );
