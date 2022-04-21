@@ -26,18 +26,15 @@ function getVariantStyles(
       [vertical ? 'marginRight' : inverted ? 'marginTop' : 'marginBottom']: -2,
       borderRadius,
 
-      '&:hover': {
+      ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
         borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-      },
+      }),
 
       '&[data-active]': {
         borderColor: filledScheme.background,
         color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-
-        '&:hover': {
-          borderColor: filledScheme.background,
-        },
+        ...theme.fn.hover({ borderColor: filledScheme.background }),
       },
     };
   }
@@ -69,18 +66,14 @@ function getVariantStyles(
   if (variant === 'pills') {
     return {
       borderRadius: theme.fn.radius(radius),
-
-      '&:hover': {
+      ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      },
+      }),
 
       '&[data-active]': {
         backgroundColor: filledScheme.background,
         color: theme.white,
-
-        '&:hover': {
-          backgroundColor: filledScheme.background,
-        },
+        ...theme.fn.hover({ backgroundColor: filledScheme.background }),
       },
     };
   }
@@ -107,10 +100,7 @@ export default createStyles((theme, params: TabStylesParams) => ({
     '&:disabled': {
       opacity: 0.5,
       cursor: 'not-allowed',
-
-      '&:hover': {
-        backgroundColor: 'transparent',
-      },
+      ...theme.fn.hover({ backgroundColor: 'transparent' }),
     },
 
     '&:focus': {

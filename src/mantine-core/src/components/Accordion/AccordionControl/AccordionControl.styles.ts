@@ -9,11 +9,9 @@ export interface AccordionControlStylesParams extends AccordionStylesParams {
 
 function getVariantStyles(theme: MantineTheme, { variant }: AccordionStylesParams): CSSObject {
   if (variant === 'default' || variant === 'contained') {
-    return {
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-      },
-    };
+    return theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    });
   }
 
   return {};
@@ -76,10 +74,7 @@ export default createStyles(
       '&:disabled': {
         opacity: 0.4,
         cursor: 'not-allowed',
-
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
+        ...theme.fn.hover({ backgroundColor: 'transparent' }),
       },
     },
   })
