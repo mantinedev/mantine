@@ -6,5 +6,6 @@ export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { packSx } from './pack-sx/pack-sx';
 export { getSafeId } from './get-safe-id/get-safe-id';
 export { clamp } from './clamp/clamp';
+export { isElement } from './is-element/is-element';
 
 export type { MantineError } from './create-error/create-error';
