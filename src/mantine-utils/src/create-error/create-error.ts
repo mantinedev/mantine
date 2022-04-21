@@ -12,5 +12,5 @@ interface CreateErrorInput {
 export function createError({ message, code, scope = '@mantine/core' }: CreateErrorInput) {
   return `[${scope}] ${
     message.endsWith('.') ? message : `${message}.`
-  } Learn more – https://mantine.dev/error/${code}/`;
+  } Learn more – https://mantine.dev/errors/${code}/`;
 }

@@ -5,7 +5,7 @@ describe('@mantine/utils/create-error', () => {
     expect(
       createError({ message: 'Tabs component was not found in tree', code: 'tabs-context' })
     ).toBe(
-      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/tabs-context/'
+      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/errors/tabs-context/'
     );
   });
 
@@ -17,7 +17,7 @@ describe('@mantine/utils/create-error', () => {
         scope: '@mantine/core',
       })
     ).toBe(
-      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/error/core-context/'
+      '[@mantine/core] Tabs component was not found in tree. Learn more – https://mantine.dev/errors/core-context/'
     );
   });
 });
