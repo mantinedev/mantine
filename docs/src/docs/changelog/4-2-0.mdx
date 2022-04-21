@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.2.0
 date: 'March 29th, 2022'
 ---
 
-import { ThemeDemos, IndicatorDemos, CalendarDemos, ModalDemos } from '@mantine/demos';
+import { ThemeDemos, IndicatorDemos, CalendarDemos, ModalDemos, HooksDemos } from '@mantine/demos';
 
 ## primaryShade on theme
 
@@ -36,12 +36,35 @@ New [Indicator](https://mantine.dev/core/indicator/) component:
 
 <Demo data={IndicatorDemos.configurator} />
 
+## use-focus-within hook
+
+New [use-focus-within](https://mantine.dev/hooks/use-focus-within/) hook detects if any element within has focus,
+it works the same way as `:focus-within` CSS selector:
+
+<Demo data={HooksDemos.useFocusWithinDemo} />
+
+## use-network hook
+
+New [use-network](https://mantine.dev/hooks/use-network/) hook returns current connection status:
+
+<Demo data={HooksDemos.useNetworkDemo} demoProps={{ toggle: true }} />
+
 ## New features
 
-[Calendar](https://mantine.dev/dates/caledar/) component now supports multiple selected dates:
+[Calendar](https://mantine.dev/dates/calendar/) component now supports multiple selected dates:
 
 <Demo data={CalendarDemos.multiple} />
 
 [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components now support setting overlay blur:
 
 <Demo data={ModalDemos.overlay} />
+
+[Calendar](https://mantine.dev/dates/calendar/), [Month](https://mantine.dev/dates/month/) and [DatePicker](https://mantine.dev/dates/date-picker/) components
+now support custom day renderer with `renderDay` function:
+
+<Demo data={CalendarDemos.renderDay} />
+
+## Other changes
+
+- [use-window-event](https://mantine.dev/hooks/use-window-event/) hook now supports custom events
+- [use-local-storage](https://mantine.dev/hooks/use-local-storage/) hook now supports value sync in the same tab

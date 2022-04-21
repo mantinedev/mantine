@@ -122,6 +122,34 @@ describe('@mantine/modals/use-modals', () => {
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
+  it('correctly renders a confirm modal with labels as HTMLElement', async () => {
+    const wrapper: WrapperComponent<unknown> = ({ children }) => (
+      <MantineProvider>
+        <ModalsProvider>{children}</ModalsProvider>
+      </MantineProvider>
+    );
+
+    const Component = () => {
+      const modals = useModals();
+
+      useEffect(() => {
+        modals.openConfirmModal({
+          labels: {
+            confirm: <span>Confirm</span>,
+            cancel: <span>Cancel</span>,
+          },
+        });
+      }, []);
+
+      return <div>Empty</div>;
+    };
+
+    render(<Component />, { wrapper });
+
+    expect(screen.getByText('Confirm')).toContainHTML('span');
+    expect(screen.getByText('Cancel')).toContainHTML('span');
+  });
+
   it('correctly renders a regular modal with children and a title', () => {
     const wrapper: WrapperComponent<unknown> = ({ children }) => (
       <MantineProvider>

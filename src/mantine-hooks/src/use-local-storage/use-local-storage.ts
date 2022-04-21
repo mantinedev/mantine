@@ -53,10 +53,12 @@ export function useLocalStorage<T = string>({
         setValue((current) => {
           const result = val(current);
           window.localStorage.setItem(key, serialize(result));
+          window.dispatchEvent(new CustomEvent('mantine-local-storage', { detail: val(current) }));
           return result;
         });
       } else {
         window.localStorage.setItem(key, serialize(val));
+        window.dispatchEvent(new CustomEvent('mantine-local-storage', { detail: val }));
         setValue(val);
       }
     },
@@ -67,6 +69,10 @@ export function useLocalStorage<T = string>({
     if (event.storageArea === window.localStorage && event.key === key) {
       setValue(deserialize(event.newValue ?? undefined));
     }
+  });
+
+  useWindowEvent('mantine-local-storage', (event) => {
+    setValue(event.detail);
   });
 
   useEffect(() => {

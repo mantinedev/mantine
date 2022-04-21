@@ -42,6 +42,9 @@ export interface IndicatorProps
 
   /** Determines whether indicator should have border */
   withBorder?: boolean;
+
+  /** When component is disabled it renders children without indicator */
+  disabled?: boolean;
 }
 
 const defaultProps: Partial<IndicatorProps> = {
@@ -49,6 +52,7 @@ const defaultProps: Partial<IndicatorProps> = {
   offset: 0,
   inline: false,
   withBorder: false,
+  disabled: false,
   size: 10,
   radius: 1000,
 };
@@ -67,6 +71,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     styles,
     label,
     classNames,
+    disabled,
     ...others
   } = useMantineDefaultProps('Indicator', defaultProps, props);
 
@@ -77,7 +82,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
 
   return (
     <Box ref={ref} className={cx(classes.root, className)} {...others}>
-      <div className={classes.indicator}>{label}</div>
+      {!disabled && <div className={classes.indicator}>{label}</div>}
       {children}
     </Box>
   );

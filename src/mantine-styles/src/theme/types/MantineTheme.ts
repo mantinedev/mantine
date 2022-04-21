@@ -4,6 +4,7 @@ import type { DeepPartial } from './DeepPartial';
 import type { MantineThemeColors } from './MantineColor';
 import type { VariantInput, VariantOutput } from '../functions/fns/variant/variant';
 import type { ColorScheme } from './ColorScheme';
+import { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
@@ -36,6 +37,7 @@ interface MantineThemeFunctions {
   radius(size: MantineNumberSize | (string & {})): string | number;
   variant(payload: VariantInput): VariantOutput;
   primaryShade(colorScheme?: ColorScheme): Shade;
+  hover(hoverStyle: CSSObject): any;
 }
 
 export interface MantineTheme {

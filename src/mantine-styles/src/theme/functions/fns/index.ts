@@ -11,6 +11,7 @@ import { lighten } from './lighten/lighten';
 import { radius } from './radius/radius';
 import { variant } from './variant/variant';
 import { primaryShade } from './primary-shade/primary-shade';
+import { hover } from './hover/hover';
 
 export const fns = {
   fontStyles,
@@ -28,4 +29,5 @@ export const fns = {
   radius,
   variant,
   primaryShade,
+  hover,
 } as const;
