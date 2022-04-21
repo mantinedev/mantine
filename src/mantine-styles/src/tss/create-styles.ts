@@ -9,7 +9,7 @@ export interface UseStylesOptions<Key extends string> {
   classNames?: Partial<Record<Key, string>>;
   styles?:
     | Partial<Record<Key, CSSObject>>
-    | ((theme: MantineTheme) => Partial<Record<Key, CSSObject>>);
+    | ((theme: MantineTheme, params: Record<string, any>) => Partial<Record<Key, CSSObject>>);
   name: string;
   unstyled?: boolean;
 }
@@ -43,7 +43,9 @@ export function createStyles<Key extends string = string, Params = void>(
     const cssObject = getCssObject(theme, params, createRef);
 
     const _styles =
-      typeof options?.styles === 'function' ? options?.styles(theme) : options?.styles || {};
+      typeof options?.styles === 'function'
+        ? options?.styles(theme, params)
+        : options?.styles || {};
     const _themeStyles =
       typeof themeStyles === 'function' ? themeStyles(theme, params || {}) : themeStyles || {};
 

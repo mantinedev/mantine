@@ -5,11 +5,16 @@ import type { CSSObject } from '../../tss';
 
 export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
 
-export interface DefaultProps<T extends string = never> extends MantineStyleSystemProps {
+export interface DefaultProps<
+  StylesNames extends string = never,
+  StylesParams extends Record<string, any> = never
+> extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;
   sx?: Sx | Sx[];
-  classNames?: Partial<Record<T, string>>;
-  styles?: Partial<Record<T, CSSObject>> | ((theme: MantineTheme) => Partial<Record<T, CSSObject>>);
+  classNames?: Partial<Record<StylesNames, string>>;
+  styles?:
+    | Partial<Record<StylesNames, CSSObject>>
+    | ((theme: MantineTheme, params: StylesParams) => Partial<Record<StylesNames, CSSObject>>);
   unstyled?: boolean;
 }

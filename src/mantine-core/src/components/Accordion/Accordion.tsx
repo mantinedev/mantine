@@ -6,6 +6,7 @@ import { AccordionItem, AccordionItemStylesNames } from './AccordionItem/Accordi
 import { AccordionControl, AccordionControlStylesNames } from './AccordionControl/AccordionControl';
 import { AccordionPanel, AccordionPanelStylesNames } from './AccordionPanel/AccordionPanel';
 import { ChevronIcon } from './ChevronIcon';
+import { AccordionStylesParams } from './Accordion.types';
 
 export type AccordionStylesNames =
   | AccordionItemStylesNames
@@ -14,7 +15,7 @@ export type AccordionStylesNames =
 
 export interface AccordionProps<Multiple extends boolean = false>
   extends AccordionProviderProps<Multiple>,
-    DefaultProps<AccordionStylesNames>,
+    DefaultProps<AccordionStylesNames, AccordionStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof AccordionProviderProps<Multiple>> {}
 
 const defaultProps: Partial<AccordionProps> = {
