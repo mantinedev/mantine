@@ -6,3 +6,4 @@ export { configurator } from './Accordion.demo.configurator';
 export { disableTransitions, customTransitions } from './Accordion.demo.transitions';
 export { unstyled } from './Accordion.demo.unstyled';
 export { disabled } from './Accordion.demo.disabled';
+export { sideControls } from './Accordion.demo.sideControls';
