@@ -136,6 +136,23 @@ describe('@mantine/core/Accordion', () => {
     expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
   });
 
+  it('handles tab key correctly', () => {
+    render(<Accordion {...defaultProps} />);
+    expect(document.body).toHaveFocus();
+
+    userEvent.tab();
+    expect(screen.getAllByRole('button')[0]).toHaveFocus();
+
+    userEvent.tab();
+    expect(screen.getAllByRole('button')[1]).toHaveFocus();
+
+    userEvent.tab();
+    expect(screen.getAllByRole('button')[2]).toHaveFocus();
+
+    userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
   it('exposes internal components as static properties', () => {
     expect(Accordion.Item).toBe(AccordionItem);
     expect(Accordion.Control).toBe(AccordionControl);
