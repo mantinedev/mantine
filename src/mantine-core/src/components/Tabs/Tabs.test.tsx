@@ -215,6 +215,34 @@ describe('@mantine/core/Tabs', () => {
     expect(view.container.querySelector('#test-id')).toBeInTheDocument();
   });
 
+  it('handles tab key correctly (with selected tab)', () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-2" />);
+    expect(document.body).toHaveFocus();
+
+    userEvent.tab();
+    expect(getTab('tab-2')).toHaveFocus();
+
+    userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
+  it('handles tab key correctly (without selected tab)', () => {
+    render(<Tabs {...defaultProps} />);
+    expect(document.body).toHaveFocus();
+
+    userEvent.tab();
+    expect(getTab('tab-1')).toHaveFocus();
+
+    userEvent.tab();
+    expect(getTab('tab-2')).toHaveFocus();
+
+    userEvent.tab();
+    expect(getTab('tab-3')).toHaveFocus();
+
+    userEvent.tab();
+    expect(document.body).toHaveFocus();
+  });
+
   it('exposes TabsList, Tab and TabsPanel component with as static properties', () => {
     expect(Tabs.Tab).toBe(Tab);
     expect(Tabs.List).toBe(TabsList);
