@@ -1,20 +1,7 @@
-import React, { cloneElement, useEffect, useState, useCallback } from 'react';
-import {
-  useFloating,
-  Placement,
-  shift,
-  autoUpdate,
-  flip,
-  offset,
-  useInteractions,
-  useHover,
-  useFocus,
-  useRole,
-  useDismiss,
-  useDelayGroupContext,
-  useDelayGroup,
-} from '@floating-ui/react-dom-interactions';
-import { isElement, useId } from '@mantine/utils';
+import React, { cloneElement } from 'react';
+import { Placement } from '@floating-ui/react-dom-interactions';
+import { isElement } from '@mantine/utils';
+import { useTooltip } from './use-tooltip';
 import { Transition } from '../Transition';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
 
@@ -46,59 +33,30 @@ export function Tooltip({
   openDelay,
   closeDelay,
 }: TooltipProps) {
-  const [opened, setOpened] = useState(true);
-  const uid = useId();
-  const { delay, currentId, setCurrentId } = useDelayGroupContext();
-  const onChange = useCallback(
-    (_opened: boolean) => {
-      setOpened(_opened);
-
-      if (opened) {
-        setCurrentId(uid);
-      }
-    },
-    [setCurrentId]
-  );
-
-  const { x, y, reference, floating, strategy, context, refs, update } = useFloating({
-    placement: position,
-    open: opened,
-    onOpenChange: onChange,
-    middleware: [offset(5), flip(), shift({ padding: 8 })],
-  });
-
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    useHover(context, { delay: closeDelay, restMs: openDelay }),
-    useFocus(context),
-    useRole(context, { role: 'tooltip' }),
-    useDismiss(context),
-    useDelayGroup(context, { id: uid }),
-  ]);
+  const tooltip = useTooltip({ position, closeDelay, openDelay });
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  useEffect(() => {
-    if (opened && refs.floating.current) {
-      autoUpdate(refs.reference.current, refs.floating.current, update);
-    }
-  }, [opened, refs]);
-
-  const isGroupPhase = opened && currentId && currentId !== uid;
+  const target = children as React.ReactElement;
 
   return (
     <>
-      <Transition mounted={opened} transition="fade" duration={isGroupPhase ? 0 : 100}>
+      <Transition
+        mounted={tooltip.opened}
+        transition="fade"
+        duration={tooltip.isGroupPhase ? 0 : 100}
+      >
         {(styles) => (
           <div
-            {...getFloatingProps({
-              ref: floating,
+            {...tooltip.getFloatingProps({
+              ref: tooltip.floating,
               style: {
                 ...styles,
-                position: strategy,
-                top: y ?? '',
-                left: x ?? '',
+                position: 'absolute',
+                top: tooltip.y ?? '',
+                left: tooltip.x ?? '',
                 backgroundColor: 'red',
               },
             })}
@@ -108,8 +66,8 @@ export function Tooltip({
         )}
       </Transition>
       {cloneElement(
-        children as React.ReactElement,
-        getReferenceProps({ [refProp]: reference, ...(children as React.ReactElement).props })
+        target,
+        tooltip.getReferenceProps({ [refProp]: tooltip.reference, ...target.props })
       )}
     </>
   );
