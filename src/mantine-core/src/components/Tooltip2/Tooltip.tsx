@@ -4,6 +4,7 @@ import { isElement } from '@mantine/utils';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import { Transition } from '../Transition';
+import { OptionalPortal } from '../Portal';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
 
 export interface TooltipProps {
@@ -30,6 +31,9 @@ export interface TooltipProps {
 
   /** Controls opened state */
   opened?: boolean;
+
+  /** Determines whether tooltip should be rendered within Portal */
+  withinPortal?: boolean;
 }
 
 export function Tooltip({
@@ -41,6 +45,7 @@ export function Tooltip({
   closeDelay,
   onPositionChange,
   opened,
+  withinPortal = true,
 }: TooltipProps) {
   const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange, opened });
 
@@ -52,28 +57,31 @@ export function Tooltip({
 
   return (
     <>
-      <Transition
-        mounted={tooltip.opened}
-        transition="fade"
-        duration={tooltip.isGroupPhase ? 10 : 100}
-      >
-        {(styles) => (
-          <div
-            {...tooltip.getFloatingProps({
-              ref: tooltip.floating,
-              style: {
-                ...styles,
-                position: 'absolute',
-                top: tooltip.y ?? '',
-                left: tooltip.x ?? '',
-                backgroundColor: 'red',
-              },
-            })}
-          >
-            {label}
-          </div>
-        )}
-      </Transition>
+      <OptionalPortal withinPortal={withinPortal}>
+        <Transition
+          mounted={tooltip.opened}
+          transition="fade"
+          duration={tooltip.isGroupPhase ? 10 : 100}
+        >
+          {(styles) => (
+            <div
+              {...tooltip.getFloatingProps({
+                ref: tooltip.floating,
+                style: {
+                  ...styles,
+                  position: 'absolute',
+                  top: tooltip.y ?? '',
+                  left: tooltip.x ?? '',
+                  backgroundColor: 'red',
+                },
+              })}
+            >
+              {label}
+            </div>
+          )}
+        </Transition>
+      </OptionalPortal>
+
       {cloneElement(
         target,
         tooltip.getReferenceProps({ [refProp]: tooltip.reference, ...target.props })
