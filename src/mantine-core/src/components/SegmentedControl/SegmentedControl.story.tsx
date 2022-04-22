@@ -62,7 +62,7 @@ function DisabledStates() {
     <div style={{ padding: 40 }}>
       <div>
         <SegmentedControl
-          disabled={true}
+          disabled
           data={[
             { label: 'React', value: 'react' },
             { label: 'Angular', value: 'ng' },
