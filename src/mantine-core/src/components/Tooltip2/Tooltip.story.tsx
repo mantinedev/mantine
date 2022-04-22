@@ -22,7 +22,7 @@ export const Usage = () => (
 );
 
 export const TooltipGroup = () => (
-  <Tooltip.Group>
+  <Tooltip.Group openDelay={500}>
     <Tooltip label="Tooltip 1">
       <button type="button">Button 1</button>
     </Tooltip>

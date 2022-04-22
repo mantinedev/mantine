@@ -55,7 +55,6 @@ export function useTooltip(settings: UseTooltip) {
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
-      restMs: 100,
       mouseOnly: true,
     }),
     useFocus(context),
