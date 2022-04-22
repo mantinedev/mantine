@@ -16,6 +16,7 @@ import {
 } from '@floating-ui/react-dom-interactions';
 import { useId } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
+import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 
 interface UseTooltip {
   position: Placement;
@@ -26,11 +27,12 @@ interface UseTooltip {
 }
 
 export function useTooltip(settings: UseTooltip) {
-  const [uncontrolledOpened, setUncontrolledOpened] = useState(true);
+  const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
   const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
+  const withinGroup = useTooltipGroupContext();
   const uid = useId();
 
-  const { delay, currentId, setCurrentId } = useDelayGroupContext();
+  const { delay: groupDelay, currentId, setCurrentId } = useDelayGroupContext();
 
   const onChange = useCallback(
     (_opened: boolean) => {
@@ -51,7 +53,11 @@ export function useTooltip(settings: UseTooltip) {
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    useHover(context, { delay, restMs: 100, mouseOnly: true }),
+    useHover(context, {
+      delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
+      restMs: 100,
+      mouseOnly: true,
+    }),
     useFocus(context),
     useRole(context, { role: 'tooltip' }),
     useDismiss(context),
