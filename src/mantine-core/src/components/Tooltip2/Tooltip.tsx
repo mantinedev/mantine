@@ -1,5 +1,17 @@
 import React, { cloneElement, useEffect, useState } from 'react';
-import { useFloating, Placement, shift, autoUpdate, flip } from '@floating-ui/react-dom';
+import {
+  useFloating,
+  Placement,
+  shift,
+  autoUpdate,
+  flip,
+  offset,
+  useInteractions,
+  useHover,
+  useFocus,
+  useRole,
+  useDismiss,
+} from '@floating-ui/react-dom-interactions';
 import { isElement } from '@mantine/utils';
 import { Transition } from '../Transition';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
@@ -17,10 +29,20 @@ export interface TooltipProps {
 
 export function Tooltip({ children, position, refProp = 'ref' }: TooltipProps) {
   const [opened, setOpened] = useState(true);
-  const { reference, floating, strategy, x, y, update, refs } = useFloating({
+
+  const { x, y, reference, floating, strategy, context, refs, update } = useFloating({
     placement: position,
-    middleware: [shift(), flip()],
+    open: opened,
+    onOpenChange: setOpened,
+    middleware: [offset(5), flip(), shift({ padding: 8 })],
   });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useHover(context),
+    useFocus(context),
+    useRole(context, { role: 'tooltip' }),
+    useDismiss(context),
+  ]);
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);
@@ -34,27 +56,28 @@ export function Tooltip({ children, position, refProp = 'ref' }: TooltipProps) {
 
   return (
     <>
-      <Transition mounted={opened} transition="pop">
+      <Transition mounted={opened} transition="fade" duration={100}>
         {(styles) => (
           <div
-            ref={floating}
-            style={{
-              position: strategy,
-              top: y ?? '',
-              left: x ?? '',
-              background: 'red',
-              ...styles,
-            }}
+            {...getFloatingProps({
+              ref: floating,
+              style: {
+                ...styles,
+                position: strategy,
+                top: y ?? '',
+                left: x ?? '',
+                backgroundColor: 'red',
+              },
+            })}
           >
             Tooltip
           </div>
         )}
       </Transition>
-      {cloneElement(children as React.ReactElement, {
-        [refProp]: reference,
-        onMouseEnter: () => setOpened(true),
-        onMouseLeave: () => setOpened(false),
-      })}
+      {cloneElement(
+        children as React.ReactElement,
+        getReferenceProps({ [refProp]: reference, ...(children as React.ReactElement).props })
+      )}
     </>
   );
 }

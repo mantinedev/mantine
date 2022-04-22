@@ -13,8 +13,10 @@ export const Usage = () => (
       width: '200vw',
     }}
   >
-    <Tooltip position="left">
-      <div>target</div>
+    <Tooltip position="right-end">
+      <button type="button" style={{ width: 200, height: 200 }}>
+        target
+      </button>
     </Tooltip>
   </div>
 );
