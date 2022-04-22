@@ -54,3 +54,13 @@ export const Controlled = () => {
     </div>
   );
 };
+
+export const Floating = () => (
+  <div style={{ padding: 0 }}>
+    <Tooltip.Floating label="Tooltip">
+      <button type="button" style={{ width: 200, height: 200 }}>
+        target
+      </button>
+    </Tooltip.Floating>
+  </div>
+);

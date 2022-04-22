@@ -18,6 +18,7 @@ export default createStyles((theme, { color, radius }: TooltipStylesParams) => (
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+    pointerEvents: 'none',
   },
 
   arrow: {

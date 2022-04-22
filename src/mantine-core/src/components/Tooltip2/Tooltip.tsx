@@ -1,33 +1,18 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement } from '@mantine/utils';
-import { MantineColor, MantineNumberSize, DefaultProps, ClassNames } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
+import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
 import { Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
-import useStyles, { TooltipStylesParams } from './Tooltip.styles';
+import { TooltipBaseProps } from './Tooltip.types';
+import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = ClassNames<typeof useStyles>;
-
-export interface TooltipProps
-  extends DefaultProps<TooltipStylesNames, TooltipStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
-  /** Target element */
-  children: React.ReactNode;
-
-  /** Tooltip position relative to target element */
-  position?: Placement;
-
+export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
   onPositionChange?(position: Placement): void;
-
-  /** Key of the prop that should be used to get element ref */
-  refProp?: string;
-
-  /** Tooltip label */
-  label: React.ReactNode;
 
   /** Open delay in ms */
   openDelay?: number;
@@ -37,15 +22,6 @@ export interface TooltipProps
 
   /** Controls opened state */
   opened?: boolean;
-
-  /** Determines whether tooltip should be rendered within Portal */
-  withinPortal?: boolean;
-
-  /** Radius from theme.radius or number to set border-radius in px */
-  radius?: MantineNumberSize;
-
-  /** Key of theme.colors */
-  color?: MantineColor;
 }
 
 export function Tooltip({
@@ -117,3 +93,4 @@ export function Tooltip({
 }
 
 Tooltip.Group = TooltipGroup;
+Tooltip.Floating = TooltipFloating;
