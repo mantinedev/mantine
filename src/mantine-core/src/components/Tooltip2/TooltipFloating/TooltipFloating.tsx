@@ -1,13 +1,15 @@
 import React, { cloneElement } from 'react';
 import { isElement } from '@mantine/utils';
 import { OptionalPortal } from '../../Portal';
-import { Transition } from '../../Transition';
 import { TooltipBaseProps } from '../Tooltip.types';
 import useStyles from '../Tooltip.styles';
 import { TOOLTIP_ERRORS } from '../Tooltip.errors';
 import { useFloatingTooltip } from './use-floating-tooltip';
 
-export interface TooltipFloatingProps extends TooltipBaseProps {}
+export interface TooltipFloatingProps extends TooltipBaseProps {
+  /** Offset from mouse in px */
+  offset?: number;
+}
 
 export function TooltipFloating({
   children,
@@ -21,9 +23,15 @@ export function TooltipFloating({
   radius,
   color,
   label,
+  offset = 10,
+  position = 'right',
   ...others
 }: TooltipFloatingProps) {
-  const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip();
+  const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
+    offset,
+    position,
+  });
+
   const { classes, cx } = useStyles(
     { radius, color },
     { name: 'Tooltip', classNames, styles, unstyled }
@@ -49,39 +57,20 @@ export function TooltipFloating({
   return (
     <>
       <OptionalPortal withinPortal={withinPortal}>
-        <Transition mounted={opened} transition="fade" duration={100}>
-          {(transitionStyles) => (
-            <div
-              {...others}
-              ref={floating}
-              className={cx(classes.root, className)}
-              style={{
-                ...style,
-                ...transitionStyles,
-                top: y ?? '',
-                left: Math.round(x) ?? '',
-              }}
-            >
-              {label}
-            </div>
-          )}
-        </Transition>
+        <div
+          {...others}
+          ref={floating}
+          className={cx(classes.root, className)}
+          style={{
+            ...style,
+            display: opened ? 'block' : 'none',
+            top: y ?? '',
+            left: Math.round(x) ?? '',
+          }}
+        >
+          {label}
+        </div>
       </OptionalPortal>
-      <div
-        ref={floating}
-        style={{
-          backgroundColor: '#fff',
-          position: 'absolute',
-          top: y ?? '',
-          left: Math.round(x) ?? '',
-          transform: `scale(${opened ? '1' : '0'})`,
-          opacity: opened ? '1' : '0',
-          transition: 'transform 0.2s ease, opacity 0.1s ease',
-          pointerEvents: 'none',
-        }}
-      >
-        Tooltip
-      </div>
 
       {cloneElement(target, {
         ...target.props,
