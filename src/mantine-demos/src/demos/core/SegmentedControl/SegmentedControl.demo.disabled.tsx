@@ -72,8 +72,7 @@ function Demo() {
               },
               {
                 value: 'code',
-                label: 'Code',
-                disabled: false
+                label: 'Code'
               },
               {
                 value: 'export',
