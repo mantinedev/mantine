@@ -36,52 +36,52 @@ function Demo() {
 function Demo() {
   return (
     <Stack align="center">
-        <Box>
-          <Text size="sm" weight={500} mb={3}>
-            Disabled control
-          </Text>
-          <SegmentedControl
-            // disabled={true}
-            disabled
-            data={[
-              {
-                value: 'preview',
-                label: 'Preview',
-              },
-              {
-                value: 'code',
-                label: 'Code',
-              },
-              {
-                value: 'export',
-                label: 'Export',
-              },
-            ]}
-          />
-        </Box>
+      <Box>
+        <Text size="sm" weight={500} mb={3}>
+          Disabled control
+        </Text>
+        <SegmentedControl
+          // disabled={true}
+          disabled
+          data={[
+            {
+              value: 'preview',
+              label: 'Preview',
+            },
+            {
+              value: 'code',
+              label: 'Code',
+            },
+            {
+              value: 'export',
+              label: 'Export',
+            },
+          ]}
+        />
+      </Box>
 
-        <Box>
-          <Text size="sm" weight={500} mb={3}>
-            Disabled options
-          </Text>
-          <SegmentedControl
-            data={[
-              {
-                value: 'preview',
-                label: 'Preview',
-                disabled: true,
-              },
-              {
-                value: 'code',
-                label: 'Code',
-              },
-              {
-                value: 'export',
-                label: 'Export',
-              },
-            ]}
-          />
-        </Box>
+      <Box>
+        <Text size="sm" weight={500} mb={3}>
+          Disabled options
+        </Text>
+        <SegmentedControl
+          data={[
+            {
+              value: 'preview',
+              label: 'Preview',
+              disabled: true,
+            },
+            {
+              value: 'code',
+              label: 'Code',
+            },
+            {
+              value: 'export',
+              label: 'Export',
+            },
+          ]}
+        />
+      </Box>
     </Stack>
   );
 }
