@@ -35,13 +35,14 @@ function Demo() {
 
 function Demo() {
   return (
-    <Stack align='center'>
+    <Stack align="center">
         <Box>
           <Text size="sm" weight={500} mb={3}>
             Disabled control
           </Text>
           <SegmentedControl
-            disabled={true}
+            // disabled={true}
+            disabled
             data={[
               {
                 value: 'preview',
@@ -68,20 +69,20 @@ function Demo() {
               {
                 value: 'preview',
                 label: 'Preview',
-                disabled: true
+                disabled: true,
               },
               {
                 value: 'code',
-                label: 'Code'
+                label: 'Code',
               },
               {
                 value: 'export',
                 label: 'Export',
-              }
+              },
             ]}
           />
         </Box>
-    </Stack >
+    </Stack>
   );
 }
 
