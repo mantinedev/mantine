@@ -13,6 +13,9 @@ export interface TooltipProps {
   /** Tooltip position relative to target element */
   position?: Placement;
 
+  /** Called when tooltip position changes */
+  onPositionChange?(position: Placement): void;
+
   /** Key of the prop that should be used to get element ref */
   refProp?: string;
 
@@ -33,8 +36,9 @@ export function Tooltip({
   label,
   openDelay,
   closeDelay,
+  onPositionChange,
 }: TooltipProps) {
-  const tooltip = useTooltip({ position, closeDelay, openDelay });
+  const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange });
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);

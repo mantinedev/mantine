@@ -15,15 +15,17 @@ import {
   useDelayGroup,
 } from '@floating-ui/react-dom-interactions';
 import { useId } from '@mantine/utils';
+import { useDidUpdate } from '@mantine/hooks';
 
 interface UseTooltip {
   position: Placement;
   closeDelay: number;
   openDelay: number;
+  onPositionChange?(position: Placement): void;
 }
 
-export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
-  const [opened, setOpened] = useState(false);
+export function useTooltip({ position, closeDelay, openDelay, onPositionChange }: UseTooltip) {
+  const [opened, setOpened] = useState(true);
   const uid = useId();
 
   const { delay, currentId, setCurrentId } = useDelayGroupContext();
@@ -39,7 +41,7 @@ export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
     [setCurrentId, uid]
   );
 
-  const { x, y, reference, floating, context, refs, update } = useFloating({
+  const { x, y, reference, floating, context, refs, update, placement } = useFloating({
     placement: position,
     open: opened,
     onOpenChange: onChange,
@@ -59,6 +61,10 @@ export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
       autoUpdate(refs.reference.current, refs.floating.current, update);
     }
   }, [opened, refs]);
+
+  useDidUpdate(() => {
+    onPositionChange?.(placement);
+  }, [placement]);
 
   const isGroupPhase = opened && currentId && currentId !== uid;
 
