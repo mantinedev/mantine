@@ -27,6 +27,9 @@ export interface TooltipProps {
 
   /** Close delay in ms */
   closeDelay?: number;
+
+  /** Controls opened state */
+  opened?: boolean;
 }
 
 export function Tooltip({
@@ -37,8 +40,9 @@ export function Tooltip({
   openDelay,
   closeDelay,
   onPositionChange,
+  opened,
 }: TooltipProps) {
-  const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange });
+  const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange, opened });
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);

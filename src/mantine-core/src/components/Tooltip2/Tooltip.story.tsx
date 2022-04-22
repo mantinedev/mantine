@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
 
 export default { title: 'Tooltip2' };
@@ -34,3 +34,23 @@ export const TooltipGroup = () => (
     </Tooltip>
   </Tooltip.Group>
 );
+
+export const Controlled = () => {
+  const [opened, setOpened] = useState(false);
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip label="Tooltip 1" opened={opened}>
+        <button
+          type="button"
+          onMouseEnter={() => setOpened(true)}
+          onMouseLeave={() => setOpened(false)}
+        >
+          Hover to open both tooltips
+        </button>
+      </Tooltip>
+      <Tooltip label="Tooltip 2" opened={opened}>
+        <button type="button">Button 2</button>
+      </Tooltip>
+    </div>
+  );
+};

@@ -22,17 +22,19 @@ interface UseTooltip {
   closeDelay: number;
   openDelay: number;
   onPositionChange?(position: Placement): void;
+  opened?: boolean;
 }
 
-export function useTooltip({ position, closeDelay, openDelay, onPositionChange }: UseTooltip) {
-  const [opened, setOpened] = useState(true);
+export function useTooltip(settings: UseTooltip) {
+  const [uncontrolledOpened, setUncontrolledOpened] = useState(true);
+  const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
   const uid = useId();
 
   const { delay, currentId, setCurrentId } = useDelayGroupContext();
 
   const onChange = useCallback(
     (_opened: boolean) => {
-      setOpened(_opened);
+      setUncontrolledOpened(_opened);
 
       if (_opened) {
         setCurrentId(uid);
@@ -42,7 +44,7 @@ export function useTooltip({ position, closeDelay, openDelay, onPositionChange }
   );
 
   const { x, y, reference, floating, context, refs, update, placement } = useFloating({
-    placement: position,
+    placement: settings.position,
     open: opened,
     onOpenChange: onChange,
     middleware: [offset(5), flip(), shift({ padding: 8 })],
@@ -63,7 +65,7 @@ export function useTooltip({ position, closeDelay, openDelay, onPositionChange }
   }, [opened, refs]);
 
   useDidUpdate(() => {
-    onPositionChange?.(placement);
+    settings.onPositionChange?.(placement);
   }, [placement]);
 
   const isGroupPhase = opened && currentId && currentId !== uid;
