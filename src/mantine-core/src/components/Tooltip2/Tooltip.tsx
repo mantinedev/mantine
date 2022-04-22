@@ -1,13 +1,19 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement } from '@mantine/utils';
+import { MantineColor, MantineNumberSize, DefaultProps, ClassNames } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import { Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
+import useStyles, { TooltipStylesParams } from './Tooltip.styles';
 
-export interface TooltipProps {
+export type TooltipStylesNames = ClassNames<typeof useStyles>;
+
+export interface TooltipProps
+  extends DefaultProps<TooltipStylesNames, TooltipStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Target element */
   children: React.ReactNode;
 
@@ -34,11 +40,17 @@ export interface TooltipProps {
 
   /** Determines whether tooltip should be rendered within Portal */
   withinPortal?: boolean;
+
+  /** Radius from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Key of theme.colors */
+  color?: MantineColor;
 }
 
 export function Tooltip({
   children,
-  position,
+  position = 'top',
   refProp = 'ref',
   label,
   openDelay,
@@ -46,7 +58,20 @@ export function Tooltip({
   onPositionChange,
   opened,
   withinPortal = true,
+  radius,
+  color = 'gray',
+  classNames,
+  styles,
+  unstyled,
+  style,
+  className,
+  ...others
 }: TooltipProps) {
+  const { classes, cx } = useStyles(
+    { radius, color },
+    { name: 'Tooltip', classNames, styles, unstyled }
+  );
+
   const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange, opened });
 
   if (!isElement(children)) {
@@ -63,16 +88,17 @@ export function Tooltip({
           transition="fade"
           duration={tooltip.isGroupPhase ? 10 : 100}
         >
-          {(styles) => (
+          {(transitionStyles) => (
             <div
               {...tooltip.getFloatingProps({
+                ...others,
                 ref: tooltip.floating,
+                className: cx(classes.root, className),
                 style: {
-                  ...styles,
-                  position: 'absolute',
+                  ...style,
+                  ...transitionStyles,
                   top: tooltip.y ?? '',
                   left: tooltip.x ?? '',
-                  backgroundColor: 'red',
                 },
               })}
             >
