@@ -20,3 +20,17 @@ export const Usage = () => (
     </Tooltip>
   </div>
 );
+
+export const TooltipGroup = () => (
+  <Tooltip.Group>
+    <Tooltip label="Tooltip 1">
+      <button type="button">Button 1</button>
+    </Tooltip>
+    <Tooltip label="Tooltip 2">
+      <button type="button">Button 2</button>
+    </Tooltip>
+    <Tooltip label="Tooltip 3">
+      <button type="button">Button 3</button>
+    </Tooltip>
+  </Tooltip.Group>
+);

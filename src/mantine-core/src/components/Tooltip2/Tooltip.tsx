@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement } from '@mantine/utils';
+import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
 import { Transition } from '../Transition';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
@@ -46,7 +47,7 @@ export function Tooltip({
       <Transition
         mounted={tooltip.opened}
         transition="fade"
-        duration={tooltip.isGroupPhase ? 0 : 100}
+        duration={tooltip.isGroupPhase ? 10 : 100}
       >
         {(styles) => (
           <div
@@ -72,3 +73,5 @@ export function Tooltip({
     </>
   );
 }
+
+Tooltip.Group = TooltipGroup;

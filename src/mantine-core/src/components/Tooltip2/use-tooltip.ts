@@ -23,7 +23,7 @@ interface UseTooltip {
 }
 
 export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
-  const [opened, setOpened] = useState(true);
+  const [opened, setOpened] = useState(false);
   const uid = useId();
 
   const { delay, currentId, setCurrentId } = useDelayGroupContext();
@@ -32,11 +32,11 @@ export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
     (_opened: boolean) => {
       setOpened(_opened);
 
-      if (opened) {
+      if (_opened) {
         setCurrentId(uid);
       }
     },
-    [setCurrentId]
+    [setCurrentId, uid]
   );
 
   const { x, y, reference, floating, context, refs, update } = useFloating({
@@ -47,7 +47,7 @@ export function useTooltip({ position, closeDelay, openDelay }: UseTooltip) {
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    useHover(context, { delay: closeDelay, restMs: openDelay, mouseOnly: true }),
+    useHover(context, { delay, restMs: 100, mouseOnly: true }),
     useFocus(context),
     useRole(context, { role: 'tooltip' }),
     useDismiss(context),
