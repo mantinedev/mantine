@@ -13,7 +13,7 @@ export const Usage = () => (
       width: '200vw',
     }}
   >
-    <Tooltip position="right-end">
+    <Tooltip position="right-end" label="It is a tooltip" openDelay={100} closeDelay={1000}>
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>
