@@ -159,6 +159,7 @@ export default createStyles(
       disabled: {
         '&, &:hover': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+          cursor: 'not-allowed',
         },
       },
 
