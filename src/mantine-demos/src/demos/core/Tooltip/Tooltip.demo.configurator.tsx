@@ -5,7 +5,7 @@ import { FLOATING_POSITION_DATA } from '../../../shared/floating-position-data';
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
     <Group position="center">
-      <Tooltip opened label="Tooltip" {...props}>
+      <Tooltip label="Tooltip" {...props}>
         <Button variant="outline" size="xl">
           With tooltip
         </Button>
@@ -20,7 +20,6 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip
-      opened
       label="Tooltip"
      ${props}
     >

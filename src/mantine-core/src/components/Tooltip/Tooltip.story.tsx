@@ -63,3 +63,22 @@ export const Floating = () => (
     </Tooltip.Floating>
   </div>
 );
+
+export const Unmount = () => {
+  const [mounted, setMounted] = useState(true);
+  return (
+    <div>
+      <button type="button" onClick={() => setMounted((c) => !c)}>
+        Toggle
+      </button>
+      <Tooltip opened label="Tooltip">
+        <button
+          type="button"
+          style={{ width: 200, height: 200, display: mounted ? 'block' : 'none' }}
+        >
+          target
+        </button>
+      </Tooltip>
+    </div>
+  );
+};
