@@ -72,7 +72,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     );
 
     return (
-      <ListContext.Provider value={{ classNames, styles, spacing, center, icon }}>
+      <ListContext.Provider value={{ classNames, styles: styles as any, spacing, center, icon }}>
         <Box<any>
           component={type === 'unordered' ? 'ul' : 'ol'}
           className={cx(classes.root, className)}

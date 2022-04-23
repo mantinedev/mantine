@@ -8,7 +8,7 @@ import { AlertCircle } from 'tabler-icons-react';
 
 function Demo() {
   const rightSection = (
-    <Tooltip label="We do not send spam" position="top" placement="end">
+    <Tooltip label="We do not send spam" position="top-end">
       <AlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
     </Tooltip>
   );
@@ -19,7 +19,7 @@ function Demo() {
 
 function Demo() {
   const rightSection = (
-    <Tooltip label="We do not send spam" position="top" placement="end">
+    <Tooltip label="We do not send spam" position="top-end">
       <AlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
     </Tooltip>
   );

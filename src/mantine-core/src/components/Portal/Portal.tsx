@@ -12,6 +12,8 @@ export interface PortalProps {
 
   /** Root element className */
   className?: string;
+
+  zIndex?: number;
 }
 
 export function Portal(props: PortalProps): ReactPortal {

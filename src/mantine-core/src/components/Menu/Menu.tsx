@@ -324,7 +324,7 @@ export const Menu: MenuComponent = forwardRef<HTMLButtonElement, MenuProps>(
         value={{
           hovered,
           radius,
-          styles,
+          styles: styles as any,
           classNames,
           onItemHover: setHovered,
           onItemKeyDown: handleKeyDown,

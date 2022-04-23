@@ -48,7 +48,7 @@ export interface TooltipProps extends TooltipBaseProps {
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
   /** useEffect dependencies to force update tooltip position */
-  positionDependencies: any[];
+  positionDependencies?: any[];
 }
 
 const defaultProps: Partial<TooltipProps> = {

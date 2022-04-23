@@ -55,11 +55,10 @@ export default function CodeDemo({
             <Tooltip
               label={`${visible ? 'Hide' : 'Show'} code`}
               position="left"
-              placement="center"
               transition="fade"
               withArrow
-              arrowSize={4}
-              gutter={8}
+              arrowSize={6}
+              offset={6}
               positionDependencies={[visible]}
             >
               <ActionIcon
