@@ -40,6 +40,12 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Transition duration in ms */
   transitionDuration?: number;
+
+  /** Defines whether content should be wrapped on to the next line */
+  multiline?: boolean;
+
+  /** Tooltip width in px */
+  width?: number | 'auto';
 }
 
 export function Tooltip({
@@ -65,10 +71,12 @@ export function Tooltip({
   offset = 5,
   transition = 'fade',
   transitionDuration = 100,
+  multiline = false,
+  width = 'auto',
   ...others
 }: TooltipProps) {
   const { classes, cx } = useStyles(
-    { radius, color },
+    { radius, color, width, multiline },
     { name: 'Tooltip', classNames, styles, unstyled }
   );
 

@@ -5,7 +5,12 @@ export default { title: 'Tooltip2' };
 
 export const Usage = () => (
   <div style={{ padding: 40 }}>
-    <Tooltip position="bottom-end" label="It is a tooltip">
+    <Tooltip
+      position="bottom-end"
+      label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
+      width={300}
+      multiline
+    >
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>

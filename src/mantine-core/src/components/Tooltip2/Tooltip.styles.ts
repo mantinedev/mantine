@@ -3,9 +3,11 @@ import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
 export interface TooltipStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
+  width: number | 'auto';
+  multiline: boolean;
 }
 
-export default createStyles((theme, { color, radius }: TooltipStylesParams) => ({
+export default createStyles((theme, { color, radius, width, multiline }: TooltipStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
@@ -15,9 +17,9 @@ export default createStyles((theme, { color, radius }: TooltipStylesParams) => (
     padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     position: 'absolute',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
+    whiteSpace: multiline ? 'unset' : 'nowrap',
     pointerEvents: 'none',
+    width,
   },
 
   arrow: {
