@@ -5,7 +5,7 @@ title: Tooltip
 order: 1
 slug: /core/tooltip/
 category: 'overlay'
-description: 'Renders tooltip at given element on mouse over or any other event'
+description: 'Renders tooltip at given element on mouse over or other event'
 props: ['Tooltip']
 import: "import { Tooltip, FloatingTooltip } from '@mantine/core';"
 source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
@@ -18,6 +18,45 @@ import { TooltipDemos } from '@mantine/demos';
 ## Usage
 
 <Demo data={TooltipDemos.usage} />
+
+## Tooltip children
+
+Tooltip requires an element or a component as a single child –
+strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
+Custom components must provide a prop to get root element ref,
+all Mantine components support ref out of the box.
+
+```tsx
+import { Tooltip, Badge } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="OK">
+        <button>Native button – ok</button>
+      </Tooltip>
+
+      <Tooltip label="OK">
+        <Badge>Mantine component – ok</Badge>
+      </Tooltip>
+
+      <Tooltip label="Throws">Raw string, NOT OK – will throw error</Tooltip>
+
+      {/* Number, NOT OK – will throw error */}
+      <Tooltip label="Throws">{2}</Tooltip>
+
+      <Tooltip label="Throws">
+        <>Fragment, NOT OK, will throw error</>
+      </Tooltip>
+
+      <Tooltip label="Throws">
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </Tooltip>
+    </>
+  );
+}
+```
 
 ## Position and color
 
@@ -72,3 +111,49 @@ Both props default to 0 and reset if user moves mouse over/out of target element
 ## FloatingTooltip component
 
 <Demo data={TooltipDemos.floating} />
+
+## Custom components with Tooltip
+
+If you want to build a component that can used with Tooltip use
+[forwardRef](https://reactjs.org/docs/forwarding-refs.html) or other prop that will allow to get root element ref.
+This logic is applied to Tooltip and Tooltip.Floating components:
+
+```tsx
+import React, { forwardRef } from 'react';
+
+// forwardRef function will allow to get root element ref
+const MyBadge = forwardRef<HTMLDivElement, { color: string }>((props, ref) => (
+  <div ref={ref} color={color}>
+    Badge
+  </div>
+));
+
+// other props can also be used
+function MyOtherBadge({
+  color,
+  innerRef,
+}: {
+  color: string;
+  innerRef: React.ForwardedRef<HTMLDivElement>;
+}) {
+  return (
+    <div ref={innerRef} color={color}>
+      Badge
+    </div>
+  );
+}
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="Can be used as is">
+        <MyBadge />
+      </Tooltip>
+
+      <Tooltip label="refProp is required" refProp="innerRef">
+        <MyOtherBadge />
+      </Tooltip>
+    </>
+  );
+}
+```

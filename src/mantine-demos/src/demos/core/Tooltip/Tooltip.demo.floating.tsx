@@ -35,8 +35,7 @@ export const floating: MantineDemo = {
     {
       name: 'color',
       type: 'color',
-      initialValue: 'gray',
-      defaultValue: 'gray',
+      initialValue: 'blue',
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
   ],
