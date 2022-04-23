@@ -5,3 +5,4 @@ export { multiline } from './Tooltip.demo.multiline';
 export { transitions } from './Tooltip.demo.transitions';
 export { delay } from './Tooltip.demo.delay';
 export { floating } from './Tooltip.demo.floating';
+export { usage } from './Tooltip.demo.usage';
