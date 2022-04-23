@@ -10,6 +10,7 @@ export const Usage = () => (
       label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
       width={300}
       multiline
+      events={{ focus: true, hover: true, touch: false }}
     >
       <button type="button" style={{ width: 200, height: 200 }}>
         target

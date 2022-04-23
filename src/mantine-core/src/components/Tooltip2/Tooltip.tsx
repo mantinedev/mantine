@@ -48,6 +48,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Tooltip width in px */
   width?: number | 'auto';
+
+  /** Determines which events will be used to show tooltip */
+  events?: { hover: boolean; focus: boolean; touch: boolean };
 }
 
 const defaultProps: Partial<TooltipProps> = {
@@ -63,34 +66,36 @@ const defaultProps: Partial<TooltipProps> = {
   transitionDuration: 100,
   multiline: false,
   width: 'auto',
+  events: { hover: true, focus: false, touch: false },
 };
 
 export function Tooltip(props: TooltipProps) {
   const {
     children,
-    position = 'top',
-    refProp = 'ref',
+    position,
+    refProp,
     label,
     openDelay,
     closeDelay,
     onPositionChange,
     opened,
-    withinPortal = true,
+    withinPortal,
     radius,
-    color = 'gray',
+    color,
     classNames,
     styles,
     unstyled,
     style,
     className,
-    withArrow = false,
-    arrowSize = 4,
-    arrowOffset = 5,
-    offset = 5,
-    transition = 'fade',
-    transitionDuration = 100,
-    multiline = false,
-    width = 'auto',
+    withArrow,
+    arrowSize,
+    arrowOffset,
+    offset,
+    transition,
+    transitionDuration,
+    multiline,
+    width,
+    events,
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
@@ -105,6 +110,7 @@ export function Tooltip(props: TooltipProps) {
     openDelay,
     onPositionChange,
     opened,
+    events,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
   });
 

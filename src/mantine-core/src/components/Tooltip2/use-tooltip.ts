@@ -24,6 +24,7 @@ interface UseTooltip {
   onPositionChange?(position: Placement): void;
   opened?: boolean;
   offset: number;
+  events: { hover: boolean; focus: boolean; touch: boolean };
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -54,10 +55,11 @@ export function useTooltip(settings: UseTooltip) {
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
+      enabled: settings.events.hover,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
-      mouseOnly: true,
+      mouseOnly: !settings.events.touch,
     }),
-    useFocus(context),
+    useFocus(context, { enabled: settings.events.focus, keyboardOnly: true }),
     useRole(context, { role: 'tooltip' }),
     useDismiss(context),
     useDelayGroup(context, { id: uid }),
