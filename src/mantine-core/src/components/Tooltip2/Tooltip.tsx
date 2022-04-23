@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { isElement } from '@mantine/utils';
+import { isElement, getArrowPositionStyles } from '@mantine/utils';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
@@ -22,6 +22,15 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Controls opened state */
   opened?: boolean;
+
+  /** Determines whether component should have an arrow */
+  withArrow?: boolean;
+
+  /** Arrow size in px */
+  arrowSize?: number;
+
+  /** Arrow offset in px */
+  arrowOffset?: number;
 }
 
 export function Tooltip({
@@ -41,6 +50,9 @@ export function Tooltip({
   unstyled,
   style,
   className,
+  withArrow = true,
+  arrowSize = 5,
+  arrowOffset = 5,
   ...others
 }: TooltipProps) {
   const { classes, cx } = useStyles(
@@ -48,7 +60,13 @@ export function Tooltip({
     { name: 'Tooltip', classNames, styles, unstyled }
   );
 
-  const tooltip = useTooltip({ position, closeDelay, openDelay, onPositionChange, opened });
+  const tooltip = useTooltip({
+    position,
+    closeDelay,
+    openDelay,
+    onPositionChange,
+    opened,
+  });
 
   if (!isElement(children)) {
     throw new Error(TOOLTIP_ERRORS.children);
@@ -79,6 +97,17 @@ export function Tooltip({
               })}
             >
               {label}
+              {withArrow && (
+                <div
+                  className={classes.arrow}
+                  style={getArrowPositionStyles({
+                    position: tooltip.placement,
+                    arrowSize,
+                    arrowOffset,
+                    dir: 'ltr',
+                  })}
+                />
+              )}
             </div>
           )}
         </Transition>

@@ -7,3 +7,4 @@ export { packSx } from './pack-sx/pack-sx';
 export { getSafeId } from './get-safe-id/get-safe-id';
 export { clamp } from './clamp/clamp';
 export { isElement } from './is-element/is-element';
+export { getArrowPositionStyles } from './get-arrow-position-styles/get-arrow-position-styles';

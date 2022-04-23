@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from 'react';
 import {
   useFloating,
   Placement,
-  shift,
   autoUpdate,
   flip,
   offset,
@@ -27,7 +26,7 @@ interface UseTooltip {
 }
 
 export function useTooltip(settings: UseTooltip) {
-  const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
+  const [uncontrolledOpened, setUncontrolledOpened] = useState(true);
   const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
   const withinGroup = useTooltipGroupContext();
   const uid = useId();
@@ -49,7 +48,7 @@ export function useTooltip(settings: UseTooltip) {
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(5), flip(), shift({ padding: 8 })],
+    middleware: [offset(5), flip()],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -84,5 +83,6 @@ export function useTooltip(settings: UseTooltip) {
     getReferenceProps,
     isGroupPhase,
     opened,
+    placement,
   };
 }

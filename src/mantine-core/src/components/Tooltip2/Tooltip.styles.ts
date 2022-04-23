@@ -15,7 +15,6 @@ export default createStyles((theme, { color, radius }: TooltipStylesParams) => (
     padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
     position: 'absolute',
-    overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
