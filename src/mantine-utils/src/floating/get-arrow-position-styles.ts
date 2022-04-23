@@ -1,8 +1,10 @@
-type Placement = 'end' | 'center' | 'start';
-type Side = 'top' | 'right' | 'bottom' | 'left';
-type Position = Side | `${Side}-${Placement}`;
+import type { FloatingPosition, FloatingSide, FloatingPlacement } from './types';
 
-function horizontalSide(placement: Placement, arrowSize: number, arrowOffset: number) {
+function horizontalSide(
+  placement: FloatingPlacement | 'center',
+  arrowSize: number,
+  arrowOffset: number
+) {
   if (placement === 'center') {
     return { top: `calc(50% - ${arrowSize / 2}px)` };
   }
@@ -19,7 +21,7 @@ function horizontalSide(placement: Placement, arrowSize: number, arrowOffset: nu
 }
 
 function verticalSide(
-  placement: Placement,
+  placement: FloatingPlacement | 'center',
   arrowSize: number,
   arrowOffset: number,
   dir: 'rtl' | 'ltr'
@@ -45,12 +47,12 @@ export function getArrowPositionStyles({
   arrowOffset,
   dir,
 }: {
-  position: Position;
+  position: FloatingPosition;
   arrowSize: number;
   arrowOffset: number;
   dir: 'rtl' | 'ltr';
 }) {
-  const [side, placement = 'center'] = position.split('-') as [Side, Placement];
+  const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
     width: arrowSize,
     height: arrowSize,

@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { isElement, getArrowPositionStyles } from '@mantine/utils';
+import { isElement, getArrowPositionStyles, getFloatingPosition } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
@@ -106,7 +106,7 @@ export function Tooltip(props: TooltipProps) {
   );
 
   const tooltip = useTooltip({
-    position,
+    position: getFloatingPosition(theme.dir, position),
     closeDelay,
     openDelay,
     onPositionChange,

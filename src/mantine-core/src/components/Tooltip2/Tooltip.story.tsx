@@ -4,14 +4,15 @@ import { Tooltip } from './Tooltip';
 export default { title: 'Tooltip2' };
 
 export const Usage = () => (
-  <div style={{ padding: 40 }}>
+  <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
     <Tooltip
-      position="bottom-end"
+      position="right-end"
       label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
       width={300}
       multiline
       events={{ focus: true, hover: true, touch: false }}
       withinPortal={false}
+      opened
     >
       <button type="button" style={{ width: 200, height: 200 }}>
         target
