@@ -1,5 +1,8 @@
 import React, { cloneElement } from 'react';
 import { isElement } from '@mantine/utils';
+import { useMergedRef } from '@mantine/hooks';
+import { useMantineDefaultProps } from '@mantine/styles';
+import { Box } from '../../Box';
 import { OptionalPortal } from '../../Portal';
 import { TooltipBaseProps } from '../Tooltip.types';
 import useStyles from '../Tooltip.styles';
@@ -11,29 +14,41 @@ export interface TooltipFloatingProps extends TooltipBaseProps {
   offset?: number;
 }
 
-export function TooltipFloating({
-  children,
-  refProp = 'ref',
-  withinPortal = true,
-  style,
-  className,
-  classNames,
-  styles,
-  unstyled,
-  radius,
-  color,
-  label,
-  offset = 10,
-  position = 'right',
-  ...others
-}: TooltipFloatingProps) {
+const defaultProps: Partial<TooltipFloatingProps> = {
+  refProp: 'ref',
+  withinPortal: true,
+  color: 'gray',
+  offset: 10,
+  position: 'right',
+};
+
+export function TooltipFloating(props: TooltipFloatingProps) {
+  const {
+    children,
+    refProp,
+    withinPortal,
+    style,
+    className,
+    classNames,
+    styles,
+    unstyled,
+    radius,
+    color,
+    label,
+    offset,
+    position,
+    multiline,
+    width,
+    ...others
+  } = useMantineDefaultProps('TooltipFloating', defaultProps, props);
+
   const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
     offset,
     position,
   });
 
   const { classes, cx } = useStyles(
-    { radius, color },
+    { radius, color, multiline, width },
     { name: 'Tooltip', classNames, styles, unstyled }
   );
 
@@ -42,6 +57,7 @@ export function TooltipFloating({
   }
 
   const target = children as React.ReactElement;
+  const targetRef = useMergedRef(boundaryRef, (target as any).ref);
 
   const onMouseEnter = (event: React.MouseEvent<unknown, MouseEvent>) => {
     target.props.onMouseEnter?.(event);
@@ -57,7 +73,7 @@ export function TooltipFloating({
   return (
     <>
       <OptionalPortal withinPortal={withinPortal}>
-        <div
+        <Box
           {...others}
           ref={floating}
           className={cx(classes.root, className)}
@@ -69,15 +85,17 @@ export function TooltipFloating({
           }}
         >
           {label}
-        </div>
+        </Box>
       </OptionalPortal>
 
       {cloneElement(target, {
         ...target.props,
-        [refProp]: boundaryRef,
+        [refProp]: targetRef,
         onMouseEnter,
         onMouseLeave,
       })}
     </>
   );
 }
+
+TooltipFloating.displayName = '@mantine/core/TooltipFloating';

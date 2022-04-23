@@ -44,12 +44,6 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Transition duration in ms */
   transitionDuration?: number;
 
-  /** Defines whether content should be wrapped on to the next line */
-  multiline?: boolean;
-
-  /** Tooltip width in px */
-  width?: number | 'auto';
-
   /** Determines which events will be used to show tooltip */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 }
