@@ -97,17 +97,15 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
       {!noCopy && (
         <Tooltip
-          className={classes.copy}
           label={clipboard.copied ? copiedLabel : copyLabel}
           position="left"
-          placement="center"
-          transition="fade"
           withArrow
-          arrowSize={4}
-          gutter={8}
-          color={clipboard.copied ? 'teal' : 'gray'}
+          arrowSize={6}
+          offset={6}
+          color={clipboard.copied ? 'teal' : undefined}
         >
           <ActionIcon
+            className={classes.copy}
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(code)}
           >
