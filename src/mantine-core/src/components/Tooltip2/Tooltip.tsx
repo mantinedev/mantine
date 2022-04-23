@@ -4,7 +4,7 @@ import { isElement, getArrowPositionStyles } from '@mantine/utils';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
-import { Transition } from '../Transition';
+import { MantineTransition, Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
 import { TooltipBaseProps } from './Tooltip.types';
@@ -31,6 +31,12 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Arrow offset in px */
   arrowOffset?: number;
+
+  /** One of premade transitions ot transition object */
+  transition?: MantineTransition;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
 }
 
 export function Tooltip({
@@ -53,6 +59,8 @@ export function Tooltip({
   withArrow = true,
   arrowSize = 5,
   arrowOffset = 5,
+  transition = 'fade',
+  transitionDuration = 100,
   ...others
 }: TooltipProps) {
   const { classes, cx } = useStyles(
@@ -79,8 +87,8 @@ export function Tooltip({
       <OptionalPortal withinPortal={withinPortal}>
         <Transition
           mounted={tooltip.opened}
-          transition="fade"
-          duration={tooltip.isGroupPhase ? 10 : 100}
+          transition={transition}
+          duration={tooltip.isGroupPhase ? 10 : transitionDuration}
         >
           {(transitionStyles) => (
             <div

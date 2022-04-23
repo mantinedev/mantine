@@ -4,16 +4,8 @@ import { Tooltip } from './Tooltip';
 export default { title: 'Tooltip2' };
 
 export const Usage = () => (
-  <div
-    style={{
-      padding: 40,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '200vw',
-    }}
-  >
-    <Tooltip position="bottom-end" label="It is a tooltip">
+  <div style={{ padding: 40 }}>
+    <Tooltip position="bottom-end" label="It is a tooltip" transition="skew-down">
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>
