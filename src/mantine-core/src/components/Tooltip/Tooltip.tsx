@@ -2,7 +2,7 @@ import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement, getArrowPositionStyles, getFloatingPosition } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
@@ -62,6 +62,7 @@ const defaultProps: Partial<TooltipProps> = {
   multiline: false,
   width: 'auto',
   events: { hover: true, focus: false, touch: false },
+  zIndex: getDefaultZIndex('popover'),
 };
 
 export function Tooltip(props: TooltipProps) {
@@ -91,6 +92,7 @@ export function Tooltip(props: TooltipProps) {
     multiline,
     width,
     events,
+    zIndex,
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
@@ -133,6 +135,7 @@ export function Tooltip(props: TooltipProps) {
                 style: {
                   ...style,
                   ...transitionStyles,
+                  zIndex,
                   top: tooltip.y ?? '',
                   left: tooltip.x ?? '',
                 },

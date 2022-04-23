@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
 import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { OptionalPortal } from '../../Portal';
 import { TooltipBaseProps } from '../Tooltip.types';
@@ -20,6 +20,7 @@ const defaultProps: Partial<TooltipFloatingProps> = {
   color: 'gray',
   offset: 10,
   position: 'right',
+  zIndex: getDefaultZIndex('popover'),
 };
 
 export function TooltipFloating(props: TooltipFloatingProps) {
@@ -39,6 +40,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     position,
     multiline,
     width,
+    zIndex,
     ...others
   } = useMantineDefaultProps('TooltipFloating', defaultProps, props);
 
@@ -79,6 +81,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
           className={cx(classes.root, className)}
           style={{
             ...style,
+            zIndex,
             display: opened ? 'block' : 'none',
             top: y ?? '',
             left: Math.round(x) ?? '',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
 
-export default { title: 'Tooltip2' };
+export default { title: 'Tooltip' };
 
 export const Usage = () => (
   <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>

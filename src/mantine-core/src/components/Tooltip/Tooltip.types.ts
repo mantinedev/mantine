@@ -33,4 +33,7 @@ export interface TooltipBaseProps
 
   /** Tooltip width in px */
   width?: number | 'auto';
+
+  /** Tooltip z-index */
+  zIndex?: React.CSSProperties['zIndex'];
 }
