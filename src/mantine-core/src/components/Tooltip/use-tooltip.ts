@@ -25,6 +25,7 @@ interface UseTooltip {
   opened?: boolean;
   offset: number;
   events: { hover: boolean; focus: boolean; touch: boolean };
+  positionDependencies: any[];
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -74,6 +75,10 @@ export function useTooltip(settings: UseTooltip) {
   useDidUpdate(() => {
     settings.onPositionChange?.(placement);
   }, [placement]);
+
+  useDidUpdate(() => {
+    update();
+  }, settings.positionDependencies);
 
   const isGroupPhase = opened && currentId && currentId !== uid;
 

@@ -46,6 +46,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Determines which events will be used to show tooltip */
   events?: { hover: boolean; focus: boolean; touch: boolean };
+
+  /** useEffect dependencies to force update tooltip position */
+  positionDependencies: any[];
 }
 
 const defaultProps: Partial<TooltipProps> = {
@@ -60,6 +63,7 @@ const defaultProps: Partial<TooltipProps> = {
   width: 'auto',
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
+  positionDependencies: [],
 };
 
 export function Tooltip(props: TooltipProps) {
@@ -91,6 +95,7 @@ export function Tooltip(props: TooltipProps) {
     events,
     zIndex,
     disabled,
+    positionDependencies,
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
@@ -107,6 +112,7 @@ export function Tooltip(props: TooltipProps) {
     opened,
     events,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
+    positionDependencies: [...positionDependencies, children],
   });
 
   if (!isElement(children)) {
