@@ -37,7 +37,8 @@
     "@radix-ui/react-scroll-area": "^0.1.1",
     "react-textarea-autosize": "^8.3.2",
     "@popperjs/core": "^2.9.3",
-    "react-popper": "^2.2.5"
+    "react-popper": "^2.2.5",
+    "@floating-ui/react-dom-interactions": "0.3.1"
   },
   "devDependencies": {}
 }

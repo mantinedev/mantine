@@ -1647,7 +1647,7 @@
   dependencies:
     "@floating-ui/core" "^0.6.2"
 
-"@floating-ui/react-dom-interactions@^0.3.1":
+"@floating-ui/react-dom-interactions@0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@floating-ui/react-dom-interactions/-/react-dom-interactions-0.3.1.tgz#abc0cb4b18e6f095397e50f9846572eee4e34554"
   integrity sha512-tP2KEh7EHJr5hokSBHcPGojb+AorDNUf0NYfZGg/M+FsMvCOOsSEeEF0O1NDfETIzDnpbHnCs0DuvCFhSMSStg==
