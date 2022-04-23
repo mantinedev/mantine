@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tooltip, TooltipProps, Group, Button } from '@mantine/core';
+import { FLOATING_POSITION_DATA } from '../../../shared/floating-position-data';
 
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
@@ -46,20 +47,7 @@ export const configurator: MantineDemo = {
     {
       name: 'position',
       type: 'select',
-      data: [
-        { label: 'top', value: 'top' },
-        { label: 'top-start', value: 'top-start' },
-        { label: 'top-end', value: 'top-end' },
-        { label: 'left', value: 'left' },
-        { label: 'left-start', value: 'left-start' },
-        { label: 'left-end', value: 'left-end' },
-        { label: 'right', value: 'right' },
-        { label: 'right-start', value: 'right-start' },
-        { label: 'right-end', value: 'right-end' },
-        { label: 'bottom', value: 'bottom' },
-        { label: 'bottom-start', value: 'bottom-start' },
-        { label: 'bottom-end', value: 'bottom-end' },
-      ],
+      data: FLOATING_POSITION_DATA,
       initialValue: 'top',
       defaultValue: 'top',
     },
