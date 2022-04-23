@@ -11,6 +11,7 @@ export const Usage = () => (
       width={300}
       multiline
       events={{ focus: true, hover: true, touch: false }}
+      withinPortal={false}
     >
       <button type="button" style={{ width: 200, height: 200 }}>
         target

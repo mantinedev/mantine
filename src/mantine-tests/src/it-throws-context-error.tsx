@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { render } from '@testing-library/react';
+import { patchConsoleError } from './patch-console-error';
 
 export function itThrowsContextError<P>(
   Component: React.ComponentType<P>,
@@ -8,12 +9,8 @@ export function itThrowsContextError<P>(
   errorMessage: string
 ) {
   it('throws error when rendered outside of context', async () => {
-    // gets rid of testing library errors for this test
-    const initialError = console.error;
-    console.error = () => {};
-
+    patchConsoleError();
     expect(() => render(<Component {...requiredProps} />)).toThrow(new Error(errorMessage));
-
-    console.error = initialError;
+    patchConsoleError.release();
   });
 }

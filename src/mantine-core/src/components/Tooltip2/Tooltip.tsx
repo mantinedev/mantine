@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement, getArrowPositionStyles } from '@mantine/utils';
+import { useMergedRef } from '@mantine/hooks';
 import { useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
@@ -99,7 +100,7 @@ export function Tooltip(props: TooltipProps) {
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
-  const { classes, cx } = useStyles(
+  const { classes, cx, theme } = useStyles(
     { radius, color, width, multiline },
     { name: 'Tooltip', classNames, styles, unstyled }
   );
@@ -119,6 +120,7 @@ export function Tooltip(props: TooltipProps) {
   }
 
   const target = children as React.ReactElement;
+  const targetRef = useMergedRef(tooltip.reference, (target as any).ref);
 
   return (
     <>
@@ -150,7 +152,7 @@ export function Tooltip(props: TooltipProps) {
                     position: tooltip.placement,
                     arrowSize,
                     arrowOffset,
-                    dir: 'ltr',
+                    dir: theme.dir,
                   })}
                 />
               )}
@@ -159,10 +161,7 @@ export function Tooltip(props: TooltipProps) {
         </Transition>
       </OptionalPortal>
 
-      {cloneElement(
-        target,
-        tooltip.getReferenceProps({ [refProp]: tooltip.reference, ...target.props })
-      )}
+      {cloneElement(target, tooltip.getReferenceProps({ [refProp]: targetRef, ...target.props }))}
     </>
   );
 }
