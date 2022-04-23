@@ -23,6 +23,7 @@ interface UseTooltip {
   openDelay: number;
   onPositionChange?(position: Placement): void;
   opened?: boolean;
+  offset: number;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -48,7 +49,7 @@ export function useTooltip(settings: UseTooltip) {
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(5), flip()],
+    middleware: [offset(settings.offset), flip()],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([

@@ -5,7 +5,7 @@ export default { title: 'Tooltip2' };
 
 export const Usage = () => (
   <div style={{ padding: 40 }}>
-    <Tooltip position="bottom-end" label="It is a tooltip" transition="skew-down">
+    <Tooltip position="bottom-end" label="It is a tooltip">
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>

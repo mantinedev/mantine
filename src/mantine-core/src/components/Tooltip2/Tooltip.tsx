@@ -23,6 +23,9 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Controls opened state */
   opened?: boolean;
 
+  /** Space between target element and tooltip in px */
+  offset?: number;
+
   /** Determines whether component should have an arrow */
   withArrow?: boolean;
 
@@ -59,6 +62,7 @@ export function Tooltip({
   withArrow = true,
   arrowSize = 5,
   arrowOffset = 5,
+  offset = 5,
   transition = 'fade',
   transitionDuration = 100,
   ...others
@@ -74,6 +78,7 @@ export function Tooltip({
     openDelay,
     onPositionChange,
     opened,
+    offset: offset + (withArrow ? arrowSize / 2 : 0),
   });
 
   if (!isElement(children)) {
