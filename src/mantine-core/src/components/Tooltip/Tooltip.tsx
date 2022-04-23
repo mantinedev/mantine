@@ -1,217 +1,166 @@
-import React, { useState, useRef, forwardRef, useEffect } from 'react';
-import {
-  DefaultProps,
-  MantineColor,
-  ClassNames,
-  getDefaultZIndex,
-  MantineNumberSize,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import React, { cloneElement } from 'react';
+import { Placement } from '@floating-ui/react-dom-interactions';
+import { isElement, getArrowPositionStyles, getFloatingPosition } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
+import { useMantineDefaultProps } from '@mantine/styles';
+import { TooltipGroup } from './TooltipGroup/TooltipGroup';
+import { TooltipFloating } from './TooltipFloating/TooltipFloating';
+import { useTooltip } from './use-tooltip';
+import { MantineTransition, Transition } from '../Transition';
+import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
-import { Popper, SharedPopperProps } from '../Popper';
+import { TOOLTIP_ERRORS } from './Tooltip.errors';
+import { TooltipBaseProps } from './Tooltip.types';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = ClassNames<typeof useStyles>;
+export interface TooltipProps extends TooltipBaseProps {
+  /** Called when tooltip position changes */
+  onPositionChange?(position: Placement): void;
 
-export interface TooltipProps
-  extends DefaultProps<TooltipStylesNames>,
-    SharedPopperProps,
-    React.ComponentPropsWithoutRef<'div'> {
-  /** Tooltip content */
-  label: React.ReactNode;
-
-  /** Any react node that should trigger tooltip */
-  children: React.ReactNode;
-
-  /** Tooltip opened state for controlled variant */
-  opened?: boolean;
-
-  /** Open delay in ms, 0 to disable delay */
+  /** Open delay in ms */
   openDelay?: number;
 
-  /** Close delay in ms, 0 to disable delay */
+  /** Close delay in ms */
   closeDelay?: number;
 
-  /** Any color from theme.colors, defaults to gray in light color scheme and dark in dark colors scheme */
-  color?: MantineColor;
+  /** Controls opened state */
+  opened?: boolean;
 
-  /** Radius from theme.radius, or number to set border-radius in px */
-  radius?: MantineNumberSize;
+  /** Space between target element and tooltip in px */
+  offset?: number;
 
-  /** True to disable tooltip */
-  disabled?: boolean;
+  /** Determines whether component should have an arrow */
+  withArrow?: boolean;
 
   /** Arrow size in px */
   arrowSize?: number;
 
-  /** Tooltip width in px or auto */
-  width?: number | 'auto';
+  /** Arrow offset in px */
+  arrowOffset?: number;
 
-  /** Allow multiline tooltip content */
-  wrapLines?: boolean;
+  /** One of premade transitions ot transition object */
+  transition?: MantineTransition;
 
-  /** Allow pointer events on tooltip, warning: this may break some animations */
-  allowPointerEvents?: boolean;
+  /** Transition duration in ms */
+  transitionDuration?: number;
 
-  /** Get tooltip ref */
-  tooltipRef?: React.ForwardedRef<HTMLDivElement>;
-
-  /** Tooltip id to bind aria-describedby */
-  tooltipId?: string;
-
-  /** useEffect dependencies to force update tooltip position */
-  positionDependencies?: any[];
-
-  /** Whether to render the target element in a Portal */
-  withinPortal?: boolean;
+  /** Determines which events will be used to show tooltip */
+  events?: { hover: boolean; focus: boolean; touch: boolean };
 }
 
 const defaultProps: Partial<TooltipProps> = {
-  openDelay: 0,
-  closeDelay: 0,
-  gutter: 5,
-  color: 'gray',
-  disabled: false,
-  withArrow: false,
-  arrowSize: 2,
   position: 'top',
-  placement: 'center',
-  transition: 'pop-top-left',
-  transitionDuration: 100,
-  zIndex: getDefaultZIndex('popover'),
-  width: 'auto',
-  wrapLines: false,
-  allowPointerEvents: false,
-  positionDependencies: [],
+  refProp: 'ref',
   withinPortal: true,
+  color: 'gray',
+  withArrow: false,
+  arrowSize: 4,
+  arrowOffset: 5,
+  offset: 5,
+  transition: 'fade',
+  transitionDuration: 100,
+  multiline: false,
+  width: 'auto',
+  events: { hover: true, focus: false, touch: false },
 };
 
-export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipProps, ref) => {
+export function Tooltip(props: TooltipProps) {
   const {
-    className,
-    label,
     children,
-    opened,
+    position,
+    refProp,
+    label,
     openDelay,
     closeDelay,
-    gutter,
-    color,
-    radius,
-    disabled,
-    withArrow,
-    arrowSize,
-    position,
-    placement,
-    transition,
-    transitionDuration,
-    zIndex,
-    transitionTimingFunction,
-    width,
-    wrapLines,
-    allowPointerEvents,
-    positionDependencies,
+    onPositionChange,
+    opened,
     withinPortal,
-    tooltipRef,
-    tooltipId,
+    radius,
+    color,
     classNames,
     styles,
-    onMouseLeave,
-    onMouseEnter,
+    unstyled,
+    style,
+    className,
+    withArrow,
+    arrowSize,
+    arrowOffset,
+    offset,
+    transition,
+    transitionDuration,
+    multiline,
+    width,
+    events,
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { color, radius },
-    { classNames, styles, name: 'Tooltip' }
+    { radius, color, width, multiline },
+    { name: 'Tooltip', classNames, styles, unstyled }
   );
-  const openTimeoutRef = useRef<number>();
-  const closeTimeoutRef = useRef<number>();
-  const [_opened, setOpened] = useState(false);
-  const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
-  const [referenceElement, setReferenceElement] = useState(null);
-  const mergedRefs = useMergedRef(ref, setReferenceElement);
 
-  const handleOpen = () => {
-    window.clearTimeout(closeTimeoutRef.current);
+  const tooltip = useTooltip({
+    position: getFloatingPosition(theme.dir, position),
+    closeDelay,
+    openDelay,
+    onPositionChange,
+    opened,
+    events,
+    offset: offset + (withArrow ? arrowSize / 2 : 0),
+  });
 
-    if (openDelay !== 0) {
-      openTimeoutRef.current = window.setTimeout(() => {
-        setOpened(true);
-      }, openDelay);
-    } else {
-      setOpened(true);
-    }
-  };
+  if (!isElement(children)) {
+    throw new Error(TOOLTIP_ERRORS.children);
+  }
 
-  const handleClose = () => {
-    window.clearTimeout(openTimeoutRef.current);
-
-    if (closeDelay !== 0) {
-      closeTimeoutRef.current = window.setTimeout(() => {
-        setOpened(false);
-      }, closeDelay);
-    } else {
-      setOpened(false);
-    }
-  };
-
-  useEffect(
-    () => () => {
-      window.clearTimeout(openTimeoutRef.current);
-      window.clearTimeout(closeTimeoutRef.current);
-    },
-    []
-  );
+  const target = children as React.ReactElement;
+  const targetRef = useMergedRef(tooltip.reference, (target as any).ref);
 
   return (
-    <Box<'div'>
-      className={cx(classes.root, className)}
-      onMouseEnter={(event) => {
-        handleOpen();
-        typeof onMouseEnter === 'function' && onMouseEnter(event);
-      }}
-      onMouseLeave={(event) => {
-        handleClose();
-        typeof onMouseLeave === 'function' && onMouseLeave(event);
-      }}
-      onFocusCapture={handleOpen}
-      onBlurCapture={handleClose}
-      ref={mergedRefs}
-      {...others}
-    >
-      <Popper
-        referenceElement={referenceElement}
-        transitionDuration={transitionDuration}
-        transition={transition}
-        mounted={visible}
-        position={position}
-        placement={placement}
-        gutter={gutter}
-        withArrow={withArrow}
-        arrowSize={arrowSize}
-        arrowDistance={theme.fn.radius(radius) > 10 ? 7 : 3}
-        zIndex={zIndex}
-        arrowClassName={classes.arrow}
-        forceUpdateDependencies={[color, radius, ...positionDependencies]}
-        withinPortal={withinPortal}
-      >
-        <Box
-          className={classes.body}
-          ref={tooltipRef}
-          sx={{
-            pointerEvents: allowPointerEvents ? 'all' : 'none',
-            whiteSpace: wrapLines ? 'normal' : 'nowrap',
-            width,
-          }}
+    <>
+      <OptionalPortal withinPortal={withinPortal}>
+        <Transition
+          mounted={tooltip.opened}
+          transition={transition}
+          duration={tooltip.isGroupPhase ? 10 : transitionDuration}
         >
-          {label}
-        </Box>
-      </Popper>
+          {(transitionStyles) => (
+            <Box
+              {...others}
+              {...tooltip.getFloatingProps({
+                ref: tooltip.floating,
+                className: cx(classes.root, className),
+                style: {
+                  ...style,
+                  ...transitionStyles,
+                  top: tooltip.y ?? '',
+                  left: tooltip.x ?? '',
+                },
+              })}
+            >
+              {label}
+              {withArrow && (
+                <div
+                  className={classes.arrow}
+                  style={getArrowPositionStyles({
+                    position: tooltip.placement,
+                    arrowSize,
+                    arrowOffset,
+                    dir: theme.dir,
+                  })}
+                />
+              )}
+            </Box>
+          )}
+        </Transition>
+      </OptionalPortal>
 
-      {children}
-    </Box>
+      {cloneElement(target, tooltip.getReferenceProps({ [refProp]: targetRef, ...target.props }))}
+    </>
   );
-});
+}
+
+Tooltip.Group = TooltipGroup;
+Tooltip.Floating = TooltipFloating;
 
 Tooltip.displayName = '@mantine/core/Tooltip';

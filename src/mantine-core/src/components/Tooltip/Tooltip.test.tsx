@@ -1,145 +1,66 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  itRendersChildren,
-  itSupportsRef,
-  itSupportsSystemProps,
-  renderWithAct,
-  actAsync,
-} from '@mantine/tests';
+import { itSupportsSystemProps, checkAccessibility, patchConsoleError } from '@mantine/tests';
+import { render } from '@testing-library/react';
 import { Tooltip, TooltipProps } from './Tooltip';
+import { TooltipFloating } from './TooltipFloating/TooltipFloating';
+import { TooltipGroup } from './TooltipGroup/TooltipGroup';
+import { TOOLTIP_ERRORS } from './Tooltip.errors';
 
 const defaultProps: TooltipProps = {
   withinPortal: false,
-  label: 'test-tooltip',
-  children: 'test-target',
+  opened: true,
   transitionDuration: 0,
+  label: 'test-tooltip',
+  children: <button type="button">test-target</button>,
 };
 
 describe('@mantine/core/Tooltip', () => {
-  afterEach(() => jest.useRealTimers());
-
-  itRendersChildren(Tooltip, defaultProps);
-  itSupportsRef(Tooltip, { ...defaultProps, opened: true }, HTMLDivElement, 'tooltipRef');
+  checkAccessibility([<Tooltip {...defaultProps} />]);
   itSupportsSystemProps({
     component: Tooltip,
     props: defaultProps,
     displayName: '@mantine/core/Tooltip',
-    refType: HTMLDivElement,
+    name: 'Tooltip',
   });
 
-  it('renders given label', async () => {
-    await renderWithAct(<Tooltip {...defaultProps} opened />);
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+  it('throws error if children cannot be processed', () => {
+    const TestTooltip: any = Tooltip;
+    const error = new Error(TOOLTIP_ERRORS.children);
+    patchConsoleError();
+    expect(() => render(<TestTooltip>Hello</TestTooltip>)).toThrow(error);
+    expect(() => render(<TestTooltip>{2}</TestTooltip>)).toThrow(error);
+    expect(() =>
+      render(
+        <TestTooltip>
+          <>fragment</>
+        </TestTooltip>
+      )
+    ).toThrow(error);
+    expect(() =>
+      render(
+        <TestTooltip>
+          <div>node 1</div>
+          <div>node 2</div>
+        </TestTooltip>
+      )
+    ).toThrow(error);
+    patchConsoleError.release();
   });
 
-  it('shows/hide tooltip when mouse enters/leaves element', async () => {
-    await renderWithAct(
-      <Tooltip {...defaultProps}>
-        <button type="button">test-target</button>
+  it('allows to get child ref', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    render(
+      <Tooltip label="tooltip" opened>
+        <button type="button" ref={ref}>
+          target
+        </button>
       </Tooltip>
     );
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => userEvent.hover(screen.getByRole('button')));
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
+    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
   });
 
-  it('shows/hide tooltip when element focuses/blurs', async () => {
-    await renderWithAct(
-      <Tooltip {...defaultProps}>
-        <button type="button">test-target</button>
-      </Tooltip>
-    );
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => userEvent.tab());
-    expect(screen.getByRole('button')).toHaveFocus();
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => userEvent.tab());
-    expect(screen.getByRole('button')).not.toHaveFocus();
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-  });
-
-  it('supports onMouseLeave and onMouseEnter events', async () => {
-    const onMouseLeave = jest.fn();
-    const onMouseEnter = jest.fn();
-
-    await renderWithAct(
-      <Tooltip {...defaultProps} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <button type="button">test-target</button>
-      </Tooltip>
-    );
-
-    await actAsync(() => userEvent.hover(screen.getByRole('button')));
-    expect(onMouseEnter).toHaveBeenCalled();
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
-    expect(onMouseLeave).toHaveBeenCalled();
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-  });
-
-  it('supports open delay', async () => {
-    jest.useFakeTimers();
-
-    await renderWithAct(
-      <Tooltip {...defaultProps} openDelay={500}>
-        <button type="button">test-target</button>
-      </Tooltip>
-    );
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => userEvent.hover(screen.getByRole('button')));
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => jest.advanceTimersByTime(500));
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => jest.runAllTimers());
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-  });
-
-  it('supports close delay', async () => {
-    jest.useFakeTimers();
-
-    await renderWithAct(
-      <Tooltip {...defaultProps} closeDelay={500}>
-        <button type="button">test-target</button>
-      </Tooltip>
-    );
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-    await actAsync(() => userEvent.hover(screen.getByRole('button')));
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => userEvent.unhover(screen.getByRole('button')));
-    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-    await actAsync(() => jest.runAllTimers());
-    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
-  });
-
-  it('sets body width based on prop', async () => {
-    const { container } = await renderWithAct(<Tooltip {...defaultProps} opened width={164} />);
-    expect(container.querySelector('.mantine-Tooltip-body')).toHaveStyle({ width: '164px' });
-  });
-
-  it('sets body pointer-events style based on allowPointerEvents prop', async () => {
-    const { container: allow } = await renderWithAct(
-      <Tooltip {...defaultProps} opened allowPointerEvents />
-    );
-    const { container: disallow } = await renderWithAct(
-      <Tooltip {...defaultProps} opened allowPointerEvents={false} />
-    );
-
-    expect(allow.querySelector('.mantine-Tooltip-body')).toHaveStyle({ pointerEvents: 'all' });
-    expect(disallow.querySelector('.mantine-Tooltip-body')).toHaveStyle({ pointerEvents: 'none' });
-  });
-
-  it('sets body white-space style based on wrapLines prop', async () => {
-    const { container: wrap } = await renderWithAct(<Tooltip {...defaultProps} opened wrapLines />);
-    const { container: noWrap } = await renderWithAct(
-      <Tooltip {...defaultProps} opened wrapLines={false} />
-    );
-
-    expect(wrap.querySelector('.mantine-Tooltip-body')).toHaveStyle({ whiteSpace: 'normal' });
-    expect(noWrap.querySelector('.mantine-Tooltip-body')).toHaveStyle({ whiteSpace: 'nowrap' });
+  it('exposes TooltipGroup and TooltipFloating as static properties', () => {
+    expect(Tooltip.Floating).toBe(TooltipFloating);
+    expect(Tooltip.Group).toBe(TooltipGroup);
   });
 });
