@@ -41,8 +41,7 @@ export const configurator: MantineDemo = {
     {
       name: 'color',
       type: 'color',
-      initialValue: 'gray',
-      defaultValue: 'gray',
+      initialValue: 'blue',
     },
     {
       name: 'position',

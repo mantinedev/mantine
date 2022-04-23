@@ -45,7 +45,11 @@ export function Portal(props: PortalProps): ReactPortal {
   }
 
   return createPortal(
-    <div className={className} dir={theme.dir}>
+    <div
+      className={className}
+      dir={theme.dir}
+      style={{ zIndex: props.zIndex, position: 'relative' }}
+    >
       {children}
     </div>,
     ref.current
