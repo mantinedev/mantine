@@ -6,3 +6,4 @@ export { transitions } from './Tooltip.demo.transitions';
 export { delay } from './Tooltip.demo.delay';
 export { floating } from './Tooltip.demo.floating';
 export { usage } from './Tooltip.demo.usage';
+export { group } from './Tooltip.demo.group';
