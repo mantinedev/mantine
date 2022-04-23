@@ -1,11 +1,13 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement, getArrowPositionStyles } from '@mantine/utils';
+import { useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
 import { MantineTransition, Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
+import { Box } from '../Box';
 import { TOOLTIP_ERRORS } from './Tooltip.errors';
 import { TooltipBaseProps } from './Tooltip.types';
 import useStyles from './Tooltip.styles';
@@ -48,33 +50,50 @@ export interface TooltipProps extends TooltipBaseProps {
   width?: number | 'auto';
 }
 
-export function Tooltip({
-  children,
-  position = 'top',
-  refProp = 'ref',
-  label,
-  openDelay,
-  closeDelay,
-  onPositionChange,
-  opened,
-  withinPortal = true,
-  radius,
-  color = 'gray',
-  classNames,
-  styles,
-  unstyled,
-  style,
-  className,
-  withArrow = true,
-  arrowSize = 5,
-  arrowOffset = 5,
-  offset = 5,
-  transition = 'fade',
-  transitionDuration = 100,
-  multiline = false,
-  width = 'auto',
-  ...others
-}: TooltipProps) {
+const defaultProps: Partial<TooltipProps> = {
+  position: 'top',
+  refProp: 'ref',
+  withinPortal: true,
+  color: 'gray',
+  withArrow: false,
+  arrowSize: 4,
+  arrowOffset: 5,
+  offset: 5,
+  transition: 'fade',
+  transitionDuration: 100,
+  multiline: false,
+  width: 'auto',
+};
+
+export function Tooltip(props: TooltipProps) {
+  const {
+    children,
+    position = 'top',
+    refProp = 'ref',
+    label,
+    openDelay,
+    closeDelay,
+    onPositionChange,
+    opened,
+    withinPortal = true,
+    radius,
+    color = 'gray',
+    classNames,
+    styles,
+    unstyled,
+    style,
+    className,
+    withArrow = false,
+    arrowSize = 4,
+    arrowOffset = 5,
+    offset = 5,
+    transition = 'fade',
+    transitionDuration = 100,
+    multiline = false,
+    width = 'auto',
+    ...others
+  } = useMantineDefaultProps('Tooltip', defaultProps, props);
+
   const { classes, cx } = useStyles(
     { radius, color, width, multiline },
     { name: 'Tooltip', classNames, styles, unstyled }
@@ -104,9 +123,9 @@ export function Tooltip({
           duration={tooltip.isGroupPhase ? 10 : transitionDuration}
         >
           {(transitionStyles) => (
-            <div
+            <Box
+              {...others}
               {...tooltip.getFloatingProps({
-                ...others,
                 ref: tooltip.floating,
                 className: cx(classes.root, className),
                 style: {
@@ -129,7 +148,7 @@ export function Tooltip({
                   })}
                 />
               )}
-            </div>
+            </Box>
           )}
         </Transition>
       </OptionalPortal>
@@ -144,3 +163,5 @@ export function Tooltip({
 
 Tooltip.Group = TooltipGroup;
 Tooltip.Floating = TooltipFloating;
+
+Tooltip.displayName = '@mantine/core/Tooltip';
