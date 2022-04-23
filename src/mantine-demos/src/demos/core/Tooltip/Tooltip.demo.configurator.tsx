@@ -4,8 +4,8 @@ import { Tooltip, TooltipProps, Group, Button } from '@mantine/core';
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
     <Group position="center">
-      <Tooltip opened {...props}>
-        <Button variant="outline" color="gray" size="xl">
+      <Tooltip opened label="Tooltip" {...props}>
+        <Button variant="outline" size="xl">
           With tooltip
         </Button>
       </Tooltip>
@@ -20,9 +20,10 @@ function Demo() {
   return (
     <Tooltip
       opened
+      label="Tooltip"
      ${props}
     >
-      <Button variant="outline" color="gray" size="xl">
+      <Button variant="outline" size="xl">
         With tooltip
       </Button>
     </Tooltip>
@@ -37,39 +38,30 @@ export const configurator: MantineDemo = {
   configuratorProps: { multiline: 3 },
   configurator: [
     {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Tooltip',
-    },
-    {
       name: 'color',
       type: 'color',
       initialValue: 'gray',
       defaultValue: 'gray',
     },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
       name: 'position',
       type: 'select',
       data: [
         { label: 'top', value: 'top' },
+        { label: 'top-start', value: 'top-start' },
+        { label: 'top-end', value: 'top-end' },
         { label: 'left', value: 'left' },
+        { label: 'left-start', value: 'left-start' },
+        { label: 'left-end', value: 'left-end' },
         { label: 'right', value: 'right' },
+        { label: 'right-start', value: 'right-start' },
+        { label: 'right-end', value: 'right-end' },
         { label: 'bottom', value: 'bottom' },
+        { label: 'bottom-start', value: 'bottom-start' },
+        { label: 'bottom-end', value: 'bottom-end' },
       ],
       initialValue: 'top',
       defaultValue: 'top',
-    },
-    {
-      name: 'placement',
-      type: 'segmented',
-      data: [
-        { label: 'start', value: 'start' },
-        { label: 'center', value: 'center' },
-        { label: 'end', value: 'end' },
-      ],
-      initialValue: 'center',
-      defaultValue: 'center',
     },
     { name: 'withArrow', type: 'boolean', initialValue: true, defaultValue: false },
   ],

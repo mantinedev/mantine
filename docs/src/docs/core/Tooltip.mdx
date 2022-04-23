@@ -19,29 +19,7 @@ import { TooltipDemos } from '@mantine/demos';
 
 <Demo data={TooltipDemos.configurator} />
 
-## Position and placement
-
-Tooltip position relative to target element is defined by:
-
-- **position** – tooltip side – top, bottom, right or left, defaults to top
-- **placement** – tooltip placement relative to position – start, center or end, defaults to center
-- **gutter** – space between tooltip and target element in px, defaults to 5px
-
-```tsx
-<Tooltip position="bottom" placement="end" gutter={10} />
-```
-
-All available positions and placements:
-
-<Demo data={TooltipDemos.positions} />
-
 ## Arrow
-
-Tooltip arrow is controlled by:
-
-- **withArrow** – set to true if arrow should be rendered
-- **arrowSize** – arrow size in px, defaults to 4px
-- **position** and **placement** – define arrow position (see previous example)
 
 <Demo data={TooltipDemos.arrow} />
 
@@ -54,12 +32,10 @@ To change this logic set `opened` prop:
 
 ## Multiline
 
-By default, tooltip white-space property is set to nowrap. To change that use:
+By default, tooltip white-space property is set to nowrap. To change that set:
 
-- **wrapLines** – to enable line breaks
-- **width** – to define tooltip width in px
-
-Note that, multiline tooltips may require different transitions for better UX.
+- **multiline** prop to enable line breaks
+- **width** prop to set tooltip width in px
 
 <Demo data={TooltipDemos.multiline} />
 
@@ -67,9 +43,8 @@ Note that, multiline tooltips may require different transitions for better UX.
 
 Tooltip is built with [Transition](/core/transition/) component, it supports the following props:
 
-- **transition** – predefined transition name or transition object
+- **transition** – premade transition name or transition object
 - **transitionDuration** – transition duration in ms, defaults to 100ms
-- **transitionTimingFunction** – timing function, defaults to `theme.transitionTimingFunction`
 
 ```tsx
 <Tooltip transition="skew-up" transitionDuration={300} transitionTimingFunction="ease" />
@@ -79,12 +54,6 @@ All available predefined transitions:
 
 <Demo data={TooltipDemos.transitions} />
 
-## Change color
-
-Tooltip supports all colors defined in [theme.colors](/theming/extend-theme/#default-colors):
-
-<Demo data={TooltipDemos.colors} />
-
 ## Close and open delay
 
 You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms.
@@ -92,45 +61,6 @@ Both props default to 0 and reset if user moves mouse over/out of target element
 
 <Demo data={TooltipDemos.delay} />
 
-## Allow pointer events
-
-By default, pointer events on tooltip are disabled to prevent animations collisions.
-To use interactive elements inside tooltip set `allowPointerEvents` prop.
-
-In this example tooltip acts more like popover –
-it is controlled and can be closed with control inside tooltip:
-
-<Demo data={TooltipDemos.pointerEvents} />
-
 ## FloatingTooltip component
 
 <Demo data={TooltipDemos.floating} />
-
-## Accessibility
-
-Do not place any important information in tooltip.
-Component is unmounted from the dom and is not visible to screen readers in default configuration.
-
-Provide `tooltipId` and `aria-describedby` props to make tooltip accessible:
-
-```tsx
-import { useState } from 'react';
-import { Tooltip, Button } from '@mantine/core';
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  return (
-    <Tooltip opened={opened} label="Hidden knowledge" tooltipId="tooltip-id">
-      <Button
-        aria-describedby="tooltip-id"
-        onFocus={() => setOpened(true)}
-        onMouseEnter={() => setOpened(true)}
-        onBlur={() => setOpened(false)}
-        onMouseLeave={() => setOpened(false)}
-      >
-        I have tooltip
-      </Button>
-    </Tooltip>
-  );
-}
-```
