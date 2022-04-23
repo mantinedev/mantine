@@ -17,7 +17,6 @@ export interface TooltipFloatingProps extends TooltipBaseProps {
 const defaultProps: Partial<TooltipFloatingProps> = {
   refProp: 'ref',
   withinPortal: true,
-  color: 'gray',
   offset: 10,
   position: 'right',
   zIndex: getDefaultZIndex('popover'),

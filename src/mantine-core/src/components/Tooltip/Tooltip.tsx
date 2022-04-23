@@ -52,7 +52,6 @@ const defaultProps: Partial<TooltipProps> = {
   position: 'top',
   refProp: 'ref',
   withinPortal: true,
-  color: 'gray',
   arrowSize: 4,
   arrowOffset: 5,
   offset: 5,
