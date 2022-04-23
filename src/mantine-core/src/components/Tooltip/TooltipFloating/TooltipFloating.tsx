@@ -41,6 +41,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     multiline,
     width,
     zIndex,
+    disabled,
     ...others
   } = useMantineDefaultProps('TooltipFloating', defaultProps, props);
 
@@ -82,7 +83,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
           style={{
             ...style,
             zIndex,
-            display: opened ? 'block' : 'none',
+            display: opened && !disabled ? 'block' : 'none',
             top: y ?? '',
             left: Math.round(x) ?? '',
           }}

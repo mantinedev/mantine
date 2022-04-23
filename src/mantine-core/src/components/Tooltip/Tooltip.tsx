@@ -53,13 +53,11 @@ const defaultProps: Partial<TooltipProps> = {
   refProp: 'ref',
   withinPortal: true,
   color: 'gray',
-  withArrow: false,
   arrowSize: 4,
   arrowOffset: 5,
   offset: 5,
   transition: 'fade',
   transitionDuration: 100,
-  multiline: false,
   width: 'auto',
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
@@ -93,6 +91,7 @@ export function Tooltip(props: TooltipProps) {
     width,
     events,
     zIndex,
+    disabled,
     ...others
   } = useMantineDefaultProps('Tooltip', defaultProps, props);
 
@@ -122,7 +121,7 @@ export function Tooltip(props: TooltipProps) {
     <>
       <OptionalPortal withinPortal={withinPortal}>
         <Transition
-          mounted={tooltip.opened}
+          mounted={!disabled && tooltip.opened}
           transition={transition}
           duration={tooltip.isGroupPhase ? 10 : transitionDuration}
         >

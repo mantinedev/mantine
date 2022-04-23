@@ -12,7 +12,6 @@ export const Usage = () => (
       multiline
       events={{ focus: true, hover: true, touch: false }}
       withinPortal={false}
-      opened
     >
       <button type="button" style={{ width: 200, height: 200 }}>
         target
@@ -57,7 +56,7 @@ export const Controlled = () => {
 
 export const Floating = () => (
   <div style={{ padding: 0 }}>
-    <Tooltip.Floating label="Tooltip">
+    <Tooltip.Floating label="Tooltip" disabled>
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>

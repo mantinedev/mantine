@@ -36,4 +36,7 @@ export interface TooltipBaseProps
 
   /** Tooltip z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** Disables tooltip */
+  disabled?: boolean;
 }
