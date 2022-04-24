@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.0.0
 date: 'March 29th, 2022'
 ---
 
-import { TabsDemos, AccordionDemos } from '@mantine/demos';
+import { TabsDemos, AccordionDemos, TooltipDemos } from '@mantine/demos';
 
 ## Components API changes
 
@@ -43,6 +43,53 @@ Tabs component now supports the following new props:
 
 <Demo data={AccordionDemos.configurator} />
 
+### Tooltip component
+
+[Tooltip](https://mantine.dev/core/tooltip/) component API was changed – it now requires children to be an element or a component,
+string, numbers, fragments and multiple elements are no longer supported. In addition to that Tooltip no longer wraps target
+element with div tag, events are added directly to target element.
+
+```tsx
+import { Tooltip, Badge } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="OK">
+        <button>Native button – ok</button>
+      </Tooltip>
+
+      <Tooltip label="OK">
+        <Badge>Mantine component – ok</Badge>
+      </Tooltip>
+
+      <Tooltip label="Throws">Raw string, NOT OK – will throw error</Tooltip>
+
+      {/* Number, NOT OK – will throw error */}
+      <Tooltip label="Throws">{2}</Tooltip>
+
+      <Tooltip label="Throws">
+        <>Fragment, NOT OK, will throw error</>
+      </Tooltip>
+
+      <Tooltip label="Throws">
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </Tooltip>
+    </>
+  );
+}
+```
+
 ## Other breaking changes
 
 - [Portal](https://mantine.dev/core/portal/) component no longer accepts `position` and `zIndex` props – it is now required to add these styles to Portal children
+- FloatingTooltip component was renamed to [Tooltip.Floating](https://mantine.dev/core/tooltip/#floating-tooltip)
+
+## New features
+
+### Tooltip delay group
+
+[Tooltip.Group](https://mantine.dev/core/tooltip/#tooltip-delay-group) component can be used to sync open and close delays for multiple tooltips:
+
+<Demo data={TooltipDemos.group} />
