@@ -193,3 +193,20 @@ Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practi
 - Tooltip body has `role="tooltip"` attribute
 - Target element has `aria-describedby` attribute
 - `Tooltip.Floating` is ignored by screen readers
+
+By default, Tooltip is not triggered by focus events and thus users who use screen reader
+or navigate with keyboard will not be able to get tooltip content. Set `events` prop to enable
+focus/blur tooltip events:
+
+```tsx
+import { Tooltip } from '@mantine/core';
+
+// Tooltip will be visible for screen readers
+function Demo() {
+  return (
+    <Tooltip label="Tooltip" events={{ hover: true, focus: true, touch: false }}>
+      <button>target</button>
+    </Tooltip>
+  );
+}
+```
