@@ -23,14 +23,12 @@ export function HeaderControl({
 
   if (link) {
     return (
-      <Tooltip
-        label={tooltip}
-        disabled={isMobile}
-        className={cx(classes.container, className)}
-        transitionDuration={0}
-        openDelay={500}
-      >
-        <a className={cx(classes.control, classes[variant])} href={link} {...(others as any)}>
+      <Tooltip label={tooltip} disabled={isMobile}>
+        <a
+          className={cx(classes.control, classes[variant], className)}
+          href={link}
+          {...(others as any)}
+        >
           {others.children}
         </a>
       </Tooltip>
@@ -38,14 +36,8 @@ export function HeaderControl({
   }
 
   return (
-    <Tooltip
-      label={tooltip}
-      disabled={isMobile}
-      className={cx(classes.container, className)}
-      transitionDuration={0}
-      openDelay={500}
-    >
-      <UnstyledButton className={cx(classes.control, classes[variant])} {...others} />
+    <Tooltip label={tooltip} disabled={isMobile}>
+      <UnstyledButton className={cx(classes.control, classes[variant], className)} {...others} />
     </Tooltip>
   );
 }

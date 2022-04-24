@@ -25,16 +25,9 @@ export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
 
     [theme.fn.smallerThan('sm')]: {
       display: hideOnMobile ? 'none' : undefined,
-      position: 'absolute',
-      right: 0,
-    },
-  },
-
-  container: {
-    [theme.fn.smallerThan('sm')]: {
       position: 'fixed',
-      top: 14,
       right: theme.spacing.md,
+      top: 14,
     },
   },
 
