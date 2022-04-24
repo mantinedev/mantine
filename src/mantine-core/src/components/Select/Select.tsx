@@ -87,6 +87,9 @@ export interface SelectSharedProps<Item, Value> {
 
   /** Whether to switch item order and keyboard navigation on dropdown position flip */
   switchDirectionOnFlip?: boolean;
+
+  /** useEffect dependencies to force update dropdown position */
+  positionDependencies?: any[];
 }
 
 export interface SelectProps
@@ -165,6 +168,7 @@ const defaultProps: Partial<SelectProps> = {
   filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
   clearButtonTabIndex: 0,
+  positionDependencies: [],
 };
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
@@ -226,6 +230,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     filterDataOnExactSearchMatch,
     clearButtonTabIndex,
     form,
+    positionDependencies,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -638,6 +643,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           withinPortal={withinPortal}
           zIndex={zIndex}
           dropdownPosition={dropdownPosition}
+          positionDependencies={positionDependencies}
         >
           <SelectItems
             data={filteredData}

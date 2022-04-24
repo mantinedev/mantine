@@ -27,6 +27,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   switchDirectionOnFlip?: boolean;
   zIndex?: number;
   dropdownPosition?: 'bottom' | 'top' | 'flip';
+  positionDependencies?: any[];
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -51,6 +52,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'flip',
       __staticSelector,
+      positionDependencies = [],
     }: SelectDropdownProps,
     ref
   ) => {
@@ -71,6 +73,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionTimingFunction={transitionTimingFunction}
         position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
         withinPortal={withinPortal}
+        forceUpdateDependencies={positionDependencies}
         zIndex={zIndex}
         modifiers={[
           {

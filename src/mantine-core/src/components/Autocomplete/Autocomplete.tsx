@@ -62,6 +62,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   zIndex: getDefaultZIndex('popover'),
   dropdownPosition: 'flip',
   maxDropdownHeight: 'auto',
+  positionDependencies: [],
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -108,6 +109,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      positionDependencies,
       ...others
     } = useMantineDefaultProps('Autocomplete', defaultProps, props);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
@@ -286,6 +288,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             withinPortal={withinPortal}
             zIndex={zIndex}
             dropdownPosition={dropdownPosition}
+            positionDependencies={positionDependencies}
           >
             <SelectItems
               data={filteredData}
