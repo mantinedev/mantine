@@ -118,7 +118,6 @@ const defaultProps: Partial<MultiSelectProps> = {
   clearSearchOnBlur: false,
   disabled: false,
   initiallyOpened: false,
-  radius: 'sm',
   creatable: false,
   shouldCreate: defaultShouldCreate,
   switchDirectionOnFlip: false,

@@ -22,6 +22,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStylesParams)
       WebkitTapHighlightColor: 'transparent',
       boxSizing: 'border-box',
       position: 'relative',
+      display: 'block',
       userSelect: 'none',
       overflow: 'hidden',
       width: theme.fn.size({ size, sizes }),

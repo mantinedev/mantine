@@ -88,7 +88,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
           disabled={disabled}
           {...rest}
         />
-        <Icon className={classes.icon} />
+        <Icon className={classes.icon} aria-hidden />
       </div>
 
       {label && (

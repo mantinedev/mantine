@@ -167,11 +167,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipP
   return (
     <Box<'div'>
       className={cx(classes.root, className)}
-      onMouseEnter={(event) => {
+      onPointerEnter={(event) => {
         handleOpen();
         typeof onMouseEnter === 'function' && onMouseEnter(event);
       }}
-      onMouseLeave={(event) => {
+      onPointerLeave={(event) => {
         handleClose();
         typeof onMouseLeave === 'function' && onMouseLeave(event);
       }}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useGridContext } from '../Grid.context';
 import useStyles from './Col.styles';
@@ -42,30 +42,41 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   xl?: number;
 }
 
+const defaultProps: Partial<ColProps> = {
+  offset: 0,
+  offsetXs: 0,
+  offsetSm: 0,
+  offsetMd: 0,
+  offsetLg: 0,
+  offsetXl: 0,
+};
+
 function isValidSpan(span: number) {
   return typeof span === 'number' && span > 0 && span % 1 === 0;
 }
 
-export function Col({
-  children,
-  span,
-  offset = 0,
-  offsetXs = 0,
-  offsetSm = 0,
-  offsetMd = 0,
-  offsetLg = 0,
-  offsetXl = 0,
-  xs,
-  sm,
-  md,
-  lg,
-  xl,
-  className,
-  classNames,
-  styles,
-  id,
-  ...others
-}: ColProps) {
+export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) => {
+  const {
+    children,
+    span,
+    offset,
+    offsetXs,
+    offsetSm,
+    offsetMd,
+    offsetLg,
+    offsetXl,
+    xs,
+    sm,
+    md,
+    lg,
+    xl,
+    className,
+    classNames,
+    styles,
+    id,
+    ...others
+  } = useMantineDefaultProps('Col', defaultProps, props);
+
   const { columns, gutter, grow } = useGridContext('Grid.Col');
   const colSpan = span || columns;
   const { classes, cx } = useStyles(
@@ -94,10 +105,10 @@ export function Col({
   }
 
   return (
-    <Box className={cx(classes.root, className)} {...others}>
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
       {children}
     </Box>
   );
-}
+});
 
 Col.displayName = '@mantine/core/Col';
