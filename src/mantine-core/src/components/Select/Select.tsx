@@ -88,7 +88,7 @@ export interface SelectSharedProps<Item, Value> {
   /** Whether to switch item order and keyboard navigation on dropdown position flip */
   switchDirectionOnFlip?: boolean;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 }
 
