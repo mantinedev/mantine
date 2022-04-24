@@ -15,6 +15,10 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
   '../src/mantine-core/src/components/Accordion/AccordionPanel/AccordionPanel.tsx',
 
+  // Tooltip
+  '../src/mantine-core/src/components/Tooltip/TooltipFloating/TooltipFloating.tsx',
+  '../src/mantine-core/src/components/Tooltip/TooltipGroup/TooltipGroup.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
