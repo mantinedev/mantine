@@ -23,14 +23,12 @@ function Demo() {
 export function Demo() {
   return (
     <Group position="center">
-      <Group position="center" style={{ paddingTop: 30 }}>
-        <Tooltip label="Default arrow" withArrow>
-          <Button variant="outline">Default arrow</Button>
-        </Tooltip>
-        <Tooltip label="Arrow with size" withArrow arrowSize={3}>
-          <Button variant="outline">With size</Button>
-        </Tooltip>
-      </Group>
+      <Tooltip label="Default arrow" withArrow>
+        <Button variant="outline">Default arrow</Button>
+      </Tooltip>
+      <Tooltip label="Arrow with size" withArrow arrowSize={3}>
+        <Button variant="outline">With size</Button>
+      </Tooltip>
     </Group>
   );
 }

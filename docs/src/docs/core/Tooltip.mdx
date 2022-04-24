@@ -7,7 +7,7 @@ slug: /core/tooltip/
 category: 'overlay'
 description: 'Renders tooltip at given element on mouse over or other event'
 props: ['Tooltip']
-import: "import { Tooltip, FloatingTooltip } from '@mantine/core';"
+import: "import { Tooltip } from '@mantine/core';"
 source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
 docs: 'core/Tooltip.mdx'
 styles: ['Tooltip']
@@ -62,53 +62,80 @@ function Demo() {
 
 <Demo data={TooltipDemos.configurator} />
 
+## Offset
+
+<Demo data={TooltipDemos.offset} />
+
 ## Arrow
 
 <Demo data={TooltipDemos.arrow} />
 
 ## Controlled
 
-By default, tooltip is displayed when mouse is over target element.
-To change this logic set `opened` prop:
-
 <Demo data={TooltipDemos.controlled} />
+
+## Change events
+
+Events that trigger tooltip can be changed with `events` prop, it accepts an object
+with the following properties that determine which events will trigger tooltip:
+
+- `hover` – mouse hover event, `true` by default
+- `focus` – focus/blur events excluding clicks on the target element, `false` by default
+- `touch` – events for touchscreen devices, `false` by default
+
+```tsx
+import { Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip label="Tooltip" events={{ hover: true, focus: true, touch: false }}>
+      <button>target</button>
+    </Tooltip>
+  );
+}
+```
 
 ## Multiline
 
-By default, tooltip white-space property is set to nowrap. To change that set:
-
-- **multiline** prop to enable line breaks
-- **width** prop to set tooltip width in px
+To enable multiline mode set `multiline` prop to enable line breaks and `width` prop to set tooltip width in px:
 
 <Demo data={TooltipDemos.multiline} />
 
 ## Change transition
 
-Tooltip is built with [Transition](/core/transition/) component, it supports the following props:
-
-- **transition** – premade transition name or transition object
-- **transitionDuration** – transition duration in ms, defaults to 100ms
+Tooltip is built with [Transition](/core/transition/) component, it supports `transition` and `transitionDuration` props:
 
 ```tsx
-<Tooltip transition="skew-up" transitionDuration={300} transitionTimingFunction="ease" />
+import { Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip transition="skew-up" transitionDuration={300}>
+      <button>target</button>
+    </Tooltip>
+  );
+}
 ```
 
-All available predefined transitions:
+All available premade transitions:
 
 <Demo data={TooltipDemos.transitions} />
 
 ## Close and open delay
 
-You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms.
-Both props default to 0 and reset if user moves mouse over/out of target element before delay is expired:
+You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms:
 
 <Demo data={TooltipDemos.delay} />
 
 ## Tooltip delay group
 
+`Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
+
 <Demo data={TooltipDemos.group} />
 
-## FloatingTooltip component
+## Floating tooltip
+
+`Tooltip.Floating` component has the same API as Tooltip component but tooltip will follow mouse:
 
 <Demo data={TooltipDemos.floating} />
 
@@ -157,3 +184,10 @@ function Demo() {
   );
 }
 ```
+
+## Accessibility
+
+Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):
+
+- Tooltip body has `role="tooltip"` attribute
+- Target element has `aria-describedby` attribute
