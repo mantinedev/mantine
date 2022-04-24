@@ -23,6 +23,7 @@ export default createStyles((theme, { size, radius, color }: AvatarStylesParams)
   root: {
     ...theme.fn.focusStyles(),
     WebkitTapHighlightColor: 'transparent',
+    display: 'block',
     boxSizing: 'border-box',
     position: 'relative',
     userSelect: 'none',
