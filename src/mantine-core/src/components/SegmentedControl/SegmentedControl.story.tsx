@@ -57,6 +57,35 @@ function Conditional(props: Partial<SegmentedControlProps>) {
   );
 }
 
+function DisabledStates() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>
+        <SegmentedControl
+          disabled
+          data={[
+            { label: 'React', value: 'react' },
+            { label: 'Angular', value: 'ng' },
+            { label: 'Vue', value: 'vue' },
+            { label: 'Very long label', value: 'svelte' },
+          ]}
+        />
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <SegmentedControl
+          data={[
+            { label: 'React', value: 'react', disabled: true },
+            { label: 'Angular', value: 'ng' },
+            { label: 'Vue', value: 'vue', disabled: true },
+            { label: 'Very long label', value: 'svelte' },
+          ]}
+        />
+      </div>
+    </div>
+  );
+}
+
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <div key={size}>
     <Controlled size={size} mt="md" disabled />
@@ -71,6 +100,7 @@ storiesOf('SegmentedControl', module)
     </div>
   ))
   .add('Scaled', () => <Scaled />)
+  .add('Disabled', () => <DisabledStates />)
   .add('Default props on MantineProvider', () => (
     <MantineProvider defaultProps={{ SegmentedControl: { color: 'orange' } }}>
       <Controlled />
