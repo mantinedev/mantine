@@ -5,6 +5,7 @@ import {
   autoUpdate,
   flip,
   offset,
+  shift,
   useInteractions,
   useHover,
   useFocus,
@@ -51,7 +52,7 @@ export function useTooltip(settings: UseTooltip) {
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(settings.offset), flip()],
+    middleware: [offset(settings.offset), shift({ padding: 8 }), flip()],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
