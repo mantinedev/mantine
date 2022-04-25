@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { renderHook, WrapperComponent } from '@testing-library/react-hooks';
 import { MantineProvider } from '@mantine/core';
@@ -29,7 +29,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('returns context value of ModalsProvider', () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: PropsWithChildren<unknown>) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>
       </MantineProvider>
