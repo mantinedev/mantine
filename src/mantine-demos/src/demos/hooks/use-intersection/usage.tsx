@@ -10,7 +10,7 @@ import { Paper, Text, useMantineTheme } from '@mantine/core';
 function Demo() {
   const containerRef = useRef();
   const theme = useMantineTheme();
-  const [ref, observer] = useIntersection({
+  const [ref, observedEntry] = useIntersection({
     root: containerRef.current,
     threshold: 1,
   });
@@ -22,12 +22,14 @@ function Demo() {
           ref={ref}
           p="xl"
           style={{
-            backgroundColor: observer?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
+            backgroundColor: observedEntry?.isIntersecting
+              ? theme.colors.green[9]
+              : theme.colors.red[9],
             minWidth: '50%',
           }}
         >
           <Text style={{ color: theme.white }} weight={700}>
-            {observer?.isIntersecting ? 'Fully visible' : 'Obscured'}
+            {observedEntry?.isIntersecting ? 'Fully visible' : 'Obscured'}
           </Text>
         </Paper>
       </div>
@@ -39,7 +41,7 @@ function Demo() {
 function Demo() {
   const containerRef = useRef();
   const theme = useMantineTheme();
-  const [ref, observer] = useIntersection({
+  const [ref, observedEntry] = useIntersection({
     root: containerRef.current,
     threshold: 1,
   });
@@ -51,12 +53,14 @@ function Demo() {
           ref={ref}
           p="xl"
           style={{
-            backgroundColor: observer?.isIntersecting ? theme.colors.green[9] : theme.colors.red[9],
+            backgroundColor: observedEntry?.isIntersecting
+              ? theme.colors.green[9]
+              : theme.colors.red[9],
             minWidth: '50%',
           }}
         >
           <Text style={{ color: theme.white }} weight={700}>
-            {observer?.isIntersecting ? 'Fully visible' : 'Obscured'}
+            {observedEntry?.isIntersecting ? 'Fully visible' : 'Obscured'}
           </Text>
         </Paper>
       </div>
