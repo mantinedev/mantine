@@ -18,7 +18,7 @@ export interface ModalsProviderProps {
   children: React.ReactNode;
 
   /** Predefined modals */
-  modals?: Record<string, React.FC<ContextModalProps>>;
+  modals?: Record<string, React.FC<ContextModalProps<any>>>;
 
   /** Shared Modal component props, applied for every modal */
   modalProps?: ModalSettings;
