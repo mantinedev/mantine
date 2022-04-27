@@ -43,8 +43,8 @@ Examples:
 
 ## Git branches
 
-- **master**: the current version, or alternatively, patches for current *minor* version (1.0.x)
-- **next-minor**: contains the next minor version (1.x.0) (more often than not, you'll want to create a PR directly to this branch)
+- **master**: the current version, or alternatively, patches for current _minor_ version (1.0.x)
+- **dev**: contains the next minor version (1.x.0) (more often than not, you'll want to create a PR directly to this branch)
 
 ## Get started with Mantine locally
 
@@ -56,7 +56,7 @@ Examples:
 ## npm scripts
 
 All npm scripts are located inside the [package.json](https://github.com/mantinedev/mantine/blob/master/package.json) file.
-Individual packages *do not* have dedicated scripts.
+Individual packages _do not_ have dedicated scripts.
 
 ### Development scripts
 
