@@ -19,7 +19,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -40,6 +40,8 @@ import { MantineProvider } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         colorScheme: 'dark',
         colors: {
@@ -75,7 +77,7 @@ import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -98,7 +100,7 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
@@ -134,7 +136,7 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
@@ -170,7 +172,7 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>

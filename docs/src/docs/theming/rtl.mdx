@@ -35,6 +35,8 @@ import rtlPlugin from 'stylis-plugin-rtl';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}
       theme={{ dir: 'rtl' }}
     >
@@ -57,6 +59,8 @@ function App() {
   const [rtl, setRtl] = useState(false);
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ dir: rtl ? 'rtl' : 'ltr' }}
       emotionOptions={
         rtl
@@ -129,6 +133,8 @@ export default function App(props: AppProps) {
 
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ dir: 'rtl' }}
       emotionOptions={{ key: 'rtl', stylisPlugins: [rtlPlugin] }}
     >
