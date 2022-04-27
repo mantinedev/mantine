@@ -320,6 +320,16 @@ export default createStyles(
       '& .ql-image-uploading img': {
         filter: 'blur(10px)',
       },
+
+      '& .ql-blank': {
+        '&::before': {
+          content: 'attr(data-placeholder)',
+          position: 'absolute',
+          left: theme.spacing.md,
+          right: theme.spacing.md,
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
+      },
     },
   })
 );
