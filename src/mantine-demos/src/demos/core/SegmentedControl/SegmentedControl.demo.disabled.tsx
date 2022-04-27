@@ -1,5 +1,5 @@
 import React from 'react';
-import { SegmentedControl, Box, Stack, Text } from '@mantine/core';
+import { SegmentedControl, Stack, Text } from '@mantine/core';
 
 const code = `
 import { SegmentedControl } from '@mantine/core';
@@ -10,22 +10,12 @@ function Demo() {
       {/* Disabled control */}
       <SegmentedControl disabled={true} />
 
-      {/* Disabled options */}
+      {/* Disabled option */}
       <SegmentedControl
         data={[
-          {
-            value: 'preview',
-            label: 'Preview',
-            disabled: true
-          },
-          {
-            value: 'code',
-            label: 'Code'
-          },
-          {
-            value: 'export',
-            label: 'Export'
-          }
+          { value: 'preview', label: 'Preview', disabled: true },
+          { value: 'code', label: 'Code' },
+          { value: 'export', label: 'Export' },
         ]}
       />
     </>
@@ -36,12 +26,11 @@ function Demo() {
 function Demo() {
   return (
     <Stack align="center">
-      <Box>
+      <div>
         <Text size="sm" weight={500} mb={3}>
           Disabled control
         </Text>
         <SegmentedControl
-          // disabled={true}
           disabled
           data={[
             {
@@ -58,11 +47,11 @@ function Demo() {
             },
           ]}
         />
-      </Box>
+      </div>
 
-      <Box>
+      <div>
         <Text size="sm" weight={500} mb={3}>
-          Disabled options
+          Disabled option
         </Text>
         <SegmentedControl
           data={[
@@ -81,7 +70,7 @@ function Demo() {
             },
           ]}
         />
-      </Box>
+      </div>
     </Stack>
   );
 }

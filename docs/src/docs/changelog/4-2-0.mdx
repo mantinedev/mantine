@@ -7,7 +7,14 @@ release: https://github.com/mantinedev/mantine/releases/tag/4.2.0
 date: 'March 29th, 2022'
 ---
 
-import { ThemeDemos, IndicatorDemos, CalendarDemos, ModalDemos, HooksDemos } from '@mantine/demos';
+import {
+  ThemeDemos,
+  IndicatorDemos,
+  CalendarDemos,
+  ModalDemos,
+  HooksDemos,
+  SegmentedControlDemos,
+} from '@mantine/demos';
 
 ## primaryShade on theme
 
@@ -63,6 +70,10 @@ New [use-network](https://mantine.dev/hooks/use-network/) hook returns current c
 now support custom day renderer with `renderDay` function:
 
 <Demo data={CalendarDemos.renderDay} />
+
+[SegmentedControl](https://mantine.dev/core/segmented-control/) component now supports disabled items:
+
+<Demo data={SegmentedControlDemos.disabled} />
 
 ## Other changes
 
