@@ -70,6 +70,8 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
   const horizontal = orientation === 'horizontal';
   const withLabel = !!label && horizontal;
 
+  const useLabelDefaultStyles = !labelProps?.color;
+
   return (
     <Box
       ref={ref}
@@ -87,10 +89,11 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
       {withLabel && (
         <Text
           {...labelProps}
-          color={labelProps?.color ?? _color}
           size={labelProps?.size || 'xs'}
           sx={{ marginTop: 2 }}
-          className={cx(classes.label, classes[labelPosition])}
+          className={cx(classes.label, classes[labelPosition], {
+            [classes.labelDefaultStyles]: useLabelDefaultStyles,
+          })}
         >
           {label}
         </Text>

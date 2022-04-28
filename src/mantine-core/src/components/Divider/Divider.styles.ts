@@ -36,10 +36,6 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
   label: {
     display: 'flex',
     alignItems: 'center',
-    color:
-      color === 'dark'
-        ? theme.colors.dark[1]
-        : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : theme.fn.primaryShade()),
 
     '&::before': {
       content: '""',
@@ -61,6 +57,13 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
       )}`,
       marginLeft: theme.spacing.xs,
     },
+  },
+
+  labelDefaultStyles: {
+    color:
+      color === 'dark'
+        ? theme.colors.dark[1]
+        : theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : theme.fn.primaryShade()),
   },
 
   horizontal: {
