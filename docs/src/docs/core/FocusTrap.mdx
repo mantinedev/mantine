@@ -1,0 +1,28 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: FocusTrap
+order: 1
+slug: /core/focus-trap/
+category: 'misc'
+description: 'Trap focus at child node'
+props: ['FocusTrap']
+import: "import { FocusTrap } from '@mantine/core';"
+source: 'mantine-core/src/components/FocusTrap/FocusTrap.tsx'
+docs: 'core/FocusTrap.mdx'
+---
+
+import { FocusTrapDemos } from '@mantine/demos';
+
+## Usage
+
+FocusTrap is a component implementation of [use-focus-trap](/hooks/use-focus-trap/) hook,
+it is used in all Mantine components that require focus trap ([Modal](/core/modal/), [DatePicker](/dates/date-picker/), [Popover](/core/popover/), etc.).
+
+<Demo data={FocusTrapDemos.usage} />
+
+## Initial focus
+
+To define the element that will receive initial focus set `data-autofocus` attribute:
+
+<Demo data={FocusTrapDemos.initial} />
