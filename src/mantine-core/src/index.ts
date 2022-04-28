@@ -29,6 +29,7 @@ export * from './components/Container';
 export * from './components/Dialog';
 export * from './components/Divider';
 export * from './components/Drawer';
+export * from './components/FocusTrap';
 export * from './components/Grid';
 export * from './components/Group';
 export * from './components/Highlight';
