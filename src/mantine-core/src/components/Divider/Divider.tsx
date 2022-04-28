@@ -7,7 +7,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
-import { Text } from '../Text';
+import { Text, TextProps } from '../Text';
 import { Box } from '../Box';
 
 export type DividerStylesNames = 'label';
@@ -31,7 +31,7 @@ export interface DividerProps
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: Record<string, any>;
+  labelProps?: TextProps<any>;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
@@ -67,8 +67,10 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
   );
 
   const vertical = orientation === 'vertical';
-  const horizontal = !vertical;
+  const horizontal = orientation === 'horizontal';
   const withLabel = !!label && horizontal;
+
+  const useLabelDefaultStyles = !labelProps?.color;
 
   return (
     <Box
@@ -84,13 +86,14 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
       )}
       {...others}
     >
-      {!!label && horizontal && (
+      {withLabel && (
         <Text
           {...labelProps}
-          color={_color}
           size={labelProps?.size || 'xs'}
           sx={{ marginTop: 2 }}
-          className={cx(classes.label, classes[labelPosition])}
+          className={cx(classes.label, classes[labelPosition], {
+            [classes.labelDefaultStyles]: useLabelDefaultStyles,
+          })}
         >
           {label}
         </Text>
