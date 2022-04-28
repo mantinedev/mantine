@@ -224,6 +224,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleClear = () => {
       setTime({ hours: '', minutes: '', seconds: '', amPm: '' });
       setValue(null);
+      onChange?.(null);
       hoursRef.current.focus();
     };
 
