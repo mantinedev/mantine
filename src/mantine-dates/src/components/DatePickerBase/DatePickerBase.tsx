@@ -78,7 +78,7 @@ export interface DatePickerBaseSharedProps
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 
   /** Popper zIndex */

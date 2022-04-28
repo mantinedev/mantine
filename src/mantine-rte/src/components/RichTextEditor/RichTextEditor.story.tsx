@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import { RichTextEditor } from './RichTextEditor';
+
+export default { title: 'RichTextEditor' };
 
 const html = `
 <h1>Rich Text editor</h1>
@@ -34,20 +35,31 @@ const handleImageUpload = (file: File): Promise<string> =>
       .catch(() => reject(new Error('Upload failed')));
   });
 
-function Wrapper() {
+export function Usage() {
   const [value, onChange] = useState(html);
   return (
-    <RichTextEditor
-      value={value}
-      onChange={onChange}
-      onImageUpload={handleImageUpload}
-      stickyOffset={0}
-    />
+    <div style={{ padding: 40, maxWidth: 800, margin: 'auto' }}>
+      <RichTextEditor
+        value={value}
+        onChange={onChange}
+        onImageUpload={handleImageUpload}
+        stickyOffset={0}
+      />
+    </div>
   );
 }
 
-storiesOf('RichTextEditor', module).add('General usage', () => (
-  <div style={{ padding: 40, maxWidth: 800 }}>
-    <Wrapper />
-  </div>
-));
+export function Placeholder() {
+  const [value, onChange] = useState('');
+  return (
+    <div style={{ padding: 40, maxWidth: 800, margin: 'auto' }}>
+      <RichTextEditor
+        placeholder="This is placeholder"
+        value={value}
+        onChange={onChange}
+        onImageUpload={handleImageUpload}
+        stickyOffset={0}
+      />
+    </div>
+  );
+}

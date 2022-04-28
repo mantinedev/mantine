@@ -118,13 +118,13 @@ const defaultProps: Partial<MultiSelectProps> = {
   clearSearchOnBlur: false,
   disabled: false,
   initiallyOpened: false,
-  radius: 'sm',
   creatable: false,
   shouldCreate: defaultShouldCreate,
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
   selectOnBlur: false,
   clearButtonTabIndex: 0,
+  positionDependencies: [],
 };
 
 export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
@@ -191,6 +191,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       descriptionProps,
       clearButtonTabIndex,
       form,
+      positionDependencies,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -647,6 +648,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
             withinPortal={withinPortal}
             zIndex={zIndex}
             dropdownPosition={dropdownPosition}
+            positionDependencies={positionDependencies}
           >
             <SelectItems
               data={filteredData}

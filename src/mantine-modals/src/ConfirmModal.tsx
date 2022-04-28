@@ -20,7 +20,7 @@ export function ConfirmModal({
   id,
   cancelProps,
   confirmProps,
-  labels,
+  labels = { cancel: '', confirm: '' },
   closeOnConfirm = true,
   closeOnCancel = true,
   groupProps,
@@ -28,6 +28,7 @@ export function ConfirmModal({
   onConfirm,
   children,
 }: ConfirmModalProps) {
+  const { cancel: cancelLabel, confirm: confirmLabel } = labels;
   const ctx = useModals();
 
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,11 +49,11 @@ export function ConfirmModal({
 
       <Group position="right" {...groupProps}>
         <Button variant="default" {...cancelProps} onClick={handleCancel}>
-          {cancelProps?.children || labels.cancel}
+          {cancelProps?.children || cancelLabel}
         </Button>
 
         <Button {...confirmProps} onClick={handleConfirm}>
-          {confirmProps?.children || labels.confirm}
+          {confirmProps?.children || confirmLabel}
         </Button>
       </Group>
     </>

@@ -24,11 +24,15 @@ function getConnection(): NetworkStatus {
   const connection: any =
     _navigator.connection || _navigator.mozConnection || _navigator.webkitConnection;
 
+  if (!connection) {
+    return defaultValue;
+  }
+
   return {
-    downlink: connection.downlink,
-    effectiveType: connection.effectiveType,
-    saveData: connection.saveData,
-    rtt: connection.rtt,
+    downlink: connection?.downlink,
+    effectiveType: connection?.effectiveType,
+    saveData: connection?.saveData,
+    rtt: connection?.rtt,
   };
 }
 
@@ -43,8 +47,12 @@ export function useNetwork() {
   useWindowEvent('offline', () => setStatus({ online: false, ...getConnection() }));
 
   useEffect(() => {
-    navigator.connection.addEventListener('change', handleConnectionChange);
-    return () => navigator.connection.removeEventListener('change', handleConnectionChange);
+    if (navigator.connection) {
+      navigator.connection.addEventListener('change', handleConnectionChange);
+      return () => navigator.connection.removeEventListener('change', handleConnectionChange);
+    }
+
+    return undefined;
   }, []);
 
   return status;

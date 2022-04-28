@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "4.1.4",
+  "version": "4.2.1",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -12,7 +12,6 @@
   "license": "MIT",
   "scripts": {
     "sync-branches": "sh scripts/sync-branches.sh",
-    "merge-dev": "sh scripts/merge-dev.sh",
     "postinstall": "npm run docs:docgen && cd docs && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",

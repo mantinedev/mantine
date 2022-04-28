@@ -40,13 +40,13 @@ useFocusReturn({
 });
 ```
 
-If `shouldReturnFocus` option is set to false you can call returned function to focus last active element:
+If `shouldReturnFocus` option is set to `false` you can call returned function to focus last active element:
 
 ```tsx
 const returnFocus = useFocusReturn({
   opened: false,
   transitionDuration: 200,
-  shouldReturnFocus: true,
+  shouldReturnFocus: false,
 });
 
 // ... later

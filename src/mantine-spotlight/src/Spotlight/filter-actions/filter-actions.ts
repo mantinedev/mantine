@@ -18,10 +18,17 @@ function getKeywords(keywords: string | string[]) {
 
 export function filterActions(_query: string, actions: SpotlightAction[]) {
   const query = _query.trim().toLowerCase();
-  return actions.filter(
-    (action) =>
-      action.title?.toLowerCase().includes(query) ||
+  const priorityMatrix = [[], []];
+  actions.forEach((action) => {
+    if (action.title?.toLowerCase().includes(query)) {
+      priorityMatrix[0].push(action);
+    } else if (
       action.description?.toLowerCase().includes(query) ||
       getKeywords(action.keywords).includes(query)
-  );
+    ) {
+      priorityMatrix[1].push(action);
+    }
+  });
+
+  return priorityMatrix.flat();
 }
