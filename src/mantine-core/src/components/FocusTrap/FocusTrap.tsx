@@ -8,9 +8,16 @@ export interface FocusTrapProps {
 
   /** Determines whether focus should be trapped within child element */
   active?: boolean;
+
+  /** Prop that should be used to access component ref */
+  refProp?: string;
 }
 
-export function FocusTrap({ children, active }: FocusTrapProps): React.ReactElement {
+export function FocusTrap({
+  children,
+  active = true,
+  refProp = 'ref',
+}: FocusTrapProps): React.ReactElement {
   const focusTrapRef = useFocusTrap(active);
   const ref = useMergedRef(focusTrapRef, children?.ref);
 
@@ -18,5 +25,7 @@ export function FocusTrap({ children, active }: FocusTrapProps): React.ReactElem
     return children;
   }
 
-  return cloneElement(children, { ref });
+  return cloneElement(children, { [refProp]: ref });
 }
+
+FocusTrap.displayName = '@mantine/core/FocusTrap';
