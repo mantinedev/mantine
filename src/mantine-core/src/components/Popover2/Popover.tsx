@@ -1,5 +1,6 @@
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
+import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
@@ -20,6 +21,15 @@ interface PopoverProps {
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
+
+  /** Controls dropdown opened state */
+  opened: boolean;
+
+  /** One of premade transitions ot transition object */
+  transition?: MantineTransition;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
 }
 
 export function Popover({
@@ -28,6 +38,9 @@ export function Popover({
   offset = 8,
   onPositionChange,
   positionDependencies = [],
+  opened,
+  transition = 'fade',
+  transitionDuration = 150,
 }: PopoverProps) {
   const { x, y, reference, floating } = usePopover({
     position,
@@ -37,7 +50,9 @@ export function Popover({
   });
 
   return (
-    <PopoverContextProvider value={{ reference, floating, x, y }}>
+    <PopoverContextProvider
+      value={{ reference, floating, x, y, opened, transition, transitionDuration }}
+    >
       {children}
     </PopoverContextProvider>
   );
