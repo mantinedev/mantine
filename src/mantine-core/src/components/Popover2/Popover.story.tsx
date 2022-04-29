@@ -10,9 +10,11 @@ export function Usage() {
 
   return (
     <div style={{ padding: 40 }}>
-      <Popover opened={opened}>
+      <Popover opened={opened} width="target">
         <Popover.Target>
-          <Button onClick={toggle}>Toggle popover</Button>
+          <Button onClick={toggle} fullWidth>
+            Toggle popover
+          </Button>
         </Popover.Target>
 
         <Popover.Dropdown>Dropdown</Popover.Dropdown>

@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
+import { Button } from '../Button';
 
 export default { title: 'Tooltip' };
 
-export const Usage = () => (
-  <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-    <Tooltip
-      position="right-end"
-      label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
-      width={300}
-      multiline
-      events={{ focus: true, hover: true, touch: false }}
-      withinPortal={false}
-    >
-      <button type="button" style={{ width: 200, height: 200 }}>
-        target
-      </button>
-    </Tooltip>
-  </div>
-);
+export const Usage = () => {
+  const [opened, setOpened] = useState(false);
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        position="bottom"
+        label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
+        width={300}
+        multiline
+        events={{ focus: true, hover: true, touch: false }}
+        withinPortal={false}
+        opened={opened}
+      >
+        <Button fullWidth onClick={() => setOpened(!opened)}>
+          target
+        </Button>
+      </Tooltip>
+    </div>
+  );
+};
 
 export const TooltipGroup = () => (
   <Tooltip.Group openDelay={500}>

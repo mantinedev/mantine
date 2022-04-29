@@ -3,6 +3,7 @@ import { Placement } from '@floating-ui/react-dom-interactions';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
+import { PopoverWidth } from './Popover.types';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
@@ -30,6 +31,9 @@ interface PopoverProps {
 
   /** Transition duration in ms */
   transitionDuration?: number;
+
+  /** Dropdown width, or 'target' to make Popover width the same as target element */
+  width?: PopoverWidth;
 }
 
 export function Popover({
@@ -41,17 +45,19 @@ export function Popover({
   opened,
   transition = 'fade',
   transitionDuration = 150,
+  width,
 }: PopoverProps) {
   const { x, y, reference, floating } = usePopover({
     position,
     offset,
     onPositionChange,
     positionDependencies,
+    opened,
   });
 
   return (
     <PopoverContextProvider
-      value={{ reference, floating, x, y, opened, transition, transitionDuration }}
+      value={{ reference, floating, x, y, opened, transition, transitionDuration, width }}
     >
       {children}
     </PopoverContextProvider>

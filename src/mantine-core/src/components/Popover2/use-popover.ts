@@ -14,6 +14,7 @@ interface UsePopoverOptions {
   position: Placement;
   positionDependencies: any[];
   onPositionChange?(position: Placement): void;
+  opened: boolean;
 }
 
 export function usePopover(options: UsePopoverOptions) {
@@ -24,15 +25,13 @@ export function usePopover(options: UsePopoverOptions) {
 
   useEffect(() => {
     if (floating.refs.reference.current && floating.refs.floating.current) {
-      return autoUpdate(
-        floating.refs.reference.current,
-        floating.refs.floating.current,
-        floating.update
-      );
+      return autoUpdate(floating.refs.reference.current, floating.refs.floating.current, () => {
+        floating.update();
+      });
     }
 
     return undefined;
-  }, [floating.refs.reference, floating.refs.floating, floating.update]);
+  }, [options.opened]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);

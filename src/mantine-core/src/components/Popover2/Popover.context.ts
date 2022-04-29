@@ -2,6 +2,7 @@ import { ReferenceType } from '@floating-ui/react-dom-interactions';
 import { createSafeContext } from '@mantine/utils';
 import { MantineTransition } from '../Transition';
 import { POPOVER_ERRORS } from './Popover.errors';
+import { PopoverWidth } from './Popover.types';
 
 interface PopoverContext {
   x: number;
@@ -11,6 +12,7 @@ interface PopoverContext {
   transitionDuration: number;
   reference: (node: ReferenceType) => void;
   floating: (node: HTMLElement) => void;
+  width?: PopoverWidth;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
