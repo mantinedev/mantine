@@ -1,8 +1,7 @@
 import { createSafeContext } from '@mantine/utils';
 import { MantineColor, MantineNumberSize } from '@mantine/styles';
-import { TabsVariant } from './Tabs.types';
+import { TabsOrientation, TabsValue, TabsVariant } from './Tabs.types';
 import { TABS_ERRORS } from './Tabs.errors';
-import type { TabsOrientation, TabsValue } from './Tabs.types';
 
 interface TabsContext {
   id: string;
