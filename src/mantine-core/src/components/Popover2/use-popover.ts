@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDidUpdate } from '@mantine/hooks';
 import {
   Placement,
@@ -6,8 +6,10 @@ import {
   shift,
   flip,
   offset,
+  size,
   autoUpdate,
 } from '@floating-ui/react-dom-interactions';
+import { PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {
   offset: number;
@@ -15,12 +17,31 @@ interface UsePopoverOptions {
   positionDependencies: any[];
   onPositionChange?(position: Placement): void;
   opened: boolean;
+  width: PopoverWidth;
 }
 
 export function usePopover(options: UsePopoverOptions) {
+  const [delayedUpdate, setDelayedUpdate] = useState(0);
   const floating = useFloating({
     placement: options.position,
-    middleware: [shift(), flip(), offset(options.offset)],
+    middleware: [
+      shift(),
+      flip(),
+      offset(options.offset),
+      ...(options.width === 'target'
+        ? [
+            size({
+              apply({ reference, height }) {
+                Object.assign(floating.refs.floating.current?.style ?? {}, {
+                  width: `${reference.width}px`,
+                  maxHeight: `${height}px`,
+                });
+              },
+              padding: 8,
+            }),
+          ]
+        : []),
+    ],
   });
 
   useEffect(() => {
@@ -31,7 +52,7 @@ export function usePopover(options: UsePopoverOptions) {
     }
 
     return undefined;
-  }, [options.opened]);
+  }, [floating.refs, options.opened, delayedUpdate]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
@@ -40,6 +61,10 @@ export function usePopover(options: UsePopoverOptions) {
   useDidUpdate(() => {
     floating.update();
   }, options.positionDependencies);
+
+  useDidUpdate(() => {
+    setDelayedUpdate((c) => c + 1);
+  }, [options.opened]);
 
   return floating;
 }

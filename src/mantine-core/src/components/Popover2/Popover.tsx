@@ -48,6 +48,7 @@ export function Popover({
   width,
 }: PopoverProps) {
   const { x, y, reference, floating } = usePopover({
+    width,
     position,
     offset,
     onPositionChange,

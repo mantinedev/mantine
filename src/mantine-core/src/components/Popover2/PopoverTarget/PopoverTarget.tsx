@@ -1,5 +1,5 @@
 import React, { cloneElement } from 'react';
-import { useMergedRef, useResizeObserver } from '@mantine/hooks';
+import { useMergedRef } from '@mantine/hooks';
 import { isElement } from '@mantine/utils';
 import { usePopoverContext } from '../Popover.context';
 import { POPOVER_ERRORS } from '../Popover.errors';
@@ -19,9 +19,7 @@ export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps)
 
   const ctx = usePopoverContext();
   const target = children as React.ReactElement;
-  const [resizeObserverRef, rect] = useResizeObserver();
-  const targetRef = useMergedRef(ctx.reference, resizeObserverRef, (target as any).ref);
-  console.log(rect);
+  const targetRef = useMergedRef(ctx.reference, (target as any).ref);
 
   return cloneElement(target, { [refProp]: targetRef });
 }
