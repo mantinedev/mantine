@@ -6,4 +6,10 @@ export default createStyles((theme) => ({
     backgroundColor: theme.white,
     background: 'red',
   },
+
+  arrow: {
+    backgroundColor: 'inherit',
+    border: 0,
+    zIndex: 1,
+  },
 }));

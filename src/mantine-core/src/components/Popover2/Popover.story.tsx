@@ -12,14 +12,14 @@ export function Usage() {
     <div
       style={{
         padding: 40,
-        width: '200vw',
-        height: '200vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
       }}
     >
-      <Popover opened={opened} middlewares={{ shift: false, flip: false }} position="top">
+      <Popover
+        opened={opened}
+        middlewares={{ shift: false, flip: false }}
+        position="bottom"
+        withArrow
+      >
         <Popover.Target>
           <Button onClick={toggle}>Toggle popover</Button>
         </Popover.Target>

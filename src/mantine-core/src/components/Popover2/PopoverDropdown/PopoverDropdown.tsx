@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/styles';
+import { getArrowPositionStyles } from '@mantine/utils';
 import { usePopoverContext } from '../Popover.context';
 import { Box } from '../../Box';
 import { Transition } from '../../Transition';
@@ -12,18 +13,8 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
 
 export function PopoverDropdown({ style, zIndex, className, ...others }: PopoverDropdownProps) {
   const ctx = usePopoverContext();
-  const { classes, cx } = useStyles();
+  const { classes, cx, theme } = useStyles();
 
-  // return (
-  //   <Box
-  //     ref={ctx.floating}
-  //     style={{ ...style, top: ctx.y ?? '', left: ctx.x ?? '' }}
-  //     className={cx(classes.root, className)}
-  //     {...others}
-  //   >
-  //     Dropdown
-  //   </Box>
-  // );
   return (
     <Transition mounted={ctx.opened} transition={ctx.transition} duration={ctx.transitionDuration}>
       {(transitionStyles) => (
@@ -34,6 +25,17 @@ export function PopoverDropdown({ style, zIndex, className, ...others }: Popover
           {...others}
         >
           Dropdown
+          {ctx.withArrow && (
+            <div
+              className={classes.arrow}
+              style={getArrowPositionStyles({
+                position: ctx.placement,
+                arrowSize: ctx.arrowSize,
+                arrowOffset: ctx.arrowOffset,
+                dir: theme.dir,
+              })}
+            />
+          )}
         </Box>
       )}
     </Transition>

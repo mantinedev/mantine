@@ -1,5 +1,7 @@
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
+import { getFloatingPosition } from '@mantine/utils';
+import { useMantineTheme } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
@@ -37,6 +39,15 @@ interface PopoverProps {
 
   /** Floating ui middlewares to configure position handling */
   middlewares?: PopoverMiddlewares;
+
+  /** Determines whether component should have an arrow */
+  withArrow?: boolean;
+
+  /** Arrow size in px */
+  arrowSize?: number;
+
+  /** Arrow offset in px */
+  arrowOffset?: number;
 }
 
 export function Popover({
@@ -50,12 +61,16 @@ export function Popover({
   transitionDuration = 150,
   width,
   middlewares = { flip: true, shift: true },
+  withArrow,
+  arrowSize = 6,
+  arrowOffset = 5,
 }: PopoverProps) {
-  const { x, y, reference, floating } = usePopover({
+  const theme = useMantineTheme();
+  const { x, y, reference, floating, placement } = usePopover({
     middlewares,
     width,
-    position,
-    offset,
+    position: getFloatingPosition(theme.dir, position),
+    offset: offset + (withArrow ? arrowSize / 2 : 0),
     onPositionChange,
     positionDependencies,
     opened,
@@ -63,7 +78,20 @@ export function Popover({
 
   return (
     <PopoverContextProvider
-      value={{ reference, floating, x, y, opened, transition, transitionDuration, width }}
+      value={{
+        reference,
+        floating,
+        x,
+        y,
+        opened,
+        transition,
+        transitionDuration,
+        width,
+        withArrow,
+        arrowSize,
+        arrowOffset,
+        placement,
+      }}
     >
       {children}
     </PopoverContextProvider>
