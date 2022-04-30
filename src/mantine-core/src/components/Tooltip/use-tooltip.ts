@@ -30,6 +30,7 @@ interface UseTooltip {
 }
 
 export function useTooltip(settings: UseTooltip) {
+  const [delayedUpdate, setDelayedUpdate] = useState(0);
   const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
   const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
   const withinGroup = useTooltipGroupContext();
@@ -69,10 +70,16 @@ export function useTooltip(settings: UseTooltip) {
   ]);
 
   useEffect(() => {
-    if (opened && refs.floating.current) {
-      autoUpdate(refs.reference.current, refs.floating.current, update);
+    if (refs.reference.current && refs.floating.current) {
+      return autoUpdate(refs.reference.current, refs.floating.current, update);
     }
-  }, [opened, refs]);
+
+    return undefined;
+  }, [refs.reference, refs.floating, opened, delayedUpdate]);
+
+  useDidUpdate(() => {
+    setDelayedUpdate((c) => c + 1);
+  }, [opened]);
 
   useDidUpdate(() => {
     settings.onPositionChange?.(placement);

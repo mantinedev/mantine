@@ -46,13 +46,15 @@ export function usePopover(options: UsePopoverOptions) {
 
   useEffect(() => {
     if (floating.refs.reference.current && floating.refs.floating.current) {
-      return autoUpdate(floating.refs.reference.current, floating.refs.floating.current, () => {
-        floating.update();
-      });
+      return autoUpdate(
+        floating.refs.reference.current,
+        floating.refs.floating.current,
+        floating.update
+      );
     }
 
     return undefined;
-  }, [floating.refs, options.opened, delayedUpdate]);
+  }, [floating.refs.reference, floating.refs.floating, options.opened, delayedUpdate]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
