@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/core';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/core';
 import { getDayTabIndex } from './get-day-tab-index/get-day-tab-index';
 import { getDayAutofocus } from './get-day-autofocus/get-day-autofocus';
 import useStyles from './Day.styles';
 
-export type DayStylesNames = ClassNames<typeof useStyles>;
+export type DayStylesNames = Selectors<typeof useStyles>;
 
 export interface DayProps
   extends DefaultProps<DayStylesNames>,

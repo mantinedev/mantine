@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -15,7 +15,7 @@ import useStyles from './Tabs.styles';
 
 export type TabsVariant = 'default' | 'outline' | 'pills' | 'unstyled';
 export type TabsStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, TabsVariant>
+  | Exclude<Selectors<typeof useStyles>, TabsVariant>
   | TabControlStylesNames;
 
 export interface TabsProps

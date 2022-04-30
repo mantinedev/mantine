@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
-export type RingProgressStylesNames = ClassNames<typeof useStyles>;
+export type RingProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,

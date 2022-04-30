@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, MantineShadow, Selectors, getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { MantineTransition } from '../../Transition';
@@ -7,7 +7,7 @@ import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
 import { Popper } from '../../Popper';
 
-export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;
+export type SelectDropdownStylesNames = Selectors<typeof useStyles>;
 
 interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   mounted: boolean;

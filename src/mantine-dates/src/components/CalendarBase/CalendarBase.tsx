@@ -1,6 +1,6 @@
 import React, { useRef, useState, forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { Box, MantineSize, ClassNames, DefaultProps } from '@mantine/core';
+import { Box, MantineSize, Selectors, DefaultProps } from '@mantine/core';
 import { MonthSettings, DayKeydownPayload } from '../Month';
 import { YearPicker, YearPickerStylesNames } from './YearPicker/YearPicker';
 import { MonthPicker, MonthPickerStylesNames } from './MonthPicker/MonthPicker';
@@ -8,7 +8,7 @@ import { MonthsList, MonthsListStylesNames } from './MonthsList/MonthsList';
 import useStyles from './CalendarBase.styles';
 
 export type CalendarBaseStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | YearPickerStylesNames
   | MonthPickerStylesNames
   | MonthsListStylesNames;

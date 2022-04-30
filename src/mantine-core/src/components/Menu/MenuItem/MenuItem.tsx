@@ -1,12 +1,12 @@
 import React, { forwardRef, useRef } from 'react';
-import { ClassNames, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
+import { Selectors, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
 import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../../Box';
 import { useMenuContext } from '../Menu.context';
 import { getContextItemIndex } from '../../../utils';
 import useStyles from './MenuItem.styles';
 
-export type MenuItemStylesNames = ClassNames<typeof useStyles>;
+export type MenuItemStylesNames = Selectors<typeof useStyles>;
 
 export interface SharedMenuItemProps extends DefaultProps {
   /** Item label */

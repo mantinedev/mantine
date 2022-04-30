@@ -5,14 +5,14 @@ import {
   MantineColor,
   PolymorphicComponentProps,
   PolymorphicRef,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ActionIconStylesNames = ClassNames<typeof useStyles>;
+export type ActionIconStylesNames = Selectors<typeof useStyles>;
 
 interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Icon rendered inside button */

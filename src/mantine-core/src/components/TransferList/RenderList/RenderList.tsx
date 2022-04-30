@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { DefaultProps, ClassNames, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../Button';
@@ -12,7 +12,7 @@ import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
 import { groupOptions } from '../../../utils';
 
-export type RenderListStylesNames = ClassNames<typeof useStyles>;
+export type RenderListStylesNames = Selectors<typeof useStyles>;
 
 export interface RenderListProps extends DefaultProps<RenderListStylesNames> {
   data: TransferListItem[];

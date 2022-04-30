@@ -8,7 +8,7 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  ClassNames,
+  Selectors,
   CloseButton,
   extractSystemStyles,
   useMantineDefaultProps,
@@ -18,7 +18,7 @@ import useStyles from './TimeRangeInput.styles';
 import { TimeInput } from '../TimeInput';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'disabled'>
+  | Exclude<Selectors<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 

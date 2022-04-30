@@ -4,13 +4,13 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { UnstyledButton } from '../Button';
 import useStyles from './Burger.styles';
 
-export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Exclude<Selectors<typeof useStyles>, 'opened'>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,

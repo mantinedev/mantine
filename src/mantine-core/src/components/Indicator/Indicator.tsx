@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef } from 'react';
 import {
-  ClassNames,
+  Selectors,
   DefaultProps,
   MantineColor,
   MantineNumberSize,
@@ -11,7 +11,7 @@ import { Box } from '../Box';
 import { IndicatorPosition } from './Indicator.types';
 import useStyles from './Indicator.styles';
 
-export type IndicatorStylesNames = ClassNames<typeof useStyles>;
+export type IndicatorStylesNames = Selectors<typeof useStyles>;
 
 export interface IndicatorProps
   extends DefaultProps<IndicatorStylesNames>,

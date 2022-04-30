@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './Breadcrumbs.styles';
 
-export type BreadcrumbsStylesNames = ClassNames<typeof useStyles>;
+export type BreadcrumbsStylesNames = Selectors<typeof useStyles>;
 
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,

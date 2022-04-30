@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -11,7 +11,7 @@ import { Box } from '../Box';
 import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
-export type AppShellStylesNames = ClassNames<typeof useStyles>;
+export type AppShellStylesNames = Selectors<typeof useStyles>;
 
 export interface AppShellProps
   extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {

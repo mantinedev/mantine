@@ -4,7 +4,7 @@ import {
   Text,
   Box,
   MantineSize,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
@@ -66,7 +66,7 @@ export interface MonthSettings {
   isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
 }
 
-export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
+export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,

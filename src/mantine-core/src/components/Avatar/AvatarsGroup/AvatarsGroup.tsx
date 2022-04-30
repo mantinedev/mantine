@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { filterChildrenByType } from '../../../utils';
@@ -11,7 +11,7 @@ import { Box } from '../../Box';
 import { Center } from '../../Center';
 import useStyles from './AvatarsGroup.styles';
 
-export type AvatarsGroupStylesNames = ClassNames<typeof useStyles>;
+export type AvatarsGroupStylesNames = Selectors<typeof useStyles>;
 
 export interface AvatarsGroupProps
   extends DefaultProps<AvatarsGroupStylesNames>,

@@ -4,7 +4,7 @@ import type { Delta, Sources } from 'quill';
 import 'quill-mention';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   Box,
   MantineNumberSize,
   useMantineDefaultProps,
@@ -19,7 +19,7 @@ import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 import { attachShortcuts } from '../../modules/shortcuts';
 
-export type RichTextEditorStylesNames = ToolbarStylesNames | ClassNames<typeof useStyles>;
+export type RichTextEditorStylesNames = ToolbarStylesNames | Selectors<typeof useStyles>;
 
 export type { RichTextEditorLabels };
 

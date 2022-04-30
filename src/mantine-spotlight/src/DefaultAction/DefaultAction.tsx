@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   Highlight,
   UnstyledButton,
   Group,
@@ -13,7 +13,7 @@ import {
 import type { SpotlightAction } from '../types';
 import useStyles from './DefaultAction.styles';
 
-export type DefaultActionStylesNames = ClassNames<typeof useStyles>;
+export type DefaultActionStylesNames = Selectors<typeof useStyles>;
 
 export interface DefaultActionProps
   extends DefaultProps<DefaultActionStylesNames>,

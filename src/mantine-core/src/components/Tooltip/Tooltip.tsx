@@ -2,7 +2,7 @@ import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   getDefaultZIndex,
   MantineNumberSize,
   useMantineDefaultProps,
@@ -12,7 +12,7 @@ import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
 import useStyles from './Tooltip.styles';
 
-export type TooltipStylesNames = ClassNames<typeof useStyles>;
+export type TooltipStylesNames = Selectors<typeof useStyles>;
 
 export interface TooltipProps
   extends DefaultProps<TooltipStylesNames>,

@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { findChildByType, filterChildrenByType } from '../../utils';
@@ -13,7 +13,7 @@ import { Step, StepStylesNames } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
-export type StepperStylesNames = ClassNames<typeof useStyles> | StepStylesNames;
+export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,

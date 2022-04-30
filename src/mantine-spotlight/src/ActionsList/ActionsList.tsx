@@ -1,10 +1,10 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text, MantineNumberSize, MantineColor } from '@mantine/core';
+import { DefaultProps, Selectors, Text, MantineNumberSize, MantineColor } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
 
-export type ActionsListStylesNames = ClassNames<typeof useStyles> | DefaultActionStylesNames;
+export type ActionsListStylesNames = Selectors<typeof useStyles> | DefaultActionStylesNames;
 type GetGroupOptionsItem<T extends any[]> = { type: 'item'; item: T[number]; index: number };
 type GetGroupOptionsLabel = { type: 'label'; label: string };
 

@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -18,7 +18,7 @@ import { CloseButton } from '../ActionIcon';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
-export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'withOverlay'>;
+export type DrawerStylesNames = Exclude<Selectors<typeof useStyles>, 'withOverlay'>;
 
 export interface DrawerProps
   extends Omit<DefaultProps<DrawerStylesNames>, MantineStyleSystemSize>,

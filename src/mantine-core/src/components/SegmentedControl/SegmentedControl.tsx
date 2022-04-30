@@ -12,7 +12,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -24,7 +24,7 @@ export interface SegmentedControlItem {
   disabled?: boolean;
 }
 
-export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
+export type SegmentedControlStylesNames = Selectors<typeof useStyles>;
 
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,

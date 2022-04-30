@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -14,7 +14,7 @@ import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | ColorSliderStylesNames
   | SwatchesStylesNames
   | SaturationStylesNames
