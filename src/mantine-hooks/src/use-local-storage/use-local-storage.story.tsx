@@ -29,6 +29,11 @@ export function SerializeJson() {
     defaultValue: { mantine: 'is awesome' },
   });
 
+  const [value3, setValue3] = useLocalStorage<{ mantine: string }>({
+    key: '@mantine/localStorage/another-value',
+    defaultValue: { mantine: 'is awesome' },
+  });
+
   return (
     <div style={{ padding: 20 }}>
       <input
@@ -38,6 +43,10 @@ export function SerializeJson() {
       <input
         value={value2.mantine}
         onChange={(event) => setValue2({ mantine: event.target.value })}
+      />
+      <input
+        value={value3.mantine}
+        onChange={(event) => setValue3({ mantine: event.target.value })}
       />
     </div>
   );

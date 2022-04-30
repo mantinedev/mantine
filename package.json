@@ -120,21 +120,20 @@
     "yargs": "^17.0.1"
   },
   "dependencies": {
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/serialize": "^1.0.2",
-    "@emotion/server": "^11.4.0",
-    "@emotion/utils": "^1.0.0",
+    "@emotion/cache": "11.7.1",
+    "@emotion/react": "11.7.1",
+    "@emotion/serialize": "1.0.2",
+    "@emotion/server": "11.4.0",
+    "@emotion/utils": "1.0.0",
     "@floating-ui/react-dom-interactions": "0.3.1",
     "@modulz/radix-icons": "^4.0.0",
     "@popperjs/core": "^2.9.3",
     "@primer/octicons-react": "^14.2.1",
     "@radix-ui/react-scroll-area": "^0.1.1",
     "clsx": "^1.1.1",
-    "csstype": "^3.0.9",
+    "csstype": "3.0.9",
     "dayjs": "^1.10.5",
-    "html-react-parser": "^1.3.0",
-    "joi": "^17.6.0",
+    "html-react-parser": "1.3.0",
     "prism-react-renderer": "^1.2.1",
     "quill-mention": "^3.0.8",
     "react": "^17.0.2",
@@ -147,7 +146,6 @@
     "react-transition-group": "^4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
     "tabler-icons-react": "^1.35.0",
-    "yup": "^0.32.11",
     "zod": "^3.13.4"
   }
 }
