@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
-import { SchemaBase } from './_schema-base';
-
-const code = `
+import React from 'react';
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
 import { NumberInput, TextInput, Button, Box, Group } from '@mantine/core';
@@ -12,7 +10,7 @@ const schema = z.object({
   age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
 });
 
-function Demo() {
+export function SchemaBase() {
   const form = useForm({
     schema: zodResolver(schema),
     initialValues: {
@@ -53,10 +51,3 @@ function Demo() {
     </Box>
   );
 }
-`;
-
-export const zod: MantineDemo = {
-  type: 'demo',
-  component: SchemaBase,
-  code,
-};
