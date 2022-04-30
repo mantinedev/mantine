@@ -150,6 +150,7 @@ export function Tooltip(props: TooltipProps) {
                 <div
                   className={classes.arrow}
                   style={getArrowPositionStyles({
+                    withBorder: false,
                     position: tooltip.placement,
                     arrowSize,
                     arrowOffset,

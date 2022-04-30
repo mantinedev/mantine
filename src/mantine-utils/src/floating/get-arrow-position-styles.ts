@@ -43,11 +43,13 @@ function verticalSide(
 
 export function getArrowPositionStyles({
   position,
+  withBorder,
   arrowSize,
   arrowOffset,
   dir,
 }: {
   position: FloatingPosition;
+  withBorder: boolean;
   arrowSize: number;
   arrowOffset: number;
   dir: 'rtl' | 'ltr';
@@ -60,11 +62,13 @@ export function getArrowPositionStyles({
     position: 'absolute',
   };
 
+  const arrowPosition = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
+
   if (side === 'left') {
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'right' : 'left']: -arrowSize / 2,
+      [dir === 'ltr' ? 'right' : 'left']: arrowPosition,
       [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
       borderBottom: 0,
     };
@@ -74,7 +78,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'left' : 'right']: -arrowSize / 2,
+      [dir === 'ltr' ? 'left' : 'right']: arrowPosition,
       [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
       borderBottom: 0,
     };
@@ -84,7 +88,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowSize, arrowOffset, dir),
-      bottom: -arrowSize / 2,
+      bottom: arrowPosition,
       borderTop: 0,
       [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
     };
@@ -94,7 +98,7 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...verticalSide(placement, arrowSize, arrowOffset, dir),
-      top: -arrowSize / 2,
+      top: arrowPosition,
       borderBottom: 0,
       [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
     };

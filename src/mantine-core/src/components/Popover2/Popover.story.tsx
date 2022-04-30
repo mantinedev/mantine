@@ -6,7 +6,7 @@ import { Button } from '../Button';
 export default { title: 'Popover2' };
 
 export function Usage() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle }] = useDisclosure(true);
 
   return (
     <div
@@ -24,7 +24,7 @@ export function Usage() {
           <Button onClick={toggle}>Toggle popover</Button>
         </Popover.Target>
 
-        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+        <Popover.Dropdown radius="md">Dropdown</Popover.Dropdown>
       </Popover>
     </div>
   );

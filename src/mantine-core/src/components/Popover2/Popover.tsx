@@ -62,7 +62,7 @@ export function Popover({
   width,
   middlewares = { flip: true, shift: true },
   withArrow,
-  arrowSize = 6,
+  arrowSize = 7,
   arrowOffset = 5,
 }: PopoverProps) {
   const theme = useMantineTheme();

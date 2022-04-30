@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
 import { getArrowPositionStyles } from '@mantine/utils';
 import { usePopoverContext } from '../Popover.context';
 import { Box } from '../../Box';
@@ -9,9 +9,22 @@ import useStyles from './PopoverDropdown.styles';
 export interface PopoverDropdownProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Dropdown z-index */
   zIndex?: number;
+
+  /** Radius from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Key of theme.shadow or any other valid css box-shadow value */
+  shadow?: MantineShadow;
 }
 
-export function PopoverDropdown({ style, zIndex, className, ...others }: PopoverDropdownProps) {
+export function PopoverDropdown({
+  style,
+  zIndex,
+  className,
+  radius,
+  shadow,
+  ...others
+}: PopoverDropdownProps) {
   const ctx = usePopoverContext();
   const { classes, cx, theme } = useStyles();
 
@@ -29,6 +42,7 @@ export function PopoverDropdown({ style, zIndex, className, ...others }: Popover
             <div
               className={classes.arrow}
               style={getArrowPositionStyles({
+                withBorder: true,
                 position: ctx.placement,
                 arrowSize: ctx.arrowSize,
                 arrowOffset: ctx.arrowOffset,
