@@ -9,6 +9,31 @@ export function Usage() {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
+    <div
+      style={{
+        padding: 40,
+        width: '200vw',
+        height: '200vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Popover opened={opened} middlewares={{ shift: false, flip: false }} position="top">
+        <Popover.Target>
+          <Button onClick={toggle}>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function SameWidth() {
+  const [opened, { toggle }] = useDisclosure(false);
+
+  return (
     <div style={{ padding: 40 }}>
       <Popover opened={opened} width="target">
         <Popover.Target>

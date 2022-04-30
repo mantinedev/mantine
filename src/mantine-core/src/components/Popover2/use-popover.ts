@@ -8,8 +8,9 @@ import {
   offset,
   size,
   autoUpdate,
+  Middleware,
 } from '@floating-ui/react-dom-interactions';
-import { PopoverWidth } from './Popover.types';
+import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 
 interface UsePopoverOptions {
   offset: number;
@@ -18,6 +19,21 @@ interface UsePopoverOptions {
   onPositionChange?(position: Placement): void;
   opened: boolean;
   width: PopoverWidth;
+  middlewares: PopoverMiddlewares;
+}
+
+function getPopoverMiddlewares(options: UsePopoverOptions) {
+  const middlewares: Middleware[] = [offset(options.offset)];
+
+  if (options.middlewares.shift) {
+    middlewares.push(shift());
+  }
+
+  if (options.middlewares.flip) {
+    middlewares.push(flip());
+  }
+
+  return middlewares;
 }
 
 export function usePopover(options: UsePopoverOptions) {
@@ -25,19 +41,15 @@ export function usePopover(options: UsePopoverOptions) {
   const floating = useFloating({
     placement: options.position,
     middleware: [
-      shift(),
-      flip(),
-      offset(options.offset),
+      ...getPopoverMiddlewares(options),
       ...(options.width === 'target'
         ? [
             size({
-              apply({ reference, height }) {
+              apply({ reference }) {
                 Object.assign(floating.refs.floating.current?.style ?? {}, {
                   width: `${reference.width}px`,
-                  maxHeight: `${height}px`,
                 });
               },
-              padding: 8,
             }),
           ]
         : []),

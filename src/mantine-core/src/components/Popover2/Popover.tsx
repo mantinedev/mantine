@@ -3,7 +3,7 @@ import { Placement } from '@floating-ui/react-dom-interactions';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
-import { PopoverWidth } from './Popover.types';
+import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
@@ -34,6 +34,9 @@ interface PopoverProps {
 
   /** Dropdown width, or 'target' to make Popover width the same as target element */
   width?: PopoverWidth;
+
+  /** Floating ui middlewares to configure position handling */
+  middlewares?: PopoverMiddlewares;
 }
 
 export function Popover({
@@ -46,8 +49,10 @@ export function Popover({
   transition = 'fade',
   transitionDuration = 150,
   width,
+  middlewares = { flip: true, shift: true },
 }: PopoverProps) {
   const { x, y, reference, floating } = usePopover({
+    middlewares,
     width,
     position,
     offset,
