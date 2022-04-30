@@ -74,7 +74,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
 
   const rootId = useUuid(id);
 
-  const titleId = title && id && `${rootId}-title`;
+  const titleId = title && `${rootId}-title`;
   const bodyId = `${rootId}-body`;
 
   return (
