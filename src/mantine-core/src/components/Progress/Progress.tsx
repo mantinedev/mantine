@@ -3,14 +3,14 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Progress.styles';
 import { Text } from '../Text';
 
-export type ProgressStylesNames = ClassNames<typeof useStyles>;
+export type ProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames>,

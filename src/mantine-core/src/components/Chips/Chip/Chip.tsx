@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -13,7 +13,7 @@ import { Box } from '../../Box';
 import { CheckboxIcon } from '../../Checkbox';
 import useStyles from './Chip.styles';
 
-export type ChipStylesNames = ClassNames<typeof useStyles>;
+export type ChipStylesNames = Selectors<typeof useStyles>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames>,

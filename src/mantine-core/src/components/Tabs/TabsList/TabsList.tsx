@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
+import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
 import { Box } from '../../Box';
 import { TabsPosition } from '../Tabs.types';
 import { useTabsContext } from '../Tabs.context';
 import useStyles from './TabsList.styles';
 
-export type TabsListStylesNames = ClassNames<typeof useStyles>;
+export type TabsListStylesNames = Selectors<typeof useStyles>;
 
 export interface TabsListProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** <Tabs.Tab /> components */

@@ -2,7 +2,7 @@ import React, { useState, forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { useDidUpdate } from '@mantine/hooks';
@@ -11,7 +11,7 @@ import { Box } from '../Box';
 import { ImageIcon } from './ImageIcon';
 import useStyles from './Image.styles';
 
-export type ImageStylesNames = ClassNames<typeof useStyles>;
+export type ImageStylesNames = Selectors<typeof useStyles>;
 
 export interface ImageProps
   extends DefaultProps<ImageStylesNames>,

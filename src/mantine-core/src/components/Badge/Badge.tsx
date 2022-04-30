@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -14,7 +14,7 @@ import { Box } from '../Box';
 import useStyles from './Badge.styles';
 
 export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
-export type BadgeStylesNames = ClassNames<typeof useStyles>;
+export type BadgeStylesNames = Selectors<typeof useStyles>;
 
 interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   /** Badge color from theme */

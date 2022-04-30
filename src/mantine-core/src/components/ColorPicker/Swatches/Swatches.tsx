@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, Selectors } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
 import useStyles from './Swatches.styles';
 
-export type SwatchesStylesNames = ClassNames<typeof useStyles>;
+export type SwatchesStylesNames = Selectors<typeof useStyles>;
 
 export interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,

@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
 import useStyles from './Spoiler.styles';
 
-export type SpoilerStylesNames = ClassNames<typeof useStyles>;
+export type SpoilerStylesNames = Selectors<typeof useStyles>;
 
 export interface SpoilerProps
   extends DefaultProps<SpoilerStylesNames>,

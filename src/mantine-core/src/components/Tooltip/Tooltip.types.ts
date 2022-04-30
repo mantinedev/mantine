@@ -1,8 +1,8 @@
-import { DefaultProps, ClassNames, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { DefaultProps, Selectors, MantineNumberSize, MantineColor } from '@mantine/styles';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import useStyles, { TooltipStylesParams } from './Tooltip.styles';
 
-export type TooltipStylesNames = ClassNames<typeof useStyles>;
+export type TooltipStylesNames = Selectors<typeof useStyles>;
 
 export interface TooltipBaseProps
   extends DefaultProps<TooltipStylesNames, TooltipStylesParams>,

@@ -5,14 +5,14 @@ import {
   MantineNumberSize,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Switch.styles';
 
-export type SwitchStylesNames = ClassNames<typeof useStyles>;
+export type SwitchStylesNames = Selectors<typeof useStyles>;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames>,

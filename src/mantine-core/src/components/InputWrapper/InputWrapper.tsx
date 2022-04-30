@@ -1,10 +1,10 @@
 import React, { createElement, forwardRef } from 'react';
-import { DefaultProps, MantineSize, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './InputWrapper.styles';
 
-export type InputWrapperStylesNames = ClassNames<typeof useStyles>;
+export type InputWrapperStylesNames = Selectors<typeof useStyles>;
 
 export interface InputWrapperBaseProps {
   /** Input label, displayed before input */

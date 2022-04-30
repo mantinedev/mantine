@@ -8,7 +8,7 @@ import {
 } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -30,7 +30,7 @@ import { SelectSharedProps } from '../Select/Select';
 export type MultiSelectStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-      ClassNames<typeof useStyles>,
+      Selectors<typeof useStyles>,
       'searchInputEmpty' | 'searchInputInputHidden' | 'searchInputPointer'
     >
   | Exclude<BaseSelectStylesNames, 'selected'>;

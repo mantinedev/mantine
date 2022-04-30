@@ -1,11 +1,11 @@
 import React from 'react';
-import { ClassNames, DefaultProps, useContextStylesApi } from '@mantine/styles';
+import { Selectors, DefaultProps, useContextStylesApi } from '@mantine/styles';
 import { Collapse } from '../../Collapse';
 import { useAccordionContext } from '../Accordion.context';
 import { useAccordionItemContext } from '../AccordionItem.context';
 import useStyles from './AccordionPanel.styles';
 
-export type AccordionPanelStylesNames = ClassNames<typeof useStyles>;
+export type AccordionPanelStylesNames = Selectors<typeof useStyles>;
 
 export interface AccordionPanelProps
   extends DefaultProps,

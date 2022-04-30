@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useContextStylesApi, MantineColor } from '@mantine/styles';
+import { DefaultProps, Selectors, useContextStylesApi, MantineColor } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useTabsContext } from '../Tabs.context';
 import useStyles from './Tab.styles';
 
-export type TabStylesNames = ClassNames<typeof useStyles>;
+export type TabStylesNames = Selectors<typeof useStyles>;
 
 export interface TabProps extends DefaultProps, React.ComponentPropsWithoutRef<'button'> {
   /** Value that is used to connect Tab with associated panel */

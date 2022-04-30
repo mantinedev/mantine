@@ -3,7 +3,7 @@ import { useUncontrolled, useMergedRef, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
-  ClassNames,
+  Selectors,
   InputWrapper,
   InputWrapperStylesNames,
   Input,
@@ -18,7 +18,7 @@ import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultVal
 export type TagInputStylesNames =
   | DefaultValueStylesNames
   | Exclude<
-      ClassNames<typeof useStyles>,
+      Selectors<typeof useStyles>,
       'tagInputEmpty' | 'tagInputInputHidden' | 'tagInputPointer'
     >
   | InputStylesNames

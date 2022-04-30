@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   extractSystemStyles,
@@ -13,7 +13,7 @@ import {
 import { Box } from '../Box';
 import useStyles, { InputVariant } from './Input.styles';
 
-export type InputStylesNames = ClassNames<typeof useStyles>;
+export type InputStylesNames = Selectors<typeof useStyles>;
 
 export interface InputBaseProps {
   /** Adds icon on the left side of input */

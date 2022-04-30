@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
+  | Exclude<Selectors<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
   | ThumbStylesNames;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {

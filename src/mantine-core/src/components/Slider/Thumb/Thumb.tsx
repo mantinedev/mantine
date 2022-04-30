@@ -1,10 +1,10 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
-export type ThumbStylesNames = ClassNames<typeof useStyles>;
+export type ThumbStylesNames = Selectors<typeof useStyles>;
 
 export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;

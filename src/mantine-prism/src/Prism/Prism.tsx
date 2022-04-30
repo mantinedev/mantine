@@ -5,7 +5,7 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  ClassNames,
+  Selectors,
   Box,
   ScrollArea,
   useMantineDefaultProps,
@@ -16,7 +16,7 @@ import { CopyIcon } from './CopyIcon';
 import { getPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
-export type PrismStylesNames = ClassNames<typeof useStyles>;
+export type PrismStylesNames = Selectors<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,

@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -11,7 +11,7 @@ import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import { ListContext } from './List.context';
 import useStyles from './List.styles';
 
-export type ListStylesNames = ListItemStylesNames | ClassNames<typeof useStyles>;
+export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,

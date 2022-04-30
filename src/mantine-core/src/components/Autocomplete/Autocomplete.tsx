@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -21,7 +21,7 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | ClassNames<typeof useStyles>;
+  | Selectors<typeof useStyles>;
 
 export interface AutocompleteItem {
   value: string;

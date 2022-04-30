@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -12,7 +12,7 @@ import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import useStyles from './Avatar.styles';
 
-export type AvatarStylesNames = ClassNames<typeof useStyles>;
+export type AvatarStylesNames = Selectors<typeof useStyles>;
 
 interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Image url */

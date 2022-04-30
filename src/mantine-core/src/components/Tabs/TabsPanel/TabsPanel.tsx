@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { ClassNames, DefaultProps, useContextStylesApi } from '@mantine/styles';
+import { Selectors, DefaultProps, useContextStylesApi } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../../Box';
 import { useTabsContext } from '../Tabs.context';
 import useStyles from './TabsPanel.styles';
 
-export type TabsPanelStylesNames = ClassNames<typeof useStyles>;
+export type TabsPanelStylesNames = Selectors<typeof useStyles>;
 
 export interface TabsPanelProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Panel content */

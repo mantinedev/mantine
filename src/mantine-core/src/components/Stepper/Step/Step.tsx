@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   MantineSize,
   MantineNumberSize,
 } from '@mantine/styles';
@@ -13,7 +13,7 @@ import { UnstyledButton } from '../../Button';
 import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
 
-export type StepStylesNames = ClassNames<typeof useStyles>;
+export type StepStylesNames = Selectors<typeof useStyles>;
 
 export interface StepProps
   extends DefaultProps<StepStylesNames>,

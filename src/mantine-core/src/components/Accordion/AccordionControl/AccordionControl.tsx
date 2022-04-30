@@ -1,12 +1,12 @@
 import React, { forwardRef } from 'react';
-import { useContextStylesApi, DefaultProps, ClassNames } from '@mantine/styles';
+import { useContextStylesApi, DefaultProps, Selectors } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
 import { UnstyledButton } from '../../Button';
 import { useAccordionContext } from '../Accordion.context';
 import { useAccordionItemContext } from '../AccordionItem.context';
 import useStyles from './AccordionControl.styles';
 
-export type AccordionControlStylesNames = ClassNames<typeof useStyles>;
+export type AccordionControlStylesNames = Selectors<typeof useStyles>;
 
 export interface AccordionControlProps
   extends DefaultProps,

@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useContextStylesApi } from '@mantine/styles';
+import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
 import { Box } from '../../Box';
 import { AccordionItemContextProvider } from '../AccordionItem.context';
 import useStyles from './AccordionItem.styles';
 import { useAccordionContext } from '../Accordion.context';
 
-export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
+export type AccordionItemStylesNames = Selectors<typeof useStyles>;
 
 export interface AccordionItemProps
   extends DefaultProps<AccordionItemStylesNames>,

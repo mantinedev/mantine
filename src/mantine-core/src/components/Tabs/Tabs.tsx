@@ -4,7 +4,7 @@ import {
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
   StylesApiProvider,
-  ClassNames,
+  Selectors,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
@@ -15,7 +15,7 @@ import { TabsStylesParams } from './Tabs.types';
 import useStyles from './Tabs.styles';
 
 export type TabsStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | TabsListStylesNames
   | TabsPanelStylesNames
   | TabStylesNames;

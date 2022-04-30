@@ -4,13 +4,13 @@ import {
   UnstyledButton,
   SelectChevronIcon,
   MantineSize,
-  ClassNames,
+  Selectors,
   DefaultProps,
 } from '@mantine/core';
 import { ArrowIcon } from './ArrowIcon';
 import useStyles from './CalendarHeader.styles';
 
-export type CalendarHeaderStylesNames = ClassNames<typeof useStyles>;
+export type CalendarHeaderStylesNames = Selectors<typeof useStyles>;
 
 export interface CalendarHeaderProps
   extends DefaultProps<CalendarHeaderStylesNames>,
