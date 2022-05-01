@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
+
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { getFloatingPosition, useId } from '@mantine/utils';
@@ -9,6 +11,7 @@ import {
   MantineNumberSize,
   MantineShadow,
   getDefaultZIndex,
+  useMantineDefaultProps,
 } from '@mantine/styles';
 import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
@@ -107,37 +110,55 @@ export interface PopoverProps {
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
 }
 
-export function Popover({
-  children,
-  position = 'bottom',
-  offset = 8,
-  onPositionChange,
-  positionDependencies = [],
-  opened,
-  transition = 'fade',
-  transitionDuration = 150,
-  width,
-  middlewares = { flip: true, shift: true },
-  withArrow,
-  arrowSize = 7,
-  arrowOffset = 5,
-  unstyled,
-  classNames,
-  styles,
-  closeOnClickOutside = true,
-  withinPortal = false,
-  closeOnEscape = true,
-  clickOutsideEvents = ['mousedown', 'touchstart'],
-  trapFocus,
-  onClose,
-  onOpen,
-  onChange,
-  zIndex = getDefaultZIndex('popover'),
-  radius,
-  shadow,
-  id,
-  defaultOpened,
-}: PopoverProps) {
+const defaultProps: Partial<PopoverProps> = {
+  position: 'bottom',
+  offset: 8,
+  positionDependencies: [],
+  transition: 'fade',
+  transitionDuration: 150,
+  middlewares: { flip: true, shift: true },
+  arrowSize: 7,
+  arrowOffset: 5,
+  closeOnClickOutside: true,
+  withinPortal: false,
+  closeOnEscape: true,
+  clickOutsideEvents: ['mousedown', 'touchstart'],
+  zIndex: getDefaultZIndex('popover'),
+};
+
+export function Popover(props: PopoverProps) {
+  const {
+    children,
+    position,
+    offset,
+    onPositionChange,
+    positionDependencies,
+    opened,
+    transition,
+    transitionDuration,
+    width,
+    middlewares,
+    withArrow,
+    arrowSize,
+    arrowOffset,
+    unstyled,
+    classNames,
+    styles,
+    closeOnClickOutside,
+    withinPortal,
+    closeOnEscape,
+    clickOutsideEvents,
+    trapFocus,
+    onClose,
+    onOpen,
+    onChange,
+    zIndex,
+    radius,
+    shadow,
+    id,
+    defaultOpened,
+  } = useMantineDefaultProps('Popover', defaultProps, props);
+
   const uid = useId(id);
   const theme = useMantineTheme();
   const popover = usePopover({
