@@ -16,6 +16,8 @@ export function GlobalStyles({ theme }: { theme: MantineTheme }) {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
           lineHeight: theme.lineHeight,
           fontSize: theme.fontSizes.md,
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale',
         },
       }}
     />
