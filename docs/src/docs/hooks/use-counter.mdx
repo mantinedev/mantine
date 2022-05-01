@@ -1,0 +1,46 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
+title: 'use-counter'
+order: 1
+slug: /hooks/use-counter/
+description: 'A counter hook'
+import: "import { useCounter } from '@mantine/hooks';"
+docs: 'hooks/use-counter.mdx'
+source: 'mantine-hooks/src/use-counter/use-counter.ts'
+---
+
+import { HooksDemos } from '@mantine/demos';
+
+## Usage
+
+use-counter helps manage a counter using a set of operations.
+
+<Demo data={HooksDemos.useCounterDemo} />
+
+## API
+
+```tsx
+const {
+  count, // -> counter value
+  {
+    inc,
+    dec,
+    set,
+    reset
+  }, // -> operations applicable on counter
+} = useCounter(initialValue, { min, max });
+``` 
+
+## Definition
+
+```tsx
+function useCounter(initialValue?: number, options?: { min?:number, max?:number }): [
+  count:number, {
+    inc: (delta?: number) => void,
+    dec: (delta?: number) => void,
+    set: (value: number) => void,
+    reset: () => void
+}];
+```

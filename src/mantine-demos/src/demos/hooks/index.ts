@@ -1,5 +1,6 @@
 export * from './use-clipboard';
 export * from './use-color-scheme';
+export * from './use-counter';
 export * from './use-debounced-value';
 export * from './use-document-title';
 export * from './use-element-size';
