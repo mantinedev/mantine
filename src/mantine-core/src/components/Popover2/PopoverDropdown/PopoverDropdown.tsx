@@ -1,5 +1,10 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineShadow } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineNumberSize,
+  MantineShadow,
+  useContextStylesApi,
+} from '@mantine/styles';
 import { getArrowPositionStyles } from '@mantine/utils';
 import { usePopoverContext } from '../Popover.context';
 import { Box } from '../../Box';
@@ -25,8 +30,12 @@ export function PopoverDropdown({
   shadow,
   ...others
 }: PopoverDropdownProps) {
+  const { classNames, styles, unstyled } = useContextStylesApi();
   const ctx = usePopoverContext();
-  const { classes, cx, theme } = useStyles();
+  const { classes, cx, theme } = useStyles(
+    { radius, shadow },
+    { name: 'Popover', classNames, styles, unstyled }
+  );
 
   return (
     <Transition mounted={ctx.opened} transition={ctx.transition} duration={ctx.transitionDuration}>

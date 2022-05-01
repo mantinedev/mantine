@@ -1,11 +1,16 @@
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { getFloatingPosition } from '@mantine/utils';
-import { useMantineTheme } from '@mantine/styles';
+import { useMantineTheme, ClassNames, Styles, StylesApiProvider } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
-import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
+import {
+  PopoverWidth,
+  PopoverMiddlewares,
+  PopoverStylesNames,
+  PopoverStylesParams,
+} from './Popover.types';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
@@ -48,6 +53,10 @@ interface PopoverProps {
 
   /** Arrow offset in px */
   arrowOffset?: number;
+
+  unstyled?: boolean;
+  classNames?: ClassNames<PopoverStylesNames>;
+  styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
 }
 
 export function Popover({
@@ -64,6 +73,9 @@ export function Popover({
   withArrow,
   arrowSize = 7,
   arrowOffset = 5,
+  unstyled,
+  classNames,
+  styles,
 }: PopoverProps) {
   const theme = useMantineTheme();
   const { x, y, reference, floating, placement } = usePopover({
@@ -77,24 +89,26 @@ export function Popover({
   });
 
   return (
-    <PopoverContextProvider
-      value={{
-        reference,
-        floating,
-        x,
-        y,
-        opened,
-        transition,
-        transitionDuration,
-        width,
-        withArrow,
-        arrowSize,
-        arrowOffset,
-        placement,
-      }}
-    >
-      {children}
-    </PopoverContextProvider>
+    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+      <PopoverContextProvider
+        value={{
+          reference,
+          floating,
+          x,
+          y,
+          opened,
+          transition,
+          transitionDuration,
+          width,
+          withArrow,
+          arrowSize,
+          arrowOffset,
+          placement,
+        }}
+      >
+        {children}
+      </PopoverContextProvider>
+    </StylesApiProvider>
   );
 }
 
