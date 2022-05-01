@@ -87,6 +87,9 @@ interface PopoverProps {
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
 
+  /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
+  closeOnEscape?: boolean;
+
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -111,6 +114,7 @@ export function Popover({
   styles,
   closeOnClickOutside = true,
   withinPortal = false,
+  closeOnEscape = true,
   clickOutsideEvents = ['mousedown', 'touchstart'],
   trapFocus,
   onClose,
@@ -155,6 +159,8 @@ export function Popover({
           zIndex,
           radius,
           shadow,
+          closeOnEscape,
+          onClose,
         }}
       >
         {children}

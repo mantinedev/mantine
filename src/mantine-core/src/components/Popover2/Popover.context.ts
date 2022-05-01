@@ -20,9 +20,11 @@ interface PopoverContext {
   trapFocus: boolean;
   placement: Placement;
   withinPortal: boolean;
+  closeOnEscape: boolean;
   zIndex: React.CSSProperties['zIndex'];
   radius?: MantineNumberSize;
   shadow?: MantineShadow;
+  onClose?(): void;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
