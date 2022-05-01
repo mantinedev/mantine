@@ -107,19 +107,19 @@ describe('@mantine/core/component', () => {
   });
 
   it('correctly handles trapFocus={true}', async () => {
-    render(<TestContainer defaultOpened trapFocus />);
+    const { container } = render(<TestContainer defaultOpened trapFocus />);
     await wait(10);
-    expect(screen.getAllByRole('textbox')[1]).toHaveFocus();
+    expect(container.querySelectorAll('input')[1]).toHaveFocus();
 
     userEvent.tab();
-    expect(screen.getAllByRole('textbox')[2]).toHaveFocus();
+    expect(container.querySelectorAll('input')[2]).toHaveFocus();
 
     userEvent.tab();
-    expect(screen.getAllByRole('textbox')[0]).toHaveFocus();
+    expect(container.querySelectorAll('input')[0]).toHaveFocus();
   });
 
   it('correctly handles trapFocus={false}', async () => {
-    render(<TestContainer defaultOpened trapFocus={false} />);
+    const { container } = render(<TestContainer defaultOpened trapFocus={false} />);
     await wait(10);
     expect(document.body).toHaveFocus();
 
@@ -127,13 +127,13 @@ describe('@mantine/core/component', () => {
     expect(screen.getByRole('button')).toHaveFocus();
 
     userEvent.tab();
-    expect(screen.getAllByRole('textbox')[0]).toHaveFocus();
+    expect(container.querySelectorAll('input')[0]).toHaveFocus();
 
     userEvent.tab();
-    expect(screen.getAllByRole('textbox')[1]).toHaveFocus();
+    expect(container.querySelectorAll('input')[1]).toHaveFocus();
 
     userEvent.tab();
-    expect(screen.getAllByRole('textbox')[2]).toHaveFocus();
+    expect(container.querySelectorAll('input')[2]).toHaveFocus();
 
     userEvent.tab();
     expect(document.body).toHaveFocus();
