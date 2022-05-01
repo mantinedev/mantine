@@ -38,6 +38,10 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
         {(transitionStyles) => (
           <FocusTrap active={ctx.trapFocus}>
             <Box
+              tabIndex={-1}
+              role="dialog"
+              id={ctx.getDropdownId()}
+              aria-labelledby={ctx.getTargetId()}
               ref={ctx.floating}
               style={{
                 ...style,

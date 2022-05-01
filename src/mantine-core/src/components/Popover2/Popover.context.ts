@@ -25,6 +25,8 @@ interface PopoverContext {
   radius?: MantineNumberSize;
   shadow?: MantineShadow;
   onClose?(): void;
+  getDropdownId(): string;
+  getTargetId(): string;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

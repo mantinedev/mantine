@@ -1,6 +1,6 @@
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { getFloatingPosition } from '@mantine/utils';
+import { getFloatingPosition, useId } from '@mantine/utils';
 import {
   useMantineTheme,
   ClassNames,
@@ -90,6 +90,9 @@ export interface PopoverProps {
   /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
   closeOnEscape?: boolean;
 
+  /** id base to create accessibility connections */
+  id?: string;
+
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -121,7 +124,9 @@ export function Popover({
   zIndex = getDefaultZIndex('popover'),
   radius,
   shadow,
+  id,
 }: PopoverProps) {
+  const uid = useId(id);
   const theme = useMantineTheme();
   const { x, y, reference, floating, placement, refs } = usePopover({
     middlewares,
@@ -161,6 +166,8 @@ export function Popover({
           shadow,
           closeOnEscape,
           onClose,
+          getTargetId: () => `${uid}-target`,
+          getDropdownId: () => `${uid}-dropdown`,
         }}
       >
         {children}

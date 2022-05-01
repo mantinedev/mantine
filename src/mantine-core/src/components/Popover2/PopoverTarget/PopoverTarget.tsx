@@ -21,7 +21,13 @@ export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps)
   const target = children as React.ReactElement;
   const targetRef = useMergedRef(ctx.reference, (target as any).ref);
 
-  return cloneElement(target, { [refProp]: targetRef });
+  return cloneElement(target, {
+    [refProp]: targetRef,
+    'aria-haspopup': 'dialog',
+    'aria-expanded': ctx.opened,
+    'aria-controls': ctx.getDropdownId(),
+    id: ctx.getTargetId(),
+  });
 }
 
 PopoverTarget.displayName = '@mantine/core/PopoverTarget';
