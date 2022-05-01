@@ -6,16 +6,13 @@ import { Button } from '../Button';
 export default { title: 'Popover2' };
 
 export function Usage() {
-  const [opened, { toggle }] = useDisclosure(true);
+  const [opened, { toggle, close }] = useDisclosure(true);
 
   return (
-    <div
-      style={{
-        padding: 40,
-      }}
-    >
+    <div style={{ padding: 40 }}>
       <Popover
         opened={opened}
+        onClose={close}
         middlewares={{ shift: false, flip: false }}
         position="bottom"
         withArrow

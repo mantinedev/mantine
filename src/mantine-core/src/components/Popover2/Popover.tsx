@@ -2,6 +2,7 @@ import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { getFloatingPosition } from '@mantine/utils';
 import { useMantineTheme, ClassNames, Styles, StylesApiProvider } from '@mantine/styles';
+import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
@@ -33,6 +34,9 @@ interface PopoverProps {
   /** Controls dropdown opened state */
   opened: boolean;
 
+  /** Called when dropdown closes */
+  onClose?(): void;
+
   /** One of premade transitions ot transition object */
   transition?: MantineTransition;
 
@@ -53,6 +57,12 @@ interface PopoverProps {
 
   /** Arrow offset in px */
   arrowOffset?: number;
+
+  /** Determines whether dropdown should be closed on outside clicks, default to true */
+  closeOnClickOutside?: boolean;
+
+  /** Events that trigger outside clicks */
+  clickOutsideEvents?: string[];
 
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
@@ -76,9 +86,12 @@ export function Popover({
   unstyled,
   classNames,
   styles,
+  closeOnClickOutside = true,
+  clickOutsideEvents = ['mousedown', 'touchstart'],
+  onClose,
 }: PopoverProps) {
   const theme = useMantineTheme();
-  const { x, y, reference, floating, placement } = usePopover({
+  const { x, y, reference, floating, placement, refs } = usePopover({
     middlewares,
     width,
     position: getFloatingPosition(theme.dir, position),
@@ -87,6 +100,11 @@ export function Popover({
     positionDependencies,
     opened,
   });
+
+  useClickOutside(() => closeOnClickOutside && onClose?.(), clickOutsideEvents, [
+    refs.floating.current,
+    refs.reference.current as any,
+  ]);
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
