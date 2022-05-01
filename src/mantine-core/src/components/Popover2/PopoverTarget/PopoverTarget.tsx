@@ -27,6 +27,7 @@ export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps)
     'aria-expanded': ctx.opened,
     'aria-controls': ctx.getDropdownId(),
     id: ctx.getTargetId(),
+    ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });
 }
 

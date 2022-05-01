@@ -39,11 +39,20 @@ export interface PopoverProps {
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
 
+  /** Initial opened state for uncontrolled component */
+  defaultOpened?: boolean;
+
   /** Controls dropdown opened state */
-  opened: boolean;
+  opened?: boolean;
+
+  /** Called with current state when dropdown opens or closes */
+  onChange?(opened: boolean): void;
 
   /** Called when dropdown closes */
   onClose?(): void;
+
+  /** Called when dropdown opens */
+  onOpen?(): void;
 
   /** One of premade transitions ot transition object */
   transition?: MantineTransition;
@@ -121,14 +130,17 @@ export function Popover({
   clickOutsideEvents = ['mousedown', 'touchstart'],
   trapFocus,
   onClose,
+  onOpen,
+  onChange,
   zIndex = getDefaultZIndex('popover'),
   radius,
   shadow,
   id,
+  defaultOpened,
 }: PopoverProps) {
   const uid = useId(id);
   const theme = useMantineTheme();
-  const { x, y, reference, floating, placement, refs } = usePopover({
+  const popover = usePopover({
     middlewares,
     width,
     position: getFloatingPosition(theme.dir, position),
@@ -136,36 +148,42 @@ export function Popover({
     onPositionChange,
     positionDependencies,
     opened,
+    defaultOpened,
+    onChange,
+    onOpen,
+    onClose,
   });
 
-  useClickOutside(() => closeOnClickOutside && onClose?.(), clickOutsideEvents, [
-    refs.floating.current,
-    refs.reference.current as any,
+  useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
+    popover.refs.floating.current,
+    popover.refs.reference.current as any,
   ]);
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
       <PopoverContextProvider
         value={{
-          reference,
-          floating,
-          x,
-          y,
-          opened,
+          controlled: popover.controlled,
+          reference: popover.reference,
+          floating: popover.floating,
+          x: popover.x,
+          y: popover.y,
+          opened: popover.opened,
           transition,
           transitionDuration,
           width,
           withArrow,
           arrowSize,
           arrowOffset,
-          placement,
+          placement: popover.placement,
           trapFocus,
           withinPortal,
           zIndex,
           radius,
           shadow,
           closeOnEscape,
-          onClose,
+          onClose: popover.onClose,
+          onToggle: popover.onToggle,
           getTargetId: () => `${uid}-target`,
           getDropdownId: () => `${uid}-dropdown`,
         }}

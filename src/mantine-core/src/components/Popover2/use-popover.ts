@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/utils';
 import {
   Placement,
   useFloating,
@@ -11,6 +12,7 @@ import {
   Middleware,
 } from '@floating-ui/react-dom-interactions';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
+import { POPOVER_ERRORS } from './Popover.errors';
 
 interface UsePopoverOptions {
   offset: number;
@@ -18,6 +20,10 @@ interface UsePopoverOptions {
   positionDependencies: any[];
   onPositionChange?(position: Placement): void;
   opened: boolean;
+  defaultOpened: boolean;
+  onChange(opened: boolean): void;
+  onClose?(): void;
+  onOpen?(): void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares;
 }
@@ -38,6 +44,28 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
 
 export function usePopover(options: UsePopoverOptions) {
   const [delayedUpdate, setDelayedUpdate] = useState(0);
+  const [_opened, setOpened] = useUncontrolled({
+    value: options.opened,
+    defaultValue: options.defaultOpened,
+    finalValue: false,
+    errorMessage: POPOVER_ERRORS.onChange,
+  });
+
+  const onClose = () => {
+    options.onClose?.();
+    setOpened(false);
+  };
+
+  const onToggle = () => {
+    if (_opened) {
+      options.onClose?.();
+      setOpened(false);
+    } else {
+      options.onOpen?.();
+      setOpened(true);
+    }
+  };
+
   const floating = useFloating({
     placement: options.position,
     middleware: [
@@ -80,5 +108,11 @@ export function usePopover(options: UsePopoverOptions) {
     setDelayedUpdate((c) => c + 1);
   }, [options.opened]);
 
-  return floating;
+  return {
+    ...floating,
+    controlled: typeof options.opened === 'boolean',
+    opened: _opened,
+    onClose,
+    onToggle,
+  };
 }

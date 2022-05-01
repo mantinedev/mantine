@@ -27,6 +27,8 @@ interface PopoverContext {
   onClose?(): void;
   getDropdownId(): string;
   getTargetId(): string;
+  controlled: boolean;
+  onToggle(): void;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

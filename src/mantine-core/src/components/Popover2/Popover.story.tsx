@@ -5,6 +5,20 @@ import { Button } from '../Button';
 
 export default { title: 'Popover2' };
 
+export function Uncontrolled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function Usage() {
   const [opened, { toggle, close }] = useDisclosure(false);
 
