@@ -8,3 +8,5 @@ export { getSafeId } from './get-safe-id/get-safe-id';
 export { clamp } from './clamp/clamp';
 export { isElement } from './is-element/is-element';
 export { getArrowPositionStyles, getFloatingPosition } from './floating';
+export { closeOnEscape } from './close-on-escape/close-on-escape';
+export { noop } from './noop/noop';
