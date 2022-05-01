@@ -1,6 +1,7 @@
 import React from 'react';
 import { DefaultProps, useContextStylesApi } from '@mantine/styles';
 import { getArrowPositionStyles, closeOnEscape } from '@mantine/utils';
+import { useFocusReturn } from '@mantine/hooks';
 import { Box } from '../../Box';
 import { Transition } from '../../Transition';
 import { FocusTrap } from '../../FocusTrap';
@@ -20,6 +21,12 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
     { radius: ctx.radius, shadow: ctx.shadow },
     { name: 'Popover', classNames, styles, unstyled }
   );
+
+  const returnFocus = useFocusReturn({
+    opened: ctx.opened,
+    transitionDuration: 0,
+    shouldReturnFocus: false,
+  });
 
   return (
     <OptionalPortal withinPortal={ctx.withinPortal}>
@@ -41,7 +48,10 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
                 width: ctx.width === 'target' ? undefined : ctx.width,
               }}
               className={cx(classes.root, className)}
-              onKeyDownCapture={closeOnEscape(ctx.onClose, { active: ctx.closeOnEscape })}
+              onKeyDownCapture={closeOnEscape(ctx.onClose, {
+                active: ctx.closeOnEscape,
+                onTrigger: returnFocus,
+              })}
               {...others}
             >
               {children}

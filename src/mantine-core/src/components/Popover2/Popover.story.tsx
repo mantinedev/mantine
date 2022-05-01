@@ -6,7 +6,7 @@ import { Button } from '../Button';
 export default { title: 'Popover2' };
 
 export function Usage() {
-  const [opened, { toggle, close }] = useDisclosure(true);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   return (
     <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

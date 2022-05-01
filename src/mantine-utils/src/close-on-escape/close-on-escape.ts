@@ -3,6 +3,7 @@ import { noop } from '../noop/noop';
 
 interface Options {
   active: boolean;
+  onTrigger?(): void;
 }
 
 export function closeOnEscape(callback?: () => void, options: Options = { active: true }) {
@@ -10,5 +11,10 @@ export function closeOnEscape(callback?: () => void, options: Options = { active
     return noop;
   }
 
-  return (event: React.KeyboardEvent<any>) => event.key === 'Escape' && callback();
+  return (event: React.KeyboardEvent<any>) => {
+    if (event.key === 'Escape') {
+      callback();
+      options.onTrigger?.();
+    }
+  };
 }

@@ -1,4 +1,5 @@
 import { closeOnEscape } from './close-on-escape';
+import { noop } from '../noop/noop';
 
 const mockEvent: any = { key: 'Escape', code: 'Escape' };
 
@@ -24,5 +25,14 @@ describe('@mantine/core/close-on-escape', () => {
   it('does not throw if callback is not a function', () => {
     expect(() => closeOnEscape(undefined, { active: false })(mockEvent)).not.toThrow();
     expect(() => closeOnEscape(null, { active: false })(mockEvent)).not.toThrow();
+  });
+
+  it('calls given trigger when callback triggers', () => {
+    const spy = jest.fn();
+    closeOnEscape(noop, { active: true, onTrigger: spy })(mockEvent);
+    expect(spy).toHaveBeenCalledTimes(1);
+
+    closeOnEscape(noop, { active: false, onTrigger: spy })(mockEvent);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
