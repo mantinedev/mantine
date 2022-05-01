@@ -54,7 +54,7 @@ export interface TooltipProps extends TooltipBaseProps {
 const defaultProps: Partial<TooltipProps> = {
   position: 'top',
   refProp: 'ref',
-  withinPortal: true,
+  withinPortal: false,
   arrowSize: 4,
   arrowOffset: 5,
   offset: 5,

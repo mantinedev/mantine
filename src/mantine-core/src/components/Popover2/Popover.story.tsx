@@ -18,12 +18,13 @@ export function Usage() {
         withArrow
         trapFocus
         width={300}
+        radius="md"
       >
         <Popover.Target>
           <Button onClick={toggle}>Toggle popover</Button>
         </Popover.Target>
 
-        <Popover.Dropdown radius="md">
+        <Popover.Dropdown>
           <input />
           <input data-autofocus />
           <input />

@@ -1,7 +1,15 @@
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
 import { getFloatingPosition } from '@mantine/utils';
-import { useMantineTheme, ClassNames, Styles, StylesApiProvider } from '@mantine/styles';
+import {
+  useMantineTheme,
+  ClassNames,
+  Styles,
+  StylesApiProvider,
+  MantineNumberSize,
+  MantineShadow,
+  getDefaultZIndex,
+} from '@mantine/styles';
 import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
 import { usePopover } from './use-popover';
@@ -67,6 +75,18 @@ interface PopoverProps {
   /** Determines whether focus should be trapped within dropdown, default to false */
   trapFocus?: boolean;
 
+  /** Determines whether dropdown should be rendered within Portal, defaults to false */
+  withinPortal?: boolean;
+
+  /** Dropdown z-index */
+  zIndex?: React.CSSProperties['zIndex'];
+
+  /** Radius from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Key of theme.shadow or any other valid css box-shadow value */
+  shadow?: MantineShadow;
+
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -90,9 +110,13 @@ export function Popover({
   classNames,
   styles,
   closeOnClickOutside = true,
+  withinPortal = false,
   clickOutsideEvents = ['mousedown', 'touchstart'],
   trapFocus,
   onClose,
+  zIndex = getDefaultZIndex('popover'),
+  radius,
+  shadow,
 }: PopoverProps) {
   const theme = useMantineTheme();
   const { x, y, reference, floating, placement, refs } = usePopover({
@@ -127,6 +151,10 @@ export function Popover({
           arrowOffset,
           placement,
           trapFocus,
+          withinPortal,
+          zIndex,
+          radius,
+          shadow,
         }}
       >
         {children}

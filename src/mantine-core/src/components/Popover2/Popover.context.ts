@@ -1,5 +1,6 @@
 import { Placement, ReferenceType } from '@floating-ui/react-dom-interactions';
 import { createSafeContext } from '@mantine/utils';
+import { MantineNumberSize, MantineShadow } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
 import { POPOVER_ERRORS } from './Popover.errors';
 import { PopoverWidth } from './Popover.types';
@@ -18,6 +19,10 @@ interface PopoverContext {
   arrowOffset: number;
   trapFocus: boolean;
   placement: Placement;
+  withinPortal: boolean;
+  zIndex: React.CSSProperties['zIndex'];
+  radius?: MantineNumberSize;
+  shadow?: MantineShadow;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
