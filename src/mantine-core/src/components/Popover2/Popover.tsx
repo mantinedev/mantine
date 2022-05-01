@@ -23,7 +23,7 @@ import {
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
-interface PopoverProps {
+export interface PopoverProps {
   /** Popover.Target and Popover.Dropdown components */
   children: React.ReactNode;
 

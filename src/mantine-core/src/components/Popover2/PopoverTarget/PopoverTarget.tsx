@@ -4,7 +4,7 @@ import { isElement } from '@mantine/utils';
 import { usePopoverContext } from '../Popover.context';
 import { POPOVER_ERRORS } from '../Popover.errors';
 
-interface PopoverTargetProps {
+export interface PopoverTargetProps {
   /** Target element */
   children: React.ReactNode;
 

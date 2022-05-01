@@ -35,11 +35,11 @@ export function Usage() {
 }
 
 export function SameWidth() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   return (
     <div style={{ padding: 40 }}>
-      <Popover opened={opened} width="target">
+      <Popover opened={opened} width="target" onClose={close}>
         <Popover.Target>
           <Button onClick={toggle} fullWidth>
             Toggle popover
