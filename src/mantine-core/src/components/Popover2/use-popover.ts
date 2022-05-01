@@ -48,6 +48,7 @@ export function usePopover(options: UsePopoverOptions) {
     value: options.opened,
     defaultValue: options.defaultOpened,
     finalValue: false,
+    onChange: options.onChange,
     errorMessage: POPOVER_ERRORS.onChange,
   });
 

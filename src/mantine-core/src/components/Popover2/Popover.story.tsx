@@ -1,5 +1,4 @@
-import React from 'react';
-import { useDisclosure } from '@mantine/hooks';
+import React, { useState } from 'react';
 import { Popover } from './Popover';
 import { Button } from '../Button';
 
@@ -20,13 +19,13 @@ export function Uncontrolled() {
 }
 
 export function Usage() {
-  const [opened, { toggle, close }] = useDisclosure(false);
+  const [opened, setState] = useState(false);
 
   return (
     <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Popover
         opened={opened}
-        onClose={close}
+        onChange={setState}
         middlewares={{ shift: false, flip: false }}
         position="right"
         withArrow
@@ -35,7 +34,7 @@ export function Usage() {
         radius="md"
       >
         <Popover.Target>
-          <Button onClick={toggle}>Toggle popover</Button>
+          <Button onClick={() => setState((c) => !c)}>Toggle popover</Button>
         </Popover.Target>
 
         <Popover.Dropdown>
@@ -49,13 +48,13 @@ export function Usage() {
 }
 
 export function SameWidth() {
-  const [opened, { toggle, close }] = useDisclosure(false);
+  const [opened, setState] = useState(false);
 
   return (
     <div style={{ padding: 40 }}>
-      <Popover opened={opened} width="target" onClose={close}>
+      <Popover opened={opened} width="target" onChange={setState}>
         <Popover.Target>
-          <Button onClick={toggle} fullWidth>
+          <Button onClick={() => setState((c) => !c)} fullWidth>
             Toggle popover
           </Button>
         </Popover.Target>
