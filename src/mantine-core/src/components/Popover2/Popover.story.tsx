@@ -9,19 +9,25 @@ export function Usage() {
   const [opened, { toggle, close }] = useDisclosure(true);
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Popover
         opened={opened}
         onClose={close}
         middlewares={{ shift: false, flip: false }}
-        position="bottom"
+        position="right"
         withArrow
+        trapFocus
+        width={300}
       >
         <Popover.Target>
           <Button onClick={toggle}>Toggle popover</Button>
         </Popover.Target>
 
-        <Popover.Dropdown radius="md">Dropdown</Popover.Dropdown>
+        <Popover.Dropdown radius="md">
+          <input />
+          <input data-autofocus />
+          <input />
+        </Popover.Dropdown>
       </Popover>
     </div>
   );

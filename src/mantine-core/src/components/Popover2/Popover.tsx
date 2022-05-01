@@ -64,6 +64,9 @@ interface PopoverProps {
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
+  /** Determines whether focus should be trapped within dropdown, default to false */
+  trapFocus?: boolean;
+
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -88,6 +91,7 @@ export function Popover({
   styles,
   closeOnClickOutside = true,
   clickOutsideEvents = ['mousedown', 'touchstart'],
+  trapFocus,
   onClose,
 }: PopoverProps) {
   const theme = useMantineTheme();
@@ -122,6 +126,7 @@ export function Popover({
           arrowSize,
           arrowOffset,
           placement,
+          trapFocus,
         }}
       >
         {children}

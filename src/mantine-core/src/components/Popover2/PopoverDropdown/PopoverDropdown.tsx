@@ -6,9 +6,10 @@ import {
   useContextStylesApi,
 } from '@mantine/styles';
 import { getArrowPositionStyles } from '@mantine/utils';
-import { usePopoverContext } from '../Popover.context';
 import { Box } from '../../Box';
 import { Transition } from '../../Transition';
+import { FocusTrap } from '../../FocusTrap';
+import { usePopoverContext } from '../Popover.context';
 import useStyles from './PopoverDropdown.styles';
 
 export interface PopoverDropdownProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -20,6 +21,9 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
+
+  /** Dropdown content */
+  children?: React.ReactNode;
 }
 
 export function PopoverDropdown({
@@ -28,6 +32,7 @@ export function PopoverDropdown({
   className,
   radius,
   shadow,
+  children,
   ...others
 }: PopoverDropdownProps) {
   const { classNames, styles, unstyled } = useContextStylesApi();
@@ -40,26 +45,35 @@ export function PopoverDropdown({
   return (
     <Transition mounted={ctx.opened} transition={ctx.transition} duration={ctx.transitionDuration}>
       {(transitionStyles) => (
-        <Box
-          ref={ctx.floating}
-          style={{ ...style, ...transitionStyles, top: ctx.y ?? '', left: ctx.x ?? '' }}
-          className={cx(classes.root, className)}
-          {...others}
-        >
-          Dropdown
-          {ctx.withArrow && (
-            <div
-              className={classes.arrow}
-              style={getArrowPositionStyles({
-                withBorder: true,
-                position: ctx.placement,
-                arrowSize: ctx.arrowSize,
-                arrowOffset: ctx.arrowOffset,
-                dir: theme.dir,
-              })}
-            />
-          )}
-        </Box>
+        <FocusTrap active={ctx.trapFocus}>
+          <Box
+            ref={ctx.floating}
+            style={{
+              ...style,
+              ...transitionStyles,
+              top: ctx.y ?? '',
+              left: ctx.x ?? '',
+              width: ctx.width === 'target' ? undefined : ctx.width,
+            }}
+            className={cx(classes.root, className)}
+            {...others}
+          >
+            {children}
+
+            {ctx.withArrow && (
+              <div
+                className={classes.arrow}
+                style={getArrowPositionStyles({
+                  withBorder: true,
+                  position: ctx.placement,
+                  arrowSize: ctx.arrowSize,
+                  arrowOffset: ctx.arrowOffset,
+                  dir: theme.dir,
+                })}
+              />
+            )}
+          </Box>
+        </FocusTrap>
       )}
     </Transition>
   );

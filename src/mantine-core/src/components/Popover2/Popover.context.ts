@@ -16,6 +16,7 @@ interface PopoverContext {
   withArrow: boolean;
   arrowSize: number;
   arrowOffset: number;
+  trapFocus: boolean;
   placement: Placement;
 }
 

@@ -80,7 +80,7 @@ export function getArrowPositionStyles({
       ...horizontalSide(placement, arrowSize, arrowOffset),
       [dir === 'ltr' ? 'left' : 'right']: arrowPosition,
       [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
-      borderBottom: 0,
+      borderTop: 0,
     };
   }
 
