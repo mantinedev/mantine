@@ -3,20 +3,20 @@ import {
   DefaultProps,
   MantineSize,
   MantineGradient,
-  MantineColor,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
+import { MantineTextColor } from './Text.types';
 import useStyles from './Text.styles';
 
 export interface SharedTextProps extends DefaultProps {
   /** Predefined font-size from theme.fontSizes */
   size?: MantineSize;
 
-  /** Text color from theme */
-  color?: MantineColor;
+  /** Text color from theme or dimmed variant */
+  color?: MantineTextColor;
 
   /** Sets font-weight css property */
   weight?: React.CSSProperties['fontWeight'];

@@ -1,7 +1,8 @@
-import { createStyles, MantineTheme, MantineSize, MantineColor, CSSObject } from '@mantine/styles';
+import { createStyles, MantineTheme, MantineSize, CSSObject } from '@mantine/styles';
+import { MantineTextColor } from './Text.types';
 
 export interface TextStylesParams {
-  color: MantineColor;
+  color: MantineTextColor;
   variant: 'text' | 'link' | 'gradient';
   size: MantineSize;
   lineClamp: number;
@@ -18,7 +19,7 @@ export interface TextStylesParams {
 
 interface GetTextColor {
   theme: MantineTheme;
-  color: MantineColor;
+  color: MantineTextColor;
   variant: TextStylesParams['variant'];
 }
 
