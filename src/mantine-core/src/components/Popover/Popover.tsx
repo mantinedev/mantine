@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { getFloatingPosition, useId } from '@mantine/utils';
+import { getFloatingPosition, useId, noop } from '@mantine/utils';
 import {
   useMantineTheme,
   ClassNames,
@@ -125,6 +125,7 @@ const defaultProps: Partial<PopoverProps> = {
   trapFocus: false,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
+  onChange: noop,
 };
 
 export function Popover(props: PopoverProps) {
