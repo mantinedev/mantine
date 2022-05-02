@@ -1,52 +1,66 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { Modal } from '../Modal';
+import { Popover } from './Popover';
 import { Button } from '../Button';
-import { Group } from '../Group';
-import { TextInput } from '../TextInput/TextInput';
-import { Popover, PopoverProps } from './Popover';
 
-function Wrapper(props: Partial<PopoverProps>) {
-  const [opened, setOpened] = useState(props.opened);
+export default { title: 'Popover' };
 
+export function Uncontrolled() {
   return (
-    <Popover
-      {...props}
-      title="Hello!"
-      opened={opened}
-      onClose={() => setOpened(false)}
-      target={<Button onClick={() => setOpened(true)}>Popover</Button>}
-      withArrow
-      withCloseButton
-    >
-      <TextInput label="Text input" placeholder="text input" style={{ minWidth: 300 }} />
-      <Group position="center" style={{ marginTop: 15 }}>
-        <Button variant="outline" color="gray">
-          Cancel
-        </Button>
-        <Button>Submit</Button>
-      </Group>
-    </Popover>
-  );
-}
+    <div style={{ padding: 40 }}>
+      <Popover>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
 
-function WithinModal() {
-  const [opened, setOpened] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpened(true)}>Open modal</Button>
-      <Modal opened={opened} onClose={() => setOpened(false)}>
-        <Wrapper />
-      </Modal>
-    </>
-  );
-}
-
-storiesOf('Popover', module)
-  .add('Focus behavior', () => (
-    <div style={{ padding: 100 }}>
-      <Wrapper />
-      <TextInput placeholder="Focus me when popover is opened" />
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
     </div>
-  ))
-  .add('Within modal', () => <WithinModal />);
+  );
+}
+
+export function Usage() {
+  const [opened, setState] = useState(false);
+
+  return (
+    <div style={{ padding: 100, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Popover
+        opened={opened}
+        onChange={setState}
+        middlewares={{ shift: false, flip: false }}
+        position="right"
+        withArrow
+        trapFocus
+        width={300}
+        radius="md"
+      >
+        <Popover.Target>
+          <Button onClick={() => setState((c) => !c)}>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>
+          <input />
+          <input data-autofocus />
+          <input />
+        </Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function SameWidth() {
+  const [opened, setState] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover opened={opened} width="target" onChange={setState}>
+        <Popover.Target>
+          <Button onClick={() => setState((c) => !c)} fullWidth>
+            Toggle popover
+          </Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}

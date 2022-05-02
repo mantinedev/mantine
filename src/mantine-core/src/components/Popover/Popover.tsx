@@ -1,214 +1,220 @@
-import React, { useState } from 'react';
+/* eslint-disable react/no-unused-prop-types */
+
+import React from 'react';
+import { Placement } from '@floating-ui/react-dom-interactions';
+import { getFloatingPosition, useId } from '@mantine/utils';
 import {
-  useClickOutside,
-  useFocusTrap,
-  useMergedRef,
-  useFocusReturn,
-  useUuid,
-} from '@mantine/hooks';
-import {
-  DefaultProps,
+  useMantineTheme,
+  ClassNames,
+  Styles,
+  StylesApiProvider,
   MantineNumberSize,
   MantineShadow,
-  Selectors,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { Box } from '../Box';
-import { Popper, SharedPopperProps } from '../Popper';
-import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
-import useStyles from './Popover.styles';
+import { useClickOutside } from '@mantine/hooks';
+import { MantineTransition } from '../Transition';
+import { usePopover } from './use-popover';
+import { PopoverContextProvider } from './Popover.context';
+import {
+  PopoverWidth,
+  PopoverMiddlewares,
+  PopoverStylesNames,
+  PopoverStylesParams,
+} from './Popover.types';
+import { PopoverTarget } from './PopoverTarget/PopoverTarget';
+import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
-export type PopoverStylesNames = Selectors<typeof useStyles> | PopoverBodyStylesNames;
-
-export interface PopoverProps
-  extends DefaultProps<PopoverStylesNames>,
-    SharedPopperProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
-  /** Defines whether Popover can be closed with outside click, defaults to true */
-  closeOnClickOutside?: boolean;
-
-  /** Defines whether Popover should trap focus, defaults to true */
-  trapFocus?: boolean;
-
-  /** Defines whether Popover can be closed with Escape key, defaults to true */
-  closeOnEscape?: boolean;
-
-  /** Displays close button */
-  withCloseButton?: boolean;
-
-  /** True to disable popover */
-  disabled?: boolean;
-
-  /** True to display popover */
-  opened: boolean;
-
-  /** Called when popover closes */
-  onClose?(): void;
-
-  /** Element which is used to position popover */
-  target: React.ReactNode;
-
-  /** Content inside popover */
+export interface PopoverProps {
+  /** Popover.Target and Popover.Dropdown components */
   children: React.ReactNode;
 
-  /** Popover title */
-  title?: React.ReactNode;
+  /** Dropdown position relative to target */
+  position?: Placement;
 
-  /** Popover body padding, value from theme.spacing or number to set padding in px */
-  spacing?: MantineNumberSize;
+  /** Space between target element and dropdown in px */
+  offset?: number;
 
-  /** Popover body radius, value from theme.radius or number to set border-radius in px */
-  radius?: MantineNumberSize;
-
-  /** Popover shadow, value from theme.shadows or string to set box-shadow to any value */
-  shadow?: MantineShadow;
-
-  /** aria-label for close button */
-  closeButtonLabel?: string;
+  /** Called when dropdown position changes */
+  onPositionChange?(position: Placement): void;
 
   /** useEffect dependencies to force update tooltip position */
   positionDependencies?: any[];
 
-  /** Whether to render the popover in a Portal */
+  /** Initial opened state for uncontrolled component */
+  defaultOpened?: boolean;
+
+  /** Controls dropdown opened state */
+  opened?: boolean;
+
+  /** Called with current state when dropdown opens or closes */
+  onChange?(opened: boolean): void;
+
+  /** Called when dropdown closes */
+  onClose?(): void;
+
+  /** Called when dropdown opens */
+  onOpen?(): void;
+
+  /** One of premade transitions ot transition object */
+  transition?: MantineTransition;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
+
+  /** Dropdown width, or 'target' to make Popover width the same as target element */
+  width?: PopoverWidth;
+
+  /** Floating ui middlewares to configure position handling */
+  middlewares?: PopoverMiddlewares;
+
+  /** Determines whether component should have an arrow */
+  withArrow?: boolean;
+
+  /** Arrow size in px */
+  arrowSize?: number;
+
+  /** Arrow offset in px */
+  arrowOffset?: number;
+
+  /** Determines whether dropdown should be closed on outside clicks, default to true */
+  closeOnClickOutside?: boolean;
+
+  /** Events that trigger outside clicks */
+  clickOutsideEvents?: string[];
+
+  /** Determines whether focus should be trapped within dropdown, default to false */
+  trapFocus?: boolean;
+
+  /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
-  /** Popover body width */
-  width?: number | string;
+  /** Dropdown z-index */
+  zIndex?: React.CSSProperties['zIndex'];
 
-  /** Events that should trigger outside clicks */
-  clickOutsideEvents?: string[];
+  /** Radius from theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
+
+  /** Key of theme.shadow or any other valid css box-shadow value */
+  shadow?: MantineShadow;
+
+  /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
+  closeOnEscape?: boolean;
+
+  /** id base to create accessibility connections */
+  id?: string;
+
+  unstyled?: boolean;
+  classNames?: ClassNames<PopoverStylesNames>;
+  styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
 }
 
 const defaultProps: Partial<PopoverProps> = {
-  zIndex: getDefaultZIndex('popover'),
-  arrowSize: 4,
-  withArrow: false,
-  transition: 'fade',
-  transitionDuration: 200,
-  gutter: 10,
-  position: 'left',
-  placement: 'center',
-  disabled: false,
-  closeOnClickOutside: true,
-  trapFocus: true,
-  closeOnEscape: true,
-  withCloseButton: false,
-  radius: 'sm',
-  spacing: 'md',
-  shadow: 'sm',
+  position: 'bottom',
+  offset: 8,
   positionDependencies: [],
-  withinPortal: true,
+  transition: 'fade',
+  transitionDuration: 150,
+  middlewares: { flip: true, shift: true },
+  arrowSize: 7,
+  arrowOffset: 5,
+  closeOnClickOutside: true,
+  withinPortal: false,
+  closeOnEscape: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
+  zIndex: getDefaultZIndex('popover'),
 };
 
 export function Popover(props: PopoverProps) {
   const {
-    className,
     children,
-    target,
-    title,
-    onClose,
+    position,
+    offset,
+    onPositionChange,
+    positionDependencies,
     opened,
-    zIndex,
-    arrowSize,
-    withArrow,
     transition,
     transitionDuration,
-    transitionTimingFunction,
-    gutter,
-    position,
-    placement,
-    disabled,
-    closeOnClickOutside,
-    trapFocus,
-    closeOnEscape,
-    withCloseButton,
-    radius,
-    spacing,
-    shadow,
-    closeButtonLabel,
-    positionDependencies,
-    withinPortal,
-    id,
+    width,
+    middlewares,
+    withArrow,
+    arrowSize,
+    arrowOffset,
+    unstyled,
     classNames,
     styles,
-    width,
+    closeOnClickOutside,
+    withinPortal,
+    closeOnEscape,
     clickOutsideEvents,
-    ...others
+    trapFocus,
+    onClose,
+    onOpen,
+    onChange,
+    zIndex,
+    radius,
+    shadow,
+    id,
+    defaultOpened,
   } = useMantineDefaultProps('Popover', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { classNames, styles, name: 'Popover' });
-  const handleClose = () => typeof onClose === 'function' && onClose();
-  const [referenceElement, setReferenceElement] = useState(null);
-  const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
-  const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-  const focusTrapRef = useFocusTrap(trapFocus && opened);
-
-  useClickOutside(() => closeOnClickOutside && handleClose(), clickOutsideEvents, [
-    rootElement,
-    dropdownElement,
-  ]);
-
-  const returnFocus = useFocusReturn({
-    opened: opened || trapFocus,
-    transitionDuration: 0,
-    shouldReturnFocus: false,
+  const uid = useId(id);
+  const theme = useMantineTheme();
+  const popover = usePopover({
+    middlewares,
+    width,
+    position: getFloatingPosition(theme.dir, position),
+    offset: offset + (withArrow ? arrowSize / 2 : 0),
+    onPositionChange,
+    positionDependencies,
+    opened,
+    defaultOpened,
+    onChange,
+    onOpen,
+    onClose,
   });
 
-  const handleKeydown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (closeOnEscape && event.nativeEvent.code === 'Escape') {
-      handleClose();
-      window.setTimeout(returnFocus, 0);
-    }
-  };
-
-  const uuid = useUuid(id);
-  const titleId = `${uuid}-title`;
-  const bodyId = `${uuid}-body`;
+  useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
+    popover.refs.floating.current,
+    popover.refs.reference.current as any,
+  ]);
 
   return (
-    <Box className={cx(classes.root, className)} id={id} ref={setRootElement} {...others}>
-      <Popper
-        referenceElement={referenceElement}
-        transitionDuration={transitionDuration}
-        transition={transition}
-        mounted={opened && !disabled}
-        position={position}
-        placement={placement}
-        gutter={gutter}
-        withArrow={withArrow}
-        arrowSize={arrowSize}
-        zIndex={zIndex}
-        arrowClassName={classes.arrow}
-        forceUpdateDependencies={[radius, shadow, spacing, ...positionDependencies]}
-        withinPortal={withinPortal}
+    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+      <PopoverContextProvider
+        value={{
+          controlled: popover.controlled,
+          reference: popover.reference,
+          floating: popover.floating,
+          x: popover.x,
+          y: popover.y,
+          opened: popover.opened,
+          transition,
+          transitionDuration,
+          width,
+          withArrow,
+          arrowSize,
+          arrowOffset,
+          placement: popover.placement,
+          trapFocus,
+          withinPortal,
+          zIndex,
+          radius,
+          shadow,
+          closeOnEscape,
+          onClose: popover.onClose,
+          onToggle: popover.onToggle,
+          getTargetId: () => `${uid}-target`,
+          getDropdownId: () => `${uid}-dropdown`,
+        }}
       >
-        <PopoverBody
-          shadow={shadow}
-          radius={radius}
-          spacing={spacing}
-          withCloseButton={withCloseButton}
-          title={title}
-          titleId={titleId}
-          bodyId={bodyId}
-          closeButtonLabel={closeButtonLabel}
-          onClose={handleClose}
-          ref={useMergedRef(focusTrapRef, setDropdownElement)}
-          onKeyDownCapture={handleKeydown}
-          classNames={classNames}
-          styles={styles}
-          width={width}
-        >
-          {children}
-        </PopoverBody>
-      </Popper>
-
-      <div className={classes.target} ref={setReferenceElement}>
-        {target}
-      </div>
-    </Box>
+        {children}
+      </PopoverContextProvider>
+    </StylesApiProvider>
   );
 }
 
+Popover.Target = PopoverTarget;
+Popover.Dropdown = PopoverDropdown;
 Popover.displayName = '@mantine/core/Popover';
