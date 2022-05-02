@@ -27,7 +27,7 @@ export function Usage() {
         opened={opened}
         onChange={setState}
         middlewares={{ shift: false, flip: false }}
-        position="right"
+        position="bottom"
         withArrow
         trapFocus
         width={300}

@@ -14,6 +14,10 @@ export default createStyles((theme, { radius, shadow }: PopoverStylesParams) => 
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     boxShadow: theme.shadows[shadow] || shadow || 'none',
     borderRadius: theme.fn.radius(radius),
+
+    '&:focus': {
+      outline: 0,
+    },
   },
 
   arrow: {

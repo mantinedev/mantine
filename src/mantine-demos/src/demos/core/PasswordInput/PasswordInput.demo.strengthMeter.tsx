@@ -123,29 +123,26 @@ function Demo() {
 
   return (
     <div style={{ maxWidth: 340, margin: 'auto' }}>
-      <Popover
-        opened={popoverOpened}
-        position="bottom"
-        placement="start"
-        trapFocus={false}
-        transition="pop-top-left"
-        onFocusCapture={() => setPopoverOpened(true)}
-        onBlurCapture={() => setPopoverOpened(false)}
-        styles={{ popover: { width: '100%' } }}
-        target={
-          <PasswordInput
-            required
-            label="Your password"
-            placeholder="Your password"
-            description="Strong password should include letters in lower and uppercase, at least 1 number, at least 1 special symbol"
-            value={value}
-            onChange={(event) => setValue(event.currentTarget.value)}
-          />
-        }
-      >
-        <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
-        <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
-        {checks}
+      <Popover opened={popoverOpened} position="bottom" width="target" transition="pop">
+        <Popover.Target>
+          <div
+            onFocusCapture={() => setPopoverOpened(true)}
+            onBlurCapture={() => setPopoverOpened(false)}
+          >
+            <PasswordInput
+              required
+              label="Your password"
+              placeholder="Your password"
+              value={value}
+              onChange={(event) => setValue(event.currentTarget.value)}
+            />
+          </div>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
+          <PasswordRequirement label="Includes at least 6 characters" meets={value.length > 5} />
+          {checks}
+        </Popover.Dropdown>
       </Popover>
     </div>
   );

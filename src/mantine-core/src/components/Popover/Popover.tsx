@@ -122,6 +122,7 @@ const defaultProps: Partial<PopoverProps> = {
   closeOnClickOutside: true,
   withinPortal: false,
   closeOnEscape: true,
+  trapFocus: false,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
 };
