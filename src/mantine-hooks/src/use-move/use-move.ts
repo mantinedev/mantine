@@ -78,9 +78,11 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     const stopScrubbing = () => {
       if (isSliding.current && mounted.current) {
         isSliding.current = false;
-        typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
         setActive(false);
         unbindEvents();
+        setTimeout(() => {
+          typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
+        }, 0);
       }
     };
 
