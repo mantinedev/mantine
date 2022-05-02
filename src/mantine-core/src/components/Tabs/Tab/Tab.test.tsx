@@ -20,7 +20,7 @@ const defaultProps: TabProps = {
 const TestContainer = createContextContainer(Tab, TabsProvider);
 
 describe('@mantine/core/Tab', () => {
-  itThrowsContextError(Tab, defaultProps, TABS_ERRORS.context);
+  itThrowsContextError(Tab, defaultProps, TABS_ERRORS['tabs-context']);
   itRendersChildren(TestContainer, defaultProps);
   itSupportsFocusEvents(TestContainer, defaultProps, '[role="tab"]');
   itSupportsSystemProps({

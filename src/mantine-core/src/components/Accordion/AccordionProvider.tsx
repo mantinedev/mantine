@@ -80,7 +80,7 @@ export function AccordionProvider<Multiple extends boolean = false>({
     defaultValue,
     finalValue: multiple ? ([] as any) : null,
     onChange,
-    errorMessage: ACCORDION_ERRORS.onChange,
+    errorMessage: ACCORDION_ERRORS['accordion-on-change'],
   });
 
   const isItemActive = (itemValue: string) =>
@@ -103,8 +103,8 @@ export function AccordionProvider<Multiple extends boolean = false>({
       value={{
         isItemActive,
         onChange: handleItemChange,
-        getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS.value),
-        getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value),
+        getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS['accordion-value']),
+        getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS['accordion-value']),
         transitionDuration,
         disableChevronRotation,
         chevronPosition,

@@ -13,7 +13,7 @@ const defaultProps: PopoverDropdownProps = {};
 const TestContainer = createContextContainer(PopoverDropdown, Popover, { opened: true });
 
 describe('@mantine/core/PopoverDropdown', () => {
-  itThrowsContextError(PopoverDropdown, defaultProps, POPOVER_ERRORS.context);
+  itThrowsContextError(PopoverDropdown, defaultProps, POPOVER_ERRORS['popover-context']);
   itRendersChildren(TestContainer, defaultProps);
 
   itSupportsSystemProps({

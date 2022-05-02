@@ -68,7 +68,7 @@ export function TabsProvider({
     defaultValue,
     finalValue: null,
     onChange: onTabChange,
-    errorMessage: TABS_ERRORS.onChange,
+    errorMessage: TABS_ERRORS['tabs-on-change'],
   });
 
   return (
@@ -79,8 +79,8 @@ export function TabsProvider({
         id: uid,
         loop,
         activateTabWithKeyboard,
-        getTabId: getSafeId(`${uid}-tab`, TABS_ERRORS.value),
-        getPanelId: getSafeId(`${uid}-panel`, TABS_ERRORS.value),
+        getTabId: getSafeId(`${uid}-tab`, TABS_ERRORS['tabs-value']),
+        getPanelId: getSafeId(`${uid}-panel`, TABS_ERRORS['tabs-value']),
         onTabChange: onChange,
         allowTabDeactivation,
         variant,

@@ -14,7 +14,7 @@ export interface PopoverTargetProps {
 
 export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps) {
   if (!isElement(children)) {
-    throw new Error(POPOVER_ERRORS.children);
+    throw new Error(POPOVER_ERRORS['popover-children']);
   }
 
   const ctx = usePopoverContext();

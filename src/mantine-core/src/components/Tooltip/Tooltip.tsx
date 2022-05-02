@@ -116,7 +116,7 @@ export function Tooltip(props: TooltipProps) {
   });
 
   if (!isElement(children)) {
-    throw new Error(TOOLTIP_ERRORS.children);
+    throw new Error(TOOLTIP_ERRORS['tooltip-children']);
   }
 
   const target = children as React.ReactElement;

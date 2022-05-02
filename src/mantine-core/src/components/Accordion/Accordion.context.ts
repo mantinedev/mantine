@@ -24,5 +24,5 @@ interface AccordionContext {
 }
 
 export const [AccordionContextProvider, useAccordionContext] = createSafeContext<AccordionContext>(
-  ACCORDION_ERRORS.context
+  ACCORDION_ERRORS['accordion-context']
 );
