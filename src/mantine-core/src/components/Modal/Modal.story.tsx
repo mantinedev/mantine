@@ -11,24 +11,6 @@ import { Menu } from '../Menu/Menu';
 import { Modal } from './Modal';
 import { MultiSelect } from '../MultiSelect/MultiSelect';
 
-function PopoverWrapper() {
-  const [opened, setOpened] = useState(false);
-  return (
-    <Popover
-      opened={opened}
-      onClose={() => setOpened(false)}
-      target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
-      styles={{ body: { width: 260 } }}
-      position="bottom"
-      withArrow
-    >
-      <div style={{ display: 'flex' }}>
-        <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
-      </div>
-    </Popover>
-  );
-}
-
 function WrappedModal(
   props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
 ) {
@@ -63,7 +45,14 @@ storiesOf('Modal', module)
       <Select data={['react', 'ng']} placeholder="Select" />
       <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />
       <MultiSelect data={['react', 'ng']} mt="md" mb="md" placeholder="MultiSelect" />
-      <PopoverWrapper />
+      <Popover position="bottom" withArrow>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
+        </Popover.Dropdown>
+      </Popover>
       <ColorInput mt="md" mb="md" placeholder="Color input" />
       <Menu>
         <Menu.Item>Hello</Menu.Item>
