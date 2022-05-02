@@ -74,6 +74,45 @@ Add `data-autofocus` attribute to element that should receive initial focus:
 </Popover>
 ```
 
+## Popover.Target children
+
+`Popover.Target` requires an element or a component as a single child –
+strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
+Custom components must provide a prop to get root element ref,
+all Mantine components support ref out of the box.
+
+```tsx
+import { Popover, Badge } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Popover.Target>
+        <button>Native button – ok</button>
+      </Popover.Target>
+
+      <Popover.Target label="OK">
+        <Badge>Mantine component – ok</Badge>
+      </Popover.Target>
+
+      <Popover.Target label="Throws">Raw string, NOT OK – will throw error</Popover.Target>
+
+      {/* Number, NOT OK – will throw error */}
+      <Popover.Target label="Throws">{2}</Popover.Target>
+
+      <Popover.Target label="Throws">
+        <>Fragment, NOT OK, will throw error</>
+      </Popover.Target>
+
+      <Popover.Target label="Throws">
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </Popover.Target>
+    </>
+  );
+}
+```
+
 ## Accessibility
 
 Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.2/#dialog_modal):
