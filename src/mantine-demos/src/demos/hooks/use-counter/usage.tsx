@@ -12,9 +12,10 @@ function Demo() {
   return (
     <>
       <Group position="center">
-          {Object.keys(operations).map((operation) => (
-              <Button onClick={() => operations[operation]()}>operation</Button>
-          ))}
+        <Button onClick={handlers.increment}>Increment</Button>
+        <Button onClick={handlers.decrement}>Decrement</Button>
+        <Button onClick={handlers.reset}>Reset</Button>
+        <Button onClick={() => handlers.set(5)}>Set 5</Button>
       </Group>
       <Text>Count : {count}</Text>
     </>
@@ -37,7 +38,7 @@ function Demo() {
               else operations[operation]();
             }}
           >
-            {operation === 'set' ? `${operation}(5)` : operation}
+            {operation === 'set' ? `${operation} 5` : operation}
           </Button>
         ))}
       </Group>

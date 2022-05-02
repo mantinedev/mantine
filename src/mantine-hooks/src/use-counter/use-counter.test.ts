@@ -11,10 +11,10 @@ describe('@mantine/hooks/use-counter', () => {
     const hook = renderHook(() => useCounter());
     expect(hook.result.current[0]).toBe(0);
 
-    act(() => hook.result.current[1].inc(100));
+    act(() => hook.result.current[1].increment(100));
     expect(hook.result.current[0]).toBe(100);
 
-    act(() => hook.result.current[1].dec(20));
+    act(() => hook.result.current[1].decrement(20));
     expect(hook.result.current[0]).toBe(80);
 
     act(() => hook.result.current[1].set(5));
@@ -28,10 +28,10 @@ describe('@mantine/hooks/use-counter', () => {
     const hook = renderHook(() => useCounter(11, { min: -10, max: 10 }));
     expect(hook.result.current[0]).toBe(10);
 
-    act(() => hook.result.current[1].inc(100));
+    act(() => hook.result.current[1].increment(100));
     expect(hook.result.current[0]).toBe(10);
 
-    act(() => hook.result.current[1].dec(2));
+    act(() => hook.result.current[1].decrement(2));
     expect(hook.result.current[0]).toBe(8);
 
     act(() => hook.result.current[1].set(5));
@@ -48,10 +48,10 @@ describe('@mantine/hooks/use-counter', () => {
     const hook = renderHook(() => useCounter(7, { min: -10, max: 10 }));
     expect(hook.result.current[0]).toBe(7);
 
-    act(() => hook.result.current[1].inc(100));
+    act(() => hook.result.current[1].increment(100));
     expect(hook.result.current[0]).toBe(10);
 
-    act(() => hook.result.current[1].dec(2));
+    act(() => hook.result.current[1].decrement(2));
     expect(hook.result.current[0]).toBe(8);
 
     act(() => hook.rerender());

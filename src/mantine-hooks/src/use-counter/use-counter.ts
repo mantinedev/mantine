@@ -6,25 +6,16 @@ const DEFAULT_OPTIONS = {
   max: Infinity,
 };
 
-export function useCounter(
-  initialValue: number = 0,
-  options?: Partial<{ min: number; max: number }>
-) {
+export function useCounter(initialValue = 0, options?: Partial<{ min: number; max: number }>) {
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
   const [count, setCount] = useState<number>(clamp({ value: initialValue, min, max }));
 
-  const inc = (delta: number = 1) => {
-    setCount((prevCount) => {
-      const newValue = prevCount + delta;
-      return clamp({ value: newValue, min, max });
-    });
+  const increment = (delta = 1) => {
+    setCount((current) => clamp({ value: current + delta, min, max }));
   };
 
-  const dec = (delta: number = 1) => {
-    setCount((prevCount) => {
-      const newValue = prevCount - delta;
-      return clamp({ value: newValue, min, max });
-    });
+  const decrement = (delta = 1) => {
+    setCount((current) => clamp({ value: current - delta, min, max }));
   };
 
   const set = (value: number) => {
@@ -35,5 +26,5 @@ export function useCounter(
     setCount(clamp({ value: initialValue, min, max }));
   };
 
-  return [count, { inc, dec, set, reset }] as const;
+  return [count, { increment, decrement, set, reset }] as const;
 }
