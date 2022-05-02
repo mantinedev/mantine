@@ -19,6 +19,10 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Tooltip/TooltipFloating/TooltipFloating.tsx',
   '../src/mantine-core/src/components/Tooltip/TooltipGroup/TooltipGroup.tsx',
 
+  // Popover
+  '../src/mantine-core/src/components/Popover/PopoverTarget/PopoverTarget.tsx',
+  '../src/mantine-core/src/components/Popover/PopoverDropdown/PopoverDropdown.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
