@@ -73,3 +73,32 @@ Add `data-autofocus` attribute to element that should receive initial focus:
   <input />
 </Popover>
 ```
+
+## Accessibility
+
+Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.2/#dialog_modal):
+
+- Dropdown element has `role="dialog"` and `aria-labelledby="target-id"` attributes
+- Target element has `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
+
+### Supported target elements
+
+Uncontrolled Popover will be accessible only when used with `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
+Other elements will not support `Space` and `Enter` key presses.
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'Escape',
+      description: 'Closes dropdown',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Space/Enter',
+      description: 'Opens/closes dropdown',
+      condition: 'Focus on target element',
+    },
+  ]}
+/>
