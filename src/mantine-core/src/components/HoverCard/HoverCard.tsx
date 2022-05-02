@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Popover } from '../Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
@@ -14,13 +14,54 @@ export interface HoverCardProps {
 
   /** Called when dropdown is closed */
   onClose?(): void;
+
+  /** Open delay in ms */
+  openDelay?: number;
+
+  /** Close delay in ms */
+  closeDelay?: number;
 }
 
-export function HoverCard({ children, onOpen, onClose }: HoverCardProps) {
+export function HoverCard({
+  children,
+  onOpen,
+  onClose,
+  openDelay = 0,
+  closeDelay = 150,
+}: HoverCardProps) {
+  const openTimeout = useRef(-1);
+  const closeTimeout = useRef(-1);
   const [opened, { open, close }] = useDisclosure(false, { onClose, onOpen });
 
+  const clearTimeouts = () => {
+    window.clearTimeout(openTimeout.current);
+    window.clearTimeout(closeTimeout.current);
+  };
+
+  const openDropdown = () => {
+    clearTimeouts();
+
+    if (openDelay === 0) {
+      open();
+    } else {
+      openTimeout.current = window.setTimeout(open, openDelay);
+    }
+  };
+
+  const closeDropdown = () => {
+    clearTimeouts();
+
+    if (closeDelay === 0) {
+      close();
+    } else {
+      closeTimeout.current = window.setTimeout(close, closeDelay);
+    }
+  };
+
+  useEffect(() => clearTimeouts, []);
+
   return (
-    <HoverCardContextProvider value={{ openDropdown: open, closeDropdown: close }}>
+    <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
       <Popover opened={opened}>{children}</Popover>
     </HoverCardContextProvider>
   );
