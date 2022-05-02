@@ -73,7 +73,28 @@ To open files browser from outside of component use `openRef` prop to get functi
 
 ## Mime types
 
-To specify specific file types provide an array of mime types to `accept` prop:
+To specify file types provide an object with the keys set to the [mime type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+and the values as an array of file extensions. Find more examples of accepting specific file types
+in the [react-dropzone docs](https://react-dropzone.js.org/#section-accepting-specific-file-types).
+
+```tsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone
+      accept={{
+        'image/*': [], // All images
+        'text/html': ['.html', '.htm'],
+      }}
+    >
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
+
+You can also specify file types by providing an array of mime types to `accept` prop:
 
 ```tsx
 import { Dropzone } from '@mantine/dropzone';
