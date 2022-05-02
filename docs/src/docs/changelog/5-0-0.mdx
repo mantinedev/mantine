@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.0.0
 date: 'March 29th, 2022'
 ---
 
-import { TabsDemos, AccordionDemos, TooltipDemos } from '@mantine/demos';
+import { TabsDemos, AccordionDemos, TooltipDemos, PopoverDemos } from '@mantine/demos';
 
 ## Components API changes
 
@@ -45,7 +45,7 @@ Tabs component now supports the following new props:
 
 ### Tooltip component
 
-[Tooltip](https://mantine.dev/core/tooltip/) component API was changed – it now requires children to be an element or a component,
+[Tooltip](https://mantine.dev/core/tooltip/) now requires children to be an element or a component,
 string, numbers, fragments and multiple elements are no longer supported. In addition to that Tooltip no longer wraps target
 element with div tag, events are added directly to target element.
 
@@ -80,6 +80,22 @@ function Demo() {
   );
 }
 ```
+
+### Popover component
+
+[Popover](https://mantine.dev/core/popover/) component now has new API with the following breaking changes:
+
+- `placement` prop is no longer supported, Popover side and alignment is now controlled with `position` prop
+- Default value for `trapFocus` and `withinPortal` props is now `false`
+- Close button and title are no longer supported, if you need these parts – add them on your side in `Popover.Dropdown` component
+
+Popover now supports the following new features:
+
+- Uncontrolled and controlled mode
+- `width="target"` prop will make popover width the same as target element
+- `Popover.Dropdown` can now be styled with system props (`sx`, `className`, padding props, etc.)
+
+<Demo data={PopoverDemos.usage} />
 
 ## Other breaking changes
 
