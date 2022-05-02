@@ -11,10 +11,4 @@ export const POPOVER_ERRORS = {
     message:
       'Popover.Target component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported',
   }),
-
-  onChange: createError({
-    message:
-      'Controlled Popover component did not receive onChange handler, either remove opened prop or add onChange',
-    code: 'popover-on-change',
-  }),
 } as const;

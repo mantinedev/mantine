@@ -12,7 +12,6 @@ import {
   Middleware,
 } from '@floating-ui/react-dom-interactions';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
-import { POPOVER_ERRORS } from './Popover.errors';
 
 interface UsePopoverOptions {
   offset: number;
@@ -49,7 +48,7 @@ export function usePopover(options: UsePopoverOptions) {
     defaultValue: options.defaultOpened,
     finalValue: false,
     onChange: options.onChange,
-    errorMessage: POPOVER_ERRORS.onChange,
+    errorMessage: 'Popover onChange prop is not a function',
   });
 
   const onClose = () => {
