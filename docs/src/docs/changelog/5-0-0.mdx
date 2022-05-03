@@ -7,7 +7,14 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.0.0
 date: 'March 29th, 2022'
 ---
 
-import { TabsDemos, AccordionDemos, TooltipDemos, PopoverDemos } from '@mantine/demos';
+import {
+  TabsDemos,
+  AccordionDemos,
+  TooltipDemos,
+  PopoverDemos,
+  HoverCardDemos,
+  FocusTrapDemos,
+} from '@mantine/demos';
 
 ## Components API changes
 
@@ -103,6 +110,20 @@ Popover now supports the following new features:
 - FloatingTooltip component was renamed to [Tooltip.Floating](https://mantine.dev/core/tooltip/#floating-tooltip)
 - Most components with dropdowns (Tooltip, Popover, ColorPicker, DatePicker, Select, etc.) are no longer using Portal by default, it is now required to set `withinPortal` if you need this feature
 
+## New components
+
+### HoverCard component
+
+New [HoverCard](https://mantine.dev/core/hover-card/) component:
+
+<Demo data={HoverCardDemos.profile} />
+
+### FocusTrap component
+
+New [FocusTrap](https://mantine.dev/core/focus-trap/) component:
+
+<Demo data={FocusTrapDemos.usage} />
+
 ## New features
 
 ### Tooltip delay group
@@ -110,7 +131,3 @@ Popover now supports the following new features:
 [Tooltip.Group](https://mantine.dev/core/tooltip/#tooltip-delay-group) component can be used to sync open and close delays for multiple tooltips:
 
 <Demo data={TooltipDemos.group} />
-
-## Other changes
-
-- New [FocusTrap](https://mantine.dev/core/focus-trap/) component – component implementation of [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) hook
