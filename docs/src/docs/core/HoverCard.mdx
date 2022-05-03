@@ -32,6 +32,44 @@ you can use anchors and buttons within dropdowns, using inputs is not recommende
 
 <Demo data={HoverCardDemos.profile} />
 
+## HoverCard.Target children
+
+`HoverCard.Target` requires an element or a component as a single child –
+strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
+Custom components must provide a prop to get root element ref, all Mantine components support ref out of the box.
+
+```tsx
+import { HoverCard, Badge } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <HoverCard.Target>
+        <button>Native button – ok</button>
+      </HoverCard.Target>
+
+      <HoverCard.Target label="OK">
+        <Badge>Mantine component – ok</Badge>
+      </HoverCard.Target>
+
+      <HoverCard.Target label="Throws">Raw string, NOT OK – will throw error</HoverCard.Target>
+
+      {/* Number, NOT OK – will throw error */}
+      <HoverCard.Target label="Throws">{2}</HoverCard.Target>
+
+      <HoverCard.Target label="Throws">
+        <>Fragment, NOT OK, will throw error</>
+      </HoverCard.Target>
+
+      <HoverCard.Target label="Throws">
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </HoverCard.Target>
+    </>
+  );
+}
+```
+
 ## Accessibility
 
 HoverCard is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
