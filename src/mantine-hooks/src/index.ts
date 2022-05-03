@@ -6,6 +6,7 @@ export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useCounter } from './use-counter/use-counter';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 export { useDocumentTitle } from './use-document-title/use-document-title';
+export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
 export { useFocusReturn } from './use-focus-return/use-focus-return';
 export { useDidUpdate } from './use-did-update/use-did-update';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
