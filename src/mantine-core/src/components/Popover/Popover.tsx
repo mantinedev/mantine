@@ -26,10 +26,7 @@ import {
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
-export interface PopoverProps {
-  /** Popover.Target and Popover.Dropdown components */
-  children: React.ReactNode;
-
+export interface PopoverBaseProps {
   /** Dropdown position relative to target */
   position?: Placement;
 
@@ -39,17 +36,8 @@ export interface PopoverProps {
   /** Called when dropdown position changes */
   onPositionChange?(position: Placement): void;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
-
-  /** Initial opened state for uncontrolled component */
-  defaultOpened?: boolean;
-
-  /** Controls dropdown opened state */
-  opened?: boolean;
-
-  /** Called with current state when dropdown opens or closes */
-  onChange?(opened: boolean): void;
 
   /** Called when dropdown closes */
   onClose?(): void;
@@ -63,7 +51,7 @@ export interface PopoverProps {
   /** Transition duration in ms */
   transitionDuration?: number;
 
-  /** Dropdown width, or 'target' to make Popover width the same as target element */
+  /** Dropdown width, or 'target' to make dropdown width the same as target element */
   width?: PopoverWidth;
 
   /** Floating ui middlewares to configure position handling */
@@ -78,15 +66,6 @@ export interface PopoverProps {
   /** Arrow offset in px */
   arrowOffset?: number;
 
-  /** Determines whether dropdown should be closed on outside clicks, default to true */
-  closeOnClickOutside?: boolean;
-
-  /** Events that trigger outside clicks */
-  clickOutsideEvents?: string[];
-
-  /** Determines whether focus should be trapped within dropdown, default to false */
-  trapFocus?: boolean;
-
   /** Determines whether dropdown should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
@@ -98,6 +77,33 @@ export interface PopoverProps {
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
+
+  unstyled?: boolean;
+  classNames?: ClassNames<PopoverStylesNames>;
+  styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
+}
+
+export interface PopoverProps extends PopoverBaseProps {
+  /** Popover.Target and Popover.Dropdown components */
+  children: React.ReactNode;
+
+  /** Initial opened state for uncontrolled component */
+  defaultOpened?: boolean;
+
+  /** Controls dropdown opened state */
+  opened?: boolean;
+
+  /** Called with current state when dropdown opens or closes */
+  onChange?(opened: boolean): void;
+
+  /** Determines whether dropdown should be closed on outside clicks, default to true */
+  closeOnClickOutside?: boolean;
+
+  /** Events that trigger outside clicks */
+  clickOutsideEvents?: string[];
+
+  /** Determines whether focus should be trapped within dropdown, default to false */
+  trapFocus?: boolean;
 
   /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
   closeOnEscape?: boolean;

@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { useDisclosure } from '@mantine/hooks';
-import { Popover } from '../Popover';
+import { Popover, PopoverBaseProps } from '../Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 
-export interface HoverCardProps {
+export interface HoverCardProps extends PopoverBaseProps {
   /** HoverCard.Target and HoverCard.Dropdown components */
   children?: React.ReactNode;
 
@@ -28,6 +28,7 @@ export function HoverCard({
   onClose,
   openDelay = 0,
   closeDelay = 150,
+  ...others
 }: HoverCardProps) {
   const openTimeout = useRef(-1);
   const closeTimeout = useRef(-1);
@@ -62,7 +63,9 @@ export function HoverCard({
 
   return (
     <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
-      <Popover opened={opened}>{children}</Popover>
+      <Popover opened={opened} {...others}>
+        {children}
+      </Popover>
     </HoverCardContextProvider>
   );
 }
