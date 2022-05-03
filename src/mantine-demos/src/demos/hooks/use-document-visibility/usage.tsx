@@ -1,34 +1,30 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Group, Badge } from '@mantine/core';
-import { useDocumentVisibility } from '@mantine/hooks';
+import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
 
 const code = `
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Group, Badge } from '@mantine/core';
 import { useDocumentVisibility } from '@mantine/hooks';
 
-  useEffect(() => {
-    console.log(documentVisibility);
-  }, [documentVisibility]);
+function Demo() {
+  const visible = useDocumentVisibility();
 
   return (
     <Group position="center">
-      <Badge color="blue">Document Visibility: {documentVisibility}</Badge>
+      <Badge color="blue">Document Visibility: {visible}</Badge>
     </Group>
   );
 }`;
 
 function Demo() {
-  const documentVisibility = useDocumentVisibility();
+  const visible = useDocumentVisibility();
 
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(documentVisibility);
-  }, [documentVisibility]);
+  useDocumentTitle(`Document is ${visible}`);
 
   return (
     <Group position="center">
-      <Badge color="blue">Document Visibility: {documentVisibility}</Badge>
+      <Badge color="blue">Document Visibility: {visible}</Badge>
     </Group>
   );
 }

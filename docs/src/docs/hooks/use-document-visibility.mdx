@@ -1,11 +1,11 @@
 ---
 group: 'mantine-hooks'
 package: '@mantine/hooks'
-category: 'state'
+category: 'utils'
 title: 'use-document-visibility'
 order: 1
 slug: /hooks/use-document-visibility/
-description: 'Detect if document is visible'
+description: 'Detect if current tab is active'
 import: "import { useDocumentVisibility } from '@mantine/hooks';"
 docs: 'hooks/use-document-visibility.mdx'
 source: 'mantine-hooks/src/use-document-visibility/use-document-visibility.ts'
@@ -15,10 +15,12 @@ import { HooksDemos } from '@mantine/demos';
 
 ## Usage
 
+Page's title displays document's visibility, navigate to another tab to toggle it.
+
 <Demo data={HooksDemos.useDocumentVisibilityDemo} />
 
 ## Definition
 
 ```tsx
-function useDocumentVisibility(): 'visible' | 'hidden' | undefined
+function useDocumentVisibility(): 'visible' | 'hidden'
 ```

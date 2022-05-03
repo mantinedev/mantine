@@ -1,18 +1,17 @@
-import { useState } from 'react';
-import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useEffect, useState } from 'react';
 
 const getVisibility = () => {
-  if (typeof document === 'undefined') return undefined;
+  if (typeof document === 'undefined') return 'visible';
 
   return document.visibilityState;
 };
 
-export function useDocumentVisibility(): DocumentVisibilityState | undefined {
+export function useDocumentVisibility(): DocumentVisibilityState {
   const [documentVisibility, setDocumentVisibility] = useState<DocumentVisibilityState>(
     getVisibility()
   );
 
-  useIsomorphicEffect(() => {
+  useEffect(() => {
     const listener = () => setDocumentVisibility(getVisibility());
 
     document.addEventListener('visibilitychange', listener);
