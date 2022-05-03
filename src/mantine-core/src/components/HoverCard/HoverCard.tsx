@@ -9,6 +9,9 @@ export interface HoverCardProps extends PopoverBaseProps {
   /** HoverCard.Target and HoverCard.Dropdown components */
   children?: React.ReactNode;
 
+  /** Initial opened state */
+  initiallyOpened?: boolean;
+
   /** Called when dropdown is opened */
   onOpen?(): void;
 
@@ -28,11 +31,12 @@ export function HoverCard({
   onClose,
   openDelay = 0,
   closeDelay = 150,
+  initiallyOpened = false,
   ...others
 }: HoverCardProps) {
   const openTimeout = useRef(-1);
   const closeTimeout = useRef(-1);
-  const [opened, { open, close }] = useDisclosure(false, { onClose, onOpen });
+  const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
 
   const clearTimeouts = () => {
     window.clearTimeout(openTimeout.current);

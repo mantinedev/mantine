@@ -4,9 +4,11 @@ import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 import { HOVER_CARD_ERRORS } from '../HoverCard.errors';
 
-export function HoverCardTarget({ children, refProp }: PopoverTargetProps) {
+export interface HoverCardTargetProps extends PopoverTargetProps {}
+
+export function HoverCardTarget({ children, refProp }: HoverCardTargetProps) {
   if (!isElement(children)) {
-    throw new Error(HOVER_CARD_ERRORS['popover-children']);
+    throw new Error(HOVER_CARD_ERRORS['hover-card-children']);
   }
 
   const ctx = useHoverCardContext();
