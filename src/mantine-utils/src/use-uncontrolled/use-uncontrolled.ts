@@ -14,7 +14,7 @@ interface UseUncontrolledInput<T> {
   onChange?(value: T): void;
 
   /** Message of error that will be thrown when state is controlled and onChange handler is not a function */
-  errorMessage: string;
+  errorMessage?: string;
 }
 
 export function useUncontrolled<T>({
@@ -32,7 +32,9 @@ export function useUncontrolled<T>({
   const handleControlledChange = useCallback(
     (val: T) => {
       if (typeof onChange !== 'function') {
-        throw new Error(errorMessage);
+        if (typeof errorMessage === 'string') {
+          throw new Error(errorMessage);
+        }
       }
 
       onChange(val);

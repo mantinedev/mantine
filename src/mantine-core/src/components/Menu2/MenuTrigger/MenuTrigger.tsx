@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
+import { isElement } from '@mantine/utils';
+import { useMenuContext } from '../Menu.context';
+import { Popover } from '../../Popover';
+import { MENU_ERRORS } from '../Menu.errors';
 
 export interface MenuTriggerProps {
   /** Target element */
@@ -9,7 +13,20 @@ export interface MenuTriggerProps {
 }
 
 export function MenuTrigger({ children, refProp = 'ref' }: MenuTriggerProps) {
-  return <>{children}</>;
+  if (!isElement(children)) {
+    throw new Error(MENU_ERRORS['menu-children']);
+  }
+
+  const ctx = useMenuContext();
+
+  const target = children as React.ReactElement;
+
+  const onClick = (event: React.MouseEvent<unknown>) => {
+    target.props.onClick?.(event);
+    ctx.toggleDropdown();
+  };
+
+  return <Popover.Target refProp={refProp}>{cloneElement(target, { onClick })}</Popover.Target>;
 }
 
 MenuTrigger.displayName = '@mantine/core/MenuTrigger';

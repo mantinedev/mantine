@@ -1,6 +1,6 @@
 import React from 'react';
 import { DefaultProps } from '@mantine/styles';
-import { Box } from '../../Box';
+import { Popover } from '../../Popover';
 
 export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Item label */
@@ -8,7 +8,7 @@ export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWit
 }
 
 export function MenuDropdown({ children, ...others }: MenuDropdownProps) {
-  return <Box {...others}>{children}</Box>;
+  return <Popover.Dropdown {...others}>{children}</Popover.Dropdown>;
 }
 
 MenuDropdown.displayName = '@mantine/core/MenuDropdown';

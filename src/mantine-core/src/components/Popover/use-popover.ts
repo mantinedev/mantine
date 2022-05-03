@@ -48,7 +48,6 @@ export function usePopover(options: UsePopoverOptions) {
     defaultValue: options.defaultOpened,
     finalValue: false,
     onChange: options.onChange,
-    errorMessage: 'Popover onChange prop is not a function',
   });
 
   const onClose = () => {
