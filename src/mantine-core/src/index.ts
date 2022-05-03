@@ -33,6 +33,7 @@ export * from './components/FocusTrap';
 export * from './components/Grid';
 export * from './components/Group';
 export * from './components/Highlight';
+export * from './components/HoverCard';
 export * from './components/Image';
 export * from './components/Indicator';
 export * from './components/Input';
