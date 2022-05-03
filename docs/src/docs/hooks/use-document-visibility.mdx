@@ -1,0 +1,24 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
+title: 'use-document-visibility'
+order: 1
+slug: /hooks/use-document-visibility/
+description: 'Detect if document is visible'
+import: "import { useDocumentVisibility } from '@mantine/hooks';"
+docs: 'hooks/use-document-visibility.mdx'
+source: 'mantine-hooks/src/use-document-visibility/use-document-visibility.ts'
+---
+
+import { HooksDemos } from '@mantine/demos';
+
+## Usage
+
+<Demo data={HooksDemos.useDocumentVisibilityDemo} />
+
+## Definition
+
+```tsx
+function useDocumentVisibility(): 'visible' | 'hidden' | undefined
+```
