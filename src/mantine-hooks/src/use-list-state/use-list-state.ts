@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 
 export interface UseListStateHandler<T> {
   setState: React.Dispatch<React.SetStateAction<T[]>>;
-  append: (...items: T[]) => void;
-  prepend: (...items: T[]) => void;
-  insert: (index: number, ...items: T[]) => void;
-  pop: () => void;
-  shift: () => void;
-  apply: (fn: (item: T, index?: number) => T) => void;
+  append: (...items: T[]) => T[];
+  prepend: (...items: T[]) => T[];
+  insert: (index: number, ...items: T[]) => T[];
+  pop: () => T[];
+  shift: () => T[];
+  apply: (fn: (item: T, index?: number) => T) => T[];
   applyWhere: (
     condition: (item: T, index: number) => boolean,
     fn: (item: T, index?: number) => T
-  ) => void;
-  remove: (...indices: number[]) => void;
-  reorder: ({ from, to }: { from: number; to: number }) => void;
-  setItem: (index: number, item: T) => void;
-  setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+  ) => T[];
+  remove: (...indices: number[]) => T[];
+  reorder: ({ from, to }: { from: number; to: number }) => T[];
+  setItem: (index: number, item: T) => T[];
+  setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => T[];
 }
 
 export type UseListState<T> = [T[], UseListStateHandler<T>];
@@ -28,6 +28,7 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
     setState(newState);
     return newState;
   };
+
   const prepend = (...items: T[]): T[] => {
     const newState = [...items, ...state];
     setState(newState);
