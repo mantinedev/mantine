@@ -136,7 +136,7 @@
     "prism-react-renderer": "^1.2.1",
     "quill-mention": "^3.0.8",
     "react": "^17.0.2",
-    "react-dropzone": "^11.4.2",
+    "react-dropzone": "^14.1.1",
     "react-feather": "^2.0.9",
     "react-popper": "^2.2.5",
     "react-quill": "2.0.0-beta.4",
