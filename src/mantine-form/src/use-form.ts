@@ -1,9 +1,11 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useCallback } from 'react';
 import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
 import { getInputOnChange } from './get-input-on-change/get-input-on-change';
 import { getErrorPath } from './get-error-path/get-error-path';
+import { useStateRef } from './use-state-ref/use-state-ref';
+import { usePropRef } from './use-prop-ref/use-prop-ref';
 import type {
   FormErrors,
   FormRules,
@@ -63,36 +65,17 @@ export interface UseFormReturnType<T> {
   ) => GetInputProps<L>;
 }
 
-/**
- * Creates a ref that stays up to date with the state of the param
- * Used to help with all the useCallback signatures in useForm
- *
- * @param value The value to clone in the ref
- * @returns The ref which clones the value
- */
-function useStateRef<T>(value: T): React.MutableRefObject<T> {
-  const ref = useRef(value);
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref;
-}
-
 export function useForm<T extends { [key: string]: any }>({
   initialValues,
   initialErrors,
   validate: rules,
   schema,
 }: UseFormInput<T>): UseFormReturnType<T> {
-  const [errors, setErrors] = useState(filterErrors(initialErrors));
-  const errorsRef = useStateRef(errors);
-  const [values, setValues] = useState(initialValues);
-  const valuesRef = useStateRef(values);
-  const initialValuesRef = useStateRef(initialValues);
-  const rulesRef = useStateRef(rules);
-  const schemaRef = useStateRef(schema);
+  const [errors, setErrors, errorsRef] = useStateRef(filterErrors(initialErrors));
+  const [values, setValues, valuesRef] = useStateRef(initialValues);
+  const initialValuesRef = usePropRef(initialValues);
+  const rulesRef = usePropRef(rules);
+  const schemaRef = usePropRef(schema);
 
   const clearErrors = useCallback(() => setErrors({}), []);
   const setFieldError = useCallback(
