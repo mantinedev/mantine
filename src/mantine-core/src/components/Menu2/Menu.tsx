@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { noop, useUncontrolled, getContextItemIndex } from '@mantine/utils';
+import React from 'react';
+import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
 import { Popover } from '../Popover';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
@@ -36,7 +36,7 @@ export function Menu({
   defaultOpened,
   onChange = noop,
 }: MenuProps) {
-  const [hovered, setHovered] = useState(-1);
+  const [hovered, { setHovered, resetHovered }] = useHovered();
   const [_opened, setOpened] = useUncontrolled({
     value: opened,
     defaultValue: defaultOpened,
@@ -46,6 +46,7 @@ export function Menu({
 
   const toggleDropdown = () => {
     setOpened(!_opened);
+    resetHovered();
   };
 
   const getItemIndex = (node: HTMLButtonElement) =>

@@ -14,3 +14,4 @@ export { getArrowPositionStyles, getFloatingPosition } from './floating';
 export { closeOnEscape } from './close-on-escape/close-on-escape';
 export { noop } from './noop/noop';
 export { keys } from './keys/keys';
+export { useHovered } from './use-hovered/use-hovered';

@@ -28,6 +28,7 @@ function MenuItem({ children, className, color, ...others }: MenuItemProps) {
       data-menu-item
       data-hovered={ctx.hovered === itemIndex ? true : undefined}
       onMouseEnter={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
+      onMouseLeave={() => ctx.setHovered(-1)}
       {...others}
     >
       {children}

@@ -6,7 +6,7 @@ export function getContextItemIndex(
   node: HTMLElement
 ) {
   if (!node) {
-    return -1;
+    return null;
   }
 
   return Array.from(
