@@ -11,6 +11,7 @@ interface PopoverContext {
   opened: boolean;
   transition: MantineTransition;
   transitionDuration: number;
+  exitTransitionDuration: number;
   reference: (node: ReferenceType) => void;
   floating: (node: HTMLElement) => void;
   width?: PopoverWidth;

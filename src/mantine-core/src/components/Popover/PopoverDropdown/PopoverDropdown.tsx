@@ -34,6 +34,11 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
         mounted={ctx.opened}
         transition={ctx.transition}
         duration={ctx.transitionDuration}
+        exitDuration={
+          typeof ctx.exitTransitionDuration === 'number'
+            ? ctx.exitTransitionDuration
+            : ctx.transitionDuration
+        }
       >
         {(transitionStyles) => (
           <FocusTrap active={ctx.trapFocus}>

@@ -51,6 +51,9 @@ export interface PopoverBaseProps {
   /** Transition duration in ms */
   transitionDuration?: number;
 
+  /** Exit transition duration in ms */
+  exitTransitionDuration?: number;
+
   /** Dropdown width, or 'target' to make dropdown width the same as target element */
   width?: PopoverWidth;
 
@@ -165,6 +168,7 @@ export function Popover(props: PopoverProps) {
     shadow,
     id,
     defaultOpened,
+    exitTransitionDuration,
   } = useMantineDefaultProps('Popover', defaultProps, props);
 
   const uid = useId(id);
@@ -200,6 +204,7 @@ export function Popover(props: PopoverProps) {
           opened: popover.opened,
           transition,
           transitionDuration,
+          exitTransitionDuration,
           width,
           withArrow,
           arrowSize,
