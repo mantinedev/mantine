@@ -26,6 +26,9 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Called when Menu is closed */
   onClose?(): void;
+
+  /** Determines whether Menu should be closed when item is clicked */
+  closeOnItemClick?: boolean;
 }
 
 export function Menu({
@@ -35,6 +38,7 @@ export function Menu({
   opened,
   defaultOpened,
   onChange = noop,
+  closeOnItemClick = true,
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -50,11 +54,18 @@ export function Menu({
     resetHovered();
   };
 
+  const closeDropdown = () => {
+    setOpened(false);
+    resetHovered();
+  };
+
   const getItemIndex = (node: HTMLButtonElement) =>
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
 
   return (
-    <MenuContextProvider value={{ toggleDropdown, getItemIndex, hovered, setHovered }}>
+    <MenuContextProvider
+      value={{ toggleDropdown, getItemIndex, hovered, setHovered, closeOnItemClick, closeDropdown }}
+    >
       <Popover
         {...others}
         opened={_opened}

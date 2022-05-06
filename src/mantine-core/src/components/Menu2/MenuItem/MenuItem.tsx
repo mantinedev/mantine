@@ -20,16 +20,32 @@ function MenuItem({ children, className, color, ...others }: MenuItemProps) {
 
   const itemIndex = ctx.getItemIndex(itemRef.current);
 
+  const handleMouseEnter = (event: React.MouseEvent) => {
+    (others as any).onMouseEnter?.(event);
+    ctx.setHovered(ctx.getItemIndex(itemRef.current));
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent) => {
+    (others as any).onMouseLeave?.(event);
+    ctx.setHovered(-1);
+  };
+
+  const handleClick = (event: React.MouseEvent) => {
+    (others as any).onClick?.(event);
+    ctx.closeOnItemClick && ctx.closeDropdown();
+  };
+
   return (
     <Box
       component="button"
+      {...others}
       className={cx(classes.item, className)}
       ref={itemRef}
       data-menu-item
       data-hovered={ctx.hovered === itemIndex ? true : undefined}
-      onMouseEnter={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
-      onMouseLeave={() => ctx.setHovered(-1)}
-      {...others}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       {children}
     </Box>
