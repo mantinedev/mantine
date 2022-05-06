@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { DefaultProps, MantineColor } from '@mantine/styles';
-import { createPolymorphicComponent, getContextItemIndex } from '@mantine/utils';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../../Box';
 import useStyles from './MenuItem.styles';
+import { useMenuContext } from '../Menu.context';
 
 export interface MenuItemProps extends DefaultProps {
   /** Item label */
@@ -13,18 +14,20 @@ export interface MenuItemProps extends DefaultProps {
 }
 
 function MenuItem({ children, className, color, ...others }: MenuItemProps) {
+  const ctx = useMenuContext();
   const { classes, cx } = useStyles({ radius: 'sm', color }, { name: 'Menu' });
   const itemRef = useRef<HTMLButtonElement>();
-  console.log(
-    getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', itemRef.current),
-    itemRef.current
-  );
+
+  const itemIndex = ctx.getItemIndex(itemRef.current);
+
   return (
     <Box
       component="button"
       className={cx(classes.item, className)}
       ref={itemRef}
       data-menu-item
+      data-hovered={ctx.hovered === itemIndex ? true : undefined}
+      onMouseEnter={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
       {...others}
     >
       {children}
