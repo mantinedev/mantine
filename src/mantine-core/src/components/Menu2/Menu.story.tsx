@@ -6,8 +6,8 @@ export default { title: 'Menu2' };
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
-      <Menu withArrow>
+    <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
+      <Menu withArrow width={200} opened>
         <Menu.Trigger>
           <Button>Toggle menu</Button>
         </Menu.Trigger>
@@ -21,9 +21,9 @@ export function Usage() {
 
           <Menu.Divider />
 
-          <Menu.Label>Button item 2</Menu.Label>
+          <Menu.Label>Label 2</Menu.Label>
+          <Menu.Item>Button item 2</Menu.Item>
           <Menu.Item>Button item 3</Menu.Item>
-          <Menu.Item>Button item 4</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </div>
