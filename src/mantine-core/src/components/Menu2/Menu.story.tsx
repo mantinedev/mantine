@@ -7,7 +7,7 @@ export default { title: 'Menu2' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Menu opened>
+      <Menu>
         <Menu.Trigger>
           <Button>Toggle menu</Button>
         </Menu.Trigger>

@@ -9,7 +9,7 @@ export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWit
 
 export function MenuDropdown({ children, ...others }: MenuDropdownProps) {
   return (
-    <Popover.Dropdown p={4} {...others}>
+    <Popover.Dropdown p={4} data-menu-dropdown {...others}>
       {children}
     </Popover.Dropdown>
   );

@@ -1,9 +1,4 @@
-function findElementAncestor(element: HTMLElement, selector: string) {
-  let _element = element;
-  // eslint-disable-next-line no-cond-assign
-  while ((_element = _element.parentElement) && !_element.matches(selector));
-  return _element;
-}
+import { findElementAncestor } from '../find-element-ancestor/find-element-ancestor';
 
 function getPreviousIndex(current: number, elements: HTMLButtonElement[], loop: boolean) {
   for (let i = current - 1; i >= 0; i -= 1) {
