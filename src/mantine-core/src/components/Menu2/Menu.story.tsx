@@ -7,7 +7,7 @@ export default { title: 'Menu2' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Menu>
+      <Menu withArrow>
         <Menu.Trigger>
           <Button>Toggle menu</Button>
         </Menu.Trigger>
@@ -15,15 +15,15 @@ export function Usage() {
         <Menu.Dropdown>
           <Menu.Label>Label 1</Menu.Label>
           <Menu.Item component="a" href="https://google.com">
-            Item 1
+            Link item
           </Menu.Item>
-          <Menu.Item>Item 2</Menu.Item>
+          <Menu.Item>Button item 1</Menu.Item>
 
           <Menu.Divider />
 
-          <Menu.Label>Label 2</Menu.Label>
-          <Menu.Item>Item 3</Menu.Item>
-          <Menu.Item>Item 4</Menu.Item>
+          <Menu.Label>Button item 2</Menu.Label>
+          <Menu.Item>Button item 3</Menu.Item>
+          <Menu.Item>Button item 4</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
-import { Popover } from '../Popover';
+import { Popover, PopoverBaseProps } from '../Popover';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -8,7 +8,7 @@ import { MenuLabel } from './MenuLabel/MenuLabel';
 import { MenuTrigger } from './MenuTrigger/MenuTrigger';
 import { MenuContextProvider } from './Menu.context';
 
-export interface MenuProps {
+export interface MenuProps extends PopoverBaseProps {
   /** Menu content */
   children?: React.ReactNode;
 
@@ -35,6 +35,7 @@ export function Menu({
   opened,
   defaultOpened,
   onChange = noop,
+  ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
   const [_opened, setOpened] = useUncontrolled({
@@ -55,6 +56,7 @@ export function Menu({
   return (
     <MenuContextProvider value={{ toggleDropdown, getItemIndex, hovered, setHovered }}>
       <Popover
+        {...others}
         opened={_opened}
         onChange={setOpened}
         defaultOpened={defaultOpened}
