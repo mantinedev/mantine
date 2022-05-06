@@ -8,7 +8,11 @@ export interface MenuDropdownProps extends DefaultProps, React.ComponentPropsWit
 }
 
 export function MenuDropdown({ children, ...others }: MenuDropdownProps) {
-  return <Popover.Dropdown {...others}>{children}</Popover.Dropdown>;
+  return (
+    <Popover.Dropdown p={4} {...others}>
+      {children}
+    </Popover.Dropdown>
+  );
 }
 
 MenuDropdown.displayName = '@mantine/core/MenuDropdown';
