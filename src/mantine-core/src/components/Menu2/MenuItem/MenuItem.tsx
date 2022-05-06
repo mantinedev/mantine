@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { DefaultProps, MantineColor } from '@mantine/styles';
-import { createPolymorphicComponent } from '@mantine/utils';
+import { createPolymorphicComponent, createScopedKeydownHandler } from '@mantine/utils';
 import { Box } from '../../Box';
 import useStyles from './MenuItem.styles';
 import { useMenuContext } from '../Menu.context';
@@ -18,7 +18,7 @@ export interface MenuItemProps extends DefaultProps {
 
 function MenuItem({ children, className, color, closeMenuOnClick, ...others }: MenuItemProps) {
   const ctx = useMenuContext();
-  const { classes, cx } = useStyles({ radius: 'sm', color }, { name: 'Menu' });
+  const { classes, cx, theme } = useStyles({ radius: 'sm', color }, { name: 'Menu' });
   const itemRef = useRef<HTMLButtonElement>();
 
   const itemIndex = ctx.getItemIndex(itemRef.current);
@@ -48,6 +48,7 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
     <Box
       component="button"
       {...others}
+      onFocus={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
       className={cx(classes.item, className)}
       ref={itemRef}
       data-menu-item
@@ -55,6 +56,15 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
+      onKeyDown={createScopedKeydownHandler({
+        siblingSelector: '[data-menu-item]',
+        parentSelector: '[data-menu-dropdown]',
+        activateOnFocus: false,
+        loop: ctx.loop,
+        dir: theme.dir,
+        orientation: 'vertical',
+        onKeyDown: _others.onKeydown,
+      })}
     >
       {children}
     </Box>

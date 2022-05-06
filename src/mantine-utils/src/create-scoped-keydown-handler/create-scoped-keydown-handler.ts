@@ -80,6 +80,7 @@ export function createScopedKeydownHandler({
   orientation,
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
     onKeyDown?.(event);
 
     const elements = Array.from(

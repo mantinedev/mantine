@@ -29,6 +29,9 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Determines whether Menu should be closed when item is clicked */
   closeOnItemClick?: boolean;
+
+  /** Determines whether arrow key presses should loop though items (first to last and last to first) */
+  loop?: boolean;
 }
 
 export function Menu({
@@ -39,6 +42,7 @@ export function Menu({
   defaultOpened,
   onChange = noop,
   closeOnItemClick = true,
+  loop = true,
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -64,7 +68,15 @@ export function Menu({
 
   return (
     <MenuContextProvider
-      value={{ toggleDropdown, getItemIndex, hovered, setHovered, closeOnItemClick, closeDropdown }}
+      value={{
+        toggleDropdown,
+        getItemIndex,
+        hovered,
+        setHovered,
+        closeOnItemClick,
+        closeDropdown,
+        loop,
+      }}
     >
       <Popover
         {...others}
@@ -73,6 +85,7 @@ export function Menu({
         defaultOpened={defaultOpened}
         onOpen={onOpen}
         onClose={onClose}
+        trapFocus
       >
         {children}
       </Popover>

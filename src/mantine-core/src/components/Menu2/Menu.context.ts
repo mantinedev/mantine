@@ -8,6 +8,7 @@ interface MenuContext {
   setHovered(index: number): void;
   hovered: number;
   closeOnItemClick: boolean;
+  loop: boolean;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
