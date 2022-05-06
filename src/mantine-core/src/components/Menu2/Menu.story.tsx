@@ -17,12 +17,12 @@ export function Usage() {
           <Menu.Item component="a" href="https://google.com">
             Link item
           </Menu.Item>
-          <Menu.Item closeMenuOnClick={false}>Button item 1</Menu.Item>
+          <Menu.Item closeMenuOnClick={false}>Won&apos;t close on click</Menu.Item>
 
           <Menu.Divider />
 
           <Menu.Label>Label 2</Menu.Label>
-          <Menu.Item>Button item 2</Menu.Item>
+          <Menu.Item color="red">Red color</Menu.Item>
           <Menu.Item>Button item 3</Menu.Item>
         </Menu.Dropdown>
       </Menu>
