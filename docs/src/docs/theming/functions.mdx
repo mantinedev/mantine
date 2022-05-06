@@ -206,3 +206,16 @@ theme.fn.darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
 theme.fn.rgba('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
 theme.fn.rgba(theme.colors.gray[1], 0.25); // rgba(241, 243, 245, 0.25)
 ```
+
+## primaryShade
+
+`primaryShade` function returns the primaryShade for a given colorScheme
+
+```tsx
+// Auto detect colorScheme
+theme.fn.primaryShade(); // -> current primaryShade for the current colorScheme
+
+// Specify the colorScheme
+theme.fn.primaryShade('light'); // -> current primaryShade for light colorScheme (6 by default)
+theme.fn.primaryShade('dark'); // -> current primaryShade for dark colorScheme (8 by default)
+```
