@@ -11,28 +11,37 @@ export interface MenuItemProps extends DefaultProps {
 
   /** Key of theme.colors */
   color?: MantineColor;
+
+  /** Determines whether menu should be closed when item is clicked, overrides closeOnItemClick prop on Menu component */
+  closeMenuOnClick?: boolean;
 }
 
-function MenuItem({ children, className, color, ...others }: MenuItemProps) {
+function MenuItem({ children, className, color, closeMenuOnClick, ...others }: MenuItemProps) {
   const ctx = useMenuContext();
   const { classes, cx } = useStyles({ radius: 'sm', color }, { name: 'Menu' });
   const itemRef = useRef<HTMLButtonElement>();
 
   const itemIndex = ctx.getItemIndex(itemRef.current);
+  const _others: any = others;
 
   const handleMouseEnter = (event: React.MouseEvent) => {
-    (others as any).onMouseEnter?.(event);
+    _others.onMouseEnter?.(event);
     ctx.setHovered(ctx.getItemIndex(itemRef.current));
   };
 
   const handleMouseLeave = (event: React.MouseEvent) => {
-    (others as any).onMouseLeave?.(event);
+    _others.onMouseLeave?.(event);
     ctx.setHovered(-1);
   };
 
   const handleClick = (event: React.MouseEvent) => {
-    (others as any).onClick?.(event);
-    ctx.closeOnItemClick && ctx.closeDropdown();
+    _others.onClick?.(event);
+
+    if (typeof closeMenuOnClick === 'boolean') {
+      closeMenuOnClick && ctx.closeDropdown();
+    } else {
+      ctx.closeOnItemClick && ctx.closeDropdown();
+    }
   };
 
   return (

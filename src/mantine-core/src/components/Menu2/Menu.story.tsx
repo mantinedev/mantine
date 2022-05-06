@@ -17,7 +17,7 @@ export function Usage() {
           <Menu.Item component="a" href="https://google.com">
             Link item
           </Menu.Item>
-          <Menu.Item>Button item 1</Menu.Item>
+          <Menu.Item closeMenuOnClick={false}>Button item 1</Menu.Item>
 
           <Menu.Divider />
 
