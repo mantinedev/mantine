@@ -32,6 +32,20 @@ const getControl = () => screen.getByRole('button');
 describe('@mantine/core/Menu', () => {
   checkAccessibility([<TestContainer opened />, <TestContainer opened={false} />]);
 
+  it('calls onOpen and onClose functions when dropdown state changes', () => {
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+    render(<TestContainer onOpen={onOpen} onClose={onClose} />);
+
+    userEvent.click(getControl());
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(0);
+
+    userEvent.click(getControl());
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it('supports controlled state', () => {
     const spy = jest.fn();
     render(<TestContainer opened onChange={spy} />);

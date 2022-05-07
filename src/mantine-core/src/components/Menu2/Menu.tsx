@@ -101,9 +101,17 @@ export function Menu(props: MenuProps) {
     onChange,
   });
 
-  const toggleDropdown = () => setOpened(!_opened);
-  const close = () => setOpened(false);
-  const open = () => setOpened(true);
+  const close = () => {
+    setOpened(false);
+    onClose?.();
+  };
+
+  const open = () => {
+    setOpened(true);
+    onOpen?.();
+  };
+
+  const toggleDropdown = () => (_opened ? close() : open());
 
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, closeDelay, openDelay });
 
@@ -135,8 +143,6 @@ export function Menu(props: MenuProps) {
           opened={_opened}
           onChange={setOpened}
           defaultOpened={defaultOpened}
-          onOpen={onOpen}
-          onClose={onClose}
           trapFocus={trigger === 'click'}
           closeOnEscape={closeOnEscape && trigger === 'click'}
           __staticSelector="Menu"
