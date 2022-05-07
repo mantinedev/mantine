@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
+import { createEventHandler } from '@mantine/utils';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
 
@@ -25,15 +26,8 @@ export function MenuDropdown({
     }
   };
 
-  const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-    onMouseEnter?.(event);
-    ctx.openDropdown();
-  };
-
-  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-    onMouseLeave?.(event);
-    ctx.closeDropdown();
-  };
+  const handleMouseEnter = createEventHandler(onMouseEnter, ctx.openDropdown);
+  const handleMouseLeave = createEventHandler(onMouseLeave, ctx.closeDropdown);
 
   return (
     <Popover.Dropdown

@@ -1,5 +1,5 @@
 import React, { cloneElement } from 'react';
-import { isElement } from '@mantine/utils';
+import { isElement, createEventHandler } from '@mantine/utils';
 import { useMenuContext } from '../Menu.context';
 import { Popover } from '../../Popover';
 import { MENU_ERRORS } from '../Menu.errors';
@@ -18,23 +18,22 @@ export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
   }
 
   const ctx = useMenuContext();
-
   const target = children as React.ReactElement;
 
-  const onClick = (event: React.MouseEvent<unknown>) => {
-    target.props.onClick?.(event);
-    ctx.trigger === 'click' && ctx.toggleDropdown();
-  };
+  const onClick = createEventHandler(
+    target.props.onClick,
+    () => ctx.trigger === 'click' && ctx.toggleDropdown()
+  );
 
-  const onMouseEnter = (event: React.MouseEvent<unknown>) => {
-    target.props.onMouseEnter?.(event);
-    ctx.trigger === 'hover' && ctx.openDropdown();
-  };
+  const onMouseEnter = createEventHandler(
+    target.props.onMouseEnter,
+    () => ctx.trigger === 'hover' && ctx.openDropdown()
+  );
 
-  const onMouseLeave = (event: React.MouseEvent<unknown>) => {
-    target.props.onMouseLeave?.(event);
-    ctx.trigger === 'hover' && ctx.closeDropdown();
-  };
+  const onMouseLeave = createEventHandler(
+    target.props.onMouseLeave,
+    () => ctx.trigger === 'hover' && ctx.closeDropdown()
+  );
 
   return (
     <Popover.Target refProp={refProp} popupType="menu">

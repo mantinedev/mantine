@@ -1,5 +1,5 @@
 import React, { cloneElement } from 'react';
-import { isElement } from '@mantine/utils';
+import { isElement, createEventHandler } from '@mantine/utils';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 import { HOVER_CARD_ERRORS } from '../HoverCard.errors';
@@ -13,16 +13,8 @@ export function HoverCardTarget({ children, refProp }: HoverCardTargetProps) {
 
   const ctx = useHoverCardContext();
   const target = children as React.ReactElement;
-
-  const onMouseEnter = (event: React.MouseEvent<unknown>) => {
-    target.props.onMouseEnter?.(event);
-    ctx.openDropdown();
-  };
-
-  const onMouseLeave = (event: React.MouseEvent<unknown>) => {
-    target.props.onMouseLeave?.(event);
-    ctx.closeDropdown();
-  };
+  const onMouseEnter = createEventHandler(target.props.onMouseEnter, ctx.openDropdown);
+  const onMouseLeave = createEventHandler(target.props.onMouseLeave, ctx.closeDropdown);
 
   return (
     <Popover.Target refProp={refProp}>

@@ -12,6 +12,7 @@ export { clamp } from './clamp/clamp';
 export { isElement } from './is-element/is-element';
 export { getArrowPositionStyles, getFloatingPosition } from './floating';
 export { closeOnEscape } from './close-on-escape/close-on-escape';
+export { createEventHandler } from './create-event-handler/create-event-handler';
 export { noop } from './noop/noop';
 export { keys } from './keys/keys';
 export { useHovered } from './use-hovered/use-hovered';

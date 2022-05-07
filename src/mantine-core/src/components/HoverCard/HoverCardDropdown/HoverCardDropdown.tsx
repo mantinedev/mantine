@@ -1,4 +1,5 @@
 import React from 'react';
+import { createEventHandler } from '@mantine/utils';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 
@@ -15,15 +16,8 @@ export function HoverCardDropdown({
 }: HoverCardDropdownProps) {
   const ctx = useHoverCardContext();
 
-  const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-    onMouseEnter?.(event);
-    ctx.openDropdown();
-  };
-
-  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-    onMouseLeave?.(event);
-    ctx.closeDropdown();
-  };
+  const handleMouseEnter = createEventHandler(onMouseEnter, ctx.openDropdown);
+  const handleMouseLeave = createEventHandler(onMouseLeave, ctx.closeDropdown);
 
   return (
     <Popover.Dropdown onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} {...others}>

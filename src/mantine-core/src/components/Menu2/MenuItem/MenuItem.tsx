@@ -1,6 +1,10 @@
 import React, { useRef } from 'react';
 import { DefaultProps, MantineColor, Selectors, useContextStylesApi } from '@mantine/styles';
-import { createPolymorphicComponent, createScopedKeydownHandler } from '@mantine/utils';
+import {
+  createEventHandler,
+  createPolymorphicComponent,
+  createScopedKeydownHandler,
+} from '@mantine/utils';
 import { Box } from '../../Box';
 import { useMenuContext } from '../Menu.context';
 import useStyles from './MenuItem.styles';
@@ -40,25 +44,18 @@ function MenuItem({
   const itemIndex = ctx.getItemIndex(itemRef.current);
   const _others: any = others;
 
-  const handleMouseEnter = (event: React.MouseEvent) => {
-    _others.onMouseEnter?.(event);
-    ctx.setHovered(ctx.getItemIndex(itemRef.current));
-  };
+  const handleMouseLeave = createEventHandler(_others.onMouseEnter, () => ctx.setHovered(-1));
+  const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
 
-  const handleMouseLeave = (event: React.MouseEvent) => {
-    _others.onMouseLeave?.(event);
-    ctx.setHovered(-1);
-  };
-
-  const handleClick = (event: React.MouseEvent) => {
-    _others.onClick?.(event);
-
+  const handleClick = createEventHandler(_others.onMouseEnter, () => {
     if (typeof closeMenuOnClick === 'boolean') {
       closeMenuOnClick && ctx.closeDropdownImmediately();
     } else {
       ctx.closeOnItemClick && ctx.closeDropdownImmediately();
     }
-  };
+  });
 
   return (
     <Box

@@ -8,7 +8,7 @@ export default { title: 'Menu2' };
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-      <Menu width={200} shadow="md" opened>
+      <Menu width={200} shadow="md">
         <Menu.Target>
           <Button>Toggle menu</Button>
         </Menu.Target>
