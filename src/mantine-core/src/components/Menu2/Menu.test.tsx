@@ -131,6 +131,21 @@ describe('@mantine/core/Menu', () => {
     // ... RTL refuses to work with other menuitem focus tests, menu dropdown is closed for no reason
   });
 
+  it('sets dropdown z-index based on zIndex prop', () => {
+    render(<TestContainer defaultOpened zIndex={452} />);
+    expect(screen.getByRole('menu')).toHaveStyle({ zIndex: 452 });
+  });
+
+  it('correctly handles withArrow={true}', () => {
+    const { container } = render(<TestContainer defaultOpened withArrow />);
+    expect(container.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(1);
+  });
+
+  it('correctly handles withArrow={false}', () => {
+    const { container } = render(<TestContainer defaultOpened withArrow={false} />);
+    expect(container.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
+  });
+
   it('exposes related components as static properties', () => {
     expect(Menu.Item).toBe(MenuItem);
     expect(Menu.Dropdown).toBe(MenuDropdown);
