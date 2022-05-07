@@ -26,8 +26,14 @@ export function MenuDropdown({
     }
   };
 
-  const handleMouseEnter = createEventHandler(onMouseEnter, ctx.openDropdown);
-  const handleMouseLeave = createEventHandler(onMouseLeave, ctx.closeDropdown);
+  const handleMouseEnter = createEventHandler(
+    onMouseEnter,
+    () => ctx.trigger === 'hover' && ctx.openDropdown
+  );
+  const handleMouseLeave = createEventHandler(
+    onMouseLeave,
+    () => ctx.trigger === 'hover' && ctx.closeDropdown
+  );
 
   return (
     <Popover.Dropdown
