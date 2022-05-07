@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
@@ -34,36 +35,8 @@ export function HoverCard({
   initiallyOpened = false,
   ...others
 }: HoverCardProps) {
-  const openTimeout = useRef(-1);
-  const closeTimeout = useRef(-1);
   const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
-
-  const clearTimeouts = () => {
-    window.clearTimeout(openTimeout.current);
-    window.clearTimeout(closeTimeout.current);
-  };
-
-  const openDropdown = () => {
-    clearTimeouts();
-
-    if (openDelay === 0) {
-      open();
-    } else {
-      openTimeout.current = window.setTimeout(open, openDelay);
-    }
-  };
-
-  const closeDropdown = () => {
-    clearTimeouts();
-
-    if (closeDelay === 0) {
-      close();
-    } else {
-      closeTimeout.current = window.setTimeout(close, closeDelay);
-    }
-  };
-
-  useEffect(() => clearTimeouts, []);
+  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
 
   return (
     <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>

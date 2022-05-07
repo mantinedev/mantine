@@ -39,6 +39,12 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Event which should open menu */
   trigger?: MenuTriggerEvent;
+
+  /** Open delay in ms, applicable only to trigger="hover" variant */
+  openDelay?: number;
+
+  /** Close delay in ms, applicable only to trigger="hover" variant */
+  closeDelay?: number;
 }
 
 export function Menu({

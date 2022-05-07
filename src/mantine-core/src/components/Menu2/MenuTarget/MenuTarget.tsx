@@ -23,7 +23,7 @@ export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
 
   const onClick = (event: React.MouseEvent<unknown>) => {
     target.props.onClick?.(event);
-    ctx.toggleDropdown();
+    ctx.trigger === 'click' && ctx.toggleDropdown();
   };
 
   return <Popover.Target refProp={refProp}>{cloneElement(target, { onClick })}</Popover.Target>;
