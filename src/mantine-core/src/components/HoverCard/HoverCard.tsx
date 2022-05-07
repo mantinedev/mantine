@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMantineDefaultProps } from '@mantine/styles';
 import { useDisclosure } from '@mantine/hooks';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
@@ -26,15 +27,15 @@ export interface HoverCardProps extends PopoverBaseProps {
   closeDelay?: number;
 }
 
-export function HoverCard({
-  children,
-  onOpen,
-  onClose,
-  openDelay = 0,
-  closeDelay = 150,
-  initiallyOpened = false,
-  ...others
-}: HoverCardProps) {
+const defaultProps: Partial<HoverCardProps> = {
+  openDelay: 0,
+  closeDelay: 150,
+  initiallyOpened: false,
+};
+
+export function HoverCard(props: HoverCardProps) {
+  const { children, onOpen, onClose, openDelay, closeDelay, initiallyOpened, ...others } =
+    useMantineDefaultProps('HoverCard', defaultProps, props);
   const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
 
