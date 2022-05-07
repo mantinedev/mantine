@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
-import { StylesApiProvider, ClassNames, Styles } from '@mantine/styles';
+import { StylesApiProvider, ClassNames, Styles, useMantineDefaultProps } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
 import { MenuDivider, MenuDividerStylesNames } from './MenuDivider/MenuDivider';
@@ -65,24 +65,34 @@ export interface MenuProps extends PopoverBaseProps {
   styles?: Styles<MenuStylesNames>;
 }
 
-export function Menu({
-  children,
-  onOpen,
-  onClose,
-  opened,
-  defaultOpened,
-  onChange,
-  closeOnItemClick = true,
-  loop = true,
-  closeOnEscape,
-  trigger = 'click',
-  openDelay = 0,
-  closeDelay = 100,
-  classNames,
-  styles,
-  unstyled,
-  ...others
-}: MenuProps) {
+const defaultProps: Partial<MenuProps> = {
+  closeOnItemClick: true,
+  loop: true,
+  trigger: 'click',
+  openDelay: 0,
+  closeDelay: 100,
+};
+
+export function Menu(props: MenuProps) {
+  const {
+    children,
+    onOpen,
+    onClose,
+    opened,
+    defaultOpened,
+    onChange,
+    closeOnItemClick,
+    loop,
+    closeOnEscape,
+    trigger,
+    openDelay,
+    closeDelay,
+    classNames,
+    styles,
+    unstyled,
+    ...others
+  } = useMantineDefaultProps('Menu', defaultProps, props);
+
   const [hovered, { setHovered, resetHovered }] = useHovered();
   const [_opened, setOpened] = useUncontrolled({
     value: opened,
