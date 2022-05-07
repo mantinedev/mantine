@@ -41,7 +41,7 @@ export function HoverCard(props: HoverCardProps) {
 
   return (
     <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
-      <Popover opened={opened} {...others}>
+      <Popover opened={opened} __staticSelector="HoverCard" {...others}>
         {children}
       </Popover>
     </HoverCardContextProvider>

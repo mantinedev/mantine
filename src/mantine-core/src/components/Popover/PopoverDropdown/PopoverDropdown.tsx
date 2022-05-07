@@ -15,11 +15,11 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
 }
 
 export function PopoverDropdown({ style, className, children, ...others }: PopoverDropdownProps) {
-  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classNames, styles, unstyled, staticSelector } = useContextStylesApi();
   const ctx = usePopoverContext();
   const { classes, cx, theme } = useStyles(
     { radius: ctx.radius, shadow: ctx.shadow },
-    { name: 'Popover', classNames, styles, unstyled }
+    { name: staticSelector, classNames, styles, unstyled }
   );
 
   const returnFocus = useFocusReturn({

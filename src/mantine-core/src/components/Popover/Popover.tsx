@@ -84,6 +84,7 @@ export interface PopoverBaseProps {
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
+  __staticSelector?: string;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -135,6 +136,7 @@ const defaultProps: Partial<PopoverProps> = {
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   onChange: noop,
+  __staticSelector: 'Popover',
 };
 
 export function Popover(props: PopoverProps) {
@@ -169,6 +171,7 @@ export function Popover(props: PopoverProps) {
     id,
     defaultOpened,
     exitTransitionDuration,
+    __staticSelector,
   } = useMantineDefaultProps('Popover', defaultProps, props);
 
   const uid = useId(id);
@@ -193,7 +196,12 @@ export function Popover(props: PopoverProps) {
   ]);
 
   return (
-    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+    <StylesApiProvider
+      classNames={classNames}
+      styles={styles}
+      unstyled={unstyled}
+      staticSelector={__staticSelector}
+    >
       <PopoverContextProvider
         value={{
           controlled: popover.controlled,

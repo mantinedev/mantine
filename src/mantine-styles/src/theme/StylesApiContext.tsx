@@ -4,6 +4,7 @@ interface StylesApiContextValue {
   classNames: Record<string, string>;
   styles: Record<string, any>;
   unstyled: boolean;
+  staticSelector?: string;
 }
 
 const StylesApiContext = createContext<StylesApiContextValue>({
@@ -17,9 +18,10 @@ export function StylesApiProvider({
   classNames,
   unstyled,
   styles,
+  staticSelector,
 }: StylesApiContextValue & { children: React.ReactNode }) {
   return (
-    <StylesApiContext.Provider value={{ classNames, styles, unstyled }}>
+    <StylesApiContext.Provider value={{ classNames, styles, unstyled, staticSelector }}>
       {children}
     </StylesApiContext.Provider>
   );
