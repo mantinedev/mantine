@@ -32,6 +32,9 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first) */
   loop?: boolean;
+
+  /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
+  closeOnEscape?: boolean;
 }
 
 export function Menu({
@@ -43,6 +46,7 @@ export function Menu({
   onChange = noop,
   closeOnItemClick = true,
   loop = true,
+  closeOnEscape,
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -86,6 +90,7 @@ export function Menu({
         onOpen={onOpen}
         onClose={onClose}
         trapFocus
+        closeOnEscape={closeOnEscape}
       >
         {children}
       </Popover>
