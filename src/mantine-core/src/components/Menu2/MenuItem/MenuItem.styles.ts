@@ -19,7 +19,7 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     boxSizing: 'border-box',
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
     cursor: 'pointer',
-    borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+    borderRadius: theme.fn.radius(radius),
     color: color
       ? theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7)
       : theme.colorScheme === 'dark'
@@ -31,6 +31,7 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     '&:disabled': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       pointerEvents: 'none',
+      userSelect: 'none',
     },
 
     '&[data-hovered]': {

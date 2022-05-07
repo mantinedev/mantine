@@ -40,7 +40,7 @@ function MenuItem({
   const ctx = useMenuContext();
   const { classNames, styles, unstyled } = useContextStylesApi();
   const { classes, cx, theme } = useStyles(
-    { radius: 'sm', color },
+    { radius: ctx.radius, color },
     { name: 'Menu', classNames, styles, unstyled }
   );
   const itemRef = useRef<HTMLButtonElement>();

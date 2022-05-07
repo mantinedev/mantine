@@ -90,6 +90,7 @@ export function Menu(props: MenuProps) {
     classNames,
     styles,
     unstyled,
+    radius,
     ...others
   } = useMantineDefaultProps('Menu', defaultProps, props);
 
@@ -136,10 +137,12 @@ export function Menu(props: MenuProps) {
           closeDropdownImmediately: close,
           loop,
           trigger,
+          radius,
         }}
       >
         <Popover
           {...others}
+          radius={radius}
           opened={_opened}
           onChange={setOpened}
           defaultOpened={defaultOpened}

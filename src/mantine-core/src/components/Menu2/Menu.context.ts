@@ -1,3 +1,4 @@
+import { MantineNumberSize } from '@mantine/styles';
 import { createSafeContext } from '@mantine/utils';
 import { MENU_ERRORS } from './Menu.errors';
 import { MenuTriggerEvent } from './Menu.types';
@@ -13,6 +14,7 @@ interface MenuContext {
   closeOnItemClick: boolean;
   loop: boolean;
   trigger: MenuTriggerEvent;
+  radius: MantineNumberSize;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
