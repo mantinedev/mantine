@@ -9,7 +9,7 @@ export default { title: 'Menu' };
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-      <Menu width={200} shadow="md">
+      <Menu width={200} shadow="md" trigger="hover">
         <Menu.Target>
           <Button>Toggle menu</Button>
         </Menu.Target>

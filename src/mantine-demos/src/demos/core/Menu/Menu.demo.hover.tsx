@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Group } from '@mantine/core';
-import { menuItems } from './_menu-items';
+import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { Menu } from '@mantine/core';
@@ -17,8 +17,8 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu trigger="hover" delay={500}>
-        {menuItems}
+      <Menu trigger="hover" openDelay={100} closeDelay={400}>
+        <DemoMenuItems />
       </Menu>
     </Group>
   );

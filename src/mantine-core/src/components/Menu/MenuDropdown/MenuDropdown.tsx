@@ -28,11 +28,12 @@ export function MenuDropdown({
 
   const handleMouseEnter = createEventHandler(
     onMouseEnter,
-    () => ctx.trigger === 'hover' && ctx.openDropdown
+    () => ctx.trigger === 'hover' && ctx.openDropdown()
   );
+
   const handleMouseLeave = createEventHandler(
     onMouseLeave,
-    () => ctx.trigger === 'hover' && ctx.closeDropdown
+    () => ctx.trigger === 'hover' && ctx.closeDropdown()
   );
 
   return (

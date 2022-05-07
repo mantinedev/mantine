@@ -1,7 +1,5 @@
 export { usage } from './Menu.demo.usage';
-export { controls } from './Menu.demo.controls';
 export { transitions } from './Menu.demo.transitions';
-export { configurator } from './Menu.demo.configurator';
 export { component } from './Menu.demo.component';
 export { hover } from './Menu.demo.hover';
 export { stylesApi } from './Menu.demo.stylesApi';

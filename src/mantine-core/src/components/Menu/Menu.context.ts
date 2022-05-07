@@ -15,6 +15,7 @@ interface MenuContext {
   loop: boolean;
   trigger: MenuTriggerEvent;
   radius: MantineNumberSize;
+  opened: boolean;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(

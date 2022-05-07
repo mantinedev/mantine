@@ -1,38 +1,23 @@
 import React from 'react';
 import { ExternalLink } from 'tabler-icons-react';
-import { Menu, Group } from '@mantine/core';
+import { Menu, Group, Button } from '@mantine/core';
 
 const code = `
-import { Menu } from '@mantine/core';
+import { Menu, Button } from '@mantine/core';
 import { ExternalLink } from 'tabler-icons-react';
 
 function Demo() {
   return (
-    <Menu>
-      <Menu.Item component="a" href="https://mantine.dev">
-        Mantine website
-      </Menu.Item>
+    <Menu width={200} shadow="md">
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
 
-      <Menu.Item
-        icon={<ExternalLink size={14} />}
-        component="a"
-        href="https://mantine.dev"
-        target="_blank"
-      >
-        External link
-      </Menu.Item>
-    </Menu>
-  );
-}
-`;
-
-function Demo() {
-  return (
-    <Group position="center">
-      <Menu>
+      <Menu.Dropdown>
         <Menu.Item component="a" href="https://mantine.dev">
           Mantine website
         </Menu.Item>
+
         <Menu.Item
           icon={<ExternalLink size={14} />}
           component="a"
@@ -41,6 +26,33 @@ function Demo() {
         >
           External link
         </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+`;
+
+function Demo() {
+  return (
+    <Group position="center">
+      <Menu width={200} shadow="md">
+        <Menu.Target>
+          <Button>Toggle menu</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item component="a" href="https://mantine.dev">
+            Mantine website
+          </Menu.Item>
+          <Menu.Item
+            icon={<ExternalLink size={14} />}
+            component="a"
+            href="https://mantine.dev"
+            target="_blank"
+          >
+            External link
+          </Menu.Item>
+        </Menu.Dropdown>
       </Menu>
     </Group>
   );
