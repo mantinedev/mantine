@@ -14,6 +14,7 @@ import {
   PopoverDemos,
   HoverCardDemos,
   FocusTrapDemos,
+  MenuDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -103,6 +104,17 @@ Popover now supports the following new features:
 - `Popover.Dropdown` can now be styled with system props (`sx`, `className`, padding props, etc.)
 
 <Demo data={PopoverDemos.usage} />
+
+### Menu component
+
+[Menu](https://mantine.dev/core/menu/) component now uses [Popover](https://mantine.dev/core/popover/) component under the hood and thus its API was changed in the same way:
+
+- Menu no longer provides default control, it should now be added with `Menu.Target`
+- `Menu.Item` component should now be used within `Menu.Dropdown` component
+- `trapFocus` prop was removed – now it is managed automatically based on `trigger` prop
+- `closeOnScroll` prop was removed – if you need this feature you will need to implement this logic on your side
+
+<Demo data={MenuDemos.usage} />
 
 ## Other breaking changes
 
