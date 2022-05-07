@@ -21,8 +21,11 @@ export interface MenuItemProps extends DefaultProps {
   /** Determines whether menu should be closed when item is clicked, overrides closeOnItemClick prop on Menu component */
   closeMenuOnClick?: boolean;
 
-  /** Icon rendered on the left side of label */
+  /** Icon rendered on the left side of the label */
   icon?: React.ReactNode;
+
+  /** Section rendered on the right side of the label */
+  rightSection?: React.ReactNode;
 }
 
 function MenuItem({
@@ -31,6 +34,7 @@ function MenuItem({
   color,
   closeMenuOnClick,
   icon,
+  rightSection,
   ...others
 }: MenuItemProps) {
   const ctx = useMenuContext();
@@ -86,7 +90,8 @@ function MenuItem({
       })}
     >
       {icon && <div className={classes.icon}>{icon}</div>}
-      {children}
+      {children && <div className={classes.label}>{children}</div>}
+      {rightSection && <div className={classes.rightSection}>{rightSection}</div>}
     </Box>
   );
 }

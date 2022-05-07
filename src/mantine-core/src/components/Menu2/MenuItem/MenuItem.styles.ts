@@ -42,10 +42,16 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     },
   },
 
+  label: {
+    flex: 1,
+  },
+
   icon: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: theme.spacing.xs,
   },
+
+  rightSection: {},
 }));

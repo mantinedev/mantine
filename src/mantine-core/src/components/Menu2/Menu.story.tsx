@@ -1,7 +1,8 @@
 import React from 'react';
-import { Table } from 'tabler-icons-react';
+import { Table, Search } from 'tabler-icons-react';
 import { Menu } from './Menu';
 import { Button } from '../Button';
+import { Text } from '../Text';
 
 export default { title: 'Menu2' };
 
@@ -19,6 +20,18 @@ export function Usage() {
             Link item
           </Menu.Item>
           <Menu.Item closeMenuOnClick={false}>Won&apos;t close on click</Menu.Item>
+          <Menu.Item disabled>Disabled</Menu.Item>
+
+          <Menu.Item
+            icon={<Search size={14} />}
+            rightSection={
+              <Text size="xs" color="dimmed">
+                ⌘K
+              </Text>
+            }
+          >
+            Search
+          </Menu.Item>
 
           <Menu.Divider />
 

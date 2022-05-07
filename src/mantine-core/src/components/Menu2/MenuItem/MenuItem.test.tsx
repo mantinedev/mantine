@@ -47,4 +47,10 @@ describe('@mantine/core/MenuItem', () => {
     userEvent.click(screen.getByRole('menuitem'));
     expect(spy).toHaveBeenCalled();
   });
+
+  it('renders given icon and rightSection', () => {
+    render(<TestContainer icon="test-icon" rightSection="test-right-section" />);
+    expect(screen.getByText('test-icon')).toBeInTheDocument();
+    expect(screen.getByText('test-right-section')).toBeInTheDocument();
+  });
 });
