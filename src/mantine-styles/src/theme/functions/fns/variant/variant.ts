@@ -109,7 +109,7 @@ export function variant(theme: MantineThemeBase) {
             : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
           getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
-          theme.colorScheme === 'dark' ? 0.35 : 1
+          theme.colorScheme === 'dark' ? 0.2 : 1
         ),
       };
     }
