@@ -1,29 +1,23 @@
 import React from 'react';
-import { Selectors, DefaultProps } from '@mantine/styles';
-import { SharedTextProps, Text } from '../../Text/Text';
-import { useMenuContext } from '../Menu.context';
+import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
+import { Text } from '../../Text';
 import useStyles from './MenuLabel.styles';
 
-export type MenuLabelStylesNames = Selectors<typeof useStyles>;
+export type MenuLabelStylesName = Selectors<typeof useStyles>;
 
-export interface MenuLabelProps
-  extends DefaultProps,
-    SharedTextProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'color'> {
+export interface MenuLabelProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Label content */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export interface MenuLabelType {
-  type: any;
-  props: MenuLabelProps;
-  ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
-}
-
-export function MenuLabel(props: MenuLabelProps) {
-  const { classNames, styles } = useMenuContext('Menu.Label');
-  const { classes } = useStyles(null, { name: 'Menu', classNames, styles });
-  return <Text className={classes.label} {...props} />;
+export function MenuLabel({ children, className, ...others }: MenuLabelProps) {
+  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled });
+  return (
+    <Text className={cx(classes.label, className)} {...others}>
+      {children}
+    </Text>
+  );
 }
 
 MenuLabel.displayName = '@mantine/core/MenuLabel';

@@ -1,17 +1,22 @@
-import { MantineNumberSize, MantineTheme, CSSObject } from '@mantine/styles';
-import { createUseContext } from '../../utils';
-import type { MenuStylesNames } from './Menu';
+import { MantineNumberSize } from '@mantine/styles';
+import { createSafeContext } from '@mantine/utils';
+import { MENU_ERRORS } from './Menu.errors';
+import { MenuTriggerEvent } from './Menu.types';
 
-interface MenuContextValue {
+interface MenuContext {
+  toggleDropdown(): void;
+  closeDropdownImmediately(): void;
+  closeDropdown(): void;
+  openDropdown(): void;
+  getItemIndex(node: HTMLButtonElement): number;
+  setHovered(index: number): void;
   hovered: number;
+  closeOnItemClick: boolean;
+  loop: boolean;
+  trigger: MenuTriggerEvent;
   radius: MantineNumberSize;
-  classNames: Partial<Record<MenuStylesNames, string>>;
-  styles:
-    | Partial<Record<MenuStylesNames, CSSObject>>
-    | ((theme: MantineTheme) => Partial<Record<MenuStylesNames, CSSObject>>);
-  onItemHover(index: number): void;
-  onItemKeyDown(event: React.KeyboardEvent<HTMLElement>): void;
-  onItemClick(): void;
 }
 
-export const [MenuProvider, useMenuContext] = createUseContext<MenuContextValue>(null);
+export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
+  MENU_ERRORS['menu-context']
+);

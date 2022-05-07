@@ -1,93 +1,102 @@
-import React, { forwardRef, useRef } from 'react';
-import { Selectors, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
-import { mergeRefs } from '@mantine/hooks';
+import React, { useRef } from 'react';
+import { DefaultProps, MantineColor, Selectors, useContextStylesApi } from '@mantine/styles';
+import {
+  createEventHandler,
+  createPolymorphicComponent,
+  createScopedKeydownHandler,
+} from '@mantine/utils';
 import { Box } from '../../Box';
 import { useMenuContext } from '../Menu.context';
-import { getContextItemIndex } from '../../../utils';
 import useStyles from './MenuItem.styles';
 
 export type MenuItemStylesNames = Selectors<typeof useStyles>;
 
-export interface SharedMenuItemProps extends DefaultProps {
+export interface MenuItemProps extends DefaultProps {
   /** Item label */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
-  /** Icon rendered on the left side of label */
-  icon?: React.ReactNode;
-
-  /** Any color from theme.colors */
+  /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Any react node to render on the right side of item, for example, keyboard shortcut or badge */
+  /** Determines whether menu should be closed when item is clicked, overrides closeOnItemClick prop on Menu component */
+  closeMenuOnClick?: boolean;
+
+  /** Icon rendered on the left side of the label */
+  icon?: React.ReactNode;
+
+  /** Section rendered on the right side of the label */
   rightSection?: React.ReactNode;
-
-  /** Is item disabled */
-  disabled?: boolean;
 }
 
-interface _MenuItemProps
-  extends SharedMenuItemProps,
-    Omit<React.ComponentPropsWithoutRef<'button'>, keyof SharedMenuItemProps> {
-  component: any;
+function MenuItem({
+  children,
+  className,
+  color,
+  closeMenuOnClick,
+  icon,
+  rightSection,
+  ...others
+}: MenuItemProps) {
+  const ctx = useMenuContext();
+  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classes, cx, theme } = useStyles(
+    { radius: ctx.radius, color },
+    { name: 'Menu', classNames, styles, unstyled }
+  );
+  const itemRef = useRef<HTMLButtonElement>();
+
+  const itemIndex = ctx.getItemIndex(itemRef.current);
+  const _others: any = others;
+
+  const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
+  const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
+
+  const handleClick = createEventHandler(_others.onClick, () => {
+    if (typeof closeMenuOnClick === 'boolean') {
+      closeMenuOnClick && ctx.closeDropdownImmediately();
+    } else {
+      ctx.closeOnItemClick && ctx.closeDropdownImmediately();
+    }
+  });
+
+  const handleFocus = createEventHandler(_others.onFocus, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
+
+  return (
+    <Box
+      component="button"
+      {...others}
+      tabIndex={-1}
+      onFocus={handleFocus}
+      className={cx(classes.item, className)}
+      ref={itemRef}
+      role="menuitem"
+      data-menu-item
+      data-hovered={ctx.hovered === itemIndex ? true : undefined}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      onKeyDown={createScopedKeydownHandler({
+        siblingSelector: '[data-menu-item]',
+        parentSelector: '[data-menu-dropdown]',
+        activateOnFocus: false,
+        loop: ctx.loop,
+        dir: theme.dir,
+        orientation: 'vertical',
+        onKeyDown: _others.onKeydown,
+      })}
+    >
+      {icon && <div className={classes.icon}>{icon}</div>}
+      {children && <div className={classes.label}>{children}</div>}
+      {rightSection && <div className={classes.rightSection}>{rightSection}</div>}
+    </Box>
+  );
 }
-
-export const _MenuItem = forwardRef(
-  (
-    {
-      className,
-      children,
-      icon,
-      color,
-      disabled,
-      rightSection,
-      component,
-      onClick,
-      ...others
-    }: _MenuItemProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
-  ) => {
-    const itemRef = useRef<HTMLButtonElement>();
-    const { hovered, onItemHover, radius, onItemKeyDown, classNames, styles, onItemClick } =
-      useMenuContext('Menu.Item');
-    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
-    const itemIndex = getContextItemIndex(
-      { elementSelector: '.mantine-Menu-item', parentClassName: 'mantine-Menu-body' },
-      itemRef.current
-    );
-
-    return (
-      <Box
-        component={component || 'button'}
-        type="button"
-        role="menuitem"
-        className={cx(classes.item, { [classes.itemHovered]: hovered === itemIndex }, className)}
-        onMouseEnter={() => !disabled && onItemHover(itemIndex)}
-        onMouseLeave={() => onItemHover(-1)}
-        onKeyDown={onItemKeyDown}
-        ref={mergeRefs(ref, itemRef)}
-        disabled={disabled}
-        onClick={(event: React.MouseEvent<any, MouseEvent>) => {
-          typeof onClick === 'function' && onClick(event);
-          onItemClick();
-        }}
-        {...others}
-      >
-        <div className={classes.itemInner}>
-          {icon && <div className={classes.itemIcon}>{icon}</div>}
-
-          <div className={classes.itemBody}>
-            <div className={classes.itemLabel}>{children}</div>
-            {rightSection}
-          </div>
-        </div>
-      </Box>
-    );
-  }
-);
-
-export type MenuItemProps<C> = PolymorphicComponentProps<C, SharedMenuItemProps>;
-type MenuItemComponent = <C = 'button'>(props: MenuItemProps<C>) => React.ReactElement;
-
-export const MenuItem: MenuItemComponent & { displayName?: string } = _MenuItem as any;
 
 MenuItem.displayName = '@mantine/core/MenuItem';
+
+const PolymorphicMenuItem = createPolymorphicComponent<'button', MenuItemProps>(MenuItem);
+export { PolymorphicMenuItem as MenuItem };
