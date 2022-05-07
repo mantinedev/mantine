@@ -15,12 +15,12 @@ export function HoverCardDropdown({
 }: HoverCardDropdownProps) {
   const ctx = useHoverCardContext();
 
-  const handleMouseEnter = (event: React.MouseEvent<any>) => {
+  const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseEnter?.(event);
     ctx.openDropdown();
   };
 
-  const handleMouseLeave = (event: React.MouseEvent<any>) => {
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseLeave?.(event);
     ctx.closeDropdown();
   };

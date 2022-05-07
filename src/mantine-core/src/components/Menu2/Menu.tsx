@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
+import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
@@ -58,6 +59,8 @@ export function Menu({
   loop = true,
   closeOnEscape,
   trigger = 'click',
+  openDelay = 0,
+  closeDelay = 100,
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -73,10 +76,17 @@ export function Menu({
     resetHovered();
   };
 
-  const closeDropdown = () => {
+  const close = () => {
     setOpened(false);
     resetHovered();
   };
+
+  const open = () => {
+    setOpened(true);
+    resetHovered();
+  };
+
+  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, closeDelay, openDelay });
 
   const getItemIndex = (node: HTMLButtonElement) =>
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
@@ -89,7 +99,9 @@ export function Menu({
         hovered,
         setHovered,
         closeOnItemClick,
-        closeDropdown,
+        closeDropdown: trigger === 'click' ? close : closeDropdown,
+        openDropdown: trigger === 'click' ? open : openDropdown,
+        closeDropdownImmediately: close,
         loop,
         trigger,
       }}
@@ -101,8 +113,8 @@ export function Menu({
         defaultOpened={defaultOpened}
         onOpen={onOpen}
         onClose={onClose}
-        trapFocus
-        closeOnEscape={closeOnEscape}
+        trapFocus={trigger === 'click'}
+        closeOnEscape={closeOnEscape && trigger === 'click'}
       >
         {children}
       </Popover>

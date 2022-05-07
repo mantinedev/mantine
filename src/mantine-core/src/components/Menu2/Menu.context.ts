@@ -4,7 +4,9 @@ import { MenuTriggerEvent } from './Menu.types';
 
 interface MenuContext {
   toggleDropdown(): void;
+  closeDropdownImmediately(): void;
   closeDropdown(): void;
+  openDropdown(): void;
   getItemIndex(node: HTMLButtonElement): number;
   setHovered(index: number): void;
   hovered: number;

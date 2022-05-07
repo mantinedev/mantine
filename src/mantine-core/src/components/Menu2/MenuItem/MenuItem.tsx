@@ -38,9 +38,9 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
     _others.onClick?.(event);
 
     if (typeof closeMenuOnClick === 'boolean') {
-      closeMenuOnClick && ctx.closeDropdown();
+      closeMenuOnClick && ctx.closeDropdownImmediately();
     } else {
-      ctx.closeOnItemClick && ctx.closeDropdown();
+      ctx.closeOnItemClick && ctx.closeDropdownImmediately();
     }
   };
 

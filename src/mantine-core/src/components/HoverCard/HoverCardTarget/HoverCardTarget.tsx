@@ -14,12 +14,12 @@ export function HoverCardTarget({ children, refProp }: HoverCardTargetProps) {
   const ctx = useHoverCardContext();
   const target = children as React.ReactElement;
 
-  const onMouseEnter = (event: React.MouseEvent<any>) => {
+  const onMouseEnter = (event: React.MouseEvent<unknown>) => {
     target.props.onMouseEnter?.(event);
     ctx.openDropdown();
   };
 
-  const onMouseLeave = (event: React.MouseEvent<any>) => {
+  const onMouseLeave = (event: React.MouseEvent<unknown>) => {
     target.props.onMouseLeave?.(event);
     ctx.closeDropdown();
   };

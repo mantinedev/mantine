@@ -26,7 +26,21 @@ export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
     ctx.trigger === 'click' && ctx.toggleDropdown();
   };
 
-  return <Popover.Target refProp={refProp}>{cloneElement(target, { onClick })}</Popover.Target>;
+  const onMouseEnter = (event: React.MouseEvent<unknown>) => {
+    target.props.onMouseEnter?.(event);
+    ctx.trigger === 'hover' && ctx.openDropdown();
+  };
+
+  const onMouseLeave = (event: React.MouseEvent<unknown>) => {
+    target.props.onMouseLeave?.(event);
+    ctx.trigger === 'hover' && ctx.closeDropdown();
+  };
+
+  return (
+    <Popover.Target refProp={refProp}>
+      {cloneElement(target, { onClick, onMouseEnter, onMouseLeave })}
+    </Popover.Target>
+  );
 }
 
 MenuTarget.displayName = '@mantine/core/MenuTarget';
