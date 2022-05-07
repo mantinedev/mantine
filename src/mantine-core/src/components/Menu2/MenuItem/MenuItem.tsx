@@ -16,9 +16,19 @@ export interface MenuItemProps extends DefaultProps {
 
   /** Determines whether menu should be closed when item is clicked, overrides closeOnItemClick prop on Menu component */
   closeMenuOnClick?: boolean;
+
+  /** Icon rendered on the left side of label */
+  icon?: React.ReactNode;
 }
 
-function MenuItem({ children, className, color, closeMenuOnClick, ...others }: MenuItemProps) {
+function MenuItem({
+  children,
+  className,
+  color,
+  closeMenuOnClick,
+  icon,
+  ...others
+}: MenuItemProps) {
   const ctx = useMenuContext();
   const { classNames, styles, unstyled } = useContextStylesApi();
   const { classes, cx, theme } = useStyles(
@@ -74,6 +84,7 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
         onKeyDown: _others.onKeydown,
       })}
     >
+      {icon && <div className={classes.icon}>{icon}</div>}
       {children}
     </Box>
   );

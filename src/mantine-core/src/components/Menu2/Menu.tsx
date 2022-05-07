@@ -1,5 +1,6 @@
 import React from 'react';
 import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
+import { useDidUpdate } from '@mantine/hooks';
 import { StylesApiProvider, ClassNames, Styles } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
@@ -90,25 +91,18 @@ export function Menu({
     onChange,
   });
 
-  const toggleDropdown = () => {
-    setOpened(!_opened);
-    resetHovered();
-  };
-
-  const close = () => {
-    setOpened(false);
-    resetHovered();
-  };
-
-  const open = () => {
-    setOpened(true);
-    resetHovered();
-  };
+  const toggleDropdown = () => setOpened(!_opened);
+  const close = () => setOpened(false);
+  const open = () => setOpened(true);
 
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, closeDelay, openDelay });
 
   const getItemIndex = (node: HTMLButtonElement) =>
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
+
+  useDidUpdate(() => {
+    resetHovered();
+  }, [_opened]);
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>

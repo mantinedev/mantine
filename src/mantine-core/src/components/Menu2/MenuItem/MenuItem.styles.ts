@@ -15,7 +15,6 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     outline: 0,
     width: '100%',
     textAlign: 'left',
-    display: 'inline-block',
     textDecoration: 'none',
     boxSizing: 'border-box',
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
@@ -26,6 +25,8 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
       : theme.black,
+    display: 'flex',
+    alignItems: 'center',
 
     '&:disabled': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
@@ -39,5 +40,12 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
         ? theme.fn.rgba(theme.colors.dark[3], 0.35)
         : theme.colors.gray[0],
     },
+  },
+
+  icon: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.xs,
   },
 }));
