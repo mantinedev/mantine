@@ -7,7 +7,7 @@ import { Menu } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menu trigger="hover" delay={500}>
+    <Menu trigger="hover" openDelay={100} closeDelay={400}>
       {/* ... menu items */}
     </Menu>
   );
