@@ -50,6 +50,12 @@ export interface MenuProps extends PopoverBaseProps {
   /** Close delay in ms, applicable only to trigger="hover" variant */
   closeDelay?: number;
 
+  /** Events that trigger outside clicks */
+  clickOutsideEvents?: string[];
+
+  /** id base to create accessibility connections */
+  id?: string;
+
   unstyled?: boolean;
   classNames?: ClassNames<MenuStylesNames>;
   styles?: Styles<MenuStylesNames>;

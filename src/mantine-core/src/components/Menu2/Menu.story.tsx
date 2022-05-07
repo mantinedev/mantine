@@ -7,14 +7,7 @@ export default { title: 'Menu2' };
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-      <Menu
-        width={200}
-        closeDelay={1000}
-        shadow="md"
-        closeOnEscape={false}
-        trigger="hover"
-        offset={0}
-      >
+      <Menu width={200} closeDelay={1000} shadow="md" closeOnEscape={false} offset={0} opened>
         <Menu.Target>
           <Button>Toggle menu</Button>
         </Menu.Target>

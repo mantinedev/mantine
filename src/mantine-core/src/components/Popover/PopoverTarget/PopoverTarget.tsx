@@ -10,9 +10,16 @@ export interface PopoverTargetProps {
 
   /** Key of the prop that should be used to get element ref */
   refProp?: string;
+
+  /** Popup accessible type, 'dialog' by default */
+  popupType?: string;
 }
 
-export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps) {
+export function PopoverTarget({
+  children,
+  refProp = 'ref',
+  popupType = 'dialog',
+}: PopoverTargetProps) {
   if (!isElement(children)) {
     throw new Error(POPOVER_ERRORS['popover-children']);
   }
@@ -23,7 +30,7 @@ export function PopoverTarget({ children, refProp = 'ref' }: PopoverTargetProps)
 
   return cloneElement(target, {
     [refProp]: targetRef,
-    'aria-haspopup': 'dialog',
+    'aria-haspopup': popupType,
     'aria-expanded': ctx.opened,
     'aria-controls': ctx.getDropdownId(),
     id: ctx.getTargetId(),

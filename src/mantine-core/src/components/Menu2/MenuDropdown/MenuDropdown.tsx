@@ -40,6 +40,8 @@ export function MenuDropdown({
       p={4}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      role="menu"
+      aria-orientation="vertical"
       {...others}
     >
       <div

@@ -37,7 +37,7 @@ export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
   };
 
   return (
-    <Popover.Target refProp={refProp}>
+    <Popover.Target refProp={refProp} popupType="menu">
       {cloneElement(target, { onClick, onMouseEnter, onMouseLeave })}
     </Popover.Target>
   );

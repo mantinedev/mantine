@@ -57,6 +57,7 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
       onFocus={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
       className={cx(classes.item, className)}
       ref={itemRef}
+      role="menuitem"
       data-menu-item
       data-hovered={ctx.hovered === itemIndex ? true : undefined}
       onMouseEnter={handleMouseEnter}
