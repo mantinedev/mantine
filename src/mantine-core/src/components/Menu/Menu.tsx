@@ -10,7 +10,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   getDefaultZIndex,
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
@@ -26,7 +26,7 @@ import { MenuProvider } from './Menu.context';
 import useStyles from './Menu.styles';
 
 export type MenuStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | MenuItemStylesNames
   | MenuLabelStylesNames;
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { DefaultProps, ClassNames, UnstyledButton, MantineSize } from '@mantine/core';
+import { DefaultProps, Selectors, UnstyledButton, MantineSize } from '@mantine/core';
 import { getDecadeRange } from './get-decade-range/get-decade-range';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
 import useStyles from './YearPicker.styles';
 
-export type YearPickerStylesNames = ClassNames<typeof useStyles> | CalendarHeaderStylesNames;
+export type YearPickerStylesNames = Selectors<typeof useStyles> | CalendarHeaderStylesNames;
 
 export interface YearPickerProps
   extends DefaultProps<YearPickerStylesNames>,

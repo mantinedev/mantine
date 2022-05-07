@@ -3,7 +3,7 @@ import {
   Portal,
   Transition,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
   DefaultProps,
   Box,
   useMantineDefaultProps,
@@ -12,7 +12,7 @@ import { useIsomorphicEffect } from '@mantine/hooks';
 import { DropzoneStatus } from '../Dropzone';
 import useStyles from './FullscreenDropzone.styles';
 
-export type FullScreenDropzoneStylesNames = ClassNames<typeof useStyles>;
+export type FullScreenDropzoneStylesNames = Selectors<typeof useStyles>;
 
 export interface FullScreenDropzoneProps
   extends DefaultProps<FullScreenDropzoneStylesNames>,

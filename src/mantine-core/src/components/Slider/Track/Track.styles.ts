@@ -38,7 +38,7 @@ export default createStyles((theme, { radius, size, color, disabled }: TrackStyl
       ? theme.colorScheme === 'dark'
         ? theme.colors.dark[3]
         : theme.colors.gray[4]
-      : theme.fn.themeColor(color, 6),
+      : theme.fn.variant({ variant: 'filled', color }).background,
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
   },
 }));

@@ -62,4 +62,10 @@ describe('@mantine/core/Alert', () => {
     const alert = rendered.getByRole('alert');
     expect(alert).toHaveAccessibleName('My Alert');
   });
+
+  it('has an accessible name even when not having an ID', () => {
+    const rendered = render(<Alert title="My Alert">test-alert</Alert>);
+    const alert = rendered.getByRole('alert');
+    expect(alert).toHaveAccessibleName('My Alert');
+  });
 });

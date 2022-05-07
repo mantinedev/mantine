@@ -1,0 +1,36 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'utils'
+title: 'use-network'
+order: 1
+slug: /hooks/use-network/
+description: 'Get current connection status'
+import: "import { useNetwork } from '@mantine/hooks';"
+docs: 'hooks/use-network.mdx'
+source: 'mantine-hooks/src/use-network/use-network.ts'
+---
+
+import { HooksDemos } from '@mantine/demos';
+
+## Usage
+
+`use-network` hook returns an object with current connection status:
+
+<Demo data={HooksDemos.useNetworkDemo} />
+
+## Browser support
+
+`use-network` uses experimental `navigator.connection`, see [browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection#browser_compatibility).
+
+## Definition
+
+```tsx
+function useNetwork(): {
+  downlink: number;
+  effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
+  saveData: boolean;
+  rtt: number;
+  online: boolean;
+};
+```

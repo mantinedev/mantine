@@ -2,7 +2,7 @@ import React, { useState, useRef, forwardRef, useEffect, useMemo } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   getDefaultZIndex,
   MantineNumberSize,
   useMantineDefaultProps,
@@ -12,7 +12,7 @@ import { Box } from '../../Box';
 import { MantineTransition, Transition } from '../../Transition';
 import useStyles from './FloatingTooltip.styles';
 
-export type FloatingTooltipStylesNames = ClassNames<typeof useStyles>;
+export type FloatingTooltipStylesNames = Selectors<typeof useStyles>;
 
 export interface FloatingTooltipProps
   extends DefaultProps<FloatingTooltipStylesNames>,

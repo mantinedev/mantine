@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -21,7 +21,7 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | ClassNames<typeof useStyles>;
+  | Selectors<typeof useStyles>;
 
 export interface AutocompleteItem {
   value: string;
@@ -62,6 +62,7 @@ const defaultProps: Partial<AutocompleteProps> = {
   zIndex: getDefaultZIndex('popover'),
   dropdownPosition: 'flip',
   maxDropdownHeight: 'auto',
+  positionDependencies: [],
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -108,6 +109,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      positionDependencies,
       ...others
     } = useMantineDefaultProps('Autocomplete', defaultProps, props);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
@@ -171,11 +173,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         }
 
         case 'Enter': {
-          if (dropdownOpened) {
-            event.preventDefault();
-          }
-
           if (filteredData[hovered] && dropdownOpened) {
+            event.preventDefault();
             handleChange(filteredData[hovered].value);
             typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
             setDropdownOpened(false);
@@ -286,6 +285,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             withinPortal={withinPortal}
             zIndex={zIndex}
             dropdownPosition={dropdownPosition}
+            positionDependencies={positionDependencies}
           >
             <SelectItems
               data={filteredData}

@@ -3,14 +3,14 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Progress.styles';
 import { Text } from '../Text';
 
-export type ProgressStylesNames = ClassNames<typeof useStyles>;
+export type ProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames>,
@@ -91,7 +91,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: Progre
           sx={{
             width: `${section.value}%`,
             left: `${section.accumulated}%`,
-            backgroundColor: theme.fn.themeColor(section.color, 6, false),
+            backgroundColor: theme.fn.themeColor(section.color, theme.fn.primaryShade(), false),
           }}
         >
           {section.label && <Text className={classes.label}>{section.label}</Text>}

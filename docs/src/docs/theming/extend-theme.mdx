@@ -78,12 +78,39 @@ import { MantineProvider } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         // THIS WILL RESUlT IN ERROR, DO NOT DO THIS
         primaryColor: '#EC45EE',
       }}
     >
       <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Primary shade
+
+`theme.primaryShade` is used to determine which shade will be used for the components that have `color` prop.
+Note that for some variants with dark color scheme `primaryShade` will not be used as it will cause contrast issues.
+
+<Demo data={ThemeDemos.primaryShade} />
+
+`primaryShade` can also be customized for dark and light color scheme separately:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{ primaryShade: { light: 6, dark: 8 } }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
+      <App />
     </MantineProvider>
   );
 }
@@ -110,6 +137,8 @@ import { Button, Code, MantineProvider, Title } from '@mantine/core';
 function YourApp() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         spacing: {
           xs: 2,
@@ -141,6 +170,8 @@ import { MantineProvider } from '@mantine/core';
 function YourApp() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         breakpoints: {
           sm: 800,
@@ -174,6 +205,8 @@ import { MantineProvider, Box } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         // Add any other properties on theme
         other: {

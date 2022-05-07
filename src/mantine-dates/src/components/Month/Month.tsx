@@ -4,7 +4,7 @@ import {
   Text,
   Box,
   MantineSize,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
@@ -66,7 +66,7 @@ export interface MonthSettings {
   isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
 }
 
-export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
+export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
@@ -78,8 +78,8 @@ export interface MonthProps
   /** Locale is used to get weekdays names with dayjs format */
   locale?: string;
 
-  /** Selected date */
-  value?: Date;
+  /** Selected date or an array of selected dates */
+  value?: Date | Date[];
 
   /** Selected range */
   range?: [Date, Date];
@@ -172,9 +172,12 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     )
   );
 
-  const hasValue = value instanceof Date;
+  const hasValue = Array.isArray(value)
+    ? value.every((item) => item instanceof Date)
+    : value instanceof Date;
+
   const hasValueInMonthRange =
-    hasValue &&
+    value instanceof Date &&
     dayjs(value).isAfter(dayjs(month).startOf('month')) &&
     dayjs(value).isBefore(dayjs(month).endOf('month'));
 

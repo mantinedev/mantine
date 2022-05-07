@@ -4,14 +4,14 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 import useStyles from './Pagination.styles';
 
-export type PaginationStylesNames = ClassNames<typeof useStyles>;
+export type PaginationStylesNames = Selectors<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,

@@ -5,7 +5,7 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  ClassNames,
+  Selectors,
   Box,
   Tabs,
   TabProps,
@@ -20,7 +20,7 @@ import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
 import useTabsStyles from './PrismTabs.styles';
 
-export type PrismStylesNames = ClassNames<typeof useStyles>;
+export type PrismStylesNames = Selectors<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
@@ -199,7 +199,7 @@ export function PrismTab(_props: PrismTabProps) {
   return null;
 }
 
-export type PrismTabsStylesNames = ClassNames<typeof useTabsStyles> | PrismStylesNames;
+export type PrismTabsStylesNames = Selectors<typeof useTabsStyles> | PrismStylesNames;
 export interface PrismTabsProps
   extends DefaultProps<PrismTabsStylesNames>,
     Omit<TabsProps, 'classNames' | 'styles'> {}

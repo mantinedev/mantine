@@ -15,3 +15,4 @@ export { disabled } from './DatePicker.demo.disabled';
 export { freeInput } from './DatePicker.demo.freeInput';
 export { multipleMonths } from './DatePicker.demo.multipleMonths';
 export { noLevel } from './DatePicker.demo.noLevel';
+export { renderDay } from './DatePicker.demo.renderDay';

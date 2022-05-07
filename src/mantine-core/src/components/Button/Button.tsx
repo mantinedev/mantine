@@ -3,10 +3,9 @@ import {
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineGradient,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -15,7 +14,7 @@ import { Box } from '../Box';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ButtonStylesNames = ClassNames<typeof useStyles>;
+export type ButtonStylesNames = Selectors<typeof useStyles>;
 
 export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
@@ -120,7 +119,7 @@ export const Button: ButtonComponent = forwardRef(
       },
       { classNames, styles, name: 'Button' }
     );
-    const colors = getSharedColorScheme({ color, theme, variant });
+    const colors = theme.fn.variant({ color, variant });
     const loader = (
       <Loader
         color={colors.color}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Collapse } from '../../Collapse';
 import { UnstyledButton } from '../../Button';
@@ -9,7 +9,7 @@ import { ChevronIcon } from './ChevronIcon';
 import useStyles, { AccordionIconPosition } from './AccordionItem.styles';
 
 export type { AccordionIconPosition };
-export type AccordionItemStylesNames = ClassNames<typeof useStyles>;
+export type AccordionItemStylesNames = Selectors<typeof useStyles>;
 
 export interface PublicAccordionItemProps
   extends DefaultProps<AccordionItemStylesNames>,

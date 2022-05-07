@@ -81,7 +81,7 @@ export default createStyles(
       },
 
       separatorActive: {
-        backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 7 : 6),
+        backgroundColor: theme.fn.variant({ variant: 'filled', color }).background,
       },
 
       content: {

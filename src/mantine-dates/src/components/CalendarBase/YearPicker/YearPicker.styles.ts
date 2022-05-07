@@ -1,4 +1,4 @@
-import { createStyles, getSharedColorScheme, MantineSize } from '@mantine/core';
+import { createStyles, MantineSize } from '@mantine/core';
 
 interface YearPickerStyles {
   size: MantineSize;
@@ -13,7 +13,7 @@ const sizes = {
 };
 
 export default createStyles((theme, { size }: YearPickerStyles) => {
-  const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
+  const colors = theme.fn.variant({ color: theme.primaryColor, variant: 'filled' });
 
   return {
     yearPicker: {
@@ -34,17 +34,17 @@ export default createStyles((theme, { size }: YearPickerStyles) => {
       borderRadius: theme.radius.sm,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
 
-      '&:hover': {
+      ...theme.fn.hover({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-      },
+      }),
 
       '&:disabled': {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
         cursor: 'not-allowed',
 
-        '&:hover': {
+        ...theme.fn.hover({
           backgroundColor: 'transparent',
-        },
+        }),
       },
     },
 
@@ -52,9 +52,9 @@ export default createStyles((theme, { size }: YearPickerStyles) => {
       backgroundColor: colors.background,
       color: colors.color,
 
-      '&:hover': {
+      ...theme.fn.hover({
         backgroundColor: colors.hover,
-      },
+      }),
     },
   };
 });

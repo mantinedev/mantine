@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import {
-  ClassNames,
+  Selectors,
   DefaultProps,
   MantineNumberSize,
   getDefaultZIndex,
@@ -16,7 +16,7 @@ import useStyles, {
   HorizontalSectionWidth,
 } from './HorizontalSection.styles';
 
-export type HorizontalSectionStylesNames = ClassNames<typeof useStyles>;
+export type HorizontalSectionStylesNames = Selectors<typeof useStyles>;
 
 export interface HorizontalSectionSharedProps extends DefaultProps<HorizontalSectionStylesNames> {
   /** Component width with breakpoints */

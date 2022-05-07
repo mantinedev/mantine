@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -12,7 +12,7 @@ import { CloseButton } from '../ActionIcon';
 import { Box } from '../Box';
 import useStyles from './Notification.styles';
 
-export type NotificationStylesNames = Exclude<ClassNames<typeof useStyles>, 'withIcon'>;
+export type NotificationStylesNames = Exclude<Selectors<typeof useStyles>, 'withIcon'>;
 
 export interface NotificationProps
   extends DefaultProps<NotificationStylesNames>,

@@ -10,7 +10,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -19,7 +19,7 @@ import { Popper, SharedPopperProps } from '../Popper';
 import { PopoverBody, PopoverBodyStylesNames } from './PopoverBody/PopoverBody';
 import useStyles from './Popover.styles';
 
-export type PopoverStylesNames = ClassNames<typeof useStyles> | PopoverBodyStylesNames;
+export type PopoverStylesNames = Selectors<typeof useStyles> | PopoverBodyStylesNames;
 
 export interface PopoverProps
   extends DefaultProps<PopoverStylesNames>,

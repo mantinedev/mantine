@@ -1,7 +1,7 @@
 {
   "name": "@mantine/styles",
   "description": "Mantine css-in-js styles engine, based on emotion",
-  "version": "4.1.4",
+  "version": "4.2.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -31,11 +31,11 @@
   },
   "dependencies": {
     "clsx": "^1.1.1",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/serialize": "^1.0.2",
-    "@emotion/utils": "^1.0.0",
-    "csstype": "^3.0.9"
+    "@emotion/cache": "11.7.1",
+    "@emotion/react": "11.7.1",
+    "@emotion/serialize": "1.0.2",
+    "@emotion/utils": "1.0.0",
+    "csstype": "3.0.9"
   },
   "devDependencies": {}
 }

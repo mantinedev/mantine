@@ -33,6 +33,7 @@ export * from './components/Grid';
 export * from './components/Group';
 export * from './components/Highlight';
 export * from './components/Image';
+export * from './components/Indicator';
 export * from './components/Input';
 export * from './components/InputWrapper';
 export * from './components/JsonInput';

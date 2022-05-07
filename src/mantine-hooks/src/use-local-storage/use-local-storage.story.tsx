@@ -24,11 +24,29 @@ export function SerializeJson() {
     defaultValue: { mantine: 'is awesome' },
   });
 
+  const [value2, setValue2] = useLocalStorage<{ mantine: string }>({
+    key: '@mantine/localStorage/val',
+    defaultValue: { mantine: 'is awesome' },
+  });
+
+  const [value3, setValue3] = useLocalStorage<{ mantine: string }>({
+    key: '@mantine/localStorage/another-value',
+    defaultValue: { mantine: 'is awesome' },
+  });
+
   return (
     <div style={{ padding: 20 }}>
       <input
         value={value.mantine}
         onChange={(event) => setValue({ mantine: event.target.value })}
+      />
+      <input
+        value={value2.mantine}
+        onChange={(event) => setValue2({ mantine: event.target.value })}
+      />
+      <input
+        value={value3.mantine}
+        onChange={(event) => setValue3({ mantine: event.target.value })}
       />
     </div>
   );
@@ -49,6 +67,25 @@ export function SerializeBoolean() {
           setValue(event.currentTarget.checked);
         }}
       />
+    </div>
+  );
+}
+
+export function MultipleHooks() {
+  const [value, setValue] = useLocalStorage<string>({
+    key: 'some-value',
+    defaultValue: '',
+  });
+
+  const [value2] = useLocalStorage<string>({
+    key: 'some-value',
+    defaultValue: '',
+  });
+
+  return (
+    <div style={{ padding: 20 }}>
+      <input value={value} onChange={(event) => setValue(event.currentTarget.value)} />
+      <input value={value2} readOnly />
     </div>
   );
 }

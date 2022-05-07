@@ -1,7 +1,7 @@
 {
   "name": "@mantine/ssr",
   "description": "Mantine server side rendering utils",
-  "version": "4.1.4",
+  "version": "4.2.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -31,14 +31,14 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@emotion/server": "^11.4.0",
-    "@mantine/styles": "4.1.4",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.7.1",
-    "@emotion/serialize": "^1.0.2",
-    "@emotion/utils": "^1.0.0",
-    "csstype": "^3.0.9",
-    "html-react-parser": "^1.3.0"
+    "@emotion/server": "11.4.0",
+    "@mantine/styles": "4.2.2",
+    "@emotion/cache": "11.7.1",
+    "@emotion/react": "11.7.1",
+    "@emotion/serialize": "1.0.2",
+    "@emotion/utils": "1.0.0",
+    "csstype": "3.0.9",
+    "html-react-parser": "1.3.0"
   },
   "devDependencies": {}
 }

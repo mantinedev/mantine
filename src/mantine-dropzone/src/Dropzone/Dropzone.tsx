@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineNumberSize,
   LoadingOverlay,
   Box,
@@ -11,7 +11,7 @@ import {
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
 
-export type DropzoneStylesNames = ClassNames<typeof useStyles>;
+export type DropzoneStylesNames = Selectors<typeof useStyles>;
 
 export interface DropzoneStatus {
   accepted: boolean;

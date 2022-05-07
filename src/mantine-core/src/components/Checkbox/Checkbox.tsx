@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   MantineNumberSize,
   useMantineDefaultProps,
@@ -13,7 +13,7 @@ import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
 import useStyles from './Checkbox.styles';
 
-export type CheckboxStylesNames = ClassNames<typeof useStyles>;
+export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames>,

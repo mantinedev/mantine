@@ -14,7 +14,7 @@ import {
   Modal,
   CloseButton,
   MantineShadow,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
 } from '@mantine/core';
@@ -29,7 +29,7 @@ import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | CalendarBaseStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
@@ -78,7 +78,7 @@ export interface DatePickerBaseSharedProps
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 
   /** Popper zIndex */

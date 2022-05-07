@@ -19,4 +19,13 @@ storiesOf('Divider', module)
     <MantineProvider defaultProps={{ Divider: { color: 'red' } }}>
       <Divider />
     </MantineProvider>
+  ))
+  .add('Label props', () => (
+    <Divider
+      labelPosition="center"
+      label="test label"
+      color="blue"
+      size="xs"
+      labelProps={{ color: 'pink', size: 'xl' }}
+    />
   ));

@@ -4,11 +4,11 @@ import {
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
 } from '@mantine/core';
 import useStyles from './DefaultValue.styles';
 
-export type DefaultValueStylesNames = ClassNames<typeof useStyles>;
+export type DefaultValueStylesNames = Selectors<typeof useStyles>;
 
 export interface TagInputValueProps
   extends DefaultProps<DefaultValueStylesNames>,

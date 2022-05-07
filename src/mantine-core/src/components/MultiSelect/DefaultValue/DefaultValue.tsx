@@ -1,9 +1,9 @@
 import React from 'react';
-import { DefaultProps, MantineSize, MantineNumberSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, MantineNumberSize, Selectors } from '@mantine/styles';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './DefaultValue.styles';
 
-export type DefaultValueStylesNames = ClassNames<typeof useStyles>;
+export type DefaultValueStylesNames = Selectors<typeof useStyles>;
 
 export interface MultiSelectValueProps
   extends DefaultProps<DefaultValueStylesNames>,

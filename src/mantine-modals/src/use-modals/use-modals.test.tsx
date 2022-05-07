@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
 import { renderHook, WrapperComponent } from '@testing-library/react-hooks';
 import { MantineProvider } from '@mantine/core';
@@ -29,7 +29,7 @@ describe('@mantine/modals/use-modals', () => {
   });
 
   it('returns context value of ModalsProvider', () => {
-    const wrapper = ({ children }) => (
+    const wrapper = ({ children }: PropsWithChildren<unknown>) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>
       </MantineProvider>
@@ -120,6 +120,34 @@ describe('@mantine/modals/use-modals', () => {
     render(<Component />, { wrapper });
     expect(screen.getByText('Confirm')).toBeInTheDocument();
     expect(screen.getByText('Cancel')).toBeInTheDocument();
+  });
+
+  it('correctly renders a confirm modal with labels as HTMLElement', async () => {
+    const wrapper: WrapperComponent<unknown> = ({ children }) => (
+      <MantineProvider>
+        <ModalsProvider>{children}</ModalsProvider>
+      </MantineProvider>
+    );
+
+    const Component = () => {
+      const modals = useModals();
+
+      useEffect(() => {
+        modals.openConfirmModal({
+          labels: {
+            confirm: <span>Confirm</span>,
+            cancel: <span>Cancel</span>,
+          },
+        });
+      }, []);
+
+      return <div>Empty</div>;
+    };
+
+    render(<Component />, { wrapper });
+
+    expect(screen.getByText('Confirm')).toContainHTML('span');
+    expect(screen.getByText('Cancel')).toContainHTML('span');
   });
 
   it('correctly renders a regular modal with children and a title', () => {

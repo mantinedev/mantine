@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
 import {
-  ClassNames,
+  Selectors,
   DefaultProps,
   extractSystemStyles,
   useMantineTheme,
@@ -14,7 +14,7 @@ import { InputWrapper } from '../InputWrapper';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import useStyles from './PasswordInput.styles';
 
-export type PasswordInputStylesNames = ClassNames<typeof useStyles> | TextInputStylesNames;
+export type PasswordInputStylesNames = Selectors<typeof useStyles> | TextInputStylesNames;
 
 export interface PasswordInputProps
   extends DefaultProps<PasswordInputStylesNames>,

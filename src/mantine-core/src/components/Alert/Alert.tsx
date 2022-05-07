@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -12,7 +12,7 @@ import { Box } from '../Box';
 import useStyles from './Alert.styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
-export type AlertStylesNames = ClassNames<typeof useStyles>;
+export type AlertStylesNames = Selectors<typeof useStyles>;
 
 export interface AlertProps
   extends DefaultProps<AlertStylesNames>,
@@ -74,7 +74,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
 
   const rootId = useUuid(id);
 
-  const titleId = title && id && `${rootId}-title`;
+  const titleId = title && `${rootId}-title`;
   const bodyId = `${rootId}-body`;
 
   return (

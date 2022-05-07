@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState, forwardRef, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import {
   useReducedMotion,
   useResizeObserver,
   useUncontrolled,
   useUuid,
   useMergedRef,
+  useIsomorphicEffect,
 } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -20,9 +21,10 @@ import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
 export interface SegmentedControlItem {
   value: string;
   label: React.ReactNode;
+  disabled?: boolean;
 }
 
-export type SegmentedControlStylesNames = ClassNames<typeof useStyles>;
+export type SegmentedControlStylesNames = Selectors<typeof useStyles>;
 
 export interface SegmentedControlProps
   extends DefaultProps<SegmentedControlStylesNames>,
@@ -95,8 +97,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   } = useMantineDefaultProps('SegmentedControl', defaultProps, props);
 
   const reduceMotion = useReducedMotion();
-  const data = _data.map((item: any) =>
-    typeof item === 'string' ? { label: item, value: item } : item
+  const data = _data.map(
+    (item: string | SegmentedControlItem): SegmentedControlItem =>
+      typeof item === 'string' ? { label: item, value: item } : item
   );
   const mounted = useRef<Boolean>();
 
@@ -104,7 +107,9 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const [_value, handleValueChange] = useUncontrolled({
     value,
     defaultValue,
-    finalValue: Array.isArray(data) ? data[0].value : null,
+    finalValue: Array.isArray(data)
+      ? data.find((item) => !item.disabled)?.value ?? data[0].value
+      : null,
     onChange,
     rule: (val) => !!val,
   });
@@ -132,7 +137,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const [observerRef, containerRect] = useResizeObserver();
 
-  useLayoutEffect(() => {
+  useIsomorphicEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
       setShouldAnimate(false);
@@ -171,7 +176,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     >
       <input
         className={classes.input}
-        disabled={disabled}
+        disabled={disabled || item.disabled}
         type="radio"
         name={uuid}
         value={item.value}
@@ -183,7 +188,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       <label
         className={cx(classes.label, {
           [classes.labelActive]: _value === item.value,
-          [classes.disabled]: disabled,
+          [classes.disabled]: disabled || item.disabled,
         })}
         htmlFor={`${uuid}-${item.value}`}
         ref={(node) => {

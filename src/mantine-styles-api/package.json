@@ -2,7 +2,7 @@
   "name": "@mantine/styles-api",
   "description": "Mantine components styles api descriptions",
   "private": true,
-  "version": "4.1.4",
+  "version": "4.2.2",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -16,8 +16,8 @@
     "directory": "src/mantine-styles-api"
   },
   "peerDependencies": {
-    "@mantine/core": "4.1.4",
-    "@mantine/hooks": "4.1.4"
+    "@mantine/core": "4.2.2",
+    "@mantine/hooks": "4.2.2"
   },
   "dependencies": {},
   "devDependencies": {}

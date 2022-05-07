@@ -4,6 +4,7 @@ const replace = {
   MantineNumberSize: 'number | "xs" | "sm" | "md" | "lg" | "xl"',
   MantineSize: '"xs" | "sm" | "md" | "lg" | "xl"',
   GroupPosition: '"right" | "center" | "left" | "apart"',
+  DefaultMantineColor: 'MantineColor',
   ReactText: 'string | number',
   'ReactElement<any, string | ((props: any) => ReactElement<any, any>) | (new (props: any) => Component<any, any, any>)>':
     'ReactElement',

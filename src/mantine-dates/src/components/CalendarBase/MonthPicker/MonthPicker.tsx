@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, ClassNames, UnstyledButton, MantineSize } from '@mantine/core';
+import { DefaultProps, Selectors, UnstyledButton, MantineSize } from '@mantine/core';
 import { getMonthsNames } from '../../../utils';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
 import { isMonthInRange } from './is-month-in-range/is-month-in-range';
 import useStyles from './MonthPicker.styles';
 
-export type MonthPickerStylesNames = ClassNames<typeof useStyles> | CalendarHeaderStylesNames;
+export type MonthPickerStylesNames = Selectors<typeof useStyles> | CalendarHeaderStylesNames;
 
 export interface MonthPickerProps
   extends DefaultProps<MonthPickerStylesNames>,

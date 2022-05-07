@@ -49,6 +49,7 @@ export default createStyles(
   (theme, { size, radius, color, offLabel, onLabel }: SwitchStylesParams) => {
     const handleSize = theme.fn.size({ size, sizes: handleSizes });
     const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       root: {
@@ -113,8 +114,8 @@ export default createStyles(
         },
 
         '&:checked': {
-          backgroundColor: theme.fn.themeColor(color, 6),
-          borderColor: theme.fn.themeColor(color, 6),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
 
           '&::before': {
             transform: `translateX(${

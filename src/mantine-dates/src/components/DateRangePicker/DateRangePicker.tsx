@@ -158,8 +158,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       if (!isOpened && firstValueValid && _value[1] === null) {
         handleClear();
       }
-      setDropdownOpened(!dropdownOpened);
-      !dropdownOpened ? onDropdownOpen?.() : onDropdownClose?.();
+      setDropdownOpened(isOpened);
     };
 
     return (

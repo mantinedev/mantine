@@ -2,7 +2,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -25,7 +25,7 @@ export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | ClassNames<typeof useStyles>;
+  | Selectors<typeof useStyles>;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,

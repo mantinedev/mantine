@@ -49,4 +49,23 @@ describe('@mantine/spotlight/filter-actions', () => {
       { title: 'action-test-2', keywords: ['orange', 'banana', 'apple'], onTrigger },
     ]);
   });
+
+  it('filters actions and prioritizes title match over description and keyword match', () => {
+    expect(
+      filterActions('test', [
+        { title: 'Test action 1', onTrigger },
+        { title: 'Some action', description: 'test this action', onTrigger },
+        { title: 'action-test-2', onTrigger },
+        { title: 'Another action', onTrigger },
+        { title: ' Still another action', description: 'test', onTrigger },
+        { title: ' Yet another action', keywords: ['test'], onTrigger },
+      ])
+    ).toStrictEqual([
+      { title: 'Test action 1', onTrigger },
+      { title: 'action-test-2', onTrigger },
+      { title: 'Some action', description: 'test this action', onTrigger },
+      { title: ' Still another action', description: 'test', onTrigger },
+      { title: ' Yet another action', keywords: ['test'], onTrigger },
+    ]);
+  });
 });

@@ -1,10 +1,10 @@
 import React from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useListContext } from '../List.context';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesNames = ClassNames<typeof useStyles>;
+export type ListItemStylesNames = Selectors<typeof useStyles>;
 
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,

@@ -5,12 +5,12 @@ import {
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
-  ClassNames,
+  Selectors,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './ColorSwatch.styles';
 
-export type ColorSwatchStylesNames = ClassNames<typeof useStyles>;
+export type ColorSwatchStylesNames = Selectors<typeof useStyles>;
 
 interface _ColorSwatchProps extends DefaultProps<ColorSwatchStylesNames> {
   /** Swatch color value in any css valid format (hex, rgb, etc.) */

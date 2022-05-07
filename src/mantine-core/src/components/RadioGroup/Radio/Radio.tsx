@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
@@ -12,7 +12,7 @@ import { Box } from '../../Box';
 import { RadioIcon } from './RadioIcon';
 import useStyles from './Radio.styles';
 
-export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
+export type RadioStylesNames = Exclude<Selectors<typeof useStyles>, 'labelDisabled'>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
@@ -88,7 +88,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
           disabled={disabled}
           {...rest}
         />
-        <Icon className={classes.icon} />
+        <Icon className={classes.icon} aria-hidden />
       </div>
 
       {label && (

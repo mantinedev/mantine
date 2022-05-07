@@ -6,7 +6,7 @@ import {
   Overlay,
   Paper,
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineShadow,
   TextInput,
   getDefaultZIndex,
@@ -21,7 +21,7 @@ import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionsListStylesNames;
+export type SpotlightStylesNames = Selectors<typeof useStyles> | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,

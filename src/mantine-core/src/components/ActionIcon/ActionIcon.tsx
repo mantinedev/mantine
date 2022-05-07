@@ -2,18 +2,17 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineColor,
   PolymorphicComponentProps,
   PolymorphicRef,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ActionIconStylesNames = ClassNames<typeof useStyles>;
+export type ActionIconStylesNames = Selectors<typeof useStyles>;
 
 interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Icon rendered inside button */
@@ -74,7 +73,7 @@ export const ActionIcon: ActionIconComponent = forwardRef(
       { size, radius, color },
       { name: 'ActionIcon', classNames, styles }
     );
-    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
+    const colors = theme.fn.variant({ color, variant: 'light' });
 
     const loader = (
       <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />

@@ -22,7 +22,7 @@ function App() {
 // Custom theme is applied to all components in App
 function WithProvider() {
   return (
-    <MantineProvider theme={{ fontFamily: 'Open Sans' }}>
+    <MantineProvider theme={{ fontFamily: 'Open Sans' }} withGlobalStyles withNormalizeCSS>
       <App />
     </MantineProvider>
   );
@@ -54,8 +54,11 @@ interface MantineTheme {
   // Object of arrays with 10 colors
   colors: Record<string, Tuple<string, 10>>;
 
-  // Should be key of theme.colors, cannot be actual color value
+  // Key of theme.colors
   primaryColor: string;
+
+  // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  primaryShade: Shade | { light: Shade; dark: Shade };
 
   // font-family and line-height used in most components
   fontFamily: string;
@@ -120,6 +123,8 @@ import { MantineProvider } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         // Theme is deeply merged with default theme
         colorScheme: 'light',
@@ -165,7 +170,7 @@ const myTheme: MantineThemeOverride = {
 
 function App() {
   return (
-    <MantineProvider theme={myTheme}>
+    <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -202,6 +207,8 @@ function App() {
   return (
     // Parent MantineProvider
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ colorScheme: 'dark' }}
       styles={{ Button: { root: { fontWeight: 400 } } }}
       defaultProps={{ Badge: { variant: 'outline' } }}
@@ -236,7 +243,11 @@ import { MantineProvider, Text } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider styles={{ Text: { root: { fontSize: 20 } } }}>
+    <MantineProvider
+      styles={{ Text: { root: { fontSize: 20 } } }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Text>20px text</Text>
     </MantineProvider>
   );
@@ -252,7 +263,11 @@ import { MantineProvider, Button } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider classNames={{ Button: { root: 'button-root', label: 'button-label' } }}>
+    <MantineProvider
+      classNames={{ Button: { root: 'button-root', label: 'button-label' } }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Button>All Button components will have the classes above</Button>
     </MantineProvider>
   );
@@ -271,7 +286,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider withCSSVariables>
+    <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -316,6 +331,8 @@ import { MantineProvider, Button, Badge } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withNormalizeCSS
+      withGlobalStyles
       defaultProps={{
         Button: { color: 'red' },
         Badge: { size: 'xl', radius: 0 },
@@ -372,7 +389,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine' }}>
+    <MantineProvider emotionOptions={{ key: 'mantine' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -390,7 +407,11 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+    <MantineProvider
+      emotionOptions={{ key: 'mantine', prepend: false }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <YourApp />
     </MantineProvider>
   );
@@ -406,7 +427,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'custom-key' }}>
+    <MantineProvider emotionOptions={{ key: 'custom-key' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );

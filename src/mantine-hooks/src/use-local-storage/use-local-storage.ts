@@ -53,10 +53,16 @@ export function useLocalStorage<T = string>({
         setValue((current) => {
           const result = val(current);
           window.localStorage.setItem(key, serialize(result));
+          window.dispatchEvent(
+            new CustomEvent('mantine-local-storage', { detail: { key, value: val(current) } })
+          );
           return result;
         });
       } else {
         window.localStorage.setItem(key, serialize(val));
+        window.dispatchEvent(
+          new CustomEvent('mantine-local-storage', { detail: { key, value: val } })
+        );
         setValue(val);
       }
     },
@@ -66,6 +72,12 @@ export function useLocalStorage<T = string>({
   useWindowEvent('storage', (event) => {
     if (event.storageArea === window.localStorage && event.key === key) {
       setValue(deserialize(event.newValue ?? undefined));
+    }
+  });
+
+  useWindowEvent('mantine-local-storage', (event) => {
+    if (event.detail.key === key) {
+      setValue(event.detail.value);
     }
   });
 

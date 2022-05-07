@@ -8,7 +8,7 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  ClassNames,
+  Selectors,
   CloseButton,
   extractSystemStyles,
   useMantineDefaultProps,
@@ -23,7 +23,7 @@ import { getDate } from '../TimeInputBase/get-date/get-date';
 import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 
 export type TimeInputStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -224,6 +224,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleClear = () => {
       setTime({ hours: '', minutes: '', seconds: '', amPm: '' });
       setValue(null);
+      onChange?.(null);
       hoursRef.current.focus();
     };
 

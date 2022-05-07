@@ -50,6 +50,13 @@ Then set `locale` prop in component:
 
 <Demo data={DatePickerDemos.localization} />
 
+## Custom day renderer
+
+You can provide your own day renderer function with `renderDay` prop.
+For example, it can be used to wrap day with [Indicator](/core/indicator/):
+
+<Demo data={DatePickerDemos.renderDay} />
+
 ## Level change
 
 DatePicker supports three levels: date, month and year. User can access next level by clicking label between next/previous controls.
