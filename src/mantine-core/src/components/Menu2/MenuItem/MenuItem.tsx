@@ -54,6 +54,7 @@ function MenuItem({ children, className, color, closeMenuOnClick, ...others }: M
     <Box
       component="button"
       {...others}
+      tabIndex={-1}
       onFocus={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
       className={cx(classes.item, className)}
       ref={itemRef}

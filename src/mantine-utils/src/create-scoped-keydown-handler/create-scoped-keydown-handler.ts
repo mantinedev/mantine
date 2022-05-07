@@ -80,7 +80,6 @@ export function createScopedKeydownHandler({
   orientation,
 }: GetElementsSiblingsInput) {
   return (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
     onKeyDown?.(event);
 
     const elements = Array.from(
@@ -98,6 +97,7 @@ export function createScopedKeydownHandler({
     switch (event.key) {
       case 'ArrowRight': {
         if (orientation === 'horizontal') {
+          event.stopPropagation();
           event.preventDefault();
           elements[nextIndex].focus();
           activateOnFocus && elements[nextIndex].click();
@@ -108,6 +108,7 @@ export function createScopedKeydownHandler({
 
       case 'ArrowLeft': {
         if (orientation === 'horizontal') {
+          event.stopPropagation();
           event.preventDefault();
           elements[previousIndex].focus();
           activateOnFocus && elements[previousIndex].click();
@@ -118,6 +119,7 @@ export function createScopedKeydownHandler({
 
       case 'ArrowUp': {
         if (orientation === 'vertical') {
+          event.stopPropagation();
           event.preventDefault();
           elements[_previousIndex].focus();
           activateOnFocus && elements[_previousIndex].click();
@@ -128,6 +130,7 @@ export function createScopedKeydownHandler({
 
       case 'ArrowDown': {
         if (orientation === 'vertical') {
+          event.stopPropagation();
           event.preventDefault();
           elements[_nextIndex].focus();
           activateOnFocus && elements[_nextIndex].click();
@@ -137,12 +140,14 @@ export function createScopedKeydownHandler({
       }
 
       case 'Home': {
+        event.stopPropagation();
         event.preventDefault();
         !elements[0].disabled && elements[0].focus();
         break;
       }
 
       case 'End': {
+        event.stopPropagation();
         event.preventDefault();
         const last = elements.length - 1;
         !elements[last].disabled && elements[last].focus();

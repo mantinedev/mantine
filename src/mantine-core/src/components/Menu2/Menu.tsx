@@ -50,6 +50,9 @@ export interface MenuProps extends PopoverBaseProps {
   /** Close delay in ms, applicable only to trigger="hover" variant */
   closeDelay?: number;
 
+  /** Determines whether dropdown should be closed on outside clicks, default to true */
+  closeOnClickOutside?: boolean;
+
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
