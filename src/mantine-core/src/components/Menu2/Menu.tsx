@@ -5,8 +5,9 @@ import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
-import { MenuTrigger } from './MenuTrigger/MenuTrigger';
+import { MenuTarget } from './MenuTarget/MenuTarget';
 import { MenuContextProvider } from './Menu.context';
+import { MenuTriggerEvent } from './Menu.types';
 
 export interface MenuProps extends PopoverBaseProps {
   /** Menu content */
@@ -35,6 +36,9 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Determines whether dropdown should be closed when Escape key is pressed, defaults to true */
   closeOnEscape?: boolean;
+
+  /** Event which should open menu */
+  trigger?: MenuTriggerEvent;
 }
 
 export function Menu({
@@ -47,6 +51,7 @@ export function Menu({
   closeOnItemClick = true,
   loop = true,
   closeOnEscape,
+  trigger = 'click',
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -80,6 +85,7 @@ export function Menu({
         closeOnItemClick,
         closeDropdown,
         loop,
+        trigger,
       }}
     >
       <Popover
@@ -102,5 +108,5 @@ Menu.displayName = '@mantine/core/Menu';
 Menu.Item = MenuItem;
 Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
-Menu.Trigger = MenuTrigger;
+Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;

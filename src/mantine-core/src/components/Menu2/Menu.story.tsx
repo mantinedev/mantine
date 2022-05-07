@@ -8,9 +8,9 @@ export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
       <Menu withArrow width={200} shadow="md" closeOnEscape={false}>
-        <Menu.Trigger>
+        <Menu.Target>
           <Button>Toggle menu</Button>
-        </Menu.Trigger>
+        </Menu.Target>
 
         <Menu.Dropdown>
           <Menu.Label>Label 1</Menu.Label>

@@ -4,7 +4,7 @@ import { useMenuContext } from '../Menu.context';
 import { Popover } from '../../Popover';
 import { MENU_ERRORS } from '../Menu.errors';
 
-export interface MenuTriggerProps {
+export interface MenuTargetProps {
   /** Target element */
   children: React.ReactNode;
 
@@ -12,7 +12,7 @@ export interface MenuTriggerProps {
   refProp?: string;
 }
 
-export function MenuTrigger({ children, refProp = 'ref' }: MenuTriggerProps) {
+export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
   if (!isElement(children)) {
     throw new Error(MENU_ERRORS['menu-children']);
   }
@@ -29,4 +29,4 @@ export function MenuTrigger({ children, refProp = 'ref' }: MenuTriggerProps) {
   return <Popover.Target refProp={refProp}>{cloneElement(target, { onClick })}</Popover.Target>;
 }
 
-MenuTrigger.displayName = '@mantine/core/MenuTrigger';
+MenuTarget.displayName = '@mantine/core/MenuTarget';

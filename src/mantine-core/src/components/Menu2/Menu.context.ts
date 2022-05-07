@@ -1,5 +1,6 @@
 import { createSafeContext } from '@mantine/utils';
 import { MENU_ERRORS } from './Menu.errors';
+import { MenuTriggerEvent } from './Menu.types';
 
 interface MenuContext {
   toggleDropdown(): void;
@@ -9,6 +10,7 @@ interface MenuContext {
   hovered: number;
   closeOnItemClick: boolean;
   loop: boolean;
+  trigger: MenuTriggerEvent;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
