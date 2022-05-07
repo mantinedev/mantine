@@ -44,7 +44,7 @@ export function useNetwork() {
   useWindowEvent('offline', () => setStatus({ online: false, ...getConnection() }));
 
   useEffect(() => {
-    if (navigator?.connection) {
+    if (navigator.connection) {
       navigator.connection.addEventListener('change', handleConnectionChange);
       return () => navigator.connection.removeEventListener('change', handleConnectionChange);
     }
