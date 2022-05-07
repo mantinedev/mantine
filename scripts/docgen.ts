@@ -27,6 +27,12 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/HoverCard/HoverCardTarget/HoverCardTarget.tsx',
   '../src/mantine-core/src/components/HoverCard/HoverCardDropdown/HoverCardDropdown.tsx',
 
+  // Menu
+  '../src/mantine-core/src/components/Menu/MenuTarget/MenuTarget.tsx',
+  '../src/mantine-core/src/components/Menu/MenuDropdown/MenuDropdown.tsx',
+  '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
+  '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',

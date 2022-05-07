@@ -28,7 +28,7 @@ export interface MenuItemProps extends DefaultProps {
   rightSection?: React.ReactNode;
 }
 
-function MenuItem({
+export function _MenuItem({
   children,
   className,
   color,
@@ -96,7 +96,6 @@ function MenuItem({
   );
 }
 
-MenuItem.displayName = '@mantine/core/MenuItem';
+_MenuItem.displayName = '@mantine/core/MenuItem';
 
-const PolymorphicMenuItem = createPolymorphicComponent<'button', MenuItemProps>(MenuItem);
-export { PolymorphicMenuItem as MenuItem };
+export const MenuItem = createPolymorphicComponent<'button', MenuItemProps>(_MenuItem);
