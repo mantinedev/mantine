@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
-import { DefaultProps, MantineColor } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useContextStylesApi } from '@mantine/styles';
 import { createPolymorphicComponent, createScopedKeydownHandler } from '@mantine/utils';
 import { Box } from '../../Box';
-import useStyles from './MenuItem.styles';
 import { useMenuContext } from '../Menu.context';
+import useStyles from './MenuItem.styles';
+
+export type MenuItemStylesNames = Selectors<typeof useStyles>;
 
 export interface MenuItemProps extends DefaultProps {
   /** Item label */
@@ -18,7 +20,11 @@ export interface MenuItemProps extends DefaultProps {
 
 function MenuItem({ children, className, color, closeMenuOnClick, ...others }: MenuItemProps) {
   const ctx = useMenuContext();
-  const { classes, cx, theme } = useStyles({ radius: 'sm', color }, { name: 'Menu' });
+  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classes, cx, theme } = useStyles(
+    { radius: 'sm', color },
+    { name: 'Menu', classNames, styles, unstyled }
+  );
   const itemRef = useRef<HTMLButtonElement>();
 
   const itemIndex = ctx.getItemIndex(itemRef.current);

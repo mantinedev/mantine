@@ -1,7 +1,9 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
 import { Text } from '../../Text';
 import useStyles from './MenuLabel.styles';
+
+export type MenuLabelStylesName = Selectors<typeof useStyles>;
 
 export interface MenuLabelProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
   /** Label content */
@@ -9,7 +11,8 @@ export interface MenuLabelProps extends DefaultProps, React.ComponentPropsWithou
 }
 
 export function MenuLabel({ children, className, ...others }: MenuLabelProps) {
-  const { classes, cx } = useStyles();
+  const { classNames, styles, unstyled } = useContextStylesApi();
+  const { classes, cx } = useStyles(null, { name: 'Menu', classNames, styles, unstyled });
   return (
     <Text className={cx(classes.label, className)} {...others}>
       {children}

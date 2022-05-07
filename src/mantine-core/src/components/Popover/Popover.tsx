@@ -80,11 +80,6 @@ export interface PopoverBaseProps {
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
-
-  unstyled?: boolean;
-  classNames?: ClassNames<PopoverStylesNames>;
-  styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
-  __staticSelector?: string;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -118,6 +113,7 @@ export interface PopoverProps extends PopoverBaseProps {
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
+  __staticSelector?: string;
 }
 
 const defaultProps: Partial<PopoverProps> = {

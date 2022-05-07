@@ -1,14 +1,17 @@
 import React from 'react';
 import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
+import { StylesApiProvider, ClassNames, Styles } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
-import { MenuDivider } from './MenuDivider/MenuDivider';
+import { MenuDivider, MenuDividerStylesNames } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
-import { MenuItem } from './MenuItem/MenuItem';
-import { MenuLabel } from './MenuLabel/MenuLabel';
+import { MenuItem, MenuItemStylesNames } from './MenuItem/MenuItem';
+import { MenuLabel, MenuLabelStylesName } from './MenuLabel/MenuLabel';
 import { MenuTarget } from './MenuTarget/MenuTarget';
 import { MenuContextProvider } from './Menu.context';
 import { MenuTriggerEvent } from './Menu.types';
+
+export type MenuStylesNames = MenuItemStylesNames | MenuLabelStylesName | MenuDividerStylesNames;
 
 export interface MenuProps extends PopoverBaseProps {
   /** Menu content */
@@ -46,6 +49,10 @@ export interface MenuProps extends PopoverBaseProps {
 
   /** Close delay in ms, applicable only to trigger="hover" variant */
   closeDelay?: number;
+
+  unstyled?: boolean;
+  classNames?: ClassNames<MenuStylesNames>;
+  styles?: Styles<MenuStylesNames>;
 }
 
 export function Menu({
@@ -61,6 +68,9 @@ export function Menu({
   trigger = 'click',
   openDelay = 0,
   closeDelay = 100,
+  classNames,
+  styles,
+  unstyled,
   ...others
 }: MenuProps) {
   const [hovered, { setHovered, resetHovered }] = useHovered();
@@ -92,33 +102,36 @@ export function Menu({
     getContextItemIndex('[data-menu-item]', '[data-menu-dropdown]', node);
 
   return (
-    <MenuContextProvider
-      value={{
-        toggleDropdown,
-        getItemIndex,
-        hovered,
-        setHovered,
-        closeOnItemClick,
-        closeDropdown: trigger === 'click' ? close : closeDropdown,
-        openDropdown: trigger === 'click' ? open : openDropdown,
-        closeDropdownImmediately: close,
-        loop,
-        trigger,
-      }}
-    >
-      <Popover
-        {...others}
-        opened={_opened}
-        onChange={setOpened}
-        defaultOpened={defaultOpened}
-        onOpen={onOpen}
-        onClose={onClose}
-        trapFocus={trigger === 'click'}
-        closeOnEscape={closeOnEscape && trigger === 'click'}
+    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+      <MenuContextProvider
+        value={{
+          toggleDropdown,
+          getItemIndex,
+          hovered,
+          setHovered,
+          closeOnItemClick,
+          closeDropdown: trigger === 'click' ? close : closeDropdown,
+          openDropdown: trigger === 'click' ? open : openDropdown,
+          closeDropdownImmediately: close,
+          loop,
+          trigger,
+        }}
       >
-        {children}
-      </Popover>
-    </MenuContextProvider>
+        <Popover
+          {...others}
+          opened={_opened}
+          onChange={setOpened}
+          defaultOpened={defaultOpened}
+          onOpen={onOpen}
+          onClose={onClose}
+          trapFocus={trigger === 'click'}
+          closeOnEscape={closeOnEscape && trigger === 'click'}
+          __staticSelector="Menu"
+        >
+          {children}
+        </Popover>
+      </MenuContextProvider>
+    </StylesApiProvider>
   );
 }
 
