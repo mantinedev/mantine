@@ -10,6 +10,6 @@ export function getContextItemIndex(
   }
 
   return Array.from(
-    findElementAncestor(node, parentSelector).querySelectorAll(elementSelector)
+    findElementAncestor(node, parentSelector)?.querySelectorAll(elementSelector) || []
   ).findIndex((element) => element === node);
 }

@@ -44,12 +44,12 @@ function MenuItem({
   const itemIndex = ctx.getItemIndex(itemRef.current);
   const _others: any = others;
 
-  const handleMouseLeave = createEventHandler(_others.onMouseEnter, () => ctx.setHovered(-1));
+  const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
   const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
     ctx.setHovered(ctx.getItemIndex(itemRef.current))
   );
 
-  const handleClick = createEventHandler(_others.onMouseEnter, () => {
+  const handleClick = createEventHandler(_others.onClick, () => {
     if (typeof closeMenuOnClick === 'boolean') {
       closeMenuOnClick && ctx.closeDropdownImmediately();
     } else {
@@ -57,12 +57,16 @@ function MenuItem({
     }
   });
 
+  const handleFocus = createEventHandler(_others.onFocus, () =>
+    ctx.setHovered(ctx.getItemIndex(itemRef.current))
+  );
+
   return (
     <Box
       component="button"
       {...others}
       tabIndex={-1}
-      onFocus={() => ctx.setHovered(ctx.getItemIndex(itemRef.current))}
+      onFocus={handleFocus}
       className={cx(classes.item, className)}
       ref={itemRef}
       role="menuitem"
