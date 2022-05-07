@@ -80,7 +80,6 @@ export function AccordionProvider<Multiple extends boolean = false>({
     defaultValue,
     finalValue: multiple ? ([] as any) : null,
     onChange,
-    errorMessage: ACCORDION_ERRORS['accordion-on-change'],
   });
 
   const isItemActive = (itemValue: string) =>

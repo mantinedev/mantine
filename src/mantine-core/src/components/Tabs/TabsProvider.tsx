@@ -68,7 +68,6 @@ export function TabsProvider({
     defaultValue,
     finalValue: null,
     onChange: onTabChange,
-    errorMessage: TABS_ERRORS['tabs-on-change'],
   });
 
   return (

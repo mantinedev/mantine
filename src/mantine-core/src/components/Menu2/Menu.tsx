@@ -1,5 +1,5 @@
 import React from 'react';
-import { noop, useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
+import { useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
 import { StylesApiProvider, ClassNames, Styles } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
@@ -71,7 +71,7 @@ export function Menu({
   onClose,
   opened,
   defaultOpened,
-  onChange = noop,
+  onChange,
   closeOnItemClick = true,
   loop = true,
   closeOnEscape,
