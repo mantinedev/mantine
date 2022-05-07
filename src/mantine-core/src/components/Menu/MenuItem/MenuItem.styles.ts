@@ -43,16 +43,16 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     },
   },
 
-  label: {
+  itemLabel: {
     flex: 1,
   },
 
-  icon: {
+  itemIcon: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: theme.spacing.xs,
   },
 
-  rightSection: {},
+  itemRightSection: {},
 }));

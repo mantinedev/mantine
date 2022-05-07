@@ -89,9 +89,9 @@ function MenuItem({
         onKeyDown: _others.onKeydown,
       })}
     >
-      {icon && <div className={classes.icon}>{icon}</div>}
-      {children && <div className={classes.label}>{children}</div>}
-      {rightSection && <div className={classes.rightSection}>{rightSection}</div>}
+      {icon && <div className={classes.itemIcon}>{icon}</div>}
+      {children && <div className={classes.itemLabel}>{children}</div>}
+      {rightSection && <div className={classes.itemRightSection}>{rightSection}</div>}
     </Box>
   );
 }
