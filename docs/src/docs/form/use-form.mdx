@@ -42,7 +42,7 @@ yarn add @mantine/form
 - `schema` (optional) – [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) or [yup](https://www.npmjs.com/package/yup) validation schema, if provided `validate` is ignored
 - `initialErrors` (optional) – initial form errors, object of React nodes
 
-Hook returns an object with the following properties:
+Hook returns an object with the following properties (the functions are all referentially stable):
 
 - `values` – current form values
 - `setValues` – handler to set all form values
@@ -93,7 +93,7 @@ function Demo() {
     <TextInput
       label="Name"
       value={form.values.name}
-      onChange={(event) => form.setFieldValue(event.currentTarget.value)}
+      onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
     />
   );
 }

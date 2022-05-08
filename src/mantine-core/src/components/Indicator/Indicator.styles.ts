@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  CSSObject,
-  MantineColor,
-  MantineNumberSize,
-  getDefaultZIndex,
-} from '@mantine/styles';
+import { createStyles, CSSObject, MantineColor, MantineNumberSize } from '@mantine/styles';
 import { IndicatorPosition } from './Indicator.types';
 
 export interface IndicatorStylesParams {
@@ -16,6 +10,7 @@ export interface IndicatorStylesParams {
   inline: boolean;
   withBorder: boolean;
   withLabel: boolean;
+  zIndex: number;
 }
 
 function getPositionStyles(_position: IndicatorPosition, offset = 0) {
@@ -62,7 +57,17 @@ function getPositionStyles(_position: IndicatorPosition, offset = 0) {
 export default createStyles(
   (
     theme,
-    { radius, size, color, position, offset, inline, withBorder, withLabel }: IndicatorStylesParams
+    {
+      radius,
+      size,
+      color,
+      position,
+      offset,
+      inline,
+      withBorder,
+      withLabel,
+      zIndex,
+    }: IndicatorStylesParams
   ) => ({
     root: {
       position: 'relative',
@@ -71,6 +76,7 @@ export default createStyles(
 
     indicator: {
       ...getPositionStyles(position, offset),
+      zIndex,
       position: 'absolute',
       [withLabel ? 'minWidth' : 'width']: size,
       height: size,
@@ -81,7 +87,6 @@ export default createStyles(
       paddingLeft: withLabel ? theme.spacing.xs / 2 : 0,
       paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-      zIndex: getDefaultZIndex('overlay'),
       backgroundColor: theme.fn.themeColor(
         color || theme.primaryColor,
         theme.fn.primaryShade(),

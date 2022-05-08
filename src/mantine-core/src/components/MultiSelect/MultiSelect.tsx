@@ -192,6 +192,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       clearButtonTabIndex,
       form,
       positionDependencies,
+      onKeyDown,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -341,9 +342,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      onKeyDown?.(event);
+
       if (event.nativeEvent.code !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
         return;
       }
+
       const isColumn = direction === 'column';
 
       const handleNext = () => {

@@ -1,7 +1,7 @@
 {
   "name": "@mantine/rte",
   "description": "Rich text editor built with Mantine components",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -30,8 +30,8 @@
     "quilljs"
   ],
   "peerDependencies": {
-    "@mantine/core": "4.2.2",
-    "@mantine/hooks": "4.2.2",
+    "@mantine/core": "4.2.3",
+    "@mantine/hooks": "4.2.3",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
