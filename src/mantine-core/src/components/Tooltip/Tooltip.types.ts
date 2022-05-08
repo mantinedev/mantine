@@ -1,5 +1,5 @@
 import { DefaultProps, Selectors, MantineNumberSize, MantineColor } from '@mantine/styles';
-import { Placement } from '@floating-ui/react-dom-interactions';
+import { FloatingPosition } from '../Floating';
 import useStyles, { TooltipStylesParams } from './Tooltip.styles';
 
 export type TooltipStylesNames = Selectors<typeof useStyles>;
@@ -11,7 +11,7 @@ export interface TooltipBaseProps
   children: React.ReactNode;
 
   /** Tooltip position relative to target element (default) or mouse (floating) */
-  position?: Placement;
+  position?: FloatingPosition;
 
   /** Key of the prop that should be used to get element ref */
   refProp?: string;

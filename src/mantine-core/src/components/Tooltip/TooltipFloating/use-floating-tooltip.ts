@@ -1,14 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import {
-  useFloating,
-  shift,
-  getOverflowAncestors,
-  Placement,
-} from '@floating-ui/react-dom-interactions';
+import { useFloating, shift, getOverflowAncestors } from '@floating-ui/react-dom-interactions';
+import { FloatingPosition } from '../../Floating';
 
 interface UseFloatingTooltip {
   offset: number;
-  position: Placement;
+  position: FloatingPosition;
 }
 
 export function useFloatingTooltip<T extends HTMLElement = any>({

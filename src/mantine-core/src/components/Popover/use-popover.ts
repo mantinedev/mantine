@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDidUpdate } from '@mantine/hooks';
 import { useUncontrolled } from '@mantine/utils';
 import {
-  Placement,
   useFloating,
   shift,
   flip,
@@ -11,13 +10,14 @@ import {
   autoUpdate,
   Middleware,
 } from '@floating-ui/react-dom-interactions';
+import { FloatingPosition } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 
 interface UsePopoverOptions {
   offset: number;
-  position: Placement;
+  position: FloatingPosition;
   positionDependencies: any[];
-  onPositionChange?(position: Placement): void;
+  onPositionChange?(position: FloatingPosition): void;
   opened: boolean;
   defaultOpened: boolean;
   onChange(opened: boolean): void;

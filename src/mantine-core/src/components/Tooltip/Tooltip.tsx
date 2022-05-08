@@ -1,12 +1,11 @@
 import React, { cloneElement } from 'react';
-import { Placement } from '@floating-ui/react-dom-interactions';
 import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
-import { FloatingArrow, getFloatingPosition } from '../Floating';
+import { FloatingArrow, getFloatingPosition, FloatingPosition } from '../Floating';
 import { MantineTransition, Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
@@ -16,7 +15,7 @@ import useStyles from './Tooltip.styles';
 
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
-  onPositionChange?(position: Placement): void;
+  onPositionChange?(position: FloatingPosition): void;
 
   /** Open delay in ms */
   openDelay?: number;

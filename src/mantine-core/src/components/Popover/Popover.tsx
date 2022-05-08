@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
 import React from 'react';
-import { Placement } from '@floating-ui/react-dom-interactions';
 import { useId } from '@mantine/utils';
 import {
   useMantineTheme,
@@ -15,7 +14,7 @@ import {
 } from '@mantine/styles';
 import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
-import { getFloatingPosition } from '../Floating';
+import { getFloatingPosition, FloatingPosition } from '../Floating';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
@@ -29,13 +28,13 @@ import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 
 export interface PopoverBaseProps {
   /** Dropdown position relative to target */
-  position?: Placement;
+  position?: FloatingPosition;
 
   /** Space between target element and dropdown in px */
   offset?: number;
 
   /** Called when dropdown position changes */
-  onPositionChange?(position: Placement): void;
+  onPositionChange?(position: FloatingPosition): void;
 
   /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];

@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import {
   useFloating,
-  Placement,
   autoUpdate,
   flip,
   offset,
@@ -17,12 +16,13 @@ import {
 import { useId } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
+import { FloatingPosition } from '../Floating';
 
 interface UseTooltip {
-  position: Placement;
+  position: FloatingPosition;
   closeDelay: number;
   openDelay: number;
-  onPositionChange?(position: Placement): void;
+  onPositionChange?(position: FloatingPosition): void;
   opened?: boolean;
   offset: number;
   events: { hover: boolean; focus: boolean; touch: boolean };
