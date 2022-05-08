@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputStylesApi<P>(Component: React.ComponentType<P>, requiredProps: P) {
-  it('supports input Styles API', async () => {
+  it('supports input Styles API: classNames', async () => {
     const { container } = await renderWithAct(
       <Component
         {...requiredProps}
@@ -15,5 +15,19 @@ export function itSupportsInputStylesApi<P>(Component: React.ComponentType<P>, r
 
     expect(screen.getByText('test-label')).toHaveClass('secret-test-label');
     expect(container.querySelector('#test-input')).toHaveClass('secret-test-input');
+  });
+
+  it('supports input Styles API: styles', async () => {
+    const { container } = await renderWithAct(
+      <Component
+        {...requiredProps}
+        id="test-input"
+        label="test-label"
+        styles={{ label: { lineHeight: 1.946 }, input: { background: 'cyan' } }}
+      />
+    );
+
+    expect(screen.getByText('test-label')).toHaveStyle({ lineHeight: 1.946 });
+    expect(container.querySelector('#test-input')).toHaveStyle({ background: 'cyan' });
   });
 }

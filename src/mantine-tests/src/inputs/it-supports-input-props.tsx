@@ -38,4 +38,12 @@ export function itSupportsInputProps<P>(
     );
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
   });
+
+  it('sets required attribute on input based on required prop', async () => {
+    const { container } = await renderWithAct(
+      <Component {...requiredProps} required id="secret-test-id" />
+    );
+
+    expect(container.querySelector('#secret-test-id')).toHaveAttribute('required');
+  });
 }
