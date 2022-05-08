@@ -1,15 +1,8 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
-import {
-  DefaultProps,
-  extractSystemStyles,
-  getDefaultZIndex,
-  useMantineDefaultProps,
-  MantineShadow,
-  useMantineTheme,
-} from '@mantine/styles';
+import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import { DefaultProps, getDefaultZIndex, MantineShadow, useMantineTheme } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input';
+import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
 import { ColorSwatch } from '../ColorSwatch';
 import { Popover, PopoverStylesNames } from '../Popover';
 import { MantineTransition } from '../Transition';
@@ -85,20 +78,14 @@ const defaultProps: Partial<ColorInputProps> = {
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
   (props: ColorInputProps, ref) => {
     const {
-      label,
-      description,
-      error,
-      required,
       wrapperProps,
-      size,
+      inputProps,
       format,
       onChange,
       onFocus,
       onBlur,
       value,
       defaultValue,
-      classNames,
-      styles,
       disallowInput,
       fixOnBlur,
       withPreview,
@@ -106,26 +93,19 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       withPicker,
       icon,
       transition,
-      id,
       dropdownZIndex,
       transitionDuration,
       transitionTimingFunction,
       withinPortal,
-      className,
-      style,
       swatches,
-      sx,
-      errorProps,
-      labelProps,
-      descriptionProps,
       shadow,
+      classNames,
+      styles,
       unstyled,
       ...others
-    } = useMantineDefaultProps('ColorInput', defaultProps, props);
+    } = useInputProps('ColorInput', defaultProps, props);
 
     const theme = useMantineTheme();
-    const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
     const [dropdownOpened, setDropdownOpened] = useState(false);
     const [lastValidValue, setLastValidValue] = useState('');
     const [_value, setValue] = useUncontrolled({
@@ -160,26 +140,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }, [format]);
 
     return (
-      <InputWrapper
-        label={label}
-        description={description}
-        error={error}
-        required={required}
-        classNames={classNames}
-        styles={styles}
-        size={size}
-        id={uuid}
-        className={className}
-        style={style}
-        __staticSelector="ColorInput"
-        sx={sx}
-        errorProps={errorProps}
-        descriptionProps={descriptionProps}
-        labelProps={labelProps}
-        unstyled={unstyled}
-        {...systemStyles}
-        {...wrapperProps}
-      >
+      <InputWrapper {...wrapperProps} __staticSelector="ColorInput">
         <Popover
           __staticSelector="ColorInput"
           position="bottom-start"
@@ -197,25 +158,22 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           <Popover.Target>
             <div>
               <Input<'input'>
-                {...rest}
+                {...others}
+                {...inputProps}
                 ref={ref}
                 __staticSelector="ColorInput"
-                id={uuid}
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 spellCheck={false}
-                size={size}
                 value={_value}
                 onChange={(event) => setValue(event.currentTarget.value)}
-                invalid={!!error}
-                required={required}
                 autoComplete="nope"
                 icon={
                   icon ||
                   (withPreview ? (
                     <ColorSwatch
                       color={isColorValid(_value) ? _value : '#fff'}
-                      size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
+                      size={theme.fn.size({ size: inputProps.size, sizes: SWATCH_SIZES })}
                     />
                   ) : null)
                 }
@@ -228,7 +186,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
             </div>
           </Popover.Target>
 
-          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} p={size}>
+          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} p={inputProps.size}>
             <ColorPicker
               __staticSelector="ColorInput"
               value={_value}
@@ -237,7 +195,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               swatches={swatches}
               swatchesPerRow={swatchesPerRow}
               withPicker={withPicker}
-              size={size}
+              size={inputProps.size}
               focusable={false}
               unstyled={unstyled}
               styles={styles}

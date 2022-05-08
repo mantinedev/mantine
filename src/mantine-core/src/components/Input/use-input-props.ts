@@ -40,6 +40,10 @@ export function useInputProps<T extends BaseProps>(
 
   return {
     ...rest,
+    classNames,
+    styles,
+    unstyled,
+
     wrapperProps: {
       label,
       description,
