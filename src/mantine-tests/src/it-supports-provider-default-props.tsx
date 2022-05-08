@@ -5,7 +5,8 @@ import { renderWithAct } from './render-with-act';
 export function itSupportsProviderDefaultProps<P>(
   Component: React.ComponentType<P>,
   requiredProps: P,
-  name: string
+  name: string,
+  selector?: string
 ) {
   it('supports default props on MantineProvider', async () => {
     const { container } = await renderWithAct(
@@ -14,6 +15,7 @@ export function itSupportsProviderDefaultProps<P>(
       </MantineProvider>
     );
 
-    expect(container.firstChild).toHaveAttribute('data-provider-prop', 'test-provider-prop');
+    const target = selector ? container.querySelector(selector) : container.firstChild;
+    expect(target).toHaveAttribute('data-provider-prop', 'test-provider-prop');
   });
 }

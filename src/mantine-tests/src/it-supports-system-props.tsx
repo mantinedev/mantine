@@ -13,6 +13,7 @@ interface Options<T extends React.FC> {
   props: any;
   name?: string;
   displayName?: string;
+  othersSelector?: string;
   excludeOthers?: boolean;
   excludePadding?: boolean;
   refType?: any;
@@ -23,8 +24,15 @@ export function itSupportsSystemProps<T extends React.FC>(options: Options<T>) {
   const shouldExcludePaddings = options.excludePadding || false;
 
   options.refType && itSupportsRef(options.component, options.props, options.refType);
-  options.name && itSupportsProviderDefaultProps(options.component, options.props, options.name);
-  !shouldExcludeOthers && itSupportsOthers(options.component, options.props);
+  options.name &&
+    itSupportsProviderDefaultProps(
+      options.component,
+      options.props,
+      options.name,
+      options.othersSelector
+    );
+  !shouldExcludeOthers &&
+    itSupportsOthers(options.component, options.props, options.othersSelector);
   itSupportsClassName(options.component, options.props);
   itSupportsMargins(options.component, options.props);
   !shouldExcludePaddings && itSupportsPaddings(options.component, options.props);

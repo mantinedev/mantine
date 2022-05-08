@@ -20,7 +20,8 @@ describe('@mantine/core/Input', () => {
     props: defaultProps,
     displayName: '@mantine/core/TextInput',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: '.mantine-TextInput-input',
+    name: 'TextInput',
   });
 
   it('supports uncontrolled state', () => {
