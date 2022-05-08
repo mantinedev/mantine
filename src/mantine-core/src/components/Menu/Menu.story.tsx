@@ -45,3 +45,29 @@ export function Usage() {
     </div>
   );
 }
+
+export function Nested() {
+  return (
+    <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
+      <Menu width={200} shadow="md" trigger="hover">
+        <Menu.Target>
+          <Button>Toggle menu</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu trigger="hover" position="right-start" width={200}>
+            <Menu.Target>
+              <Menu.Item>Item nested</Menu.Item>
+            </Menu.Target>
+
+            <Menu.Dropdown>
+              <Menu.Item>Does not</Menu.Item>
+              <Menu.Item>really work</Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
+  );
+}

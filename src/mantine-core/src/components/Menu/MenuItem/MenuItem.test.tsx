@@ -23,6 +23,7 @@ describe('@mantine/core/MenuItem', () => {
   itSupportsSystemProps({
     component: TestContainer,
     props: defaultProps,
+    refType: HTMLButtonElement,
     displayName: '@mantine/core/MenuItem',
   });
 
