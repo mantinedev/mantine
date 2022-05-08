@@ -119,6 +119,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       labelProps,
       descriptionProps,
       shadow,
+      unstyled,
       ...others
     } = useMantineDefaultProps('ColorInput', defaultProps, props);
 
@@ -175,6 +176,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         errorProps={errorProps}
         descriptionProps={descriptionProps}
         labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -190,6 +192,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
           shadow={shadow}
           classNames={classNames}
           styles={styles}
+          unstyled={unstyled}
         >
           <Popover.Target>
             <div>
@@ -218,6 +221,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 }
                 readOnly={disallowInput}
                 sx={{ cursor: disallowInput ? 'pointer' : undefined }}
+                unstyled={unstyled}
                 classNames={classNames}
                 styles={styles}
               />
@@ -235,6 +239,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               withPicker={withPicker}
               size={size}
               focusable={false}
+              unstyled={unstyled}
               styles={styles}
               classNames={classNames}
             />
