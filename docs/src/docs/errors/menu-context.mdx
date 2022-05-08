@@ -1,0 +1,49 @@
+---
+title: 'Menu component error'
+error: 'Menu component was not found in the tree'
+---
+
+## Error source
+
+You have rendered `Menu.Target`, `Menu.Item` or `Menu.Dropdown` component outside of [Menu](/core/menu/) component context:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+function DemoWithError() {
+  return (
+    <>
+      <Menu.Target>
+        <button>Target</button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item>Will not work</Menu.Item>
+      </Menu.Dropdown>
+    </>
+  );
+}
+```
+
+## How to fix
+
+Make sure that `Menu.Target`, `Menu.Item` and `Menu.Dropdown` components are rendered within [Menu](/core/menu/) component
+– all of them require Menu context to work correctly:
+
+```tsx
+import { Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Target>
+        <button>Target</button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item>Works fine</Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
