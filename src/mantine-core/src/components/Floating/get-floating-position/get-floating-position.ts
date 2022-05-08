@@ -1,4 +1,4 @@
-import type { FloatingPosition, FloatingSide, FloatingPlacement } from './types';
+import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types';
 
 export function getFloatingPosition(
   dir: 'rtl' | 'ltr',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMantineTheme } from '@mantine/styles';
 import { getArrowPositionStyles } from './get-arrow-position-styles';
-import { FloatingPosition } from './types';
+import { FloatingPosition } from '../types';
 
 interface FloatingArrowProps extends React.ComponentPropsWithoutRef<'div'> {
   withBorder: boolean;
