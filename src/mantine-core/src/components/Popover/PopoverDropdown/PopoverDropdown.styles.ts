@@ -6,7 +6,7 @@ export interface PopoverStylesParams {
 }
 
 export default createStyles((theme, { radius, shadow }: PopoverStylesParams) => ({
-  root: {
+  dropdown: {
     position: 'absolute',
     backgroundColor: theme.white,
     background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,

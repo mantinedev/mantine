@@ -57,7 +57,7 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
                 left: ctx.x ?? '',
                 width: ctx.width === 'target' ? undefined : ctx.width,
               }}
-              className={cx(classes.root, className)}
+              className={cx(classes.dropdown, className)}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,

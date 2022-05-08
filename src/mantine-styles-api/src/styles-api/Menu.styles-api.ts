@@ -1,7 +1,7 @@
 import type { MenuStylesNames } from '@mantine/core';
 
 export const Menu: Record<MenuStylesNames, string> = {
-  root: 'Menu.Dropdown element',
+  dropdown: 'Menu.Dropdown element',
   label: 'Menu.Label root element',
   item: 'Menu.Item root element',
   arrow: 'Menu.Dropdown arrow',

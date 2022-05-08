@@ -2,30 +2,29 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
+  MantineShadow,
+  useMantineTheme,
 } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { ColorSwatch } from '../ColorSwatch';
-import { Popper } from '../Popper';
+import { Popover, PopoverStylesNames } from '../Popover';
 import { MantineTransition } from '../Transition';
-import { Paper } from '../Paper';
 import {
   ColorPicker,
   ColorPickerBaseProps,
   ColorPickerStylesNames,
 } from '../ColorPicker/ColorPicker';
 import { convertHsvaTo, isColorValid, parseColor } from '../ColorPicker/converters';
-import useStyles from './ColorInput.styles';
 
 export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | Selectors<typeof useStyles>;
+  | PopoverStylesNames;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
@@ -56,6 +55,9 @@ export interface ColorInputProps
 
   /** Whether to render the dropdown in a Portal */
   withinPortal?: boolean;
+
+  /** Dropdown box-shadow, key of theme.shadows */
+  shadow?: MantineShadow;
 }
 
 const SWATCH_SIZES = {
@@ -64,14 +66,6 @@ const SWATCH_SIZES = {
   md: 22,
   lg: 28,
   xl: 36,
-};
-
-const ARROW_OFFSET = {
-  xs: 12,
-  sm: 15,
-  md: 17,
-  lg: 21,
-  xl: 25,
 };
 
 const defaultProps: Partial<ColorInputProps> = {
@@ -85,6 +79,7 @@ const defaultProps: Partial<ColorInputProps> = {
   dropdownZIndex: getDefaultZIndex('popover'),
   transitionDuration: 0,
   withinPortal: true,
+  shadow: 'md',
 };
 
 export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
@@ -123,16 +118,13 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       errorProps,
       labelProps,
       descriptionProps,
+      shadow,
       ...others
     } = useMantineDefaultProps('ColorInput', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles(
-      { disallowInput },
-      { classNames, styles, name: 'ColorInput' }
-    );
+    const theme = useMantineTheme();
     const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useUuid(id);
-    const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const [dropdownOpened, setDropdownOpened] = useState(false);
     const [lastValidValue, setLastValidValue] = useState('');
     const [_value, setValue] = useUncontrolled({
@@ -186,73 +178,68 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         {...systemStyles}
         {...wrapperProps}
       >
-        <div ref={setReferenceElement}>
-          <Input<'input'>
-            {...rest}
-            ref={ref}
-            __staticSelector="ColorInput"
-            id={uuid}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            spellCheck={false}
-            size={size}
-            value={_value}
-            onChange={(event) => setValue(event.currentTarget.value)}
-            invalid={!!error}
-            required={required}
-            autoComplete="nope"
-            icon={
-              icon ||
-              (withPreview ? (
-                <ColorSwatch
-                  color={isColorValid(_value) ? _value : '#fff'}
-                  size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
-                />
-              ) : null)
-            }
-            readOnly={disallowInput}
-            classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-            styles={styles}
-          />
-        </div>
-
-        <Popper
-          referenceElement={referenceElement}
-          transitionDuration={transitionDuration}
-          transitionTimingFunction={transitionTimingFunction}
-          transition={transition}
-          mounted={dropdownOpened}
-          position="bottom"
-          placement="start"
-          gutter={5}
-          arrowSize={3}
+        <Popover
+          __staticSelector="ColorInput"
+          position="bottom-start"
+          offset={5}
           zIndex={dropdownZIndex}
-          arrowStyle={{ left: theme.fn.size({ size, sizes: ARROW_OFFSET }) }}
           withinPortal={withinPortal}
+          transitionDuration={transitionDuration}
+          transition={transition}
+          opened={dropdownOpened}
+          shadow={shadow}
+          classNames={classNames}
+          styles={styles}
         >
-          <div style={{ pointerEvents: 'all' }}>
-            <Paper<'div'>
-              shadow="sm"
-              p={size}
-              className={classes.dropdownBody}
-              onMouseDown={(event) => event.preventDefault()}
-            >
-              <ColorPicker
+          <Popover.Target>
+            <div>
+              <Input<'input'>
+                {...rest}
+                ref={ref}
                 __staticSelector="ColorInput"
-                value={_value}
-                onChange={setValue}
-                format={format}
-                swatches={swatches}
-                swatchesPerRow={swatchesPerRow}
-                withPicker={withPicker}
+                id={uuid}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                spellCheck={false}
                 size={size}
-                focusable={false}
-                styles={styles}
+                value={_value}
+                onChange={(event) => setValue(event.currentTarget.value)}
+                invalid={!!error}
+                required={required}
+                autoComplete="nope"
+                icon={
+                  icon ||
+                  (withPreview ? (
+                    <ColorSwatch
+                      color={isColorValid(_value) ? _value : '#fff'}
+                      size={theme.fn.size({ size, sizes: SWATCH_SIZES })}
+                    />
+                  ) : null)
+                }
+                readOnly={disallowInput}
+                sx={{ cursor: disallowInput ? 'pointer' : undefined }}
                 classNames={classNames}
+                styles={styles}
               />
-            </Paper>
-          </div>
-        </Popper>
+            </div>
+          </Popover.Target>
+
+          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} p={size}>
+            <ColorPicker
+              __staticSelector="ColorInput"
+              value={_value}
+              onChange={setValue}
+              format={format}
+              swatches={swatches}
+              swatchesPerRow={swatchesPerRow}
+              withPicker={withPicker}
+              size={size}
+              focusable={false}
+              styles={styles}
+              classNames={classNames}
+            />
+          </Popover.Dropdown>
+        </Popover>
       </InputWrapper>
     );
   }
