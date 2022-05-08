@@ -25,4 +25,5 @@ export { itSupportsInputIcon } from './inputs/it-supports-input-icon';
 export { itSupportsInputRightSection } from './inputs/it-supports-input-right-section';
 export { itSupportsWrapperProps } from './inputs/it-supports-wrapper-props';
 export { itSupportsInputWrapperProps } from './inputs/it-supports-input-wrapper-props';
-export { itSupportsInputProps } from './inputs/is-supports-input-props';
+export { itSupportsInputProps } from './inputs/it-supports-input-props';
+export { itSupportsInputStylesApi } from './inputs/it-supports-input-styles-api';

@@ -3,6 +3,7 @@ import { itConnectsLabelAndInput } from '../it-connects-label-and-input';
 import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
 import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
+import { itSupportsInputStylesApi } from './it-supports-input-styles-api';
 import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputProps<P>(
@@ -12,6 +13,7 @@ export function itSupportsInputProps<P>(
 ) {
   itSupportsInputWrapperProps(Component, requiredProps, name);
   itConnectsLabelAndInput(Component, requiredProps);
+  itSupportsInputStylesApi(Component, requiredProps);
   itSupportsInputIcon(Component, requiredProps);
   itSupportsInputRightSection(Component, requiredProps);
 

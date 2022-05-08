@@ -72,16 +72,4 @@ export function itSupportsInputWrapperProps<P>(
     expect(description).toHaveAttribute('id', 'test-description');
     expect(description).toHaveAttribute('data-test', 'test-data');
   });
-
-  it('passes classNames to InputWrapper', async () => {
-    await renderWithAct(
-      <Component
-        {...requiredProps}
-        label="test-label"
-        classNames={{ label: 'secret-test-label' }}
-      />
-    );
-
-    expect(screen.getByText('test-label')).toHaveClass('secret-test-label');
-  });
 }
