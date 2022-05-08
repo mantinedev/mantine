@@ -1,7 +1,8 @@
 import React from 'react';
 import { DefaultProps, useContextStylesApi } from '@mantine/styles';
-import { getArrowPositionStyles, closeOnEscape } from '@mantine/utils';
+import { closeOnEscape } from '@mantine/utils';
 import { useFocusReturn } from '@mantine/hooks';
+import { FloatingArrow } from '../../Floating';
 import { Box } from '../../Box';
 import { Transition } from '../../Transition';
 import { FocusTrap } from '../../FocusTrap';
@@ -17,7 +18,7 @@ export interface PopoverDropdownProps extends DefaultProps, React.ComponentProps
 export function PopoverDropdown({ style, className, children, ...others }: PopoverDropdownProps) {
   const { classNames, styles, unstyled, staticSelector } = useContextStylesApi();
   const ctx = usePopoverContext();
-  const { classes, cx, theme } = useStyles(
+  const { classes, cx } = useStyles(
     { radius: ctx.radius, shadow: ctx.shadow },
     { name: staticSelector, classNames, styles, unstyled }
   );
@@ -65,18 +66,14 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
             >
               {children}
 
-              {ctx.withArrow && (
-                <div
-                  className={classes.arrow}
-                  style={getArrowPositionStyles({
-                    withBorder: true,
-                    position: ctx.placement,
-                    arrowSize: ctx.arrowSize,
-                    arrowOffset: ctx.arrowOffset,
-                    dir: theme.dir,
-                  })}
-                />
-              )}
+              <FloatingArrow
+                visible={ctx.withArrow}
+                withBorder
+                position={ctx.placement}
+                arrowSize={ctx.arrowSize}
+                arrowOffset={ctx.arrowOffset}
+                className={classes.arrow}
+              />
             </Box>
           </FocusTrap>
         )}

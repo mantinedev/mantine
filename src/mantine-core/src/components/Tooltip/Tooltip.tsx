@@ -1,11 +1,12 @@
 import React, { cloneElement } from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { isElement, getArrowPositionStyles, getFloatingPosition } from '@mantine/utils';
+import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
+import { FloatingArrow, getFloatingPosition } from '../Floating';
 import { MantineTransition, Transition } from '../Transition';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
@@ -146,18 +147,15 @@ export function Tooltip(props: TooltipProps) {
               })}
             >
               {label}
-              {withArrow && (
-                <div
-                  className={classes.arrow}
-                  style={getArrowPositionStyles({
-                    withBorder: false,
-                    position: tooltip.placement,
-                    arrowSize,
-                    arrowOffset,
-                    dir: theme.dir,
-                  })}
-                />
-              )}
+
+              <FloatingArrow
+                visible={withArrow}
+                withBorder={false}
+                position={tooltip.placement}
+                arrowSize={arrowSize}
+                arrowOffset={arrowOffset}
+                className={classes.arrow}
+              />
             </Box>
           )}
         </Transition>

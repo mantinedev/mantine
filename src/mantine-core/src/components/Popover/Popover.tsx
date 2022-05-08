@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Placement } from '@floating-ui/react-dom-interactions';
-import { getFloatingPosition, useId } from '@mantine/utils';
+import { useId } from '@mantine/utils';
 import {
   useMantineTheme,
   ClassNames,
@@ -15,6 +15,7 @@ import {
 } from '@mantine/styles';
 import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
+import { getFloatingPosition } from '../Floating';
 import { usePopover } from './use-popover';
 import { PopoverContextProvider } from './Popover.context';
 import {
