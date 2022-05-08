@@ -165,13 +165,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       }
     };
 
-    const sendResult = () => {
-      const res = inputsRef.current.map((input) => input.value).join('');
-      if (typeof onChange === 'function') {
-        onChange(res);
-      }
-    };
-
     const setFieldValue = (val: string, index: number) => {
       const values = [..._values];
 
@@ -210,8 +203,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
         } else {
           focusInputField('prev', index);
         }
-
-        sendResult();
       }
     };
 
