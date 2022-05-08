@@ -67,7 +67,7 @@ const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
 
 ## API
 
-use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react use-state hook.
+use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react's `useState` hook.
 
 Hook provides handlers to work with array data:
 
@@ -117,7 +117,7 @@ function useListState<T>(initialValue: T[] = []): [
 
 ### Set item type
 
-By default, use-list-state will use type from initialValues.
+By default, use-list-state will use type from `initialValues`.
 If you init hook with empty array, you must specify item type:
 
 ```tsx
