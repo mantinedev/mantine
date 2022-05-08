@@ -6,6 +6,7 @@ import {
   MantineColor,
   MantineNumberSize,
   useMantineDefaultProps,
+  getDefaultZIndex,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { IndicatorPosition } from './Indicator.types';
@@ -45,6 +46,9 @@ export interface IndicatorProps
 
   /** When component is disabled it renders children without indicator */
   disabled?: boolean;
+
+  /** Indicator z-index */
+  zIndex?: number;
 }
 
 const defaultProps: Partial<IndicatorProps> = {
@@ -55,6 +59,7 @@ const defaultProps: Partial<IndicatorProps> = {
   disabled: false,
   size: 10,
   radius: 1000,
+  zIndex: getDefaultZIndex('app'),
 };
 
 export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref) => {
@@ -72,11 +77,12 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     label,
     classNames,
     disabled,
+    zIndex,
     ...others
   } = useMantineDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { position, offset, size, radius, inline, color, withBorder, withLabel: !!label },
+    { position, offset, size, radius, inline, color, withBorder, zIndex, withLabel: !!label },
     { name: 'Indicator', classNames, styles }
   );
 

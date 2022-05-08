@@ -8,8 +8,11 @@ import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
 export interface DateRangePickerProps
-  extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange'>,
-    Omit<CalendarSharedProps, 'size' | 'styles' | 'classNames' | 'value' | 'onChange'> {
+  extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
+    Omit<
+      CalendarSharedProps,
+      'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
+    > {
   /** Selected date, required with controlled input */
   value?: [Date | null, Date | null];
 

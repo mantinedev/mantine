@@ -81,7 +81,7 @@ only 5 notifications can be displayed at a time, rest are added to queue.
 
 ## TypeScript
 
-By default, hook will get types information from initialValues automatically:
+By default, hook will get types information from `initialValues` automatically:
 
 ```tsx
 const q = useQueue({
@@ -95,7 +95,7 @@ const q = useQueue({
 typeof q.state[number]; // -> { name: string; id: number; }
 ```
 
-If you do not provide initialValues, pass in type for state item:
+If you do not provide `initialValues`, pass in type for state item:
 
 ```tsx
 const q = useQueue<{ name: string; id: number }>({

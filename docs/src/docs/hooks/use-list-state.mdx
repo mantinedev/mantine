@@ -67,7 +67,7 @@ const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
 
 ## API
 
-use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react use-state hook.
+use-list-state takes array as single argument and returns list values and handlers to change them in tuple, similar to react's `useState` hook.
 
 Hook provides handlers to work with array data:
 
@@ -97,27 +97,27 @@ function useListState<T>(initialValue: T[] = []): [
   T[],
   {
     setState: Dispatch<SetStateAction<T[]>>;
-    append: (...items: T[]) => void;
-    prepend: (...items: T[]) => void;
-    insert: (index: number, ...items: T[]) => void;
-    apply: (fn: (item: T, index?: number) => T) => void;
-    pop: () => void;
-    shift: () => void;
+    append: (...items: T[]) => T[];
+    prepend: (...items: T[]) => T[];
+    insert: (index: number, ...items: T[]) => T[];
+    apply: (fn: (item: T, index?: number) => T) => T[];
+    pop: () => T[];
+    shift: () => T[];
     applyWhere: (
       condition: (item: T, index?: number) => boolean,
       fn: (item: T, index?: number) => T)
-    ) => void;
-    remove: (...indices: number[]) => void;
-    reorder: ({ from, to }: { from: number; to: number }) => void;
-    setItem: (index: number, item: T) => void;
-    setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+    ) => T[];
+    remove: (...indices: number[]) => T[];
+    reorder: ({ from, to }: { from: number; to: number }) => T[];
+    setItem: (index: number, item: T) => T[];
+    setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => T[];
   }
 ];
 ```
 
 ### Set item type
 
-By default, use-list-state will use type from initialValues.
+By default, use-list-state will use type from `initialValues`.
 If you init hook with empty array, you must specify item type:
 
 ```tsx
