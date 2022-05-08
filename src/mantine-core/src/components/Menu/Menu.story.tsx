@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Search } from 'tabler-icons-react';
+import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
 import { Button } from '../Button';
 import { Text } from '../Text';
@@ -9,7 +10,7 @@ export default { title: 'Menu' };
 export function Usage() {
   return (
     <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-      <Menu width={200} shadow="md" trigger="hover">
+      <Menu width={200} shadow="md">
         <Menu.Target>
           <Button>Toggle menu</Button>
         </Menu.Target>
@@ -46,28 +47,10 @@ export function Usage() {
   );
 }
 
-export function Nested() {
+export function _WithinOverlays() {
   return (
-    <div style={{ padding: 40, display: 'flex', justifyContent: 'center' }}>
-      <Menu width={200} shadow="md" trigger="hover">
-        <Menu.Target>
-          <Button>Toggle menu</Button>
-        </Menu.Target>
-
-        <Menu.Dropdown>
-          <Menu.Item>Item 1</Menu.Item>
-          <Menu trigger="hover" position="right-start" width={200}>
-            <Menu.Target>
-              <Menu.Item>Item nested</Menu.Item>
-            </Menu.Target>
-
-            <Menu.Dropdown>
-              <Menu.Item>Does not</Menu.Item>
-              <Menu.Item>really work</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Menu.Dropdown>
-      </Menu>
-    </div>
+    <WithinOverlays>
+      <Usage />
+    </WithinOverlays>
   );
 }
