@@ -1,9 +1,9 @@
 import React from 'react';
-import { itConnectsLabelAndInput } from './it-connects-label-and-input';
+import { itConnectsLabelAndInput } from '../it-connects-label-and-input';
 import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
 import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
-import { renderWithAct } from './render-with-act';
+import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputProps<P>(
   Component: React.ComponentType<P>,

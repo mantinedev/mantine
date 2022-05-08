@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
-import { renderWithAct } from './render-with-act';
+import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputWrapperProps<P>(
   Component: React.ComponentType<P>,
@@ -71,5 +71,17 @@ export function itSupportsInputWrapperProps<P>(
     const description = screen.getByText('Test description');
     expect(description).toHaveAttribute('id', 'test-description');
     expect(description).toHaveAttribute('data-test', 'test-data');
+  });
+
+  it('passes classNames to InputWrapper', async () => {
+    await renderWithAct(
+      <Component
+        {...requiredProps}
+        label="test-label"
+        classNames={{ label: 'secret-test-label' }}
+      />
+    );
+
+    expect(screen.getByText('test-label')).toHaveClass('secret-test-label');
   });
 }

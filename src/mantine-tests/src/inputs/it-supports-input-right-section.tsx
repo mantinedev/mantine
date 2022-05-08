@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithAct } from './render-with-act';
+import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputRightSection<P>(
   Component: React.ComponentType<P>,
