@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useDidUpdate } from '@mantine/hooks';
 import { useUncontrolled } from '@mantine/utils';
 import {
@@ -7,10 +6,9 @@ import {
   flip,
   offset,
   size,
-  autoUpdate,
   Middleware,
 } from '@floating-ui/react-dom-interactions';
-import { FloatingPosition } from '../Floating';
+import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
 
 interface UsePopoverOptions {
@@ -42,7 +40,6 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
 }
 
 export function usePopover(options: UsePopoverOptions) {
-  const [delayedUpdate, setDelayedUpdate] = useState(0);
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
@@ -83,29 +80,15 @@ export function usePopover(options: UsePopoverOptions) {
     ],
   });
 
-  useEffect(() => {
-    if (floating.refs.reference.current && floating.refs.floating.current) {
-      return autoUpdate(
-        floating.refs.reference.current,
-        floating.refs.floating.current,
-        floating.update
-      );
-    }
-
-    return undefined;
-  }, [floating.refs.reference, floating.refs.floating, options.opened, delayedUpdate]);
+  useFloatingAutoUpdate({
+    opened: options.opened,
+    positionDependencies: options.positionDependencies,
+    floating,
+  });
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
   }, [floating.placement]);
-
-  useDidUpdate(() => {
-    floating.update();
-  }, options.positionDependencies);
-
-  useDidUpdate(() => {
-    setDelayedUpdate((c) => c + 1);
-  }, [options.opened]);
 
   return {
     ...floating,

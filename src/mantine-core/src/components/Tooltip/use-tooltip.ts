@@ -1,7 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   useFloating,
-  autoUpdate,
   flip,
   offset,
   shift,
@@ -16,7 +15,7 @@ import {
 import { useId } from '@mantine/utils';
 import { useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
-import { FloatingPosition } from '../Floating';
+import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 
 interface UseTooltip {
   position: FloatingPosition;
@@ -30,7 +29,6 @@ interface UseTooltip {
 }
 
 export function useTooltip(settings: UseTooltip) {
-  const [delayedUpdate, setDelayedUpdate] = useState(0);
   const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
   const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
   const withinGroup = useTooltipGroupContext();
@@ -69,25 +67,15 @@ export function useTooltip(settings: UseTooltip) {
     useDelayGroup(context, { id: uid }),
   ]);
 
-  useEffect(() => {
-    if (refs.reference.current && refs.floating.current) {
-      return autoUpdate(refs.reference.current, refs.floating.current, update);
-    }
-
-    return undefined;
-  }, [refs.reference, refs.floating, opened, delayedUpdate]);
-
-  useDidUpdate(() => {
-    setDelayedUpdate((c) => c + 1);
-  }, [opened]);
+  useFloatingAutoUpdate({
+    opened,
+    positionDependencies: settings.positionDependencies,
+    floating: { refs, update },
+  });
 
   useDidUpdate(() => {
     settings.onPositionChange?.(placement);
   }, [placement]);
-
-  useDidUpdate(() => {
-    update();
-  }, settings.positionDependencies);
 
   const isGroupPhase = opened && currentId && currentId !== uid;
 
