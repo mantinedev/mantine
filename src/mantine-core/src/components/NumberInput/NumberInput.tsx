@@ -122,6 +122,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       rightSectionWidth,
       formatter,
       parser,
+      inputMode,
       ...others
     } = useMantineDefaultProps('NumberInput', defaultProps, props);
 
@@ -371,7 +372,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
-        inputMode={getInputMode(step, precision, useOs())}
+        inputMode={inputMode || getInputMode(step, precision, useOs())}
         __staticSelector="NumberInput"
       />
     );
