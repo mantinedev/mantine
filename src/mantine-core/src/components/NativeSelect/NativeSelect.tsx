@@ -1,18 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useUuid } from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  extractSystemStyles,
-  useMantineTheme,
-  useMantineDefaultProps,
-} from '@mantine/styles';
-import {
-  InputWrapperBaseProps,
-  InputWrapper,
-  InputWrapperStylesNames,
-} from '../InputWrapper/InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input/Input';
+import { DefaultProps, MantineSize, useMantineTheme } from '@mantine/styles';
+import { InputWrapperBaseProps, InputWrapper, InputWrapperStylesNames } from '../InputWrapper';
+import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { SelectItem } from '../Select/types';
 
@@ -49,33 +38,20 @@ const defaultProps: Partial<NativeSelectProps> = {
 export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
   (props: NativeSelectProps, ref) => {
     const {
-      id,
-      className,
-      required,
-      label,
-      error,
-      style,
+      inputProps,
+      wrapperProps,
       data,
       placeholder,
-      wrapperProps,
       inputStyle,
-      description,
       onChange,
       value,
       classNames,
       styles,
-      size,
       rightSection,
       rightSectionWidth,
-      sx,
-      errorProps,
-      descriptionProps,
-      labelProps,
       ...others
-    } = useMantineDefaultProps('NativeSelect', defaultProps, props);
-    const uuid = useUuid(id);
+    } = useInputProps('NativeSelect', defaultProps, props);
     const theme = useMantineTheme();
-    const { systemStyles, rest } = extractSystemStyles(others);
 
     const formattedData = data.map((item) =>
       typeof item === 'string' ? { label: item, value: item } : item
@@ -96,38 +72,15 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
     }
 
     return (
-      <InputWrapper
-        required={required}
-        id={uuid}
-        label={label}
-        error={error}
-        className={className}
-        style={style}
-        description={description}
-        size={size}
-        styles={styles}
-        classNames={classNames}
-        sx={sx}
-        __staticSelector="NativeSelect"
-        errorProps={errorProps}
-        descriptionProps={descriptionProps}
-        labelProps={labelProps}
-        {...systemStyles}
-        {...wrapperProps}
-      >
+      <InputWrapper {...wrapperProps} __staticSelector="NativeSelect">
         <Input<'select'>
-          {...rest}
+          {...inputProps}
+          {...others}
           onChange={onChange}
           component="select"
-          invalid={!!error}
           style={inputStyle}
-          aria-required={required}
           ref={ref}
-          id={uuid}
-          required={required}
           value={value === null ? '' : value}
-          size={size}
-          classNames={classNames}
           __staticSelector="NativeSelect"
           {...getSelectRightSectionProps({
             theme,
@@ -135,8 +88,8 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>(
             rightSectionWidth,
             styles,
             shouldClear: false,
-            size,
-            error,
+            size: inputProps.size,
+            error: wrapperProps.error,
           })}
         >
           {options}
