@@ -28,12 +28,18 @@ export function PopoverTarget({
   const target = children as React.ReactElement;
   const targetRef = useMergedRef(ctx.reference, (target as any).ref);
 
+  const accessibleProps = ctx.withRoles
+    ? {
+        'aria-haspopup': popupType,
+        'aria-expanded': ctx.opened,
+        'aria-controls': ctx.getDropdownId(),
+        id: ctx.getTargetId(),
+      }
+    : {};
+
   return cloneElement(target, {
+    ...accessibleProps,
     [refProp]: targetRef,
-    'aria-haspopup': popupType,
-    'aria-expanded': ctx.opened,
-    'aria-controls': ctx.getDropdownId(),
-    id: ctx.getTargetId(),
     ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });
 }

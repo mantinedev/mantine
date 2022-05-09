@@ -31,6 +31,7 @@ interface PopoverContext {
   getTargetId(): string;
   controlled: boolean;
   onToggle(): void;
+  withRoles: boolean;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

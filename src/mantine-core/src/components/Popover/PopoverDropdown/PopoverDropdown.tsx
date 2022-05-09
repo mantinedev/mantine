@@ -29,6 +29,14 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
     shouldReturnFocus: false,
   });
 
+  const accessibleProps = ctx.withRoles
+    ? {
+        'aria-labelledby': ctx.getTargetId(),
+        id: ctx.getDropdownId(),
+        role: 'dialog',
+      }
+    : {};
+
   return (
     <OptionalPortal withinPortal={ctx.withinPortal}>
       <Transition
@@ -44,10 +52,8 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
         {(transitionStyles) => (
           <FocusTrap active={ctx.trapFocus}>
             <Box
+              {...accessibleProps}
               tabIndex={-1}
-              role="dialog"
-              id={ctx.getDropdownId()}
-              aria-labelledby={ctx.getTargetId()}
               ref={ctx.floating}
               style={{
                 ...style,

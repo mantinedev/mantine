@@ -110,6 +110,9 @@ export interface PopoverProps extends PopoverBaseProps {
   /** id base to create accessibility connections */
   id?: string;
 
+  /** Determines whether dropdown and target element should have accessible roles, defaults to true */
+  withRoles?: boolean;
+
   unstyled?: boolean;
   classNames?: ClassNames<PopoverStylesNames>;
   styles?: Styles<PopoverStylesNames, PopoverStylesParams>;
@@ -129,6 +132,7 @@ const defaultProps: Partial<PopoverProps> = {
   withinPortal: false,
   closeOnEscape: true,
   trapFocus: false,
+  withRoles: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
@@ -167,6 +171,7 @@ export function Popover(props: PopoverProps) {
     defaultOpened,
     exitTransitionDuration,
     __staticSelector,
+    withRoles,
   } = useMantineDefaultProps('Popover', defaultProps, props);
 
   const uid = useId(id);
@@ -223,6 +228,7 @@ export function Popover(props: PopoverProps) {
           onToggle: popover.onToggle,
           getTargetId: () => `${uid}-target`,
           getDropdownId: () => `${uid}-dropdown`,
+          withRoles,
         }}
       >
         {children}
