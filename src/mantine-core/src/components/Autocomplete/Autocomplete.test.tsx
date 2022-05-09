@@ -35,7 +35,8 @@ describe('@mantine/core/Autocomplete', () => {
     props: defaultProps,
     displayName: '@mantine/core/Autocomplete',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: '.mantine-Autocomplete-input',
+    name: 'Autocomplete',
   });
 
   it('renders dropdown when value has both full match and partial match', async () => {

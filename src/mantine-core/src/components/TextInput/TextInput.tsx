@@ -37,11 +37,7 @@ const defaultProps: Partial<TextInputProps> = {
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (props: TextInputProps, ref) => {
-    const { inputProps, wrapperProps, ...others } = useInputProps<TextInputProps>(
-      'TextInput',
-      defaultProps,
-      props
-    );
+    const { inputProps, wrapperProps, ...others } = useInputProps('TextInput', defaultProps, props);
 
     return (
       <InputWrapper {...wrapperProps}>

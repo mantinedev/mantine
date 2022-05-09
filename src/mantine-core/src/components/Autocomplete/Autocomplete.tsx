@@ -1,14 +1,8 @@
 import React, { useState, forwardRef, useRef } from 'react';
-import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
-import {
-  DefaultProps,
-  Selectors,
-  extractSystemStyles,
-  getDefaultZIndex,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
+import { DefaultProps, Selectors, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
-import { Input, InputBaseProps, InputStylesNames } from '../Input';
+import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -68,57 +62,47 @@ const defaultProps: Partial<AutocompleteProps> = {
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
   (props: AutocompleteProps, ref) => {
     const {
-      className,
-      style,
-      sx,
-      required = false,
-      label,
-      id,
-      error,
-      description,
-      size = 'sm',
-      shadow = 'sm',
+      inputProps,
+      wrapperProps,
+      shadow,
       data,
-      limit = 5,
+      limit,
       value,
       defaultValue,
       onChange,
-      itemComponent = DefaultItem,
+      itemComponent,
       onItemSubmit,
       onKeyDown,
       onFocus,
       onBlur,
       onClick,
-      transition = 'skew-up',
-      transitionDuration = 0,
-      initiallyOpened = false,
+      transition,
+      transitionDuration,
+      initiallyOpened,
       transitionTimingFunction,
-      wrapperProps,
       classNames,
       styles,
-      filter = defaultFilter,
+      filter,
       nothingFound,
       onDropdownClose,
       onDropdownOpen,
       withinPortal,
-      switchDirectionOnFlip = false,
-      zIndex = getDefaultZIndex('popover'),
+      switchDirectionOnFlip,
+      zIndex,
       dropdownPosition,
       maxDropdownHeight,
       dropdownComponent,
-      errorProps,
-      labelProps,
-      descriptionProps,
       positionDependencies,
       ...others
-    } = useMantineDefaultProps('Autocomplete', defaultProps, props);
-    const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
-    const { systemStyles, rest } = extractSystemStyles(others);
+    } = useInputProps('Autocomplete', defaultProps, props);
+    const { classes } = useStyles(
+      { size: inputProps.size },
+      { classNames, styles, name: 'Autocomplete' }
+    );
     const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
     const [hovered, setHovered] = useState(-1);
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const inputRef = useRef<HTMLInputElement>(null);
-    const uuid = useUuid(id);
     const [_value, handleChange] = useUncontrolled({
       value,
       defaultValue,
@@ -210,44 +194,23 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       dropdownOpened && (filteredData.length > 0 || (filteredData.length === 0 && !!nothingFound));
 
     return (
-      <InputWrapper
-        required={required}
-        id={uuid}
-        label={label}
-        error={error}
-        description={description}
-        size={size}
-        className={className}
-        classNames={classNames}
-        styles={styles}
-        __staticSelector="Autocomplete"
-        sx={sx}
-        style={style}
-        errorProps={errorProps}
-        descriptionProps={descriptionProps}
-        labelProps={labelProps}
-        {...systemStyles}
-        {...wrapperProps}
-      >
+      <InputWrapper {...wrapperProps} __staticSelector="Autocomplete">
         <div
           className={classes.wrapper}
           role="combobox"
           aria-haspopup="listbox"
-          aria-owns={`${uuid}-items`}
-          aria-controls={uuid}
+          aria-owns={`${inputProps.id}-items`}
+          aria-controls={inputProps.id}
           aria-expanded={shouldRenderDropdown}
           onMouseLeave={() => setHovered(-1)}
           tabIndex={-1}
         >
           <Input<'input'>
-            {...rest}
+            {...inputProps}
+            {...others}
             data-mantine-stop-propagation={dropdownOpened}
-            required={required}
             ref={useMergedRef(ref, inputRef)}
-            id={uuid}
             type="string"
-            invalid={!!error}
-            size={size}
             onKeyDown={handleInputKeydown}
             classNames={classNames}
             styles={styles}
@@ -262,8 +225,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             onClick={handleInputClick}
             autoComplete="nope"
             aria-autocomplete="list"
-            aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
-            aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+            aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
+            aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
           />
 
           <SelectDropdown
@@ -271,7 +234,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             transition={transition}
             transitionDuration={transitionDuration}
             transitionTimingFunction={transitionTimingFunction}
-            uuid={uuid}
+            uuid={inputProps.id}
             shadow={shadow}
             maxDropdownHeight={maxDropdownHeight}
             dropdownComponent={dropdownComponent || SelectScrollArea}
@@ -292,12 +255,12 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               hovered={hovered}
               classNames={classNames}
               styles={styles}
-              uuid={uuid}
+              uuid={inputProps.id}
               __staticSelector="Autocomplete"
               onItemHover={setHovered}
               onItemSelect={handleItemClick}
               itemComponent={itemComponent}
-              size={size}
+              size={inputProps.size}
               nothingFound={nothingFound}
             />
           </SelectDropdown>
