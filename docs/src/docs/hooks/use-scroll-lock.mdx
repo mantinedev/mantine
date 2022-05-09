@@ -21,9 +21,10 @@ use-scroll-lock locks scroll at current position by setting `document.body` over
 
 ## Scrollbars offset
 
-In some operation systems scrollbars have width
-To offset that width use-scroll-lock adds `padding-right` equal to scrollbar width to body element when scroll is locked.
-However if you use elements with fixed position you will need to add right padding manually: `padding-right: var(--removed-scroll-width, 0px))`.
+In some operation systems scrollbars have width.
+
+To offset that width use-scroll-lock adds `padding-right` equal to scrollbar width to `body` element when scroll is locked.
+However if you use elements with `fixed` position you will need to add right padding manually: `padding-right: var(--removed-scroll-width, 0px))`.
 
 ## Definition
 

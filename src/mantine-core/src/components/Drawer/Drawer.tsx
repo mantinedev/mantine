@@ -215,7 +215,6 @@ export function Drawer(props: DrawerProps) {
             {...others}
           >
             <Paper<'div'>
-              onMouseDown={(event) => event.stopPropagation()}
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}
               style={transitionStyles.drawer}

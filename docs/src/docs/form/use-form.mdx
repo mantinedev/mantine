@@ -93,7 +93,7 @@ function Demo() {
     <TextInput
       label="Name"
       value={form.values.name}
-      onChange={(event) => form.setFieldValue(event.currentTarget.value)}
+      onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
     />
   );
 }

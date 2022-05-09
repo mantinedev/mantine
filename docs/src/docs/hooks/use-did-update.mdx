@@ -13,9 +13,9 @@ source: 'mantine-hooks/src/use-did-update/use-did-update.ts'
 
 ## Usage
 
-When component mounts useEffect hook is called.
+When component mounts `useEffect` hook is called.
 This is fine in most cases, but if you need to track value changes
-you will need to implement something like this to prevent useEffect call on mount:
+you will need to implement something like this to prevent `useEffect` call on mount:
 
 ```tsx
 const mounted = useRef(false);

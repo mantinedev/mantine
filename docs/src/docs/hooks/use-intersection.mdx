@@ -32,7 +32,7 @@ useIntersection({
 });
 ```
 
-Hook returns ref function that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
+Hook returns `ref` function that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
 See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) documentation to learn everything about options.
 
 On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
