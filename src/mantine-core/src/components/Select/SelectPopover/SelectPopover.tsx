@@ -77,6 +77,7 @@ export function SelectPopover({
   return (
     <Popover
       width="target"
+      withRoles={false}
       opened={opened}
       middlewares={{ flip: dropdownPosition === 'flip', shift: false }}
       position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
