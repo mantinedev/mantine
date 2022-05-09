@@ -8,7 +8,7 @@ import { MantineTransition } from '../Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
 import { SelectItems } from './SelectItems/SelectItems';
-import { SelectDropdown } from './SelectDropdown/SelectDropdown';
+import { SelectPopover } from './SelectPopover/SelectPopover';
 import { SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
 import { groupOptions } from '../../utils';
@@ -156,6 +156,7 @@ const defaultProps: Partial<SelectProps> = {
   zIndex: getDefaultZIndex('popover'),
   clearButtonTabIndex: 0,
   positionDependencies: [],
+  dropdownPosition: 'flip',
 };
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
@@ -214,7 +215,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
-  const dropdownRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const isColumn = direction === 'column';
@@ -526,77 +526,78 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
 
   return (
     <InputWrapper {...wrapperProps} __staticSelector="Select">
-      <div
-        role="combobox"
-        aria-haspopup="listbox"
-        aria-owns={`${inputProps.id}-items`}
-        aria-controls={inputProps.id}
-        aria-expanded={shouldShowDropdown}
-        onMouseLeave={() => setHovered(-1)}
-        tabIndex={-1}
+      <SelectPopover
+        opened={shouldShowDropdown}
+        transition={transition}
+        transitionDuration={transitionDuration}
+        shadow="sm"
+        withinPortal={withinPortal}
+        __staticSelector="Select"
+        onDirectionChange={setDirection}
+        switchDirectionOnFlip={switchDirectionOnFlip}
+        zIndex={zIndex}
+        dropdownPosition={dropdownPosition}
+        positionDependencies={positionDependencies}
       >
-        <input type="hidden" name={name} value={_value || ''} form={form} />
+        <SelectPopover.Target>
+          <div
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-owns={`${inputProps.id}-items`}
+            aria-controls={inputProps.id}
+            aria-expanded={shouldShowDropdown}
+            onMouseLeave={() => setHovered(-1)}
+            tabIndex={-1}
+          >
+            <input type="hidden" name={name} value={_value || ''} form={form} />
 
-        <Input<'input'>
-          autoComplete="nope"
-          {...inputProps}
-          {...others}
-          type="text"
-          ref={useMergedRef(ref, inputRef)}
-          onKeyDown={handleInputKeydown}
-          __staticSelector="Select"
-          value={inputValue}
-          placeholder={placeholder}
-          onChange={handleInputChange}
-          aria-autocomplete="list"
-          aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
-          aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
-          onClick={handleInputClick}
-          onBlur={handleInputBlur}
-          onFocus={handleInputFocus}
-          readOnly={!searchable}
-          disabled={disabled}
-          data-mantine-stop-propagation={shouldShowDropdown}
-          name={null}
-          classNames={{
-            ...classNames,
-            input: cx({ [classes.input]: !searchable }, (classNames as any)?.input),
-          }}
-          {...getSelectRightSectionProps({
-            theme,
-            rightSection,
-            rightSectionWidth,
-            styles,
-            size: inputProps.size,
-            shouldClear: clearable && !!selectedValue,
-            clearButtonLabel,
-            onClear: handleClear,
-            error: wrapperProps.error,
-            clearButtonTabIndex,
-          })}
-        />
+            <Input<'input'>
+              autoComplete="nope"
+              {...inputProps}
+              {...others}
+              type="text"
+              ref={useMergedRef(ref, inputRef)}
+              onKeyDown={handleInputKeydown}
+              __staticSelector="Select"
+              value={inputValue}
+              placeholder={placeholder}
+              onChange={handleInputChange}
+              aria-autocomplete="list"
+              aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
+              aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
+              onClick={handleInputClick}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              readOnly={!searchable}
+              disabled={disabled}
+              data-mantine-stop-propagation={shouldShowDropdown}
+              name={null}
+              classNames={{
+                ...classNames,
+                input: cx({ [classes.input]: !searchable }, (classNames as any)?.input),
+              }}
+              {...getSelectRightSectionProps({
+                theme,
+                rightSection,
+                rightSectionWidth,
+                styles,
+                size: inputProps.size,
+                shouldClear: clearable && !!selectedValue,
+                clearButtonLabel,
+                onClear: handleClear,
+                error: wrapperProps.error,
+                clearButtonTabIndex,
+              })}
+            />
+          </div>
+        </SelectPopover.Target>
 
-        <SelectDropdown
-          referenceElement={inputRef.current}
-          mounted={shouldShowDropdown}
-          transition={transition}
-          transitionDuration={transitionDuration}
-          transitionTimingFunction={transitionTimingFunction}
-          uuid={inputProps.id}
-          shadow={shadow}
-          maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames}
-          styles={styles}
-          ref={useMergedRef(dropdownRef, scrollableRef)}
-          __staticSelector="Select"
-          dropdownComponent={dropdownComponent || SelectScrollArea}
+        <SelectPopover.Dropdown
+          component={dropdownComponent || SelectScrollArea}
+          maxHeight={maxDropdownHeight}
           direction={direction}
-          onDirectionChange={setDirection}
-          switchDirectionOnFlip={switchDirectionOnFlip}
-          withinPortal={withinPortal}
-          zIndex={zIndex}
-          dropdownPosition={dropdownPosition}
-          positionDependencies={positionDependencies}
+          id={inputProps.id}
+          innerRef={scrollableRef}
         >
           <SelectItems
             data={filteredData}
@@ -616,8 +617,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             createLabel={createLabel}
             aria-label={wrapperProps.label}
           />
-        </SelectDropdown>
-      </div>
+        </SelectPopover.Dropdown>
+      </SelectPopover>
     </InputWrapper>
   );
 });

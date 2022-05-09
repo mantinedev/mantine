@@ -244,7 +244,12 @@ storiesOf('Select', module)
   .add('Popper flip', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
-      <Select label="Dropdown flip" data={data} placeholder="Select items" />
+      <Select
+        label="Dropdown flip"
+        data={data}
+        placeholder="Select items"
+        dropdownPosition="flip"
+      />
       {content}
     </div>
   ))
