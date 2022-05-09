@@ -23,5 +23,5 @@ function getReactId() {
 }
 
 export function useId(staticId?: string) {
-  return staticId || getReactId() || useClientId();
+  return typeof staticId === 'string' ? staticId : getReactId() || useClientId();
 }
