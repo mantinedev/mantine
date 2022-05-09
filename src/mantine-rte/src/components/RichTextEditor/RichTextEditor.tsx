@@ -161,6 +161,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
+          scrollingContainer="html"
         />
       </Box>
     );
