@@ -33,7 +33,8 @@ describe('@mantine/core/Select', () => {
     props: defaultProps,
     displayName: '@mantine/core/Select',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: '.mantine-Select-input',
+    name: 'Select',
   });
 
   it('renders correct amount of items based on data prop', async () => {

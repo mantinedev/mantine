@@ -1,22 +1,9 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import {
-  useUncontrolled,
-  useMergedRef,
-  useDidUpdate,
-  useScrollIntoView,
-  useUuid,
-} from '@mantine/hooks';
-import {
-  DefaultProps,
-  MantineSize,
-  MantineShadow,
-  extractSystemStyles,
-  getDefaultZIndex,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
+import { DefaultProps, MantineSize, MantineShadow, getDefaultZIndex } from '@mantine/styles';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
 import { InputWrapper } from '../InputWrapper';
-import { Input } from '../Input';
+import { Input, useInputProps } from '../Input';
 import { MantineTransition } from '../Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { getSelectRightSectionProps } from './SelectRightSection/get-select-right-section-props';
@@ -173,14 +160,8 @@ const defaultProps: Partial<SelectProps> = {
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
   const {
-    className,
-    style,
-    required,
-    label,
-    id,
-    error,
-    description,
-    size,
+    inputProps,
+    wrapperProps,
     shadow,
     data,
     value,
@@ -194,7 +175,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     transitionDuration,
     initiallyOpened,
     transitionTimingFunction,
-    wrapperProps,
     classNames,
     styles,
     filter,
@@ -213,7 +193,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     shouldCreate,
     selectOnBlur,
     onCreate,
-    sx,
     dropdownComponent,
     onDropdownClose,
     onDropdownOpen,
@@ -223,19 +202,15 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     name,
     dropdownPosition,
     allowDeselect,
-    errorProps,
-    descriptionProps,
-    labelProps,
     placeholder,
     filterDataOnExactSearchMatch,
     clearButtonTabIndex,
     form,
     positionDependencies,
     ...others
-  } = useMantineDefaultProps('Select', defaultProps, props);
+  } = useInputProps('Select', defaultProps, props);
 
   const { classes, cx, theme } = useStyles();
-  const { systemStyles, rest } = extractSystemStyles(others);
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const inputRef = useRef<HTMLInputElement>();
@@ -243,7 +218,6 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const isColumn = direction === 'column';
-  const uuid = useUuid(id);
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
     offset: 5,
@@ -551,30 +525,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
   return (
-    <InputWrapper
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      description={description}
-      size={size}
-      className={className}
-      style={style}
-      classNames={classNames}
-      styles={styles}
-      __staticSelector="Select"
-      sx={sx}
-      errorProps={errorProps}
-      descriptionProps={descriptionProps}
-      labelProps={labelProps}
-      {...systemStyles}
-      {...wrapperProps}
-    >
+    <InputWrapper {...wrapperProps} __staticSelector="Select">
       <div
         role="combobox"
         aria-haspopup="listbox"
-        aria-owns={`${uuid}-items`}
-        aria-controls={uuid}
+        aria-owns={`${inputProps.id}-items`}
+        aria-controls={inputProps.id}
         aria-expanded={shouldShowDropdown}
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
@@ -583,21 +539,18 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
 
         <Input<'input'>
           autoComplete="nope"
-          {...rest}
+          {...inputProps}
+          {...others}
           type="text"
-          required={required}
           ref={useMergedRef(ref, inputRef)}
-          id={uuid}
-          invalid={!!error}
-          size={size}
           onKeyDown={handleInputKeydown}
           __staticSelector="Select"
           value={inputValue}
           placeholder={placeholder}
           onChange={handleInputChange}
           aria-autocomplete="list"
-          aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
-          aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+          aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
+          aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
           onClick={handleInputClick}
           onBlur={handleInputBlur}
           onFocus={handleInputFocus}
@@ -607,18 +560,18 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           name={null}
           classNames={{
             ...classNames,
-            input: cx({ [classes.input]: !searchable }, classNames?.input),
+            input: cx({ [classes.input]: !searchable }, (classNames as any)?.input),
           }}
           {...getSelectRightSectionProps({
             theme,
             rightSection,
             rightSectionWidth,
             styles,
-            size,
+            size: inputProps.size,
             shouldClear: clearable && !!selectedValue,
             clearButtonLabel,
             onClear: handleClear,
-            error,
+            error: wrapperProps.error,
             clearButtonTabIndex,
           })}
         />
@@ -629,7 +582,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           transition={transition}
           transitionDuration={transitionDuration}
           transitionTimingFunction={transitionTimingFunction}
-          uuid={uuid}
+          uuid={inputProps.id}
           shadow={shadow}
           maxDropdownHeight={maxDropdownHeight}
           classNames={classNames}
@@ -651,17 +604,17 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             classNames={classNames}
             styles={styles}
             isItemSelected={(val) => val === _value}
-            uuid={uuid}
+            uuid={inputProps.id}
             __staticSelector="Select"
             onItemHover={setHovered}
             onItemSelect={handleItemSelect}
             itemsRefs={itemsRefs}
             itemComponent={itemComponent}
-            size={size}
+            size={inputProps.size}
             nothingFound={nothingFound}
             creatable={isCreatable && !!createLabel}
             createLabel={createLabel}
-            aria-label={label}
+            aria-label={wrapperProps.label}
           />
         </SelectDropdown>
       </div>
