@@ -1,11 +1,6 @@
-export interface ComboboxItemData {
-  value: string;
-  label?: string;
-  group?: string;
-  disabled?: boolean;
-}
+import { ComboboxItemData } from '../types';
 
-interface ChunkedItems {
+export interface ChunkedItems {
   ungrouped: ComboboxItemData[];
   grouped: { label: string; items: ComboboxItemData[] }[];
   length: number;

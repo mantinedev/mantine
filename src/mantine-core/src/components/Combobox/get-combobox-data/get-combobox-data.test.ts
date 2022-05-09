@@ -1,28 +1,32 @@
-import { chunkItems, ComboboxItemData } from './chunk-items';
+import { getComboboxData } from './get-combobox-data';
 
-const withoutGroups: ComboboxItemData[] = [
-  { value: 'banana' },
-  { value: 'orange' },
-  { value: 'apple' },
+const withoutGroups = [
+  { value: 'banana', label: 'banana' },
+  { value: 'orange', label: 'orange' },
+  'apple',
 ];
-const withGroups: ComboboxItemData[] = [
+const withGroups = [
   { value: 'banana', group: 'sweet' },
   { value: 'pineapple', group: 'sweet' },
-  { value: 'orange' },
+  'orange',
   { value: 'apple', group: 'sour' },
 ];
 
-describe('@mantine/core/Combobox/chunk-items', () => {
+describe('@mantine/core/Combobox/get-combobox-items', () => {
   it('correctly handles items without groups', () => {
-    expect(chunkItems(withoutGroups)).toStrictEqual({
+    expect(getComboboxData(withoutGroups)).toStrictEqual({
       grouped: [],
-      ungrouped: withoutGroups,
+      ungrouped: [
+        { value: 'banana', label: 'banana' },
+        { value: 'orange', label: 'orange' },
+        { value: 'apple', label: 'apple' },
+      ],
       length: withoutGroups.length,
     });
   });
 
   it('correctly handlers items with groups', () => {
-    expect(chunkItems(withGroups)).toStrictEqual({
+    expect(getComboboxData(withGroups)).toStrictEqual({
       grouped: [
         {
           label: 'sweet',
@@ -34,7 +38,7 @@ describe('@mantine/core/Combobox/chunk-items', () => {
 
         { label: 'sour', items: [{ value: 'apple', group: 'sour' }] },
       ],
-      ungrouped: [{ value: 'orange' }],
+      ungrouped: [{ value: 'orange', label: 'orange' }],
       length: withGroups.length,
     });
   });
