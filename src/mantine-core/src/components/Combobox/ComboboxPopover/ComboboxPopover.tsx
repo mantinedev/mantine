@@ -47,6 +47,7 @@ function ComboboxPopoverDropdown({
           role="listbox"
           onMouseDown={(event) => event.preventDefault()}
           style={{ flex: 1, overflowY: component !== ScrollArea ? 'auto' : undefined }}
+          data-combobox-popover
         >
           <div style={{ display: 'flex', flexDirection: direction, width: '100%', padding: 4 }}>
             {children}
