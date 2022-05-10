@@ -1,12 +1,10 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 import {
   DefaultProps,
   Input,
   InputWrapper,
   InputBaseProps,
   InputWrapperBaseProps,
-  Paper,
-  Popper,
   MantineTransition,
   InputStylesNames,
   InputWrapperStylesNames,
@@ -16,15 +14,9 @@ import {
   MantineShadow,
   Selectors,
   extractSystemStyles,
-  getDefaultZIndex,
+  Popover,
 } from '@mantine/core';
-import {
-  useClickOutside,
-  useFocusTrap,
-  useMergedRef,
-  useWindowEvent,
-  useUuid,
-} from '@mantine/hooks';
+import { useMergedRef, useUuid } from '@mantine/hooks';
 import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
@@ -32,7 +24,8 @@ export type DatePickerStylesNames =
   | Selectors<typeof useStyles>
   | CalendarBaseStylesNames
   | InputStylesNames
-  | InputWrapperStylesNames;
+  | InputWrapperStylesNames
+  | 'dropdown';
 
 export interface DatePickerBaseSharedProps
   extends InputBaseProps,
@@ -62,9 +55,6 @@ export interface DatePickerBaseSharedProps
 
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
-
-  /** Set to true to disable dropdown closing on scroll */
-  closeDropdownOnScroll?: boolean;
 
   /** Input size */
   size?: MantineSize;
@@ -152,11 +142,10 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       id,
       description,
       placeholder,
-      shadow = 'sm',
-      transition = 'pop-top-left',
-      transitionDuration = 200,
+      shadow,
+      transition = 'pop',
+      transitionDuration = 100,
       transitionTimingFunction,
-      closeDropdownOnScroll = false,
       size = 'sm',
       children,
       inputLabel,
@@ -168,7 +157,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonLabel,
       onClear,
       positionDependencies = [],
-      zIndex = getDefaultZIndex('popover'),
+      zIndex,
       withinPortal = true,
       onBlur,
       onFocus,
@@ -185,21 +174,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       labelProps,
       descriptionProps,
       clearButtonTabIndex = 0,
+      unstyled,
       ...others
     }: DatePickerBaseProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(
-      { size, invalid: !!error },
-      { classNames, styles, name: __staticSelector }
-    );
+    const { classes, cx, theme } = useStyles(null, { classNames, styles, name: __staticSelector });
     const { systemStyles, rest } = extractSystemStyles(others);
-    const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-    const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
-    const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
     const uuid = useUuid(id);
-
-    const focusTrapRef = useFocusTrap(!allowFreeInput && dropdownOpened);
     const inputRef = useRef<HTMLButtonElement>();
 
     const closeDropdown = () => {
@@ -223,14 +205,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         window.setTimeout(() => inputRef.current?.focus(), 0);
       }
     };
-
-    useClickOutside(
-      () => dropdownType === 'popover' && !allowFreeInput && closeDropdown(),
-      clickOutsideEvents,
-      [dropdownElement, rootElement]
-    );
-
-    useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
     const rightSection = clearable ? (
       <CloseButton
@@ -278,76 +252,76 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
-        ref={setReferenceElement}
         errorProps={errorProps}
         descriptionProps={descriptionProps}
         labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >
-        <div ref={setRootElement}>
-          <div className={classes.wrapper}>
-            <Input<'input'>
-              classNames={{
-                ...classNames,
-                input: cx(
-                  classes.input,
-                  { [classes.freeInput]: allowFreeInput },
-                  classNames?.input
-                ),
-              }}
-              styles={styles}
-              onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
-              onKeyDown={handleKeyDown}
-              id={uuid}
-              ref={useMergedRef(ref, inputRef)}
-              __staticSelector={__staticSelector}
-              size={size}
-              name={name}
-              placeholder={placeholder}
-              value={inputLabel}
-              required={required}
-              invalid={!!error}
-              readOnly={!allowFreeInput}
-              rightSection={rightSection}
-              rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              onChange={onChange}
-              autoComplete="off"
-              {...rest}
-            />
-          </div>
+        <Popover
+          position="bottom-start"
+          __staticSelector={__staticSelector}
+          withinPortal={withinPortal}
+          offset={10}
+          opened={dropdownOpened}
+          transitionDuration={transitionDuration}
+          transition={transition}
+          positionDependencies={positionDependencies}
+          shadow={shadow}
+          onClose={closeDropdown}
+          trapFocus={!allowFreeInput}
+          withRoles={false}
+          clickOutsideEvents={clickOutsideEvents}
+          zIndex={zIndex}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+        >
+          <Popover.Target>
+            <div className={classes.wrapper}>
+              <Input<'input'>
+                classNames={{
+                  ...classNames,
+                  input: cx(
+                    classes.input,
+                    { [classes.freeInput]: allowFreeInput },
+                    classNames?.input
+                  ),
+                }}
+                styles={styles}
+                onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
+                onKeyDown={handleKeyDown}
+                id={uuid}
+                ref={useMergedRef(ref, inputRef)}
+                __staticSelector={__staticSelector}
+                size={size}
+                name={name}
+                placeholder={placeholder}
+                value={inputLabel}
+                required={required}
+                invalid={!!error}
+                readOnly={!allowFreeInput}
+                rightSection={rightSection}
+                rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                onChange={onChange}
+                autoComplete="off"
+                {...rest}
+              />
+            </div>
+          </Popover.Target>
 
           {dropdownType === 'popover' ? (
-            <Popper
-              referenceElement={referenceElement}
-              transitionDuration={transitionDuration}
-              transitionTimingFunction={transitionTimingFunction}
-              forceUpdateDependencies={positionDependencies}
-              transition={transition}
-              mounted={dropdownOpened}
-              position="bottom"
-              placement="start"
-              gutter={10}
-              withinPortal={withinPortal}
-              withArrow
-              arrowSize={3}
-              zIndex={zIndex}
-              arrowClassName={classes.arrow}
-            >
+            <Popover.Dropdown>
               <div
-                className={classes.dropdownWrapper}
-                ref={setDropdownElement}
                 data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
                 aria-hidden={allowFreeInput || undefined}
               >
-                <Paper className={classes.dropdown} shadow={shadow} ref={focusTrapRef}>
-                  {children}
-                </Paper>
+                {children}
               </div>
-            </Popper>
+            </Popover.Dropdown>
           ) : (
             <Modal
               opened={dropdownOpened}
@@ -359,7 +333,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               {children}
             </Modal>
           )}
-        </div>
+        </Popover>
       </InputWrapper>
     );
   }
