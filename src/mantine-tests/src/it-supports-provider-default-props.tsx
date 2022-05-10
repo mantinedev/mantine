@@ -1,6 +1,6 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/styles';
-import { renderWithAct } from './render-with-act';
+import { render } from '@testing-library/react';
 
 export function itSupportsProviderDefaultProps<P>(
   Component: React.ComponentType<P>,
@@ -8,8 +8,8 @@ export function itSupportsProviderDefaultProps<P>(
   name: string,
   selector?: string
 ) {
-  it('supports default props on MantineProvider', async () => {
-    const { container } = await renderWithAct(
+  it('supports default props on MantineProvider', () => {
+    const { container } = render(
       <MantineProvider defaultProps={{ [name]: { 'data-provider-prop': 'test-provider-prop' } }}>
         <Component {...requiredProps} />
       </MantineProvider>

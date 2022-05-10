@@ -1,9 +1,9 @@
 import React from 'react';
-import { renderWithAct } from '../render-with-act';
+import { render } from '@testing-library/react';
 
 export function itSupportsWrapperProps<P>(Component: React.ComponentType<P>, requiredProps: P) {
-  it('supports wrapperProps prop', async () => {
-    const { container } = await renderWithAct(
+  it('supports wrapperProps prop', () => {
+    const { container } = render(
       <Component {...requiredProps} wrapperProps={{ 'data-test-prop': 'test-prop' }} />
     );
     expect(container.firstChild).toHaveAttribute('data-test-prop', 'test-prop');

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderWithAct } from './render-with-act';
+import { render } from '@testing-library/react';
 
 export function itFiltersChildren<P>(
   Component: React.ComponentType<P>,
@@ -7,7 +7,7 @@ export function itFiltersChildren<P>(
   childSelector: string,
   children: React.ReactElement[]
 ) {
-  it('filters out unexpected children', async () => {
+  it('filters out unexpected children', () => {
     const dirtyChildren = [
       <p className="unexpected" key="1">
         Unexpected child 1
@@ -18,10 +18,7 @@ export function itFiltersChildren<P>(
       </div>,
     ];
 
-    const { container } = await renderWithAct(
-      <Component {...requiredProps}>{dirtyChildren}</Component>
-    );
-
+    const { container } = render(<Component {...requiredProps}>{dirtyChildren}</Component>);
     expect(container.querySelectorAll(childSelector)).toHaveLength(children.length);
     expect(container.querySelectorAll('.unexpected')).toHaveLength(0);
   });

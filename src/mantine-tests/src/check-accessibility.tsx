@@ -1,6 +1,6 @@
 import React from 'react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import { renderWithAct } from './render-with-act';
+import { render } from '@testing-library/react';
 
 const config = {
   rules: {
@@ -20,7 +20,7 @@ export function checkAccessibility(elements: React.ReactElement[]) {
   it('has no accessibility violations', async () => {
     /* eslint-disable no-restricted-syntax, no-await-in-loop */
     for (const element of elements) {
-      const { container } = await renderWithAct(element);
+      const { container } = render(element);
       const result = await axe(container, config);
       expect(result).toHaveNoViolations();
     }

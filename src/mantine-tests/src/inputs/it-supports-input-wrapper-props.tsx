@@ -1,7 +1,6 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import { itSupportsWrapperProps } from './it-supports-wrapper-props';
-import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputWrapperProps<P>(
   Component: React.ComponentType<P>,
@@ -10,8 +9,8 @@ export function itSupportsInputWrapperProps<P>(
 ) {
   itSupportsWrapperProps(Component, requiredProps);
 
-  it('handles required attribute correctly', async () => {
-    const { container } = await renderWithAct(
+  it('handles required attribute correctly', () => {
+    const { container } = render(
       <Component {...requiredProps} required id="secret-test-id" label="Test label" />
     );
     const requiredGlyph = container.querySelector(`.mantine-${name}-required`);
@@ -19,25 +18,23 @@ export function itSupportsInputWrapperProps<P>(
     expect(requiredGlyph).toHaveAttribute('aria-hidden');
   });
 
-  it('supports description prop', async () => {
-    const { getByText } = await renderWithAct(
-      <Component {...requiredProps} description="Test description" />
-    );
+  it('supports description prop', () => {
+    const { getByText } = render(<Component {...requiredProps} description="Test description" />);
     expect(getByText('Test description')).toBeInTheDocument();
   });
 
-  it('supports label prop', async () => {
-    const { getByText } = await renderWithAct(<Component {...requiredProps} label="Test label" />);
+  it('supports label prop', () => {
+    const { getByText } = render(<Component {...requiredProps} label="Test label" />);
     expect(getByText('Test label')).toBeInTheDocument();
   });
 
-  it('supports error prop', async () => {
-    const { getByText } = await renderWithAct(<Component {...requiredProps} error="Test error" />);
+  it('supports error prop', () => {
+    const { getByText } = render(<Component {...requiredProps} error="Test error" />);
     expect(getByText('Test error')).toBeInTheDocument();
   });
 
-  it('supports labelProps', async () => {
-    await renderWithAct(
+  it('supports labelProps', () => {
+    render(
       <Component {...requiredProps} label="Test label" labelProps={{ 'data-test': 'test-data' }} />
     );
 
@@ -45,8 +42,8 @@ export function itSupportsInputWrapperProps<P>(
     expect(label).toHaveAttribute('data-test', 'test-data');
   });
 
-  it('supports errorProps', async () => {
-    await renderWithAct(
+  it('supports errorProps', () => {
+    render(
       <Component
         {...requiredProps}
         error="Test error"
@@ -59,8 +56,8 @@ export function itSupportsInputWrapperProps<P>(
     expect(error).toHaveAttribute('data-test', 'test-data');
   });
 
-  it('supports descriptionProps', async () => {
-    await renderWithAct(
+  it('supports descriptionProps', () => {
+    render(
       <Component
         {...requiredProps}
         description="Test description"

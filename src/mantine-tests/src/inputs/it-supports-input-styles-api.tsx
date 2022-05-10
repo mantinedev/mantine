@@ -1,10 +1,9 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
-import { renderWithAct } from '../render-with-act';
+import { screen, render } from '@testing-library/react';
 
 export function itSupportsInputStylesApi<P>(Component: React.ComponentType<P>, requiredProps: P) {
   it('supports input Styles API: classNames', async () => {
-    const { container } = await renderWithAct(
+    const { container } = render(
       <Component
         {...requiredProps}
         id="test-input"
@@ -18,7 +17,7 @@ export function itSupportsInputStylesApi<P>(Component: React.ComponentType<P>, r
   });
 
   it('supports input Styles API: styles', async () => {
-    const { container } = await renderWithAct(
+    const { container } = render(
       <Component
         {...requiredProps}
         id="test-input"

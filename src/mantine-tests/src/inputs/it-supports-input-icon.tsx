@@ -1,9 +1,9 @@
 import React from 'react';
-import { renderWithAct } from '../render-with-act';
+import { render } from '@testing-library/react';
 
 export function itSupportsInputIcon<P>(Component: React.ComponentType<P>, requiredProps: P) {
-  it('supports input icon', async () => {
-    const { getByText } = await renderWithAct(<Component {...requiredProps} icon="Test icon" />);
+  it('supports input icon', () => {
+    const { getByText } = render(<Component {...requiredProps} icon="Test icon" />);
     expect(getByText('Test icon')).toBeInTheDocument();
   });
 }

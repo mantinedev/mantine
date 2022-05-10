@@ -1,10 +1,10 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import { itConnectsLabelAndInput } from '../it-connects-label-and-input';
 import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
 import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 import { itSupportsInputStylesApi } from './it-supports-input-styles-api';
-import { renderWithAct } from '../render-with-act';
 
 export function itSupportsInputProps<P>(
   Component: React.ComponentType<P>,
@@ -17,11 +17,11 @@ export function itSupportsInputProps<P>(
   itSupportsInputIcon(Component, requiredProps);
   itSupportsInputRightSection(Component, requiredProps);
 
-  it('handles error and invalid state', async () => {
-    const { container: invalid } = await renderWithAct(
+  it('handles error and invalid state', () => {
+    const { container: invalid } = render(
       <Component {...requiredProps} required id="invalid-test-id" error />
     );
-    const { container: withError } = await renderWithAct(
+    const { container: withError } = render(
       <Component {...requiredProps} required id="error-test-id" error="Test error" />
     );
 
@@ -32,17 +32,13 @@ export function itSupportsInputProps<P>(
     expect(withError.querySelector(`.mantine-${name}-error`).textContent).toBe('Test error');
   });
 
-  it('sets border-radius on input', async () => {
-    const { container } = await renderWithAct(
-      <Component {...requiredProps} radius={43} id="secret-test-id" />
-    );
+  it('sets border-radius on input', () => {
+    const { container } = render(<Component {...requiredProps} radius={43} id="secret-test-id" />);
     expect(container.querySelector('#secret-test-id')).toHaveStyle({ borderRadius: '43px' });
   });
 
-  it('sets required attribute on input based on required prop', async () => {
-    const { container } = await renderWithAct(
-      <Component {...requiredProps} required id="secret-test-id" />
-    );
+  it('sets required attribute on input based on required prop', () => {
+    const { container } = render(<Component {...requiredProps} required id="secret-test-id" />);
 
     expect(container.querySelector('#secret-test-id')).toHaveAttribute('required');
   });

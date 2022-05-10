@@ -1,10 +1,10 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import {
   itSupportsSystemProps,
   itSupportsInputProps,
   checkAccessibility,
   itSupportsFocusEvents,
-  renderWithAct,
 } from '@mantine/tests';
 import { Autocomplete, AutocompleteProps } from './Autocomplete';
 
@@ -39,24 +39,24 @@ describe('@mantine/core/Autocomplete', () => {
     name: 'Autocomplete',
   });
 
-  it('renders dropdown when value has both full match and partial match', async () => {
-    const { container } = await renderWithAct(
+  it('renders dropdown when value has both full match and partial match', () => {
+    const { container } = render(
       <Autocomplete {...defaultProps} data={[{ value: 'AAA' }, { value: 'AA' }]} value="AA" />
     );
 
     expect(queries.getDropdown(container)).toBeInTheDocument();
   });
 
-  it('renders correct amount of items based on data prop', async () => {
-    const { container } = await renderWithAct(
+  it('renders correct amount of items based on data prop', () => {
+    const { container } = render(
       <Autocomplete {...defaultProps} data={largeDataSet.slice(0, 5)} limit={10} />
     );
 
     expect(queries.getItems(container)).toHaveLength(5);
   });
 
-  it('renders correct amount of items based on filter prop', async () => {
-    const { container } = await renderWithAct(
+  it('renders correct amount of items based on filter prop', () => {
+    const { container } = render(
       <Autocomplete
         {...defaultProps}
         data={largeDataSet}
@@ -69,8 +69,8 @@ describe('@mantine/core/Autocomplete', () => {
     expect(queries.getItems(container)).toHaveLength(10);
   });
 
-  it('limits amount of shown items based on limit prop', async () => {
-    const { container } = await renderWithAct(
+  it('limits amount of shown items based on limit prop', () => {
+    const { container } = render(
       <Autocomplete {...defaultProps} data={largeDataSet} initiallyOpened limit={10} />
     );
     expect(queries.getItems(container)).toHaveLength(10);

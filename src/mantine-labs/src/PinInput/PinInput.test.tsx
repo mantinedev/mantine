@@ -9,7 +9,6 @@ import {
   itSupportsFocusEvents,
   checkAccessibility,
   itSupportsSystemProps,
-  renderWithAct,
 } from '@mantine/tests';
 import { PinInput } from './PinInput';
 
@@ -31,9 +30,8 @@ describe('@mantine/core/PinInput', () => {
   itSupportsStyle(PinInput, defaultProps);
   itSupportsRef(PinInput, defaultProps, HTMLDivElement);
 
-  it('renders correct amount of inputs based on length prop', async () => {
-    const { container } = await renderWithAct(<PinInput {...defaultProps} length={5} />);
-
+  it('renders correct amount of inputs based on length prop', () => {
+    const { container } = render(<PinInput {...defaultProps} length={5} />);
     expect(container.querySelectorAll('.mantine-PinInput-input')).toHaveLength(5);
   });
 
