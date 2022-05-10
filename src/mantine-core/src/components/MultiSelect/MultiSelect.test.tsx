@@ -33,6 +33,7 @@ describe('@mantine/core/MultiSelect', () => {
     props: defaultProps,
     displayName: '@mantine/core/MultiSelect',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: '#test-multi-select',
+    name: 'MultiSelect',
   });
 });

@@ -20,9 +20,9 @@ import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { filterData } from './filter-data/filter-data';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
+import { SelectPopover } from '../Select/SelectPopover/SelectPopover';
 import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
-import { SelectDropdown } from '../Select/SelectDropdown/SelectDropdown';
 import { groupOptions } from '../../utils';
 import useStyles from './MultiSelect.styles';
 import { SelectSharedProps } from '../Select/Select';
@@ -201,7 +201,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       { classNames, styles, name: 'MultiSelect' }
     );
     const { systemStyles, rest } = extractSystemStyles(others);
-    const dropdownRef = useRef<HTMLDivElement>();
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
     const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
@@ -390,7 +389,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         });
       };
 
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'ArrowUp': {
           event.preventDefault();
           setDropdownOpened(true);
@@ -556,103 +555,105 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         {...systemStyles}
         {...wrapperProps}
       >
-        <div
-          className={classes.wrapper}
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-owns={`${uuid}-items`}
-          aria-controls={uuid}
-          aria-expanded={dropdownOpened}
-          onMouseLeave={() => setHovered(-1)}
-          tabIndex={-1}
-          ref={wrapperRef}
+        <SelectPopover
+          opened={shouldRenderDropdown}
+          transition={transition}
+          transitionDuration={transitionDuration}
+          shadow="sm"
+          withinPortal={withinPortal}
+          __staticSelector="Select"
+          onDirectionChange={setDirection}
+          switchDirectionOnFlip={switchDirectionOnFlip}
+          zIndex={zIndex}
+          dropdownPosition={dropdownPosition}
+          positionDependencies={positionDependencies}
         >
-          <input type="hidden" name={name} value={_value.join(',')} form={form} />
+          <SelectPopover.Target>
+            <div
+              className={classes.wrapper}
+              role="combobox"
+              aria-haspopup="listbox"
+              aria-owns={`${uuid}-items`}
+              aria-controls={uuid}
+              aria-expanded={dropdownOpened}
+              onMouseLeave={() => setHovered(-1)}
+              tabIndex={-1}
+              ref={wrapperRef}
+            >
+              <input type="hidden" name={name} value={_value.join(',')} form={form} />
 
-          <Input<'div'>
-            __staticSelector="MultiSelect"
-            style={{ overflow: 'hidden' }}
-            component="div"
-            multiline
-            size={size}
-            variant={variant}
-            disabled={disabled}
-            invalid={!!error}
-            required={required}
-            radius={radius}
-            icon={icon}
-            onMouseDown={(event) => {
-              event.preventDefault();
-              !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
-              inputRef.current?.focus();
-            }}
-            classNames={{
-              ...classNames,
-              input: cx({ [classes.input]: !searchable }, classNames?.input),
-            }}
-            {...getSelectRightSectionProps({
-              theme,
-              rightSection,
-              rightSectionWidth,
-              styles,
-              size,
-              shouldClear: clearable && _value.length > 0,
-              clearButtonLabel,
-              onClear: handleClear,
-              error,
-              disabled,
-              clearButtonTabIndex,
-            })}
-          >
-            <div className={classes.values}>
-              {selectedItems}
-
-              <input
-                ref={useMergedRef(ref, inputRef)}
-                type="text"
-                id={uuid}
-                className={cx(classes.searchInput, {
-                  [classes.searchInputPointer]: !searchable,
-                  [classes.searchInputInputHidden]:
-                    (!dropdownOpened && _value.length > 0) || (!searchable && _value.length > 0),
-                  [classes.searchInputEmpty]: _value.length === 0,
-                })}
-                onKeyDown={handleInputKeydown}
-                value={searchValue}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
-                readOnly={!searchable || valuesOverflow.current}
-                placeholder={_value.length === 0 ? placeholder : undefined}
+              <Input<'div'>
+                __staticSelector="MultiSelect"
+                style={{ overflow: 'hidden' }}
+                component="div"
+                multiline
+                size={size}
+                variant={variant}
                 disabled={disabled}
-                data-mantine-stop-propagation={dropdownOpened}
-                autoComplete="nope"
-                {...rest}
-              />
-            </div>
-          </Input>
+                invalid={!!error}
+                required={required}
+                radius={radius}
+                icon={icon}
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
+                  inputRef.current?.focus();
+                }}
+                classNames={{
+                  ...classNames,
+                  input: cx({ [classes.input]: !searchable }, classNames?.input),
+                }}
+                {...getSelectRightSectionProps({
+                  theme,
+                  rightSection,
+                  rightSectionWidth,
+                  styles,
+                  size,
+                  shouldClear: clearable && _value.length > 0,
+                  clearButtonLabel,
+                  onClear: handleClear,
+                  error,
+                  disabled,
+                  clearButtonTabIndex,
+                })}
+              >
+                <div className={classes.values}>
+                  {selectedItems}
 
-          <SelectDropdown
-            mounted={dropdownOpened && shouldRenderDropdown}
-            transition={transition}
-            transitionDuration={transitionDuration}
-            transitionTimingFunction={transitionTimingFunction}
-            uuid={uuid}
-            shadow={shadow}
-            maxDropdownHeight={maxDropdownHeight}
-            classNames={classNames}
-            styles={styles}
-            ref={useMergedRef(dropdownRef, scrollableRef)}
-            __staticSelector="MultiSelect"
-            dropdownComponent={dropdownComponent || SelectScrollArea}
-            referenceElement={wrapperRef.current}
+                  <input
+                    ref={useMergedRef(ref, inputRef)}
+                    type="text"
+                    id={uuid}
+                    className={cx(classes.searchInput, {
+                      [classes.searchInputPointer]: !searchable,
+                      [classes.searchInputInputHidden]:
+                        (!dropdownOpened && _value.length > 0) ||
+                        (!searchable && _value.length > 0),
+                      [classes.searchInputEmpty]: _value.length === 0,
+                    })}
+                    onKeyDown={handleInputKeydown}
+                    value={searchValue}
+                    onChange={handleInputChange}
+                    onFocus={handleInputFocus}
+                    onBlur={handleInputBlur}
+                    readOnly={!searchable || valuesOverflow.current}
+                    placeholder={_value.length === 0 ? placeholder : undefined}
+                    disabled={disabled}
+                    data-mantine-stop-propagation={dropdownOpened}
+                    autoComplete="nope"
+                    {...rest}
+                  />
+                </div>
+              </Input>
+            </div>
+          </SelectPopover.Target>
+
+          <SelectPopover.Dropdown
+            component={dropdownComponent || SelectScrollArea}
+            maxHeight={maxDropdownHeight}
             direction={direction}
-            onDirectionChange={setDirection}
-            switchDirectionOnFlip={switchDirectionOnFlip}
-            withinPortal={withinPortal}
-            zIndex={zIndex}
-            dropdownPosition={dropdownPosition}
-            positionDependencies={positionDependencies}
+            id={uuid}
+            innerRef={scrollableRef}
           >
             <SelectItems
               data={filteredData}
@@ -670,8 +671,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
               creatable={creatable && !!createLabel}
               createLabel={createLabel}
             />
-          </SelectDropdown>
-        </div>
+          </SelectPopover.Dropdown>
+        </SelectPopover>
       </InputWrapper>
     );
   }

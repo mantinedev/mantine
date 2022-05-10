@@ -383,7 +383,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     typeof onKeyDown === 'function' && onKeyDown(event);
 
-    switch (event.nativeEvent.code) {
+    switch (event.key) {
       case 'ArrowUp': {
         event.preventDefault();
 
