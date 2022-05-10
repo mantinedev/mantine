@@ -18,6 +18,14 @@ function createRef(refName: string) {
   return `__mantine-ref-${refName || ''}`;
 }
 
+function getStyles<Key extends string>(
+  styles: UseStylesOptions<Key>['styles'],
+  theme: MantineTheme,
+  params: Record<string, any>
+): UseStylesOptions<Key>['styles'] {
+  return typeof styles === 'function' ? styles(theme, params || {}) : styles || {};
+}
+
 export function createStyles<Key extends string = string, Params = void>(
   input:
     | ((
@@ -36,15 +44,8 @@ export function createStyles<Key extends string = string, Params = void>(
     const { css, cx } = useCss();
     const cssObject = getCssObject(theme, params, createRef);
 
-    const _styles =
-      typeof options?.styles === 'function'
-        ? options?.styles(theme, params)
-        : options?.styles || {};
-
-    const _providerStyles =
-      typeof providerStyles === 'function'
-        ? providerStyles(theme, params || {})
-        : providerStyles || {};
+    const _styles = getStyles(options?.styles, theme, params);
+    const _providerStyles = getStyles(providerStyles, theme, params);
 
     const classes = fromEntries(
       Object.keys(cssObject).map((key) => {
