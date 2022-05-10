@@ -3,10 +3,9 @@ import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, Selectors, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
-import { SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
-import { SelectPopover } from '../Select/SelectPopover/SelectPopover';
+import { SelectPopover, SelectPopoverStylesNames } from '../Select/SelectPopover/SelectPopover';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
@@ -15,7 +14,7 @@ import { SelectSharedProps } from '../Select/Select';
 export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
-  | SelectDropdownStylesNames
+  | SelectPopoverStylesNames
   | Selectors<typeof useStyles>;
 
 export interface AutocompleteItem {
@@ -71,6 +70,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       value,
       defaultValue,
       onChange,
+      unstyled,
       itemComponent,
       onItemSubmit,
       onKeyDown,
@@ -208,6 +208,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           zIndex={zIndex}
           dropdownPosition={dropdownPosition}
           positionDependencies={positionDependencies}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
         >
           <SelectPopover.Target>
             <div

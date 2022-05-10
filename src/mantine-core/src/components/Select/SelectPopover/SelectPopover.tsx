@@ -1,24 +1,11 @@
 import React from 'react';
-import { MantineShadow } from '@mantine/styles';
+import { ClassNames, MantineShadow, Styles } from '@mantine/styles';
 import { ScrollArea } from '../../ScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
 import { MantineTransition } from '../../Transition';
 
-interface SelectPopoverProps {
-  opened: boolean;
-  transition?: MantineTransition;
-  transitionDuration?: number;
-  shadow?: MantineShadow;
-  withinPortal?: boolean;
-  children: React.ReactNode;
-  __staticSelector?: string;
-  onDirectionChange?(direction: React.CSSProperties['flexDirection']): void;
-  switchDirectionOnFlip?: boolean;
-  zIndex?: number;
-  dropdownPosition?: 'bottom' | 'top' | 'flip';
-  positionDependencies?: any[];
-}
+export type SelectPopoverStylesNames = 'dropdown';
 
 interface SelectPopoverDropdownProps {
   children: React.ReactNode;
@@ -60,6 +47,24 @@ function SelectPopoverDropdown({
   );
 }
 
+interface SelectPopoverProps {
+  opened: boolean;
+  transition?: MantineTransition;
+  transitionDuration?: number;
+  shadow?: MantineShadow;
+  withinPortal?: boolean;
+  children: React.ReactNode;
+  __staticSelector?: string;
+  onDirectionChange?(direction: React.CSSProperties['flexDirection']): void;
+  switchDirectionOnFlip?: boolean;
+  zIndex?: number;
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
+  positionDependencies?: any[];
+  classNames?: ClassNames<SelectPopoverStylesNames>;
+  styles?: Styles<SelectPopoverStylesNames>;
+  unstyled?: boolean;
+}
+
 export function SelectPopover({
   opened,
   transition = 'fade',
@@ -73,9 +78,15 @@ export function SelectPopover({
   zIndex,
   dropdownPosition,
   positionDependencies = [],
+  classNames,
+  styles,
+  unstyled,
 }: SelectPopoverProps) {
   return (
     <Popover
+      unstyled={unstyled}
+      classNames={classNames}
+      styles={styles}
       width="target"
       withRoles={false}
       opened={opened}

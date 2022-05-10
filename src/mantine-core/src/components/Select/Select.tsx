@@ -176,6 +176,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     transitionDuration,
     initiallyOpened,
     transitionTimingFunction,
+    unstyled,
     classNames,
     styles,
     filter,
@@ -538,6 +539,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         zIndex={zIndex}
         dropdownPosition={dropdownPosition}
         positionDependencies={positionDependencies}
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
       >
         <SelectPopover.Target>
           <div

@@ -193,6 +193,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       form,
       positionDependencies,
       onKeyDown,
+      unstyled,
       ...others
     } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -567,6 +568,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           zIndex={zIndex}
           dropdownPosition={dropdownPosition}
           positionDependencies={positionDependencies}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
         >
           <SelectPopover.Target>
             <div
