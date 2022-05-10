@@ -1,12 +1,11 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   itSupportsFocusEvents,
   checkAccessibility,
   itSupportsSystemProps,
   itSupportsInputProps,
-  renderWithAct,
 } from '@mantine/tests';
 import { Select, SelectProps } from './Select';
 
@@ -15,14 +14,10 @@ const defaultProps: SelectProps = {
   label: 'test-label',
   withinPortal: false,
   data: [
-    { value: 'test-1', label: 'Test 1' },
-    { value: 'test-2', label: 'Test 2' },
+    { value: 'test-item-1', label: 'Test item 1' },
+    { value: 'test-item-2', label: 'Test item 2' },
   ],
 };
-
-const data = Array(50)
-  .fill(0)
-  .map((_, index) => ({ value: index.toString(), label: index.toString() }));
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
@@ -37,45 +32,61 @@ describe('@mantine/core/Select', () => {
     name: 'Select',
   });
 
-  it('renders correct amount of items based on data prop', async () => {
-    await renderWithAct(<Select {...defaultProps} data={data.slice(0, 5)} />);
-    expect(screen.getAllByRole('option')).toHaveLength(5);
-  });
-
-  it('renders correct amount of items based on filter prop', async () => {
-    await renderWithAct(
-      <Select
-        {...defaultProps}
-        data={data}
-        searchable
-        filter={(_query, item) => item.value.includes('2')}
-      />
+  it('renders hidden input with current input value', () => {
+    const { container } = render(
+      <Select {...defaultProps} name="custom-select" form="custom-form" value="test-1" />
     );
-
-    // Numbers 0-50 which include 2
-    expect(screen.getAllByRole('option')).toHaveLength(14);
-  });
-
-  it('renders correct amount of disabled items', async () => {
-    const { container } = await renderWithAct(
-      <Select
-        {...defaultProps}
-        data={Array(50)
-          .fill(0)
-          .map((_, index) => ({
-            value: index.toString(),
-            label: index.toString(),
-            disabled: index % 2 === 0,
-          }))}
-      />
+    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('test-1');
+    expect(container.querySelector('input[name="custom-select"]')).toHaveAttribute(
+      'form',
+      'custom-form'
     );
-
-    expect(container.querySelectorAll('.mantine-Select-item[disabled]')).toHaveLength(25);
   });
 
-  it('clears value when clear button is clicked', async () => {
+  it('opens dropdown when input is clicked (searchable={false})', () => {
+    render(<Select {...defaultProps} initiallyOpened={false} searchable={false} />);
+    expect(screen.queryAllByRole('option')).toHaveLength(0);
+
+    userEvent.click(screen.getByRole('textbox'));
+    expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
+  });
+
+  it('opens dropdown when input is clicked (searchable={true})', () => {
+    render(<Select {...defaultProps} initiallyOpened={false} searchable />);
+    expect(screen.queryAllByRole('option')).toHaveLength(0);
+
+    userEvent.click(screen.getByRole('textbox'));
+    expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
+  });
+
+  it('supports uncontrolled state', () => {
+    render(<Select {...defaultProps} initiallyOpened={false} />);
+    userEvent.click(screen.getByRole('textbox'));
+    userEvent.click(screen.getAllByRole('option')[0]);
+    expect(screen.queryAllByRole('option')).toHaveLength(0);
+    expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
+  });
+
+  it('supports controlled state', () => {
     const spy = jest.fn();
-    await renderWithAct(
+    render(<Select {...defaultProps} value="test-item-1" initiallyOpened={false} onChange={spy} />);
+    userEvent.click(screen.getByRole('textbox'));
+    userEvent.click(screen.getAllByRole('option')[1]);
+    expect(screen.queryAllByRole('option')).toHaveLength(0);
+    expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
+    expect(spy).toHaveBeenCalledWith('test-item-2');
+  });
+
+  it('filters options based on input value', () => {
+    render(<Select {...defaultProps} searchable />);
+    userEvent.type(screen.getByRole('textbox'), '2');
+    expect(screen.getAllByRole('option')).toHaveLength(1);
+    expect(screen.getByText('Test item 2')).toBeInTheDocument();
+  });
+
+  it('clears value when clear button is clicked', () => {
+    const spy = jest.fn();
+    render(
       <Select
         {...defaultProps}
         clearable
@@ -85,13 +96,6 @@ describe('@mantine/core/Select', () => {
       />
     );
     userEvent.click(screen.getByLabelText('test-clear'));
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('renders hidden input with current input value', async () => {
-    const { container } = await renderWithAct(
-      <Select {...defaultProps} name="custom-select" value="test-1" />
-    );
-    expect(container.querySelector('input[name="custom-select"]')).toHaveValue('test-1');
+    expect(spy).toHaveBeenCalledWith(null);
   });
 });
