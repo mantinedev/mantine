@@ -30,7 +30,7 @@ export const docgenParser = withCustomConfig(path.join(__dirname, '../../tsconfi
   savePropValueAsString: true,
   shouldExtractLiteralValuesFromEnum: true,
   propFilter: (prop: PropItem) => {
-    if (EXCLUDE_PROPS.includes(prop.name)) {
+    if (EXCLUDE_PROPS.includes(prop.name) || prop.name.startsWith('__')) {
       return false;
     }
 
