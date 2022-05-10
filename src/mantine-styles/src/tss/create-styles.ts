@@ -2,7 +2,7 @@ import type { MantineTheme } from '../theme';
 import type { CSSObject } from './types';
 import { fromEntries } from './utils/from-entries/from-entries';
 import { useCss } from './use-css';
-import { useMantineTheme, useMantineThemeStyles } from '../theme/MantineProvider';
+import { useMantineTheme, useMantineProviderStyles } from '../theme/MantineProvider';
 import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 export interface UseStylesOptions<Key extends string> {
@@ -14,8 +14,12 @@ export interface UseStylesOptions<Key extends string> {
   unstyled?: boolean;
 }
 
+function createRef(refName: string) {
+  return `__mantine-ref-${refName || ''}`;
+}
+
 export function createStyles<Key extends string = string, Params = void>(
-  getCssObjectOrCssObject:
+  input:
     | ((
         theme: MantineTheme,
         params: Params,
@@ -23,37 +27,30 @@ export function createStyles<Key extends string = string, Params = void>(
       ) => Record<Key, CSSObject>)
     | Record<Key, CSSObject>
 ) {
-  const getCssObject =
-    typeof getCssObjectOrCssObject === 'function'
-      ? getCssObjectOrCssObject
-      : () => getCssObjectOrCssObject;
+  const getCssObject = typeof input === 'function' ? input : () => input;
 
   function useStyles(params: Params, options?: UseStylesOptions<Key>) {
     const theme = useMantineTheme();
-    const { styles: themeStyles, classNames: themeClassNames } = useMantineThemeStyles(
-      options?.name
-    );
+    const { providerStyles, providerClassNames } = useMantineProviderStyles(options?.name);
 
     const { css, cx } = useCss();
-
-    function createRef(refName: string) {
-      return `__mantine-ref-${refName || ''}`;
-    }
-
     const cssObject = getCssObject(theme, params, createRef);
 
     const _styles =
       typeof options?.styles === 'function'
         ? options?.styles(theme, params)
         : options?.styles || {};
-    const _themeStyles =
-      typeof themeStyles === 'function' ? themeStyles(theme, params || {}) : themeStyles || {};
+
+    const _providerStyles =
+      typeof providerStyles === 'function'
+        ? providerStyles(theme, params || {})
+        : providerStyles || {};
 
     const classes = fromEntries(
       Object.keys(cssObject).map((key) => {
         const mergedStyles = cx(
           { [css(cssObject[key])]: !options?.unstyled },
-          css(_themeStyles[key]),
+          css(_providerStyles[key]),
           css(_styles[key])
         );
         return [key, mergedStyles];
@@ -61,7 +58,7 @@ export function createStyles<Key extends string = string, Params = void>(
     ) as Record<Key, string>;
 
     return {
-      classes: mergeClassNames(cx, classes, themeClassNames, options?.classNames, options?.name),
+      classes: mergeClassNames(cx, classes, providerClassNames, options?.classNames, options?.name),
       cx,
       theme,
     };

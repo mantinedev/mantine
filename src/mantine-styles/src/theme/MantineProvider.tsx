@@ -37,9 +37,12 @@ export function useMantineTheme() {
   return useContext(MantineProviderContext)?.theme || DEFAULT_THEME;
 }
 
-export function useMantineThemeStyles(component: string) {
+export function useMantineProviderStyles(component: string) {
   const ctx = useContext(MantineProviderContext);
-  return { styles: ctx.styles[component] || {}, classNames: ctx.classNames[component] || {} };
+  return {
+    providerStyles: ctx.styles[component] || {},
+    providerClassNames: ctx.classNames[component] || {},
+  };
 }
 
 export function useMantineEmotionOptions(): EmotionCacheOptions {
