@@ -33,7 +33,10 @@ export function mergeClassNames<T extends Record<string, string>>({
       contextClassNames[className],
       classNames != null && classNames[className],
       Array.isArray(name)
-        ? name.map((part) => `mantine-${part}-${className}`).join(' ')
+        ? name
+            .filter(Boolean)
+            .map((part) => `mantine-${part}-${className}`)
+            .join(' ')
         : name
         ? `mantine-${name}-${className}`
         : null

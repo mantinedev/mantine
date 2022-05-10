@@ -52,7 +52,6 @@ export interface InputWrapperProps
 const defaultProps: Partial<InputWrapperProps> = {
   labelElement: 'label',
   size: 'sm',
-  __staticSelector: 'InputWrapper',
 };
 
 export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
@@ -76,7 +75,10 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
       ...others
     } = useMantineDefaultProps('InputWrapper', defaultProps, props);
 
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+    const { classes, cx } = useStyles(
+      { size },
+      { classNames, styles, name: ['InputWrapper', __staticSelector] }
+    );
     const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
     const inputLabel = createElement(
       labelElement,

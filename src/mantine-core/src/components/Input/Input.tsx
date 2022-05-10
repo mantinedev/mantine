@@ -70,7 +70,6 @@ const defaultProps: Partial<InputProps<any>> = {
   rightSectionWidth: 36,
   size: 'sm',
   variant: 'default',
-  __staticSelector: 'Input',
 };
 
 export const Input: InputComponent = forwardRef(
@@ -110,7 +109,7 @@ export const Input: InputComponent = forwardRef(
         iconWidth,
         withRightSection: !!rightSection,
       },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, name: ['Input', __staticSelector] }
     );
 
     const { systemStyles, rest } = extractSystemStyles(others);

@@ -89,4 +89,31 @@ storiesOf('Autocomplete', module)
     <MantineProvider theme={{ defaultRadius: 0 }}>
       <Autocomplete label="Default radius" data={['React', 'Angular', 'Svelte', 'Vue']} />
     </MantineProvider>
+  ))
+  .add('Styles API on MantineProvider', () => (
+    <MantineProvider
+      styles={{
+        Autocomplete: (theme) => ({
+          label: { backgroundColor: theme.colors.red[5] },
+          dropdown: { backgroundColor: theme.colors.orange[5] },
+        }),
+
+        InputWrapper: (theme) => ({
+          description: { backgroundColor: theme.colors.blue[5] },
+        }),
+
+        Input: (theme) => ({
+          input: { backgroundColor: theme.colors.green[5] },
+        }),
+      }}
+    >
+      <Autocomplete
+        label="label"
+        description="description"
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        sx={{ maxWidth: 400 }}
+        mx="auto"
+        my="xl"
+      />
+    </MantineProvider>
   ));
