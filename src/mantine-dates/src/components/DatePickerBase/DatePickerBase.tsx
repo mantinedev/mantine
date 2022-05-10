@@ -71,7 +71,7 @@ export interface DatePickerBaseSharedProps
   /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 
-  /** Popper zIndex */
+  /** Dropdown zIndex */
   zIndex?: number;
 
   /** call onChange with last valid value onBlur */

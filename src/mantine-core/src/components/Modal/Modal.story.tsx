@@ -40,7 +40,7 @@ storiesOf('Modal', module)
         ))}
     </WrappedModal>
   ))
-  .add('With popper components', () => (
+  .add('With popover components', () => (
     <WrappedModal title="Modal with overlay items">
       <Select data={['react', 'ng']} placeholder="Select" />
       <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />

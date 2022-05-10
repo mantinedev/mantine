@@ -68,7 +68,6 @@ export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
 export * as PopoverDemos from './demos/core/Popover';
-export * as PopperDemos from './demos/core/Popper';
 export * as ProgressDemos from './demos/core/Progress';
 export * as RadioGroupDemos from './demos/core/RadioGroup';
 export * as RingProgressDemos from './demos/core/RingProgress';

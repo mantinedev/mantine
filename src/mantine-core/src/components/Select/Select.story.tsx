@@ -241,7 +241,7 @@ storiesOf('Select', module)
       />
     </div>
   ))
-  .add('Popper flip', () => (
+  .add('Dropdown flip', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
       <Select
@@ -253,7 +253,7 @@ storiesOf('Select', module)
       {content}
     </div>
   ))
-  .add('Popper flip (with direction switch)', () => (
+  .add('Dropdown flip (with direction switch)', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
       <Select label="Dropdown flip" data={data} placeholder="Select items" switchDirectionOnFlip />

@@ -62,15 +62,11 @@ form.errors;
 
 <Demo data={ModalDemos.centered} />
 
-[Accordion](https://mantine.dev/core/accordion/) component now supports controlled state with `useAccordionState` hook:
-
-<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
-
 ## Other changes
 
-- Components that use [Popper](https://mantine.dev/core/popper/) ([Select](https://mantine.dev/core/select/), [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.) now support an option to disable rendering within portal
+- Components that use Popper ([Select](https://mantine.dev/core/select/), [Menu](https://mantine.dev/core/menu/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.) now support an option to disable rendering within portal
 - [Rich text editor](https://mantine.dev/others/rte/) now has an option to [get editor ref](https://mantine.dev/others/rte/#get-editor-ref), it can be used, for example, to focus/blur editor or to extend editor with plugins
-- Components that use [Popper](https://mantine.dev/core/popper/) now support rendering without [Portal](https://mantine.dev/core/portal/) by setting `withinPortal={false}`. This option is useful when you want to use [Select](https://mantine.dev/core/select/) and other components inside [Popover](https://mantine.dev/core/popover/) or other components that use [use-click-outside](https://mantine.dev/hooks/use-click-outside/).
+- Components that use Popper now support rendering without [Portal](https://mantine.dev/core/portal/) by setting `withinPortal={false}`. This option is useful when you want to use [Select](https://mantine.dev/core/select/) and other components inside [Popover](https://mantine.dev/core/popover/) or other components that use [use-click-outside](https://mantine.dev/hooks/use-click-outside/).
 - [Accordion](https://mantine.dev/core/accordion/) component now supports `iconSize` and `offsetIcon` props
 - [Menu](https://mantine.dev/core/menu/) component now support disabled items
 - You can now change default locale that is used in all `@mantine/dates` components with `dateLocale` on [MantineProvider](https://mantine.dev/theming/mantine-provider/)
