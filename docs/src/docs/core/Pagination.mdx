@@ -52,6 +52,7 @@ To provide aria-labels to the actions inside the component, use the `getItemAria
 
 ```tsx
 <Pagination
+  aria-label="my pagination component"
   total={20}
   getItemAriaLabel={(page) => {
     switch (page) {
