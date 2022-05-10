@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
 
-export type InputVariant = 'default' | 'filled' | 'unstyled' | 'headless';
+export type InputVariant = 'default' | 'filled' | 'unstyled';
 
 export interface InputStylesParams {
   radius: MantineNumberSize;
@@ -51,55 +51,52 @@ export default createStyles(
         position: 'relative',
       },
 
-      input:
-        variant === 'headless'
-          ? {}
-          : {
-              ...theme.fn.fontStyles(),
-              height: multiline
-                ? variant === 'unstyled'
-                  ? undefined
-                  : 'auto'
-                : theme.fn.size({ size, sizes }),
-              WebkitTapHighlightColor: 'transparent',
-              lineHeight: multiline ? theme.lineHeight : `${theme.fn.size({ size, sizes }) - 2}px`,
-              appearance: 'none',
-              resize: 'none',
-              boxSizing: 'border-box',
-              fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-              width: '100%',
-              color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-              display: 'block',
-              textAlign: 'left',
-              ...sizeStyles,
+      input: {
+        ...theme.fn.fontStyles(),
+        height: multiline
+          ? variant === 'unstyled'
+            ? undefined
+            : 'auto'
+          : theme.fn.size({ size, sizes }),
+        WebkitTapHighlightColor: 'transparent',
+        lineHeight: multiline ? theme.lineHeight : `${theme.fn.size({ size, sizes }) - 2}px`,
+        appearance: 'none',
+        resize: 'none',
+        boxSizing: 'border-box',
+        fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+        width: '100%',
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        display: 'block',
+        textAlign: 'left',
+        ...sizeStyles,
 
-              '&:disabled': {
-                backgroundColor:
-                  theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-                color: theme.colors.dark[2],
-                opacity: 0.6,
-                cursor: 'not-allowed',
+        '&:disabled': {
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+          color: theme.colors.dark[2],
+          opacity: 0.6,
+          cursor: 'not-allowed',
 
-                '&::placeholder': {
-                  color: theme.colors.dark[2],
-                },
-              },
+          '&::placeholder': {
+            color: theme.colors.dark[2],
+          },
+        },
 
-              '&::placeholder': {
-                opacity: 1,
-                userSelect: 'none',
-                color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-              },
+        '&::placeholder': {
+          opacity: 1,
+          userSelect: 'none',
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
 
-              '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
-                {
-                  appearance: 'none',
-                },
+        '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button, &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration':
+          {
+            appearance: 'none',
+          },
 
-              '&[type=number]': {
-                MozAppearance: 'textfield',
-              },
-            },
+        '&[type=number]': {
+          MozAppearance: 'textfield',
+        },
+      },
 
       defaultVariant: {
         border: `1px solid ${
