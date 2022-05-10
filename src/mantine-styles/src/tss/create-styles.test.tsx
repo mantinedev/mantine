@@ -41,6 +41,15 @@ function NamedContainer({ classNames, styles }: { classNames?: any; styles?: any
   return <div className={classes.testObject}>test-element</div>;
 }
 
+function MultipleNames({ classNames, styles }: { classNames?: any; styles?: any }) {
+  const { classes } = objectStyles(null, {
+    name: ['NamedComponent', 'TestName'],
+    classNames,
+    styles,
+  });
+  return <div className={classes.testObject}>test-element</div>;
+}
+
 describe('@mantine/styles/create-styles', () => {
   it('assigns styles with css object', () => {
     expectStyles(() => <div className={objectStyles().classes.testObject}>test-element</div>, {
@@ -134,14 +143,14 @@ describe('@mantine/styles/create-styles', () => {
     render(
       <MantineProvider
         styles={{
-          NamedComponent: { testObject: { lineHeight: 325 } },
+          NamedComponent: { testObject: { background: '#EF56ED' } },
         }}
       >
         <NamedContainer styles={{ testObject: { color: 'cyan' } }} />
       </MantineProvider>
     );
 
-    expect(screen.getByText('test-element')).toHaveStyle({ lineHeight: 325, color: 'cyan' });
+    expect(screen.getByText('test-element')).toHaveStyle({ background: '#EF56ED', color: 'cyan' });
   });
 
   it('assigns styles from MantineProvider (function)', () => {
@@ -158,6 +167,48 @@ describe('@mantine/styles/create-styles', () => {
     expect(screen.getByText('test-element')).toHaveStyle({
       fontSize: `${DEFAULT_THEME.fontSizes.sm}px`,
       color: 'cyan',
+    });
+  });
+
+  it('adds correct static selectors for multiple names', () => {
+    render(<MultipleNames />);
+    expect(screen.getByText('test-element')).toHaveClass('mantine-NamedComponent-testObject');
+    expect(screen.getByText('test-element')).toHaveClass('mantine-TestName-testObject');
+  });
+
+  it('supports MantineProvider classNames for multiple names', () => {
+    render(
+      <MantineProvider
+        classNames={{
+          NamedComponent: { testObject: 'named-class' },
+          TestName: { testObject: 'test-class' },
+        }}
+      >
+        <MultipleNames classNames={{ testObject: 'local-class' }} />
+      </MantineProvider>
+    );
+
+    expect(screen.getByText('test-element')).toHaveClass('named-class');
+    expect(screen.getByText('test-element')).toHaveClass('test-class');
+    expect(screen.getByText('test-element')).toHaveClass('local-class');
+  });
+
+  it('supports MantineProvider styles object for multiple names', () => {
+    render(
+      <MantineProvider
+        styles={{
+          NamedComponent: { testObject: { background: '#EFFF79' } },
+          TestName: { testObject: { color: '#661188' } },
+        }}
+      >
+        <MultipleNames styles={{ testObject: { fontSize: '12%' } }} />
+      </MantineProvider>
+    );
+
+    expect(screen.getByText('test-element')).toHaveStyle({
+      background: '#EFFF79',
+      color: '#661188',
+      fontSize: '12%',
     });
   });
 });
