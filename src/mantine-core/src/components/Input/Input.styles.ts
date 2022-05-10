@@ -103,14 +103,14 @@ export default createStyles(
 
       defaultVariant: {
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4]
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
         }`,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         transition: 'border-color 100ms ease',
 
         '&:focus, &:focus-within': {
           outline: 'none',
-          borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5],
+          borderColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
         },
       },
 
@@ -120,9 +120,7 @@ export default createStyles(
 
         '&:focus, &:focus-within': {
           outline: 'none',
-          borderColor: `${
-            theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 8 : 5]
-          } !important`,
+          borderColor: `${theme.colors[theme.primaryColor][theme.fn.primaryShade()]} !important`,
         },
       },
 

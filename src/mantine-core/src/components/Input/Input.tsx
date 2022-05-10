@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
@@ -70,6 +69,7 @@ type InputComponent = (<C = 'input'>(props: InputProps<C>) => React.ReactElement
 const defaultProps: Partial<InputProps<any>> = {
   rightSectionWidth: 36,
   size: 'sm',
+  variant: 'default',
   __staticSelector: 'Input',
 };
 
@@ -99,14 +99,12 @@ export const Input: InputComponent = forwardRef(
       ...others
     } = useMantineDefaultProps('Input', defaultProps, props);
 
-    const theme = useMantineTheme();
-    const _variant = variant || (theme.colorScheme === 'dark' ? 'filled' : 'default');
     const { classes, cx } = useStyles(
       {
         radius,
         size,
         multiline,
-        variant: _variant,
+        variant,
         invalid,
         rightSectionWidth,
         iconWidth,
@@ -114,6 +112,7 @@ export const Input: InputComponent = forwardRef(
       },
       { classNames, styles, name: __staticSelector }
     );
+
     const { systemStyles, rest } = extractSystemStyles(others);
     const Element: any = component || 'input';
 
@@ -133,7 +132,7 @@ export const Input: InputComponent = forwardRef(
           required={required}
           aria-invalid={invalid}
           disabled={disabled}
-          className={cx(classes[`${_variant}Variant`], classes.input, {
+          className={cx(classes[`${variant}Variant`], classes.input, {
             [classes.withIcon]: icon,
             [classes.invalid]: invalid,
             [classes.disabled]: disabled,
