@@ -24,7 +24,7 @@ interface SelectPopoverDropdownProps {
   children: React.ReactNode;
   id: string;
   component?: any;
-  maxHeight?: number;
+  maxHeight?: number | string;
   direction?: React.CSSProperties['flexDirection'];
   innerRef?: React.MutableRefObject<HTMLDivElement>;
 }

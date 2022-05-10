@@ -3,9 +3,10 @@ import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, Selectors, getDefaultZIndex } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
 import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
-import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
+import { SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
+import { SelectPopover } from '../Select/SelectPopover/SelectPopover';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
@@ -195,60 +196,61 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
 
     return (
       <InputWrapper {...wrapperProps} __staticSelector="Autocomplete">
-        <div
-          className={classes.wrapper}
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-owns={`${inputProps.id}-items`}
-          aria-controls={inputProps.id}
-          aria-expanded={shouldRenderDropdown}
-          onMouseLeave={() => setHovered(-1)}
-          tabIndex={-1}
+        <SelectPopover
+          opened={shouldRenderDropdown}
+          transition={transition}
+          transitionDuration={transitionDuration}
+          shadow="sm"
+          withinPortal={withinPortal}
+          __staticSelector="Autocomplete"
+          onDirectionChange={setDirection}
+          switchDirectionOnFlip={switchDirectionOnFlip}
+          zIndex={zIndex}
+          dropdownPosition={dropdownPosition}
+          positionDependencies={positionDependencies}
         >
-          <Input<'input'>
-            {...inputProps}
-            {...others}
-            data-mantine-stop-propagation={dropdownOpened}
-            ref={useMergedRef(ref, inputRef)}
-            type="string"
-            onKeyDown={handleInputKeydown}
-            classNames={classNames}
-            styles={styles}
-            __staticSelector="Autocomplete"
-            value={_value}
-            onChange={(event) => {
-              handleChange(event.currentTarget.value);
-              setDropdownOpened(true);
-            }}
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-            onClick={handleInputClick}
-            autoComplete="nope"
-            aria-autocomplete="list"
-            aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
-            aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
-          />
+          <SelectPopover.Target>
+            <div
+              className={classes.wrapper}
+              role="combobox"
+              aria-haspopup="listbox"
+              aria-owns={`${inputProps.id}-items`}
+              aria-controls={inputProps.id}
+              aria-expanded={shouldRenderDropdown}
+              onMouseLeave={() => setHovered(-1)}
+              tabIndex={-1}
+            >
+              <Input<'input'>
+                {...inputProps}
+                {...others}
+                data-mantine-stop-propagation={dropdownOpened}
+                ref={useMergedRef(ref, inputRef)}
+                type="string"
+                onKeyDown={handleInputKeydown}
+                classNames={classNames}
+                styles={styles}
+                __staticSelector="Autocomplete"
+                value={_value}
+                onChange={(event) => {
+                  handleChange(event.currentTarget.value);
+                  setDropdownOpened(true);
+                }}
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                onClick={handleInputClick}
+                autoComplete="nope"
+                aria-autocomplete="list"
+                aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
+                aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
+              />
+            </div>
+          </SelectPopover.Target>
 
-          <SelectDropdown
-            mounted={shouldRenderDropdown}
-            transition={transition}
-            transitionDuration={transitionDuration}
-            transitionTimingFunction={transitionTimingFunction}
-            uuid={inputProps.id}
-            shadow={shadow}
-            maxDropdownHeight={maxDropdownHeight}
-            dropdownComponent={dropdownComponent || SelectScrollArea}
-            classNames={classNames}
-            styles={styles}
-            __staticSelector="Autocomplete"
+          <SelectPopover.Dropdown
+            component={dropdownComponent || SelectScrollArea}
+            maxHeight={maxDropdownHeight}
             direction={direction}
-            onDirectionChange={setDirection}
-            switchDirectionOnFlip={switchDirectionOnFlip}
-            referenceElement={inputRef.current}
-            withinPortal={withinPortal}
-            zIndex={zIndex}
-            dropdownPosition={dropdownPosition}
-            positionDependencies={positionDependencies}
+            id={inputProps.id}
           >
             <SelectItems
               data={filteredData}
@@ -263,8 +265,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               size={inputProps.size}
               nothingFound={nothingFound}
             />
-          </SelectDropdown>
-        </div>
+          </SelectPopover.Dropdown>
+        </SelectPopover>
       </InputWrapper>
     );
   }
