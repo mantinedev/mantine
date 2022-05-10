@@ -83,19 +83,4 @@ describe('@mantine/core/Select', () => {
     expect(screen.getAllByRole('option')).toHaveLength(1);
     expect(screen.getByText('Test item 2')).toBeInTheDocument();
   });
-
-  it('clears value when clear button is clicked', () => {
-    const spy = jest.fn();
-    render(
-      <Select
-        {...defaultProps}
-        clearable
-        value="test-1"
-        clearButtonLabel="test-clear"
-        onChange={spy}
-      />
-    );
-    userEvent.click(screen.getByLabelText('test-clear'));
-    expect(spy).toHaveBeenCalledWith(null);
-  });
 });
