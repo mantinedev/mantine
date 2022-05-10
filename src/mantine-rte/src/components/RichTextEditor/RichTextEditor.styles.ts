@@ -153,7 +153,7 @@ export default createStyles(
         left: '-100000px',
         height: '1px',
         overflowY: 'hidden',
-        position: 'absolute',
+        position: 'fixed',
         top: '50%',
       },
 
