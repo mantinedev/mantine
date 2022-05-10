@@ -116,6 +116,14 @@ Popover now supports the following new features:
 
 <Demo data={MenuDemos.usage} />
 
+## Migration to Floating UI
+
+All components that have dropdowns ([DatePicker](https://mantine.dev/dates/date-picker/), [Popover](https://mantine.dev/core/popover/), [Select](https://mantine.dev/core/select/), etc.)
+were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
+
+- `position` and `placement` props were merged into `position` prop, for example, `position="top-start"`
+- Popper component is no longer exported from `@mantine/core` package
+
 ## Other breaking changes
 
 - [Portal](https://mantine.dev/core/portal/) component no longer accepts `position` and `zIndex` props – it is now required to add these styles to Portal children
