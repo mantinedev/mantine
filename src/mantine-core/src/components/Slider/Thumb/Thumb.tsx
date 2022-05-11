@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Transition, MantineTransition } from '../../Transition';
@@ -55,6 +55,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
     }: ThumbProps,
     ref
   ) => {
+    // const theme = useMantineTheme();
     const { classes, cx, theme } = useStyles(
       { color, size, disabled },
       { classNames, styles, name: 'Slider' }
@@ -83,7 +84,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        style={{ left: `${position}%` }}
+        style={{ [theme.dir === 'ltr' ? 'left' : 'right']: `${position}%` }}
       >
         {children}
         <Transition
