@@ -156,11 +156,12 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         <Editor
           theme="snow"
           modules={modules}
-          value={value}
+          defaultValue={value}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
+          scrollingContainer="html"
         />
       </Box>
     );
