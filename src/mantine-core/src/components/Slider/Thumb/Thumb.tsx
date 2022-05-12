@@ -83,7 +83,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        sx={{ left: `${position}%` }}
+        style={{ [theme.dir === 'rtl' ? 'right' : 'left']: `${position}%` }}
       >
         {children}
         <Transition
