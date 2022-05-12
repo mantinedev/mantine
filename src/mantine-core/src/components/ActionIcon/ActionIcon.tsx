@@ -43,7 +43,7 @@ export interface ActionIconProps
 const defaultProps: Partial<ActionIconProps> = {
   color: 'gray',
   size: 'md',
-  variant: 'hover',
+  variant: 'subtle',
   loading: false,
 };
 

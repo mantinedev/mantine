@@ -10,7 +10,7 @@ function Demo() {
   return (
     <>
       <ActionIcon variant="transparent"><Settings size={16} /></ActionIcon>
-      <ActionIcon variant="hover"><Settings size={16} /></ActionIcon>
+      <ActionIcon variant="subtle"><Settings size={16} /></ActionIcon>
       <ActionIcon variant="default"><Settings size={16} /></ActionIcon>
       <ActionIcon variant="outline"><Settings size={16} /></ActionIcon>
       <ActionIcon variant="filled"><Settings size={16} /></ActionIcon>
@@ -28,7 +28,7 @@ export function Demo() {
       <ActionIcon variant="transparent" color="blue">
         {icon}
       </ActionIcon>
-      <ActionIcon variant="hover" color="blue">
+      <ActionIcon variant="subtle" color="blue">
         {icon}
       </ActionIcon>
       <ActionIcon variant="default" color="blue">

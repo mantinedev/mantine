@@ -61,11 +61,7 @@ export default function CodeDemo({
               offset={6}
               positionDependencies={[visible]}
             >
-              <ActionIcon
-                variant="hover"
-                onClick={() => setVisible((v) => !v)}
-                aria-label="Toggle code"
-              >
+              <ActionIcon onClick={() => setVisible((v) => !v)} aria-label="Toggle code">
                 <CodeIcon />
               </ActionIcon>
             </Tooltip>

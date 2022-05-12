@@ -97,7 +97,6 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
             iconSize={16}
             color="gray"
             onClick={onClose}
-            variant="hover"
             className={classes.closeButton}
           />
         )}

@@ -12,7 +12,7 @@ const getColors = (props: Omit<ActionIconProps, 'children'>) =>
 function Demo() {
   return (
     <>
-      <Group position="center">{getColors({ variant: 'hover' })}</Group>
+      <Group position="center">{getColors({ variant: 'subtle' })}</Group>
       <Group position="center" mt="md">
         {getColors({ variant: 'outline' })}
       </Group>

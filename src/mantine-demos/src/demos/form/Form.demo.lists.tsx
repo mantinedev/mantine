@@ -84,11 +84,7 @@ function Demo() {
         {...form.getListInputProps('employees', index, 'name')}
       />
       <Switch label="Active" {...form.getListInputProps('employees', index, 'active')} />
-      <ActionIcon
-        color="red"
-        variant="hover"
-        onClick={() => form.removeListItem('employees', index)}
-      >
+      <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
         <Trash size={16} />
       </ActionIcon>
     </Group>

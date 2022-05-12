@@ -1,7 +1,7 @@
 import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
 
 export type ActionIconVariant =
-  | 'hover'
+  | 'subtle'
   | 'filled'
   | 'outline'
   | 'light'
@@ -30,19 +30,11 @@ interface GetVariantStyles {
 }
 
 function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
-  if (variant === 'hover' || variant === 'transparent') {
+  if (variant === 'transparent') {
     return {
       border: '1px solid transparent',
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       backgroundColor: 'transparent',
-      ...theme.fn.hover(
-        variant === 'transparent'
-          ? {}
-          : {
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.fn.themeColor(color, 0),
-            }
-      ),
     };
   }
 
@@ -58,8 +50,6 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
 
 export default createStyles((theme, { color, size, radius, variant }: ActionIconStylesParams) => ({
   root: {
-    ...theme.fn.focusStyles(),
-    ...theme.fn.fontStyles(),
     ...getVariantStyles({ variant, theme, color }),
     position: 'relative',
     height: theme.fn.size({ size, sizes }),

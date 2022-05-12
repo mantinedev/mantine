@@ -11,7 +11,9 @@ export default createStyles((theme, { color, radius }: NotificationStylesParams,
   const colors = theme.fn.variant({ variant: 'filled', color });
 
   return {
-    closeButton: {},
+    closeButton: theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    }),
 
     icon: {
       ref: getRef('icon'),
