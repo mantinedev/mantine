@@ -7,7 +7,7 @@ import {
   Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { UnstyledButton } from '../Button';
+import { UnstyledButton } from '../UnstyledButton';
 import useStyles from './Burger.styles';
 
 export type BurgerStylesNames = Exclude<Selectors<typeof useStyles>, 'opened'>;

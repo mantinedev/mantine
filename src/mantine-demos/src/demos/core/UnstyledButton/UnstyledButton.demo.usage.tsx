@@ -6,7 +6,7 @@ import { UnstyledButton, Group, Avatar, Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <UnstyledButton onClick={() => console.log('try focusing button with tab')}>
+    <UnstyledButton>
       <Group>
         <Avatar size={40} color="blue">BH</Avatar>
         <div>
@@ -39,7 +39,7 @@ function Demo() {
   );
 }
 
-export const unstyled: MantineDemo = {
+export const usage: MantineDemo = {
   type: 'demo',
   code,
   component: Demo,

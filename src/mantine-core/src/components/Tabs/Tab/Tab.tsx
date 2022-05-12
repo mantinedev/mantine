@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, useContextStylesApi, MantineColor } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
-import { UnstyledButton } from '../../Button';
+import { UnstyledButton } from '../../UnstyledButton';
 import { useTabsContext } from '../Tabs.context';
 import useStyles from './Tab.styles';
 

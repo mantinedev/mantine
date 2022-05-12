@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Box } from '../../Box';
+import { Box } from '../Box';
 import useStyles from './UnstyledButton.styles';
 
 export interface UnstyledButtonProps extends DefaultProps {

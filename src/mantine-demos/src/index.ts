@@ -95,6 +95,7 @@ export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransferListDemos from './demos/core/TransferList';
 export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
+export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 
 // @mantine/dates
 export * as CalendarDemos from './demos/dates/Calendar';

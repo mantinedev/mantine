@@ -9,7 +9,7 @@ import {
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
-import { UnstyledButton } from '../../Button';
+import { UnstyledButton } from '../../UnstyledButton';
 import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
 

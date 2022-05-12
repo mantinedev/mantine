@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
-import { UnstyledButton } from '../../Button';
+import { UnstyledButton } from '../../UnstyledButton';
 import { ActionIcon } from '../../ActionIcon';
 import { TextInput } from '../../TextInput';
 import { Text } from '../../Text';

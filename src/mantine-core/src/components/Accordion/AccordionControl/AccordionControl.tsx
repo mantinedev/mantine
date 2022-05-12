@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useContextStylesApi, DefaultProps, Selectors } from '@mantine/styles';
 import { createScopedKeydownHandler } from '@mantine/utils';
-import { UnstyledButton } from '../../Button';
+import { UnstyledButton } from '../../UnstyledButton';
 import { useAccordionContext } from '../Accordion.context';
 import { useAccordionItemContext } from '../AccordionItem.context';
 import useStyles from './AccordionControl.styles';

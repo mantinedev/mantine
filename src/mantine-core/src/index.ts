@@ -84,3 +84,4 @@ export * from './components/Tooltip';
 export * from './components/TransferList';
 export * from './components/Transition';
 export * from './components/TypographyStylesProvider';
+export * from './components/UnstyledButton';
