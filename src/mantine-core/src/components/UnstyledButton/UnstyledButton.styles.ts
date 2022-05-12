@@ -13,5 +13,6 @@ export default createStyles((theme) => ({
     textAlign: 'left',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     textDecoration: 'none',
+    boxSizing: 'border-box',
   },
 }));

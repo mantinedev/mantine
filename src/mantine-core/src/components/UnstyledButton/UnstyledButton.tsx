@@ -5,6 +5,7 @@ import { Box } from '../Box';
 import useStyles from './UnstyledButton.styles';
 
 export interface UnstyledButtonProps extends DefaultProps {
+  children?: React.ReactNode;
   component?: any;
 }
 

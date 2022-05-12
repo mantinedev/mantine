@@ -7,7 +7,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Box } from '../Box';
+import { UnstyledButton } from '../UnstyledButton';
 import useStyles, { sizes, ActionIconVariant, ActionIconStylesParams } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
@@ -74,9 +74,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
   );
 
   return (
-    <Box
-      component="button"
-      type="button"
+    <UnstyledButton
       className={cx(classes.root, className)}
       ref={ref}
       disabled={disabled || loading}
@@ -85,7 +83,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
       {...others}
     >
       {loading ? loader : children}
-    </Box>
+    </UnstyledButton>
   );
 });
 

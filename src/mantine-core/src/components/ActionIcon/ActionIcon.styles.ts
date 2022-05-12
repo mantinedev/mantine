@@ -62,10 +62,6 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     ...theme.fn.fontStyles(),
     ...getVariantStyles({ variant, theme, color }),
     position: 'relative',
-    appearance: 'none',
-    WebkitAppearance: 'none',
-    WebkitTapHighlightColor: 'transparent',
-    boxSizing: 'border-box',
     height: theme.fn.size({ size, sizes }),
     minHeight: theme.fn.size({ size, sizes }),
     width: theme.fn.size({ size, sizes }),
@@ -76,8 +72,6 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
-    textDecoration: 'none',
 
     '&:active': {
       transform: 'translateY(1px)',
