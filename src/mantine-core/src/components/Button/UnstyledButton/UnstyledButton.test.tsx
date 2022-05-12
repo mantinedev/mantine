@@ -6,7 +6,7 @@ import {
 } from '@mantine/tests';
 import { UnstyledButton, UnstyledButtonProps } from './UnstyledButton';
 
-const defaultProps: UnstyledButtonProps<'button'> = {};
+const defaultProps: UnstyledButtonProps = {};
 
 describe('@mantine/core/UnstyledButton', () => {
   itRendersChildren(UnstyledButton, defaultProps);
