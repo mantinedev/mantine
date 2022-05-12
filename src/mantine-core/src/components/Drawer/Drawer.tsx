@@ -14,7 +14,7 @@ import { Overlay } from '../Overlay';
 import { OptionalPortal } from '../Portal';
 import { Text } from '../Text';
 import { Box } from '../Box';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 

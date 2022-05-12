@@ -10,7 +10,7 @@ import {
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { Text } from '../Text';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';

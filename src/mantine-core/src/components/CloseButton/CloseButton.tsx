@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useMantineTheme } from '@mantine/styles';
-import { ActionIcon, ActionIconProps } from '../ActionIcon';
+import { ActionIcon, ActionIconProps } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from './CloseIcon';
 
 export interface CloseButtonProps

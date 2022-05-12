@@ -1,6 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineSize, MantineNumberSize, Selectors } from '@mantine/styles';
-import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
+import { CloseButton } from '../../CloseButton';
 import useStyles from './DefaultValue.styles';
 
 export type DefaultValueStylesNames = Selectors<typeof useStyles>;

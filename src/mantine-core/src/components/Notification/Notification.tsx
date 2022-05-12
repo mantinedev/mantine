@@ -8,7 +8,7 @@ import {
 } from '@mantine/styles';
 import { Text } from '../Text';
 import { Loader } from '../Loader';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
 import useStyles from './Notification.styles';
 

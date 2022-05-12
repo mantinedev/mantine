@@ -9,9 +9,9 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { Affix } from '../Affix';
-import { Paper, PaperProps } from '../Paper/Paper';
+import { Paper, PaperProps } from '../Paper';
 import useStyles from './Dialog.styles';
 
 export type DialogStylesNames = Selectors<typeof useStyles>;

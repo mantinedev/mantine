@@ -23,7 +23,7 @@ function Demo() {
   );
 }
 
-export const closeButton: MantineDemo = {
+export const usage: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
