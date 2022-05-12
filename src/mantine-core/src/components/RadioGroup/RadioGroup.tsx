@@ -42,6 +42,9 @@ export interface RadioGroupProps
 
   /** Spacing between radios in horizontal orientation */
   spacing?: MantineNumberSize;
+  
+  /** Grow prop of Group-Component **/
+  grow?: boolean;
 
   /** Active radio color from theme.colors */
   color?: MantineColor;
@@ -69,6 +72,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       onChange,
       orientation,
       spacing,
+      grow,
       color,
       size,
       classNames,
@@ -124,6 +128,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           role="radiogroup"
           aria-labelledby={`${rootId}-label`}
           spacing={spacing}
+          grow={grow}
           direction={orientation === 'horizontal' ? 'row' : 'column'}
           style={{ paddingTop: 5 }}
         >
