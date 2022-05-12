@@ -35,6 +35,16 @@ describe('@mantine/core/ActionIcon', () => {
     expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
 
+  it('sets data-disabled attribute when disabled={true}', () => {
+    render(<ActionIcon disabled />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
+  });
+
+  it('sets data-loading attribute when loading={true}', () => {
+    render(<ActionIcon loading />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-loading');
+  });
+
   it('replaces icon with Loader when loading is set to true', () => {
     const { container: loading } = render(
       <ActionIcon loading>
