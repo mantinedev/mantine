@@ -28,12 +28,29 @@ ActionIcon `color` prop accepts only keys of `theme.colors`, hex, rgba, hsl and 
 
 <Demo data={ActionIconDemos.colors} />
 
-## Close button
+## data- attributes
 
-CloseButton is a premade ActionIcon with close icon, it is used in all other components: [Popover](/core/popover/), [Modal](/core/modal/), [Notification](/core/Notification/), etc.
-Component accepts the same props as ActionIcon with additional `iconSize` prop to control icon width and height:
+ActionIcon has the following attributes on the root element:
 
-<Demo data={ActionIconDemos.closeButton} />
+- `data-disabled` when `disabled` prop is `true`
+- `data-loading` when `loading` prop is `true`
+
+You can customize disabled and loading styles with these attributes:
+
+```tsx
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionIcon
+      sx={{
+        '&[data-disabled]': { opacity: 0.4 },
+        '&[data-loading]': { backgroundColor: 'red' },
+      }}
+    />
+  );
+}
+```
 
 ## Change root element
 
