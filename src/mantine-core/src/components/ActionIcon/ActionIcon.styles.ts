@@ -75,6 +75,7 @@ export default createStyles((theme, { color, size, radius }: ActionIconStylesPar
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    textDecoration: 'none',
 
     '&:disabled': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],

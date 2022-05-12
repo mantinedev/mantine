@@ -3,14 +3,18 @@ import React from 'react';
 type ExtendedProps<Props = {}, OverrideProps = {}> = OverrideProps &
   Omit<Props, keyof OverrideProps>;
 
-type PropsOf<C extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>> =
-  JSX.LibraryManagedAttributes<C, React.ComponentPropsWithoutRef<C>>;
+type ElementType = keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>;
 
-type ComponentProp<C extends React.ElementType> = {
+type PropsOf<C extends ElementType> = JSX.LibraryManagedAttributes<
+  C,
+  React.ComponentPropsWithoutRef<C>
+>;
+
+type ComponentProp<C> = {
   component?: C;
 };
 
-type InheritedProps<C extends React.ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
+type InheritedProps<C extends ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
 
 export type PolymorphicRef<C> = C extends React.ElementType
   ? React.ComponentPropsWithRef<C>['ref']

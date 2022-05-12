@@ -9,17 +9,20 @@ import {
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
-const defaultProps: ActionIconProps<'button'> = { children: <div /> };
+const defaultProps: ActionIconProps = {
+  children: '$',
+};
 
 describe('@mantine/core/ActionIcon', () => {
   itIsPolymorphic(ActionIcon, defaultProps);
   itRendersChildren(ActionIcon, defaultProps);
-  itSupportsFocusEvents(ActionIcon, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsFocusEvents(ActionIcon, defaultProps, 'button');
   itSupportsSystemProps({
     component: ActionIcon,
     props: defaultProps,
     displayName: '@mantine/core/ActionIcon',
     refType: HTMLButtonElement,
+    name: 'ActionIcon',
   });
 
   checkAccessibility([
