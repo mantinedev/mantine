@@ -12,3 +12,14 @@ export function AsLink() {
     </div>
   );
 }
+
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ActionIcon disabled>$</ActionIcon>
+      <ActionIcon loading color="blue">
+        $
+      </ActionIcon>
+    </div>
+  );
+}

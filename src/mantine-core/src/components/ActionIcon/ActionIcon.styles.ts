@@ -79,32 +79,38 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     cursor: 'pointer',
     textDecoration: 'none',
 
-    '&:disabled': {
+    '&:active': {
+      transform: 'translateY(1px)',
+    },
+
+    '&[data-disabled]': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
       backgroundColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
       borderColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
+
+      '&:active': {
+        transform: 'none',
+      },
     },
 
-    '&:not(:disabled):active': {
-      transform: 'translateY(1px)',
-    },
-  },
+    '&[data-loading]': {
+      pointerEvents: 'none',
 
-  loading: {
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: -1,
-      left: -1,
-      right: -1,
-      bottom: -1,
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.fn.rgba(theme.colors.dark[7], 0.5)
-          : 'rgba(255, 255, 255, .5)',
-      borderRadius: theme.fn.radius(radius),
-      cursor: 'not-allowed',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: -1,
+        left: -1,
+        right: -1,
+        bottom: -1,
+        backgroundColor:
+          theme.colorScheme === 'dark'
+            ? theme.fn.rgba(theme.colors.dark[7], 0.5)
+            : 'rgba(255, 255, 255, .5)',
+        borderRadius: theme.fn.radius(radius),
+        cursor: 'not-allowed',
+      },
     },
   },
 }));

@@ -77,9 +77,11 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     <Box
       component="button"
       type="button"
-      className={cx(classes.root, { [classes.loading]: loading }, className)}
+      className={cx(classes.root, className)}
       ref={ref}
       disabled={disabled || loading}
+      data-disabled={disabled ? true : undefined}
+      data-loading={loading ? true : undefined}
       {...others}
     >
       {loading ? loader : children}
