@@ -4,8 +4,8 @@ package: '@mantine/core'
 title: ActionIcon
 order: 1
 slug: /core/action-icon/
-category: 'inputs'
-description: 'Icon button to indicate secondary action'
+category: 'buttons'
+description: 'Icon button'
 props: ['ActionIcon']
 import: "import { ActionIcon } from '@mantine/core';"
 source: 'mantine-core/src/components/ActionIcon/ActionIcon.tsx'
@@ -18,54 +18,15 @@ import { ActionIconDemos } from '@mantine/demos';
 
 <Demo data={ActionIconDemos.configurator} />
 
-## Children
-
-ActionIcon accepts any React node as child. It **does not control icon size**, specify it manually on icon component to match ActionIcon size.
-For example, in [tabler icons](https://tablericons.com/) you can use size prop:
-
-```tsx
-import { ActionIcon } from '@mantine/core';
-import { Adjustments } from 'tabler-icons-react';
-
-function Demo() {
-  return (
-    <ActionIcon>
-      <Adjustments size={16} />
-    </ActionIcon>
-  );
-}
-```
-
 ## Variants
-
-ActionIcon has 6 variants: hover, default, transparent, filled, light and outline:
 
 <Demo data={ActionIconDemos.variants} />
 
-## Color
+## Colors
 
-ActionIcon supports all colors from [theme.colors](/theming/extend-theme/#default-colors):
-
-```tsx
-<ActionIcon color="red" />
-<ActionIcon color="blue" />
-```
+ActionIcon `color` prop accepts only keys of `theme.colors`, hex, rgba, hsl and other CSS colors are not supported:
 
 <Demo data={ActionIconDemos.colors} />
-
-## Size and radius
-
-Control button width and height with `size` and border-radius with `radius`.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, use a number to set radius or size in px:
-
-```tsx
-<ActionIcon radius="lg" /> // -> theme predefined large radius
-<ActionIcon radius={10} /> // -> { borderRadius: '10px' }
-
-<ActionIcon size="sm" /> // -> predefined small size
-<ActionIcon size={50} /> // -> { width: '50px', height: '50px' }
-```
 
 ## Close button
 
@@ -74,10 +35,21 @@ Component accepts the same props as ActionIcon with additional `iconSize` prop t
 
 <Demo data={ActionIconDemos.closeButton} />
 
-## Usage with react-router and other libraries
+## Change root element
 
-To use ActionIcon component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
-or other similar libraries pass `Link` as component to ActionIcon:
+```tsx
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ActionIcon component="a" href="https://mantine.dev/core/">
+      Anchor element
+    </ActionIcon>
+  );
+}
+```
+
+## Usage with react-router
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -88,22 +60,6 @@ function Demo() {
     <ActionIcon component={Link} to="/react-router">
       React router link
     </ActionIcon>
-  );
-}
-```
-
-To use custom component with TypeScript, provide type (should match `component` prop):
-
-```tsx
-import { ActionIcon } from '@mantine/core';
-import { Link } from 'react-router-dom';
-
-function Demo() {
-  return (
-    <>
-      <ActionIcon<'a'> component="a" href="#" />
-      <ActionIcon<typeof Link> component={Link} to="/hello" />
-    </>
   );
 }
 ```
@@ -120,21 +76,9 @@ function Demo() {
 }
 ```
 
-To use `ref` with custom component in TypeScript, specify generic type:
-
-```tsx
-import { useRef } from 'react';
-import { ActionIcon } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLAnchorElement>();
-  return <ActionIcon<'a'> component="a" href="#" ref={ref} />;
-}
-```
-
 ## Accessibility
 
-ActionIcon renders a regular button element. Set `title` or `aria-label` props for screen reader support:
+ActionIcon does not have an associated label, set `title` or `aria-label` props to make it visible for screen readers:
 
 ```tsx
 <ActionIcon /> // -> not visible to screen reader

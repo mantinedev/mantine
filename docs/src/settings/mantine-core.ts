@@ -7,11 +7,13 @@ import {
   LetterCaseCapitalizeIcon,
   ContainerIcon,
   TextAlignJustifyIcon,
+  ButtonIcon,
 } from '@modulz/radix-icons';
 import { Category } from './types';
 
 export const MANTINE_CORE_ORDER = [
   'layout',
+  'buttons',
   'inputs',
   'navigation',
   'data-display',
@@ -68,5 +70,11 @@ export const MANTINE_CORE_CATEGORIES: Record<typeof MANTINE_CORE_ORDER[number], 
     title: 'Layout',
     icon: ContainerIcon,
     color: 'grape',
+  },
+
+  buttons: {
+    title: 'Buttons',
+    icon: ButtonIcon,
+    color: 'cyan',
   },
 };
