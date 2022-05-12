@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Anchor, AnchorProps } from './Anchor';
 
-const defaultProps: AnchorProps<'a'> = {};
+const defaultProps: AnchorProps = {};
 
 describe('@mantine/core/Anchor', () => {
   itRendersChildren(Anchor, defaultProps);

@@ -1,21 +1,20 @@
 import React, { forwardRef } from 'react';
-import { PolymorphicComponentProps, PolymorphicRef, useMantineDefaultProps } from '@mantine/styles';
+import { useMantineDefaultProps } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Text, SharedTextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
-export type AnchorProps<C> = PolymorphicComponentProps<C, SharedTextProps>;
+export interface AnchorProps extends SharedTextProps {
+  children?: React.ReactNode;
+}
 
-type AnchorComponent = (<C = 'a'>(props: AnchorProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
+const defaultProps: Partial<AnchorProps> = {};
 
-const defaultProps: Partial<AnchorProps<any>> = {};
-
-export const Anchor: AnchorComponent = forwardRef(
-  (props: AnchorProps<'a'>, ref: PolymorphicRef<'a'>) => {
+export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
+  (props, ref) => {
     const { component, className, classNames, styles, ...others } = useMantineDefaultProps(
       'Anchor',
-      defaultProps,
+      defaultProps as AnchorProps & { component: any },
       props
     );
     const { classes, cx } = useStyles(null, { name: 'Anchor', classNames, styles });
@@ -32,6 +31,8 @@ export const Anchor: AnchorComponent = forwardRef(
       />
     );
   }
-) as any;
+);
 
-Anchor.displayName = '@mantine/core/Anchor';
+_Anchor.displayName = '@mantine/core/Anchor';
+
+export const Anchor = createPolymorphicComponent<'a', AnchorProps>(_Anchor);

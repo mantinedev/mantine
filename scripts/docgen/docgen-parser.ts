@@ -6,6 +6,7 @@ const EXCLUDE_PROPS = [
   'classNames',
   'styles',
   'unstyled',
+  'component',
   'key',
   'ref',
   'style',
