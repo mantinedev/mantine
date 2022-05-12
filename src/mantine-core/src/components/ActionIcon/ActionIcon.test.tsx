@@ -49,9 +49,9 @@ describe('@mantine/core/ActionIcon', () => {
     );
 
     expect(notLoading.querySelectorAll('.test-icon')).toHaveLength(1);
-    expect(notLoading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(0);
+    expect(notLoading.querySelectorAll('svg')).toHaveLength(0);
 
     expect(loading.querySelectorAll('.test-icon')).toHaveLength(0);
-    expect(loading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(1);
+    expect(loading.querySelectorAll('svg')).toHaveLength(1);
   });
 });
