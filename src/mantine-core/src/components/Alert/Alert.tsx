@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/utils';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
 import useStyles from './Alert.styles';
@@ -72,8 +72,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
     { classNames, styles, name: 'Alert' }
   );
 
-  const rootId = useUuid(id);
-
+  const rootId = useId(id);
   const titleId = title && `${rootId}-title`;
   const bodyId = `${rootId}-body`;
 
@@ -100,7 +99,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
               {withCloseButton && (
                 <CloseButton
                   className={classes.closeButton}
-                  onClick={() => onClose?.()}
+                  onClick={onClose}
                   variant="transparent"
                   size={16}
                   iconSize={16}

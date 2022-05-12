@@ -1,12 +1,52 @@
-import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  CSSObject,
+  MantineColor,
+  MantineNumberSize,
+  MantineTheme,
+} from '@mantine/styles';
+
+type AlertVariant = 'filled' | 'outline' | 'light';
 
 export interface AlertStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
-  variant: 'filled' | 'outline' | 'light';
+  variant: AlertVariant;
 }
 
-export default createStyles((theme, { color, radius, variant }: AlertStylesParams, getRef) => ({
+interface GetVariantStylesInput {
+  variant: AlertVariant;
+  color: MantineColor;
+  theme: MantineTheme;
+}
+
+function getVariantStyles({ variant, color, theme }: GetVariantStylesInput): CSSObject {
+  if (variant === 'filled') {
+    const colors = theme.fn.variant({ variant: 'filled', color });
+    return {
+      backgroundColor: colors.background,
+      color: theme.white,
+    };
+  }
+
+  if (variant === 'outline') {
+    const colors = theme.fn.variant({ variant: 'outline', color });
+    return {
+      color: colors.color,
+      borderColor: colors.border,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+    };
+  }
+
+  const colors = theme.fn.variant({ variant: 'light', color });
+
+  return {
+    backgroundColor: colors.background,
+    color: colors.color,
+  };
+}
+
+export default createStyles((theme, { color, radius, variant }: AlertStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     position: 'relative',
@@ -14,6 +54,7 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
     padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
     borderRadius: theme.fn.radius(radius),
     border: '1px solid transparent',
+    ...getVariantStyles({ variant, color, theme }),
   },
 
   wrapper: {
@@ -40,25 +81,6 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
     display: 'block',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-
-  light: {
-    backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
-    color: theme.fn.variant({ variant: 'light', color }).color,
-  },
-
-  filled: {
-    backgroundColor: theme.fn.variant({ variant: 'filled', color }).background,
-    color: theme.white,
-
-    [`& .${getRef('closeButton')}`]: {
-      color: theme.white,
-    },
-  },
-
-  outline: {
-    color: theme.fn.variant({ variant: 'outline', color }).color,
-    borderColor: theme.fn.variant({ variant: 'outline', color }).border,
   },
 
   icon: {
@@ -89,7 +111,7 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   },
 
   closeButton: {
-    ref: getRef('closeButton'),
     marginTop: 2,
+    color: 'inherit',
   },
 }));
