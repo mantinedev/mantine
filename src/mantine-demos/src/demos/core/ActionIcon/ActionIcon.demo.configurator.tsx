@@ -10,7 +10,7 @@ const iconSizes = {
   xl: 34,
 };
 
-function Wrapper(props: ActionIconProps<'button'>) {
+function Wrapper(props: ActionIconProps) {
   return (
     <Group position="center">
       <ActionIcon {...props}>

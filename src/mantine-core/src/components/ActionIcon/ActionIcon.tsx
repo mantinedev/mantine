@@ -64,7 +64,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
   } = useMantineDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, radius, color },
+    { size, radius, color, variant },
     { name: 'ActionIcon', classNames, styles }
   );
   const colors = theme.fn.variant({ color, variant: 'light' });
@@ -77,7 +77,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     <Box
       component="button"
       type="button"
-      className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
+      className={cx(classes.root, { [classes.loading]: loading }, className)}
       ref={ref}
       disabled={disabled || loading}
       {...others}

@@ -1,6 +1,5 @@
 // @mantine/core
 export * from './Accordion.styles-api';
-export * from './ActionIcon.styles-api';
 export * from './Alert.styles-api';
 export * from './AppShell.styles-api';
 export * from './Autocomplete.styles-api';

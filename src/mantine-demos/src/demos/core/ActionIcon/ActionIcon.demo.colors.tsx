@@ -2,7 +2,7 @@ import React from 'react';
 import { Sun } from 'tabler-icons-react';
 import { Group, MANTINE_COLORS, ActionIcon, ActionIconProps } from '@mantine/core';
 
-const getColors = (props: Omit<ActionIconProps<'button'>, 'children'>) =>
+const getColors = (props: Omit<ActionIconProps, 'children'>) =>
   MANTINE_COLORS.slice(1).map((color) => (
     <ActionIcon key={color} color={color} {...props}>
       <Sun size={18} />

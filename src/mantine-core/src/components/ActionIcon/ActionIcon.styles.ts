@@ -12,6 +12,7 @@ export interface ActionIconStylesParams {
   color: MantineColor;
   size: MantineNumberSize;
   radius: MantineNumberSize;
+  variant: ActionIconVariant;
 }
 
 export const sizes = {
@@ -55,10 +56,11 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   };
 }
 
-export default createStyles((theme, { color, size, radius }: ActionIconStylesParams) => ({
+export default createStyles((theme, { color, size, radius, variant }: ActionIconStylesParams) => ({
   root: {
     ...theme.fn.focusStyles(),
     ...theme.fn.fontStyles(),
+    ...getVariantStyles({ variant, theme, color }),
     position: 'relative',
     appearance: 'none',
     WebkitAppearance: 'none',
@@ -88,13 +90,6 @@ export default createStyles((theme, { color, size, radius }: ActionIconStylesPar
       transform: 'translateY(1px)',
     },
   },
-
-  outline: getVariantStyles({ theme, color, variant: 'outline' }),
-  filled: getVariantStyles({ theme, color, variant: 'filled' }),
-  default: getVariantStyles({ theme, color, variant: 'default' }),
-  light: getVariantStyles({ theme, color, variant: 'light' }),
-  hover: getVariantStyles({ theme, color, variant: 'hover' }),
-  transparent: getVariantStyles({ theme, color, variant: 'transparent' }),
 
   loading: {
     '&::before': {

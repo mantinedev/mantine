@@ -3,7 +3,9 @@ import { useMantineTheme } from '@mantine/styles';
 import { ActionIcon, ActionIconProps } from '../ActionIcon';
 import { CloseIcon } from './CloseIcon';
 
-export interface CloseButtonProps extends Omit<ActionIconProps<'button'>, 'children'> {
+export interface CloseButtonProps
+  extends Omit<ActionIconProps, 'children'>,
+    Omit<React.ComponentPropsWithoutRef<'button'>, 'color'> {
   /** Width and height of cross icon */
   iconSize?: number;
 }
