@@ -12,6 +12,12 @@ export function Variants() {
       <Badge variant="outline">Outline</Badge>
       <Badge variant="dot">Dot</Badge>
       <Badge variant="gradient">Gradient</Badge>
+      <Badge variant="gradient" gradient={{ deg: 30, from: 'red', to: 'orange' }}>
+        Custom gradient
+      </Badge>
+      <Badge variant="gradient" gradient={{ deg: 115, from: '#FC00CF', to: '#CCFFEF' }}>
+        hex gradient
+      </Badge>
     </Group>
   );
 }

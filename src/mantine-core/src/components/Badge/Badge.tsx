@@ -11,9 +11,8 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { BadgeStylesParams } from './Badge.styles';
+import useStyles, { BadgeStylesParams, BadgeVariant } from './Badge.styles';
 
-export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
 export type BadgeStylesNames = Selectors<typeof useStyles>;
 
 interface _BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesParams> {
@@ -82,6 +81,7 @@ export const Badge: BadgeComponent = forwardRef(
         fullWidth,
         color,
         radius,
+        variant,
         gradient,
       },
       { classNames, styles, name: 'Badge' }
@@ -90,7 +90,7 @@ export const Badge: BadgeComponent = forwardRef(
     return (
       <Box
         component={component || 'div'}
-        className={cx(classes[variant], classes.root, className)}
+        className={cx(classes.root, className)}
         ref={ref}
         {...others}
       >

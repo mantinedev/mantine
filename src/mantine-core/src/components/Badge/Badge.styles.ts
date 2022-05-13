@@ -4,37 +4,26 @@ import {
   MantineNumberSize,
   MantineColor,
   MantineGradient,
+  MantineTheme,
 } from '@mantine/styles';
+
+export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
 
 export interface BadgeStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
   gradient: MantineGradient;
+  variant: BadgeVariant;
   fullWidth: boolean;
 }
 
 const sizes = {
-  xs: {
-    fontSize: 9,
-    height: 16,
-  },
-  sm: {
-    fontSize: 10,
-    height: 18,
-  },
-  md: {
-    fontSize: 11,
-    height: 20,
-  },
-  lg: {
-    fontSize: 13,
-    height: 26,
-  },
-  xl: {
-    fontSize: 16,
-    height: 32,
-  },
+  xs: { fontSize: 9, height: 16 },
+  sm: { fontSize: 10, height: 18 },
+  md: { fontSize: 11, height: 20 },
+  lg: { fontSize: 13, height: 26 },
+  xl: { fontSize: 16, height: 32 },
 };
 
 const dotSizes = {
@@ -45,14 +34,52 @@ const dotSizes = {
   xl: 10,
 };
 
-export default createStyles(
-  (theme, { color, size, radius, gradient, fullWidth }: BadgeStylesParams) => {
+interface GetVariantStylesInput {
+  theme: MantineTheme;
+  variant: BadgeVariant;
+  color: MantineColor;
+  size: MantineSize;
+  gradient: MantineGradient;
+}
+
+function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantStylesInput) {
+  if (variant === 'dot') {
     const dotSize = theme.fn.size({ size, sizes: dotSizes });
+    return {
+      backgroundColor: 'transparent',
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
+      }`,
+      paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
+
+      '&::before': {
+        content: '""',
+        display: 'block',
+        width: dotSize,
+        height: dotSize,
+        borderRadius: dotSize,
+        backgroundColor: theme.fn.themeColor(
+          color,
+          theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light')
+        ),
+        marginRight: dotSize,
+      },
+    };
+  }
+
+  const colors = theme.fn.variant({ color, variant, gradient });
+
+  return {
+    background: colors.background,
+    color: colors.color,
+    border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+  };
+}
+
+export default createStyles(
+  (theme, { color, size, radius, gradient, fullWidth, variant }: BadgeStylesParams) => {
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
-    const lightColors = theme.fn.variant({ color, variant: 'light' });
-    const filledColors = theme.fn.variant({ color, variant: 'filled' });
-    const outlineColors = theme.fn.variant({ color, variant: 'outline' });
-    const gradientColors = theme.fn.variant({ variant: 'gradient', gradient });
 
     return {
       leftSection: {
@@ -90,52 +117,7 @@ export default createStyles(
         cursor: 'default',
         textOverflow: 'ellipsis',
         overflow: 'hidden',
-      },
-
-      light: {
-        backgroundColor: lightColors.background,
-        color: lightColors.color,
-        border: '1px solid transparent',
-      },
-
-      filled: {
-        backgroundColor: filledColors.background,
-        color: filledColors.color,
-        border: '1px solid transparent',
-      },
-
-      outline: {
-        backgroundColor: outlineColors.background,
-        color: outlineColors.color,
-        border: `1px solid ${outlineColors.border}`,
-      },
-
-      gradient: {
-        backgroundImage: gradientColors.background,
-        color: gradientColors.color,
-        border: 0,
-      },
-
-      dot: {
-        backgroundColor: 'transparent',
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
-        border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[3]
-        }`,
-        paddingLeft: theme.fn.size({ size, sizes: theme.spacing }) / 1.5 - dotSize / 2,
-
-        '&::before': {
-          content: '""',
-          display: 'block',
-          width: dotSize,
-          height: dotSize,
-          borderRadius: dotSize,
-          backgroundColor: theme.fn.themeColor(
-            color,
-            theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light')
-          ),
-          marginRight: dotSize,
-        },
+        ...getVariantStyles({ theme, variant, color, size, gradient }),
       },
     };
   }
