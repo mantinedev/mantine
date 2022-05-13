@@ -16,6 +16,7 @@ import {
   FocusTrapDemos,
   MenuDemos,
   AvatarDemos,
+  NProgressDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -145,6 +146,13 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - Most components with dropdowns (Tooltip, Popover, ColorPicker, DatePicker, Select, etc.) are no longer using Portal by default, it is now required to set `withinPortal` if you need this feature
 - [Input](https://mantine.dev/core/input/) no longer supports `headless` variant, use `unstyled` prop instead
 - [AppShell](https://mantine.dev/core/app-shell/) `fixed` prop is now `true` by default
+
+## @mantine/nprogress package
+
+[@mantine/nprogress](https://mantine.dev/others/nprogress/) is a new package that allows you to add
+a navigation progress bar to your application. It can be triggered programmatically from anywhere in your application:
+
+<Demo data={NProgressDemos.usage} />
 
 ## New components
 

@@ -35,7 +35,7 @@ export interface NProgressProps {
   /** Exit transition function (transition-timing-function)*/
   exitTransition?: string;
 
-  /** Determines whether NProgress should be rendered within Portal, defaults to true */
+  /** Determines whether NProgress should be rendered within Portal, defaults to false */
   withinPortal?: boolean;
 
   /** NProgress container z-index */
@@ -53,7 +53,7 @@ export function NProgress({
   exitTransitionDuration = 600,
   exitTransition = 'ease',
   onFinish,
-  withinPortal = true,
+  withinPortal = false,
   zIndex = getDefaultZIndex('nprogress'),
 }: NProgressProps) {
   const reducedMotion = useReducedMotion();
@@ -80,7 +80,8 @@ export function NProgress({
 
   const cancelUnmount = () => {
     if (unmountRef.current) {
-      clearTimeout(unmountRef.current);
+      window.clearTimeout(unmountRef.current);
+      unmountRef.current = null;
     }
     setMounted(true);
   };
@@ -94,7 +95,7 @@ export function NProgress({
   };
   const stop = () => interval.stop();
   const reset = () => {
-    interval.stop();
+    stop();
     setProgress(0);
   };
 
@@ -129,6 +130,7 @@ export function NProgress({
         styles={{
           root: {
             top: 0,
+            left: 0,
             position: 'fixed',
             width: '100vw',
             backgroundColor: 'transparent',
