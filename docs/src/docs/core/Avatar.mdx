@@ -6,11 +6,12 @@ order: 1
 slug: /core/avatar/
 category: 'data-display'
 description: 'Display user profile image, initials or fallback icon'
-props: ['Avatar', 'AvatarsGroup']
-import: "import { Avatar, AvatarsGroup } from '@mantine/core';"
+componentPrefix: 'Avatar'
+props: ['Avatar', 'AvatarGroup']
+import: "import { Avatar } from '@mantine/core';"
 source: 'mantine-core/src/components/Avatar/Avatar.tsx'
 docs: 'core/Avatar.mdx'
-styles: ['Avatar', 'AvatarsGroup']
+styles: ['Avatar']
 ---
 
 import { AvatarDemos } from '@mantine/demos';
@@ -21,18 +22,12 @@ import { AvatarDemos } from '@mantine/demos';
 
 ## Placeholder
 
-If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be rendered instead.
+If `src` prop is not set, equals to null or image cannot be loaded, placeholder icon will be displayed instead.
 Any React node can be used instead of placeholder icon. Usually icon or initials are used in this case:
 
 <Demo data={AvatarDemos.placeholders} />
 
 ## Size and radius
-
-<Demo data={AvatarDemos.configurator} />
-
-Control avatar width and height with `size` and border-radius with `radius`.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, a number can be used to set radius or size in px:
 
 ```tsx
 <Avatar radius="lg" /> // -> theme predefined large radius
@@ -41,6 +36,8 @@ Alternatively, a number can be used to set radius or size in px:
 <Avatar size="sm" /> // -> predefined small size
 <Avatar size={50} /> // -> { width: '50px', height: '50px' }
 ```
+
+<Demo data={AvatarDemos.configurator} />
 
 ## Change root element
 
@@ -57,35 +54,19 @@ function Demo() {
 }
 ```
 
-To use a custom component with TypeScript, pass an additional type:
+## Avatar.Group
 
-```tsx
-import { Avatar } from '@mantine/core';
-import { Link } from 'react-router-dom';
+`Avatar.Group` component can be used to combine multiple avatars into a stack:
 
-function Demo() {
-  return (
-    <>
-      <Avatar<'a'> component="a" href="#" />
-      <Avatar<typeof Link> component={Link} to="/hello" />
-    </>
-  );
-}
-```
+<Demo data={AvatarDemos.group} />
 
-## Avatars Group
+You can combine it with [Tooltip](/core/tooltip/) or [Popover](/core/popover/) to show additional information on hover
 
-Use AvatarsGroup to stack avatar components, set `limit` prop to truncate avatars:
-
-<Demo data={AvatarDemos.avatarsGroup} />
-
-To override truncated avatars length set `total` prop:
-
-<Demo data={AvatarDemos.total} />
+<Demo data={AvatarDemos.groupTooltip} />
 
 ## Accessibility
 
-Avatar renders img html element. It is important to add alt text.
+Avatar renders img html element. Do not forget to add alt text.
 If image fails to load alt will be used as `title` for placeholder.
 
 ```tsx

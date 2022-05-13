@@ -31,8 +31,8 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
 
-  /** `img` element attributes */
-  imageProps?: React.ComponentPropsWithoutRef<'img'>;
+  /** img element attributes */
+  imageProps?: Record<string, any>;
 
   /** Custom placeholder */
   children?: React.ReactNode;

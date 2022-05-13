@@ -33,6 +33,9 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
 
+  // Avatar
+  '../src/mantine-core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
@@ -43,7 +46,6 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
   '../src/mantine-core/src/components/Stepper/Step/Step.tsx',
-  '../src/mantine-core/src/components/Avatar/AvatarsGroup/AvatarsGroup.tsx',
   '../src/mantine-core/src/components/AppShell/Navbar/Navbar.tsx',
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',
   '../src/mantine-core/src/components/AppShell/Footer/Footer.tsx',
