@@ -13,5 +13,6 @@ describe('@mantine/core/Collapse', () => {
     component: Collapse,
     props: defaultProps,
     displayName: '@mantine/core/Collapse',
+    providerName: 'Collapse',
   });
 });

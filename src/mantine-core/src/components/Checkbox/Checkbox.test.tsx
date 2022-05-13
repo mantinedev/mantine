@@ -30,7 +30,8 @@ describe('@mantine/core/Checkbox', () => {
     props: defaultProps,
     displayName: '@mantine/core/Checkbox',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'Checkbox',
   });
 
   it('renders label based on label prop', () => {

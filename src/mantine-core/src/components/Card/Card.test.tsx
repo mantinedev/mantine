@@ -14,6 +14,7 @@ describe('@mantine/core/Card', () => {
     props: defaultProps,
     displayName: '@mantine/core/Card',
     refType: HTMLDivElement,
+    providerName: 'Card',
   });
 
   it('exposes CardSection as Card.Section', () => {

@@ -25,7 +25,7 @@ describe('@mantine/core/Chips', () => {
     component: Chips,
     props: defaultProps,
     displayName: '@mantine/core/Chips',
-    excludeOthers: true,
+    providerName: 'Chips',
   });
 
   it('sets chip type based on multiple prop', () => {

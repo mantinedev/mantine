@@ -23,8 +23,8 @@ describe('@mantine/core/CheckboxGroup', () => {
     component: CheckboxGroup,
     props: defaultProps,
     displayName: '@mantine/core/CheckboxGroup',
-    excludeOthers: true,
     refType: HTMLDivElement,
+    providerName: 'CheckboxGroup',
   });
 
   checkAccessibility([

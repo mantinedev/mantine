@@ -28,7 +28,8 @@ describe('@mantine/core/Chip', () => {
     props: defaultProps,
     displayName: '@mantine/core/Chip',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'Chip',
   });
 
   it('displays checked icon when input is checked', () => {

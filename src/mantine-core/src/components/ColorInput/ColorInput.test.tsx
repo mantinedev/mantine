@@ -20,6 +20,7 @@ describe('@mantine/core/ColorInput', () => {
     props: defaultProps,
     displayName: '@mantine/core/ColorInput',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'ColorInput',
   });
 });

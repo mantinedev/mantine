@@ -16,6 +16,7 @@ describe('@mantine/core/Blockquote', () => {
     props: defaultProps,
     displayName: '@mantine/core/Blockquote',
     refType: HTMLQuoteElement,
+    providerName: 'Blockquote',
   });
 
   it('renders given icon based on icon prop', () => {

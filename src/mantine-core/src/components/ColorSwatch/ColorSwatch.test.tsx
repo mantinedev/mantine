@@ -12,5 +12,6 @@ describe('@mantine/core/ColorSwatch', () => {
     props: defaultProps,
     displayName: '@mantine/core/ColorSwatch',
     refType: HTMLDivElement,
+    providerName: 'ColorSwatch',
   });
 });

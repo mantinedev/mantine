@@ -16,6 +16,7 @@ describe('@mantine/core/Burger', () => {
     props: defaultProps,
     displayName: '@mantine/core/Burger',
     refType: HTMLButtonElement,
+    providerName: 'Burger',
   });
 
   it('renders cross when opened prop is true', () => {

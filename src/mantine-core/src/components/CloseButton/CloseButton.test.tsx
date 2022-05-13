@@ -13,6 +13,7 @@ describe('@mantine/core/CloseButton', () => {
     props: defaultProps,
     displayName: '@mantine/core/CloseButton',
     refType: HTMLButtonElement,
+    providerName: 'CloseButton',
   });
 
   it('sets width and height on CloseIcon based on iconSize prop', () => {

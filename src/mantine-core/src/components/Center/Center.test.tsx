@@ -13,5 +13,6 @@ describe('@mantine/core/Center', () => {
     props: defaultProps,
     displayName: '@mantine/core/Center',
     refType: HTMLDivElement,
+    providerName: 'Center',
   });
 });

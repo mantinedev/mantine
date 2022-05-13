@@ -22,6 +22,7 @@ describe('@mantine/core/Breadcrumbs', () => {
     props: defaultProps,
     displayName: '@mantine/core/Breadcrumbs',
     refType: HTMLDivElement,
+    providerName: 'Breadcrumbs',
   });
 
   it('renders correct amount of children and separators', () => {

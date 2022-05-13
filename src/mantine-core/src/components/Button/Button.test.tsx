@@ -21,6 +21,7 @@ describe('@mantine/core/Button', () => {
     props: defaultProps,
     displayName: '@mantine/core/Button',
     refType: HTMLButtonElement,
+    providerName: 'Button',
   });
 
   it('passes type to button component', () => {
