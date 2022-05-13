@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { checkAccessibility, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Avatar, AvatarProps } from './Avatar';
 
-const defaultProps: AvatarProps<'div'> = {
+const defaultProps: AvatarProps = {
   src: './test-image',
 };
 
@@ -19,6 +19,7 @@ describe('@mantine/core/Avatar', () => {
     props: defaultProps,
     displayName: '@mantine/core/Avatar',
     refType: HTMLDivElement,
+    providerName: 'Avatar',
   });
 
   it('passes src and alt to image', () => {

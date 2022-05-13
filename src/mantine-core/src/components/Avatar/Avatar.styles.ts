@@ -29,6 +29,10 @@ export default createStyles((theme, { size, radius, color }: AvatarStylesParams)
       minWidth: theme.fn.size({ size, sizes }),
       height: theme.fn.size({ size, sizes }),
       borderRadius: theme.fn.radius(radius),
+      textDecoration: 'none',
+      border: 0,
+      backgroundColor: 'transparent',
+      padding: 0,
     },
 
     image: {
