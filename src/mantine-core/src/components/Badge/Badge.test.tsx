@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Badge, BadgeProps } from './Badge';
 
-const defaultProps: BadgeProps<'div'> = {};
+const defaultProps: BadgeProps = {};
 
 describe('@mantine/core/Badge', () => {
   itRendersChildren(Badge, defaultProps);

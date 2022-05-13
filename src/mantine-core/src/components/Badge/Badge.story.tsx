@@ -21,3 +21,27 @@ export function Variants() {
     </Group>
   );
 }
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge unstyled leftSection="$$">
+        Unstyled badge
+      </Badge>
+    </div>
+  );
+}
+
+export function CustomComponent() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge component="a" href="https://mantine.dev/">
+        Anchor
+      </Badge>
+
+      <Badge component="button" type="button">
+        Button
+      </Badge>
+    </div>
+  );
+}
