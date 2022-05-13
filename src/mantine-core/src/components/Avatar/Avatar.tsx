@@ -11,11 +11,11 @@ import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
-import useStyles from './Avatar.styles';
+import useStyles, { AvatarStylesParams } from './Avatar.styles';
 
 export type AvatarStylesNames = Selectors<typeof useStyles>;
 
-export interface AvatarProps extends DefaultProps<AvatarStylesNames> {
+export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStylesParams> {
   /** Image url */
   src?: string | null;
 

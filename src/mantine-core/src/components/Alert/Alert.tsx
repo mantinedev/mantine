@@ -9,13 +9,13 @@ import {
 import { useId } from '@mantine/utils';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
-import useStyles from './Alert.styles';
+import useStyles, { AlertStylesParams } from './Alert.styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
 export type AlertStylesNames = Selectors<typeof useStyles>;
 
 export interface AlertProps
-  extends DefaultProps<AlertStylesNames>,
+  extends DefaultProps<AlertStylesNames, AlertStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Alert title */
   title?: React.ReactNode;

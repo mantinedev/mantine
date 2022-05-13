@@ -31,7 +31,7 @@ const sizes = {
     fontSize: 16,
     height: 32,
   },
-} as const;
+};
 
 const dotSizes = {
   xs: 4,
@@ -40,11 +40,6 @@ const dotSizes = {
   lg: 8,
   xl: 10,
 };
-
-export const heights = Object.keys(sizes).reduce((acc, key) => {
-  acc[key] = sizes[key].height;
-  return acc;
-}, {} as Record<MantineSize, number>);
 
 export default createStyles(
   (
