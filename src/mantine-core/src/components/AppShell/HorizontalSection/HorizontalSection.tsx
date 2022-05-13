@@ -1,24 +1,14 @@
 import React, { forwardRef } from 'react';
-import {
-  Selectors,
-  DefaultProps,
-  MantineNumberSize,
-  getDefaultZIndex,
-  ForwardRefWithStaticComponents,
-  Global,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, getDefaultZIndex, Global } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useAppShellContext } from '../AppShell.context';
 import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
-import { Section } from './Section/Section';
 import useStyles, {
   HorizontalSectionPosition,
   HorizontalSectionWidth,
 } from './HorizontalSection.styles';
 
-export type HorizontalSectionStylesNames = Selectors<typeof useStyles>;
-
-export interface HorizontalSectionSharedProps extends DefaultProps<HorizontalSectionStylesNames> {
+export interface HorizontalSectionSharedProps extends DefaultProps {
   /** Component width with breakpoints */
   width?: HorizontalSectionWidth;
 
@@ -51,15 +41,7 @@ export interface HorizontalSectionProps
   __staticSelector: string;
 }
 
-type HorizontalSectionComponent = ForwardRefWithStaticComponents<
-  HorizontalSectionProps,
-  { Section: typeof Section }
->;
-
-export const HorizontalSection: HorizontalSectionComponent = forwardRef<
-  HTMLElement,
-  HorizontalSectionProps
->(
+export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>(
   (
     {
       width,
@@ -109,7 +91,8 @@ export const HorizontalSection: HorizontalSectionComponent = forwardRef<
       <Box
         component={section === 'navbar' ? 'nav' : 'aside'}
         ref={ref}
-        className={cx(classes.root, { [classes.hidden]: hidden }, className)}
+        data-hidden={hidden || undefined}
+        className={cx(classes.root, className)}
         {...others}
       >
         {children}
@@ -125,7 +108,6 @@ export const HorizontalSection: HorizontalSectionComponent = forwardRef<
       </Box>
     );
   }
-) as any;
+);
 
-HorizontalSection.Section = Section;
 HorizontalSection.displayName = '@mantine/core/HorizontalSection';

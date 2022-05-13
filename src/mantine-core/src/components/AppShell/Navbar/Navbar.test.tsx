@@ -1,6 +1,6 @@
 import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Navbar, NavbarProps } from './Navbar';
-import { HorizontalSection } from '../HorizontalSection/HorizontalSection';
+import { Section } from '../HorizontalSection/Section/Section';
 
 const defaultProps: NavbarProps = { children: 'test-navbar' };
 
@@ -11,9 +11,10 @@ describe('@mantine/core/Navbar', () => {
     props: defaultProps,
     displayName: '@mantine/core/Navbar',
     refType: HTMLElement,
+    name: 'Navbar',
   });
 
-  it('exposes HorizontalSection.HorizontalSection as Navbar.Section', () => {
-    expect(Navbar.Section).toBe(HorizontalSection.Section);
+  it('exposes Section as Navbar.Section', () => {
+    expect(Navbar.Section).toBe(Section);
   });
 });

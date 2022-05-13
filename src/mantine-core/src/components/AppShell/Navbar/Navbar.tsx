@@ -8,6 +8,7 @@ import {
   HorizontalSection,
   HorizontalSectionSharedProps,
 } from '../HorizontalSection/HorizontalSection';
+import { Section } from '../HorizontalSection/Section/Section';
 
 export interface NavbarProps
   extends HorizontalSectionSharedProps,
@@ -16,10 +17,7 @@ export interface NavbarProps
   children: React.ReactNode;
 }
 
-type NavbarComponent = ForwardRefWithStaticComponents<
-  NavbarProps,
-  { Section: typeof HorizontalSection.Section }
->;
+type NavbarComponent = ForwardRefWithStaticComponents<NavbarProps, { Section: typeof Section }>;
 
 const defaultProps: Partial<NavbarProps> = {
   fixed: false,
@@ -36,5 +34,5 @@ export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   }
 ) as any;
 
-Navbar.Section = HorizontalSection.Section;
+Navbar.Section = Section;
 Navbar.displayName = '@mantine/core/Navbar';

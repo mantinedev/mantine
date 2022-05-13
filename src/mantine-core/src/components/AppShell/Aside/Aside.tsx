@@ -8,6 +8,7 @@ import {
   HorizontalSection,
   HorizontalSectionSharedProps,
 } from '../HorizontalSection/HorizontalSection';
+import { Section } from '../HorizontalSection/Section/Section';
 
 export interface AsideProps
   extends HorizontalSectionSharedProps,
@@ -16,10 +17,7 @@ export interface AsideProps
   children: React.ReactNode;
 }
 
-type AsideComponent = ForwardRefWithStaticComponents<
-  AsideProps,
-  { Section: typeof HorizontalSection.Section }
->;
+type AsideComponent = ForwardRefWithStaticComponents<AsideProps, { Section: typeof Section }>;
 
 const defaultProps: Partial<AsideProps> = {
   fixed: false,
@@ -36,5 +34,5 @@ export const Aside: AsideComponent = forwardRef<HTMLElement, AsideProps>(
   }
 ) as any;
 
-Aside.Section = HorizontalSection.Section;
+Aside.Section = Section;
 Aside.displayName = '@mantine/core/Aside';

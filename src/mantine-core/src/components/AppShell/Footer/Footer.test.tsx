@@ -13,5 +13,6 @@ describe('@mantine/core/Footer', () => {
     props: defaultProps,
     displayName: '@mantine/core/Footer',
     refType: HTMLElement,
+    name: 'Footer',
   });
 });

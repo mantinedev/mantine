@@ -60,7 +60,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
 
     return (
       <Box
-        component={section === 'header' ? 'nav' : 'footer'}
+        component={section === 'header' ? 'header' : 'footer'}
         className={cx(classes.root, className)}
         ref={ref}
         {...others}

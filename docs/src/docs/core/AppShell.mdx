@@ -10,7 +10,7 @@ props: ['AppShell', 'Navbar', 'Header', 'Aside', 'Footer']
 import: "import { AppShell, Navbar, Header, Aside, Footer } from '@mantine/core';"
 source: 'mantine-core/src/components/AppShell/AppShell.tsx'
 docs: 'core/AppShell.mdx'
-styles: ['AppShell', 'Navbar']
+styles: ['AppShell']
 ---
 
 import { ExternalLinkIcon } from '@modulz/radix-icons';
@@ -59,7 +59,6 @@ export default function AppShellDemo() {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      fixed
       navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
           <Text>Application navbar</Text>
@@ -153,15 +152,15 @@ function Demo() {
 }
 ```
 
-### Fixed position
+### Static position
 
-To make Navbar or Aside fixed (like in Mantine docs) set `fixed` and `position` props:
+To make Navbar or Aside static, set `fixed={false}`:
 
 ```tsx
 import { Navbar } from '@mantine/core';
 
 function Demo() {
-  return <Navbar fixed position={{ top: 0, left: 0 }} />;
+  return <Navbar fixed={false} position={{ top: 0, left: 0 }} />;
 }
 ```
 
@@ -173,7 +172,8 @@ function Demo() {
 
 ## Semantic elements
 
-- Header and Navbar components root element is `nav`
-- Footer component root element is `footer`
-- Aside component root element is `aside`
+- Header root element is `header`
+- Navbar root element is `nav`
+- Footer root element is `footer`
+- Aside root element is `aside`
 - AppShell wraps content with `main` tag – **!important** do not use `main` tag inside AppShell

@@ -30,6 +30,7 @@ function Demo() {
   return (
     <AppShell
       padding="md"
+      fixed={false}
       navbar={
         <Navbar width={{ base: 300 }} height={500} p="xs">
           <Navbar.Section grow mt="xs">

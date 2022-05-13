@@ -56,14 +56,14 @@ export default createStyles(
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
         }`,
         ...breakpoints,
-      },
 
-      hidden: {
-        [`@media (max-width: ${theme.fn.size({
-          size: hiddenBreakpoint,
-          sizes: theme.breakpoints,
-        })}px)`]: {
-          display: 'none',
+        '&[data-hidden]': {
+          [`@media (max-width: ${theme.fn.size({
+            size: hiddenBreakpoint,
+            sizes: theme.breakpoints,
+          })}px)`]: {
+            display: 'none',
+          },
         },
       },
     };

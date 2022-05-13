@@ -47,7 +47,7 @@ export interface AppShellProps
 }
 
 const defaultProps: Partial<AppShellProps> = {
-  fixed: false,
+  fixed: true,
   zIndex: getDefaultZIndex('app'),
   padding: 'md',
 };

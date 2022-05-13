@@ -10,4 +10,3 @@ export type { NavbarProps } from './Navbar/Navbar';
 export type { HeaderProps } from './Header/Header';
 export type { AsideProps } from './Aside/Aside';
 export type { FooterProps } from './Footer/Footer';
-export type { HorizontalSectionStylesNames } from './HorizontalSection/HorizontalSection';

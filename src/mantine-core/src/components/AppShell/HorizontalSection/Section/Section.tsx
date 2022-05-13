@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, PolymorphicComponentProps, PolymorphicRef } from '@mantine/styles';
+import { DefaultProps } from '@mantine/styles';
+import { createPolymorphicComponent, packSx } from '@mantine/utils';
 import { Box } from '../../../Box';
 
-interface _SectionProps extends DefaultProps {
+export interface SectionProps extends DefaultProps {
   /** Section children */
   children: React.ReactNode;
 
@@ -10,24 +11,18 @@ interface _SectionProps extends DefaultProps {
   grow?: boolean;
 }
 
-export type SectionProps<C> = PolymorphicComponentProps<C, _SectionProps>;
-
-type SectionComponent = <C = 'div'>(props: SectionProps<C>) => React.ReactElement;
-
-export const Section: SectionComponent & { displayName?: string } = forwardRef(
-  (
-    { component, children, grow = false, sx, ...others }: SectionProps<'div'>,
-    ref: PolymorphicRef<'div'>
-  ) => (
+export const _Section = forwardRef<HTMLDivElement, SectionProps>(
+  ({ children, grow = false, sx, ...others }, ref) => (
     <Box
-      component={component || 'div'}
       ref={ref}
-      sx={[{ flex: grow ? 1 : 0, boxSizing: 'border-box' }, ...(Array.isArray(sx) ? sx : [sx])]}
+      sx={[{ flex: grow ? 1 : 0, boxSizing: 'border-box' }, ...packSx(sx)]}
       {...others}
     >
       {children}
     </Box>
   )
-) as any;
+);
 
-Section.displayName = '@mantine/core/Section';
+_Section.displayName = '@mantine/core/Section';
+
+export const Section = createPolymorphicComponent<'div', SectionProps>(_Section);

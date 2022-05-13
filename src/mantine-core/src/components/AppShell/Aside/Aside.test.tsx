@@ -1,6 +1,6 @@
 import { itRendersChildren, itSupportsSystemProps } from '@mantine/tests';
 import { Aside, AsideProps } from './Aside';
-import { HorizontalSection } from '../HorizontalSection/HorizontalSection';
+import { Section } from '../HorizontalSection/Section/Section';
 
 const defaultProps: AsideProps = { children: 'test-aside' };
 
@@ -11,9 +11,10 @@ describe('@mantine/core/Aside', () => {
     props: defaultProps,
     displayName: '@mantine/core/Aside',
     refType: HTMLElement,
+    name: 'Aside',
   });
 
-  it('exposes HorizontalSection.HorizontalSection as Aside.Section', () => {
-    expect(Aside.Section).toBe(HorizontalSection.Section);
+  it('exposes Section as Aside.Section', () => {
+    expect(Aside.Section).toBe(Section);
   });
 });
