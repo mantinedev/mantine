@@ -11,7 +11,7 @@ describe('@mantine/core/Navbar', () => {
     props: defaultProps,
     displayName: '@mantine/core/Navbar',
     refType: HTMLElement,
-    name: 'Navbar',
+    providerName: 'Navbar',
   });
 
   it('exposes Section as Navbar.Section', () => {

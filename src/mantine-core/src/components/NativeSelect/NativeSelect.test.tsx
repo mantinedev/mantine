@@ -21,7 +21,7 @@ describe('@mantine/core/NativeSelect', () => {
     displayName: '@mantine/core/NativeSelect',
     refType: HTMLSelectElement,
     othersSelector: '.mantine-NativeSelect-input',
-    name: 'NativeSelect',
+    providerName: 'NativeSelect',
   });
 
   checkAccessibility([

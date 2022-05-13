@@ -11,7 +11,7 @@ import { itSupportsProviderDefaultProps } from './it-supports-provider-default-p
 interface Options<T extends React.FC> {
   component: T;
   props: any;
-  name?: string;
+  providerName?: string;
   displayName?: string;
   othersSelector?: string;
   excludeOthers?: boolean;
@@ -24,11 +24,11 @@ export function itSupportsSystemProps<T extends React.FC>(options: Options<T>) {
   const shouldExcludePaddings = options.excludePadding || false;
 
   options.refType && itSupportsRef(options.component, options.props, options.refType);
-  options.name &&
+  options.providerName &&
     itSupportsProviderDefaultProps(
       options.component,
       options.props,
-      options.name,
+      options.providerName,
       options.othersSelector
     );
   !shouldExcludeOthers &&

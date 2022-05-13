@@ -11,7 +11,7 @@ describe('@mantine/core/Aside', () => {
     props: defaultProps,
     displayName: '@mantine/core/Aside',
     refType: HTMLElement,
-    name: 'Aside',
+    providerName: 'Aside',
   });
 
   it('exposes Section as Aside.Section', () => {

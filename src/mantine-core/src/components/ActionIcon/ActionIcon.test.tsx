@@ -22,7 +22,7 @@ describe('@mantine/core/ActionIcon', () => {
     props: defaultProps,
     displayName: '@mantine/core/ActionIcon',
     refType: HTMLButtonElement,
-    name: 'ActionIcon',
+    providerName: 'ActionIcon',
   });
 
   checkAccessibility([

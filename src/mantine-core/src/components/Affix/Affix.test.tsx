@@ -15,7 +15,7 @@ describe('@mantine/core/Affix', () => {
     props: defaultProps,
     displayName: '@mantine/core/Affix',
     refType: HTMLDivElement,
-    name: 'Affix',
+    providerName: 'Affix',
   });
 
   it('sets z-index based on zIndex prop', () => {

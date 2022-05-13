@@ -21,7 +21,7 @@ describe('@mantine/core/Input', () => {
     displayName: '@mantine/core/TextInput',
     refType: HTMLInputElement,
     othersSelector: '.mantine-TextInput-input',
-    name: 'TextInput',
+    providerName: 'TextInput',
   });
 
   it('supports uncontrolled state', () => {

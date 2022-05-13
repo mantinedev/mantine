@@ -34,6 +34,6 @@ describe('@mantine/core/MultiSelect', () => {
     displayName: '@mantine/core/MultiSelect',
     refType: HTMLInputElement,
     othersSelector: '#test-multi-select',
-    name: 'MultiSelect',
+    providerName: 'MultiSelect',
   });
 });

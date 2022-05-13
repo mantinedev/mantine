@@ -13,6 +13,6 @@ describe('@mantine/core/Header', () => {
     props: defaultProps,
     displayName: '@mantine/core/Header',
     refType: HTMLElement,
-    name: 'Header',
+    providerName: 'Header',
   });
 });

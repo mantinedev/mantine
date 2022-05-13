@@ -13,6 +13,7 @@ describe('@mantine/core/Anchor', () => {
     props: defaultProps,
     displayName: '@mantine/core/Anchor',
     refType: HTMLAnchorElement,
+    providerName: 'Anchor',
   });
 
   it('adds type="button" attribute if component prop is button', () => {

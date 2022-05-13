@@ -16,7 +16,7 @@ describe('@mantine/core/Tooltip', () => {
     component: TooltipFloating,
     props: defaultProps,
     displayName: '@mantine/core/TooltipFloating',
-    name: 'TooltipFloating',
+    providerName: 'TooltipFloating',
   });
 
   it('throws error if children cannot be processed', () => {

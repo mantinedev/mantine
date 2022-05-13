@@ -29,7 +29,7 @@ describe('@mantine/core/Select', () => {
     displayName: '@mantine/core/Select',
     refType: HTMLInputElement,
     othersSelector: '.mantine-Select-input',
-    name: 'Select',
+    providerName: 'Select',
   });
 
   it('renders hidden input with current input value', () => {

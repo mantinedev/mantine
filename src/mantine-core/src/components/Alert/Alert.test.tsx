@@ -19,6 +19,7 @@ describe('@mantine/core/Alert', () => {
     props: defaultProps,
     displayName: '@mantine/core/Alert',
     refType: HTMLDivElement,
+    providerName: 'Alert',
   });
 
   it('renders close button based on withCloseButton prop', () => {

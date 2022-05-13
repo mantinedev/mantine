@@ -20,7 +20,7 @@ describe('@mantine/core/Tooltip', () => {
     component: Tooltip,
     props: defaultProps,
     displayName: '@mantine/core/Tooltip',
-    name: 'Tooltip',
+    providerName: 'Tooltip',
   });
 
   it('throws error if children cannot be processed', () => {
