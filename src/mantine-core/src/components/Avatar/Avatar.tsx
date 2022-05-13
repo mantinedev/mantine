@@ -9,6 +9,8 @@ import {
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
+import { AvatarGroup } from './AvatarGroup/AvatarGroup';
+import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
 import useStyles from './Avatar.styles';
 
 export type AvatarStylesNames = Selectors<typeof useStyles>;
@@ -55,8 +57,10 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     imageProps,
     ...others
   } = useMantineDefaultProps('Avatar', defaultProps, props);
+  const ctx = useAvatarGroupContext();
+
   const { classes, cx } = useStyles(
-    { color, radius, size },
+    { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing },
     { classNames, styles, name: 'Avatar' }
   );
   const [error, setError] = useState(!src);
@@ -82,8 +86,11 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
       )}
     </Box>
   );
-});
+}) as any;
 
 _Avatar.displayName = '@mantine/core/Avatar';
+_Avatar.Group = AvatarGroup;
 
-export const Avatar = createPolymorphicComponent<'div', AvatarProps>(_Avatar);
+export const Avatar = createPolymorphicComponent<'div', AvatarProps, { Group: typeof AvatarGroup }>(
+  _Avatar
+);

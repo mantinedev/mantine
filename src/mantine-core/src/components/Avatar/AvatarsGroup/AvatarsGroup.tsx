@@ -64,10 +64,6 @@ export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
         radius,
         key: index,
         className: cx(classes.child, child.props.className),
-        style: {
-          ...child.props.style,
-          zIndex: index + 1,
-        },
       })
     );
 
@@ -79,12 +75,7 @@ export const AvatarsGroup = forwardRef<HTMLDivElement, AvatarsGroupProps>(
       <Box className={cx(className, classes.root)} ref={ref} {...others}>
         {avatars.slice(0, avatars.length - extraAvatars)}
         {truncatedAvatars ? (
-          <Avatar
-            size={size}
-            radius={radius}
-            className={classes.child}
-            style={{ zIndex: limit + 1 }}
-          >
+          <Avatar size={size} radius={radius} className={classes.child}>
             <Center className={classes.truncated}>+{truncatedAvatars}</Center>
           </Avatar>
         ) : null}
