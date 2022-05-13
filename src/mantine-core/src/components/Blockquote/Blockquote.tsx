@@ -2,12 +2,12 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, MantineColor, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { QuoteIcon } from './QuoteIcon';
-import useStyles from './Blockquote.styles';
+import useStyles, { BlockquoteStylesParams } from './Blockquote.styles';
 
 export type BlockquoteStylesNames = Selectors<typeof useStyles>;
 
 export interface BlockquoteProps
-  extends DefaultProps<BlockquoteStylesNames>,
+  extends DefaultProps<BlockquoteStylesNames, BlockquoteStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Icon color from theme */
   color?: MantineColor;
