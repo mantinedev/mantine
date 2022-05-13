@@ -1,12 +1,16 @@
-import { createStyles, MantineSize, MantineNumberSize, MantineColor } from '@mantine/styles';
+import {
+  createStyles,
+  MantineSize,
+  MantineNumberSize,
+  MantineColor,
+  MantineGradient,
+} from '@mantine/styles';
 
 export interface BadgeStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
-  gradientFrom: string;
-  gradientTo: string;
-  gradientDeg: number;
+  gradient: MantineGradient;
   fullWidth: boolean;
 }
 
@@ -42,19 +46,13 @@ const dotSizes = {
 };
 
 export default createStyles(
-  (
-    theme,
-    { color, size, radius, gradientFrom, gradientTo, gradientDeg, fullWidth }: BadgeStylesParams
-  ) => {
+  (theme, { color, size, radius, gradient, fullWidth }: BadgeStylesParams) => {
     const dotSize = theme.fn.size({ size, sizes: dotSizes });
     const { fontSize, height } = size in sizes ? sizes[size] : sizes.md;
     const lightColors = theme.fn.variant({ color, variant: 'light' });
     const filledColors = theme.fn.variant({ color, variant: 'filled' });
     const outlineColors = theme.fn.variant({ color, variant: 'outline' });
-    const gradientColors = theme.fn.variant({
-      variant: 'gradient',
-      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
-    });
+    const gradientColors = theme.fn.variant({ variant: 'gradient', gradient });
 
     return {
       leftSection: {

@@ -1,24 +1,17 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { StylesAPIStory } from '@mantine/storybook';
-import { MantineProvider } from '@mantine/styles';
+import { Group } from '../Group';
 import { Badge } from './Badge';
 
-storiesOf('Badge', module)
-  .add('Styles API', () => (
-    <StylesAPIStory
-      name="Badge"
-      component={Badge}
-      props={{ children: 'Badge', rightSection: '$', leftSection: '$' }}
-    />
-  ))
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ Badge: { color: 'red', variant: 'filled' } }}>
-      <Badge>Default props badge</Badge>
-    </MantineProvider>
-  ))
-  .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 0 }}>
-      <Badge>Default radius badge</Badge>
-    </MantineProvider>
-  ));
+export default { title: 'Badge' };
+
+export function Variants() {
+  return (
+    <Group p={40}>
+      <Badge variant="light">Light</Badge>
+      <Badge variant="filled">Filled</Badge>
+      <Badge variant="outline">Outline</Badge>
+      <Badge variant="dot">Dot</Badge>
+      <Badge variant="gradient">Gradient</Badge>
+    </Group>
+  );
+}
