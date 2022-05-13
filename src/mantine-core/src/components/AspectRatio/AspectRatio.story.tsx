@@ -1,20 +1,14 @@
 import React from 'react';
-import { StylesAPIStory } from '@mantine/storybook';
 import { AspectRatio } from './AspectRatio';
 
 export default {
   title: 'AspectRatio',
 };
 
-export function StylesApi() {
+export function Usage() {
   return (
-    <StylesAPIStory
-      component={AspectRatio}
-      name="AspectRatio"
-      props={{
-        children: <div>Aspect ratio</div>,
-        ratio: 16 / 9,
-      }}
-    />
+    <AspectRatio ratio={16 / 9}>
+      <div style={{ backgroundColor: 'silver' }}>AspectRatio</div>
+    </AspectRatio>
   );
 }
