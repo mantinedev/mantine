@@ -50,10 +50,10 @@ export function variant(theme: MantineThemeBase) {
 
     if (variant === 'default') {
       return {
-        border: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[4],
-        background: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+        border: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
+        background: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-        hover: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[0],
+        hover: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       };
     }
 
