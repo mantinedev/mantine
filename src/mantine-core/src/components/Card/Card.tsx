@@ -27,8 +27,8 @@ export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
       return cloneElement(child, {
         padding: p,
-        first: index === 0,
-        last: index === _children.length - 1,
+        'data-first': index === 0 || undefined,
+        'data-last': index === _children.length - 1 || undefined,
       });
     }
 

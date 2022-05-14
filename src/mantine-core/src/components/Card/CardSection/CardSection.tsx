@@ -6,13 +6,11 @@ import useStyles from './CardSection.styles';
 
 export interface CardSectionProps extends DefaultProps {
   padding?: MantineNumberSize;
-  first?: boolean;
-  last?: boolean;
 }
 
 export const _CardSection = forwardRef<HTMLDivElement, CardSectionProps>(
-  ({ className, padding = 0, first, last, ...others }, ref) => {
-    const { classes, cx } = useStyles({ padding, first, last }, { name: 'Card' });
+  ({ className, padding = 0, ...others }, ref) => {
+    const { classes, cx } = useStyles({ padding }, { name: 'Card' });
     return <Box className={cx(classes.cardSection, className)} ref={ref} {...others} />;
   }
 );

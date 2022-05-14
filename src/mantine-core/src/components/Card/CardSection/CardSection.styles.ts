@@ -2,16 +2,20 @@ import { createStyles, MantineNumberSize } from '@mantine/styles';
 
 interface CardSectionStyles {
   padding: MantineNumberSize;
-  first?: boolean;
-  last?: boolean;
 }
 
-export default createStyles((theme, { padding, first, last }: CardSectionStyles) => ({
+export default createStyles((theme, { padding }: CardSectionStyles) => ({
   cardSection: {
     display: 'block',
     marginLeft: -1 * theme.fn.size({ size: padding, sizes: theme.spacing }),
     marginRight: -1 * theme.fn.size({ size: padding, sizes: theme.spacing }),
-    marginTop: first ? -1 * theme.fn.size({ size: padding, sizes: theme.spacing }) : undefined,
-    marginBottom: last ? -1 * theme.fn.size({ size: padding, sizes: theme.spacing }) : undefined,
+
+    '&[data-first]': {
+      marginTop: -1 * theme.fn.size({ size: padding, sizes: theme.spacing }),
+    },
+
+    '&[data-last]': {
+      marginBottom: -1 * theme.fn.size({ size: padding, sizes: theme.spacing }),
+    },
   },
 }));
