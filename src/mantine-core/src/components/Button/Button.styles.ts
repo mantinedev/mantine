@@ -93,31 +93,7 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
 }
 
 export default createStyles(
-  (
-    theme,
-    { color, size, radius, fullWidth, compact, gradient, variant }: ButtonStylesParams,
-    getRef
-  ) => ({
-    loading: {
-      ref: getRef('loading'),
-      pointerEvents: 'none',
-
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        top: -1,
-        left: -1,
-        right: -1,
-        bottom: -1,
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? theme.fn.rgba(theme.colors.dark[7], 0.5)
-            : 'rgba(255, 255, 255, .5)',
-        borderRadius: theme.fn.radius(radius),
-        cursor: 'not-allowed',
-      },
-    },
-
+  (theme, { color, size, radius, fullWidth, compact, gradient, variant }: ButtonStylesParams) => ({
     root: {
       ...getSizeStyles({ compact, size }),
       ...theme.fn.fontStyles(),
@@ -137,15 +113,38 @@ export default createStyles(
       WebkitAppearance: 'none',
       ...getVariantStyles({ variant, theme, color, gradient }),
 
-      '&:not(:disabled):active': {
+      '&:active': {
         transform: 'translateY(1px)',
       },
 
-      [`&:not(.${getRef('loading')}):disabled`]: {
+      '&[data-disabled]': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
         cursor: 'not-allowed',
+
+        '&:active': {
+          transform: 'none',
+        },
+      },
+
+      '&[data-loading]': {
+        pointerEvents: 'none',
+
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: -1,
+          left: -1,
+          right: -1,
+          bottom: -1,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.fn.rgba(theme.colors.dark[7], 0.5)
+              : 'rgba(255, 255, 255, .5)',
+          borderRadius: theme.fn.radius(radius),
+          cursor: 'not-allowed',
+        },
       },
     },
 

@@ -11,12 +11,12 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { heights, ButtonVariant } from './Button.styles';
+import useStyles, { heights, ButtonVariant, ButtonStylesParams } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
 
-export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
+export interface SharedButtonProps extends DefaultProps<ButtonStylesNames, ButtonStylesParams> {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -131,11 +131,12 @@ export const Button: ButtonComponent = forwardRef(
     return (
       <Box
         component={component || 'button'}
-        className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
+        className={cx(classes.root, className)}
         type={type}
         disabled={disabled || loading}
+        data-disabled={disabled || undefined}
+        data-loading={loading || undefined}
         ref={ref}
-        onTouchStart={() => {}}
         {...others}
       >
         <div className={classes.inner}>

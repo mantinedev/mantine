@@ -30,6 +30,15 @@ export function Colors() {
   return <div style={{ padding: 40, backgroundColor: 'rgba(0,0,0,0.1)' }}>{items}</div>;
 }
 
+export function Disabled() {
+  return (
+    <Group p={40}>
+      <Button disabled>Disabled</Button>
+      <Button loading>Loading</Button>
+    </Group>
+  );
+}
+
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>
