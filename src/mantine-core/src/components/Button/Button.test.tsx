@@ -9,7 +9,7 @@ import {
 } from '@mantine/tests';
 import { Button, ButtonProps } from './Button';
 
-const defaultProps: ButtonProps<'button'> = {};
+const defaultProps: ButtonProps = {};
 
 describe('@mantine/core/Button', () => {
   checkAccessibility([<Button>Mantine button</Button>]);

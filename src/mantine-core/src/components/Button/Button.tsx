@@ -6,17 +6,16 @@ import {
   MantineGradient,
   MantineColor,
   Selectors,
-  PolymorphicComponentProps,
-  PolymorphicRef,
   useMantineDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles, { heights, ButtonVariant, ButtonStylesParams } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
+import useStyles, { heights, ButtonVariant, ButtonStylesParams } from './Button.styles';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
 
-export interface SharedButtonProps extends DefaultProps<ButtonStylesNames, ButtonStylesParams> {
+export interface ButtonProps extends DefaultProps<ButtonStylesNames, ButtonStylesParams> {
   /** Predefined button size */
   size?: MantineSize;
 
@@ -66,102 +65,95 @@ export interface SharedButtonProps extends DefaultProps<ButtonStylesNames, Butto
   disabled?: boolean;
 }
 
-export type ButtonProps<C> = PolymorphicComponentProps<C, SharedButtonProps>;
-
-type ButtonComponent = (<C = 'button'>(props: ButtonProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<ButtonProps<any>> = {
+const defaultProps: Partial<ButtonProps> = {
   size: 'sm',
   type: 'button',
   variant: 'filled',
   loaderPosition: 'left',
 };
 
-export const Button: ButtonComponent = forwardRef(
-  (props: ButtonProps<'button'>, ref: PolymorphicRef<'button'>) => {
-    const {
-      className,
-      size,
-      color,
-      type,
-      disabled,
-      children,
-      leftIcon,
-      rightIcon,
-      fullWidth,
-      variant,
+export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  const {
+    className,
+    size,
+    color,
+    type,
+    disabled,
+    children,
+    leftIcon,
+    rightIcon,
+    fullWidth,
+    variant,
+    radius,
+    uppercase,
+    compact,
+    loading,
+    loaderPosition,
+    loaderProps,
+    gradient,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Button', defaultProps, props);
+
+  const { classes, cx, theme } = useStyles(
+    {
       radius,
-      component,
-      uppercase,
+      color,
+      size,
+      fullWidth,
       compact,
-      loading,
-      loaderPosition,
-      loaderProps,
       gradient,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Button', defaultProps, props);
+      variant,
+    },
+    { classNames, styles, name: 'Button' }
+  );
 
-    const { classes, cx, theme } = useStyles(
-      {
-        radius,
-        color,
-        size,
-        fullWidth,
-        compact,
-        gradient,
-        variant,
-      },
-      { classNames, styles, name: 'Button' }
-    );
+  const colors = theme.fn.variant({ color, variant });
 
-    const colors = theme.fn.variant({ color, variant });
+  const loader = (
+    <Loader
+      color={colors.color}
+      size={theme.fn.size({ size, sizes: heights }) / 2}
+      {...loaderProps}
+    />
+  );
 
-    const loader = (
-      <Loader
-        color={colors.color}
-        size={theme.fn.size({ size, sizes: heights }) / 2}
-        {...loaderProps}
-      />
-    );
-
-    return (
-      <Box
-        component={component || 'button'}
-        className={cx(classes.root, className)}
-        type={type}
-        disabled={disabled || loading}
-        data-disabled={disabled || undefined}
-        data-loading={loading || undefined}
-        ref={ref}
-        {...others}
-      >
-        <div className={classes.inner}>
-          {(leftIcon || (loading && loaderPosition === 'left')) && (
-            <span className={cx(classes.icon, classes.leftIcon)}>
-              {loading && loaderPosition === 'left' ? loader : leftIcon}
-            </span>
-          )}
-
-          <span
-            className={classes.label}
-            style={{ textTransform: uppercase ? 'uppercase' : undefined }}
-          >
-            {children}
+  return (
+    <Box
+      component="button"
+      className={cx(classes.root, className)}
+      type={type}
+      disabled={disabled || loading}
+      data-disabled={disabled || undefined}
+      data-loading={loading || undefined}
+      ref={ref}
+      {...others}
+    >
+      <div className={classes.inner}>
+        {(leftIcon || (loading && loaderPosition === 'left')) && (
+          <span className={cx(classes.icon, classes.leftIcon)}>
+            {loading && loaderPosition === 'left' ? loader : leftIcon}
           </span>
+        )}
 
-          {(rightIcon || (loading && loaderPosition === 'right')) && (
-            <span className={cx(classes.icon, classes.rightIcon)}>
-              {loading && loaderPosition === 'right' ? loader : rightIcon}
-            </span>
-          )}
-        </div>
-      </Box>
-    );
-  }
-) as any;
+        <span
+          className={classes.label}
+          style={{ textTransform: uppercase ? 'uppercase' : undefined }}
+        >
+          {children}
+        </span>
 
-Button.displayName = '@mantine/core/Button';
+        {(rightIcon || (loading && loaderPosition === 'right')) && (
+          <span className={cx(classes.icon, classes.rightIcon)}>
+            {loading && loaderPosition === 'right' ? loader : rightIcon}
+          </span>
+        )}
+      </div>
+    </Box>
+  );
+});
+
+_Button.displayName = '@mantine/core/Button';
+
+export const Button = createPolymorphicComponent<'button', ButtonProps>(_Button);

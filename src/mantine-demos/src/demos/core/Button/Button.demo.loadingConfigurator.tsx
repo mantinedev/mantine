@@ -2,7 +2,7 @@ import React from 'react';
 import { Database } from 'tabler-icons-react';
 import { Button, Group, ButtonProps } from '@mantine/core';
 
-function Wrapper(props: ButtonProps<'button'>) {
+function Wrapper(props: ButtonProps) {
   return (
     <Group position="center">
       <Button leftIcon={<Database size={14} />} {...props}>
