@@ -1,12 +1,12 @@
 import React from 'react';
-import { CheckboxGroup, CheckboxGroupProps, Checkbox } from '@mantine/core';
+import { CheckboxGroupProps, Checkbox } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
 import { CheckboxGroup, Checkbox } from '@mantine/core';
 
 function Demo() {
   return (
-    <CheckboxGroup
+    <Checkbox.Group
       defaultValue={['react']}
      ${props}
     >
@@ -14,19 +14,19 @@ function Demo() {
       <Checkbox value="svelte" label="Svelte" />
       <Checkbox value="ng" label="Angular" />
       <Checkbox value="vue" label="Vue" />
-    </CheckboxGroup>
+    </Checkbox.Group>
   );
 }
 `;
 
 function Wrapper(props: CheckboxGroupProps) {
   return (
-    <CheckboxGroup defaultValue={['react']} {...props}>
+    <Checkbox.Group defaultValue={['react']} {...props}>
       <Checkbox value="react" label="React" />
       <Checkbox value="svelte" label="Svelte" />
       <Checkbox value="ng" label="Angular" />
       <Checkbox value="vue" label="Vue" />
-    </CheckboxGroup>
+    </Checkbox.Group>
   );
 }
 
@@ -36,7 +36,6 @@ export const groupConfigurator: MantineDemo = {
   codeTemplate,
   configuratorProps: { multiline: 3 },
   configurator: [
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     {
       name: 'orientation',
       type: 'segmented',
