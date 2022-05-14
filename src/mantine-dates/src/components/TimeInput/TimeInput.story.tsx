@@ -12,6 +12,7 @@ function Controlled() {
   const [value, onChange] = useState(new Date());
   return (
     <>
+      <p>Time value: {value?.toISOString()}</p>
       <TimeInput value={value} onChange={onChange} label="Controlled" />
       <button type="button" onClick={() => onChange(dayjs(new Date()).add(30, 'minutes').toDate())}>
         set date
