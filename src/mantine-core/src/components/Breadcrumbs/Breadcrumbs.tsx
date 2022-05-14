@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { isElement } from '@mantine/utils';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './Breadcrumbs.styles';
@@ -28,8 +29,19 @@ export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
     const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
 
     const items = React.Children.toArray(children).reduce(
-      (acc: any[], child: any, index, array) => {
-        acc.push(React.cloneElement(child, { className: classes.breadcrumb, key: index }));
+      (acc: React.ReactNode[], child: React.ReactElement, index, array) => {
+        const item = isElement(child) ? (
+          React.cloneElement(child, {
+            className: cx(classes.breadcrumb, child.props?.className),
+            key: index,
+          })
+        ) : (
+          <div className={classes.breadcrumb} key={index}>
+            {child}
+          </div>
+        );
+
+        acc.push(item);
 
         if (index !== array.length - 1) {
           acc.push(

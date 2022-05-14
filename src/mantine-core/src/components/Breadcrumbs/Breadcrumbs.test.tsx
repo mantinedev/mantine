@@ -35,4 +35,16 @@ describe('@mantine/core/Breadcrumbs', () => {
     render(<Breadcrumbs separator="test-separator" {...defaultProps} />);
     expect(screen.getAllByText('test-separator')).toHaveLength(2);
   });
+
+  it('arrows to set child className', () => {
+    render(
+      <Breadcrumbs>
+        <button type="button" className="test-class">
+          test-label
+        </button>
+      </Breadcrumbs>
+    );
+
+    expect(screen.getByRole('button')).toHaveClass('test-class');
+  });
 });
