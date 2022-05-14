@@ -18,7 +18,7 @@ export default createStyles((theme, { radius, shadow, withBorder }: PaperStylesP
     borderRadius: theme.fn.radius(radius),
     boxShadow: theme.shadows[shadow] || shadow || 'none',
     border: withBorder
-      ? `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]}`
+      ? `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]}`
       : undefined,
   },
 }));
