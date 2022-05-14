@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, MantineColor, keyframes } from '@mantine/styles';
 
-export const sizes = {
+const sizes = {
   xs: 3,
   sm: 5,
   md: 8,

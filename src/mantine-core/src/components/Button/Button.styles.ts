@@ -2,7 +2,6 @@ import {
   createStyles,
   MantineSize,
   MantineNumberSize,
-  MantineSizes,
   MantineColor,
   MantineTheme,
   MantineGradient,
@@ -28,7 +27,7 @@ export interface ButtonStylesParams {
   variant: ButtonVariant;
 }
 
-const sizes = {
+export const sizes = {
   xs: { height: INPUT_SIZES.xs, padding: '0 14px' },
   sm: { height: INPUT_SIZES.sm, padding: '0 18px' },
   md: { height: INPUT_SIZES.md, padding: '0 22px' },
@@ -40,11 +39,6 @@ const sizes = {
   'compact-lg': { height: 34, padding: '0 12px' },
   'compact-xl': { height: 40, padding: '0 14px' },
 };
-
-export const heights = Object.keys(sizes).reduce((acc, size) => {
-  acc[size] = sizes[size].height;
-  return acc;
-}, {} as MantineSizes);
 
 const getSizeStyles = ({ compact, size }: { compact: boolean; size: MantineSize }) => {
   if (!compact) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, MantineTheme } from '@mantine/styles';
 
-export const sizes = {
+const sizes = {
   xs: 180,
   sm: 240,
   md: 320,

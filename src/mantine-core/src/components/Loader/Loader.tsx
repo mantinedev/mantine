@@ -18,7 +18,7 @@ const LOADERS = {
   dots: Dots,
 } as const;
 
-export const LOADER_SIZES = {
+const sizes = {
   xs: 18,
   sm: 22,
   md: 36,
@@ -57,7 +57,7 @@ export function Loader(props: LoaderProps) {
     <Box
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
-      size={theme.fn.size({ size, sizes: LOADER_SIZES })}
+      size={theme.fn.size({ size, sizes })}
       color={
         _color in theme.colors
           ? theme.fn.themeColor(

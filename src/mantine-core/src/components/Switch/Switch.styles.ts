@@ -40,11 +40,6 @@ const labelFontSizes = {
   xl: 11,
 };
 
-export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
-  acc[size] = { width: switchWidth[size], height: switchHeight[size] };
-  return acc;
-}, {} as Record<MantineSize, { width: number; height: number }>);
-
 export default createStyles(
   (theme, { size, radius, color, offLabel, onLabel }: SwitchStylesParams) => {
     const handleSize = theme.fn.size({ size, sizes: handleSizes });

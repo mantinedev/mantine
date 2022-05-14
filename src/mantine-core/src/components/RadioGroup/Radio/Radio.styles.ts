@@ -6,7 +6,7 @@ export interface RadioStylesParams {
   transitionDuration: number;
 }
 
-export const sizes = {
+const sizes = {
   xs: 12,
   sm: 16,
   md: 20,

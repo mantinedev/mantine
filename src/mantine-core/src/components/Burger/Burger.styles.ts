@@ -6,7 +6,7 @@ export interface BurgerStylesParams {
   transitionDuration: number;
 }
 
-export const sizes = {
+const sizes = {
   xs: 12,
   sm: 18,
   md: 24,

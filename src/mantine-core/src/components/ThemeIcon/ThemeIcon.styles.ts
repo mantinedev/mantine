@@ -12,7 +12,7 @@ export interface ThemeIconStylesParams {
   gradientDeg: number;
 }
 
-export const sizes = {
+const sizes = {
   xs: 16,
   sm: 20,
   md: 26,

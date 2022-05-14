@@ -11,7 +11,7 @@ import {
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import { Loader, LoaderProps } from '../Loader';
-import useStyles, { heights, ButtonVariant, ButtonStylesParams } from './Button.styles';
+import useStyles, { sizes, ButtonVariant, ButtonStylesParams } from './Button.styles';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
 
@@ -114,7 +114,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   const loader = (
     <Loader
       color={colors.color}
-      size={theme.fn.size({ size, sizes: heights }) / 2}
+      size={theme.fn.size({ size, sizes }).height / 2}
       {...loaderProps}
     />
   );

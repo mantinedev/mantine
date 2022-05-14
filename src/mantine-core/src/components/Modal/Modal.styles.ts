@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/styles';
 
-export const sizes = {
+const sizes = {
   xs: 320,
   sm: 380,
   md: 440,
