@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -10,7 +9,7 @@ import {
 import { UnstyledButton } from '../UnstyledButton';
 import useStyles from './Burger.styles';
 
-export type BurgerStylesNames = Exclude<Selectors<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Selectors<typeof useStyles>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,
@@ -23,32 +22,28 @@ export interface BurgerProps
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
 }
 
 const defaultProps: Partial<BurgerProps> = {
   size: 'md',
+  transitionDuration: 300,
 };
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerProps, ref) => {
-  const {
-    className,
-    opened,
-    color,
-    size = 'md',
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Burger', defaultProps, props);
-  const theme = useMantineTheme();
-  const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
+  const { className, opened, color, size, classNames, styles, transitionDuration, ...others } =
+    useMantineDefaultProps('Burger', defaultProps, props);
+
   const { classes, cx } = useStyles(
-    { color: _color, size },
+    { color, size, transitionDuration },
     { classNames, styles, name: 'Burger' }
   );
 
   return (
     <UnstyledButton className={cx(classes.root, className)} ref={ref} {...others}>
-      <div className={cx(classes.burger, { [classes.opened]: opened })} />
+      <div data-opened={opened || undefined} className={classes.burger} />
     </UnstyledButton>
   );
 });

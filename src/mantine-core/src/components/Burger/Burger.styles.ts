@@ -3,6 +3,7 @@ import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 export interface BurgerStylesParams {
   size: MantineNumberSize;
   color: MantineColor;
+  transitionDuration: number;
 }
 
 export const sizes = {
@@ -13,14 +14,11 @@ export const sizes = {
   xl: 42,
 };
 
-export default createStyles((theme, { size, color }: BurgerStylesParams, getRef) => {
+export default createStyles((theme, { size, color, transitionDuration }: BurgerStylesParams) => {
   const sizeValue = theme.fn.size({ size, sizes });
+  const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
 
   return {
-    opened: {
-      ref: getRef('opened'),
-    },
-
     root: {
       borderRadius: theme.radius.sm,
       width: sizeValue + theme.spacing.xs,
@@ -38,10 +36,10 @@ export default createStyles((theme, { size, color }: BurgerStylesParams, getRef)
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
-        backgroundColor: color,
+        backgroundColor: _color,
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
-        transitionDuration: '300ms',
+        transitionDuration: `${transitionDuration}ms`,
 
         '@media (prefers-reduced-motion)': {
           transitionDuration: '0ms',
@@ -62,7 +60,7 @@ export default createStyles((theme, { size, color }: BurgerStylesParams, getRef)
         top: sizeValue / 3,
       },
 
-      [`&.${getRef('opened')}`]: {
+      '&[data-opened]': {
         backgroundColor: 'transparent',
 
         '&:before': {
