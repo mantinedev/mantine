@@ -1,20 +1,30 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/styles';
 import { Card } from './Card';
 
-storiesOf('Card', module)
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ Card: { shadow: 'xl', padding: 0, withBorder: true } }}>
-      <Card sx={{ maxWidth: 400 }} mx="auto" my={50}>
-        Default props card
+export default { title: 'Card' };
+
+export function Usage() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
+      <Card withBorder p="lg">
+        <Card.Section>Card section 1</Card.Section>
+        <Card.Section>Card section 2</Card.Section>
+        <div>Content</div>
+        <Card.Section>Card section 3</Card.Section>
       </Card>
-    </MantineProvider>
-  ))
-  .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 'xl' }}>
-      <Card sx={{ maxWidth: 400 }} mx="auto" my={50} withBorder>
-        Default radius card
+    </div>
+  );
+}
+
+export function CustomComponent() {
+  return (
+    <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
+      <Card withBorder p="lg" component="a" href="https://mantine.dev">
+        <Card.Section>Card section 1</Card.Section>
+        <Card.Section component="button">Card section 2</Card.Section>
+        <div>Content</div>
+        <Card.Section>Card section 3</Card.Section>
       </Card>
-    </MantineProvider>
-  ));
+    </div>
+  );
+}

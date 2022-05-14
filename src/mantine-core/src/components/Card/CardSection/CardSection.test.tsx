@@ -1,7 +1,7 @@
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { CardSection, CardSectionProps } from './CardSection';
 
-const defaultProps: CardSectionProps<'div'> = {};
+const defaultProps: CardSectionProps = {};
 
 describe('@mantine/core/CardSection', () => {
   itRendersChildren(CardSection, defaultProps);

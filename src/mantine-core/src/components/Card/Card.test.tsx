@@ -2,7 +2,7 @@ import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mant
 import { Card, CardProps } from './Card';
 import { CardSection } from './CardSection/CardSection';
 
-const defaultProps: CardProps<'div'> = {
+const defaultProps: CardProps = {
   children: 'test-card',
 };
 

@@ -1,40 +1,22 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../../Box';
 import useStyles from './CardSection.styles';
 
-export interface _CardSectionProps extends DefaultProps {
+export interface CardSectionProps extends DefaultProps {
   padding?: MantineNumberSize;
   first?: boolean;
   last?: boolean;
 }
 
-export type CardSectionProps<C> = PolymorphicComponentProps<C, _CardSectionProps>;
-
-type CardSectionComponent = (<C = 'div'>(props: CardSectionProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-export const CardSection: CardSectionComponent = forwardRef(
-  (
-    { className, padding = 0, component, first, last, ...others }: CardSectionProps<'div'>,
-    ref: PolymorphicRef<'div'>
-  ) => {
+export const _CardSection = forwardRef<HTMLDivElement, CardSectionProps>(
+  ({ className, padding = 0, first, last, ...others }, ref) => {
     const { classes, cx } = useStyles({ padding, first, last }, { name: 'Card' });
-    return (
-      <Box
-        component={component || 'div'}
-        className={cx(classes.cardSection, className)}
-        ref={ref}
-        {...others}
-      />
-    );
+    return <Box className={cx(classes.cardSection, className)} ref={ref} {...others} />;
   }
-) as any;
+);
 
-CardSection.displayName = '@mantine/core/CardSection';
+_CardSection.displayName = '@mantine/core/CardSection';
+
+export const CardSection = createPolymorphicComponent<'div', CardSectionProps>(_CardSection);
