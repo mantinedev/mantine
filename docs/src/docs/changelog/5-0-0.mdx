@@ -16,6 +16,7 @@ import {
   FocusTrapDemos,
   MenuDemos,
   AvatarDemos,
+  CardDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -137,6 +138,7 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - data attributes
 - params with styles attribute
 - variants handling changes
+- inputs styles api improvements
 
 ## Polymorphic components changes
 
@@ -182,6 +184,15 @@ New [FocusTrap](https://mantine.dev/core/focus-trap/) component:
 [Tooltip.Group](https://mantine.dev/core/tooltip/#tooltip-delay-group) component can be used to sync open and close delays for multiple tooltips:
 
 <Demo data={TooltipDemos.group} />
+
+### Card.Section improvements
+
+[Card.Section](https://mantine.dev/core/card/#withborder-and-inheritpadding-props) now supports the following props to simplify customizations:
+
+- `withBorder` prop will add top and bottom border to `Card.Section` depending on its position relative to other content and sections
+- `inheritPadding` prop will add the same left and right padding to `Card.Section` as set in `Card` component
+
+<Demo data={CardDemos.section} demoProps={{ toggle: true }} />
 
 ## Other changes
 

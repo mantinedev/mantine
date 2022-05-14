@@ -62,6 +62,19 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 </Card>
 ```
 
+### Custom Card.Section root element
+
+`Card.Section` root element can be changed the same way as with Card:
+
+<Demo data={CardDemos.linkSection} />
+
+### withBorder and inheritPadding props
+
+- `withBorder` prop will add top and bottom border to `Card.Section` depending on its position relative to other content and sections
+- `inheritPadding` prop will add the same left and right padding to `Card.Section` as set in `Card` component
+
+<Demo data={CardDemos.section} />
+
 ## Custom root element
 
 You can set `component` prop on Card to use provide custom root element,
@@ -95,9 +108,3 @@ function Demo() {
   );
 }
 ```
-
-## Custom Card.Section root element
-
-`Card.Section` root element can be changed the same way as with Card:
-
-<Demo data={CardDemos.linkSection} />
