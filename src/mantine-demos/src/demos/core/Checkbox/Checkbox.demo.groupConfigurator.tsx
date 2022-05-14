@@ -2,7 +2,7 @@ import React from 'react';
 import { CheckboxGroupProps, Checkbox } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
-import { CheckboxGroup, Checkbox } from '@mantine/core';
+import { Checkbox } from '@mantine/core';
 
 function Demo() {
   return (

@@ -50,7 +50,7 @@ export interface RadioGroupProps
   size?: MantineSize;
 
   /** Props spread to InputWrapper */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 }
 
 const defaultProps: Partial<RadioGroupProps> = {

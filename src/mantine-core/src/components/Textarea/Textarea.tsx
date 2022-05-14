@@ -30,7 +30,7 @@ export interface TextareaProps
   minRows?: number;
 
   /** Props passed to root element (InputWrapper component) */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 
   /** Input size */
   size?: MantineSize;

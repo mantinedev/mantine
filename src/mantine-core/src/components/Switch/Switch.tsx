@@ -39,7 +39,7 @@ export interface SwitchProps
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 }
 
 const defaultProps: Partial<SwitchProps> = {

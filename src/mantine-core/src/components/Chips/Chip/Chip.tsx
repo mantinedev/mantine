@@ -52,7 +52,7 @@ export interface ChipProps
   __staticSelector?: string;
 
   /** Props spread to wrapper element */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 }
 
 const defaultProps: Partial<ChipProps> = {

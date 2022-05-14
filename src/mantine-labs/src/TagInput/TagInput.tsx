@@ -28,7 +28,7 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
   size?: MantineSize;
 
   /** Properties spread to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 
   /** Controlled input value */
   value?: string[];

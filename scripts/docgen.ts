@@ -36,6 +36,9 @@ const EXTRA_FILES_PATHS = [
   // Avatar
   '../src/mantine-core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',
 
+  // Checkbox
+  '../src/mantine-core/src/components/Checkbox/CheckboxGroup/CheckboxGroup.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
