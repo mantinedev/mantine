@@ -8,7 +8,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
-import { Group } from '../../Group';
+import { InputsGroup } from './InputsGroup';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
@@ -102,13 +102,9 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           {...wrapperProps}
           {...others}
         >
-          <Group
-            spacing={spacing}
-            direction={orientation === 'horizontal' ? 'row' : 'column'}
-            sx={{ paddingTop: 5 }}
-          >
+          <InputsGroup spacing={spacing} orientation={orientation}>
             {children}
-          </Group>
+          </InputsGroup>
         </InputWrapper>
       </CheckboxGroupProvider>
     );
