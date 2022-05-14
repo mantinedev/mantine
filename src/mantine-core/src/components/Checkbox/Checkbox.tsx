@@ -7,17 +7,20 @@ import {
   extractSystemStyles,
   MantineNumberSize,
   useMantineDefaultProps,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
 import { useId } from '@mantine/utils';
 import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
+import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
   /** Key of theme.colors */
   color?: MantineColor;
 
@@ -52,62 +55,80 @@ const defaultProps: Partial<CheckboxProps> = {
   icon: CheckboxIcon,
 };
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const {
-    className,
-    style,
-    sx,
-    checked,
-    color,
-    label,
-    indeterminate,
-    id,
-    size,
-    radius,
-    wrapperProps,
-    children,
-    classNames,
-    styles,
-    transitionDuration,
-    icon: Icon,
-    ...others
-  } = useMantineDefaultProps('Checkbox', defaultProps, props);
+type CheckboxComponent = ForwardRefWithStaticComponents<
+  CheckboxProps,
+  { Group: typeof CheckboxGroup }
+>;
 
-  const uuid = useId(id);
-  const { systemStyles, rest } = extractSystemStyles(others);
-  const { classes, cx } = useStyles(
-    { size, radius, color, transitionDuration },
-    { classNames, styles, name: 'Checkbox' }
-  );
+export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, CheckboxProps>(
+  (props, ref) => {
+    const {
+      className,
+      style,
+      sx,
+      checked,
+      color,
+      label,
+      indeterminate,
+      id,
+      size,
+      radius,
+      wrapperProps,
+      children,
+      classNames,
+      styles,
+      transitionDuration,
+      icon: Icon,
+      unstyled,
+      ...others
+    } = useMantineDefaultProps('Checkbox', defaultProps, props);
 
-  return (
-    <Box
-      className={cx(classes.root, className)}
-      style={style}
-      sx={sx}
-      {...systemStyles}
-      {...wrapperProps}
-    >
-      <div className={classes.inner}>
-        <input
-          id={uuid}
-          ref={ref}
-          type="checkbox"
-          className={classes.input}
-          checked={indeterminate || checked}
-          {...rest}
-        />
+    const ctx = useCheckboxGroupContext();
+    const uuid = useId(id);
+    const { systemStyles, rest } = extractSystemStyles(others);
+    const { classes, cx } = useStyles(
+      { size: ctx?.size || size, radius, color, transitionDuration },
+      { name: 'Checkbox', classNames, styles, unstyled }
+    );
 
-        <Icon indeterminate={indeterminate} className={classes.icon} />
-      </div>
+    const contextProps = ctx
+      ? {
+          checked: ctx.value.includes(rest.value as string),
+          onChange: ctx.onChange,
+        }
+      : {};
 
-      {label && (
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
-      )}
-    </Box>
-  );
-});
+    return (
+      <Box
+        className={cx(classes.root, className)}
+        style={style}
+        sx={sx}
+        {...systemStyles}
+        {...wrapperProps}
+      >
+        <div className={classes.inner}>
+          <input
+            id={uuid}
+            ref={ref}
+            type="checkbox"
+            className={classes.input}
+            checked={indeterminate || checked}
+            {...rest}
+            {...contextProps}
+          />
+
+          <Icon indeterminate={indeterminate} className={classes.icon} />
+        </div>
+
+        {label && (
+          <label className={classes.label} htmlFor={uuid}>
+            {label}
+          </label>
+        )}
+      </Box>
+    );
+  }
+) as any;
 
 Checkbox.displayName = '@mantine/core/Checkbox';
+Checkbox.Group = CheckboxGroup;

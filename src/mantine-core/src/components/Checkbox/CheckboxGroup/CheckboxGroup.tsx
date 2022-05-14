@@ -1,5 +1,5 @@
-import React, { cloneElement, forwardRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import React, { forwardRef } from 'react';
+import { useUncontrolled } from '@mantine/utils';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -7,16 +7,11 @@ import {
   MantineColor,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../../utils';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../../InputWrapper/InputWrapper';
-import { Checkbox, CheckboxStylesNames } from '../Checkbox';
-import { Group } from '../../Group/Group';
+import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
+import { Group } from '../../Group';
+import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
-export type CheckboxGroupStylesNames = InputWrapperStylesNames | CheckboxStylesNames;
+export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
 export interface CheckboxGroupProps
   extends DefaultProps<CheckboxGroupStylesNames>,
@@ -81,51 +76,41 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       defaultValue,
       finalValue: [],
       onChange,
-      rule: (val) => Array.isArray(val),
     });
 
-    const checkboxes = filterChildrenByType(children, Checkbox).map((checkbox, index) =>
-      cloneElement(checkbox, {
-        key: index,
-        checked: _value.includes(checkbox.props.value),
-        color,
-        size,
-        classNames,
-        styles,
-        __staticSelector: 'CheckboxGroup',
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          const itemValue = event.currentTarget.value;
-          setValue(
-            _value.includes(itemValue)
-              ? _value.filter((item) => item !== itemValue)
-              : [..._value, itemValue]
-          );
-        },
-      })
-    );
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const itemValue = event.currentTarget.value;
+      setValue(
+        _value.includes(itemValue)
+          ? _value.filter((item) => item !== itemValue)
+          : [..._value, itemValue]
+      );
+    };
 
     return (
-      <InputWrapper
-        labelElement="div"
-        size={size}
-        __staticSelector="CheckboxGroup"
-        classNames={classNames}
-        styles={styles}
-        ref={ref}
-        errorProps={errorProps}
-        descriptionProps={descriptionProps}
-        labelProps={labelProps}
-        {...wrapperProps}
-        {...others}
-      >
-        <Group
-          spacing={spacing}
-          direction={orientation === 'horizontal' ? 'row' : 'column'}
-          sx={{ paddingTop: 5 }}
+      <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+        <InputWrapper
+          labelElement="div"
+          size={size}
+          __staticSelector="CheckboxGroup"
+          classNames={classNames}
+          styles={styles}
+          ref={ref}
+          errorProps={errorProps}
+          descriptionProps={descriptionProps}
+          labelProps={labelProps}
+          {...wrapperProps}
+          {...others}
         >
-          {checkboxes}
-        </Group>
-      </InputWrapper>
+          <Group
+            spacing={spacing}
+            direction={orientation === 'horizontal' ? 'row' : 'column'}
+            sx={{ paddingTop: 5 }}
+          >
+            {children}
+          </Group>
+        </InputWrapper>
+      </CheckboxGroupProvider>
     );
   }
 );
