@@ -188,18 +188,18 @@ export function useForm<T extends { [key: string]: any }>({
       field: K,
       { type, withError = true }: { type?: L; withError?: boolean } = {}
     ): GetInputProps<L> => {
-      const value = valuesRef.current[field];
+      const value = values[field];
       const onChange = getInputOnChange<U>((val: U) => setFieldValue(field, val)) as any;
 
       const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
 
-      if (withError && errorsRef.current[field as any]) {
-        payload.error = errorsRef.current[field as any];
+      if (withError && errors[field as any]) {
+        payload.error = errors[field as any];
       }
 
       return payload as any;
     },
-    []
+    [values, errors]
   );
 
   const getListInputProps = useCallback(
@@ -214,7 +214,7 @@ export function useForm<T extends { [key: string]: any }>({
       listField: LK,
       { type, withError = true }: { type?: L; withError?: boolean } = {}
     ): GetInputProps<L> => {
-      const list = valuesRef.current[field];
+      const list = values[field];
 
       if (isFormList(list) && list[index] && listField in list[index]) {
         const listValue = list[index];
@@ -224,7 +224,7 @@ export function useForm<T extends { [key: string]: any }>({
         ) as any;
         const payload: any =
           type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
-        const error = errorsRef.current[getErrorPath([field, index, listField])];
+        const error = errors[getErrorPath([field, index, listField])];
 
         if (withError && error) {
           payload.error = error;
@@ -235,7 +235,7 @@ export function useForm<T extends { [key: string]: any }>({
 
       return {} as any;
     },
-    []
+    [values, errors]
   );
 
   return {

@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export function usePropRef<T>(value: T): React.MutableRefObject<T> {
   const ref = useRef(value);
-  ref.current = value;
+
+  useEffect(() => {
+    ref.current = value;
+  });
 
   return ref;
 }
