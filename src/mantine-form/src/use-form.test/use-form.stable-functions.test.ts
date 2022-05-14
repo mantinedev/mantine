@@ -12,6 +12,8 @@ describe('@mantine/form/use-form stable functions', () => {
     };
     delete originalFunctions.values;
     delete originalFunctions.errors;
+    delete originalFunctions.getInputProps;
+    delete originalFunctions.getListInputProps;
 
     act(() =>
       hook.result.current.setValues({

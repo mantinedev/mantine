@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { formList, isFormList, FormList } from './form-list/form-list';
 import { validateValues, validateFieldValue } from './validate-values/validate-values';
 import { filterErrors } from './filter-errors/filter-errors';
@@ -71,7 +71,7 @@ export function useForm<T extends { [key: string]: any }>({
   validate: rules,
   schema,
 }: UseFormInput<T>): UseFormReturnType<T> {
-  const [errors, setErrors, errorsRef] = useStateRef(filterErrors(initialErrors));
+  const [errors, setErrors] = useState(filterErrors(initialErrors));
   const [values, setValues, valuesRef] = useStateRef(initialValues);
   const initialValuesRef = usePropRef(initialValues);
   const rulesRef = usePropRef(rules);
