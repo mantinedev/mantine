@@ -11,12 +11,12 @@ import {
 import { useId } from '@mantine/utils';
 import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
-import useStyles from './Checkbox.styles';
+import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
-  extends DefaultProps<CheckboxStylesNames>,
+  extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Key of theme.colors */
   color?: MantineColor;
