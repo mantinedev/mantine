@@ -1,5 +1,5 @@
 export { Checkbox } from './Checkbox';
-export { CheckboxIcon } from './CheckboxIcon';
+export { CheckboxIcon, CheckIcon } from './CheckboxIcon';
 
 export type { CheckboxProps, CheckboxStylesNames } from './Checkbox';
 export type { CheckboxIconProps } from './CheckboxIcon';
