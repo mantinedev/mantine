@@ -8,11 +8,17 @@ import useStyles from './CardSection.styles';
 export interface CardSectionProps extends DefaultProps {
   /** Determines whether section should have border */
   withBorder?: boolean;
+
+  /** Determines whether section from inherit padding from Card */
+  inheritPadding?: boolean;
 }
 
 export const _CardSection = forwardRef<HTMLDivElement, CardSectionProps>(
-  ({ className, withBorder = false, ...others }, ref) => {
-    const { classes, cx } = useStyles({ padding: useCardPadding(), withBorder }, { name: 'Card' });
+  ({ className, withBorder = false, inheritPadding = false, ...others }, ref) => {
+    const { classes, cx } = useStyles(
+      { padding: useCardPadding(), withBorder, inheritPadding },
+      { name: 'Card' }
+    );
     return <Box className={cx(classes.cardSection, className)} ref={ref} {...others} />;
   }
 );

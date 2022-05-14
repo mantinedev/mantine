@@ -7,19 +7,19 @@ export function Usage() {
   return (
     <div style={{ maxWidth: 400, padding: 40, margin: 'auto' }}>
       <Card withBorder p="lg">
-        <Card.Section p="md" withBorder>
+        <Card.Section inheritPadding py="md" withBorder>
           Card section 1
         </Card.Section>
         <div>Content 1</div>
-        <Card.Section p="md" withBorder>
+        <Card.Section inheritPadding withBorder>
           Card section 2
         </Card.Section>
         <div>Content 2</div>
-        <Card.Section p="md" withBorder>
+        <Card.Section inheritPadding withBorder>
           Card section 3
         </Card.Section>
 
-        <Card.Section p="md" withBorder>
+        <Card.Section inheritPadding withBorder>
           Card section 4
         </Card.Section>
       </Card>
