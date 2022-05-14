@@ -77,7 +77,6 @@ const defaultProps: Partial<ButtonProps<any>> = {
   type: 'button',
   variant: 'filled',
   loaderPosition: 'left',
-  gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
 export const Button: ButtonComponent = forwardRef(
@@ -113,13 +112,14 @@ export const Button: ButtonComponent = forwardRef(
         size,
         fullWidth,
         compact,
-        gradientFrom: gradient.from,
-        gradientTo: gradient.to,
-        gradientDeg: gradient.deg,
+        gradient,
+        variant,
       },
       { classNames, styles, name: 'Button' }
     );
+
     const colors = theme.fn.variant({ color, variant });
+
     const loader = (
       <Loader
         color={colors.color}
