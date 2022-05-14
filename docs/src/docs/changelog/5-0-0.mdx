@@ -162,6 +162,7 @@ type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { 
 - Most components with dropdowns (Tooltip, Popover, ColorPicker, DatePicker, Select, etc.) are no longer using Portal by default, it is now required to set `withinPortal` if you need this feature
 - [Input](https://mantine.dev/core/input/) no longer supports `headless` variant, use `unstyled` prop instead
 - [AppShell](https://mantine.dev/core/app-shell/) `fixed` prop is now `true` by default
+- [CheckboxGroup](https://mantine.dev/core/checkbox), [RadioGroup](https://mantine.dev/core/radio/) and [Chips](https://mantine.dev/core/chip/) components are no longer exported from `@mantine/core`, use `Checkbox.Group`, `Radio.Group` and `Chip.Group` components instead
 
 ## New components
 

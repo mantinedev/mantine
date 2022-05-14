@@ -5,15 +5,15 @@ import {
   checkAccessibility,
   itSupportsInputWrapperProps,
   itSupportsSystemProps,
-  itFiltersChildren,
 } from '@mantine/tests';
-import { CheckboxGroup, Checkbox, CheckboxGroupProps } from '../index';
+import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
+import { Checkbox } from '../Checkbox';
 
 const defaultProps: CheckboxGroupProps = {
   children: [
-    <Checkbox value="test-value-1" label="test-label-1" />,
-    <Checkbox value="test-value-2" label="test-label-2" />,
-    <Checkbox value="test-value-3" label="test-label-3" />,
+    <Checkbox value="test-value-1" label="test-label-1" key={1} />,
+    <Checkbox value="test-value-2" label="test-label-2" key={2} />,
+    <Checkbox value="test-value-3" label="test-label-3" key={3} />,
   ],
 };
 
@@ -33,11 +33,6 @@ describe('@mantine/core/CheckboxGroup', () => {
       <Checkbox value="test-2" label="test-2" />
       <Checkbox value="test-3" label="test-3" />
     </CheckboxGroup>,
-  ]);
-
-  itFiltersChildren(CheckboxGroup, defaultProps, '.mantine-CheckboxGroup-input', [
-    <Checkbox value="test-value-1" label="test-label-1" />,
-    <Checkbox value="test-value-2" label="test-label-2" />,
   ]);
 
   it('supports uncontrolled state', () => {
