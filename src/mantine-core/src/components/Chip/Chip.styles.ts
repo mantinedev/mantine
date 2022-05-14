@@ -62,25 +62,57 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     whiteSpace: 'nowrap',
     transition: 'background-color 100ms ease',
     WebkitTapHighlightColor: 'transparent',
-  },
 
-  outline: {
-    ref: getRef('outline'),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    '&[data-variant="filled"]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      borderColor: 'transparent',
 
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    }),
-  },
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      }),
+    },
 
-  filled: {
-    ref: getRef('filled'),
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-    borderColor: 'transparent',
+    '&[data-variant="outline"]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    }),
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+      }),
+    },
+
+    '&[data-disabled]': {
+      backgroundColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+      } !important`,
+      borderColor: `${
+        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+      } !important`,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      cursor: 'not-allowed',
+
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      }),
+
+      [`& .${getRef('iconWrapper')}`]: {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+    },
+
+    '&[data-checked]': {
+      paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
+      paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
+
+      '&[data-variant="outline"]': {
+        border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
+      },
+
+      '&[data-variant="filled"]': {
+        '&, &:hover': {
+          backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
+        },
+      },
+    },
   },
 
   iconWrapper: {
@@ -98,40 +130,6 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     overflow: 'hidden',
   },
 
-  disabled: {
-    backgroundColor: `${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-    } !important`,
-    borderColor: `${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-    } !important`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-    cursor: 'not-allowed',
-
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-    }),
-
-    [`& .${getRef('iconWrapper')}`]: {
-      color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-    },
-  },
-
-  checked: {
-    paddingLeft: theme.fn.size({ size, sizes: checkedPadding }),
-    paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
-
-    [`&.${getRef('outline')}`]: {
-      border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
-    },
-
-    [`&.${getRef('filled')}`]: {
-      '&, &:hover': {
-        backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
-      },
-    },
-  },
-
   checkIcon: {
     width: theme.fn.size({ size, sizes: iconSizes }),
     height: theme.fn.size({ size, sizes: iconSizes }) / 1.1,
@@ -145,7 +143,6 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     opacity: 0,
     margin: 0,
 
-    // input is hidden by default, these styles add focus to label when user navigates with keyboard
     '&:focus': {
       outline: 'none',
 

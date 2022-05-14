@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useUncontrolled, useUuid } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/utils';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -80,7 +80,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
     ...others
   } = useMantineDefaultProps('Chip', defaultProps, props);
 
-  const uuid = useUuid(id);
+  const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
   const { classes, cx, theme } = useStyles(
     { radius, size, color },
@@ -92,7 +92,6 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
     defaultValue: defaultChecked,
     finalValue: false,
     onChange,
-    rule: (val) => typeof val === 'boolean',
   });
 
   const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
@@ -117,11 +116,10 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
       />
       <label
         htmlFor={uuid}
-        className={cx(
-          classes.label,
-          { [classes.checked]: value, [classes.disabled]: disabled },
-          classes[variant || defaultVariant]
-        )}
+        data-checked={value || undefined}
+        data-disabled={disabled || undefined}
+        data-variant={variant || defaultVariant}
+        className={classes.label}
       >
         {value && (
           <span className={classes.iconWrapper}>
