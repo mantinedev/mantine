@@ -138,6 +138,21 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - params with styles attribute
 - variants handling changes
 
+## Polymorphic components changes
+
+Because of internal changes polymorphic components props types exported from `@mantine/core` package are no longer generic types.
+Now if you want to extend these types you need to provide associated element types on your side:
+
+```tsx
+import type { ButtonProps } from '@mantine/core';
+
+// Previously, no longer supported
+type MyButtonProps = ButtonProps<'button'> & { label: string };
+
+// Convert to
+type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { label: string };
+```
+
 ## Other breaking changes
 
 - [Portal](https://mantine.dev/core/portal/) component no longer accepts `position` and `zIndex` props – it is now required to add these styles to Portal children
