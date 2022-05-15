@@ -17,12 +17,12 @@ export type DefaultMantineColor =
   | 'teal'
   | (string & {});
 
-export type MantineThemeColorsOverride = Record<string, any>;
+export type MantineThemeColorsOverride = {};
 
 export type MantineThemeColors = MantineThemeColorsOverride extends {
-  colors: Record<string, Tuple<string, 10>>;
+  colors: Record<infer CustomColors, Tuple<string, 10>>;
 }
-  ? MantineThemeColorsOverride['colors']
+  ? Record<CustomColors, Tuple<string, 10>>
   : Record<DefaultMantineColor, Tuple<string, 10>>;
 
 export type MantineColor = keyof MantineThemeColors;
