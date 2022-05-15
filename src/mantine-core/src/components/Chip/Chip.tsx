@@ -8,16 +8,19 @@ import {
   Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { CheckIcon } from '../Checkbox';
+import { ChipGroup } from './ChipGroup/ChipGroup';
+import { useChipGroup } from './ChipGroup.context';
 import useStyles, { ChipStylesParams } from './Chip.styles';
 
 export type ChipStylesNames = Selectors<typeof useStyles>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames, ChipStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'onChange'> {
   /** Chip radius from theme or number to set value in px */
   radius?: MantineNumberSize;
 
@@ -58,7 +61,9 @@ const defaultProps: Partial<ChipProps> = {
   radius: 'xl',
 };
 
-export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, ref) => {
+type ChipComponent = ForwardRefWithStaticComponents<ChipProps, { Group: typeof ChipGroup }>;
+
+export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((props, ref) => {
   const {
     radius,
     type,
@@ -77,8 +82,10 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
     onChange,
     sx,
     wrapperProps,
+    value,
     ...others
   } = useMantineDefaultProps('Chip', defaultProps, props);
+  const ctx = useChipGroup();
 
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -87,7 +94,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
     { classNames, styles, name: 'Chip' }
   );
 
-  const [value, setValue] = useUncontrolled({
+  const [_value, setValue] = useUncontrolled({
     value: checked,
     defaultValue: defaultChecked,
     finalValue: false,
@@ -95,6 +102,14 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
   });
 
   const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
+
+  const contextProps = ctx
+    ? {
+        checked: ctx.isChipSelected(value as string),
+        onChange: ctx.onChange,
+      }
+    : {};
+  const _checked = contextProps.checked || _value;
 
   return (
     <Box
@@ -107,21 +122,23 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
       <input
         type={type}
         className={classes.input}
-        checked={value}
+        checked={_checked}
         onChange={(event) => setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
         ref={ref}
+        value={value}
+        {...contextProps}
         {...rest}
       />
       <label
         htmlFor={uuid}
-        data-checked={value || undefined}
+        data-checked={_checked || undefined}
         data-disabled={disabled || undefined}
         data-variant={variant || defaultVariant}
         className={classes.label}
       >
-        {value && (
+        {_checked && (
           <span className={classes.iconWrapper}>
             <CheckIcon className={classes.checkIcon} />
           </span>
@@ -130,6 +147,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
       </label>
     </Box>
   );
-});
+}) as any;
 
 Chip.displayName = '@mantine/core/Chip';
+Chip.Group = ChipGroup;
