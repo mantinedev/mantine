@@ -17,6 +17,9 @@ export interface NProgressProps {
   /** Called when the progress is 100% */
   onFinish?: () => void;
 
+  /** Automatically resets the progress when 100% is reached */
+  autoReset?: boolean;
+
   /** Step delay in ms */
   stepIntervalTime?: number;
 
@@ -53,13 +56,16 @@ export function NProgress({
   exitTransitionDuration = 600,
   exitTransition = 'ease',
   onFinish,
+  autoReset = false,
   withinPortal = true,
   zIndex = getDefaultZIndex('nprogress'),
 }: NProgressProps) {
   const reducedMotion = useReducedMotion();
   const [_progress, setProgress] = useState(defaultProgress);
   const [mounted, setMounted] = useState(true);
+  const resetRef = useRef<number>();
   const unmountRef = useRef<number>();
+  const unmountProgressRef = useRef(false);
 
   const interval = useInterval(() => {
     setProgress((amount) => {
@@ -80,8 +86,14 @@ export function NProgress({
 
   const cancelUnmount = () => {
     if (unmountRef.current) {
-      clearTimeout(unmountRef.current);
+      window.clearTimeout(unmountRef.current);
+      unmountRef.current = null;
     }
+    if (resetRef.current) {
+      window.clearTimeout(resetRef.current);
+      resetRef.current = null;
+    }
+
     setMounted(true);
   };
 
@@ -94,8 +106,10 @@ export function NProgress({
   };
   const stop = () => interval.stop();
   const reset = () => {
-    interval.stop();
+    unmountProgressRef.current = true;
+    stop();
     setProgress(0);
+    unmountProgressRef.current = false;
   };
 
   const ctx = {
@@ -107,11 +121,23 @@ export function NProgress({
     reset,
   };
 
+  const unmountProgress = () => {
+    unmountRef.current = null;
+    setMounted(false);
+
+    if (autoReset) {
+      resetRef.current = window.setTimeout(() => {
+        resetRef.current = null;
+        reset();
+      }, exitTransitionDuration);
+    }
+  };
+
   useDidUpdate(() => {
     if (_progress >= 100) {
       stop();
       onFinish && onFinish();
-      unmountRef.current = window.setTimeout(() => setMounted(false), exitTimeout);
+      unmountRef.current = window.setTimeout(unmountProgress, exitTimeout);
     } else if (!mounted) {
       cancelUnmount();
     }
@@ -121,31 +147,34 @@ export function NProgress({
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
-      <Progress
-        radius={0}
-        value={_progress}
-        size={size}
-        color={color}
-        styles={{
-          root: {
-            top: 0,
-            position: 'fixed',
-            width: '100vw',
-            backgroundColor: 'transparent',
-            transitionProperty: 'opacity',
-            transitionTimingFunction: exitTransition,
-            transitionDuration: `${
-              reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
-            }ms`,
-            opacity: mounted ? 1 : 0,
-          },
-          bar: {
-            transitionProperty: 'width',
-            transitionTimingFunction: progressTransition,
-            transitionDuration: `${reducedMotion || !mounted ? 0 : progressTransitionDuration}ms`,
-          },
-        }}
-      />
+      {!unmountProgressRef.current && (
+        <Progress
+          radius={0}
+          value={_progress}
+          size={size}
+          color={color}
+          styles={{
+            root: {
+              top: 0,
+              left: 0,
+              position: 'fixed',
+              width: '100vw',
+              backgroundColor: 'transparent',
+              transitionProperty: 'opacity',
+              transitionTimingFunction: exitTransition,
+              transitionDuration: `${
+                reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
+              }ms`,
+              opacity: mounted ? 1 : 0,
+            },
+            bar: {
+              transitionProperty: 'width',
+              transitionTimingFunction: progressTransition,
+              transitionDuration: `${reducedMotion || !mounted ? 0 : progressTransitionDuration}ms`,
+            },
+          }}
+        />
+      )}
     </OptionalPortal>
   );
 }
