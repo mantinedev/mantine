@@ -1,8 +1,8 @@
 import React from 'react';
-import { Chips, Chip, createStyles } from '@mantine/core';
+import { Chip, createStyles } from '@mantine/core';
 
 const code = `
-import { createStyles, Chip, Chips } from '@mantine/core';
+import { createStyles, Chip } from '@mantine/core';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   iconWrapper: {
@@ -19,16 +19,17 @@ const useStyles = createStyles((theme, _params, getRef) => ({
   },
 }));
 
+
 function Demo() {
   const { classes } = useStyles();
 
   return (
-    <Chips position="center" multiple classNames={classes} defaultValue={['react']}>
-      <Chip value="react">React</Chip>
-      <Chip value="ng">Angular</Chip>
-      <Chip value="vue">Vue</Chip>
-      <Chip value="svelte">Svelte</Chip>
-    </Chips>
+    <Chip.Group position="center" multiple defaultValue={['react']}>
+      <Chip classNames={classes} value="react">React</Chip>
+      <Chip classNames={classes} value="ng">Angular</Chip>
+      <Chip classNames={classes} value="vue">Vue</Chip>
+      <Chip classNames={classes} value="svelte">Svelte</Chip>
+    </Chip.Group>
   );
 }
 `;
@@ -52,12 +53,20 @@ function Demo() {
   const { classes } = useStyles();
 
   return (
-    <Chips position="center" multiple classNames={classes} defaultValue={['react']}>
-      <Chip value="react">React</Chip>
-      <Chip value="ng">Angular</Chip>
-      <Chip value="vue">Vue</Chip>
-      <Chip value="svelte">Svelte</Chip>
-    </Chips>
+    <Chip.Group position="center" multiple defaultValue={['react']}>
+      <Chip classNames={classes} value="react">
+        React
+      </Chip>
+      <Chip classNames={classes} value="ng">
+        Angular
+      </Chip>
+      <Chip classNames={classes} value="vue">
+        Vue
+      </Chip>
+      <Chip classNames={classes} value="svelte">
+        Svelte
+      </Chip>
+    </Chip.Group>
   );
 }
 

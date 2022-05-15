@@ -31,7 +31,7 @@ export * as ButtonDemos from './demos/core/Button';
 export * as CardDemos from './demos/core/Card';
 export * as CenterDemos from './demos/core/Center';
 export * as CheckboxDemos from './demos/core/Checkbox';
-export * as ChipsDemos from './demos/core/Chips';
+export * as ChipDemos from './demos/core/Chip';
 export * as CloseButtonDemos from './demos/core/CloseButton';
 export * as CodeDemos from './demos/core/Code';
 export * as CollapseDemos from './demos/core/Collapse';

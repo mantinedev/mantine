@@ -39,12 +39,14 @@ const EXTRA_FILES_PATHS = [
   // Checkbox
   '../src/mantine-core/src/components/Checkbox/CheckboxGroup/CheckboxGroup.tsx',
 
+  // Chip
+  '../src/mantine-core/src/components/Chip/ChipGroup/ChipGroup.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
   '../src/mantine-core/src/components/RadioGroup/Radio/Radio.tsx',
-  '../src/mantine-core/src/components/Chips/Chip/Chip.tsx',
   '../src/mantine-core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',

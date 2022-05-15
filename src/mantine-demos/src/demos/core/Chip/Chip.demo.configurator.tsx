@@ -1,28 +1,28 @@
 import React from 'react';
-import { Chips, Chip, ChipsProps } from '@mantine/core';
+import { Chip, ChipGroupProps } from '@mantine/core';
 
-function Wrapper(props: ChipsProps) {
+function Wrapper(props: ChipGroupProps) {
   return (
-    <Chips {...props} position="center" defaultValue="react">
+    <Chip.Group {...props} position="center" defaultValue="react">
       <Chip value="react">React</Chip>
       <Chip value="ng">Angular</Chip>
       <Chip value="svelte">Svelte</Chip>
       <Chip value="vue">Vue</Chip>
-    </Chips>
+    </Chip.Group>
   );
 }
 
 const codeTemplate = (props: string) => `
-import { Chips, Chip } from '@mantine/core';
+import { Chip } from '@mantine/core';
 
 function Demo() {
   return (
-    <Chips${props}>
+    <Chip.Group${props}>
       <Chip value="react">React</Chip>
       <Chip value="ng">Angular</Chip>
       <Chip value="svelte">Svelte</Chip>
       <Chip value="vue">Vue</Chip>
-    </Chips>
+    </Chip.Group>
   );
 }
 `;

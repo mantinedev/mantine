@@ -19,7 +19,7 @@ export * from './components/Button';
 export * from './components/Card';
 export * from './components/Center';
 export * from './components/Checkbox';
-export * from './components/Chips';
+export * from './components/Chip';
 export * from './components/CloseButton';
 export * from './components/Code';
 export * from './components/Collapse';
