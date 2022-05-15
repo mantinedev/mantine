@@ -1,14 +1,11 @@
 import React from 'react';
-import { Chip, ChipGroupProps } from '@mantine/core';
+import { Chip, ChipProps, Group } from '@mantine/core';
 
-function Wrapper(props: ChipGroupProps) {
+function Wrapper(props: ChipProps) {
   return (
-    <Chip.Group {...props} position="center" defaultValue="react">
-      <Chip value="react">React</Chip>
-      <Chip value="ng">Angular</Chip>
-      <Chip value="svelte">Svelte</Chip>
-      <Chip value="vue">Vue</Chip>
-    </Chip.Group>
+    <Group position="center">
+      <Chip {...props}>Awesome chip</Chip>
+    </Group>
   );
 }
 
@@ -16,14 +13,7 @@ const codeTemplate = (props: string) => `
 import { Chip } from '@mantine/core';
 
 function Demo() {
-  return (
-    <Chip.Group${props}>
-      <Chip value="react">React</Chip>
-      <Chip value="ng">Angular</Chip>
-      <Chip value="svelte">Svelte</Chip>
-      <Chip value="vue">Vue</Chip>
-    </Chip.Group>
-  );
+  return <Chip${props}>Awesome chip</Chip>
 }
 `;
 

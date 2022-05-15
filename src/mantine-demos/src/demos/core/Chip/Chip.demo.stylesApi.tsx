@@ -5,17 +5,21 @@ const code = `
 import { createStyles, Chip } from '@mantine/core';
 
 const useStyles = createStyles((theme, _params, getRef) => ({
-  iconWrapper: {
-    ref: getRef('iconWrapper'),
+  label: {
+    '&[data-checked]': {
+      '&, &:hover': {
+        backgroundColor: theme.colors.blue[theme.fn.primaryShade()],
+        color: theme.white,
+      },
+
+      [\`& .\${getRef('iconWrapper')}\`]: {
+        color: theme.white,
+      },
+    },
   },
 
-  checked: {
-    backgroundColor: \`\${theme.colors.blue[6]} !important\`,
-    color: theme.white,
-
-    [\`& .\${getRef('iconWrapper')}\`]: {
-      color: theme.white,
-    },
+  iconWrapper: {
+    ref: getRef('iconWrapper'),
   },
 }));
 
@@ -35,17 +39,21 @@ function Demo() {
 `;
 
 const useStyles = createStyles((theme, _params, getRef) => ({
-  iconWrapper: {
-    ref: getRef('iconWrapper'),
+  label: {
+    '&[data-checked]': {
+      '&, &:hover': {
+        backgroundColor: theme.colors.blue[theme.fn.primaryShade()],
+        color: theme.white,
+      },
+
+      [`& .${getRef('iconWrapper')}`]: {
+        color: theme.white,
+      },
+    },
   },
 
-  checked: {
-    backgroundColor: `${theme.colors.blue[6]} !important`,
-    color: theme.white,
-
-    [`& .${getRef('iconWrapper')}`]: {
-      color: theme.white,
-    },
+  iconWrapper: {
+    ref: getRef('iconWrapper'),
   },
 }));
 
