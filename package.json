@@ -44,6 +44,9 @@
     "release:minor": "npm run _release minor && npm run docs:deploy",
     "release:major": "npm run _release major && npm run docs:deploy"
   },
+  "resolutions": {
+    "@types/react": "18.0.9"
+  },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-commonjs": "^19.0.0",
@@ -71,7 +74,7 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "18.0.4",
     "@types/react-router-dom": "^5.1.7",
-    "@types/react-transition-group": "^4.4.1",
+    "@types/react-transition-group": "^4.4.4",
     "@types/resize-observer-browser": "^0.1.5",
     "@types/rimraf": "^3.0.1",
     "@types/yargs": "^17.0.0",

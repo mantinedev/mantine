@@ -16,7 +16,7 @@ export type FullScreenDropzoneStylesNames = Selectors<typeof useStyles>;
 
 export interface FullScreenDropzoneProps
   extends DefaultProps<FullScreenDropzoneStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onDrop'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onDrop' | 'children'> {
   /** Space between dropzone and viewport edges */
   offset?: MantineNumberSize;
 

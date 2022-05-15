@@ -6,7 +6,7 @@ const defaultProps: ColorSwatchProps<'div'> = {
 };
 
 describe('@mantine/core/ColorSwatch', () => {
-  itIsPolymorphic(ColorSwatch, defaultProps);
+  itIsPolymorphic(ColorSwatch as any, defaultProps);
   itSupportsSystemProps({
     component: ColorSwatch,
     props: defaultProps,

@@ -4,8 +4,8 @@ import { Box, BoxProps } from './Box';
 const defaultProps: BoxProps<'div'> = {};
 
 describe('@mantine/core/Box', () => {
-  itRendersChildren(Box, defaultProps);
-  itIsPolymorphic(Box, defaultProps);
+  itRendersChildren(Box as any, defaultProps);
+  itIsPolymorphic(Box as any, defaultProps);
   itSupportsSystemProps({
     component: Box,
     props: defaultProps,
