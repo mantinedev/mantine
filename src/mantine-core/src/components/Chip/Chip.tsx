@@ -107,6 +107,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
     ? {
         checked: ctx.isChipSelected(value as string),
         onChange: ctx.onChange,
+        type: ctx.multiple ? 'checkbox' : 'radio',
       }
     : {};
   const _checked = contextProps.checked || _value;
