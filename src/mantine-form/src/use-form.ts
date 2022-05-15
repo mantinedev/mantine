@@ -83,21 +83,26 @@ export function useForm<T extends { [key: string]: any }>({
       return clone;
     });
 
-  const setFieldValue = <K extends keyof T, V extends T[K]>(field: K, value: V) => {
+  const setFieldValue = <K extends keyof T, V extends T[K]>(
+    field: K,
+    value: V,
+    errorPath?: string
+  ) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    clearFieldError(field);
+    clearFieldError(errorPath);
   };
 
   const setListItem = <K extends keyof T, V extends T[K]>(
     field: K,
     index: number,
-    value: V[K][number]
+    value: V[K][number],
+    errorPath?: string
   ) => {
     const list = values[field];
     if (isFormList(list) && list[index] !== undefined) {
       const cloned = [...list];
       cloned[index] = value;
-      setFieldValue(field, formList(cloned) as any);
+      setFieldValue(field, formList(cloned) as any, errorPath);
     }
   };
 
@@ -200,8 +205,9 @@ export function useForm<T extends { [key: string]: any }>({
     if (isFormList(list) && list[index] && listField in list[index]) {
       const listValue = list[index];
       const value = listValue[listField];
+      const listItemErrorPath = getErrorPath([field, index, listField]);
       const onChange = getInputOnChange<U[LK]>((val: U[LK]) =>
-        setListItem(field, index, { ...listValue, [listField]: val })
+        setListItem(field, index, { ...listValue, [listField]: val }, listItemErrorPath)
       ) as any;
       const payload: any = type === 'checkbox' ? { checked: value, onChange } : { value, onChange };
       const error = errors[getErrorPath([field, index, listField])];
