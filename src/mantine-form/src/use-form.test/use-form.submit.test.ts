@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useForm } from '../index';
 
 const getFormEvent = () => ({ preventDefault: jest.fn() } as any);

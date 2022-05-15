@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useToggle, useBooleanToggle } from './use-toggle';
 
 describe('@mantine/hooks/use-boolean-toggle', () => {

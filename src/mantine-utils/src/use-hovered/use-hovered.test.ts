@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useHovered } from './use-hovered';
 
 describe('@mantine/utils/use-hovered', () => {

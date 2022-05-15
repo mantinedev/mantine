@@ -32,7 +32,7 @@ describe('@mantine/core/Alert', () => {
     expect(withoutCloseButton.querySelectorAll('.mantine-Alert-closeButton')).toHaveLength(0);
   });
 
-  it('calls onClose when CloseButton is clicked', () => {
+  it('calls onClose when CloseButton is clicked', async () => {
     const spy = jest.fn();
     render(
       <Alert title="test" withCloseButton onClose={spy}>
@@ -40,7 +40,7 @@ describe('@mantine/core/Alert', () => {
       </Alert>
     );
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

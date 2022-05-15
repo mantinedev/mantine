@@ -18,24 +18,24 @@ describe('@mantine/dates/CalendarHeader', () => {
   itSupportsClassName(CalendarHeader, defaultProps);
   checkAccessibility([<CalendarHeader {...defaultProps} />]);
 
-  it('calls onNext/onPrevious functions when previous/next buttons are clicked', () => {
+  it('calls onNext/onPrevious functions when previous/next buttons are clicked', async () => {
     const onNext = jest.fn();
     const onPrevious = jest.fn();
     render(<CalendarHeader {...defaultProps} onNext={onNext} onPrevious={onPrevious} />);
 
-    userEvent.click(screen.getByLabelText('Previous month'));
+    await userEvent.click(screen.getByLabelText('Previous month'));
     expect(onPrevious).toHaveBeenCalledTimes(1);
     expect(onNext).toHaveBeenCalledTimes(0);
 
-    userEvent.click(screen.getByLabelText('Next month'));
+    await userEvent.click(screen.getByLabelText('Next month'));
     expect(onPrevious).toHaveBeenCalledTimes(1);
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onNextLevel function when level button is clicked', () => {
+  it('calls onNextLevel function when level button is clicked', async () => {
     const spy = jest.fn();
     render(<CalendarHeader {...defaultProps} onNextLevel={spy} />);
-    userEvent.click(screen.getByText('February 2021'));
+    await userEvent.click(screen.getByText('February 2021'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

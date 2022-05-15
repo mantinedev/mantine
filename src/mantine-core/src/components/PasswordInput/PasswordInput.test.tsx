@@ -33,10 +33,10 @@ describe('@mantine/core/PasswordInput', () => {
     expect(container.querySelector('input')).toHaveAttribute('required');
   });
 
-  it('sets input type based on password visibility state', () => {
+  it('sets input type based on password visibility state', async () => {
     const { container } = render(<PasswordInput />);
     expect(container.querySelector('input')).toHaveAttribute('type', 'password');
-    userEvent.click(screen.getByRole('button', { hidden: true }));
+    await userEvent.click(screen.getByRole('button', { hidden: true }));
     expect(container.querySelector('input')).toHaveAttribute('type', 'text');
   });
 

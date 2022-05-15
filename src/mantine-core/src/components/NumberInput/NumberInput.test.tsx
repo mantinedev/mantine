@@ -55,25 +55,25 @@ describe('@mantine/core/NumberInput', () => {
     expect(getRightSection(unstyled)).toBe(null);
   });
 
-  it('increments and decrements value with controls', () => {
+  it('increments and decrements value with controls', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput value={0} step={10} onChange={spy} />);
-    clickIncrement(container);
+    await clickIncrement(container);
     expect(spy).toHaveBeenLastCalledWith(10);
-    clickDecrement(container);
-    clickDecrement(container);
+    await clickDecrement(container);
+    await clickDecrement(container);
     expect(spy).toHaveBeenLastCalledWith(-10);
   });
 
-  it('does not increment or decrements out of min and max', () => {
+  it('does not increment or decrements out of min and max', async () => {
     const spy = jest.fn();
     const { container } = render(
       <NumberInput value={5} max={10} min={0} step={6} onChange={spy} />
     );
-    clickIncrement(container);
+    await clickIncrement(container);
     expect(spy).toHaveBeenLastCalledWith(10);
-    clickDecrement(container);
-    clickDecrement(container);
+    await clickDecrement(container);
+    await clickDecrement(container);
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 
@@ -91,76 +91,76 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(10);
   });
 
-  it('returns undefined when input is empty', () => {
+  it('returns undefined when input is empty', async () => {
     const spy = jest.fn();
     render(<NumberInput value={5} max={10} min={0} step={6} onChange={spy} />);
     expectValue('5');
-    enterText('{backspace}');
+    await enterText('{backspace}');
     expect(spy).toHaveBeenLastCalledWith(undefined);
     expectValue('');
   });
 
-  it('clears input on blur when input is empty and a string is entered', () => {
+  it('clears input on blur when input is empty and a string is entered', async () => {
     const spy = jest.fn();
     render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
-    enterText('6');
+    await enterText('6');
     expect(spy).toHaveBeenLastCalledWith(6);
-    enterText('test');
+    await enterText('test');
     blurInput();
     expect(getInput()).toHaveValue('6');
     expect(spy).toHaveBeenLastCalledWith(6);
   });
 
-  it('supports changing decimal separator', () => {
+  it('supports changing decimal separator', async () => {
     const spy = jest.fn();
     render(<NumberInput max={10} min={0} step={6} onChange={spy} decimalSeparator="," />);
-    enterText('6,54');
+    await enterText('6,54');
     expect(spy).toHaveBeenLastCalledWith(6.54);
     blurInput();
     expect(getInput()).toHaveValue('7');
   });
 
-  it('sets input value with a given precision', () => {
+  it('sets input value with a given precision', async () => {
     const spy = jest.fn();
     render(<NumberInput max={10} min={0} step={6} precision={2} onChange={spy} />);
-    enterText('6.123');
+    await enterText('6.123');
     expect(spy).toHaveBeenLastCalledWith(6.123);
     blurInput();
     expectValue('6.12');
     expect(spy).toHaveBeenLastCalledWith(6.12);
   });
 
-  it('sets state to min if input is empty and is incremented/decremented', () => {
+  it('sets state to min if input is empty and is incremented/decremented', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput max={10} min={0} step={6} onChange={spy} />);
-    clickIncrement(container);
+    await clickIncrement(container);
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
-    enterText('{backspace}');
-    clickDecrement(container);
+    await enterText('{backspace}');
+    await clickDecrement(container);
     expectValue('0');
   });
 
-  it('steps value with controls on hold keydown without stepHoldInterval', () => {
+  it('steps value with controls on hold keydown without stepHoldInterval', async () => {
     const spy = jest.fn();
     render(<NumberInput step={10} onChange={spy} defaultValue={0} />);
-    enterText('{arrowup}');
+    await enterText('{arrowup}');
     expectValue('10');
     expect(spy).toHaveBeenLastCalledWith(10);
-    enterText('{arrowdown}');
+    await enterText('{arrowdown}');
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 
-  it('allows "-" in an empty NumberInput', () => {
+  it('allows "-" in an empty NumberInput', async () => {
     const spy = jest.fn();
     render(<NumberInput onChange={spy} />);
-    enterText('-');
+    await enterText('-');
     expect(spy).toHaveBeenLastCalledWith(undefined);
     blurInput();
     expect(getInput()).toHaveValue('');
     expect(spy).toHaveBeenLastCalledWith(undefined);
-    enterText('-1');
+    await enterText('-1');
     expect(spy).toHaveBeenLastCalledWith(-1);
   });
 });

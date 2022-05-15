@@ -1,5 +1,6 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
+import { patchConsoleError } from '@mantine/tests';
 import { createSafeContext } from './create-safe-context';
 
 interface ContextType {
@@ -9,9 +10,10 @@ interface ContextType {
 
 describe('@mantine/utils/create-safe-context', () => {
   it('throws error if useSafeContext hook was called without Provider', () => {
+    patchConsoleError();
     const [, useContext] = createSafeContext<ContextType>('test-error');
-    const view = renderHook(() => useContext());
-    expect(view.result.error).toStrictEqual(new Error('test-error'));
+    expect(() => renderHook(() => useContext())).toThrow(new Error('test-error'));
+    patchConsoleError.release();
   });
 
   it('returns context value when useSafeContext hook was called within Provider', () => {

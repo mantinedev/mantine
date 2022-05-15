@@ -35,18 +35,18 @@ describe('@mantine/core/CheckboxGroup', () => {
     </CheckboxGroup>,
   ]);
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<CheckboxGroup {...defaultProps} defaultValue={['test-value-1']} />);
     expect(screen.getAllByRole('checkbox')[0]).toBeChecked();
-    userEvent.click(screen.getAllByRole('checkbox')[1]);
+    await userEvent.click(screen.getAllByRole('checkbox')[1]);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<CheckboxGroup {...defaultProps} value={['test-value-2']} onChange={spy} />);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
-    userEvent.click(screen.getAllByRole('checkbox')[0]);
+    await userEvent.click(screen.getAllByRole('checkbox')[0]);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith(['test-value-2', 'test-value-1']);

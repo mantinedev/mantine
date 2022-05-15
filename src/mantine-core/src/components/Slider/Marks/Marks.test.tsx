@@ -26,12 +26,12 @@ describe('@mantine/core/Slider/Marks', () => {
     expect(labels[1].textContent).toBe('test-2');
   });
 
-  it('calls onChange with mark value when mark label is pressed', () => {
+  it('calls onChange with mark value when mark label is pressed', async () => {
     const spy = jest.fn();
     const { container } = render(<Marks {...defaultProps} onChange={spy} />);
-    userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[0]);
+    await userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[0]);
     expect(spy).toHaveBeenLastCalledWith(50);
-    userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[1]);
+    await userEvent.click(container.querySelectorAll('.mantine-Slider-markLabel')[1]);
     expect(spy).toHaveBeenLastCalledWith(80);
   });
 

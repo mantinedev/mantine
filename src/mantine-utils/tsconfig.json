@@ -10,5 +10,6 @@
     "declarationMap": true,
     "declarationDir": "lib",
     "composite": true
-  }
+  },
+  "references": [{ "path": "../mantine-tests" }]
 }

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useForm } from '../index';
 
 describe('@mantine/form/use-form function validation', () => {

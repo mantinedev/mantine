@@ -35,10 +35,10 @@ describe('@mantine/core/MultiSelect/DefaultValue', () => {
     expect(notDisabled.querySelectorAll('button')).toHaveLength(1);
   });
 
-  it('calls onRemove when CloseButton is clicked', () => {
+  it('calls onRemove when CloseButton is clicked', async () => {
     const spy = jest.fn();
     render(<DefaultValue {...defaultProps} onRemove={spy} />);
-    userEvent.click(screen.getByRole('button', { hidden: true }));
+    await userEvent.click(screen.getByRole('button', { hidden: true }));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

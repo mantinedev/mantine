@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useIdle } from './use-idle';
 
 describe('@mantine/hooks/use-idle', () => {

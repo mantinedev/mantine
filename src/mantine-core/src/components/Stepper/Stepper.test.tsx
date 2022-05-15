@@ -34,10 +34,10 @@ describe('@mantine/core/Stepper', () => {
     refType: HTMLDivElement,
   });
 
-  it('calls onStepClick with clicked step index', () => {
+  it('calls onStepClick with clicked step index', async () => {
     const spy = jest.fn();
     render(<Stepper {...defaultProps} onStepClick={spy} />);
-    userEvent.click(screen.getAllByRole('button')[2]);
+    await userEvent.click(screen.getAllByRole('button')[2]);
     expect(spy).toHaveBeenCalledWith(2);
   });
 

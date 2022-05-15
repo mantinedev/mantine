@@ -23,18 +23,18 @@ describe('@mantine/core/Textarea', () => {
     excludeOthers: true,
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<Textarea {...defaultProps} />);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    await userEvent.type(screen.getByRole('textbox'), 'test-value');
     expect(screen.getByRole('textbox')).toHaveValue('test-value');
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<Textarea {...defaultProps} value="" onChange={spy} />);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    await userEvent.type(screen.getByRole('textbox'), 'test-value');
     expect(spy).toHaveBeenCalled();
     expect(screen.getByRole('textbox')).toHaveValue('');
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
-import { checkAccessibility, wait } from '@mantine/tests';
+import { checkAccessibility } from '@mantine/tests';
 import userEvent from '@testing-library/user-event';
 import { Menu, MenuProps } from './Menu';
 import { MenuItem } from './MenuItem/MenuItem';
@@ -32,48 +32,48 @@ const getControl = () => screen.getByRole('button');
 describe('@mantine/core/Menu', () => {
   checkAccessibility([<TestContainer opened />, <TestContainer opened={false} />]);
 
-  it('calls onOpen and onClose functions when dropdown state changes', () => {
+  it('calls onOpen and onClose functions when dropdown state changes', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();
     render(<TestContainer onOpen={onOpen} onClose={onClose} />);
 
-    userEvent.click(getControl());
+    await userEvent.click(getControl());
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(0);
 
-    userEvent.click(getControl());
+    await userEvent.click(getControl());
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<TestContainer opened onChange={spy} />);
-    userEvent.click(getControl());
+    await userEvent.click(getControl());
 
     expect(spy).toHaveBeenCalledWith(false);
     expectOpened();
   });
 
-  it('toggles menu when target is clicked when trigger="click"', () => {
+  it('toggles menu when target is clicked when trigger="click"', async () => {
     render(<TestContainer />);
 
     expectClosed();
-    userEvent.click(getControl());
+    await userEvent.click(getControl());
 
     expectOpened();
-    userEvent.click(getControl());
+    await userEvent.click(getControl());
     expectClosed();
   });
 
-  it('toggles menu when target is hovered when trigger="hover"', () => {
+  it('toggles menu when target is hovered when trigger="hover"', async () => {
     render(<TestContainer trigger="hover" />);
     expectClosed();
 
-    userEvent.hover(getControl());
+    await userEvent.hover(getControl());
     expectOpened();
 
-    userEvent.unhover(getControl());
+    await userEvent.unhover(getControl());
     expectClosed();
   });
 
@@ -82,53 +82,42 @@ describe('@mantine/core/Menu', () => {
     expectOpened();
   });
 
-  it('closes menu on click outside', () => {
+  it('closes menu on click outside', async () => {
     render(<TestContainer defaultOpened />);
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expectClosed();
   });
 
-  it('does not close menu on click outside if closeOnClickOutside={false}', () => {
+  it('does not close menu on click outside if closeOnClickOutside={false}', async () => {
     render(<TestContainer defaultOpened closeOnClickOutside={false} />);
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expectOpened();
   });
 
-  it('closes menu when item is clicked', () => {
+  it('closes menu when item is clicked', async () => {
     render(<TestContainer defaultOpened />);
-    userEvent.click(screen.getByText('test-item-1'));
+    await userEvent.click(screen.getByText('test-item-1'));
     expectClosed();
   });
 
-  it('does not close menu when item is clicked and closeOnItemClick={false}', () => {
+  it('does not close menu when item is clicked and closeOnItemClick={false}', async () => {
     render(<TestContainer defaultOpened closeOnItemClick={false} />);
-    userEvent.click(screen.getByText('test-item-1'));
+    await userEvent.click(screen.getByText('test-item-1'));
     expectOpened();
   });
 
-  it('closes menu when item is clicked and closeOnItemClick={false} but item has closeMenuOnClick={true} prop', () => {
+  it('closes menu when item is clicked and closeOnItemClick={false} but item has closeMenuOnClick={true} prop', async () => {
     render(<TestContainer defaultOpened closeOnItemClick={false} />);
-    userEvent.click(screen.getByText('test-item-3'));
+    await userEvent.click(screen.getByText('test-item-3'));
     expectClosed();
   });
 
-  it('does not close menu when item with closeMenuOnClick={false} prop is clicked', () => {
+  it('does not close menu when item with closeMenuOnClick={false} prop is clicked', async () => {
     render(<TestContainer defaultOpened closeOnItemClick />);
-    userEvent.click(screen.getByText('test-item-2'));
+    await userEvent.click(screen.getByText('test-item-2'));
     expectOpened();
 
     cleanup();
-  });
-
-  it('handles arrow keys correctly', async () => {
-    const { container } = render(<TestContainer defaultOpened />);
-    await wait(10);
-    expect(container.querySelector('[data-menu-dropdown]')).toHaveFocus();
-
-    userEvent.type(container.querySelector('[data-menu-dropdown]'), '{arrowdown}');
-    expect(container.querySelectorAll('[data-menu-item]')[0]).toHaveFocus();
-
-    // ... RTL refuses to work with other menuitem focus tests, menu dropdown is closed for no reason
   });
 
   it('sets dropdown z-index based on zIndex prop', () => {
@@ -137,13 +126,13 @@ describe('@mantine/core/Menu', () => {
   });
 
   it('correctly handles withArrow={true}', () => {
-    const { container } = render(<TestContainer defaultOpened withArrow />);
-    expect(container.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(1);
+    render(<TestContainer defaultOpened withArrow />);
+    expect(document.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(1);
   });
 
   it('correctly handles withArrow={false}', () => {
-    const { container } = render(<TestContainer defaultOpened withArrow={false} />);
-    expect(container.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
+    render(<TestContainer defaultOpened withArrow={false} />);
+    expect(document.querySelectorAll('.mantine-Menu-arrow')).toHaveLength(0);
   });
 
   it('exposes related components as static properties', () => {

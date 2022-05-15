@@ -21,10 +21,10 @@ describe('@mantine/core/SelectRightSection', () => {
     expect(screen.getByLabelText('test-label')).toBeInTheDocument();
   });
 
-  it('calls onClear when CloseButton is clicked', () => {
+  it('calls onClear when CloseButton is clicked', async () => {
     const spy = jest.fn();
     render(<SelectRightSection shouldClear size="sm" onClear={spy} />);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

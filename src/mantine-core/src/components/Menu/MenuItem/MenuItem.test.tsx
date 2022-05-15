@@ -27,25 +27,25 @@ describe('@mantine/core/MenuItem', () => {
     displayName: '@mantine/core/MenuItem',
   });
 
-  it('allows to add onMouseEnter and onMouseLeave events', () => {
+  it('allows to add onMouseEnter and onMouseLeave events', async () => {
     const onMouseEnter = jest.fn();
     const onMouseLeave = jest.fn();
     render(<TestContainer onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} />);
 
-    userEvent.hover(screen.getByRole('menuitem'));
+    await userEvent.hover(screen.getByRole('menuitem'));
     expect(onMouseEnter).toHaveBeenCalled();
     expect(onMouseLeave).not.toHaveBeenCalled();
 
-    userEvent.unhover(screen.getByRole('menuitem'));
+    await userEvent.unhover(screen.getByRole('menuitem'));
     expect(onMouseLeave).toHaveBeenCalled();
   });
 
-  it('allows to add onClick event', () => {
+  it('allows to add onClick event', async () => {
     const spy = jest.fn();
     render(<TestContainer onClick={spy} />);
     expect(spy).not.toHaveBeenCalled();
 
-    userEvent.click(screen.getByRole('menuitem'));
+    await userEvent.click(screen.getByRole('menuitem'));
     expect(spy).toHaveBeenCalled();
   });
 

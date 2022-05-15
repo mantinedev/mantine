@@ -42,80 +42,80 @@ describe('@mantine/core/Accordion', () => {
     expect(container.querySelectorAll('.mantine-Accordion-item')).toHaveLength(3);
   });
 
-  it('support uncontrolled state (multiple: false, default)', () => {
+  it('support uncontrolled state (multiple: false, default)', async () => {
     render(<Accordion {...defaultProps} defaultValue="item-2" />);
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
     expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
 
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
     expect(screen.getByText('test-item-1')).toBeInTheDocument();
   });
 
-  it('support uncontrolled state (multiple: true)', () => {
+  it('support uncontrolled state (multiple: true)', async () => {
     render(<Accordion {...defaultProps} multiple defaultValue={['item-2']} />);
     expect(screen.queryAllByText('test-item-1').length).toBe(0);
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
 
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(screen.getByText('test-item-1')).toBeInTheDocument();
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
   });
 
-  it('supports navigating between items with up and down arrows (loop: true, default)', () => {
+  it('supports navigating between items with up and down arrows (loop: true, default)', async () => {
     render(<Accordion {...defaultProps} defaultValue="item-1" />);
 
-    userEvent.type(screen.getAllByRole('button')[0], '{arrowdown}');
+    await userEvent.type(screen.getAllByRole('button')[0], '{arrowdown}');
     expect(screen.getAllByRole('button')[1]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[2], '{arrowup}');
+    await userEvent.type(screen.getAllByRole('button')[2], '{arrowup}');
     expect(screen.getAllByRole('button')[1]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[2], '{arrowdown}');
+    await userEvent.type(screen.getAllByRole('button')[2], '{arrowdown}');
     expect(screen.getAllByRole('button')[0]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[0], '{arrowup}');
+    await userEvent.type(screen.getAllByRole('button')[0], '{arrowup}');
     expect(screen.getAllByRole('button')[2]).toHaveFocus();
   });
 
-  it('supports navigating between items with up and down arrows (loop: false)', () => {
+  it('supports navigating between items with up and down arrows (loop: false)', async () => {
     render(<Accordion {...defaultProps} defaultValue="item-1" loop={false} />);
 
-    userEvent.type(screen.getAllByRole('button')[0], '{arrowdown}');
+    await userEvent.type(screen.getAllByRole('button')[0], '{arrowdown}');
     expect(screen.getAllByRole('button')[1]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[2], '{arrowup}');
+    await userEvent.type(screen.getAllByRole('button')[2], '{arrowup}');
     expect(screen.getAllByRole('button')[1]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[2], '{arrowdown}');
+    await userEvent.type(screen.getAllByRole('button')[2], '{arrowdown}');
     expect(screen.getAllByRole('button')[2]).toHaveFocus();
 
-    userEvent.type(screen.getAllByRole('button')[0], '{arrowup}');
+    await userEvent.type(screen.getAllByRole('button')[0], '{arrowup}');
     expect(screen.getAllByRole('button')[0]).toHaveFocus();
   });
 
-  it('supports controlled state (multiple: false, default)', () => {
+  it('supports controlled state (multiple: false, default)', async () => {
     const spy = jest.fn();
     render(<Accordion {...defaultProps} value="item-2" onChange={spy} />);
 
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
     expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
 
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith('item-1');
 
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
     expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
   });
 
-  it('supports controlled state (multiple: true)', () => {
+  it('supports controlled state (multiple: true)', async () => {
     const spy = jest.fn();
     render(<Accordion {...defaultProps} value={['item-2']} multiple onChange={spy} />);
 
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
     expect(screen.queryAllByText('test-item-1')).toHaveLength(0);
 
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(['item-2', 'item-1']);
 
     expect(screen.getByText('test-item-2')).toBeInTheDocument();
@@ -136,20 +136,20 @@ describe('@mantine/core/Accordion', () => {
     expect(screen.queryAllByText('test-item-2')).toHaveLength(0);
   });
 
-  it('handles tab key correctly', () => {
+  it('handles tab key correctly', async () => {
     render(<Accordion {...defaultProps} />);
     expect(document.body).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(screen.getAllByRole('button')[0]).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(screen.getAllByRole('button')[1]).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(screen.getAllByRole('button')[2]).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
 

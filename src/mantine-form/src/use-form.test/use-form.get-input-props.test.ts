@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useForm } from '../index';
 
 describe('@mantine/form/use-form get-input-props', () => {

@@ -32,14 +32,14 @@ describe('@mantine/core/component', () => {
   checkAccessibility([<TestContainer opened />, <TestContainer opened={false} />]);
   itRendersChildren(Popover, defaultProps);
 
-  it('supports uncontrolled mode', () => {
+  it('supports uncontrolled mode', async () => {
     render(<TestContainer />);
     expect(screen.queryAllByText('test-dropdown')).toHaveLength(0);
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(screen.getByText('test-dropdown')).toBeInTheDocument();
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(screen.queryAllByText('test-dropdown')).toHaveLength(0);
   });
 
@@ -48,74 +48,74 @@ describe('@mantine/core/component', () => {
     expect(screen.getByText('test-dropdown')).toBeInTheDocument();
   });
 
-  it('calls onOpen and onClose functions when dropdown state changes', () => {
+  it('calls onOpen and onClose functions when dropdown state changes', async () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();
     render(<TestContainer onOpen={onOpen} onClose={onClose} />);
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(0);
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it('supports controlled mode', () => {
+  it('supports controlled mode', async () => {
     const spy = jest.fn();
     render(<TestContainer opened onChange={spy} />);
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(0);
 
-    userEvent.type(screen.getByRole('dialog'), '{Escape}');
+    await userEvent.type(screen.getByRole('dialog'), '{Escape}');
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenLastCalledWith(false);
 
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expect(spy).toHaveBeenCalledTimes(2);
     expect(spy).toHaveBeenLastCalledWith(false);
   });
 
-  it('correctly handles closeOnClickOutside={false}', () => {
+  it('correctly handles closeOnClickOutside={false}', async () => {
     const spy = jest.fn();
     render(<TestContainer defaultOpened closeOnClickOutside={false} onClose={spy} />);
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('correctly handles closeOnClickOutside={true}', () => {
+  it('correctly handles closeOnClickOutside={true}', async () => {
     const spy = jest.fn();
     render(<TestContainer defaultOpened closeOnClickOutside onClose={spy} />);
-    userEvent.click(document.body);
+    await userEvent.click(document.body);
     expect(spy).toHaveBeenCalled();
   });
 
-  it('correctly handles closeOnEscape={false}', () => {
+  it('correctly handles closeOnEscape={false}', async () => {
     const spy = jest.fn();
     render(<TestContainer defaultOpened closeOnEscape={false} onClose={spy} />);
-    userEvent.type(screen.getByRole('dialog'), '{Escape}');
+    await userEvent.type(screen.getByRole('dialog'), '{Escape}');
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('correctly handles closeOnEscape={true}', () => {
+  it('correctly handles closeOnEscape={true}', async () => {
     const spy = jest.fn();
     render(<TestContainer defaultOpened closeOnEscape onClose={spy} />);
-    userEvent.type(screen.getByRole('dialog'), '{Escape}');
+    await userEvent.type(screen.getByRole('dialog'), '{Escape}');
     expect(spy).toHaveBeenCalled();
   });
 
   it('correctly handles trapFocus={true}', async () => {
-    const { container } = render(<TestContainer defaultOpened trapFocus />);
+    render(<TestContainer defaultOpened trapFocus />);
     await wait(10);
-    expect(container.querySelectorAll('input')[1]).toHaveFocus();
+    expect(document.querySelectorAll('input')[1]).toHaveFocus();
 
     userEvent.tab();
-    expect(container.querySelectorAll('input')[2]).toHaveFocus();
+    expect(document.querySelectorAll('input')[2]).toHaveFocus();
 
     userEvent.tab();
-    expect(container.querySelectorAll('input')[0]).toHaveFocus();
+    expect(document.querySelectorAll('input')[0]).toHaveFocus();
   });
 
   it('correctly handles trapFocus={false}', async () => {

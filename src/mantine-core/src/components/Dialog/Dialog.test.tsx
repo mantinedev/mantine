@@ -15,10 +15,10 @@ describe('@mantine/core/Dialog', () => {
   itSupportsRef(Dialog, defaultProps, HTMLDivElement);
   itSupportsSystemProps({ component: MantineDialog, props: defaultProps });
 
-  it('calls onClose when close button is clicked', () => {
+  it('calls onClose when close button is clicked', async () => {
     const spy = jest.fn();
     render(<MantineDialog opened withCloseButton onClose={spy} />);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
