@@ -1,7 +1,7 @@
 {
   "name": "@mantine/nprogress",
   "description": "A navigation progress bar",
-  "version": "4.2.3",
+  "version": "4.2.5",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,9 +15,9 @@
     "directory": "src/mantine-nprogress"
   },
   "peerDependencies": {
-    "@mantine/core": "4.2.3",
-    "@mantine/hooks": "4.2.3",
-    "@mantine/styles": "4.2.3",
+    "@mantine/core": "4.2.5",
+    "@mantine/hooks": "4.2.5",
+    "@mantine/styles": "4.2.5",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

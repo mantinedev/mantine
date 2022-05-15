@@ -27,5 +27,6 @@ export function getDate(
     .hour(_hours)
     .minute(Number.isNaN(_minutes) ? 0 : _minutes)
     .second(Number.isNaN(_seconds) ? 0 : _seconds)
+    .millisecond(0)
     .toDate();
 }

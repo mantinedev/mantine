@@ -1,22 +1,24 @@
 import React from 'react';
 import { useForm, formList } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
 import { Trash } from 'tabler-icons-react';
 
 const code = `
 import { useForm, formList } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
 import { Trash } from 'tabler-icons-react';
 
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([{ name: '', active: false }]),
+      employees: formList([{ name: '', active: false, key: randomId() }]),
     },
   });
 
-  const fields = form.values.employees.map((_, index) => (
-    <Group key={index} mt="xs">
+  const fields = form.values.employees.map((item, index) => (
+    <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
         required
@@ -54,7 +56,11 @@ function Demo() {
       {fields}
 
       <Group position="center" mt="md">
-        <Button onClick={() => form.addListItem('employees', { name: '', active: false })}>
+        <Button
+          onClick={() =>
+            form.addListItem('employees', { name: '', active: false, key: randomId() })
+          }
+        >
           Add employee
         </Button>
       </Group>
@@ -71,12 +77,12 @@ function Demo() {
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([{ name: '', active: false }]),
+      employees: formList([{ name: '', active: false, key: randomId() }]),
     },
   });
 
-  const fields = form.values.employees.map((_, index) => (
-    <Group key={index} mt="xs">
+  const fields = form.values.employees.map((item, index) => (
+    <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
         required
@@ -110,7 +116,11 @@ function Demo() {
       {fields}
 
       <Group position="center" mt="md">
-        <Button onClick={() => form.addListItem('employees', { name: '', active: false })}>
+        <Button
+          onClick={() =>
+            form.addListItem('employees', { name: '', active: false, key: randomId() })
+          }
+        >
           Add employee
         </Button>
       </Group>

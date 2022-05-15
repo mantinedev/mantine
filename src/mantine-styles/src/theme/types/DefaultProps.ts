@@ -16,7 +16,7 @@ export interface DefaultProps<
 > extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;
-  sx?: Sx | Sx[];
+  sx?: Sx | (Sx | undefined)[];
   classNames?: ClassNames<StylesNames>;
   styles?: Styles<StylesNames, StylesParams>;
   unstyled?: boolean;

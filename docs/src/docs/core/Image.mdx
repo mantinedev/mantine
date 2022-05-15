@@ -23,11 +23,11 @@ Image component is a wrapper around img element with option to change object fit
 
 ## Width and height
 
-In the example above, the image takes 100% of width of its container and height is calculated dynamically based on image proportion.
+In the example above, the image takes 100% of the width of its container and height is calculated dynamically based on image proportion.
 To change this behavior, set image width and height to define image size.
 
-Note that if image proportions do not match given width and height, some parts will be cut out.
-In case you want to show image in its original proportions but fitted in current width and height set `fit="contain"`:
+Note that if image proportions do not match the given width and height, some parts will be cut out.
+In case you want to show the image with its original proportions and want it to fit in the current width and height, set `fit="contain"`:
 
 <Demo data={ImageDemos.sizes} />
 
@@ -55,7 +55,7 @@ You can add figcaption to an image with `caption` prop:
 
 ## Radius
 
-Radius is applied both to image and placeholder. Radius has predefined values: xs, sm, md, lg, xl
+Radius is applied both to the image and placeholder. Radius has predefined values: xs, sm, md, lg, xl
 which are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
 Alternatively, you can use a number to set border-radius in px:
 
@@ -82,7 +82,7 @@ function Demo() {
 
 ## BackgroundImage component
 
-Use BackgroundImage component when you need to display image below any content.
+Use BackgroundImage component when you need to display the image below any content.
 Component sets background-image to given `src`, background-size to `cover` and background-position to `center`.
 It can be used for cards, hero headers and similar components:
 

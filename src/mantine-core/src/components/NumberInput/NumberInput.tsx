@@ -69,12 +69,16 @@ export interface NumberInputProps
   /** Formats the number into the input */
   formatter?: Formatter;
 
-  /** Parsers the value from formatter, should be used with formatter at the same time */
+  /** Parses the value from formatter, should be used with formatter at the same time */
   parser?: Parser;
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
 const defaultParser: Parser = (num) => {
+  if (num === '-') {
+    return num;
+  }
+
   const parsedNum = parseFloat(num);
 
   if (Number.isNaN(parsedNum)) {
@@ -295,7 +299,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
       setTempValue(parsed);
 
-      if (val === '') {
+      if (val === '' || val === '-') {
         handleValueChange(undefined);
       } else {
         val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
