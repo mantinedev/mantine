@@ -59,6 +59,7 @@ const defaultProps: Partial<ChipProps> = {
   type: 'checkbox',
   size: 'sm',
   radius: 'xl',
+  variant: 'outline',
 };
 
 type ChipComponent = ForwardRefWithStaticComponents<ChipProps, { Group: typeof ChipGroup }>;
@@ -89,10 +90,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
 
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
-  const { classes, cx, theme } = useStyles(
-    { radius, size, color },
-    { classNames, styles, name: 'Chip' }
-  );
+  const { classes, cx } = useStyles({ radius, size, color }, { classNames, styles, name: 'Chip' });
 
   const [_value, setValue] = useUncontrolled({
     value: checked,
@@ -100,8 +98,6 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
     finalValue: false,
     onChange,
   });
-
-  const defaultVariant = theme.colorScheme === 'dark' ? 'filled' : 'outline';
 
   const contextProps = ctx
     ? {
@@ -136,7 +132,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
         htmlFor={uuid}
         data-checked={_checked || undefined}
         data-disabled={disabled || undefined}
-        data-variant={variant || defaultVariant}
+        data-variant={variant}
         className={classes.label}
       >
         {_checked && (

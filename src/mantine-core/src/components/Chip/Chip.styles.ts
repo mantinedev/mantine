@@ -49,9 +49,7 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     display: 'inline-block',
     alignItems: 'center',
     userSelect: 'none',
-    border: `1px solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
-    }`,
+    border: '1px solid transparent',
     borderRadius: theme.fn.radius(radius),
     height: theme.fn.size({ size, sizes }),
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
@@ -64,19 +62,19 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     WebkitTapHighlightColor: 'transparent',
 
     '&[data-variant="filled"]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-      borderColor: 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
 
       ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       }),
     },
 
     '&[data-variant="outline"]': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
 
       ...theme.fn.hover({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       }),
     },
 
