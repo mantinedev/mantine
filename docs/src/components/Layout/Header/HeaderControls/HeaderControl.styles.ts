@@ -44,8 +44,7 @@ export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
     borderColor: '5865f2',
 
     '&:hover': {
-      backgroundColor:
-        theme.fn.lighten('#5865f2', 0.1)
+      backgroundColor: theme.fn.lighten('#5865f2', 0.1),
     },
   },
   twitter: {
