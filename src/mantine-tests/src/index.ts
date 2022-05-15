@@ -18,6 +18,7 @@ export { itThrowsContextError } from './it-throws-context-error';
 export { itSupportsProviderDefaultProps } from './it-supports-provider-default-props';
 export { patchConsoleError } from './patch-console-error';
 export { wait } from './wait';
+export { renderWithAct } from './render-with-act';
 
 // Inputs
 export { itSupportsInputIcon } from './inputs/it-supports-input-icon';

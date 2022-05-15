@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { itRendersChildren, checkAccessibility, wait } from '@mantine/tests';
+import { itRendersChildren, checkAccessibility, wait, renderWithAct } from '@mantine/tests';
 import { Popover, PopoverProps } from './Popover';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
@@ -107,7 +107,7 @@ describe('@mantine/core/component', () => {
   });
 
   it('correctly handles trapFocus={true}', async () => {
-    render(<TestContainer defaultOpened trapFocus />);
+    await renderWithAct(<TestContainer defaultOpened trapFocus />);
     await wait(10);
     expect(document.querySelectorAll('input')[1]).toHaveFocus();
 
