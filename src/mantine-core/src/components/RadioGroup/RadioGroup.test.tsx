@@ -62,18 +62,18 @@ describe('@mantine/core/RadioGroup', () => {
     expect(radioGroup.queryByLabelText('Select a Framework')).not.toEqual(null);
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<RadioGroup {...defaultProps} defaultValue="test-value-1" />);
     expect(screen.getAllByRole('radio')[0]).toBeChecked();
-    userEvent.click(screen.getAllByRole('radio')[1]);
+    await userEvent.click(screen.getAllByRole('radio')[1]);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<RadioGroup {...defaultProps} value="test-value-2" onChange={spy} />);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
-    userEvent.click(screen.getAllByRole('radio')[0]);
+    await userEvent.click(screen.getAllByRole('radio')[0]);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
     expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith('test-value-1');

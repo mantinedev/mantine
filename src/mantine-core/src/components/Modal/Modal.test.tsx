@@ -23,10 +23,10 @@ describe('@mantine/core/Modal', () => {
     expect(container.querySelectorAll('#my-modal')).toHaveLength(1);
   });
 
-  it('calls onClose when close button is clicked', () => {
+  it('calls onClose when close button is clicked', async () => {
     const spy = jest.fn();
     render(<Modal {...defaultProps} onClose={spy} />);
-    userEvent.click(screen.getByLabelText('test-close'));
+    await userEvent.click(screen.getByLabelText('test-close'));
     expect(spy).toHaveBeenCalled();
   });
 

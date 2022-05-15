@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useSelectionState } from './use-selection-state';
 
 describe('@mantine/core/TransferList/use-selection-state', () => {

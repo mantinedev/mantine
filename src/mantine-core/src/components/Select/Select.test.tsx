@@ -43,43 +43,43 @@ describe('@mantine/core/Select', () => {
     );
   });
 
-  it('opens dropdown when input is clicked (searchable={false})', () => {
+  it('opens dropdown when input is clicked (searchable={false})', async () => {
     render(<Select {...defaultProps} initiallyOpened={false} searchable={false} />);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
 
-    userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('textbox'));
     expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
   });
 
-  it('opens dropdown when input is clicked (searchable={true})', () => {
+  it('opens dropdown when input is clicked (searchable={true})', async () => {
     render(<Select {...defaultProps} initiallyOpened={false} searchable />);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
 
-    userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('textbox'));
     expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<Select {...defaultProps} initiallyOpened={false} />);
-    userEvent.click(screen.getByRole('textbox'));
-    userEvent.click(screen.getAllByRole('option')[0]);
+    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getAllByRole('option')[0]);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
     expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<Select {...defaultProps} value="test-item-1" initiallyOpened={false} onChange={spy} />);
-    userEvent.click(screen.getByRole('textbox'));
-    userEvent.click(screen.getAllByRole('option')[1]);
+    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getAllByRole('option')[1]);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
     expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
     expect(spy).toHaveBeenCalledWith('test-item-2');
   });
 
-  it('filters options based on input value', () => {
+  it('filters options based on input value', async () => {
     render(<Select {...defaultProps} searchable />);
-    userEvent.type(screen.getByRole('textbox'), '2');
+    await userEvent.type(screen.getByRole('textbox'), '2');
     expect(screen.getAllByRole('option')).toHaveLength(1);
     expect(screen.getByText('Test item 2')).toBeInTheDocument();
   });

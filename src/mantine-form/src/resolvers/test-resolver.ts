@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { formList, FormErrors, useForm } from '../index';
 
 export const RESOLVER_ERROR_MESSAGES = {

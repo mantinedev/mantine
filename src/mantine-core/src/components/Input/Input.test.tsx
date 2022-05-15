@@ -13,10 +13,10 @@ import { Input, InputProps } from './Input';
 const defaultProps: InputProps<'input'> = {};
 
 describe('@mantine/core/Input', () => {
-  itIsPolymorphic(Input, defaultProps, '.mantine-Input-input');
-  itSupportsWrapperProps(Input, defaultProps);
-  itSupportsInputIcon(Input, defaultProps);
-  itSupportsInputRightSection(Input, defaultProps);
+  itIsPolymorphic(Input as any, defaultProps, '.mantine-Input-input');
+  itSupportsWrapperProps(Input as any, defaultProps);
+  itSupportsInputIcon(Input as any, defaultProps);
+  itSupportsInputRightSection(Input as any, defaultProps);
   checkAccessibility([
     <Input aria-label="test-input" />,
     <Input placeholder="test-input" />,

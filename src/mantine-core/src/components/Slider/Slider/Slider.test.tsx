@@ -32,43 +32,43 @@ describe('@mantine/core/Slider', () => {
     expect(getInput(container)).toHaveAttribute('name', 'test-input');
   });
 
-  it('can be controlled with right/left arrows', () => {
+  it('can be controlled with right/left arrows', async () => {
     const spy = jest.fn();
     render(<Slider value={50} step={10} onChange={spy} />);
-    pressArrow('right');
+    await pressArrow('right');
     expect(spy).toHaveBeenLastCalledWith(60);
-    pressArrow('left');
+    await pressArrow('left');
     expect(spy).toHaveBeenLastCalledWith(40);
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     const { container } = render(<Slider defaultValue={50} step={10} />);
     expectInputValue('50', container);
-    pressArrow('right');
+    await pressArrow('right');
     expectInputValue('60', container);
-    pressArrow('right');
+    await pressArrow('right');
     expectInputValue('70', container);
-    pressArrow('left');
+    await pressArrow('left');
     expectInputValue('60', container);
-    pressArrow('left');
+    await pressArrow('left');
     expectInputValue('50', container);
   });
 
-  it('does not allow to set value greater than max', () => {
+  it('does not allow to set value greater than max', async () => {
     const { container } = render(<Slider defaultValue={115} step={10} max={120} />);
     expectInputValue('115', container);
-    pressArrow('right');
+    await pressArrow('right');
     expectInputValue('120', container);
   });
 
-  it('does not allow to set value smaller than min', () => {
+  it('does not allow to set value smaller than min', async () => {
     const { container } = render(<Slider defaultValue={50} step={10} min={45} />);
     expectInputValue('50', container);
-    pressArrow('left');
+    await pressArrow('left');
     expectInputValue('45', container);
   });
 
-  it('sets slider value to clicked mark value', () => {
+  it('sets slider value to clicked mark value', async () => {
     const { container } = render(
       <Slider
         defaultValue={50}
@@ -80,22 +80,22 @@ describe('@mantine/core/Slider', () => {
     );
 
     expectInputValue('50', container);
-    clickMark('test-mark-15');
+    await clickMark('test-mark-15');
     expectInputValue('15', container);
-    clickMark('test-mark-85');
+    await clickMark('test-mark-85');
     expectInputValue('85', container);
   });
 
-  it('shows label on hover', () => {
+  it('shows label on hover', async () => {
     render(<Slider label="test-label" labelTransitionDuration={0} />);
     expect(screen.queryAllByText('test-label')).toHaveLength(0);
-    userEvent.hover(screen.getByRole('slider'));
+    await userEvent.hover(screen.getByRole('slider'));
     expect(screen.getByText('test-label')).toBeInTheDocument();
-    userEvent.unhover(screen.getByRole('slider'));
+    await userEvent.unhover(screen.getByRole('slider'));
     expect(screen.queryAllByText('test-label')).toHaveLength(0);
   });
 
-  it('renders label with current value based on callback', () => {
+  it('renders label with current value based on callback', async () => {
     render(
       <Slider
         defaultValue={50}
@@ -106,10 +106,10 @@ describe('@mantine/core/Slider', () => {
       />
     );
     expect(screen.getByText('test-label-50')).toBeInTheDocument();
-    pressArrow('left');
+    await pressArrow('left');
     expect(screen.getByText('test-label-40')).toBeInTheDocument();
-    pressArrow('right');
-    pressArrow('right');
+    await pressArrow('right');
+    await pressArrow('right');
     expect(screen.getByText('test-label-60')).toBeInTheDocument();
   });
 

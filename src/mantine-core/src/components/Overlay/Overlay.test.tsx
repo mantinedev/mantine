@@ -4,8 +4,8 @@ import { Overlay, OverlayProps } from './Overlay';
 const defaultProps: OverlayProps<'div'> = {};
 
 describe('@mantine/core/Overlay', () => {
-  itIsPolymorphic(Overlay, defaultProps);
-  itRendersChildren(Overlay, defaultProps);
+  itIsPolymorphic(Overlay as any, defaultProps);
+  itRendersChildren(Overlay as any, defaultProps);
   itSupportsSystemProps({
     component: Overlay,
     props: defaultProps,

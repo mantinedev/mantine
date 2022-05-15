@@ -89,17 +89,17 @@ describe('@mantine/dates/Month', () => {
     expect(container.querySelectorAll('.mantine-Month-inRange')).toHaveLength(9);
   });
 
-  it('calls onChange with Date object when Day is clicked', () => {
+  it('calls onChange with Date object when Day is clicked', async () => {
     const spy = jest.fn();
     render(<Month month={new Date(2021, 11, 1)} onChange={spy} />);
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29));
   });
 
-  it('handles mouseenter events correctly on Day', () => {
+  it('handles mouseenter events correctly on Day', async () => {
     const spy = jest.fn();
     render(<Month month={new Date(2021, 11, 1)} onDayMouseEnter={spy} />);
-    userEvent.hover(screen.getAllByRole('button')[0]);
+    await userEvent.hover(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29), expect.anything());
   });
 

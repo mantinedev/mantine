@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useActionsState } from './use-actions-state';
 import type { SpotlightAction } from '../types';
 

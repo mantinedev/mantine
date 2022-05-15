@@ -4,10 +4,10 @@ import userEvent from '@testing-library/user-event';
 import { AmPmInput } from './AmPmInput';
 
 describe('@mantine/dates/TimeInputBase/AmPmInput', () => {
-  it.each([['a'], ['p'], ['{arrowdown}']])('triggers onChange once for %s', (value) => {
+  it.each([['a'], ['p'], ['{arrowdown}']])('triggers onChange once for %s', async (value) => {
     const spy = jest.fn();
     const { container } = render(<AmPmInput onChange={spy} size="md" />);
-    userEvent.type(container.querySelector('input'), value);
+    await userEvent.type(container.querySelector('input'), value);
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

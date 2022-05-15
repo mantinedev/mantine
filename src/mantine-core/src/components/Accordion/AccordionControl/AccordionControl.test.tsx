@@ -38,17 +38,17 @@ describe('@mantine/core/AccordionControl', () => {
     refType: HTMLButtonElement,
   });
 
-  it('calls onClick function from props', () => {
+  it('calls onClick function from props', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onClick={spy} />);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onKeyDown function from props', () => {
+  it('calls onKeyDown function from props', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onKeyDown={spy} />);
-    userEvent.type(screen.getByRole('button'), 'R');
+    await userEvent.type(screen.getByRole('button'), 'R');
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

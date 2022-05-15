@@ -30,17 +30,17 @@ describe('@mantine/core/Tab', () => {
     displayName: '@mantine/core/Tab',
   });
 
-  it('calls onClick function from props', () => {
+  it('calls onClick function from props', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onClick={spy} />);
-    userEvent.click(screen.getByRole('tab'));
+    await userEvent.click(screen.getByRole('tab'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onKeyDown function from props', () => {
+  it('calls onKeyDown function from props', async () => {
     const spy = jest.fn();
     render(<TestContainer {...defaultProps} onKeyDown={spy} />);
-    userEvent.type(screen.getByRole('tab'), 'R');
+    await userEvent.type(screen.getByRole('tab'), 'R');
     expect(spy).toHaveBeenCalledTimes(1);
   });
 

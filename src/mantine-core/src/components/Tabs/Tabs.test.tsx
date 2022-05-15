@@ -57,116 +57,116 @@ describe('@mantine/core/Tabs', () => {
     providerName: 'Tabs',
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<Tabs {...defaultProps} value="tab-1" onTabChange={spy} />);
     expectActiveTab('tab-1');
 
-    clickTab('tab-2');
+    await clickTab('tab-2');
     expectActiveTab('tab-1');
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith('tab-2');
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     const spy = jest.fn();
     render(<Tabs {...defaultProps} defaultValue="tab-1" onTabChange={spy} />);
     expectActiveTab('tab-1');
 
-    clickTab('tab-2');
+    await clickTab('tab-2');
     expectActiveTab('tab-2');
 
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('handles arrow events correctly (default)', () => {
+  it('handles arrow events correctly (default)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-1" />);
 
-    userEvent.type(getTab('tab-1'), '{arrowright}');
+    await userEvent.type(getTab('tab-1'), '{arrowright}');
     expectActiveTab('tab-2');
 
-    userEvent.type(getTab('tab-2'), '{arrowright}');
+    await userEvent.type(getTab('tab-2'), '{arrowright}');
     expectActiveTab('tab-3');
 
-    userEvent.type(getTab('tab-3'), '{arrowright}');
+    await userEvent.type(getTab('tab-3'), '{arrowright}');
     expectActiveTab('tab-1');
 
-    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    await userEvent.type(getTab('tab-1'), '{arrowleft}');
     expectActiveTab('tab-3');
 
-    userEvent.type(getTab('tab-2'), '{arrowleft}');
+    await userEvent.type(getTab('tab-2'), '{arrowleft}');
     expectActiveTab('tab-1');
   });
 
-  it('handles arrows events correctly (loop = false)', () => {
+  it('handles arrows events correctly (loop = false)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-3" loop={false} />);
 
-    userEvent.type(getTab('tab-3'), '{arrowright}');
+    await userEvent.type(getTab('tab-3'), '{arrowright}');
     expectActiveTab('tab-3');
 
-    clickTab('tab-1');
-    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    await clickTab('tab-1');
+    await userEvent.type(getTab('tab-1'), '{arrowleft}');
     expectActiveTab('tab-1');
   });
 
-  it('handles arrow events correctly (RTL direction)', () => {
+  it('handles arrow events correctly (RTL direction)', async () => {
     render(
       <MantineProvider theme={{ dir: 'rtl' }}>
         <Tabs {...defaultProps} defaultValue="tab-2" loop={false} />
       </MantineProvider>
     );
 
-    userEvent.type(getTab('tab-2'), '{arrowright}');
+    await userEvent.type(getTab('tab-2'), '{arrowright}');
     expectActiveTab('tab-1');
 
-    userEvent.type(getTab('tab-1'), '{arrowleft}');
+    await userEvent.type(getTab('tab-1'), '{arrowleft}');
     expectActiveTab('tab-2');
   });
 
-  it('handles arrow events correctly (vertical orientation, loop = true)', () => {
+  it('handles arrow events correctly (vertical orientation, loop = true)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-2" orientation="vertical" />);
 
-    userEvent.type(getTab('tab-2'), '{arrowup}');
+    await userEvent.type(getTab('tab-2'), '{arrowup}');
     expectActiveTab('tab-1');
 
-    userEvent.type(getTab('tab-1'), '{arrowup}');
+    await userEvent.type(getTab('tab-1'), '{arrowup}');
     expectActiveTab('tab-3');
 
-    userEvent.type(getTab('tab-3'), '{arrowdown}');
+    await userEvent.type(getTab('tab-3'), '{arrowdown}');
     expectActiveTab('tab-1');
 
-    userEvent.type(getTab('tab-1'), '{arrowdown}');
+    await userEvent.type(getTab('tab-1'), '{arrowdown}');
     expectActiveTab('tab-2');
   });
 
-  it('handles arrow events correctly (vertical orientation, loop = false)', () => {
+  it('handles arrow events correctly (vertical orientation, loop = false)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-2" orientation="vertical" loop={false} />);
 
-    userEvent.type(getTab('tab-1'), '{arrowup}');
+    await userEvent.type(getTab('tab-1'), '{arrowup}');
     expectActiveTab('tab-1');
 
-    userEvent.type(getTab('tab-1'), '{arrowdown}');
+    await userEvent.type(getTab('tab-1'), '{arrowdown}');
     expectActiveTab('tab-2');
 
-    userEvent.type(getTab('tab-3'), '{arrowdown}');
+    await userEvent.type(getTab('tab-3'), '{arrowdown}');
     expectActiveTab('tab-3');
 
-    userEvent.type(getTab('tab-3'), '{arrowup}');
+    await userEvent.type(getTab('tab-3'), '{arrowup}');
     expectActiveTab('tab-2');
   });
 
-  it('handles arrow events correctly (activateTabWithKeyboard = false)', () => {
+  it('handles arrow events correctly (activateTabWithKeyboard = false)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-2" activateTabWithKeyboard={false} />);
 
-    userEvent.type(getTab('tab-2'), '{arrowright}');
+    await userEvent.type(getTab('tab-2'), '{arrowright}');
     expectActiveTab('tab-2');
 
-    userEvent.type(getTab('tab-2'), '{arrowleft}');
+    await userEvent.type(getTab('tab-2'), '{arrowleft}');
     expectActiveTab('tab-2');
   });
 
-  it('handles arrow events correctly (disabled tab)', () => {
+  it('handles arrow events correctly (disabled tab)', async () => {
     render(
       <Tabs defaultValue="tab-1">
         <Tabs.List aria-label="test-tabs">
@@ -183,30 +183,30 @@ describe('@mantine/core/Tabs', () => {
       </Tabs>
     );
 
-    userEvent.type(getTab('tab-1'), '{arrowright}');
+    await userEvent.type(getTab('tab-1'), '{arrowright}');
     expectActiveTab('tab-3');
 
-    userEvent.type(getTab('tab-3'), '{arrowleft}');
+    await userEvent.type(getTab('tab-3'), '{arrowleft}');
     expectActiveTab('tab-1');
   });
 
-  it('does not display any tab if value in null', () => {
+  it('does not display any tab if value in null', async () => {
     render(<Tabs {...defaultProps} value={null} />);
     expectActiveTab(null);
   });
 
-  it('does not display any tab if defaultValue in null', () => {
+  it('does not display any tab if defaultValue in null', async () => {
     render(<Tabs {...defaultProps} defaultValue={null} />);
     expectActiveTab(null);
 
-    clickTab('tab-1');
+    await clickTab('tab-1');
     expectActiveTab('tab-1');
   });
 
-  it('allows to deactivate tab when allowTabDeactivation is true', () => {
+  it('allows to deactivate tab when allowTabDeactivation is true', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-1" allowTabDeactivation />);
     expectActiveTab('tab-1');
-    clickTab('tab-1');
+    await clickTab('tab-1');
     expectActiveTab(null);
   });
 
@@ -215,31 +215,31 @@ describe('@mantine/core/Tabs', () => {
     expect(view.container.querySelector('#test-id')).toBeInTheDocument();
   });
 
-  it('handles tab key correctly (with selected tab)', () => {
+  it('handles tab key correctly (with selected tab)', async () => {
     render(<Tabs {...defaultProps} defaultValue="tab-2" />);
     expect(document.body).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(getTab('tab-2')).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
 
-  it('handles tab key correctly (without selected tab)', () => {
+  it('handles tab key correctly (without selected tab)', async () => {
     render(<Tabs {...defaultProps} />);
     expect(document.body).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(getTab('tab-1')).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(getTab('tab-2')).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(getTab('tab-3')).toHaveFocus();
 
-    userEvent.tab();
+    await userEvent.tab();
     expect(document.body).toHaveFocus();
   });
 

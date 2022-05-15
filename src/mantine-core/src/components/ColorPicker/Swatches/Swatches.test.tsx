@@ -11,10 +11,10 @@ const defaultProps: SwatchesProps = {
 };
 
 describe('@mantine/core/Swatches', () => {
-  it('calls onSelect when color is clicked', () => {
+  it('calls onSelect when color is clicked', async () => {
     const spy = jest.fn();
     render(<Swatches {...defaultProps} onSelect={spy} />);
-    userEvent.click(screen.getAllByRole('button')[4]);
+    await userEvent.click(screen.getAllByRole('button')[4]);
     expect(spy).toHaveBeenCalledWith(parseColor(defaultProps.data[4]));
   });
 

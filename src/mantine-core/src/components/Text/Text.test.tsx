@@ -13,8 +13,8 @@ const expectStyle = (props: TextProps<'div'>, style: Record<string, any>) => {
 };
 
 describe('@mantine/core/Text', () => {
-  itRendersChildren(Text, defaultProps);
-  itIsPolymorphic(Text, defaultProps);
+  itRendersChildren(Text as any, defaultProps);
+  itIsPolymorphic(Text as any, defaultProps);
   itSupportsSystemProps({
     component: Text,
     props: defaultProps,
