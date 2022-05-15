@@ -24,8 +24,8 @@ storiesOf('Divider', module)
     <Divider
       labelPosition="center"
       label="test label"
-      color="blue"
+      color="#000"
       size="xs"
-      labelProps={{ color: 'pink', size: 'xl' }}
+      labelProps={{ color: '#000', size: 'xl' }}
     />
   ));
