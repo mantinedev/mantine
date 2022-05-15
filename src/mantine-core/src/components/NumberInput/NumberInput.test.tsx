@@ -151,4 +151,16 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
+
+  it('allows "-" in an empty NumberInput', () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} />);
+    enterText('-');
+    expect(spy).toHaveBeenLastCalledWith(undefined);
+    blurInput();
+    expect(getInput()).toHaveValue('');
+    expect(spy).toHaveBeenLastCalledWith(undefined);
+    enterText('-1');
+    expect(spy).toHaveBeenLastCalledWith(-1);
+  });
 });

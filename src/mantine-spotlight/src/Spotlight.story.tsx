@@ -1,9 +1,16 @@
 /* eslint-disable no-console */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
 import { Search } from 'tabler-icons-react';
-import { SpotlightProvider, useSpotlight, SpotlightProviderProps, SpotlightAction } from '.';
+import {
+  SpotlightProvider,
+  useSpotlight,
+  SpotlightProviderProps,
+  SpotlightAction,
+  openSpotlight,
+  registerSpotlightActions,
+} from '.';
 
 const DEFAULT_ACTIONS: SpotlightAction[] = [
   {
@@ -21,6 +28,30 @@ const LARGE_ACTIONS_SET: SpotlightAction[] = Array(100)
     title: `Action ${index + 1}`,
     onTrigger: () => console.log('Action'),
   }));
+
+function RegisterInEffect() {
+  useEffect(() => {
+    registerSpotlightActions([
+      { title: 'Effect action 1', onTrigger: () => console.log('Effect action 1') },
+      { title: 'Effect action 2', onTrigger: () => console.log('Effect action 2') },
+    ]);
+  }, []);
+
+  return (
+    <Box sx={{ padding: 40 }}>
+      <Button onClick={openSpotlight}>Open spotlight</Button>
+      <Button
+        onClick={() =>
+          registerSpotlightActions([
+            { title: 'Registered', onTrigger: () => console.log('registered') },
+          ])
+        }
+      >
+        Register actions
+      </Button>
+    </Box>
+  );
+}
 
 function Control() {
   const spotlight = useSpotlight();
@@ -40,12 +71,8 @@ function Control() {
   );
 }
 
-function Wrapper(props: Omit<SpotlightProviderProps, 'children'>) {
-  return (
-    <SpotlightProvider {...props}>
-      <Control />
-    </SpotlightProvider>
-  );
+function Wrapper(props: Omit<SpotlightProviderProps, 'children'> & { children?: React.ReactNode }) {
+  return <SpotlightProvider {...props}>{props.children || <Control />}</SpotlightProvider>;
 }
 
 function CustomActionComponent() {
@@ -180,4 +207,9 @@ storiesOf('Spotlight', module)
   .add('Highlight query', () => <Wrapper {...defaultProps} highlightQuery />)
   .add('Highlight with custom color', () => (
     <Wrapper {...defaultProps} highlightColor="red" highlightQuery />
+  ))
+  .add('Register in useEffect', () => (
+    <Wrapper {...defaultProps}>
+      <RegisterInEffect />
+    </Wrapper>
   ));

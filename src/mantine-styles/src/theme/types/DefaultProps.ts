@@ -8,7 +8,7 @@ export type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
 export interface DefaultProps<T extends string = never> extends MantineStyleSystemProps {
   className?: string;
   style?: CSSProperties;
-  sx?: Sx | Sx[];
+  sx?: Sx | (Sx | undefined)[];
   classNames?: Partial<Record<T, string>>;
   styles?: Partial<Record<T, CSSObject>> | ((theme: MantineTheme) => Partial<Record<T, CSSObject>>);
 }
