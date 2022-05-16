@@ -94,17 +94,12 @@ export default createStyles(
       ...theme.fn.focusStyles(),
       ...getWidthStyles(fullWidth),
       borderRadius: theme.fn.radius(radius),
-      fontWeight: 600,
+      fontWeight: 700,
       position: 'relative',
       lineHeight: 1,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
-      WebkitTapHighlightColor: 'transparent',
       userSelect: 'none',
-      boxSizing: 'border-box',
-      textDecoration: 'none',
       cursor: 'pointer',
-      appearance: 'none',
-      WebkitAppearance: 'none',
       ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': {

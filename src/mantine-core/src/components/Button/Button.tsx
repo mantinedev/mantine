@@ -9,7 +9,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Box } from '../Box';
+import { UnstyledButton } from '../UnstyledButton';
 import { Loader, LoaderProps } from '../Loader';
 import useStyles, { sizes, ButtonVariant, ButtonStylesParams } from './Button.styles';
 
@@ -93,6 +93,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
     gradient,
     classNames,
     styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Button', defaultProps, props);
 
@@ -106,7 +107,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       gradient,
       variant,
     },
-    { classNames, styles, name: 'Button' }
+    { name: 'Button', unstyled, classNames, styles }
   );
 
   const colors = theme.fn.variant({ color, variant });
@@ -120,14 +121,14 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
   );
 
   return (
-    <Box
-      component="button"
+    <UnstyledButton
       className={cx(classes.root, className)}
       type={type}
       disabled={disabled || loading}
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
       ref={ref}
+      unstyled={unstyled}
       {...others}
     >
       <div className={classes.inner}>
@@ -150,7 +151,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
           </span>
         )}
       </div>
-    </Box>
+    </UnstyledButton>
   );
 });
 
