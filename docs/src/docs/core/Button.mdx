@@ -21,16 +21,7 @@ import { ButtonDemos } from '@mantine/demos';
 
 ## Variants
 
-Button supports the following variants: default, subtle, white, gradient, filled, light and outline:
-
 <Demo data={ButtonDemos.variants} />
-
-Default Button color is `theme.primaryColor`, to change color and variant pass `color` and `variant` props:
-
-```tsx
-<Button color="red" /> // filled button with red color
-<Button variant="outline" /> // outline button with theme.primaryColor color
-```
 
 ### Gradient variant
 
@@ -62,23 +53,9 @@ You can control loading state and [Loader](/core/loader/) component with followi
 
 <Demo data={ButtonDemos.loadingConfigurator} />
 
-## Customize
-
-You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements:
+## Styles API
 
 <Demo data={ButtonDemos.customize} />
-
-## Size and radius
-
-Control button font-size, height and padding with `size` and border-radius with `radius` props.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius in px:
-
-```tsx
-<Button radius="lg" /> // -> theme predefined large radius
-<Button radius={10} /> // -> { borderRadius: '10px' }
-<Button size="sm" /> // -> predefined small size
-```
 
 ## Compact
 
@@ -115,23 +92,31 @@ function Demo() {
 }
 ```
 
-Provide type to use custom element with TypeScript:
+## data- attributes
+
+Button has the following attributes on the root element:
+
+- `data-disabled` when `disabled` prop is `true`
+- `data-loading` when `loading` prop is `true`
+
+You can customize disabled and loading styles with these attributes:
 
 ```tsx
 import { Button } from '@mantine/core';
-import { Link } from 'react-router-dom';
 
 function Demo() {
   return (
-    <>
-      <Button<'a'> component="a" href="#" />
-      <Button<typeof Link> component={Link} to="/hello" />
-    </>
+    <Button
+      sx={{
+        '&[data-disabled]': { opacity: 0.4 },
+        '&[data-loading]': { backgroundColor: 'red' },
+      }}
+    />
   );
 }
 ```
 
-## Get button ref
+## Get root element ref
 
 ```tsx
 import { useRef } from 'react';
