@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineSize } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineTheme } from '@mantine/styles';
 
 export type InputVariant = 'default' | 'filled' | 'unstyled';
 
@@ -20,6 +20,62 @@ export const sizes = {
   lg: 50,
   xl: 60,
 };
+
+interface GetVariantStylesInput {
+  theme: MantineTheme;
+  variant: InputVariant;
+}
+
+function getVariantStyles({ theme, variant }: GetVariantStylesInput) {
+  if (variant === 'default') {
+    return {
+      border: `1px solid ${
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+      }`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      transition: 'border-color 100ms ease',
+
+      '&:focus, &:focus-within': {
+        outline: 'none',
+        borderColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
+      },
+    };
+  }
+
+  if (variant === 'filled') {
+    return {
+      border: '1px solid transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+
+      '&:focus, &:focus-within': {
+        outline: 'none',
+        borderColor: `${theme.colors[theme.primaryColor][theme.fn.primaryShade()]} !important`,
+      },
+    };
+  }
+
+  return {
+    borderWidth: 0,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+    backgroundColor: 'transparent',
+    minHeight: 28,
+    outline: 0,
+
+    '&:focus, &:focus-within': {
+      outline: 'none',
+      borderColor: 'transparent',
+    },
+
+    '&:disabled': {
+      backgroundColor: 'transparent',
+
+      '&:focus, &:focus-within': {
+        outline: 'none',
+        borderColor: 'transparent',
+      },
+    },
+  };
+}
 
 export default createStyles(
   (
@@ -96,51 +152,8 @@ export default createStyles(
         '&[type=number]': {
           MozAppearance: 'textfield',
         },
-      },
 
-      defaultVariant: {
-        border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
-        }`,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-        transition: 'border-color 100ms ease',
-
-        '&:focus, &:focus-within': {
-          outline: 'none',
-          borderColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
-        },
-      },
-
-      filledVariant: {
-        border: '1px solid transparent',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-
-        '&:focus, &:focus-within': {
-          outline: 'none',
-          borderColor: `${theme.colors[theme.primaryColor][theme.fn.primaryShade()]} !important`,
-        },
-      },
-
-      unstyledVariant: {
-        borderWidth: 0,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        backgroundColor: 'transparent',
-        minHeight: 28,
-        outline: 0,
-
-        '&:focus, &:focus-within': {
-          outline: 'none',
-          borderColor: 'transparent',
-        },
-
-        '&:disabled': {
-          backgroundColor: 'transparent',
-
-          '&:focus, &:focus-within': {
-            outline: 'none',
-            borderColor: 'transparent',
-          },
-        },
+        ...getVariantStyles({ theme, variant }),
       },
 
       withIcon: {
