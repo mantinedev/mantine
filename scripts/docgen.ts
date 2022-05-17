@@ -33,6 +33,9 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
 
+  // List
+  '../src/mantine-core/src/components/List/ListItem/ListItem.tsx',
+
   // Avatar
   '../src/mantine-core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',
 
