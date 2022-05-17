@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useInterval } from '@mantine/hooks';
 import { Image } from './Image';
-import { BackgroundImage } from './BackgroundImage/BackgroundImage';
 
 const images = [
   'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3748&q=80',
@@ -31,11 +30,4 @@ storiesOf('Image', module)
       <Image mt="xl" height={200} caption="This is caption" withPlaceholder />
     </>
   ))
-  .add('src changes over time', () => <ImageChangesOverTime />)
-  .add('BackgroundImage', () => (
-    <div style={{ width: 400, padding: 40 }}>
-      <BackgroundImage src={images[0]} sx={{ height: 200 }} radius="md" component="button">
-        BackgroundImage
-      </BackgroundImage>
-    </div>
-  ));
+  .add('src changes over time', () => <ImageChangesOverTime />);

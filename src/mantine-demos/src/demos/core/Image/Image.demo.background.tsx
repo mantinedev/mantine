@@ -1,7 +1,7 @@
 import React from 'react';
 import { BackgroundImage, BackgroundImageProps, Center, Text, Box } from '@mantine/core';
 
-function Wrapper(props: BackgroundImageProps<'div'>) {
+function Wrapper(props: BackgroundImageProps) {
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
       <BackgroundImage
