@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
-import { createPolymorphicComponent } from '@mantine/utils';
+import { createPolymorphicComponent, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 
 export interface BackgroundImageProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -39,7 +39,7 @@ export const _BackgroundImage = forwardRef<HTMLDivElement, BackgroundImageProps>
           backgroundImage: `url(${src})`,
           borderRadius: theme.fn.radius(radius),
         }),
-        ...(Array.isArray(sx) ? sx : [sx]),
+        ...packSx(sx),
       ]}
     />
   );
