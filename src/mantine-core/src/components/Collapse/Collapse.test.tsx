@@ -12,6 +12,7 @@ describe('@mantine/core/Collapse', () => {
   itSupportsSystemProps({
     component: Collapse,
     props: defaultProps,
+    refType: HTMLDivElement,
     displayName: '@mantine/core/Collapse',
     providerName: 'Collapse',
   });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
 import { extractSystemStyles, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
@@ -30,7 +30,7 @@ const defaultProps: Partial<CollapseProps> = {
   animateOpacity: true,
 };
 
-export function Collapse(props: CollapseProps) {
+export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const {
     children,
     in: opened,
@@ -57,7 +57,7 @@ export function Collapse(props: CollapseProps) {
   }
 
   return (
-    <Box {...getCollapseProps({ style, ...rest, ...systemStyles })}>
+    <Box {...getCollapseProps({ style, ref, ...rest, ...systemStyles })}>
       <div
         style={{
           opacity: opened || !animateOpacity ? 1 : 0,
@@ -68,6 +68,6 @@ export function Collapse(props: CollapseProps) {
       </div>
     </Box>
   );
-}
+});
 
 Collapse.displayName = '@mantine/core/Collapse';
