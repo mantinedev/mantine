@@ -1,7 +1,7 @@
 import { itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { ColorSwatch, ColorSwatchProps } from './ColorSwatch';
 
-const defaultProps: ColorSwatchProps<'div'> = {
+const defaultProps: ColorSwatchProps = {
   color: '#fff',
 };
 
