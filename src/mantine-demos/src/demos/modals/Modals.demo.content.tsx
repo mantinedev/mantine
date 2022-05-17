@@ -14,7 +14,7 @@ function Demo() {
       title: 'Subscribe to newsletter',
       children: (
         <>
-          <TextInput label="Your email" placeholder="Your email" />
+          <TextInput label="Your email" placeholder="Your email" data-autofocus />
           <Button fullWidth onClick={() => modals.closeModal(id)} mt="md">
             Submit
           </Button>
@@ -35,7 +35,7 @@ function Demo() {
       title: 'Subscribe to newsletter',
       children: (
         <>
-          <TextInput label="Your email" placeholder="Your email" />
+          <TextInput label="Your email" placeholder="Your email" data-autofocus />
           <Button fullWidth onClick={() => modals.closeModal(id)} mt="md">
             Submit
           </Button>
