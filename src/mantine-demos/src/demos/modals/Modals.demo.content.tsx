@@ -14,8 +14,8 @@ function Demo() {
       title: 'Subscribe to newsletter',
       children: (
         <>
-          <TextInput label="Your email" />
-          <Button fullWidth onClick={() => modals.closeModal(id)}>
+          <TextInput label="Your email" placeholder="Your email" />
+          <Button fullWidth onClick={() => modals.closeModal(id)} mt="md">
             Submit
           </Button>
         </>
