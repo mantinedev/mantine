@@ -28,6 +28,7 @@ export * from './components/ColorInput';
 export * from './components/ColorPicker';
 export * from './components/ColorSwatch';
 export * from './components/Container';
+export * from './components/CopyButton';
 export * from './components/Dialog';
 export * from './components/Divider';
 export * from './components/Drawer';
