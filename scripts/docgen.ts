@@ -42,6 +42,9 @@ const EXTRA_FILES_PATHS = [
   // Chip
   '../src/mantine-core/src/components/Chip/ChipGroup/ChipGroup.tsx',
 
+  // Grid
+  '../src/mantine-core/src/components/Grid/Col/Col.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
