@@ -43,7 +43,7 @@ export const MANTINE_CORE_CATEGORIES: Record<typeof MANTINE_CORE_ORDER[number], 
   },
 
   inputs: {
-    title: 'Inputs & buttons',
+    title: 'Inputs',
     icon: InputIcon,
     color: 'orange',
   },
