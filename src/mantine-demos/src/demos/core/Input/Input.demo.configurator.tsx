@@ -10,7 +10,7 @@ const iconSizes = {
   xl: 24,
 };
 
-function Wrapper(props: InputProps<'input'>) {
+function Wrapper(props: InputProps) {
   return <Input icon={<At size={iconSizes[props.size]} />} {...props} />;
 }
 

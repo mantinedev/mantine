@@ -4,11 +4,10 @@ import {
   MantineNumberSize,
   MantineSize,
   Selectors,
-  PolymorphicComponentProps,
-  PolymorphicRef,
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import useStyles, { InputVariant } from './Input.styles';
 
@@ -49,7 +48,7 @@ export interface InputBaseProps {
   size?: MantineSize;
 }
 
-interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
+export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
   /** Static css selector base */
   __staticSelector?: string;
 
@@ -60,92 +59,85 @@ interface _InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
   multiline?: boolean;
 }
 
-export type InputProps<C> = PolymorphicComponentProps<C, _InputProps>;
-
-type InputComponent = (<C = 'input'>(props: InputProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<InputProps<any>> = {
+const defaultProps: Partial<InputProps> = {
   rightSectionWidth: 36,
   size: 'sm',
   variant: 'default',
 };
 
-export const Input: InputComponent = forwardRef(
-  (props: InputProps<'input'>, ref: PolymorphicRef<'input'>) => {
-    const {
-      component,
-      className,
-      invalid,
-      required,
-      disabled,
-      variant,
-      icon,
-      style,
-      rightSectionWidth,
-      iconWidth,
-      rightSection,
-      rightSectionProps,
+export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    className,
+    invalid,
+    required,
+    disabled,
+    variant,
+    icon,
+    style,
+    rightSectionWidth,
+    iconWidth,
+    rightSection,
+    rightSectionProps,
+    radius,
+    size,
+    wrapperProps,
+    classNames,
+    styles,
+    __staticSelector,
+    multiline,
+    sx,
+    ...others
+  } = useMantineDefaultProps('Input', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    {
       radius,
       size,
-      wrapperProps,
-      classNames,
-      styles,
-      __staticSelector,
       multiline,
-      sx,
-      ...others
-    } = useMantineDefaultProps('Input', defaultProps, props);
+      variant,
+      invalid,
+      rightSectionWidth,
+      iconWidth,
+      withRightSection: !!rightSection,
+    },
+    { classNames, styles, name: ['Input', __staticSelector] }
+  );
 
-    const { classes, cx } = useStyles(
-      {
-        radius,
-        size,
-        multiline,
-        variant,
-        invalid,
-        rightSectionWidth,
-        iconWidth,
-        withRightSection: !!rightSection,
-      },
-      { classNames, styles, name: ['Input', __staticSelector] }
-    );
+  const { systemStyles, rest } = extractSystemStyles(others);
 
-    const { systemStyles, rest } = extractSystemStyles(others);
-    const Element: any = component || 'input';
+  return (
+    <Box
+      className={cx(classes.wrapper, className)}
+      sx={sx}
+      style={style}
+      {...systemStyles}
+      {...wrapperProps}
+    >
+      {icon && <div className={classes.icon}>{icon}</div>}
 
-    return (
       <Box
-        className={cx(classes.wrapper, className)}
-        sx={sx}
-        style={style}
-        {...systemStyles}
-        {...wrapperProps}
-      >
-        {icon && <div className={classes.icon}>{icon}</div>}
+        component="input"
+        {...rest}
+        ref={ref}
+        required={required}
+        aria-invalid={invalid}
+        disabled={disabled}
+        className={cx(classes[`${variant}Variant`], classes.input, {
+          [classes.withIcon]: icon,
+          [classes.invalid]: invalid,
+          [classes.disabled]: disabled,
+        })}
+      />
 
-        <Element
-          {...rest}
-          ref={ref}
-          required={required}
-          aria-invalid={invalid}
-          disabled={disabled}
-          className={cx(classes[`${variant}Variant`], classes.input, {
-            [classes.withIcon]: icon,
-            [classes.invalid]: invalid,
-            [classes.disabled]: disabled,
-          })}
-        />
+      {rightSection && (
+        <div {...rightSectionProps} className={classes.rightSection}>
+          {rightSection}
+        </div>
+      )}
+    </Box>
+  );
+});
 
-        {rightSection && (
-          <div {...rightSectionProps} className={classes.rightSection}>
-            {rightSection}
-          </div>
-        )}
-      </Box>
-    );
-  }
-) as any;
+_Input.displayName = '@mantine/core/Input';
 
-Input.displayName = '@mantine/core/Input';
+export const Input = createPolymorphicComponent<'input', InputProps>(_Input);

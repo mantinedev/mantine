@@ -9,7 +9,7 @@ import {
 } from '@mantine/styles';
 import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
 import { TextInputStylesNames } from '../TextInput/TextInput';
-import { Input, InputBaseProps, InputProps } from '../Input/Input';
+import { Input, InputBaseProps } from '../Input/Input';
 import useStyles from './Textarea.styles';
 
 export interface TextareaProps
@@ -73,7 +73,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const uuid = useUuid(id);
     const { classes, cx } = useStyles();
     const { systemStyles, rest } = extractSystemStyles(others);
-    const sharedProps: InputProps<'textarea'> = {
+    const sharedProps = {
       required,
       ref,
       invalid: !!error,
