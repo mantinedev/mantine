@@ -16,7 +16,7 @@ const LOADERS = {
   bars: Bars,
   oval: Oval,
   dots: Dots,
-} as const;
+};
 
 const sizes = {
   xs: 18,
@@ -42,13 +42,7 @@ const defaultProps: Partial<LoaderProps> = {
 };
 
 export function Loader(props: LoaderProps) {
-  const {
-    size = 'md',
-    color,
-    variant,
-    ...others
-  } = useMantineDefaultProps('Loader', defaultProps, props);
-
+  const { size, color, variant, ...others } = useMantineDefaultProps('Loader', defaultProps, props);
   const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const _color = color || theme.primaryColor;

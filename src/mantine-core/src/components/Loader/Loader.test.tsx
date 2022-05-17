@@ -11,6 +11,7 @@ describe('@mantine/core/Loader', () => {
     component: Loader,
     props: defaultProps,
     displayName: '@mantine/core/Loader',
+    providerName: 'Loader',
   });
 
   it('sets svg width based on size prop', () => {
