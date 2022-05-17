@@ -32,63 +32,61 @@ const defaultProps: Partial<JsonInputProps> = {
   size: 'sm',
 };
 
-export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>(
-  (props: JsonInputProps, ref) => {
-    const {
-      value,
-      defaultValue,
-      onChange,
-      onFocus,
-      onBlur,
-      error,
-      formatOnBlur,
-      size,
-      validationError,
-      classNames,
-      ...others
-    } = useMantineDefaultProps('JsonInput', defaultProps, props);
+export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props, ref) => {
+  const {
+    value,
+    defaultValue,
+    onChange,
+    onFocus,
+    onBlur,
+    error,
+    formatOnBlur,
+    size,
+    validationError,
+    classNames,
+    ...others
+  } = useMantineDefaultProps('JsonInput', defaultProps, props);
 
-    const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });
-    const [_value, setValue] = useUncontrolled({
-      value,
-      defaultValue,
-      finalValue: '',
-      rule: (val) => typeof val === 'string',
-      onChange,
-    });
+  const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });
+  const [_value, setValue] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: '',
+    rule: (val) => typeof val === 'string',
+    onChange,
+  });
 
-    const [valid, setValid] = useState(validateJson(_value));
+  const [valid, setValid] = useState(validateJson(_value));
 
-    const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      typeof onFocus === 'function' && onFocus(event);
-      setValid(true);
-    };
+  const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    typeof onFocus === 'function' && onFocus(event);
+    setValid(true);
+  };
 
-    const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      typeof onBlur === 'function' && onBlur(event);
-      const isValid = validateJson(event.currentTarget.value);
-      formatOnBlur &&
-        isValid &&
-        event.currentTarget.value.trim() !== '' &&
-        setValue(JSON.stringify(JSON.parse(event.currentTarget.value), null, 2));
-      setValid(isValid);
-    };
+  const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    typeof onBlur === 'function' && onBlur(event);
+    const isValid = validateJson(event.currentTarget.value);
+    formatOnBlur &&
+      isValid &&
+      event.currentTarget.value.trim() !== '' &&
+      setValue(JSON.stringify(JSON.parse(event.currentTarget.value), null, 2));
+    setValid(isValid);
+  };
 
-    return (
-      <Textarea
-        value={_value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        error={valid ? error : validationError || true}
-        __staticSelector="JsonInput"
-        classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
-        autoComplete="nope"
-        ref={ref}
-        {...others}
-      />
-    );
-  }
-);
+  return (
+    <Textarea
+      value={_value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      error={valid ? error : validationError || true}
+      __staticSelector="JsonInput"
+      classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+      autoComplete="nope"
+      ref={ref}
+      {...others}
+    />
+  );
+});
 
 JsonInput.displayName = '@mantine/core/JsonInput';

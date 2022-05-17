@@ -54,70 +54,68 @@ const defaultProps: Partial<InputWrapperProps> = {
   size: 'sm',
 };
 
-export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
-  (props: InputWrapperProps, ref) => {
-    const {
-      className,
-      label,
-      children,
-      required,
-      id,
-      error,
-      description,
-      labelElement,
-      labelProps,
-      descriptionProps,
-      errorProps,
-      classNames,
-      styles,
-      size,
-      __staticSelector,
-      ...others
-    } = useMantineDefaultProps('InputWrapper', defaultProps, props);
+export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props, ref) => {
+  const {
+    className,
+    label,
+    children,
+    required,
+    id,
+    error,
+    description,
+    labelElement,
+    labelProps,
+    descriptionProps,
+    errorProps,
+    classNames,
+    styles,
+    size,
+    __staticSelector,
+    ...others
+  } = useMantineDefaultProps('InputWrapper', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { size },
-      { classNames, styles, name: ['InputWrapper', __staticSelector] }
-    );
-    const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
-    const inputLabel = createElement(
-      labelElement,
-      {
-        ..._labelProps,
-        ...labelProps,
-        id: id ? `${id}-label` : undefined,
-        className: classes.label,
-      },
-      <>
-        {label}
-        {required && (
-          <span className={classes.required} aria-hidden>
-            {' *'}
-          </span>
-        )}
-      </>
-    );
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, name: ['InputWrapper', __staticSelector] }
+  );
+  const _labelProps = labelElement === 'label' ? { htmlFor: id } : {};
+  const inputLabel = createElement(
+    labelElement,
+    {
+      ..._labelProps,
+      ...labelProps,
+      id: id ? `${id}-label` : undefined,
+      className: classes.label,
+    },
+    <>
+      {label}
+      {required && (
+        <span className={classes.required} aria-hidden>
+          {' *'}
+        </span>
+      )}
+    </>
+  );
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {label && inputLabel}
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {label && inputLabel}
 
-        {description && (
-          <Text {...descriptionProps} color="gray" className={classes.description}>
-            {description}
-          </Text>
-        )}
+      {description && (
+        <Text {...descriptionProps} color="gray" className={classes.description}>
+          {description}
+        </Text>
+      )}
 
-        {children}
+      {children}
 
-        {typeof error !== 'boolean' && error && (
-          <Text {...errorProps} size={size} className={classes.error}>
-            {error}
-          </Text>
-        )}
-      </Box>
-    );
-  }
-);
+      {typeof error !== 'boolean' && error && (
+        <Text {...errorProps} size={size} className={classes.error}>
+          {error}
+        </Text>
+      )}
+    </Box>
+  );
+});
 
 InputWrapper.displayName = '@mantine/core/InputWrapper';
