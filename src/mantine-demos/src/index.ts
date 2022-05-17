@@ -22,6 +22,7 @@ export * as AppShellDemos from './demos/core/AppShell';
 export * as AspectRatioDemos from './demos/core/AspectRatio';
 export * as AutocompleteDemos from './demos/core/Autocomplete';
 export * as AvatarDemos from './demos/core/Avatar';
+export * as BackgroundImageDemos from './demos/core/BackgroundImage';
 export * as BadgeDemos from './demos/core/Badge';
 export * as BlockquoteDemos from './demos/core/Blockquote';
 export * as BoxDemos from './demos/core/Box';

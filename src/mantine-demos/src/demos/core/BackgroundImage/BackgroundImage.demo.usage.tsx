@@ -41,7 +41,7 @@ function Demo() {
 }
 `;
 
-export const background: MantineDemo = {
+export const usage: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
