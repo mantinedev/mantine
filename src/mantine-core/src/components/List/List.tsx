@@ -5,6 +5,7 @@ import {
   Selectors,
   ForwardRefWithStaticComponents,
   useMantineDefaultProps,
+  StylesApiProvider,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
@@ -63,6 +64,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       className,
       styles,
       classNames,
+      unstyled,
       ...others
     } = useMantineDefaultProps('List', defaultProps, props);
 
@@ -72,16 +74,18 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
     );
 
     return (
-      <ListContext.Provider value={{ classNames, styles: styles as any, spacing, center, icon }}>
-        <Box<any>
-          component={type === 'unordered' ? 'ul' : 'ol'}
-          className={cx(classes.root, className)}
-          ref={ref}
-          {...others}
-        >
-          {children}
-        </Box>
-      </ListContext.Provider>
+      <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+        <ListContext.Provider value={{ spacing, center, icon }}>
+          <Box<any>
+            component={type === 'unordered' ? 'ul' : 'ol'}
+            className={cx(classes.root, className)}
+            ref={ref}
+            {...others}
+          >
+            {children}
+          </Box>
+        </ListContext.Provider>
+      </StylesApiProvider>
     );
   }
 ) as any;

@@ -1,12 +1,7 @@
 import { createContext, useContext } from 'react';
-import { CSSObject, MantineNumberSize, MantineTheme } from '@mantine/styles';
-import type { ListItemStylesNames } from './ListItem/ListItem';
+import { MantineNumberSize } from '@mantine/styles';
 
 interface ListContextValue {
-  classNames?: Partial<Record<ListItemStylesNames, string>>;
-  styles?:
-    | Partial<Record<ListItemStylesNames, CSSObject>>
-    | ((theme: MantineTheme) => Partial<Record<ListItemStylesNames, CSSObject>>);
   spacing?: MantineNumberSize;
   center?: boolean;
   icon?: React.ReactNode;
