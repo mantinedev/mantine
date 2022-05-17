@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Highlight, HighlightProps } from './Highlight';
 
-const defaultProps: HighlightProps<'div'> = { children: 'Hello', highlight: 'He' };
+const defaultProps: HighlightProps = { children: 'Hello', highlight: 'He' };
 
 describe('@mantine/core/Highlight', () => {
   itIsPolymorphic(Highlight as any, defaultProps);
