@@ -35,30 +35,28 @@ const defaultProps: Partial<ThemeIconProps> = {
   gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
-export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
-  (props: ThemeIconProps, ref) => {
-    const { className, size, radius, variant, color, children, gradient, ...others } =
-      useMantineDefaultProps('ThemeIcon', defaultProps, props);
+export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref) => {
+  const { className, size, radius, variant, color, children, gradient, ...others } =
+    useMantineDefaultProps('ThemeIcon', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      {
-        variant,
-        radius,
-        color,
-        size,
-        gradientFrom: gradient.from,
-        gradientTo: gradient.to,
-        gradientDeg: gradient.deg,
-      },
-      { name: 'ThemeIcon' }
-    );
+  const { classes, cx } = useStyles(
+    {
+      variant,
+      radius,
+      color,
+      size,
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
+    { name: 'ThemeIcon' }
+  );
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {children}
-      </Box>
-    );
-  }
-);
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {children}
+    </Box>
+  );
+});
 
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

@@ -20,6 +20,7 @@ describe('@mantine/core/SegmentedControl', () => {
     props: defaultProps,
     displayName: '@mantine/core/SegmentedControl',
     refType: HTMLDivElement,
+    providerName: 'SegmentedControl',
   });
 
   it('supports uncontrolled state', async () => {

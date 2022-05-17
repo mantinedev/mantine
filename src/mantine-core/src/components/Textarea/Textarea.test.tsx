@@ -20,7 +20,8 @@ describe('@mantine/core/Textarea', () => {
     props: defaultProps,
     displayName: '@mantine/core/Textarea',
     refType: HTMLTextAreaElement,
-    excludeOthers: true,
+    othersSelector: 'textarea',
+    providerName: 'Textarea',
   });
 
   it('supports uncontrolled state', async () => {

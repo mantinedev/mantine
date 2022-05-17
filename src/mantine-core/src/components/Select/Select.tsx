@@ -159,7 +159,7 @@ const defaultProps: Partial<SelectProps> = {
   dropdownPosition: 'flip',
 };
 
-export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
+export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => {
   const {
     inputProps,
     wrapperProps,

@@ -57,119 +57,117 @@ const defaultProps: Partial<PasswordInputProps> = {
   __staticSelector: 'PasswordInput',
 };
 
-export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  (props: PasswordInputProps, ref) => {
-    const {
-      radius,
-      disabled,
-      size,
-      toggleTabIndex,
-      className,
-      id,
-      label,
-      error,
-      required,
-      style,
-      icon,
-      description,
-      wrapperProps,
-      classNames,
-      styles,
-      variant,
-      visibilityToggleIcon: VisibilityToggleIcon,
-      __staticSelector,
-      rightSection: _rightSection,
-      rightSectionWidth: _rightSectionWidth,
-      rightSectionProps: _rightSectionProps,
-      sx,
-      labelProps,
-      descriptionProps,
-      errorProps,
-      ...others
-    } = useMantineDefaultProps('PasswordInput', defaultProps, props);
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((props, ref) => {
+  const {
+    radius,
+    disabled,
+    size,
+    toggleTabIndex,
+    className,
+    id,
+    label,
+    error,
+    required,
+    style,
+    icon,
+    description,
+    wrapperProps,
+    classNames,
+    styles,
+    variant,
+    visibilityToggleIcon: VisibilityToggleIcon,
+    __staticSelector,
+    rightSection: _rightSection,
+    rightSectionWidth: _rightSectionWidth,
+    rightSectionProps: _rightSectionProps,
+    sx,
+    labelProps,
+    descriptionProps,
+    errorProps,
+    ...others
+  } = useMantineDefaultProps('PasswordInput', defaultProps, props);
 
-    const theme = useMantineTheme();
-    const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
-    const { classes, cx } = useStyles(
-      { size, rightSectionWidth },
-      { name: 'PasswordInput', classNames, styles }
-    );
-    const uuid = useUuid(id);
-    const { systemStyles, rest } = extractSystemStyles(others);
-    const [reveal, toggle] = useBooleanToggle(false);
+  const theme = useMantineTheme();
+  const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
+  const { classes, cx } = useStyles(
+    { size, rightSectionWidth },
+    { name: 'PasswordInput', classNames, styles }
+  );
+  const uuid = useUuid(id);
+  const { systemStyles, rest } = extractSystemStyles(others);
+  const [reveal, toggle] = useBooleanToggle(false);
 
-    const rightSection = (
-      <ActionIcon<'button'>
-        className={classes.visibilityToggle}
-        tabIndex={toggleTabIndex}
-        radius={radius}
-        size={theme.fn.size({ size, sizes: buttonSizes })}
-        aria-hidden
-        onMouseDown={(event) => {
+  const rightSection = (
+    <ActionIcon<'button'>
+      className={classes.visibilityToggle}
+      tabIndex={toggleTabIndex}
+      radius={radius}
+      size={theme.fn.size({ size, sizes: buttonSizes })}
+      aria-hidden
+      onMouseDown={(event) => {
+        event.preventDefault();
+        toggle();
+      }}
+      onKeyDown={(event) => {
+        if (event.nativeEvent.code === 'Space') {
           event.preventDefault();
           toggle();
-        }}
-        onKeyDown={(event) => {
-          if (event.nativeEvent.code === 'Space') {
-            event.preventDefault();
-            toggle();
-          }
-        }}
-      >
-        <VisibilityToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
-      </ActionIcon>
-    );
+        }
+      }}
+    >
+      <VisibilityToggleIcon reveal={reveal} size={theme.fn.size({ size, sizes: iconSizes })} />
+    </ActionIcon>
+  );
 
-    return (
-      <InputWrapper
-        required={required}
-        id={uuid}
-        label={label}
-        error={error}
-        description={description}
+  return (
+    <InputWrapper
+      required={required}
+      id={uuid}
+      label={label}
+      error={error}
+      description={description}
+      size={size}
+      className={className}
+      style={style}
+      classNames={classNames}
+      styles={styles}
+      __staticSelector={__staticSelector}
+      sx={sx}
+      errorProps={errorProps}
+      descriptionProps={descriptionProps}
+      labelProps={labelProps}
+      {...systemStyles}
+      {...wrapperProps}
+    >
+      <Input<'div'>
+        component="div"
+        invalid={!!error}
+        icon={icon}
         size={size}
-        className={className}
-        style={style}
-        classNames={classNames}
+        classNames={{ ...classNames, input: classes.input }}
         styles={styles}
+        radius={radius}
+        disabled={disabled}
         __staticSelector={__staticSelector}
-        sx={sx}
-        errorProps={errorProps}
-        descriptionProps={descriptionProps}
-        labelProps={labelProps}
-        {...systemStyles}
-        {...wrapperProps}
+        rightSectionWidth={rightSectionWidth}
+        rightSection={!disabled && rightSection}
+        variant={variant}
       >
-        <Input<'div'>
-          component="div"
-          invalid={!!error}
-          icon={icon}
-          size={size}
-          classNames={{ ...classNames, input: classes.input }}
-          styles={styles}
-          radius={radius}
+        <input
+          type={reveal ? 'text' : 'password'}
+          required={required}
+          className={cx(classes.innerInput, {
+            [classes.withIcon]: icon,
+            [classes.invalid]: !!error,
+          })}
           disabled={disabled}
-          __staticSelector={__staticSelector}
-          rightSectionWidth={rightSectionWidth}
-          rightSection={!disabled && rightSection}
-          variant={variant}
-        >
-          <input
-            type={reveal ? 'text' : 'password'}
-            required={required}
-            className={cx(classes.innerInput, {
-              [classes.withIcon]: icon,
-              [classes.invalid]: !!error,
-            })}
-            disabled={disabled}
-            id={uuid}
-            ref={ref}
-            {...rest}
-          />
-        </Input>
-      </InputWrapper>
-    );
-  }
-);
+          id={uuid}
+          ref={ref}
+          {...rest}
+        />
+      </Input>
+    </InputWrapper>
+  );
+});
 
 PasswordInput.displayName = '@mantine/core/PasswordInput';

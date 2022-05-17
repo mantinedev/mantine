@@ -12,5 +12,6 @@ describe('@mantine/core/ThemeIcon', () => {
     props: defaultProps,
     displayName: '@mantine/core/ThemeIcon',
     refType: HTMLDivElement,
+    providerName: 'ThemeIcon',
   });
 });

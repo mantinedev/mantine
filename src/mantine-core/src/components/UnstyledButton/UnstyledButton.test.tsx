@@ -17,5 +17,6 @@ describe('@mantine/core/UnstyledButton', () => {
     props: defaultProps,
     displayName: '@mantine/core/UnstyledButton',
     refType: HTMLButtonElement,
+    providerName: 'UnstyledButton',
   });
 });

@@ -24,8 +24,9 @@ describe('@mantine/core/PasswordInput', () => {
     component: PasswordInput,
     props: defaultProps,
     displayName: '@mantine/core/PasswordInput',
-    excludeOthers: true,
     refType: HTMLInputElement,
+    othersSelector: 'input',
+    providerName: 'PasswordInput',
   });
 
   it('sets required on input', () => {

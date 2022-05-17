@@ -54,7 +54,7 @@ const defaultProps: Partial<TimelineProps> = {
 };
 
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
-  (props: TimelineProps, ref) => {
+  (props, ref) => {
     const {
       children,
       active,

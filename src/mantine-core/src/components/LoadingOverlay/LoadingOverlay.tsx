@@ -43,53 +43,51 @@ const defaultProps: Partial<LoadingOverlayProps> = {
   zIndex: getDefaultZIndex('overlay'),
 };
 
-export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>(
-  (props: LoadingOverlayProps, ref) => {
-    const {
-      className,
-      visible,
-      loaderProps,
-      overlayOpacity,
-      overlayColor,
-      transitionDuration,
-      zIndex,
-      style,
-      loader,
-      radius,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
-    const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
+export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((props, ref) => {
+  const {
+    className,
+    visible,
+    loaderProps,
+    overlayOpacity,
+    overlayColor,
+    transitionDuration,
+    zIndex,
+    style,
+    loader,
+    radius,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
+  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
 
-    return (
-      <Transition duration={transitionDuration} mounted={visible} transition="fade">
-        {(transitionStyles) => (
-          <Box
-            className={cx(classes.root, className)}
-            style={{ ...transitionStyles, ...style, zIndex }}
-            ref={ref}
-            {...others}
-          >
-            {loader ? (
-              <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
-            ) : (
-              <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
-            )}
+  return (
+    <Transition duration={transitionDuration} mounted={visible} transition="fade">
+      {(transitionStyles) => (
+        <Box
+          className={cx(classes.root, className)}
+          style={{ ...transitionStyles, ...style, zIndex }}
+          ref={ref}
+          {...others}
+        >
+          {loader ? (
+            <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
+          ) : (
+            <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+          )}
 
-            <Overlay
-              opacity={overlayOpacity}
-              zIndex={zIndex}
-              radius={radius}
-              color={
-                overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
-              }
-            />
-          </Box>
-        )}
-      </Transition>
-    );
-  }
-);
+          <Overlay
+            opacity={overlayOpacity}
+            zIndex={zIndex}
+            radius={radius}
+            color={
+              overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
+            }
+          />
+        </Box>
+      )}
+    </Transition>
+  );
+});
 
 LoadingOverlay.displayName = '@mantine/core/LoadingOverlay';

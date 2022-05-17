@@ -61,7 +61,7 @@ const defaultProps: Partial<ProgressProps> = {
   label: '',
 };
 
-export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: ProgressProps, ref) => {
+export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) => {
   const {
     className,
     value,

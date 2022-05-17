@@ -20,6 +20,7 @@ describe('@mantine/core/Text', () => {
     props: defaultProps,
     displayName: '@mantine/core/Text',
     refType: HTMLDivElement,
+    providerName: 'Text',
   });
 
   it('sets text-align based on align prop', () => {

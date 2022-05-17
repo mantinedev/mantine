@@ -10,5 +10,6 @@ describe('@mantine/core/Stack', () => {
     props: defaultProps,
     displayName: '@mantine/core/Stack',
     refType: HTMLDivElement,
+    providerName: 'Stack',
   });
 });

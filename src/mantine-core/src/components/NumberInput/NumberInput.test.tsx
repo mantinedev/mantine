@@ -37,7 +37,8 @@ describe('@mantine/core/NumberInput', () => {
     props: defaultProps,
     displayName: '@mantine/core/NumberInput',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'NumberInput',
   });
 
   itSupportsInputProps(NumberInput, defaultProps, 'NumberInput');

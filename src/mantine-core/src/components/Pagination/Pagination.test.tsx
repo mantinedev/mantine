@@ -14,5 +14,6 @@ describe('@mantine/core/Pagination', () => {
     props: defaultProps,
     displayName: '@mantine/core/Pagination',
     refType: HTMLDivElement,
+    providerName: 'Pagination',
   });
 });

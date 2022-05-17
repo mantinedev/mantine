@@ -20,7 +20,7 @@ describe('@mantine/core/Input', () => {
     props: defaultProps,
     displayName: '@mantine/core/TextInput',
     refType: HTMLInputElement,
-    othersSelector: '.mantine-TextInput-input',
+    othersSelector: 'input',
     providerName: 'TextInput',
   });
 

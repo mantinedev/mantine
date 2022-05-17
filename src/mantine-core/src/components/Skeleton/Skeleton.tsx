@@ -30,23 +30,13 @@ const defaultProps: Partial<SkeletonProps> = {
   animate: true,
 };
 
-export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props: SkeletonProps, ref) => {
-  const {
-    height,
-    width,
-    visible,
-    animate,
-    className,
-    circle,
-    radius,
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Skeleton', defaultProps, props);
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
+  const { height, width, visible, animate, className, circle, radius, unstyled, ...others } =
+    useMantineDefaultProps('Skeleton', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { height, width, circle, radius, animate },
-    { classNames, styles, name: 'Skeleton' }
+    { unstyled, name: 'Skeleton' }
   );
 
   return (

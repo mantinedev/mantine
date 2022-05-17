@@ -11,9 +11,6 @@ describe('@mantine/core/Paper', () => {
     props: defaultProps,
     displayName: '@mantine/core/Paper',
     refType: HTMLDivElement,
-  });
-
-  it('has correct displayName', () => {
-    expect(Paper.displayName).toStrictEqual('@mantine/core/Paper');
+    providerName: 'Paper',
   });
 });

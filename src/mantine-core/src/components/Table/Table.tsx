@@ -32,7 +32,7 @@ const defaultProps: Partial<TableProps> = {
   verticalSpacing: 7,
 };
 
-export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps, ref) => {
+export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
   const {
     className,
     children,

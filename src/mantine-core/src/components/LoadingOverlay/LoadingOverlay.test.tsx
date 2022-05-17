@@ -13,6 +13,7 @@ describe('@mantine/core/LoadingOverlay', () => {
     props: defaultProps,
     displayName: '@mantine/core/LoadingOverlay',
     refType: HTMLDivElement,
+    providerName: 'LoadingOverlay',
   });
 
   it('renders based on visible prop', () => {

@@ -9,5 +9,6 @@ describe('@mantine/core/Table', () => {
     props: defaultProps,
     displayName: '@mantine/core/Table',
     refType: HTMLTableElement,
+    providerName: 'Table',
   });
 });

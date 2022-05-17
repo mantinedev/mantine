@@ -17,6 +17,7 @@ describe('@mantine/core/Notification', () => {
     props: defaultProps,
     displayName: '@mantine/core/Notification',
     refType: HTMLDivElement,
+    providerName: 'Notification',
   });
 
   it('does not render close button if disallowClose is true', () => {

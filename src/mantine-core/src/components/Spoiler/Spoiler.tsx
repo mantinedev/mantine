@@ -34,7 +34,7 @@ const defaultProps: Partial<SpoilerProps> = {
   initialState: false,
 };
 
-export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props: SpoilerProps, ref) => {
+export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => {
   const {
     className,
     children,

@@ -32,6 +32,7 @@ describe('@mantine/core/Stepper', () => {
     props: defaultProps,
     displayName: '@mantine/core/Stepper',
     refType: HTMLDivElement,
+    providerName: 'Stepper',
   });
 
   it('calls onStepClick with clicked step index', async () => {

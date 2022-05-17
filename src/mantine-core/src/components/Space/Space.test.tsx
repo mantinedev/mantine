@@ -11,6 +11,7 @@ describe('@mantine/core/Space', () => {
     props: defaultProps,
     displayName: '@mantine/core/Space',
     refType: HTMLDivElement,
+    providerName: 'Space',
   });
 
   it('sets width based on w prop', () => {

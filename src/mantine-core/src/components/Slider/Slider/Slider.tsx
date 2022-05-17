@@ -107,7 +107,7 @@ const defaultProps: Partial<SliderProps> = {
   disabled: false,
 };
 
-export const Slider = forwardRef<HTMLDivElement, SliderProps>((props: SliderProps, ref) => {
+export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const {
     classNames,
     styles,

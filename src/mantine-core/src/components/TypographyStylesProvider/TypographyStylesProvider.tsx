@@ -11,7 +11,7 @@ export interface TypographyStylesProviderProps
 }
 
 export const TypographyStylesProvider = forwardRef<HTMLDivElement, TypographyStylesProviderProps>(
-  (props: TypographyStylesProviderProps, ref) => {
+  (props, ref) => {
     const { className, ...others } = useMantineDefaultProps('TypographyStylesProvider', {}, props);
     const { classes, cx } = useStyles(null, { name: 'TypographyStylesProvider' });
     return <Box className={cx(classes.root, className)} ref={ref} {...others} />;

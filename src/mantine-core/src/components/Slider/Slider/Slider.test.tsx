@@ -24,6 +24,7 @@ describe('@mantine/core/Slider', () => {
     props: defaultProps,
     displayName: '@mantine/core/Slider',
     refType: HTMLDivElement,
+    providerName: 'Slider',
   });
 
   it('provides name and value to hidden input', () => {

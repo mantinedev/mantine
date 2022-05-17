@@ -98,289 +98,283 @@ const defaultProps: Partial<NumberInputProps> = {
   parser: defaultParser,
 };
 
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
-  (props: NumberInputProps, ref) => {
-    const {
-      disabled,
-      value,
-      onChange,
-      decimalSeparator,
-      min,
-      max,
-      step,
-      stepHoldInterval,
-      stepHoldDelay,
-      onBlur,
-      onFocus,
-      hideControls,
-      radius,
-      variant,
-      precision,
-      defaultValue,
-      noClampOnBlur,
-      handlersRef,
-      classNames,
-      styles,
-      size,
-      rightSection,
-      rightSectionWidth,
-      formatter,
-      parser,
-      inputMode,
-      ...others
-    } = useMantineDefaultProps('NumberInput', defaultProps, props);
+export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props, ref) => {
+  const {
+    disabled,
+    value,
+    onChange,
+    decimalSeparator,
+    min,
+    max,
+    step,
+    stepHoldInterval,
+    stepHoldDelay,
+    onBlur,
+    onFocus,
+    hideControls,
+    radius,
+    variant,
+    precision,
+    defaultValue,
+    noClampOnBlur,
+    handlersRef,
+    classNames,
+    styles,
+    size,
+    rightSection,
+    rightSectionWidth,
+    formatter,
+    parser,
+    inputMode,
+    ...others
+  } = useMantineDefaultProps('NumberInput', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles(
-      { radius, size },
-      { classNames, styles, name: 'NumberInput' }
-    );
+  const { classes, cx, theme } = useStyles(
+    { radius, size },
+    { classNames, styles, name: 'NumberInput' }
+  );
 
-    const [focused, setFocused] = useState(false);
-    const [_value, setValue] = useState(
-      typeof value === 'number'
-        ? value
-        : typeof defaultValue === 'number'
-        ? defaultValue
-        : undefined
-    );
-    const finalValue = typeof value === 'number' ? value : _value;
-    const [tempValue, setTempValue] = useState(
-      typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
-    );
-    const inputRef = useRef<HTMLInputElement>();
-    const handleValueChange = (val: number | undefined) => {
-      typeof onChange === 'function' && onChange(val);
-      setValue(val);
-    };
+  const [focused, setFocused] = useState(false);
+  const [_value, setValue] = useState(
+    typeof value === 'number' ? value : typeof defaultValue === 'number' ? defaultValue : undefined
+  );
+  const finalValue = typeof value === 'number' ? value : _value;
+  const [tempValue, setTempValue] = useState(
+    typeof finalValue === 'number' ? finalValue.toFixed(precision) : ''
+  );
+  const inputRef = useRef<HTMLInputElement>();
+  const handleValueChange = (val: number | undefined) => {
+    typeof onChange === 'function' && onChange(val);
+    setValue(val);
+  };
 
-    const formatNum = (val: string | number = '') => {
-      let parsedStr = typeof val === 'number' ? String(val) : val;
+  const formatNum = (val: string | number = '') => {
+    let parsedStr = typeof val === 'number' ? String(val) : val;
 
-      if (decimalSeparator) {
-        parsedStr = parsedStr.replace(/\./g, decimalSeparator);
-      }
+    if (decimalSeparator) {
+      parsedStr = parsedStr.replace(/\./g, decimalSeparator);
+    }
 
-      return formatter(parsedStr);
-    };
+    return formatter(parsedStr);
+  };
 
-    const parseNum = (val: string): string | undefined => {
-      let num = val;
+  const parseNum = (val: string): string | undefined => {
+    let num = val;
 
-      if (decimalSeparator) {
-        num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
-      }
+    if (decimalSeparator) {
+      num = num.replace(new RegExp(`\\${decimalSeparator}`, 'g'), '.');
+    }
 
-      return parser(num);
-    };
+    return parser(num);
+  };
 
-    const _min = typeof min === 'number' ? min : -Infinity;
-    const _max = typeof max === 'number' ? max : Infinity;
+  const _min = typeof min === 'number' ? min : -Infinity;
+  const _max = typeof max === 'number' ? max : Infinity;
 
-    const incrementRef = useRef<() => void>();
-    incrementRef.current = () => {
-      if (_value === undefined) {
-        handleValueChange(min ?? 0);
-        setTempValue(min?.toFixed(precision) ?? '0');
-      } else {
-        const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
+  const incrementRef = useRef<() => void>();
+  incrementRef.current = () => {
+    if (_value === undefined) {
+      handleValueChange(min ?? 0);
+      setTempValue(min?.toFixed(precision) ?? '0');
+    } else {
+      const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
 
-        handleValueChange(parseFloat(result));
-        setTempValue(result);
-      }
-    };
+      handleValueChange(parseFloat(result));
+      setTempValue(result);
+    }
+  };
 
-    const decrementRef = useRef<() => void>();
-    decrementRef.current = () => {
-      if (_value === undefined) {
-        handleValueChange(min ?? 0);
-        setTempValue(min?.toFixed(precision) ?? '0');
-      } else {
-        const result = clamp({ value: _value - step, min: _min, max: _max }).toFixed(precision);
-        handleValueChange(parseFloat(result));
-        setTempValue(result);
-      }
-    };
+  const decrementRef = useRef<() => void>();
+  decrementRef.current = () => {
+    if (_value === undefined) {
+      handleValueChange(min ?? 0);
+      setTempValue(min?.toFixed(precision) ?? '0');
+    } else {
+      const result = clamp({ value: _value - step, min: _min, max: _max }).toFixed(precision);
+      handleValueChange(parseFloat(result));
+      setTempValue(result);
+    }
+  };
 
-    assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
+  assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
-    useEffect(() => {
-      if (typeof value === 'number' && !focused) {
-        setValue(value);
-        setTempValue(value.toFixed(precision));
-      }
-      if (defaultValue === undefined && value === undefined && !focused) {
-        setValue(value);
-        setTempValue('');
-      }
-    }, [value]);
+  useEffect(() => {
+    if (typeof value === 'number' && !focused) {
+      setValue(value);
+      setTempValue(value.toFixed(precision));
+    }
+    if (defaultValue === undefined && value === undefined && !focused) {
+      setValue(value);
+      setTempValue('');
+    }
+  }, [value]);
 
-    const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
-    const onStepTimeoutRef = useRef<number>(null);
-    const stepCountRef = useRef<number>(0);
+  const shouldUseStepInterval = stepHoldDelay !== undefined && stepHoldInterval !== undefined;
+  const onStepTimeoutRef = useRef<number>(null);
+  const stepCountRef = useRef<number>(0);
 
-    const onStepDone = () => {
-      if (onStepTimeoutRef.current) {
-        window.clearTimeout(onStepTimeoutRef.current);
-      }
-      onStepTimeoutRef.current = null;
-      stepCountRef.current = 0;
-    };
+  const onStepDone = () => {
+    if (onStepTimeoutRef.current) {
+      window.clearTimeout(onStepTimeoutRef.current);
+    }
+    onStepTimeoutRef.current = null;
+    stepCountRef.current = 0;
+  };
 
-    const onStepHandleChange = (isIncrement: boolean) => {
-      if (isIncrement) {
-        incrementRef.current();
-      } else {
-        decrementRef.current();
-      }
-      stepCountRef.current += 1;
-    };
+  const onStepHandleChange = (isIncrement: boolean) => {
+    if (isIncrement) {
+      incrementRef.current();
+    } else {
+      decrementRef.current();
+    }
+    stepCountRef.current += 1;
+  };
 
-    const onStepLoop = (isIncrement: boolean) => {
-      onStepHandleChange(isIncrement);
+  const onStepLoop = (isIncrement: boolean) => {
+    onStepHandleChange(isIncrement);
 
-      if (shouldUseStepInterval) {
-        const interval =
-          typeof stepHoldInterval === 'number'
-            ? stepHoldInterval
-            : stepHoldInterval(stepCountRef.current);
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
-      }
-    };
+    if (shouldUseStepInterval) {
+      const interval =
+        typeof stepHoldInterval === 'number'
+          ? stepHoldInterval
+          : stepHoldInterval(stepCountRef.current);
+      onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), interval);
+    }
+  };
 
-    const onStep = (
-      event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-      isIncrement: boolean
-    ) => {
-      event.preventDefault();
-      onStepHandleChange(isIncrement);
-      if (shouldUseStepInterval) {
-        onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
-      }
-      inputRef.current.focus();
-    };
+  const onStep = (
+    event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    isIncrement: boolean
+  ) => {
+    event.preventDefault();
+    onStepHandleChange(isIncrement);
+    if (shouldUseStepInterval) {
+      onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
+    }
+    inputRef.current.focus();
+  };
 
-    useEffect(() => {
-      onStepDone();
-      return onStepDone;
-    }, []);
+  useEffect(() => {
+    onStepDone();
+    return onStepDone;
+  }, []);
 
-    const controls = (
-      <div className={classes.rightSection}>
-        <button
-          type="button"
-          tabIndex={-1}
-          aria-hidden
-          disabled={finalValue >= max}
-          className={cx(classes.control, classes.controlUp)}
-          onMouseDown={(event) => {
-            onStep(event, true);
-          }}
-          onMouseUp={onStepDone}
-          onMouseLeave={onStepDone}
-        />
-        <button
-          type="button"
-          tabIndex={-1}
-          aria-hidden
-          disabled={finalValue <= min}
-          className={cx(classes.control, classes.controlDown)}
-          onMouseDown={(event) => {
-            onStep(event, false);
-          }}
-          onMouseUp={onStepDone}
-          onMouseLeave={onStepDone}
-        />
-      </div>
-    );
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const val = event.target.value;
-      const parsed = parseNum(val);
-
-      setTempValue(parsed);
-
-      if (val === '' || val === '-') {
-        handleValueChange(undefined);
-      } else {
-        val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
-      }
-    };
-
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-      if (event.target.value === '') {
-        setTempValue('');
-        handleValueChange(undefined);
-      } else {
-        const parsedVal = parseNum(event.target.value);
-        const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
-
-        if (!Number.isNaN(val)) {
-          if (!noClampOnBlur) {
-            setTempValue(val.toFixed(precision));
-            handleValueChange(parseFloat(val.toFixed(precision)));
-          }
-        } else {
-          setTempValue(finalValue?.toFixed(precision) ?? '');
-        }
-      }
-
-      setFocused(false);
-      typeof onBlur === 'function' && onBlur(event);
-    };
-
-    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-      setFocused(true);
-      typeof onFocus === 'function' && onFocus(event);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.repeat && shouldUseStepInterval) {
-        event.preventDefault();
-        return;
-      }
-
-      if (event.key === 'ArrowUp') {
-        onStep(event, true);
-      } else if (event.key === 'ArrowDown') {
-        onStep(event, false);
-      }
-    };
-
-    const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-        onStepDone();
-      }
-    };
-
-    return (
-      <TextInput
-        {...others}
-        variant={variant}
-        value={formatNum(tempValue)}
-        disabled={disabled}
-        ref={useMergedRef(inputRef, ref)}
-        type="text"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        rightSection={
-          rightSection || (disabled || hideControls || variant === 'unstyled' ? null : controls)
-        }
-        rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
-        radius={radius}
-        max={max}
-        min={min}
-        step={step}
-        size={size}
-        styles={styles}
-        classNames={classNames}
-        inputMode={inputMode || getInputMode(step, precision, useOs())}
-        __staticSelector="NumberInput"
+  const controls = (
+    <div className={classes.rightSection}>
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden
+        disabled={finalValue >= max}
+        className={cx(classes.control, classes.controlUp)}
+        onMouseDown={(event) => {
+          onStep(event, true);
+        }}
+        onMouseUp={onStepDone}
+        onMouseLeave={onStepDone}
       />
-    );
-  }
-);
+      <button
+        type="button"
+        tabIndex={-1}
+        aria-hidden
+        disabled={finalValue <= min}
+        className={cx(classes.control, classes.controlDown)}
+        onMouseDown={(event) => {
+          onStep(event, false);
+        }}
+        onMouseUp={onStepDone}
+        onMouseLeave={onStepDone}
+      />
+    </div>
+  );
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event.target.value;
+    const parsed = parseNum(val);
+
+    setTempValue(parsed);
+
+    if (val === '' || val === '-') {
+      handleValueChange(undefined);
+    } else {
+      val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
+    }
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (event.target.value === '') {
+      setTempValue('');
+      handleValueChange(undefined);
+    } else {
+      const parsedVal = parseNum(event.target.value);
+      const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
+
+      if (!Number.isNaN(val)) {
+        if (!noClampOnBlur) {
+          setTempValue(val.toFixed(precision));
+          handleValueChange(parseFloat(val.toFixed(precision)));
+        }
+      } else {
+        setTempValue(finalValue?.toFixed(precision) ?? '');
+      }
+    }
+
+    setFocused(false);
+    typeof onBlur === 'function' && onBlur(event);
+  };
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+    typeof onFocus === 'function' && onFocus(event);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.repeat && shouldUseStepInterval) {
+      event.preventDefault();
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
+      onStep(event, true);
+    } else if (event.key === 'ArrowDown') {
+      onStep(event, false);
+    }
+  };
+
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      onStepDone();
+    }
+  };
+
+  return (
+    <TextInput
+      {...others}
+      variant={variant}
+      value={formatNum(tempValue)}
+      disabled={disabled}
+      ref={useMergedRef(inputRef, ref)}
+      type="text"
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      rightSection={
+        rightSection || (disabled || hideControls || variant === 'unstyled' ? null : controls)
+      }
+      rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
+      radius={radius}
+      max={max}
+      min={min}
+      step={step}
+      size={size}
+      styles={styles}
+      classNames={classNames}
+      inputMode={inputMode || getInputMode(step, precision, useOs())}
+      __staticSelector="NumberInput"
+    />
+  );
+});
 
 NumberInput.displayName = '@mantine/core/NumberInput';

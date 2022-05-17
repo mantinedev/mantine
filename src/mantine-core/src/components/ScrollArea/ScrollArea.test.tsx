@@ -10,5 +10,6 @@ describe('@mantine/core/ScrollArea', () => {
     props: defaultProps,
     displayName: '@mantine/core/ScrollArea',
     refType: HTMLDivElement,
+    providerName: 'ScrollArea',
   });
 });

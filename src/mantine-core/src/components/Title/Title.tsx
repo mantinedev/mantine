@@ -17,7 +17,7 @@ const defaultProps: Partial<TitleProps> = {
   order: 1,
 };
 
-export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props: TitleProps, ref) => {
+export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
   const { className, order, children, align, ...others } = useMantineDefaultProps(
     'Title',
     defaultProps,

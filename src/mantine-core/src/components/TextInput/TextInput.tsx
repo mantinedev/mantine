@@ -35,16 +35,13 @@ const defaultProps: Partial<TextInputProps> = {
   __staticSelector: 'TextInput',
 };
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (props: TextInputProps, ref) => {
-    const { inputProps, wrapperProps, ...others } = useInputProps('TextInput', defaultProps, props);
-
-    return (
-      <InputWrapper {...wrapperProps}>
-        <Input {...inputProps} {...others} ref={ref} />
-      </InputWrapper>
-    );
-  }
-);
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
+  const { inputProps, wrapperProps, ...others } = useInputProps('TextInput', defaultProps, props);
+  return (
+    <InputWrapper {...wrapperProps}>
+      <Input {...inputProps} {...others} ref={ref} />
+    </InputWrapper>
+  );
+});
 
 TextInput.displayName = '@mantine/core/TextInput';

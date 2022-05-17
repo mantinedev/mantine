@@ -11,5 +11,6 @@ describe('@mantine/core/Overlay', () => {
     props: defaultProps,
     displayName: '@mantine/core/Overlay',
     refType: HTMLDivElement,
+    providerName: 'Overlay',
   });
 });

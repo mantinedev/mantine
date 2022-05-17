@@ -6,6 +6,7 @@ import {
   MantineSize,
   Selectors,
   useMantineDefaultProps,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
 import { findChildByType, filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
@@ -58,11 +59,13 @@ export interface StepperProps
   breakpoint?: MantineNumberSize;
 }
 
-type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
-  displayName: string;
-  Step: typeof Step;
-  Completed: typeof StepCompleted;
-};
+type StepperComponent = ForwardRefWithStaticComponents<
+  StepperProps,
+  {
+    Step: typeof Step;
+    Completed: typeof StepCompleted;
+  }
+>;
 
 const defaultProps: Partial<StepperProps> = {
   contentPadding: 'md',
@@ -72,91 +75,87 @@ const defaultProps: Partial<StepperProps> = {
   iconPosition: 'left',
 };
 
-export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
-  (props: StepperProps, ref) => {
-    const {
-      className,
-      children,
-      onStepClick,
-      active,
-      completedIcon,
-      progressIcon,
-      color,
-      iconSize,
-      contentPadding,
-      size,
-      radius,
-      orientation,
-      breakpoint,
-      iconPosition,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Stepper', defaultProps, props);
+export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>((props, ref) => {
+  const {
+    className,
+    children,
+    onStepClick,
+    active,
+    completedIcon,
+    progressIcon,
+    color,
+    iconSize,
+    contentPadding,
+    size,
+    radius,
+    orientation,
+    breakpoint,
+    iconPosition,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Stepper', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-      { classNames, styles, name: 'Stepper' }
+  const { classes, cx } = useStyles(
+    { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
+    { classNames, styles, name: 'Stepper' }
+  );
+
+  const filteredChildren = filterChildrenByType(children, Step);
+  const completedStep = findChildByType(children, StepCompleted);
+
+  const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
+    const shouldAllowSelect =
+      typeof item.props.allowStepSelect === 'boolean'
+        ? item.props.allowStepSelect
+        : typeof onStepClick === 'function';
+
+    acc.push(
+      <Step
+        {...item.props}
+        __staticSelector="Stepper"
+        icon={item.props.icon || index + 1}
+        key={index}
+        state={
+          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
+        }
+        onClick={() => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)}
+        allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
+        completedIcon={item.props.completedIcon || completedIcon}
+        progressIcon={item.props.progressIcon || progressIcon}
+        color={item.props.color || color}
+        iconSize={iconSize}
+        size={size}
+        radius={radius}
+        classNames={classNames}
+        styles={styles}
+        iconPosition={item.props.iconPosition || iconPosition}
+      />
     );
 
-    const filteredChildren = filterChildrenByType(children, Step);
-    const completedStep = findChildByType(children, StepCompleted);
-
-    const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
-      const shouldAllowSelect =
-        typeof item.props.allowStepSelect === 'boolean'
-          ? item.props.allowStepSelect
-          : typeof onStepClick === 'function';
-
+    if (index !== array.length - 1) {
       acc.push(
-        <Step
-          {...item.props}
-          __staticSelector="Stepper"
-          icon={item.props.icon || index + 1}
-          key={index}
-          state={
-            active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
-          }
-          onClick={() =>
-            shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)
-          }
-          allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
-          completedIcon={item.props.completedIcon || completedIcon}
-          progressIcon={item.props.progressIcon || progressIcon}
-          color={item.props.color || color}
-          iconSize={iconSize}
-          size={size}
-          radius={radius}
-          classNames={classNames}
-          styles={styles}
-          iconPosition={item.props.iconPosition || iconPosition}
+        <div
+          className={cx(classes.separator, { [classes.separatorActive]: index < active })}
+          key={`separator-${index}`}
         />
       );
+    }
 
-      if (index !== array.length - 1) {
-        acc.push(
-          <div
-            className={cx(classes.separator, { [classes.separatorActive]: index < active })}
-            key={`separator-${index}`}
-          />
-        );
-      }
+    return acc;
+  }, []);
 
-      return acc;
-    }, []);
+  const stepContent = filteredChildren[active]?.props?.children;
+  const completedContent = completedStep?.props?.children;
+  const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
 
-    const stepContent = filteredChildren[active]?.props?.children;
-    const completedContent = completedStep?.props?.children;
-    const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
-
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        <div className={classes.steps}>{items}</div>
-        {content && <div className={classes.content}>{content}</div>}
-      </Box>
-    );
-  }
-) as any;
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <div className={classes.steps}>{items}</div>
+      {content && <div className={classes.content}>{content}</div>}
+    </Box>
+  );
+}) as any;
 
 Stepper.Step = Step;
 Stepper.Completed = StepCompleted;

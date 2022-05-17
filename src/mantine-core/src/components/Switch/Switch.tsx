@@ -49,7 +49,7 @@ const defaultProps: Partial<SwitchProps> = {
   radius: 'xl',
 };
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchProps, ref) => {
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
     className,
     color,
@@ -62,15 +62,14 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchPr
     radius,
     wrapperProps,
     children,
-    classNames,
-    styles,
+    unstyled,
     sx,
     ...others
   } = useMantineDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size, color, radius, offLabel, onLabel },
-    { classNames, styles, name: 'Switch' }
+    { unstyled, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

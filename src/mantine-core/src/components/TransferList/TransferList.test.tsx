@@ -23,5 +23,6 @@ describe('@mantine/core/TransferList', () => {
     props: defaultProps,
     displayName: '@mantine/core/TransferList',
     refType: HTMLDivElement,
+    providerName: 'TransferList',
   });
 });

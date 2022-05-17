@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps } from '@mantine/styles';
+import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import useStyles from './UnstyledButton.styles';
@@ -11,7 +11,13 @@ export interface UnstyledButtonProps extends DefaultProps {
 export const _UnstyledButton = forwardRef<
   HTMLDivElement,
   UnstyledButtonProps & { component?: any }
->(({ className, component = 'button', unstyled, ...others }, ref) => {
+>((props, ref) => {
+  const {
+    className,
+    component = 'button',
+    unstyled,
+    ...others
+  } = useMantineDefaultProps('UnstyledButton', {}, props);
   const { classes, cx } = useStyles(null, { name: 'UnstyledButton', unstyled });
   return (
     <Box

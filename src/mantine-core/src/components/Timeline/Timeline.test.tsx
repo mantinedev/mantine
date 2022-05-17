@@ -21,6 +21,7 @@ describe('@mantine/core/Timeline', () => {
     excludePadding: true,
     displayName: '@mantine/core/Timeline',
     refType: HTMLDivElement,
+    providerName: 'Timeline',
   });
 
   itFiltersChildren(Timeline, defaultProps, '.mantine-Timeline-item', [

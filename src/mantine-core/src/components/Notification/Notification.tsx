@@ -45,64 +45,62 @@ export interface NotificationProps
   closeButtonProps?: Record<string, any>;
 }
 
-export const Notification = forwardRef<HTMLDivElement, NotificationProps>(
-  (props: NotificationProps, ref) => {
-    const {
-      className,
-      color,
-      radius,
-      loading,
-      disallowClose,
-      title,
-      icon,
-      children,
-      onClose,
-      closeButtonProps,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Notification', {}, props);
+export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props, ref) => {
+  const {
+    className,
+    color,
+    radius,
+    loading,
+    disallowClose,
+    title,
+    icon,
+    children,
+    onClose,
+    closeButtonProps,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Notification', {}, props);
 
-    const { classes, cx } = useStyles(
-      { color, radius },
-      { classNames, styles, name: 'Notification' }
-    );
-    const withIcon = icon || loading;
+  const { classes, cx } = useStyles(
+    { color, radius },
+    { classNames, styles, name: 'Notification' }
+  );
+  const withIcon = icon || loading;
 
-    return (
-      <Box
-        className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
-        role="alert"
-        ref={ref}
-        {...others}
-      >
-        {icon && !loading && <div className={classes.icon}>{icon}</div>}
-        {loading && <Loader size={28} color={color} className={classes.loader} />}
+  return (
+    <Box
+      className={cx(classes.root, { [classes.withIcon]: withIcon }, className)}
+      role="alert"
+      ref={ref}
+      {...others}
+    >
+      {icon && !loading && <div className={classes.icon}>{icon}</div>}
+      {loading && <Loader size={28} color={color} className={classes.loader} />}
 
-        <div className={classes.body}>
-          {title && (
-            <Text className={classes.title} size="sm" weight={500}>
-              {title}
-            </Text>
-          )}
-
-          <Text color="dimmed" className={classes.description} size="sm">
-            {children}
+      <div className={classes.body}>
+        {title && (
+          <Text className={classes.title} size="sm" weight={500}>
+            {title}
           </Text>
-        </div>
-
-        {!disallowClose && (
-          <CloseButton
-            {...closeButtonProps}
-            iconSize={16}
-            color="gray"
-            onClick={onClose}
-            className={classes.closeButton}
-          />
         )}
-      </Box>
-    );
-  }
-);
+
+        <Text color="dimmed" className={classes.description} size="sm">
+          {children}
+        </Text>
+      </div>
+
+      {!disallowClose && (
+        <CloseButton
+          {...closeButtonProps}
+          iconSize={16}
+          color="gray"
+          onClick={onClose}
+          className={classes.closeButton}
+        />
+      )}
+    </Box>
+  );
+});
 
 Notification.displayName = '@mantine/core/Notification';
