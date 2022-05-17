@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { itRendersChildren, itSupportsRef, itSupportsSystemProps } from '@mantine/tests';
-import { Dialog, MantineDialog, DialogProps } from './Dialog';
+import { Dialog, DialogBody, DialogProps } from './Dialog';
 
 const defaultProps: DialogProps = {
   opened: true,
@@ -11,13 +11,13 @@ const defaultProps: DialogProps = {
 };
 
 describe('@mantine/core/Dialog', () => {
-  itRendersChildren(MantineDialog, defaultProps);
+  itRendersChildren(DialogBody, defaultProps);
   itSupportsRef(Dialog, defaultProps, HTMLDivElement);
-  itSupportsSystemProps({ component: MantineDialog, props: defaultProps });
+  itSupportsSystemProps({ component: DialogBody, props: defaultProps });
 
   it('calls onClose when close button is clicked', async () => {
     const spy = jest.fn();
-    render(<MantineDialog opened withCloseButton onClose={spy} />);
+    render(<DialogBody opened withCloseButton onClose={spy} />);
     await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });

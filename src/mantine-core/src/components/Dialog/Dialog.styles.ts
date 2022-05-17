@@ -20,7 +20,6 @@ export default createStyles((theme, { size }: DialogStylesParams) => ({
     width: theme.fn.size({ size, sizes }),
     maxWidth: '100%',
     minHeight: 50,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
   },
 
   closeButton: {

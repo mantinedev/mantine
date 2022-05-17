@@ -64,7 +64,7 @@ const defaultProps: Partial<DialogProps> = {
   transitionDuration: 200,
 };
 
-export function MantineDialog(props: DialogProps) {
+export function DialogBody(props: DialogProps) {
   const {
     withCloseButton,
     onClose,
@@ -109,23 +109,20 @@ export function MantineDialog(props: DialogProps) {
   );
 }
 
-type DialogComponent = (props: DialogProps) => React.ReactElement;
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
+  ({ zIndex = getDefaultZIndex('modal'), ...props }: DialogProps, ref) => {
+    const theme = useMantineTheme();
 
-export const Dialog: DialogComponent & { displayName?: string } = forwardRef<
-  HTMLDivElement,
-  DialogProps
->(({ zIndex = getDefaultZIndex('modal'), ...props }: DialogProps, ref) => {
-  const theme = useMantineTheme();
-
-  return (
-    <Affix
-      zIndex={zIndex}
-      position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
-      ref={ref}
-    >
-      <MantineDialog {...props} />
-    </Affix>
-  );
-});
+    return (
+      <Affix
+        zIndex={zIndex}
+        position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
+        ref={ref}
+      >
+        <DialogBody {...props} />
+      </Affix>
+    );
+  }
+);
 
 Dialog.displayName = '@mantine/core/Dialog';
