@@ -40,6 +40,7 @@ export * as ColorInputDemos from './demos/core/ColorInput';
 export * as ColorPickerDemos from './demos/core/ColorPicker';
 export * as ColorSwatchDemos from './demos/core/ColorSwatch';
 export * as ContainerDemos from './demos/core/Container';
+export * as CopyButtonDemos from './demos/core/CopyButton';
 export * as DialogDemos from './demos/core/Dialog';
 export * as DividerDemos from './demos/core/Divider';
 export * as DrawerDemos from './demos/core/Drawer';
