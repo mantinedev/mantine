@@ -5,7 +5,12 @@ import { Grid, GridProps } from './Grid';
 import { Col } from './Col/Col';
 
 const defaultProps: GridProps = {
-  children: [<Col key={1}>1</Col>, <Col key={2}>2</Col>],
+  children: (
+    <>
+      <Grid.Col>1</Grid.Col>
+      <Grid.Col>2</Grid.Col>
+    </>
+  ),
 };
 
 describe('@mantine/core/Grid', () => {
@@ -14,6 +19,7 @@ describe('@mantine/core/Grid', () => {
     props: defaultProps,
     displayName: '@mantine/core/Grid',
     refType: HTMLDivElement,
+    providerName: 'Grid',
   });
 
   it('exposes Col as Grid.Col', () => {

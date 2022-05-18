@@ -1,5 +1,5 @@
 import type { MantineNumberSize } from '@mantine/styles';
-import { createUseContext } from '../../utils';
+import { createContext, useContext } from 'react';
 
 interface GridContextValue {
   gutter: MantineNumberSize;
@@ -7,4 +7,7 @@ interface GridContextValue {
   columns: number;
 }
 
-export const [GridProvider, useGridContext] = createUseContext<GridContextValue>(null);
+const GridContext = createContext<GridContextValue>(null);
+
+export const GridProvider = GridContext.Provider;
+export const useGridContext = () => useContext(GridContext);

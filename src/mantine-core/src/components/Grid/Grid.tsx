@@ -39,36 +39,34 @@ const defaultProps: Partial<GridProps> = {
   columns: 12,
 };
 
-export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
-  (props: GridProps, ref) => {
-    const {
-      gutter,
-      children,
-      grow,
-      justify,
-      align,
-      columns,
-      className,
-      classNames,
-      styles,
-      id,
-      ...others
-    } = useMantineDefaultProps('Grid', defaultProps, props);
+export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
+  const {
+    gutter,
+    children,
+    grow,
+    justify,
+    align,
+    columns,
+    className,
+    classNames,
+    styles,
+    id,
+    ...others
+  } = useMantineDefaultProps('Grid', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { gutter, justify, align },
-      { classNames, styles, name: 'Grid' }
-    );
+  const { classes, cx } = useStyles(
+    { gutter, justify, align },
+    { classNames, styles, name: 'Grid' }
+  );
 
-    return (
-      <GridProvider value={{ gutter, grow, columns }}>
-        <Box className={cx(classes.root, className)} ref={ref} {...others}>
-          {children}
-        </Box>
-      </GridProvider>
-    );
-  }
-) as any;
+  return (
+    <GridProvider value={{ gutter, grow, columns }}>
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        {children}
+      </Box>
+    </GridProvider>
+  );
+}) as any;
 
 Grid.Col = Col;
 Grid.displayName = '@mantine/core/Grid';

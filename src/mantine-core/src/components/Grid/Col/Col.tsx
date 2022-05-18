@@ -77,11 +77,16 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     ...others
   } = useMantineDefaultProps('Col', defaultProps, props);
 
-  const { columns, gutter, grow } = useGridContext('Grid.Col');
-  const colSpan = span || columns;
+  const ctx = useGridContext();
+
+  if (!ctx) {
+    throw new Error('[@mantine/core] Grid.Col was used outside of Grid context');
+  }
+
+  const colSpan = span || ctx.columns;
   const { classes, cx } = useStyles(
     {
-      gutter,
+      gutter: ctx.gutter,
       offset,
       offsetXs,
       offsetSm,
@@ -93,14 +98,14 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       md,
       lg,
       xl,
-      grow,
-      columns,
+      grow: ctx.grow,
+      columns: ctx.columns,
       span: colSpan,
     },
     { classNames, styles, name: 'Col' }
   );
 
-  if (!isValidSpan(colSpan) || colSpan > columns) {
+  if (!isValidSpan(colSpan) || colSpan > ctx.columns) {
     return null;
   }
 
