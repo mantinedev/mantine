@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
+import React, { useState, useRef, forwardRef } from 'react';
+import { useDidUpdate } from '@mantine/hooks';
+import { useUncontrolled } from '@mantine/utils';
 import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
@@ -114,37 +115,38 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     );
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
+    const updateRef = useRef(true);
     const withAlpha = format === 'rgba' || format === 'hsla';
 
-    const [shouldSkip, setShouldSkip] = useState(false);
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
       finalValue: '#FFFFFF',
-      rule: (val) => isColorValid(val),
       onChange,
     });
 
     const [parsed, setParsed] = useState(parseColor(_value));
 
     const handleChange = (color: Partial<HsvaColor>) => {
-      // This is required for useEffect to work, it's dirty but works fine
-      setShouldSkip(true);
-
+      updateRef.current = false;
       setParsed((current) => {
         const next = { ...current, ...color };
         valueRef.current = convertHsvaTo(formatRef.current, next);
         return next;
       });
 
-      Promise.resolve()
-        .then(() => setValue(valueRef.current))
-        .then(() => setShouldSkip(false));
+      setValue(valueRef.current);
+
+      // Does not work any other way
+      setTimeout(() => {
+        updateRef.current = true;
+      }, 0);
     };
 
-    useEffect(() => {
-      if (isColorValid(value) && !shouldSkip) {
+    useDidUpdate(() => {
+      if (isColorValid(value) && updateRef.current) {
         setParsed(parseColor(value));
+        updateRef.current = true;
       }
     }, [value]);
 
