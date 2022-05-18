@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { ChevronRight } from 'tabler-icons-react';
+import { IconChevronRight } from '@tabler/icons';
 import { Group, Avatar, Text, UnstyledButton, Menu } from '@mantine/core';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
 import { forwardRef } from 'react';
-import { ChevronRight } from 'tabler-icons-react';
+import { IconChevronRight } from '@tabler/icons';
 import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
@@ -45,7 +45,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <ChevronRight size={16} />}
+        {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )
@@ -108,7 +108,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <ChevronRight size={16} />}
+        {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )

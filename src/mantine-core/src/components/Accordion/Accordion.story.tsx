@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PictureInPicture } from 'tabler-icons-react';
+import { IconPictureInPicture } from '@tabler/icons';
 import { Accordion } from './Accordion';
 
 export default { title: 'Accordion' };
@@ -164,13 +164,13 @@ export const WithIcon = () => (
   <>
     <Accordion sx={{ maxWidth: 400 }} mx="auto">
       <Accordion.Item value="flex">
-        <Accordion.Control icon={<PictureInPicture size={18} />}>Flexibility</Accordion.Control>
+        <Accordion.Control icon={<IconPictureInPicture size={18} />}>Flexibility</Accordion.Control>
       </Accordion.Item>
     </Accordion>
 
     <Accordion sx={{ maxWidth: 400 }} mx="auto" chevronPosition="left">
       <Accordion.Item value="flex">
-        <Accordion.Control icon={<PictureInPicture size={18} />}>Flexibility</Accordion.Control>
+        <Accordion.Control icon={<IconPictureInPicture size={18} />}>Flexibility</Accordion.Control>
       </Accordion.Item>
     </Accordion>
   </>

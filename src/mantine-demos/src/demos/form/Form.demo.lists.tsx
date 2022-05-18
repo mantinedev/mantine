@@ -2,13 +2,13 @@ import React from 'react';
 import { useForm, formList } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { Trash } from 'tabler-icons-react';
+import { IconTrash } from '@tabler/icons';
 
 const code = `
 import { useForm, formList } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { Trash } from 'tabler-icons-react';
+import { IconTrash } from '@tabler/icons';
 
 function Demo() {
   const form = useForm({
@@ -31,7 +31,7 @@ function Demo() {
         variant="hover"
         onClick={() => form.removeListItem('employees', index)}
       >
-        <Trash size={16} />
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -91,7 +91,7 @@ function Demo() {
       />
       <Switch label="Active" {...form.getListInputProps('employees', index, 'active')} />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <Trash size={16} />
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));

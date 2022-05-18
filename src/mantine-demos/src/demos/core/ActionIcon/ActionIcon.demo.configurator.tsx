@@ -1,5 +1,5 @@
 import React from 'react';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
 const iconSizes = {
@@ -14,7 +14,7 @@ function Wrapper(props: ActionIconProps) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
-        <Adjustments size={iconSizes[props.size]} />
+        <IconAdjustments size={iconSizes[props.size]} />
       </ActionIcon>
     </Group>
   );
@@ -22,12 +22,12 @@ function Wrapper(props: ActionIconProps) {
 
 const codeTemplate = (props: string) => `
 import { ActionIcon } from '@mantine/core';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
 
 function Demo() {
   return (
     <ActionIcon${props}>
-      <Adjustments />
+      <IconAdjustments />
     </ActionIcon>
   );
 }

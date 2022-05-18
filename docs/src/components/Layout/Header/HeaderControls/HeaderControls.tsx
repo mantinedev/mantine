@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Group, useMantineColorScheme, Tooltip } from '@mantine/core';
-import { TextDirectionRtl, TextDirectionLtr, Sun, Moon } from 'tabler-icons-react';
+import { IconTextDirectionRtl, IconTextDirectionLtr, IconSun, IconMoon } from '@tabler/icons';
 import { MarkGithubIcon } from '@primer/octicons-react';
 import { DiscordIcon } from './DiscordIcon';
 import { HeaderControl } from './HeaderControl';
@@ -39,13 +39,17 @@ export function HeaderControls() {
             tooltip={`${dir === 'ltr' ? 'RTL' : 'LTR'} direction`}
             hideOnMobile
           >
-            {dir === 'rtl' ? <TextDirectionLtr size={22} /> : <TextDirectionRtl size={22} />}
+            {dir === 'rtl' ? (
+              <IconTextDirectionLtr size={22} />
+            ) : (
+              <IconTextDirectionRtl size={22} />
+            )}
           </HeaderControl>
           <HeaderControl
             onClick={() => toggleColorScheme()}
             tooltip={`${colorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
           >
-            {colorScheme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+            {colorScheme === 'dark' ? <IconSun size={22} /> : <IconMoon size={22} />}
           </HeaderControl>
         </Group>
       </Tooltip.Group>

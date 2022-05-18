@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -22,7 +22,7 @@ function Demo() {
 function Demo() {
   return (
     <Wrapper
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       transitionDuration={300}
       transition="slide-down"
       searchPlaceholder="Search..."

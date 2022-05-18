@@ -1,17 +1,17 @@
 import React from 'react';
-import { Calendar } from 'tabler-icons-react';
+import { IconCalendar } from '@tabler/icons';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
 import { DatePicker } from '@mantine/dates';
-import { Calendar } from 'tabler-icons-react';
+import { IconCalendar } from '@tabler/icons';
 
 function Demo() {
   return (
     <DatePicker
       placeholder="Pick date"
       label="Event date"
-      icon={<Calendar size={16} />}
+      icon={<IconCalendar size={16} />}
     />
   );
 }
@@ -20,7 +20,7 @@ function Demo() {
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" icon={<Calendar size={16} />} />
+      <DatePicker placeholder="Pick date" label="Event date" icon={<IconCalendar size={16} />} />
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 
 const code = `
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 
 function Demo() {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -17,7 +17,7 @@ function Demo() {
       onClick={() => toggleColorScheme()}
       title="Toggle color scheme"
     >
-      {dark ? <Sun size={18} /> : <MoonStars size={18} />}
+      {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
     </ActionIcon>
   );
 }
@@ -35,7 +35,7 @@ function Demo() {
         onClick={() => toggleColorScheme()}
         title="Toggle color scheme"
       >
-        {dark ? <Sun size={18} /> : <MoonStars size={18} />}
+        {dark ? <IconSun size={18} /> : <IconMoonStars size={18} />}
       </ActionIcon>
     </Group>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { At } from 'tabler-icons-react';
+import { IconAt } from '@tabler/icons';
 import { Input, InputProps } from '@mantine/core';
 
 const iconSizes = {
@@ -11,17 +11,17 @@ const iconSizes = {
 };
 
 function Wrapper(props: InputProps) {
-  return <Input icon={<At size={iconSizes[props.size]} />} {...props} />;
+  return <Input icon={<IconAt size={iconSizes[props.size]} />} {...props} />;
 }
 
 const codeTemplate = (props: string) => `
 import { Input } from '@mantine/core';
-import { At } from 'tabler-icons-react';
+import { IconAt } from '@tabler/icons';
 
 function Demo() {
   return (
     <Input
-      icon={<At />}
+      icon={<IconAt />}
      ${props}
     />
   );

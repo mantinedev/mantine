@@ -2,13 +2,13 @@ import React from 'react';
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
 import { useForm, formList } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { GripVertical } from 'tabler-icons-react';
+import { IconGripVertical } from '@tabler/icons';
 
 const code = `
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
 import { useForm, formList } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { GripVertical } from 'tabler-icons-react';
+import { IconGripVertical } from '@tabler/icons';
 
 function Demo() {
   const form = useForm({
@@ -28,7 +28,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <GripVertical size={18} />
+            <IconGripVertical size={18} />
           </Center>
           <TextInput
             placeholder="John Doe"
@@ -93,7 +93,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <GripVertical size={18} />
+            <IconGripVertical size={18} />
           </Center>
           <TextInput
             placeholder="John Doe"

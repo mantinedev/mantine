@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { Group, Text, Anchor } from '@mantine/core';
 import { Wrapper } from './_wrapper';
 
@@ -75,7 +75,7 @@ function Demo() {
   return (
     <Wrapper
       actionsWrapperComponent={ActionsWrapper}
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + alt + T"
       buttonLabel="Open spotlight"

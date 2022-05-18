@@ -1,17 +1,17 @@
 import React from 'react';
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
-import { Dots } from 'tabler-icons-react';
+import { IconDots } from '@tabler/icons';
 
 const code = `
 import { Accordion, ActionIcon, AccordionControlProps, Box } from '@mantine/core';
-import { Dots } from 'tabler-icons-react';
+import { IconDots } from '@tabler/icons';
 
 function AccordionControl(props: AccordionControlProps) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <Dots size={16} />
+        <IconDots size={16} />
       </ActionIcon>
     </Box>
   );
@@ -44,7 +44,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Accordion.Control {...props} />
       <ActionIcon size="lg">
-        <Dots size={16} />
+        <IconDots size={16} />
       </ActionIcon>
     </Box>
   );

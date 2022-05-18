@@ -1,12 +1,12 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { Wrapper } from './_wrapper';
 
 const code = `
 import { Button, Group } from '@mantine/core';
 import { SpotlightProvider, openSpotlight } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
-import { Home, Dashboard, FileText, Search } from 'tabler-icons-react';
+import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons';
 
 function SpotlightControl() {
   return (
@@ -21,19 +21,19 @@ const actions: SpotlightAction[] = [
     title: 'Home',
     description: 'Get to home page',
     onTrigger: () => console.log('Home'),
-    icon: <Home size={18} />,
+    icon: <IconHome size={18} />,
   },
   {
     title: 'Dashboard',
     description: 'Get full information about current system status',
     onTrigger: () => console.log('Dashboard'),
-    icon: <Dashboard size={18} />,
+    icon: <IconDashboard size={18} />,
   },
   {
     title: 'Documentation',
     description: 'Visit documentation to lean more about all features',
     onTrigger: () => console.log('Documentation'),
-    icon: <FileText size={18} />,
+    icon: <IconFileText size={18} />,
   },
 ];
 
@@ -42,7 +42,7 @@ function Demo() {
   return (
     <SpotlightProvider
       actions={actions}
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 1"
       nothingFoundMessage="Nothing found..."
@@ -56,7 +56,7 @@ function Demo() {
 function Demo() {
   return (
     <Wrapper
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       searchPlaceholder="Search..."
       shortcut="mod + shift + 1"
       nothingFoundMessage="Nothing found..."

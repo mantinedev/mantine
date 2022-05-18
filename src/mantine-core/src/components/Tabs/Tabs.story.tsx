@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package } from 'tabler-icons-react';
+import { IconPackage } from '@tabler/icons';
 import { Tabs, TabsProps } from './Tabs';
 import { Badge } from '../Badge';
 import { Box } from '../Box';
@@ -152,7 +152,7 @@ export const VerticalVariants = () => (
 export const WithIcon = () => (
   <Wrapper defaultValue="react" variant="outline">
     <Tabs.List>
-      <Tabs.Tab value="react" icon={<Package size={14} />} />
+      <Tabs.Tab value="react" icon={<IconPackage size={14} />} />
       <Tabs.Tab
         value="sv"
         rightSection={

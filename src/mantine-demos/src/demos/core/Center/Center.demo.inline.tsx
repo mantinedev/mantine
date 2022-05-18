@@ -1,16 +1,16 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight } from 'tabler-icons-react';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
 import { Center, useMantineTheme, Anchor, Box } from '@mantine/core';
 
 const code = `
 import { Center, Anchor, Box } from '@mantine/core';
-import { ArrowLeft } from 'tabler-icons-react';
+import { IconArrowLeft } from '@tabler/icons';
 
 function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        <ArrowLeft size={14} />
+        <IconArrowLeft size={14} />
         <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>
@@ -23,7 +23,7 @@ function Demo() {
   return (
     <Anchor href="https://mantine.dev" target="_blank">
       <Center inline>
-        {theme.dir === 'ltr' ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
+        {theme.dir === 'ltr' ? <IconArrowLeft size={14} /> : <IconArrowRight size={14} />}
         <Box ml={5}>Back to Mantine website</Box>
       </Center>
     </Anchor>

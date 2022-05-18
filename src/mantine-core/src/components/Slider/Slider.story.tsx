@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { Heart } from 'tabler-icons-react';
+import { IconHeart } from '@tabler/icons';
 import { useDisclosure } from '@mantine/hooks';
 import { Slider } from './Slider/Slider';
 import { RangeSlider } from './RangeSlider/RangeSlider';
@@ -120,7 +120,7 @@ storiesOf('Slider', module)
   .add('With thumb children', () => (
     <div style={{ width: 380, padding: 40 }}>
       <Slider
-        thumbChildren={<Heart />}
+        thumbChildren={<IconHeart />}
         color="red"
         defaultValue={40}
         styles={{ thumb: { borderWidth: 2, height: 26, width: 26, padding: 3 } }}

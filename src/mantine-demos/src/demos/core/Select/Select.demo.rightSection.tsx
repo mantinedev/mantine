@@ -1,17 +1,17 @@
 import React from 'react';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 import { Select } from '@mantine/core';
 
 const code = `
 import { Select } from '@mantine/core';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 
 function Demo() {
   return (
     <Select
       label="Your favorite framework/library"
       placeholder="Pick one"
-      rightSection={<ChevronDown size={14} />}
+      rightSection={<IconChevronDown size={14} />}
       rightSectionWidth={30}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       data={['React', 'Angular', 'Svelte', 'Vue']}
@@ -26,7 +26,7 @@ function Demo() {
       <Select
         label="Your favorite framework/library"
         placeholder="Pick one"
-        rightSection={<ChevronDown size={14} />}
+        rightSection={<IconChevronDown size={14} />}
         rightSectionWidth={30}
         styles={{ rightSection: { pointerEvents: 'none' } }}
         data={['React', 'Angular', 'Svelte', 'Vue']}

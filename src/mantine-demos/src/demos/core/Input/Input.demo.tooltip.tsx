@@ -1,15 +1,15 @@
 import React from 'react';
-import { AlertCircle } from 'tabler-icons-react';
+import { IconAlertCircle } from '@tabler/icons';
 import { Input, Tooltip } from '@mantine/core';
 
 const code = `
 import { Input, Tooltip } from '@mantine/core';
-import { AlertCircle } from 'tabler-icons-react';
+import { IconAlertCircle } from '@tabler/icons';
 
 function Demo() {
   const rightSection = (
     <Tooltip label="We do not send spam" position="top-end">
-      <AlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
+      <IconAlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
     </Tooltip>
   );
 
@@ -20,7 +20,7 @@ function Demo() {
 function Demo() {
   const rightSection = (
     <Tooltip label="We do not send spam" position="top-end">
-      <AlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
+      <IconAlertCircle size={16} style={{ display: 'block', opacity: 0.5 }} />
     </Tooltip>
   );
 

@@ -131,6 +131,7 @@
     "@modulz/radix-icons": "^4.0.0",
     "@primer/octicons-react": "^14.2.1",
     "@radix-ui/react-scroll-area": "^0.1.1",
+    "@tabler/icons": "^1.68.0",
     "clsx": "^1.1.1",
     "csstype": "3.0.9",
     "dayjs": "^1.10.5",
@@ -145,7 +146,6 @@
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
-    "tabler-icons-react": "^1.35.0",
     "zod": "^3.13.4"
   }
 }

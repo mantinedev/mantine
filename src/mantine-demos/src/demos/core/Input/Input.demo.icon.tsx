@@ -1,15 +1,15 @@
 import React from 'react';
-import { BrandTwitter } from 'tabler-icons-react';
+import { IconBrandTwitter } from '@tabler/icons';
 import { Input, Badge } from '@mantine/core';
 
 const code = `
 import { Input, Badge } from '@mantine/core';
-import { BrandTwitter } from 'tabler-icons-react';
+import { IconBrandTwitter } from '@tabler/icons';
 
 function Demo() {
   return (
     <Input
-      icon={<BrandTwitter size={16} />}
+      icon={<IconBrandTwitter size={16} />}
       placeholder="Your twitter"
       rightSectionWidth={70}
       styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -26,7 +26,7 @@ function Demo() {
 function Demo() {
   return (
     <Input
-      icon={<BrandTwitter size={16} />}
+      icon={<IconBrandTwitter size={16} />}
       placeholder="Your twitter"
       rightSectionWidth={70}
       styles={{ rightSection: { pointerEvents: 'none' } }}

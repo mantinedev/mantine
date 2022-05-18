@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { UnstyledButton, Text, Group } from '@mantine/core';
 import { useOs } from '@mantine/hooks';
 import { useSpotlight } from '@mantine/spotlight';
@@ -36,7 +36,7 @@ export function SearchControl(props: React.ComponentPropsWithoutRef<'button'>) {
       })}
     >
       <Group spacing="xs">
-        <Search size={14} />
+        <IconSearch size={14} />
         <Text size="sm" color="dimmed" pr={80}>
           Search
         </Text>

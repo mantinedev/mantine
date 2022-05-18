@@ -206,7 +206,7 @@ If you use `Tabs.Tab` without text content, for example, only with icon, then se
 
 ```tsx
 import { Tabs } from '@mantine/core';
-import { Coin } from 'tabler-icons-react';
+import { IconCoin } from '@tabler/icon';
 
 function Demo() {
   return (
@@ -216,7 +216,7 @@ function Demo() {
         <Tabs.Tab value="chat">Chat</Tabs.Tab>
 
         {/* aria-label is required, tab is not labelled by children */}
-        <Tabs.Tab icon={<Coin size={14} />} value="money" aria-label="Get money" />
+        <Tabs.Tab icon={<IconCoin size={14} />} value="money" aria-label="Get money" />
       </Tabs.List>
     </Tabs>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { Kbd, TextInput } from '@mantine/core';
 
 const code = `
 import { Kbd, TextInput } from '@mantine/core';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 
 function Demo() {
   const rightSection = (
@@ -18,7 +18,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<Search size={16} />}
+      icon={<IconSearch size={16} />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}
@@ -39,7 +39,7 @@ function Demo() {
   return (
     <TextInput
       placeholder="Search"
-      icon={<Search size={16} />}
+      icon={<IconSearch size={16} />}
       rightSectionWidth={90}
       rightSection={rightSection}
       styles={{ rightSection: { pointerEvents: 'none' } }}

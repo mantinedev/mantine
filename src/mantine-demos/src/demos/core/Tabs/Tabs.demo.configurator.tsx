@@ -1,5 +1,5 @@
 import React from 'react';
-import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
 import { Tabs, TabsProps } from '@mantine/core';
 
 function Wrapper(props: TabsProps) {
@@ -7,13 +7,13 @@ function Wrapper(props: TabsProps) {
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<Photo size={14} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<MessageCircle size={14} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<Settings size={14} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -37,15 +37,15 @@ const codeTemplate = (props: string) => {
   const panelProps = props.includes('vertical') ? 'pl="xs"' : 'pt="xs"';
   return `
 import { Tabs } from '@mantine/core';
-import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
 
 function Demo() {
   return (
     <Tabs${props} defaultValue="gallery">
       <Tabs.List>
-        <Tabs.Tab value="gallery" icon={<Photo size={14} />}>Gallery</Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<MessageCircle size={14} />}>Messages</Tabs.Tab>
-        <Tabs.Tab value="settings" icon={<Settings size={14} />}>Settings</Tabs.Tab>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size={14} />}>Gallery</Tabs.Tab>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size={14} />}>Messages</Tabs.Tab>
+        <Tabs.Tab value="settings" icon={<IconSettings size={14} />}>Settings</Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="gallery" ${panelProps}>

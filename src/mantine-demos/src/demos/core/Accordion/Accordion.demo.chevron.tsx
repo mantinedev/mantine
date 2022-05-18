@@ -1,15 +1,15 @@
 import React from 'react';
-import { Plus } from 'tabler-icons-react';
+import { IconPlus } from '@tabler/icons';
 import { BaseDemo } from './_base';
 
 const code = `
 import { Accordion } from '@mantine/core';
-import { Plus } from 'tabler-icons-react';
+import { IconPlus } from '@tabler/icons';
 
 function Demo() {
   return (
     <Accordion
-      icon={<Plus size={16} />}
+      icon={<IconPlus size={16} />}
       styles={{
         chevron: {
           '&[data-rotate]': {
@@ -27,7 +27,7 @@ function Demo() {
 export function IconReplaceDemo() {
   return (
     <BaseDemo
-      chevron={<Plus size={16} />}
+      chevron={<IconPlus size={16} />}
       styles={{
         chevron: {
           '&[data-rotate]': {

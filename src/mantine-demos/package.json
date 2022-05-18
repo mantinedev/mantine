@@ -29,7 +29,7 @@
     "@mantine/prism": "4.2.5",
     "@mantine/labs": "4.2.5",
     "@mantine/spotlight": "4.2.5",
-    "tabler-icons-react": "*",
+    "@tabler/icons": "*",
     "react-beautiful-dnd": "*",
     "dayjs": "*",
     "zod": "*",

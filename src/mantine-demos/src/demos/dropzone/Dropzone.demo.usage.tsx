@@ -2,7 +2,7 @@ import { BaseDemo } from './_base';
 
 const code = `
 import { Group, Text, useMantineTheme, MantineTheme } from '@mantine/core';
-import { Upload, Photo, X, Icon as TablerIcon } from 'tabler-icons-react';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
@@ -18,16 +18,16 @@ function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
 function ImageUploadIcon({
   status,
   ...props
-}: React.ComponentProps<TablerIcon> & { status: DropzoneStatus }) {
+}: React.ComponentProps<typeof IconUpload> & { status: DropzoneStatus }) {
   if (status.accepted) {
-    return <Upload {...props} />;
+    return <IconUpload {...props} />;
   }
 
   if (status.rejected) {
-    return <X {...props} />;
+    return <IconX {...props} />;
   }
 
-  return <Photo {...props} />;
+  return <IconPhoto {...props} />;
 }
 
 export const dropzoneChildren = (status: DropzoneStatus, theme: MantineTheme) => (

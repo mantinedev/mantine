@@ -1,10 +1,10 @@
 import React from 'react';
-import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
 import { Tabs, TabsProps } from '@mantine/core';
 
 const code = `
 import { TabsProps, Tabs } from '@mantine/core';
-import { Photo, MessageCircle, Settings } from 'tabler-icons-react';
+import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons';
 
 function StyledTabs(props: TabsProps) {
   return (
@@ -66,9 +66,9 @@ function StyledTabs(props: TabsProps) {
 function Demo() {
   return (
     <StyledTabs>
-      <Tabs.Tab label="Settings" icon={<Settings size={16} />} />
-      <Tabs.Tab label="Messages" icon={<MessageCircle size={16} />} />
-      <Tabs.Tab label="Gallery" icon={<Photo size={16} />} />
+      <Tabs.Tab label="Settings" icon={<IconSettings size={16} />} />
+      <Tabs.Tab label="Messages" icon={<IconMessageCircle size={16} />} />
+      <Tabs.Tab label="Gallery" icon={<IconPhoto size={16} />} />
     </StyledTabs>
   );
 }
@@ -137,13 +137,13 @@ function Demo() {
   return (
     <StyledTabs defaultValue="settings">
       <Tabs.List>
-        <Tabs.Tab value="settings" icon={<Settings size={16} />}>
+        <Tabs.Tab value="settings" icon={<IconSettings size={16} />}>
           Settings
         </Tabs.Tab>
-        <Tabs.Tab value="messages" icon={<MessageCircle size={16} />}>
+        <Tabs.Tab value="messages" icon={<IconMessageCircle size={16} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="gallery" icon={<Photo size={16} />}>
+        <Tabs.Tab value="gallery" icon={<IconPhoto size={16} />}>
           Gallery
         </Tabs.Tab>
       </Tabs.List>
