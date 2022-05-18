@@ -20,14 +20,8 @@ describe('@mantine/core/utils/get-context-item-index', () => {
     items.forEach((item) => parent.appendChild(item));
     parent.appendChild(nestedContainer);
 
-    expect(
-      getContextItemIndex({ elementSelector: '.child', parentClassName: 'parent' }, items[0])
-    ).toBe(0);
-    expect(
-      getContextItemIndex({ elementSelector: '.child', parentClassName: 'parent' }, items[5])
-    ).toBe(5);
-    expect(
-      getContextItemIndex({ elementSelector: '.child', parentClassName: 'parent' }, nestedItem)
-    ).toBe(10);
+    expect(getContextItemIndex('.child', '.parent', items[0])).toBe(0);
+    expect(getContextItemIndex('.child', '.parent', items[5])).toBe(5);
+    expect(getContextItemIndex('.child', '.parent', nestedItem)).toBe(10);
   });
 });

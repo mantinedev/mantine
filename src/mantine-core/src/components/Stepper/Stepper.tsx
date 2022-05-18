@@ -8,7 +8,8 @@ import {
   useMantineDefaultProps,
   ForwardRefWithStaticComponents,
 } from '@mantine/styles';
-import { findChildByType, filterChildrenByType } from '../../utils';
+import { filterChildrenByType } from '../../utils';
+import { findChildByType } from './find-child-by-type/find-child-by-type';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
