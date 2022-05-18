@@ -3,15 +3,18 @@ import { Group, CopyButton, ActionIcon, Tooltip } from '@mantine/core';
 import { Copy, Check } from 'tabler-icons-react';
 
 const code = `
-import { CopyButton, Button } from '@mantine/core';
+import { CopyButton, ActionIcon, Tooltip } from '@mantine/core';
+import { Copy, Check } from 'tabler-icons-react';
 
 function Demo() {
   return (
-    <CopyButton value="https://mantine.dev">
+    <CopyButton value="https://mantine.dev" timeout={2000}>
       {({ copied, copy }) => (
-        <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
-          {copied ? 'Copied url' : 'Copy url'}
-        </Button>
+        <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="right">
+          <ActionIcon color={copied ? 'teal' : 'gray'} onClick={copy}>
+            {copied ? <Check size={16} /> : <Copy size={16} />}
+          </ActionIcon>
+        </Tooltip>
       )}
     </CopyButton>
   );
