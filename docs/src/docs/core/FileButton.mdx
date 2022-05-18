@@ -1,0 +1,25 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: FileButton
+order: 1
+slug: /core/file-button/
+category: 'buttons'
+description: 'Open file picker with a button click'
+props: ['FileButton']
+import: "import { FileButton } from '@mantine/core';"
+source: 'mantine-core/src/components/FileButton/FileButton.tsx'
+docs: 'core/FileButton.mdx'
+---
+
+import { FileButtonDemos } from '@mantine/demos';
+
+## Usage
+
+<Demo data={FileButtonDemos.usage} />
+
+## Multiple files
+
+Set `multiple` prop to enable picking multiple files:
+
+<Demo data={FileButtonDemos.multiple} />
