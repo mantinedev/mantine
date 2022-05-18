@@ -5,6 +5,7 @@ import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import { getInputMode } from './get-input-mode/get-input-mode';
+import { Chevron } from './Chevron';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
 export type InnerNumberInputStylesNames = Selectors<typeof useStyles>;
@@ -86,6 +87,14 @@ const defaultParser: Parser = (num) => {
   }
 
   return num;
+};
+
+const CHEVRON_SIZES = {
+  xs: 10,
+  sm: 14,
+  md: 16,
+  lg: 18,
+  xl: 20,
 };
 
 const defaultProps: Partial<NumberInputProps> = {
@@ -272,7 +281,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         }}
         onMouseUp={onStepDone}
         onMouseLeave={onStepDone}
-      />
+      >
+        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="up" />
+      </button>
       <button
         type="button"
         tabIndex={-1}
@@ -284,7 +295,9 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         }}
         onMouseUp={onStepDone}
         onMouseLeave={onStepDone}
-      />
+      >
+        <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="down" />
+      </button>
     </div>
   );
 
