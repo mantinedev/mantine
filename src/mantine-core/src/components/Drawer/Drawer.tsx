@@ -50,10 +50,10 @@ export interface DrawerProps
   /** Disables scroll lock */
   lockScroll?: boolean;
 
-  /** Disable onClock trigger for outside events */
+  /** Disable onMouseDown trigger for outside events */
   closeOnClickOutside?: boolean;
 
-  /** Disable onClock trigger for escape key press */
+  /** Disable onKeyDownCapture trigger for escape key press */
   closeOnEscape?: boolean;
 
   /** Drawer appear and disappear transition, see Transition component for full documentation */
