@@ -216,7 +216,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             className={classes.wrapper}
             role="combobox"
             aria-haspopup="listbox"
-            aria-owns={`${inputProps.id}-items`}
+            aria-owns={shouldRenderDropdown ? `${inputProps.id}-items` : null}
             aria-controls={inputProps.id}
             aria-expanded={shouldRenderDropdown}
             onMouseLeave={() => setHovered(-1)}

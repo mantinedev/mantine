@@ -33,14 +33,11 @@ export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
 
   discord: {
     color: theme.white,
-    backgroundColor: theme.colorScheme === 'dark' ? '#5865f2' : '#7289da',
-    borderColor: theme.colorScheme === 'dark' ? '#5865f2' : '#7289da',
+    backgroundColor: '#5865f2',
+    borderColor: '5865f2',
 
     '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.fn.lighten('#5865f2', 0.1)
-          : theme.fn.darken('#7289da', 0.1),
+      backgroundColor: theme.fn.lighten('#5865f2', 0.1),
     },
   },
   twitter: {
