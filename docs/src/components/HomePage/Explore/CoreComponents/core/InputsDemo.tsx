@@ -8,7 +8,6 @@ import {
   Checkbox,
   SegmentedControl,
   SegmentedControlProps,
-  RadioGroup,
   Radio,
   Autocomplete,
   ColorInput,
@@ -96,11 +95,11 @@ export function InputsDemo() {
           styles={{ dropdown: { zIndex: 5 } }}
         />
 
-        <RadioGroup label="Radio group" mt="md" defaultValue="react">
+        <Radio.Group label="Radio group" mt="md" defaultValue="react">
           <Radio value="react" label="React" />
           <Radio value="svelte" label="Svelte" />
           <Radio value="vue" label="Vue" />
-        </RadioGroup>
+        </Radio.Group>
 
         <Checkbox mt={20} label="Checkbox" defaultChecked />
 

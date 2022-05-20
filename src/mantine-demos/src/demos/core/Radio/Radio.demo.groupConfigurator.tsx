@@ -1,35 +1,35 @@
 import React from 'react';
-import { RadioGroup, RadioGroupProps, Radio } from '@mantine/core';
+import { RadioGroupProps, Radio } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
-import { RadioGroup, Radio } from '@mantine/core';
+import { Radio } from '@mantine/core';
 
 function Demo() {
   return (
-    <RadioGroup
+    <Radio.Group
      ${props}
     >
       <Radio value="react" label="React" />
       <Radio value="svelte" label="Svelte" />
       <Radio value="ng" label="Angular" />
       <Radio value="vue" label="Vue" />
-    </RadioGroup>
+    </Radio.Group>
   );
 }
 `;
 
 function Wrapper(props: RadioGroupProps) {
   return (
-    <RadioGroup defaultValue="react" {...props}>
+    <Radio.Group defaultValue="react" {...props}>
       <Radio value="react" label="React" />
       <Radio value="svelte" label="Svelte" />
       <Radio value="ng" label="Angular" />
       <Radio value="vue" label="Vue" />
-    </RadioGroup>
+    </Radio.Group>
   );
 }
 
-export const configurator: MantineDemo = {
+export const groupConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,
@@ -50,7 +50,6 @@ export const configurator: MantineDemo = {
     { name: 'error', type: 'string', initialValue: '' },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'color', type: 'color', initialValue: 'blue', defaultValue: 'blue' },
     { name: 'required', type: 'boolean', initialValue: true, defaultValue: false },
   ],
 };

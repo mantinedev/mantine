@@ -73,7 +73,7 @@ export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
 export * as PopoverDemos from './demos/core/Popover';
 export * as ProgressDemos from './demos/core/Progress';
-export * as RadioGroupDemos from './demos/core/RadioGroup';
+export * as RadioDemos from './demos/core/Radio';
 export * as RingProgressDemos from './demos/core/RingProgress';
 export * as ScrollAreaDemos from './demos/core/ScrollArea';
 export * as SegmentedControlDemos from './demos/core/SegmentedControl';

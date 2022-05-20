@@ -4,7 +4,6 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  MantineColor,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
@@ -35,9 +34,6 @@ export interface CheckboxGroupProps
   /** Spacing between checkboxes in horizontal orientation */
   spacing?: MantineNumberSize;
 
-  /** Activated checkbox color from theme.colors */
-  color?: MantineColor;
-
   /** Predefined label fontSize, checkbox width, height and border-radius */
   size?: MantineSize;
 
@@ -60,7 +56,6 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       onChange,
       orientation,
       spacing,
-      color,
       size,
       classNames,
       styles,

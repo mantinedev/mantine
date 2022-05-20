@@ -4,7 +4,6 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  MantineColor,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
@@ -17,7 +16,7 @@ export interface RadioGroupProps
   extends DefaultProps<RadioGroupStylesNames>,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
-  /** <Checkbox /> components only */
+  /** <Radio /> components */
   children: React.ReactNode;
 
   /** Value of currently selected radio */
@@ -32,13 +31,10 @@ export interface RadioGroupProps
   /** Horizontal or vertical orientation */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Spacing between checkboxes in horizontal orientation */
+  /** Spacing between radios in horizontal orientation */
   spacing?: MantineNumberSize;
 
-  /** Activated checkbox color from theme.colors */
-  color?: MantineColor;
-
-  /** Predefined label fontSize, checkbox width, height and border-radius */
+  /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
 
   /** Props spread to InputWrapper */
@@ -60,7 +56,6 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       onChange,
       orientation,
       spacing,
-      color,
       size,
       classNames,
       styles,

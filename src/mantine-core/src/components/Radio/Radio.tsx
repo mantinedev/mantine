@@ -13,12 +13,12 @@ import { Box } from '../Box';
 import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
-import useStyles from './Radio.styles';
+import useStyles, { RadioStylesParams } from './Radio.styles';
 
 export type RadioStylesNames = Selectors<typeof useStyles>;
 
 export interface RadioProps
-  extends DefaultProps<RadioStylesNames>,
+  extends DefaultProps<RadioStylesNames, RadioStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Radio label */
   label?: React.ReactNode;

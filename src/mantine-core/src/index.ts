@@ -62,7 +62,7 @@ export * from './components/PasswordInput';
 export * from './components/Popover';
 export * from './components/Portal';
 export * from './components/Progress';
-export * from './components/RadioGroup';
+export * from './components/Radio';
 export * from './components/RingProgress';
 export * from './components/ScrollArea';
 export * from './components/SegmentedControl';
