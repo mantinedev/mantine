@@ -30,15 +30,15 @@ describe('@mantine/core/PasswordInput', () => {
   });
 
   it('sets required on input', () => {
-    const { container } = render(<PasswordInput required />);
-    expect(container.querySelector('input')).toHaveAttribute('required');
+    render(<PasswordInput required />);
+    expect(document.querySelector('input')).toHaveAttribute('required');
   });
 
   it('sets input type based on password visibility state', async () => {
-    const { container } = render(<PasswordInput />);
-    expect(container.querySelector('input')).toHaveAttribute('type', 'password');
+    render(<PasswordInput />);
+    expect(document.querySelector('input')).toHaveAttribute('type', 'password');
     await userEvent.click(screen.getByRole('button', { hidden: true }));
-    expect(container.querySelector('input')).toHaveAttribute('type', 'text');
+    expect(document.querySelector('input')).toHaveAttribute('type', 'text');
   });
 
   it('sets toggle button tabIndex based on toggleTabIndex prop', () => {
