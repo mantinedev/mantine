@@ -573,7 +573,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       <div
         role="combobox"
         aria-haspopup="listbox"
-        aria-owns={`${uuid}-items`}
+        aria-owns={shouldShowDropdown ? `${uuid}-items` : null}
         aria-controls={uuid}
         aria-expanded={shouldShowDropdown}
         onMouseLeave={() => setHovered(-1)}
