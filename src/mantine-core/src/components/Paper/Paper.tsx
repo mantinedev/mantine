@@ -3,14 +3,13 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  PolymorphicComponentProps,
-  PolymorphicRef,
   useMantineDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles from './Paper.styles';
+import useStyles, { PaperStylesParams } from './Paper.styles';
 
-export interface SharedPaperProps extends DefaultProps {
+export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
   /** Predefined box-shadow from theme.shadows (xs, sm, md, lg, xl) or any valid css box-shadow property */
   shadow?: MantineShadow;
 
@@ -24,31 +23,23 @@ export interface SharedPaperProps extends DefaultProps {
   children?: React.ReactNode;
 }
 
-export type PaperProps<C> = PolymorphicComponentProps<C, SharedPaperProps>;
+const defaultProps: Partial<PaperProps> = {};
 
-type PaperComponent = (<C = 'div'>(props: PaperProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
+export const _Paper = forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
+  const { className, children, radius, withBorder, shadow, ...others } = useMantineDefaultProps(
+    'Paper',
+    defaultProps,
+    props
+  );
+  const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
 
-const defaultProps: Partial<PaperProps<any>> = {};
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {children}
+    </Box>
+  );
+});
 
-export const Paper: PaperComponent = forwardRef(
-  (props: PaperProps<'div'>, ref: PolymorphicRef<'div'>) => {
-    const { component, className, children, radius, withBorder, shadow, ...others } =
-      useMantineDefaultProps('Paper', defaultProps, props);
-    const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
+_Paper.displayName = '@mantine/core/Paper';
 
-    return (
-      <Box<any>
-        component={component || 'div'}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        {children}
-      </Box>
-    );
-  }
-) as any;
-
-Paper.displayName = '@mantine/core/Paper';
+export const Paper = createPolymorphicComponent<'div', PaperProps>(_Paper);

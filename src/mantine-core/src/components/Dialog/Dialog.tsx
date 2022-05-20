@@ -18,7 +18,7 @@ export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
   extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
-    Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
+    Omit<PaperProps, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 

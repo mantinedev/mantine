@@ -1,11 +1,11 @@
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Paper, PaperProps } from './Paper';
 
-const defaultProps: PaperProps<'div'> = {};
+const defaultProps: PaperProps = {};
 
 describe('@mantine/core/Paper', () => {
-  itRendersChildren(Paper as any, defaultProps);
-  itIsPolymorphic(Paper as any, defaultProps);
+  itRendersChildren(Paper, defaultProps);
+  itIsPolymorphic(Paper, defaultProps);
   itSupportsSystemProps({
     component: Paper,
     props: defaultProps,

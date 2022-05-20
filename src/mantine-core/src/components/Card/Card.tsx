@@ -1,12 +1,12 @@
 import React, { Children, cloneElement, forwardRef } from 'react';
 import { useMantineDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Paper, SharedPaperProps } from '../Paper/Paper';
+import { Paper, PaperProps } from '../Paper/Paper';
 import { CardSection } from './CardSection/CardSection';
 import useStyles from './Card.styles';
 import { CardProvider } from './Card.context';
 
-export interface CardProps extends SharedPaperProps {
+export interface CardProps extends PaperProps {
   /** Card content */
   children: React.ReactNode;
 }
