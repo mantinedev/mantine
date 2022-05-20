@@ -560,7 +560,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
           className={classes.wrapper}
           role="combobox"
           aria-haspopup="listbox"
-          aria-owns={`${uuid}-items`}
+          aria-owns={dropdownOpened && shouldRenderDropdown ? `${uuid}-items` : null}
           aria-controls={uuid}
           aria-expanded={dropdownOpened}
           onMouseLeave={() => setHovered(-1)}
