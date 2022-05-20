@@ -42,12 +42,13 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     horizontalSpacing,
     verticalSpacing,
     fontSize,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { captionSide, verticalSpacing, horizontalSpacing, fontSize },
-    { name: 'Table' }
+    { unstyled, name: 'Table' }
   );
 
   return (

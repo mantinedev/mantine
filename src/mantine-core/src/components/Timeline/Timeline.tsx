@@ -7,6 +7,7 @@ import {
   CSSObject,
   useMantineDefaultProps,
 } from '@mantine/styles';
+import { packSx } from '@mantine/utils';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
@@ -95,7 +96,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
     return (
-      <Box ref={ref} sx={[offset, ...(Array.isArray(sx) ? sx : [sx])]} {...others}>
+      <Box ref={ref} sx={[offset, ...packSx(sx)]} {...others}>
         {items}
       </Box>
     );

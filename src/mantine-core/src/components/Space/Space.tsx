@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { packSx } from '@mantine/utils';
 import { Box } from '../Box';
 
 export interface SpaceProps extends DefaultProps {
@@ -27,7 +28,7 @@ export const Space = forwardRef<HTMLDivElement, SpaceProps>((props: SpaceProps, 
           const height = theme.fn.size({ size: h, sizes: theme.spacing });
           return { width, height, minWidth: width, minHeight: height };
         },
-        ...(Array.isArray(sx) ? sx : [sx]),
+        ...packSx(sx),
       ]}
       {...others}
     />
