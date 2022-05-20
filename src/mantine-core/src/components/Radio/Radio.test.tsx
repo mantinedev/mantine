@@ -6,6 +6,7 @@ import {
   itSupportsWrapperProps,
 } from '@mantine/tests';
 import { Radio, RadioProps } from './Radio';
+import { RadioGroup } from './RadioGroup/RadioGroup';
 
 const defaultProps: RadioProps = {
   value: 'test-radio',
@@ -23,5 +24,9 @@ describe('@mantine/core/Radio', () => {
     refType: HTMLInputElement,
     othersSelector: 'input',
     providerName: 'Radio',
+  });
+
+  it('exposes RadioGroup as a static component', () => {
+    expect(Radio.Group).toBe(RadioGroup);
   });
 });

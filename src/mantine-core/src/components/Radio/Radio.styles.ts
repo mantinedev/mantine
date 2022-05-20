@@ -7,11 +7,19 @@ export interface RadioStylesParams {
 }
 
 const sizes = {
-  xs: 12,
-  sm: 16,
-  md: 20,
-  lg: 24,
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 30,
   xl: 36,
+};
+
+const iconSizes = {
+  xs: 6,
+  sm: 8,
+  md: 10,
+  lg: 14,
+  xl: 16,
 };
 
 export default createStyles(
@@ -36,11 +44,11 @@ export default createStyles(
         transform: 'scale(0.75) translateY(2px)',
         transition: `opacity ${transitionDuration}ms ${theme.transitionTimingFunction}`,
         pointerEvents: 'none',
-        width: theme.fn.size({ sizes, size }) / 2,
-        height: theme.fn.size({ sizes, size }) / 2,
+        width: theme.fn.size({ sizes: iconSizes, size }),
+        height: theme.fn.size({ sizes: iconSizes, size }),
         position: 'absolute',
-        top: `calc(50% - ${theme.fn.size({ sizes, size }) / 4}px)`,
-        left: `calc(50% - ${theme.fn.size({ sizes, size }) / 4}px)`,
+        top: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size }) / 2}px)`,
+        left: `calc(50% - ${theme.fn.size({ sizes: iconSizes, size }) / 2}px)`,
       },
 
       radio: {

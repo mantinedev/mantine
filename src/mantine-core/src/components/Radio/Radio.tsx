@@ -7,9 +7,12 @@ import {
   Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
+  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { RadioIcon } from './RadioIcon';
+import { useRadioGroupContext } from './RadioGroup.context';
+import { RadioGroup } from './RadioGroup/RadioGroup';
 import useStyles from './Radio.styles';
 
 export type RadioStylesNames = Selectors<typeof useStyles>;
@@ -42,9 +45,12 @@ export interface RadioProps
 const defaultProps: Partial<RadioProps> = {
   icon: RadioIcon,
   transitionDuration: 100,
+  size: 'sm',
 };
 
-export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
+type RadioComponent = ForwardRefWithStaticComponents<RadioProps, { Group: typeof RadioGroup }>;
+
+export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
     className,
     style,
@@ -62,14 +68,22 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
     wrapperProps,
     ...others
   } = useMantineDefaultProps('Radio', defaultProps, props);
+  const ctx = useRadioGroupContext();
 
   const { classes, cx } = useStyles(
-    { color, size, transitionDuration },
+    { color, size: ctx?.size || size, transitionDuration },
     { classNames, styles, name: 'Radio' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useUuid(id);
+
+  const contextProps = ctx
+    ? {
+        checked: ctx.value === rest.value,
+        onChange: ctx.onChange,
+      }
+    : {};
 
   return (
     <Box
@@ -88,6 +102,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
           id={uuid}
           disabled={disabled}
           {...rest}
+          {...contextProps}
         />
         <Icon className={classes.icon} aria-hidden />
       </div>
@@ -99,6 +114,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
       )}
     </Box>
   );
-});
+}) as any;
 
 Radio.displayName = '@mantine/core/Radio';
+Radio.Group = RadioGroup;
