@@ -63,9 +63,9 @@ export function NProgress({
   const reducedMotion = useReducedMotion();
   const [_progress, setProgress] = useState(defaultProgress);
   const [mounted, setMounted] = useState(true);
+  const [unmountProgress, setUnmountProgress] = useState(false);
   const resetRef = useRef<number>();
   const unmountRef = useRef<number>();
-  const unmountProgressRef = useRef(false);
 
   const interval = useInterval(() => {
     setProgress((amount) => {
@@ -84,6 +84,30 @@ export function NProgress({
     });
   }, stepIntervalTime);
 
+  const set = (value: React.SetStateAction<number>) => setProgress(value);
+  const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
+  const decrease = (value: number) => setProgress((c) => Math.max(c - value, 0));
+  const start = () => {
+    interval.stop();
+    interval.start();
+  };
+  const stop = () => interval.stop();
+  const reset = () => {
+    setUnmountProgress(true);
+    stop();
+    setProgress(0);
+    window.setTimeout(() => setUnmountProgress(false), 0);
+  };
+
+  const ctx = {
+    set,
+    add,
+    decrease,
+    start,
+    stop,
+    reset,
+  };
+
   const cancelUnmount = () => {
     if (unmountRef.current) {
       window.clearTimeout(unmountRef.current);
@@ -97,47 +121,24 @@ export function NProgress({
     setMounted(true);
   };
 
-  const set = (value: React.SetStateAction<number>) => setProgress(value);
-  const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
-  const decrease = (value: number) => setProgress((c) => Math.max(c - value, 0));
-  const start = () => {
-    interval.stop();
-    interval.start();
-  };
-  const stop = () => interval.stop();
-  const reset = () => {
-    unmountProgressRef.current = true;
-    stop();
-    setProgress(0);
-    unmountProgressRef.current = false;
-  };
-
-  const ctx = {
-    set,
-    add,
-    decrease,
-    start,
-    stop,
-    reset,
-  };
-
-  const unmountProgress = () => {
-    unmountRef.current = null;
-    setMounted(false);
-
-    if (autoReset) {
-      resetRef.current = window.setTimeout(() => {
-        resetRef.current = null;
-        reset();
-      }, exitTransitionDuration);
-    }
-  };
-
   useDidUpdate(() => {
     if (_progress >= 100) {
       stop();
       onFinish && onFinish();
-      unmountRef.current = window.setTimeout(unmountProgress, exitTimeout);
+      unmountRef.current = window.setTimeout(() => {
+        unmountRef.current = null;
+        setMounted(false);
+
+        if (autoReset) {
+          resetRef.current = window.setTimeout(
+            () => {
+              resetRef.current = null;
+              reset();
+            },
+            reducedMotion ? 0 : exitTransitionDuration
+          );
+        }
+      }, exitTimeout);
     } else if (!mounted) {
       cancelUnmount();
     }
@@ -147,7 +148,7 @@ export function NProgress({
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
-      {!unmountProgressRef.current && (
+      {!unmountProgress && (
         <Progress
           radius={0}
           value={_progress}
