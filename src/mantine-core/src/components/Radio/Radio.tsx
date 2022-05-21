@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -76,7 +76,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
-  const uuid = useUuid(id);
+  const uuid = useId(id);
 
   const contextProps = ctx
     ? {

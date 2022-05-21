@@ -12,8 +12,7 @@ import {
   useDelayGroupContext,
   useDelayGroup,
 } from '@floating-ui/react-dom-interactions';
-import { useId } from '@mantine/utils';
-import { useDidUpdate } from '@mantine/hooks';
+import { useId, useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 

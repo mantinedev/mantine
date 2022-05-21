@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useUuid } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -155,7 +155,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
 
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const [inputValue, setInputValue] = useState('');
 
     const [_value, setValue] = useUncontrolled({

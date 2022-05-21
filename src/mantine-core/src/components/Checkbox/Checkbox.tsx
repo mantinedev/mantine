@@ -9,7 +9,7 @@ import {
   useMantineDefaultProps,
   ForwardRefWithStaticComponents,
 } from '@mantine/styles';
-import { useId } from '@mantine/utils';
+import { useId } from '@mantine/hooks';
 import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';

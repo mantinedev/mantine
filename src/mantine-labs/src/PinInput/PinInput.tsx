@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect, useState } from 'react';
-import { useUncontrolled, useUuid } from '@mantine/hooks';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -108,7 +108,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
     }: PinInputProps,
     ref
   ) => {
-    const uuid = useUuid(name);
+    const uuid = useId(name);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'PinInput' });
 
     const [focusedIndex, setFocusedIndex] = useState(-1);

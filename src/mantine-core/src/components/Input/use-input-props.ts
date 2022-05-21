@@ -1,5 +1,5 @@
 import { useMantineDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import { InputWrapperBaseProps } from '../InputWrapper';
 import { InputBaseProps } from './Input';
 
@@ -34,7 +34,7 @@ export function useInputProps<T extends BaseProps>(
     ...others
   } = useMantineDefaultProps(component, defaultProps, props);
 
-  const uid = useUuid(id);
+  const uid = useId(id);
 
   const { systemStyles, rest } = extractSystemStyles(others);
 

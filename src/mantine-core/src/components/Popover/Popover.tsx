@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 
 import React from 'react';
-import { useId } from '@mantine/utils';
+import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
   ClassNames,
@@ -12,7 +12,6 @@ import {
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { useClickOutside } from '@mantine/hooks';
 import { MantineTransition } from '../Transition';
 import { getFloatingPosition, FloatingPosition } from '../Floating';
 import { usePopover } from './use-popover';

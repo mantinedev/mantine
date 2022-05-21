@@ -16,7 +16,7 @@ import {
   extractSystemStyles,
   Popover,
 } from '@mantine/core';
-import { useMergedRef, useUuid } from '@mantine/hooks';
+import { useMergedRef, useId } from '@mantine/hooks';
 import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
@@ -181,7 +181,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
   ) => {
     const { classes, cx, theme } = useStyles(null, { classNames, styles, name: __staticSelector });
     const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const inputRef = useRef<HTMLButtonElement>();
 
     const closeDropdown = () => {

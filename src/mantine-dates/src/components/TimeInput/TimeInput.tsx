@@ -13,7 +13,7 @@ import {
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/core';
-import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -141,7 +141,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
 
     const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
     const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
+    const uuid = useId(id);
 
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();

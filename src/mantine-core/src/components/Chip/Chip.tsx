@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useId } from '@mantine/utils';
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,

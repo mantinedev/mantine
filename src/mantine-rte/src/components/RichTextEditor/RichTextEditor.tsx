@@ -9,7 +9,7 @@ import {
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/core';
-import { useUuid, mergeRefs } from '@mantine/hooks';
+import { useId, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -109,7 +109,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       ...others
     } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
 
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
       {

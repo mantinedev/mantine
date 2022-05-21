@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useBooleanToggle, useUuid } from '@mantine/hooks';
+import { useBooleanToggle, useId } from '@mantine/hooks';
 import {
   Selectors,
   DefaultProps,
@@ -93,7 +93,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     { size, rightSectionWidth },
     { name: 'PasswordInput', classNames, styles }
   );
-  const uuid = useUuid(id);
+  const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
   const [reveal, toggle] = useBooleanToggle(false);
 

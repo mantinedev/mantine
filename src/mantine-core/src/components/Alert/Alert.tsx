@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { useId } from '@mantine/utils';
+import { useId } from '@mantine/hooks';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
 import useStyles, { AlertStylesParams } from './Alert.styles';

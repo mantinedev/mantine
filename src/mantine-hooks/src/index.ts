@@ -40,7 +40,6 @@ export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys';
 export { useFullscreen } from './use-fullscreen/use-fullscreen';
 export { useLogger } from './use-logger/use-logger';
 export { useHover } from './use-hover/use-hover';
-export { useUuid } from './use-uuid/use-uuid';
 export { useValidatedState } from './use-validated-state/use-validated-state';
 export { useOs } from './use-os/use-os';
 export { useSetState } from './use-set-state/use-set-state';

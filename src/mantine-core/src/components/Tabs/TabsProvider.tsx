@@ -1,6 +1,6 @@
 import React from 'react';
-import { useId, getSafeId } from '@mantine/utils';
-import { useUncontrolled } from '@mantine/hooks';
+import { getSafeId } from '@mantine/utils';
+import { useUncontrolled, useId } from '@mantine/hooks';
 import { MantineColor, MantineNumberSize } from '@mantine/styles';
 import { TabsContextProvider } from './Tabs.context';
 import { TABS_ERRORS } from './Tabs.errors';

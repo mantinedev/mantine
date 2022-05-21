@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
@@ -69,7 +69,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     ...others
   } = useMantineDefaultProps('Textarea', defaultProps, props);
 
-  const uuid = useUuid(id);
+  const uuid = useId(id);
   const { classes, cx } = useStyles();
   const { systemStyles, rest } = extractSystemStyles(others);
   const sharedProps = {

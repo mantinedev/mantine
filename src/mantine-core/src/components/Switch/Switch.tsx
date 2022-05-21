@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -73,7 +73,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
-  const uuid = useUuid(id);
+  const uuid = useId(id);
 
   return (
     <Box

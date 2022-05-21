@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -144,7 +144,7 @@ export function Modal(props: ModalProps) {
     overlayBlur,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
-  const baseId = useUuid(id);
+  const baseId = useId(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(

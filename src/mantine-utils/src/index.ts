@@ -4,7 +4,6 @@ export { getContextItemIndex } from './get-context-item-index/get-context-item-i
 export { findElementAncestor } from './find-element-ancestor/find-element-ancestor';
 export { createSafeContext } from './create-safe-context/create-safe-context';
 export { createError, createErrors } from './create-error/create-error';
-export { useId } from './use-id/use-id';
 export { packSx } from './pack-sx/pack-sx';
 export { getSafeId } from './get-safe-id/get-safe-id';
 export { clamp } from './clamp/clamp';

@@ -3,7 +3,7 @@ import {
   useReducedMotion,
   useResizeObserver,
   useUncontrolled,
-  useUuid,
+  useId,
   useMergedRef,
   useIsomorphicEffect,
 } from '@mantine/hooks';
@@ -132,7 +132,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     height: 0,
     translate: [0, 0],
   });
-  const uuid = useUuid(name);
+  const uuid = useId(name);
   const refs = useRef<Record<string, HTMLLabelElement>>({});
   const [observerRef, containerRect] = useResizeObserver();
 

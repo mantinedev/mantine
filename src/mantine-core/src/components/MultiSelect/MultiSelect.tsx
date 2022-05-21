@@ -4,7 +4,7 @@ import {
   useMergedRef,
   useDidUpdate,
   useScrollIntoView,
-  useUuid,
+  useId,
 } from '@mantine/hooks';
 import {
   DefaultProps,
@@ -204,7 +204,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const inputRef = useRef<HTMLInputElement>();
   const wrapperRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
-  const uuid = useUuid(id);
+  const uuid = useId(id);
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
