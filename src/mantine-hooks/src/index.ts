@@ -11,7 +11,6 @@ export { useFocusReturn } from './use-focus-return/use-focus-return';
 export { useDidUpdate } from './use-did-update/use-did-update';
 export { useFocusTrap } from './use-focus-trap/use-focus-trap';
 export { useForceUpdate } from './use-force-update/use-force-update';
-export { useForm } from './use-form/use-form';
 export { useId } from './use-id/use-id';
 export { useIdle } from './use-idle/use-idle';
 export { useInterval } from './use-interval/use-interval';

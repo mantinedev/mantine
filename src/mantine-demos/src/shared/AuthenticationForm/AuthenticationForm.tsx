@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
 import {
   TextInput,
@@ -45,20 +45,6 @@ export function AuthenticationForm({
       password: '',
       confirmPassword: '',
       termsOfService: true,
-    },
-
-    validationRules: {
-      firstName: (value) => formType === 'login' || value.trim().length >= 2,
-      lastName: (value) => formType === 'login' || value.trim().length >= 2,
-      email: (value) => /^\S+@\S+$/.test(value),
-      password: (value) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(value),
-      confirmPassword: (val, values) => formType === 'login' || val === values.password,
-    },
-
-    errorMessages: {
-      email: 'Invalid email',
-      password: 'Password should contain 1 number, 1 letter and at least 6 characters',
-      confirmPassword: "Passwords don't match. Try again",
     },
   });
 
