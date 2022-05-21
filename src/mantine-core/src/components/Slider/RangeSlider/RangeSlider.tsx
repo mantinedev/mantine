@@ -156,7 +156,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     value,
     defaultValue,
     finalValue: [min, max],
-    rule: (val) => Array.isArray(val),
     onChange,
   });
   const valueRef = useRef(_value);

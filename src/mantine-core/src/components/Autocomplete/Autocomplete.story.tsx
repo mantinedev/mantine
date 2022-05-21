@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { WithinOverlays, SubmitForm, StylesAPIStory } from '@mantine/storybook';
+import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { MantineProvider } from '@mantine/styles';
 import { Autocomplete } from './Autocomplete';
 
@@ -18,15 +18,13 @@ function DynamicData() {
   );
 }
 
+function Controlled() {
+  const [value, setValue] = useState('');
+  return <Autocomplete data={['React', 'Angular']} value={value} onChange={setValue} />;
+}
+
 storiesOf('Autocomplete', module)
-  .add('Styles API', () => (
-    <StylesAPIStory
-      component={Autocomplete}
-      name="Autocomplete"
-      withInputProps
-      props={{ data: ['React'] }}
-    />
-  ))
+  .add('Controlled', () => <Controlled />)
   .add('Repetitive data', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Autocomplete

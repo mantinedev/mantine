@@ -1,5 +1,6 @@
 import React from 'react';
-import { useUncontrolled, useId, getSafeId } from '@mantine/utils';
+import { useId, getSafeId } from '@mantine/utils';
+import { useUncontrolled } from '@mantine/hooks';
 import { MantineNumberSize } from '@mantine/styles';
 import { AccordionContextProvider } from './Accordion.context';
 import {

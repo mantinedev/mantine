@@ -5,7 +5,13 @@ import { JsonInput } from './JsonInput';
 function Controlled() {
   const [value, onChange] = useState('');
   return (
-    <JsonInput value={value} onChange={onChange} label="Controlled" placeholder="Controlled" />
+    <JsonInput
+      value={value}
+      onChange={onChange}
+      label="Controlled"
+      placeholder="Controlled"
+      formatOnBlur
+    />
   );
 }
 

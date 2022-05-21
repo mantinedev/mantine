@@ -162,7 +162,6 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       value,
       defaultValue,
       finalValue: [],
-      rule: (val) => Array.isArray(val),
       onChange,
     });
 

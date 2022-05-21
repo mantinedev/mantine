@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUncontrolled } from '@mantine/utils';
+import { useUncontrolled } from '@mantine/hooks';
 import { MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Group, GroupProps } from '../../Group';
 import { ChipGroupProvider } from '../ChipGroup.context';

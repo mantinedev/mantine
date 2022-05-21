@@ -1,6 +1,6 @@
 import React from 'react';
-import { useUncontrolled, getContextItemIndex, useHovered } from '@mantine/utils';
-import { useDidUpdate } from '@mantine/hooks';
+import { getContextItemIndex, useHovered } from '@mantine/utils';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { ClassNames, Styles, useMantineDefaultProps } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps, PopoverStylesNames } from '../Popover';

@@ -108,7 +108,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     defaultValue,
     finalValue: '',
     onChange,
-    rule: (val) => typeof val === 'string',
   });
 
   const setDropdownOpened = (opened: boolean) => {

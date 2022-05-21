@@ -43,7 +43,6 @@ export function CheckboxCard({
     defaultValue: defaultChecked,
     finalValue: false,
     onChange,
-    rule: (val) => typeof val === 'boolean',
   });
 
   return (

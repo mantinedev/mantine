@@ -122,7 +122,6 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       defaultValue,
       finalValue: null,
       onChange,
-      rule: (val) => val === null || val instanceof Date,
     });
     const [calendarMonth, setCalendarMonth] = useState(_value || initialMonth || new Date());
 

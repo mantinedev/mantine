@@ -127,7 +127,6 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {

@@ -52,7 +52,6 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
     value,
     defaultValue,
     finalValue: '',
-    rule: (val) => typeof val === 'string',
     onChange,
   });
 

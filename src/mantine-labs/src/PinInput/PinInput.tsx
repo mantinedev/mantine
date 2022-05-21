@@ -118,7 +118,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       defaultValue: createPinArray(length, defaultValue),
       finalValue: createPinArray(length, value),
       onChange: (values) => onChange && onChange(values.join('')),
-      rule: (val) => typeof val === 'string',
     });
 
     const inputsRef = useRef<Array<HTMLInputElement>>([]);

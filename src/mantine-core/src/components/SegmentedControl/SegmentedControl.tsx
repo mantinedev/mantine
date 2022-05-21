@@ -111,7 +111,6 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       ? data.find((item) => !item.disabled)?.value ?? data[0].value
       : null,
     onChange,
-    rule: (val) => !!val,
   });
 
   const { classes, cx, theme } = useStyles(

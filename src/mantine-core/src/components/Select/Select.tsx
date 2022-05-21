@@ -245,12 +245,11 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const sortedData = groupOptions({ data: formattedData });
 
-  const [_value, handleChange, inputMode] = useUncontrolled({
+  const [_value, handleChange, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => typeof val === 'string' || val === null,
   });
 
   const selectedValue = sortedData.find((item) => item.value === _value);
@@ -265,7 +264,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleClear = () => {
     handleChange(null);
-    if (inputMode === 'uncontrolled') {
+    if (!controlled) {
       handleSearchChange('');
     }
     inputRef.current?.focus();
@@ -298,7 +297,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         typeof onCreate === 'function' && onCreate(item.value);
       }
 
-      if (inputMode === 'uncontrolled') {
+      if (!controlled) {
         handleSearchChange(item.label);
       }
       setHovered(-1);

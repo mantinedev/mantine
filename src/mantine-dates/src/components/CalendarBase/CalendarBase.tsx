@@ -149,7 +149,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       defaultValue: initialMonth,
       finalValue: new Date(),
       onChange: onMonthChange,
-      rule: (val) => val instanceof Date,
     });
 
     const [yearSelection, setYearSelection] = useState(_month.getFullYear());

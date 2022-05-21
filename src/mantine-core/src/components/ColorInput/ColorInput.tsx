@@ -112,7 +112,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       value,
       defaultValue,
       finalValue: '',
-      rule: (val) => typeof val === 'string',
       onChange,
     });
 

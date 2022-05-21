@@ -1,6 +1,5 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useDidUpdate } from '@mantine/hooks';
-import { useUncontrolled } from '@mantine/utils';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';

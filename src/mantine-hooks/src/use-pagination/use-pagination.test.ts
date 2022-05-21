@@ -48,11 +48,11 @@ describe('@mantine/hooks/use-pagination', () => {
     const spy = jest.fn();
     const { result } = renderHook(() =>
       usePagination({
+        page: 7,
         onChange: spy,
         total: 20,
         siblings: 2,
         boundaries: 2,
-        initialPage: 7,
       })
     );
 

@@ -1,5 +1,4 @@
-import { useDidUpdate } from '@mantine/hooks';
-import { useUncontrolled } from '@mantine/utils';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   useFloating,
   shift,

@@ -241,7 +241,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     value,
     defaultValue,
     finalValue: [],
-    rule: (val) => Array.isArray(val),
     onChange,
   });
 

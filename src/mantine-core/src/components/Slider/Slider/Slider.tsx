@@ -143,7 +143,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     defaultValue:
       typeof defaultValue === 'number' ? clamp({ value: defaultValue, min, max }) : defaultValue,
     finalValue: clamp({ value: 0, min, max }),
-    rule: (val) => typeof val === 'number',
     onChange,
   });
 
