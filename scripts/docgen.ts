@@ -68,6 +68,7 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
   '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
+  '../src/mantine-nprogress/src/NProgress.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [
