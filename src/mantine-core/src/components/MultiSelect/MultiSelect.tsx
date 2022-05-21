@@ -76,7 +76,7 @@ export interface MultiSelectProps
   shouldCreate?: (query: string, data: SelectItem[]) => boolean;
 
   /** Called when create option is selected */
-  onCreate?: (query: string) => void;
+  onCreate?: (query: string) => SelectItem | void;
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: any;
@@ -315,6 +315,15 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
 
     const handleItemSelect = (item: SelectItem) => {
       clearSearchOnChange && handleSearchChange('');
+
+      if (item.creatable) {
+        if (typeof onCreate === 'function') {
+          const newItem = onCreate(item.value);
+          // eslint-disable-next-line no-param-reassign
+          if (newItem) item = { ...newItem };
+        }
+      }
+
       if (_value.includes(item.value)) {
         handleValueRemove(item.value);
       } else {
@@ -326,9 +335,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
         if (hovered === filteredData.length - 1) {
           setHovered(filteredData.length - 2);
         }
-      }
-      if (item.creatable) {
-        typeof onCreate === 'function' && onCreate(item.value);
       }
     };
 

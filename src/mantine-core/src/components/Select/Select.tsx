@@ -121,7 +121,7 @@ export interface SelectProps
   shouldCreate?: (query: string, data: SelectItem[]) => boolean;
 
   /** Called when create option is selected */
-  onCreate?: (query: string) => void;
+  onCreate?: (query: string) => SelectItem | void;
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
@@ -313,6 +313,14 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   }, [selectedValue?.label]);
 
   const handleItemSelect = (item: SelectItem) => {
+    if (item.creatable) {
+      if (typeof onCreate === 'function') {
+        const newItem = onCreate(item.value);
+        // eslint-disable-next-line no-param-reassign
+        if (newItem) item = { ...newItem };
+      }
+    }
+
     if (isDeselectable && selectedValue?.value === item.value) {
       handleChange(null);
       setDropdownOpened(false);

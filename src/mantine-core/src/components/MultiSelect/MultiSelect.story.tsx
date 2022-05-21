@@ -244,6 +244,26 @@ storiesOf('MultiSelect', module)
       />
     </div>
   ))
+  .add('onCreate', () => {
+    const [items, setItems] = useState(data);
+
+    return (
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <MultiSelect
+          data={items}
+          searchable
+          creatable
+          getCreateLabel={(query) => `+ Create ${query}`}
+          onCreate={(query) => {
+            const val = Math.random().toString();
+            const newItem = { value: val, label: query };
+            setItems((c) => [...c, newItem]);
+            return newItem;
+          }}
+        />
+      </div>
+    );
+  })
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Variants', () => <div style={{ padding: 40 }}>{variants}</div>)
   .add('Max Selected Values', () => (
