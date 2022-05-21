@@ -27,7 +27,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
       justifyContent: 'center',
       fontWeight: 500,
       border: `1px solid ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       height: theme.fn.size({ size, sizes }),
@@ -36,7 +36,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       borderRadius: theme.fn.radius(radius),
       lineHeight: 1,
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
       [`&:active:not(:disabled):not(.${getRef('dots')})`]: {
         transform: 'translateY(1px)',
