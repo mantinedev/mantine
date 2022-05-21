@@ -16,6 +16,6 @@ export const FEATURES_DATA = [
   {
     icon: IconRocket,
     title: 'Use anywhere',
-    description: 'Mantine supports all modern frameworks: Next.js, Gatsby, etc.',
+    description: 'Mantine supports all modern frameworks: Next.js, Remix, etc.',
   },
 ];

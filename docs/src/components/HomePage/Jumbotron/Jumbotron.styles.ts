@@ -43,7 +43,7 @@ export default createStyles((theme) => ({
     height: 64,
     paddingLeft: 46,
     paddingRight: 46,
-    fontSize: 22,
+    fontSize: 20,
 
     [BREAKPOINT]: {
       height: 54,
@@ -55,20 +55,21 @@ export default createStyles((theme) => ({
 
   controlPrimary: {
     border: 0,
+    fontWeight: 700,
     backgroundImage: `linear-gradient(52deg, ${
       theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
     } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
   },
 
   githubControl: {
-    borderWidth: 2,
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
-    backgroundColor: 'transparent',
+    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : 'transparent',
+    backgroundColor: theme.black,
+    color: theme.white,
+    fontWeight: 700,
 
     '&:hover': {
-      backgroundColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
-      } !important`,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.dark[5],
+      color: theme.white,
     },
   },
 

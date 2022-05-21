@@ -67,7 +67,7 @@ export function Jumbotron() {
             radius="md"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={20} />}
+            leftIcon={<MarkGithubIcon size={22} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
             GitHub
