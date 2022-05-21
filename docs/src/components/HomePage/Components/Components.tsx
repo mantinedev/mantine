@@ -30,13 +30,18 @@ export function Components() {
       </Text>
     </UnstyledButton>
   ));
+
+  const ActiveDemo = data.find((item) => item.name === active).demo;
+
   return (
     <div className={classes.root}>
       <Container size={1100}>
         <SectionTitle>100+ components</SectionTitle>
-        <Grid gutter={60}>
+        <Grid gutter={60} mt="md">
           <Grid.Col span={4}>{controls}</Grid.Col>
-          <Grid.Col span={8}>demo</Grid.Col>
+          <Grid.Col span={8}>
+            <ActiveDemo />
+          </Grid.Col>
         </Grid>
       </Container>
     </div>

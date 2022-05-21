@@ -4,7 +4,7 @@ export default createStyles((theme) => ({
   root: {
     paddingTop: 100,
     paddingBottom: 100,
-    backgroundColor: theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
   },
 
   control: {
@@ -14,15 +14,14 @@ export default createStyles((theme) => ({
     borderRadius: theme.radius.md,
     border: '1px solid transparent',
     position: 'relative',
-    transition: 'box-shadow 100ms ease',
 
     '&:hover': {
-      backgroundColor: theme.colors.gray[1],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
     },
 
     '&[data-active]': {
-      backgroundColor: theme.white,
-      borderColor: theme.colors.gray[3],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
       boxShadow: theme.shadows.md,
       zIndex: 1,
     },
