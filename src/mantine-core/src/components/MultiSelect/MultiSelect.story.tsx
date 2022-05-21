@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Group } from '../Group/Group';
+import { Stack } from '../Stack';
 import { TextInput } from '../TextInput/TextInput';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { MultiSelect } from './MultiSelect';
@@ -95,7 +96,7 @@ function DynamicLabels() {
 }
 
 const sizes = MANTINE_SIZES.map((size) => (
-  <Group grow key={size} style={{ marginTop: 30 }} direction="column">
+  <Stack key={size} mt="xl">
     <MultiSelect
       size={size}
       variant="unstyled"
@@ -106,11 +107,11 @@ const sizes = MANTINE_SIZES.map((size) => (
       nothingFound="Nothing found"
     />
     <TextInput label="Text input" placeholder="Text input" size={size} />
-  </Group>
+  </Stack>
 ));
 
 const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
-  <Group grow key={variant} style={{ marginTop: 30 }} direction="column">
+  <Stack key={variant} mt="xl">
     <MultiSelect
       variant={variant}
       label="Multi select"
@@ -119,7 +120,7 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
       nothingFound="Nothing found"
     />
     <TextInput label="Text input" placeholder="Text input" variant={variant} />
-  </Group>
+  </Stack>
 ));
 
 storiesOf('MultiSelect', module)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Group, Button, Text } from '@mantine/core';
+import { Stack, Button, Text } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 
 const code = `
@@ -17,7 +17,7 @@ function Demo() {
   }, []);
 
   return (
-    <Group position="center" direction="column">
+    <Stack align="center">
       <Text>Page loaded <b>{seconds}</b> seconds ago</Text>
       <Button
         onClick={interval.toggle}
@@ -26,7 +26,7 @@ function Demo() {
       >
         {interval.active ? 'Stop' : 'Start'} counting
       </Button>
-    </Group>
+    </Stack>
   );
 }
 `;
@@ -41,14 +41,14 @@ function Demo() {
   }, []);
 
   return (
-    <Group position="center" direction="column">
+    <Stack align="center">
       <Text>
         Page loaded <b>{seconds}</b> seconds ago
       </Text>
       <Button onClick={interval.toggle} color={interval.active ? 'red' : 'teal'} variant="light">
         {interval.active ? 'Stop' : 'Start'} counting
       </Button>
-    </Group>
+    </Stack>
   );
 }
 

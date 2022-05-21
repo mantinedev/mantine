@@ -23,9 +23,6 @@ export interface PinInputProps
   /** Input name attribute, used to bind inputs in one group, by default generated randomly with use-id hook */
   name?: string;
 
-  /** Input direction position */
-  direction?: 'horizontal' | 'vertical';
-
   /** Spacing between inputs */
   spacing?: MantineNumberSize;
 
@@ -88,7 +85,6 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
       className,
       value,
       defaultValue,
-      direction = 'horizontal',
       variant,
       spacing = 'sm',
       color,
@@ -234,15 +230,7 @@ export const PinInput = forwardRef<HTMLDivElement, PinInputProps>(
     }, []);
 
     return (
-      <Group
-        role="group"
-        spacing={spacing}
-        ref={ref}
-        className={className}
-        sx={sx}
-        direction={direction === 'horizontal' ? 'row' : 'column'}
-        {...others}
-      >
+      <Group role="group" spacing={spacing} ref={ref} className={className} sx={sx} {...others}>
         {_values.map((char, i) => (
           <Input<'input'>
             __staticSelector="PinInput"

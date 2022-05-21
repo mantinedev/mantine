@@ -17,9 +17,6 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
   /** Space between elements */
   spacing?: MantineNumberSize;
 
-  /** Defines flex-direction property, row for horizontal, column for vertical */
-  direction?: 'row' | 'column';
-
   /** Defines align-items css property */
   align?: React.CSSProperties['alignItems'];
 }
@@ -27,7 +24,6 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
 const defaultProps: Partial<GroupProps> = {
   position: 'left',
   spacing: 'md',
-  direction: 'row',
 };
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
@@ -39,7 +35,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
     noWrap,
     grow,
     spacing,
-    direction,
     classNames,
     styles,
     ...others
@@ -53,7 +48,6 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
       noWrap,
       spacing,
       position,
-      direction,
       count: filteredChildren.length,
     },
     { classNames, styles, name: 'Group' }

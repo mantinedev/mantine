@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
 import { CodeIcon } from '@modulz/radix-icons';
-import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
+import { useMantineTheme, Paper, Stack, ActionIcon, Tooltip } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import useStyles from './CodeDemo.styles';
 
@@ -51,7 +51,7 @@ export default function CodeDemo({
         {children}
 
         {!!code && toggle && (
-          <Group position="center" direction="column" spacing={5} className={classes.controls}>
+          <Stack justify="center" spacing={5} className={classes.controls}>
             <Tooltip
               label={`${visible ? 'Hide' : 'Show'} code`}
               position="left"
@@ -65,7 +65,7 @@ export default function CodeDemo({
                 <CodeIcon />
               </ActionIcon>
             </Tooltip>
-          </Group>
+          </Stack>
         )}
       </Paper>
 
