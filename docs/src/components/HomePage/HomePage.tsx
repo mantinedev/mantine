@@ -3,6 +3,7 @@ import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
+import { Components } from './Components/Components';
 import { Footer } from '../Footer/Footer';
 // import { MantineUiBanner } from '../MantineUiBanner/MantineUiBanner';
 // import { Community } from './Community/Community';
@@ -17,6 +18,7 @@ export function HomePage() {
       <Head title="Mantine" disableTitleTemplate />
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
+        <Components />
 
         {/* <Explore />
         <Box
