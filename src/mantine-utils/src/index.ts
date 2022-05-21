@@ -15,3 +15,5 @@ export { createEventHandler } from './create-event-handler/create-event-handler'
 export { noop } from './noop/noop';
 export { keys } from './keys/keys';
 export { useHovered } from './use-hovered/use-hovered';
+
+export type { PolymorphicComponentProps } from './create-polymorphic-component/create-polymorphic-component';
