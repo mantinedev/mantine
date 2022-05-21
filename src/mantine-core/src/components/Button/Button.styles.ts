@@ -94,7 +94,7 @@ export default createStyles(
       ...theme.fn.focusStyles(),
       ...getWidthStyles(fullWidth),
       borderRadius: theme.fn.radius(radius),
-      fontWeight: 700,
+      fontWeight: 600,
       position: 'relative',
       lineHeight: 1,
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
