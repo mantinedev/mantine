@@ -7,7 +7,7 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
-import { Text, TextProps } from '../Text';
+import { Text } from '../Text';
 import { Box } from '../Box';
 
 export type DividerStylesNames = 'label';
@@ -31,7 +31,7 @@ export interface DividerProps
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: TextProps;
+  labelProps?: Record<string, any>;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
