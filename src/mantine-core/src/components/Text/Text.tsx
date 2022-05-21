@@ -3,15 +3,17 @@ import {
   DefaultProps,
   MantineSize,
   MantineGradient,
-  PolymorphicComponentProps,
-  PolymorphicRef,
   useMantineDefaultProps,
   MantineColor,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import useStyles from './Text.styles';
 
-export interface SharedTextProps extends DefaultProps {
+export interface TextProps extends DefaultProps {
+  /** Text content */
+  children?: React.ReactNode;
+
   /** Predefined font-size from theme.fontSizes */
   size?: MantineSize;
 
@@ -46,13 +48,7 @@ export interface SharedTextProps extends DefaultProps {
   gradient?: MantineGradient;
 }
 
-export type TextProps<C> = PolymorphicComponentProps<C, SharedTextProps>;
-
-type TextComponent = (<C = 'div'>(props: TextProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<TextProps<any>> = {
+const defaultProps: Partial<TextProps> = {
   size: 'md',
   variant: 'text',
   gradient: { from: 'blue', to: 'cyan', deg: 45 },
@@ -60,55 +56,53 @@ const defaultProps: Partial<TextProps<any>> = {
   inherit: false,
 };
 
-export const Text: TextComponent = forwardRef(
-  (props: TextProps<'div'>, ref: PolymorphicRef<'div'>) => {
-    const {
-      className,
-      component,
-      size = 'md',
+export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
+  const {
+    className,
+    size = 'md',
+    weight,
+    transform,
+    color,
+    align,
+    variant = 'text',
+    lineClamp,
+    gradient = { from: 'blue', to: 'cyan', deg: 45 },
+    inline = false,
+    inherit = false,
+    underline,
+    classNames,
+    styles,
+    ...others
+  } = useMantineDefaultProps('Text', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    {
+      variant,
+      color,
+      size,
+      lineClamp,
+      inline,
+      inherit,
+      underline,
       weight,
       transform,
-      color,
       align,
-      variant = 'text',
-      lineClamp,
-      gradient = { from: 'blue', to: 'cyan', deg: 45 },
-      inline = false,
-      inherit = false,
-      underline,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Text', defaultProps, props);
+      gradientFrom: gradient.from,
+      gradientTo: gradient.to,
+      gradientDeg: gradient.deg,
+    },
+    { classNames, styles, name: 'Text' }
+  );
 
-    const { classes, cx } = useStyles(
-      {
-        variant,
-        color,
-        size,
-        lineClamp,
-        inline,
-        inherit,
-        underline,
-        weight,
-        transform,
-        align,
-        gradientFrom: gradient.from,
-        gradientTo: gradient.to,
-        gradientDeg: gradient.deg,
-      },
-      { classNames, styles, name: 'Text' }
-    );
+  return (
+    <Box
+      ref={ref}
+      className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
+      {...others}
+    />
+  );
+});
 
-    return (
-      <Box
-        ref={ref}
-        component={component || 'div'}
-        className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
-        {...others}
-      />
-    );
-  }
-) as any;
+_Text.displayName = '@mantine/core/Text';
 
-Text.displayName = '@mantine/core/Text';
+export const Text = createPolymorphicComponent<'div', TextProps>(_Text);

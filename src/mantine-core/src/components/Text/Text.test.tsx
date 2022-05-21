@@ -3,18 +3,18 @@ import { render, screen } from '@testing-library/react';
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Text, TextProps } from './Text';
 
-const defaultProps: TextProps<'div'> = {
+const defaultProps: TextProps = {
   children: 'test-text',
 };
 
-const expectStyle = (props: TextProps<'div'>, style: Record<string, any>) => {
+const expectStyle = (props: TextProps, style: Record<string, any>) => {
   render(<Text {...defaultProps} {...props} align="center" />);
   expect(screen.getByText('test-text')).toHaveStyle(style);
 };
 
 describe('@mantine/core/Text', () => {
-  itRendersChildren(Text as any, defaultProps);
-  itIsPolymorphic(Text as any, defaultProps);
+  itRendersChildren(Text, defaultProps);
+  itIsPolymorphic(Text, defaultProps);
   itSupportsSystemProps({
     component: Text,
     props: defaultProps,

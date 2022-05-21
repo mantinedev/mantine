@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import { MantineColor, MantineTheme, CSSObject, useMantineDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Text, SharedTextProps } from '../Text/Text';
+import { Text, TextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 import { highlighter } from './highlighter/highlighter';
 
-export interface HighlightProps extends SharedTextProps {
+export interface HighlightProps extends TextProps {
   /** Substring or an array of substrings to highlight in children */
   highlight: string | string[];
 

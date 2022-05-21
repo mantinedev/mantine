@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import { useMantineDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
-import { Text, SharedTextProps } from '../Text/Text';
+import { Text, TextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
 
-export interface AnchorProps extends SharedTextProps {
+export interface AnchorProps extends TextProps {
   children?: React.ReactNode;
 }
 

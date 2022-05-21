@@ -31,7 +31,7 @@ export interface DividerProps
   labelPosition?: 'left' | 'center' | 'right';
 
   /** Props spread to Text component in label */
-  labelProps?: TextProps<any>;
+  labelProps?: TextProps;
 
   /** Divider borderStyle */
   variant?: 'solid' | 'dashed' | 'dotted';
