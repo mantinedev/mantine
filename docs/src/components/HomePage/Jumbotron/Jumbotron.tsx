@@ -34,7 +34,7 @@ export function Jumbotron() {
 
         <Text className={classes.description}>
           Build fully functional accessible web applications faster than ever – Mantine includes
-          more than 120 customizable components and hooks to cover you in any situation
+          more than 100 customizable components and 40 hooks to cover you in any situation
         </Text>
 
         <SimpleGrid
