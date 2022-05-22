@@ -18,7 +18,7 @@ function Demo() {
       <Text variant="link" component="a" href="https://mantine.dev">Link variant</Text>
       <Text color="red">Red text</Text>
       <Text color="blue">Blue text</Text>
-      <Text color="gray">Gray text</Text>
+      <Text color="teal">Teal text</Text>
       <Text transform="uppercase">Uppercase</Text>
       <Text transform="capitalize">capitalized text</Text>
       <Text align="center">Aligned to center</Text>
@@ -44,7 +44,7 @@ function Demo() {
       </Text>
       <Text color="red">Red text</Text>
       <Text color="blue">Blue text</Text>
-      <Text color="gray">Gray text</Text>
+      <Text color="teal">Teal text</Text>
       <Text transform="uppercase">Uppercase</Text>
       <Text transform="capitalize">capitalized text</Text>
       <Text align="center">Aligned to center</Text>

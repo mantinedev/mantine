@@ -28,7 +28,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
   }
 
   return color in theme.colors
-    ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
+    ? theme.fn.variant({ variant: 'filled', color }).background
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
     : color || 'inherit';
