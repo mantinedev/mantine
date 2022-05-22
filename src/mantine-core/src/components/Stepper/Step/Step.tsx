@@ -134,7 +134,7 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
 
             {state !== 'stepCompleted' ? (
               loading ? (
-                <Loader size={_iconSize} />
+                <Loader size={_iconSize} color={color} />
               ) : (
                 _icon || icon
               )

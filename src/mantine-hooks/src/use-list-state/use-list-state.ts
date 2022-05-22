@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export interface UseListStateHandler<T> {
+export interface UseListStateHandlers<T> {
   setState: React.Dispatch<React.SetStateAction<T[]>>;
   append: (...items: T[]) => void;
   prepend: (...items: T[]) => void;
@@ -18,7 +18,7 @@ export interface UseListStateHandler<T> {
   setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
 }
 
-export type UseListState<T> = [T[], UseListStateHandler<T>];
+export type UseListState<T> = [T[], UseListStateHandlers<T>];
 
 export function useListState<T>(initialValue: T[] = []): UseListState<T> {
   const [state, setState] = useState(initialValue);

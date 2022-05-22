@@ -72,7 +72,7 @@ const defaultProps: Partial<DateRangePickerProps> = {
   withinPortal: true,
 };
 
-export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
+export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
   (props: DateRangePickerProps, ref) => {
     const {
       value,

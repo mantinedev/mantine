@@ -60,7 +60,7 @@ const defaultProps: Partial<DatePickerProps> = {
   firstDayOfWeek: 'monday',
 };
 
-export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (props: DatePickerProps, ref) => {
     const {
       value,

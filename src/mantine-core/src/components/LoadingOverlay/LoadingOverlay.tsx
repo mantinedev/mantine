@@ -30,8 +30,11 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   /** If visible overlay will take 100% width and height of first parent with relative position and overlay all of its content */
   visible: boolean;
 
-  /** Appear and disappear animation duration */
+  /** Animation duration in ms */
   transitionDuration?: number;
+
+  /** Exit transition duration in ms */
+  exitTransitionDuration?: number;
 
   /** Value from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
@@ -51,6 +54,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     overlayOpacity,
     overlayColor,
     transitionDuration,
+    exitTransitionDuration,
     zIndex,
     style,
     loader,
@@ -62,7 +66,12 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
   const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
 
   return (
-    <Transition duration={transitionDuration} mounted={visible} transition="fade">
+    <Transition
+      duration={transitionDuration}
+      exitDuration={exitTransitionDuration}
+      mounted={visible}
+      transition="fade"
+    >
       {(transitionStyles) => (
         <Box
           className={cx(classes.root, className)}
