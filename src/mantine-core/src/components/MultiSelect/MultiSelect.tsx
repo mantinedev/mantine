@@ -314,20 +314,20 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     }, [_value]);
 
     const handleItemSelect = (item: SelectItem) => {
+      let newItem = item;
       clearSearchOnChange && handleSearchChange('');
 
-      if (item.creatable) {
+      if (newItem.creatable) {
         if (typeof onCreate === 'function') {
-          const newItem = onCreate(item.value);
-          // eslint-disable-next-line no-param-reassign
-          if (newItem) item = { ...newItem };
+          const newCreatedItem = onCreate(newItem.value);
+          if (newCreatedItem) newItem = { ...newCreatedItem };
         }
       }
 
-      if (_value.includes(item.value)) {
-        handleValueRemove(item.value);
+      if (_value.includes(newItem.value)) {
+        handleValueRemove(newItem.value);
       } else {
-        setValue([..._value, item.value]);
+        setValue([..._value, newItem.value]);
         if (_value.length === maxSelectedValues - 1) {
           valuesOverflow.current = true;
           setDropdownOpened(false);
@@ -493,16 +493,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
     };
 
     const selectedItems = _value
-      .map((val) => {
-        let selectedItem = sortedData.find((item) => item.value === val && !item.disabled);
-        if (!selectedItem && isCreatable) {
-          selectedItem = {
-            value: val,
-            label: val,
-          };
-        }
-        return selectedItem;
-      })
+      .map((val) => sortedData.find((item) => item.value === val && !item.disabled))
       .filter((val) => !!val)
       .map((item) => (
         <Value

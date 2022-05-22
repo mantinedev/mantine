@@ -313,26 +313,22 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   }, [selectedValue?.label]);
 
   const handleItemSelect = (item: SelectItem) => {
-    if (item.creatable) {
+    let newItem = item;
+    if (newItem.creatable) {
       if (typeof onCreate === 'function') {
-        const newItem = onCreate(item.value);
-        // eslint-disable-next-line no-param-reassign
-        if (newItem) item = { ...newItem };
+        const newCreatedItem = onCreate(newItem.value);
+        if (newCreatedItem) newItem = { ...newCreatedItem };
       }
     }
 
-    if (isDeselectable && selectedValue?.value === item.value) {
+    if (isDeselectable && selectedValue?.value === newItem.value) {
       handleChange(null);
       setDropdownOpened(false);
     } else {
-      handleChange(item.value);
-
-      if (item.creatable) {
-        typeof onCreate === 'function' && onCreate(item.value);
-      }
+      handleChange(newItem.value);
 
       if (inputMode === 'uncontrolled') {
-        handleSearchChange(item.label);
+        handleSearchChange(newItem.label);
       }
       setHovered(-1);
       setDropdownOpened(false);
