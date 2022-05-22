@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
 
 export interface DividerStylesParams {
   size: MantineNumberSize;
@@ -13,6 +13,18 @@ const sizes = {
   lg: 4,
   xl: 5,
 };
+
+function getColor(theme: MantineTheme, color: MantineColor) {
+  const themeColor = theme.fn.variant({ variant: 'outline', color }).border;
+
+  return color in theme.colors
+    ? themeColor
+    : color === undefined
+    ? theme.colorScheme === 'dark'
+      ? theme.colors.dark[4]
+      : theme.colors.gray[3]
+    : color;
+}
 
 export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
   root: {},
@@ -41,22 +53,14 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
       content: '""',
       flex: 1,
       height: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
-        color,
-        theme.colorScheme === 'dark' ? 3 : 4,
-        false
-      )}`,
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
       marginRight: theme.spacing.xs,
     },
 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
-        color,
-        theme.colorScheme === 'dark' ? 3 : 4,
-        false
-      )}`,
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
       marginLeft: theme.spacing.xs,
     },
   },
@@ -75,7 +79,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
   horizontal: {
     border: 0,
     borderTopWidth: theme.fn.size({ size, sizes }),
-    borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4, false),
+    borderTopColor: getColor(theme, color),
     borderTopStyle: variant,
     margin: 0,
   },
@@ -85,7 +89,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     alignSelf: 'stretch',
     height: '100%',
     borderLeftWidth: theme.fn.size({ size, sizes }),
-    borderLeftColor: theme.fn.themeColor(color, 4, false),
+    borderLeftColor: getColor(theme, color),
     borderLeftStyle: variant,
   },
 }));
