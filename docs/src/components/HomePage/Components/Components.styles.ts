@@ -1,4 +1,9 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, keyframes } from '@mantine/core';
+
+const fadeId = keyframes({
+  from: { opacity: 0, transform: 'translateY(-20px) scale(0.95) rotate(1deg) skewX(-2deg)' },
+  to: { opacity: 1, transform: 'translateY(0) scale(1) rotate(0)' },
+});
 
 export default createStyles((theme) => ({
   root: {
@@ -77,6 +82,7 @@ export default createStyles((theme) => ({
 
   demo: {
     paddingLeft: theme.spacing.xl * 2,
+    animation: `${fadeId} 300ms ease`,
 
     [theme.fn.smallerThan('md')]: {
       paddingLeft: 0,

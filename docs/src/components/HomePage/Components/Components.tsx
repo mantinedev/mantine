@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Container, Grid, UnstyledButton, Text } from '@mantine/core';
 import {
   IconForms,
@@ -35,13 +35,22 @@ const data = [
 
 export function Components() {
   const { classes, theme } = useStyles();
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const animationTimeout = useRef<number>();
   const [active, setActive] = useState(0);
   const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`) ? 60 : 80;
+
+  const handleActiveChange = (index: number) => {
+    setActive(index);
+    setShouldAnimate(true);
+    window.clearTimeout(animationTimeout.current);
+    animationTimeout.current = window.setTimeout(() => setShouldAnimate(false), 500);
+  };
 
   const controls = data.map((item, index) => (
     <UnstyledButton<'button'>
       key={item.name}
-      onClick={() => setActive(index)}
+      onClick={() => handleActiveChange(index)}
       data-active={index === active || undefined}
       className={classes.control}
     >
@@ -74,7 +83,7 @@ export function Components() {
             </div>
           </Grid.Col>
           <Grid.Col md={8}>
-            <div className={classes.demo}>
+            <div className={classes.demo} style={{ animation: shouldAnimate ? undefined : 'none' }}>
               <ActiveDemo />
             </div>
           </Grid.Col>
