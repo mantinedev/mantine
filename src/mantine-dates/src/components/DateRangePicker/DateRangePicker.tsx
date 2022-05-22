@@ -25,6 +25,9 @@ export interface DateRangePickerProps
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
 
+  /** Set to true to open dropdown on clear */
+  openDropdownOnClear?: boolean;
+
   /** dayjs input format */
   inputFormat?: string;
 
@@ -70,6 +73,7 @@ const defaultProps: Partial<DateRangePickerProps> = {
   allowSingleDateInRange: false,
   amountOfMonths: 1,
   withinPortal: true,
+  openDropdownOnClear: true,
 };
 
 export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
@@ -113,6 +117,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       hideOutsideDates,
       hideWeekdays,
       renderDay,
+      openDropdownOnClear,
       ...others
     } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -153,7 +158,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
     const handleClear = () => {
       setValue([null, null]);
       setDropdownOpened(true);
-      onDropdownOpen?.();
+      openDropdownOnClear && onDropdownOpen?.();
       inputRef.current?.focus();
     };
 
