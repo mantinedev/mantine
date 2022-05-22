@@ -31,7 +31,7 @@ export function DefaultValue({
   onRemove,
   disabled,
   size,
-  radius,
+  radius = 'sm',
   ...others
 }: MultiSelectValueProps) {
   const { classes, cx } = useStyles(
