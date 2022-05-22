@@ -12,6 +12,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Inputs } from './demos/Inputs';
 import { Dates } from './demos/Dates';
+import { Overlays } from './demos/Overlays';
 import useStyles from './Components.styles';
 
 const data = [
@@ -22,7 +23,12 @@ const data = [
     name: 'Date pickers',
     description: 'Calendar, date pickers, time inputs',
   },
-  { demo: Inputs, icon: IconStack2, name: 'Overlays', description: 'Modal, Drawer, Popover, Menu' },
+  {
+    demo: Overlays,
+    icon: IconStack2,
+    name: 'Overlays & Navigation',
+    description: 'Modal, HoverCard, Tabs, Stepper',
+  },
   { demo: Inputs, icon: IconLink, name: 'Navigation', description: 'Tabs, Pagination, Stepper' },
   {
     demo: Inputs,
