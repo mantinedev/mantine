@@ -22,7 +22,7 @@ function getColor(theme: MantineTheme, color: MantineColor) {
     : color === undefined
     ? theme.colorScheme === 'dark'
       ? theme.colors.dark[4]
-      : theme.colors.gray[3]
+      : theme.colors.gray[4]
     : color;
 }
 

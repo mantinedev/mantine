@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
@@ -59,10 +58,8 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
     ...others
   } = useMantineDefaultProps('Divider', defaultProps, props);
 
-  const theme = useMantineTheme();
-  const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const { classes, cx } = useStyles(
-    { color: _color, size, variant },
+    { color, size, variant },
     { classNames, styles, name: 'Divider' }
   );
 

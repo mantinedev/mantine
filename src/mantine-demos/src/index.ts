@@ -7,6 +7,7 @@ export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
 export { TimelineBase } from './demos/core/Timeline/_base';
 export { CustomSelectDemo } from './demos/core/Select/Select.demo.itemComponent';
 export { CountriesSelect } from './demos/core/MultiSelect/MultiSelect.demo.countries';
+export { HoverCardHomePageDemo } from './demos/core/HoverCard/HoverCard.demo.profile';
 
 // Meta demos
 export * as CreateStylesDemos from './demos/create-styles';
