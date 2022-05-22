@@ -42,9 +42,11 @@ export function Components() {
 
   const handleActiveChange = (index: number) => {
     setActive(index);
-    setShouldAnimate(true);
-    window.clearTimeout(animationTimeout.current);
-    animationTimeout.current = window.setTimeout(() => setShouldAnimate(false), 500);
+    if (index !== active) {
+      setShouldAnimate(true);
+      window.clearTimeout(animationTimeout.current);
+      animationTimeout.current = window.setTimeout(() => setShouldAnimate(false), 500);
+    }
   };
 
   const controls = data.map((item, index) => (

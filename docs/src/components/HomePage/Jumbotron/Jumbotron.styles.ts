@@ -63,12 +63,12 @@ export default createStyles((theme) => ({
 
   githubControl: {
     borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : 'transparent',
-    backgroundColor: theme.black,
+    backgroundColor: theme.colors.dark[6],
     color: theme.white,
     fontWeight: 700,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.dark[5],
+      backgroundColor: theme.colors.dark[7],
       color: theme.white,
     },
   },
