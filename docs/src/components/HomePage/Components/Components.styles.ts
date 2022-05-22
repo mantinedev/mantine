@@ -12,6 +12,7 @@ export default createStyles((theme) => ({
   },
 
   controlsIndicator: {
+    pointerEvents: 'none',
     position: 'absolute',
     left: 0,
     right: 0,
@@ -33,7 +34,10 @@ export default createStyles((theme) => ({
     height: 80,
 
     '&:hover': theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.fn.rgba(theme.colors.dark[8], 0.5)
+          : theme.colors.gray[1],
     }),
 
     [theme.fn.smallerThan('sm')]: {
