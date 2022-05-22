@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { Container, Grid, UnstyledButton, Text } from '@mantine/core';
+import {
+  IconForms,
+  IconCalendar,
+  IconStack2,
+  IconLink,
+  IconDragDrop,
+  IconBold,
+} from '@tabler/icons';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Inputs } from './demos/Inputs';
 import useStyles from './Components.styles';
 
 const data = [
-  { demo: Inputs, name: 'Inputs', description: '20+ input components' },
-  { demo: Inputs, name: 'Date pickers', description: 'Calendar, date pickers, time inputs' },
-  { demo: Inputs, name: 'Overlays', description: 'Modal, Drawer, Popover, Menu' },
-  { demo: Inputs, name: 'Navigation', description: 'Tabs, Pagination, Stepper' },
-  { demo: Inputs, name: 'Rich text editor', description: 'Quill based rich text editor' },
-  { demo: Inputs, name: 'Dropzone', description: 'Drag and drop files' },
-  { demo: Inputs, name: 'Spotlight', description: 'Command center for your application' },
+  { demo: Inputs, icon: IconForms, name: 'Inputs', description: '20+ input components' },
+  {
+    demo: Inputs,
+    icon: IconCalendar,
+    name: 'Date pickers',
+    description: 'Calendar, date pickers, time inputs',
+  },
+  { demo: Inputs, icon: IconStack2, name: 'Overlays', description: 'Modal, Drawer, Popover, Menu' },
+  { demo: Inputs, icon: IconLink, name: 'Navigation', description: 'Tabs, Pagination, Stepper' },
+  {
+    demo: Inputs,
+    icon: IconBold,
+    name: 'Rich text editor',
+    description: 'Quill based rich text editor',
+  },
+  { demo: Inputs, icon: IconDragDrop, name: 'Dropzone', description: 'Drag and drop files' },
 ];
 
 export function Components() {
@@ -24,10 +41,13 @@ export function Components() {
       data-active={item.name === active || undefined}
       className={classes.control}
     >
-      <Text className={classes.controlTitle}>{item.name}</Text>
-      <Text color="dimmed" size="sm">
-        {item.description}
-      </Text>
+      <item.icon size={28} stroke={1.5} className={classes.controlIcon} />
+      <div>
+        <Text className={classes.controlTitle}>{item.name}</Text>
+        <Text color="dimmed" size="sm">
+          {item.description}
+        </Text>
+      </div>
     </UnstyledButton>
   ));
 

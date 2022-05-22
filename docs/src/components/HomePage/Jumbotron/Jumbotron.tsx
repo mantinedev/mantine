@@ -13,7 +13,7 @@ export function Jumbotron() {
   const features = FEATURES_DATA.map((feature) => (
     <div className={classes.feature} key={feature.title}>
       <div className={classes.featureIcon}>
-        <feature.icon size={28} />
+        <feature.icon size={28} stroke={1.5} />
       </div>
 
       <div className={classes.featureBody}>

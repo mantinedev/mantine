@@ -7,6 +7,7 @@ import {
   Select,
   NativeSelect,
   MultiSelect,
+  Autocomplete,
 } from '@mantine/core';
 
 export function Inputs() {
@@ -19,12 +20,6 @@ export function Inputs() {
         defaultValue="Secret"
         required
       />
-      {/* <TextInput
-        label="With description"
-        placeholder="Additional info is always useful"
-        description="All inputs can have description..."
-      />
-      <TextInput label="With error" placeholder="Oh-oh" error="...and error" /> */}
       <ColorInput
         label="Color input"
         defaultValue="rgba(34, 138, 230, 0.8)"
@@ -43,6 +38,25 @@ export function Inputs() {
         searchable
         data={['React', 'Angular', 'Svelte', 'Vue']}
       />
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        searchable
+        label="Custom multi select"
+        placeholder="Pick all you want"
+      />
+
+      <Autocomplete
+        data={['React', 'Angular', 'Svelte', 'Vue']}
+        label="Autocomplete"
+        placeholder="Enter anything with suggestions"
+      />
+
+      <TextInput
+        label="With description"
+        placeholder="Additional info is always useful"
+        description="Every input can have description..."
+      />
+      <TextInput label="With error" placeholder="Oh-oh" error="...and error" />
     </SimpleGrid>
   );
 }

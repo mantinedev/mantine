@@ -1,4 +1,4 @@
-import { IconScale, IconFileCode, IconRocket } from '@tabler/icons';
+import { IconScale, IconRocket, IconLifebuoy } from '@tabler/icons';
 
 export const FEATURES_DATA = [
   {
@@ -8,7 +8,7 @@ export const FEATURES_DATA = [
   },
 
   {
-    icon: IconFileCode,
+    icon: IconLifebuoy,
     title: 'TypeScript based',
     description: 'Build type safe applications, all components and hooks export types',
   },

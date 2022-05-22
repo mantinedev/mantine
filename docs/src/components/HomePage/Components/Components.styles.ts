@@ -8,7 +8,8 @@ export default createStyles((theme) => ({
   },
 
   control: {
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
     width: '100%',
     padding: `${theme.spacing.md}px ${theme.spacing.lg}px`,
     borderRadius: theme.radius.md,
@@ -30,5 +31,10 @@ export default createStyles((theme) => ({
   controlTitle: {
     fontWeight: 700,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+  },
+
+  controlIcon: {
+    color: theme.fn.variant({ variant: 'filled', color: 'blue' }).background,
+    marginRight: theme.spacing.md,
   },
 }));
