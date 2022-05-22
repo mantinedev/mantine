@@ -4,15 +4,16 @@ import {
   IconForms,
   IconCalendar,
   IconStack2,
-  IconLink,
   IconDragDrop,
   IconBold,
+  IconNotebook,
 } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Inputs } from './demos/Inputs';
 import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';
+import { Content } from './demos/Content';
 import useStyles from './Components.styles';
 
 const data = [
@@ -29,7 +30,7 @@ const data = [
     name: 'Overlays & Navigation',
     description: 'Modal, HoverCard, Tabs, Stepper',
   },
-  { demo: Inputs, icon: IconLink, name: 'Navigation', description: 'Tabs, Pagination, Stepper' },
+  { demo: Content, icon: IconNotebook, name: 'Content', description: 'Accordion, Timeline' },
   {
     demo: Inputs,
     icon: IconBold,

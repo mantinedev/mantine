@@ -47,13 +47,4 @@ export const charactersList = [
     content:
       'Homer Jay Simpson (born May 12) is the main protagonist and one of the five main characters of The Simpsons series(or show). He is the spouse of Marge Simpson and father of Bart, Lisa and Maggie Simpson.',
   },
-
-  {
-    id: 'spongebob',
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-    content:
-      'SpongeBob is a childish and joyful sea sponge who lives in a pineapple with his pet snail Gary in the underwater city of Bikini Bottom. He works as a fry cook at the Krusty Krab, a job which he is exceptionally skilled at and enjoys thoroughly. ',
-  },
 ];
