@@ -140,7 +140,7 @@ export function AuthenticationForm({
             <Anchor
               component="button"
               type="button"
-              color="gray"
+              color="dimmed"
               onClick={toggleFormType}
               size="sm"
             >
