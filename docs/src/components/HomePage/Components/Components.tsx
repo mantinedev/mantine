@@ -14,6 +14,7 @@ import { Inputs } from './demos/Inputs';
 import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';
 import { Content } from './demos/Content';
+import { RichText } from './demos/RichText';
 import useStyles from './Components.styles';
 
 const data = [
@@ -32,7 +33,7 @@ const data = [
   },
   { demo: Content, icon: IconNotebook, name: 'Content', description: 'Accordion, Timeline' },
   {
-    demo: Inputs,
+    demo: RichText,
     icon: IconBold,
     name: 'Rich text editor',
     description: 'Quill based rich text editor',
