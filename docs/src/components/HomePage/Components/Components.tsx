@@ -11,12 +11,13 @@ import {
 import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Inputs } from './demos/Inputs';
+import { Dates } from './demos/Dates';
 import useStyles from './Components.styles';
 
 const data = [
   { demo: Inputs, icon: IconForms, name: 'Inputs', description: '20+ input components' },
   {
-    demo: Inputs,
+    demo: Dates,
     icon: IconCalendar,
     name: 'Date pickers',
     description: 'Calendar, date pickers, time inputs',
