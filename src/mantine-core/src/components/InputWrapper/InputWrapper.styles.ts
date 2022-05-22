@@ -25,15 +25,15 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
     color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+    fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
+    lineHeight: 1.2,
   },
 
   description: {
     marginTop: -3,
     marginBottom: 7,
     wordBreak: 'break-word',
-    color: `${
-      theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6]
-    } !important`,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
     lineHeight: 1.2,
   },
