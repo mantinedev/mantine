@@ -12,7 +12,12 @@ import {
 
 export function Inputs() {
   return (
-    <SimpleGrid cols={2} sx={(theme) => ({ rowGap: theme.spacing.md })} spacing="xl">
+    <SimpleGrid
+      cols={2}
+      breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
+      sx={(theme) => ({ rowGap: theme.spacing.md })}
+      spacing="xl"
+    >
       <TextInput label="Text input" placeholder="Text input" required />
       <PasswordInput
         label="Password input"

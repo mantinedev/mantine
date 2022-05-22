@@ -8,6 +8,7 @@ import {
   IconDragDrop,
   IconBold,
 } from '@tabler/icons';
+import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import { Inputs } from './demos/Inputs';
 import useStyles from './Components.styles';
@@ -32,35 +33,49 @@ const data = [
 ];
 
 export function Components() {
-  const { classes } = useStyles();
-  const [active, setActive] = useState('Inputs');
-  const controls = data.map((item) => (
-    <UnstyledButton
+  const { classes, theme } = useStyles();
+  const [active, setActive] = useState(0);
+  const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`) ? 60 : 80;
+
+  const controls = data.map((item, index) => (
+    <UnstyledButton<'button'>
       key={item.name}
-      onClick={() => setActive(item.name)}
-      data-active={item.name === active || undefined}
+      onClick={() => setActive(index)}
+      data-active={index === active || undefined}
       className={classes.control}
     >
-      <item.icon size={28} stroke={1.5} className={classes.controlIcon} />
-      <div>
-        <Text className={classes.controlTitle}>{item.name}</Text>
-        <Text color="dimmed" size="sm">
-          {item.description}
-        </Text>
+      <div className={classes.controlInner}>
+        <item.icon size={28} stroke={1.5} className={classes.controlIcon} />
+        <div>
+          <Text className={classes.controlTitle}>{item.name}</Text>
+          <Text color="dimmed" size="sm" className={classes.controlDescription}>
+            {item.description}
+          </Text>
+        </div>
       </div>
     </UnstyledButton>
   ));
 
-  const ActiveDemo = data.find((item) => item.name === active).demo;
+  const ActiveDemo = data[active].demo;
 
   return (
     <div className={classes.root}>
       <Container size={1100}>
         <SectionTitle>100+ components</SectionTitle>
-        <Grid gutter={60} mt="md">
-          <Grid.Col span={4}>{controls}</Grid.Col>
-          <Grid.Col span={8}>
-            <ActiveDemo />
+        <Grid gutter={0} mt="md">
+          <Grid.Col md={4}>
+            <div className={classes.controls}>
+              <div
+                className={classes.controlsIndicator}
+                style={{ height: controlSize, transform: `translateY(${controlSize * active}px)` }}
+              />
+              {controls}
+            </div>
+          </Grid.Col>
+          <Grid.Col md={8}>
+            <div className={classes.demo}>
+              <ActiveDemo />
+            </div>
           </Grid.Col>
         </Grid>
       </Container>
