@@ -24,7 +24,7 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
   error: {
     marginTop: theme.spacing.xs / 2,
     wordBreak: 'break-word',
-    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+    color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }) - 2,
     lineHeight: 1.2,
   },

@@ -91,7 +91,7 @@ export default createStyles(
       iconWidth,
     }: InputStylesParams
   ) => {
-    const invalidColor = theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7];
+    const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
     const sizeStyles =
       variant === 'default' || variant === 'filled'
         ? {
