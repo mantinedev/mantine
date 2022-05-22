@@ -15,6 +15,7 @@ import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';
 import { Content } from './demos/Content';
 import { RichText } from './demos/RichText';
+import { DropzoneDemo } from './demos/Dropzone';
 import useStyles from './Components.styles';
 
 const data = [
@@ -38,7 +39,7 @@ const data = [
     name: 'Rich text editor',
     description: 'Quill based rich text editor',
   },
-  { demo: Inputs, icon: IconDragDrop, name: 'Dropzone', description: 'Drag and drop files' },
+  { demo: DropzoneDemo, icon: IconDragDrop, name: 'Dropzone', description: 'Drag and drop files' },
 ];
 
 export function Components() {

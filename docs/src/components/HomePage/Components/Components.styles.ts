@@ -1,7 +1,7 @@
 import { createStyles, keyframes } from '@mantine/core';
 
 const fadeId = keyframes({
-  from: { opacity: 0, transform: 'translateY(-20px) scale(0.95) rotate(1deg) skewX(-2deg)' },
+  from: { opacity: 0, transform: 'translateY(-20px) scale(0.95) skewX(-2deg)' },
   to: { opacity: 1, transform: 'translateY(0) scale(1) rotate(0)' },
 });
 
