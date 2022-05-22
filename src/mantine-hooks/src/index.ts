@@ -54,3 +54,4 @@ export { useNetwork } from './use-network/use-network';
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
 export type { HotkeyItem } from './use-hotkeys/use-hotkeys';
+export type { UseListStateHandlers } from './use-list-state/use-list-state';

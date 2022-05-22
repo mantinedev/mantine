@@ -99,7 +99,7 @@ storiesOf('Stepper', module)
     <div style={{ padding: 40 }}>
       <Stepper active={0}>
         <Stepper.Step label="First" />
-        <Stepper.Step label="Second" loading />
+        <Stepper.Step color="orange" label="Second" loading />
         <Stepper.Step label="Third" />
       </Stepper>
     </div>
