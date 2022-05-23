@@ -17,10 +17,10 @@ export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
     justifyContent: 'center',
     alignItems: 'center',
     color: theme.colorScheme === 'dark' ? theme.white : theme.colors.gray[7],
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
 
     [theme.fn.smallerThan('sm')]: {
@@ -34,12 +34,13 @@ export default createStyles((theme, { hideOnMobile }: HeaderControlStyles) => ({
   discord: {
     color: theme.white,
     backgroundColor: '#5865f2',
-    borderColor: '5865f2',
+    borderColor: '#5865f2',
 
     '&:hover': {
       backgroundColor: theme.fn.lighten('#5865f2', 0.1),
     },
   },
+
   twitter: {
     color: theme.white,
     backgroundColor: theme.colorScheme === 'dark' ? '#1C8CD8' : '#00acee',

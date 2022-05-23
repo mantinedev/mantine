@@ -40,16 +40,20 @@ export function HeaderControls() {
             hideOnMobile
           >
             {dir === 'rtl' ? (
-              <IconTextDirectionLtr size={22} />
+              <IconTextDirectionLtr size={22} stroke={1.5} />
             ) : (
-              <IconTextDirectionRtl size={22} />
+              <IconTextDirectionRtl size={22} stroke={1.5} />
             )}
           </HeaderControl>
           <HeaderControl
             onClick={() => toggleColorScheme()}
             tooltip={`${colorScheme === 'dark' ? 'Light' : 'Dark'} mode`}
           >
-            {colorScheme === 'dark' ? <IconSun size={22} /> : <IconMoon size={22} />}
+            {colorScheme === 'dark' ? (
+              <IconSun size={22} stroke={1.5} />
+            ) : (
+              <IconMoon size={22} stroke={1.5} />
+            )}
           </HeaderControl>
         </Group>
       </Tooltip.Group>

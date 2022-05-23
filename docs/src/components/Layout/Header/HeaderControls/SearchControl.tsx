@@ -18,9 +18,9 @@ export function SearchControl(props: React.ComponentPropsWithoutRef<'button'>) {
         height: 34,
         borderRadius: theme.radius.md,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3]
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
 
         '&:hover': {
@@ -49,10 +49,10 @@ export function SearchControl(props: React.ComponentPropsWithoutRef<'button'>) {
             borderRadius: theme.radius.sm,
             color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
             border: `1px solid ${
-              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2]
+              theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2]
             }`,
             backgroundColor:
-              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+              theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
           })}
         >
           {os === 'undetermined' || os === 'macos' ? '⌘' : 'Ctrl'} + K
