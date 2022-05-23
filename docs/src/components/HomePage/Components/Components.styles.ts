@@ -10,6 +10,11 @@ export default createStyles((theme) => ({
     paddingTop: 100,
     paddingBottom: 100,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+
+    [theme.fn.smallerThan('sm')]: {
+      paddingTop: 60,
+      paddingBottom: 60,
+    },
   },
 
   controls: {
