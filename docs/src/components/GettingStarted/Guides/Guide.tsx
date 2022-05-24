@@ -111,7 +111,7 @@ function NextGuide({ dependencies }: GuideProps) {
         And follow Next.js guide
       </Text>
 
-      <GatsbyLink to="/theming/next/">Follow Next.js getting started guide</GatsbyLink>
+      <GatsbyLink to="/guides/next/">Follow Next.js getting started guide</GatsbyLink>
     </Guide>
   );
 }

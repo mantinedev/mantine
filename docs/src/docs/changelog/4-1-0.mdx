@@ -83,7 +83,7 @@ Then you will be able to use variables anywhere in your CSS:
 
 ## sx array syntax
 
-All components now support arrays in [sx prop](https://mantine.dev/theming/sx/). It can be to simultaneously use `sx` prop and add it from props:
+All components now support arrays in [sx prop](https://mantine.dev/styles/sx/). It can be to simultaneously use `sx` prop and add it from props:
 
 ```tsx
 import { Button, Sx } from '@mantine/core';
@@ -205,4 +205,4 @@ export default function AppShellDemo() {
 - `useLocalStorageValue` hook was renamed to `useLocalStorage` (old hook is still exported from `@mantine/hooks`)
 - [AppShell](https://mantine.dev/core/app-shell/) no longer parses props of Navbar and Header components, AppShell positioning logic was migrated to context and CSS variables, Navbar and Header components can now be wrapped with other components
 - NextLink component was added to `@mantine/next` package to simplify Next.js Link usage with [Menu](https://mantine.dev/core/menu/#menuitem-as-nextjs-link)
-- [Global](https://mantine.dev/theming/global-styles/#global-component) component now supports array syntax for `styles`
+- [Global](https://mantine.dev/styles/global-styles/#global-component) component now supports array syntax for `styles`

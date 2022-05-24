@@ -27,15 +27,15 @@ Mantine documentation includes more than 150 pages, to use it efficiently rememb
 ## Mantine packages
 
 - `@mantine/hooks` – collection of 30+ react hooks for state and UI management.
-- `@mantine/styles` – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components. Usually this package is installed automatically and exported from `@mantine/core` – there is no need to install it separately, [learn more about createStyles here](/theming/create-styles/).
+- `@mantine/styles` – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components. Usually this package is installed automatically and exported from `@mantine/core` – there is no need to install it separately, [learn more about createStyles here](/styles/create-styles/).
 - `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`.
 - `@mantine/notifications` – a fully featured [notifications system](/others/notifications/).
 - `@mantine/prism` – [code highlight](/others/prism/) built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer).
 - `@mantine/rte` – a Quill based [rich text editor](/others/rte/).
 - `@mantine/dropzone` – manages [files drag 'n' drop](/others/dropzone/) of files to an area or the entire screen.
-- `@mantine/ssr` – [server side rendering](/theming/ssr/) utilities.
-- `@mantine/next` – components and ssr utils for [Next.js integration](/theming/next/).
-- `gatsby-plugin-mantine` – [Gatsby plugin](/theming/gatsby/) to setup ssr.
+- `@mantine/ssr` – [server side rendering](/guides/ssr/) utilities.
+- `@mantine/next` – components and ssr utils for [Next.js integration](/guides/next/).
+- `gatsby-plugin-mantine` – [Gatsby plugin](/guides/gatsby/) to setup ssr.
 - `@mantine/eslint-config` – ESLint and Prettier configuration that the Mantine project uses.
 
 ## Theming
@@ -80,14 +80,14 @@ function App() {
 }
 ```
 
-To learn how to implement color scheme changes via context follow [dark theme guide](/theming/dark-theme/).
+To learn how to implement color scheme changes via context follow [dark theme guide](/guides/dark-theme/).
 
 ## Writing styles
 
 ### createStyles
 
 Mantine is built with a css-in-js library based on [emotion](https://emotion.sh/).
-You can use any other styling solution but we recommend working with [createStyles](/theming/create-styles/)
+You can use any other styling solution but we recommend working with [createStyles](/styles/create-styles/)
 to avoid styles collisions.
 
 `createStyles` usage demo:
@@ -96,7 +96,7 @@ to avoid styles collisions.
 
 ### Styling components internals with Styles API
 
-[Styles API](/theming/styles-api/) lets you add styles to any internal part of a component:
+[Styles API](/styles/styles-api/) lets you add styles to any internal part of a component:
 
 <Demo data={SliderDemos.customize} />
 
@@ -374,9 +374,9 @@ function Demo() {
 
 To setup server side rendering follow one of these guides
 
-- [Server side rendering with Next.js](/theming/next/)
-- [Server side rendering with Gatsby.js](/theming/gatsby/)
-- [Server side rendering with express server](/theming/ssr/)
+- [Server side rendering with Next.js](/guides/next/)
+- [Server side rendering with Gatsby.js](/guides/gatsby/)
+- [Server side rendering with express server](/guides/ssr/)
 
 ## TypeScript
 

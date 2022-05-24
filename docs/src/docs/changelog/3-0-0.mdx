@@ -21,7 +21,7 @@ import {
 ## Breaking changes
 
 - Mantine was migrated to [emotion](https://emotion.sh/) from react-jss and no longer supports react-jss
-- `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/theming/create-styles/) instead
+- `@mantine/core` package no longer exports react-jss `theming` context, use [createStyles](https://mantine.dev/styles/create-styles/) instead
 - All components no longer support `themeOverride` prop due to performance reasons
 - `elementRef` prop was replaced with `ref` in all components
 - Default line-height (`theme.lineHeight`) was increased from 1.4 to 1.55
@@ -39,9 +39,9 @@ exposed as separate `@mantine/styles` package and as a part of `@mantine/core`. 
 
 ### createStyles
 
-[Read createStyles documentation](https://mantine.dev/theming/create-styles/)
+[Read createStyles documentation](https://mantine.dev/styles/create-styles/)
 
-From version 3.0 [createStyles](https://mantine.dev/theming/create-styles/) is the main way to add styles to Mantine components. Core features:
+From version 3.0 [createStyles](https://mantine.dev/styles/create-styles/) is the main way to add styles to Mantine components. Core features:
 
 - API is similar to react-jss
 - As fast and lightweight as emotion: `createStyles` extends [@emotion/react](https://emotion.sh/docs/@emotion/react)
@@ -65,9 +65,9 @@ Mantine now has 3 new packages to help you setup server side rendering:
 
 Follow these guides to get started with ssr:
 
-- [SSR with Next.js](https://mantine.dev/theming/next/)
-- [SSR with Gatsby.js](https://mantine.dev/theming/gatsby/)
-- [General approach to SSR](https://mantine.dev/theming/ssr/)
+- [SSR with Next.js](https://mantine.dev/guides/next/)
+- [SSR with Gatsby.js](https://mantine.dev/guides/gatsby/)
+- [General approach to SSR](https://mantine.dev/guides/ssr/)
 
 ## Ref forwarding
 
@@ -89,7 +89,7 @@ if you wrap your application in MantineProvider.
 
 ## ColorSchemeProvider
 
-`ColorSchemeProvider` is a new component that will help you manage color scheme ([read full docs](https://mantine.dev/theming/dark-theme/)):
+`ColorSchemeProvider` is a new component that will help you manage color scheme ([read full docs](https://mantine.dev/guides/dark-theme/)):
 
 ```tsx
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';

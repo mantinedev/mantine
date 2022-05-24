@@ -19,7 +19,7 @@ export function Emotion() {
         <Button
           size="md"
           component={Link}
-          to="/theming/create-styles/"
+          to="/styles/create-styles/"
           rightIcon={<ArrowRightIcon style={{ width: 16, height: 16 }} />}
         >
           Explore all createStyle features

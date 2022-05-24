@@ -96,7 +96,7 @@ function App() {
 ## Styles params on MantineProvider
 
 You can now get component styles params in [MantineProvider](https://mantine.dev/theming/mantine-provider/) `styles` prop.
-Each component that has [Styles API](https://mantine.dev/theming/styles-api/) now exports type that can be assigned to params
+Each component that has [Styles API](https://mantine.dev/styles/styles-api/) now exports type that can be assigned to params
 `ComponentNameStylesParams`, for example, `ButtonStylesParams`. This feature can be used to add more complex context styles that were not possible before:
 
 ```tsx
@@ -215,7 +215,7 @@ function Demo() {
 
 ## createStyles references changes
 
-[createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
+[createStyles](https://mantine.dev/styles/create-styles/) function now works differently with references.
 Instead of generating unique identifiers with each `getRef` call it returns the same value for given argument:
 
 ```tsx

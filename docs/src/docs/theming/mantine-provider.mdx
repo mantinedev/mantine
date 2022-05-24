@@ -162,7 +162,7 @@ function App() {
 
 ## Styles on MantineProvider
 
-You can add context styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
+You can add context styles to components that support [Styles API](/styles/styles-api/) with MantineProvider.
 All components that are rendered inside MantineProvider will inherit those styles:
 
 <Demo data={ThemeDemos.providerStyles} />
@@ -214,7 +214,7 @@ You can provide [emotion options](https://emotion.sh/docs/@emotion/cache#options
 - `key` (required) – the prefix before class names, defaults to `mantine`
 - `container` – a DOM node that emotion will insert all of its style tags into. This is useful for inserting styles into iframes.
 - `prepend` - a boolean representing whether to prepend rather than append style tags into the specified container DOM node
-- `stylisPlugins` – an array of Stylis plugins that will be run by Stylis during preprocessing, for example [stylis-plugin-rtl](https://www.npmjs.com/package/stylis-plugin-rtl) can be used to add [RTL](/theming/rtl) support
+- `stylisPlugins` – an array of Stylis plugins that will be run by Stylis during preprocessing, for example [stylis-plugin-rtl](https://www.npmjs.com/package/stylis-plugin-rtl) can be used to add [RTL](/guides/rtl) support
 
 ```tsx
 import { MantineProvider } from '@mantine/core';

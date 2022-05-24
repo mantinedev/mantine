@@ -25,7 +25,7 @@ export default function PageNotFound() {
             <GatsbyLink to="/pages/contributing/">Mantine contributions guideline</GatsbyLink>
           </Li>
           <Li>
-            <GatsbyLink to="/theming/ssr/">
+            <GatsbyLink to="/guides/ssr/">
               Learn how to setup server side rendering with Mantine
             </GatsbyLink>
           </Li>

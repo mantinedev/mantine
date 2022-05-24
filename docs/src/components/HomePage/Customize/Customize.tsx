@@ -101,7 +101,7 @@ export function Customize() {
             mt={15}
             size="md"
             component={Link}
-            to="/theming/styles-api"
+            to="/styles/styles-api"
             rightIcon={<ArrowRightIcon style={{ width: 16, height: 16 }} />}
           >
             Learn more about Styles API
