@@ -1,5 +1,4 @@
 import React from 'react';
-import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button';
 import { HoverCard } from './HoverCard';
 
@@ -16,20 +15,5 @@ export function Usage() {
         <HoverCard.Dropdown>Hello</HoverCard.Dropdown>
       </HoverCard>
     </div>
-  );
-}
-
-export function StylesOnMantineProvider() {
-  return (
-    <MantineProvider
-      inherit
-      styles={{
-        HoverCard: {
-          root: { backgroundColor: 'red' },
-        },
-      }}
-    >
-      <Usage />
-    </MantineProvider>
   );
 }

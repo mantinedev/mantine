@@ -80,9 +80,22 @@ export interface MantineTheme {
   other: MantineThemeOther;
 
   datesLocale: string;
+
+  components: Record<string, ThemeComponent>;
+}
+
+interface ThemeComponent {
+  defaultProps?: Record<string, any>;
+  classNames?: Record<string, string>;
+  styles?:
+    | Record<string, CSSObject>
+    | ((theme: MantineTheme, params: unknown) => Record<string, CSSObject>);
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
-export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'fn' | 'other'>> & {
+export type MantineThemeOverride = DeepPartial<
+  Omit<MantineThemeBase, 'fn' | 'other' | 'components'>
+> & {
   other?: MantineThemeOther;
+  components?: Record<string, ThemeComponent>;
 };

@@ -127,8 +127,12 @@ describe('@mantine/styles/create-styles', () => {
   it('assigns classNames from MantineProvider', () => {
     render(
       <MantineProvider
-        classNames={{
-          NamedComponent: { testObject: 'provider-class' },
+        theme={{
+          components: {
+            NamedComponent: {
+              classNames: { testObject: 'provider-class' },
+            },
+          },
         }}
       >
         <NamedContainer classNames={{ testObject: 'local-class' }} />
@@ -142,8 +146,12 @@ describe('@mantine/styles/create-styles', () => {
   it('assigns styles from MantineProvider (object)', () => {
     render(
       <MantineProvider
-        styles={{
-          NamedComponent: { testObject: { background: '#EF56ED' } },
+        theme={{
+          components: {
+            NamedComponent: {
+              styles: { testObject: { background: '#EF56ED' } },
+            },
+          },
         }}
       >
         <NamedContainer styles={{ testObject: { color: 'cyan' } }} />
@@ -156,8 +164,12 @@ describe('@mantine/styles/create-styles', () => {
   it('assigns styles from MantineProvider (function)', () => {
     render(
       <MantineProvider
-        styles={{
-          NamedComponent: (theme) => ({ testObject: { fontSize: theme.fontSizes.sm } }),
+        theme={{
+          components: {
+            NamedComponent: {
+              styles: (theme) => ({ testObject: { fontSize: theme.fontSizes.sm } }),
+            },
+          },
         }}
       >
         <NamedContainer styles={{ testObject: { color: 'cyan' } }} />
@@ -179,9 +191,16 @@ describe('@mantine/styles/create-styles', () => {
   it('supports MantineProvider classNames for multiple names', () => {
     render(
       <MantineProvider
-        classNames={{
-          NamedComponent: { testObject: 'named-class' },
-          TestName: { testObject: 'test-class' },
+        theme={{
+          components: {
+            NamedComponent: {
+              classNames: { testObject: 'named-class' },
+            },
+
+            TestName: {
+              classNames: { testObject: 'test-class' },
+            },
+          },
         }}
       >
         <MultipleNames classNames={{ testObject: 'local-class' }} />
@@ -196,9 +215,16 @@ describe('@mantine/styles/create-styles', () => {
   it('supports MantineProvider styles object for multiple names', () => {
     render(
       <MantineProvider
-        styles={{
-          NamedComponent: { testObject: { background: '#EFFF79' } },
-          TestName: { testObject: { color: '#661188' } },
+        theme={{
+          components: {
+            NamedComponent: {
+              styles: { testObject: { background: '#EFFF79' } },
+            },
+
+            TestName: {
+              styles: { testObject: { color: '#661188' } },
+            },
+          },
         }}
       >
         <MultipleNames styles={{ testObject: { fontSize: '12%' } }} />

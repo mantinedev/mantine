@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
+import { MANTINE_SIZES } from '@mantine/styles';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Group } from '../Group/Group';
 import { Stack } from '../Stack';
@@ -291,11 +291,6 @@ storiesOf('MultiSelect', module)
         name="test"
       />
     </SubmitForm>
-  ))
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ MultiSelect: { radius: 0, label: 'Default label' } }}>
-      <MultiSelect data={data} placeholder="Select items" />
-    </MantineProvider>
   ))
   .add('Clearable button not in tab index', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>

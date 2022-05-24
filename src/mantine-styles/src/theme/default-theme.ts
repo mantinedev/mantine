@@ -82,6 +82,7 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   },
 
   other: {},
+  components: {},
   datesLocale: 'en',
 };
 

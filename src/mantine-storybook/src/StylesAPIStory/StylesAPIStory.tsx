@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Container, Divider, createStyles, MantineProvider } from '@mantine/core';
+import { Text, Container, Divider, createStyles } from '@mantine/core';
 import * as StylesAPI from '@mantine/styles-api';
 import { generateBorderStyles } from '../generate-border-styles';
 
@@ -77,12 +77,6 @@ export function StylesAPIStory({
 
       <Section name="classNames">
         <Component {...props} classNames={classNames} />
-      </Section>
-
-      <Section name="MantineProvider styles">
-        <MantineProvider styles={{ [name]: styles }}>
-          <Component {...props} />
-        </MantineProvider>
       </Section>
     </Container>
   );

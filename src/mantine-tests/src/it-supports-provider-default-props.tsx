@@ -10,7 +10,15 @@ export function itSupportsProviderDefaultProps<P>(
 ) {
   it('supports default props on MantineProvider', () => {
     const { container } = render(
-      <MantineProvider defaultProps={{ [name]: { 'data-provider-prop': 'test-provider-prop' } }}>
+      <MantineProvider
+        theme={{
+          components: {
+            [name]: {
+              defaultProps: { 'data-provider-prop': 'test-provider-prop' },
+            },
+          },
+        }}
+      >
         <Component {...requiredProps} />
       </MantineProvider>
     );

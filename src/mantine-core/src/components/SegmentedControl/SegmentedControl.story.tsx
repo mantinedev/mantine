@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/styles';
 import { Button } from '../Button/Button';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
@@ -101,18 +100,4 @@ storiesOf('SegmentedControl', module)
   ))
   .add('Scaled', () => <Scaled />)
   .add('Disabled', () => <DisabledStates />)
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ SegmentedControl: { color: 'orange' } }}>
-      <Controlled />
-    </MantineProvider>
-  ))
-  .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 0 }}>
-      <Controlled />
-    </MantineProvider>
-  ))
-  .add('Conditional Rendering without initial transition', () => (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <Conditional />
-    </MantineProvider>
-  ));
+  .add('Conditional Rendering without initial transition', () => <Conditional />);
