@@ -203,6 +203,16 @@ type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { 
 - [use-uncontrolled](https://mantine.dev/hooks/use-uncontrolled/) hook logic was changed, it no longer supports `rule` parameter
 - [use-id](https://mantine.dev/hooks/use-id/) hook now supports React 18 `useId` hook with a fallback for older React versions, `generateId` function is no longer supported
 
+## React 18 support
+
+All Mantine components now support React 18, all known issues related to React 18 migration
+were fixed:
+
+- [ColorPicker](https://mantine.dev/core/color-picker/) and [ColorInput](https://mantine.dev/core/color-input/) components no longer throw error on value change
+- Issue with stale [Dropzone](https://mantine.dev/others/dropzone/) status was fixed
+- Multiple issues with types were fixed (mostly related to `children` prop changes)
+- The entire Mantine codebase was migrate to React 18 (documentation website, [Mantine UI](https://ui.mantine.dev), all packages)
+
 ## New components
 
 ### HoverCard component
