@@ -1,0 +1,77 @@
+---
+group: 'theming'
+title: Default props
+slug: /theming/default-props/
+order: 3
+search: 'Default props for components on MantineProvider'
+---
+
+import { ThemeDemos } from '@mantine/demos';
+
+# Default props
+
+You can define default props for every Mantine component by setting `theme.components` on
+[MantineProvider](/theming/mantine-provider):
+
+<Demo data={ThemeDemos.defaultProps} />
+
+## Overriding default props
+
+Default props defined on [MantineProvider](/theming/mantine-provider) will be overridden with
+props that you set on component itself:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Button: {
+            defaultProps: { color: 'red' },
+          },
+        },
+      }}
+    >
+      <Button>Red color, defined with defaultProps</Button>
+      <Button color="cyan">Cyan color, overridden by prop</Button>
+    </MantineProvider>
+  );
+}
+```
+
+## Usage with TypeScript
+
+MantineProvider uses `Record<string, any>` type for default props types to improve TypeScript performance.
+If you need more strict type checks or want to have IDE autocomplete, you should define default props separately:
+
+```tsx
+import { MantineProvider, Group, Button, Switch, ButtonProps, SwitchProps } from '@mantine/core';
+
+const ButtonDefaultProps: Partial<ButtonProps> = {
+  size: 'xs',
+  color: 'cyan',
+};
+
+const SwitchDefaultProps: Partial<SwitchProps> = {
+  size: 'xs',
+  onLabel: 'ON',
+  offLabel: 'OFF',
+};
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Button: { defaultProps: ButtonDefaultProps },
+          Switch: { defaultProps: SwitchDefaultProps },
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
