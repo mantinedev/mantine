@@ -1,0 +1,192 @@
+---
+group: 'theming'
+title: Theme object
+slug: /theming/theme-object/
+order: 0
+search: 'Theme object, use-mantine-theme, theme overrides'
+---
+
+# Theme object
+
+Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design tokens are stored.
+
+```tsx
+interface MantineTheme {
+  // Defines color scheme for all components, defaults to "light"
+  colorScheme: 'light' | 'dark';
+
+  // Controls focus ring styles:
+  // auto – display focus ring only when user navigates with keyboard (default)
+  // always – display focus ring when user navigates with keyboard and mouse
+  // never – focus ring is always hidden (not recommended)
+  focusRing: 'auto' | 'always' | 'never';
+
+  // Default border-radius used for most elements
+  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
+
+  // White and black colors, defaults to '#fff' and '#000'
+  white: string;
+  black: string;
+
+  // Object of arrays with 10 colors
+  colors: Record<string, Tuple<string, 10>>;
+
+  // Key of theme.colors
+  primaryColor: string;
+
+  // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  primaryShade: Shade | { light: Shade; dark: Shade };
+
+  // font-family and line-height used in most components
+  fontFamily: string;
+  lineHeight: string | number;
+
+  // Timing function used for animations, defaults to 'ease'
+  transitionTimingFunction: string;
+
+  // Monospace font-family, used in Code, Kbd and Prism components
+  fontFamilyMonospace: string;
+
+  // Sizes for corresponding properties
+  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+
+  // Values used for box-shadow
+  shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
+
+  // Breakpoints used in some components to add responsive styles
+  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
+
+  // h1-h6 styles, used in Title and TypographyStylesProvider components
+  headings: {
+    fontFamily: CSSProperties['fontFamily'];
+    fontWeight: CSSProperties['fontWeight'];
+    sizes: {
+      h1: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h2: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h3: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h4: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h5: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      h6: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+    };
+  };
+
+  // theme functions, see in theme functions guide
+  fn: MantineThemeFunctions;
+
+  // Left to right or right to left direction, see RTL Support guide to learn more
+  dir: 'ltr' | 'rtl';
+
+  // Default loader used in Loader and LoadingOverlay components
+  loader: 'oval' | 'bars' | 'dots';
+
+  // Default date format used in DatePicker and DateRangePicker components
+  dateFormat: string;
+
+  // Default dates formatting locale used in every @mantine/dates component
+  datesLocale: string;
+
+  // defaultProps, styles and classNames for components
+  components: ComponentsOverride;
+
+  // Add your own custom properties on Mantine theme
+  other: Record<string, any>;
+}
+```
+
+## Usage
+
+Pass theme object to [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        // Theme is deeply merged with default theme
+        colorScheme: 'light',
+        colors: {
+          // Add your color
+          'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+          // or replace default theme color
+          blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+        },
+
+        shadows: {
+          // other shadows (xs, sm, lg) will be merged from default theme
+          md: '1px 1px 3px rgba(0,0,0,.25)',
+          xl: '5px 5px 3px rgba(0,0,0,.25)',
+        },
+
+        headings: {
+          fontFamily: 'Roboto, sans-serif',
+          sizes: {
+            h1: { fontSize: 30 },
+          },
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Store theme override object in a variable
+
+To store theme override object in a variable use `MantineThemeOverride` type:
+
+```tsx
+import { MantineThemeOverride, MantineProvider } from '@mantine/core';
+
+const myTheme: MantineThemeOverride = {
+  colorScheme: 'light',
+  primaryColor: 'orange',
+  defaultRadius: 0,
+};
+
+function App() {
+  return (
+    <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## use-mantine-theme hook
+
+`use-mantine-theme` hook returns theme from [MantineProvider](/theming/mantine-provider/) context or default theme
+if you did not provide theme override:
+
+```tsx
+import { useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ background: theme.colors.blue[5] }} />;
+}
+```
+
+## MantineTheme type
+
+In most cases theme will already have the correct type, but in some cases you will need to
+assign `MantineTheme` manually:
+
+```tsx
+import { useMantineTheme, MantineTheme } from '@mantine/core';
+
+function getColor(theme: MantineTheme) {
+  return theme.colors.blue[5];
+}
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ background: getColor(theme) }} />;
+}
+```

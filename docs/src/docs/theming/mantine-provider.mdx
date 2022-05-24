@@ -10,7 +10,9 @@ import { ThemeDemos } from '@mantine/demos';
 
 # MantineProvider
 
-MantineProvider component can be used to change theme globally. It is not required if you decide to use default theme:
+MantineProvider component can be used to change theme globally. It is not required if you decide to use default theme.
+
+## Usage
 
 ```tsx
 import { MantineProvider, Button } from '@mantine/core';
@@ -29,165 +31,94 @@ function WithProvider() {
 }
 ```
 
-## Theme object
+## Normalize.css and global styles
 
-Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design tokens are stored.
+MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
 
-```tsx
-interface MantineTheme {
-  // Defines color scheme for all components, defaults to "light"
-  colorScheme: 'light' | 'dark';
+- background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
+- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
+- font-family and font-smoothing based on theme
+- font-size to `theme.fontSize.md`
 
-  // Controls focus ring styles:
-  // auto – display focus ring only when user navigates with keyboard (default)
-  // always – display focus ring when user navigates with keyboard and mouse
-  // never – focus ring is always hidden (not recommended)
-  focusRing: 'auto' | 'always' | 'never';
-
-  // Default border-radius used for most elements
-  defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
-
-  // White and black colors, defaults to '#fff' and '#000'
-  white: string;
-  black: string;
-
-  // Object of arrays with 10 colors
-  colors: Record<string, Tuple<string, 10>>;
-
-  // Key of theme.colors
-  primaryColor: string;
-
-  // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-  primaryShade: Shade | { light: Shade; dark: Shade };
-
-  // font-family and line-height used in most components
-  fontFamily: string;
-  lineHeight: string | number;
-
-  // Timing function used for animations, defaults to 'ease'
-  transitionTimingFunction: string;
-
-  // Monospace font-family, used in Code, Kbd and Prism components
-  fontFamilyMonospace: string;
-
-  // Sizes for corresponding properties
-  fontSizes: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  radius: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-  spacing: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-
-  // Values used for box-shadow
-  shadows: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>;
-
-  // Breakpoints used in some components to add responsive styles
-  breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
-
-  // h1-h6 styles, used in Title and TypographyStylesProvider components
-  headings: {
-    fontFamily: CSSProperties['fontFamily'];
-    fontWeight: CSSProperties['fontWeight'];
-    sizes: {
-      h1: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h2: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h3: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h4: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h5: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h6: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-    };
-  };
-
-  // theme functions, see in theme functions guide
-  fn: MantineThemeFunctions;
-
-  // Left to right or right to left direction, see RTL Support guide to learn more
-  dir: 'ltr' | 'rtl';
-
-  // Default loader used in Loader and LoadingOverlay components
-  loader: 'oval' | 'bars' | 'dots';
-
-  // Default date format used in DatePicker and DateRangePicker components
-  dateFormat: string;
-
-  // Add your own custom properties on Mantine theme
-  other: Record<string, any>;
-
-  // Default dates formatting locale used in every @mantine/dates component
-  datesLocale: string;
-}
-```
-
-Pass theme object to MantineProvider to change global styles:
+To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={{
-        // Theme is deeply merged with default theme
-        colorScheme: 'light',
-        colors: {
-          // Add your color
-          'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-          // or replace default theme color
-          blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
-        },
-
-        shadows: {
-          // other shadows (xs, sm, lg) will be merged from default theme
-          md: '1px 1px 3px rgba(0,0,0,.25)',
-          xl: '5px 5px 3px rgba(0,0,0,.25)',
-        },
-
-        headings: {
-          fontFamily: 'Roboto, sans-serif',
-          sizes: {
-            h1: { fontSize: 30 },
-          },
-        },
-      }}
-    >
+    <MantineProvider withNormalizeCSS withGlobalStyles>
       <YourApp />
     </MantineProvider>
   );
 }
 ```
 
-## Store theme override object in a variable
+## CSS variables
 
-To store theme override object in a variable use `MantineThemeOverride` type:
+If you prefer to style components with CSS/SCSS or other styling solutions that do not have access to Mantine theme
+context, then you can use Mantine CSS variables. To add css variables set `withCSSVariables` prop on MantineProvider:
 
 ```tsx
-import { MantineThemeOverride, MantineProvider } from '@mantine/core';
-
-const myTheme: MantineThemeOverride = {
-  colorScheme: 'light',
-  primaryColor: 'orange',
-  defaultRadius: 0,
-};
+import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
+    <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
 }
 ```
 
-## use-mantine-theme hook
+Then you will be able to use variables anywhere in your CSS:
 
-Hook returns theme from MantineProvider context or default theme
-if you did not wrap application with MantineProvider.
+```css
+.my-button {
+  background-color: var(--mantine-color-blue-6);
+  font-family: var(--mantine-font-family);
+  line-height: var(--mantine-line-height);
+}
+```
+
+Mantine exposes the following CSS variables based on `theme` you provide:
+
+- `--mantine-color-white`
+- `--mantine-color-black`
+- `--mantine-transition-timing-function`
+- `--mantine-line-height`
+- `--mantine-font-family`
+- `--mantine-font-family-monospace`
+- `--mantine-font-family-headings`
+- `--mantine-heading-font-weight`
+- `--mantine-shadow-{size}`, e.g. `--mantine-shadow-sm`, `--mantine-shadow-xl`
+- `--mantine-radius-{size}`, e.g. `--mantine-radius-sm`, `--mantine-radius-xl`
+- `--mantine-spacing-{size}`, e.g. `--mantine-spacing-sm`, `--mantine-spacing-xl`
+- `--mantine-font-size-{size}`, e.g. `--mantine-font-size-sm`, `--mantine-font-size-xl`
+- `--mantine-color-{color}-{shade}`, e.g. `--mantine-color-blue-6`, `--mantine-color-gray-0`
+- `--mantine-{heading}-font-size`, e.g. `--mantine-h1-font-size`
+- `--mantine-{heading}-line-height`, e.g, `--mantine-h3-line-height`
+
+## Normalize.css and global styles
+
+MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
+
+- background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
+- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
+- font-family and font-smoothing based on theme
+- font-size to `theme.fontSize.md`
+
+To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
 
 ```tsx
-import { useMantineTheme } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 
-function Demo() {
-  const theme = useMantineTheme();
-  return <div style={{ background: theme.colors.blue[5] }} />;
+function App() {
+  return (
+    <MantineProvider withNormalizeCSS withGlobalStyles>
+      <YourApp />
+    </MantineProvider>
+  );
 }
 ```
 
@@ -275,105 +206,6 @@ function App() {
 ```
 
 This approach is useful when you want to styles components with utility based CSS libraries.
-
-## Mantine CSS variables
-
-If you prefer to style components with CSS/SCSS or other styling solutions that do not have access to Mantine theme
-context, then you can use Mantine CSS variables. To add css variables set `withCSSVariables` prop on MantineProvider:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS>
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-Then you will be able to use variables anywhere in your CSS:
-
-```css
-.my-button {
-  background-color: var(--mantine-color-blue-6);
-  font-family: var(--mantine-font-family);
-  line-height: var(--mantine-line-height);
-}
-```
-
-Mantine exposes the following CSS variables based on `theme` you provide:
-
-- `--mantine-color-white`
-- `--mantine-color-black`
-- `--mantine-transition-timing-function`
-- `--mantine-line-height`
-- `--mantine-font-family`
-- `--mantine-font-family-monospace`
-- `--mantine-font-family-headings`
-- `--mantine-heading-font-weight`
-- `--mantine-shadow-{size}`, e.g. `--mantine-shadow-sm`, `--mantine-shadow-xl`
-- `--mantine-radius-{size}`, e.g. `--mantine-radius-sm`, `--mantine-radius-xl`
-- `--mantine-spacing-{size}`, e.g. `--mantine-spacing-sm`, `--mantine-spacing-xl`
-- `--mantine-font-size-{size}`, e.g. `--mantine-font-size-sm`, `--mantine-font-size-xl`
-- `--mantine-color-{color}-{shade}`, e.g. `--mantine-color-blue-6`, `--mantine-color-gray-0`
-- `--mantine-{heading}-font-size`, e.g. `--mantine-h1-font-size`
-- `--mantine-{heading}-line-height`, e.g, `--mantine-h3-line-height`
-
-## Default props on MantineProvider
-
-All Mantine components support default props on MantineProvider:
-
-```tsx
-import { MantineProvider, Button, Badge } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider
-      withNormalizeCSS
-      withGlobalStyles
-      defaultProps={{
-        Button: { color: 'red' },
-        Badge: { size: 'xl', radius: 0 },
-        // ... default props for other components
-      }}
-    >
-      {/* By default, Button will have red color */}
-      <Button>Red button</Button>
-
-      {/* Default color can be overwritten by props */}
-      <Button color="blue">Blue button</Button>
-
-      {/* By default, Badge will have xl size and 0 radius */}
-      <Badge>Badge</Badge>
-    </MantineProvider>
-  );
-}
-```
-
-## Normalize.css and global styles
-
-MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
-
-- background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
-- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
-- font-family and font-smoothing based on theme
-- font-size to `theme.fontSize.md`
-
-To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider withNormalizeCSS withGlobalStyles>
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
 
 ## Configure emotion
 
