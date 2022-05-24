@@ -24,13 +24,18 @@ export const components = {
   inlineCode: (props: any) => <Code {...props} />,
   a: ({ href, children }: { href: string; children: string }) => {
     const replaced = href.replace('https://mantine.dev', '');
+    const style = { fontSize: 15 };
 
     if (!replaced.startsWith('http') && replaced.trim().length > 0) {
-      return <GatsbyLink to={href.replace('https://mantine.dev', '')}>{children}</GatsbyLink>;
+      return (
+        <GatsbyLink style={style} to={href.replace('https://mantine.dev', '')}>
+          {children}
+        </GatsbyLink>
+      );
     }
 
     return (
-      <Text component="a" variant="link" href={href}>
+      <Text style={style} component="a" variant="link" href={href}>
         {children}
       </Text>
     );
