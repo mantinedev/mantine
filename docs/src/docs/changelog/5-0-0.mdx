@@ -142,6 +142,39 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - variants handling changes
 - inputs styles api improvements
 
+## MantineProvider changes
+
+[MantineProvider](https://mantine.dev/theming/mantine-provider/) no longer supports `styles`, `classNames` and `defaultProps` props.
+Instead of separate props these values should be added to the theme. This change allows to store
+all components in one object and share it across multiple environments. For example, it is not much easier
+to share theme between application and Storybook:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Tabs: {
+            defaultProps: { color: 'red' },
+            classNames: { root: 'tabs-root' },
+            styles: (theme) => ({
+              tab: {
+                '&[data-active]': { backgroundColor: theme.colors.red[5] },
+              },
+            }),
+          },
+        },
+      }}
+    >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
 ## Polymorphic components changes
 
 Because of internal changes polymorphic components props types exported from `@mantine/core` package are no longer generic types.
