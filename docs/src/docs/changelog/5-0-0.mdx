@@ -144,6 +144,8 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 
 ## MantineProvider changes
 
+### defaultProps, styles and classNames props
+
 [MantineProvider](https://mantine.dev/theming/mantine-provider/) no longer supports `styles`, `classNames` and `defaultProps` props.
 Instead of separate props these values should be added to the theme. This change allows to store
 all components in one object and share it across multiple environments. For example, it is not much easier
@@ -169,6 +171,27 @@ function Demo() {
         },
       }}
     >
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+### emotionCache prop
+
+[MantineProvider](https://mantine.dev/theming/mantine-provider/) no longer supports `emotionOptions`
+prop, instead you will need to create emotion cache on your side and provide it with `emotionCache` prop.
+This change was made to enable custom cache to be used during ssr and support more options for emotion
+usage, for example with shadow dom or with iframe.
+
+```tsx
+import { MantineProvider, createEmotionCache } from '@mantine/core';
+
+const myCache = createEmotionCache({ key: 'mantine' });
+
+function App() {
+  return (
+    <MantineProvider emotionCache={myCache} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
