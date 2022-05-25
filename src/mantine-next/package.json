@@ -25,7 +25,8 @@
     "next": "*"
   },
   "dependencies": {
-    "@mantine/ssr": "5.0.0-alpha.3"
+    "@mantine/ssr": "5.0.0-alpha.3",
+    "@mantine/styles": "5.0.0-alpha.3"
   },
   "devDependencies": {}
 }

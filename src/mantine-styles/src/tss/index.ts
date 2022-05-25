@@ -1,5 +1,6 @@
-import createEmotionCache from '@emotion/cache';
+import createEmotionCache, { EmotionCache } from '@emotion/cache';
 
+export type { EmotionCache };
 export type { CSSObject, Selectors } from './types';
 export type { UseStylesOptions } from './create-styles';
 
