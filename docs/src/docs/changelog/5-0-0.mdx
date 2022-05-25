@@ -198,37 +198,6 @@ function App() {
 }
 ```
 
-## Theme changes
-
-### fontWeight for each heading
-
-`theme.headings` now has an option to set `fontWeight` for each heading individually:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function Demo() {
-  return (
-    <MantineProvider
-      theme={{
-        headings: {
-          // font-weight for all headings
-          fontWeight: 400,
-
-          sizes: {
-            // Overrides individual headings
-            h1: { fontWeight: 100 },
-            h6: { fontWeight: 900 },
-          },
-        },
-      }}
-    >
-      <App />
-    </MantineProvider>
-  );
-}
-```
-
 ## Polymorphic components changes
 
 Because of internal changes polymorphic components props types exported from `@mantine/core` package are no longer generic types.
@@ -266,6 +235,37 @@ were fixed:
 - Issue with stale [Dropzone](https://mantine.dev/others/dropzone/) status was fixed
 - Multiple issues with types were fixed (mostly related to `children` prop changes)
 - The entire Mantine codebase was migrate to React 18 (documentation website, [Mantine UI](https://ui.mantine.dev), all packages)
+
+## New theme properties
+
+### fontWeight for each heading
+
+`theme.headings` now has an option to set `fontWeight` for each heading individually:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        headings: {
+          // font-weight for all headings
+          fontWeight: 400,
+
+          sizes: {
+            // Overrides individual headings
+            h1: { fontWeight: 100 },
+            h6: { fontWeight: 900 },
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
 
 ## New components
 
