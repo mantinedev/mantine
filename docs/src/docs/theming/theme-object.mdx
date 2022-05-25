@@ -197,3 +197,16 @@ function Demo() {
   return <div style={{ background: getColor(theme) }} />;
 }
 ```
+
+### Adding custom 'other' properties
+
+Similar to how you can extend/set custom colors, you can add your own properties to the `theme.other` type using TypeScript module declaration:
+
+```ts
+declare module '@mantine/core' {
+  export interface MantineThemeOther {
+    myCustomProperty: string;
+    myCustomFunction: () => void;
+  }
+}
+```
