@@ -34,6 +34,76 @@ Default values for theme properties:
 - Default value for `theme.fontFamily` and `theme.headings.fontFamily` is `-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji`
 - Default value for `theme.fontFamilyMonospace` is `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`
 
+## Headings
+
+To customize headings in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
+set `theme.headings`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        headings: {
+          // properties for all headings
+          fontWeight: 400,
+          fontFamily: 'Roboto',
+
+          // properties for individual headings, all of them are optional
+          sizes: {
+            h1: { fontWeight: 100, fontSize: 32, lineHeight: 1.4 },
+            h2: { fontSize: 28, lineHeight: 1.5 },
+            // ...up to h6
+            h6: { fontWeight: 900 },
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+If you need to customize styles of heading with specific element you can use [Styles API](/styles/styles-api/) on
+[MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Title: {
+            styles: {
+              root: {
+                '&:is(h1)': { color: 'red' },
+                '&:is(h3)': { color: 'blue' },
+              },
+            },
+          },
+
+          TypographyStylesProvider: {
+            styles: {
+              root: {
+                '& h1': { color: 'red' },
+                '& h3': { color: 'blue' },
+              },
+            },
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Load custom fonts
 
 Use [Global](/styles/global-styles/) to load custom fonts.
