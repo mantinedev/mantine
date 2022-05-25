@@ -9,15 +9,15 @@ function Demo() {
   return (
     <Group>
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} orientation="vertical" />
+      <Divider sx={{ height: '24px' }} orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="sm" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="sm" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="md" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="md" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="lg" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="lg" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="xl" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="xl" orientation="vertical" />
       <Text>Label</Text>
     </Group>
   );
@@ -28,15 +28,15 @@ function Demo() {
   return (
     <Group>
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} orientation="vertical" />
+      <Divider sx={{ height: '24px' }} orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="sm" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="sm" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="md" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="md" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="lg" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="lg" orientation="vertical" />
       <Text>Label</Text>
-      <Divider style={{ height: '24px' }} size="xl" orientation="vertical" />
+      <Divider sx={{ height: '24px' }} size="xl" orientation="vertical" />
       <Text>Label</Text>
     </Group>
   );
