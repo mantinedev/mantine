@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { useDarkMode } from 'storybook-dark-mode';
-import { MantineProvider, ColorSchemeProvider, Affix, ActionIcon } from '@mantine/core';
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  Affix,
+  ActionIcon,
+  createEmotionCache,
+} from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import rtlPlugin from 'stylis-plugin-rtl';
 
 export const parameters = { layout: 'fullscreen' };
+
+const rtlCache = createEmotionCache({
+  key: 'mantine-rtl',
+  prepend: true,
+  stylisPlugins: [rtlPlugin],
+});
 
 function ThemeWrapper(props: any) {
   const [rtl, setRtl] = useState(false);
@@ -20,9 +32,7 @@ function ThemeWrapper(props: any) {
           colorScheme: useDarkMode() ? 'dark' : 'light',
           headings: { fontFamily: 'Greycliff CF, sans-serif' },
         }}
-        emotionOptions={
-          rtl ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin as any] } : { key: 'mantine' }
-        }
+        emotionCache={rtl ? rtlCache : undefined}
         withGlobalStyles
         withNormalizeCSS
       >

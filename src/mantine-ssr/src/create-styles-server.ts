@@ -1,7 +1,7 @@
-import { Options } from '@emotion/cache';
+import { EmotionCache } from '@emotion/cache';
 import createEmotionServer from '@emotion/server/create-instance';
-import { getCache } from '@mantine/styles';
+import { defaultMantineEmotionCache } from '@mantine/styles';
 
-export function createStylesServer(options?: Options) {
-  return createEmotionServer(getCache(options));
+export function createStylesServer(cache?: EmotionCache) {
+  return createEmotionServer(cache || defaultMantineEmotionCache);
 }
