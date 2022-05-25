@@ -25,7 +25,7 @@ function DiscordButton({ style, ...others }: SocialButtonProps) {
       style={{
         ...style,
         ...baseStyles,
-        backgroundColor: theme.colorScheme === 'dark' ? '#5865f2' : '#7289da',
+        backgroundColor: '#5865f2',
       }}
       {...others}
     >

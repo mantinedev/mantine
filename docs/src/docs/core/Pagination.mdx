@@ -47,11 +47,12 @@ Control amount of items displayed after previous and before next buttons with `b
 
 ## Accessibility
 
-Pagination renders a regular button element. To include aria-label for screen reader support
-provide `getItemAriaLabel` function to generate aria-labels:
+Pagination renders a div with the role of "navigation". Inside are regular button elements. To include aria-labels for screen reader support, you can provide an aria-label to the Pagination component itself.
+To provide aria-labels to the actions inside the component, use the `getItemAriaLabel` function to generate aria-labels:
 
 ```tsx
 <Pagination
+  aria-label="my pagination component"
   total={20}
   getItemAriaLabel={(page) => {
     switch (page) {
@@ -71,6 +72,8 @@ provide `getItemAriaLabel` function to generate aria-labels:
   }}
 />
 ```
+
+The current active page will have the attribute `aria-current="page"`.
 
 ## use-pagination hook
 

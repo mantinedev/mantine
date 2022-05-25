@@ -1,20 +1,17 @@
 import {
-  CSSObject,
   MantineStyleSystemProps,
   MantineTheme,
+  Sx,
   useCss,
   useMantineTheme,
 } from '@mantine/styles';
 import { getSystemStyles } from './get-system-styles/get-system-styles';
 
-type Sx = CSSObject | ((theme: MantineTheme) => CSSObject);
-export type BoxSx = Sx | Sx[];
-
 function extractSx(sx: Sx, theme: MantineTheme) {
   return typeof sx === 'function' ? sx(theme) : sx;
 }
 
-export function useSx(sx: BoxSx, systemProps: MantineStyleSystemProps, className: string) {
+export function useSx(sx: Sx | Sx[], systemProps: MantineStyleSystemProps, className: string) {
   const theme = useMantineTheme();
   const { css, cx } = useCss();
 

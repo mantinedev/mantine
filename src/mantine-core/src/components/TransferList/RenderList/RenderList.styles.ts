@@ -32,9 +32,9 @@ export default createStyles((theme, { reversed, native, radius }: RenderListStyl
     },
   },
 
-  transferListItemHovered: theme.fn.hover({
+  transferListItemHovered: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-  }),
+  },
 
   transferListItems: {
     overflow: native ? 'auto' : 'hidden',

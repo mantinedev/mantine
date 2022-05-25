@@ -5,11 +5,9 @@ import {
   PolymorphicRef,
   extractSystemStyles,
 } from '@mantine/styles';
-import { useSx, BoxSx } from './use-sx/use-sx';
+import { useSx } from './use-sx/use-sx';
 
-interface _BoxProps extends Omit<DefaultProps, 'sx'> {
-  sx?: BoxSx;
-}
+interface _BoxProps extends DefaultProps {}
 
 export type BoxProps<C> = PolymorphicComponentProps<C, _BoxProps>;
 
