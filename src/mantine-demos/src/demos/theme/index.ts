@@ -6,3 +6,4 @@ export { themeFontsExtend } from './Theme.demo.theme-fonts-extend';
 export { providerStyles } from './Theme.demo.provider-styles';
 export { primaryShade } from './Theme.demo.primary-shade';
 export { defaultProps } from './Theme.demo.default-props';
+export { focusRing } from './Theme.demo.focus-ring';

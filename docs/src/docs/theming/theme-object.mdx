@@ -6,6 +6,8 @@ order: 0
 search: 'Theme object, use-mantine-theme, theme overrides'
 ---
 
+import { ThemeDemos } from '@mantine/demos';
+
 # Theme object
 
 Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design tokens are stored.
@@ -126,8 +128,8 @@ function App() {
 
         shadows: {
           // other shadows (xs, sm, lg) will be merged from default theme
-          md: '1px 1px 3px rgba(0,0,0,.25)',
-          xl: '5px 5px 3px rgba(0,0,0,.25)',
+          md: '1px 1px 3px rgba(0, 0, 0, .25)',
+          xl: '5px 5px 3px rgba(0, 0, 0, .25)',
         },
 
         headings: {
@@ -143,6 +145,24 @@ function App() {
   );
 }
 ```
+
+## Theme properties
+
+### colorScheme
+
+`theme.colorScheme` determines which color scheme will be used in your application.
+It can be either `light` or `dark`, default value is `light`. See [dark theme guide](/guides/dark-theme/) to
+learn how to setup dark color scheme in your application.
+
+### focusRing
+
+`theme.focusRing` controls focus ring styles, it supports the following values:
+
+- `auto` (default) – focus ring is visible only when user navigates with keyboard, this is default browser behavior for native interactive elements
+- `always` – focus ring is visible when user navigates with keyboard and mouse
+- `never` – focus ring is always hidden, it is not recommended – users who navigate with keyboard will not have visual indication of current focused element
+
+<Demo data={ThemeDemos.focusRing} />
 
 ## Store theme override object in a variable
 
