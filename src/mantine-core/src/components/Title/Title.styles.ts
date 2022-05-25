@@ -11,7 +11,7 @@ export default createStyles((theme, { element, align }: TitleStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,
-    fontWeight: theme.headings.fontWeight,
+    fontWeight: theme.headings.sizes[element].fontWeight || theme.headings.fontWeight,
     fontSize: theme.headings.sizes[element].fontSize,
     lineHeight: theme.headings.sizes[element].lineHeight,
     margin: 0,

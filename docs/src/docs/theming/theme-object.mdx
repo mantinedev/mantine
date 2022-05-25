@@ -63,12 +63,13 @@ interface MantineTheme {
     fontFamily: CSSProperties['fontFamily'];
     fontWeight: CSSProperties['fontWeight'];
     sizes: {
-      h1: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h2: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h3: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h4: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h5: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
-      h6: { fontSize: CSSProperties['fontSize']; lineHeight: CSSProperties['lineHeight'] };
+      // See heading options below
+      h1: Heading;
+      h2: Heading;
+      h3: Heading;
+      h4: Heading;
+      h5: Heading;
+      h6: Heading;
     };
   };
 
@@ -92,6 +93,12 @@ interface MantineTheme {
 
   // Add your own custom properties on Mantine theme
   other: Record<string, any>;
+}
+
+interface Heading {
+  fontSize: CSSProperties['fontSize'];
+  fontWeight: CSSProperties['fontWeight'];
+  lineHeight: CSSProperties['lineHeight'];
 }
 ```
 

@@ -11,6 +11,7 @@ export type MantineThemeOther = Record<string, any>;
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
+  fontWeight: CSSProperties['fontWeight'];
   lineHeight: CSSProperties['lineHeight'];
 }
 

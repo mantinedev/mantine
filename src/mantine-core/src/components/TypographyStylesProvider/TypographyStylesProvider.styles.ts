@@ -1,18 +1,21 @@
 import { createStyles } from '@mantine/styles';
+import { keys } from '@mantine/utils';
 
 export default createStyles((theme) => {
-  const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
+  const headings = keys(theme.headings.sizes).reduce((acc, h) => {
+    const values = theme.headings.sizes[h];
     acc[`& ${h}`] = {
       fontFamily: theme.headings.fontFamily,
-      fontWeight: theme.headings.fontWeight,
-      marginTop: theme.spacing.xl * theme.headings.sizes[h].lineHeight,
+      fontWeight: values.fontWeight || theme.headings.fontWeight,
+      marginTop:
+        typeof values.lineHeight === 'number'
+          ? theme.spacing.xl * values.lineHeight
+          : theme.spacing.xl,
       marginBottom: theme.spacing.sm,
-      ...theme.headings.sizes[h],
+      ...values,
 
       '@media (max-width: 755px)': {
-        fontSize:
-          typeof theme.headings.sizes[h].fontSize === 'number' &&
-          (theme.headings.sizes[h].fontSize as number) / 1.3,
+        fontSize: typeof values.fontSize === 'number' && (values.fontSize as number) / 1.3,
       },
     };
 
