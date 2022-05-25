@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { StrictMode, useState } from 'react';
 import { RichTextEditor } from './RichTextEditor';
 
 export default { title: 'RichTextEditor' };
@@ -53,13 +53,15 @@ export function Placeholder() {
   const [value, onChange] = useState('');
   return (
     <div style={{ padding: 40, maxWidth: 800, margin: 'auto' }}>
-      <RichTextEditor
-        placeholder="This is placeholder"
-        value={value}
-        onChange={onChange}
-        onImageUpload={handleImageUpload}
-        stickyOffset={0}
-      />
+      <StrictMode>
+        <RichTextEditor
+          placeholder="This is placeholder"
+          value={value}
+          onChange={onChange}
+          // onImageUpload={handleImageUpload}
+          stickyOffset={0}
+        />
+      </StrictMode>
     </div>
   );
 }
