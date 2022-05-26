@@ -52,14 +52,7 @@ export function Loader(props: LoaderProps) {
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
       size={theme.fn.size({ size, sizes })}
-      color={
-        _color in theme.colors
-          ? theme.fn.themeColor(
-              _color,
-              theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light')
-            )
-          : color
-      }
+      color={_color in theme.colors ? theme.fn.themeColor(_color, theme.fn.primaryShade()) : color}
       {...others}
     />
   );

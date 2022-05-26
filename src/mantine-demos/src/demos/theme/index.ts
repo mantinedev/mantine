@@ -7,3 +7,4 @@ export { providerStyles } from './Theme.demo.providerStyles';
 export { primaryShade } from './Theme.demo.primaryShade';
 export { defaultProps } from './Theme.demo.defaultProps';
 export { focusRing } from './Theme.demo.focusRing';
+export { loader } from './Theme.demo.loader';
