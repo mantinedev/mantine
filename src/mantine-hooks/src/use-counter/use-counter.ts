@@ -1,11 +1,10 @@
 import { useState } from 'react';
+import { clamp } from '../utils';
 
 const DEFAULT_OPTIONS = {
   min: -Infinity,
   max: Infinity,
 };
-
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 export function useCounter(initialValue = 0, options?: Partial<{ min: number; max: number }>) {
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
