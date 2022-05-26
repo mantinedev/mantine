@@ -164,6 +164,80 @@ learn how to setup dark color scheme in your application.
 
 <Demo data={ThemeDemos.focusRing} />
 
+### defaultRadius
+
+`theme.defaultRadius` controls default border-radius of all Mantine components ([Button](/core/button/), [TextInput](/core/text-input/), [ThemeIcon](/core/theme-icon/), etc.), default value is `sm`.
+It accepts `'xs' | 'sm' | 'md' | 'lg' | 'xl'` (key of `theme.radius`) or a number to set border-radius in px.
+For example, to remove border-radius from all elements set `defaultRadius: 0`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ defaultRadius: 0 }}>
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+### colors
+
+Mantine theme has the following properties associated with colors:
+
+- `theme.white` used for body and overlays ([Modal](/core/modal/), [Popover](/core/popover/)) background when `theme.colorScheme` is `light`, default value is `#fff`
+- `theme.black` used as color for all text when `theme.colorScheme` is `light`, default value is `#000`
+- `theme.colors`, `theme.primaryColor` and `theme.primaryShade` properties are described in the [separate guide](/theming/colors/)
+
+### dir
+
+Controls direction, you will need to set it if you need RTL support, follow [RTL guide](/guides/rtl/) to get started.
+
+### loader
+
+`theme.loader` controls default loader that will be displayed by [Loader](/core/loader/) and [LoadingOverlay](/core/loading-overlay/) components:
+
+<Demo data={ThemeDemos.loader} />
+
+### other
+
+With `theme.other` you can add any amount of extra properties to theme:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        other: {
+          charcoal: '#333333',
+          primaryHeadingSize: 45,
+          fontWeights: {
+            bold: 700,
+            extraBold: 900,
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+To specify `theme.other` type, add file with the following declaration:
+
+```ts
+declare module '@mantine/core' {
+  export interface MantineThemeOther {
+    myCustomProperty: string;
+    myCustomFunction: () => void;
+  }
+}
+```
+
 ## Store theme override object in a variable
 
 To store theme override object in a variable use `MantineThemeOverride` type:
@@ -215,18 +289,5 @@ function getColor(theme: MantineTheme) {
 function Demo() {
   const theme = useMantineTheme();
   return <div style={{ background: getColor(theme) }} />;
-}
-```
-
-### Adding custom 'other' properties
-
-Similar to how you can extend/set custom colors, you can add your own properties to the `theme.other` type using TypeScript module declaration:
-
-```ts
-declare module '@mantine/core' {
-  export interface MantineThemeOther {
-    myCustomProperty: string;
-    myCustomFunction: () => void;
-  }
 }
 ```
