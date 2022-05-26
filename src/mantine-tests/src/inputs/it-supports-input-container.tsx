@@ -13,7 +13,9 @@ export function itSupportsInputContainer<P>(
         required
         id="invalid-test-id"
         error
-        inputContainer={({ children }) => <div className="test-input-container">{children}</div>}
+        inputContainer={(children: React.ReactNode) => (
+          <div className="test-input-container">{children}</div>
+        )}
       />
     );
 

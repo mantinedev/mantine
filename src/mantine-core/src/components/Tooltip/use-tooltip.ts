@@ -29,7 +29,8 @@ interface UseTooltip {
 
 export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
-  const opened = typeof settings.opened === 'boolean' ? settings.opened : uncontrolledOpened;
+  const controlled = typeof settings.opened === 'boolean';
+  const opened = controlled ? settings.opened : uncontrolledOpened;
   const withinGroup = useTooltipGroupContext();
   const uid = useId();
 

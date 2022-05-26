@@ -24,7 +24,7 @@ export function WithInputContainer() {
         label="with tooltip"
         description="with tooltip"
         error="with tooltip"
-        inputContainer={({ children }) => (
+        inputContainer={(children) => (
           <Tooltip label="tooltip" position="bottom-start">
             {children}
           </Tooltip>

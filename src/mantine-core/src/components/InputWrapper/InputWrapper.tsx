@@ -29,7 +29,7 @@ export interface InputWrapperBaseProps {
   errorProps?: Record<string, any>;
 
   /** Input container component, defaults to React.Fragment */
-  inputContainer?: React.FC<{ children: React.ReactNode }>;
+  inputContainer?(children: React.ReactNode): React.ReactNode;
 }
 
 export interface InputWrapperProps
@@ -55,7 +55,7 @@ export interface InputWrapperProps
 const defaultProps: Partial<InputWrapperProps> = {
   labelElement: 'label',
   size: 'sm',
-  inputContainer: Fragment,
+  inputContainer: (children) => children,
 };
 
 export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props, ref) => {
@@ -74,7 +74,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     classNames,
     styles,
     size,
-    inputContainer: InputContainer,
+    inputContainer,
     __staticSelector,
     ...others
   } = useMantineDefaultProps('InputWrapper', defaultProps, props);
@@ -112,7 +112,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
         </Text>
       )}
 
-      <InputContainer>{children}</InputContainer>
+      {inputContainer(children)}
 
       {typeof error !== 'boolean' && error && (
         <Text {...errorProps} size={size} className={classes.error}>
