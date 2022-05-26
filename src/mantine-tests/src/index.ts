@@ -21,6 +21,7 @@ export { wait } from './wait';
 export { renderWithAct } from './render-with-act';
 
 // Inputs
+export { itSupportsInputContainer } from './inputs/it-supports-input-container';
 export { itSupportsInputIcon } from './inputs/it-supports-input-icon';
 export { itSupportsInputRightSection } from './inputs/it-supports-input-right-section';
 export { itSupportsWrapperProps } from './inputs/it-supports-wrapper-props';

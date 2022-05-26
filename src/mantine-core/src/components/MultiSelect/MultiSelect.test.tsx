@@ -8,6 +8,7 @@ import {
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
   itSupportsInputWrapperProps,
+  itSupportsInputContainer,
 } from '@mantine/tests';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
@@ -25,6 +26,7 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);
   itSupportsInputWrapperProps(MultiSelect, defaultProps, 'MultiSelect');
+  itSupportsInputContainer(MultiSelect, defaultProps, 'MultiSelect');
   itSupportsInputRightSection(MultiSelect, defaultProps);
   itSupportsWrapperProps(MultiSelect, defaultProps);
   itConnectsLabelAndInput(MultiSelect, defaultProps);

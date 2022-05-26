@@ -193,6 +193,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     positionDependencies,
     onKeyDown,
     unstyled,
+    inputContainer,
     ...others
   } = useMantineDefaultProps('MultiSelect', defaultProps, props);
 
@@ -551,6 +552,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       errorProps={errorProps}
       descriptionProps={descriptionProps}
       labelProps={labelProps}
+      inputContainer={inputContainer}
       {...systemStyles}
       {...wrapperProps}
     >

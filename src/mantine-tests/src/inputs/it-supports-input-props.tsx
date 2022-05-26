@@ -5,6 +5,7 @@ import { itSupportsInputIcon } from './it-supports-input-icon';
 import { itSupportsInputRightSection } from './it-supports-input-right-section';
 import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 import { itSupportsInputStylesApi } from './it-supports-input-styles-api';
+import { itSupportsInputContainer } from './it-supports-input-container';
 
 export function itSupportsInputProps<P>(
   Component: React.ComponentType<P>,
@@ -12,6 +13,7 @@ export function itSupportsInputProps<P>(
   name: string
 ) {
   itSupportsInputWrapperProps(Component, requiredProps, name);
+  itSupportsInputContainer(Component, requiredProps, name);
   itConnectsLabelAndInput(Component, requiredProps);
   itSupportsInputStylesApi(Component, requiredProps);
   itSupportsInputIcon(Component, requiredProps);
