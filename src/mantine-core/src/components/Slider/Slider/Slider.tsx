@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useState, useCallback } from 'react';
-import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useMove, useUncontrolled, clamp } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineColor,
@@ -139,10 +139,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const theme = useMantineTheme();
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
-    value: typeof value === 'number' ? clamp({ value, min, max }) : value,
-    defaultValue:
-      typeof defaultValue === 'number' ? clamp({ value: defaultValue, min, max }) : defaultValue,
-    finalValue: clamp({ value: 0, min, max }),
+    value: typeof value === 'number' ? clamp(value, min, max) : value,
+    defaultValue: typeof defaultValue === 'number' ? clamp(defaultValue, min, max) : defaultValue,
+    finalValue: clamp(0, min, max),
     onChange,
   });
 

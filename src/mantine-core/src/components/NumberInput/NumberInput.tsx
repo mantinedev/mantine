@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, clamp, useOs } from '@mantine/hooks';
+import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
 import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
@@ -186,7 +186,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       handleValueChange(min ?? 0);
       setTempValue(min?.toFixed(precision) ?? '0');
     } else {
-      const result = clamp({ value: _value + step, min: _min, max: _max }).toFixed(precision);
+      const result = clamp(_value + step, _min, _max).toFixed(precision);
 
       handleValueChange(parseFloat(result));
       setTempValue(result);
@@ -199,7 +199,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       handleValueChange(min ?? 0);
       setTempValue(min?.toFixed(precision) ?? '0');
     } else {
-      const result = clamp({ value: _value - step, min: _min, max: _max }).toFixed(precision);
+      const result = clamp(_value - step, _min, _max).toFixed(precision);
       handleValueChange(parseFloat(result));
       setTempValue(result);
     }
@@ -320,7 +320,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       handleValueChange(undefined);
     } else {
       const parsedVal = parseNum(event.target.value);
-      const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
+      const val = clamp(parseFloat(parsedVal), _min, _max);
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {

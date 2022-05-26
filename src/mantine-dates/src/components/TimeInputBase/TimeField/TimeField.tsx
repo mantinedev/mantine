@@ -70,7 +70,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowUp') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) + 1, max, min }).toString()
+          clamp(parseInt(event.currentTarget.value, 10) + 1, max, min).toString()
         );
 
         if (value !== padded) {
@@ -81,7 +81,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       if (event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
         const padded = padTime(
-          clamp({ value: parseInt(event.currentTarget.value, 10) - 1, max, min }).toString()
+          clamp(parseInt(event.currentTarget.value, 10) - 1, max, min).toString()
         );
 
         if (value !== padded) {
