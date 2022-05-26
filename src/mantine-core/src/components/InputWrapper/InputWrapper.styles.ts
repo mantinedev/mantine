@@ -12,7 +12,7 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
 
   label: {
     display: 'inline-block',
-    marginBottom: 4,
+    marginBottom: 1,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],
@@ -30,7 +30,6 @@ export default createStyles((theme, { size }: InputWrapperStylesParams) => ({
   },
 
   description: {
-    marginTop: -3,
     marginBottom: 7,
     wordBreak: 'break-word',
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
