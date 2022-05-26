@@ -19,6 +19,7 @@ import {
   CardDemos,
   CopyButtonDemos,
   FileButtonDemos,
+  InputDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -300,6 +301,14 @@ New [FocusTrap](https://mantine.dev/core/focus-trap/) component:
 [Tooltip.Group](https://mantine.dev/core/tooltip/#tooltip-delay-group) component can be used to sync open and close delays for multiple tooltips:
 
 <Demo data={TooltipDemos.group} />
+
+### inputContainer prop
+
+All inputs that use `Input.Wrapper` component under the hood ([TextInput](https://mantine.dev/core/text-input/), [Autocomplete](https://mantine.dev/core/autocomplete/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.)
+now support `inputContainer` prop. This prop let you add additional elements before/after input element or add floating
+elements that will be positioned relative to the input. Example with [Tooltip](https://mantine.dev/core/tooltip/):
+
+<Demo data={InputDemos.inputContainer} />
 
 ### Card.Section improvements
 

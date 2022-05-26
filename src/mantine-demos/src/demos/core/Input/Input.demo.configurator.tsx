@@ -11,7 +11,7 @@ const iconSizes = {
 };
 
 function Wrapper(props: InputProps) {
-  return <Input icon={<IconAt size={iconSizes[props.size]} />} {...props} />;
+  return <Input icon={<IconAt size={iconSizes[props.size]} stroke={1.5} />} {...props} />;
 }
 
 const codeTemplate = (props: string) => `

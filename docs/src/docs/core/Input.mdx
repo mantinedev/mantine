@@ -33,44 +33,32 @@ Input component is a base for other inputs and was not designed to be used direc
 
 ## Usage
 
-Input component is used as base for all other inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/) and others).
-The single purpose of Input is to provide shared styles and features to other inputs.
-Use other components listed above to build forms (as they provide better accessibility)
-and Input component as base for your own custom inputs with Mantine theme.
+`Input` component is used as base for some other inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/), etc.).
+The purpose of `Input` is to provide shared styles and features to other inputs:
 
 <Demo data={InputDemos.configurator} />
-
-## Variants
-
-Input has 3 variants, all of which are available on all Mantine inputs.
-Note that unstyled input variant may significantly impact usability, use it wisely.
-
-<Demo data={InputDemos.variants} />
 
 ## Icon and right section
 
 <Demo data={InputDemos.icon} />
 
-Right section with [Tooltip](/core/tooltip/):
-
-<Demo data={InputDemos.tooltip} />
-
-## Sizes
-
-Component has 5 premade sizes: xs, sm, md, lg, xl, use `size` prop to control input height, padding and font-size:
-
-<Demo data={InputDemos.sizes} />
-
 ## Custom component
 
-As Input component is intended to be a base for all other inputs,
-you can pass `component` prop which will define root element:
+Input is a polymorphic component, you can change the root element with `component` prop:
 
 <Demo data={InputDemos.component} />
 
-## Get input ref
+## Input.Wrapper component
 
-You can get input ref by passing `ref` prop to Input component:
+### inputContainer
+
+With `inputContainer` prop you can enhance inputs that use `Input.Wrapper` under the hood,
+for example, you can add [Tooltip](/core/tooltip/) to [TextInput](/core/text-input/) when
+the input is focused:
+
+<Demo data={InputDemos.inputContainer} />
+
+## Get input ref
 
 ```tsx
 import { useRef } from 'react';
