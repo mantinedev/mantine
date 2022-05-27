@@ -13,8 +13,8 @@ interface YupSchema {
   validateSync(values: Record<string, any>, options: { abortEarly: boolean }): void;
 }
 
-export function yupResolver(schema: any) {
-  const _schema: YupSchema = schema;
+export function yupResolver(schema: any, transform?: (values: Record<string, any>) => Record<string, any>) {
+  const _schema: YupSchema = transform ? transform(schema) : schema;
 
   return (values: Record<string, any>): FormErrors => {
     try {

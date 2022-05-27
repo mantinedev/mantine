@@ -16,8 +16,8 @@ interface ZodSchema {
   safeParse(values: Record<string, any>): ZodResults;
 }
 
-export function zodResolver<T extends Record<string, any>>(schema: any) {
-  const _schema: ZodSchema = schema;
+export function zodResolver<T extends Record<string, any>>(schema: any, transform?: (values: Record<string, any>) => Record<string, any>) {
+  const _schema: ZodSchema = transform ? transform(schema) : schema;
 
   return (values: T): FormErrors => {
     const parsed = _schema.safeParse(values);
