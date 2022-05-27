@@ -250,6 +250,20 @@ were fixed:
 - Multiple issues with types were fixed (mostly related to `children` prop changes)
 - The entire Mantine codebase was migrate to React 18 (documentation website, [Mantine UI](https://ui.mantine.dev), all packages)
 
+## Unstyled components
+
+All components now support `unstyled` prop which removes all non-essential Mantine styles
+from the component. This is useful when you want to style some component from scratch
+without overwriting any styles.
+
+Unstyled [Tabs](https://mantine.dev/core/tabs/):
+
+<Demo data={TabsDemos.unstyled} demoProps={{ toggle: true }} />
+
+Unstyled [Accordion](https://mantine.dev/core/accordion/):
+
+<Demo data={AccordionDemos.unstyled} demoProps={{ toggle: true }} />
+
 ## New theme properties
 
 ### fontWeight for each heading
