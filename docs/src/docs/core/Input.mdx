@@ -50,6 +50,12 @@ Input is a polymorphic component, you can change the root element with `componen
 
 ## Input.Wrapper component
 
+`Input.Wrapper` component is used in all other inputs ([TextInput](/core/text-input/), [Autocomplete](/core/autocomplete/), [MultiSelect](/core/multi-select/), etc.)
+under the hood, you **do not need to wrap your inputs with it, as it is already included in all of them**.
+Use `Input.Wrapper` only when you want to create custom inputs.
+
+<Demo data={InputDemos.wrapperConfigurator} />
+
 ### inputContainer
 
 With `inputContainer` prop you can enhance inputs that use `Input.Wrapper` under the hood,
@@ -57,6 +63,13 @@ for example, you can add [Tooltip](/core/tooltip/) to [TextInput](/core/text-inp
 the input is focused:
 
 <Demo data={InputDemos.inputContainer} />
+
+### Input.Label, Input.Error and Input.Description
+
+`Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
+form layouts if default `Input.Wrapper` layout does not fit your requirements.
+
+<Demo data={InputDemos.helpers} />
 
 ## Get input ref
 
