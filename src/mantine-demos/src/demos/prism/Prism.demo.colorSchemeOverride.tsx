@@ -25,7 +25,7 @@ function Demo() {
   );
 }
 
-export const themeOverride: MantineDemo = {
+export const colorSchemeOverride: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
