@@ -31,7 +31,7 @@ export interface InputBaseProps {
   rightSectionWidth?: number;
 
   /** Props spread to rightSection div element */
-  rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
+  rightSectionProps?: Record<string, any>;
 
   /** Properties spread to root element */
   wrapperProps?: Record<string, any>;

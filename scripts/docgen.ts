@@ -33,6 +33,12 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
   '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
 
+  // Input
+  '../src/mantine-core/src/components/Input/InputLabel/InputLabel.tsx',
+  '../src/mantine-core/src/components/Input/InputWrapper/InputWrapper.tsx',
+  '../src/mantine-core/src/components/Input/InputDescription/InputDescription.tsx',
+  '../src/mantine-core/src/components/Input/InputError/InputError.tsx',
+
   // List
   '../src/mantine-core/src/components/List/ListItem/ListItem.tsx',
 
