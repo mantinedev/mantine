@@ -29,4 +29,10 @@ export default createStyles((theme) => ({
       },
     },
   },
+
+  root: {
+    '& + &': {
+      marginTop: theme.spacing.xl * 2,
+    },
+  },
 }));

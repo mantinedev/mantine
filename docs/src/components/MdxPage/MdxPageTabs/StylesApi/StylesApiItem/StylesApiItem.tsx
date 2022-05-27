@@ -9,7 +9,7 @@ interface StylesApiItemProps {
 
 export function StylesApiItem({ component }: StylesApiItemProps) {
   const { classes } = useStyles();
-  const COMPONENT_STYLES = STYLES_API[component];
+  const COMPONENT_STYLES = STYLES_API[component.replace('.', '')];
 
   if (!COMPONENT_STYLES || typeof COMPONENT_STYLES !== 'object') {
     return null;
@@ -25,7 +25,7 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
   ));
 
   return (
-    <>
+    <div className={classes.root}>
       <Title order={3} className={classes.title}>
         {component} component Styles API
       </Title>
@@ -40,6 +40,6 @@ export function StylesApiItem({ component }: StylesApiItemProps) {
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-    </>
+    </div>
   );
 }
