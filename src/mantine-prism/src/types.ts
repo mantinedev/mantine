@@ -1,5 +1,5 @@
-import type { Language } from 'prism-react-renderer';
-import type { MantineColor } from '@mantine/core';
+import type { Language, PrismTheme } from 'prism-react-renderer';
+import type { MantineColor, MantineTheme } from '@mantine/core';
 
 export interface PrismSharedProps {
   /** Code which will be highlighted */
@@ -26,9 +26,14 @@ export interface PrismSharedProps {
   /** Force color scheme, defaults to theme.colorScheme */
   colorScheme?: 'dark' | 'light';
 
+  /** Override the PrismTheme syntax rules @see {https://github.com/FormidableLabs/prism-react-renderer#theming} */
+  getPrismTheme?: PrismThemeSelector;
+
   /** Change scroll area component */
   scrollAreaComponent?: any;
 
   /** Defines whether the code should be trimmed, defaults to true */
   trim?: boolean;
 }
+
+export type PrismThemeSelector = (theme: MantineTheme, colorScheme: 'light' | 'dark') => PrismTheme;

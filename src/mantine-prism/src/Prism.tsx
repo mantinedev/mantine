@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
-import { getPrismTheme } from './prism-theme';
+import { getPrismTheme as defaultGetPrismTheme } from './prism-theme';
 import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
 import useTabsStyles from './PrismTabs.styles';
@@ -41,6 +41,7 @@ const prismDefaultProps: Partial<PrismProps> = {
   trim: true,
   highlightLines: {},
   scrollAreaComponent: ScrollArea,
+  getPrismTheme: defaultGetPrismTheme,
 };
 
 export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
@@ -58,6 +59,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       highlightLines,
       scrollAreaComponent: ScrollAreaComponent,
       colorScheme,
+      getPrismTheme,
       trim,
       ...others
     } = useMantineDefaultProps('Prism', prismDefaultProps, props);
@@ -100,7 +102,7 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
 
         <Highlight
           {...defaultProps}
-          theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
+          theme={(getPrismTheme || defaultGetPrismTheme)(theme, colorScheme || theme.colorScheme)}
           code={code}
           language={language}
         >

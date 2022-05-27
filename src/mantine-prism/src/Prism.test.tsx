@@ -2,12 +2,14 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Prism, PrismTab, PrismTabs, PrismProps, PrismTabsProps } from './Prism';
+import { getPrismTheme } from './prism-theme';
 
 const defaultProps: PrismProps = {
   children: 'test',
   withLineNumbers: true,
   language: 'tsx',
 };
+const stringifiedDefaultProps = JSON.stringify(defaultProps, null, '/t');
 
 describe('@mantine/prism/Prism', () => {
   itSupportsSystemProps({
@@ -39,6 +41,42 @@ describe('@mantine/prism/Prism', () => {
   it('exposes PrismTabs and PrismTab components', () => {
     expect(Prism.Tabs).toBe(PrismTabs);
     expect(Prism.Tab).toBe(PrismTab);
+  });
+
+  it('calls and uses the custom getPrismTheme', () => {
+    expect.assertions(2);
+    const getPrismThemePassthrough = jest.fn((theme, colorScheme) =>
+      getPrismTheme(theme, colorScheme)
+    );
+    const { container } = render(
+      <Prism language="json" withLineNumbers getPrismTheme={getPrismThemePassthrough}>
+        {stringifiedDefaultProps}
+      </Prism>
+    );
+    expect(getPrismThemePassthrough).toHaveBeenCalledTimes(1);
+    expect(container.querySelectorAll('.mantine-Prism-lineNumber')).toHaveLength(
+      stringifiedDefaultProps.split('\n').length
+    );
+  });
+
+  it('handles missing getPrismTheme', () => {
+    expect.assertions(2);
+    const undefResult = render(<Prism language="json">{stringifiedDefaultProps}</Prism>);
+    const nullResult = render(
+      <Prism language="json" getPrismTheme={null}>
+        {stringifiedDefaultProps}
+      </Prism>
+    );
+    expect(undefResult.container).toEqual(nullResult.container);
+
+    // If user passes a non-function, that's expected crash.
+    expect(() =>
+      render(
+        <Prism language="json" getPrismTheme={'broken' as any}>
+          {stringifiedDefaultProps}
+        </Prism>
+      )
+    ).toThrow();
   });
 });
 
