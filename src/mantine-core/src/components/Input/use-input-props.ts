@@ -32,6 +32,7 @@ export function useInputProps<T extends BaseProps>(
     size,
     style,
     inputContainer,
+    inputWrapperOrder,
     ...others
   } = useMantineDefaultProps(component, defaultProps, props);
 
@@ -63,6 +64,7 @@ export function useInputProps<T extends BaseProps>(
       size,
       style,
       inputContainer,
+      inputWrapperOrder,
       ...wrapperProps,
       ...systemStyles,
     },

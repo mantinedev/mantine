@@ -175,6 +175,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonTabIndex = 0,
       unstyled,
       inputContainer,
+      inputWrapperOrder,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -256,6 +257,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         descriptionProps={descriptionProps}
         labelProps={labelProps}
         inputContainer={inputContainer}
+        inputWrapperOrder={inputWrapperOrder}
         {...systemStyles}
         {...wrapperProps}
       >

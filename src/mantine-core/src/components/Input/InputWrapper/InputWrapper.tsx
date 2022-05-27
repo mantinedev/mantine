@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Fragment } from 'react';
 import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { InputLabel, InputLabelStylesNames } from '../InputLabel/InputLabel';
@@ -39,6 +39,9 @@ export interface InputWrapperBaseProps {
 
   /** Input container component, defaults to React.Fragment */
   inputContainer?(children: React.ReactNode): React.ReactNode;
+
+  /** Controls order of the Input.Wrapper elements */
+  inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
 }
 
 export interface InputWrapperProps
@@ -65,6 +68,7 @@ const defaultProps: Partial<InputWrapperProps> = {
   labelElement: 'label',
   size: 'sm',
   inputContainer: (children) => children,
+  inputWrapperOrder: ['label', 'description', 'input', 'error'],
 };
 
 export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props, ref) => {
@@ -86,6 +90,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     inputContainer,
     __staticSelector,
     unstyled,
+    inputWrapperOrder,
     ...others
   } = useMantineDefaultProps('InputWrapper', defaultProps, props);
 
@@ -103,34 +108,52 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     __staticSelector,
   };
 
+  const _label = label && (
+    <InputLabel
+      key="label"
+      labelElement={labelElement}
+      id={id ? `${id}-label` : undefined}
+      htmlFor={id}
+      required={required}
+      {...sharedProps}
+      {...labelProps}
+    >
+      {label}
+    </InputLabel>
+  );
+
+  const _description = description && (
+    <InputDescription key="description" {...sharedProps} {...descriptionProps}>
+      {description}
+    </InputDescription>
+  );
+
+  const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
+
+  const _error = typeof error !== 'boolean' && error && (
+    <InputError {...errorProps} key="error" {...sharedProps}>
+      {error}
+    </InputError>
+  );
+
+  const content = inputWrapperOrder.map((part) => {
+    switch (part) {
+      case 'label':
+        return _label;
+      case 'input':
+        return _input;
+      case 'description':
+        return _description;
+      case 'error':
+        return _error;
+      default:
+        return null;
+    }
+  });
+
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
-      {label && (
-        <InputLabel
-          labelElement={labelElement}
-          id={id ? `${id}-label` : undefined}
-          htmlFor={id}
-          required={required}
-          {...sharedProps}
-          {...labelProps}
-        >
-          {label}
-        </InputLabel>
-      )}
-
-      {description && (
-        <InputDescription {...sharedProps} {...descriptionProps}>
-          {description}
-        </InputDescription>
-      )}
-
-      {inputContainer(children)}
-
-      {typeof error !== 'boolean' && error && (
-        <InputError {...errorProps} {...sharedProps}>
-          {error}
-        </InputError>
-      )}
+      {content}
     </Box>
   );
 });
