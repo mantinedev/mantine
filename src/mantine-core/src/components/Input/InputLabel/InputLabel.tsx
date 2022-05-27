@@ -20,6 +20,8 @@ export interface InputLabelProps
 
   /** Predefined label size */
   size?: MantineSize;
+
+  __staticSelector?: string;
 }
 
 export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>(
@@ -33,13 +35,15 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>(
       styles,
       unstyled,
       className,
+      htmlFor,
+      __staticSelector,
       ...others
     },
     ref
   ) => {
     const { classes, cx } = useStyles(
       { size },
-      { name: 'InputWrapper', classNames, styles, unstyled }
+      { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
     );
 
     return (
@@ -47,6 +51,7 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>(
         component={labelElement as 'label'}
         ref={ref}
         className={cx(classes.label, className)}
+        htmlFor={labelElement === 'label' ? htmlFor : undefined}
         {...others}
       >
         {children}

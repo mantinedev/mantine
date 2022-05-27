@@ -3,7 +3,7 @@ import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { Text } from '../../Text';
 import useStyles, { InputDescriptionStylesParams } from './InputDescription.styles';
 
-type InputDescriptionStylesNames = Selectors<typeof useStyles>;
+export type InputDescriptionStylesNames = Selectors<typeof useStyles>;
 
 export interface InputDescriptionProps
   extends DefaultProps<InputDescriptionStylesNames, InputDescriptionStylesParams>,
@@ -13,13 +13,18 @@ export interface InputDescriptionProps
 
   /** Predefined size */
   size?: MantineSize;
+
+  __staticSelector?: string;
 }
 
 export const InputDescription = forwardRef<HTMLDivElement, InputDescriptionProps>(
-  ({ children, className, classNames, styles, unstyled, size, ...others }, ref) => {
+  (
+    { children, className, classNames, styles, unstyled, size, __staticSelector, ...others },
+    ref
+  ) => {
     const { classes, cx } = useStyles(
       { size },
-      { name: 'InputWrapper', classNames, styles, unstyled }
+      { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
     );
     return (
       <Text color="dimmed" className={cx(classes.description, className)} ref={ref} {...others}>

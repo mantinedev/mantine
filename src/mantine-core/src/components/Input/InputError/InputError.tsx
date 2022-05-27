@@ -3,7 +3,7 @@ import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { Text } from '../../Text';
 import useStyles, { InputErrorStylesParams } from './InputError.styles';
 
-type InputErrorStylesNames = Selectors<typeof useStyles>;
+export type InputErrorStylesNames = Selectors<typeof useStyles>;
 
 export interface InputErrorProps
   extends DefaultProps<InputErrorStylesNames, InputErrorStylesParams>,
@@ -13,13 +13,18 @@ export interface InputErrorProps
 
   /** Predefined size */
   size?: MantineSize;
+
+  __staticSelector?: string;
 }
 
 export const InputError = forwardRef<HTMLDivElement, InputErrorProps>(
-  ({ children, className, classNames, styles, unstyled, size, ...others }, ref) => {
+  (
+    { children, className, classNames, styles, unstyled, size, __staticSelector, ...others },
+    ref
+  ) => {
     const { classes, cx } = useStyles(
       { size },
-      { name: 'InputWrapper', classNames, styles, unstyled }
+      { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
     );
     return (
       <Text className={cx(classes.error, className)} ref={ref} {...others}>
