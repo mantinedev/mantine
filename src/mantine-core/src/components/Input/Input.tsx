@@ -13,6 +13,7 @@ import { InputWrapper } from './InputWrapper/InputWrapper';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputError } from './InputError/InputError';
+import { useInputWrapperContext } from './InputWrapper.context';
 import useStyles, { InputVariant } from './Input.styles';
 
 export type InputStylesNames = Selectors<typeof useStyles>;
@@ -92,6 +93,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     sx,
     ...others
   } = useMantineDefaultProps('Input', defaultProps, props);
+  const { offsetBottom, offsetTop } = useInputWrapperContext();
 
   const { classes, cx } = useStyles(
     {
@@ -103,6 +105,8 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       rightSectionWidth,
       iconWidth,
       withRightSection: !!rightSection,
+      offsetBottom,
+      offsetTop,
     },
     { classNames, styles, name: ['Input', __staticSelector] }
   );

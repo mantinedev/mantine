@@ -7,7 +7,6 @@ export interface InputLabelStylesParams {
 export default createStyles((theme, { size }: InputLabelStylesParams) => ({
   label: {
     display: 'inline-block',
-    marginBottom: 1,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     fontWeight: 500,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[9],

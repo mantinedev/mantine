@@ -7,6 +7,8 @@ import {
   InputDescription,
   InputDescriptionStylesNames,
 } from '../InputDescription/InputDescription';
+import { InputWrapperProvider } from '../InputWrapper.context';
+import { getInputOffsets } from './get-input-offsets';
 import useStyles from './InputWrapper.styles';
 
 export type InputWrapperStylesNames =
@@ -152,9 +154,16 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   });
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
-      {content}
-    </Box>
+    <InputWrapperProvider
+      value={getInputOffsets(inputWrapperOrder, {
+        hasDescription: !!_description,
+        hasError: !!_error,
+      })}
+    >
+      <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        {content}
+      </Box>
+    </InputWrapperProvider>
   );
 });
 

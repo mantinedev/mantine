@@ -312,4 +312,19 @@ storiesOf('MultiSelect', module)
         nothingFound="Nothing found"
       />
     </div>
+  ))
+  .add('inputWrapperOrder', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        required
+        description="Description"
+        error="Error"
+        inputWrapperOrder={['input', 'error', 'description', 'label']}
+      />
+    </div>
   ));

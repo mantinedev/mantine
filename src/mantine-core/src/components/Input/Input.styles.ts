@@ -11,6 +11,8 @@ export interface InputStylesParams {
   rightSectionWidth: number;
   withRightSection: boolean;
   iconWidth: number;
+  offsetBottom: boolean;
+  offsetTop: boolean;
 }
 
 export const sizes = {
@@ -89,6 +91,8 @@ export default createStyles(
       rightSectionWidth,
       withRightSection,
       iconWidth,
+      offsetBottom,
+      offsetTop,
     }: InputStylesParams
   ) => {
     const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
@@ -105,6 +109,8 @@ export default createStyles(
     return {
       wrapper: {
         position: 'relative',
+        marginTop: offsetTop ? theme.spacing.xs / 2 : undefined,
+        marginBottom: offsetBottom ? theme.spacing.xs / 2 : undefined,
       },
 
       input: {

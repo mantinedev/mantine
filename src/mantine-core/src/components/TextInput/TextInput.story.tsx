@@ -33,3 +33,51 @@ export function WithInputContainer() {
     </div>
   );
 }
+
+export function InputWrapperOrder() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <TextInput
+        value="Default"
+        label="Input label"
+        description="Input description"
+        error="Input error"
+      />
+
+      <TextInput
+        mt={50}
+        value="Text input"
+        label="Input label"
+        required
+        inputWrapperOrder={['label', 'input']}
+      />
+
+      <TextInput
+        mt={50}
+        value="Text input"
+        label="Input label"
+        description="Input description"
+        error="Input error"
+        inputWrapperOrder={['label', 'error', 'description', 'input']}
+      />
+
+      <TextInput
+        mt={50}
+        value="Text input"
+        label="Input label"
+        description="Input description"
+        error="Input error"
+        inputWrapperOrder={['label', 'description', 'error', 'input']}
+      />
+
+      <TextInput
+        mt={50}
+        value="Text input"
+        label="Input label"
+        description="Input description"
+        error="Input error"
+        inputWrapperOrder={['label', 'error', 'input', 'description']}
+      />
+    </div>
+  );
+}
