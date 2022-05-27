@@ -148,7 +148,13 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - data attributes
 - params with styles attribute
 - variants handling changes
-- inputs styles api improvements
+
+### Inputs styles API
+
+You can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/styles/styles-api/)
+on [MantineProvider](https://mantine.dev/theming/mantine-provider/) to add styles to all Inputs:
+
+<Demo data={InputDemos.providerStyles} />
 
 ## MantineProvider changes
 
@@ -309,13 +315,19 @@ New [FocusTrap](https://mantine.dev/core/focus-trap/) component:
 
 <Demo data={TooltipDemos.group} />
 
-### inputContainer prop
+### Input.Wrapper inputContainer prop
 
 All inputs that use `Input.Wrapper` component under the hood ([TextInput](https://mantine.dev/core/text-input/), [Autocomplete](https://mantine.dev/core/autocomplete/), [DatePicker](https://mantine.dev/dates/date-picker/), etc.)
 now support `inputContainer` prop. This prop let you add additional elements before/after input element or add floating
 elements that will be positioned relative to the input. Example with [Tooltip](https://mantine.dev/core/tooltip/):
 
 <Demo data={InputDemos.inputContainer} />
+
+### Input.Wrapper inputWrapperOrder prop
+
+New `inputWrapperOrder` prop allows to define the order of `Input.Wrapper` parts:
+
+<Demo data={InputDemos.order} />
 
 ### Input.Label, Input.Error and Input.Description
 
