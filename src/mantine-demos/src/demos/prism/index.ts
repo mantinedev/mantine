@@ -5,4 +5,5 @@ export { linesHighlight } from './Prism.demo.linesHighlight';
 export { lineNumbers } from './Prism.demo.lineNumbers';
 export { usage } from './Prism.demo.usage';
 export { tabs } from './Prism.demo.tabs';
+export { themeOverride } from './Prism.demo.themeOverride';
 export { scrollbars } from './Prism.demo.scrollbars';

@@ -8,3 +8,4 @@ export type {
   PrismTabsStylesNames,
 } from './Prism';
 export type { PrismStylesParams } from './Prism.styles';
+export type { PrismThemeSelector } from './types';

@@ -1,5 +1,6 @@
-import { PrismTheme } from 'prism-react-renderer';
-import { MantineTheme } from '@mantine/core';
+import type { PrismTheme } from 'prism-react-renderer';
+import type { MantineTheme } from '@mantine/core';
+import type { PrismThemeSelector } from './types';
 
 export const dark = (theme: MantineTheme): PrismTheme => ({
   plain: {
@@ -183,5 +184,5 @@ export const light = (theme: MantineTheme): PrismTheme => ({
   ],
 });
 
-export const getPrismTheme = (theme: MantineTheme, colorScheme: 'light' | 'dark') =>
+export const getPrismTheme: PrismThemeSelector = (theme, colorScheme) =>
   colorScheme === 'dark' ? dark(theme) : light(theme);
