@@ -41,7 +41,6 @@ function getVariantStyles(
 
   if (variant === 'outline') {
     return {
-      background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
       borderRadius,
       border: '1px solid transparent',
       [vertical ? 'borderRight' : inverted ? 'borderTop' : 'borderBottom']: 'none',
