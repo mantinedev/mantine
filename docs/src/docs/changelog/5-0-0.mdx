@@ -24,7 +24,7 @@ import {
 
 ## Components API changes
 
-### Tabs component
+### Tabs
 
 [Tabs](https://mantine.dev/core/tabs/) and associated [Prism.Tabs](https://mantine.dev/others/prism/) components now have new API.
 New API provides the following enhancements:
@@ -44,7 +44,7 @@ Tabs component now supports the following new props:
 
 <Demo data={TabsDemos.configurator} />
 
-### Accordion component
+### Accordion
 
 [Accordion](https://mantine.dev/core/accordion/) component now has new API with the following new props:
 
@@ -56,7 +56,7 @@ Tabs component now supports the following new props:
 
 <Demo data={AccordionDemos.configurator} />
 
-### Tooltip component
+### Tooltip
 
 [Tooltip](https://mantine.dev/core/tooltip/) now requires children to be an element or a component,
 string, numbers, fragments and multiple elements are no longer supported. In addition to that Tooltip no longer wraps target
@@ -94,7 +94,7 @@ function Demo() {
 }
 ```
 
-### Popover component
+### Popover
 
 [Popover](https://mantine.dev/core/popover/) component now has new API with the following breaking changes:
 
@@ -110,7 +110,7 @@ Popover now supports the following new features:
 
 <Demo data={PopoverDemos.usage} />
 
-### Menu component
+### Menu
 
 [Menu](https://mantine.dev/core/menu/) component now uses [Popover](https://mantine.dev/core/popover/) component under the hood and thus its API was changed in the same way:
 
@@ -121,12 +121,19 @@ Popover now supports the following new features:
 
 <Demo data={MenuDemos.usage} />
 
-### Avatar component
+### Avatar
 
 `AvatarsGroup` component is no longer exported from `@mantine/core` package, instead you can now use
 `Avatar.Group` component which can be combined with [Tooltip](https://mantine.dev/core/tooltip/) or [Popover](https://mantine.dev/core/popover/) to display additional information:
 
 <Demo data={AvatarDemos.group} />
+
+### InputWrapper
+
+`InputWrapper` component is no longer exported from `@mantine/core` package, instead you can now use
+`Input.Wrapper` component:
+
+<Demo data={InputDemos.wrapperConfigurator} />
 
 ## Migration to Floating UI
 
@@ -309,6 +316,14 @@ now support `inputContainer` prop. This prop let you add additional elements bef
 elements that will be positioned relative to the input. Example with [Tooltip](https://mantine.dev/core/tooltip/):
 
 <Demo data={InputDemos.inputContainer} />
+
+### Input.Label, Input.Error and Input.Description
+
+[Input](https://mantine.dev/core/input/) component now exposes `Input.Label`, `Input.Error` and `Input.Description`,
+that were previously the parts of `InputWrapper` component. You can use these components to create custom
+form layouts if default `Input.Wrapper` layout does not fit your requirements:
+
+<Demo data={InputDemos.helpers} />
 
 ### Card.Section improvements
 
