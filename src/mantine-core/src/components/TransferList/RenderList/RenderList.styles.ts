@@ -80,7 +80,7 @@ export default createStyles((theme, { reversed, native, radius }: RenderListStyl
     },
 
     '&:disabled': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : 'transparent',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : 'transparent',
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4],
     },
   },

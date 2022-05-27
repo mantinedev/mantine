@@ -13,15 +13,13 @@ export function StylesApi({ components }: StylesApiProps) {
     return null;
   }
 
-  const singleNode = components[1] === 'single-node';
-
   const items = components.map((component) => (
     <StylesApiItem key={component} component={component} />
   ));
 
   return (
     <>
-      {singleNode ? null : items}
+      {items}
       <Box mt="xl">
         <GatsbyLink to="/styles/styles-api/">
           <Group spacing={4}>
