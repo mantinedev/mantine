@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
 import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
-import { TextInput } from '../TextInput/TextInput';
-import { InputStylesNames } from '../Input/Input';
-import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
+import { TextInput } from '../TextInput';
+import { InputStylesNames, InputWrapperStylesNames } from '../Input';
 import { getInputMode } from './get-input-mode/get-input-mode';
 import { Chevron } from './Chevron';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';

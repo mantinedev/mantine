@@ -7,9 +7,8 @@ import {
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { InputWrapperBaseProps, InputWrapper } from '../InputWrapper/InputWrapper';
+import { InputWrapperBaseProps, Input, InputBaseProps } from '../Input';
 import { TextInputStylesNames } from '../TextInput/TextInput';
-import { Input, InputBaseProps } from '../Input/Input';
 import useStyles from './Textarea.styles';
 
 export interface TextareaProps
@@ -29,7 +28,7 @@ export interface TextareaProps
   /** Defined minRows in autosize variant and rows in regular variant */
   minRows?: number;
 
-  /** Props passed to root element (InputWrapper component) */
+  /** Props passed to root element */
   wrapperProps?: Record<string, any>;
 
   /** Input size */
@@ -87,7 +86,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
   };
 
   return (
-    <InputWrapper
+    <Input.Wrapper
       label={label}
       error={error}
       id={uuid}
@@ -117,7 +116,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
       ) : (
         <Input<'textarea'> {...sharedProps} component="textarea" rows={minRows} />
       )}
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

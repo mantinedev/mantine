@@ -6,7 +6,7 @@ import {
   MantineSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
+import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroup } from '../../Checkbox/CheckboxGroup/InputsGroup';
 import { RadioGroupProvider } from '../RadioGroup.context';
 
@@ -37,7 +37,7 @@ export interface RadioGroupProps
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
 
-  /** Props spread to InputWrapper */
+  /** Props spread to root element */
   wrapperProps?: Record<string, any>;
 }
 
@@ -79,7 +79,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 
     return (
       <RadioGroupProvider value={{ value: _value, onChange: handleChange, size }}>
-        <InputWrapper
+        <Input.Wrapper
           labelElement="div"
           size={size}
           __staticSelector="RadioGroup"
@@ -96,7 +96,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           <InputsGroup spacing={spacing} orientation={orientation} role="radiogroup">
             {children}
           </InputsGroup>
-        </InputWrapper>
+        </Input.Wrapper>
       </RadioGroupProvider>
     );
   }

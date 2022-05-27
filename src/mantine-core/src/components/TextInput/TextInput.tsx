@@ -1,7 +1,13 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize } from '@mantine/styles';
-import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
-import { InputWrapperBaseProps, InputWrapper, InputWrapperStylesNames } from '../InputWrapper';
+import {
+  Input,
+  InputBaseProps,
+  InputStylesNames,
+  useInputProps,
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+} from '../Input';
 
 export type TextInputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
@@ -38,9 +44,9 @@ const defaultProps: Partial<TextInputProps> = {
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
   const { inputProps, wrapperProps, ...others } = useInputProps('TextInput', defaultProps, props);
   return (
-    <InputWrapper {...wrapperProps}>
+    <Input.Wrapper {...wrapperProps}>
       <Input {...inputProps} {...others} ref={ref} />
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

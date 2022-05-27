@@ -41,7 +41,6 @@ export * from './components/HoverCard';
 export * from './components/Image';
 export * from './components/Indicator';
 export * from './components/Input';
-export * from './components/InputWrapper';
 export * from './components/JsonInput';
 export * from './components/Kbd';
 export * from './components/List';

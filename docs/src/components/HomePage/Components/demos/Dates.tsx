@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, SimpleGrid, InputWrapper } from '@mantine/core';
+import { Paper, SimpleGrid, Input } from '@mantine/core';
 import {
   DatePicker,
   DateRangePicker,
@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 function CalendarWrapper() {
   const [value, setValue] = useState(new Date());
   return (
-    <InputWrapper labelElement="div" label="Calendar">
+    <Input.Wrapper labelElement="div" label="Calendar">
       <Paper
         withBorder
         p="md"
@@ -25,7 +25,7 @@ function CalendarWrapper() {
       >
         <Calendar value={value} onChange={setValue} />
       </Paper>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 function RangeCalendarWrapper() {
@@ -34,7 +34,7 @@ function RangeCalendarWrapper() {
     dayjs(new Date()).startOf('month').add(8, 'days').toDate(),
   ]);
   return (
-    <InputWrapper labelElement="div" label="Range calendar">
+    <Input.Wrapper labelElement="div" label="Range calendar">
       <Paper
         withBorder
         p="md"
@@ -46,7 +46,7 @@ function RangeCalendarWrapper() {
       >
         <RangeCalendar value={value} onChange={setValue} />
       </Paper>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 

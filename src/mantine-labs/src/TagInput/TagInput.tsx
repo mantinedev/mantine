@@ -4,7 +4,6 @@ import {
   DefaultProps,
   MantineSize,
   Selectors,
-  InputWrapper,
   InputWrapperStylesNames,
   Input,
   InputStylesNames,
@@ -27,7 +26,7 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
   /** Input size */
   size?: MantineSize;
 
-  /** Properties spread to root element (InputWrapper component) */
+  /** Properties spread to root element */
   wrapperProps?: Record<string, any>;
 
   /** Controlled input value */
@@ -295,7 +294,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         id={uuid}
         label={label}
@@ -380,7 +379,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
         </div>
 
         {name && <input type="hidden" name={name} value={_value.join(',')} />}
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

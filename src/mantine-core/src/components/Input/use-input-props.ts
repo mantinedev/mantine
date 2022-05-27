@@ -1,6 +1,6 @@
 import { useMantineDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
-import { InputWrapperBaseProps } from '../InputWrapper';
+import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
 import { InputBaseProps } from './Input';
 
 interface BaseProps extends InputWrapperBaseProps, InputBaseProps, DefaultProps {

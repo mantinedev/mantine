@@ -54,7 +54,6 @@ export * as HoverCardDemos from './demos/core/HoverCard';
 export * as ImageDemos from './demos/core/Image';
 export * as IndicatorDemos from './demos/core/Indicator';
 export * as InputDemos from './demos/core/Input';
-export * as InputWrapperDemos from './demos/core/InputWrapper';
 export * as JsonInputDemos from './demos/core/JsonInput';
 export * as KbdDemos from './demos/core/Kbd';
 export * as ListDemos from './demos/core/List';

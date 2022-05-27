@@ -1,8 +1,14 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
 import { DefaultProps, getDefaultZIndex, MantineShadow, useMantineTheme } from '@mantine/styles';
-import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
-import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+  Input,
+  InputBaseProps,
+  InputStylesNames,
+  useInputProps,
+} from '../Input';
 import { ColorSwatch } from '../ColorSwatch';
 import { Popover, PopoverStylesNames } from '../Popover';
 import { MantineTransition } from '../Transition';
@@ -139,7 +145,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     }, [format]);
 
     return (
-      <InputWrapper {...wrapperProps} __staticSelector="ColorInput">
+      <Input.Wrapper {...wrapperProps} __staticSelector="ColorInput">
         <Popover
           __staticSelector="ColorInput"
           position="bottom-start"
@@ -202,7 +208,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
             />
           </Popover.Dropdown>
         </Popover>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

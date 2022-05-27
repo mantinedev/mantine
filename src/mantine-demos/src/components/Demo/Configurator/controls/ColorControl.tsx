@@ -1,5 +1,5 @@
 import React from 'react';
-import { Group, InputWrapper, useMantineTheme, ColorSwatch } from '@mantine/core';
+import { Group, Input, useMantineTheme, ColorSwatch } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import { CheckIcon } from '@modulz/radix-icons';
 
@@ -33,11 +33,11 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
   ));
 
   return (
-    <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
+    <Input.Wrapper labelElement="div" label={upperFirst(label)} {...others}>
       <Group spacing={2} style={{ marginTop: 5 }}>
         {colors}
       </Group>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 

@@ -1,32 +1,32 @@
 import React from 'react';
-import { InputWrapper, InputWrapperProps, Input } from '@mantine/core';
+import { InputWrapperProps, Input } from '@mantine/core';
 
 function Wrapper(props: InputWrapperProps) {
   return (
     <div style={{ maxWidth: 440, marginLeft: 'auto', marginRight: 'auto' }}>
-      <InputWrapper id="input-demo" {...props}>
+      <Input.Wrapper id="input-demo" {...props}>
         <Input id="input-demo" placeholder="Your email" size={props.size} />
-      </InputWrapper>
+      </Input.Wrapper>
     </div>
   );
 }
 
 const codeTemplate = (props: string) => `
-import { InputWrapper, Input } from '@mantine/core';
+import { Input } from '@mantine/core';
 
 function Demo() {
   return (
-    <InputWrapper
+    <Input.Wrapper
       id="input-demo"
      ${props}
     >
       <Input id="input-demo" placeholder="Your email" />
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 `;
 
-export const configurator: MantineDemo = {
+export const wrapperConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   codeTemplate,

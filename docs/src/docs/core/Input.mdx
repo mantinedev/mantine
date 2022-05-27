@@ -22,12 +22,12 @@ Input component is a base for other inputs and was not designed to be used direc
 
 ```tsx
 // Incorrect usage, input is not accessible
-<InputWrapper label="Input label">
+<Input.Wrapper label="Input label">
   <Input />
-</InputWrapper>
+</Input.Wrapper>
 
 // Use TextInput instead of Input everywhere you want to use Input,
-// it is accessible by default and includes InputWrapper
+// it is accessible by default and includes Input.Wrapper
 <TextInput label="Input label" description="Input description" />
 ```
 

@@ -1,5 +1,9 @@
-import type { InputStylesNames, InputBaseProps } from '../Input/Input';
-import type { InputWrapperStylesNames, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
+import type {
+  InputStylesNames,
+  InputBaseProps,
+  InputWrapperStylesNames,
+  InputWrapperBaseProps,
+} from '../Input';
 import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 import type { SelectPopoverStylesNames } from './SelectPopover/SelectPopover';
 

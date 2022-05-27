@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   NumberInput,
   Slider,
-  InputWrapper,
+  Input,
   RangeSlider,
   Switch,
   Checkbox,
@@ -128,7 +128,7 @@ export function InputsDemo() {
           mt="md"
         />
 
-        <InputWrapper labelElement="div" label="Slider and RangeSlider" mt="md">
+        <Input.Wrapper labelElement="div" label="Slider and RangeSlider" mt="md">
           <Slider defaultValue={40} mt="xs" />
           <RangeSlider
             mt={10}
@@ -143,7 +143,7 @@ export function InputsDemo() {
               { value: 100, label: 'xl' },
             ]}
           />
-        </InputWrapper>
+        </Input.Wrapper>
       </div>
     </Paper>
   );

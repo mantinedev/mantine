@@ -6,7 +6,7 @@ import {
   MantineSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../../InputWrapper';
+import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroup } from './InputsGroup';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
@@ -85,7 +85,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
 
     return (
       <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
-        <InputWrapper
+        <Input.Wrapper
           labelElement="div"
           size={size}
           __staticSelector="CheckboxGroup"
@@ -102,7 +102,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           <InputsGroup spacing={spacing} orientation={orientation}>
             {children}
           </InputsGroup>
-        </InputWrapper>
+        </Input.Wrapper>
       </CheckboxGroupProvider>
     );
   }

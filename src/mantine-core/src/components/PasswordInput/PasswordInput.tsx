@@ -10,7 +10,6 @@ import {
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
 import { Input } from '../Input';
-import { InputWrapper } from '../InputWrapper';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import useStyles from './PasswordInput.styles';
 
@@ -120,7 +119,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   );
 
   return (
-    <InputWrapper
+    <Input.Wrapper
       required={required}
       id={uuid}
       label={label}
@@ -166,7 +165,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
           {...rest}
         />
       </Input>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

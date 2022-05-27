@@ -6,7 +6,6 @@ import {
   InputWrapperStylesNames,
   DefaultProps,
   Input,
-  InputWrapper,
   MantineSize,
   Selectors,
   CloseButton,
@@ -239,7 +238,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       ) : null;
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         label={label}
         error={error}
@@ -329,7 +328,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             )}
           </div>
         </Input>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

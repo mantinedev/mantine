@@ -13,7 +13,6 @@ import {
   getDefaultZIndex,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { InputWrapper } from '../InputWrapper';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -536,7 +535,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
   return (
-    <InputWrapper
+    <Input.Wrapper
       required={required}
       id={uuid}
       label={label}
@@ -676,7 +675,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
           />
         </SelectPopover.Dropdown>
       </SelectPopover>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

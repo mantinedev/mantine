@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow, getDefaultZIndex } from '@mantine/styles';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
-import { InputWrapper } from '../InputWrapper';
 import { Input, useInputProps } from '../Input';
 import { MantineTransition } from '../Transition';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -525,7 +524,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
   return (
-    <InputWrapper {...wrapperProps} __staticSelector="Select">
+    <Input.Wrapper {...wrapperProps} __staticSelector="Select">
       <SelectPopover
         opened={shouldShowDropdown}
         transition={transition}
@@ -622,7 +621,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
           />
         </SelectPopover.Dropdown>
       </SelectPopover>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

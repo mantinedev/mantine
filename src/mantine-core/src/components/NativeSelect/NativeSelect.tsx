@@ -1,7 +1,13 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize, useMantineTheme } from '@mantine/styles';
-import { InputWrapperBaseProps, InputWrapper, InputWrapperStylesNames } from '../InputWrapper';
-import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
+import {
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+  Input,
+  InputBaseProps,
+  InputStylesNames,
+  useInputProps,
+} from '../Input';
 import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { SelectItem } from '../Select/types';
 
@@ -71,7 +77,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
   }
 
   return (
-    <InputWrapper {...wrapperProps} __staticSelector="NativeSelect">
+    <Input.Wrapper {...wrapperProps} __staticSelector="NativeSelect">
       <Input<'select'>
         {...inputProps}
         {...others}
@@ -93,7 +99,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
       >
         {options}
       </Input>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 

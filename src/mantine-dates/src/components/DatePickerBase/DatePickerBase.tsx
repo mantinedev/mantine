@@ -2,7 +2,6 @@ import React, { useRef, forwardRef } from 'react';
 import {
   DefaultProps,
   Input,
-  InputWrapper,
   InputBaseProps,
   InputWrapperBaseProps,
   MantineTransition,
@@ -35,7 +34,7 @@ export interface DatePickerBaseSharedProps
       React.ComponentPropsWithoutRef<'input'>,
       'value' | 'defaultValue' | 'placeholder' | 'size'
     > {
-  /** Props spread to root element (InputWrapper) */
+  /** Props spread to root element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Placeholder, displayed when date is not selected */
@@ -240,7 +239,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     };
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         id={uuid}
         label={label}
@@ -336,7 +335,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
             </Modal>
           )}
         </Popover>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

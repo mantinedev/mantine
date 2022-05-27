@@ -1,8 +1,14 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, Selectors, getDefaultZIndex } from '@mantine/styles';
-import { InputWrapper, InputWrapperBaseProps, InputWrapperStylesNames } from '../InputWrapper';
-import { Input, InputBaseProps, InputStylesNames, useInputProps } from '../Input';
+import {
+  Input,
+  InputWrapperBaseProps,
+  InputWrapperStylesNames,
+  InputBaseProps,
+  InputStylesNames,
+  useInputProps,
+} from '../Input';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
 import { SelectPopover, SelectPopoverStylesNames } from '../Select/SelectPopover/SelectPopover';
@@ -193,7 +199,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     dropdownOpened && (filteredData.length > 0 || (filteredData.length === 0 && !!nothingFound));
 
   return (
-    <InputWrapper {...wrapperProps} __staticSelector="Autocomplete">
+    <Input.Wrapper {...wrapperProps} __staticSelector="Autocomplete">
       <SelectPopover
         opened={shouldRenderDropdown}
         transition={transition}
@@ -268,7 +274,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
           />
         </SelectPopover.Dropdown>
       </SelectPopover>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 });
 
