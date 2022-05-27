@@ -11,6 +11,7 @@ export default createStyles((theme, { noActive }: ToolbarButtonStyles) => {
     control: {
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
       border: `1px solid ${theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[3]}`,
+      color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       '&.ql-active': noActive
         ? {}
