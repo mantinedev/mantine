@@ -19,7 +19,7 @@ export interface InputDescriptionProps
 
 export const InputDescription = forwardRef<HTMLDivElement, InputDescriptionProps>(
   (
-    { children, className, classNames, styles, unstyled, size, __staticSelector, ...others },
+    { children, className, classNames, styles, unstyled, size = 'sm', __staticSelector, ...others },
     ref
   ) => {
     const { classes, cx } = useStyles(

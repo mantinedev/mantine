@@ -19,7 +19,7 @@ export interface InputErrorProps
 
 export const InputError = forwardRef<HTMLDivElement, InputErrorProps>(
   (
-    { children, className, classNames, styles, unstyled, size, __staticSelector, ...others },
+    { children, className, classNames, styles, unstyled, size = 'sm', __staticSelector, ...others },
     ref
   ) => {
     const { classes, cx } = useStyles(

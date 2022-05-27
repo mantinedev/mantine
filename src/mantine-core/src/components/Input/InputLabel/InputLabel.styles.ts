@@ -17,6 +17,6 @@ export default createStyles((theme, { size }: InputLabelStylesParams) => ({
   },
 
   required: {
-    color: theme.colorScheme === 'dark' ? theme.colors.red[5] : theme.colors.red[7],
+    color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
   },
 }));

@@ -30,7 +30,7 @@ export const InputLabel = forwardRef<HTMLLabelElement, InputLabelProps>(
       labelElement = 'label',
       children,
       required,
-      size,
+      size = 'sm',
       classNames,
       styles,
       unstyled,
