@@ -9,6 +9,10 @@ import {
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
+import { InputWrapper } from './InputWrapper/InputWrapper';
+import { InputDescription } from './InputDescription/InputDescription';
+import { InputLabel } from './InputLabel/InputLabel';
+import { InputError } from './InputError/InputError';
 import useStyles, { InputVariant } from './Input.styles';
 
 export type InputStylesNames = Selectors<typeof useStyles>;
@@ -136,8 +140,21 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       )}
     </Box>
   );
-});
+}) as any;
 
 _Input.displayName = '@mantine/core/Input';
+_Input.Wrapper = InputWrapper;
+_Input.Label = InputLabel;
+_Input.Description = InputDescription;
+_Input.Error = InputError;
 
-export const Input = createPolymorphicComponent<'input', InputProps>(_Input);
+export const Input = createPolymorphicComponent<
+  'input',
+  InputProps,
+  {
+    Wrapper: typeof InputWrapper;
+    Label: typeof InputLabel;
+    Description: typeof InputDescription;
+    Error: typeof InputError;
+  }
+>(_Input);
