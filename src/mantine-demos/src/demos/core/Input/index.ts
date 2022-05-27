@@ -4,3 +4,6 @@ export { component } from './Input.demo.component';
 export { inputContainer } from './Input.demo.inputContainer';
 export { wrapperConfigurator } from './Input.demo.wrapperConfigurator';
 export { helpers } from './Input.demo.helpers';
+export { order } from './Input.demo.order';
+export { providerDefault } from './Input.demo.providerDefault';
+export { providerStyles } from './Input.demo.providerStyles';

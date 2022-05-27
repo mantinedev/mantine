@@ -65,12 +65,33 @@ the input is focused:
 
 <Demo data={InputDemos.inputContainer} />
 
+### inputWrapperOrder
+
+`inputWrapper` prop allows to define the order of `Input.Wrapper` parts:
+
+<Demo data={InputDemos.order} />
+
 ### Input.Label, Input.Error and Input.Description
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
 form layouts if default `Input.Wrapper` layout does not fit your requirements.
 
 <Demo data={InputDemos.helpers} />
+
+## Default props on MantineProvider
+
+You can add [default props](/theming/default-props/) on [MantineProvider](/theming/mantine-provider/)
+to `Input` and `Input.Wrapper` components. These default props will be inherited by all inputs
+that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-input/), [Autocomplete](/core/autocomplete/), [MultiSelect](/core/multi-select/), etc.):
+
+<Demo data={InputDemos.providerDefault} />
+
+## Styles on MantineProvider
+
+Same as with default props you can use `Input` and `Input.Wrapper` [Styles API](/styles/styles-api/)
+on [MantineProvider](/theming/mantine-provider/) to add styles to all Inputs:
+
+<Demo data={InputDemos.providerStyles} />
 
 ## Get input ref
 
