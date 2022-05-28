@@ -7,8 +7,8 @@ import {
   extractSystemStyles,
   MantineNumberSize,
   useMantineDefaultProps,
-  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useId } from '@mantine/hooks';
 import { Box } from '../Box';
 import { CheckboxIcon } from './CheckboxIcon';

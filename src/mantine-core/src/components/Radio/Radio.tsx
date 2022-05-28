@@ -7,8 +7,8 @@ import {
   Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
-  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';

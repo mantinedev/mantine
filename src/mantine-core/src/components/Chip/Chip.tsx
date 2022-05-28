@@ -8,8 +8,8 @@ import {
   Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
-  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { CheckIcon } from '../Checkbox';
 import { ChipGroup } from './ChipGroup/ChipGroup';

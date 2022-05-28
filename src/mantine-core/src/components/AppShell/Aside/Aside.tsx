@@ -1,9 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  getDefaultZIndex,
-  ForwardRefWithStaticComponents,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
   HorizontalSection,
   HorizontalSectionSharedProps,

@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  ForwardRefWithStaticComponents,
   useMantineDefaultProps,
   StylesApiProvider,
   Selectors,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
 import { TabsPanel, TabsPanelStylesNames } from './TabsPanel/TabsPanel';

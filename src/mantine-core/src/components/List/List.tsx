@@ -3,10 +3,10 @@ import {
   DefaultProps,
   MantineNumberSize,
   Selectors,
-  ForwardRefWithStaticComponents,
   useMantineDefaultProps,
   StylesApiProvider,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import { ListContext } from './List.context';

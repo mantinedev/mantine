@@ -2,12 +2,11 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ForwardRefWithStaticComponents,
   MantineNumberSize,
   CSSObject,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { packSx } from '@mantine/utils';
+import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';

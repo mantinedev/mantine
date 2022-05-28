@@ -1,10 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  ForwardRefWithStaticComponents,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { Col } from './Col/Col';
 import { GridProvider } from './Grid.context';

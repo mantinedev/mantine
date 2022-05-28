@@ -16,5 +16,4 @@ export type {
   MantineThemeBase,
   MantineThemeOther,
 } from './MantineTheme';
-export type { ForwardRefWithStaticComponents } from './ForwardRefWithStaticComponents';
 export type { Tuple } from './Tuple';

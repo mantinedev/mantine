@@ -6,8 +6,8 @@ import {
   MantineSize,
   Selectors,
   useMantineDefaultProps,
-  ForwardRefWithStaticComponents,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { filterChildrenByType } from '../../utils';
 import { findChildByType } from './find-child-by-type/find-child-by-type';
 import { Box } from '../Box';
