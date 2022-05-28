@@ -1,5 +1,5 @@
 import React from 'react';
-import { MantineProvider, Button, Badge, Group, useMantineColorScheme } from '@mantine/core';
+import { MantineProvider, Button, Badge, Group, ButtonStylesParams } from '@mantine/core';
 
 const code = `
 import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/core';
@@ -7,30 +7,27 @@ import { MantineProvider, Button, Badge, ButtonStylesParams } from '@mantine/cor
 function Demo() {
   return (
     <MantineProvider
-      styles={{
-        Button: (theme, params: ButtonStylesParams) => ({
-          // Shared button styles are applied to all buttons
-          root: { height: 42, padding: '0 30px' },
-
-          filled: {
-            // subscribe to component params
-            color: theme.colors[params.color || theme.primaryColor][1],
+      theme={{
+        components: {
+          Button: {
+            // Subscribe to theme and component params
+            styles: (theme, params: ButtonStylesParams) => ({
+              root: {
+                height: 42,
+                padding: '0 30px',
+                backgroundColor:
+                  params.variant === 'filled'
+                    ? theme.colors[params.color || theme.primaryColor][9]
+                    : undefined,
+              },
+            }),
           },
 
-          // These styles are applied only to buttons with outline variant
-          outline: {
-            // You can use any selectors inside (the same way as in createStyles function)
-            '&:hover': {
-              backgroundColor:
-                theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          Badge: {
+            // Use raw styles object if you do not need theme dependency
+            styles: {
+              root: { borderWidth: 2 },
             },
-          },
-        }),
-
-        // Use raw styles object if you do not need theme dependency
-        Badge: {
-          dot: {
-            borderWidth: 2,
           },
         },
       }}
@@ -44,38 +41,33 @@ function Demo() {
 `;
 
 function Demo() {
-  const { colorScheme } = useMantineColorScheme();
-
   return (
     <MantineProvider
-      theme={{ colorScheme }}
-      // styles={{
-      //   Button: (theme, params: ButtonStylesParams) => ({
-      //     // Shared button styles are applied to all buttons
-      //     root: { height: 42, padding: '0 30px' },
+      inherit
+      theme={{
+        components: {
+          Button: {
+            // Subscribe to theme and component params
+            styles: (theme, params: ButtonStylesParams) => ({
+              root: {
+                height: 42,
+                padding: '0 30px',
+                backgroundColor:
+                  params.variant === 'filled'
+                    ? theme.colors[params.color || theme.primaryColor][9]
+                    : undefined,
+              },
+            }),
+          },
 
-      //     filled: {
-      //       // subscribe to component params
-      //       color: theme.colors[params.color || theme.primaryColor][1],
-      //     },
-
-      //     // These styles are applied only to buttons with outline variant
-      //     outline: {
-      //       // You can use any selectors inside (the same way as in createStyles function)
-      //       '&:hover': {
-      //         backgroundColor:
-      //           theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-      //       },
-      //     },
-      //   }),
-
-      //   // Use raw styles object if you do not need theme dependency
-      //   Badge: {
-      //     dot: {
-      //       borderWidth: 2,
-      //     },
-      //   },
-      // }}
+          Badge: {
+            // Use raw styles object if you do not need theme dependency
+            styles: {
+              root: { borderWidth: 2 },
+            },
+          },
+        },
+      }}
     >
       <Group position="center">
         <Button variant="outline">Outline button</Button>

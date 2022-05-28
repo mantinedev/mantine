@@ -13,6 +13,7 @@ import {
   AccordionDemos,
   CalendarDemos,
   ThemeDemos,
+  InputDemos,
 } from '@mantine/demos';
 import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/styles-api';
 
@@ -127,27 +128,24 @@ All styles defined there will be added to each component rendered inside provide
 
 <Demo data={ThemeDemos.providerStyles} />
 
+## Inputs Styles API on MantineProvider
+
+Most of input components are based on [Input](/core/input/) and `Input.Wrapper`
+components, you can change shared styles on MantineProvider:
+
+<Demo data={InputDemos.providerStyles} />
+
 ## Static class names
 
 Apart from `classNames` and `styles` props, each component also has static classes on each element.
 You can use them to apply your styles if you do not use CSS modules or just do not want to pass `classNames` prop.
 
-## More examples
-
-### Calendar component
-
-[Calendar](/dates/calendar/) component customization with styles API:
-
-<Demo data={CalendarDemos.stylesApi} />
+## Examples
 
 ### Tabs component
 
-[Tabs](/core/tabs/) component customization with styles API:
+<Demo data={TabsDemos.stylesApi} demoProps={{ toggle: true }} />
 
-<Demo data={TabsDemos.stylesApi} />
+### Accordion
 
-### Accordion component
-
-[Accordion](/core/accordion/) component customization with styles API:
-
-<Demo data={AccordionDemos.stylesApi} />
+<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
