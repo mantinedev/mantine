@@ -58,3 +58,32 @@ function Demo() {
   );
 }
 ```
+
+## Create your own polymorphic components
+
+You can create your own polymorphic components using `createPolymorphicComponent` function
+and [Box](/core/box/) component:
+
+```tsx
+import { forwardRef } from 'react';
+import { Box, createPolymorphicComponent } from '@mantine/core';
+
+interface ButtonProps {
+  children: React.ReactNode;
+}
+
+// Create intermediate component with default ref type and props
+const _Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...others }, ref) => (
+  <Box
+    // define default component, you will be able to override it with `component` prop from ...others
+    component="button"
+    {...others}
+  >
+    {children}
+  </Box>
+));
+
+// createPolymorphicComponent accepts two types: default element and component props
+// all other props will be added to component type automatically
+export const Button = createPolymorphicComponent<'button', ButtonProps>();
+```

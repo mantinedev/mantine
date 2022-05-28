@@ -1,3 +1,4 @@
+export { createPolymorphicComponent } from '@mantine/utils';
 export * from '@mantine/styles';
 export * from './utils';
 
