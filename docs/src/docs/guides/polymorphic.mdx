@@ -36,6 +36,38 @@ function Demo() {
 }
 ```
 
+## With Next.js Link
+
+Next.js link does not work the say way as other similar components, you will need to either
+wrap your component with it or use `NextLink` component exported from `@mantine/next` package:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
+```
+
+```tsx
+// Same as above
+import { NextLink } from '@mantine/next';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={NextLink} href="/hello">
+      Next link button
+    </Button>
+  );
+}
+```
+
 ## With TypeScript
 
 Polymorphic components cannot infer ref and events correctly in some cases,
