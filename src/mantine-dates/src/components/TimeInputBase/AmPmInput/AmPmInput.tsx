@@ -34,11 +34,6 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       }
     };
 
-    /*
-      If the field change is triggered onKeyDown, the keyUp event seems to steal focus back from the nextRef
-      This way, all key presses focus nextRef and don't steal it back
-      Anything beside a or p will leave the value and just move to the next field
-    */
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const lastInputVal = event.target.value.slice(-1).toLowerCase();
 
