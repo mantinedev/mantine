@@ -1,0 +1,60 @@
+---
+group: 'guides'
+title: Polymorphic components
+slug: /guides/polymorphic/
+search: 'Create custom polymorphic components with Box'
+---
+
+import { ButtonDemos } from '@mantine/demos';
+
+# Polymorphic components
+
+Some of the Mantine components ([Button](/core/button/), [Text](/core/text/), etc.) accept special `component` prop that lets you
+change to root element. This guide will explain
+
+## With HTML elements
+
+You can use any HTML element in `component` prop, for example, `a` tag will render an anchor:
+
+<Demo data={ButtonDemos.component} />
+
+## With other components
+
+You can also use polymorphic components with any other component, for example,
+with `react-router-dom` Link:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} to="/react-router">
+      React router link
+    </Button>
+  );
+}
+```
+
+## With TypeScript
+
+Polymorphic components cannot infer ref and events correctly in some cases,
+when this happens – provide generic component type:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button<'a'>
+      component="a"
+      href="#"
+      // events and ref types cannot be inferred when component prop is set
+      onClick={(event) => console.log(event)}
+      ref={(node) => console.log(node)}
+    >
+      Open in new tab
+    </Button>
+  );
+}
+```
