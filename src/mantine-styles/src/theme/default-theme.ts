@@ -83,6 +83,7 @@ export const _DEFAULT_THEME: MantineThemeBase = {
 
   other: {},
   components: {},
+  activeStyles: { transform: 'translateY(1px)' },
   datesLocale: 'en',
 };
 

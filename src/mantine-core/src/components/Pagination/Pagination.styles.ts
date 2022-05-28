@@ -38,9 +38,7 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
-      [`&:active:not(:disabled):not(.${getRef('dots')})`]: {
-        transform: 'translateY(1px)',
-      },
+      [`&:active:not(:disabled):not(.${getRef('dots')})`]: theme.activeStyles,
 
       '&:disabled': {
         opacity: 0.6,

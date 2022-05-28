@@ -102,9 +102,7 @@ export default createStyles(
       cursor: 'pointer',
       ...getVariantStyles({ variant, theme, color, gradient }),
 
-      '&:active': {
-        transform: 'translateY(1px)',
-      },
+      '&:active': theme.activeStyles,
 
       '&[data-disabled]': {
         borderColor: 'transparent',

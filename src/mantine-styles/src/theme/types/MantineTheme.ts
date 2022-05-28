@@ -79,9 +79,8 @@ export interface MantineTheme {
 
   fn: MantineThemeFunctions;
   other: MantineThemeOther;
-
+  activeStyles: CSSObject;
   datesLocale: string;
-
   components: Record<string, ThemeComponent>;
 }
 

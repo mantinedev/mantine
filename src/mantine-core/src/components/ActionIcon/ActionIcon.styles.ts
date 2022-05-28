@@ -63,9 +63,7 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     alignItems: 'center',
     justifyContent: 'center',
 
-    '&:active': {
-      transform: 'translateY(1px)',
-    },
+    '&:active': theme.activeStyles,
 
     '&[data-disabled]': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],

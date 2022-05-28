@@ -60,6 +60,9 @@ interface MantineTheme {
   // Breakpoints used in some components to add responsive styles
   breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', number>;
 
+  // Styles added to buttons with `:active` pseudo-class
+  activeStyles: CSSObject;
+
   // h1-h6 styles, used in Title and TypographyStylesProvider components
   headings: {
     fontFamily: CSSProperties['fontFamily'];
@@ -189,6 +192,12 @@ Mantine theme has the following properties associated with colors:
 - `theme.white` used for body and overlays ([Modal](/core/modal/), [Popover](/core/popover/)) background when `theme.colorScheme` is `light`, default value is `#fff`
 - `theme.black` used as color for all text when `theme.colorScheme` is `light`, default value is `#000`
 - `theme.colors`, `theme.primaryColor` and `theme.primaryShade` properties are described in the [separate guide](/theming/colors/)
+
+### activeStyles
+
+`theme.activeStyles` lets you override styles added to buttons with `:active` pseudo-class:
+
+<Demo data={ThemeDemos.activeStyles} />
 
 ### loader
 
