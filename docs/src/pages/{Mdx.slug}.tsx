@@ -62,6 +62,7 @@ export const query = graphql`
         date
         error
         componentPrefix
+        hideToc
       }
       body
     }

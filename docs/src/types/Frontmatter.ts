@@ -19,4 +19,5 @@ export interface Frontmatter {
   search?: string;
   error?: string;
   componentPrefix?: string;
+  hideToc?: boolean;
 }
