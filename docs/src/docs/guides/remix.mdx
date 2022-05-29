@@ -1,8 +1,100 @@
 ---
 group: 'guides'
 title: Usage with Remix
-slug: /guides/vite/
+slug: /guides/remix/
 search: 'Get started with Remix'
 ---
 
 # Usage with Remix
+
+## Get started with template
+
+The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-remix-template):
+
+1. Open [template page on GitHub](https://github.com/mantinedev/mantine-remix-template)
+2. Click `Use this template` button
+3. Clone or download the repository
+4. Install dependencies: `yarn`
+5. Start development server: `npm run dev`
+
+## Generate new application
+
+Init new application:
+
+```sh
+npx create-remix@latest my-mantine-app
+```
+
+Install dependencies:
+
+```sh
+yarn add @mantine/core @mantine/hooks @mantine/ssr
+```
+
+Replace your `entry.server.tsx` file with
+
+```tsx
+import { renderToString } from 'react-dom/server';
+import { RemixServer } from '@remix-run/react';
+import type { EntryContext } from '@remix-run/node';
+import { injectStylesIntoStaticMarkup } from '@mantine/ssr';
+
+export default function handleRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext
+) {
+  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
+  responseHeaders.set('Content-Type', 'text/html');
+
+  return new Response(`<!DOCTYPE html>${injectStylesIntoStaticMarkup(markup)}`, {
+    status: responseStatusCode,
+    headers: responseHeaders,
+  });
+}
+```
+
+Add [MantineProvider](/theming/mantine-provider/) to the `root.tsx` file:
+
+```tsx
+import type { MetaFunction } from '@remix-run/node';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { MantineProvider } from '@mantine/core';
+import { theme } from './theme';
+
+export const meta: MetaFunction = () => ({
+  charset: 'utf-8',
+  title: 'New Remix App',
+  viewport: 'width=device-width,initial-scale=1',
+});
+
+export default function App() {
+  return (
+    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+      <html lang="en">
+        <head>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    </MantineProvider>
+  );
+}
+```
+
+All set! Start development server:
+
+```sh
+npm run dev
+```
+
+## Next steps
+
+<NextSteps />
