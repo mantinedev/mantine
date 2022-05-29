@@ -4,6 +4,7 @@ import { useMantineTheme } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Components } from './Components/Components';
+import { Banner } from './Banner/Banner';
 import { Footer } from '../Footer/Footer';
 // import { MantineUiBanner } from '../MantineUiBanner/MantineUiBanner';
 // import { Community } from './Community/Community';
@@ -33,6 +34,7 @@ export function HomePage() {
         </Box> */}
         {/* <Customize /> */}
         <Usage />
+        <Banner />
         {/* <Community /> */}
       </div>
       <Footer />

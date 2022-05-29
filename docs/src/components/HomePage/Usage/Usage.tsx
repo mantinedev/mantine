@@ -8,6 +8,9 @@ export function Usage() {
     <PageSection
       title="Use anywhere"
       description="Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js, create-react-app, Vite or Remix by following getting started guide:"
+      sx={(theme) => ({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      })}
     >
       <Space h="xl" />
       <FrameworksControls />

@@ -1,19 +1,19 @@
 import React from 'react';
-import { Container, Text } from '@mantine/core';
+import { Container, Text, DefaultProps, Box } from '@mantine/core';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
 import useStyles from './PageSection.styles';
 
-interface PageSectionProps {
+interface PageSectionProps extends DefaultProps {
   title: string;
   description: string;
   children: React.ReactNode;
 }
 
-export function PageSection({ title, description, children }: PageSectionProps) {
+export function PageSection({ title, description, children, ...others }: PageSectionProps) {
   const { classes } = useStyles();
 
   return (
-    <div className={classes.wrapper}>
+    <Box className={classes.wrapper} {...others}>
       <Container size={1100}>
         <SectionTitle>{title}</SectionTitle>
         <Text className={classes.description} size="xl">
@@ -22,6 +22,6 @@ export function PageSection({ title, description, children }: PageSectionProps) 
 
         {children}
       </Container>
-    </div>
+    </Box>
   );
 }
