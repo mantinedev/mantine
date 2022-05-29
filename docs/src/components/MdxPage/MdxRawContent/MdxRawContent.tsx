@@ -7,7 +7,7 @@ import { MdxPageProps } from '../../../types';
 import useStyles from './MdxRawContent.styles';
 
 export function MdxRawContent({ body, headings, siblings, frontmatter }: MdxPageProps) {
-  const { classes } = useStyles();
+  const { classes } = useStyles({ withToc: !frontmatter.hideToc });
   return (
     <MdxPageBase>
       <div className={classes.wrapper}>
