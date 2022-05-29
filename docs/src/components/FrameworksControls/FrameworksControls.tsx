@@ -7,7 +7,7 @@ import useStyles from './FrameworksControls.styles';
 export function FrameworksControls() {
   const { classes } = useStyles();
   const controls = FRAMEWORKS_DATA.map((guide) => (
-    <UnstyledButton component={Link} to="/" className={classes.control} key={guide.id}>
+    <UnstyledButton component={Link} to={guide.link} className={classes.control} key={guide.id}>
       <guide.icon />
       <Text mt="md">{guide.title}</Text>
     </UnstyledButton>

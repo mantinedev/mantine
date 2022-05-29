@@ -15,7 +15,7 @@ export default createStyles((theme) => ({
     borderRadius: theme.radius.md,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
   },
 }));
