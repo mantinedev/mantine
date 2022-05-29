@@ -198,6 +198,7 @@ export function Drawer(props: DrawerProps) {
         onExited={() => _lockScroll(false)}
         onEntered={() => _lockScroll(lockScroll && true)}
         mounted={opened}
+        timingFunction={transitionTimingFunction}
         transitions={{
           overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
           drawer: {

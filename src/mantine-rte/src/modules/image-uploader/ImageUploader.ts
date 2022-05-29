@@ -25,20 +25,22 @@ export class ImageUploader {
 
   selectLocalImage() {
     this.range = this.quill.getSelection();
-    this.fileHolder = document.createElement('input');
-    this.fileHolder.setAttribute('type', 'file');
-    this.fileHolder.setAttribute('accept', 'image/*');
-    this.fileHolder.setAttribute('style', 'visibility:hidden');
+    if (this.range) {
+      this.fileHolder = document.createElement('input');
+      this.fileHolder.setAttribute('type', 'file');
+      this.fileHolder.setAttribute('accept', 'image/*');
+      this.fileHolder.setAttribute('style', 'visibility:hidden');
 
-    this.fileHolder.onchange = this.fileChanged.bind(this);
+      this.fileHolder.onchange = this.fileChanged.bind(this);
 
-    document.body.appendChild(this.fileHolder);
+      document.body.appendChild(this.fileHolder);
 
-    this.fileHolder.click();
+      this.fileHolder.click();
 
-    window.requestAnimationFrame(() => {
-      document.body.removeChild(this.fileHolder);
-    });
+      window.requestAnimationFrame(() => {
+        document.body.removeChild(this.fileHolder);
+      });
+    }
   }
 
   handleDrop(event: any) {
