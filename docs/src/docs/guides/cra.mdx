@@ -5,4 +5,55 @@ slug: /guides/cra/
 search: 'Get started with create-react-app'
 ---
 
+import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+
 # Usage with create-react-app
+
+## Get started with template
+
+The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-cra-template):
+
+1. Open [template page on GitHub](https://github.com/mantinedev/mantine-cra-template)
+2. Click `Use this template` button
+3. Clone or download the repository
+4. Install dependencies: `yarn`
+5. Start development server: `npm start`
+
+## Generate new application
+
+Init new application:
+
+```sh
+npx create-react-app my-mantine-app --template typescript
+```
+
+Install dependencies:
+
+```sh
+yarn add @mantine/core @mantine/hooks
+```
+
+Replace `App.tsx` with:
+
+```tsx
+import { MantineProvider, Text } from '@mantine/core';
+import { theme } from './theme';
+
+export default function App() {
+  return (
+    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+      <Text>Welcome to Mantine!</Text>
+    </MantineProvider>
+  );
+}
+```
+
+All set! Start development server:
+
+```sh
+npm start
+```
+
+## Next steps
+
+<NextSteps />
