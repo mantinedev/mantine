@@ -8,7 +8,7 @@ import { Footer } from '../Footer/Footer';
 // import { MantineUiBanner } from '../MantineUiBanner/MantineUiBanner';
 // import { Community } from './Community/Community';
 // import { Customize } from './Customize/Customize';
-// import { Usage } from './Usage/Usage';
+import { Usage } from './Usage/Usage';
 // import { Explore } from './Explore/Explore';
 
 export function HomePage() {
@@ -32,7 +32,7 @@ export function HomePage() {
           </Container>
         </Box> */}
         {/* <Customize /> */}
-        {/* <Usage /> */}
+        <Usage />
         {/* <Community /> */}
       </div>
       <Footer />

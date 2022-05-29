@@ -15,9 +15,13 @@ export default createStyles((theme, _params, getRef) => ({
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 
-    '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
-    },
+    transition: 'box-shadow 100ms ease, transform 100ms ease',
+
+    ...theme.fn.hover({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
+      boxShadow: theme.shadows.md,
+      transform: theme.colorScheme === 'dark' ? 'none' : 'scale(1.01)',
+    }),
   },
 
   body: {
