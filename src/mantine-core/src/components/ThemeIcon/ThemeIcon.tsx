@@ -40,15 +40,7 @@ export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref)
     useMantineDefaultProps('ThemeIcon', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    {
-      variant,
-      radius,
-      color,
-      size,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
-    },
+    { variant, radius, color, size, gradient },
     { name: 'ThemeIcon' }
   );
 

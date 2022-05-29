@@ -7,6 +7,7 @@ export interface VariantInput {
   variant: 'filled' | 'light' | 'outline' | 'default' | 'gradient' | 'white' | 'subtle';
   color?: MantineColor;
   gradient?: MantineGradient;
+  primaryFallback?: boolean;
 }
 
 export interface VariantOutput {
@@ -27,7 +28,7 @@ export function variant(theme: MantineThemeBase) {
   const getPrimaryShade = primaryShade(theme);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  return ({ variant, color, gradient }: VariantInput): VariantOutput => {
+  return ({ variant, color, gradient, primaryFallback }: VariantInput): VariantOutput => {
     if (variant === 'light') {
       return {
         border: 'transparent',
@@ -116,7 +117,7 @@ export function variant(theme: MantineThemeBase) {
 
     return {
       border: 'transparent',
-      background: getThemeColor(color, getPrimaryShade()),
+      background: getThemeColor(color, getPrimaryShade(), primaryFallback),
       color: theme.white,
       hover: getThemeColor(color, getPrimaryShade() === 9 ? 8 : getPrimaryShade() + 1),
     };
