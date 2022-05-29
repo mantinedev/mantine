@@ -16,7 +16,7 @@ To set global styles use `Global` component. `styles` prop accepts:
 ```tsx
 import { Global } from '@mantine/core';
 
-export function Demo() {
+function Demo() {
   return (
     <Global
       styles={(theme) => ({
@@ -45,7 +45,7 @@ import { Global } from '@mantine/core';
 import bold from './GreycliffCF-Bold.woff2';
 import heavy from './GreycliffCF-Heavy.woff2';
 
-export function Demo() {
+function Demo() {
   return (
     <Global
       styles={[
@@ -67,6 +67,34 @@ export function Demo() {
         },
       ]}
     />
+  );
+}
+```
+
+## Where to render
+
+Usually global styles depend on theme, you can render `Global` component anywhere within [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { Global, MantineProvider } from '@mantine/core';
+
+function MyGlobalStyles() {
+  return (
+    <Global
+      styles={(theme) => ({
+        '*, *::before, *::after': { boxSizing: 'border-box' },
+        // ...other global styles
+      })}
+    />
+  );
+}
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <MyGlobalStyles />
+      <App />
+    </MantineProvider>
   );
 }
 ```
