@@ -5,10 +5,12 @@ export function useInterval(fn: () => void, interval: number) {
   const intervalRef = useRef<number>();
 
   const start = () => {
-    if (!active) {
-      setActive(true);
-      intervalRef.current = window.setInterval(fn, interval);
-    }
+    setActive((old) => {
+      if (!old) {
+        intervalRef.current = window.setInterval(fn, interval);
+      }
+      return true;
+    });
   };
 
   const stop = () => {
