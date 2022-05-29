@@ -79,7 +79,13 @@ const defaultParser: Parser = (num) => {
     return num;
   }
 
-  const parsedNum = parseFloat(num);
+  let tempNum = num;
+
+  if (tempNum[0] === '.') {
+    tempNum = `0${num}`;
+  }
+
+  const parsedNum = parseFloat(tempNum);
 
   if (Number.isNaN(parsedNum)) {
     return undefined;
@@ -310,7 +316,17 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setTempValue('');
         handleValueChange(undefined);
       } else {
-        const parsedVal = parseNum(event.target.value);
+        let newNumber = event.target.value;
+
+        /** Unshifting zero to handle the following case -
+         * parseFloat('....1212') -> NaN
+         * parseFloat('0....1212') -> 0
+         */
+        if (newNumber[0] === `${decimalSeparator}` || newNumber[0] === '.') {
+          newNumber = `0${newNumber}`;
+        }
+
+        const parsedVal = parseNum(newNumber);
         const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
 
         if (!Number.isNaN(val)) {
