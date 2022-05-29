@@ -142,6 +142,7 @@ export function Modal(props: ModalProps) {
     withinPortal,
     zIndex,
     overlayBlur,
+    transitionTimingFunction,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
@@ -186,6 +187,7 @@ export function Modal(props: ModalProps) {
         mounted={opened}
         duration={transitionDuration}
         exitDuration={transitionDuration}
+        timingFunction={transitionTimingFunction}
         transitions={{
           modal: { duration: transitionDuration, transition },
           overlay: {

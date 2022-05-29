@@ -93,7 +93,7 @@ function ViteGuide({ dependencies }: GuideProps) {
   return (
     <Guide
       dependencies={dependencies}
-      initScript="yarn create @vitejs/app mantine-vite --template react-ts"
+      initScript="yarn create vite mantine-vite --template react-ts"
       withDone
     />
   );

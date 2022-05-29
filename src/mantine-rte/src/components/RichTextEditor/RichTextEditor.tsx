@@ -131,7 +131,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           upload: (file: File) => onImageUpload(file),
         },
       }),
-      [uuid, mentions, externalModules]
+      [uuid, mentions, externalModules, onImageUpload]
     );
 
     useEffect(() => {

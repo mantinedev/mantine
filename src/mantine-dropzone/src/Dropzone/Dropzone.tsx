@@ -86,8 +86,8 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
   const { classes, cx } = useStyles({ radius, padding }, { classNames, styles, name: 'Dropzone' });
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-    onDropAccepted: (files) => onDrop(files),
-    onDropRejected: (fileRejections) => onReject(fileRejections),
+    onDropAccepted: onDrop,
+    onDropRejected: onReject,
     disabled: disabled || loading,
     accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
     multiple,

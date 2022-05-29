@@ -32,24 +32,23 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         event.preventDefault();
         onChange(value === 'am' ? 'pm' : 'am', true);
       }
-
-      if (event.key === 'p' || event.nativeEvent.code === 'KeyP') {
-        event.preventDefault();
-        onChange('pm', true);
-      }
-
-      if (event.key === 'a' || event.nativeEvent.code === 'KeyA') {
-        event.preventDefault();
-        onChange('am', true);
-      }
     };
 
-    /*
-      If the field change is triggered onKeyDown, the keyUp event seems to steal focus back from the nextRef
-      This way, all key presses focus nextRef and don't steal it back
-      Anything beside a or p will leave the value and just move to the next field
-    */
-    const handleChange = () => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const lastInputVal = event.target.value.slice(-1).toLowerCase();
+
+      if (lastInputVal === 'p') {
+        event.preventDefault();
+        onChange('pm', true);
+        return;
+      }
+
+      if (lastInputVal === 'a') {
+        event.preventDefault();
+        onChange('am', true);
+        return;
+      }
+
       onChange(value.toString(), true);
     };
 
