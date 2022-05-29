@@ -50,7 +50,7 @@ export function Jumbotron() {
         <Group className={classes.controls}>
           <Button
             component={Link}
-            to="/getting-started/"
+            to="/pages/getting-started/"
             size="xl"
             radius="md"
             className={cx(classes.control, classes.controlPrimary)}

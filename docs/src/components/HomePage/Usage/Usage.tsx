@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, SimpleGrid } from '@mantine/core';
 import { Link } from 'gatsby';
-import { GUIDES_DATA } from '../../GettingStarted/Guides/data';
+import { FRAMEWORKS_DATA } from 'src/components/FrameworksControls/data';
 import { PageSection } from '../PageSection/PageSection';
 import useStyles from './Usage.styles';
 
 export function Usage() {
   const { classes } = useStyles();
-  const guides = GUIDES_DATA.map((guide) => {
+  const guides = FRAMEWORKS_DATA.map((guide) => {
     const Icon = guide.icon;
     return (
       <Link className={classes.guide} key={guide.id} to={`/getting-started?g=${guide.id}`}>
