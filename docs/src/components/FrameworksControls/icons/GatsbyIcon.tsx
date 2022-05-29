@@ -6,7 +6,7 @@ export function GatsbyIcon() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 256 256"
-      style={{ width: 80, height: 80 }}
+      style={{ width: 70, height: 70 }}
     >
       <rect width="250" height="250" x="3" y="3" fill="#fff" rx="125" />
       <path

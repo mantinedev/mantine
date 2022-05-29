@@ -8,7 +8,7 @@ export function NextIcon() {
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
       viewBox="0 0 512 309"
-      style={{ height: 80 }}
+      style={{ height: 70 }}
     >
       <path
         fill={theme.colorScheme === 'dark' ? theme.white : theme.black}

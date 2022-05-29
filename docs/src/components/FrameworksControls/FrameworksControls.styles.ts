@@ -8,10 +8,8 @@ export default createStyles((theme) => ({
     border: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
     }`,
-    minWidth: 180,
-    flex: 1,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
-    padding: theme.spacing.xl,
+    padding: theme.spacing.lg,
     borderRadius: theme.radius.md,
 
     '&:hover': {

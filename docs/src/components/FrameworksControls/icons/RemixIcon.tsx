@@ -4,12 +4,12 @@ import { useMantineTheme, Center } from '@mantine/core';
 export function RemixIcon() {
   const theme = useMantineTheme();
   return (
-    <Center sx={{ height: 80, width: '100%' }}>
+    <Center sx={{ height: 70, width: '100%' }}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid"
         viewBox="0 0 512 128"
-        style={{ flex: 1, maxWidth: 120 }}
+        style={{ flex: 1, maxWidth: 100 }}
       >
         <path
           fill={theme.colorScheme === 'dark' ? theme.white : theme.black}
