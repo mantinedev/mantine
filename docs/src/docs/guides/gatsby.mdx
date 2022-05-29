@@ -5,23 +5,35 @@ slug: /guides/gatsby/
 search: 'Setup SSR with Gatsby.js and gatsby-plugin-mantine'
 ---
 
+import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+
 # Usage with Gatsby.js
 
-Mantine is fully compatible with Gatsby.js, follow following guide to setup your application
+## Get started with template
 
-## Using a plugin
+The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-gatsby-template):
 
-The simplest way to get started with Mantine in Gatsby is to use a plugin:
+1. Open [template page on GitHub](https://github.com/mantinedev/mantine-gatsby-template)
+2. Click `Use this template` button
+3. Clone or download the repository
+4. Install dependencies: `yarn`
+5. Start development server: `npm start`
 
-1. Install plugin:
+## Generate new application
 
-```bash
-yarn add gatsby-plugin-mantine
+Init new application:
 
-npm install gatsby-plugin-mantine
+```sh
+npm init gatsby
 ```
 
-2. Add plugin to your `gatsby-config.js`
+Install dependencies:
+
+```sh
+yarn add @mantine/hooks @mantine/core gatsby-plugin-mantine
+```
+
+Add `gatsby-plugin-mantine` in your `gatsby.config.js` file:
 
 ```tsx
 module.exports = {
@@ -29,27 +41,37 @@ module.exports = {
 };
 ```
 
-3. All done! Server side rendering is fully functional
+All set! Start development server:
 
-## Without plugin
-
-To setup server side rendering without `gatsby-plugin-mantine`:
-
-1. Install `@mantine/ssr`
-
-```bash
-yarn add @mantine/ssr
-
-npm install @mantine/ssr
+```sh
+npm start
 ```
 
-2. Create `gatsby-ssr.js` file with following code:
+## Usage without plugin
+
+If you want to provide custom [emotion cache](/theming/emotion-cache/) you will need
+to setup server side rendering on your side without plugin.
+
+Init new application:
+
+```sh
+npm init gatsby
+```
+
+Install dependencies:
+
+```sh
+yarn add @mantine/hooks @mantine/core @mantine/ssr
+```
+
+Create `gatsby-ssr.js` file with following code:
 
 ```tsx
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createStylesServer, ServerStyles } from '@mantine/ssr';
 
+// optional: you can provide your cache as a fist argument in createStylesServer function
 const stylesServer = createStylesServer();
 
 export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
@@ -59,4 +81,12 @@ export const replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadC
 };
 ```
 
-3. All done! Server side rendering is fully functional
+All set! Start development server:
+
+```sh
+npm start
+```
+
+## Next steps
+
+<NextSteps />
