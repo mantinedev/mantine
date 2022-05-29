@@ -29,7 +29,10 @@ export default createStyles((theme) => ({
   linkUI: {
     color: theme.white,
     borderWidth: 0,
-    backgroundImage: theme.fn.linearGradient(50, theme.colors.blue[7], theme.colors.cyan[5]),
+    backgroundImage:
+      theme.colorScheme === 'dark'
+        ? theme.fn.linearGradient(50, theme.colors.blue[8], theme.colors.cyan[6])
+        : theme.fn.linearGradient(50, theme.colors.blue[7], theme.colors.cyan[5]),
   },
 
   uiDescription: {

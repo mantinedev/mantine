@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { ThemeIcon, Text, Group, SimpleGrid } from '@mantine/core';
-import { IconRocket } from '@tabler/icons';
 import { NEXT_STEPS_DATA } from './data';
+import { LogoWhite } from './LogoWhite';
 import useStyles from './NextSteps.styles';
 
 export function NextSteps() {
@@ -17,7 +17,7 @@ export function NextSteps() {
       <LinkComponent className={classes.link} key={index} {...linkProps}>
         <Group noWrap>
           <ThemeIcon size={34} color={item.color} radius="md">
-            <item.icon width={22} height={22} size={22} />
+            <item.icon size={20} stroke={1.5} />
           </ThemeIcon>
 
           <Text weight={500} size="lg">
@@ -36,7 +36,7 @@ export function NextSteps() {
       cols={2}
       breakpoints={[{ maxWidth: 'md', cols: 1 }]}
       className={classes.wrapper}
-      spacing="xl"
+      spacing="md"
     >
       {items}
 
@@ -45,10 +45,10 @@ export function NextSteps() {
           <ThemeIcon
             size={34}
             color="#fff"
-            radius="md"
+            radius="xl"
             sx={(theme) => ({ color: theme.colors.blue[6], boxShadow: theme.shadows.sm })}
           >
-            <IconRocket stroke={1.5} />
+            <LogoWhite />
           </ThemeIcon>
 
           <Text weight={500} size="lg">
