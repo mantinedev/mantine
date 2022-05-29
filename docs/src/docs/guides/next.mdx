@@ -2,30 +2,32 @@
 group: 'guides'
 title: Usage with Next.js
 slug: /guides/next/
-search: 'Setup SSR with Next.js using @mantine/next'
+search: 'Get started with Next.js'
 ---
+
+import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
 
 # Usage with Next.js
 
-Mantine is fully compatible with Next.js, follow following guide to setup your application
-
 ## Get started with template
 
-If you are starting new project you can skip all configuration steps and use [Next.js template](https://github.com/mantinedev/mantine-next-template).
-To get started [follow this link](https://github.com/mantinedev/mantine-next-template/generate) and create new repository.
-Alternatively you can download or clone [repository](https://github.com/mantinedev/mantine-next-template) to get started on your machine.
+The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-next-template):
 
-## Adding to existing Next.js project
+1. Open [template page on GitHub](https://github.com/mantinedev/mantine-next-template)
+2. Click `Use this template` button
+3. Clone or download the repository
+4. Install dependencies: `yarn`
+5. Start development server: `npm run dev`
 
-1. Install `@mantine/next`
+## Add to existing Next.js project
 
-```bash
-yarn add @mantine/next
+Install dependencies:
 
-npm install @mantine/next
+```
+yarn add @mantine/hooks @mantine/core @mantine/next
 ```
 
-1. Create `pages/_document.tsx` file:
+Create `pages/_document.tsx` file:
 
 ```tsx
 import { createGetInitialProps } from '@mantine/next';
@@ -50,7 +52,7 @@ export default class _Document extends Document {
 }
 ```
 
-2. (Optional) Replace your `pages/_app.tsx` with
+Add [MantineProvider](/theming/mantine-provider/) to `pages/_app.tsx`:
 
 ```tsx
 import { AppProps } from 'next/app';
@@ -84,13 +86,14 @@ export default function App(props: AppProps) {
 
 ## Create your own getInitialProps
 
-In some cases you would want to have access to `getInitialProps` in Next Document,
-to do so you will need to setup Mantine ssr styles extraction on your own:
+In some cases you will need to have access to `getInitialProps` in Next Document,
+for that you will need to setup Mantine ssr styles extraction on your side:
 
 ```tsx
 import Document, { DocumentContext } from 'next/document';
 import { ServerStyles, createStylesServer } from '@mantine/next';
 
+// optional: you can provide your cache as a fist argument in createStylesServer function
 const stylesServer = createStylesServer();
 
 export default class _Document extends Document {
@@ -136,3 +139,7 @@ function Demo() {
 
 Follow [custom emotion cache guide](/theming/emotion-cache/#server-side-rendering-with-custom-cache)
 to setup server side rendering with emotion cache. If you do not follow this guide, server side rendering will not work.
+
+## Next steps
+
+<NextSteps />
