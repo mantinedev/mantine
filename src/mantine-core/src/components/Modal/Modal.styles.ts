@@ -57,7 +57,7 @@ export default createStyles(
     modal: {
       position: 'relative',
       width: fullScreen ? '100%' : theme.fn.size({ sizes, size }),
-      height: fullScreen ? '100vh' : 'unset',
+      minHeight: fullScreen ? '100vh' : 'unset',
       borderRadius: fullScreen ? 0 : undefined,
       outline: 0,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
