@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React, { useEffect } from 'react';
 import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
 import {
@@ -51,6 +50,9 @@ export interface ModalProps
   /** Overlay blur in px */
   overlayBlur?: number;
 
+  /** Determines whether the modal should take the entire screen */
+  fullScreen?: boolean;
+
   /** Modal radius */
   radius?: MantineNumberSize;
 
@@ -101,7 +103,6 @@ const defaultProps: Partial<ModalProps> = {
   size: 'md',
   transitionDuration: 250,
   overflow: 'outside',
-  transition: 'pop',
   padding: 'lg',
   shadow: 'lg',
   closeOnClickOutside: true,
@@ -143,14 +144,16 @@ export function Modal(props: ModalProps) {
     zIndex,
     overlayBlur,
     transitionTimingFunction,
+    fullScreen,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
-    { size, overflow, centered, zIndex },
-    { classNames, styles, name: 'Modal' }
+    { size, overflow, centered, zIndex, fullScreen },
+    { unstyled, classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
   const _overlayOpacity =
@@ -189,7 +192,10 @@ export function Modal(props: ModalProps) {
         exitDuration={transitionDuration}
         timingFunction={transitionTimingFunction}
         transitions={{
-          modal: { duration: transitionDuration, transition },
+          modal: {
+            duration: transitionDuration,
+            transition: transition || (fullScreen ? 'fade' : 'pop'),
+          },
           overlay: {
             duration: transitionDuration / 2,
             transition: 'fade',
@@ -219,6 +225,7 @@ export function Modal(props: ModalProps) {
                 aria-modal
                 tabIndex={-1}
                 style={transitionStyles.modal}
+                unstyled={unstyled}
               >
                 {(title || withCloseButton) && (
                   <div className={classes.header}>
@@ -253,6 +260,7 @@ export function Modal(props: ModalProps) {
                     (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
                   }
                   opacity={_overlayOpacity}
+                  unstyled={unstyled}
                 />
               </div>
             </div>

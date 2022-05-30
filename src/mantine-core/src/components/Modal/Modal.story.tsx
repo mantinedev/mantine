@@ -80,4 +80,5 @@ storiesOf('Modal', module)
     <MantineProvider theme={{ defaultRadius: 0 }} inherit>
       <WrappedModal title="Modal with default radius">default radius</WrappedModal>
     </MantineProvider>
-  ));
+  ))
+  .add('Fullscreen', () => <WrappedModal fullScreen>Full screen modal</WrappedModal>);
