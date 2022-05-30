@@ -5,3 +5,4 @@ export { yupResolver } from './resolvers/yup-resolver/yup-resolver';
 export { joiResolver } from './resolvers/joi-resolver/joi-resolver';
 
 export type { FormErrors, FormRules } from './types';
+export type { FormList } from './form-list/form-list';
