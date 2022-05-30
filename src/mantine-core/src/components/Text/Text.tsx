@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  MantineSize,
   MantineGradient,
   useMantineDefaultProps,
   MantineColor,
+  MantineNumberSize,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -14,20 +14,20 @@ export interface TextProps extends DefaultProps {
   /** Text content */
   children?: React.ReactNode;
 
-  /** Predefined font-size from theme.fontSizes */
-  size?: MantineSize;
+  /** Key of theme.fontSizes or number to set font-size in px */
+  size?: MantineNumberSize;
 
-  /** Text color from theme or dimmed variant */
+  /** Key of theme.colors or any valid CSS color */
   color?: 'dimmed' | MantineColor;
 
   /** Sets font-weight css property */
   weight?: React.CSSProperties['fontWeight'];
 
   /** Sets text-transform css property */
-  transform?: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
+  transform?: React.CSSProperties['textTransform'];
 
   /** Sets text-align css property */
-  align?: 'left' | 'center' | 'right' | 'justify';
+  align?: React.CSSProperties['textAlign'];
 
   /** Link or text variant */
   variant?: 'text' | 'link' | 'gradient';
@@ -51,27 +51,25 @@ export interface TextProps extends DefaultProps {
 const defaultProps: Partial<TextProps> = {
   size: 'md',
   variant: 'text',
-  gradient: { from: 'blue', to: 'cyan', deg: 45 },
-  inline: false,
-  inherit: false,
 };
 
 export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
   const {
     className,
-    size = 'md',
+    size,
     weight,
     transform,
     color,
     align,
-    variant = 'text',
+    variant,
     lineClamp,
-    gradient = { from: 'blue', to: 'cyan', deg: 45 },
-    inline = false,
-    inherit = false,
+    gradient,
+    inline,
+    inherit,
     underline,
     classNames,
     styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Text', defaultProps, props);
 
@@ -87,11 +85,9 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       weight,
       transform,
       align,
-      gradientFrom: gradient.from,
-      gradientTo: gradient.to,
-      gradientDeg: gradient.deg,
+      gradient,
     },
-    { classNames, styles, name: 'Text' }
+    { unstyled, name: 'Text' }
   );
 
   return (

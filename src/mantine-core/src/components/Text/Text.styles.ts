@@ -1,18 +1,23 @@
-import { createStyles, MantineTheme, MantineSize, CSSObject, MantineColor } from '@mantine/styles';
+import {
+  createStyles,
+  MantineTheme,
+  CSSObject,
+  MantineColor,
+  MantineGradient,
+  MantineNumberSize,
+} from '@mantine/styles';
 
 export interface TextStylesParams {
   color: 'dimmed' | MantineColor;
   variant: 'text' | 'link' | 'gradient';
-  size: MantineSize;
+  size: MantineNumberSize;
   lineClamp: number;
   inline: boolean;
   inherit: boolean;
   underline: boolean;
-  gradientFrom: string;
-  gradientTo: string;
-  gradientDeg: number;
-  transform: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
-  align: 'left' | 'center' | 'right' | 'justify';
+  gradient: MantineGradient;
+  transform: React.CSSProperties['textTransform'];
+  align: React.CSSProperties['textAlign'];
   weight: React.CSSProperties['fontWeight'];
 }
 
@@ -59,18 +64,13 @@ export default createStyles(
       inline,
       inherit,
       underline,
-      gradientDeg,
-      gradientTo,
-      gradientFrom,
+      gradient,
       weight,
       transform,
       align,
     }: TextStylesParams
   ) => {
-    const colors = theme.fn.variant({
-      variant: 'gradient',
-      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
-    });
+    const colors = theme.fn.variant({ variant: 'gradient', gradient });
 
     return {
       root: {
@@ -79,7 +79,7 @@ export default createStyles(
         ...getLineClamp(lineClamp),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
-        fontSize: inherit ? 'inherit' : theme.fontSizes[size],
+        fontSize: inherit ? 'inherit' : theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',
