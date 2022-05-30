@@ -126,6 +126,13 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
+const defaultTransition: MantineTransition = {
+  in: { opacity: 1, transform: 'translateY(0) scale(1)' },
+  out: { opacity: 0, transform: 'translateY(-25px) scale(0.93)' },
+  common: { transformOrigin: 'top left' },
+  transitionProperty: 'opacity, transform',
+};
+
 export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
   (
     {
@@ -142,7 +149,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       description,
       placeholder,
       shadow,
-      transition = 'pop',
+      transition = defaultTransition,
       transitionDuration = 100,
       transitionTimingFunction,
       size = 'sm',
