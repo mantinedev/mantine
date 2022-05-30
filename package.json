@@ -139,7 +139,6 @@
     "quill-mention": "^3.0.8",
     "react": "18.1.0",
     "react-dropzone": "^14.1.1",
-    "react-feather": "^2.0.9",
     "react-quill": "2.0.0-beta.4",
     "react-textarea-autosize": "^8.3.2",
     "react-transition-group": "^4.4.2",
