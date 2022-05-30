@@ -18,6 +18,7 @@ export const MIME_TYPES = {
   ppt: 'application/vnd.ms-powerpoint',
   pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   exe: 'application/vnd.microsoft.portable-executable',
+  kml: 'application/vnd.google-earth.kml+xml',
 } as const;
 
 export const IMAGE_MIME_TYPE = [
@@ -33,3 +34,4 @@ export const MS_WORD_MIME_TYPE = [MIME_TYPES.doc, MIME_TYPES.docx];
 export const MS_EXCEL_MIME_TYPE = [MIME_TYPES.xls, MIME_TYPES.xlsx];
 export const MS_POWERPOINT_MIME_TYPE = [MIME_TYPES.ppt, MIME_TYPES.pptx];
 export const EXE_MIME_TYPE = [MIME_TYPES.exe];
+export const KML_MINE_TYPE = [MIME_TYPES.kml];
