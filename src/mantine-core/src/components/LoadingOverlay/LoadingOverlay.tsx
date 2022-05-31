@@ -24,6 +24,9 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   /** Sets overlay color, defaults to theme.white in light theme and to theme.colors.dark[5] in dark theme */
   overlayColor?: string;
 
+  /** Sets overlay blur in px */
+  overlayBlur?: number;
+
   /** Loading overlay z-index */
   zIndex?: number;
 
@@ -42,7 +45,7 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
 
 const defaultProps: Partial<LoadingOverlayProps> = {
   overlayOpacity: 0.75,
-  transitionDuration: 200,
+  transitionDuration: 0,
   zIndex: getDefaultZIndex('overlay'),
 };
 
@@ -61,6 +64,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     radius,
     classNames,
     styles,
+    overlayBlur,
     ...others
   } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
   const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
@@ -89,6 +93,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
             opacity={overlayOpacity}
             zIndex={zIndex}
             radius={radius}
+            blur={overlayBlur}
             color={
               overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
             }
