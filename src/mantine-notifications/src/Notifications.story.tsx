@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
+import { IconCheck } from '@tabler/icons';
 import { storiesOf } from '@storybook/react';
 import { Button, Group, MantineProvider } from '@mantine/core';
 import { showNotification, updateNotification } from './events';
@@ -28,7 +28,7 @@ function NotificationsDemo() {
             color: 'teal',
             title: 'You did great',
             message: 'Data was saved',
-            icon: <CheckIcon />,
+            icon: <IconCheck size={16} />,
           })
         }
       >
@@ -98,7 +98,7 @@ function NotificationsDemo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 3 seconds, you can close this notification now',
-              icon: <CheckIcon />,
+              icon: <IconCheck size={16} />,
               autoClose: 3000,
             });
           }, 3000);

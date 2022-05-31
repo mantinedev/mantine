@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { Button, Container, Group } from '@mantine/core';
-import { StarFilledIcon, TwitterLogoIcon } from '@modulz/radix-icons';
+import { Container } from '@mantine/core';
 import GatsbyLink from '../components/MdxPage/MdxProvider/GatsbyLink/GatsbyLink';
 import Head from '../components/Head/Head';
 import { components } from '../components/MdxPage/MdxProvider/MdxProvider';
@@ -43,30 +42,6 @@ export default function PageNotFound() {
             </GatsbyLink>
           </Li>
         </Ul>
-        <P>
-          And since you are here, what about following Mantine on Twitter and a star on GitHub 😉?
-        </P>
-
-        <Group>
-          <Button
-            component="a"
-            href="https://github.com/mantinedev/mantine"
-            leftIcon={<StarFilledIcon />}
-            color="gray"
-            variant="outline"
-          >
-            Star mantine on GitHub
-          </Button>
-          <Button
-            component="a"
-            href="https://twitter.com/mantinedev"
-            leftIcon={<TwitterLogoIcon />}
-            color="blue"
-            variant="outline"
-          >
-            Follow Mantine on Twitter
-          </Button>
-        </Group>
       </Container>
     </>
   );

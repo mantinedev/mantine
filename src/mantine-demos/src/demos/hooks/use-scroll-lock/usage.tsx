@@ -1,12 +1,12 @@
 import React from 'react';
 import { useScrollLock } from '@mantine/hooks';
-import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
+import { IconLock, IconLockOpen } from '@tabler/icons';
 import { Group, Button } from '@mantine/core';
 
 const code = `
 import { useScrollLock } from '@mantine/hooks';
 import { Button, Group } from '@mantine/core';
-import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
+import { IconLock, IconLockOpen } from '@tabler/icons';
 
 function Demo() {
   const [scrollLocked, setScrollLocked] = useScrollLock();
@@ -16,7 +16,7 @@ function Demo() {
       <Button
         onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
-        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
+        leftIcon={scrollLocked ? <IconLock size={16} /> : <IconLockOpen size={16} />}
       >
         {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
@@ -32,7 +32,7 @@ function Demo() {
       <Button
         onClick={() => setScrollLocked((c) => !c)}
         variant="outline"
-        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
+        leftIcon={scrollLocked ? <IconLock size={16} /> : <IconLockOpen size={16} />}
       >
         {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>

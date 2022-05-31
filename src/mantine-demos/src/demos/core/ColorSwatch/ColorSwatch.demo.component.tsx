@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
-import { useMantineTheme, ColorSwatch, Group } from '@mantine/core';
+import { useMantineTheme, ColorSwatch, Group, CheckIcon } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
-import { ColorSwatch, Group, useMantineTheme } from '@mantine/core';
+import { ColorSwatch, Group, useMantineTheme, CheckIcon } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -13,14 +11,13 @@ function Demo() {
 
   return (
     <Group position="center" spacing="xs">
-      <ColorSwatch component="a" href="https://mantine.dev" color={theme.colors.blue[6]} />
       <ColorSwatch
         component="button"
         color={theme.colors.grape[6]}
         onClick={() => setChecked((c) => !c)}
-        style={{ color: '#fff', cursor: 'pointer' }}
+        sx={{ color: '#fff', cursor: 'pointer' }}
       >
-        {checked && <CheckIcon />}
+        {checked && <CheckIcon width={10} />}
       </ColorSwatch>
     </Group>
   );
@@ -33,14 +30,13 @@ function Demo() {
 
   return (
     <Group position="center" spacing="xs">
-      <ColorSwatch component="a" href="https://mantine.dev" color={theme.colors.blue[6]} />
       <ColorSwatch
         component="button"
         color={theme.colors.grape[6]}
         onClick={() => setChecked((c) => !c)}
-        style={{ color: '#fff', cursor: 'pointer' }}
+        sx={{ color: '#fff', cursor: 'pointer' }}
       >
-        {checked && <CheckIcon />}
+        {checked && <CheckIcon width={10} />}
       </ColorSwatch>
     </Group>
   );

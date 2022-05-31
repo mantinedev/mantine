@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { ArrowRightIcon } from '@modulz/radix-icons';
+import { IconArrowRight } from '@tabler/icons';
 import { Text, SimpleGrid, Slider, Button } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import { Slider as SliderStylesApi } from '@mantine/styles-api';
@@ -102,7 +102,7 @@ export function Customize() {
             size="md"
             component={Link}
             to="/styles/styles-api"
-            rightIcon={<ArrowRightIcon style={{ width: 16, height: 16 }} />}
+            rightIcon={<IconArrowRight size={16} />}
           >
             Learn more about Styles API
           </Button>

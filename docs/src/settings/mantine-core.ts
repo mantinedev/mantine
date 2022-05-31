@@ -1,14 +1,14 @@
 import {
-  DashboardIcon,
-  StackIcon,
-  InputIcon,
-  MixIcon,
-  ExclamationTriangleIcon,
-  LetterCaseCapitalizeIcon,
-  ContainerIcon,
-  TextAlignJustifyIcon,
-  ButtonIcon,
-} from '@modulz/radix-icons';
+  IconLayout2,
+  IconClick,
+  IconForms,
+  IconMenu2,
+  IconNotebook,
+  IconBoxMultiple,
+  IconLetterCase,
+  IconSpeakerphone,
+  IconComponents,
+} from '@tabler/icons';
 import { Category } from './types';
 
 export const MANTINE_CORE_ORDER = [
@@ -26,55 +26,46 @@ export const MANTINE_CORE_ORDER = [
 export const MANTINE_CORE_CATEGORIES: Record<typeof MANTINE_CORE_ORDER[number], Category> = {
   'data-display': {
     title: 'Data display',
-    icon: DashboardIcon,
-    color: 'red',
+    icon: IconNotebook,
   },
 
   overlay: {
-    title: 'Overlay',
-    icon: StackIcon,
-    color: 'indigo',
+    title: 'Overlays',
+    icon: IconBoxMultiple,
   },
 
   navigation: {
     title: 'Navigation',
-    icon: TextAlignJustifyIcon,
-    color: 'indigo',
+    icon: IconMenu2,
   },
 
   inputs: {
     title: 'Inputs',
-    icon: InputIcon,
-    color: 'orange',
+    icon: IconForms,
   },
 
   misc: {
     title: 'Miscellaneous',
-    icon: MixIcon,
-    color: 'teal',
+    icon: IconComponents,
   },
 
   feedback: {
     title: 'Feedback',
-    icon: ExclamationTriangleIcon,
-    color: 'yellow',
+    icon: IconSpeakerphone,
   },
 
   typography: {
     title: 'Typography',
-    icon: LetterCaseCapitalizeIcon,
-    color: 'blue',
+    icon: IconLetterCase,
   },
 
   layout: {
     title: 'Layout',
-    icon: ContainerIcon,
-    color: 'grape',
+    icon: IconLayout2,
   },
 
   buttons: {
     title: 'Buttons',
-    icon: ButtonIcon,
-    color: 'cyan',
+    icon: IconClick,
   },
 };

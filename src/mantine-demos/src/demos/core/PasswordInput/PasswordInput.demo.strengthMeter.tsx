@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
+import { IconX, IconCheck } from '@tabler/icons';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { CheckIcon, Cross1Icon } from '@modulz/radix-icons';
+import { IconX, IconCheck } from '@tabler/icons';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
@@ -15,7 +15,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
+      {meets ? <IconCheck size={14} /> : <IconX size={14} />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }
@@ -85,7 +85,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
+      {meets ? <IconCheck size={14} /> : <IconX size={14} />} <Box ml={10}>{label}</Box>
     </Text>
   );
 }

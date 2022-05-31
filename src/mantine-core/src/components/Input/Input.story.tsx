@@ -2,7 +2,7 @@ import React from 'react';
 import { useBooleanToggle } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { IconSearch } from '@tabler/icons';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
@@ -23,7 +23,7 @@ function ValidInvalid() {
 
 const actionIcon = (
   <ActionIcon size="sm">
-    <MagnifyingGlassIcon />
+    <IconSearch />
   </ActionIcon>
 );
 
@@ -41,18 +41,13 @@ const getStates = (props?: any) => (
     <Input placeholder="Url" type="url" {...props} style={{ marginTop: 15 }} />
     <Input
       placeholder="Invalid"
-      icon={<MagnifyingGlassIcon />}
+      icon={<IconSearch />}
       invalid
       style={{ marginTop: 15 }}
       {...props}
     />
     <Input placeholder="Disabled" disabled style={{ marginTop: 15 }} {...props} />
-    <Input
-      placeholder="With icon"
-      icon={<MagnifyingGlassIcon />}
-      style={{ marginTop: 15 }}
-      {...props}
-    />
+    <Input placeholder="With icon" icon={<IconSearch />} style={{ marginTop: 15 }} {...props} />
     <Input
       style={{ marginTop: 15 }}
       placeholder="With right section"

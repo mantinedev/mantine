@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { ArrowRightIcon } from '@modulz/radix-icons';
+import { IconArrowRight } from '@tabler/icons';
 import { Title, Text, Anchor } from '@mantine/core';
 import useStyles from './Section.styles';
 
@@ -34,7 +34,7 @@ export function Section({ title, description, children, link, label }: SectionPr
         {label && (
           <Anchor component={Link} to={link} className={classes.link}>
             {label}
-            <ArrowRightIcon style={{ marginLeft: 8 }} />
+            <IconArrowRight style={{ marginLeft: 8 }} />
           </Anchor>
         )}
       </div>

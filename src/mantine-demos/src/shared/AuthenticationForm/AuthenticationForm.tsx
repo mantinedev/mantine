@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@mantine/form';
-import { EnvelopeClosedIcon, LockClosedIcon } from '@modulz/radix-icons';
+import { IconLock, IconAt } from '@tabler/icons';
 import {
   TextInput,
   PasswordInput,
@@ -97,7 +97,7 @@ export function AuthenticationForm({
           required
           placeholder="Your email"
           label="Email"
-          icon={<EnvelopeClosedIcon />}
+          icon={<IconAt size={16} stroke={1.5} />}
           {...form.getInputProps('email')}
         />
 
@@ -106,7 +106,7 @@ export function AuthenticationForm({
           required
           placeholder="Password"
           label="Password"
-          icon={<LockClosedIcon />}
+          icon={<IconLock size={16} stroke={1.5} />}
           {...form.getInputProps('password')}
         />
 
@@ -116,7 +116,7 @@ export function AuthenticationForm({
             required
             label="Confirm Password"
             placeholder="Confirm password"
-            icon={<LockClosedIcon />}
+            icon={<IconLock size={16} stroke={1.5} />}
             {...form.getInputProps('confirmPassword')}
           />
         )}

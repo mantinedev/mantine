@@ -1,4 +1,4 @@
-import { CubeIcon, LayersIcon, LightningBoltIcon, UpdateIcon } from '@modulz/radix-icons';
+import { IconRefresh, IconBulb, IconForms, IconBox } from '@tabler/icons';
 import { Category } from './types';
 
 export const MANTINE_HOOKS_ORDER = ['state', 'dom', 'utils', 'lifecycle'] as const;
@@ -6,25 +6,21 @@ export const MANTINE_HOOKS_ORDER = ['state', 'dom', 'utils', 'lifecycle'] as con
 export const MANTINE_HOOKS_CATEGORIES: Record<typeof MANTINE_HOOKS_ORDER[number], Category> = {
   state: {
     title: 'State management',
-    icon: CubeIcon,
-    color: 'blue',
+    icon: IconBox,
   },
 
   dom: {
     title: 'UI and Dom',
-    icon: LayersIcon,
-    color: 'red',
+    icon: IconForms,
   },
 
   utils: {
     title: 'Utilities',
-    icon: LightningBoltIcon,
-    color: 'yellow',
+    icon: IconBulb,
   },
 
   lifecycle: {
     title: 'Lifecycle',
-    icon: UpdateIcon,
-    color: 'teal',
+    icon: IconRefresh,
   },
 };

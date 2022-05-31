@@ -3,7 +3,7 @@ import Slugger from 'github-slugger';
 import { navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
 import { Text, useMantineTheme } from '@mantine/core';
-import { ActivityLogIcon } from '@modulz/radix-icons';
+import { IconList } from '@tabler/icons';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {
@@ -94,7 +94,7 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
       <div className={classes.inner}>
         <div>
           <div className={classes.header}>
-            <ActivityLogIcon />
+            <IconList size={20} stroke={1.5} />
             <Text className={classes.title}>Table of contents</Text>
           </div>
           <div className={classes.items}>{items}</div>

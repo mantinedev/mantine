@@ -1,5 +1,4 @@
 import React from 'react';
-import { InputIcon, StackIcon, DashboardIcon } from '@modulz/radix-icons';
 import { Tabs, createStyles } from '@mantine/core';
 import { InputsDemo } from './InputsDemo';
 import { ContentDemos } from './ContentDemos';
@@ -28,21 +27,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function CoreDemo() {
-  const iconStyles = { width: 16, height: 16 };
   const { classes } = useStyles();
 
   return (
     <Tabs variant="pills" defaultValue="inputs" classNames={classes}>
       <Tabs.List grow>
-        <Tabs.Tab value="inputs" icon={<InputIcon style={iconStyles} />}>
-          Inputs
-        </Tabs.Tab>
-        <Tabs.Tab value="overlays" icon={<StackIcon style={iconStyles} />}>
-          Overlays
-        </Tabs.Tab>
-        <Tabs.Tab value="content" icon={<DashboardIcon style={iconStyles} />}>
-          Content
-        </Tabs.Tab>
+        <Tabs.Tab value="inputs">Inputs</Tabs.Tab>
+        <Tabs.Tab value="overlays">Overlays</Tabs.Tab>
+        <Tabs.Tab value="content">Content</Tabs.Tab>
       </Tabs.List>
 
       <Tabs.Panel value="inputs" pt="xs">

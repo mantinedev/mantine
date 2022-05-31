@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useScrollLock, useClickOutside } from '@mantine/hooks';
 import { Title, Button, Paper, Center, createStyles, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
-import { LockClosedIcon, LockOpen2Icon } from '@modulz/radix-icons';
 
 const useStyles = createStyles((theme) => ({
   prism: {
@@ -66,13 +65,7 @@ export function HooksDemo() {
     <>
       <Title order={4}>use-scroll-lock hook</Title>
 
-      <Button
-        onClick={() => setScrollLocked((c) => !c)}
-        variant="outline"
-        leftIcon={scrollLocked ? <LockClosedIcon /> : <LockOpen2Icon />}
-        mt="xs"
-        mb="md"
-      >
+      <Button onClick={() => setScrollLocked((c) => !c)} variant="outline" mt="xs" mb="md">
         {scrollLocked ? 'Unlock scroll' : 'Lock scroll'}
       </Button>
 

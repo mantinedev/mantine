@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import { Tabs, Title, TextInput } from '@mantine/core';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { IconSearch } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MdxSiblings } from '../MdxSiblings/MdxSiblings';
@@ -98,7 +98,7 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
           >
             <TextInput
               autoFocus
-              icon={<MagnifyingGlassIcon />}
+              icon={<IconSearch size={16} stroke={1.5} />}
               placeholder="Search props"
               mb={20}
               value={query}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { CodeIcon } from '@modulz/radix-icons';
+import { IconCode } from '@tabler/icons';
 import { useMantineTheme, Paper, Stack, ActionIcon, Tooltip } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import useStyles from './CodeDemo.styles';
@@ -62,7 +62,7 @@ export default function CodeDemo({
               positionDependencies={[visible]}
             >
               <ActionIcon onClick={() => setVisible((v) => !v)} aria-label="Toggle code">
-                <CodeIcon />
+                <IconCode size={16} />
               </ActionIcon>
             </Tooltip>
           </Stack>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Button, Group } from '@mantine/core';
-import { ArrowRightIcon } from '@modulz/radix-icons';
+import { IconArrowRight } from '@tabler/icons';
 import { Demo, CreateStylesDemos } from '@mantine/demos';
 import { PageSection } from '../PageSection/PageSection';
 
@@ -20,7 +20,7 @@ export function Emotion() {
           size="md"
           component={Link}
           to="/styles/create-styles/"
-          rightIcon={<ArrowRightIcon style={{ width: 16, height: 16 }} />}
+          rightIcon={<IconArrowRight size={16} />}
         >
           Explore all createStyle features
         </Button>
