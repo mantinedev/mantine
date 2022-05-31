@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useBooleanToggle, useId } from '@mantine/hooks';
+import { useDisclosure, useId } from '@mantine/hooks';
 import {
   Selectors,
   DefaultProps,
@@ -95,7 +95,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   );
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
-  const [reveal, toggle] = useBooleanToggle(false);
+  const [reveal, { toggle }] = useDisclosure(false);
 
   const rightSection = (
     <ActionIcon<'button'>

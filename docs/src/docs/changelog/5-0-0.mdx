@@ -240,6 +240,8 @@ type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { 
 - [Group](https://mantine.dev/core/group/) component no longer supports `direction` prop, use [Stack](https://mantine.dev/core/stack/) component instead for vertical stacks
 - [use-uncontrolled](https://mantine.dev/hooks/use-uncontrolled/) hook logic was changed, it no longer supports `rule` parameter
 - [use-id](https://mantine.dev/hooks/use-id/) hook now supports React 18 `useId` hook with a fallback for older React versions, `generateId` function is no longer supported
+- `@mantine/hooks` package no longer exports `useBooleanToggle` hook, use `useDisclosure` hook instead
+- [use-toggle](https://mantine.dev/hooks/use-toggle/) hook API was changed, it no longer accepts initial value as first argument
 
 ## React 18 support
 

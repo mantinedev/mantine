@@ -1,5 +1,5 @@
 import React from 'react';
-import { useBooleanToggle } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
 import { IconSearch } from '@tabler/icons';
@@ -8,7 +8,7 @@ import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 
 function ValidInvalid() {
-  const [valid, toggle] = useBooleanToggle();
+  const [valid, { toggle }] = useDisclosure(false);
   return (
     <div style={{ padding: 40 }}>
       <Input invalid={valid} placeholder="Hello there" />

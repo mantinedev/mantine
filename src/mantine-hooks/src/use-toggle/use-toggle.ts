@@ -19,7 +19,3 @@ export function useToggle<T>(initialValue: T, options: [T, T]) {
 
   return [state, toggle] as const;
 }
-
-export function useBooleanToggle(initialValue = false) {
-  return useToggle(initialValue, [true, false]);
-}

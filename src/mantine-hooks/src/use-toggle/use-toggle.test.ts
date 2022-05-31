@@ -1,21 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useToggle, useBooleanToggle } from './use-toggle';
-
-describe('@mantine/hooks/use-boolean-toggle', () => {
-  it('correctly toggles boolean value', () => {
-    const hook = renderHook(() => useBooleanToggle(false));
-    expect(hook.result.current[0]).toBe(false);
-
-    act(() => hook.result.current[1]());
-    expect(hook.result.current[0]).toBe(true);
-
-    act(() => hook.result.current[1]());
-    expect(hook.result.current[0]).toBe(false);
-
-    act(() => hook.result.current[1](false));
-    expect(hook.result.current[0]).toBe(false);
-  });
-});
+import { useToggle } from './use-toggle';
 
 describe('@mantine/hooks/use-toggle', () => {
   it('returns correct initial state', () => {

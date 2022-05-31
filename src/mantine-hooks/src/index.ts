@@ -29,7 +29,7 @@ export { useScrollIntoView } from './use-scroll-into-view/use-scroll-into-view';
 export { useResizeObserver, useElementSize } from './use-resize-observer/use-resize-observer';
 export { useScrollLock } from './use-scroll-lock/use-scroll-lock';
 export { useShallowEffect } from './use-shallow-effect/use-shallow-effect';
-export { useToggle, useBooleanToggle } from './use-toggle/use-toggle';
+export { useToggle } from './use-toggle/use-toggle';
 export { useUncontrolled } from './use-uncontrolled/use-uncontrolled';
 export { useViewportSize } from './use-viewport-size/use-viewport-size';
 export { useWindowEvent } from './use-window-event/use-window-event';
