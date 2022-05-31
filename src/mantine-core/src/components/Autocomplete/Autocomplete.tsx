@@ -228,6 +228,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             tabIndex={-1}
           >
             <Input<'input'>
+              autoComplete="nope"
               {...inputProps}
               {...others}
               data-mantine-stop-propagation={dropdownOpened}
@@ -245,7 +246,6 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               onClick={handleInputClick}
-              autoComplete="nope"
               aria-autocomplete="list"
               aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
