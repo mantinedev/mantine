@@ -31,6 +31,7 @@
     "@mantine/spotlight": "5.0.0-alpha.5",
     "@tabler/icons": "*",
     "react-beautiful-dnd": "*",
+    "react-input-mask": "*",
     "dayjs": "*",
     "zod": "*",
     "@modulz/radix-icons": "*",

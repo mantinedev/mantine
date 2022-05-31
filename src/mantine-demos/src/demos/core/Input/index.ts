@@ -7,3 +7,4 @@ export { helpers } from './Input.demo.helpers';
 export { order } from './Input.demo.order';
 export { providerDefault } from './Input.demo.providerDefault';
 export { providerStyles } from './Input.demo.providerStyles';
+export { mask } from './Input.demo.mask';

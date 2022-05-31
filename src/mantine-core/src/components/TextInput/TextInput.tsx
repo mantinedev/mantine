@@ -27,11 +27,14 @@ export interface TextInputProps
 
   /** Input size */
   size?: MantineSize;
+
+  __staticSelector?: string;
 }
 
 const defaultProps: Partial<TextInputProps> = {
   type: 'text',
   size: 'sm',
+  __staticSelector: 'TextInput',
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
