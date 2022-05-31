@@ -11,7 +11,7 @@ interface AmPmSelectProps
   /** Colon text size */
   size?: MantineSize;
 
-  unstyled: boolean;
+  unstyled?: boolean;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(

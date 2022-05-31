@@ -7,7 +7,7 @@ import { Button } from '@mantine/core';
 import { useToggle } from '@mantine/hooks';
 
 function Demo() {
-  const [value, toggle] = useToggle('blue', ['blue', 'orange']);
+  const [value, toggle] = useToggle(['blue', 'orange']);
 
   return (
     <Button color={value} onClick={() => toggle()}>
@@ -18,7 +18,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, toggle] = useToggle('blue', ['blue', 'orange']);
+  const [value, toggle] = useToggle(['blue', 'orange']);
 
   return (
     <Group position="center">
