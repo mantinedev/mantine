@@ -16,29 +16,22 @@ export interface TextInputProps
     InputBaseProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
-  /** id is used to bind input and label, if not passed unique id will be generated for each input */
-  id?: string;
-
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
   /** Input element type */
-  type?: 'text' | 'password' | 'email' | 'search' | 'tel' | 'url' | 'number';
+  type?: React.HTMLInputTypeAttribute;
 
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
 
   /** Input size */
   size?: MantineSize;
-
-  /** Static css selector base */
-  __staticSelector?: string;
 }
 
 const defaultProps: Partial<TextInputProps> = {
   type: 'text',
   size: 'sm',
-  __staticSelector: 'TextInput',
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
