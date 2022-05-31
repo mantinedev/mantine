@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { itFiltersChildren, itSupportsSystemProps } from '@mantine/tests';
+import { itSupportsSystemProps } from '@mantine/tests';
 import { Timeline } from './Timeline';
 import { TimelineItem } from './TimelineItem/TimelineItem';
 
@@ -23,11 +23,6 @@ describe('@mantine/core/Timeline', () => {
     refType: HTMLDivElement,
     providerName: 'Timeline',
   });
-
-  itFiltersChildren(Timeline, defaultProps, '.mantine-Timeline-item', [
-    <Timeline.Item>Child 1</Timeline.Item>,
-    <Timeline.Item>Child 2</Timeline.Item>,
-  ]);
 
   it('handles active item correctly', () => {
     const { container: secondActive } = render(<Timeline {...defaultProps} active={1} />);
