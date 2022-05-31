@@ -57,6 +57,8 @@ export interface MantineTheme {
   transitionTimingFunction: CSSProperties['transitionTimingFunction'];
   fontFamilyMonospace: CSSProperties['fontFamily'];
   primaryColor: keyof MantineThemeColors;
+  respectReducedMotion: boolean;
+  cursorType: 'default' | 'pointer';
 
   fontSizes: MantineSizes;
   radius: MantineSizes;

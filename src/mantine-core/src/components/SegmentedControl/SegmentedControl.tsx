@@ -14,6 +14,7 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  useMantineTheme,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, {
@@ -99,8 +100,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     unstyled,
     ...others
   } = useComponentDefaultProps('SegmentedControl', defaultProps, props);
+  const theme = useMantineTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
 
-  const reduceMotion = useReducedMotion();
   const data = _data.map(
     (item: string | SegmentedControlItem): SegmentedControlItem =>
       typeof item === 'string' ? { label: item, value: item } : item
@@ -117,7 +120,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     onChange,
   });
 
-  const { classes, cx, theme } = useStyles(
+  const { classes, cx } = useStyles(
     {
       size,
       fullWidth,

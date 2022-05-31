@@ -90,7 +90,7 @@ export default createStyles(
           transform: `translateX(${size === 'xs' ? 1 : 2}px)`,
 
           '@media (prefers-reduced-motion)': {
-            transitionDuration: '0ms',
+            transitionDuration: theme.respectReducedMotion ? '0ms' : false,
           },
         },
 

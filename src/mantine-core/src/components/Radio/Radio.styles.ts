@@ -69,6 +69,7 @@ export default createStyles(
         transitionProperty: 'background-color, border-color',
         transitionTimingFunction: theme.transitionTimingFunction,
         transitionDuration: `${transitionDuration}ms`,
+        cursor: theme.cursorType,
 
         '&:checked': {
           background: colors.background,
@@ -98,7 +99,8 @@ export default createStyles(
         fontSize: theme.fontSizes[size] || theme.fontSizes.md,
         lineHeight: `${theme.fn.size({ sizes, size })}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        marginLeft: theme.spacing.sm,
+        paddingLeft: theme.spacing.sm,
+        cursor: theme.cursorType,
 
         '&[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],

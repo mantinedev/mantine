@@ -32,7 +32,8 @@ export function useTransition({
   onExited,
 }: UseTransition) {
   const theme = useMantineTheme();
-  const reduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
   const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
   const timeoutRef = useRef<number>(-1);

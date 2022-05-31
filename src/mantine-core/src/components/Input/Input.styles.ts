@@ -13,6 +13,7 @@ export interface InputStylesParams {
   iconWidth: number;
   offsetBottom: boolean;
   offsetTop: boolean;
+  pointer: boolean;
 }
 
 export const sizes = {
@@ -93,6 +94,7 @@ export default createStyles(
       iconWidth,
       offsetBottom,
       offsetTop,
+      pointer,
     }: InputStylesParams
   ) => {
     const invalidColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
@@ -130,6 +132,7 @@ export default createStyles(
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         display: 'block',
         textAlign: 'left',
+        cursor: pointer ? 'pointer' : undefined,
         ...sizeStyles,
 
         '&:disabled': {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
 
 export default { title: 'Checkbox' };
@@ -20,5 +21,13 @@ export function CheckboxGroup() {
         <Checkbox label="Angular" value="ng" />
       </Checkbox.Group>
     </div>
+  );
+}
+
+export function CursorPointer() {
+  return (
+    <MantineProvider theme={{ cursorType: 'pointer' }}>
+      <Checkbox label="Hello" value="1" />
+    </MantineProvider>
   );
 }

@@ -76,9 +76,11 @@ export function NotificationsProvider({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
-  const reduceMotion = useReducedMotion();
-  const duration = reduceMotion ? 1 : transitionDuration;
+
   const { classes, cx, theme } = useStyles();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
+  const duration = reduceMotion ? 1 : transitionDuration;
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;

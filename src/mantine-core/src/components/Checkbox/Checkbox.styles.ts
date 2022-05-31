@@ -48,7 +48,7 @@ export default createStyles(
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {
-          transitionDuration: '0ms',
+          transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
         },
       },
 
@@ -70,6 +70,7 @@ export default createStyles(
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        cursor: theme.cursorType,
       },
 
       input: {
@@ -86,6 +87,7 @@ export default createStyles(
         display: 'block',
         margin: 0,
         transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
+        cursor: theme.cursorType,
 
         '&:checked': {
           backgroundColor: colors.background,

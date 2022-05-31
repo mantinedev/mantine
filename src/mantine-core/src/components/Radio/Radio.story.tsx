@@ -1,5 +1,5 @@
 import React from 'react';
-import { MANTINE_SIZES } from '@mantine/styles';
+import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { Checkbox } from '../Checkbox';
 import { Radio } from './Radio';
 
@@ -53,5 +53,13 @@ export function ComparedToCheckbox() {
         <Checkbox label="Svelte" value="sv" disabled name="hello" />
       </Checkbox.Group>
     </div>
+  );
+}
+
+export function CursorPointer() {
+  return (
+    <MantineProvider theme={{ cursorType: 'pointer' }}>
+      <Radio label="Hello" value="1" />
+    </MantineProvider>
   );
 }

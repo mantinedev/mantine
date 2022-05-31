@@ -63,7 +63,7 @@ export default createStyles(
       },
 
       '@media (prefers-reduced-motion)': {
-        transitionDuration: '0ms',
+        transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
       },
     },
 

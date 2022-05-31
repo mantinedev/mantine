@@ -42,7 +42,7 @@ export default createStyles((theme, { size, color, transitionDuration }: BurgerS
         transitionDuration: `${transitionDuration}ms`,
 
         '@media (prefers-reduced-motion)': {
-          transitionDuration: '0ms',
+          transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
         },
       },
 

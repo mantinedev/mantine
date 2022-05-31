@@ -1,4 +1,4 @@
-import { OptionalPortal, Progress } from '@mantine/core';
+import { OptionalPortal, Progress, useMantineTheme } from '@mantine/core';
 import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import { getDefaultZIndex, MantineColor } from '@mantine/styles';
 import React, { useRef, useState } from 'react';
@@ -60,7 +60,9 @@ export function NProgress({
   withinPortal = true,
   zIndex = getDefaultZIndex('max'),
 }: NProgressProps) {
-  const reducedMotion = useReducedMotion();
+  const theme = useMantineTheme();
+  const shouldReduceMotion = useReducedMotion();
+  const reducedMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const [_progress, setProgress] = useState(defaultProgress);
   const [mounted, setMounted] = useState(true);
   const [unmountProgress, setUnmountProgress] = useState(false);

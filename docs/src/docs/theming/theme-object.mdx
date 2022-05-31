@@ -23,6 +23,14 @@ interface MantineTheme {
   // never – focus ring is always hidden (not recommended)
   focusRing: 'auto' | 'always' | 'never';
 
+  // Determines whether motion based animations should be disabled for
+  // users who prefer to reduce motion in their OS settings
+  respectReducedMotion: boolean;
+
+  // Determines whether elements that do not have pointer cursor by default
+  // (checkboxes, radio, native select) should have it
+  cursorType: 'default' | 'pointer';
+
   // Default border-radius used for most elements
   defaultRadius: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
 

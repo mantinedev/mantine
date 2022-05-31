@@ -62,6 +62,9 @@ export interface InputProps extends InputBaseProps, DefaultProps<InputStylesName
 
   /** Will input have multiple lines? */
   multiline?: boolean;
+
+  /** Determines whether cursor on input should be pointer */
+  pointer?: boolean;
 }
 
 const defaultProps: Partial<InputProps> = {
@@ -92,6 +95,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     multiline,
     sx,
     unstyled,
+    pointer,
     ...others
   } = useComponentDefaultProps('Input', defaultProps, props);
   const { offsetBottom, offsetTop } = useInputWrapperContext();
@@ -108,6 +112,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       withRightSection: !!rightSection,
       offsetBottom,
       offsetTop,
+      pointer,
     },
     { classNames, styles, name: ['Input', __staticSelector], unstyled }
   );

@@ -82,6 +82,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
         ref={ref}
         value={value === null ? '' : value}
         __staticSelector="NativeSelect"
+        pointer={theme.cursorType === 'pointer'}
         {...getSelectRightSectionProps({
           theme,
           rightSection,

@@ -18,7 +18,7 @@ export default createStyles((theme, { transitionDuration }: SpoilerStylesParams)
     transitionDuration: `${transitionDuration}ms`,
 
     '@media (prefers-reduced-motion)': {
-      transitionDuration: '0ms',
+      transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
     },
   },
 }));
