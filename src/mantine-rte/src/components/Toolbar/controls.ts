@@ -1,155 +1,163 @@
 import {
-  FontBoldIcon,
-  FontItalicIcon,
-  UnderlineIcon,
-  StrikethroughIcon,
-  ListBulletIcon,
-  Link1Icon,
-  ImageIcon,
-  TextNoneIcon,
-  TextAlignLeftIcon,
-  TextAlignRightIcon,
-  TextAlignCenterIcon,
-  VideoIcon,
-  QuoteIcon,
-  CodeIcon,
-} from '@modulz/radix-icons';
-import { OrderedList, H1, H2, H3, H4, H5, H6, Sub, Sup } from './icons';
+  IconBold,
+  IconItalic,
+  IconUnderline,
+  IconStrikethrough,
+  IconList,
+  IconListNumbers,
+  IconLink,
+  IconCode,
+  IconBlockquote,
+  IconBrandYoutube,
+  IconAlignRight,
+  IconAlignLeft,
+  IconAlignCenter,
+  IconClearFormatting,
+  IconH1,
+  IconH2,
+  IconH3,
+  IconH4,
+  IconH5,
+  IconH6,
+  IconSuperscript,
+  IconSubscript,
+  IconPhoto,
+} from '@tabler/icons';
 
 export const CONTROLS = {
   code: {
-    icon: CodeIcon,
+    icon: IconCode,
     controls: 'code',
   },
 
   codeBlock: {
-    icon: CodeIcon,
+    icon: IconCode,
     controls: 'code-block',
   },
 
   bold: {
-    icon: FontBoldIcon,
+    icon: IconBold,
     controls: 'bold',
   },
 
   italic: {
-    icon: FontItalicIcon,
+    icon: IconItalic,
     controls: 'italic',
   },
 
   underline: {
-    icon: UnderlineIcon,
+    icon: IconUnderline,
     controls: 'underline',
   },
 
   strike: {
-    icon: StrikethroughIcon,
+    icon: IconStrikethrough,
     controls: 'strike',
   },
 
   unorderedList: {
-    icon: ListBulletIcon,
+    icon: IconList,
     controls: 'list',
     value: 'bullet',
   },
 
   orderedList: {
-    icon: OrderedList,
+    icon: IconListNumbers,
     controls: 'list',
     value: 'ordered',
   },
 
   link: {
-    icon: Link1Icon,
+    icon: IconLink,
     controls: 'link',
   },
 
   image: {
-    icon: ImageIcon,
+    icon: IconPhoto,
     controls: 'image',
   },
 
   clean: {
-    icon: TextNoneIcon,
+    icon: IconClearFormatting,
     controls: 'clean',
   },
 
   alignCenter: {
-    icon: TextAlignCenterIcon,
+    icon: IconAlignCenter,
     controls: 'align',
     value: 'center',
     noActive: true,
   },
 
   alignLeft: {
-    icon: TextAlignLeftIcon,
+    icon: IconAlignLeft,
     controls: 'align',
     value: '',
     noActive: true,
   },
 
   alignRight: {
-    icon: TextAlignRightIcon,
+    icon: IconAlignRight,
     controls: 'align',
     value: 'right',
     noActive: true,
   },
 
   video: {
-    icon: VideoIcon,
+    icon: IconBrandYoutube,
     controls: 'video',
   },
 
   h1: {
-    icon: H1,
+    icon: IconH1,
     controls: 'header',
     value: '1',
   },
 
   h2: {
-    icon: H2,
+    icon: IconH2,
     controls: 'header',
     value: '2',
   },
 
   h3: {
-    icon: H3,
+    icon: IconH3,
     controls: 'header',
     value: '3',
   },
 
   h4: {
-    icon: H4,
+    icon: IconH4,
     controls: 'header',
     value: '4',
   },
 
   h5: {
-    icon: H5,
+    icon: IconH5,
     controls: 'header',
     value: '5',
   },
 
   h6: {
-    icon: H6,
+    icon: IconH6,
     controls: 'header',
     value: '6',
   },
 
   sup: {
-    icon: Sup,
+    icon: IconSuperscript,
     controls: 'script',
     value: 'super',
   },
 
   sub: {
-    icon: Sub,
+    icon: IconSubscript,
     controls: 'script',
     value: 'sub',
   },
 
   blockquote: {
-    icon: QuoteIcon,
+    icon: IconBlockquote,
     controls: 'blockquote',
   },
 } as const;

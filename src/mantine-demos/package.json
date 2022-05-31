@@ -34,7 +34,6 @@
     "react-input-mask": "*",
     "dayjs": "*",
     "zod": "*",
-    "@modulz/radix-icons": "*",
     "@primer/octicons-react": "*"
   },
   "dependencies": {},
