@@ -14,7 +14,7 @@ interface CodeDemoProps {
   toggle?: boolean;
   inline?: boolean;
   spacing?: boolean;
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export default function CodeDemo({

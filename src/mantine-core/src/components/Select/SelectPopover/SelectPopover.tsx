@@ -57,7 +57,7 @@ interface SelectPopoverProps {
   __staticSelector?: string;
   onDirectionChange?(direction: React.CSSProperties['flexDirection']): void;
   switchDirectionOnFlip?: boolean;
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
   dropdownPosition?: 'bottom' | 'top' | 'flip';
   positionDependencies?: any[];
   classNames?: ClassNames<SelectPopoverStylesNames>;

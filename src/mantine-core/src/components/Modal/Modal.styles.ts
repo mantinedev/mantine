@@ -13,7 +13,7 @@ export interface ModalStylesParams {
   overflow: 'outside' | 'inside';
   size: string | number;
   centered: boolean;
-  zIndex: number;
+  zIndex: React.CSSProperties['zIndex'];
   fullScreen: boolean;
 }
 

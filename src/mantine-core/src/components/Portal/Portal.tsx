@@ -13,7 +13,7 @@ export interface PortalProps {
   /** Root element className */
   className?: string;
 
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export function Portal(props: PortalProps): ReactPortal {

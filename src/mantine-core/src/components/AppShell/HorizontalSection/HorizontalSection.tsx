@@ -31,7 +31,7 @@ export interface HorizontalSectionSharedProps extends DefaultProps {
   hidden?: boolean;
 
   /** z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export interface HorizontalSectionProps

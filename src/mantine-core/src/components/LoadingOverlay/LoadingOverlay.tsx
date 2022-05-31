@@ -28,7 +28,7 @@ export interface LoadingOverlayProps extends DefaultProps, React.ComponentPropsW
   overlayBlur?: number;
 
   /** Loading overlay z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** If visible overlay will take 100% width and height of first parent with relative position and overlay all of its content */
   visible: boolean;
@@ -67,6 +67,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     ...others
   } = useComponentDefaultProps('LoadingOverlay', defaultProps, props);
   const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled });
+  const _zIndex = `calc(${zIndex} + 1)` as any;
 
   return (
     <Transition
@@ -83,9 +84,9 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
           {...others}
         >
           {loader ? (
-            <div style={{ zIndex: zIndex + 1 }}>{loader}</div>
+            <div style={{ zIndex: _zIndex }}>{loader}</div>
           ) : (
-            <Loader style={{ zIndex: zIndex + 1 }} {...loaderProps} />
+            <Loader style={{ zIndex: _zIndex }} {...loaderProps} />
           )}
 
           <Overlay

@@ -10,7 +10,7 @@ export interface IndicatorStylesParams {
   inline: boolean;
   withBorder: boolean;
   withLabel: boolean;
-  zIndex: number;
+  zIndex: React.CSSProperties['zIndex'];
 }
 
 function getPositionStyles(_position: IndicatorPosition, offset = 0) {

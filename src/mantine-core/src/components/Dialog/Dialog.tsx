@@ -37,7 +37,7 @@ export interface DialogProps
   children?: React.ReactNode;
 
   /** Dialog container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Opened state */
   opened: boolean;

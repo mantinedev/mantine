@@ -84,7 +84,7 @@ export interface InnerSpotlightProps
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 
   /** Spotlight z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;

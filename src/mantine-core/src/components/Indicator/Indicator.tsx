@@ -48,7 +48,7 @@ export interface IndicatorProps
   disabled?: boolean;
 
   /** Indicator z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 const defaultProps: Partial<IndicatorProps> = {

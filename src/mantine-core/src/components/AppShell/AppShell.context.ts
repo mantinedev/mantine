@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 interface AppShellContextValue {
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
   fixed?: boolean;
 }
 

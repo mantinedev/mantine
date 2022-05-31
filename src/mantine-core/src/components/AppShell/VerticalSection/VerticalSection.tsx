@@ -18,7 +18,7 @@ export interface VerticalSectionSharedProps extends DefaultProps {
   position?: VerticalSectionPosition;
 
   /** z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 interface VerticalSectionProps

@@ -16,7 +16,7 @@ interface HorizontalSectionStyles {
   position: HorizontalSectionPosition;
   hiddenBreakpoint: MantineNumberSize;
   fixed: boolean;
-  zIndex: number;
+  zIndex: React.CSSProperties['zIndex'];
   section: 'navbar' | 'aside';
 }
 

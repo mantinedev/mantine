@@ -42,7 +42,7 @@ export interface NProgressProps {
   withinPortal?: boolean;
 
   /** NProgress container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export function NProgress({

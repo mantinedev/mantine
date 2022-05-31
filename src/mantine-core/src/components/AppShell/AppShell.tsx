@@ -28,7 +28,7 @@ export interface AppShellProps
   footer?: React.ReactElement;
 
   /** zIndex prop passed to Navbar and Header components */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** true to switch from static layout to fixed */
   fixed?: boolean;

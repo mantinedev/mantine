@@ -15,7 +15,7 @@ export type DrawerPosition = 'top' | 'bottom' | 'left' | 'right';
 export interface DrawerStylesParams {
   position: DrawerPosition;
   size: number | string;
-  zIndex: number;
+  zIndex: React.CSSProperties['zIndex'];
 }
 
 interface GetPositionStyles {

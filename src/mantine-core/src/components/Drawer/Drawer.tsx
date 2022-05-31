@@ -42,7 +42,7 @@ export interface DrawerProps
   padding?: MantineNumberSize;
 
   /** Drawer z-index property */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Disables focus trap */
   trapFocus?: boolean;

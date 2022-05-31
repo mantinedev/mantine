@@ -48,7 +48,7 @@ export interface NotificationProviderProps
   limit?: number;
 
   /** Notifications container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export function NotificationsProvider({

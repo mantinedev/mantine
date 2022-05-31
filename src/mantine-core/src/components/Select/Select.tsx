@@ -66,7 +66,7 @@ export interface SelectSharedProps<Item, Value> {
   nothingFound?: React.ReactNode;
 
   /** Dropdown z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Dropdown positioning behavior */
   dropdownPosition?: 'bottom' | 'top' | 'flip';

@@ -11,7 +11,7 @@ interface VerticalSectionStyles {
   height: number | string;
   fixed: boolean;
   position: VerticalSectionPosition;
-  zIndex: number;
+  zIndex: React.CSSProperties['zIndex'];
   borderPosition: 'top' | 'bottom';
 }
 

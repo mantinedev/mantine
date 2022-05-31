@@ -71,7 +71,7 @@ export interface DatePickerBaseSharedProps
   positionDependencies?: any[];
 
   /** Dropdown zIndex */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
@@ -89,7 +89,7 @@ export interface DatePickerBaseSharedProps
   clickOutsideEvents?: string[];
 
   /** Modal z-index */
-  modalZIndex?: number;
+  modalZIndex?: React.CSSProperties['zIndex'];
 
   /** Set the clear button tab index to disabled or default after input field */
   clearButtonTabIndex?: -1 | 0;

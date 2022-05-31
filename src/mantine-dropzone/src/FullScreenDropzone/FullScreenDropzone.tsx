@@ -21,7 +21,7 @@ export interface FullScreenDropzoneProps
   offset?: MantineNumberSize;
 
   /** Overlay z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Disable dropzone */
   disabled?: boolean;

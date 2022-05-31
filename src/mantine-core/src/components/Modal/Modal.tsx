@@ -33,7 +33,7 @@ export interface ModalProps
   title?: React.ReactNode;
 
   /** Modal z-index property */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Control vertical overflow behavior */
   overflow?: 'outside' | 'inside';
