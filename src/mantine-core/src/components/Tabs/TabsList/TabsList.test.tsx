@@ -15,7 +15,7 @@ const defaultProps: TabsListProps = {
 const TestContainer = createContextContainer(TabsList, TabsProvider);
 
 describe('@mantine/core/TabsList', () => {
-  itThrowsContextError(TabsList, defaultProps, TABS_ERRORS['tabs-context']);
+  itThrowsContextError(TabsList, defaultProps, TABS_ERRORS.context);
   itRendersChildren(TestContainer, defaultProps);
   itSupportsSystemProps({
     component: TestContainer,

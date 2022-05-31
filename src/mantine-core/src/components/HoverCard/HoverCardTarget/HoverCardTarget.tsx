@@ -8,7 +8,7 @@ export interface HoverCardTargetProps extends PopoverTargetProps {}
 
 export function HoverCardTarget({ children, refProp }: HoverCardTargetProps) {
   if (!isElement(children)) {
-    throw new Error(HOVER_CARD_ERRORS['hover-card-children']);
+    throw new Error(HOVER_CARD_ERRORS.children);
   }
 
   const ctx = useHoverCardContext();

@@ -15,7 +15,7 @@ const TestContainer = createContextContainer(HoverCardDropdown, HoverCard, {
 });
 
 describe('@mantine/core/HoverCardDropdown', () => {
-  itThrowsContextError(HoverCardDropdown, defaultProps, HOVER_CARD_ERRORS['hover-card-context']);
+  itThrowsContextError(HoverCardDropdown, defaultProps, HOVER_CARD_ERRORS.context);
   itRendersChildren(TestContainer, defaultProps);
 
   itSupportsSystemProps({

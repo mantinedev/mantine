@@ -14,7 +14,7 @@ export interface MenuTargetProps {
 
 export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
   if (!isElement(children)) {
-    throw new Error(MENU_ERRORS['menu-children']);
+    throw new Error(MENU_ERRORS.children);
   }
 
   const ctx = useMenuContext();

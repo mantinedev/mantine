@@ -55,7 +55,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
   );
 
   if (!isElement(children)) {
-    throw new Error(TOOLTIP_ERRORS['tooltip-children']);
+    throw new Error(TOOLTIP_ERRORS.children);
   }
 
   const target = children as React.ReactElement;

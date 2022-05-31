@@ -7,5 +7,5 @@ interface HoverCardContext {
 }
 
 export const [HoverCardContextProvider, useHoverCardContext] = createSafeContext<HoverCardContext>(
-  HOVER_CARD_ERRORS['hover-card-context']
+  HOVER_CARD_ERRORS.context
 );

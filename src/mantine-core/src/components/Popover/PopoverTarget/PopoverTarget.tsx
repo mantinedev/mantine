@@ -21,7 +21,7 @@ export function PopoverTarget({
   popupType = 'dialog',
 }: PopoverTargetProps) {
   if (!isElement(children)) {
-    throw new Error(POPOVER_ERRORS['popover-children']);
+    throw new Error(POPOVER_ERRORS.children);
   }
 
   const ctx = usePopoverContext();

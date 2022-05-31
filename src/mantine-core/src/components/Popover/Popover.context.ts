@@ -35,5 +35,5 @@ interface PopoverContext {
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
-  POPOVER_ERRORS['popover-context']
+  POPOVER_ERRORS.context
 );

@@ -17,7 +17,7 @@ const defaultProps: MenuItemProps = {};
 const TestContainer = createContextContainer<any>(MenuItem, Menu, { opened: true });
 
 describe('@mantine/core/MenuItem', () => {
-  itThrowsContextError(MenuItem, defaultProps, MENU_ERRORS['menu-context']);
+  itThrowsContextError(MenuItem, defaultProps, MENU_ERRORS.context);
   itRendersChildren(TestContainer, defaultProps);
   itIsPolymorphic(TestContainer, defaultProps);
   itSupportsSystemProps({

@@ -103,8 +103,8 @@ export function AccordionProvider<Multiple extends boolean = false>({
       value={{
         isItemActive,
         onChange: handleItemChange,
-        getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS['accordion-value']),
-        getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS['accordion-value']),
+        getControlId: getSafeId(`${uid}-control`, ACCORDION_ERRORS.value),
+        getRegionId: getSafeId(`${uid}-panel`, ACCORDION_ERRORS.value),
         transitionDuration,
         disableChevronRotation,
         chevronPosition,

@@ -12,10 +12,10 @@ const defaultProps: PopoverTargetProps = {
 const TestContainer = createContextContainer(PopoverTarget, Popover, { opened: true });
 
 describe('@mantine/core/PopoverTarget', () => {
-  itThrowsContextError(PopoverTarget, defaultProps, POPOVER_ERRORS['popover-context']);
+  itThrowsContextError(PopoverTarget, defaultProps, POPOVER_ERRORS.context);
 
   it('throws error if children cannot be processed', () => {
-    const error = new Error(POPOVER_ERRORS['popover-children']);
+    const error = new Error(POPOVER_ERRORS.children);
     patchConsoleError();
     expect(() => render(<TestContainer>Hello</TestContainer>)).toThrow(error);
     expect(() => render(<TestContainer>{2}</TestContainer>)).toThrow(error);

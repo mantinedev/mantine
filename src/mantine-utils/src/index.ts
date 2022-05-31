@@ -3,7 +3,6 @@ export { createScopedKeydownHandler } from './create-scoped-keydown-handler/crea
 export { getContextItemIndex } from './get-context-item-index/get-context-item-index';
 export { findElementAncestor } from './find-element-ancestor/find-element-ancestor';
 export { createSafeContext } from './create-safe-context/create-safe-context';
-export { createError, createErrors } from './create-error/create-error';
 export { packSx } from './pack-sx/pack-sx';
 export { getSafeId } from './get-safe-id/get-safe-id';
 export { isElement } from './is-element/is-element';

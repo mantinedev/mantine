@@ -12,10 +12,10 @@ const defaultProps: MenuTargetProps = {
 const TestContainer = createContextContainer(MenuTarget, Menu, { opened: true });
 
 describe('@mantine/core/MenuTarget', () => {
-  itThrowsContextError(MenuTarget, defaultProps, MENU_ERRORS['menu-context']);
+  itThrowsContextError(MenuTarget, defaultProps, MENU_ERRORS.context);
 
   it('throws error if children cannot be processed', () => {
-    const error = new Error(MENU_ERRORS['menu-children']);
+    const error = new Error(MENU_ERRORS.children);
     patchConsoleError();
     expect(() => render(<TestContainer>Hello</TestContainer>)).toThrow(error);
     expect(() => render(<TestContainer>{2}</TestContainer>)).toThrow(error);

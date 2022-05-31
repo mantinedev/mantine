@@ -12,10 +12,10 @@ const defaultProps: HoverCardTargetProps = {
 const TestContainer = createContextContainer(HoverCardTarget, HoverCard, { opened: true });
 
 describe('@mantine/core/HoverCardTarget', () => {
-  itThrowsContextError(HoverCardTarget, defaultProps, HOVER_CARD_ERRORS['hover-card-context']);
+  itThrowsContextError(HoverCardTarget, defaultProps, HOVER_CARD_ERRORS.context);
 
   it('throws error if children cannot be processed', () => {
-    const error = new Error(HOVER_CARD_ERRORS['hover-card-children']);
+    const error = new Error(HOVER_CARD_ERRORS.children);
     patchConsoleError();
     expect(() => render(<TestContainer>Hello</TestContainer>)).toThrow(error);
     expect(() => render(<TestContainer>{2}</TestContainer>)).toThrow(error);

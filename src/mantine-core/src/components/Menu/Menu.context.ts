@@ -19,5 +19,5 @@ interface MenuContext {
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
-  MENU_ERRORS['menu-context']
+  MENU_ERRORS.context
 );

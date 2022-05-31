@@ -13,7 +13,7 @@ const defaultProps: MenuDropdownProps = {};
 const TestContainer = createContextContainer(MenuDropdown, Menu, { opened: true });
 
 describe('@mantine/core/MenuDropdown', () => {
-  itThrowsContextError(MenuDropdown, defaultProps, MENU_ERRORS['menu-context']);
+  itThrowsContextError(MenuDropdown, defaultProps, MENU_ERRORS.context);
   itRendersChildren(TestContainer, defaultProps);
   itSupportsSystemProps({
     component: TestContainer,

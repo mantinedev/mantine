@@ -25,7 +25,7 @@ describe('@mantine/core/Tooltip', () => {
 
   it('throws error if children cannot be processed', () => {
     const TestTooltip: any = Tooltip;
-    const error = new Error(TOOLTIP_ERRORS['tooltip-children']);
+    const error = new Error(TOOLTIP_ERRORS.children);
     patchConsoleError();
     expect(() => render(<TestTooltip>Hello</TestTooltip>)).toThrow(error);
     expect(() => render(<TestTooltip>{2}</TestTooltip>)).toThrow(error);

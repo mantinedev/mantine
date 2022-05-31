@@ -17,7 +17,7 @@ const TestContainer = createContextContainer(AccordionItem, AccordionProvider, {
 
 describe('@mantine/core/AccordionItem', () => {
   itRendersChildren(TestContainer, defaultProps);
-  itThrowsContextError(AccordionItem, defaultProps, ACCORDION_ERRORS['accordion-context']);
+  itThrowsContextError(AccordionItem, defaultProps, ACCORDION_ERRORS.context);
   itSupportsSystemProps({
     component: TestContainer,
     props: defaultProps,
