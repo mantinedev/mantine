@@ -58,7 +58,7 @@ export function NProgress({
   onFinish,
   autoReset = false,
   withinPortal = true,
-  zIndex = getDefaultZIndex('nprogress'),
+  zIndex = getDefaultZIndex('max'),
 }: NProgressProps) {
   const reducedMotion = useReducedMotion();
   const [_progress, setProgress] = useState(defaultProgress);
