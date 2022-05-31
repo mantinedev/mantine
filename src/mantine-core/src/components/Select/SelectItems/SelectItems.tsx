@@ -41,10 +41,7 @@ export function SelectItems({
   createLabel,
   unstyled,
 }: SelectItemsProps) {
-  const { classes, cx } = useStyles(
-    { size },
-    { classNames, styles, unstyled, name: __staticSelector }
-  );
+  const { classes } = useStyles({ size }, { classNames, styles, unstyled, name: __staticSelector });
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;
@@ -54,11 +51,10 @@ export function SelectItems({
     return (
       <Item
         key={item.value}
-        className={cx(classes.item, {
-          [classes.hovered]: !item.disabled && hovered === index,
-          [classes.selected]: !item.disabled && selected,
-          [classes.disabled]: item.disabled,
-        })}
+        className={classes.item}
+        data-disabled={item.disabled || undefined}
+        data-hovered={(!item.disabled && hovered === index) || undefined}
+        data-selected={(!item.disabled && selected) || undefined}
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"
@@ -112,10 +108,9 @@ export function SelectItems({
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         key={creatableDataItem.value}
-        className={cx(classes.item, {
-          [classes.hovered]: hovered === creatableDataIndex,
-          [classes.selected]: selected,
-        })}
+        className={classes.item}
+        data-selected={selected || undefined}
+        data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
