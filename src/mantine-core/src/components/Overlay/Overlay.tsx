@@ -4,12 +4,12 @@ import {
   DefaultProps,
   getDefaultZIndex,
   useComponentDefaultProps,
-  CSSObject,
 } from '@mantine/styles';
 import { createPolymorphicComponent, packSx } from '@mantine/utils';
 import { Box } from '../Box';
+import useStyles, { OverlayStylesParams } from './Overlay.styles';
 
-export interface OverlayProps extends DefaultProps {
+export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -38,26 +38,18 @@ const defaultProps: Partial<OverlayProps> = {
 };
 
 export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, ...others } =
+  const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, className, ...others } =
     useComponentDefaultProps('Overlay', defaultProps, props);
+  const { classes, cx } = useStyles({ zIndex }, { name: 'Overlay', unstyled });
   const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
-
-  const baseStyles: CSSObject = {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex,
-  };
 
   const innerOverlay = (otherProps?: Record<string, any>) => (
     <Box
       ref={ref}
+      className={cx(classes.root, className)}
       sx={[
         (theme) => ({
           ...background,
-          ...baseStyles,
           opacity,
           borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
         }),
@@ -69,7 +61,11 @@ export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) =>
 
   if (blur) {
     return (
-      <Box sx={[{ ...baseStyles, backdropFilter: `blur(${blur}px)` }, ...packSx(sx)]} {...others}>
+      <Box
+        className={cx(classes.root, className)}
+        sx={[{ backdropFilter: `blur(${blur}px)` }, ...packSx(sx)]}
+        {...others}
+      >
         {innerOverlay()}
       </Box>
     );
