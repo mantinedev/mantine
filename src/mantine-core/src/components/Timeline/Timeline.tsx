@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Children } from 'react';
 import {
   DefaultProps,
   MantineColor,
@@ -7,7 +7,6 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
-import { filterChildrenByType } from '../../utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
@@ -71,7 +70,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       ...others
     } = useComponentDefaultProps('Timeline', defaultProps, props);
 
-    const _children = filterChildrenByType(children, TimelineItem);
+    const _children = Children.toArray(children);
     const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
         classNames,

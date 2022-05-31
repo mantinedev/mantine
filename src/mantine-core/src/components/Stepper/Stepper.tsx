@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Children } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -8,7 +8,6 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { filterChildrenByType } from '../../utils';
 import { findChildByType } from './find-child-by-type/find-child-by-type';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
@@ -103,10 +102,10 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     { classNames, styles, unstyled, name: 'Stepper' }
   );
 
-  const filteredChildren = filterChildrenByType(children, Step);
+  const _children = Children.toArray(children) as React.ReactElement[];
   const completedStep = findChildByType(children, StepCompleted);
 
-  const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
+  const items = _children.reduce<React.ReactNode[]>((acc, item, index, array) => {
     const shouldAllowSelect =
       typeof item.props.allowStepSelect === 'boolean'
         ? item.props.allowStepSelect
@@ -148,9 +147,9 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     return acc;
   }, []);
 
-  const stepContent = filteredChildren[active]?.props?.children;
+  const stepContent = _children[active]?.props?.children;
   const completedContent = completedStep?.props?.children;
-  const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
+  const content = active > _children.length - 1 ? completedContent : stepContent;
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>
