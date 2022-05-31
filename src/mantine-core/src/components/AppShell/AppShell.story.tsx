@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { DEFAULT_THEME, useMantineTheme } from '@mantine/styles';
-import { StylesAPIStory } from '@mantine/storybook';
 import { Burger } from '../Burger';
 import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
@@ -9,7 +8,7 @@ import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
 import { Footer } from './Footer/Footer';
 import { Aside } from './Aside/Aside';
-import { AppShell, AppShellProps } from './AppShell';
+import { AppShell } from './AppShell';
 
 const content = Array(30)
   .fill(0)
@@ -111,25 +110,6 @@ function WrappedAppShell() {
 }
 
 storiesOf('AppShell/AppShell', module)
-  .add('Styles API', () => (
-    <StylesAPIStory
-      name="AppShell"
-      props={{}}
-      component={(props: AppShellProps) => (
-        <AppShell
-          {...props}
-          navbar={
-            <Navbar height={60} width={{ base: 100 }}>
-              navbar
-            </Navbar>
-          }
-          header={<Header height={30}>Header</Header>}
-        >
-          Content
-        </AppShell>
-      )}
-    />
-  ))
   .add('Static', () => (
     <AppShell
       header={<Header height={50}>Header</Header>}
