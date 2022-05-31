@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DefaultProps, Selectors, MantineNumberSize } from '@mantine/styles';
 import { useScrollIntoView } from '@mantine/hooks';
+import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from '../../Select/SelectScrollArea/SelectScrollArea';
 import { UnstyledButton } from '../../UnstyledButton';
 import { ActionIcon } from '../../ActionIcon';
@@ -10,7 +11,6 @@ import { Divider } from '../../Divider/Divider';
 import { LastIcon, NextIcon, FirstIcon, PrevIcon } from '../../Pagination/icons';
 import { TransferListItem, TransferListItemComponent } from '../types';
 import useStyles from './RenderList.styles';
-import { groupOptions } from '../../../utils';
 
 export type RenderListStylesNames = Selectors<typeof useStyles>;
 

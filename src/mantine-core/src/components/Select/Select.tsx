@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, useDidUpdate, useScrollIntoView } from '@mantine/hooks';
 import { DefaultProps, MantineSize, MantineShadow, getDefaultZIndex } from '@mantine/styles';
+import { groupOptions } from '@mantine/utils';
 import { SelectScrollArea } from './SelectScrollArea/SelectScrollArea';
 import { Input, useInputProps } from '../Input';
 import { MantineTransition } from '../Transition';
@@ -10,7 +11,6 @@ import { SelectItems } from './SelectItems/SelectItems';
 import { SelectPopover } from './SelectPopover/SelectPopover';
 import { SelectItem, BaseSelectStylesNames, BaseSelectProps } from './types';
 import { filterData } from './filter-data/filter-data';
-import { groupOptions } from '../../utils';
 import useStyles from './Select.styles';
 
 export interface SelectSharedProps<Item, Value> {

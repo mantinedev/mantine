@@ -10,10 +10,10 @@ import {
   MantineShadow,
   TextInput,
   getDefaultZIndex,
-  getGroupedOptions,
   MantineNumberSize,
   MantineColor,
 } from '@mantine/core';
+import { getGroupedOptions } from '@mantine/utils';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';

@@ -17,6 +17,7 @@
   "peerDependencies": {
     "@mantine/core": "5.0.0-alpha.5",
     "@mantine/hooks": "5.0.0-alpha.5",
+    "@mantine/utils": "5.0.0-alpha.5",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

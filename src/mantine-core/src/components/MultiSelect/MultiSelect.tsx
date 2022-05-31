@@ -13,6 +13,7 @@ import {
   getDefaultZIndex,
   useComponentDefaultProps,
 } from '@mantine/styles';
+import { groupOptions } from '@mantine/utils';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
@@ -22,7 +23,6 @@ import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { SelectPopover } from '../Select/SelectPopover/SelectPopover';
 import { SelectItem, BaseSelectProps, BaseSelectStylesNames } from '../Select/types';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
-import { groupOptions } from '../../utils';
 import useStyles from './MultiSelect.styles';
 import { SelectSharedProps } from '../Select/Select';
 

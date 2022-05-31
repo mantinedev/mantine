@@ -1,6 +1,5 @@
 export { createPolymorphicComponent } from '@mantine/utils';
 export * from '@mantine/styles';
-export * from './utils';
 
 export * from './components/Accordion';
 export * from './components/ActionIcon';
