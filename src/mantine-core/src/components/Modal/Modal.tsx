@@ -92,6 +92,9 @@ export interface ModalProps
   /** Controls if modal should be centered */
   centered?: boolean;
 
+  /** Determines whether scroll should be locked when modal is opened, defaults to true */
+  lockScroll?: boolean;
+
   /** Target element or selector where modal portal should be rendered */
   target?: HTMLElement | string;
 
@@ -110,6 +113,7 @@ const defaultProps: Partial<ModalProps> = {
   trapFocus: true,
   withCloseButton: true,
   withinPortal: true,
+  lockScroll: true,
   overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
 };
@@ -146,6 +150,7 @@ export function Modal(props: ModalProps) {
     transitionTimingFunction,
     fullScreen,
     unstyled,
+    lockScroll: shouldLockScroll,
     ...others
   } = useComponentDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
@@ -185,8 +190,8 @@ export function Modal(props: ModalProps) {
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
       <GroupedTransition
-        onExited={() => lockScroll(false)}
-        onEntered={() => lockScroll(true)}
+        onExited={() => shouldLockScroll && lockScroll(false)}
+        onEntered={() => shouldLockScroll && lockScroll(true)}
         mounted={opened}
         duration={transitionDuration}
         exitDuration={transitionDuration}
