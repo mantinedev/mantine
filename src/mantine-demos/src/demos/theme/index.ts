@@ -11,3 +11,5 @@ export { loader } from './Theme.demo.loader';
 export { dateFormat } from './Theme.demo.dateFormat';
 export { datesLocale } from './Theme.demo.datesLocale';
 export { activeStyles } from './Theme.demo.activeStyles';
+export { respectReduceMotion } from './Theme.demo.respectReduceMotion';
+export { cursorType } from './Theme.demo.cursorType';

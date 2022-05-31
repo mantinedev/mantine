@@ -216,7 +216,8 @@ function App() {
 ## Polymorphic components changes
 
 Because of internal changes polymorphic components props types exported from `@mantine/core` package are no longer generic types.
-Now if you want to extend these types you need to provide associated element types on your side:
+Now if you want to extend these types you need to provide associated element types on your side.
+You can find updated polymorphic components guide [here](https://mantine.dev/guides/polymorphic/).
 
 ```tsx
 import type { ButtonProps } from '@mantine/core';
@@ -304,6 +305,21 @@ function Demo() {
   );
 }
 ```
+
+### respectReduceMotion
+
+`theme.respectReduceMotion` allows to disregard user OS settings and play animations as usual:
+
+<Demo data={ThemeDemos.respectReduceMotion} demoProps={{ toggle: true }} />
+
+### cursorType
+
+`theme.cursorType` determines which cursor type will native controls have.
+If it is set to `pointer` then [Checkbox](https://mantine.dev/core/checkbox/),
+[Radio](https://mantine.dev/core/radio/), [NativeSelect](https://mantine.dev/core/native-select/)
+and other native elements will have `cursor: pointer` style.
+
+<Demo data={ThemeDemos.cursorType} demoProps={{ toggle: true }} />
 
 ## New components
 
