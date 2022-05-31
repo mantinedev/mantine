@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Mark.styles';
 
@@ -13,7 +13,7 @@ const defaultProps: Partial<MarkProps> = {
 };
 
 export const Mark = forwardRef<HTMLElement, MarkProps>((props, ref) => {
-  const { color, className, unstyled, ...others } = useMantineDefaultProps(
+  const { color, className, unstyled, ...others } = useComponentDefaultProps(
     'Mark',
     defaultProps,
     props

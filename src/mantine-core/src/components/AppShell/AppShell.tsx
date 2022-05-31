@@ -5,7 +5,7 @@ import {
   Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { AppShellProvider } from './AppShell.context';
@@ -69,7 +69,7 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     classNames,
     unstyled,
     ...others
-  } = useMantineDefaultProps('AppShell', defaultProps, props);
+  } = useComponentDefaultProps('AppShell', defaultProps, props);
   const { classes, cx } = useStyles(
     { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
     { styles, classNames, unstyled, name: 'AppShell' }

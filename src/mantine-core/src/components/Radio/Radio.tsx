@@ -6,7 +6,7 @@ import {
   MantineColor,
   Selectors,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
@@ -68,7 +68,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     wrapperProps,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Radio', defaultProps, props);
+  } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
   const { classes, cx } = useStyles(

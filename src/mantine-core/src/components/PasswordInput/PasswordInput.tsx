@@ -5,7 +5,7 @@ import {
   DefaultProps,
   extractSystemStyles,
   useMantineTheme,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ActionIcon } from '../ActionIcon';
 import { TextInputProps, TextInputStylesNames } from '../TextInput';
@@ -85,7 +85,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     errorProps,
     unstyled,
     ...others
-  } = useMantineDefaultProps('PasswordInput', defaultProps, props);
+  } = useComponentDefaultProps('PasswordInput', defaultProps, props);
 
   const theme = useMantineTheme();
   const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });

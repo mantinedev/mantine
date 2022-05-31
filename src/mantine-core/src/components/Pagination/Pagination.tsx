@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
@@ -93,7 +93,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     sx,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Pagination', defaultProps, props);
+  } = useComponentDefaultProps('Pagination', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius },

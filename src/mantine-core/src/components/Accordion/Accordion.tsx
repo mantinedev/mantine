@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultProps, useMantineDefaultProps, StylesApiProvider } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, StylesApiProvider } from '@mantine/styles';
 import { Box } from '../Box';
 import { AccordionProviderProps, AccordionProvider } from './AccordionProvider';
 import { AccordionItem, AccordionItemStylesNames } from './AccordionItem/AccordionItem';
@@ -49,7 +49,7 @@ export function Accordion<Multiple extends boolean = false>(props: AccordionProp
     variant,
     radius,
     ...others
-  } = useMantineDefaultProps<AccordionProps<Multiple>>(
+  } = useComponentDefaultProps<AccordionProps<Multiple>>(
     'Accordion',
     defaultProps as AccordionProps<Multiple>,
     props

@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineSize,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { filterChildrenByType } from '../../utils';
@@ -96,7 +96,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Stepper', defaultProps, props);
+  } = useComponentDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },

@@ -3,7 +3,7 @@ import {
   MantineNumberSize,
   DefaultProps,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   CSSObject,
 } from '@mantine/styles';
 import { createPolymorphicComponent, packSx } from '@mantine/utils';
@@ -39,7 +39,7 @@ const defaultProps: Partial<OverlayProps> = {
 
 export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
   const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, ...others } =
-    useMantineDefaultProps('Overlay', defaultProps, props);
+    useComponentDefaultProps('Overlay', defaultProps, props);
   const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
   const baseStyles: CSSObject = {

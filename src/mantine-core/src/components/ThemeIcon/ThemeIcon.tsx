@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { ThemeIconVariant, ThemeIconStylesParams } from './ThemeIcon.styles';
@@ -39,7 +39,7 @@ const defaultProps: Partial<ThemeIconProps> = {
 
 export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref) => {
   const { className, size, radius, variant, color, children, gradient, unstyled, ...others } =
-    useMantineDefaultProps('ThemeIcon', defaultProps, props);
+    useComponentDefaultProps('ThemeIcon', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { variant, radius, color, size, gradient },

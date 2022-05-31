@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineGradient,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   MantineColor,
   MantineNumberSize,
 } from '@mantine/styles';
@@ -71,7 +71,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Text', defaultProps, props);
+  } = useComponentDefaultProps('Text', defaultProps, props);
 
   const { classes, cx } = useStyles(
     {

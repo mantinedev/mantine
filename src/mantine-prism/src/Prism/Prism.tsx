@@ -8,7 +8,7 @@ import {
   Selectors,
   Box,
   ScrollArea,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   MantineColor,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
@@ -79,7 +79,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     trim,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Prism', prismDefaultProps, props);
+  } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
   const maxLineSize = code.split('\n').length.toString().length;
 

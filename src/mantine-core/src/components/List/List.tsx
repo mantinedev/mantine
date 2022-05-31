@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   StylesApiProvider,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
@@ -66,7 +66,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       classNames,
       unstyled,
       ...others
-    } = useMantineDefaultProps('List', defaultProps, props);
+    } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType },

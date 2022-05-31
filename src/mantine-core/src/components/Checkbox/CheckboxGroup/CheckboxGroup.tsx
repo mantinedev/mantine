@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroup } from './InputsGroup';
@@ -66,7 +66,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       inputContainer,
       inputWrapperOrder,
       ...others
-    } = useMantineDefaultProps('CheckboxGroup', defaultProps, props);
+    } = useComponentDefaultProps('CheckboxGroup', defaultProps, props);
 
     const [_value, setValue] = useUncontrolled({
       value,

@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Overlay } from '../Overlay';
 import { Transition } from '../Transition';
@@ -65,7 +65,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     overlayBlur,
     unstyled,
     ...others
-  } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
+  } = useComponentDefaultProps('LoadingOverlay', defaultProps, props);
   const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled });
 
   return (

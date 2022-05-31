@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { MantineColor, MantineTheme, CSSObject, useMantineDefaultProps } from '@mantine/styles';
+import { MantineColor, MantineTheme, CSSObject, useComponentDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Text, TextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
@@ -25,7 +25,7 @@ const defaultProps: Partial<HighlightProps> = {
 
 export const _Highlight = forwardRef<HTMLDivElement, HighlightProps>((props, ref) => {
   const { children, highlight, highlightColor, highlightStyles, unstyled, ...others } =
-    useMantineDefaultProps('Highlight', defaultProps, props);
+    useComponentDefaultProps('Highlight', defaultProps, props);
   const highlightChunks = highlighter(children, highlight);
 
   return (

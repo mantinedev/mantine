@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
@@ -44,7 +44,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     roundCaps,
     unstyled,
     ...others
-  } = useMantineDefaultProps('RingProgress', defaultProps, props);
+  } = useComponentDefaultProps('RingProgress', defaultProps, props);
 
   const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'RingProgress' });
 

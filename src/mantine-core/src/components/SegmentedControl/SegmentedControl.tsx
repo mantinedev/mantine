@@ -13,7 +13,7 @@ import {
   MantineSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, {
@@ -98,7 +98,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     orientation,
     unstyled,
     ...others
-  } = useMantineDefaultProps('SegmentedControl', defaultProps, props);
+  } = useComponentDefaultProps('SegmentedControl', defaultProps, props);
 
   const reduceMotion = useReducedMotion();
   const data = _data.map(

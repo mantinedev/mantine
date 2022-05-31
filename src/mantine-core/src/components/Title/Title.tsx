@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { TitleStylesParams } from './Title.styles';
 
@@ -20,7 +20,7 @@ const defaultProps: Partial<TitleProps> = {
 };
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  const { className, order, children, align, unstyled, ...others } = useMantineDefaultProps(
+  const { className, order, children, align, unstyled, ...others } = useComponentDefaultProps(
     'Title',
     defaultProps,
     props

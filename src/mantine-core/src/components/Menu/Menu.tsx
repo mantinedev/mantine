@@ -1,7 +1,7 @@
 import React from 'react';
 import { getContextItemIndex, useHovered } from '@mantine/utils';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import { ClassNames, Styles, useMantineDefaultProps } from '@mantine/styles';
+import { ClassNames, Styles, useComponentDefaultProps } from '@mantine/styles';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps, PopoverStylesNames } from '../Popover';
 import { MenuDivider, MenuDividerStylesNames } from './MenuDivider/MenuDivider';
@@ -96,7 +96,7 @@ export function Menu(props: MenuProps) {
     unstyled,
     radius,
     ...others
-  } = useMantineDefaultProps('Menu', defaultProps, props);
+  } = useComponentDefaultProps('Menu', defaultProps, props);
 
   const [hovered, { setHovered, resetHovered }] = useHovered();
   const [_opened, setOpened] = useUncontrolled({

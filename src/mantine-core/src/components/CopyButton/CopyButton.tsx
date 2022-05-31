@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { useClipboard } from '@mantine/hooks';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 
 export interface CopyButtonProps {
   /** Function called with current status */
@@ -19,7 +19,7 @@ const defaultProps: Partial<CopyButtonProps> = {
 };
 
 export function CopyButton(props: CopyButtonProps) {
-  const { children, timeout, value, ...others } = useMantineDefaultProps(
+  const { children, timeout, value, ...others } = useComponentDefaultProps(
     'CopyButton',
     defaultProps,
     props

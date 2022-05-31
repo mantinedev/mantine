@@ -10,7 +10,7 @@ import {
   MantineNumberSize,
   MantineShadow,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { MantineTransition } from '../Transition';
 import { getFloatingPosition, FloatingPosition } from '../Floating';
@@ -171,7 +171,7 @@ export function Popover(props: PopoverProps) {
     exitTransitionDuration,
     __staticSelector,
     withRoles,
-  } = useMantineDefaultProps('Popover', defaultProps, props);
+  } = useComponentDefaultProps('Popover', defaultProps, props);
 
   const uid = useId(id);
   const theme = useMantineTheme();

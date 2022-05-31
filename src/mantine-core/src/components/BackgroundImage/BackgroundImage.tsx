@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 
@@ -16,7 +16,7 @@ const defaultProps: Partial<BackgroundImageProps> = {
 };
 
 export const _BackgroundImage = forwardRef<HTMLDivElement, BackgroundImageProps>((props, ref) => {
-  const { src, radius, sx, ...others } = useMantineDefaultProps(
+  const { src, radius, sx, ...others } = useComponentDefaultProps(
     'BackgroundImage',
     defaultProps,
     props

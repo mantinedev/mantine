@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { TableStylesParams } from './Table.styles';
 
@@ -46,7 +46,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
     fontSize,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Table', defaultProps, props);
+  } = useComponentDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { captionSide, verticalSpacing, horizontalSpacing, fontSize },

@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { UnstyledButton } from '../UnstyledButton';
 import useStyles, { BurgerStylesParams } from './Burger.styles';
@@ -34,7 +34,7 @@ const defaultProps: Partial<BurgerProps> = {
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerProps, ref) => {
   const { className, opened, color, size, classNames, styles, transitionDuration, ...others } =
-    useMantineDefaultProps('Burger', defaultProps, props);
+    useComponentDefaultProps('Burger', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, size, transitionDuration },

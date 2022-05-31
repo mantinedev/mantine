@@ -1,5 +1,5 @@
 import React, { Children, cloneElement, forwardRef } from 'react';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Paper, PaperProps } from '../Paper/Paper';
 import { CardSection } from './CardSection/CardSection';
@@ -16,7 +16,7 @@ const defaultProps: Partial<CardProps> = {
 };
 
 export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const { className, p, radius, children, unstyled, ...others } = useMantineDefaultProps(
+  const { className, p, radius, children, unstyled, ...others } = useComponentDefaultProps(
     'Card',
     defaultProps,
     props

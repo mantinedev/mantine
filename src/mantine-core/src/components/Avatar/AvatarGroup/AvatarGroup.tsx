@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { AvatarGroupProvider } from './AvatarGroup.context';
 import useStyles from './AvatarGroup.styles';
@@ -21,7 +21,7 @@ export const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>((props, 
     unstyled,
     className,
     ...others
-  } = useMantineDefaultProps('AvatarGroup', defaultProps, props);
+  } = useComponentDefaultProps('AvatarGroup', defaultProps, props);
   const { classes, cx } = useStyles({ spacing }, { name: 'AvatarGroup', unstyled });
 
   return (

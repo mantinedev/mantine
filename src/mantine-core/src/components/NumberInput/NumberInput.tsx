@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
-import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { TextInput } from '../TextInput';
 import { InputStylesNames, InputWrapperStylesNames } from '../Input';
 import { getInputMode } from './get-input-mode/get-input-mode';
@@ -142,7 +142,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     inputMode,
     unstyled,
     ...others
-  } = useMantineDefaultProps('NumberInput', defaultProps, props);
+  } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, size },

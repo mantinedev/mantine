@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import {
   DefaultProps,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   StylesApiProvider,
   Selectors,
 } from '@mantine/styles';
@@ -64,7 +64,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     radius,
     inverted,
     ...others
-  } = useMantineDefaultProps('Tabs', defaultProps, props);
+  } = useComponentDefaultProps('Tabs', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { orientation, color, variant, radius, inverted },

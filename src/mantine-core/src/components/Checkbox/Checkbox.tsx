@@ -6,7 +6,7 @@ import {
   Selectors,
   extractSystemStyles,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useId } from '@mantine/hooks';
@@ -81,7 +81,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       icon: Icon,
       unstyled,
       ...others
-    } = useMantineDefaultProps('Checkbox', defaultProps, props);
+    } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
     const ctx = useCheckboxGroupContext();
     const uuid = useId(id);

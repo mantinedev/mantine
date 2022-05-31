@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box/Box';
 import useStyles from './AspectRatio.styles';
 
@@ -10,7 +10,7 @@ export interface AspectRatioProps extends DefaultProps, React.ComponentPropsWith
 
 export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>(
   (props: AspectRatioProps, ref) => {
-    const { className, ratio, children, unstyled, ...others } = useMantineDefaultProps(
+    const { className, ratio, children, unstyled, ...others } = useComponentDefaultProps(
       'AspectRatio',
       {},
       props

@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineSize,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { InputWrapperBaseProps, Input, InputBaseProps } from '../Input';
 import { TextInputStylesNames } from '../TextInput/TextInput';
@@ -69,7 +69,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     inputContainer,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Textarea', defaultProps, props);
+  } = useComponentDefaultProps('Textarea', defaultProps, props);
 
   const uuid = useId(id);
   const { classes, cx } = useStyles();

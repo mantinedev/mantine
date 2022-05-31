@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../Box';
@@ -37,7 +37,7 @@ const defaultProps: Partial<AffixProps> = {
 };
 
 export const Affix = forwardRef<HTMLDivElement, AffixProps>((props: AffixProps, ref) => {
-  const { target, position, zIndex, sx, withinPortal, ...others } = useMantineDefaultProps(
+  const { target, position, zIndex, sx, withinPortal, ...others } = useComponentDefaultProps(
     'Affix',
     defaultProps,
     props

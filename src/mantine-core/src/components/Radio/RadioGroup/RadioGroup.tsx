@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroup } from '../../Checkbox/CheckboxGroup/InputsGroup';
@@ -67,7 +67,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       inputWrapperOrder,
       unstyled,
       ...others
-    } = useMantineDefaultProps('RadioGroup', defaultProps, props);
+    } = useComponentDefaultProps('RadioGroup', defaultProps, props);
 
     const [_value, setValue] = useUncontrolled({
       value,

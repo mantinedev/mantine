@@ -1,5 +1,5 @@
 import React, { forwardRef, Fragment } from 'react';
-import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { InputLabel, InputLabelStylesNames } from '../InputLabel/InputLabel';
 import { InputError, InputErrorStylesNames } from '../InputError/InputError';
@@ -94,7 +94,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     unstyled,
     inputWrapperOrder,
     ...others
-  } = useMantineDefaultProps('InputWrapper', defaultProps, props);
+  } = useComponentDefaultProps('InputWrapper', defaultProps, props);
 
   const { classes, cx } = useStyles(null, {
     classNames,

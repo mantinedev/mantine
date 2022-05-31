@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
   HorizontalSection,
@@ -26,7 +26,7 @@ const defaultProps: Partial<NavbarProps> = {
 
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   (props: NavbarProps, ref) => {
-    const _props = useMantineDefaultProps('Navbar', defaultProps, props);
+    const _props = useComponentDefaultProps('Navbar', defaultProps, props);
     return <HorizontalSection section="navbar" __staticSelector="Navbar" ref={ref} {..._props} />;
   }
 ) as any;

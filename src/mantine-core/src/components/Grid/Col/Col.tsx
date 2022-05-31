@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useGridContext } from '../Grid.context';
 import useStyles from './Col.styles';
@@ -74,7 +74,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     id,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Grid.Col', defaultProps, props);
+  } = useComponentDefaultProps('Grid.Col', defaultProps, props);
 
   const ctx = useGridContext();
 

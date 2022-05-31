@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   MantineSize,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -31,7 +31,7 @@ const defaultProps: Partial<ContainerProps> = {
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   (props: ContainerProps, ref) => {
-    const { className, fluid, size, unstyled, sizes, ...others } = useMantineDefaultProps(
+    const { className, fluid, size, unstyled, sizes, ...others } = useComponentDefaultProps(
       'Container',
       defaultProps,
       props

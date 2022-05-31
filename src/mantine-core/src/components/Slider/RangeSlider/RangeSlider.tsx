@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineColor,
   useMantineTheme,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
 import { getClientPosition } from '../utils/get-client-position/get-client-position';
@@ -148,7 +148,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     disabled,
     unstyled,
     ...others
-  } = useMantineDefaultProps('RangeSlider', defaultProps, props);
+  } = useComponentDefaultProps('RangeSlider', defaultProps, props);
 
   const theme = useMantineTheme();
   const [focused, setFocused] = useState(-1);

@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Text } from '../Text';
@@ -77,7 +77,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
     sections,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Progress', defaultProps, props);
+  } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius, striped: striped || animate, animate },

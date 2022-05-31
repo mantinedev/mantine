@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { packSx } from '@mantine/utils';
 import { Box } from '../Box';
 
@@ -17,7 +17,7 @@ const defaultProps: Partial<SpaceProps> = {
 };
 
 export const Space = forwardRef<HTMLDivElement, SpaceProps>((props: SpaceProps, ref) => {
-  const { w, h, sx, ...others } = useMantineDefaultProps('Space', defaultProps, props);
+  const { w, h, sx, ...others } = useComponentDefaultProps('Space', defaultProps, props);
 
   return (
     <Box

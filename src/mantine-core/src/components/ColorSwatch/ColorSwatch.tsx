@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   Selectors,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
@@ -33,7 +33,7 @@ const defaultProps: Partial<ColorSwatchProps> = {
 
 export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props, ref) => {
   const { color, size, radius, className, children, classNames, styles, unstyled, ...others } =
-    useMantineDefaultProps('ColorSwatch', defaultProps, props);
+    useComponentDefaultProps('ColorSwatch', defaultProps, props);
   const { classes, cx } = useStyles(
     { radius, size },
     { classNames, styles, unstyled, name: 'ColorSwatch' }

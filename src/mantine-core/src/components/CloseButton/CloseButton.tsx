@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useMantineDefaultProps, useMantineTheme } from '@mantine/styles';
+import { useComponentDefaultProps, useMantineTheme } from '@mantine/styles';
 import { ActionIcon, ActionIconProps } from '../ActionIcon/ActionIcon';
 import { CloseIcon } from './CloseIcon';
 
@@ -27,7 +27,7 @@ export const CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>((prop
     iconSize,
     size = 'md',
     ...others
-  } = useMantineDefaultProps('CloseButton', defaultProps, props);
+  } = useComponentDefaultProps('CloseButton', defaultProps, props);
   const theme = useMantineTheme();
   const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
 

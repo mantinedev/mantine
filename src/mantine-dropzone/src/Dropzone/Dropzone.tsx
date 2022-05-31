@@ -6,7 +6,7 @@ import {
   MantineNumberSize,
   LoadingOverlay,
   Box,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
@@ -82,7 +82,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     name,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Dropzone', defaultProps, props);
+  } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { radius, padding },

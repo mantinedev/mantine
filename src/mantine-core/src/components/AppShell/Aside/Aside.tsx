@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
   HorizontalSection,
@@ -26,7 +26,7 @@ const defaultProps: Partial<AsideProps> = {
 
 export const Aside: AsideComponent = forwardRef<HTMLElement, AsideProps>(
   (props: AsideProps, ref) => {
-    const _props = useMantineDefaultProps('Aside', defaultProps, props);
+    const _props = useComponentDefaultProps('Aside', defaultProps, props);
     return <HorizontalSection section="aside" __staticSelector="Aside" ref={ref} {..._props} />;
   }
 ) as any;

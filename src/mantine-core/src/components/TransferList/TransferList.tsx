@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { RenderList, RenderListStylesNames } from './RenderList/RenderList';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { DefaultItem } from './DefaultItem/DefaultItem';
@@ -89,7 +89,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     limit,
     unstyled,
     ...others
-  } = useMantineDefaultProps('TransferList', defaultProps, props);
+  } = useComponentDefaultProps('TransferList', defaultProps, props);
 
   const [selection, handlers] = useSelectionState(initialSelection);
 

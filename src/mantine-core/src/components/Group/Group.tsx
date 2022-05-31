@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 import useStyles, { GroupPosition } from './Group.styles';
@@ -28,7 +28,7 @@ const defaultProps: Partial<GroupProps> = {
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
   const { className, position, align, children, noWrap, grow, spacing, unstyled, ...others } =
-    useMantineDefaultProps('Group', defaultProps, props);
+    useComponentDefaultProps('Group', defaultProps, props);
 
   const filteredChildren = filterFalsyChildren(children);
   const { classes, cx } = useStyles(

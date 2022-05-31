@@ -7,7 +7,7 @@ import {
   Selectors,
   Box,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { useId, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
@@ -108,7 +108,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       modules: externalModules,
       unstyled,
       ...others
-    } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
+    } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
 
     const uuid = useId(id);
     const editorRef = useRef<Editor>();

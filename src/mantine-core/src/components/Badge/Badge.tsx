@@ -6,7 +6,7 @@ import {
   MantineGradient,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -65,7 +65,7 @@ export const _Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Badge', defaultProps, props);
+  } = useComponentDefaultProps('Badge', defaultProps, props);
 
   const { classes, cx } = useStyles(
     {

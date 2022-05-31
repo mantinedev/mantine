@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
 import { Text } from '../Text';
@@ -57,7 +57,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
     classNames,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Divider', defaultProps, props);
+  } = useComponentDefaultProps('Divider', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, size, variant },

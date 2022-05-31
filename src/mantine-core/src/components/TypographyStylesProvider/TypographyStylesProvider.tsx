@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './TypographyStylesProvider.styles';
 
@@ -12,7 +12,7 @@ export interface TypographyStylesProviderProps
 
 export const TypographyStylesProvider = forwardRef<HTMLDivElement, TypographyStylesProviderProps>(
   (props, ref) => {
-    const { className, unstyled, ...others } = useMantineDefaultProps(
+    const { className, unstyled, ...others } = useComponentDefaultProps(
       'TypographyStylesProvider',
       {},
       props

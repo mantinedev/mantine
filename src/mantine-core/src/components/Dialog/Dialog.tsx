@@ -6,7 +6,7 @@ import {
   Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../CloseButton';
@@ -83,7 +83,7 @@ export function DialogBody(props: DialogProps) {
     transitionTimingFunction,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Dialog', defaultProps, props);
+  } = useComponentDefaultProps('Dialog', defaultProps, props);
 
   const { classes, cx } = useStyles({ size }, { classNames, styles, unstyled, name: 'Dialog' });
 

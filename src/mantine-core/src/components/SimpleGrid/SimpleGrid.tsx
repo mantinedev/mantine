@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { SimpleGridBreakpoint, SimpleGridStylesParams } from './SimpleGrid.styles';
 
@@ -24,7 +24,7 @@ const defaultProps: Partial<SimpleGridProps> = {
 
 export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>((props, ref) => {
   const { className, breakpoints, cols, spacing, children, unstyled, ...others } =
-    useMantineDefaultProps('SimpleGrid', defaultProps, props);
+    useComponentDefaultProps('SimpleGrid', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { breakpoints, cols, spacing },

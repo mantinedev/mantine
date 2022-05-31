@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps, MantineNumberSize } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps, MantineNumberSize } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { StackStylesParams } from './Stack.styles';
 
@@ -19,7 +19,7 @@ const defaultProps: Partial<StackProps> = {
 };
 
 export const Stack = forwardRef<HTMLDivElement, StackProps>((props, ref) => {
-  const { spacing, className, align, justify, unstyled, ...others } = useMantineDefaultProps(
+  const { spacing, className, align, justify, unstyled, ...others } = useComponentDefaultProps(
     'Stack',
     defaultProps,
     props

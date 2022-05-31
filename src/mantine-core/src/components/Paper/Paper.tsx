@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -27,7 +27,7 @@ const defaultProps: Partial<PaperProps> = {};
 
 export const _Paper = forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
   const { className, children, radius, withBorder, shadow, unstyled, ...others } =
-    useMantineDefaultProps('Paper', defaultProps, props);
+    useComponentDefaultProps('Paper', defaultProps, props);
   const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper', unstyled });
 
   return (

@@ -10,7 +10,7 @@ import {
   Selectors,
   CloseButton,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
@@ -137,7 +137,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       errorProps,
       unstyled,
       ...others
-    } = useMantineDefaultProps('TimeInput', defaultProps, props);
+    } = useComponentDefaultProps('TimeInput', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size },

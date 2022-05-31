@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef, useEffect } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { Calendar } from '../Calendar/Calendar';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
@@ -114,7 +114,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       openDropdownOnClear,
       unstyled,
       ...others
-    } = useMantineDefaultProps('DatePicker', defaultProps, props);
+    } = useComponentDefaultProps('DatePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;

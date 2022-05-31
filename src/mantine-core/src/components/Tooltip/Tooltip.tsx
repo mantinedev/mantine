@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
 import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
-import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { useTooltip } from './use-tooltip';
@@ -97,7 +97,7 @@ export function Tooltip(props: TooltipProps) {
     disabled,
     positionDependencies,
     ...others
-  } = useMantineDefaultProps('Tooltip', defaultProps, props);
+  } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, color, width, multiline },

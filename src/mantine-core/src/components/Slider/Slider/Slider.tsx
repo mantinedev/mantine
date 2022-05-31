@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineColor,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   useMantineTheme,
 } from '@mantine/styles';
 import { MantineTransition } from '../../Transition';
@@ -135,7 +135,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     disabled,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Slider', defaultProps, props);
+  } = useComponentDefaultProps('Slider', defaultProps, props);
 
   const theme = useMantineTheme();
   const [hovered, setHovered] = useState(false);

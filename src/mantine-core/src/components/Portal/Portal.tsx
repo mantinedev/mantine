@@ -1,7 +1,7 @@
 import React, { ReactPortal, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useIsomorphicEffect } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/styles';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/styles';
 
 export interface PortalProps {
   /** Portal children, for example, modal or popover */
@@ -17,7 +17,7 @@ export interface PortalProps {
 }
 
 export function Portal(props: PortalProps): ReactPortal {
-  const { children, target, className } = useMantineDefaultProps('Portal', {}, props);
+  const { children, target, className } = useComponentDefaultProps('Portal', {}, props);
 
   const theme = useMantineTheme();
   const [mounted, setMounted] = useState(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { useDisclosure } from '@mantine/hooks';
 import { useDelayedHover } from '../Floating';
 import { Popover, PopoverBaseProps } from '../Popover';
@@ -35,7 +35,7 @@ const defaultProps: Partial<HoverCardProps> = {
 
 export function HoverCard(props: HoverCardProps) {
   const { children, onOpen, onClose, openDelay, closeDelay, initiallyOpened, ...others } =
-    useMantineDefaultProps('HoverCard', defaultProps, props);
+    useComponentDefaultProps('HoverCard', defaultProps, props);
   const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
   const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
 

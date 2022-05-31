@@ -7,7 +7,7 @@ import {
   MantineColor,
   Selectors,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
@@ -86,7 +86,7 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
     value,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Chip', defaultProps, props);
+  } = useComponentDefaultProps('Chip', defaultProps, props);
   const ctx = useChipGroup();
 
   const uuid = useId(id);

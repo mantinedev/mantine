@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
 import useStyles, { SpoilerStylesParams } from './Spoiler.styles';
@@ -48,7 +48,7 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Spoiler', defaultProps, props);
+  } = useComponentDefaultProps('Spoiler', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { transitionDuration },

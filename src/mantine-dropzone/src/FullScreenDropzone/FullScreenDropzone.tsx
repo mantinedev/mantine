@@ -6,7 +6,7 @@ import {
   Selectors,
   DefaultProps,
   Box,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { DropzoneStatus } from '../Dropzone';
@@ -91,7 +91,7 @@ export function FullScreenDropzone(props: FullScreenDropzoneProps) {
     children,
     unstyled,
     ...others
-  } = useMantineDefaultProps('FullScreenDropzone', defaultProps, props);
+  } = useComponentDefaultProps('FullScreenDropzone', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { offset, padding, radius },

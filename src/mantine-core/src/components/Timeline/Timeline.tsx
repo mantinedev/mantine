@@ -4,7 +4,7 @@ import {
   MantineColor,
   MantineNumberSize,
   CSSObject,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { filterChildrenByType } from '../../utils';
@@ -69,7 +69,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       reverseActive,
       unstyled,
       ...others
-    } = useMantineDefaultProps('Timeline', defaultProps, props);
+    } = useComponentDefaultProps('Timeline', defaultProps, props);
 
     const _children = filterChildrenByType(children, TimelineItem);
     const items = _children.map((item: React.ReactElement, index) =>

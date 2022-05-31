@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { useDidUpdate } from '@mantine/hooks';
 import { Text } from '../Text';
@@ -75,7 +75,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     caption,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Image', defaultProps, props);
+  } = useComponentDefaultProps('Image', defaultProps, props);
   const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);

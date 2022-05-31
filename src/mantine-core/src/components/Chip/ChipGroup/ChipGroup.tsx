@@ -1,6 +1,6 @@
 import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Group, GroupProps } from '../../Group';
 import { ChipGroupProvider } from '../ChipGroup.context';
 
@@ -31,7 +31,7 @@ const defaultProps: Partial<ChipGroupProps<false>> = {
 
 export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
   const { value, defaultValue, onChange, spacing, multiple, children, unstyled, ...others } =
-    useMantineDefaultProps('ChipGroup', defaultProps as any, props);
+    useComponentDefaultProps('ChipGroup', defaultProps as any, props);
 
   const [_value, setValue] = useUncontrolled<string | string[]>({
     value,

@@ -4,7 +4,7 @@ import {
   MantineColor,
   Selectors,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
 import { CloseButton } from '../CloseButton';
@@ -66,7 +66,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
     closeButtonLabel,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Alert', defaultProps, props);
+  } = useComponentDefaultProps('Alert', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, radius, variant },

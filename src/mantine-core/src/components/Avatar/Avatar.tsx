@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -57,7 +57,7 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     imageProps,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Avatar', defaultProps, props);
+  } = useComponentDefaultProps('Avatar', defaultProps, props);
 
   const ctx = useAvatarGroupContext();
   const [error, setError] = useState(!src);

@@ -5,7 +5,7 @@ import {
   MantineSize,
   Selectors,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
@@ -93,7 +93,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     sx,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Input', defaultProps, props);
+  } = useComponentDefaultProps('Input', defaultProps, props);
   const { offsetBottom, offsetTop } = useInputWrapperContext();
 
   const { classes, cx } = useStyles(

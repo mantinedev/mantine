@@ -7,7 +7,7 @@ import {
   MantineColor,
   Selectors,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { SwitchStylesParams } from './Switch.styles';
@@ -65,7 +65,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     unstyled,
     sx,
     ...others
-  } = useMantineDefaultProps('Switch', defaultProps, props);
+  } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size, color, radius, offLabel, onLabel },

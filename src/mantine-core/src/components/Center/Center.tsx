@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { packSx, createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 
@@ -12,7 +12,7 @@ export interface CenterProps extends DefaultProps {
 }
 
 export const _Center = forwardRef<HTMLDivElement, CenterProps>((props, ref) => {
-  const { inline, sx, ...others } = useMantineDefaultProps('Center', {}, props);
+  const { inline, sx, ...others } = useComponentDefaultProps('Center', {}, props);
   return (
     <Box
       ref={ref}

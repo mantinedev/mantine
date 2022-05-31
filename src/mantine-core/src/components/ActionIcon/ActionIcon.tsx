@@ -4,7 +4,7 @@ import {
   MantineNumberSize,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
@@ -60,7 +60,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     loading,
     unstyled,
     ...others
-  } = useMantineDefaultProps('ActionIcon', defaultProps, props);
+  } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, radius, color, variant },

@@ -7,7 +7,7 @@ import {
   Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { CloseButton } from '../CloseButton';
 import { Text } from '../Text';
@@ -147,7 +147,7 @@ export function Modal(props: ModalProps) {
     fullScreen,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Modal', defaultProps, props);
+  } = useComponentDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;

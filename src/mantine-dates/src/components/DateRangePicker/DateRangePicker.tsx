@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -120,7 +120,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       openDropdownOnClear,
       unstyled,
       ...others
-    } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
+    } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;

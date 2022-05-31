@@ -4,7 +4,7 @@ import {
   MantineColor,
   Selectors,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Text } from '../Text';
 import { Loader } from '../Loader';
@@ -61,7 +61,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Notification', {}, props);
+  } = useComponentDefaultProps('Notification', {}, props);
 
   const { classes, cx } = useStyles(
     { color, radius },

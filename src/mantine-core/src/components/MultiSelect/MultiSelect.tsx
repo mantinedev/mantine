@@ -11,7 +11,7 @@ import {
   Selectors,
   extractSystemStyles,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Input } from '../Input';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
@@ -195,7 +195,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputContainer,
     inputWrapperOrder,
     ...others
-  } = useMantineDefaultProps('MultiSelect', defaultProps, props);
+  } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, invalid: !!error },

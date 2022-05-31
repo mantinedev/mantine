@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineColor,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
   getDefaultZIndex,
 } from '@mantine/styles';
 import { Box } from '../Box';
@@ -80,7 +80,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     zIndex,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Indicator', defaultProps, props);
+  } = useComponentDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { position, offset, size, radius, inline, color, withBorder, zIndex, withLabel: !!label },

@@ -1,7 +1,7 @@
 import React, { cloneElement } from 'react';
 import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
-import { getDefaultZIndex, useMantineDefaultProps } from '@mantine/styles';
+import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../../Box';
 import { OptionalPortal } from '../../Portal';
 import { TooltipBaseProps } from '../Tooltip.types';
@@ -42,7 +42,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     zIndex,
     disabled,
     ...others
-  } = useMantineDefaultProps('TooltipFloating', defaultProps, props);
+  } = useComponentDefaultProps('TooltipFloating', defaultProps, props);
 
   const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
     offset,

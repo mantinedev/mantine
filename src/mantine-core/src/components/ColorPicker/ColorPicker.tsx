@@ -1,6 +1,6 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, MantineSize, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -107,7 +107,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       classNames,
       unstyled,
       ...others
-    } = useMantineDefaultProps('ColorPicker', defaultProps, props);
+    } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },

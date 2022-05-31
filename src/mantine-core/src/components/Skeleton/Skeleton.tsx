@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { SkeletonStylesParams } from './Skeleton.styles';
 
@@ -34,7 +34,7 @@ const defaultProps: Partial<SkeletonProps> = {
 
 export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
   const { height, width, visible, animate, className, circle, radius, unstyled, ...others } =
-    useMantineDefaultProps('Skeleton', defaultProps, props);
+    useComponentDefaultProps('Skeleton', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { height, width, circle, radius, animate },

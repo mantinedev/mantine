@@ -6,7 +6,7 @@ import {
   MantineGradient,
   MantineColor,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
@@ -95,7 +95,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
     styles,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Button', defaultProps, props);
+  } = useComponentDefaultProps('Button', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     {

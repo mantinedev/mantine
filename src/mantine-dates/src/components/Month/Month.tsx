@@ -5,7 +5,7 @@ import {
   Box,
   MantineSize,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -154,7 +154,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     weekdayLabelFormat,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Month', defaultProps, props);
+  } = useComponentDefaultProps('Month', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { fullWidth },

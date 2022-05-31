@@ -3,7 +3,7 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './Code.styles';
@@ -20,7 +20,7 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Code = forwardRef<HTMLElement, CodeProps>((props: CodeProps, ref) => {
-  const { className, children, block, color, unstyled, ...others } = useMantineDefaultProps(
+  const { className, children, block, color, unstyled, ...others } = useComponentDefaultProps(
     'Code',
     {},
     props

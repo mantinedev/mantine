@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useMantineDefaultProps } from '@mantine/styles';
+import { useComponentDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Text, TextProps } from '../Text/Text';
 import useStyles from './Anchor.styles';
@@ -12,7 +12,7 @@ const defaultProps: Partial<AnchorProps> = {};
 
 export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
   (props, ref) => {
-    const { component, className, unstyled, ...others } = useMantineDefaultProps(
+    const { component, className, unstyled, ...others } = useComponentDefaultProps(
       'Anchor',
       defaultProps as AnchorProps & { component: any },
       props

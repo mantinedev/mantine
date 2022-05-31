@@ -7,7 +7,7 @@ import {
   Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
@@ -156,7 +156,7 @@ export function Drawer(props: DrawerProps) {
     overlayBlur,
     unstyled,
     ...others
-  } = useMantineDefaultProps('Drawer', defaultProps, props);
+  } = useComponentDefaultProps('Drawer', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, position, zIndex },

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles, { BlockquoteStylesParams } from './Blockquote.styles';
@@ -27,7 +27,7 @@ const defaultProps: Partial<BlockquoteProps> = {
 export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
   (props: BlockquoteProps, ref) => {
     const { className, color, icon, cite, children, classNames, styles, unstyled, ...others } =
-      useMantineDefaultProps('Blockquote', defaultProps, props);
+      useComponentDefaultProps('Blockquote', defaultProps, props);
     const { classes, cx } = useStyles(
       { color },
       { classNames, styles, unstyled, name: 'Blockquote' }

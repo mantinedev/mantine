@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { isElement } from '@mantine/utils';
 import { Text } from '../Text';
 import { Box } from '../Box';
@@ -24,7 +24,7 @@ const defaultProps: Partial<BreadcrumbsProps> = {
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (props: BreadcrumbsProps, ref) => {
     const { className, children, separator, classNames, styles, unstyled, ...others } =
-      useMantineDefaultProps('Breadcrumbs', defaultProps, props);
+      useComponentDefaultProps('Breadcrumbs', defaultProps, props);
 
     const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'Breadcrumbs' });
 

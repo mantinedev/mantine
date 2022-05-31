@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { Col } from './Col/Col';
@@ -37,7 +37,7 @@ const defaultProps: Partial<GridProps> = {
 
 export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
   const { gutter, children, grow, justify, align, columns, className, id, unstyled, ...others } =
-    useMantineDefaultProps('Grid', defaultProps, props);
+    useComponentDefaultProps('Grid', defaultProps, props);
   const { classes, cx } = useStyles({ gutter, justify, align }, { unstyled, name: 'Grid' });
 
   return (

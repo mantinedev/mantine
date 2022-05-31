@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { extractSystemStyles, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { extractSystemStyles, DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { useCollapse } from './use-collapse';
 
@@ -40,7 +40,7 @@ export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) =
     onTransitionEnd,
     animateOpacity,
     ...others
-  } = useMantineDefaultProps('Collapse', defaultProps, props);
+  } = useComponentDefaultProps('Collapse', defaultProps, props);
 
   const reduceMotion = useReducedMotion();
   const duration = reduceMotion ? 0 : transitionDuration;

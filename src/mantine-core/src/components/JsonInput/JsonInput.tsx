@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
 import { validateJson } from './validate-json/validate-json';
 import { Textarea, TextareaProps } from '../Textarea';
 import { TextInputStylesNames } from '../TextInput';
@@ -46,7 +46,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
     classNames,
     unstyled,
     ...others
-  } = useMantineDefaultProps('JsonInput', defaultProps, props);
+  } = useComponentDefaultProps('JsonInput', defaultProps, props);
 
   const { classes, cx } = useStyles({ size }, { name: 'JsonInput', unstyled });
   const [_value, setValue] = useUncontrolled({

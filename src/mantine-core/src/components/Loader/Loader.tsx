@@ -5,7 +5,7 @@ import {
   MantineColor,
   MantineTheme,
   useMantineTheme,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Bars } from './loaders/Bars';
@@ -42,7 +42,11 @@ const defaultProps: Partial<LoaderProps> = {
 };
 
 export function Loader(props: LoaderProps) {
-  const { size, color, variant, ...others } = useMantineDefaultProps('Loader', defaultProps, props);
+  const { size, color, variant, ...others } = useComponentDefaultProps(
+    'Loader',
+    defaultProps,
+    props
+  );
   const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const _color = color || theme.primaryColor;

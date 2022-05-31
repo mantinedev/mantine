@@ -10,7 +10,7 @@ import {
   Selectors,
   CloseButton,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import useStyles from './TimeRangeInput.styles';
@@ -134,7 +134,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       errorProps,
       unstyled,
       ...others
-    } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
+    } = useComponentDefaultProps('TimeRangeInput', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size },

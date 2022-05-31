@@ -40,7 +40,7 @@ export function useMantineEmotionCache() {
   return useContext(MantineProviderContext)?.emotionCache;
 }
 
-export function useMantineDefaultProps<T extends Record<string, any>>(
+export function useComponentDefaultProps<T extends Record<string, any>>(
   component: string,
   defaultProps: Partial<T>,
   props: T
