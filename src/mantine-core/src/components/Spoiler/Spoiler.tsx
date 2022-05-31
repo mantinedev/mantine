@@ -2,12 +2,12 @@ import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
-import useStyles from './Spoiler.styles';
+import useStyles, { SpoilerStylesParams } from './Spoiler.styles';
 
 export type SpoilerStylesNames = Selectors<typeof useStyles>;
 
 export interface SpoilerProps
-  extends DefaultProps<SpoilerStylesNames>,
+  extends DefaultProps<SpoilerStylesNames, SpoilerStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
@@ -46,12 +46,13 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
     initialState,
     classNames,
     styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Spoiler', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { transitionDuration },
-    { classNames, styles, name: 'Spoiler' }
+    { classNames, styles, unstyled, name: 'Spoiler' }
   );
 
   const [show, setShowState] = useState(initialState);

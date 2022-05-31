@@ -16,12 +16,12 @@ import { Overlay } from '../Overlay';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
-import useStyles from './Modal.styles';
+import useStyles, { ModalStylesParams } from './Modal.styles';
 
 export type ModalStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalProps
-  extends Omit<DefaultProps<ModalStylesNames>, MantineStyleSystemSize>,
+  extends Omit<DefaultProps<ModalStylesNames, ModalStylesParams>, MantineStyleSystemSize>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;

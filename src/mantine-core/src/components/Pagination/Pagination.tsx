@@ -9,12 +9,12 @@ import {
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
-import useStyles from './Pagination.styles';
+import useStyles, { PaginationStylesParams } from './Pagination.styles';
 
 export type PaginationStylesNames = Selectors<typeof useStyles>;
 
 export interface PaginationProps
-  extends DefaultProps<PaginationStylesNames>,
+  extends DefaultProps<PaginationStylesNames, PaginationStylesParams>,
     Omit<GroupProps, 'classNames' | 'styles' | 'onChange'> {
   /** Change item component */
   itemComponent?: React.FC<PaginationItemProps>;
@@ -91,12 +91,13 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     withEdges,
     withControls,
     sx,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Pagination', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius },
-    { classNames, styles, name: 'Pagination' }
+    { classNames, styles, unstyled, name: 'Pagination' }
   );
 
   const { range, setPage, next, previous, active, first, last } = usePagination({
@@ -130,6 +131,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
       spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
       ref={ref}
       sx={sx}
+      unstyled={unstyled}
       {...others}
     >
       {withEdges && (

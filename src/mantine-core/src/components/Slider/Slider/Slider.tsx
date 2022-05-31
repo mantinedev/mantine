@@ -133,6 +133,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     showLabelOnHover,
     thumbChildren,
     disabled,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Slider', defaultProps, props);
 
@@ -238,6 +239,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       classNames={classNames}
       styles={styles}
       disabled={disabled}
+      unstyled={unstyled}
     >
       <Track
         offset={0}
@@ -255,6 +257,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         classNames={classNames}
         styles={styles}
         disabled={disabled}
+        unstyled={unstyled}
       >
         <Thumb
           max={max}
@@ -276,6 +279,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           thumbLabel={thumbLabel}
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
+          unstyled={unstyled}
         >
           {thumbChildren}
         </Thumb>

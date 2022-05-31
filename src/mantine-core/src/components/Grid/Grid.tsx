@@ -36,24 +36,9 @@ const defaultProps: Partial<GridProps> = {
 };
 
 export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
-  const {
-    gutter,
-    children,
-    grow,
-    justify,
-    align,
-    columns,
-    className,
-    classNames,
-    styles,
-    id,
-    ...others
-  } = useMantineDefaultProps('Grid', defaultProps, props);
-
-  const { classes, cx } = useStyles(
-    { gutter, justify, align },
-    { classNames, styles, name: 'Grid' }
-  );
+  const { gutter, children, grow, justify, align, columns, className, id, unstyled, ...others } =
+    useMantineDefaultProps('Grid', defaultProps, props);
+  const { classes, cx } = useStyles({ gutter, justify, align }, { unstyled, name: 'Grid' });
 
   return (
     <GridProvider value={{ gutter, grow, columns }}>

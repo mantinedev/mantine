@@ -12,12 +12,12 @@ const defaultProps: Partial<AnchorProps> = {};
 
 export const _Anchor = forwardRef<HTMLAnchorElement, AnchorProps & { component: any }>(
   (props, ref) => {
-    const { component, className, classNames, styles, ...others } = useMantineDefaultProps(
+    const { component, className, unstyled, ...others } = useMantineDefaultProps(
       'Anchor',
       defaultProps as AnchorProps & { component: any },
       props
     );
-    const { classes, cx } = useStyles(null, { name: 'Anchor', classNames, styles });
+    const { classes, cx } = useStyles(null, { name: 'Anchor', unstyled });
     const buttonProps = component === 'button' ? { type: 'button' } : null;
 
     return (

@@ -30,8 +30,9 @@ export function Saturation({
   saturationLabel,
   classNames,
   styles,
+  unstyled,
 }: SaturationProps) {
-  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector, unstyled });
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 
   const { ref } = useMove(({ x, y }) => {

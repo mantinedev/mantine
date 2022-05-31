@@ -14,10 +14,10 @@ export interface CardSectionProps extends DefaultProps {
 }
 
 export const _CardSection = forwardRef<HTMLDivElement, CardSectionProps>(
-  ({ className, withBorder = false, inheritPadding = false, ...others }, ref) => {
+  ({ className, withBorder = false, inheritPadding = false, unstyled, ...others }, ref) => {
     const { classes, cx } = useStyles(
       { padding: useCardPadding(), withBorder, inheritPadding },
-      { name: 'Card' }
+      { name: 'Card', unstyled }
     );
     return <Box className={cx(classes.cardSection, className)} ref={ref} {...others} />;
   }

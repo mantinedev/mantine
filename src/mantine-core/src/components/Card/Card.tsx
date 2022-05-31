@@ -16,12 +16,12 @@ const defaultProps: Partial<CardProps> = {
 };
 
 export const _Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const { className, p, radius, children, classNames, styles, ...others } = useMantineDefaultProps(
+  const { className, p, radius, children, unstyled, ...others } = useMantineDefaultProps(
     'Card',
     defaultProps,
     props
   );
-  const { classes, cx } = useStyles(null, { name: 'Card', classNames, styles });
+  const { classes, cx } = useStyles(null, { name: 'Card', unstyled });
   const _children = Children.toArray(children);
 
   const content = _children.map((child, index) => {

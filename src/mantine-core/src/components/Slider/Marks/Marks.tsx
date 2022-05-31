@@ -31,10 +31,11 @@ export function Marks({
   offset,
   onChange,
   disabled,
+  unstyled,
 }: MarksProps) {
   const { classes, cx } = useStyles(
     { size, color, disabled },
-    { classNames, styles, name: 'Slider' }
+    { classNames, styles, unstyled, name: 'Slider' }
   );
 
   const items = marks.map((mark, index) => (

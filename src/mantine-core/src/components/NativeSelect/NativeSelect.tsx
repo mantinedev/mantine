@@ -27,9 +27,6 @@ export interface NativeSelectProps
   /** Data used to render options */
   data: (string | SelectItem)[];
 
-  /** Style properties added to select element */
-  inputStyle?: React.CSSProperties;
-
   /** Props passed to root element (InputWrapper component) */
   wrapperProps?: Record<string, any>;
 
@@ -47,7 +44,6 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
     wrapperProps,
     data,
     placeholder,
-    inputStyle,
     onChange,
     value,
     classNames,
@@ -83,7 +79,6 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
         {...others}
         onChange={onChange}
         component="select"
-        style={inputStyle}
         ref={ref}
         value={value === null ? '' : value}
         __staticSelector="NativeSelect"

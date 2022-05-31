@@ -106,7 +106,7 @@ export interface MonthProps
   weekdayLabelFormat?: string;
 }
 
-const no = () => false;
+const noop = () => false;
 
 const defaultProps: Partial<MonthProps> = {
   disableOutsideEvents: false,
@@ -120,7 +120,7 @@ const defaultProps: Partial<MonthProps> = {
   hideOutsideDates: false,
 };
 
-export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
+export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
     className,
     month,
@@ -147,17 +147,18 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     onDayKeyDown,
     daysRefs,
     hideOutsideDates,
-    isDateInRange = no,
-    isDateFirstInRange = no,
-    isDateLastInRange = no,
+    isDateInRange = noop,
+    isDateFirstInRange = noop,
+    isDateLastInRange = noop,
     renderDay,
     weekdayLabelFormat,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Month', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { fullWidth },
-    { classNames, styles, name: __staticSelector }
+    { classNames, styles, unstyled, name: __staticSelector }
   );
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
@@ -200,6 +201,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
       return (
         <td className={classes.cell} key={cellIndex}>
           <Day
+            unstyled={unstyled}
             ref={(button) => {
               if (daysRefs) {
                 if (!Array.isArray(daysRefs[rowIndex])) {
@@ -232,7 +234,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             disabled={dayProps.disabled}
-            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
+            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
             fullWidth={fullWidth}
             focusable={focusable}

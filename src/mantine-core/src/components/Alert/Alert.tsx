@@ -64,12 +64,13 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
     radius,
     withCloseButton,
     closeButtonLabel,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Alert', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, radius, variant },
-    { classNames, styles, name: 'Alert' }
+    { classNames, styles, unstyled, name: 'Alert' }
   );
 
   const rootId = useId(id);

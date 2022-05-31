@@ -67,11 +67,12 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     className,
     styles,
     classNames,
+    unstyled,
     ...others
   } = useMantineDefaultProps('AppShell', defaultProps, props);
   const { classes, cx } = useStyles(
     { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
-    { styles, classNames, name: 'AppShell' }
+    { styles, classNames, unstyled, name: 'AppShell' }
   );
 
   return (

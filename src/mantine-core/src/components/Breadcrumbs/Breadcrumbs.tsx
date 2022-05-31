@@ -23,10 +23,10 @@ const defaultProps: Partial<BreadcrumbsProps> = {
 
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (props: BreadcrumbsProps, ref) => {
-    const { className, children, separator, classNames, styles, ...others } =
+    const { className, children, separator, classNames, styles, unstyled, ...others } =
       useMantineDefaultProps('Breadcrumbs', defaultProps, props);
 
-    const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
+    const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'Breadcrumbs' });
 
     const items = React.Children.toArray(children).reduce(
       (acc: React.ReactNode[], child: React.ReactElement, index, array) => {

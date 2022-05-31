@@ -30,7 +30,7 @@ const defaultProps: Partial<ChipGroupProps<false>> = {
 };
 
 export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
-  const { value, defaultValue, onChange, spacing, multiple, children, ...others } =
+  const { value, defaultValue, onChange, spacing, multiple, children, unstyled, ...others } =
     useMantineDefaultProps('ChipGroup', defaultProps as any, props);
 
   const [_value, setValue] = useUncontrolled<string | string[]>({
@@ -54,7 +54,7 @@ export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
 
   return (
     <ChipGroupProvider value={{ isChipSelected, onChange: handleChange, multiple }}>
-      <Group spacing={spacing} {...others}>
+      <Group spacing={spacing} unstyled={unstyled} {...others}>
         {children}
       </Group>
     </ChipGroupProvider>

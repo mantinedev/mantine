@@ -33,11 +33,12 @@ export function Toolbar({
   classNames,
   styles,
   id,
+  unstyled,
   ...others
 }: ToolbarProps) {
   const { classes, cx } = useStyles(
     { sticky, stickyOffset },
-    { classNames, styles, name: 'RichTextEditor' }
+    { classNames, styles, unstyled, name: 'RichTextEditor' }
   );
 
   const groups = controls.map((group, index) => {

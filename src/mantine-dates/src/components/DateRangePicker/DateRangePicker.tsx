@@ -118,6 +118,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       hideWeekdays,
       renderDay,
       openDropdownOnClear,
+      unstyled,
       ...others
     } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -188,6 +189,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        unstyled={unstyled}
         {...others}
       >
         <RangeCalendar
@@ -217,6 +219,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
+          unstyled={unstyled}
         />
       </DatePickerBase>
     );

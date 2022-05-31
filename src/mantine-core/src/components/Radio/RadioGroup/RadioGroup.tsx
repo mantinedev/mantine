@@ -65,6 +65,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       descriptionProps,
       inputContainer,
       inputWrapperOrder,
+      unstyled,
       ...others
     } = useMantineDefaultProps('RadioGroup', defaultProps, props);
 
@@ -92,10 +93,16 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           labelProps={labelProps}
           inputContainer={inputContainer}
           inputWrapperOrder={inputWrapperOrder}
+          unstyled={unstyled}
           {...wrapperProps}
           {...others}
         >
-          <InputsGroup spacing={spacing} orientation={orientation} role="radiogroup">
+          <InputsGroup
+            spacing={spacing}
+            orientation={orientation}
+            unstyled={unstyled}
+            role="radiogroup"
+          >
             {children}
           </InputsGroup>
         </Input.Wrapper>

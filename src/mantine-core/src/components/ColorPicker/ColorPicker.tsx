@@ -105,12 +105,13 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       className,
       styles,
       classNames,
+      unstyled,
       ...others
     } = useMantineDefaultProps('ColorPicker', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, name: __staticSelector, unstyled }
     );
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);

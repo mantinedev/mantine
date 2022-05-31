@@ -58,14 +58,13 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     disabled,
     loaderProps,
     loading,
-    styles,
-    classNames,
+    unstyled,
     ...others
   } = useMantineDefaultProps('ActionIcon', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, radius, color, variant },
-    { name: 'ActionIcon', classNames, styles }
+    { name: 'ActionIcon', unstyled }
   );
   const colors = theme.fn.variant({ color, variant: 'light' });
 
@@ -80,6 +79,7 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
       disabled={disabled || loading}
       data-disabled={disabled ? true : undefined}
       data-loading={loading ? true : undefined}
+      unstyled={unstyled}
       {...others}
     >
       {loading ? loader : children}

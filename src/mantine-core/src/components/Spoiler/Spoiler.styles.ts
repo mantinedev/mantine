@@ -4,7 +4,7 @@ export interface SpoilerStylesParams {
   transitionDuration: number;
 }
 
-export default createStyles((_theme, { transitionDuration }: SpoilerStylesParams) => ({
+export default createStyles((theme, { transitionDuration }: SpoilerStylesParams) => ({
   control: {},
 
   root: {
@@ -14,7 +14,7 @@ export default createStyles((_theme, { transitionDuration }: SpoilerStylesParams
   content: {
     overflow: 'hidden',
     transitionProperty: 'max-height',
-    transitionTimingFunction: 'ease',
+    transitionTimingFunction: theme.transitionTimingFunction,
     transitionDuration: `${transitionDuration}ms`,
 
     '@media (prefers-reduced-motion)': {

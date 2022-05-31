@@ -24,15 +24,15 @@ const defaultProps: Partial<HighlightProps> = {
 };
 
 export const _Highlight = forwardRef<HTMLDivElement, HighlightProps>((props, ref) => {
-  const { children, highlight, highlightColor, highlightStyles, ...others } =
+  const { children, highlight, highlightColor, highlightStyles, unstyled, ...others } =
     useMantineDefaultProps('Highlight', defaultProps, props);
   const highlightChunks = highlighter(children, highlight);
 
   return (
-    <Text ref={ref} {...others}>
+    <Text unstyled={unstyled} ref={ref} {...others}>
       {highlightChunks.map(({ chunk, highlighted }, i) =>
         highlighted ? (
-          <Mark key={i} color={highlightColor} sx={highlightStyles}>
+          <Mark unstyled={unstyled} key={i} color={highlightColor} sx={highlightStyles}>
             {chunk}
           </Mark>
         ) : (

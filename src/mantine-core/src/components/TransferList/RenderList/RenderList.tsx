@@ -67,10 +67,11 @@ export function RenderList({
   classNames,
   styles,
   limit,
+  unstyled,
 }: RenderListProps) {
   const { classes, cx, theme } = useStyles(
     { reversed, native: listComponent !== SelectScrollArea, radius },
-    { name: 'TransferList', classNames, styles }
+    { name: 'TransferList', classNames, styles, unstyled }
   );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
@@ -96,6 +97,7 @@ export function RenderList({
   sortedData.forEach((item, index) => {
     const itemComponent = (
       <UnstyledButton
+        unstyled={unstyled}
         tabIndex={-1}
         onClick={() => onSelect(item.value)}
         key={item.value}
@@ -131,7 +133,7 @@ export function RenderList({
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
     unGroupedItems.unshift(
       <div className={classes.separator}>
-        <Divider classNames={{ label: classes.separatorLabel }} />
+        <Divider unstyled={unstyled} classNames={{ label: classes.separatorLabel }} />
       </div>
     );
   }
@@ -182,7 +184,7 @@ export function RenderList({
   return (
     <div className={cx(classes.transferList, className)}>
       {title && (
-        <Text weight={500} className={classes.transferListTitle}>
+        <Text weight={500} unstyled={unstyled} className={classes.transferListTitle}>
           {title}
         </Text>
       )}
@@ -190,6 +192,7 @@ export function RenderList({
       <div className={classes.transferListBody}>
         <div className={classes.transferListHeader}>
           <TextInput
+            unstyled={unstyled}
             value={query}
             onChange={(event) => {
               setQuery(event.currentTarget.value);
@@ -211,6 +214,7 @@ export function RenderList({
             className={classes.transferListControl}
             disabled={selection.length === 0}
             onClick={onMove}
+            unstyled={unstyled}
           >
             {reversed ? <Icons.Prev /> : <Icons.Next />}
           </ActionIcon>
@@ -223,6 +227,7 @@ export function RenderList({
               className={classes.transferListControl}
               disabled={data.length === 0}
               onClick={onMoveAll}
+              unstyled={unstyled}
             >
               {reversed ? <Icons.First /> : <Icons.Last />}
             </ActionIcon>
@@ -241,7 +246,7 @@ export function RenderList({
               {unGroupedItems}
             </>
           ) : (
-            <Text color="dimmed" size="sm" align="center" mt="sm">
+            <Text color="dimmed" unstyled={unstyled} size="sm" align="center" mt="sm">
               {nothingFound}
             </Text>
           )}

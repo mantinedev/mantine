@@ -7,9 +7,11 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
+import useStyles, { ThemeIconVariant, ThemeIconStylesParams } from './ThemeIcon.styles';
 
-export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ThemeIconProps
+  extends DefaultProps<never, ThemeIconStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Icon */
   children: React.ReactNode;
 
@@ -36,12 +38,12 @@ const defaultProps: Partial<ThemeIconProps> = {
 };
 
 export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref) => {
-  const { className, size, radius, variant, color, children, gradient, ...others } =
+  const { className, size, radius, variant, color, children, gradient, unstyled, ...others } =
     useMantineDefaultProps('ThemeIcon', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { variant, radius, color, size, gradient },
-    { name: 'ThemeIcon' }
+    { name: 'ThemeIcon', unstyled }
   );
 
   return (

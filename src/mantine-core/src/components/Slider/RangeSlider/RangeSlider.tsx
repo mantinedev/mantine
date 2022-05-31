@@ -146,6 +146,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     showLabelOnHover,
     thumbChildren,
     disabled,
+    unstyled,
     ...others
   } = useMantineDefaultProps('RangeSlider', defaultProps, props);
 
@@ -375,6 +376,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
       styles={styles}
       classNames={classNames}
       disabled={disabled}
+      unstyled={unstyled}
     >
       <Track
         offset={positions[0]}
@@ -398,6 +400,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           _setValue(clone);
         }}
         disabled={disabled}
+        unstyled={unstyled}
       >
         <Thumb
           {...sharedThumbProps}
@@ -413,6 +416,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           onFocus={() => setFocused(0)}
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
+          unstyled={unstyled}
         >
           {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
         </Thumb>
@@ -431,6 +435,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           onFocus={() => setFocused(1)}
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
+          unstyled={unstyled}
         >
           {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
         </Thumb>

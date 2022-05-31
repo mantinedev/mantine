@@ -38,11 +38,12 @@ export function Track({
   onMouseEnter,
   disabled,
   marksOffset,
+  unstyled,
   ...others
 }: TrackProps) {
   const { classes } = useStyles(
     { color, size, radius, disabled },
-    { classNames, styles, name: 'Slider' }
+    { classNames, styles, unstyled, name: 'Slider' }
   );
 
   return (
@@ -65,6 +66,7 @@ export function Track({
         classNames={classNames}
         styles={styles}
         disabled={disabled}
+        unstyled={unstyled}
       />
     </div>
   );

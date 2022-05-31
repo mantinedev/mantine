@@ -67,6 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     labelProps,
     inputWrapperOrder,
     inputContainer,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Textarea', defaultProps, props);
 
@@ -83,6 +84,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
     __staticSelector,
     size,
     multiline: true,
+    unstyled,
     ...rest,
   };
 
@@ -105,6 +107,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>((props, r
       descriptionProps={descriptionProps}
       inputContainer={inputContainer}
       inputWrapperOrder={inputWrapperOrder}
+      unstyled={unstyled}
       {...systemStyles}
       {...wrapperProps}
     >

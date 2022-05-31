@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
+import useStyles, { SimpleGridBreakpoint, SimpleGridStylesParams } from './SimpleGrid.styles';
 
-export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SimpleGridProps
+  extends DefaultProps<never, SimpleGridStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
   breakpoints?: SimpleGridBreakpoint[];
 

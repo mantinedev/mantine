@@ -103,7 +103,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   } = useInputProps('Autocomplete', defaultProps, props);
   const { classes } = useStyles(
     { size: inputProps.size },
-    { classNames, styles, name: 'Autocomplete' }
+    { classNames, styles, name: 'Autocomplete', unstyled }
   );
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);

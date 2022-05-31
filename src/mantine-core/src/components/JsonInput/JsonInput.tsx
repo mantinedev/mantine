@@ -44,10 +44,11 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
     size,
     validationError,
     classNames,
+    unstyled,
     ...others
   } = useMantineDefaultProps('JsonInput', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { name: 'JsonInput' });
+  const { classes, cx } = useStyles({ size }, { name: 'JsonInput', unstyled });
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -83,6 +84,7 @@ export const JsonInput = forwardRef<HTMLTextAreaElement, JsonInputProps>((props,
       classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
       autoComplete="nope"
       ref={ref}
+      unstyled={unstyled}
       {...others}
     />
   );

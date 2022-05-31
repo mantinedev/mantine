@@ -40,6 +40,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       position,
       zIndex = getDefaultZIndex('app'),
       section,
+      unstyled,
       __staticSelector,
       ...others
     }: VerticalSectionProps,
@@ -55,7 +56,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         zIndex: ctx.zIndex || zIndex,
         borderPosition: section === 'header' ? 'bottom' : 'top',
       },
-      { name: __staticSelector, classNames, styles }
+      { name: __staticSelector, classNames, styles, unstyled }
     );
 
     return (

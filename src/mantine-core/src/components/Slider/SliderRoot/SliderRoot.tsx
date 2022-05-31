@@ -14,8 +14,14 @@ export interface SliderRootProps
 }
 
 export const SliderRoot = forwardRef<HTMLDivElement, SliderRootProps>(
-  ({ className, size, classNames, styles, disabled, ...others }: SliderRootProps, ref) => {
-    const { classes, cx } = useStyles({ size, disabled }, { classNames, styles, name: 'Slider' });
+  (
+    { className, size, classNames, styles, disabled, unstyled, ...others }: SliderRootProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles(
+      { size, disabled },
+      { classNames, styles, unstyled, name: 'Slider' }
+    );
     return <Box {...others} tabIndex={-1} className={cx(classes.root, className)} ref={ref} />;
   }
 );

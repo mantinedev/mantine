@@ -55,15 +55,17 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     classNames,
     styles,
     imageProps,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Avatar', defaultProps, props);
+
   const ctx = useAvatarGroupContext();
+  const [error, setError] = useState(!src);
 
   const { classes, cx } = useStyles(
     { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing },
-    { classNames, styles, name: 'Avatar' }
+    { classNames, styles, unstyled, name: 'Avatar' }
   );
-  const [error, setError] = useState(!src);
 
   useEffect(() => {
     !src ? setError(true) : setError(false);

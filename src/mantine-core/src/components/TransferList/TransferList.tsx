@@ -87,6 +87,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
     classNames,
     styles,
     limit,
+    unstyled,
     ...others
   } = useMantineDefaultProps('TransferList', defaultProps, props);
 
@@ -137,7 +138,14 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
   };
 
   return (
-    <SimpleGrid cols={2} spacing="xl" breakpoints={breakpoints} ref={ref} {...others}>
+    <SimpleGrid
+      cols={2}
+      spacing="xl"
+      breakpoints={breakpoints}
+      ref={ref}
+      unstyled={unstyled}
+      {...others}
+    >
       <RenderList
         {...sharedListProps}
         data={value[0]}
@@ -146,6 +154,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onMoveAll={() => handleMoveAll(0)}
         onMove={() => handleMove(0)}
         title={titles[0]}
+        unstyled={unstyled}
       />
 
       <RenderList
@@ -157,6 +166,7 @@ export const TransferList = forwardRef<HTMLDivElement, TransferListProps>((props
         onMove={() => handleMove(1)}
         title={titles[1]}
         reversed
+        unstyled={unstyled}
       />
     </SimpleGrid>
   );

@@ -12,12 +12,12 @@ import { Transition, MantineTransition } from '../Transition';
 import { CloseButton } from '../CloseButton';
 import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper';
-import useStyles from './Dialog.styles';
+import useStyles, { DialogStylesParams } from './Dialog.styles';
 
 export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
+  extends Omit<DefaultProps<DialogStylesNames, DialogStylesParams>, MantineStyleSystemSize>,
     Omit<PaperProps, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
@@ -81,10 +81,11 @@ export function DialogBody(props: DialogProps) {
     transition,
     transitionDuration,
     transitionTimingFunction,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Dialog', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
+  const { classes, cx } = useStyles({ size }, { classNames, styles, unstyled, name: 'Dialog' });
 
   return (
     <Transition
@@ -99,6 +100,7 @@ export function DialogBody(props: DialogProps) {
           style={{ ...style, ...transitionStyles }}
           shadow={shadow}
           withBorder={withBorder}
+          unstyled={unstyled}
           {...others}
         >
           {withCloseButton && <CloseButton onClick={onClose} className={classes.closeButton} />}

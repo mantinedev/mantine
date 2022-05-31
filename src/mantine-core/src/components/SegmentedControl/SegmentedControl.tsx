@@ -16,7 +16,10 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { WRAPPER_PADDING } from './SegmentedControl.styles';
+import useStyles, {
+  WRAPPER_PADDING,
+  SegmentedControlStylesParams,
+} from './SegmentedControl.styles';
 
 export interface SegmentedControlItem {
   value: string;
@@ -27,7 +30,7 @@ export interface SegmentedControlItem {
 export type SegmentedControlStylesNames = Selectors<typeof useStyles>;
 
 export interface SegmentedControlProps
-  extends DefaultProps<SegmentedControlStylesNames>,
+  extends DefaultProps<SegmentedControlStylesNames, SegmentedControlStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   /** Data based on which controls are rendered */
   data: string[] | SegmentedControlItem[];
@@ -93,6 +96,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     styles,
     defaultValue,
     orientation,
+    unstyled,
     ...others
   } = useMantineDefaultProps('SegmentedControl', defaultProps, props);
 
@@ -124,7 +128,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       transitionTimingFunction,
       orientation,
     },
-    { classNames, styles, name: 'SegmentedControl' }
+    { classNames, styles, unstyled, name: 'SegmentedControl' }
   );
 
   const [activePosition, setActivePosition] = useState({

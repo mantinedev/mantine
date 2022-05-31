@@ -77,6 +77,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     scrollAreaComponent: ScrollAreaComponent,
     colorScheme,
     trim,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
@@ -90,7 +91,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
       native: ScrollAreaComponent !== ScrollArea,
       maxLineSize,
     },
-    { classNames, styles, name: 'Prism' }
+    { classNames, styles, unstyled, name: 'Prism' }
   );
 
   return (
@@ -103,11 +104,13 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
           arrowSize={6}
           offset={6}
           color={clipboard.copied ? 'teal' : undefined}
+          unstyled={unstyled}
         >
           <ActionIcon
             className={classes.copy}
             aria-label={clipboard.copied ? copiedLabel : copyLabel}
             onClick={() => clipboard.copy(code)}
+            unstyled={unstyled}
           >
             <CopyIcon copied={clipboard.copied} />
           </ActionIcon>

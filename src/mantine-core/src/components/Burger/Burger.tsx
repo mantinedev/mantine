@@ -7,12 +7,12 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { UnstyledButton } from '../UnstyledButton';
-import useStyles from './Burger.styles';
+import useStyles, { BurgerStylesParams } from './Burger.styles';
 
 export type BurgerStylesNames = Selectors<typeof useStyles>;
 
 export interface BurgerProps
-  extends DefaultProps<BurgerStylesNames>,
+  extends DefaultProps<BurgerStylesNames, BurgerStylesParams>,
     React.ComponentPropsWithoutRef<'button'> {
   /** Burger state: true for cross, false for burger */
   opened: boolean;

@@ -10,11 +10,16 @@ interface AmPmSelectProps
 
   /** Colon text size */
   size?: MantineSize;
+
+  unstyled: boolean;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
-  ({ className, onChange, onFocus, size = 'sm', value, ...others }: AmPmSelectProps, ref) => {
-    const { classes, cx } = useStyles({ size, hasValue: !!value });
+  (
+    { className, onChange, onFocus, size = 'sm', value, unstyled, ...others }: AmPmSelectProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size, hasValue: !!value }, { name: 'AmPmInput', unstyled });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {

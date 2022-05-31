@@ -39,8 +39,12 @@ export function SelectItems({
   nothingFound,
   creatable,
   createLabel,
+  unstyled,
 }: SelectItemsProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, unstyled, name: __staticSelector }
+  );
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;
@@ -144,7 +148,7 @@ export function SelectItems({
       {unGroupedItems}
     </>
   ) : (
-    <Text size={size} className={classes.nothingFound}>
+    <Text size={size} unstyled={unstyled} className={classes.nothingFound}>
       {nothingFound}
     </Text>
   );

@@ -62,12 +62,11 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
     style,
     loader,
     radius,
-    classNames,
-    styles,
     overlayBlur,
+    unstyled,
     ...others
   } = useMantineDefaultProps('LoadingOverlay', defaultProps, props);
-  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', classNames, styles });
+  const { classes, cx, theme } = useStyles(null, { name: 'LoadingOverlay', unstyled });
 
   return (
     <Transition
@@ -94,6 +93,7 @@ export const LoadingOverlay = forwardRef<HTMLDivElement, LoadingOverlayProps>((p
             zIndex={zIndex}
             radius={radius}
             blur={overlayBlur}
+            unstyled={unstyled}
             color={
               overlayColor || (theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white)
             }

@@ -4,7 +4,7 @@ type HeadingElement = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export interface TitleStylesParams {
   element: HeadingElement;
-  align: 'right' | 'left' | 'center' | 'justify';
+  align: React.CSSProperties['textAlign'];
 }
 
 export default createStyles((theme, { element, align }: TitleStylesParams) => ({

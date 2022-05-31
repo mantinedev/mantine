@@ -89,12 +89,13 @@ export function FullScreenDropzone(props: FullScreenDropzoneProps) {
     zIndex,
     onDrop,
     children,
+    unstyled,
     ...others
   } = useMantineDefaultProps('FullScreenDropzone', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { offset, padding, radius },
-    { classNames, styles, name: 'FullScreenDropzone' }
+    { classNames, styles, unstyled, name: 'FullScreenDropzone' }
   );
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);

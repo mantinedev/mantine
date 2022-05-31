@@ -106,6 +106,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       mentions,
       readOnly,
       modules: externalModules,
+      unstyled,
       ...others
     } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
 
@@ -119,7 +120,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         radius,
         readOnly,
       },
-      { classNames, styles, name: 'RichTextEditor' }
+      { classNames, styles, unstyled, name: 'RichTextEditor' }
     );
 
     const modules = useMemo(
@@ -151,6 +152,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           styles={styles}
           id={uuid}
           className={classes.toolbar}
+          unstyled={unstyled}
         />
 
         <Editor

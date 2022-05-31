@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Skeleton.styles';
+import useStyles, { SkeletonStylesParams } from './Skeleton.styles';
 
-export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SkeletonProps
+  extends DefaultProps<never, SkeletonStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Should skeleton overlay be displayed */
   visible?: boolean;
 

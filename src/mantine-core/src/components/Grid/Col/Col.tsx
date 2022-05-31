@@ -71,11 +71,10 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     lg,
     xl,
     className,
-    classNames,
-    styles,
     id,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Col', defaultProps, props);
+  } = useMantineDefaultProps('Grid.Col', defaultProps, props);
 
   const ctx = useGridContext();
 
@@ -102,7 +101,7 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       columns: ctx.columns,
       span: colSpan,
     },
-    { classNames, styles, name: 'Col' }
+    { unstyled, name: 'Col' }
   );
 
   if (!isValidSpan(colSpan) || colSpan > ctx.columns) {

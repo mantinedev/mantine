@@ -67,6 +67,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       styles,
       sx,
       reverseActive,
+      unstyled,
       ...others
     } = useMantineDefaultProps('Timeline', defaultProps, props);
 
@@ -80,6 +81,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         radius: item.props.radius || radius,
         color: item.props.color || color,
         bulletSize: item.props.bulletSize || bulletSize,
+        unstyled,
         active:
           item.props.active ||
           (reverseActive ? active >= _children.length - index - 1 : active >= index),

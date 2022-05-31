@@ -10,12 +10,12 @@ import {
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { IndicatorPosition } from './Indicator.types';
-import useStyles from './Indicator.styles';
+import useStyles, { IndicatorStylesParams } from './Indicator.styles';
 
 export type IndicatorStylesNames = Selectors<typeof useStyles>;
 
 export interface IndicatorProps
-  extends DefaultProps<IndicatorStylesNames>,
+  extends DefaultProps<IndicatorStylesNames, IndicatorStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Element that should have an indicator */
   children: React.ReactNode;
@@ -78,12 +78,13 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     classNames,
     disabled,
     zIndex,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Indicator', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { position, offset, size, radius, inline, color, withBorder, zIndex, withLabel: !!label },
-    { name: 'Indicator', classNames, styles }
+    { name: 'Indicator', classNames, styles, unstyled }
   );
 
   return (

@@ -70,7 +70,7 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
 
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType },
-      { classNames, styles, name: 'List' }
+      { classNames, styles, name: 'List', unstyled }
     );
 
     return (

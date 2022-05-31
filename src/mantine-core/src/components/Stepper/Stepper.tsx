@@ -94,12 +94,13 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     iconPosition,
     classNames,
     styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Stepper', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-    { classNames, styles, name: 'Stepper' }
+    { classNames, styles, unstyled, name: 'Stepper' }
   );
 
   const filteredChildren = filterChildrenByType(children, Step);
@@ -131,6 +132,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
         classNames={classNames}
         styles={styles}
         iconPosition={item.props.iconPosition || iconPosition}
+        unstyled={unstyled}
       />
     );
 

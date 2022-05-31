@@ -26,9 +26,12 @@ const defaultProps: Partial<BlockquoteProps> = {
 
 export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
   (props: BlockquoteProps, ref) => {
-    const { className, color, icon, cite, children, classNames, styles, ...others } =
+    const { className, color, icon, cite, children, classNames, styles, unstyled, ...others } =
       useMantineDefaultProps('Blockquote', defaultProps, props);
-    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Blockquote' });
+    const { classes, cx } = useStyles(
+      { color },
+      { classNames, styles, unstyled, name: 'Blockquote' }
+    );
 
     return (
       <Box component="blockquote" className={cx(classes.root, className)} ref={ref} {...others}>

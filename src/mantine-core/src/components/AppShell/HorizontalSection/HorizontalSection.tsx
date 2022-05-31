@@ -57,6 +57,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
       children,
       section,
       __staticSelector,
+      unstyled,
       ...others
     }: HorizontalSectionProps,
     ref
@@ -73,7 +74,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
         zIndex: ctx.zIndex || zIndex,
         section,
       },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, name: __staticSelector, unstyled }
     );
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(

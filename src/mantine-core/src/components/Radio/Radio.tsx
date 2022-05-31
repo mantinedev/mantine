@@ -66,13 +66,14 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     icon: Icon,
     transitionDuration,
     wrapperProps,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
   const { classes, cx } = useStyles(
     { color, size: ctx?.size || size, transitionDuration },
-    { classNames, styles, name: 'Radio' }
+    { classNames, styles, unstyled, name: 'Radio' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

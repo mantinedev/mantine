@@ -618,6 +618,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             creatable={isCreatable && !!createLabel}
             createLabel={createLabel}
             aria-label={wrapperProps.label}
+            unstyled={unstyled}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

@@ -27,18 +27,8 @@ const defaultProps: Partial<GroupProps> = {
 };
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
-  const {
-    className,
-    position,
-    align,
-    children,
-    noWrap,
-    grow,
-    spacing,
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Group', defaultProps, props);
+  const { className, position, align, children, noWrap, grow, spacing, unstyled, ...others } =
+    useMantineDefaultProps('Group', defaultProps, props);
 
   const filteredChildren = filterFalsyChildren(children);
   const { classes, cx } = useStyles(
@@ -50,7 +40,7 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
       position,
       count: filteredChildren.length,
     },
-    { classNames, styles, name: 'Group' }
+    { unstyled, name: 'Group' }
   );
 
   const items = filteredChildren.map((child) => {

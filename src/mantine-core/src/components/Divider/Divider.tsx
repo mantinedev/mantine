@@ -55,12 +55,13 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
     variant,
     styles,
     classNames,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Divider', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, size, variant },
-    { classNames, styles, name: 'Divider' }
+    { classNames, styles, unstyled, name: 'Divider' }
   );
 
   const vertical = orientation === 'vertical';

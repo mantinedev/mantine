@@ -52,12 +52,13 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       showLabelOnHover,
       children = null,
       disabled,
+      unstyled,
     }: ThumbProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
       { color, size, disabled },
-      { classNames, styles, name: 'Slider' }
+      { classNames, styles, unstyled, name: 'Slider' }
     );
     const [focused, setFocused] = useState(false);
     const isVisible = labelAlwaysOn || dragging || focused || showLabelOnHover;

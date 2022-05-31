@@ -42,10 +42,11 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
     classNames,
     styles,
     roundCaps,
+    unstyled,
     ...others
   } = useMantineDefaultProps('RingProgress', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { classNames, styles, name: 'RingProgress' });
+  const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'RingProgress' });
 
   const curves = getCurves({
     size,

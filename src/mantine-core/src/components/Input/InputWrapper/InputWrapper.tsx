@@ -100,6 +100,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     classNames,
     styles,
     name: ['InputWrapper', __staticSelector],
+    unstyled,
   });
 
   const sharedProps = {

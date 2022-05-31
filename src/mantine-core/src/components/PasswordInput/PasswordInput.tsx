@@ -83,6 +83,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     labelProps,
     descriptionProps,
     errorProps,
+    unstyled,
     ...others
   } = useMantineDefaultProps('PasswordInput', defaultProps, props);
 
@@ -90,7 +91,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
   const { classes, cx } = useStyles(
     { size, rightSectionWidth },
-    { name: 'PasswordInput', classNames, styles }
+    { name: 'PasswordInput', classNames, styles, unstyled }
   );
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -103,6 +104,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       radius={radius}
       size={theme.fn.size({ size, sizes: buttonSizes })}
       aria-hidden
+      unstyled={unstyled}
       onMouseDown={(event) => {
         event.preventDefault();
         toggle();
@@ -135,6 +137,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       errorProps={errorProps}
       descriptionProps={descriptionProps}
       labelProps={labelProps}
+      unstyled={unstyled}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -151,6 +154,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         rightSectionWidth={rightSectionWidth}
         rightSection={!disabled && rightSection}
         variant={variant}
+        unstyled={unstyled}
       >
         <input
           type={reveal ? 'text' : 'password'}

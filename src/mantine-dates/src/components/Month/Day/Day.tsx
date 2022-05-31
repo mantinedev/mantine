@@ -50,13 +50,14 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       focusable,
       hideOutsideDates,
       renderDay,
+      unstyled,
       ...others
     }: DayProps,
     ref
   ) => {
     const { classes, cx } = useStyles(
       { size, fullWidth, hideOutsideDates },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, unstyled, name: __staticSelector }
     );
 
     return (

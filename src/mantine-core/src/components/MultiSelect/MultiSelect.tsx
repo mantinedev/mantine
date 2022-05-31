@@ -199,7 +199,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const { classes, cx, theme } = useStyles(
     { size, invalid: !!error },
-    { classNames, styles, name: 'MultiSelect' }
+    { classNames, styles, unstyled, name: 'MultiSelect' }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
   const inputRef = useRef<HTMLInputElement>();
@@ -554,6 +554,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       labelProps={labelProps}
       inputContainer={inputContainer}
       inputWrapperOrder={inputWrapperOrder}
+      unstyled={unstyled}
       {...systemStyles}
       {...wrapperProps}
     >
@@ -599,6 +600,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
               required={required}
               radius={radius}
               icon={icon}
+              unstyled={unstyled}
               onMouseDown={(event) => {
                 event.preventDefault();
                 !disabled && !valuesOverflow.current && setDropdownOpened(!dropdownOpened);
@@ -674,6 +676,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             nothingFound={nothingFound}
             creatable={creatable && !!createLabel}
             createLabel={createLabel}
+            unstyled={unstyled}
           />
         </SelectPopover.Dropdown>
       </SelectPopover>

@@ -140,12 +140,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     formatter,
     parser,
     inputMode,
+    unstyled,
     ...others
   } = useMantineDefaultProps('NumberInput', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { radius, size },
-    { classNames, styles, name: 'NumberInput' }
+    { classNames, styles, unstyled, name: 'NumberInput' }
   );
 
   const [focused, setFocused] = useState(false);
@@ -401,6 +402,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       classNames={classNames}
       inputMode={inputMode || getInputMode(step, precision, useOs())}
       __staticSelector="NumberInput"
+      unstyled={unstyled}
     />
   );
 });

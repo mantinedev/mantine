@@ -135,10 +135,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       labelProps,
       descriptionProps,
       errorProps,
+      unstyled,
       ...others
     } = useMantineDefaultProps('TimeInput', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
+    const { classes, cx, theme } = useStyles(
+      { size },
+      { classNames, styles, unstyled, name: 'TimeInput' }
+    );
     const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useId(id);
 
@@ -234,6 +238,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           aria-label={clearButtonLabel}
           onClick={handleClear}
           size={size}
+          unstyled={unstyled}
         />
       ) : null;
 
@@ -254,6 +259,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         errorProps={errorProps}
         descriptionProps={descriptionProps}
         labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -270,6 +276,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           disabled={disabled}
           rightSection={rightSection}
           rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+          unstyled={unstyled}
           {...rest}
         >
           <div className={classes.controls}>
@@ -287,6 +294,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               aria-label={hoursLabel}
               disabled={disabled}
               name={name}
+              unstyled={unstyled}
             />
             <TimeField
               ref={minutesRef}
@@ -300,6 +308,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               placeholder={timePlaceholder}
               aria-label={minutesLabel}
               disabled={disabled}
+              unstyled={unstyled}
             />
             {withSeconds && (
               <TimeField
@@ -313,6 +322,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 placeholder={timePlaceholder}
                 aria-label={secondsLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
             {format === '12' && (
@@ -324,6 +334,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 size={size}
                 aria-label={amPmLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
           </div>

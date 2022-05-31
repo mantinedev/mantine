@@ -58,11 +58,12 @@ export function TimelineItem({
   color,
   align,
   lineVariant = 'solid',
+  unstyled,
   ...others
 }: TimelineItemProps) {
   const { classes, cx } = useStyles(
     { bulletSize, color, radius, align, lineVariant, lineWidth },
-    { classNames, styles, name: 'Timeline' }
+    { classNames, styles, unstyled, name: 'Timeline' }
   );
 
   return (

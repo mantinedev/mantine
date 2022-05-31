@@ -25,9 +25,13 @@ export function Swatches({
   classNames,
   styles,
   __staticSelector = 'color-picker',
+  unstyled,
   ...others
 }: SwatchesProps) {
-  const { classes } = useStyles({ swatchesPerRow }, { classNames, styles, name: __staticSelector });
+  const { classes } = useStyles(
+    { swatchesPerRow },
+    { classNames, styles, name: __staticSelector, unstyled }
+  );
 
   const colors = data.map((color, index) => (
     <ColorSwatch

@@ -132,12 +132,13 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       labelProps,
       descriptionProps,
       errorProps,
+      unstyled,
       ...others
     } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size },
-      { classNames, styles, name: 'TimeRangeInput' }
+      { classNames, styles, unstyled, name: 'TimeRangeInput' }
     );
 
     const { systemStyles, rest } = extractSystemStyles(others);
@@ -173,6 +174,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           aria-label={clearButtonLabel}
           onClick={handleClear}
           size={size}
+          unstyled={unstyled}
         />
       ) : null;
 
@@ -206,6 +208,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         errorProps={errorProps}
         descriptionProps={descriptionProps}
         labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -224,6 +227,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           disabled={disabled}
           rightSection={rightSection}
           rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+          unstyled={unstyled}
           {...rest}
         >
           <div className={classes.inputWrapper}>
@@ -235,6 +239,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               name={name}
               nextRef={toTimeRef}
               id={uuid}
+              unstyled={unstyled}
               {...forwardProps}
             />
 
@@ -252,6 +257,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               variant="unstyled"
               value={_value[1]}
               onChange={(date) => setValue([_value[0], date])}
+              unstyled={unstyled}
               {...forwardProps}
             />
           </div>

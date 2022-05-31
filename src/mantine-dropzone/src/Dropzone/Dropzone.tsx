@@ -80,10 +80,14 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     onReject,
     openRef,
     name,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Dropzone', defaultProps, props);
 
-  const { classes, cx } = useStyles({ radius, padding }, { classNames, styles, name: 'Dropzone' });
+  const { classes, cx } = useStyles(
+    { radius, padding },
+    { classNames, styles, unstyled, name: 'Dropzone' }
+  );
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
     onDropAccepted: onDrop,
@@ -110,7 +114,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
         className
       )}
     >
-      <LoadingOverlay visible={loading} radius={radius} />
+      <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
       <input {...getInputProps()} name={name} />
       {children({ accepted: isDragAccept, rejected: isDragReject })}
     </Box>

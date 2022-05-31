@@ -32,9 +32,12 @@ const defaultProps: Partial<ColorSwatchProps> = {
 };
 
 export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props, ref) => {
-  const { color, size, radius, className, children, classNames, styles, ...others } =
+  const { color, size, radius, className, children, classNames, styles, unstyled, ...others } =
     useMantineDefaultProps('ColorSwatch', defaultProps, props);
-  const { classes, cx } = useStyles({ radius, size }, { classNames, styles, name: 'ColorSwatch' });
+  const { classes, cx } = useStyles(
+    { radius, size },
+    { classNames, styles, unstyled, name: 'ColorSwatch' }
+  );
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>

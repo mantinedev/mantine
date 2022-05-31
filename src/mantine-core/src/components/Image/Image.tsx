@@ -9,12 +9,12 @@ import { useDidUpdate } from '@mantine/hooks';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import { ImageIcon } from './ImageIcon';
-import useStyles from './Image.styles';
+import useStyles, { ImageStylesParams } from './Image.styles';
 
 export type ImageStylesNames = Selectors<typeof useStyles>;
 
 export interface ImageProps
-  extends DefaultProps<ImageStylesNames>,
+  extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */
   src?: string;
@@ -73,9 +73,10 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     classNames,
     styles,
     caption,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Image', defaultProps, props);
-  const { classes, cx } = useStyles({ radius }, { classNames, styles, name: 'Image' });
+  const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);

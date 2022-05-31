@@ -10,12 +10,12 @@ import { Text } from '../Text';
 import { Loader } from '../Loader';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
-import useStyles from './Notification.styles';
+import useStyles, { NotificationStylesParams } from './Notification.styles';
 
 export type NotificationStylesNames = Exclude<Selectors<typeof useStyles>, 'withIcon'>;
 
 export interface NotificationProps
-  extends DefaultProps<NotificationStylesNames>,
+  extends DefaultProps<NotificationStylesNames, NotificationStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Called when close button is clicked */
   onClose?(): void;
@@ -59,12 +59,13 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
     closeButtonProps,
     classNames,
     styles,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Notification', {}, props);
 
   const { classes, cx } = useStyles(
     { color, radius },
-    { classNames, styles, name: 'Notification' }
+    { classNames, styles, unstyled, name: 'Notification' }
   );
   const withIcon = icon || loading;
 

@@ -26,12 +26,9 @@ export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
 const defaultProps: Partial<PaperProps> = {};
 
 export const _Paper = forwardRef<HTMLDivElement, PaperProps>((props, ref) => {
-  const { className, children, radius, withBorder, shadow, ...others } = useMantineDefaultProps(
-    'Paper',
-    defaultProps,
-    props
-  );
-  const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper' });
+  const { className, children, radius, withBorder, shadow, unstyled, ...others } =
+    useMantineDefaultProps('Paper', defaultProps, props);
+  const { classes, cx } = useStyles({ radius, shadow, withBorder }, { name: 'Paper', unstyled });
 
   return (
     <Box className={cx(classes.root, className)} ref={ref} {...others}>

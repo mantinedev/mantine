@@ -7,13 +7,13 @@ import {
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Progress.styles';
 import { Text } from '../Text';
+import useStyles, { ProgressStylesParams } from './Progress.styles';
 
 export type ProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface ProgressProps
-  extends DefaultProps<ProgressStylesNames>,
+  extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
   value?: number;
@@ -75,12 +75,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
     classNames,
     styles,
     sections,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius, striped: striped || animate, animate },
-    { classNames, styles, name: 'Progress' }
+    { classNames, styles, unstyled, name: 'Progress' }
   );
 
   const segments = Array.isArray(sections)

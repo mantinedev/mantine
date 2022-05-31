@@ -91,6 +91,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     __staticSelector,
     multiline,
     sx,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Input', defaultProps, props);
   const { offsetBottom, offsetTop } = useInputWrapperContext();
@@ -108,7 +109,7 @@ export const _Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       offsetBottom,
       offsetTop,
     },
-    { classNames, styles, name: ['Input', __staticSelector] }
+    { classNames, styles, name: ['Input', __staticSelector], unstyled }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

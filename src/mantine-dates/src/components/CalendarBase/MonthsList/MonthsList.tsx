@@ -52,6 +52,7 @@ export function MonthsList({
   weekdayLabelFormat,
   preventFocus,
   renderDay,
+  unstyled,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -83,6 +84,7 @@ export function MonthsList({
             previousLabel={previousMonthLabel}
             preventLevelFocus={index > 0}
             preventFocus={preventFocus}
+            unstyled={unstyled}
           />
 
           <Month
@@ -100,6 +102,7 @@ export function MonthsList({
             preventFocus={preventFocus}
             renderDay={renderDay}
             weekdayLabelFormat={weekdayLabelFormat}
+            unstyled={unstyled}
             {...others}
           />
         </div>

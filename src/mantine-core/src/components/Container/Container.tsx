@@ -31,17 +31,13 @@ const defaultProps: Partial<ContainerProps> = {
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
   (props: ContainerProps, ref) => {
-    const { className, fluid, size, styles, classNames, sizes, ...others } = useMantineDefaultProps(
+    const { className, fluid, size, unstyled, sizes, ...others } = useMantineDefaultProps(
       'Container',
       defaultProps,
       props
     );
 
-    const { classes, cx } = useStyles(
-      { fluid, size, sizes },
-      { styles, classNames, name: 'Container' }
-    );
-
+    const { classes, cx } = useStyles({ fluid, size, sizes }, { unstyled, name: 'Container' });
     return <Box className={cx(classes.root, className)} ref={ref} {...others} />;
   }
 );

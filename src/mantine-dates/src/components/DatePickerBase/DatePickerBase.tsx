@@ -187,7 +187,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     }: DatePickerBaseProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(null, { classNames, styles, name: __staticSelector });
+    const { classes, cx, theme } = useStyles(null, {
+      classNames,
+      styles,
+      unstyled,
+      name: __staticSelector,
+    });
     const { systemStyles, rest } = extractSystemStyles(others);
     const uuid = useId(id);
     const inputRef = useRef<HTMLButtonElement>();
@@ -221,6 +226,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         onClick={onClear}
         size={size}
         tabIndex={clearButtonTabIndex}
+        unstyled={unstyled}
       />
     ) : null;
 
@@ -265,6 +271,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         labelProps={labelProps}
         inputContainer={inputContainer}
         inputWrapperOrder={inputWrapperOrder}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -317,6 +324,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
                 onFocus={handleInputFocus}
                 onChange={onChange}
                 autoComplete="off"
+                unstyled={unstyled}
                 {...rest}
               />
             </div>
@@ -339,6 +347,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               withCloseButton={false}
               size={amountOfMonths * 400}
               zIndex={modalZIndex}
+              unstyled={unstyled}
             >
               {children}
             </Modal>

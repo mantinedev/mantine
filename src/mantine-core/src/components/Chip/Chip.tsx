@@ -84,13 +84,17 @@ export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((prop
     sx,
     wrapperProps,
     value,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Chip', defaultProps, props);
   const ctx = useChipGroup();
 
   const uuid = useId(id);
   const { systemStyles, rest } = extractSystemStyles(others);
-  const { classes, cx } = useStyles({ radius, size, color }, { classNames, styles, name: 'Chip' });
+  const { classes, cx } = useStyles(
+    { radius, size, color },
+    { classNames, styles, unstyled, name: 'Chip' }
+  );
 
   const [_value, setValue] = useUncontrolled({
     value: checked,

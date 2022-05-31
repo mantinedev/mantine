@@ -154,12 +154,13 @@ export function Drawer(props: DrawerProps) {
     target,
     withinPortal,
     overlayBlur,
+    unstyled,
     ...others
   } = useMantineDefaultProps('Drawer', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, position, zIndex },
-    { classNames, styles, name: 'Drawer' }
+    { classNames, styles, unstyled, name: 'Drawer' }
   );
 
   const focusTrapRef = useFocusTrap(trapFocus && opened);
@@ -229,10 +230,13 @@ export function Drawer(props: DrawerProps) {
               }}
               shadow={shadow}
               p={padding}
+              unstyled={unstyled}
             >
               {(title || withCloseButton) && (
                 <div className={classes.header}>
-                  <Text className={classes.title}>{title}</Text>
+                  <Text className={classes.title} unstyled={unstyled}>
+                    {title}
+                  </Text>
 
                   {withCloseButton && (
                     <CloseButton
@@ -240,6 +244,7 @@ export function Drawer(props: DrawerProps) {
                       onClick={onClose}
                       aria-label={closeButtonLabel}
                       className={classes.closeButton}
+                      unstyled={unstyled}
                     />
                   )}
                 </div>
@@ -250,6 +255,7 @@ export function Drawer(props: DrawerProps) {
             {withOverlay && (
               <div style={transitionStyles.overlay}>
                 <Overlay
+                  unstyled={unstyled}
                   blur={overlayBlur}
                   onMouseDown={() => closeOnClickOutside && onClose()}
                   className={classes.overlay}

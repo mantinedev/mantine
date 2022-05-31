@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Table.styles';
+import useStyles, { TableStylesParams } from './Table.styles';
 
-export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+export interface TableProps
+  extends DefaultProps<never, TableStylesParams>,
+    React.ComponentPropsWithoutRef<'table'> {
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 

@@ -24,6 +24,8 @@ interface TimeFieldProps
 
   /** Minimum possible value. Default 0 */
   min?: number;
+
+  unstyled?: boolean;
 }
 
 export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
@@ -39,12 +41,16 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
       max,
       min = 0,
       value,
+      unstyled,
       ...others
     }: TimeFieldProps,
     ref
   ) => {
     const [digitsEntered, setDigitsEntered] = useState(0);
-    const { classes, cx, theme } = useStyles({ size, hasValue: !!value });
+    const { classes, cx, theme } = useStyles(
+      { size, hasValue: !!value },
+      { name: 'TimeField', unstyled }
+    );
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -122,6 +128,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         {withSeparator && (
           <Text
             size={size}
+            unstyled={unstyled}
             style={{
               lineHeight: 1,
               color: value
