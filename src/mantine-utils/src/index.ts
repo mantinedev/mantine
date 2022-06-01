@@ -12,6 +12,7 @@ export { noop } from './noop/noop';
 export { keys } from './keys/keys';
 export { useHovered } from './use-hovered/use-hovered';
 export { groupOptions, getGroupedOptions } from './group-options/group-options';
+export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
 
 export type { PolymorphicComponentProps } from './create-polymorphic-component/create-polymorphic-component';
 export type { ForwardRefWithStaticComponents } from './ForwardRefWithStaticComponents';

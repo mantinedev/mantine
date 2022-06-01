@@ -12,7 +12,7 @@ export interface NotificationsContextProps {
   notifications: NotificationProps[];
   queue: NotificationProps[];
   showNotification(props: NotificationProps): string;
-  updateNotification(id: string, props: NotificationProps): void;
+  updateNotification(props: NotificationProps): void;
   hideNotification(id: string): void;
   clean(): void;
   cleanQueue(): void;

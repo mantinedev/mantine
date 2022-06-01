@@ -113,7 +113,7 @@ function NotificationsDemo() {
 storiesOf('Notifications System', module)
   .add('bottom-right (default)', () => (
     <React.StrictMode>
-      <MantineProvider>
+      <MantineProvider inherit>
         <NotificationsProvider>
           <NotificationsDemo />
         </NotificationsProvider>
@@ -121,35 +121,35 @@ storiesOf('Notifications System', module)
     </React.StrictMode>
   ))
   .add('top-right', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-right" limit={2}>
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('top-left', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-left', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="bottom-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-center', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="bottom-center">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('top-center', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-center">
         <NotificationsDemo />
       </NotificationsProvider>
