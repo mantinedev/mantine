@@ -83,4 +83,3 @@ storiesOf('Hooks/use-move', module).add('Horizontal usage', () => (
     <HorizontalDemo />
   </div>
 ));
-
