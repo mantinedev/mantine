@@ -11,11 +11,6 @@ export interface NotificationProps extends Omit<NotificationComponentProps, 'onC
 export interface NotificationsContextProps {
   notifications: NotificationProps[];
   queue: NotificationProps[];
-  showNotification(props: NotificationProps): string;
-  updateNotification(props: NotificationProps): void;
-  hideNotification(id: string): void;
-  clean(): void;
-  cleanQueue(): void;
 }
 
 export type NotificationsProviderPositioning = ['top' | 'bottom', 'left' | 'right' | 'center'];

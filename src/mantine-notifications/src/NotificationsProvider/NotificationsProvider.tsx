@@ -85,16 +85,6 @@ export function NotificationsProvider({
     '-'
   ) as NotificationsProviderPositioning;
 
-  const ctx = {
-    notifications,
-    queue,
-    showNotification,
-    hideNotification,
-    updateNotification,
-    clean,
-    cleanQueue,
-  };
-
   useDidUpdate(() => {
     if (notifications.length > previousLength.current) {
       setTimeout(() => forceUpdate(), 0);
@@ -102,7 +92,13 @@ export function NotificationsProvider({
     previousLength.current = notifications.length;
   }, [notifications]);
 
-  useNotificationsEvents(ctx);
+  useNotificationsEvents({
+    show: showNotification,
+    hide: hideNotification,
+    update: updateNotification,
+    clean,
+    cleanQueue,
+  });
 
   const items = notifications.map((notification) => (
     <Transition
@@ -137,7 +133,7 @@ export function NotificationsProvider({
   ));
 
   return (
-    <NotificationsContext.Provider value={ctx}>
+    <NotificationsContext.Provider value={{ notifications, queue }}>
       <Portal>
         <Box
           className={cx(classes.notifications, className)}

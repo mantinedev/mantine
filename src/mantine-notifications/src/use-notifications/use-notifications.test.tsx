@@ -13,11 +13,7 @@ describe('@mantine/notifications/use-notifications', () => {
     );
 
     const hook = renderHook(() => useNotifications(), { wrapper });
-    const { current } = hook.result;
-
-    expect(current.notifications).toBeDefined();
-    expect(current.showNotification).toBeDefined();
-    expect(current.hideNotification).toBeDefined();
-    expect(current.updateNotification).toBeDefined();
+    expect(hook.result.current.notifications).toBeDefined();
+    expect(hook.result.current.queue).toBeDefined();
   });
 });

@@ -1,5 +1,5 @@
 import { createUseExternalEvents } from '@mantine/utils';
-import type { NotificationProps, NotificationsContextProps } from './types';
+import type { NotificationProps } from './types';
 
 export type NotificationsEvents = {
   show(notification: NotificationProps): void;
@@ -9,7 +9,7 @@ export type NotificationsEvents = {
   cleanQueue(): void;
 };
 
-const [useEvents, createEvent] =
+export const [useNotificationsEvents, createEvent] =
   createUseExternalEvents<NotificationsEvents>('mantine-notifications');
 
 export const showNotification = createEvent('show');
@@ -17,15 +17,3 @@ export const hideNotification = createEvent('hide');
 export const cleanNotifications = createEvent('clean');
 export const cleanNotificationsQueue = createEvent('cleanQueue');
 export const updateNotification = createEvent('update');
-
-export function useNotificationsEvents(ctx: NotificationsContextProps) {
-  const events = {
-    show: ctx.showNotification,
-    hide: ctx.hideNotification,
-    update: ctx.updateNotification,
-    clean: ctx.clean,
-    cleanQueue: ctx.cleanQueue,
-  };
-
-  useEvents(events);
-}
