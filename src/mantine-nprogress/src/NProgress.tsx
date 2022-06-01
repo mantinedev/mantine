@@ -6,55 +6,51 @@ import { useNProgressEvents } from './events';
 
 export interface NProgressProps {
   /** The default progress */
-  defaultProgress?: number;
+  initialProgress?: number;
 
-  /** The color of the progressbar */
+  /** Key of theme.colors of any other valid CSS color */
   color?: MantineColor;
 
-  /** The height of the progressbar */
+  /** The height of the progressbar in px */
   size?: number;
 
-  /** Called when the progress is 100% */
-  onFinish?: () => void;
+  /** Called when the progressbar reaches 100% */
+  onFinish?(): void;
 
-  /** Automatically resets the progress when 100% is reached */
+  /** Determines whether progress should be automatically reset when 100% is reached */
   autoReset?: boolean;
 
-  /** Step delay in ms */
-  stepIntervalTime?: number;
+  /** Step interval in ms */
+  stepInterval?: number;
 
-  /** Transition function (transition-timing-function) */
-  progressTransition?: string;
+  /** Progressbar animation timing function */
+  transitionTimingFunction?: string;
 
   /** Transition duration in ms */
-  progressTransitionDuration?: number;
+  transitionDuration?: number;
 
-  /** The time when the component should be unmounted after progress is 100% */
+  /** Number of ms that should elapse before progressbar is hidden after reaching 100% */
   exitTimeout?: number;
 
   /** Exit transition duration in ms */
   exitTransitionDuration?: number;
 
-  /** Exit transition function (transition-timing-function)*/
-  exitTransition?: string;
-
-  /** Determines whether NProgress should be rendered within Portal, defaults to true */
+  /** Determines whether progressbar should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
 
-  /** NProgress container z-index */
+  /** Progressbar z-index */
   zIndex?: React.CSSProperties['zIndex'];
 }
 
 export function NProgress({
-  defaultProgress = 0,
-  color = 'blue',
+  initialProgress = 0,
+  color,
   size = 2,
-  stepIntervalTime = 500,
-  progressTransition = 'ease',
-  progressTransitionDuration = 600,
+  stepInterval = 500,
+  transitionTimingFunction = 'ease',
+  transitionDuration = 600,
   exitTimeout = 700,
   exitTransitionDuration = 600,
-  exitTransition = 'ease',
   onFinish,
   autoReset = false,
   withinPortal = true,
@@ -63,7 +59,7 @@ export function NProgress({
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reducedMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
-  const [_progress, setProgress] = useState(defaultProgress);
+  const [_progress, setProgress] = useState(initialProgress);
   const [mounted, setMounted] = useState(true);
   const [unmountProgress, setUnmountProgress] = useState(false);
   const resetRef = useRef<number>();
@@ -84,7 +80,7 @@ export function NProgress({
 
       return amount + next;
     });
-  }, stepIntervalTime);
+  }, stepInterval);
 
   const set = (value: React.SetStateAction<number>) => setProgress(value);
   const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
@@ -165,7 +161,7 @@ export function NProgress({
               width: '100vw',
               backgroundColor: 'transparent',
               transitionProperty: 'opacity',
-              transitionTimingFunction: exitTransition,
+              transitionTimingFunction,
               transitionDuration: `${
                 reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
               }ms`,
@@ -173,8 +169,8 @@ export function NProgress({
             },
             bar: {
               transitionProperty: 'width',
-              transitionTimingFunction: progressTransition,
-              transitionDuration: `${reducedMotion || !mounted ? 0 : progressTransitionDuration}ms`,
+              transitionTimingFunction,
+              transitionDuration: `${reducedMotion || !mounted ? 0 : transitionDuration}ms`,
             },
           }}
         />
