@@ -27,8 +27,10 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
   }
 
   function createEvent<EventKey extends keyof Handlers>(event: EventKey) {
-    return (payload: Parameters<Handlers[EventKey]>[0]) =>
-      dispatchEvent(`${prefix}:${event}`, payload);
+    type Parameter = Parameters<Handlers[EventKey]>[0];
+
+    return (...payload: Parameter extends undefined ? [undefined?] : [Parameter]) =>
+      dispatchEvent(`${prefix}:${event}`, payload[0]);
   }
 
   return [_useExternalEvents, createEvent] as const;
