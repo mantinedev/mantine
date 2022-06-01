@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, CSSObject } from '@mantine/styles';
 
 const sizes = {
   xs: 320,
@@ -15,6 +15,20 @@ export interface ModalStylesParams {
   centered: boolean;
   zIndex: React.CSSProperties['zIndex'];
   fullScreen: boolean;
+}
+
+function getFullScreenStyles(fullScreen: boolean): CSSObject {
+  if (!fullScreen) {
+    return {};
+  }
+
+  return {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
 }
 
 export default createStyles(
@@ -56,8 +70,7 @@ export default createStyles(
 
     modal: {
       position: 'relative',
-      width: fullScreen ? '100%' : theme.fn.size({ sizes, size }),
-      minHeight: fullScreen ? '100vh' : 'unset',
+      width: fullScreen ? undefined : theme.fn.size({ sizes, size }),
       borderRadius: fullScreen ? 0 : undefined,
       outline: 0,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
@@ -65,6 +78,7 @@ export default createStyles(
       marginBottom: centered ? 'auto' : undefined,
       zIndex: 1,
       marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+      ...getFullScreenStyles(fullScreen),
     },
 
     header: {
