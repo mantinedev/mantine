@@ -7,6 +7,7 @@ import {
   DefaultProps,
   Box,
   useComponentDefaultProps,
+  getDefaultZIndex,
 } from '@mantine/core';
 import { useIsomorphicEffect } from '@mantine/hooks';
 import { DropzoneStatus } from '../Dropzone';
@@ -72,7 +73,7 @@ const defaultProps: Partial<FullScreenDropzoneProps> = {
   offset: 'xl',
   padding: 'md',
   accept: ['*'],
-  zIndex: 1000,
+  zIndex: getDefaultZIndex('max'),
 };
 
 export function FullScreenDropzone(props: FullScreenDropzoneProps) {
@@ -94,7 +95,7 @@ export function FullScreenDropzone(props: FullScreenDropzoneProps) {
   } = useComponentDefaultProps('FullScreenDropzone', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { offset, padding, radius },
+    { offset, padding, radius, zIndex },
     { classNames, styles, unstyled, name: 'FullScreenDropzone' }
   );
   const [visible, setVisible] = useState(false);
@@ -137,7 +138,7 @@ export function FullScreenDropzone(props: FullScreenDropzoneProps) {
   }, [disabled]);
 
   return (
-    <Portal zIndex={zIndex}>
+    <Portal>
       <Transition
         transition="fade"
         duration={200}

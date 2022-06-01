@@ -149,7 +149,7 @@ export function NProgress({
   useNProgressEvents(ctx);
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
+    <OptionalPortal withinPortal={withinPortal}>
       {!unmountProgress && (
         <Progress
           radius={0}
@@ -161,6 +161,7 @@ export function NProgress({
               top: 0,
               left: 0,
               position: 'fixed',
+              zIndex,
               width: '100vw',
               backgroundColor: 'transparent',
               transitionProperty: 'opacity',

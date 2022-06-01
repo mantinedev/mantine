@@ -4,10 +4,11 @@ export interface FullScreenDropzoneStylesParams {
   offset: MantineNumberSize;
   padding: MantineNumberSize;
   radius: MantineNumberSize;
+  zIndex: React.CSSProperties['zIndex'];
 }
 
 export default createStyles(
-  (theme, { offset, padding, radius }: FullScreenDropzoneStylesParams) => {
+  (theme, { offset, padding, radius, zIndex }: FullScreenDropzoneStylesParams) => {
     const spacing = theme.fn.size({ size: offset, sizes: theme.spacing });
     const rejected = theme.fn.variant({ color: 'red', variant: 'light' });
     const accepted = theme.fn.variant({ color: theme.primaryColor, variant: 'light' });
@@ -15,6 +16,7 @@ export default createStyles(
     return {
       root: {
         position: 'fixed',
+        zIndex,
         top: 0,
         left: 0,
         right: 0,

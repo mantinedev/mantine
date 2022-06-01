@@ -194,7 +194,7 @@ export function Drawer(props: DrawerProps) {
   useFocusReturn({ opened, transitionDuration: 0 });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
       <GroupedTransition
         onExited={() => _lockScroll(false)}
         onEntered={() => _lockScroll(lockScroll && true)}
@@ -210,12 +210,7 @@ export function Drawer(props: DrawerProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box
-            className={cx(classes.root, { [classes.noOverlay]: !withOverlay }, className)}
-            role="dialog"
-            aria-modal
-            {...others}
-          >
+          <Box className={cx(classes.root, className)} role="dialog" aria-modal {...others}>
             <Paper<'div'>
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}

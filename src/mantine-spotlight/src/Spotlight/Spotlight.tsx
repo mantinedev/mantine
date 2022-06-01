@@ -131,12 +131,12 @@ export function Spotlight({
   limit = 10,
   actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
-  zIndex = getDefaultZIndex('modal'),
+  zIndex = getDefaultZIndex('max'),
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
   const { classes, cx } = useStyles(
-    { centered, maxWidth, topOffset, radius },
+    { centered, maxWidth, topOffset, radius, zIndex },
     { classNames, styles, name: 'Spotlight' }
   );
 
@@ -202,7 +202,7 @@ export function Spotlight({
   };
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
+    <OptionalPortal withinPortal={withinPortal}>
       <GroupedTransition
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}

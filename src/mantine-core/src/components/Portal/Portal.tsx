@@ -12,8 +12,6 @@ export interface PortalProps {
 
   /** Root element className */
   className?: string;
-
-  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export function Portal(props: PortalProps): ReactPortal {
@@ -45,11 +43,7 @@ export function Portal(props: PortalProps): ReactPortal {
   }
 
   return createPortal(
-    <div
-      className={className}
-      dir={theme.dir}
-      style={{ zIndex: props.zIndex, position: 'relative' }}
-    >
+    <div className={className} dir={theme.dir}>
       {children}
     </div>,
     ref.current

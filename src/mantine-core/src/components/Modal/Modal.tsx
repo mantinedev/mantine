@@ -188,7 +188,7 @@ export function Modal(props: ModalProps) {
   useFocusReturn({ opened, transitionDuration: 0 });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
       <GroupedTransition
         onExited={() => shouldLockScroll && lockScroll(false)}
         onEntered={() => shouldLockScroll && lockScroll(true)}

@@ -77,7 +77,7 @@ export function NotificationsProvider({
     cleanQueue,
   } = useNotificationsState({ limit });
 
-  const { classes, cx, theme } = useStyles();
+  const { classes, cx, theme } = useStyles({ zIndex });
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
@@ -138,7 +138,7 @@ export function NotificationsProvider({
 
   return (
     <NotificationsContext.Provider value={ctx}>
-      <Portal zIndex={zIndex}>
+      <Portal>
         <Box
           className={cx(classes.notifications, className)}
           style={style}

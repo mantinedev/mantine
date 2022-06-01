@@ -47,23 +47,17 @@ function getPositionStyles({
   }
 }
 
-export default createStyles((theme, { position, size, zIndex }: DrawerStylesParams, getRef) => ({
+export default createStyles((theme, { position, size, zIndex }: DrawerStylesParams) => ({
   closeButton: {},
   overlay: {},
 
-  noOverlay: {
-    ref: getRef('noOverlay'),
-  },
-
   root: {
-    [`&:not(.${getRef('noOverlay')})`]: {
-      position: 'fixed',
-      zIndex,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
+    position: 'fixed',
+    zIndex,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 
   drawer: {
