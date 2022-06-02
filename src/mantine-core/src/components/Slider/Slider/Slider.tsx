@@ -89,6 +89,9 @@ export interface SliderProps
 
   /** Disables slider */
   disabled?: boolean;
+
+  /** Thumb width and height in px */
+  thumbSize?: number;
 }
 
 const defaultProps: Partial<SliderProps> = {
@@ -134,6 +137,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     thumbChildren,
     disabled,
     unstyled,
+    thumbSize,
     ...others
   } = useComponentDefaultProps('Slider', defaultProps, props);
 
@@ -280,6 +284,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
           unstyled={unstyled}
+          thumbSize={thumbSize}
         >
           {thumbChildren}
         </Thumb>

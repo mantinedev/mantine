@@ -98,6 +98,9 @@ export interface RangeSliderProps
 
   /** Disables slider */
   disabled?: boolean;
+
+  /** Thumb width and height in px */
+  thumbSize?: number;
 }
 
 const defaultProps: Partial<RangeSliderProps> = {
@@ -147,6 +150,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     thumbChildren,
     disabled,
     unstyled,
+    thumbSize,
     ...others
   } = useComponentDefaultProps('RangeSlider', defaultProps, props);
 
@@ -417,6 +421,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
           unstyled={unstyled}
+          thumbSize={thumbSize}
         >
           {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
         </Thumb>
@@ -436,6 +441,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
           showLabelOnHover={showLabelOnHover && hovered}
           disabled={disabled}
           unstyled={unstyled}
+          thumbSize={thumbSize}
         >
           {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
         </Thumb>

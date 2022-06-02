@@ -36,6 +36,15 @@ function RangeWrapper(
   );
 }
 
+function ThumbSize() {
+  return (
+    <div style={{ width: 380, padding: 40 }}>
+      <Slider thumbSize={40} defaultValue={20} />
+      <RangeSlider thumbSize={40} mt="xl" defaultValue={[20, 80]} />
+    </div>
+  );
+}
+
 function Disabled() {
   const [disabled, handlers] = useDisclosure(true);
 
@@ -148,22 +157,6 @@ storiesOf('Slider', module)
   ))
   .add('Negative marks', () => (
     <div style={{ width: 380, padding: 40 }}>
-      {/* <Slider
-        min={-100}
-        max={100}
-        marks={[
-          { value: -100, label: '-100' },
-          { value: -75, label: '-75' },
-          { value: -50, label: '-50' },
-          { value: -25, label: '-25' },
-          { value: 0 },
-          { value: 25, label: '25' },
-          { value: 50, label: '50' },
-          { value: 75, label: '75' },
-          { value: 100, label: '100' },
-        ]}
-      /> */}
-
       <RangeSlider
         mt="xl"
         min={-100}
@@ -182,4 +175,5 @@ storiesOf('Slider', module)
         ]}
       />
     </div>
-  ));
+  ))
+  .add('Thumb size', () => <ThumbSize />);

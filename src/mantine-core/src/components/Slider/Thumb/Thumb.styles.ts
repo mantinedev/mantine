@@ -5,9 +5,10 @@ interface ThumbStyles {
   color: MantineColor;
   size: MantineNumberSize;
   disabled: boolean;
+  thumbSize: number;
 }
 
-export default createStyles((theme, { color, size, disabled }: ThumbStyles) => ({
+export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbStyles) => ({
   label: {
     position: 'absolute',
     top: -36,
@@ -25,8 +26,8 @@ export default createStyles((theme, { color, size, disabled }: ThumbStyles) => (
     boxSizing: 'border-box',
     position: 'absolute',
     display: disabled ? 'none' : 'flex',
-    height: theme.fn.size({ sizes, size }) * 2,
-    width: theme.fn.size({ sizes, size }) * 2,
+    height: thumbSize || theme.fn.size({ sizes, size }) * 2,
+    width: thumbSize || theme.fn.size({ sizes, size }) * 2,
     backgroundColor:
       theme.colorScheme === 'dark'
         ? theme.fn.themeColor(color, theme.fn.primaryShade())
