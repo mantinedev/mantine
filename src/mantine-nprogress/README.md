@@ -1,4 +1,4 @@
-# Mantine NProgress
+# Mantine Navigation Progress
 
 A navigation progress bar
 

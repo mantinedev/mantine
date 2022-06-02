@@ -4,9 +4,9 @@ package: '@mantine/nprogress'
 title: 'Navigation progress'
 order: 1
 slug: /others/nprogress/
-description: 'A navigation progress bar'
-props: ['NProgress']
-import: "import { NProgress } from '@mantine/nprogress';"
+description: 'Navigation progress bar'
+props: ['NavigationProgress']
+import: "import { NavigationProgress } from '@mantine/nprogress';"
 source: 'mantine-nprogress/src'
 docs: 'others/nprogress.mdx'
 installation: '@mantine/nprogress'
@@ -31,18 +31,18 @@ Install with yarn:
 yarn add @mantine/nprogress @mantine/core @mantine/hooks
 ```
 
-## Setup NProgress
+## Setup NavigationProgress
 
-Add `NProgress` to your app:
+Render `NavigationProgress` anywhere in your app within [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
-import { NProgress } from '@mantine/nprogress';
+import { NavigationProgress } from '@mantine/nprogress';
 
 function App() {
   return (
     <MantineProvider>
-      <NProgress />
+      <NavigationProgress />
       <YourApp />
     </MantineProvider>
   );
@@ -53,37 +53,58 @@ function App() {
 
 <Demo data={NProgressDemos.usage} />
 
-## Event based functions
+## Usage with Next.js
 
-`@mantine/nprogress` exports several functions which can be used to perform certain actions
-from any part of your application:
+Create `RouterTransition` component that will handle router events:
 
 ```tsx
-// All functions can be called from anywhere (not only from components)
+// components/RouterTransition.tsx
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
-  addNProgress,
-  decreaseNProgress,
-  setNProgress,
-  startNProgress,
-  stopNProgress,
-  resetNProgress,
+  startNavigationProgress,
+  resetNavigationProgress,
+  NavigationProgress,
 } from '@mantine/nprogress';
 
-// Adds progress to the current progress
-addNProgress(10);
+export function RouterTransition() {
+  const router = useRouter();
 
-// Decreases the current progress
-decreaseNProgress(10);
+  useEffect(() => {
+    const handleStart = (url: string) => url !== router.asPath && startNavigationProgress();
+    const handleComplete = (url: string) => url === router.asPath && resetNavigationProgress();
 
-// Sets a custom progress
-setNProgress(50);
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
 
-// Starts the progress bar
-startNProgress();
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+  }, [router.asPath]);
 
-// Stops the progress bar
-stopNProgress();
+  return <NavigationProgress />;
+}
+```
 
-// Resets the progress bar
-resetNProgress();
+Then render it in `_app.tsx` within [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+// pages/_app.tsx
+import { AppProps } from 'next/app';
+import { MantineProvider } from '@mantine/core';
+import { RouterTransition } from '../components/RouterTransition';
+
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
+
+  return (
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <RouterTransition />
+      <Component {...pageProps} />
+    </MantineProvider>
+  );
+}
 ```

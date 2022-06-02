@@ -1,6 +1,11 @@
-import { OptionalPortal, Progress, useMantineTheme } from '@mantine/core';
+import {
+  OptionalPortal,
+  Progress,
+  useMantineTheme,
+  getDefaultZIndex,
+  MantineColor,
+} from '@mantine/core';
 import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
-import { getDefaultZIndex, MantineColor } from '@mantine/styles';
 import React, { useRef, useState } from 'react';
 import { useNavigationProgressEvents } from './events';
 
@@ -44,9 +49,9 @@ export function NavigationProgress({
   color,
   size = 3,
   stepInterval = 500,
-  transitionDuration = 600,
-  exitTimeout = 700,
-  exitTransitionDuration = 600,
+  transitionDuration = 300,
+  exitTimeout = 500,
+  exitTransitionDuration = 400,
   onFinish,
   autoReset = false,
   withinPortal = true,
