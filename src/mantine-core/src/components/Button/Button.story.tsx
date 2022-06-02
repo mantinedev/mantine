@@ -1,5 +1,6 @@
 import React from 'react';
 import { MANTINE_COLORS } from '@mantine/styles';
+import { IconExternalLink } from '@tabler/icons';
 import { Button } from './Button';
 import { Group } from '../Group';
 
@@ -46,5 +47,17 @@ export function CustomComponent() {
         Anchor
       </Button>
     </div>
+  );
+}
+
+export function WithIcon() {
+  return (
+    <Group style={{ padding: 40 }}>
+      <Button rightIcon={<IconExternalLink size={16} />}>Right icon</Button>
+      <Button leftIcon={<IconExternalLink size={16} />}>LeftIcon</Button>
+      <Button leftIcon={<IconExternalLink size={16} />} rightIcon={<IconExternalLink size={16} />}>
+        Both icons
+      </Button>
+    </Group>
   );
 }

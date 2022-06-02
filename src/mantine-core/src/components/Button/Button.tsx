@@ -127,6 +127,8 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       disabled={disabled || loading}
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
+      data-with-left-icon={!!leftIcon || undefined}
+      data-with-right-icon={!!rightIcon || undefined}
       ref={ref}
       unstyled={unstyled}
       {...others}
