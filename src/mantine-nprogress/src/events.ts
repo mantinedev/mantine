@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { createUseExternalEvents } from '@mantine/utils';
 
-type ValueOf<T> = T[keyof T];
+export type NavigationProgressEvents = {
+  start(): void;
+  stop(): void;
+  set(progress: number): void;
+  increment(progress: number): void;
+  decrement(progress: number): void;
+  reset(): void;
+};
 
-interface NProgressProps {
-  start: () => void;
-  stop: () => void;
-  set: (progress: number) => void;
-  add: (progress: number) => void;
-  decrease: (progress: number) => void;
-  reset: () => void;
-}
+export const [useNavigationProgressEvents, createEvent] =
+  createUseExternalEvents<NavigationProgressEvents>('mantine-nprogress');
 
 export const NPROGRESS_EVENTS = {
   add: 'mantine:add-nprogress',
@@ -20,53 +21,9 @@ export const NPROGRESS_EVENTS = {
   reset: 'mantine:reset-nprogress',
 } as const;
 
-export function createEvent(type: ValueOf<typeof NPROGRESS_EVENTS>, detail?: any) {
-  return new CustomEvent(type, { detail });
-}
-
-export function addNProgress(progress: number) {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.add, progress));
-}
-
-export function decreaseNProgress(progress: number) {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.decrease, progress));
-}
-
-export function setNProgress(progress: React.SetStateAction<number>) {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.set, progress));
-}
-
-export function startNProgress() {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.start));
-}
-
-export function stopNProgress() {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.stop));
-}
-
-export function resetNProgress() {
-  window.dispatchEvent(createEvent(NPROGRESS_EVENTS.reset));
-}
-
-export function useNProgressEvents(ctx: NProgressProps) {
-  const events = {
-    add: (event: any) => ctx.add(event.detail),
-    decrease: (event: any) => ctx.decrease(event.detail),
-    set: (event: any) => ctx.set(event.detail),
-    start: ctx.start,
-    stop: ctx.stop,
-    reset: ctx.reset,
-  };
-
-  useEffect(() => {
-    Object.keys(events).forEach((event) => {
-      window.addEventListener(NPROGRESS_EVENTS[event], events[event]);
-    });
-
-    return () => {
-      Object.keys(events).forEach((event) => {
-        window.removeEventListener(NPROGRESS_EVENTS[event], events[event]);
-      });
-    };
-  }, []);
-}
+export const startNavigationProgress = createEvent('start');
+export const stopNavigationProgress = createEvent('stop');
+export const resetNavigationProgress = createEvent('reset');
+export const setNavigationProgress = createEvent('set');
+export const incrementNavigationProgress = createEvent('increment');
+export const decrementNavigationProgress = createEvent('decrement');

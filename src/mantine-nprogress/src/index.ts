@@ -1,11 +1,11 @@
-export { NProgress } from './NProgress';
+export { NavigationProgress } from './NavigationProgress';
 export {
-  addNProgress,
-  decreaseNProgress,
-  setNProgress,
-  startNProgress,
-  stopNProgress,
-  resetNProgress,
+  startNavigationProgress,
+  stopNavigationProgress,
+  resetNavigationProgress,
+  setNavigationProgress,
+  incrementNavigationProgress,
+  decrementNavigationProgress,
 } from './events';
 
-export type { NProgressProps } from './NProgress';
+export type { NavigationProgressProps } from './NavigationProgress';

@@ -2,9 +2,9 @@ import { OptionalPortal, Progress, useMantineTheme } from '@mantine/core';
 import { useDidUpdate, useInterval, useReducedMotion } from '@mantine/hooks';
 import { getDefaultZIndex, MantineColor } from '@mantine/styles';
 import React, { useRef, useState } from 'react';
-import { useNProgressEvents } from './events';
+import { useNavigationProgressEvents } from './events';
 
-export interface NProgressProps {
+export interface NavigationProgressProps {
   /** The default progress */
   initialProgress?: number;
 
@@ -23,9 +23,6 @@ export interface NProgressProps {
   /** Step interval in ms */
   stepInterval?: number;
 
-  /** Progressbar animation timing function */
-  transitionTimingFunction?: string;
-
   /** Transition duration in ms */
   transitionDuration?: number;
 
@@ -42,12 +39,11 @@ export interface NProgressProps {
   zIndex?: React.CSSProperties['zIndex'];
 }
 
-export function NProgress({
+export function NavigationProgress({
   initialProgress = 0,
   color,
-  size = 2,
+  size = 3,
   stepInterval = 500,
-  transitionTimingFunction = 'ease',
   transitionDuration = 600,
   exitTimeout = 700,
   exitTransitionDuration = 600,
@@ -55,7 +51,7 @@ export function NProgress({
   autoReset = false,
   withinPortal = true,
   zIndex = getDefaultZIndex('max'),
-}: NProgressProps) {
+}: NavigationProgressProps) {
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reducedMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
@@ -83,8 +79,8 @@ export function NProgress({
   }, stepInterval);
 
   const set = (value: React.SetStateAction<number>) => setProgress(value);
-  const add = (value: number) => setProgress((c) => Math.min(c + value, 100));
-  const decrease = (value: number) => setProgress((c) => Math.max(c - value, 0));
+  const increment = (value: number) => setProgress((c) => Math.min(c + value, 100));
+  const decrement = (value: number) => setProgress((c) => Math.max(c - value, 0));
   const start = () => {
     interval.stop();
     interval.start();
@@ -95,15 +91,6 @@ export function NProgress({
     stop();
     setProgress(0);
     window.setTimeout(() => setUnmountProgress(false), 0);
-  };
-
-  const ctx = {
-    set,
-    add,
-    decrease,
-    start,
-    stop,
-    reset,
   };
 
   const cancelUnmount = () => {
@@ -122,7 +109,8 @@ export function NProgress({
   useDidUpdate(() => {
     if (_progress >= 100) {
       stop();
-      onFinish && onFinish();
+      onFinish?.();
+
       unmountRef.current = window.setTimeout(() => {
         unmountRef.current = null;
         setMounted(false);
@@ -142,7 +130,7 @@ export function NProgress({
     }
   }, [_progress]);
 
-  useNProgressEvents(ctx);
+  useNavigationProgressEvents({ start, stop, set, increment, decrement, reset });
 
   return (
     <OptionalPortal withinPortal={withinPortal}>
@@ -154,22 +142,23 @@ export function NProgress({
           color={color}
           styles={{
             root: {
+              position: 'fixed',
               top: 0,
               left: 0,
-              position: 'fixed',
+              right: 0,
               zIndex,
-              width: '100vw',
               backgroundColor: 'transparent',
               transitionProperty: 'opacity',
-              transitionTimingFunction,
+              transitionTimingFunction: theme.transitionTimingFunction,
               transitionDuration: `${
                 reducedMotion || _progress !== 100 ? 0 : exitTransitionDuration
               }ms`,
               opacity: mounted ? 1 : 0,
             },
             bar: {
+              position: 'relative',
               transitionProperty: 'width',
-              transitionTimingFunction,
+              transitionTimingFunction: theme.transitionTimingFunction,
               transitionDuration: `${reducedMotion || !mounted ? 0 : transitionDuration}ms`,
             },
           }}

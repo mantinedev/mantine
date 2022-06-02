@@ -2,4 +2,4 @@ import { storiesOf } from '@storybook/react';
 import { attachDemos } from '../../attach-demos';
 import * as demos from './index';
 
-attachDemos(storiesOf('NProgress', module), demos);
+attachDemos(storiesOf('NavigationProgress', module), demos);
