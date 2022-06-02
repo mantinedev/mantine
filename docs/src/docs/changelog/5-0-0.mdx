@@ -22,6 +22,7 @@ import {
   InputDemos,
   ModalDemos,
   NProgressDemos,
+  RangeCalendarDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -145,19 +146,6 @@ were migrated to [Floating UI](https://floating-ui.com/) from popper.js:
 - `position` and `placement` props were merged into `position` prop, for example, `position="top-start"`
 - Popper component is no longer exported from `@mantine/core` package
 
-## Styles API changes
-
-- data attributes
-- params with styles attribute
-- variants handling changes
-
-### Inputs styles API
-
-You can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/styles/styles-api/)
-on [MantineProvider](https://mantine.dev/theming/mantine-provider/) to add styles to all Inputs:
-
-<Demo data={InputDemos.providerStyles} />
-
 ## MantineProvider changes
 
 ### defaultProps, styles and classNames props
@@ -213,6 +201,22 @@ function App() {
   );
 }
 ```
+
+## Styles API changes
+
+### data- attributes
+
+Most of components state were migrated to `data-` attributes. This allows to override styles
+more predictably without using `!important` and reduces complexity of components Styles API.
+
+<Demo data={RangeCalendarDemos.stylesApi} demoProps={{ toggle: true }} />
+
+### Inputs styles API
+
+You can use `Input` and `Input.Wrapper` [Styles API](https://mantine.dev/styles/styles-api/)
+on [MantineProvider](https://mantine.dev/theming/mantine-provider/) to add styles to all Inputs:
+
+<Demo data={InputDemos.providerStyles} demoProps={{ toggle: true }} />
 
 ## Polymorphic components changes
 
