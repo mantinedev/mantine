@@ -51,6 +51,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       hideOutsideDates,
       renderDay,
       unstyled,
+      disabled,
       ...others
     }: DayProps,
     ref
@@ -65,22 +66,18 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         {...others}
         type="button"
         ref={ref}
+        disabled={disabled}
         onMouseEnter={(event) => onMouseEnter(value, event)}
         tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
         data-autofocus={getDayAutofocus({ hasValue, selected, firstInMonth })}
         data-mantine-stop-propagation
-        className={cx(
-          classes.day,
-          {
-            [classes.outside]: outside,
-            [classes.weekend]: weekend,
-            [classes.selected]: selected,
-            [classes.inRange]: inRange,
-            [classes.firstInRange]: firstInRange,
-            [classes.lastInRange]: lastInRange,
-          },
-          className
-        )}
+        data-outside={(outside && !disabled) || undefined}
+        data-weekend={(weekend && !disabled) || undefined}
+        data-selected={(selected && !disabled) || undefined}
+        data-in-range={(inRange && !disabled) || undefined}
+        data-first-in-range={(firstInRange && !disabled) || undefined}
+        data-last-in-range={(lastInRange && !disabled) || undefined}
+        className={cx(classes.day, className)}
       >
         {typeof renderDay === 'function' ? renderDay(value) : value.getDate()}
       </button>
