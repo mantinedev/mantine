@@ -23,6 +23,7 @@ import {
   ModalDemos,
   NProgressDemos,
   RangeCalendarDemos,
+  SliderDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -405,6 +406,13 @@ form layouts if default `Input.Wrapper` layout does not fit your requirements:
 - `inheritPadding` prop will add the same left and right padding to `Card.Section` as set in `Card` component
 
 <Demo data={CardDemos.section} demoProps={{ toggle: true }} />
+
+### Slider thumbSize
+
+[Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `thumbSize` prop
+to configure thumbs width and height from prop:
+
+<Demo data={SliderDemos.thumbSize} />
 
 ## Other changes
 
