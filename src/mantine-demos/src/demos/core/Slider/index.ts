@@ -6,3 +6,4 @@ export { step } from './Slider.demo.step';
 export { changeEnd } from './Slider.demo.changeEnd';
 export { disabled } from './Slider.demo.disabled';
 export { thumbSize } from './Slider.demo.thumbSize';
+export { thumbChildren } from './Slider.demo.thumbChildren';
