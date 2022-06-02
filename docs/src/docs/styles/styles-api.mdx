@@ -141,6 +141,20 @@ components, you can change shared styles on MantineProvider:
 Apart from `classNames` and `styles` props, each component also has static classes on each element.
 You can use them to apply your styles if you do not use CSS modules or just do not want to pass `classNames` prop.
 
+## Unstyled components
+
+All Mantine components support `unstyled` prop which removes all non-essential Mantine styles
+from the component. This is useful when you want to add new components styles with Styles API
+without overriding default styles.
+
+Unstyled [Tabs](https://mantine.dev/core/tabs/):
+
+<Demo data={TabsDemos.unstyled} demoProps={{ toggle: true }} />
+
+Unstyled [Accordion](https://mantine.dev/core/accordion/):
+
+<Demo data={AccordionDemos.unstyled} demoProps={{ toggle: true }} />
+
 ## Examples
 
 ### Tabs
