@@ -14,9 +14,9 @@ export default createStyles((theme, { padding, radius }: DropzoneStylesParams) =
       ...theme.fn.fontStyles(),
       ...theme.fn.focusStyles(),
       boxSizing: 'border-box',
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       border: `2px dashed ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+        theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
       }`,
       padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
       borderRadius: theme.fn.radius(radius),
@@ -26,7 +26,7 @@ export default createStyles((theme, { padding, radius }: DropzoneStylesParams) =
       position: 'relative',
 
       '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       },
     },
 

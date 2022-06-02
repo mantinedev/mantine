@@ -21,16 +21,16 @@ export default createStyles(
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
         padding: spacing,
       },
 
       dropzone: {
         ...theme.fn.fontStyles(),
         boxSizing: 'border-box',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `2px dashed ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4]
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
         }`,
         padding: theme.fn.size({ size: padding, sizes: theme.spacing }),
         borderRadius: theme.fn.radius(radius),
