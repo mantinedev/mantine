@@ -69,12 +69,12 @@ export function variant(theme: MantineThemeBase) {
 
     if (variant === 'outline') {
       return {
-        border: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : getPrimaryShade('light')),
+        border: getThemeColor(color, theme.colorScheme === 'dark' ? 5 : getPrimaryShade('light')),
         background: 'transparent',
-        color: getThemeColor(color, theme.colorScheme === 'dark' ? 4 : getPrimaryShade('light')),
+        color: getThemeColor(color, theme.colorScheme === 'dark' ? 5 : getPrimaryShade('light')),
         hover:
           theme.colorScheme === 'dark'
-            ? rgba(getThemeColor(color, 4), 0.05)
+            ? rgba(getThemeColor(color, 5), 0.05)
             : rgba(getThemeColor(color, 0), 0.35),
       };
     }
