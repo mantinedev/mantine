@@ -75,6 +75,7 @@ export default createStyles(
         alignItems: 'center',
         fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
         fontWeight: 600,
+        cursor: theme.cursorType,
 
         '&::before': {
           zIndex: 1,
@@ -149,6 +150,7 @@ export default createStyles(
         fontFamily: theme.fontFamily,
         paddingLeft: theme.spacing.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        cursor: theme.cursorType,
       },
     };
   }
