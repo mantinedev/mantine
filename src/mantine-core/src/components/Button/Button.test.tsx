@@ -22,6 +22,7 @@ describe('@mantine/core/Button', () => {
     displayName: '@mantine/core/Button',
     refType: HTMLButtonElement,
     providerName: 'Button',
+    excludePadding: true,
   });
 
   it('passes type to button component', () => {
