@@ -21,6 +21,7 @@ import {
   FileButtonDemos,
   InputDemos,
   ModalDemos,
+  NProgressDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -245,6 +246,14 @@ type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { 
 - [use-toggle](https://mantine.dev/hooks/use-toggle/) hook API was changed, it no longer accepts initial value as first argument
 - [use-intersection](https://mantine.dev/hooks/use-intersection/) hook API was changed to keep API consistent across all hooks
 - [use-notifications](https://mantine.dev/others/notifications/) hook from `@mantine/notifications` package no longer has `showNotification`, `hideNotification` and other functions, use separate functions exported from the package for that
+
+## @mantine/nprogress package
+
+New [@mantine/nprogress](https://mantine.dev/others/nprogress/) package displays navigation
+progress bar at the top of the page, it can be easily integrated with Next.js and other similar
+frameworks:
+
+<Demo data={NProgressDemos.usage} />
 
 ## React 18 support
 
