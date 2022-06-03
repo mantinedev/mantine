@@ -59,6 +59,9 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkSt
 
   /** Key of theme.spacing or number to set collapsed links padding-left in px */
   childrenOffset?: MantineNumberSize;
+
+  /** Adds disabled styles to root element */
+  disabled?: boolean;
 }
 
 const defaultProps: Partial<NavLinkProps> = {
@@ -86,13 +89,14 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
     onChange,
     disableRightSectionRotation,
     childrenOffset,
+    disabled,
     // @ts-expect-error
     onClick,
     ...others
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, variant, noWrap, childrenOffset },
+    { color, variant, noWrap, childrenOffset, alignIcon: description ? 'top' : 'center' },
     { name: 'NavLink', classNames, styles, unstyled }
   );
 
@@ -124,6 +128,8 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
         onClick={handleClick}
         unstyled={unstyled}
         data-expanded={_opened || undefined}
+        data-disabled={disabled || undefined}
+        disabled={disabled}
         {...others}
       >
         <span className={classes.icon}>{icon}</span>

@@ -5,10 +5,11 @@ export interface NavLinkStylesParams {
   variant: 'filled' | 'light' | 'subtle';
   noWrap: boolean;
   childrenOffset: MantineNumberSize;
+  alignIcon: 'top' | 'center';
 }
 
 export default createStyles(
-  (theme, { color, variant, noWrap, childrenOffset }: NavLinkStylesParams) => {
+  (theme, { color, variant, noWrap, childrenOffset, alignIcon }: NavLinkStylesParams) => {
     const colors = theme.fn.variant({ variant, color });
     return {
       root: {
@@ -16,6 +17,7 @@ export default createStyles(
         alignItems: 'center',
         width: '100%',
         padding: `8px ${theme.spacing.sm}px`,
+        userSelect: 'none',
 
         ...theme.fn.hover({
           backgroundColor:
@@ -27,6 +29,11 @@ export default createStyles(
           color: colors.color,
           ...theme.fn.hover({ backgroundColor: colors.hover }),
         },
+
+        '&[data-disabled]': {
+          opacity: 0.4,
+          pointerEvents: 'none',
+        },
       },
 
       icon: {
@@ -34,6 +41,8 @@ export default createStyles(
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: alignIcon === 'center' ? 'center' : 'flex-start',
+        paddingTop: alignIcon === 'center' ? undefined : 4,
       },
 
       rightSection: {
