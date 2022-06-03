@@ -63,3 +63,20 @@ export function Usage() {
     </div>
   );
 }
+
+export function WithNestedItems() {
+  return (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <NavLink label="With nested links 1" icon={<IconHome2 size={16} stroke={1.5} />}>
+        <NavLink label="Child link 1" icon={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 2" icon={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 3" icon={<IconHome2 size={16} stroke={1.5} />} />
+      </NavLink>
+      <NavLink label="With nested links 2" icon={<IconHome2 size={16} stroke={1.5} />}>
+        <NavLink label="Child link 1" icon={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 2" icon={<IconHome2 size={16} stroke={1.5} />} />
+        <NavLink label="Child link 3" icon={<IconHome2 size={16} stroke={1.5} />} />
+      </NavLink>
+    </div>
+  );
+}
