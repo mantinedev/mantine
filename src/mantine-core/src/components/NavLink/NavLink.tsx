@@ -1,6 +1,12 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import {
+  DefaultProps,
+  MantineColor,
+  MantineNumberSize,
+  Selectors,
+  useComponentDefaultProps,
+} from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { useUncontrolled } from '@mantine/hooks';
 import { UnstyledButton } from '../UnstyledButton';
@@ -50,10 +56,14 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames> {
 
   /** If set to true, right section will not rotate when collapse is opened */
   disableRightSectionRotation?: boolean;
+
+  /** Key of theme.spacing or number to set collapsed links padding-left in px */
+  childrenOffset?: MantineNumberSize;
 }
 
 const defaultProps: Partial<NavLinkProps> = {
   variant: 'light',
+  childrenOffset: 'lg',
 };
 
 export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref) => {
@@ -74,14 +84,15 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
     opened,
     defaultOpened,
     onChange,
+    disableRightSectionRotation,
+    childrenOffset,
     // @ts-expect-error
     onClick,
-    disableRightSectionRotation,
     ...others
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, variant, noWrap },
+    { color, variant, noWrap, childrenOffset },
     { name: 'NavLink', classNames, styles, unstyled }
   );
 
@@ -139,7 +150,9 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
             : rightSection}
         </span>
       </UnstyledButton>
-      <Collapse in={_opened}>{children}</Collapse>
+      <Collapse in={_opened}>
+        <div className={classes.children}>{children}</div>
+      </Collapse>
     </>
   );
 });
