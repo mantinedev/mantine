@@ -63,6 +63,7 @@ export default createStyles(
       stepWrapper: {
         position: 'relative',
         overflow: 'hidden',
+        flexShrink: 0,
         marginBottom: separatorDistanceFromIcon,
       },
 
