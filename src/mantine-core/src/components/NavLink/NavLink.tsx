@@ -158,4 +158,6 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
   );
 });
 
+_NavLink.displayName = '@mantine/core/NavLink';
+
 export const NavLink = createPolymorphicComponent<'button', NavLinkProps>(_NavLink);
