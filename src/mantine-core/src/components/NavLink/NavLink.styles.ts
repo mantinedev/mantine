@@ -1,38 +1,56 @@
-import { createStyles } from '@mantine/styles';
+import { createStyles, MantineColor } from '@mantine/styles';
 
-export default createStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-    padding: `${theme.spacing.xs / 2}px ${theme.spacing.sm}px`,
+export interface NavLinkStylesParams {
+  color: MantineColor;
+  variant: 'filled' | 'light' | 'subtle';
+}
 
-    ...theme.fn.hover({
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    }),
-  },
+export default createStyles((theme, { color, variant }: NavLinkStylesParams) => {
+  const colors = theme.fn.variant({ variant, color });
+  return {
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      padding: `8px ${theme.spacing.sm}px`,
 
-  icon: {
-    marginRight: theme.spacing.sm,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      ...theme.fn.hover({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      }),
 
-  rightSection: {
-    marginLeft: theme.spacing.sm,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+      '&[data-active]': {
+        backgroundColor: colors.background,
+        color: colors.color,
+        ...theme.fn.hover({ backgroundColor: colors.hover }),
+      },
+    },
 
-  body: {
-    flex: 1,
-  },
+    icon: {
+      marginRight: theme.spacing.sm,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 
-  label: {},
+    rightSection: {
+      marginLeft: theme.spacing.sm,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 
-  description: {
-    display: 'block',
-  },
-}));
+    body: {
+      flex: 1,
+    },
+
+    label: {},
+
+    description: {
+      display: 'block',
+
+      '&[data-active]': {
+        color: 'inherit',
+      },
+    },
+  };
+});

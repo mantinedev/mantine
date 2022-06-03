@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef } from 'react';
-import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
 import useStyles from './NavLink.styles';
@@ -20,7 +20,20 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames> {
 
   /** Section displayed on the right side of the label */
   rightSection?: React.ReactNode;
+
+  /** Determines whether link should have active styles */
+  active?: boolean;
+
+  /** Key of theme.colors, active link color */
+  color?: MantineColor;
+
+  /** Active link variant */
+  variant?: 'filled' | 'light' | 'subtle';
 }
+
+const defaultProps: Partial<NavLinkProps> = {
+  variant: 'light',
+};
 
 export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref) => {
   const {
@@ -32,19 +45,36 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
     classNames,
     styles,
     unstyled,
+    active,
+    color,
+    variant,
     ...others
-  } = useComponentDefaultProps('NavLink', {}, props);
+  } = useComponentDefaultProps('NavLink', defaultProps, props);
 
-  const { classes, cx } = useStyles(null, { name: 'NavLink', classNames, styles, unstyled });
+  const { classes, cx } = useStyles(
+    { color, variant },
+    { name: 'NavLink', classNames, styles, unstyled }
+  );
 
   return (
-    <UnstyledButton ref={ref} className={cx(classes.root, className)} {...others}>
+    <UnstyledButton
+      ref={ref}
+      className={cx(classes.root, className)}
+      data-active={active || undefined}
+      {...others}
+    >
       <span className={classes.icon}>{icon}</span>
       <span className={classes.body}>
         <Text component="span" size="sm" className={classes.label}>
           {label}
         </Text>
-        <Text component="span" color="dimmed" size="xs" className={classes.description}>
+        <Text
+          component="span"
+          color="dimmed"
+          size="xs"
+          data-active={active || undefined}
+          className={classes.description}
+        >
           {description}
         </Text>
       </span>
