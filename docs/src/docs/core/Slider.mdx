@@ -93,7 +93,12 @@ You can change styles of any element in slider component with [Styles API](/styl
 
 <Demo data={SliderDemos.customize} />
 
-## Accessibility and usability
+## Vertical slider
+
+Slider and RangeSlider do not provide vertical orientation as it is very rarely used.
+If you need this feature you should build it yourself with [use-move](/hooks/use-move/) hook.
+
+## Accessibility
 
 Slider and RangeSlider components are accessible by default:
 
@@ -107,3 +112,20 @@ To label component for screen readers, add labels to thumbs:
 <Slider thumbLabel="Thumb aria-label" />
 <RangeSlider thumbFromLabel="First thumb aria-label" thumbToLabel="Second thumb aria-label" />
 ```
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight/ArrowUp',
+      description: 'Increases slider value by one step',
+    },
+    {
+      key: 'ArrowLeft/ArrowDown',
+      description: 'Decreases slider value by one step',
+    },
+    { key: 'Home', description: 'Sets slider value to min value' },
+    { key: 'End', description: 'Sets slider value to max value' },
+  ]}
+/>
