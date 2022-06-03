@@ -65,6 +65,7 @@ export * as MenuDemos from './demos/core/Menu';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
+export * as NavLinkDemos from './demos/core/NavLink';
 export * as NotificationDemos from './demos/core/Notification';
 export * as NumberInputDemos from './demos/core/NumberInput';
 export * as OverlayDemos from './demos/core/Overlay';
