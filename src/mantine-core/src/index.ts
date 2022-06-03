@@ -52,6 +52,7 @@ export * from './components/Menu';
 export * from './components/Modal';
 export * from './components/MultiSelect';
 export * from './components/NativeSelect';
+export * from './components/NavLink';
 export * from './components/Notification';
 export * from './components/NumberInput';
 export * from './components/Overlay';

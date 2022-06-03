@@ -12,12 +12,12 @@ import { useUncontrolled } from '@mantine/hooks';
 import { UnstyledButton } from '../UnstyledButton';
 import { ChevronIcon } from '../Accordion';
 import { Collapse } from '../Collapse';
-import useStyles from './NavLink.styles';
 import { Text } from '../Text';
+import useStyles, { NavLinkStylesParams } from './NavLink.styles';
 
 export type NavLinkStylesNames = Selectors<typeof useStyles>;
 
-export interface NavLinkProps extends DefaultProps<NavLinkStylesNames> {
+export interface NavLinkProps extends DefaultProps<NavLinkStylesNames, NavLinkStylesParams> {
   /** Main link content */
   label?: React.ReactNode;
 
@@ -122,6 +122,7 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
         className={cx(classes.root, className)}
         data-active={active || undefined}
         onClick={handleClick}
+        unstyled={unstyled}
         {...others}
       >
         <span className={classes.icon}>{icon}</span>
