@@ -26,6 +26,7 @@ export * from './Menu.styles-api';
 export * from './Modal.styles-api';
 export * from './MultiSelect.styles-api';
 export * from './NativeSelect.styles-api';
+export * from './NavLink.styles-api';
 export * from './Notification.styles-api';
 export * from './NumberInput.styles-api';
 export * from './Pagination.styles-api';
