@@ -13,6 +13,11 @@ export function Usage() {
         icon={<IconHome2 size={16} stroke={1.5} />}
         rightSection={<IconChevronRight size={16} stroke={1.5} />}
       />
+      <NavLink
+        label="Navigation link"
+        icon={<IconHome2 size={16} stroke={1.5} />}
+        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+      />
     </div>
   );
 }

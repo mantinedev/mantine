@@ -4,6 +4,7 @@ import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styl
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
 import useStyles from './NavLink.styles';
+import { Text } from '../Text';
 
 export type NavLinkStylesNames = Selectors<typeof useStyles>;
 
@@ -38,10 +39,16 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
 
   return (
     <UnstyledButton ref={ref} className={cx(classes.root, className)} {...others}>
-      {icon}
-      {label}
-      {description}
-      {rightSection}
+      <span className={classes.icon}>{icon}</span>
+      <span className={classes.body}>
+        <Text component="span" size="sm" className={classes.label}>
+          {label}
+        </Text>
+        <Text component="span" color="dimmed" size="xs" className={classes.description}>
+          {description}
+        </Text>
+      </span>
+      <span className={classes.rightSection}>{rightSection}</span>
     </UnstyledButton>
   );
 });
