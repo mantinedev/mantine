@@ -47,6 +47,9 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames> {
 
   /** Called when open state changes */
   onChange?(opened: boolean): void;
+
+  /** If set to true, right section will not rotate when collapse is opened */
+  disableRightSectionRotation?: boolean;
 }
 
 const defaultProps: Partial<NavLinkProps> = {
@@ -73,6 +76,7 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
     onChange,
     // @ts-expect-error
     onClick,
+    disableRightSectionRotation,
     ...others
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
@@ -124,8 +128,15 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
             {description}
           </Text>
         </span>
-        <span className={classes.rightSection}>
-          {withChildren ? rightSection || <ChevronIcon width={14} height={14} /> : rightSection}
+        <span
+          className={classes.rightSection}
+          data-rotate={(_opened && !disableRightSectionRotation) || undefined}
+        >
+          {withChildren
+            ? rightSection || (
+                <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+              )
+            : rightSection}
         </span>
       </UnstyledButton>
       <Collapse in={_opened}>{children}</Collapse>

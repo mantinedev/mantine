@@ -38,6 +38,11 @@ export default createStyles((theme, { color, variant, noWrap }: NavLinkStylesPar
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      transition: `transform 150ms ${theme.transitionTimingFunction}`,
+
+      '&[data-rotate]': {
+        transform: 'rotate(90deg)',
+      },
     },
 
     body: {
