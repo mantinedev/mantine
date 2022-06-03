@@ -1,28 +1,26 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export function useTimeout(
   fn: () => void,
   delay: number,
-  options: { autoInvoke: boolean } = { autoInvoke: true }
+  options: { autoInvoke: boolean } = { autoInvoke: false }
 ) {
-  const [active, setActive] = useState(false);
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<number>(null);
 
   const start = () => {
-    setActive((old) => {
-      if (!old) {
-        timeoutRef.current = window.setTimeout(() => {
-          setActive(false);
-          fn();
-        }, delay);
-      }
-      return true;
-    });
+    if (!timeoutRef.current) {
+      timeoutRef.current = window.setTimeout(() => {
+        fn();
+        timeoutRef.current = null;
+      }, delay);
+    }
   };
 
   const clear = () => {
-    setActive(false);
-    window.clearTimeout(timeoutRef.current);
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   };
 
   useEffect(() => {
@@ -30,11 +28,7 @@ export function useTimeout(
       start();
     }
 
-    return () => {
-      if (active) {
-        clear();
-      }
-    };
+    return clear;
   }, [delay]);
 
   return { start, clear };

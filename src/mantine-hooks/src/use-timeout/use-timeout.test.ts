@@ -39,9 +39,7 @@ describe('@mantine/hooks/use-timeout', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer();
     renderHook(() => useTimeout(callback, timeout, { autoInvoke: false }));
 
-    act(() => {
-      advanceTimerToNextTick();
-    });
+    advanceTimerToNextTick();
 
     expect(callback).not.toHaveBeenCalled();
     expect(setTimeout).not.toHaveBeenCalled();
@@ -56,21 +54,17 @@ describe('@mantine/hooks/use-timeout', () => {
       hook.result.current.start();
     });
 
-    act(() => {
-      advanceTimerToNextTick();
-    });
+    advanceTimerToNextTick();
 
     expect(callback).toHaveBeenCalled();
     expect(setTimeout).toHaveBeenCalled();
   });
 
-  it('callback is called after delay is elapsed, with default autoInvoke i.e true', () => {
+  it('callback should fire without calling start when autoInvoke is true', () => {
     const { timeout, advanceTimerToNextTick } = setupTimer(null);
-    renderHook(() => useTimeout(callback, timeout));
+    renderHook(() => useTimeout(callback, timeout, { autoInvoke: true }));
 
-    act(() => {
-      advanceTimerToNextTick();
-    });
+    advanceTimerToNextTick();
 
     expect(callback).toBeCalled();
     expect(setTimeout).toHaveBeenCalled();
@@ -88,9 +82,7 @@ describe('@mantine/hooks/use-timeout', () => {
       hook.result.current.clear();
     });
 
-    act(() => {
-      advanceTimerToNextTick();
-    });
+    advanceTimerToNextTick();
 
     expect(callback).not.toBeCalled();
     expect(setTimeout).toHaveBeenCalled();

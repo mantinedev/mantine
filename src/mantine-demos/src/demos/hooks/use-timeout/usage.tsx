@@ -8,8 +8,8 @@ import { Group, Button, Text } from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
 
 function Demo() {
-  const [triggered, setTriggered] = useState(true);
-  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: true });
+  const [triggered, setTriggered] = useState(false);
+  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: false });
 
   const handleClick = () => {
     if (triggered) {
@@ -33,8 +33,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const [triggered, setTriggered] = useState(true);
-  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: true });
+  const [triggered, setTriggered] = useState(false);
+  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: false });
 
   const handleClick = () => {
     if (triggered) {
@@ -48,7 +48,7 @@ function Demo() {
 
   return (
     <Group position="center" direction="column">
-      <Text>{triggered ? 'Timer Ticking' : '5 seconds Elapsed'}</Text>
+      <Text>{triggered ? 'Timer Ticking' : 'Start a 5 second timer'}</Text>
       <Button onClick={handleClick} color={triggered ? 'red' : 'teal'} variant="light">
         {triggered ? 'Clear' : 'Start'}
       </Button>

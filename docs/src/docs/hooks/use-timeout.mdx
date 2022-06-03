@@ -5,7 +5,7 @@ category: 'state'
 title: 'use-timeout'
 order: 1
 slug: /hooks/use-timeout/
-description: 'Wrapper around window.setTimeout'
+description: 'Calls function after given timeout'
 import: "import { useTimeout } from '@mantine/hooks';"
 docs: 'hooks/use-timeout.mdx'
 source: 'mantine-hooks/src/use-timeout/use-timeout.ts'
@@ -20,14 +20,14 @@ import { HooksDemos } from '@mantine/demos';
 ## API
 
 ```tsx
-const { start, clear } = useTimeout(fn, delay, { autoInvoke: true });
+const { start, clear } = useTimeout(fn, delay, { autoInvoke: false });
 ```
 
 Arguments:
 
 - `fn` – function that will be called after the timer expires
 - `interval` – amount of milliseconds the timer should wait before the specified function is executed.
-- `options: { autoInvoke }` - If the timer should be invoked on component mount, defaults to true.   
+- `options: { autoInvoke }` - If the timer should be invoked on component mount, defaults to false.   
 
 Return object:
 
