@@ -14,6 +14,19 @@ export function Usage() {
         rightSection={<IconChevronRight size={16} stroke={1.5} />}
       />
       <NavLink
+        label="Navigation link with label text overflow"
+        description="And with description text overflow"
+        noWrap
+        icon={<IconHome2 size={16} stroke={1.5} />}
+        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+      />
+      <NavLink
+        label="Thislabelissolongthatitoverflowsitscontainernotnice"
+        description="Thislabelissolongthatitoverflowsitscontainernotnice"
+        icon={<IconHome2 size={16} stroke={1.5} />}
+        rightSection={<IconChevronRight size={16} stroke={1.5} />}
+      />
+      <NavLink
         label="Navigation link"
         description="Some description here"
         icon={<IconHome2 size={16} stroke={1.5} />}

@@ -3,9 +3,10 @@ import { createStyles, MantineColor } from '@mantine/styles';
 export interface NavLinkStylesParams {
   color: MantineColor;
   variant: 'filled' | 'light' | 'subtle';
+  noWrap: boolean;
 }
 
-export default createStyles((theme, { color, variant }: NavLinkStylesParams) => {
+export default createStyles((theme, { color, variant, noWrap }: NavLinkStylesParams) => {
   const colors = theme.fn.variant({ variant, color });
   return {
     root: {
@@ -41,6 +42,9 @@ export default createStyles((theme, { color, variant }: NavLinkStylesParams) => 
 
     body: {
       flex: 1,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: noWrap ? 'nowrap' : undefined,
     },
 
     label: {},

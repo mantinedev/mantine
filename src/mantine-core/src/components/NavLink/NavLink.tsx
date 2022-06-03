@@ -29,6 +29,9 @@ export interface NavLinkProps extends DefaultProps<NavLinkStylesNames> {
 
   /** Active link variant */
   variant?: 'filled' | 'light' | 'subtle';
+
+  /** If prop is set then label and description will not wrap on the next line */
+  noWrap?: boolean;
 }
 
 const defaultProps: Partial<NavLinkProps> = {
@@ -48,11 +51,12 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
     active,
     color,
     variant,
+    noWrap,
     ...others
   } = useComponentDefaultProps('NavLink', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, variant },
+    { color, variant, noWrap },
     { name: 'NavLink', classNames, styles, unstyled }
   );
 
