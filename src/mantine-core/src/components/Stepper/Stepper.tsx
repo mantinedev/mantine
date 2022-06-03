@@ -1,4 +1,4 @@
-import React, { forwardRef, Children } from 'react';
+import React, { forwardRef, Children, cloneElement } from 'react';
 import {
   MantineColor,
   DefaultProps,
@@ -8,7 +8,6 @@ import {
   useComponentDefaultProps,
 } from '@mantine/styles';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { findChildByType } from './find-child-by-type/find-child-by-type';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
@@ -102,40 +101,39 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
     { classNames, styles, unstyled, name: 'Stepper' }
   );
 
-  const _children = Children.toArray(children) as React.ReactElement[];
-  const completedStep = findChildByType(children, StepCompleted);
+  const convertedChildren = Children.toArray(children) as React.ReactElement[];
+  const _children = convertedChildren.filter((child) => child.type !== StepCompleted);
+  const completedStep = convertedChildren.find((item) => item.type === StepCompleted);
 
-  const items = _children.reduce<React.ReactNode[]>((acc, item, index, array) => {
+  const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
     const shouldAllowSelect =
       typeof item.props.allowStepSelect === 'boolean'
         ? item.props.allowStepSelect
         : typeof onStepClick === 'function';
 
     acc.push(
-      <Step
-        {...item.props}
-        __staticSelector="Stepper"
-        icon={item.props.icon || index + 1}
-        key={index}
-        state={
-          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
-        }
-        onClick={() => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)}
-        allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
-        completedIcon={item.props.completedIcon || completedIcon}
-        progressIcon={item.props.progressIcon || progressIcon}
-        color={item.props.color || color}
-        iconSize={iconSize}
-        size={size}
-        radius={radius}
-        classNames={classNames}
-        styles={styles}
-        iconPosition={item.props.iconPosition || iconPosition}
-        unstyled={unstyled}
-      />
+      cloneElement(item, {
+        __staticSelector: 'Stepper',
+        icon: item.props.icon || index + 1,
+        key: index,
+        state:
+          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive',
+        onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
+        allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
+        completedIcon: item.props.completedIcon || completedIcon,
+        progressIcon: item.props.progressIcon || progressIcon,
+        color: item.props.color || color,
+        iconSize,
+        size,
+        radius,
+        classNames,
+        styles,
+        iconPosition: item.props.iconPosition || iconPosition,
+        unstyled,
+      })
     );
 
-    if (index !== array.length - 1) {
+    if (index !== _children.length - 1) {
       acc.push(
         <div
           className={cx(classes.separator, { [classes.separatorActive]: index < active })}

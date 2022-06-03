@@ -4,6 +4,15 @@ import { MANTINE_SIZES } from '@mantine/styles';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stepper, StepperProps } from './Stepper';
+import { StepProps } from './Step/Step';
+
+function StepWrapper(props: StepProps) {
+  return (
+    <Stepper.Step label="Second" description="Second description" {...props}>
+      Second step content here
+    </Stepper.Step>
+  );
+}
 
 function Wrapper(props: Partial<StepperProps>) {
   const [active, setActive] = useState(1);
@@ -14,9 +23,7 @@ function Wrapper(props: Partial<StepperProps>) {
         <Stepper.Step label="First" description="First description">
           First step content here
         </Stepper.Step>
-        <Stepper.Step label="Second" description="Second description">
-          Second step content here
-        </Stepper.Step>
+        <StepWrapper />
         <Stepper.Step label="Last" description="Last description">
           Last step content here
         </Stepper.Step>
