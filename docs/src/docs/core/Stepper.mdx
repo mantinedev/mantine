@@ -119,6 +119,60 @@ function MyStepper() {
 }
 ```
 
+## Wrap Stepper.Step
+
+`Stepper` component relies on `Stepper.Step` order, if you want to wrap `Stepper.Step` component you will
+need to spread `...others`:
+
+```tsx
+import { Stepper, StepProps } from '@mantine/core';
+
+function SecondStep(props: StepProps) {
+  return (
+    <Stepper.Step label="Second" description="Second description" {...props}>
+      Second step content here
+    </Stepper.Step>
+  );
+}
+
+function Demo() {
+  return (
+    <Stepper active={1}>
+      <Stepper.Step label="Regular step">Fist step</Stepper.Step>
+      <SecondStep />
+      <Stepper.Step label="Regular step">Third step</Stepper.Step>
+    </Stepper>
+  );
+}
+```
+
+Note that:
+
+- `Stepper.Completed` component **cannot be wrapped with other components**
+- Any additional nodes rendered within `Stepper` will output unexpected separators
+
+```tsx
+import { Stepper, StepProps } from '@mantine/core';
+
+// Do not wrap Stepper.Completed with any components,
+// create a component that will be rendered within it instead.
+function Completed() {
+  return <div>Completed</div>;
+}
+
+function Demo() {
+  return (
+    <Stepper active={1}>
+      <Stepper.Step>Fist step</Stepper.Step>
+      <Stepper.Step>Second step</Stepper.Step>
+      <Stepper.Completed>
+        <Completed />
+      </Stepper.Completed>
+    </Stepper>
+  );
+}
+```
+
 ## Accessibility
 
 `<Stepper.Step />` components render button element, set `aria-label` or `title` props
