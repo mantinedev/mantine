@@ -171,7 +171,7 @@ export function Modal(props: ModalProps) {
   const [, lockScroll] = useScrollLock();
 
   const closeOnEscapePress = (event: KeyboardEvent) => {
-    if (!trapFocus && event.code === 'Escape' && closeOnEscape) {
+    if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
@@ -215,7 +215,7 @@ export function Modal(props: ModalProps) {
               onKeyDownCapture={(event) => {
                 const shouldTrigger =
                   (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+                shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
               }}
               ref={focusTrapRef}
             >

@@ -28,7 +28,7 @@ export function useFocusReturn({
     let timeout = -1;
 
     const clearFocusTimeout = (event: KeyboardEvent) => {
-      if (event.code === 'Tab') {
+      if (event.key === 'Tab') {
         window.clearTimeout(timeout);
       }
     };

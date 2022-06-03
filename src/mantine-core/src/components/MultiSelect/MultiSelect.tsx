@@ -343,7 +343,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
-    if (event.nativeEvent.code !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
+    if (event.key !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
       return;
     }
 

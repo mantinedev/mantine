@@ -205,7 +205,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.code === 'Enter' && allowFreeInput) {
+      if (event.key === 'Enter' && allowFreeInput) {
         closeDropdown();
         setDateFromInput();
       }

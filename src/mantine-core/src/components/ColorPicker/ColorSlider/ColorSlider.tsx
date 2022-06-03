@@ -71,7 +71,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'ArrowRight': {
           handleArrow(event, { x: position.x + 0.05, y: position.y });
           break;

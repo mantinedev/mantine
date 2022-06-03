@@ -177,7 +177,7 @@ export function Drawer(props: DrawerProps) {
       : 0.75;
 
   const _closeOnEscape = (event: KeyboardEvent) => {
-    if (event.code === 'Escape' && closeOnEscape) {
+    if (event.key === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
@@ -221,7 +221,7 @@ export function Drawer(props: DrawerProps) {
                 const shouldTrigger =
                   (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
 
-                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+                shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
               }}
               shadow={shadow}
               p={padding}

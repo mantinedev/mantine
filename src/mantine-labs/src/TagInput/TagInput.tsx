@@ -223,7 +223,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'Enter': {
           if (inputValue) {
             event.preventDefault();

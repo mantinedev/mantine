@@ -50,7 +50,7 @@ export function Saturation({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    switch (event.nativeEvent.code) {
+    switch (event.key) {
       case 'ArrowUp': {
         handleArrow(event, { y: position.y - 0.05, x: position.x });
         break;

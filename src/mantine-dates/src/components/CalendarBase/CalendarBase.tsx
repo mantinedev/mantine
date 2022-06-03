@@ -161,7 +161,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       payload: DayKeydownPayload,
       event: React.KeyboardEvent<HTMLButtonElement>
     ) => {
-      switch (event.code) {
+      switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
 

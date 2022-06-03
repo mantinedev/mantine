@@ -139,7 +139,7 @@ export function RenderList({
   }
 
   const handleSearchKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (event.code) {
+    switch (event.key) {
       case 'Enter': {
         event.preventDefault();
         if (filteredData[hovered]) {

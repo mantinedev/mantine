@@ -213,7 +213,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     };
 
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.nativeEvent.code === 'Escape') {
+      if (event.key === 'Escape') {
         closeDropdown();
         window.setTimeout(() => inputRef.current?.focus(), 0);
       }
@@ -246,7 +246,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
-      if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
+      if ((event.key === 'Space' || event.key === 'Enter') && !allowFreeInput) {
         event.preventDefault();
         openDropdown();
       }

@@ -164,7 +164,7 @@ export function Spotlight({
   }, [groupedActions.length]);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (event.code) {
+    switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
         setHovered((current) => (current < groupedActions.length - 1 ? current + 1 : 0));

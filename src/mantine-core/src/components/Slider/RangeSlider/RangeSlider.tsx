@@ -277,7 +277,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!disabled) {
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'ArrowUp': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();

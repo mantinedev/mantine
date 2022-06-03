@@ -73,7 +73,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp') {
+      if (event.key === 'ArrowUp') {
         event.preventDefault();
         const padded = padTime(
           clamp(parseInt(event.currentTarget.value, 10) + 1, max, min).toString()
@@ -84,7 +84,7 @@ export const TimeField = forwardRef<HTMLInputElement, TimeFieldProps>(
         }
       }
 
-      if (event.nativeEvent.code === 'ArrowDown') {
+      if (event.key === 'ArrowDown') {
         event.preventDefault();
         const padded = padTime(
           clamp(parseInt(event.currentTarget.value, 10) - 1, max, min).toString()
