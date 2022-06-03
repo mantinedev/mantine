@@ -123,6 +123,7 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
         data-active={active || undefined}
         onClick={handleClick}
         unstyled={unstyled}
+        data-expanded={_opened || undefined}
         {...others}
       >
         <span className={classes.icon}>{icon}</span>
