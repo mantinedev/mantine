@@ -183,7 +183,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!disabled) {
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'ArrowUp': {
           event.preventDefault();
           thumb.current.focus();
@@ -223,6 +223,22 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
           );
           onChangeEnd?.(nextValue);
           setValue(nextValue);
+          break;
+        }
+
+        case 'Home': {
+          event.preventDefault();
+          thumb.current.focus();
+          onChangeEnd?.(min);
+          setValue(min);
+          break;
+        }
+
+        case 'End': {
+          event.preventDefault();
+          thumb.current.focus();
+          onChangeEnd?.(max);
+          setValue(max);
           break;
         }
 
