@@ -130,10 +130,11 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
           classNames={classNames}
           styles={styles}
           iconPosition={item.props.iconPosition || iconPosition}
+          orientation={orientation}
         />
       );
 
-      if (index !== array.length - 1) {
+      if (orientation === 'horizontal' && index !== array.length - 1) {
         acc.push(
           <div
             className={cx(classes.separator, { [classes.separatorActive]: index < active })}

@@ -88,6 +88,25 @@ storiesOf('Stepper', module)
     <div style={{ padding: 40 }}>
       <Wrapper orientation="vertical" />
       <Wrapper orientation="vertical" iconPosition="right" mt="xl" />
+      <div style={{ marginTop: 40 }}>
+        <Stepper active={1} orientation="vertical">
+          <Stepper.Step label="Step 1" description="Create an account" />
+          <Stepper.Step
+            label="Step 2"
+            description={
+              <>
+                <p>Hello world</p>
+                <p>Hello world</p>
+                <p>Hello world</p>
+                <p>Hello world</p>
+                <p>Hello world</p>
+              </>
+            }
+            loading
+          />
+          <Stepper.Step label="Step 3" description="Get full access" />
+        </Stepper>
+      </div>
     </div>
   ))
   .add('Icon position right', () => (
