@@ -132,7 +132,7 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
         disabled={disabled}
         {...others}
       >
-        <span className={classes.icon}>{icon}</span>
+        {icon && <span className={classes.icon}>{icon}</span>}
         <span className={classes.body}>
           <Text component="span" size="sm" className={classes.label}>
             {label}
@@ -147,16 +147,18 @@ export const _NavLink = forwardRef<HTMLButtonElement, NavLinkProps>((props, ref)
             {description}
           </Text>
         </span>
-        <span
-          className={classes.rightSection}
-          data-rotate={(_opened && !disableRightSectionRotation) || undefined}
-        >
-          {withChildren
-            ? rightSection || (
-                <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
-              )
-            : rightSection}
-        </span>
+        {(withChildren || rightSection) && (
+          <span
+            className={classes.rightSection}
+            data-rotate={(_opened && !disableRightSectionRotation) || undefined}
+          >
+            {withChildren
+              ? rightSection || (
+                  <ChevronIcon width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                )
+              : rightSection}
+          </span>
+        )}
       </UnstyledButton>
       <Collapse in={_opened}>
         <div className={classes.children}>{children}</div>
