@@ -5,6 +5,7 @@ import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Components } from './Components/Components';
 import { Banner } from './Banner/Banner';
+import { JoinCommunity } from './JoinCommunity/JoinCommunity';
 import { Footer } from '../Footer/Footer';
 // import { MantineUiBanner } from '../MantineUiBanner/MantineUiBanner';
 // import { Community } from './Community/Community';
@@ -35,6 +36,7 @@ export function HomePage() {
         {/* <Customize /> */}
         <Usage />
         <Banner />
+        <JoinCommunity />
         {/* <Community /> */}
       </div>
       <Footer />
