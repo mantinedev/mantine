@@ -69,10 +69,6 @@ If button is too large for its container, overflow content will be hidden:
 
 <Demo data={ButtonDemos.overflow} />
 
-## Button.Group
-
-<Demo data={ButtonDemos.group} />
-
 ## Change root element
 
 You can use Button component both as `button` and `a` elements:
@@ -121,7 +117,7 @@ function Demo() {
 }
 ```
 
-## Get root element ref
+## Get ref
 
 ```tsx
 import { useRef } from 'react';
@@ -130,5 +126,44 @@ import { Button } from '@mantine/core';
 function Demo() {
   const ref = useRef<HTMLButtonElement>();
   return <Button ref={ref} />;
+}
+```
+
+## Button.Group
+
+<Demo data={ButtonDemos.group} />
+
+Note that you cannot wrap child `Button` components with any additional elements:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button.Group>
+      <div>
+        <Button>This will not work</Button>
+      </div>
+      <Button>Buttons will have incorrect borders</Button>
+    </Button.Group>
+  );
+}
+```
+
+If you want to use [Tooltip](/core/tooltip/), [Popover](/core/popover/) or other overlay component,
+it is required to set `withinPortal` prop:
+
+```tsx
+import { Button, Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button.Group>
+      <Tooltip label="Working as expected" withinPortal>
+        <Button>With Tooltip</Button>
+      </Tooltip>
+      <Button>Regular button</Button>
+    </Button.Group>
+  );
 }
 ```
