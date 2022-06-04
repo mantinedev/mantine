@@ -57,19 +57,27 @@ const EXTRA_FILES_PATHS = [
   // Grid
   '../src/mantine-core/src/components/Grid/Col/Col.tsx',
 
-  // Other
-  '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
-  '../src/mantine-core/src/components/Menu/MenuItem/MenuItem.tsx',
-  '../src/mantine-core/src/components/Menu/MenuLabel/MenuLabel.tsx',
+  // Button
+  '../src/mantine-core/src/components/Button/ButtonGroup/ButtonGroup.tsx',
+
+  // Timeline
   '../src/mantine-core/src/components/Timeline/TimelineItem/TimelineItem.tsx',
+
+  // Slider
   '../src/mantine-core/src/components/Slider/Slider/Slider.tsx',
   '../src/mantine-core/src/components/Slider/RangeSlider/RangeSlider.tsx',
-  '../src/mantine-core/src/components/Stepper/Step/Step.tsx',
+
+  // AppShell
   '../src/mantine-core/src/components/AppShell/Navbar/Navbar.tsx',
   '../src/mantine-core/src/components/AppShell/Header/Header.tsx',
   '../src/mantine-core/src/components/AppShell/Footer/Footer.tsx',
   '../src/mantine-core/src/components/AppShell/Aside/Aside.tsx',
-  '../src/mantine-core/src/components/Grid/Col/Col.tsx',
+
+  // Stepper
+  '../src/mantine-core/src/components/Stepper/Step/Step.tsx',
+
+  // Other
+  '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-prism/src/Prism/Prism.tsx',
   '../src/mantine-spotlight/src/SpotlightProvider.tsx',
   '../src/mantine-modals/src/ModalsProvider.tsx',
