@@ -14,7 +14,6 @@ const baseStyles = {
 type SocialButtonProps = Omit<React.ComponentPropsWithoutRef<'a'>, 'type'>;
 
 function DiscordButton({ style, ...others }: SocialButtonProps) {
-  const theme = useMantineTheme();
   return (
     <Button
       component="a"
