@@ -61,3 +61,24 @@ export function WithIcon() {
     </Group>
   );
 }
+
+export function Groups() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Button.Group>
+        <Button variant="default">First</Button>
+        <Button variant="default">Second</Button>
+        <Button variant="default">Third</Button>
+        <Button variant="default">Forth</Button>
+        <Button variant="default">Last</Button>
+      </Button.Group>
+      <Button.Group mt="xl" orientation="vertical">
+        <Button variant="default">First</Button>
+        <Button variant="default">Second</Button>
+        <Button variant="default">Third</Button>
+        <Button variant="default">Forth</Button>
+        <Button variant="default">Last</Button>
+      </Button.Group>
+    </div>
+  );
+}

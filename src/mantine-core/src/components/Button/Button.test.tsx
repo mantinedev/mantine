@@ -8,6 +8,7 @@ import {
   itSupportsFocusEvents,
 } from '@mantine/tests';
 import { Button, ButtonProps } from './Button';
+import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 
 const defaultProps: ButtonProps = {};
 
@@ -46,5 +47,9 @@ describe('@mantine/core/Button', () => {
     render(<Button loading />);
     expect(screen.getByRole('button')).toBeDisabled();
     expect(screen.getByRole('button')).toHaveAttribute('data-loading');
+  });
+
+  it('exposes ButtonGroup as static component', () => {
+    expect(Button.Group).toBe(ButtonGroup);
   });
 });

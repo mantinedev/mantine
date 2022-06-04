@@ -11,6 +11,7 @@ import {
 import { createPolymorphicComponent } from '@mantine/utils';
 import { UnstyledButton } from '../UnstyledButton';
 import { Loader, LoaderProps } from '../Loader';
+import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import useStyles, { sizes, ButtonVariant, ButtonStylesParams } from './Button.styles';
 
 export type ButtonStylesNames = Selectors<typeof useStyles>;
@@ -125,6 +126,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       className={cx(classes.root, className)}
       type={type}
       disabled={disabled || loading}
+      data-button
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
       data-with-left-icon={!!leftIcon || undefined}
@@ -155,8 +157,13 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       </div>
     </UnstyledButton>
   );
-});
+}) as any;
 
 _Button.displayName = '@mantine/core/Button';
+_Button.Group = ButtonGroup;
 
-export const Button = createPolymorphicComponent<'button', ButtonProps>(_Button);
+export const Button = createPolymorphicComponent<
+  'button',
+  ButtonProps,
+  { Group: typeof ButtonGroup }
+>(_Button);
