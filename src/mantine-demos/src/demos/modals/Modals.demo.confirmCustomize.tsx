@@ -1,17 +1,15 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openConfirmModal } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
 
 const code = `
 import { Button, Text } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openConfirmModal } from '@mantine/modals';
 
 function Demo() {
-  const modals = useModals();
-
   const openDeleteModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Delete your profile',
       centered: true,
       children: (
@@ -31,10 +29,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const modals = useModals();
-
   const openDeleteModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Delete your profile',
       centered: true,
       children: (

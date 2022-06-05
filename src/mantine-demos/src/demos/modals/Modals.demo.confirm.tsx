@@ -1,16 +1,14 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openConfirmModal } from '@mantine/modals';
 import { showNotification } from '@mantine/notifications';
 
 const code = `
 import { Button, Text } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openConfirmModal } from '@mantine/modals';
 
 function Demo() {
-  const modals = useModals();
-
-  const openConfirmModal = () => modals.openConfirmModal({
+  const openModal = () => openConfirmModal({
     title: 'Please confirm your action',
     children: (
       <Text size="sm">
@@ -23,15 +21,13 @@ function Demo() {
     onConfirm: () => console.log('Confirmed'),
   });
 
-  return <Button onClick={openConfirmModal}>Open confirm modal</Button>;
+  return <Button onClick={openModal}>Open confirm modal</Button>;
 }
 `;
 
 function Demo() {
-  const modals = useModals();
-
-  const openConfirmModal = () =>
-    modals.openConfirmModal({
+  const openModal = () =>
+    openConfirmModal({
       title: 'Please confirm your action',
       children: (
         <Text size="sm">
@@ -55,7 +51,7 @@ function Demo() {
 
   return (
     <Group position="center">
-      <Button onClick={openConfirmModal}>Open confirm modal</Button>
+      <Button onClick={openModal}>Open confirm modal</Button>
     </Group>
   );
 }

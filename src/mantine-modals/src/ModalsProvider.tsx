@@ -12,6 +12,7 @@ import {
 } from './context';
 import { ConfirmModal } from './ConfirmModal';
 import { modalsReducer } from './reducer';
+import { useModalsEvents } from './events';
 
 export interface ModalsProviderProps {
   /** Your app */
@@ -132,6 +133,14 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     modal?.props?.onClose?.();
     dispatch({ type: 'CLOSE', payload: modal.id });
   };
+
+  useModalsEvents({
+    openModal,
+    openConfirmModal,
+    openContextModal: ({ modal, ...payload }) => openContextModal(modal, payload),
+    closeModal,
+    closeAllModals: closeAll,
+  });
 
   const ctx: ModalsContextProps = {
     modals: state.modals,

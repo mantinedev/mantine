@@ -12,15 +12,6 @@ export type NavigationProgressEvents = {
 export const [useNavigationProgressEvents, createEvent] =
   createUseExternalEvents<NavigationProgressEvents>('mantine-nprogress');
 
-export const NPROGRESS_EVENTS = {
-  add: 'mantine:add-nprogress',
-  decrease: 'mantine:decrease-nprogress',
-  set: 'mantine:set-nprogress',
-  start: 'mantine:start-nprogress',
-  stop: 'mantine:stop-nprogress',
-  reset: 'mantine:reset-nprogress',
-} as const;
-
 export const startNavigationProgress = createEvent('start');
 export const stopNavigationProgress = createEvent('stop');
 export const resetNavigationProgress = createEvent('reset');
