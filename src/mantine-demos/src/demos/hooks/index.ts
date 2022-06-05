@@ -21,6 +21,7 @@ export * from './use-page-leave';
 export * from './use-reduced-motion';
 export * from './use-resize-observer';
 export * from './use-scroll-lock';
+export * from './use-timeout';
 export * from './use-toggle';
 export * from './use-viewport-size';
 export * from './use-window-scroll';
