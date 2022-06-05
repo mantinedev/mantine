@@ -1,18 +1,19 @@
+import { Space } from '@mantine/core';
 import React from 'react';
-import { Container } from '@mantine/core';
 import { Community } from '../../Community/Community';
-import useStyles from './JoinCommunity.styles';
-import { SectionTitle } from '../SectionTitle/SectionTitle';
+import { PageSection } from '../PageSection/PageSection';
 
 export function JoinCommunity() {
-  const { classes } = useStyles();
-
   return (
-    <div className={classes.wrapper}>
-      <Container size={1100}>
-        <SectionTitle>Join the community</SectionTitle>
-        <Community />
-      </Container>
-    </div>
+    <PageSection
+      title="Join the community"
+      sx={(theme) => ({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      })}
+    >
+      <Space h="md" />
+      <Community />
+      <Space h={120} />
+    </PageSection>
   );
 }

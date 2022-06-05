@@ -31,6 +31,7 @@ export function DarkTheme() {
         mt={30}
         spacing={60}
         breakpoints={[{ maxWidth: 'sm', cols: 1, spacing: 30 }]}
+        pb={60}
       >
         <div>
           <Image src={image} radius="md" className={classes.image} />

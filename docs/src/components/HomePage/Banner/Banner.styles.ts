@@ -4,7 +4,7 @@ import banner from './banner.webp';
 export default createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    minHeight: 500,
+    minHeight: 540,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
 
     [theme.fn.smallerThan('sm')]: {
