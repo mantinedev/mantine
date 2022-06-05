@@ -95,6 +95,39 @@ storiesOf('Stepper', module)
     <div style={{ padding: 40 }}>
       <Wrapper orientation="vertical" />
       <Wrapper orientation="vertical" iconPosition="right" mt="xl" />
+      <div style={{ marginTop: 40 }}>
+        <Stepper active={1} orientation="vertical">
+          <Stepper.Step label="Step 1" description="Create an account" />
+          <Stepper.Step
+            label="Step 2"
+            description={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut quam vitae
+            lorem viverra ultricies. Integer hendrerit, quam mollis tempus iaculis, tellus est
+            pellentesque eros, vel molestie risus eros sit amet sem. Fusce pretium ex quis neque
+            fringilla facilisis. Aenean sed luctus tortor, eget suscipit neque. Pellentesque
+            consequat neque quis porta luctus. Donec vitae est id velit condimentum mollis id
+            vel est. Sed eleifend interdum enim, a facilisis ex faucibus nec. Morbi vel est et
+            mauris congue ullamcorper. Duis eget velit lacinia, consequat neque vel, dignissim
+            massa.`}
+            loading
+          />
+          <Stepper.Step
+            label="Step 3"
+            description={`Curabitur in neque dignissim, accumsan ante et, aliquam ex. Mauris nibh tortor,
+            blandit sit amet eleifend sed, convallis in erat. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. In hac habitasse platea dictumst. Integer feugiat elit
+            vel neque tincidunt semper. Pellentesque euismod dignissim massa, ac venenatis ipsum
+            vulputate mattis. Integer a efficitur ligula. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh. Integer sit amet diam ligula.
+            Phasellus ex purus, dictum non purus ut, viverra maximus sem. Sed luctus eget massa
+            vitae dapibus. Sed ante tortor, viverra at urna et, feugiat scelerisque dolor.`}
+            loading
+          />
+          <Stepper.Step label="Step 3" description="Get full access" />
+        </Stepper>
+      </div>
     </div>
   ))
   .add('Icon position right', () => (
