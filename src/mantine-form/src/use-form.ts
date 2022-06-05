@@ -89,7 +89,7 @@ export function useForm<T extends { [key: string]: any }>({
     errorPath?: string
   ) => {
     setValues((currentValues) => ({ ...currentValues, [field]: value }));
-    clearFieldError(errorPath);
+    clearFieldError(errorPath || field);
   };
 
   const setListItem = <K extends keyof T, V extends T[K]>(
