@@ -22,7 +22,10 @@ export function DarkTheme() {
   const { classes, theme } = useStyles();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   return (
-    <PageSection title="Dark color scheme">
+    <PageSection
+      title="Dark color scheme"
+      sx={{ backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white }}
+    >
       <SimpleGrid
         cols={2}
         mt={30}
@@ -39,7 +42,18 @@ export function DarkTheme() {
             the box.
           </Text>
 
-          <Prism language="tsx" noCopy mt="xl">
+          <Prism
+            language="tsx"
+            noCopy
+            mt="xl"
+            radius="md"
+            styles={{
+              code: {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+              },
+            }}
+          >
             {code}
           </Prism>
 
