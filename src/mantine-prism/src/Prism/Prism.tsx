@@ -10,6 +10,7 @@ import {
   ScrollArea,
   useComponentDefaultProps,
   MantineColor,
+  MantineNumberSize,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
@@ -50,6 +51,9 @@ export interface PrismProps
 
   /** Defines whether the code should be trimmed, defaults to true */
   trim?: boolean;
+
+  /** Key of theme.radius or number to set border-radius in px */
+  radius?: MantineNumberSize;
 }
 
 const prismDefaultProps: Partial<PrismProps> = {
@@ -78,6 +82,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     colorScheme,
     trim,
     unstyled,
+    radius,
     ...others
   } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;
@@ -90,6 +95,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
       colorScheme: colorScheme || theme.colorScheme,
       native: ScrollAreaComponent !== ScrollArea,
       maxLineSize,
+      radius,
     },
     { classNames, styles, unstyled, name: 'Prism' }
   );
