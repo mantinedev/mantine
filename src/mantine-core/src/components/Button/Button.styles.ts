@@ -5,6 +5,7 @@ import {
   MantineColor,
   MantineTheme,
   MantineGradient,
+  CSSObject,
 } from '@mantine/styles';
 import { INPUT_SIZES } from '../Input';
 
@@ -25,6 +26,8 @@ export interface ButtonStylesParams {
   compact: boolean;
   gradient: MantineGradient;
   variant: ButtonVariant;
+  withRightIcon: boolean;
+  withLeftIcon: boolean;
 }
 
 export const sizes = {
@@ -40,13 +43,26 @@ export const sizes = {
   'compact-xl': { height: 40, paddingLeft: 14, paddingRight: 14 },
 };
 
-const getSizeStyles = ({ compact, size }: { compact: boolean; size: MantineSize }) => {
-  if (!compact) {
-    return sizes[size];
+interface GetSizeStyles {
+  compact: boolean;
+  size: MantineSize;
+  withLeftIcon: boolean;
+  withRightIcon: boolean;
+}
+
+function getSizeStyles({ compact, size, withLeftIcon, withRightIcon }: GetSizeStyles): CSSObject {
+  if (compact) {
+    return sizes[`compact-${size}`];
   }
 
-  return sizes[`compact-${size}`];
-};
+  const _sizes = sizes[size];
+
+  return {
+    ..._sizes,
+    paddingLeft: withLeftIcon ? _sizes.paddingLeft / 1.5 : _sizes.paddingLeft,
+    paddingRight: withRightIcon ? _sizes.paddingRight / 1.5 : _sizes.paddingRight,
+  };
+}
 
 const getWidthStyles = (fullWidth: boolean) => ({
   display: fullWidth ? 'block' : 'inline-block',
@@ -87,9 +103,22 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
 }
 
 export default createStyles(
-  (theme, { color, size, radius, fullWidth, compact, gradient, variant }: ButtonStylesParams) => ({
+  (
+    theme,
+    {
+      color,
+      size,
+      radius,
+      fullWidth,
+      compact,
+      gradient,
+      variant,
+      withLeftIcon,
+      withRightIcon,
+    }: ButtonStylesParams
+  ) => ({
     root: {
-      ...getSizeStyles({ compact, size }),
+      ...getSizeStyles({ compact, size, withLeftIcon, withRightIcon }),
       ...theme.fn.fontStyles(),
       ...theme.fn.focusStyles(),
       ...getWidthStyles(fullWidth),
@@ -103,14 +132,6 @@ export default createStyles(
       ...getVariantStyles({ variant, theme, color, gradient }),
 
       '&:active': theme.activeStyles,
-
-      '&[data-with-right-icon]': {
-        paddingRight: getSizeStyles({ compact, size }).paddingRight / 1.8,
-      },
-
-      '&[data-with-left-icon]': {
-        paddingLeft: getSizeStyles({ compact, size }).paddingLeft / 1.8,
-      },
 
       '&[data-disabled]': {
         borderColor: 'transparent',

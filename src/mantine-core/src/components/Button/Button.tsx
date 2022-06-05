@@ -107,6 +107,8 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       compact,
       gradient,
       variant,
+      withLeftIcon: !!leftIcon,
+      withRightIcon: !!rightIcon,
     },
     { name: 'Button', unstyled, classNames, styles }
   );
@@ -129,8 +131,6 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
       data-button
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}
-      data-with-left-icon={!!leftIcon || undefined}
-      data-with-right-icon={!!rightIcon || undefined}
       ref={ref}
       unstyled={unstyled}
       {...others}
