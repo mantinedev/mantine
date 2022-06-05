@@ -6,21 +6,22 @@ import { PageSection } from '../PageSection/PageSection';
 import image from './dark-theme-image.png';
 import useStyles from './DarkTheme.styles';
 
-const code = `
+export function DarkTheme() {
+  const { classes, theme } = useStyles();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  const code = `
 import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
+    <MantineProvider theme={{ colorScheme: '${colorScheme}' }}>
       <App />
     </MantineProvider>
   );
 }
 `;
 
-export function DarkTheme() {
-  const { classes, theme } = useStyles();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   return (
     <PageSection
       title="Dark color scheme"
