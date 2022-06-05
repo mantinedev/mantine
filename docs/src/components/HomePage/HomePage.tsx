@@ -8,6 +8,7 @@ import { JoinCommunity } from './JoinCommunity/JoinCommunity';
 import { Footer } from '../Footer/Footer';
 import { Usage } from './Usage/Usage';
 import { CustomizeWithProps } from './CustomizeWithProps/CustomizeWithProps';
+import { Customize } from './Customize/Customize';
 import { DarkTheme } from './DarkTheme/DarkTheme';
 
 export function HomePage() {
@@ -20,6 +21,7 @@ export function HomePage() {
         <Components />
         <DarkTheme />
         <CustomizeWithProps />
+        <Customize />
         <Banner />
         <Usage />
         <JoinCommunity />

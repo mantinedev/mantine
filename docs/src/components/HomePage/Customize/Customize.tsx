@@ -8,19 +8,25 @@ import DataTable from '../../MdxPage/MdxProvider/DataTable/DataTable';
 import { PageSection } from '../PageSection/PageSection';
 
 const code = `
-<Slider
-  defaultValue={40}
-  marks={marks}
-  labelTransition="fade"
-  size={2}
-  styles={(theme) => ({
+function Demo() {
+  const styles = (theme) => ({
     track: { '&::before': { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] } },
     mark: { width: 6, height: 6, borderRadius: 6, transform: 'translateX(-3px) translateY(-2px)', borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.blue[1] },
     markFilled: { borderColor: theme.colors.blue[6] },
     markLabel: { fontSize: theme.fontSizes.xs, marginBottom: 5, marginTop: 0 },
     thumb: { height: 16, width: 16, backgroundColor: theme.white, borderWidth: 1, boxShadow: theme.shadows.sm },
-  })}
-/>
+  });
+
+  return (
+    <Slider
+      defaultValue={40}
+      marks={marks}
+      labelTransition="fade"
+      size={2}
+      styles={styles}
+    />
+  );
+}
 `;
 
 const marks = [
@@ -34,6 +40,9 @@ export function Customize() {
     <PageSection
       title="Components customization"
       description="Each Mantine component supports styles overriding for every internal element inside with classes or inline styles. This feature alongside other customization options allows you to implement any visual modifications to components and adapt them to fit almost any design requirements."
+      sx={(theme) => ({
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+      })}
     >
       <SimpleGrid cols={2} breakpoints={[{ maxWidth: 960, cols: 1 }]} spacing={30} mt={30}>
         <div>
@@ -41,7 +50,17 @@ export function Customize() {
             Default slider styles
           </Text>
           <Slider defaultValue={40} marks={marks} />
-          <Prism mt={25} language="tsx" noCopy>
+          <Prism
+            mt={25}
+            language="tsx"
+            noCopy
+            styles={(theme) => ({
+              code: {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+              },
+            })}
+          >
             {'<Slider defaultValue={40} marks={marks} />'}
           </Prism>
 
@@ -93,7 +112,17 @@ export function Customize() {
             })}
           />
 
-          <Prism mt={32} language="tsx" noCopy>
+          <Prism
+            mt={32}
+            language="tsx"
+            noCopy
+            styles={(theme) => ({
+              code: {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+              },
+            })}
+          >
             {code}
           </Prism>
 
