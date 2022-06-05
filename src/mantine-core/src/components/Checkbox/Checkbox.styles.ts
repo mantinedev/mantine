@@ -76,7 +76,7 @@ export default createStyles(
       input: {
         ...theme.fn.focusStyles(),
         appearance: 'none',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
         }`,
