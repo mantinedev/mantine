@@ -38,7 +38,7 @@ const marks = [
 export function Customize() {
   return (
     <PageSection
-      title="Components customization"
+      title="Styles overriding"
       description="Each Mantine component supports styles overriding for every internal element inside with classes or inline styles. This feature alongside other customization options allows you to implement any visual modifications to components and adapt them to fit almost any design requirements."
       sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
@@ -132,8 +132,14 @@ export function Customize() {
             component={Link}
             to="/styles/styles-api"
             rightIcon={<IconArrowRight size={16} />}
+            variant="gradient"
+            sx={(theme) => ({
+              backgroundImage: `linear-gradient(52deg, ${
+                theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
+              } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+            })}
           >
-            Learn more about Styles API
+            View more examples
           </Button>
         </div>
       </SimpleGrid>
