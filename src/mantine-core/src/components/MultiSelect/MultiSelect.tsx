@@ -342,14 +342,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
       setDropdownOpened(false);
     };
 
-    const handleCompositionStart = () => {
-      setIMEOpen(true);
-    };
-
-    const handleCompositionEnd = () => {
-      setIMEOpen(false);
-    };
-
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (IMEOpen) {
         return;
@@ -634,8 +626,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 value={searchValue}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
-                onCompositionStart={handleCompositionStart}
-                onCompositionEnd={handleCompositionEnd}
+                onCompositionStart={() => setIMEOpen(true)}
+                onCompositionEnd={() => setIMEOpen(false)}
                 onBlur={handleInputBlur}
                 readOnly={!searchable || valuesOverflow.current}
                 placeholder={_value.length === 0 ? placeholder : undefined}
