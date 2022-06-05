@@ -5,7 +5,7 @@ import useStyles from './PageSection.styles';
 
 interface PageSectionProps extends DefaultProps {
   title: string;
-  description: string;
+  description?: string;
   children: React.ReactNode;
 }
 
@@ -16,9 +16,11 @@ export function PageSection({ title, description, children, ...others }: PageSec
     <Box className={classes.wrapper} {...others}>
       <Container size={1100}>
         <SectionTitle>{title}</SectionTitle>
-        <Text className={classes.description} size="xl">
-          {description}
-        </Text>
+        {description && (
+          <Text className={classes.description} size="xl">
+            {description}
+          </Text>
+        )}
 
         {children}
       </Container>

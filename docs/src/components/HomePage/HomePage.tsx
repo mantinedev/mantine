@@ -11,6 +11,7 @@ import { Footer } from '../Footer/Footer';
 // import { Community } from './Community/Community';
 // import { Customize } from './Customize/Customize';
 import { Usage } from './Usage/Usage';
+import { DarkTheme } from './DarkTheme/DarkTheme';
 // import { Explore } from './Explore/Explore';
 
 export function HomePage() {
@@ -21,6 +22,7 @@ export function HomePage() {
       <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
         <Jumbotron />
         <Components />
+        <DarkTheme />
 
         {/* <Explore />
         <Box
