@@ -10,7 +10,7 @@ search: 'Integrate your components with MantineProvider and Styles API'
 This guide will help you learn how to integrate custom components with [MantineProvider](/theming/mantine-provider/)
 and how to add [Styles API](/styles/styles-api/) support.
 
-## Adding Styles API support
+## Add Styles API support
 
 You will need to use [createStyles](/styles/create-styles/) to add [Styles API](/styles/styles-api/) support to any component:
 
@@ -115,6 +115,78 @@ function Demo() {
               title: { color: theme.colors.gray[5] },
               description: { fontSize: 14 },
             }),
+          },
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
+## DefaultProps type
+
+`DefaultProps` adds system props support (margin, padding, sx, unstyled, styles and classNames).
+It accepts 2 types: styles names and styles params, both of them are optional.
+When you build components there might be 4 cases:
+
+```tsx
+import { DefaultProps } from '@mantine/core';
+
+type StylesNames = 'root' | 'title';
+type StylesParams = { radius: number };
+
+// Case 1: component has styles params and styles names
+interface Props extends DefaultProps<StylesNames, StylesParams> {}
+
+// Case 2: component has only styles names
+interface Props extends DefaultProps<StylesNames> {}
+
+// Case 3: component has only styles params
+interface Props extends DefaultProps<never, StylesParams> {}
+
+// Case 4: component does not have styles params and styles names
+interface Props extends DefaultProps {}
+```
+
+## Add default prop support
+
+You can add [default props](/theming/default-props/) support to any component with
+`useComponentDefaultProps` hook:
+
+```tsx
+import { useComponentDefaultProps } from '@mantine/core';
+
+interface CustomComponentProps {
+  radius?: number;
+  children: React.ReactNode;
+}
+
+const defaultProps: Partial<CustomComponentProps> = {
+  radius: 6,
+};
+
+function CustomComponent(props: CustomComponentProps) {
+  const { radius, children } = useComponentDefaultProps('CustomComponent', defaultProps, props);
+  return <div style={{ borderRadius: radius }}>{children}</div>;
+}
+```
+
+Then you will be able to add [default props](/theming/default-props/) on [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          // Use component name that you've provided
+          // in the first argument of useComponentDefaultProps
+          CustomComponent: {
+            defaultProps: { radius: 12 },
           },
         },
       }}
