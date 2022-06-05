@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Group, Button, Text } from '@mantine/core';
+import { Stack, Button, Text } from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
-import { Group, Button, Text } from '@mantine/core';
+import { Stack, Button, Text } from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
 
 function Demo() {
@@ -22,12 +22,12 @@ function Demo() {
   };
 
   return (
-    <Group position="center" direction="column">
+    <Stack>
       <Text>{triggered ? 'Timer Ticking' : '5 seconds Elapsed'}</Text>
       <Button onClick={handleClick} color={triggered ? 'red' : 'teal'} variant="light">
         {triggered ? 'Clear' : 'Start'}
       </Button>
-    </Group>
+    </Stack>
   );
 }
 `;
@@ -47,12 +47,12 @@ function Demo() {
   };
 
   return (
-    <Group position="center" direction="column">
+    <Stack>
       <Text>{triggered ? 'Timer Ticking' : 'Start a 5 second timer'}</Text>
       <Button onClick={handleClick} color={triggered ? 'red' : 'teal'} variant="light">
         {triggered ? 'Clear' : 'Start'}
       </Button>
-    </Group>
+    </Stack>
   );
 }
 

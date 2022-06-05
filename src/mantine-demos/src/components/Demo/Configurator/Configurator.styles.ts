@@ -37,6 +37,7 @@ export default createStyles((theme: MantineTheme) => ({
     boxSizing: 'border-box',
     width: 250,
     padding: theme.spacing.md,
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     borderLeft: `1px solid ${
       theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1]
     }`,
