@@ -7,6 +7,7 @@ import { Banner } from './Banner/Banner';
 import { JoinCommunity } from './JoinCommunity/JoinCommunity';
 import { Footer } from '../Footer/Footer';
 import { Usage } from './Usage/Usage';
+import { CustomizeWithProps } from './CustomizeWithProps/CustomizeWithProps';
 import { DarkTheme } from './DarkTheme/DarkTheme';
 
 export function HomePage() {
@@ -18,6 +19,7 @@ export function HomePage() {
         <Jumbotron />
         <Components />
         <DarkTheme />
+        <CustomizeWithProps />
         <Banner />
         <Usage />
         <JoinCommunity />
