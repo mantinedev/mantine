@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import {
   Box,
   DefaultProps,
@@ -23,7 +23,7 @@ export interface CarouselSlideProps extends DefaultProps, React.ComponentPropsWi
 }
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  ({ children, className, size, gap, ...others }, ref) => {
+  ({ children, className, size, gap, onClick, ...others }, ref) => {
     const ctx = useCarouselContext();
     const { classNames, styles, unstyled } = useContextStylesApi();
     const { classes, cx } = useStyles(
@@ -34,8 +34,15 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       { name: 'Carousel', classNames, styles, unstyled }
     );
 
+    const handleClick = useCallback(
+      (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (ctx.emblaApi?.clickAllowed()) onClick?.(event);
+      },
+      [ctx.emblaApi]
+    );
+
     return (
-      <Box className={cx(classes.slide, className)} ref={ref} {...others}>
+      <Box className={cx(classes.slide, className)} ref={ref} onClick={handleClick} {...others}>
         {children}
       </Box>
     );

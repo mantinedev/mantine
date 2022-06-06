@@ -95,7 +95,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider value={{ slideGap, slideSize }}>
+      <CarouselProvider value={{ slideGap, slideSize, emblaApi }}>
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
           <div className={classes.viewport} ref={emblaRef}>
             <div className={classes.container}>{children}</div>
