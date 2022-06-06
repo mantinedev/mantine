@@ -59,14 +59,26 @@ export interface CarouselProps
 
   /** Slides container height, required for vertical orientation */
   height?: React.CSSProperties['height'];
+
+  /** Determines how slides will be aligned relative to the container. Use number between 0-1 to align slides based on percentage, where 0.5 equals 50% */
+  align?: 'start' | 'center' | 'end' | number;
+
+  /** Number of slides that should be scrolled with next/previous buttons */
+  slidesToScroll?: number;
+
+  /** Determines whether gap should be treated as part of the slide size, true by default */
+  includeGapInSize?: boolean;
 }
 
 const defaultProps: Partial<CarouselProps> = {
-  controlSize: 30,
+  controlSize: 26,
   controlsOffset: 'sm',
   slideSize: '100%',
   slideGap: 0,
   orientation: 'horizontal',
+  align: 'center',
+  slidesToScroll: 1,
+  includeGapInSize: true,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -87,16 +99,24 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     slideGap,
     orientation,
     height,
+    align,
+    slidesToScroll,
+    includeGapInSize,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    axis: orientation === 'horizontal' ? 'x' : 'y',
-  });
+
   const { classes, cx, theme } = useStyles(
     { controlSize, controlsOffset, orientation, height },
     { name: 'Carousel', classNames, styles, unstyled }
   );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    axis: orientation === 'horizontal' ? 'x' : 'y',
+    direction: theme.dir,
+    align,
+    slidesToScroll,
+  });
 
   const handlePrevious = useCallback(() => {
     emblaApi?.scrollPrev();
@@ -114,7 +134,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider value={{ slideGap, slideSize, emblaApi, orientation }}>
+      <CarouselProvider value={{ slideGap, slideSize, emblaApi, orientation, includeGapInSize }}>
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
           <div className={classes.viewport} ref={emblaRef}>
             <div className={classes.container}>{children}</div>

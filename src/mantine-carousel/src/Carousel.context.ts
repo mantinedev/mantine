@@ -7,6 +7,7 @@ interface CarouselContext {
   slideSize: string | number;
   slideGap: MantineNumberSize;
   orientation: CarouselOrientation;
+  includeGapInSize: boolean;
 }
 
 export const [CarouselProvider, useCarouselContext] = createSafeContext<CarouselContext>(

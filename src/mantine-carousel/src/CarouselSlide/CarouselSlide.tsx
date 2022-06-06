@@ -31,6 +31,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         gap: typeof gap === 'undefined' ? ctx.slideGap : gap,
         size: typeof size === 'undefined' ? ctx.slideSize : size,
         orientation: ctx.orientation,
+        includeGapInSize: ctx.includeGapInSize,
       },
       { name: 'Carousel', classNames, styles, unstyled }
     );
