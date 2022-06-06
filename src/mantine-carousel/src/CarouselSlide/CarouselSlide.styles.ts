@@ -20,7 +20,6 @@ export default createStyles(
             }) / 2
           : 0
       }px)`,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
         size: gap,
         sizes: theme.spacing,

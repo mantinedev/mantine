@@ -1,39 +1,26 @@
 import React from 'react';
 import { Carousel } from '@mantine/carousel';
-import { Image } from '@mantine/core';
-import { images } from './_images';
+import { Slides } from './_slides';
 
 const code = `
 import { Carousel } from '@mantine/carousel';
-import { Image } from '@mantine/core';
-
-const images = [/* ... urls of images */];
 
 function Demo() {
-  const slides = images.map((url) => (
-    <Carousel.Slide key={url}>
-      <Image src={url} />
-    </Carousel.Slide>
-  ));
-
   return (
     <Carousel orientation="vertical" height={200} withIndicators sx={{ maxWidth: 320 }} mx="auto">
-      {slides}
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
     </Carousel>
   );
 }
 `;
 
 function Demo() {
-  const slides = images.map((url) => (
-    <Carousel.Slide key={url}>
-      <Image src={url} />
-    </Carousel.Slide>
-  ));
-
   return (
     <Carousel orientation="vertical" height={200} withIndicators sx={{ maxWidth: 320 }} mx="auto">
-      {slides}
+      <Slides count={5} />
     </Carousel>
   );
 }
