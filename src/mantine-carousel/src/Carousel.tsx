@@ -34,7 +34,7 @@ export interface CarouselProps
   onPreviousSlide?(): void;
 
   /** Get embla API as ref */
-  emblaApiRef?: React.ForwardedRef<EmblaApi>;
+  emblaRef?: React.ForwardedRef<EmblaApi>;
 
   /** Next control aria-label */
   nextControlLabel?: string;
@@ -109,7 +109,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   const {
     children,
     className,
-    emblaApiRef,
+    emblaRef,
     onNextSlide,
     onPreviousSlide,
     nextControlLabel,
@@ -140,7 +140,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const [emblaRefElement, embla] = useEmblaCarousel({
     axis: orientation === 'horizontal' ? 'x' : 'y',
     direction: theme.dir,
     startIndex: initialSlide,
@@ -154,27 +154,27 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   });
 
   const handlePrevious = useCallback(() => {
-    emblaApi?.scrollPrev();
+    embla?.scrollPrev();
     onPreviousSlide?.();
-  }, [emblaApi]);
+  }, [embla]);
 
   const handleNext = useCallback(() => {
-    emblaApi?.scrollNext();
+    embla?.scrollNext();
     onNextSlide?.();
-  }, [emblaApi]);
+  }, [embla]);
 
   useEffect(() => {
-    assignRef(emblaApiRef, emblaApi);
-  }, [emblaApi]);
+    assignRef(emblaRef, embla);
+  }, [embla]);
 
-  const canScrollPrev = emblaApi?.canScrollPrev() || false;
-  const canScrollNext = emblaApi?.canScrollPrev() || false;
+  const canScrollPrev = embla?.canScrollPrev() || false;
+  const canScrollNext = embla?.canScrollPrev() || false;
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider value={{ slideGap, slideSize, emblaApi, orientation, includeGapInSize }}>
+      <CarouselProvider value={{ slideGap, slideSize, embla, orientation, includeGapInSize }}>
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
-          <div className={classes.viewport} ref={emblaRef}>
+          <div className={classes.viewport} ref={emblaRefElement}>
             <div className={classes.container}>{children}</div>
           </div>
           <div className={classes.controls}>

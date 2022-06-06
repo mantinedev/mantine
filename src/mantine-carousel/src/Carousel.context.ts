@@ -3,7 +3,7 @@ import { createSafeContext } from '@mantine/utils';
 import { CarouselOrientation, EmblaApi } from './types';
 
 interface CarouselContext {
-  emblaApi: EmblaApi;
+  embla: EmblaApi;
   slideSize: string | number;
   slideGap: MantineNumberSize;
   orientation: CarouselOrientation;

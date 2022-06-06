@@ -38,9 +38,9 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
 
     const handleClick = useCallback(
       (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (ctx.emblaApi?.clickAllowed()) onClick?.(event);
+        if (ctx.embla?.clickAllowed()) onClick?.(event);
       },
-      [ctx.emblaApi]
+      [ctx.embla]
     );
 
     return (
