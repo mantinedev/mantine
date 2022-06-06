@@ -207,7 +207,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   }, [embla]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
-  const canScrollNext = embla?.canScrollPrev() || false;
+  const canScrollNext = embla?.canScrollNext() || false;
 
   const indicators = Array(slidesCount)
     .fill(0)
@@ -238,7 +238,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
                 onClick={handlePrevious}
                 className={classes.control}
                 aria-label={previousControlLabel}
-                data-active={canScrollPrev || undefined}
+                data-inactive={!canScrollPrev || undefined}
                 tabIndex={canScrollPrev ? 0 : -1}
               >
                 <ChevronIcon
@@ -256,7 +256,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
                 onClick={handleNext}
                 className={classes.control}
                 aria-label={nextControlLabel}
-                data-active={canScrollNext || undefined}
+                data-inactive={!canScrollNext || undefined}
                 tabIndex={canScrollNext ? 0 : -1}
               >
                 <ChevronIcon

@@ -61,7 +61,15 @@ export default createStyles(
         backgroundColor: theme.white,
         color: theme.black,
         boxShadow: theme.shadows.md,
-        ...theme.fn.hover({ backgroundColor: theme.colors.gray[0] }),
+        opacity: theme.colorScheme === 'dark' ? 0.65 : 0.85,
+        border: `1px solid ${theme.colors.gray[3]}`,
+        transition: `opacity 150ms ${theme.transitionTimingFunction}`,
+        ...theme.fn.hover({ opacity: 1 }),
+
+        '&[data-inactive]': {
+          opacity: 0,
+          cursor: 'default',
+        },
 
         '&:active': theme.activeStyles,
       },
@@ -87,7 +95,7 @@ export default createStyles(
         backgroundColor: theme.white,
         boxShadow: theme.shadows.sm,
         opacity: 0.6,
-        transition: 'opacity 150ms ease',
+        transition: `opacity 150ms ${theme.transitionTimingFunction}`,
 
         '&[data-active]': {
           opacity: 1,
