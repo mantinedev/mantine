@@ -68,6 +68,24 @@ export interface CarouselProps
 
   /** Determines whether gap should be treated as part of the slide size, true by default */
   includeGapInSize?: boolean;
+
+  /** Determines whether carousel can be scrolled with mouse and touch interactions, true by default */
+  draggable?: boolean;
+
+  /** Determines whether momentum scrolling should be enabled, false by default */
+  dragFree?: boolean;
+
+  /** Enables infinite looping. Automatically falls back to false if slide content isn't enough to loop. */
+  loop?: boolean;
+
+  /** Adjusts scroll speed when triggered by any of the methods. Higher numbers enables faster scrolling. */
+  speed?: number;
+
+  /** Index of initial slide */
+  initialSlide?: number;
+
+  /** Choose a fraction representing the percentage portion of a slide that needs to be visible in order to be considered in view. For example, 0.5 equals 50%. */
+  inViewThreshold?: number;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -79,6 +97,12 @@ const defaultProps: Partial<CarouselProps> = {
   align: 'center',
   slidesToScroll: 1,
   includeGapInSize: true,
+  draggable: true,
+  dragFree: false,
+  loop: false,
+  speed: 10,
+  initialSlide: 0,
+  inViewThreshold: 0,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -102,6 +126,12 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     align,
     slidesToScroll,
     includeGapInSize,
+    draggable,
+    dragFree,
+    loop,
+    speed,
+    initialSlide,
+    inViewThreshold,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -111,11 +141,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
     axis: orientation === 'horizontal' ? 'x' : 'y',
     direction: theme.dir,
+    startIndex: initialSlide,
+    loop,
     align,
     slidesToScroll,
+    draggable,
+    dragFree,
+    speed,
+    inViewThreshold,
   });
 
   const handlePrevious = useCallback(() => {
