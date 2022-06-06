@@ -8,10 +8,12 @@ import {
   UnstyledButton,
   ChevronIcon,
   MantineNumberSize,
+  StylesApiProvider,
 } from '@mantine/core';
 import useEmblaCarousel, { EmblaCarouselType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
+import { CarouselProvider } from './Carousel.context';
 import useStyles from './Carousel.styles';
 
 export interface CarouselProps extends DefaultProps {
@@ -38,11 +40,19 @@ export interface CarouselProps extends DefaultProps {
 
   /** Key of theme.spacing or number to set space between next/previous control and carousel boundary */
   controlsOffset?: MantineNumberSize;
+
+  /** Slide width, defaults to 100%, examples: 200px, 50% */
+  slideSize?: string | number;
+
+  /** Key of theme.spacing or number to set gap between slides in px */
+  slideGap?: MantineNumberSize;
 }
 
 const defaultProps: Partial<CarouselProps> = {
   controlSize: 30,
   controlsOffset: 'sm',
+  slideSize: '100%',
+  slideGap: 0,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -59,9 +69,11 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     classNames,
     styles,
     unstyled,
+    slideSize,
+    slideGap,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const { classes, cx, theme } = useStyles(
     { controlSize, controlsOffset },
     { name: 'Carousel', classNames, styles, unstyled }
@@ -82,28 +94,36 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   }, [emblaApi]);
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
-      <div className={classes.viewport} ref={emblaRef}>
-        <div className={classes.container}>{children}</div>
-      </div>
-      <div className={classes.controls}>
-        <UnstyledButton
-          onClick={handlePrevious}
-          className={classes.control}
-          aria-label={previousControlLabel}
-        >
-          <ChevronIcon style={{ transform: `rotate(${theme.dir === 'ltr' ? '' : '-'}90deg)` }} />
-        </UnstyledButton>
+    <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+      <CarouselProvider value={{ slideGap, slideSize }}>
+        <Box className={cx(classes.root, className)} ref={ref} {...others}>
+          <div className={classes.viewport} ref={emblaRef}>
+            <div className={classes.container}>{children}</div>
+          </div>
+          <div className={classes.controls}>
+            <UnstyledButton
+              onClick={handlePrevious}
+              className={classes.control}
+              aria-label={previousControlLabel}
+            >
+              <ChevronIcon
+                style={{ transform: `rotate(${theme.dir === 'ltr' ? '' : '-'}90deg)` }}
+              />
+            </UnstyledButton>
 
-        <UnstyledButton
-          onClick={handleNext}
-          className={classes.control}
-          aria-label={nextControlLabel}
-        >
-          <ChevronIcon style={{ transform: `rotate(${theme.dir === 'ltr' ? '-' : ''}90deg)` }} />
-        </UnstyledButton>
-      </div>
-    </Box>
+            <UnstyledButton
+              onClick={handleNext}
+              className={classes.control}
+              aria-label={nextControlLabel}
+            >
+              <ChevronIcon
+                style={{ transform: `rotate(${theme.dir === 'ltr' ? '-' : ''}90deg)` }}
+              />
+            </UnstyledButton>
+          </div>
+        </Box>
+      </CarouselProvider>
+    </StylesApiProvider>
   );
 }) as any;
 
