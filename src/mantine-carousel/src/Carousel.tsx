@@ -95,6 +95,12 @@ export interface CarouselProps
 
   /** An array of embla plugins */
   plugins?: EmblaPluginType[];
+
+  /** Icon of next control */
+  nextControlIcon?: React.ReactNode;
+
+  /** Previous control icon */
+  previousControlIcon?: React.ReactNode;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -146,6 +152,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     withControls,
     withIndicators,
     plugins,
+    nextControlIcon,
+    previousControlIcon,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -241,15 +249,19 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
                 data-inactive={!canScrollPrev || undefined}
                 tabIndex={canScrollPrev ? 0 : -1}
               >
-                <ChevronIcon
-                  style={{
-                    transform: `rotate(${getChevronRotation({
-                      dir: theme.dir,
-                      orientation,
-                      direction: 'previous',
-                    })}deg)`,
-                  }}
-                />
+                {typeof previousControlIcon !== 'undefined' ? (
+                  previousControlIcon
+                ) : (
+                  <ChevronIcon
+                    style={{
+                      transform: `rotate(${getChevronRotation({
+                        dir: theme.dir,
+                        orientation,
+                        direction: 'previous',
+                      })}deg)`,
+                    }}
+                  />
+                )}
               </UnstyledButton>
 
               <UnstyledButton
@@ -259,15 +271,19 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
                 data-inactive={!canScrollNext || undefined}
                 tabIndex={canScrollNext ? 0 : -1}
               >
-                <ChevronIcon
-                  style={{
-                    transform: `rotate(${getChevronRotation({
-                      dir: theme.dir,
-                      orientation,
-                      direction: 'next',
-                    })}deg)`,
-                  }}
-                />
+                {typeof nextControlIcon !== 'undefined' ? (
+                  nextControlIcon
+                ) : (
+                  <ChevronIcon
+                    style={{
+                      transform: `rotate(${getChevronRotation({
+                        dir: theme.dir,
+                        orientation,
+                        direction: 'next',
+                      })}deg)`,
+                    }}
+                  />
+                )}
               </UnstyledButton>
             </div>
           )}
