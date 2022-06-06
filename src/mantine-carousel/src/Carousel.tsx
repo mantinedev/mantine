@@ -16,6 +16,7 @@ import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
 import { CarouselProvider } from './Carousel.context';
 import { CarouselOrientation, EmblaApi } from './types';
+import { getChevronRotation } from './get-chevron-rotation';
 import useStyles, { CarouselStylesParams } from './Carousel.styles';
 
 export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof useStyles>;
@@ -55,6 +56,9 @@ export interface CarouselProps
 
   /** Carousel orientation, horizontal by default */
   orientation?: CarouselOrientation;
+
+  /** Slides container height, required for vertical orientation */
+  height?: React.CSSProperties['height'];
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -82,6 +86,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     slideSize,
     slideGap,
     orientation,
+    height,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -89,7 +94,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     axis: orientation === 'horizontal' ? 'x' : 'y',
   });
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation },
+    { controlSize, controlsOffset, orientation, height },
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
@@ -121,7 +126,13 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
               aria-label={previousControlLabel}
             >
               <ChevronIcon
-                style={{ transform: `rotate(${theme.dir === 'ltr' ? '' : '-'}90deg)` }}
+                style={{
+                  transform: `rotate(${getChevronRotation({
+                    dir: theme.dir,
+                    orientation,
+                    direction: 'previous',
+                  })}deg)`,
+                }}
               />
             </UnstyledButton>
 
@@ -131,7 +142,13 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
               aria-label={nextControlLabel}
             >
               <ChevronIcon
-                style={{ transform: `rotate(${theme.dir === 'ltr' ? '-' : ''}90deg)` }}
+                style={{
+                  transform: `rotate(${getChevronRotation({
+                    dir: theme.dir,
+                    orientation,
+                    direction: 'next',
+                  })}deg)`,
+                }}
               />
             </UnstyledButton>
           </div>
