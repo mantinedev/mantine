@@ -134,6 +134,7 @@
     "clsx": "^1.1.1",
     "csstype": "3.0.9",
     "dayjs": "^1.10.5",
+    "embla-carousel-react": "6.2.0",
     "html-react-parser": "1.4.12",
     "prism-react-renderer": "^1.2.1",
     "quill-mention": "^3.0.8",

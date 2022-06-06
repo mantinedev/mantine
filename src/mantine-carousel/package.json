@@ -1,0 +1,33 @@
+{
+  "name": "@mantine/carousel",
+  "description": "Embla based carousel",
+  "version": "5.0.0-alpha.5",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "homepage": "https://mantine.dev/dates/getting-started/",
+  "keywords": [
+    "react",
+    "next",
+    "nextjs",
+    "ui",
+    "components",
+    "ui-kit",
+    "library",
+    "frontend",
+    "carousel",
+    "slider",
+    "slick"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "5.0.0-alpha.5",
+    "@mantine/utils": "5.0.0-alpha.5",
+    "@mantine/hooks": "5.0.0-alpha.5",
+    "embla-carousel-react": "6.2.0",
+    "react": ">=16.8.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
