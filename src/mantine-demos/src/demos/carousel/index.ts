@@ -6,3 +6,6 @@ export { multiple } from './Carousel.demo.multiple';
 export { breakpoints } from './Carousel.demo.breakpoints';
 export { autoplay } from './Carousel.demo.autoplay';
 export { dragFree } from './Carousel.demo.dragFree';
+export { indicatorStyles } from './Carousel.demo.indicatorStyles';
+export { controlsStyles } from './Carousel.demo.controlsStyles';
+export { controlsHover } from './Carousel.demo.controlsHover';
