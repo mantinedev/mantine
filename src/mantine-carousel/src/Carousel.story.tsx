@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from './Carousel';
 
 export default { title: 'Carousel' };
@@ -46,6 +47,26 @@ export function Vertical() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
       <Carousel slideSize={120} height={200} slideGap="md" orientation="vertical">
+        {slides}
+      </Carousel>
+    </div>
+  );
+}
+
+export function AutoPlay() {
+  const autoplay = useRef(
+    Autoplay({ delay: 500, stopOnInteraction: false }, (emblaRoot) => emblaRoot.parentElement)
+  );
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Carousel
+        height={200}
+        plugins={[autoplay.current]}
+        onMouseEnter={autoplay.current.stop}
+        onMouseLeave={autoplay.current.reset}
+        withIndicators
+      >
         {slides}
       </Carousel>
     </div>

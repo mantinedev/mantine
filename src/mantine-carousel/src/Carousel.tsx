@@ -11,7 +11,7 @@ import {
   StylesApiProvider,
   Selectors,
 } from '@mantine/core';
-import useEmblaCarousel from 'embla-carousel-react';
+import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
 import { CarouselProvider } from './Carousel.context';
@@ -92,6 +92,9 @@ export interface CarouselProps
 
   /** Determines whether indicators should be displayed, false by default */
   withIndicators?: boolean;
+
+  /** An array of embla plugins */
+  plugins?: EmblaPluginType[];
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -142,6 +145,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     inViewThreshold,
     withControls,
     withIndicators,
+    plugins,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -150,18 +154,21 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
-  const [emblaRefElement, embla] = useEmblaCarousel({
-    axis: orientation === 'horizontal' ? 'x' : 'y',
-    direction: theme.dir,
-    startIndex: initialSlide,
-    loop,
-    align,
-    slidesToScroll,
-    draggable,
-    dragFree,
-    speed,
-    inViewThreshold,
-  });
+  const [emblaRefElement, embla] = useEmblaCarousel(
+    {
+      axis: orientation === 'horizontal' ? 'x' : 'y',
+      direction: theme.dir,
+      startIndex: initialSlide,
+      loop,
+      align,
+      slidesToScroll,
+      draggable,
+      dragFree,
+      speed,
+      inViewThreshold,
+    },
+    plugins
+  );
 
   const [selected, setSelected] = useState(0);
   const [slidesCount, setSlidesCount] = useState(0);
