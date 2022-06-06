@@ -10,10 +10,11 @@ import {
   MantineNumberSize,
   StylesApiProvider,
 } from '@mantine/core';
-import useEmblaCarousel, { EmblaCarouselType } from 'embla-carousel-react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
 import { CarouselProvider } from './Carousel.context';
+import { CarouselOrientation, EmblaApi } from './types';
 import useStyles from './Carousel.styles';
 
 export interface CarouselProps extends DefaultProps {
@@ -27,7 +28,7 @@ export interface CarouselProps extends DefaultProps {
   onPreviousSlide?(): void;
 
   /** Get embla API as ref */
-  emblaApiRef?: React.ForwardedRef<EmblaCarouselType>;
+  emblaApiRef?: React.ForwardedRef<EmblaApi>;
 
   /** Next control aria-label */
   nextControlLabel?: string;
@@ -46,6 +47,9 @@ export interface CarouselProps extends DefaultProps {
 
   /** Key of theme.spacing or number to set gap between slides in px */
   slideGap?: MantineNumberSize;
+
+  /** Carousel orientation, horizontal by default */
+  orientation?: CarouselOrientation;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -53,6 +57,7 @@ const defaultProps: Partial<CarouselProps> = {
   controlsOffset: 'sm',
   slideSize: '100%',
   slideGap: 0,
+  orientation: 'horizontal',
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -71,11 +76,15 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     unstyled,
     slideSize,
     slideGap,
+    orientation,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    axis: orientation === 'horizontal' ? 'x' : 'y',
+  });
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset },
+    { controlSize, controlsOffset, orientation },
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
@@ -95,7 +104,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider value={{ slideGap, slideSize, emblaApi }}>
+      <CarouselProvider value={{ slideGap, slideSize, emblaApi, orientation }}>
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
           <div className={classes.viewport} ref={emblaRef}>
             <div className={classes.container}>{children}</div>
