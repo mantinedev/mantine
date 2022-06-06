@@ -4,7 +4,7 @@ export default createStyles(() => ({
   slide: {
     position: 'relative',
     flex: '0 0 100%',
-    backgroundColor: 'red',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     height: 200,
   },
 }));
