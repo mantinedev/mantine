@@ -120,6 +120,7 @@ export * as HooksDemos from './demos/hooks';
 export * as SpotlightDemos from './demos/spotlight';
 export * as FormDemos from './demos/form';
 export * as NProgressDemos from './demos/nprogress';
+export * as CarouselDemos from './demos/carousel';
 
 // @mantine/labs
 export * as PinInputDemos from './demos/labs/PinInput';

@@ -29,6 +29,7 @@
     "@mantine/prism": "5.0.0-alpha.5",
     "@mantine/labs": "5.0.0-alpha.5",
     "@mantine/spotlight": "5.0.0-alpha.5",
+    "@mantine/carousel": "5.0.0-alpha.5",
     "@tabler/icons": "*",
     "react-beautiful-dnd": "*",
     "react-input-mask": "*",

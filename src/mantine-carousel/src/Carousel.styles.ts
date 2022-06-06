@@ -65,12 +65,6 @@ export default createStyles(
         border: `1px solid ${theme.colors.gray[3]}`,
         transition: `opacity 150ms ${theme.transitionTimingFunction}`,
         ...theme.fn.hover({ opacity: 1 }),
-
-        '&[data-inactive]': {
-          opacity: 0,
-          cursor: 'default',
-        },
-
         '&:active': theme.activeStyles,
       },
 
