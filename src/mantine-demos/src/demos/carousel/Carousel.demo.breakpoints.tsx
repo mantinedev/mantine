@@ -18,7 +18,6 @@ function Demo() {
       ]}
       loop
       align="start"
-      slidesToScroll={1}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -42,7 +41,6 @@ function Demo() {
       ]}
       loop
       align="start"
-      slidesToScroll={1}
     >
       <Slides count={6} />
     </Carousel>

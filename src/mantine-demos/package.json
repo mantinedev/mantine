@@ -32,6 +32,7 @@
     "@mantine/carousel": "5.0.0-alpha.5",
     "@tabler/icons": "*",
     "react-beautiful-dnd": "*",
+    "embla-carousel-autoplay": "*",
     "react-input-mask": "*",
     "dayjs": "*",
     "zod": "*",
