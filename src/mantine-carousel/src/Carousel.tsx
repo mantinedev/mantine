@@ -9,15 +9,20 @@ import {
   ChevronIcon,
   MantineNumberSize,
   StylesApiProvider,
+  Selectors,
 } from '@mantine/core';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
-import { CarouselSlide } from './CarouselSlide/CarouselSlide';
+import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
 import { CarouselProvider } from './Carousel.context';
 import { CarouselOrientation, EmblaApi } from './types';
-import useStyles from './Carousel.styles';
+import useStyles, { CarouselStylesParams } from './Carousel.styles';
 
-export interface CarouselProps extends DefaultProps {
+export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof useStyles>;
+
+export interface CarouselProps
+  extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Carousel.Slide /> components */
   children: React.ReactNode;
 
