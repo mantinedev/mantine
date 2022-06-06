@@ -15,7 +15,7 @@ import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
 import { CarouselProvider } from './Carousel.context';
-import { CarouselOrientation, EmblaApi } from './types';
+import { CarouselOrientation, Embla, CarouselBreakpoint } from './types';
 import { getChevronRotation } from './get-chevron-rotation';
 import useStyles, { CarouselStylesParams } from './Carousel.styles';
 
@@ -34,7 +34,7 @@ export interface CarouselProps
   onPreviousSlide?(): void;
 
   /** Get embla API as ref */
-  emblaRef?: React.ForwardedRef<EmblaApi>;
+  emblaRef?: React.ForwardedRef<Embla>;
 
   /** Next control aria-label */
   nextControlLabel?: string;
@@ -53,6 +53,9 @@ export interface CarouselProps
 
   /** Key of theme.spacing or number to set gap between slides in px */
   slideGap?: MantineNumberSize;
+
+  /** Control slideSize and slideGap at different viewport sizes */
+  breakpoints?: CarouselBreakpoint[];
 
   /** Carousel orientation, horizontal by default */
   orientation?: CarouselOrientation;
@@ -154,6 +157,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     plugins,
     nextControlIcon,
     previousControlIcon,
+    breakpoints,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -232,7 +236,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
-      <CarouselProvider value={{ slideGap, slideSize, embla, orientation, includeGapInSize }}>
+      <CarouselProvider
+        value={{ slideGap, slideSize, embla, orientation, includeGapInSize, breakpoints }}
+      >
         <Box className={cx(classes.root, className)} ref={ref} {...others}>
           <div className={classes.viewport} ref={emblaRefElement}>
             <div className={classes.container}>{children}</div>

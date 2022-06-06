@@ -12,9 +12,13 @@ function Demo() {
       height={200}
       slideSize="33.333333%"
       slideGap="md"
+      breakpoints={[
+        { maxWidth: 'md', slideSize: '50%' },
+        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
+      ]}
       loop
       align="start"
-      slidesToScroll={3}
+      slidesToScroll={1}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -32,16 +36,20 @@ function Demo() {
       height={200}
       slideSize="33.333333%"
       slideGap="md"
+      breakpoints={[
+        { maxWidth: 'md', slideSize: '50%' },
+        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
+      ]}
       loop
       align="start"
-      slidesToScroll={3}
+      slidesToScroll={1}
     >
-      <Slides count={12} />
+      <Slides count={6} />
     </Carousel>
   );
 }
 
-export const multiple: MantineDemo = {
+export const breakpoints: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,
