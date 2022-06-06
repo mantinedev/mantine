@@ -25,7 +25,7 @@ export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** <Carousel.Slide /> components */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Called when user clicks next button */
   onNextSlide?(): void;

@@ -1,5 +1,6 @@
 import { MantineNumberSize } from '@mantine/core';
 import { createSafeContext } from '@mantine/utils';
+import { CAROUSEL_ERRORS } from './Carousel.errors';
 import { CarouselOrientation, Embla, CarouselBreakpoint } from './types';
 
 interface CarouselContext {
@@ -12,5 +13,5 @@ interface CarouselContext {
 }
 
 export const [CarouselProvider, useCarouselContext] = createSafeContext<CarouselContext>(
-  'Carousel component was now found in tree'
+  CAROUSEL_ERRORS.context
 );
