@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback } from 'react';
+import React, { forwardRef, useEffect, useCallback, useState } from 'react';
 import { assignRef } from '@mantine/hooks';
 import {
   useComponentDefaultProps,
@@ -86,6 +86,12 @@ export interface CarouselProps
 
   /** Choose a fraction representing the percentage portion of a slide that needs to be visible in order to be considered in view. For example, 0.5 equals 50%. */
   inViewThreshold?: number;
+
+  /** Determines whether next/previous controls should be displayed, true by default */
+  withControls?: boolean;
+
+  /** Determines whether indicators should be displayed, false by default */
+  withIndicators?: boolean;
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -103,6 +109,8 @@ const defaultProps: Partial<CarouselProps> = {
   speed: 10,
   initialSlide: 0,
   inViewThreshold: 0,
+  withControls: true,
+  withIndicators: false,
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
@@ -132,6 +140,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     speed,
     initialSlide,
     inViewThreshold,
+    withControls,
+    withIndicators,
     ...others
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
@@ -153,6 +163,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     inViewThreshold,
   });
 
+  const [selected, setSelected] = useState(0);
+  const [slidesCount, setSlidesCount] = useState(0);
+
+  const handleScroll = useCallback((index) => embla && embla.scrollTo(index), [embla]);
+
+  const handleSelect = useCallback(() => {
+    if (!embla) return;
+    setSelected(embla.selectedScrollSnap());
+  }, [embla, setSelected]);
+
   const handlePrevious = useCallback(() => {
     embla?.scrollPrev();
     onPreviousSlide?.();
@@ -165,10 +185,35 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
   useEffect(() => {
     assignRef(emblaRef, embla);
+
+    if (embla) {
+      handleSelect();
+      setSlidesCount(embla.scrollSnapList().length);
+      embla.on('select', handleSelect);
+
+      return () => {
+        embla.off('select', handleSelect);
+      };
+    }
+
+    return undefined;
   }, [embla]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollPrev() || false;
+
+  const indicators = Array(slidesCount)
+    .fill(0)
+    .map((_, index) => (
+      <UnstyledButton
+        key={index}
+        data-active={index === selected || undefined}
+        className={classes.indicator}
+        aria-hidden
+        tabIndex={-1}
+        onClick={() => handleScroll(index)}
+      />
+    ));
 
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
@@ -177,43 +222,48 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
           <div className={classes.viewport} ref={emblaRefElement}>
             <div className={classes.container}>{children}</div>
           </div>
-          <div className={classes.controls}>
-            <UnstyledButton
-              onClick={handlePrevious}
-              className={classes.control}
-              aria-label={previousControlLabel}
-              data-active={canScrollPrev || undefined}
-              tabIndex={canScrollPrev ? 0 : -1}
-            >
-              <ChevronIcon
-                style={{
-                  transform: `rotate(${getChevronRotation({
-                    dir: theme.dir,
-                    orientation,
-                    direction: 'previous',
-                  })}deg)`,
-                }}
-              />
-            </UnstyledButton>
 
-            <UnstyledButton
-              onClick={handleNext}
-              className={classes.control}
-              aria-label={nextControlLabel}
-              data-active={canScrollNext || undefined}
-              tabIndex={canScrollNext ? 0 : -1}
-            >
-              <ChevronIcon
-                style={{
-                  transform: `rotate(${getChevronRotation({
-                    dir: theme.dir,
-                    orientation,
-                    direction: 'next',
-                  })}deg)`,
-                }}
-              />
-            </UnstyledButton>
-          </div>
+          {withIndicators && <div className={classes.indicators}>{indicators}</div>}
+
+          {withControls && (
+            <div className={classes.controls}>
+              <UnstyledButton
+                onClick={handlePrevious}
+                className={classes.control}
+                aria-label={previousControlLabel}
+                data-active={canScrollPrev || undefined}
+                tabIndex={canScrollPrev ? 0 : -1}
+              >
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'previous',
+                    })}deg)`,
+                  }}
+                />
+              </UnstyledButton>
+
+              <UnstyledButton
+                onClick={handleNext}
+                className={classes.control}
+                aria-label={nextControlLabel}
+                data-active={canScrollNext || undefined}
+                tabIndex={canScrollNext ? 0 : -1}
+              >
+                <ChevronIcon
+                  style={{
+                    transform: `rotate(${getChevronRotation({
+                      dir: theme.dir,
+                      orientation,
+                      direction: 'next',
+                    })}deg)`,
+                  }}
+                />
+              </UnstyledButton>
+            </div>
+          )}
         </Box>
       </CarouselProvider>
     </StylesApiProvider>

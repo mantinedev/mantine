@@ -26,7 +26,7 @@ export default createStyles(
 
       controls: {
         position: 'absolute',
-        zIndex: 10,
+        zIndex: 1,
         left: horizontal ? 0 : `calc(50% - ${controlSize / 2}px)`,
         right: horizontal ? 0 : undefined,
         top: horizontal ? `calc(50% - ${controlSize / 2}px)` : 0,
@@ -64,6 +64,34 @@ export default createStyles(
         ...theme.fn.hover({ backgroundColor: theme.colors.gray[0] }),
 
         '&:active': theme.activeStyles,
+      },
+
+      indicators: {
+        position: 'absolute',
+        bottom: horizontal ? theme.spacing.md : 0,
+        top: horizontal ? undefined : 0,
+        left: horizontal ? 0 : undefined,
+        right: horizontal ? 0 : theme.spacing.md,
+        display: 'flex',
+        flexDirection: horizontal ? 'row' : 'column',
+        justifyContent: 'center',
+        gap: 8,
+        pointerEvents: 'none',
+      },
+
+      indicator: {
+        pointerEvents: 'all',
+        width: horizontal ? 25 : 5,
+        height: horizontal ? 5 : 25,
+        borderRadius: 10000,
+        backgroundColor: theme.white,
+        boxShadow: theme.shadows.sm,
+        opacity: 0.6,
+        transition: 'opacity 150ms ease',
+
+        '&[data-active]': {
+          opacity: 1,
+        },
       },
     };
   }
