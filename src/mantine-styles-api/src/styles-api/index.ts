@@ -63,3 +63,4 @@ export * from './Dropzone.styles-api';
 export * from './Prism.styles-api';
 export * from './RichTextEditor.styles-api';
 export * from './SpotlightProvider.styles-api';
+export * from './Carousel.styles-api';
