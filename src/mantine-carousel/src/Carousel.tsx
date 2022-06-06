@@ -167,6 +167,9 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     assignRef(emblaApiRef, emblaApi);
   }, [emblaApi]);
 
+  const canScrollPrev = emblaApi?.canScrollPrev() || false;
+  const canScrollNext = emblaApi?.canScrollPrev() || false;
+
   return (
     <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
       <CarouselProvider value={{ slideGap, slideSize, emblaApi, orientation, includeGapInSize }}>
@@ -179,6 +182,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
               onClick={handlePrevious}
               className={classes.control}
               aria-label={previousControlLabel}
+              data-active={canScrollPrev || undefined}
+              tabIndex={canScrollPrev ? 0 : -1}
             >
               <ChevronIcon
                 style={{
@@ -195,6 +200,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
               onClick={handleNext}
               className={classes.control}
               aria-label={nextControlLabel}
+              data-active={canScrollNext || undefined}
+              tabIndex={canScrollNext ? 0 : -1}
             >
               <ChevronIcon
                 style={{
