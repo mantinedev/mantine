@@ -76,6 +76,10 @@ const EXTRA_FILES_PATHS = [
   // Stepper
   '../src/mantine-core/src/components/Stepper/Step/Step.tsx',
 
+  // Carousel
+  '../src/mantine-carousel/src/Carousel.tsx',
+  '../src/mantine-carousel/src/CarouselSlide/CarouselSlide.tsx',
+
   // Other
   '../src/mantine-notifications/src/NotificationsProvider/NotificationsProvider.tsx',
   '../src/mantine-prism/src/Prism/Prism.tsx',

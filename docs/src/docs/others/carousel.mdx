@@ -44,9 +44,32 @@ it supports most of its features:
 
 <Demo data={CarouselDemos.configurator} />
 
-## Multiple slides
+## Size and gap
+
+Set `slideSize` and `slideGap` on `Carousel` component to control size and gap of every slide:
 
 <Demo data={CarouselDemos.multiple} />
+
+You can also control size and gap of each slide individually by setting `size` and `gap` props
+on `Carousel.Slide` component:
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel>
+      <Carousel.Slide size="50%" gap="xl">
+        1
+      </Carousel.Slide>
+      <Carousel.Slide size="100%">2</Carousel.Slide>
+      <Carousel.Slide size={200} gap={20}>
+        3
+      </Carousel.Slide>
+    </Carousel>
+  );
+}
+```
 
 ## Responsive styles
 
