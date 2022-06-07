@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { forwardRef, useEffect, useCallback, useState } from 'react';
-import { assignRef } from '@mantine/hooks';
 import {
   useComponentDefaultProps,
   Box,
@@ -34,7 +33,7 @@ export interface CarouselProps
   onPreviousSlide?(): void;
 
   /** Get embla API as ref */
-  emblaRef?: React.ForwardedRef<Embla>;
+  getEmblaApi?(embla: Embla): void;
 
   /** Next control aria-label */
   nextControlLabel?: string;
@@ -129,7 +128,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   const {
     children,
     className,
-    emblaRef,
+    getEmblaApi,
     onNextSlide,
     onPreviousSlide,
     nextControlLabel,
@@ -203,9 +202,8 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   }, [embla]);
 
   useEffect(() => {
-    assignRef(emblaRef, embla);
-
     if (embla) {
+      getEmblaApi?.(embla);
       handleSelect();
       setSlidesCount(embla.scrollSnapList().length);
       embla.on('select', handleSelect);
