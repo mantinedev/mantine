@@ -21,6 +21,8 @@ export default createStyles(
         sizes: theme.breakpoints,
       });
 
+      const breakpointGap = typeof breakpoint.slideGap === 'undefined' ? gap : breakpoint.slideGap;
+
       acc[`@media (${property}: ${breakpointSize + (property === 'max-width' ? 0 : 1)}px)`] = {
         flex: `0 0 calc(${
           typeof breakpoint.slideSize === 'number'
@@ -29,14 +31,14 @@ export default createStyles(
         } - ${
           includeGapInSize
             ? theme.fn.size({
-                size: breakpoint.slideGap || gap,
+                size: breakpointGap,
                 sizes: theme.spacing,
               }) / 2
             : 0
         }px)`,
 
         [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
-          size: breakpoint.slideGap || gap,
+          size: breakpointGap,
           sizes: theme.spacing,
         }),
       };
