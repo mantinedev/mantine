@@ -26,6 +26,7 @@ import {
   SliderDemos,
   NavLinkDemos,
   ButtonDemos,
+  CarouselDemos,
 } from '@mantine/demos';
 
 ## Components API changes
@@ -254,6 +255,12 @@ type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { 
 - [use-intersection](https://mantine.dev/hooks/use-intersection/) hook API was changed to keep API consistent across all hooks
 - [use-notifications](https://mantine.dev/others/notifications/) hook from `@mantine/notifications` package no longer has `showNotification`, `hideNotification` and other functions, use separate functions exported from the package for that
 
+## @mantine/carousel package
+
+New [@mantine/carousel](https://mantine.dev/others/carousel/) package based on [embla carousel](https://www.embla-carousel.com/):
+
+<Demo data={CarouselDemos.cards} demoProps={{ toggle: true }} />
+
 ## @mantine/nprogress package
 
 New [@mantine/nprogress](https://mantine.dev/others/nprogress/) package displays navigation
@@ -350,7 +357,7 @@ New [NavLink](https://mantine.dev/core/nav-link/) component:
 
 New [HoverCard](https://mantine.dev/core/hover-card/) component:
 
-<Demo data={HoverCardDemos.profile} demoProps={{ toggle: true }} />
+<Demo data={HoverCardDemos.profile} demoProps={{ toggle: true, zIndex: 5 }} />
 
 ### CopyButton component
 
