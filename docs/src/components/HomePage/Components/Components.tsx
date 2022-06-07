@@ -4,9 +4,9 @@ import {
   IconForms,
   IconCalendar,
   IconStack2,
-  IconDragDrop,
   IconBold,
   IconNotebook,
+  IconSlideshow,
 } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { SectionTitle } from '../SectionTitle/SectionTitle';
@@ -15,7 +15,7 @@ import { Dates } from './demos/Dates';
 import { Overlays } from './demos/Overlays';
 import { Content } from './demos/Content';
 import { RichText } from './demos/RichText';
-import { DropzoneDemo } from './demos/Dropzone';
+import { Carousel } from './demos/Carousel';
 import useStyles from './Components.styles';
 
 const data = [
@@ -39,12 +39,12 @@ const data = [
     name: 'Rich text editor',
     description: 'Quill based rich text editor',
   },
-  { demo: DropzoneDemo, icon: IconDragDrop, name: 'Dropzone', description: 'Drag and drop files' },
+  { demo: Carousel, icon: IconSlideshow, name: 'Carousel', description: 'Embla based carousel' },
 ];
 
 export function Components() {
-  const { classes, theme } = useStyles();
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const { classes, theme } = useStyles({ shouldAnimate });
   const animationTimeout = useRef<number>();
   const [active, setActive] = useState(0);
   const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`) ? 60 : 80;
@@ -94,7 +94,7 @@ export function Components() {
             </div>
           </Grid.Col>
           <Grid.Col md={8}>
-            <div className={classes.demo} style={{ animation: shouldAnimate ? undefined : 'none' }}>
+            <div className={classes.demo}>
               <ActiveDemo />
             </div>
           </Grid.Col>

@@ -8,6 +8,7 @@ export { TimelineBase } from './demos/core/Timeline/_base';
 export { CustomSelectDemo } from './demos/core/Select/Select.demo.itemComponent';
 export { CountriesSelect } from './demos/core/MultiSelect/MultiSelect.demo.countries';
 export { HoverCardHomePageDemo } from './demos/core/HoverCard/HoverCard.demo.profile';
+export { CarouselCardsDemos } from './demos/carousel/Carousel.demo.cards';
 
 // Meta demos
 export * as CreateStylesDemos from './demos/create-styles';

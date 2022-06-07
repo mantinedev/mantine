@@ -5,7 +5,7 @@ const fadeId = keyframes({
   to: { opacity: 1, transform: 'translateY(0) scale(1) rotate(0)' },
 });
 
-export default createStyles((theme) => ({
+export default createStyles((theme, { shouldAnimate }: { shouldAnimate: boolean }) => ({
   root: {
     paddingTop: 100,
     paddingBottom: 100,
@@ -87,7 +87,7 @@ export default createStyles((theme) => ({
 
   demo: {
     paddingLeft: theme.spacing.xl * 2,
-    animation: `${fadeId} 300ms ease`,
+    animation: shouldAnimate ? `${fadeId} 300ms ease` : 'none',
 
     [theme.fn.smallerThan('md')]: {
       paddingLeft: 0,

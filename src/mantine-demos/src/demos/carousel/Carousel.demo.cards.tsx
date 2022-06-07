@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from '@mantine/carousel';
+import { Carousel, CarouselProps } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
 import { Card } from './_card';
@@ -170,7 +170,7 @@ const data = [
   },
 ];
 
-function Demo() {
+export function CarouselCardsDemos(props: CarouselProps) {
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
   const slides = data.map((item) => (
@@ -186,6 +186,7 @@ function Demo() {
       slideGap="xl"
       align="start"
       slidesToScroll={mobile ? 1 : 2}
+      {...props}
     >
       {slides}
     </Carousel>
@@ -194,6 +195,6 @@ function Demo() {
 
 export const cards: MantineDemo = {
   type: 'demo',
-  component: Demo,
+  component: CarouselCardsDemos,
   code,
 };
