@@ -11,3 +11,4 @@ export { controlsStyles } from './Carousel.demo.controlsStyles';
 export { controlsHover } from './Carousel.demo.controlsHover';
 export { configurator } from './Carousel.demo.configurator';
 export { progress } from './Carousel.demo.progress';
+export { cards } from './Carousel.demo.cards';
