@@ -1,0 +1,93 @@
+---
+group: 'Other packages'
+package: '@mantine/carousel'
+title: 'Carousel'
+order: 1
+slug: /others/carousel/
+description: 'Embla based carousel component'
+componentPrefix: 'Carousel'
+props: ['Carousel', 'CarouselSlide']
+import: "import { Carousel } from '@mantine/carousel';"
+source: 'mantine-carousel/src'
+docs: 'others/carousel.mdx'
+installation: '@mantine/carousel'
+license: MIT
+---
+
+import { CarouselDemos } from '@mantine/demos';
+
+## Installation
+
+Package depends on @mantine/core and @mantine/hooks.
+
+Install with npm:
+
+```sh
+npm install @mantine/carousel @mantine/core @mantine/hooks
+```
+
+Install with yarn:
+
+```sh
+yarn add @mantine/carousel @mantine/core @mantine/hooks
+```
+
+## Usage
+
+<Demo data={CarouselDemos.usage} />
+
+## Options
+
+<Demo data={CarouselDemos.configurator} />
+
+## Multiple slides
+
+<Demo data={CarouselDemos.multiple} />
+
+## Responsive styles
+
+<Demo data={CarouselDemos.breakpoints} />
+
+## Drag free
+
+<Demo data={CarouselDemos.dragFree} />
+
+## Vertical orientation
+
+<Demo data={CarouselDemos.vertical} />
+
+## Controls icons
+
+<Demo data={CarouselDemos.icons} />
+
+## Get embla instance
+
+<Demo data={CarouselDemos.progress} />
+
+## Embla plugins
+
+<Demo data={CarouselDemos.autoplay} />
+
+## Styles API
+
+### Indicator styles
+
+<Demo data={CarouselDemos.indicatorStyles} />
+
+### Hide inactive controls
+
+<Demo data={CarouselDemos.controlsStyles} />
+
+### Show controls on hover
+
+<Demo data={CarouselDemos.controlsHover} />
+
+## Examples
+
+### Images carousel
+
+<Demo data={CarouselDemos.images} demoProps={{ toggle: true }} />
+
+### Cards carousel
+
+<Demo data={CarouselDemos.cards} demoProps={{ toggle: true }} />
