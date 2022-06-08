@@ -1,10 +1,4 @@
-function getSplittedPath(path: string) {
-  if (typeof path !== 'string') {
-    return [];
-  }
-
-  return path.split('.');
-}
+import { getSplittedPath } from './get-splitted-path';
 
 export function getPath(path: string, values: unknown) {
   const splittedPath = getSplittedPath(path);
