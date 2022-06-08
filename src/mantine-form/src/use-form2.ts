@@ -14,6 +14,10 @@ type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   value: Field extends keyof Values ? Values[Field] : unknown
 ) => void;
 
+type ClearFieldError = (field: string) => void;
+type ClearErrors = () => void;
+type Reset = () => void;
+
 type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   error: React.ReactNode
@@ -32,6 +36,9 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   setErrors: SetErrors;
   setFieldValue: SetFieldValue<Values>;
   setFieldError: SetFieldError<Values>;
+  clearFieldError: ClearFieldError;
+  clearErrors: ClearErrors;
+  reset: Reset;
 }
 
 export function useForm<Values extends ValuesPlaceholder>({
@@ -42,8 +49,14 @@ export function useForm<Values extends ValuesPlaceholder>({
   const [values, _setValues] = useState(initialValues);
   const [errors, setErrors] = useState(initialErrors);
 
+  const clearErrors: ClearErrors = () => setErrors({});
+  const reset: Reset = () => {
+    _setValues(initialValues);
+    clearErrors();
+  };
+
   const setFieldError: SetFieldError<Values> = (path, error) =>
-    setErrors((current) => filterErrors(setPath(path, error, current)));
+    setErrors((current) => filterErrors({ ...current, [path]: error }));
 
   const setFieldValue: SetFieldValue<Values> = (path, value) => {
     _setValues((current) => setPath(path, value, current));
@@ -52,8 +65,15 @@ export function useForm<Values extends ValuesPlaceholder>({
 
   const setValues: SetValues<Values> = (payload) => {
     _setValues(payload);
-    clearInputErrorOnChange && setErrors({});
+    clearInputErrorOnChange && clearErrors();
   };
+
+  const clearFieldError: ClearFieldError = (field) =>
+    setErrors((current) => {
+      const clone = { ...current };
+      delete clone[field];
+      return clone;
+    });
 
   return {
     values,
@@ -62,5 +82,8 @@ export function useForm<Values extends ValuesPlaceholder>({
     setErrors,
     setFieldValue,
     setFieldError,
+    clearFieldError,
+    clearErrors,
+    reset,
   };
 }
