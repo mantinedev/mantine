@@ -1,4 +1,4 @@
-export function getSplittedPath(path: string) {
+export function getSplittedPath(path: unknown) {
   if (typeof path !== 'string') {
     return [];
   }

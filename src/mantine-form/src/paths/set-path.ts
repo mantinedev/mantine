@@ -1,7 +1,7 @@
 import clone from 'lodash.clonedeep';
 import { getSplittedPath } from './get-splitted-path';
 
-export function setPath(path: string, value: unknown, values: unknown) {
+export function setPath<T>(path: unknown, value: unknown, values: T) {
   const splittedPath = getSplittedPath(path);
 
   if (splittedPath.length === 0) {
