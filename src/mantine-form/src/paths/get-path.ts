@@ -1,6 +1,6 @@
 import { getSplittedPath } from './get-splitted-path';
 
-export function getPath(path: string, values: unknown) {
+export function getPath(path: unknown, values: unknown): unknown {
   const splittedPath = getSplittedPath(path);
 
   if (splittedPath.length === 0) {
