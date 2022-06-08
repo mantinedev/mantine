@@ -23,20 +23,20 @@ const getThemes = (props?: Partial<SwitchProps>) =>
     <Switch key={color} color={color} {...props} label={color} style={{ marginTop: 15 }} />
   ));
 
-  const switchWithLabels = [
-    { on: 'D', off: 'L', size: 'md' },
-    { on: 'On', off: 'Off', size: 'lg' },
-    { on: 'Dark', off: 'Light', size: 'xl' },
-  ].map((label) => (
-    <Switch
-      color="blue"
-      label={`On: ${label.on} Off: ${label.off}`}
-      key={label.on}
-      size={label.size as MantineSize}
-      onLabel={label.on}
-      offLabel={label.off}
-      style={{ marginTop: 15 }}
-    />
+const switchWithLabels = [
+  { on: 'D', off: 'L', size: 'md' },
+  { on: 'On', off: 'Off', size: 'lg' },
+  { on: 'Dark', off: 'Light', size: 'xl' },
+].map((label) => (
+  <Switch
+    color="blue"
+    label={`On: ${label.on} Off: ${label.off}`}
+    key={label.on}
+    size={label.size as MantineSize}
+    onLabel={label.on}
+    offLabel={label.off}
+    style={{ marginTop: 15 }}
+  />
 ));
 
 storiesOf('Switch', module)
