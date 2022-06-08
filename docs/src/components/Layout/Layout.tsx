@@ -13,7 +13,7 @@ export default function Layout({ children, location }: LayoutProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
-    getInitialValueInEffect: true,
+    getInitialValueInEffect: false,
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>
