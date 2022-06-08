@@ -101,12 +101,11 @@ export default createStyles(
         '&::after': {
           position: 'absolute',
           zIndex: 0,
-          display: 'flex',
           height: '100%',
+          display: 'flex',
           alignItems: 'center',
           lineHeight: 0,
           right: '10%',
-          transform: 'translateX(0)',
           content: offLabel ? `'${offLabel}'` : "''",
           color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
           transition: `color 150ms ${theme.transitionTimingFunction}`,
@@ -126,9 +125,17 @@ export default createStyles(
           },
 
           '&::after': {
-            transform: 'translateX(-200%)',
+            position: 'absolute',
+            zIndex: 0,
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center',
+            lineHeight: 0,
+            left: '10%',
             content: onLabel ? `'${onLabel}'` : "''",
             color: theme.white,
+            transition: `color 150ms ${theme.transitionTimingFunction}`,
+
           },
         },
 
