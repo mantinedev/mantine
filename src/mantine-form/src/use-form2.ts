@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { setPath, reorderPath, insertPath } from './paths';
 import { filterErrors } from './filter-errors';
-import { ReorderPayload } from './types2';
+import { ReorderPayload, FormErrors, FormValidateInput } from './types2';
 
 type LooseKeys<Values> = keyof Values | (string & {});
-type FormErrors = Record<string, React.ReactNode>;
 type ValuesPlaceholder = Record<string, unknown>;
 
 type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
@@ -38,6 +37,7 @@ type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
 export interface UseFormInput<Values extends ValuesPlaceholder> {
   initialValues?: Values;
   initialErrors?: FormErrors;
+  validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
 }
 
