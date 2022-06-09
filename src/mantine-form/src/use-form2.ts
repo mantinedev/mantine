@@ -22,6 +22,8 @@ type OnSubmit<Values> = (
   handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void
 ) => (event: React.FormEvent<HTMLFormElement>) => void;
 
+type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
+
 type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean }
@@ -79,6 +81,7 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values>;
+  onReset: OnReset;
 }
 
 export function useForm<Values extends ValuesPlaceholder>({
@@ -165,6 +168,11 @@ export function useForm<Values extends ValuesPlaceholder>({
     !results.hasErrors && handleSubmit(values, event);
   };
 
+  const onReset: OnReset = (event) => {
+    event.preventDefault();
+    reset();
+  };
+
   return {
     values,
     errors,
@@ -181,5 +189,6 @@ export function useForm<Values extends ValuesPlaceholder>({
     insertListItem,
     getInputProps,
     onSubmit,
+    onReset,
   };
 }
