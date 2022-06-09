@@ -16,9 +16,16 @@ function validateRulesRecord<T>(
   return Object.keys(rules).reduce((acc, ruleKey) => {
     const rule = rules[ruleKey];
     const rulePath = `${path === '' ? '' : `${path}.`}${ruleKey}`;
+    const value = getPath(rulePath, values);
 
     if (typeof rule === 'function') {
-      acc[rulePath] = rule(getPath(rulePath, values), values);
+      acc[rulePath] = rule(value, values);
+    }
+
+    if (typeof rule === 'object' && Array.isArray(value)) {
+      value.forEach((_item, index) =>
+        validateRulesRecord(rule, values, `${rulePath}.${index}`, acc)
+      );
     }
 
     return acc;
