@@ -3,6 +3,11 @@ export interface FormFieldValidationResult {
   error: React.ReactNode;
 }
 
+export interface FormValidationResult {
+  hasErrors: boolean;
+  errors: FormErrors;
+}
+
 export type FormErrors = Record<string, React.ReactNode>;
 
 export interface ReorderPayload {

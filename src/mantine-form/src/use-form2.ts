@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { setPath, reorderPath, insertPath } from './paths';
 import { filterErrors } from './filter-errors';
-import { ReorderPayload, FormErrors, FormValidateInput } from './types2';
+import { validateValues, validateFieldValue } from './validate';
+import {
+  ReorderPayload,
+  FormErrors,
+  FormValidateInput,
+  FormValidationResult,
+  FormFieldValidationResult,
+} from './types2';
 
 type LooseKeys<Values> = keyof Values | (string & {});
 type ValuesPlaceholder = Record<string, unknown>;
@@ -14,9 +21,13 @@ type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   value: Field extends keyof Values ? Values[Field] : unknown
 ) => void;
 
-type ClearFieldError = (field: string) => void;
+type ClearFieldError = (path: unknown) => void;
 type ClearErrors = () => void;
 type Reset = () => void;
+type Validate = () => FormValidationResult;
+type ValidateField<Values> = <Field extends LooseKeys<Values>>(
+  path: Field
+) => FormFieldValidationResult;
 
 type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -51,6 +62,8 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   clearFieldError: ClearFieldError;
   clearErrors: ClearErrors;
   reset: Reset;
+  validate: Validate;
+  validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;
   insertListItem: InsertListItem<Values>;
 }
@@ -59,6 +72,7 @@ export function useForm<Values extends ValuesPlaceholder>({
   initialValues = {} as Values,
   initialErrors = {},
   clearInputErrorOnChange = true,
+  validate: rules,
 }: UseFormInput<Values> = {}): UseFormReturnType<Values> {
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
@@ -91,12 +105,28 @@ export function useForm<Values extends ValuesPlaceholder>({
   const insertListItem: InsertListItem<Values> = (path, item, index) =>
     _setValues((current) => insertPath(path, item, index, current));
 
-  const clearFieldError: ClearFieldError = (field) =>
+  const clearFieldError: ClearFieldError = (path) =>
     setErrors((current) => {
+      if (typeof path !== 'string') {
+        return current;
+      }
+
       const clone = { ...current };
-      delete clone[field];
+      delete clone[path];
       return clone;
     });
+
+  const validate: Validate = () => {
+    const results = validateValues(rules, values);
+    _setErrors(results.errors);
+    return results;
+  };
+
+  const validateField: ValidateField<Values> = (path) => {
+    const results = validateFieldValue(path, rules, values);
+    results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+    return results;
+  };
 
   return {
     values,
@@ -108,6 +138,8 @@ export function useForm<Values extends ValuesPlaceholder>({
     clearFieldError,
     clearErrors,
     reset,
+    validate,
+    validateField,
     reorderListItem,
     insertListItem,
   };
