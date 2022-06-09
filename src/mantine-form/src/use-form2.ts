@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setPath, reorderPath } from './paths';
+import { setPath, reorderPath, insertPath } from './paths';
 import { filterErrors } from './filter-errors';
 import { ReorderPayload } from './types2';
 
@@ -29,6 +29,12 @@ type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
   payload: ReorderPayload
 ) => void;
 
+type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  item: unknown,
+  index?: number
+) => void;
+
 export interface UseFormInput<Values extends ValuesPlaceholder> {
   initialValues?: Values;
   initialErrors?: FormErrors;
@@ -46,6 +52,7 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   clearErrors: ClearErrors;
   reset: Reset;
   reorderListItem: ReorderListItem<Values>;
+  insertListItem: InsertListItem<Values>;
 }
 
 export function useForm<Values extends ValuesPlaceholder>({
@@ -78,6 +85,9 @@ export function useForm<Values extends ValuesPlaceholder>({
   const reorderListItem: ReorderListItem<Values> = (path, payload) =>
     _setValues((current) => reorderPath(path, payload, current));
 
+  const insertListItem: InsertListItem<Values> = (path, item, index) =>
+    _setValues((current) => insertPath(path, item, index, current));
+
   const clearFieldError: ClearFieldError = (field) =>
     setErrors((current) => {
       const clone = { ...current };
@@ -96,5 +106,6 @@ export function useForm<Values extends ValuesPlaceholder>({
     clearErrors,
     reset,
     reorderListItem,
+    insertListItem,
   };
 }
