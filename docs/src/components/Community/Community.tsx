@@ -54,7 +54,7 @@ export function Community() {
         p="lg"
         component="a"
         radius="md"
-        href="https://twitter.com/mantinedev"
+        href="https://github.com/mantinedev/mantine/discussions"
         className={cx(classes.card, classes.github)}
       >
         <Group noWrap>
