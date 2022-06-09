@@ -1,3 +1,8 @@
+export interface FormFieldValidationResult {
+  hasError: boolean;
+  error: React.ReactNode;
+}
+
 export type FormErrors = Record<string, React.ReactNode>;
 
 export interface ReorderPayload {

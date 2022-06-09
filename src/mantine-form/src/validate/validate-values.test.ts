@@ -1,4 +1,4 @@
-import { validateValues } from './validate';
+import { validateValues } from './validate-values';
 
 describe('@mantine/form/validate-values', () => {
   it('returns correct results if form does not have any errors', () => {
