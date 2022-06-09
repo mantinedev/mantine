@@ -1,6 +1,44 @@
 import { validateValues } from './validate';
 
 describe('@mantine/form/validate-values', () => {
+  it('returns correct results if form does not have any errors', () => {
+    expect(
+      validateValues(
+        {
+          a: (value) => (value === 1 ? null : 'error-a'),
+          b: (value) => (value === 1 ? null : 'error-b'),
+        },
+        { a: 1, b: 1 }
+      )
+    ).toStrictEqual({
+      hasErrors: false,
+      errors: {},
+    });
+  });
+
+  it('validates values with function', () => {
+    expect(validateValues(() => ({ a: 'error-a', b: 'error-b' }), { a: 1, b: 2 })).toStrictEqual({
+      hasErrors: true,
+      errors: {
+        a: 'error-a',
+        b: 'error-b',
+      },
+    });
+  });
+
+  it('correctly handles empty errors with validate function', () => {
+    expect(validateValues(() => ({}), { a: 1, b: 2 })).toStrictEqual({
+      hasErrors: false,
+      errors: {},
+    });
+  });
+
+  it('calls validate function with values', () => {
+    const spy = jest.fn();
+    validateValues(spy, { a: 1, b: 2 });
+    expect(spy).toHaveBeenCalledWith({ a: 1, b: 2 });
+  });
+
   it('validates values with rules record (root properties)', () => {
     expect(
       validateValues(
@@ -89,6 +127,55 @@ describe('@mantine/form/validate-values', () => {
       errors: {
         'a.b': 'error-b',
         'a.c.d': 'error-d',
+      },
+    });
+  });
+
+  it('validates nested lists correctly', () => {
+    expect(
+      validateValues(
+        {
+          a: {
+            b: {
+              c: (value) => (value < 2 ? 'error-c' : null),
+            },
+          },
+        },
+        { a: [{ b: [{ c: 1 }, { c: 2 }] }, { b: [{ c: 3 }, { c: 1 }] }] }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: {
+        'a.0.b.0.c': 'error-c',
+        'a.1.b.1.c': 'error-c',
+      },
+    });
+  });
+
+  it('validates mixed nested lists and objects', () => {
+    expect(
+      validateValues(
+        {
+          a: {
+            b: {
+              c: {
+                d: {
+                  e: (value) => (value !== 1 ? 'error-e' : null),
+                },
+              },
+            },
+          },
+        },
+        {
+          a: {
+            b: [{ c: { d: { e: 1 } } }, { c: { d: { e: 2 } } }],
+          },
+        }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: {
+        'a.b.1.c.d.e': 'error-e',
       },
     });
   });
