@@ -1,3 +1,5 @@
+export type GetInputPropsType = 'input' | 'checkbox';
+
 export interface FormFieldValidationResult {
   hasError: boolean;
   error: React.ReactNode;

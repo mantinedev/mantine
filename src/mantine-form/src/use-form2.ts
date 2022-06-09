@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { setPath, reorderPath, insertPath } from './paths';
+import { getInputOnChange } from './get-input-on-change';
+import { setPath, reorderPath, insertPath, getPath } from './paths';
 import { filterErrors } from './filter-errors';
 import { validateValues, validateFieldValue } from './validate';
 import {
@@ -8,6 +9,7 @@ import {
   FormValidateInput,
   FormValidationResult,
   FormFieldValidationResult,
+  GetInputPropsType,
 } from './types2';
 
 type LooseKeys<Values> = keyof Values | (string & {});
@@ -15,6 +17,11 @@ type ValuesPlaceholder = Record<string, unknown>;
 
 type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
 type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
+
+type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  options?: { type?: GetInputPropsType; withError?: boolean }
+) => any;
 
 type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
@@ -66,6 +73,7 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;
   insertListItem: InsertListItem<Values>;
+  getInputProps: GetInputProps<Values>;
 }
 
 export function useForm<Values extends ValuesPlaceholder>({
@@ -128,6 +136,24 @@ export function useForm<Values extends ValuesPlaceholder>({
     return results;
   };
 
+  const getInputProps: GetInputProps<Values> = (
+    path,
+    { type = 'input', withError = type === 'input' } = {}
+  ) => {
+    const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
+    const withOptionalError = (payload: Record<string, unknown>) => {
+      if (withError) {
+        // eslint-disable-next-line no-param-reassign
+        payload.error = errors[path];
+      }
+      return payload;
+    };
+
+    return type === 'checkbox'
+      ? withOptionalError({ checked: getPath(path, values), onChange })
+      : withOptionalError({ value: getPath(path, values), onChange });
+  };
+
   return {
     values,
     errors,
@@ -142,5 +168,6 @@ export function useForm<Values extends ValuesPlaceholder>({
     validateField,
     reorderListItem,
     insertListItem,
+    getInputProps,
   };
 }
