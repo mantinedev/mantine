@@ -28,6 +28,10 @@ function validateRulesRecord<T>(
       );
     }
 
+    if (typeof rule === 'object' && typeof value === 'object' && value !== null) {
+      validateRulesRecord(rule, values, rulePath, acc);
+    }
+
     return acc;
   }, errors);
 }
