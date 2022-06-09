@@ -17,4 +17,11 @@ describe('@mantine/form/errors', () => {
     act(() => hook.result.current.setErrors({ a: true, b: true }));
     expect(hook.result.current.errors).toStrictEqual({ a: true, b: true });
   });
+
+  it('filters out initialErrors with null and undefined values', () => {
+    const hook = renderHook(() =>
+      useForm({ initialErrors: { a: 1, b: undefined, c: null, d: 2 } })
+    );
+    expect(hook.result.current.errors).toStrictEqual({ a: 1, d: 2 });
+  });
 });

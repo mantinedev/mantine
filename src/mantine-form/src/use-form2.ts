@@ -61,16 +61,19 @@ export function useForm<Values extends ValuesPlaceholder>({
   clearInputErrorOnChange = true,
 }: UseFormInput<Values> = {}): UseFormReturnType<Values> {
   const [values, _setValues] = useState(initialValues);
-  const [errors, setErrors] = useState(initialErrors);
+  const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
-  const clearErrors: ClearErrors = () => setErrors({});
+  const setErrors: SetErrors = (errs) =>
+    _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs));
+
+  const clearErrors: ClearErrors = () => _setErrors({});
   const reset: Reset = () => {
     _setValues(initialValues);
     clearErrors();
   };
 
   const setFieldError: SetFieldError<Values> = (path, error) =>
-    setErrors((current) => filterErrors({ ...current, [path]: error }));
+    setErrors((current) => ({ ...current, [path]: error }));
 
   const setFieldValue: SetFieldValue<Values> = (path, value) => {
     _setValues((current) => setPath(path, value, current));
