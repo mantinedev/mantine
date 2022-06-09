@@ -18,6 +18,10 @@ type ValuesPlaceholder = Record<string, unknown>;
 type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
 type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 
+type OnSubmit<Values> = (
+  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void
+) => (event: React.FormEvent<HTMLFormElement>) => void;
+
 type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean }
@@ -74,6 +78,7 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   reorderListItem: ReorderListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
+  onSubmit: OnSubmit<Values>;
 }
 
 export function useForm<Values extends ValuesPlaceholder>({
@@ -154,6 +159,12 @@ export function useForm<Values extends ValuesPlaceholder>({
       : withOptionalError({ value: getPath(path, values), onChange });
   };
 
+  const onSubmit: OnSubmit<Values> = (handleSubmit) => (event) => {
+    event.preventDefault();
+    const results = validate();
+    !results.hasErrors && handleSubmit(values, event);
+  };
+
   return {
     values,
     errors,
@@ -169,5 +180,6 @@ export function useForm<Values extends ValuesPlaceholder>({
     reorderListItem,
     insertListItem,
     getInputProps,
+    onSubmit,
   };
 }

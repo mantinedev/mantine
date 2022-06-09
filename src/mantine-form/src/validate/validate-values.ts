@@ -13,6 +13,10 @@ function validateRulesRecord<T>(
   path = '',
   errors: FormErrors = {}
 ) {
+  if (typeof rules !== 'object' || rules === null) {
+    return errors;
+  }
+
   return Object.keys(rules).reduce((acc, ruleKey) => {
     const rule = rules[ruleKey];
     const rulePath = `${path === '' ? '' : `${path}.`}${ruleKey}`;
