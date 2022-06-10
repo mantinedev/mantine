@@ -1,25 +1,25 @@
 import React from 'react';
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
-import { useForm, formList } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { IconGripVertical } from '@tabler/icons';
 
 const code = `
 import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
-import { useForm, formList } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { IconGripVertical } from '@tabler/icons';
 
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([
+      employees: [
         { name: 'John Doe', email: 'john@mantine.dev' },
         { name: 'Bill Love', email: 'bill@mantine.dev' },
         { name: 'Nancy Eagle', email: 'nanacy@mantine.dev' },
         { name: 'Lim Notch', email: 'lim@mantine.dev' },
         { name: 'Susan Seven', email: 'susan@mantine.dev' },
-      ]),
+      ],
     },
   });
 
@@ -30,13 +30,10 @@ function Demo() {
           <Center {...provided.dragHandleProps}>
             <IconGripVertical size={18} />
           </Center>
-          <TextInput
-            placeholder="John Doe"
-            {...form.getListInputProps('employees', index, 'name')}
-          />
+          <TextInput placeholder="John Doe" {...form.getInputProps(\`employees.\${index}.name\`)} />
           <TextInput
             placeholder="example@mail.com"
-            {...form.getListInputProps('employees', index, 'email')}
+            {...form.getInputProps(\`employees.\${index}.email\`)}
           />
         </Group>
       )}
@@ -61,7 +58,7 @@ function Demo() {
       </DragDropContext>
 
       <Group position="center" mt="md">
-        <Button onClick={() => form.addListItem('employees', { name: '', email: '' })}>
+        <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
           Add employee
         </Button>
       </Group>
@@ -78,13 +75,13 @@ function Demo() {
 function Demo() {
   const form = useForm({
     initialValues: {
-      employees: formList([
+      employees: [
         { name: 'John Doe', email: 'john@mantine.dev' },
         { name: 'Bill Love', email: 'bill@mantine.dev' },
         { name: 'Nancy Eagle', email: 'nanacy@mantine.dev' },
         { name: 'Lim Notch', email: 'lim@mantine.dev' },
         { name: 'Susan Seven', email: 'susan@mantine.dev' },
-      ]),
+      ],
     },
   });
 
@@ -95,13 +92,10 @@ function Demo() {
           <Center {...provided.dragHandleProps}>
             <IconGripVertical size={18} />
           </Center>
-          <TextInput
-            placeholder="John Doe"
-            {...form.getListInputProps('employees', index, 'name')}
-          />
+          <TextInput placeholder="John Doe" {...form.getInputProps(`employees.${index}.name`)} />
           <TextInput
             placeholder="example@mail.com"
-            {...form.getListInputProps('employees', index, 'email')}
+            {...form.getInputProps(`employees.${index}.email`)}
           />
         </Group>
       )}
@@ -126,7 +120,7 @@ function Demo() {
       </DragDropContext>
 
       <Group position="center" mt="md">
-        <Button onClick={() => form.addListItem('employees', { name: '', email: '' })}>
+        <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
           Add employee
         </Button>
       </Group>

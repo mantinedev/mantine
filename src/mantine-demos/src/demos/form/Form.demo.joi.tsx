@@ -16,7 +16,7 @@ const schema = Joi.object({
 
 function Demo() {
   const form = useForm({
-    schema: joiResolver(schema),
+    validate: joiResolver(schema),
     initialValues: {
       name: '',
       email: '',
