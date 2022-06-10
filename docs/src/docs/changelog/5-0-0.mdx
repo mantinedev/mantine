@@ -238,6 +238,15 @@ type MyButtonProps = ButtonProps<'button'> & { label: string };
 type MyButtonProps = ButtonProps & React.ComponentPropsWithoutRef<'button'> & { label: string };
 ```
 
+## @mantine/form changes
+
+[use-form](https://mantine.dev/form/use-form/) no longer exports `formList` function, you can now
+manage lists with just regular arrays. Other changes:
+
+- You can now use [objects and lists with any level of nesting](https://mantine.dev/form/nested/)
+- `useForm` hook now supports `clearInputErrorOnChange` option to disable error clearing when input value changes
+- `form.addListItem` was renamed to `form.insertListItem`, it now supports inserting items add given index
+
 ## Other breaking changes
 
 - [Portal](https://mantine.dev/core/portal/) component no longer accepts `position` and `zIndex` props – it is now required to add these styles to Portal children

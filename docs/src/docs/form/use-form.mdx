@@ -35,12 +35,12 @@ yarn add @mantine/form
 
 ## API
 
-`useForm` hook accepts a single argument with a configuration object that includes the following properties:
+`useForm` hook accepts a single argument with a configuration object that includes the following properties (all of them are optional):
 
 - `initialValues` – initial form values, form types are generated based on this value
-- `validate` (optional) – an object with validation rules or a validation function that receives form values as an argument and returns object with validation errors
-- `schema` (optional) – [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) or [yup](https://www.npmjs.com/package/yup) validation schema, if provided `validate` is ignored
-- `initialErrors` (optional) – initial form errors, object of React nodes
+- `validate` – an object with validation rules, [schema](/form/schema/) or a validation function that receives form values as an argument and returns object with validation errors
+- `initialErrors` – initial form errors, object of React nodes
+- `clearInputErrorOnChange` – boolean value that determines whether input error should be clear when its value changes, true by default
 
 Hook returns an object with the following properties:
 
