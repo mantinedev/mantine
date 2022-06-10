@@ -53,6 +53,53 @@ form.getInputProps('deeply.nested.object.0.item');
 
 <Demo data={FormDemos.nested} />
 
+### Set nested object value
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    user: {
+      name: '',
+      occupation: '',
+    },
+  },
+});
+
+// You can set values for each field individually
+form.setFieldValue('user.name', 'John');
+form.setFieldValue('user.occupation', 'Engineer');
+
+// Or set the entire object
+form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
+```
+
+### Nested object values validation
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    user: {
+      name: '',
+      occupation: '',
+    },
+  },
+
+  validate: {
+    user: {
+      name: (value) => (value.length < 2 ? 'Name is too short' : null),
+      occupation: (value) => (value.length < 2 ? 'Occupation is too short' : null),
+    },
+  },
+});
+
+form.validate();
+form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occupation is too short' }
+```
+
 ## Nested arrays
 
 <Demo data={FormDemos.lists} />
@@ -65,7 +112,7 @@ form.getInputProps('deeply.nested.object.0.item');
 - `insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
 - `reorderListItem` – reorders list item with given position at specified field
 
-### Validation with rules object
+### List values validation
 
 ```tsx
 const form = useForm({
