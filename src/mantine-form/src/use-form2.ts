@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getInputOnChange } from './get-input-on-change';
-import { setPath, reorderPath, insertPath, getPath } from './paths';
+import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
 import { filterErrors } from './filter-errors';
 import { validateValues, validateFieldValue } from './validate';
 import {
@@ -58,6 +58,8 @@ type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
   index?: number
 ) => void;
 
+type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(path: Field, index: number) => void;
+
 export interface UseFormInput<Values extends ValuesPlaceholder> {
   initialValues?: Values;
   initialErrors?: FormErrors;
@@ -78,6 +80,7 @@ export interface UseFormReturnType<Values extends ValuesPlaceholder> {
   validate: Validate;
   validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;
+  removeListItem: RemoveListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values>;
@@ -117,6 +120,9 @@ export function useForm<Values extends ValuesPlaceholder>({
 
   const reorderListItem: ReorderListItem<Values> = (path, payload) =>
     _setValues((current) => reorderPath(path, payload, current));
+
+  const removeListItem: RemoveListItem<Values> = (path, index) =>
+    _setValues((current) => removePath(path, index, current));
 
   const insertListItem: InsertListItem<Values> = (path, item, index) =>
     _setValues((current) => insertPath(path, item, index, current));
@@ -186,6 +192,7 @@ export function useForm<Values extends ValuesPlaceholder>({
     validate,
     validateField,
     reorderListItem,
+    removeListItem,
     insertListItem,
     getInputProps,
     onSubmit,
