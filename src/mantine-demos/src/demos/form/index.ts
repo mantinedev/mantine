@@ -7,3 +7,4 @@ export { validateFunction } from './Form.demo.validateFunction';
 export { joi } from './Form.demo.joi';
 export { yup } from './Form.demo.yup';
 export { localStorage } from './Form.demo.localStorage';
+export { nested } from './Form.demo.nested';
