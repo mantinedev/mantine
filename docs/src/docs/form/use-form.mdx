@@ -363,3 +363,34 @@ function Demo() {
   });
 }
 ```
+
+### UseFormReturnType
+
+`UseFormReturnType` can be used when you want to pass `form` as a prop to another component:
+
+```tsx
+import { useForm, UseFormReturnType } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  occupation: string;
+}
+
+function NameInput({ form }: { form: UseFormReturnType<FormValues> }) {
+  return <TextInput {...form.getInputProps('name')} />;
+}
+
+function OccupationInput({ form }: { form: UseFormReturnType<FormValues> }) {
+  return <TextInput {...form.getInputProps('name')} />;
+}
+
+function Parent() {
+  const form = useForm<FormValues>({ initialValues: { name: '', occupation: '' } });
+  return (
+    <>
+      <NameInput form={form} />
+      <OccupationInput form={form} />
+    </>
+  );
+}
+```
