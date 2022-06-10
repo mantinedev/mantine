@@ -1,0 +1,91 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'Nested fields'
+order: 1
+slug: /form/nested/
+description: 'Manage nested arrays and object state with use-form hook'
+docs: 'form/use-form.mdx'
+source: 'mantine-form/src'
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## getInputProps
+
+`form.getInputProps` first argument is a path to the property separated with `.`.
+You can get props for any object or array at any level:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    user: {
+      firstName: 'John',
+      lastName: 'Doe',
+    },
+
+    fruits: [
+      { name: 'Banana', available: true },
+      { name: 'Orange', available: false },
+    ],
+
+    deeply: {
+      nested: {
+        object: [{ item: 1 }, { item: 2 }],
+      },
+    },
+  },
+});
+
+// Props for input that is controlled by user object firstName field
+form.getInputProps('user.firstName');
+
+// Props for input that is controlled by name property of second item at fruits array
+form.getInputProps('fruits.1.name');
+
+// Any level of nested is supported
+form.getInputProps('deeply.nested.object.0.item');
+```
+
+## Nested arrays
+
+<Demo data={FormDemos.lists} />
+
+### List handlers
+
+`useForm` hook provides the following handlers to manage list state:
+
+- `removeListItem` – removes list item at given index
+- `insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
+- `reorderListItem` – reorders list item with given position at specified field
+
+### Validation with rules object
+
+```tsx
+const form = useForm({
+  initialValues: {
+    users: [
+      { name: 'John', age: 12 },
+      { name: '', age: 22 },
+    ],
+  },
+
+  validate: {
+    users: {
+      name: (value) => (value.length < 2 ? 'Name should have at least 2 letters' : null),
+      age: (value) => (value < 18 ? 'User must be 18 or older' : null),
+    },
+  },
+});
+
+form.validate();
+form.errors; // -> { 'users.0.age': 'Name should have at least 2 letters', 'users.1.age': 'User must be 18 or older' }
+```
+
+### List items reordering
+
+Example of items reordering with [react-beautiful-dnd](https://npmjs.com/package/react-beautiful-dnd):
+
+<Demo data={FormDemos.dnd} />
