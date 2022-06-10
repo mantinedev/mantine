@@ -6,7 +6,12 @@ import { useForm } from '../use-form2';
 export default { title: 'Form' };
 
 export function Usage() {
-  const form = useForm({ initialValues: { name: '', terms: false } });
+  const form = useForm({
+    initialValues: { name: '', terms: false },
+    validate: {
+      name: (value) => (value.length === 0 ? 'Required' : null),
+    },
+  });
 
   return (
     <FormBase form={form}>
