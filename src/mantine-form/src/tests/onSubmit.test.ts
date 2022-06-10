@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 const getFormEvent = () => ({ preventDefault: jest.fn() } as any);
 

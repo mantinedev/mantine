@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { FormBase } from './_base';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 export default { title: 'Form' };
 

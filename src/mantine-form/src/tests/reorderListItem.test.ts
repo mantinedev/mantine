@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 describe('@mantine/form/reorderListItem', () => {
   it('reorders items at given list', () => {

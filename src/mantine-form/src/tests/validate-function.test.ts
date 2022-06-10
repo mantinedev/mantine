@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 describe('@mantine/form/validate with function rules', () => {
   it('validates all fields with validate handler', () => {

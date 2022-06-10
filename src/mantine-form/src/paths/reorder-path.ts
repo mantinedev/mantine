@@ -1,6 +1,6 @@
 import { getPath } from './get-path';
 import { setPath } from './set-path';
-import { ReorderPayload } from '../types2';
+import { ReorderPayload } from '../types';
 
 export function reorderPath<T>(path: unknown, { from, to }: ReorderPayload, values: T) {
   const currentValue = getPath(path, values);

@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 describe('@mantine/form/removeListItem', () => {
   it('removes list item with given index (root property)', () => {

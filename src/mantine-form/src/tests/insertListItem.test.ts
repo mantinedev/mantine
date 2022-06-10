@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 describe('@mantine/form/insertListItem', () => {
   it('appends list item to the end of the array if index is not specified', () => {

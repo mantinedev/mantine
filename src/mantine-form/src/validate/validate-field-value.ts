@@ -1,4 +1,4 @@
-import { FormValidateInput, FormFieldValidationResult } from '../types2';
+import { FormValidateInput, FormFieldValidationResult } from '../types';
 import { validateValues } from './validate-values';
 
 export function validateFieldValue<T>(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, Checkbox } from '@mantine/core';
 import { FormBase } from './_base';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 export default { title: 'Form' };
 

@@ -1,6 +1,6 @@
 import { filterErrors } from '../filter-errors';
 import { getPath } from '../paths';
-import { FormValidateInput, FormErrors, FormRulesRecord } from '../types2';
+import { FormValidateInput, FormErrors, FormRulesRecord } from '../types';
 
 function getValidationResults(errors: FormErrors) {
   const filteredErrors = filterErrors(errors);

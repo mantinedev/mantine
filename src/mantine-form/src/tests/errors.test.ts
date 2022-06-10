@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { useForm } from '../use-form2';
+import { useForm } from '../use-form';
 
 describe('@mantine/form/errors', () => {
   it('initializes form with given initialErrors', () => {
