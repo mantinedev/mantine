@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
 import { filterErrors } from './filter-errors';
@@ -96,59 +96,76 @@ export function useForm<Values extends ValuesPlaceholder>({
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
-  const setErrors: SetErrors = (errs) =>
-    _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs));
+  const setErrors: SetErrors = useCallback(
+    (errs) =>
+      _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
+    []
+  );
 
-  const clearErrors: ClearErrors = () => _setErrors({});
-  const reset: Reset = () => {
+  const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
+  const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
-  };
+  }, []);
 
-  const setFieldError: SetFieldError<Values> = (path, error) =>
-    setErrors((current) => ({ ...current, [path]: error }));
+  const setFieldError: SetFieldError<Values> = useCallback(
+    (path, error) => setErrors((current) => ({ ...current, [path]: error })),
+    []
+  );
 
-  const setFieldValue: SetFieldValue<Values> = (path, value) => {
+  const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
     _setValues((current) => setPath(path, value, current));
     clearInputErrorOnChange && setFieldError(path, null);
-  };
+  }, []);
 
-  const setValues: SetValues<Values> = (payload) => {
+  const setValues: SetValues<Values> = useCallback((payload) => {
     _setValues(payload);
     clearInputErrorOnChange && clearErrors();
-  };
+  }, []);
 
-  const reorderListItem: ReorderListItem<Values> = (path, payload) =>
-    _setValues((current) => reorderPath(path, payload, current));
+  const reorderListItem: ReorderListItem<Values> = useCallback(
+    (path, payload) => _setValues((current) => reorderPath(path, payload, current)),
+    []
+  );
 
-  const removeListItem: RemoveListItem<Values> = (path, index) =>
-    _setValues((current) => removePath(path, index, current));
+  const removeListItem: RemoveListItem<Values> = useCallback(
+    (path, index) => _setValues((current) => removePath(path, index, current)),
+    []
+  );
 
-  const insertListItem: InsertListItem<Values> = (path, item, index) =>
-    _setValues((current) => insertPath(path, item, index, current));
+  const insertListItem: InsertListItem<Values> = useCallback(
+    (path, item, index) => _setValues((current) => insertPath(path, item, index, current)),
+    []
+  );
 
-  const clearFieldError: ClearFieldError = (path) =>
-    setErrors((current) => {
-      if (typeof path !== 'string') {
-        return current;
-      }
+  const clearFieldError: ClearFieldError = useCallback(
+    (path) =>
+      setErrors((current) => {
+        if (typeof path !== 'string') {
+          return current;
+        }
 
-      const clone = { ...current };
-      delete clone[path];
-      return clone;
-    });
+        const clone = { ...current };
+        delete clone[path];
+        return clone;
+      }),
+    []
+  );
 
-  const validate: Validate = () => {
+  const validate: Validate = useCallback(() => {
     const results = validateValues(rules, values);
     _setErrors(results.errors);
     return results;
-  };
+  }, [values]);
 
-  const validateField: ValidateField<Values> = (path) => {
-    const results = validateFieldValue(path, rules, values);
-    results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
-    return results;
-  };
+  const validateField: ValidateField<Values> = useCallback(
+    (path) => {
+      const results = validateFieldValue(path, rules, values);
+      results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+      return results;
+    },
+    [values]
+  );
 
   const getInputProps: GetInputProps<Values> = (
     path,
@@ -174,10 +191,10 @@ export function useForm<Values extends ValuesPlaceholder>({
     !results.hasErrors && handleSubmit(values, event);
   };
 
-  const onReset: OnReset = (event) => {
+  const onReset: OnReset = useCallback((event) => {
     event.preventDefault();
     reset();
-  };
+  }, []);
 
   return {
     values,
