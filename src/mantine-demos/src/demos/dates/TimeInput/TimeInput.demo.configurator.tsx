@@ -55,7 +55,7 @@ export const configurator: MantineDemo = {
         { label: '24', value: '24' },
         { label: '12', value: '12' },
       ],
-      initialValue: '12',
+      initialValue: '24',
       defaultValue: '24',
     },
     {
