@@ -5,7 +5,7 @@ title: 'Nested fields'
 order: 1
 slug: /form/nested/
 description: 'Manage nested arrays and object state with use-form hook'
-docs: 'form/use-form.mdx'
+docs: 'form/nested.mdx'
 source: 'mantine-form/src'
 ---
 
@@ -49,6 +49,10 @@ form.getInputProps('fruits.1.name');
 form.getInputProps('deeply.nested.object.0.item');
 ```
 
+## Nested objects
+
+<Demo data={FormDemos.nested} />
+
 ## Nested arrays
 
 <Demo data={FormDemos.lists} />
@@ -83,9 +87,3 @@ const form = useForm({
 form.validate();
 form.errors; // -> { 'users.0.age': 'Name should have at least 2 letters', 'users.1.age': 'User must be 18 or older' }
 ```
-
-### List items reordering
-
-Example of items reordering with [react-beautiful-dnd](https://npmjs.com/package/react-beautiful-dnd):
-
-<Demo data={FormDemos.dnd} />
