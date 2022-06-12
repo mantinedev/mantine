@@ -245,7 +245,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             required={required}
             ref={useMergedRef(ref, inputRef)}
             id={uuid}
-            type="string"
+            type="search"
             invalid={!!error}
             size={size}
             onKeyDown={handleInputKeydown}
@@ -260,7 +260,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
             onClick={handleInputClick}
-            autoComplete="nope"
+            autoComplete="off"
             aria-autocomplete="list"
             aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
             aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
