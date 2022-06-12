@@ -1,6 +1,6 @@
 import { padTime } from '../pad-time/pad-time';
 
-export function getTimeValues(value: Date, format: '12' | '24') {
+export function getTimeValues(value: Date, format: '12' | '24', amLabel: string, pmLabel: string) {
   if (!(value instanceof Date)) {
     return { hours: '', minutes: '', seconds: '', amPm: '' };
   }
@@ -19,6 +19,6 @@ export function getTimeValues(value: Date, format: '12' | '24') {
     hours: padTime(_hours.toString()),
     minutes: padTime(value.getMinutes().toString()),
     seconds: padTime(value.getSeconds().toString()),
-    amPm: isPm ? 'pm' : 'am',
+    amPm: isPm ? pmLabel : amLabel,
   };
 }

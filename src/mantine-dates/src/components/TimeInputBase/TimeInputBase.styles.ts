@@ -32,12 +32,18 @@ export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => 
     },
 
     '&::placeholder': {
-      textAlign: 'center',
+      width: 'auto',
+      textAlign: 'left',
     },
 
     '&[disabled]': {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[7],
       cursor: 'not-allowed',
     },
+  },
+
+  amPmInput: {
+    width: 'auto',
+    textAlign: 'left',
   },
 }));
