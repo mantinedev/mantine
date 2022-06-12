@@ -104,6 +104,9 @@ export interface MonthProps
 
   /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
+
+  /** Indices of weekend days */
+  weekendDays?: number[];
 }
 
 const no = () => false;
@@ -118,6 +121,7 @@ const defaultProps: Partial<MonthProps> = {
   focusable: true,
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
+  weekendDays: [0, 6],
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
@@ -152,6 +156,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     isDateLastInRange = no,
     renderDay,
     weekdayLabelFormat,
+    weekendDays,
     ...others
   } = useMantineDefaultProps('Month', defaultProps, props);
 
@@ -193,6 +198,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
         excludeDate,
         disableOutsideEvents,
         range,
+        weekendDays,
       });
 
       const onKeyDownPayload = { rowIndex, cellIndex, date };

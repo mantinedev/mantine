@@ -23,7 +23,7 @@ function Demo() {
       <Divider />
 
       <Menu.Label>Danger zone</Menu.Label>
-      <Menu.Item icon={<ArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>,
+      <Menu.Item icon={<ArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
       <Menu.Item color="red" icon={<Trash size={14} />}>Delete my account</Menu.Item>
     </Menu>
   );

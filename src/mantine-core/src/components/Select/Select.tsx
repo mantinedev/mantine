@@ -582,9 +582,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         <input type="hidden" name={name} value={_value || ''} form={form} />
 
         <Input<'input'>
-          autoComplete="nope"
+          autoComplete="off"
+          type="search"
           {...rest}
-          type="text"
           required={required}
           ref={useMergedRef(ref, inputRef)}
           id={uuid}

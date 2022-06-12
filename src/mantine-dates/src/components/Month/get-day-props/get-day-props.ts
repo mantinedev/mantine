@@ -30,6 +30,9 @@ interface GetDayProps {
 
   /** Selected date range */
   range: [Date, Date];
+
+  /** Indices of weekend days */
+  weekendDays: number[];
 }
 
 export function getDayProps({
@@ -42,6 +45,7 @@ export function getDayProps({
   excludeDate,
   disableOutsideEvents,
   range,
+  weekendDays,
 }: GetDayProps): DayModifiers {
   const outside = isOutside(date, month);
   const selected =
@@ -51,7 +55,7 @@ export function getDayProps({
 
   return {
     disabled: isDisabled({ minDate, maxDate, excludeDate, disableOutsideEvents, date, outside }),
-    weekend: isWeekend(date),
+    weekend: isWeekend(date, weekendDays),
     selectedInRange,
     selected,
     inRange,

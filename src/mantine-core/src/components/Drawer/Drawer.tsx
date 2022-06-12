@@ -190,7 +190,7 @@ export function Drawer(props: DrawerProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0 });
+  useFocusReturn({ opened, transitionDuration: 0, shouldReturnFocus: trapFocus });
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
