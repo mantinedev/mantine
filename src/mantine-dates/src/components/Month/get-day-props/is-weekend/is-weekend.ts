@@ -1,4 +1,3 @@
-export function isWeekend(date: Date) {
-  const weekday = date.getDay();
-  return weekday === 6 || weekday === 0;
+export function isWeekend(date: Date, weekendDays = [0, 6]) {
+  return weekendDays.includes(date.getDay());
 }
