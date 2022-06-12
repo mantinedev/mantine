@@ -597,7 +597,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           onChange={handleInputChange}
           aria-autocomplete="list"
           aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
-          aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+          aria-activedescendant={hovered >= 0 ? `${uuid}-${hovered}` : null}
           onClick={handleInputClick}
           onBlur={handleInputBlur}
           onFocus={handleInputFocus}
