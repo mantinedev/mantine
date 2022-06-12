@@ -26,7 +26,7 @@ const data = Array(50)
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
-  itSupportsFocusEvents(Select, defaultProps, 'input[type="text"]');
+  itSupportsFocusEvents(Select, defaultProps, 'input[type="search"]');
   itSupportsInputProps(Select, defaultProps, 'Select');
   itSupportsSystemProps({
     component: Select,
