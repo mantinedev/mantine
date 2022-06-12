@@ -88,8 +88,6 @@ function Demo() {
 Mantine support dynamic color scheme change and exports `ColorSchemeProvider` to
 help you set up color scheme context:
 
-You can add the `disableTransitions` prop to disable CSS transitions when changing the theme.
-
 ```tsx
 import { useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
@@ -100,11 +98,7 @@ function App() {
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   return (
-    <ColorSchemeProvider
-      disableTransitions
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>

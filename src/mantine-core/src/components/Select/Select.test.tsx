@@ -21,7 +21,7 @@ const defaultProps: SelectProps = {
 
 describe('@mantine/core/Select', () => {
   checkAccessibility([<Select {...defaultProps} />]);
-  itSupportsFocusEvents(Select, defaultProps, 'input[type="text"]');
+  itSupportsFocusEvents(Select, defaultProps, 'input[type="search"]');
   itSupportsInputProps(Select, defaultProps, 'Select');
   itSupportsSystemProps({
     component: Select,
@@ -47,7 +47,7 @@ describe('@mantine/core/Select', () => {
     render(<Select {...defaultProps} initiallyOpened={false} searchable={false} />);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
 
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('searchbox'));
     expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
   });
 
@@ -55,31 +55,31 @@ describe('@mantine/core/Select', () => {
     render(<Select {...defaultProps} initiallyOpened={false} searchable />);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
 
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('searchbox'));
     expect(screen.queryAllByRole('option')).toHaveLength(defaultProps.data.length);
   });
 
   it('supports uncontrolled state', async () => {
     render(<Select {...defaultProps} initiallyOpened={false} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('searchbox'));
     await userEvent.click(screen.getAllByRole('option')[0]);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
-    expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
+    expect(screen.getByRole('searchbox')).toHaveValue('Test item 1');
   });
 
   it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<Select {...defaultProps} value="test-item-1" initiallyOpened={false} onChange={spy} />);
-    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.click(screen.getByRole('searchbox'));
     await userEvent.click(screen.getAllByRole('option')[1]);
     expect(screen.queryAllByRole('option')).toHaveLength(0);
-    expect(screen.getByRole('textbox')).toHaveValue('Test item 1');
+    expect(screen.getByRole('searchbox')).toHaveValue('Test item 1');
     expect(spy).toHaveBeenCalledWith('test-item-2');
   });
 
   it('filters options based on input value', async () => {
     render(<Select {...defaultProps} searchable />);
-    await userEvent.type(screen.getByRole('textbox'), '2');
+    await userEvent.type(screen.getByRole('searchbox'), '2');
     expect(screen.getAllByRole('option')).toHaveLength(1);
     expect(screen.getByText('Test item 2')).toBeInTheDocument();
   });

@@ -554,10 +554,10 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             <input type="hidden" name={name} value={_value || ''} form={form} />
 
             <Input<'input'>
-              autoComplete="nope"
+              autoComplete="off"
+              type="search"
               {...inputProps}
               {...others}
-              type="text"
               ref={useMergedRef(ref, inputRef)}
               onKeyDown={handleInputKeydown}
               __staticSelector="Select"

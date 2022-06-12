@@ -5,6 +5,12 @@ import useStyles from '../TimeInputBase.styles';
 
 interface AmPmSelectProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
+  /** Label for 'am' */
+  amLabel?: string;
+
+  /** Label for 'pm' */
+  pmLabel?: string;
+
   /** Called with onChange event */
   onChange(value: string, triggerShift: boolean): void;
 
@@ -16,7 +22,17 @@ interface AmPmSelectProps
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
   (
-    { className, onChange, onFocus, size = 'sm', value, unstyled, ...others }: AmPmSelectProps,
+    {
+      className,
+      onChange,
+      onFocus,
+      size = 'sm',
+      value,
+      unstyled,
+      amLabel,
+      pmLabel,
+      ...others
+    }: AmPmSelectProps,
     ref
   ) => {
     const { classes, cx } = useStyles({ size, hasValue: !!value }, { name: 'AmPmInput', unstyled });
@@ -35,7 +51,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
-        onChange(value === 'am' ? 'pm' : 'am', true);
+        onChange(value === amLabel ? pmLabel : amLabel, true);
       }
     };
 
@@ -44,13 +60,13 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
 
       if (lastInputVal === 'p') {
         event.preventDefault();
-        onChange('pm', true);
+        onChange(pmLabel, true);
         return;
       }
 
       if (lastInputVal === 'a') {
         event.preventDefault();
-        onChange('am', true);
+        onChange(amLabel, true);
         return;
       }
 
@@ -66,7 +82,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onKeyDown={handleKeyDown}
         onChange={handleChange}
         value={value}
-        className={cx(classes.timeInput, className)}
+        className={cx(classes.timeInput, classes.amPmInput)}
         {...others}
       />
     );

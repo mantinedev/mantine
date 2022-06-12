@@ -123,9 +123,17 @@ export default createStyles(
           },
 
           '&::after': {
-            transform: 'translateX(-200%)',
+            position: 'absolute',
+            zIndex: 0,
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center',
+            lineHeight: 0,
+            left: '10%',
+            transform: 'translateX(0)',
             content: onLabel ? `'${onLabel}'` : "''",
             color: theme.white,
+            transition: `color 150ms ${theme.transitionTimingFunction}`,
           },
         },
 

@@ -79,7 +79,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: `1px ${theme.spacing.xs / 1}`,
+        padding: `1px ${theme.spacing.xs / 1}px`,
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],

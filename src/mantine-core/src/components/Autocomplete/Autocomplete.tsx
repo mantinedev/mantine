@@ -228,12 +228,12 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
             tabIndex={-1}
           >
             <Input<'input'>
-              autoComplete="nope"
+              type="search"
+              autoComplete="off"
               {...inputProps}
               {...others}
               data-mantine-stop-propagation={dropdownOpened}
               ref={useMergedRef(ref, inputRef)}
-              type="string"
               onKeyDown={handleInputKeydown}
               classNames={classNames}
               styles={styles}

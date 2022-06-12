@@ -104,6 +104,9 @@ export interface MonthProps
 
   /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
+
+  /** Indices of weekend days */
+  weekendDays?: number[];
 }
 
 const noop = () => false;
@@ -118,6 +121,7 @@ const defaultProps: Partial<MonthProps> = {
   focusable: true,
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
+  weekendDays: [0, 6],
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
@@ -153,6 +157,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     renderDay,
     weekdayLabelFormat,
     unstyled,
+    weekendDays,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -194,6 +199,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
         excludeDate,
         disableOutsideEvents,
         range,
+        weekendDays,
       });
 
       const onKeyDownPayload = { rowIndex, cellIndex, date };

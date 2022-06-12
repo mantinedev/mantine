@@ -6,6 +6,7 @@ export interface TimeInputStylesParams {
 
 export default createStyles((theme, { size }: TimeInputStylesParams) => ({
   timeInput: {},
+  amPmInput: {},
 
   disabled: {
     opacity: 0.6,

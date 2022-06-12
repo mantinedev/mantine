@@ -210,6 +210,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const [searchValue, setSearchValue] = useState('');
+  const [IMEOpen, setIMEOpen] = useState(false);
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -341,6 +342,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   };
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (IMEOpen) {
+      return;
+    }
+
     onKeyDown?.(event);
 
     if (event.key !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
@@ -629,7 +634,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
                 <input
                   ref={useMergedRef(ref, inputRef)}
-                  type="text"
+                  type="search"
                   id={uuid}
                   className={cx(classes.searchInput, {
                     [classes.searchInputPointer]: !searchable,
@@ -646,7 +651,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                   placeholder={_value.length === 0 ? placeholder : undefined}
                   disabled={disabled}
                   data-mantine-stop-propagation={dropdownOpened}
-                  autoComplete="nope"
+                  autoComplete="off"
+                  onCompositionStart={() => setIMEOpen(true)}
+                  onCompositionEnd={() => setIMEOpen(false)}
                   {...rest}
                 />
               </div>

@@ -55,6 +55,12 @@ export interface TimeInputProps
   /** Time format */
   format?: '12' | '24';
 
+  /** Label for 'am' */
+  amLabel?: string;
+
+  /** Label for 'pm' */
+  pmLabel?: string;
+
   /** Uncontrolled input name */
   name?: string;
 
@@ -96,6 +102,8 @@ const defaultProps: Partial<TimeInputProps> = {
   withSeconds: false,
   clearable: false,
   format: '24',
+  amLabel: 'am',
+  pmLabel: 'pm',
   timePlaceholder: '--',
   amPmPlaceholder: 'am',
   disabled: false,
@@ -122,6 +130,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       clearable,
       clearButtonLabel,
       format,
+      amLabel,
+      pmLabel,
       name,
       hoursLabel,
       minutesLabel,
@@ -155,12 +165,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minutes: string;
       seconds: string;
       amPm: string;
-    }>(getTimeValues(value || defaultValue, format));
+    }>(getTimeValues(value || defaultValue, format, amLabel, pmLabel));
     const [_value, setValue] = useState<Date | null>(value || defaultValue);
 
     useDidUpdate(() => {
-      setTime(getTimeValues(_value, format));
-    }, [_value, format]);
+      setTime(getTimeValues(_value, format, amLabel, pmLabel));
+    }, [_value, format, amLabel, pmLabel]);
 
     // Allow controlled value prop to override internal _value
     useDidUpdate(() => {
@@ -176,6 +186,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         timeWithChange.minutes,
         timeWithChange.seconds,
         format,
+        pmLabel,
         timeWithChange.amPm
       );
       setValue(newDate);
@@ -218,6 +229,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     });
 
     const handleAmPmChange = createAmPmHandler({
+      amLabel,
+      pmLabel,
       onChange: (val) => {
         setDate({ amPm: val });
       },
@@ -331,6 +344,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 value={time.amPm}
                 onChange={handleAmPmChange}
                 placeholder={amPmPlaceholder}
+                amLabel={amLabel}
+                pmLabel={pmLabel}
                 size={size}
                 aria-label={amPmLabel}
                 disabled={disabled}
