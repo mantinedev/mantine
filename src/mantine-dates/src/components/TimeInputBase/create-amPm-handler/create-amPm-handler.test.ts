@@ -4,7 +4,12 @@ describe('@mantine/dates/create-amPm-handler', () => {
   it('does not call onChange if value is the wrong input', () => {
     const ref = { current: { focus: jest.fn(), select: jest.fn() } };
     const spy = jest.fn();
+
+    const amLabel = 'am';
+    const pmLabel = 'pm';
     const handler = createAmPmHandler({
+      amLabel,
+      pmLabel,
       onChange: spy,
       nextRef: ref as any,
     });
@@ -17,7 +22,12 @@ describe('@mantine/dates/create-amPm-handler', () => {
   it('calls onChange when value is right', () => {
     const ref = { current: { focus: jest.fn(), select: jest.fn() } };
     const spy = jest.fn();
+
+    const amLabel = 'am';
+    const pmLabel = 'pm';
     const handler = createAmPmHandler({
+      amLabel,
+      pmLabel,
       onChange: spy,
       nextRef: ref as any,
     });

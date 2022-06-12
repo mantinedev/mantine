@@ -59,6 +59,16 @@ export const configurator: MantineDemo = {
       defaultValue: '24',
     },
     {
+      name: 'amLabel',
+      type: 'string',
+      initialValue: 'am',
+    },
+    {
+      name: 'pmLabel',
+      type: 'string',
+      initialValue: 'pm',
+    },
+    {
       name: 'withSeconds',
       type: 'boolean',
       initialValue: false,

@@ -614,7 +614,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
 
               <input
                 ref={useMergedRef(ref, inputRef)}
-                type="text"
+                type="search"
+                autoComplete="off"
                 id={uuid}
                 className={cx(classes.searchInput, {
                   [classes.searchInputPointer]: !searchable,
@@ -633,7 +634,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
                 placeholder={_value.length === 0 ? placeholder : undefined}
                 disabled={disabled}
                 data-mantine-stop-propagation={dropdownOpened}
-                autoComplete="nope"
                 {...rest}
               />
             </div>

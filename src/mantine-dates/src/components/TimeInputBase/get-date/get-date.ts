@@ -5,6 +5,7 @@ export function getDate(
   minutes: string,
   seconds: string,
   format: '12' | '24',
+  pmLabel: string,
   amPm?: string
 ) {
   const date = dayjs();
@@ -18,7 +19,7 @@ export function getDate(
 
   if (format === '12') {
     _hours %= 12;
-    if (amPm === 'pm') {
+    if (amPm === pmLabel) {
       _hours += 12;
     }
   }

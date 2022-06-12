@@ -7,3 +7,4 @@ export { usage } from './Month.demo.usage';
 export { modifiers } from './Month.demo.modifiers';
 export { weekdays } from './Month.demo.weekdays';
 export { localization } from './Month.demo.localization';
+export { weekendDays } from './Month.demo.weekendDays';
