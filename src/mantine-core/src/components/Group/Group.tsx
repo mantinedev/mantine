@@ -18,7 +18,7 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
   spacing?: MantineNumberSize;
 
   /** Defines flex-direction property, row for horizontal, column for vertical */
-  direction?: 'row' | 'column';
+  direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
 
   /** Defines align-items css property */
   align?: React.CSSProperties['alignItems'];
