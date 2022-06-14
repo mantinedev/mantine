@@ -66,9 +66,10 @@ export function useForm<Values extends ValuesPlaceholder>({
   );
 
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
+    const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
     _setValues((current) => {
       const result = setPath(path, value, current);
-      if (shouldValidateOnChange(path, validateInputOnChange)) {
+      if (shouldValidate) {
         const validationResults = validateFieldValue(path, rules, result);
         validationResults.hasError
           ? setFieldError(path, validationResults.error)
@@ -77,7 +78,7 @@ export function useForm<Values extends ValuesPlaceholder>({
       return result;
     });
 
-    clearInputErrorOnChange && setFieldError(path, null);
+    !shouldValidate && clearInputErrorOnChange && setFieldError(path, null);
   }, []);
 
   const setValues: SetValues<Values> = useCallback((payload) => {

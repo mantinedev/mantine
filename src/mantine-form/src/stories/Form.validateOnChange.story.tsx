@@ -9,7 +9,6 @@ export function ValidateOnChange() {
   const form = useForm({
     initialValues: { name: '', email: '', terms: false },
     validateInputOnChange: ['email'],
-    clearInputErrorOnChange: false,
     validate: {
       name: (value) => (value.length < 6 ? 'Less than 6' : null),
       email: (value) => (value.length > 6 ? 'More than 6' : null),
