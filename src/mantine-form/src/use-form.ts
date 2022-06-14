@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
 import { filterErrors } from './filter-errors';
-import { validateValues, validateFieldValue } from './validate';
+import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
 import {
   ValuesPlaceholder,
   UseFormReturnType,
@@ -28,6 +28,7 @@ export function useForm<Values extends ValuesPlaceholder>({
   initialValues = {} as Values,
   initialErrors = {},
   clearInputErrorOnChange = true,
+  validateInputOnChange = false,
   validate: rules,
 }: UseFormInput<Values> = {}): UseFormReturnType<Values> {
   const [values, _setValues] = useState(initialValues);
@@ -50,8 +51,32 @@ export function useForm<Values extends ValuesPlaceholder>({
     []
   );
 
+  const clearFieldError: ClearFieldError = useCallback(
+    (path) =>
+      setErrors((current) => {
+        if (typeof path !== 'string') {
+          return current;
+        }
+
+        const clone = { ...current };
+        delete clone[path];
+        return clone;
+      }),
+    []
+  );
+
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
-    _setValues((current) => setPath(path, value, current));
+    _setValues((current) => {
+      const result = setPath(path, value, current);
+      if (shouldValidateOnChange(path, validateInputOnChange)) {
+        const validationResults = validateFieldValue(path, rules, result);
+        validationResults.hasError
+          ? setFieldError(path, validationResults.error)
+          : clearFieldError(path);
+      }
+      return result;
+    });
+
     clearInputErrorOnChange && setFieldError(path, null);
   }, []);
 
@@ -72,20 +97,6 @@ export function useForm<Values extends ValuesPlaceholder>({
 
   const insertListItem: InsertListItem<Values> = useCallback(
     (path, item, index) => _setValues((current) => insertPath(path, item, index, current)),
-    []
-  );
-
-  const clearFieldError: ClearFieldError = useCallback(
-    (path) =>
-      setErrors((current) => {
-        if (typeof path !== 'string') {
-          return current;
-        }
-
-        const clone = { ...current };
-        delete clone[path];
-        return clone;
-      }),
     []
   );
 

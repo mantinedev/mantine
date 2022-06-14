@@ -93,6 +93,7 @@ export interface UseFormInput<Values extends ValuesPlaceholder> {
   initialErrors?: FormErrors;
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
+  validateInputOnChange?: boolean | LooseKeys<Values>[];
 }
 
 export interface UseFormReturnType<Values extends ValuesPlaceholder> {
