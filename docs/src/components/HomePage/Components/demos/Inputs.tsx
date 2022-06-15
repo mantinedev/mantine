@@ -19,12 +19,7 @@ export function Inputs() {
       spacing="xl"
     >
       <TextInput label="Text input" placeholder="Text input" required />
-      <PasswordInput
-        label="Password input"
-        placeholder="Password input"
-        defaultValue="Secret"
-        required
-      />
+      <PasswordInput label="Password input" placeholder="Password input" required />
       <ColorInput
         label="Color input"
         defaultValue="rgba(34, 138, 230, 0.8)"
