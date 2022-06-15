@@ -134,10 +134,15 @@ export function useForm<Values extends ValuesPlaceholder>({
       : withOptionalError({ value: getPath(path, values), onChange });
   };
 
-  const onSubmit: OnSubmit<Values> = (handleSubmit) => (event) => {
+  const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => (event) => {
     event.preventDefault();
     const results = validate();
-    !results.hasErrors && handleSubmit(values, event);
+
+    if (results.hasErrors) {
+      handleValidationFailure?.(results.errors, event);
+    } else {
+      handleSubmit(values, event);
+    }
   };
 
   const onReset: OnReset = useCallback((event) => {

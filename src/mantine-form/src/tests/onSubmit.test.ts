@@ -4,25 +4,27 @@ import { useForm } from '../use-form';
 const getFormEvent = () => ({ preventDefault: jest.fn() } as any);
 
 describe('@mantine/form/onSubmit', () => {
-  it('calls given function with values and event when all values are valid', () => {
+  it('calls handleSubmit with values and event when all values are valid', () => {
     const hook = renderHook(() =>
       useForm({ initialValues: { banana: 'test banana', apple: 'test apple' } })
     );
 
     const event = getFormEvent();
     const handleSubmit = jest.fn();
+    const handleValidationFailure = jest.fn();
 
-    act(() => hook.result.current.onSubmit(handleSubmit)(event));
+    act(() => hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event));
 
     expect(event.preventDefault).toHaveBeenCalled();
 
+    expect(handleValidationFailure).not.toHaveBeenCalled();
     expect(handleSubmit).toHaveBeenCalledWith(
       { banana: 'test banana', apple: 'test apple' },
       event
     );
   });
 
-  it('does not call given function if values are not valid', () => {
+  it('calls handleValidationFailure when values are not valid', () => {
     const hook = renderHook(() =>
       useForm({
         initialValues: {
@@ -39,9 +41,17 @@ describe('@mantine/form/onSubmit', () => {
 
     const event = getFormEvent();
     const handleSubmit = jest.fn();
+    const handleValidationFailure = jest.fn();
 
-    act(() => hook.result.current.onSubmit(handleSubmit)(event));
+    act(() => hook.result.current.onSubmit(handleSubmit, handleValidationFailure)(event));
     expect(handleSubmit).not.toHaveBeenCalled();
+    expect(handleValidationFailure).toHaveBeenCalledWith(
+      {
+        banana: 'invalid banana',
+        orange: 'invalid orange',
+      },
+      event
+    );
     expect(hook.result.current.errors).toStrictEqual({
       banana: 'invalid banana',
       orange: 'invalid orange',

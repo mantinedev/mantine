@@ -44,7 +44,8 @@ export type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 
 export type OnSubmit<Values> = (
-  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void
+  handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void,
+  handleValidationFailure?: (errors: FormErrors, event: React.FormEvent<HTMLFormElement>) => void
 ) => (event: React.FormEvent<HTMLFormElement>) => void;
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
