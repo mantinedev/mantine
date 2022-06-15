@@ -61,6 +61,9 @@ export interface DatePickerBaseSharedProps
   /** Where to show calendar in modal or popover */
   dropdownType?: 'popover' | 'modal';
 
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom-start' | 'top-start' | 'flip';
+
   /** Allow to clear value */
   clearable?: boolean;
 
@@ -163,6 +166,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       clearButtonLabel,
       onClear,
       positionDependencies = [],
+      dropdownPosition,
       zIndex,
       withinPortal = true,
       onBlur,
@@ -276,7 +280,6 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         {...wrapperProps}
       >
         <Popover
-          position="bottom-start"
           __staticSelector={__staticSelector}
           withinPortal={withinPortal}
           offset={10}
@@ -284,6 +287,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
           transitionDuration={transitionDuration}
           transition={transition}
           positionDependencies={positionDependencies}
+          middlewares={{ flip: dropdownPosition === 'flip', shift: false }}
+          position={dropdownPosition === 'flip' ? 'bottom-start' : dropdownPosition}
           shadow={shadow}
           onClose={closeDropdown}
           trapFocus={!allowFreeInput}
