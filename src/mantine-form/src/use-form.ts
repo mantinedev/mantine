@@ -139,7 +139,7 @@ export function useForm<Values extends ValuesPlaceholder>({
     const results = validate();
 
     if (results.hasErrors) {
-      handleValidationFailure?.(results.errors, event);
+      handleValidationFailure?.(results.errors, values, event);
     } else {
       handleSubmit(values, event);
     }

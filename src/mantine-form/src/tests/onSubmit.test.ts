@@ -50,6 +50,10 @@ describe('@mantine/form/onSubmit', () => {
         banana: 'invalid banana',
         orange: 'invalid orange',
       },
+      {
+        banana: '',
+        orange: '',
+      },
       event
     );
     expect(hook.result.current.errors).toStrictEqual({
