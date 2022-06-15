@@ -15,11 +15,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        activeStyles: { transform: 'scale(0.95)' },
-      }}
-    >
+    <MantineProvider inherit theme={{ activeStyles: { transform: 'scale(0.95)' } }}>
       <Group position="center">
         <Button>Press me</Button>
       </Group>
