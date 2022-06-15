@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   DefaultProps,
-  MantineNumberSize,
   Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
@@ -52,7 +51,7 @@ export interface DialogProps
   transitionTimingFunction?: string;
 
   /** Predefined dialog width or number to set width in px */
-  size?: MantineNumberSize;
+  size?: string | number;
 }
 
 const defaultProps: Partial<DialogProps> = {

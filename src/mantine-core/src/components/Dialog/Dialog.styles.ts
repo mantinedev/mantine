@@ -1,7 +1,7 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export interface DialogStylesParams {
-  size: MantineNumberSize;
+  size: string | number;
 }
 
 const sizes = {
