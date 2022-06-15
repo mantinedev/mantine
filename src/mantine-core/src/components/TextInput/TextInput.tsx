@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { DefaultProps, MantineSize } from '@mantine/styles';
 import {
   Input,
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
   useInputProps,
   InputWrapperBaseProps,
@@ -13,7 +13,7 @@ export type TextInputStylesNames = InputStylesNames | InputWrapperStylesNames;
 
 export interface TextInputProps
   extends DefaultProps<TextInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   /** Adds icon on the left side of input */

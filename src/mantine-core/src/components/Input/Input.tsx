@@ -18,7 +18,7 @@ import useStyles, { InputVariant } from './Input.styles';
 
 export type InputStylesNames = Selectors<typeof useStyles>;
 
-export interface InputBaseProps {
+export interface InputSharedProps {
   /** Adds icon on the left side of input */
   icon?: React.ReactNode;
 
@@ -53,7 +53,7 @@ export interface InputBaseProps {
   size?: MantineSize;
 }
 
-export interface InputProps extends InputBaseProps, DefaultProps<InputStylesNames> {
+export interface InputProps extends InputSharedProps, DefaultProps<InputStylesNames> {
   /** Static css selector base */
   __staticSelector?: string;
 

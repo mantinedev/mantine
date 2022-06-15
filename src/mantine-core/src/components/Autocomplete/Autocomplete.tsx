@@ -5,7 +5,7 @@ import {
   Input,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
   useInputProps,
 } from '../Input';
@@ -30,7 +30,7 @@ export interface AutocompleteItem {
 
 export interface AutocompleteProps
   extends DefaultProps<AutocompleteStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     SelectSharedProps<AutocompleteItem, string>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {

@@ -7,14 +7,14 @@ import {
   extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
-import { InputWrapperBaseProps, Input, InputBaseProps } from '../Input';
+import { InputWrapperBaseProps, Input, InputSharedProps } from '../Input';
 import { TextInputStylesNames } from '../TextInput/TextInput';
 import useStyles from './Textarea.styles';
 
 export interface TextareaProps
   extends DefaultProps<TextInputStylesNames>,
     InputWrapperBaseProps,
-    InputBaseProps,
+    InputSharedProps,
     React.ComponentPropsWithoutRef<'textarea'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;

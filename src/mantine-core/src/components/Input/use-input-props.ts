@@ -1,9 +1,9 @@
 import { useComponentDefaultProps, DefaultProps, extractSystemStyles } from '@mantine/styles';
 import { useId } from '@mantine/hooks';
 import { InputWrapperBaseProps } from './InputWrapper/InputWrapper';
-import { InputBaseProps } from './Input';
+import { InputSharedProps } from './Input';
 
-interface BaseProps extends InputWrapperBaseProps, InputBaseProps, DefaultProps {
+interface BaseProps extends InputWrapperBaseProps, InputSharedProps, DefaultProps {
   __staticSelector?: string;
   id?: string;
 }

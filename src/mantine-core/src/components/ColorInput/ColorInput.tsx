@@ -5,7 +5,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
   Input,
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
   useInputProps,
 } from '../Input';
@@ -27,7 +27,7 @@ export type ColorInputStylesNames =
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
-    InputBaseProps,
+    InputSharedProps,
     ColorPickerBaseProps,
     DefaultProps<ColorInputStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'defaultValue' | 'value'> {

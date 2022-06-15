@@ -2,7 +2,7 @@ import React, { useRef, forwardRef } from 'react';
 import {
   DefaultProps,
   Input,
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
   MantineTransition,
   InputStylesNames,
@@ -27,7 +27,7 @@ export type DatePickerStylesNames =
   | 'dropdown';
 
 export interface DatePickerBaseSharedProps
-  extends InputBaseProps,
+  extends InputSharedProps,
     InputWrapperBaseProps,
     DefaultProps<DatePickerStylesNames>,
     Omit<

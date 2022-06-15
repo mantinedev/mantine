@@ -1,6 +1,6 @@
 import type {
   InputStylesNames,
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperStylesNames,
   InputWrapperBaseProps,
 } from '../Input';
@@ -22,5 +22,5 @@ export type BaseSelectStylesNames =
   | SelectPopoverStylesNames;
 
 export type BaseSelectProps = InputWrapperBaseProps &
-  InputBaseProps &
+  InputSharedProps &
   Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size' | 'defaultValue'>;

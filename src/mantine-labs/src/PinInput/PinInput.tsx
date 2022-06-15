@@ -7,7 +7,7 @@ import {
   MantineColor,
   Group,
   Input,
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
 } from '@mantine/core';
 import useStyles from './PinInput.styles';
@@ -18,7 +18,7 @@ export type PinInputStylesNames = InputStylesNames;
 
 export interface PinInputProps
   extends DefaultProps<PinInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** Input name attribute, used to bind inputs in one group, by default generated randomly with use-id hook */
   name?: string;

@@ -1,6 +1,6 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import {
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
   InputStylesNames,
   InputWrapperStylesNames,
@@ -23,7 +23,7 @@ export type TimeRangeInputStylesNames =
 
 export interface TimeRangeInputProps
   extends DefaultProps<TimeRangeInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
