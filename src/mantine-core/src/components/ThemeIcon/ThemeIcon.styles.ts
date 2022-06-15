@@ -20,7 +20,13 @@ const sizes = {
 
 export default createStyles(
   (theme, { color, size, radius, gradient, variant }: ThemeIconStylesParams) => {
-    const colors = theme.fn.variant({ variant, color, gradient, primaryFallback: false });
+    const colors = theme.fn.variant({
+      variant,
+      color: color || theme.primaryColor,
+      gradient,
+      primaryFallback: false,
+    });
+
     const iconSize = theme.fn.size({ size, sizes });
 
     return {
