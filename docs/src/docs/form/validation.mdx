@@ -24,3 +24,21 @@ You can get all form values as a second rule function argument to perform field 
 form values. For example, you can validate that password confirmation is the same as password:
 
 <Demo data={FormDemos.password} />
+
+## Validate fields onChange
+
+To validate all fields on change set `validateInputOnChange` option to `true`:
+
+```tsx
+const form = useForm({ validateInputOnChange: true });
+```
+
+<Demo data={FormDemos.liveValidation} demoProps={{ toggle: true }} />
+
+You can also provide an array of fields paths to validate only those values:
+
+```tsx
+const form = useForm({ validateInputOnChange: ['name', 'email'] });
+```
+
+<Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />

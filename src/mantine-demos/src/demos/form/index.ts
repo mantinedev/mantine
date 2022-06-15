@@ -9,3 +9,5 @@ export { yup } from './Form.demo.yup';
 export { localStorage } from './Form.demo.localStorage';
 export { nested } from './Form.demo.nested';
 export { rulesValidation } from './Form.demo.rulesValidation';
+export { liveValidation } from './Form.demo.liveValidation';
+export { liveFieldValidation } from './Form.demo.liveFieldValidation';
