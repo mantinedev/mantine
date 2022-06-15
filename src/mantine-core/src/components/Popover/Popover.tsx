@@ -171,6 +171,7 @@ export function Popover(props: PopoverProps) {
     exitTransitionDuration,
     __staticSelector,
     withRoles,
+    ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
   const uid = useId(id);
@@ -228,6 +229,7 @@ export function Popover(props: PopoverProps) {
           getTargetId: () => `${uid}-target`,
           getDropdownId: () => `${uid}-dropdown`,
           withRoles,
+          targetProps: others,
         }}
       >
         {children}

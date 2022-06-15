@@ -39,6 +39,7 @@ export function PopoverTarget({
 
   return cloneElement(target, {
     ...accessibleProps,
+    ...ctx.targetProps,
     [refProp]: targetRef,
     ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Popover } from './Popover';
 import { Button } from '../Button';
+import { Group } from '../Group';
 
 export default { title: 'Popover' };
 
@@ -62,5 +63,20 @@ export function SameWidth() {
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
       </Popover>
     </div>
+  );
+}
+
+export function WithinGroup() {
+  return (
+    <Group grow>
+      <Popover>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+      <Button>Regular button</Button>
+    </Group>
   );
 }
