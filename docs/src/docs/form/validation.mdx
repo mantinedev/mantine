@@ -25,7 +25,35 @@ form values. For example, you can validate that password confirmation is the sam
 
 <Demo data={FormDemos.password} />
 
-## Validate fields onChange
+## Function based validation
+
+Another approach to handle validation is to provide a function to `validate`.
+Function takes form values as single argument and should return object that contains
+errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
+from the validation results.
+
+<Demo data={FormDemos.validateFunction} />
+
+## Schema based validation
+
+`@mantine/form` supports schema validation with [zod](https://www.npmjs.com/package/zod), [joi](https://www.npmjs.com/package/joi) and [yup](https://www.npmjs.com/package/yup) out of the box.
+You will need to install one of the libraries yourself, as `@mantine/form` package does not depend on any of them.
+If you do not know what validation library to choose, we recommend choosing [zod](https://www.npmjs.com/package/zod)
+as the most modern and developer-friendly library.
+
+### zod
+
+<Demo data={FormDemos.zod} demoProps={{ toggle: true }} />
+
+### joi
+
+<Demo data={FormDemos.joi} demoProps={{ toggle: true }} />
+
+### yup
+
+<Demo data={FormDemos.yup} demoProps={{ toggle: true }} />
+
+## Validate fields on change
 
 To validate all fields on change set `validateInputOnChange` option to `true`:
 
@@ -42,3 +70,23 @@ const form = useForm({ validateInputOnChange: ['name', 'email'] });
 ```
 
 <Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />
+
+## Clear field error on change
+
+By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
+
+```tsx
+const form = useForm({ clearInputErrorOnChange: false });
+```
+
+<Demo data={FormDemos.clearErrorOnChange} demoProps={{ toggle: true }} />
+
+## Validation in onSubmit handler
+
+`form.onSubmit` accepts two arguments: first argument is `handleSubmit` function that will be called with form values, when validation
+was completed without errors, second argument is `handleErrors` function, it is called with errors object when validation was completed with errors.
+
+You can use `handleErrors` function to perform certain actions when user tries to submit form without values,
+for example, you can show a notification:
+
+<Demo data={FormDemos.onSubmitErrors} />
