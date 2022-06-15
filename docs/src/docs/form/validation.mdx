@@ -1,0 +1,26 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'Validation'
+order: 0
+slug: /form/validation/
+description: 'Validate fields with use-form hook'
+docs: 'form/validation.mdx'
+source: 'mantine-form/src'
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## Validation with rules object
+
+To validate form with rules object, provide an object of functions which take field value as an argument
+and return error message (any React node) or null if field is valid:
+
+<Demo data={FormDemos.rulesValidation} />
+
+## Validation based on other form values
+
+You can get all form values as a second rule function argument to perform field validation based on other
+form values. For example, you can validate that password confirmation is the same as password:
+
+<Demo data={FormDemos.password} />
