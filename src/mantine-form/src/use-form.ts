@@ -4,7 +4,6 @@ import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
 import { filterErrors } from './filter-errors';
 import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
 import {
-  ValuesPlaceholder,
   UseFormReturnType,
   UseFormInput,
   SetErrors,
@@ -24,7 +23,7 @@ import {
   OnReset,
 } from './types';
 
-export function useForm<Values extends ValuesPlaceholder>({
+export function useForm<Values = Record<string, unknown>>({
   initialValues = {} as Values,
   initialErrors = {},
   clearInputErrorOnChange = true,

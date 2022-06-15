@@ -38,7 +38,6 @@ export type FormRulesRecord<Values> = Partial<{
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
 
 export type LooseKeys<Values> = keyof Values | (string & {});
-export type ValuesPlaceholder = Record<string, unknown>;
 
 export type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
@@ -93,7 +92,7 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
   index: number
 ) => void;
 
-export interface UseFormInput<Values extends ValuesPlaceholder> {
+export interface UseFormInput<Values> {
   initialValues?: Values;
   initialErrors?: FormErrors;
   validate?: FormValidateInput<Values>;
@@ -101,7 +100,7 @@ export interface UseFormInput<Values extends ValuesPlaceholder> {
   validateInputOnChange?: boolean | LooseKeys<Values>[];
 }
 
-export interface UseFormReturnType<Values extends ValuesPlaceholder> {
+export interface UseFormReturnType<Values> {
   values: Values;
   errors: FormErrors;
   setValues: SetValues<Values>;
