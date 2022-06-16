@@ -48,11 +48,11 @@ export default createStyles((theme, { size, rightSectionWidth }: PasswordInputSt
   },
 
   invalid: {
-    color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+    color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
 
     '&::placeholder': {
       opacity: 1,
-      color: theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7],
+      color: theme.fn.variant({ variant: 'filled', color: 'red' }).background,
     },
   },
 
