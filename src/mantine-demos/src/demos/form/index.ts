@@ -13,3 +13,4 @@ export { liveValidation } from './Form.demo.liveValidation';
 export { liveFieldValidation } from './Form.demo.liveFieldValidation';
 export { clearErrorOnChange } from './Form.demo.clearErrorOnChange';
 export { onSubmitErrors } from './Form.demo.onSubmitErrors';
+export { asyncSetValues } from './Form.demo.asyncSetValues';
