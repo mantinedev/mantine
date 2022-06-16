@@ -87,3 +87,9 @@ export const Unmount = () => {
     </div>
   );
 };
+
+export const HexColor = () => (
+  <Tooltip label="Tooltip 2" color="#F0F">
+    <button type="button">Button 2</button>
+  </Tooltip>
+);

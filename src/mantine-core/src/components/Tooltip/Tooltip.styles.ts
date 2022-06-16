@@ -21,7 +21,7 @@ function getColors(theme: MantineTheme, color?: MantineColor): CSSObject {
     };
   }
 
-  const colors = theme.fn.variant({ variant: 'filled', color });
+  const colors = theme.fn.variant({ variant: 'filled', color, primaryFallback: false });
 
   return {
     backgroundColor: colors.background,
