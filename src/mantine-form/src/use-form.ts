@@ -104,7 +104,7 @@ export function useForm<Values = Record<string, unknown>>({
     const results = validateValues(rules, values);
     _setErrors(results.errors);
     return results;
-  }, [values]);
+  }, [values, rules]);
 
   const validateField: ValidateField<Values> = useCallback(
     (path) => {
@@ -112,7 +112,7 @@ export function useForm<Values = Record<string, unknown>>({
       results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
       return results;
     },
-    [values]
+    [values, rules]
   );
 
   const getInputProps: GetInputProps<Values> = (

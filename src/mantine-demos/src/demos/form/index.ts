@@ -14,3 +14,4 @@ export { liveFieldValidation } from './Form.demo.liveFieldValidation';
 export { clearErrorOnChange } from './Form.demo.clearErrorOnChange';
 export { onSubmitErrors } from './Form.demo.onSubmitErrors';
 export { asyncSetValues } from './Form.demo.asyncSetValues';
+export { stepper } from './Form.demo.stepper';
