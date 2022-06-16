@@ -289,13 +289,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   };
 
   useDidUpdate(() => {
-    setHovered(
-      getNextIndex(
-        -1,
-        (index) => index + 1,
-        (index) => index < filteredData.length - 1
-      )
-    );
+    setHovered(-1);
   }, [searchValue]);
 
   useDidUpdate(() => {

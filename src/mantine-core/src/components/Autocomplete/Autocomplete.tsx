@@ -123,7 +123,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   };
 
   useDidUpdate(() => {
-    setHovered(0);
+    setHovered(-1);
   }, [_value]);
 
   const handleItemClick = (item: AutocompleteItem) => {

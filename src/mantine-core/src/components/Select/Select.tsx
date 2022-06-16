@@ -334,13 +334,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   };
 
   useDidUpdate(() => {
-    setHovered(
-      getNextIndex(
-        -1,
-        (index) => index + 1,
-        (index) => index < filteredData.length - 1
-      )
-    );
+    setHovered(-1);
   }, [inputValue]);
 
   const selectedItemIndex = _value ? filteredData.findIndex((el) => el.value === _value) : 0;
@@ -501,7 +495,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       handleChange(null);
     }
 
-    setHovered(0);
+    setHovered(-1);
     setDropdownOpened(true);
   };
 
