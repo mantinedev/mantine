@@ -11,10 +11,10 @@ source: 'mantine-form/src'
 
 import { FormDemos } from '@mantine/demos';
 
-## getInputProps
+## Properties paths
 
-`form.getInputProps` first argument is a path to the property separated with `.`.
-You can get props for any object or array at any level:
+Most of `form` handlers accept property path as the first argument.
+Property path includes keys/indices of objects/arrays at which target property is contained:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -42,18 +42,18 @@ const form = useForm({
 // Props for input that is controlled by user object firstName field
 form.getInputProps('user.firstName');
 
-// Props for input that is controlled by name property of second item at fruits array
-form.getInputProps('fruits.1.name');
+// Set value of `name` field that is contained in object at second position of fruits array:
+form.setFieldValue('fruits.1.name', 'Carrot');
 
-// Any level of nested is supported
-form.getInputProps('deeply.nested.object.0.item');
+// Validate deeply nested field
+form.validateField('deeply.nested.object.0.item');
 ```
 
 ## Nested objects
 
 <Demo data={FormDemos.nested} />
 
-### Set nested object value
+## Set nested object value
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -75,7 +75,7 @@ form.setFieldValue('user.occupation', 'Engineer');
 form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 ```
 
-### Nested object values validation
+## Nested object values validation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -104,7 +104,7 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 
 <Demo data={FormDemos.lists} />
 
-### List handlers
+## List handlers
 
 `useForm` hook provides the following handlers to manage list state:
 
@@ -112,7 +112,7 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 - `insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
 - `reorderListItem` – reorders list item with given position at specified field
 
-### List values validation
+## List values validation
 
 ```tsx
 const form = useForm({
@@ -131,6 +131,14 @@ const form = useForm({
   },
 });
 
+// Validate list item field
+form.validate('users.1.name');
+
+// Or with all other fields
 form.validate();
-form.errors; // -> { 'users.0.age': 'Name should have at least 2 letters', 'users.1.age': 'User must be 18 or older' }
+console.log(form.errors);
+// {
+//  'users.0.name': 'Name should have at least 2 letters',
+//  'users.1.age': 'User must be 18 or older'
+// }
 ```
