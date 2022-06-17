@@ -47,6 +47,9 @@ interface MantineTheme {
   // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
   primaryShade: Shade | { light: Shade; dark: Shade };
 
+  // Default gradient used in components that support `variant="gradient"` (Button, ThemeIcon, etc.)
+  defaultGradient: { deg: number; from: MantineColor; to: MantineColor };
+
   // font-family and line-height used in most components
   fontFamily: string;
   lineHeight: string | number;
@@ -206,6 +209,12 @@ Mantine theme has the following properties associated with colors:
 `theme.activeStyles` lets you override styles added to buttons with `:active` pseudo-class:
 
 <Demo data={ThemeDemos.activeStyles} />
+
+### defaultGradient
+
+`theme.defaultGradient` defines default gradient value for components that support `variant="gradient"` ([Button](/core/button/), [ThemeIcon](/core/theme-icon/), etc.):
+
+<Demo data={ThemeDemos.defaultGradient} />
 
 ### loader
 
