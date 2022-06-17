@@ -12,6 +12,7 @@ export function attachFunctions(themeBase: MantineThemeBase): MantineTheme {
       smallerThan: fns.smallerThan(themeBase),
       radialGradient: fns.radialGradient,
       linearGradient: fns.linearGradient,
+      gradient: fns.gradient(themeBase),
       rgba: fns.rgba,
       size: fns.size,
       cover: fns.cover,

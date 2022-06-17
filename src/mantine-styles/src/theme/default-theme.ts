@@ -28,6 +28,11 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   primaryColor: 'blue',
   respectReducedMotion: true,
   cursorType: 'default',
+  defaultGradient: {
+    from: 'indigo',
+    to: 'cyan',
+    deg: 45,
+  },
 
   shadows: {
     xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',

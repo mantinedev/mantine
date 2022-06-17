@@ -2,6 +2,7 @@ import type { MantineColor, MantineGradient, MantineThemeBase } from '../../../t
 import { rgba } from '../rgba/rgba';
 import { themeColor } from '../theme-color/theme-color';
 import { primaryShade } from '../primary-shade/primary-shade';
+import { gradient } from '../gradient/gradient';
 
 export interface VariantInput {
   variant: 'filled' | 'light' | 'outline' | 'default' | 'gradient' | 'white' | 'subtle';
@@ -17,15 +18,10 @@ export interface VariantOutput {
   hover: string;
 }
 
-const DEFAULT_GRADIENT = {
-  from: 'indigo',
-  to: 'cyan',
-  deg: 45,
-};
-
 export function variant(theme: MantineThemeBase) {
   const getThemeColor = themeColor(theme);
   const getPrimaryShade = primaryShade(theme);
+  const getGradient = gradient(theme);
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   return ({ variant, color, gradient, primaryFallback }: VariantInput): VariantOutput => {
@@ -80,18 +76,8 @@ export function variant(theme: MantineThemeBase) {
     }
 
     if (variant === 'gradient') {
-      const merged = {
-        from: gradient?.from || DEFAULT_GRADIENT.from,
-        to: gradient?.to || DEFAULT_GRADIENT.to,
-        deg: gradient?.deg || DEFAULT_GRADIENT.deg,
-      };
-
       return {
-        background: `linear-gradient(${merged.deg}deg, ${getThemeColor(
-          merged.from,
-          getPrimaryShade(),
-          false
-        )} 0%, ${getThemeColor(merged.to, getPrimaryShade(), false)} 100%)`,
+        background: getGradient(gradient),
         color: theme.white,
         border: 'transparent',
         hover: null,

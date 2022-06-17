@@ -2,9 +2,10 @@ import type { CSSProperties } from 'react';
 import type { MantineSizes, MantineSize, MantineNumberSize } from './MantineSize';
 import type { DeepPartial } from './DeepPartial';
 import type { MantineThemeColors } from './MantineColor';
+import type { MantineGradient } from './MantineGradient';
 import type { VariantInput, VariantOutput } from '../functions/fns/variant/variant';
 import type { ColorScheme } from './ColorScheme';
-import { CSSObject } from '../../tss';
+import type { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
@@ -31,6 +32,7 @@ interface MantineThemeFunctions {
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
   radialGradient(...colors: string[]): string;
+  gradient(gradient?: MantineGradient): string;
   smallerThan(breakpoint: MantineNumberSize): string;
   largerThan(breakpoint: MantineNumberSize): string;
   lighten(color: string, alpha: number): string;
@@ -59,6 +61,7 @@ export interface MantineTheme {
   primaryColor: keyof MantineThemeColors;
   respectReducedMotion: boolean;
   cursorType: 'default' | 'pointer';
+  defaultGradient: MantineGradient;
 
   fontSizes: MantineSizes;
   radius: MantineSizes;
