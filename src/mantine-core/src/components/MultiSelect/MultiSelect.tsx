@@ -419,7 +419,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         break;
       }
 
-      case 'Space': {
+      case ' ': {
         if (!searchable) {
           event.preventDefault();
           if (filteredData[hovered] && dropdownOpened) {

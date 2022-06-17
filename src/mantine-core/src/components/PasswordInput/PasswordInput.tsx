@@ -110,7 +110,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
         toggle();
       }}
       onKeyDown={(event) => {
-        if (event.key === 'Space') {
+        if (event.key === ' ') {
           event.preventDefault();
           toggle();
         }

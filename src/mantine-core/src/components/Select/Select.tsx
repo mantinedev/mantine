@@ -442,7 +442,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
         break;
       }
 
-      case 'Space': {
+      case ' ': {
         if (!searchable) {
           if (filteredData[hovered] && dropdownOpened) {
             event.preventDefault();
