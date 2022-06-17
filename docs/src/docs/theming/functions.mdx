@@ -6,6 +6,8 @@ order: 3
 search: 'rgba, lighten, darken, smallerThan, gradient'
 ---
 
+import { ThemeDemos } from '@mantine/demos';
+
 # Theme functions
 
 Mantine theme provides several functions that can be used to simplify writing styles.
@@ -169,6 +171,13 @@ theme.fn.radialGradient('#000', '#fff'); // -> radial-gradient(circle, #000 0%, 
 theme.fn.radialGradient('blue', 'red', 'orange', 'cyan', 'white');
 // -> radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)
 ```
+
+## gradient
+
+`gradient` function returns string value with given gradient or with `theme.defaultGradient`
+if argument is not provided:
+
+<Demo data={ThemeDemos.gradientFn} />
 
 ## cover
 
