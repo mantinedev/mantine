@@ -3,3 +3,4 @@ export { DirectionControl } from './DirectionControl';
 export { DiscordControl } from './DiscordControl';
 export { GithubControl } from './GithubControl';
 export { HeaderControl } from './HeaderControl';
+export { HeaderControls } from './HeaderControls';

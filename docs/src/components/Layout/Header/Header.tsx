@@ -1,8 +1,11 @@
+/* eslint-disable import/no-relative-packages */
 import React from 'react';
 import { Burger, Code } from '@mantine/core';
+import { HeaderControls } from '@mantine/ds';
+import { useSpotlight } from '@mantine/spotlight';
 import corePackageJson from '../../../../../package.json';
 import { Logo } from '../../Logo/Logo';
-import { HeaderControls } from './HeaderControls/HeaderControls';
+import { useDirectionContext } from '../DirectionContext';
 import useStyles from './Header.styles';
 
 interface HeaderProps {
@@ -12,6 +15,8 @@ interface HeaderProps {
 
 export default function Header({ navbarOpened, toggleNavbar }: HeaderProps) {
   const { classes } = useStyles();
+  const { dir, toggleDirection } = useDirectionContext();
+  const spotlight = useSpotlight();
   const burgerTitle = navbarOpened ? 'Open navigation' : 'Hide navigation';
 
   return (
@@ -36,7 +41,13 @@ export default function Header({ navbarOpened, toggleNavbar }: HeaderProps) {
         </div>
       </div>
 
-      <HeaderControls />
+      <HeaderControls
+        pr="md"
+        onSearch={spotlight.openSpotlight}
+        githubLink="https://github.com/mantinedev/mantine"
+        direction={dir}
+        toggleDirection={toggleDirection}
+      />
     </div>
   );
 }
