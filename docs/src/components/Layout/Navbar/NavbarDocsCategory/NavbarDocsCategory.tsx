@@ -5,7 +5,7 @@ import { Text } from '@mantine/core';
 import { useLocation } from '@reach/router';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
-import { HEADER_HEIGHT } from '../../Header/Header.styles';
+import { HEADER_HEIGHT } from '../../Header/HeaderDesktop.styles';
 
 interface NavbarDocsCategoryProps {
   group: ReturnType<typeof getDocsData>[number];
