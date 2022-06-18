@@ -1,6 +1,7 @@
+import React from 'react';
 import { DEFAULT_THEME } from '@mantine/core';
 import { IconCode, IconStar, IconRocket } from '@tabler/icons';
-import { Logo } from './Logo';
+import { MantineLogo } from '@mantine/ds';
 
 export default [
   {
@@ -16,10 +17,18 @@ export default [
     icon: IconStar,
   },
   {
+    to: '/pages/about/',
+    label: 'About Mantine',
+    color: DEFAULT_THEME.colors.indigo[5],
+    icon: (props: any) => <MantineLogo type="mark" {...props} />,
+    rawIcon: true,
+  },
+  {
     to: 'https://ui.mantine.dev/',
     label: 'Mantine UI',
     color: DEFAULT_THEME.colors.cyan[5],
-    icon: Logo,
+    icon: (props: any) => <MantineLogo type="mark" variant="ui.mantine.dev" {...props} />,
+    rawIcon: true,
   },
   { to: '/pages/contributing/', label: 'Contribute', color: '#000', icon: IconCode },
 ];
