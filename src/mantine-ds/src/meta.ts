@@ -7,6 +7,9 @@ export const meta = {
 
   npmLink: 'https://www.npmjs.com/org/mantine',
 
+  discordColor: '#5865f2',
+  twitterColor: '#1C8CD8',
+
   gitHubLinks: {
     mantine: 'https://github.com/mantinedev/mantine',
     mantineUi: 'https://github.com/mantinedev/ui.mantine.dev',

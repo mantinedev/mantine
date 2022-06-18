@@ -11,11 +11,11 @@ export function DiscordControl() {
       href={meta.discordLink}
       sx={(theme) => ({
         color: theme.white,
-        backgroundColor: '#5865f2',
-        borderColor: '#5865f2',
+        backgroundColor: meta.discordColor,
+        borderColor: meta.discordColor,
 
         ...theme.fn.hover({
-          backgroundColor: theme.fn.lighten('#5865f2', 0.1),
+          backgroundColor: theme.fn.lighten(meta.discordColor, 0.1),
         }),
       })}
     >
