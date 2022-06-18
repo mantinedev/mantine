@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, useMantineTheme } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 
@@ -62,7 +62,7 @@ function GithubButton({ style, ...others }: SocialButtonProps) {
       target="_blank"
       rel="noopener noreferrer"
       href="https://github.com/mantinedev/mantine/discussions"
-      leftIcon={<MarkGithubIcon size={14} />}
+      leftIcon={<GithubIcon size={14} />}
       style={{ ...style, ...baseStyles, color: theme.black, backgroundColor: theme.white }}
       styles={{
         leftIcon: {

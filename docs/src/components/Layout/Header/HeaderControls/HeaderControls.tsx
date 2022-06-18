@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Group, useMantineColorScheme, Tooltip } from '@mantine/core';
 import { IconTextDirectionRtl, IconTextDirectionLtr, IconSun, IconMoon } from '@tabler/icons';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import { DiscordIcon } from './DiscordIcon';
 import { HeaderControl } from './HeaderControl';
 import { SearchControl } from './SearchControl';
@@ -31,7 +31,7 @@ export function HeaderControls() {
             tooltip="Source code"
             hideOnMobile
           >
-            <MarkGithubIcon size={20} />
+            <GithubIcon size={20} />
           </HeaderControl>
 
           <HeaderControl

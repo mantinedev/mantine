@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Container, Group, Button, Text, useMantineTheme, SimpleGrid } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import { Hero } from './Hero';
 import { FEATURES_DATA } from './features';
 import useStyles from './Jumbotron.styles';
@@ -67,7 +67,7 @@ export function Jumbotron() {
             radius="md"
             className={cx(classes.control, classes.githubControl)}
             color={theme.colorScheme === 'dark' ? 'gray' : 'dark'}
-            leftIcon={<MarkGithubIcon size={22} />}
+            leftIcon={<GithubIcon size={22} />}
             styles={{ leftIcon: { marginRight: 12 } }}
           >
             GitHub

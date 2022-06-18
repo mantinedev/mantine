@@ -35,8 +35,7 @@
     "embla-carousel-autoplay": "*",
     "react-input-mask": "*",
     "dayjs": "*",
-    "zod": "*",
-    "@primer/octicons-react": "*"
+    "zod": "*"
   },
   "dependencies": {},
   "devDependencies": {}

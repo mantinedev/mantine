@@ -1,15 +1,14 @@
 import React from 'react';
 import { SimpleGrid, Group, Text, Card } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon, TwitterIcon } from '@mantine/ds';
 import { DiscordIcon } from '../SocialButton/DiscordIcon';
 import useStyles from './Community.styles';
-import { TwitterIcon } from '../SocialButton/TwitterIcon';
 
 export function Community() {
   const { classes, cx } = useStyles();
 
   return (
-    <SimpleGrid cols={3} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
+    <SimpleGrid cols={3} spacing="xl" breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
       <Card
         p="lg"
         component="a"
@@ -38,7 +37,7 @@ export function Community() {
         className={cx(classes.card, classes.twitter)}
       >
         <Group noWrap>
-          <TwitterIcon width={24} height={24} />
+          <TwitterIcon size={24} />
           <Text size="md" weight={600}>
             Follow on Twitter
           </Text>
@@ -58,7 +57,7 @@ export function Community() {
         className={cx(classes.card, classes.github)}
       >
         <Group noWrap>
-          <MarkGithubIcon size={24} />
+          <GithubIcon size={24} />
           <Text size="md" weight={600}>
             Start a discussion
           </Text>

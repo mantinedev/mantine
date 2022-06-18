@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, Overlay, Text, Button, Group } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import useStyles from './MantineUiBanner.styles';
 
 interface MantineUiBannerProps extends React.ComponentPropsWithoutRef<'div'> {}
@@ -36,7 +36,7 @@ export function MantineUiBanner({ className, ...others }: MantineUiBannerProps) 
             component="a"
             href="https://github.com/mantinedev/ui.mantine.dev"
             variant="default"
-            leftIcon={<MarkGithubIcon size={14} />}
+            leftIcon={<GithubIcon size={14} />}
           >
             Source code
           </Button>

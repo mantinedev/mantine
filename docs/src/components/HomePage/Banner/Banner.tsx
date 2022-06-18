@@ -1,6 +1,6 @@
 import React from 'react';
 import { Title, Overlay, Text, Button, Container } from '@mantine/core';
-import { MarkGithubIcon } from '@primer/octicons-react';
+import { GithubIcon } from '@mantine/ds';
 import useStyles from './Banner.styles';
 
 export function Banner() {
@@ -43,7 +43,7 @@ export function Banner() {
               Explore components
             </Button>
             <Button
-              leftIcon={<MarkGithubIcon />}
+              leftIcon={<GithubIcon size={18} />}
               component="a"
               radius="md"
               href="https://github.com/mantinedev/ui.mantine.dev"
