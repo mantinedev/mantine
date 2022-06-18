@@ -1,13 +1,14 @@
 import React from 'react';
 import { HeaderControl } from './HeaderControl';
 import { DiscordIcon } from '../Icons';
+import { meta } from '../meta';
 
 export function DiscordControl() {
   return (
     <HeaderControl
       tooltip="Discord"
       component="a"
-      href="https://discord.gg/eUZpPbpxb4"
+      href={meta.discordLink}
       sx={(theme) => ({
         color: theme.white,
         backgroundColor: '#5865f2',

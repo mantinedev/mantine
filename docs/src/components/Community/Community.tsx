@@ -1,6 +1,6 @@
 import React from 'react';
 import { SimpleGrid, Group, Text, Card } from '@mantine/core';
-import { GithubIcon, TwitterIcon } from '@mantine/ds';
+import { GithubIcon, TwitterIcon, meta } from '@mantine/ds';
 import { DiscordIcon } from '../SocialButton/DiscordIcon';
 import useStyles from './Community.styles';
 
@@ -13,7 +13,7 @@ export function Community() {
         p="lg"
         component="a"
         radius="md"
-        href="https://discord.gg/eUZpPbpxb4"
+        href={meta.discordLink}
         className={cx(classes.card, classes.discord)}
       >
         <Group noWrap>

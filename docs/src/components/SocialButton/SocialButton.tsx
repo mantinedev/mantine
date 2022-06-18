@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, useMantineTheme } from '@mantine/core';
-import { GithubIcon } from '@mantine/ds';
+import { meta } from '@mantine/ds';
 import { TwitterIcon } from './TwitterIcon';
 import { DiscordIcon } from './DiscordIcon';
 
@@ -19,7 +19,7 @@ function DiscordButton({ style, ...others }: SocialButtonProps) {
       component="a"
       target="_blank"
       rel="noopener noreferrer"
-      href="https://discord.gg/eUZpPbpxb4"
+      href={meta.discordLink}
       leftIcon={<DiscordIcon style={{ width: 14, marginRight: 5 }} />}
       style={{
         ...style,
@@ -40,7 +40,7 @@ function TwitterButton({ style, ...others }: SocialButtonProps) {
       component="a"
       target="_blank"
       rel="noopener noreferrer"
-      href="https://twitter.com/mantinedev"
+      href={meta.twitterLink}
       leftIcon={<TwitterIcon style={{ width: 14, marginRight: 5 }} />}
       style={{
         ...style,
@@ -54,42 +54,16 @@ function TwitterButton({ style, ...others }: SocialButtonProps) {
   );
 }
 
-function GithubButton({ style, ...others }: SocialButtonProps) {
-  const theme = useMantineTheme();
-  return (
-    <Button
-      component="a"
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://github.com/mantinedev/mantine/discussions"
-      leftIcon={<GithubIcon size={14} />}
-      style={{ ...style, ...baseStyles, color: theme.black, backgroundColor: theme.white }}
-      styles={{
-        leftIcon: {
-          marginRight: 16,
-        },
-      }}
-      {...others}
-    >
-      GitHub Discussions
-    </Button>
-  );
-}
-
 export function SocialButton({
   service,
   ...others
-}: SocialButtonProps & { service: 'twitter' | 'discord' | 'email' | 'github' }) {
+}: SocialButtonProps & { service: 'twitter' | 'discord' }) {
   if (service === 'discord') {
     return <DiscordButton {...others} />;
   }
 
   if (service === 'twitter') {
     return <TwitterButton {...others} />;
-  }
-
-  if (service === 'github') {
-    return <GithubButton {...others} />;
   }
 
   return null;
