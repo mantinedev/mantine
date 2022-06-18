@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, useMantineTheme } from '@mantine/core';
-import { meta } from '@mantine/ds';
-import { TwitterIcon } from './TwitterIcon';
-import { DiscordIcon } from './DiscordIcon';
+import { meta, DiscordIcon, TwitterIcon } from '@mantine/ds';
 
 const baseStyles = {
   border: 0,
