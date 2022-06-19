@@ -274,19 +274,28 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     return onStepDone;
   }, []);
 
+  const [mouseDown, setMouseDown] = useState(false);
+
   const controls = (
     <div className={classes.rightSection}>
       <button
         type="button"
         tabIndex={-1}
         aria-hidden
-        disabled={finalValue >= max}
+        disabled={!mouseDown && finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
         onMouseDown={(event) => {
+          setMouseDown(true);
           onStep(event, true);
         }}
-        onMouseUp={onStepDone}
-        onMouseLeave={onStepDone}
+        onMouseUp={() => {
+          setMouseDown(false);
+          onStepDone();
+        }}
+        onMouseLeave={() => {
+          setMouseDown(false);
+          onStepDone();
+        }}
       >
         <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="up" />
       </button>
@@ -294,13 +303,20 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         type="button"
         tabIndex={-1}
         aria-hidden
-        disabled={finalValue <= min}
+        disabled={!mouseDown && finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
         onMouseDown={(event) => {
+          setMouseDown(true);
           onStep(event, false);
         }}
-        onMouseUp={onStepDone}
-        onMouseLeave={onStepDone}
+        onMouseUp={() => {
+          setMouseDown(false);
+          onStepDone();
+        }}
+        onMouseLeave={() => {
+          setMouseDown(false);
+          onStepDone();
+        }}
       >
         <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="down" />
       </button>
