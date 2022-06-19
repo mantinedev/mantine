@@ -1,58 +1,44 @@
 import React, { useState } from 'react';
-import { Stack, Button, Text } from '@mantine/core';
-import { useTimeout } from '@mantine/hooks';
+import { Button, Text, Group } from '@mantine/core';
+import { randomId, useTimeout } from '@mantine/hooks';
 
 const code = `
 import { useState } from 'react';
-import { Stack, Button, Text } from '@mantine/core';
-import { useTimeout } from '@mantine/hooks';
+import { Button, Text, Group } from '@mantine/core';
+import { randomId, useTimeout } from '@mantine/hooks';
 
 function Demo() {
-  const [triggered, setTriggered] = useState(false);
-  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: false });
-
-  const handleClick = () => {
-    if (triggered) {
-      setTriggered(false);
-      clear();
-    } else {
-      setTriggered(true);
-      start();
-    }
-  };
+  const [value, setValue] = useState('');
+  const { start, clear } = useTimeout(() => setValue(randomId()), 1000);
 
   return (
-    <Stack>
-      <Text>{triggered ? 'Timer Ticking' : '5 seconds Elapsed'}</Text>
-      <Button onClick={handleClick} color={triggered ? 'red' : 'teal'} variant="light">
-        {triggered ? 'Clear' : 'Start'}
+    <Group>
+      <Button onClick={start} variant="outline">
+        Start
       </Button>
-    </Stack>
+      <Button onClick={clear} variant="outline" color="red">
+        Clear
+      </Button>
+      <Text>Random value: {value}</Text>
+    </Group>
   );
 }
 `;
 
 function Demo() {
-  const [triggered, setTriggered] = useState(false);
-  const { start, clear } = useTimeout(() => setTriggered(false), 5000, { autoInvoke: false });
-
-  const handleClick = () => {
-    if (triggered) {
-      setTriggered(false);
-      clear();
-    } else {
-      setTriggered(true);
-      start();
-    }
-  };
+  const [value, setValue] = useState('');
+  const { start, clear } = useTimeout(() => setValue(randomId()), 1000);
 
   return (
-    <Stack>
-      <Text>{triggered ? 'Timer Ticking' : 'Start a 5 second timer'}</Text>
-      <Button onClick={handleClick} color={triggered ? 'red' : 'teal'} variant="light">
-        {triggered ? 'Clear' : 'Start'}
+    <Group>
+      <Button onClick={start} variant="outline">
+        Start
       </Button>
-    </Stack>
+      <Button onClick={clear} variant="outline" color="red">
+        Clear
+      </Button>
+      <Text>Random value: {value}</Text>
+    </Group>
   );
 }
 

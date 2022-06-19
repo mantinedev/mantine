@@ -20,27 +20,27 @@ import { HooksDemos } from '@mantine/demos';
 ## API
 
 ```tsx
-const { start, clear } = useTimeout(fn, delay, { autoInvoke: false });
+const { start, clear } = useTimeout(callback, delay, { autoInvoke: true });
 ```
 
 Arguments:
 
-- `fn` – function that will be called after the timer expires
-- `interval` – amount of milliseconds the timer should wait before the specified function is executed.
-- `options: { autoInvoke }` - If the timer should be invoked on component mount, defaults to false.   
+- `callback` – function that will be called after the timer elapses
+- `delay` – number of milliseconds the timer should wait before the specified function is executed
+- `options: { autoInvoke }` - determines whether the timer should be started on mount, defaults to false
 
 Return object:
 
-- `start` - to start the timer.
-- `clear` – to cancel the timer.
+- `start` - starts the timer
+- `clear` – cancels the timer
 
 ## Definition
 
 ```tsx
-function useInterval(
-  fn: () => void,
+function useTimeout(
+  callback: () => void,
   delay: number,
-  options: {
+  options?: {
     autoInvoke: boolean;
   }
 ): {
