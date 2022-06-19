@@ -125,32 +125,7 @@ function Demo() {
 }
 ```
 
-## DefaultProps type
-
-`DefaultProps` adds system props support (margin, padding, sx, unstyled, styles and classNames).
-It accepts 2 types: styles names and styles params, both of them are optional.
-When you build components there might be 4 cases:
-
-```tsx
-import { DefaultProps } from '@mantine/core';
-
-type StylesNames = 'root' | 'title';
-type StylesParams = { radius: number };
-
-// Case 1: component has styles params and styles names
-interface Props extends DefaultProps<StylesNames, StylesParams> {}
-
-// Case 2: component has only styles names
-interface Props extends DefaultProps<StylesNames> {}
-
-// Case 3: component has only styles params
-interface Props extends DefaultProps<never, StylesParams> {}
-
-// Case 4: component does not have styles params and styles names
-interface Props extends DefaultProps {}
-```
-
-## Add default prop support
+## Add default props support
 
 You can add [default props](/theming/default-props/) support to any component with
 `useComponentDefaultProps` hook:
@@ -195,4 +170,29 @@ function Demo() {
     </MantineProvider>
   );
 }
+```
+
+## DefaultProps type
+
+`DefaultProps` adds system props support (margin, padding, sx, unstyled, styles and classNames).
+It accepts 2 types: styles names and styles params, both of them are optional.
+When you build components there might be 4 cases:
+
+```tsx
+import { DefaultProps } from '@mantine/core';
+
+type StylesNames = 'root' | 'title';
+type StylesParams = { radius: number };
+
+// Case 1: component has styles params and styles names
+interface Props extends DefaultProps<StylesNames, StylesParams> {}
+
+// Case 2: component has only styles names
+interface Props extends DefaultProps<StylesNames> {}
+
+// Case 3: component has only styles params
+interface Props extends DefaultProps<never, StylesParams> {}
+
+// Case 4: component does not have styles params and styles names
+interface Props extends DefaultProps {}
 ```
