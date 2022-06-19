@@ -24,7 +24,7 @@
     "library",
     "frontend",
     "notification",
-    "motification-manager",
+    "notification-manager",
     "notification-system"
   ],
   "peerDependencies": {

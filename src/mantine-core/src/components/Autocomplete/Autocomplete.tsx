@@ -248,7 +248,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               onClick={handleInputClick}
               aria-autocomplete="list"
               aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
-              aria-activedescendant={hovered !== -1 ? `${inputProps.id}-${hovered}` : null}
+              aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
             />
           </div>
         </SelectPopover.Target>
