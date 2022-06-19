@@ -183,7 +183,7 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: theme.fn.size({ size, sizes }),
+        width: typeof iconWidth === 'number' ? iconWidth : theme.fn.size({ size, sizes }),
         color: invalid
           ? theme.colors.red[theme.colorScheme === 'dark' ? 6 : 7]
           : theme.colorScheme === 'dark'
