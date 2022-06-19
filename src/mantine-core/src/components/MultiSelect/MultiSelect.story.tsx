@@ -316,4 +316,14 @@ storiesOf('MultiSelect', module)
         nothingFound="Nothing found"
       />
     </div>
+  ))
+  .add('Styles API', () => (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <MultiSelect
+        data={['react', 'angular']}
+        label="pick"
+        defaultValue={['react']}
+        styles={{ label: { color: 'red' } }}
+      />
+    </div>
   ));
