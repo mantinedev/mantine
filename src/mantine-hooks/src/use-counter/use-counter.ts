@@ -10,8 +10,8 @@ export function useCounter(initialValue = 0, options?: Partial<{ min: number; ma
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
   const [count, setCount] = useState<number>(clamp(initialValue, min, max));
 
-  const increment = (delta = 1) => setCount((current) => clamp(current + delta, min, max));
-  const decrement = (delta = 1) => setCount((current) => clamp(current - delta, min, max));
+  const increment = () => setCount((current) => clamp(current + 1, min, max));
+  const decrement = () => setCount((current) => clamp(current - 1, min, max));
   const set = (value: number) => setCount(clamp(value, min, max));
   const reset = () => setCount(clamp(initialValue, min, max));
 

@@ -20,11 +20,19 @@ import { HooksDemos } from '@mantine/demos';
 ## Definition
 
 ```tsx
-function useCounter(initialValue?: number, options?: { min?:number, max?:number }): [
-  count:number, {
-    increment: (delta?: number) => void,
-    decrement: (delta?: number) => void,
-    set: (value: number) => void,
-    reset: () => void
-}];
+function useCounter(
+  initialValue?: number,
+  options?: Partial<{
+    min: number;
+    max: number;
+  }>
+): [
+  number,
+  {
+    increment: () => void;
+    decrement: () => void;
+    set: (value: number) => void;
+    reset: () => void;
+  }
+];
 ```
