@@ -134,7 +134,7 @@ import { useRef } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const secondTabRef = useRef<HTMLButtonElement>();
+  const secondTabRef = useRef<HTMLButtonElement>(null);
 
   return (
     <Tabs defaultValue="first">

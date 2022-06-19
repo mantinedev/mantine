@@ -69,7 +69,7 @@ import { useRef } from 'react';
 import { Radio } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Radio value="react" label="React" ref={ref} />;
 }
 ```

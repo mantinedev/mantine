@@ -59,35 +59,11 @@ function Demo() {
 }
 ```
 
-## Get input ref
-
-You can get input ref by setting `ref` prop:
-
-```tsx
-import { useRef } from 'react';
-import { Checkbox } from '@mantine/core';
-
-function Demo() {
-  const ref = useRef<HTMLInputElement>();
-  return <Checkbox ref={ref} />;
-}
-```
-
-## Accessibility
-
-Provide `aria-label` in case you use checkbox without label for screen reader support:
-
-```tsx
-<Checkbox /> // -> not ok, input is not labeled
-<Checkbox label="My checkbox" /> // -> ok, input and label is connected
-<Checkbox aria-label="My checkbox" /> // -> ok, label is not visible but will be announced by screen reader
-```
-
 ## Checkbox.Group
 
 <Demo data={CheckboxDemos.groupConfigurator} />
 
-### Controlled
+## Controlled Checkbox.Group
 
 ```tsx
 import { useState } from 'react';
@@ -103,4 +79,28 @@ function Demo() {
     </Checkbox.Group>
   );
 }
+```
+
+## Get input ref
+
+You can get input ref by setting `ref` prop:
+
+```tsx
+import { useRef } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Checkbox ref={ref} />;
+}
+```
+
+## Accessibility
+
+Provide `aria-label` in case you use checkbox without label for screen reader support:
+
+```tsx
+<Checkbox /> // -> not ok, input is not labeled
+<Checkbox label="My checkbox" /> // -> ok, input and label is connected
+<Checkbox aria-label="My checkbox" /> // -> ok, label is not visible but will be announced by screen reader
 ```

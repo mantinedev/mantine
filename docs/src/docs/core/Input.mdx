@@ -111,7 +111,7 @@ import { useRef } from 'react';
 import { Input } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Input ref={ref} />;
 }
 ```

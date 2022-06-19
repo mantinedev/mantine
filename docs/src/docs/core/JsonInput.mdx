@@ -45,7 +45,7 @@ import { useRef } from 'react';
 import { JsonInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLTextAreaElement>();
+  const ref = useRef<HTMLTextAreaElement>(null);
   return <JsonInput ref={ref} />;
 }
 ```

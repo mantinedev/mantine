@@ -73,8 +73,8 @@ import { useRef } from 'react';
 import { Image } from '@mantine/core';
 
 function Demo() {
-  const imageRef = useRef<HTMLImageElement>();
-  const rootRef = useRef<HTMLDivElement>();
+  const imageRef = useRef<HTMLImageElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```

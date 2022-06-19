@@ -157,7 +157,7 @@ import { useRef, useEffect } from 'react';
 import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
-  const dropzoneRef = useRef<HTMLDivElement>();
+  const dropzoneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dropzoneRef.current.focus();
