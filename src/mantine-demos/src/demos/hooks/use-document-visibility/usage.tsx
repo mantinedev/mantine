@@ -1,32 +1,22 @@
 import React from 'react';
-import { Group, Badge } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
 
 const code = `
-import React from 'react';
-import { Group, Badge } from '@mantine/core';
-import { useDocumentVisibility } from '@mantine/hooks';
+import { Text } from '@mantine/core';
+import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
 
 function Demo() {
-  const visible = useDocumentVisibility();
-
-  return (
-    <Group position="center">
-      <Badge color="blue">Document Visibility: {visible}</Badge>
-    </Group>
-  );
-}`;
+  const documentState = useDocumentVisibility();
+  useDocumentTitle(\`Document is \${documentState}\`);
+  return <Text>Switch to another tab to see document title change</Text>;
+}
+`;
 
 function Demo() {
-  const visible = useDocumentVisibility();
-
-  useDocumentTitle(`Document is ${visible}`);
-
-  return (
-    <Group position="center">
-      <Badge color="blue">Document Visibility: {visible}</Badge>
-    </Group>
-  );
+  const documentState = useDocumentVisibility();
+  useDocumentTitle(`Document is ${documentState}`);
+  return <Text>Switch to another tab to see document title change</Text>;
 }
 
 export const useDocumentVisibilityDemo: MantineDemo = {
