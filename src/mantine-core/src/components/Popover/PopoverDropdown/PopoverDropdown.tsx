@@ -25,7 +25,6 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
 
   const returnFocus = useFocusReturn({
     opened: ctx.opened,
-    transitionDuration: 0,
     shouldReturnFocus: false,
   });
 

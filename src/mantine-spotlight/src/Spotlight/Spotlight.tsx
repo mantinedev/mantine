@@ -149,7 +149,7 @@ export function Spotlight({
     onClose();
   };
 
-  useFocusReturn({ transitionDuration: 0, opened });
+  useFocusReturn({ opened });
 
   const filteredActions = filter(query, actions).slice(0, limit);
   const groupedWithLabels = getGroupedOptions(filteredActions).items;

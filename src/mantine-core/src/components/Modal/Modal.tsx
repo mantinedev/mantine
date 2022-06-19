@@ -185,7 +185,7 @@ export function Modal(props: ModalProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0, shouldReturnFocus: trapFocus });
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>

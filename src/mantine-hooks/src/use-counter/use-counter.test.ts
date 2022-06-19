@@ -11,11 +11,11 @@ describe('@mantine/hooks/use-counter', () => {
     const hook = renderHook(() => useCounter());
     expect(hook.result.current[0]).toBe(0);
 
-    act(() => hook.result.current[1].increment(100));
-    expect(hook.result.current[0]).toBe(100);
+    act(() => hook.result.current[1].increment());
+    expect(hook.result.current[0]).toBe(1);
 
-    act(() => hook.result.current[1].decrement(20));
-    expect(hook.result.current[0]).toBe(80);
+    act(() => hook.result.current[1].decrement());
+    expect(hook.result.current[0]).toBe(0);
 
     act(() => hook.result.current[1].set(5));
     expect(hook.result.current[0]).toBe(5);
@@ -28,11 +28,11 @@ describe('@mantine/hooks/use-counter', () => {
     const hook = renderHook(() => useCounter(11, { min: -10, max: 10 }));
     expect(hook.result.current[0]).toBe(10);
 
-    act(() => hook.result.current[1].increment(100));
+    act(() => hook.result.current[1].increment());
     expect(hook.result.current[0]).toBe(10);
 
-    act(() => hook.result.current[1].decrement(2));
-    expect(hook.result.current[0]).toBe(8);
+    act(() => hook.result.current[1].decrement());
+    expect(hook.result.current[0]).toBe(9);
 
     act(() => hook.result.current[1].set(5));
     expect(hook.result.current[0]).toBe(5);
@@ -42,25 +42,5 @@ describe('@mantine/hooks/use-counter', () => {
 
     act(() => hook.result.current[1].reset());
     expect(hook.result.current[0]).toBe(10);
-  });
-
-  it('correctly maintains count on rerenders', () => {
-    const hook = renderHook(() => useCounter(7, { min: -10, max: 10 }));
-    expect(hook.result.current[0]).toBe(7);
-
-    act(() => hook.result.current[1].increment(100));
-    expect(hook.result.current[0]).toBe(10);
-
-    act(() => hook.result.current[1].decrement(2));
-    expect(hook.result.current[0]).toBe(8);
-
-    act(() => hook.rerender());
-    expect(hook.result.current[0]).toBe(8);
-
-    act(() => hook.result.current[1].set(5));
-    expect(hook.result.current[0]).toBe(5);
-
-    act(() => hook.result.current[1].reset());
-    expect(hook.result.current[0]).toBe(7);
   });
 });
