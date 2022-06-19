@@ -30,6 +30,7 @@
     "@mantine/labs": "5.0.0-alpha.10",
     "@mantine/spotlight": "5.0.0-alpha.10",
     "@mantine/carousel": "5.0.0-alpha.10",
+    "@mantine/ds": "5.0.0-alpha.10",
     "@tabler/icons": "*",
     "react-beautiful-dnd": "*",
     "embla-carousel-autoplay": "*",
