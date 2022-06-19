@@ -6,7 +6,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
     title: 'About',
     data: [
       { type: 'gatsby', label: 'Contribute', link: '/pages/contributing/' },
-      { type: 'gatsby', label: 'Media assets', link: '/assets/' },
+      { type: 'gatsby', label: 'About Mantine', link: '/pages/about/' },
       { type: 'gatsby', label: 'Changelog', link: '/pages/changelog/' },
       { type: 'link', label: 'Releases', link: meta.gitHubLinks.releases },
     ],
