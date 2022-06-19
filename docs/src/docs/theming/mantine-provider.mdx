@@ -31,9 +31,10 @@ function WithProvider() {
 }
 ```
 
-## Normalize.css and global styles
+## CSS reset and global styles
 
-MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
+MantineProvider has an option to add css reset similar to [normalize.css](https://necolas.github.io/normalize.css/)
+and some extra global styles:
 
 - background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
 - color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
@@ -98,29 +99,6 @@ Mantine exposes the following CSS variables based on `theme` you provide:
 - `--mantine-color-{color}-{shade}`, e.g. `--mantine-color-blue-6`, `--mantine-color-gray-0`
 - `--mantine-{heading}-font-size`, e.g. `--mantine-h1-font-size`
 - `--mantine-{heading}-line-height`, e.g, `--mantine-h3-line-height`
-
-## Normalize.css and global styles
-
-MantineProvider includes [normalize.css](https://necolas.github.io/normalize.css/) and some extra global styles added to body element:
-
-- background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
-- color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
-- font-family and font-smoothing based on theme
-- font-size to `theme.fontSize.md`
-
-To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider withNormalizeCSS withGlobalStyles>
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
 
 ## Nested MantineProviders
 
@@ -206,64 +184,3 @@ function App() {
 ```
 
 This approach is useful when you want to styles components with utility based CSS libraries.
-
-## Configure emotion
-
-You can provide [emotion options](https://emotion.sh/docs/@emotion/cache#options) to MantineProvider to configure emotion cache:
-
-- `key` (required) – the prefix before class names, defaults to `mantine`
-- `container` – a DOM node that emotion will insert all of its style tags into. This is useful for inserting styles into iframes.
-- `prepend` - a boolean representing whether to prepend rather than append style tags into the specified container DOM node
-- `stylisPlugins` – an array of Stylis plugins that will be run by Stylis during preprocessing, for example [stylis-plugin-rtl](https://www.npmjs.com/package/stylis-plugin-rtl) can be used to add [RTL](/guides/rtl) support
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider emotionOptions={{ key: 'mantine' }} withGlobalStyles withNormalizeCSS>
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-## Change styles insertion point
-
-By default, Mantine components styles are prepended to head to allow overrides.
-To make Mantine styles override other styles, set `prepend` to `false`.
-With this option styles will be added at the end of `head` element:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider
-      emotionOptions={{ key: 'mantine', prepend: false }}
-      withGlobalStyles
-      withNormalizeCSS
-    >
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-## Change classes prefix
-
-To change classes prefix set `emotionOptions.key` property:
-
-```tsx
-import { MantineProvider } from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider emotionOptions={{ key: 'custom-key' }} withGlobalStyles withNormalizeCSS>
-      <YourApp />
-    </MantineProvider>
-  );
-}
-```
-
-Now classes will follow this pattern: `custom-key-{random part}`.
