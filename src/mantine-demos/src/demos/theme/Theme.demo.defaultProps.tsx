@@ -57,6 +57,7 @@ function Demo() {
   return (
     <>
       <MantineProvider
+        inherit
         theme={{
           components: {
             Button: { defaultProps: ButtonDefaultProps },
