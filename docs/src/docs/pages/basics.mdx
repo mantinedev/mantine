@@ -7,8 +7,8 @@ import { SliderDemos, CreateStylesDemos } from '@mantine/demos';
 # Learn the basics
 
 This guide will help you get familiar with core Mantine concepts.
-Please read this guide and **theming** section before starting development
-to learn about all available theming features and components props.
+Please read this guide, [theming](/theming/mantine-provider/) and [styles](/styles/sx/) sections before starting development
+to learn about all available theming and styling features.
 
 ## Getting help
 
@@ -23,7 +23,7 @@ Mantine documentation includes more than 150 pages, to use it efficiently rememb
 
 - `⌘ + K` or `Ctrl + K` – focus search field, searching components and hooks is the best way to jump straight to the page you are looking for.
 - `⌘ + J` or `Ctrl + J` – toggle color scheme (light/dark). All components support both light and dark color schemes, using this shortcut is the easiest way to preview both color schemes.
-- `⌘ + Shift + J` or `Ctrl + Shift + L` – toggle text direction (LTR/RTL)
+- `⌘ + Shift + L` or `Ctrl + Shift + L` – toggle text direction (LTR/RTL)
 
 ## Theming
 
@@ -73,13 +73,13 @@ Mantine is built with a css-in-js library based on [emotion](https://emotion.sh/
 You can use any other styling solution but we recommend working with [createStyles](/styles/create-styles/)
 to avoid styles collisions.
 
-`createStyles` usage demo:
+Core `createStyles` features overview:
 
 <Demo data={CreateStylesDemos.createStylesBasics} />
 
 ### Styling components internals with Styles API
 
-[Styles API](/styles/styles-api/) lets you add styles to any internal part of a component:
+[Styles API](/styles/styles-api/) lets you add styles to any internal part of a component with inline styles or classes:
 
 <Demo data={SliderDemos.customize} />
 
@@ -90,7 +90,7 @@ to avoid styles collisions.
 All Mantine components support these props:
 
 - `className` – adds class to root element.
-- `style` – adds style to root element.
+- `sx` – adds style to root element.
 - Margin props:
   - `m` – sets `margin` property on root element.
   - `my` – sets `margin-top` and `margin-bottom` properties on root element.
@@ -113,7 +113,7 @@ import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button className="my-button" style={{ backgroundColor: '#fff' }} mx={20}>
+    <Button className="my-button" sx={{ backgroundColor: '#fff' }} mx={20} pt="xl">
       My button
     </Button>
   );
@@ -137,7 +137,7 @@ Same is applied to padding props:
 
 ### Color prop
 
-Mantine components work with colors defined in [theme.colors](/theming/extend-theme/#default-colors).
+Mantine components work with colors defined in [theme.colors](/theming/colors/).
 `theme.colors` is an object that contains an array of 10 shades per each color. To use predefined colors in components set `color` prop:
 
 ```tsx
@@ -145,7 +145,7 @@ Mantine components work with colors defined in [theme.colors](/theming/extend-th
 <Button color="violet" />
 ```
 
-You can [extend theme](/theming/extend-theme/) with any amount of your colors:
+You can [extend theme](/theming/colors/) with any amount of your colors:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -190,14 +190,13 @@ In some components where size is associated with only one value, you can set it 
 
 ### Spacing and padding
 
-Components that have padding get values from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows),
-default values are:
+Components that have padding get values from `theme.spacing`, default values are:
 
 ```tsx
 { xs: 10, sm: 12, md: 16, lg: 20, xl: 24 }
 ```
 
-To change these values set `spacing` property on [theme](/theming/extend-theme/):
+To change these values set `spacing` property on [theme](/theming/theme-object/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -220,8 +219,7 @@ Later when you use Mantine components you can reference these values in `spacing
 
 ### Shadows
 
-Components that use the box-shadow property get values from [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows),
-default values are:
+Components that use the box-shadow property get values from `theme.shadows`, default values are:
 
 ```tsx
 {
@@ -233,7 +231,7 @@ default values are:
 }
 ```
 
-To change these values set the `shadows` property on [theme](/theming/extend-theme/):
+To change these values set the `shadows` property on [theme](/theming/theme-object/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -273,9 +271,9 @@ import { useRef } from 'react';
 import { Button, Paper, TextInput } from '@mantine/core';
 
 function Demo() {
-  const buttonRef = useRef<HTMLButtonElement>();
-  const paperRef = useRef<HTMLDivElement>();
-  const inputRef = useRef<HTMLInputElement>();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const paperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -300,7 +298,7 @@ To setup server side rendering follow one of these guides
 
 ### Exported types
 
-@mantine/core package export types to help you build components and styles with TypeScript:
+`@mantine/core` package export types to help you build components and styles with TypeScript:
 
 - `MantineTheme` – theme interface defined in MantineProvider.
 - `ColorScheme` – union of `'light' | 'dark'`.
