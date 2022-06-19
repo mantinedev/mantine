@@ -52,13 +52,13 @@ function Demo() {
       </div>
       <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
         <Text>
-          <Text component="span" color="gray" size="sm">
+          <Text component="span" color="dimmed" size="sm">
             Value:
           </Text>{' '}
           {value.trim() || '[empty string]'}
         </Text>
         <Text>
-          <Text component="span" color="gray" size="sm">
+          <Text component="span" color="dimmed" size="sm">
             Debounced value:
           </Text>{' '}
           {debounced.trim() || '[empty string]'}
