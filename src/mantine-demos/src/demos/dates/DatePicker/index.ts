@@ -3,6 +3,7 @@ export { modal } from './DatePicker.demo.modal';
 export { configurator } from './DatePicker.demo.configurator';
 export { boundaries } from './DatePicker.demo.boundaries';
 export { exclude } from './DatePicker.demo.exclude';
+export { flip } from './DatePicker.demo.flip';
 export { styles } from './DatePicker.demo.styles';
 export { modifiers } from './DatePicker.demo.modifiers';
 export { localization } from './DatePicker.demo.localization';

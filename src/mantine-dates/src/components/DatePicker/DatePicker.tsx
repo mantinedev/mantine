@@ -56,6 +56,7 @@ const defaultProps: Partial<DatePickerProps> = {
   name: 'date',
   size: 'sm',
   dropdownType: 'popover',
+  dropdownPosition: 'flip',
   clearable: true,
   disabled: false,
   fixOnBlur: true,
@@ -92,6 +93,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       name,
       size,
       dropdownType,
+      dropdownPosition,
       clearable,
       disabled,
       clearButtonLabel,
@@ -249,6 +251,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
         inputLabel={inputState}
         __staticSelector="DatePicker"
         dropdownType={dropdownType}
+        dropdownPosition={dropdownPosition}
         clearable={type === 'date' ? false : clearable && !!_value && !disabled}
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
