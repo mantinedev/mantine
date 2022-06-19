@@ -2,9 +2,9 @@ import React from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { useMantineLogoColors, LogoProps } from './use-mantine-logo-colors';
 
-export function MantineLogoText({ size, color, variant, ...others }: LogoProps) {
+export function MantineLogoText({ size, color, variant, inverted, ...others }: LogoProps) {
   const theme = useMantineTheme();
-  const colors = useMantineLogoColors(color, variant);
+  const colors = useMantineLogoColors(color, variant, inverted);
 
   return (
     <svg {...others} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 623 163" height={size}>

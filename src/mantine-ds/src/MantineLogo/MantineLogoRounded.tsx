@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMantineLogoColors, LogoProps } from './use-mantine-logo-colors';
 
-export function MantineLogoRounded({ size, color, variant, ...others }: LogoProps) {
-  const colors = useMantineLogoColors(color, variant);
+export function MantineLogoRounded({ size, color, variant, inverted, ...others }: LogoProps) {
+  const colors = useMantineLogoColors(color, variant, inverted);
 
   return (
     <svg
