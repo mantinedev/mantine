@@ -41,7 +41,7 @@ export function DefaultValue({
 
   return (
     <div className={cx(classes.defaultValue, className)} {...others}>
-      <span className={classes.label}>{label}</span>
+      <span className={classes.defaultValueLabel}>{label}</span>
 
       {!disabled && (
         <CloseButton
