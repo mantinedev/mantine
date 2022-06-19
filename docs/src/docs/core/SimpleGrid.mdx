@@ -50,17 +50,23 @@ You can also use breakpoints from theme to set `maxWidth`:
 If you prefer a mobile first approach, you can use min-width breakpoints:
 
 ```tsx
-<SimpleGrid
-  breakpoints={[
-    { minWidth: 'sm', cols: 2 },
-    { minWidth: 'md', cols: 3 },
-    { minWidth: 1200, cols: 4 },
-  ]}
->
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-</SimpleGrid>
+import { SimpleGrid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SimpleGrid
+      breakpoints={[
+        { minWidth: 'sm', cols: 2 },
+        { minWidth: 'md', cols: 3 },
+        { minWidth: 1200, cols: 4 },
+      ]}
+    >
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </SimpleGrid>
+  );
+}
 ```
 
 ## Spacing
