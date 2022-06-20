@@ -9,6 +9,7 @@ import {
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '../Input';
+import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import useStyles from './FileInput.styles';
 
@@ -51,6 +52,15 @@ export interface FileInputProps<Multiple extends boolean = false>
 
   /** Current value renderer */
   valueComponent?: React.FC<{ value: File | File[] }>;
+
+  /** Allow to clear value */
+  clearable?: boolean;
+
+  /** aria-label for clear button */
+  clearButtonLabel?: string;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
@@ -60,6 +70,15 @@ const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
 const defaultProps: Partial<FileInputProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
+  clearButtonTabIndex: 0,
+};
+
+const RIGHT_SECTION_WIDTH = {
+  xs: 24,
+  sm: 30,
+  md: 34,
+  lg: 40,
+  xl: 44,
 };
 
 export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, ref) => {
@@ -78,9 +97,19 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     styles,
     unstyled,
     valueComponent: ValueComponent,
+    rightSection,
+    rightSectionWidth,
+    clearable,
+    clearButtonLabel,
+    clearButtonTabIndex,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
-  const { classes } = useStyles(null, { name: 'FileInput', classNames, styles, unstyled });
+  const { classes, theme, cx } = useStyles(null, {
+    name: 'FileInput',
+    classNames,
+    styles,
+    unstyled,
+  });
 
   const [_value, setValue] = useUncontrolled<File | File[]>({
     value,
@@ -89,7 +118,20 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     finalValue: multiple ? [] : null,
   });
 
-  const isPlaceholder = Array.isArray(_value) ? _value.length === 0 : _value === null;
+  const hasValue = Array.isArray(_value) ? _value.length !== 0 : _value !== null;
+
+  const _rightSection =
+    rightSection ||
+    (clearable && hasValue ? (
+      <CloseButton
+        variant="transparent"
+        aria-label={clearButtonLabel}
+        onClick={() => setValue(multiple ? [] : null)}
+        size={inputProps.size}
+        tabIndex={clearButtonTabIndex}
+        unstyled={unstyled}
+      />
+    ) : null);
 
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="FileInput">
@@ -103,8 +145,14 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             component="button"
             ref={ref}
             __staticSelector="FileInput"
+            rightSection={_rightSection}
+            rightSectionWidth={
+              rightSectionWidth ||
+              theme.fn.size({ size: inputProps.size, sizes: RIGHT_SECTION_WIDTH })
+            }
+            classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
           >
-            {isPlaceholder ? (
+            {!hasValue ? (
               <span className={classes.placeholder}>{placeholder}</span>
             ) : (
               <ValueComponent value={_value} />
