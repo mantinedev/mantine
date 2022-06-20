@@ -18,6 +18,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
 
   /** Input name attribute */
   name?: string;
+
+  /** Input form attribute */
+  form?: string;
 }
 
 const defaultProps: Partial<FileButtonProps> = {
@@ -30,11 +33,8 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
 
 export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
   (props, ref) => {
-    const { onChange, children, multiple, accept, name, ...others } = useComponentDefaultProps(
-      'FileButton',
-      defaultProps,
-      props
-    );
+    const { onChange, children, multiple, accept, name, form, ...others } =
+      useComponentDefaultProps('FileButton', defaultProps, props);
 
     const inputRef = useRef<HTMLInputElement>();
 
@@ -62,6 +62,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
           onChange={handleChange}
           ref={useMergedRef(ref, inputRef)}
           name={name}
+          form={form}
         />
       </>
     );
