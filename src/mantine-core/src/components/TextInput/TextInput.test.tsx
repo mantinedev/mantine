@@ -11,7 +11,7 @@ import { TextInput, TextInputProps } from './TextInput';
 
 const defaultProps: TextInputProps = {};
 
-describe('@mantine/core/Input', () => {
+describe('@mantine/core/TextInput', () => {
   checkAccessibility([<TextInput label="test-input" />, <TextInput aria-label="test-input" />]);
   itSupportsInputProps(TextInput, defaultProps, 'TextInput');
   itSupportsFocusEvents(TextInput, defaultProps, 'input');
