@@ -16,9 +16,6 @@ export interface TextInputProps
     InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
-  /** Adds icon on the left side of input */
-  icon?: React.ReactNode;
-
   /** Input element type */
   type?: React.HTMLInputTypeAttribute;
 
