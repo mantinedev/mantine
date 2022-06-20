@@ -47,6 +47,7 @@ export * as DialogDemos from './demos/core/Dialog';
 export * as DividerDemos from './demos/core/Divider';
 export * as DrawerDemos from './demos/core/Drawer';
 export * as FileButtonDemos from './demos/core/FileButton';
+export * as FileInputDemos from './demos/core/FileInput';
 export * as FocusTrapDemos from './demos/core/FocusTrap';
 export * as GridDemos from './demos/core/Grid';
 export * as GroupDemos from './demos/core/Group';
