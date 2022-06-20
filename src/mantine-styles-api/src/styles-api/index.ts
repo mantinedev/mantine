@@ -16,6 +16,7 @@ export * from './ColorPicker.styles-api';
 export * from './Dialog.styles-api';
 export * from './Divider.styles-api';
 export * from './Drawer.styles-api';
+export * from './FileInput.styles-api';
 export * from './Image.styles-api';
 export * from './Indicator.styles-api';
 export * from './Input.styles-api';
