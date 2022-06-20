@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineSize } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   Input,
@@ -10,8 +10,12 @@ import {
   InputWrapperStylesNames,
 } from '../Input';
 import { FileButton } from '../FileButton';
+import useStyles from './FileInput.styles';
 
-export type FileInputStylesNames = InputStylesNames | InputWrapperStylesNames;
+export type FileInputStylesNames =
+  | InputStylesNames
+  | InputWrapperStylesNames
+  | Selectors<typeof useStyles>;
 
 export interface FileInputProps<Multiple extends boolean = false>
   extends DefaultProps<FileInputStylesNames>,
@@ -45,12 +49,17 @@ export interface FileInputProps<Multiple extends boolean = false>
   /** Input form attribute */
   form?: string;
 
-  __staticSelector?: string;
+  /** Current value renderer */
+  valueComponent?: React.FC<{ value: File | File[] }>;
 }
+
+const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
+  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value.name}</span>
+);
 
 const defaultProps: Partial<FileInputProps> = {
   size: 'sm',
-  __staticSelector: 'FileInput',
+  valueComponent: DefaultValue,
 };
 
 export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, ref) => {
@@ -65,8 +74,13 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     accept,
     name,
     form,
+    classNames,
+    styles,
+    unstyled,
+    valueComponent: ValueComponent,
     ...others
   } = useInputProps('FileInput', defaultProps, props);
+  const { classes } = useStyles(null, { name: 'FileInput', classNames, styles, unstyled });
 
   const [_value, setValue] = useUncontrolled<File | File[]>({
     value,
@@ -75,14 +89,26 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
     finalValue: multiple ? [] : null,
   });
 
-  console.log(_value);
+  const isPlaceholder = Array.isArray(_value) ? _value.length === 0 : _value === null;
 
   return (
-    <Input.Wrapper {...wrapperProps}>
+    <Input.Wrapper {...wrapperProps} __staticSelector="FileInput">
       <FileButton onChange={setValue} multiple={multiple} accept={accept} name={name} form={form}>
         {(fileButtonProps) => (
-          <Input component="button" {...fileButtonProps} {...inputProps} {...others} ref={ref}>
-            {placeholder}
+          <Input
+            multiline
+            {...fileButtonProps}
+            {...inputProps}
+            {...others}
+            component="button"
+            ref={ref}
+            __staticSelector="FileInput"
+          >
+            {isPlaceholder ? (
+              <span className={classes.placeholder}>{placeholder}</span>
+            ) : (
+              <ValueComponent value={_value} />
+            )}
           </Input>
         )}
       </FileButton>
