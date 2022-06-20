@@ -56,7 +56,7 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
     marginLeft: theme.fn.size({ size, sizes: theme.spacing }) / 6,
   },
 
-  label: {
+  defaultValueLabel: {
     display: 'block',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
