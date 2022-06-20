@@ -282,11 +282,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         aria-hidden
         disabled={finalValue >= max}
         className={cx(classes.control, classes.controlUp)}
-        onMouseDown={(event) => {
+        onPointerDown={(event) => {
           onStep(event, true);
         }}
-        onMouseUp={onStepDone}
-        onMouseLeave={onStepDone}
+        onPointerUp={onStepDone}
+        onPointerLeave={onStepDone}
       >
         <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="up" />
       </button>
@@ -296,11 +296,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
         aria-hidden
         disabled={finalValue <= min}
         className={cx(classes.control, classes.controlDown)}
-        onMouseDown={(event) => {
+        onPointerDown={(event) => {
           onStep(event, false);
         }}
-        onMouseUp={onStepDone}
-        onMouseLeave={onStepDone}
+        onPointerUp={onStepDone}
+        onPointerLeave={onStepDone}
       >
         <Chevron size={theme.fn.size({ size, sizes: CHEVRON_SIZES })} direction="down" />
       </button>

@@ -53,6 +53,15 @@ storiesOf('NumberInput', module)
       </div>
       <div style={{ padding: 40, maxWidth: 400 }}>
         <NumberInput
+          label="With max value"
+          min={0}
+          max={10}
+          stepHoldDelay={500}
+          stepHoldInterval={100}
+        />
+      </div>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput
           label="Step on hold with interval function"
           stepHoldDelay={750}
           stepHoldInterval={(count) => Math.max(1000 - count * count, 0)}
