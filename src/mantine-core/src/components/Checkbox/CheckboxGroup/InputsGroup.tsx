@@ -14,14 +14,14 @@ interface InputsGroupProps {
 export function InputsGroup({ spacing, orientation, children, role, unstyled }: InputsGroupProps) {
   if (orientation === 'horizontal') {
     return (
-      <Group pt={5} spacing={spacing} role={role} unstyled={unstyled}>
+      <Group pt="xs" spacing={spacing} role={role} unstyled={unstyled}>
         {children}
       </Group>
     );
   }
 
   return (
-    <Stack pt={5} spacing={spacing} role={role} unstyled={unstyled}>
+    <Stack pt="xs" spacing={spacing} role={role} unstyled={unstyled}>
       {children}
     </Stack>
   );
