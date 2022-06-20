@@ -54,6 +54,9 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Name of the form control. Submitted with the form as part of a name/value pair. */
   name?: string;
+
+  /** Number of files that user can pick */
+  maxFiles?: number;
 }
 
 const defaultProps: Partial<DropzoneProps> = {
@@ -81,6 +84,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     openRef,
     name,
     unstyled,
+    maxFiles,
     ...others
   } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
@@ -96,6 +100,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
     multiple,
     maxSize,
+    maxFiles,
   });
 
   assignRef(openRef, open);
