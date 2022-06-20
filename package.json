@@ -15,7 +15,7 @@
     "postinstall": "npm run docs:docgen && cd docs && yarn",
     "syncpack": "syncpack list-mismatches",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx",
+    "lint": "eslint src docs/src --ext .ts,.tsx --cache",
     "build": "esno scripts/build",
     "build:all": "npm run build all && npm run build:private",
     "build:demos": "npm run build @mantine/demos",
