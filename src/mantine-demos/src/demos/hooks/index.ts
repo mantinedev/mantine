@@ -41,5 +41,6 @@ export { useScrollIntoViewUsage } from './use-scroll-into-view.demo.usage';
 export { useScrollLockDemo } from './use-scroll-lock.demo.usage';
 export { useTimeoutDemo } from './use-timeout.demo.usage';
 export { useToggleDemo } from './use-toggle.demo.usage';
+export { useValidatedStateDemo } from './use-validated-state.demo.usage';
 export { useViewportSizeDemo } from './use-viewport-size.demo';
 export { useWindowScrollDemo } from './use-window-scroll.demo.usage';
