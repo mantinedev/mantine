@@ -1,1 +1,0 @@
-export { useWindowScrollDemo } from './usage';

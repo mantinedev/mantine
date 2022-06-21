@@ -1,1 +1,0 @@
-export { useTimeoutDemo } from './usage';
