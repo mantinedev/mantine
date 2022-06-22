@@ -16,6 +16,7 @@ export function generateDeclarations(paths: DeclarationPath[]) {
 
   return docgenParser.parse(componentsPaths).reduce((acc, declaration) => {
     const componentName = declaration.displayName.replace(/@mantine\/([^\s]+)\//, '');
+    console.log(componentName);
     acc[componentName] = prepareDeclaration(declaration);
     return acc;
   }, {});

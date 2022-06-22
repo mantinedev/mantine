@@ -87,6 +87,8 @@ const EXTRA_FILES_PATHS = [
   '../src/mantine-modals/src/ModalsProvider.tsx',
   '../src/mantine-rte/src/components/RichTextEditor/RichTextEditor.tsx',
   '../src/mantine-nprogress/src/NavigationProgress.tsx',
+  '../src/mantine-dropzone/src/Dropzone.tsx',
+  '../src/mantine-dropzone/src/DropzoneFullScreen.tsx',
 ];
 
 const PATHS: DeclarationPath[] = [
