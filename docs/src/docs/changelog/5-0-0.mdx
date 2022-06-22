@@ -146,7 +146,18 @@ Popover now supports the following new features:
 
 ### Dropzone
 
-[Dropzone](https://mantine.dev/others/dropzone/)
+[Dropzone](https://mantine.dev/others/dropzone/) component was migrated to context, it no longer supports
+function as `children`. Instead, you can use `Dropzone.Accept`, `Dropzone.Reject` and `Dropzone.Idle` components
+to display content based on current status.
+
+Other `Dropzone` changes:
+
+- `FullScreenDropzone` component is no loner exported from the `@mantine/dropzone` package, use `Dropzone.FullScreen` component instead
+- `Dropzone.FullScreen` now supports all props from `Dropzone` component
+- `Dropzone` now uses `data-*` attributes instead of classes to change styles of root element based on current status
+- `Dropzone` and `Dropzone.FullScreen` components now supports the following new props: `maxFiles`, `autoFocus`, `activateOnClick`, `activateOnDrag`, `activateOnKeyboard`, `dragEventsBubbling`, `onDragEnter`, `onDragLeave`, `onDragOver`, `onFileDialogCancel`, `onFileDialogOpen`, `preventDropOnDocument`
+
+<Demo data={DropzoneDemos.usage} />
 
 ## Migration to Floating UI
 
@@ -483,7 +494,6 @@ to configure thumbs width and height from prop:
 - [Slider](https://mantine.dev/core/slider/) now supports `Home` and `End` keys
 - [Modals manager](https://mantine.dev/modals/) now supports event based functions, it is now the primary way to work with the package
 - [Prism](https://mantine.dev/others/prism/) now supports `radius` prop
-- [Dropzone](https://mantine.dev/others/dropzone/) now supports `maxFiles` prop
 
 ## Documentation updates
 
