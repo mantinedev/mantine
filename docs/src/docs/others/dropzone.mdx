@@ -42,19 +42,19 @@ yarn add @mantine/dropzone @mantine/core @mantine/hooks
 
 ## Usage
 
-Dropzone lets you capture one or more files from user.
-Component is built with [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
+`Dropzone` lets you capture one or more files from user.
+Component is based on [react-dropzone](https://react-dropzone.js.org/) and support all of its core features:
 
 - Accepts/rejects files based on provided mime types
 - Limits individual file size
-- Renders any content within dropzone with children function
+- Renders given children and provides context based component to display elements based on current status
 
 <Demo data={DropzoneDemos.usage} />
 
 ## Loading state
 
 Set `loading` prop to indicate loading state with [LoadingOverlay](/core/loading-overlay/) component.
-When `loading` is set to true user cannot drop or select new files (Dropzone becomes disabled):
+When `loading` props is true user cannot drop or select new files (`Dropzone` becomes disabled):
 
 <Demo data={DropzoneDemos.loading} />
 
@@ -167,11 +167,10 @@ function Demo() {
 }
 ```
 
-## FullScreenDropzone component
+## Dropzone.FullScreen component
 
-FullScreenDropzone lets you capture files dropped to browser window instead of specific area.
-Component is built without react-dropzone (due to some bugs in mime types detections) but supports the same props
-and features as Dropzone component shown above (except `maxSize`, `onReject`, `openRef` and `loading` props).
+`Dropzone.FullScreen` lets you capture files dropped to browser window instead of specific area.
+It supports the same props as `Dropzone` component.
 
 To preview component click button and drop images to browser window:
 
