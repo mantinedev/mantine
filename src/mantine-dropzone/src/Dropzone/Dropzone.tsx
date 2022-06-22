@@ -13,8 +13,12 @@ import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { DropzoneProvider } from './Dropzone.context';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import useStyles from './Dropzone.styles';
+import useFullScreenStyles from './DropzoneFullScreen.styles';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
+export type DropzoneFullScreenStylesName =
+  | DropzoneStylesNames
+  | Exclude<Selectors<typeof useFullScreenStyles>, 'dropzone'>;
 
 export interface DropzoneStatus {
   accepted: boolean;
@@ -191,10 +195,47 @@ const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzon
   );
 });
 
+export interface DropzoneFullScreenProps
+  extends Omit<DropzoneProps, 'styles' | 'classNames'>,
+    DefaultProps<DropzoneFullScreenStylesName> {
+  active?: boolean;
+}
+
+const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
+  ...defaultProps,
+  active: true,
+};
+
+const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((props, ref) => {
+  const { classNames, styles, sx, className, style, unstyled, ...others } =
+    useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
+
+  const { classes, cx } = useFullScreenStyles(null, {
+    name: 'FullScreenDropzone',
+    classNames,
+    styles,
+    unstyled,
+  });
+
+  return (
+    <Box className={cx(classes.wrapper, className)} sx={sx} style={style}>
+      <_Dropzone
+        {...others}
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
+        ref={ref}
+        className={classes.dropzone}
+      />
+    </Box>
+  );
+});
+
 _Dropzone.displayName = '@mantine/dropzone/Dropzone';
 _Dropzone.Accept = DropzoneAccept;
 _Dropzone.Reject = DropzoneReject;
 _Dropzone.Idle = DropzoneIdle;
+_Dropzone.FullScreen = DropzoneFullScreen;
 
 export const Dropzone: ForwardRefWithStaticComponents<
   DropzoneProps,
@@ -202,5 +243,6 @@ export const Dropzone: ForwardRefWithStaticComponents<
     Accept: typeof DropzoneAccept;
     Reject: typeof DropzoneReject;
     Idle: typeof DropzoneIdle;
+    FullScreen: typeof DropzoneFullScreen;
   }
 > = _Dropzone;
