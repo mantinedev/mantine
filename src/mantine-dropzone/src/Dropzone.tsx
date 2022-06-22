@@ -7,6 +7,8 @@ import {
   LoadingOverlay,
   Box,
   useComponentDefaultProps,
+  getDefaultZIndex,
+  OptionalPortal,
 } from '@mantine/core';
 import { assignRef, useDisclosure } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
@@ -194,11 +196,15 @@ export interface DropzoneFullScreenProps
   extends Omit<DropzoneProps, 'styles' | 'classNames'>,
     DefaultProps<DropzoneFullScreenStylesName> {
   active?: boolean;
+  zIndex?: React.CSSProperties['zIndex'];
+  withinPortal?: boolean;
 }
 
 const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
   ...defaultProps,
   active: true,
+  zIndex: getDefaultZIndex('max'),
+  withinPortal: true,
 };
 
 const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((props, ref) => {
@@ -213,6 +219,8 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
     onDrop,
     onReject,
     onDragLeave,
+    zIndex,
+    withinPortal,
     ...others
   } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
@@ -234,32 +242,39 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
   }, [active]);
 
   return (
-    <Box
-      className={cx(classes.wrapper, className)}
-      sx={sx}
-      style={{ ...style, opacity: visible ? 1 : 0, pointerEvents: visible ? 'all' : 'none' }}
-    >
-      <_Dropzone
-        {...others}
-        classNames={classNames}
-        styles={styles}
-        unstyled={unstyled}
-        ref={ref}
-        className={classes.dropzone}
-        onDrop={(files: any) => {
-          onDrop?.(files);
-          close();
+    <OptionalPortal withinPortal={withinPortal}>
+      <Box
+        className={cx(classes.wrapper, className)}
+        sx={sx}
+        style={{
+          ...style,
+          opacity: visible ? 1 : 0,
+          pointerEvents: visible ? 'all' : 'none',
+          zIndex,
         }}
-        onReject={(files: any) => {
-          onReject?.(files);
-          close();
-        }}
-        onDragLeave={(event: any) => {
-          onDragLeave?.(event);
-          close();
-        }}
-      />
-    </Box>
+      >
+        <_Dropzone
+          {...others}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+          ref={ref}
+          className={classes.dropzone}
+          onDrop={(files: any) => {
+            onDrop?.(files);
+            close();
+          }}
+          onReject={(files: any) => {
+            onReject?.(files);
+            close();
+          }}
+          onDragLeave={(event: any) => {
+            onDragLeave?.(event);
+            close();
+          }}
+        />
+      </Box>
+    </OptionalPortal>
   );
 });
 
