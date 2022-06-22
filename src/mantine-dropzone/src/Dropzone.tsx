@@ -20,11 +20,6 @@ export type DropzoneFullScreenStylesName =
   | DropzoneStylesNames
   | Exclude<Selectors<typeof useFullScreenStyles>, 'dropzone'>;
 
-export interface DropzoneStatus {
-  accepted: boolean;
-  rejected: boolean;
-}
-
 export interface DropzoneProps
   extends DefaultProps<DropzoneStylesNames>,
     Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
