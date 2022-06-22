@@ -13,12 +13,14 @@
     "paths": {
       "@mantine/core": ["../mantine-core/src"],
       "@mantine/hooks": ["../mantine-hooks/src"],
+      "@mantine/utils": ["../mantine-utils/src"],
       "@mantine/tests": ["../mantine-tests/src"]
     }
   },
   "references": [
     { "path": "../mantine-core" },
     { "path": "../mantine-hooks" },
+    { "path": "../mantine-utils" },
     { "path": "../mantine-tests" }
   ]
 }

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import { useDropzone, FileRejection, Accept } from 'react-dropzone';
 import {
   DefaultProps,
   Selectors,
@@ -9,6 +9,9 @@ import {
   useComponentDefaultProps,
 } from '@mantine/core';
 import { assignRef } from '@mantine/hooks';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
+import { DropzoneProvider } from './Dropzone.context';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import useStyles from './Dropzone.styles';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
@@ -18,15 +21,17 @@ export interface DropzoneStatus {
   rejected: boolean;
 }
 
-export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
+export interface DropzoneProps
+  extends DefaultProps<DropzoneStylesNames>,
+    Omit<React.ComponentPropsWithRef<'div'>, 'onDrop'> {
   /** Padding from theme.spacing, or number to set padding in px */
   padding?: MantineNumberSize;
 
   /** Border radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Render children based on dragging state */
-  children(status: DropzoneStatus): React.ReactNode;
+  /** Dropzone statues */
+  children: React.ReactNode;
 
   /** Disable files capturing */
   disabled?: boolean;
@@ -41,7 +46,7 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
   loading?: boolean;
 
   /** File types to accept  */
-  accept?: { [key: string]: string[] } | string[];
+  accept?: Accept | string[];
 
   /** Get open function as ref */
   openRef?: React.ForwardedRef<() => void | undefined>;
@@ -66,7 +71,7 @@ const defaultProps: Partial<DropzoneProps> = {
   maxSize: Infinity,
 };
 
-export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: DropzoneProps, ref) => {
+const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>((props: DropzoneProps, ref) => {
   const {
     className,
     padding,
@@ -106,24 +111,40 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
   assignRef(openRef, open);
 
   return (
-    <Box
-      {...others}
-      {...getRootProps({ ref })}
-      className={cx(
-        classes.root,
-        {
-          [classes.active]: isDragAccept,
-          [classes.reject]: isDragReject,
-          [classes.loading]: loading,
-        },
-        className
-      )}
+    <DropzoneProvider
+      value={{ accept: isDragAccept, reject: isDragReject, idle: !isDragAccept && !isDragReject }}
     >
-      <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
-      <input {...getInputProps()} name={name} />
-      {children({ accepted: isDragAccept, rejected: isDragReject })}
-    </Box>
+      <Box
+        {...others}
+        {...getRootProps({ ref })}
+        className={cx(
+          classes.root,
+          {
+            [classes.active]: isDragAccept,
+            [classes.reject]: isDragReject,
+            [classes.loading]: loading,
+          },
+          className
+        )}
+      >
+        <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
+        <input {...getInputProps()} name={name} />
+        {children}
+      </Box>
+    </DropzoneProvider>
   );
 });
 
-Dropzone.displayName = '@mantine/dropzone/Dropzone';
+_Dropzone.displayName = '@mantine/dropzone/Dropzone';
+_Dropzone.Accept = DropzoneAccept;
+_Dropzone.Reject = DropzoneReject;
+_Dropzone.Idle = DropzoneIdle;
+
+export const Dropzone: ForwardRefWithStaticComponents<
+  DropzoneProps,
+  {
+    Accept: typeof DropzoneAccept;
+    Reject: typeof DropzoneReject;
+    Idle: typeof DropzoneIdle;
+  }
+> = _Dropzone;
