@@ -2,10 +2,11 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Dropzone, DropzoneProps } from './Dropzone';
+import { DropzoneAccept, DropzoneReject, DropzoneIdle } from './DropzoneStatus';
 
 const defaultProps: DropzoneProps = {
   onDrop: () => {},
-  children: () => null,
+  children: null,
 };
 
 describe('@mantine/dropzone/Dropzone', () => {
@@ -36,5 +37,11 @@ describe('@mantine/dropzone/Dropzone', () => {
 
     expect(withName.querySelector("input[type='file']")).toHaveAttribute('name', 'a-custom-name');
     expect(withoutName.querySelector("input[type='file']")).not.toHaveAttribute('name');
+  });
+
+  it('exposes static components', () => {
+    expect(Dropzone.Accept).toBe(DropzoneAccept);
+    expect(Dropzone.Reject).toBe(DropzoneReject);
+    expect(Dropzone.Idle).toBe(DropzoneIdle);
   });
 });
