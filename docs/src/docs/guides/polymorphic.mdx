@@ -117,5 +117,5 @@ const _Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...other
 
 // createPolymorphicComponent accepts two types: default element and component props
 // all other props will be added to component type automatically
-export const Button = createPolymorphicComponent<'button', ButtonProps>();
+export const Button = createPolymorphicComponent<'button', ButtonProps>(_Button);
 ```
