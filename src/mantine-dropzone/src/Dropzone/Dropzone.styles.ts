@@ -28,35 +28,42 @@ export default createStyles((theme, { padding, radius }: DropzoneStylesParams) =
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
       },
-    },
 
-    loading: {
-      cursor: 'default',
+      '&[data-loading]': {
+        cursor: 'default',
 
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+        '&:hover': {
+          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
+        },
       },
-    },
 
-    active: {
-      backgroundColor:
-        theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],
-      borderColor:
-        theme.colorScheme === 'dark' ? accepted.border : theme.colors[theme.primaryColor][4],
-
-      '&:hover': {
+      '&[data-accept]': {
         backgroundColor:
           theme.colorScheme === 'dark' ? accepted.background : theme.colors[theme.primaryColor][0],
+        borderColor:
+          theme.colorScheme === 'dark' ? accepted.border : theme.colors[theme.primaryColor][4],
+
+        '&:hover': {
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? accepted.background
+              : theme.colors[theme.primaryColor][0],
+        },
+      },
+
+      '&[data-reject]': {
+        backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
+        borderColor: theme.colorScheme === 'dark' ? rejected.border : theme.colors.red[4],
+
+        '&:hover': {
+          backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
+        },
       },
     },
 
-    reject: {
-      backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
-      borderColor: theme.colorScheme === 'dark' ? rejected.border : theme.colors.red[4],
-
-      '&:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? rejected.background : theme.colors.red[0],
-      },
+    inner: {
+      pointerEvents: 'none',
+      userSelect: 'none',
     },
   };
 });

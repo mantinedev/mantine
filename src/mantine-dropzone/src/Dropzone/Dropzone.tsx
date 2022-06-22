@@ -110,26 +110,22 @@ const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzon
 
   assignRef(openRef, open);
 
+  const isIdle = !isDragAccept && !isDragReject;
+
   return (
-    <DropzoneProvider
-      value={{ accept: isDragAccept, reject: isDragReject, idle: !isDragAccept && !isDragReject }}
-    >
+    <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
       <Box
         {...others}
         {...getRootProps({ ref })}
-        className={cx(
-          classes.root,
-          {
-            [classes.active]: isDragAccept,
-            [classes.reject]: isDragReject,
-            [classes.loading]: loading,
-          },
-          className
-        )}
+        data-accept={isDragAccept || undefined}
+        data-reject={isDragReject || undefined}
+        data-idle={isIdle || undefined}
+        data-loading={loading || undefined}
+        className={cx(classes.root, className)}
       >
         <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
         <input {...getInputProps()} name={name} />
-        {children}
+        <div className={classes.inner}>{children}</div>
       </Box>
     </DropzoneProvider>
   );
