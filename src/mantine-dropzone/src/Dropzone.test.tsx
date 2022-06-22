@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
 import { Dropzone, DropzoneProps } from './Dropzone';
 import { DropzoneAccept, DropzoneReject, DropzoneIdle } from './DropzoneStatus';
+import { DropzoneFullScreen } from './DropzoneFullScreen';
 
 const defaultProps: DropzoneProps = {
   onDrop: () => {},
@@ -43,5 +44,6 @@ describe('@mantine/dropzone/Dropzone', () => {
     expect(Dropzone.Accept).toBe(DropzoneAccept);
     expect(Dropzone.Reject).toBe(DropzoneReject);
     expect(Dropzone.Idle).toBe(DropzoneIdle);
+    expect(Dropzone.FullScreen).toBe(DropzoneFullScreen);
   });
 });

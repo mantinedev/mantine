@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef } from 'react';
 import { useDropzone, FileRejection, Accept } from 'react-dropzone';
 import {
   DefaultProps,
@@ -7,15 +7,15 @@ import {
   LoadingOverlay,
   Box,
   useComponentDefaultProps,
-  getDefaultZIndex,
-  OptionalPortal,
 } from '@mantine/core';
-import { assignRef, useDisclosure } from '@mantine/hooks';
+import { assignRef } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { DropzoneProvider } from './Dropzone.context';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
 import useStyles from './Dropzone.styles';
 import useFullScreenStyles from './DropzoneFullScreen.styles';
+// eslint-disable-next-line import/no-cycle
+import { DropzoneFullScreen } from './DropzoneFullScreen';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
 export type DropzoneFullScreenStylesName =
@@ -98,7 +98,7 @@ export interface DropzoneProps
   preventDropOnDocument?: boolean;
 }
 
-const defaultProps: Partial<DropzoneProps> = {
+export const defaultProps: Partial<DropzoneProps> = {
   padding: 'md',
   loading: false,
   multiple: true,
@@ -110,87 +110,89 @@ const defaultProps: Partial<DropzoneProps> = {
   activateOnKeyboard: true,
 };
 
-const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>((props: DropzoneProps, ref) => {
-  const {
-    className,
-    padding,
-    radius,
-    disabled,
-    classNames,
-    styles,
-    loading,
-    multiple,
-    maxSize,
-    accept,
-    children,
-    onDrop,
-    onReject,
-    openRef,
-    name,
-    unstyled,
-    maxFiles,
-    autoFocus,
-    activateOnClick,
-    activateOnDrag,
-    dragEventsBubbling,
-    activateOnKeyboard,
-    onDragEnter,
-    onDragLeave,
-    onDragOver,
-    onFileDialogCancel,
-    onFileDialogOpen,
-    preventDropOnDocument,
-    ...others
-  } = useComponentDefaultProps('Dropzone', defaultProps, props);
+export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
+  (props: DropzoneProps, ref) => {
+    const {
+      className,
+      padding,
+      radius,
+      disabled,
+      classNames,
+      styles,
+      loading,
+      multiple,
+      maxSize,
+      accept,
+      children,
+      onDrop,
+      onReject,
+      openRef,
+      name,
+      unstyled,
+      maxFiles,
+      autoFocus,
+      activateOnClick,
+      activateOnDrag,
+      dragEventsBubbling,
+      activateOnKeyboard,
+      onDragEnter,
+      onDragLeave,
+      onDragOver,
+      onFileDialogCancel,
+      onFileDialogOpen,
+      preventDropOnDocument,
+      ...others
+    } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
-  const { classes, cx } = useStyles(
-    { radius, padding },
-    { classNames, styles, unstyled, name: 'Dropzone' }
-  );
+    const { classes, cx } = useStyles(
+      { radius, padding },
+      { classNames, styles, unstyled, name: 'Dropzone' }
+    );
 
-  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-    onDropAccepted: onDrop,
-    onDropRejected: onReject,
-    disabled: disabled || loading,
-    accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
-    multiple,
-    maxSize,
-    maxFiles,
-    autoFocus,
-    noClick: !activateOnClick,
-    noDrag: !activateOnDrag,
-    noDragEventsBubbling: !dragEventsBubbling,
-    noKeyboard: !activateOnKeyboard,
-    onDragEnter,
-    onDragLeave,
-    onDragOver,
-    onFileDialogCancel,
-    onFileDialogOpen,
-    preventDropOnDocument,
-  });
+    const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
+      onDropAccepted: onDrop,
+      onDropRejected: onReject,
+      disabled: disabled || loading,
+      accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
+      multiple,
+      maxSize,
+      maxFiles,
+      autoFocus,
+      noClick: !activateOnClick,
+      noDrag: !activateOnDrag,
+      noDragEventsBubbling: !dragEventsBubbling,
+      noKeyboard: !activateOnKeyboard,
+      onDragEnter,
+      onDragLeave,
+      onDragOver,
+      onFileDialogCancel,
+      onFileDialogOpen,
+      preventDropOnDocument,
+    });
 
-  assignRef(openRef, open);
+    assignRef(openRef, open);
 
-  const isIdle = !isDragAccept && !isDragReject;
+    const isIdle = !isDragAccept && !isDragReject;
 
-  return (
-    <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
-      <Box
-        {...others}
-        {...getRootProps({ ref })}
-        data-accept={isDragAccept || undefined}
-        data-reject={isDragReject || undefined}
-        data-idle={isIdle || undefined}
-        data-loading={loading || undefined}
-        className={cx(classes.root, className)}
-      >
-        <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
-        <input {...getInputProps()} name={name} />
-        <div className={classes.inner}>{children}</div>
-      </Box>
-    </DropzoneProvider>
-  );
-});
+    return (
+      <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
+        <Box
+          {...others}
+          {...getRootProps({ ref })}
+          data-accept={isDragAccept || undefined}
+          data-reject={isDragReject || undefined}
+          data-idle={isIdle || undefined}
+          data-loading={loading || undefined}
+          className={cx(classes.root, className)}
+        >
+          <LoadingOverlay visible={loading} radius={radius} unstyled={unstyled} />
+          <input {...getInputProps()} name={name} />
+          <div className={classes.inner}>{children}</div>
+        </Box>
+      </DropzoneProvider>
+    );
+  }
+);
 
 export interface DropzoneFullScreenProps
   extends Omit<DropzoneProps, 'styles' | 'classNames'>,
@@ -199,84 +201,6 @@ export interface DropzoneFullScreenProps
   zIndex?: React.CSSProperties['zIndex'];
   withinPortal?: boolean;
 }
-
-const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
-  ...defaultProps,
-  active: true,
-  zIndex: getDefaultZIndex('max'),
-  withinPortal: true,
-};
-
-const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((props, ref) => {
-  const {
-    classNames,
-    styles,
-    sx,
-    className,
-    style,
-    unstyled,
-    active,
-    onDrop,
-    onReject,
-    onDragLeave,
-    zIndex,
-    withinPortal,
-    ...others
-  } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
-
-  const [visible, { open, close }] = useDisclosure(false);
-  const { classes, cx } = useFullScreenStyles(null, {
-    name: 'FullScreenDropzone',
-    classNames,
-    styles,
-    unstyled,
-  });
-
-  useEffect(() => {
-    if (active) {
-      document.addEventListener('dragover', open, false);
-      return () => document.removeEventListener('dragover', open, false);
-    }
-
-    return undefined;
-  }, [active]);
-
-  return (
-    <OptionalPortal withinPortal={withinPortal}>
-      <Box
-        className={cx(classes.wrapper, className)}
-        sx={sx}
-        style={{
-          ...style,
-          opacity: visible ? 1 : 0,
-          pointerEvents: visible ? 'all' : 'none',
-          zIndex,
-        }}
-      >
-        <_Dropzone
-          {...others}
-          classNames={classNames}
-          styles={styles}
-          unstyled={unstyled}
-          ref={ref}
-          className={classes.dropzone}
-          onDrop={(files: any) => {
-            onDrop?.(files);
-            close();
-          }}
-          onReject={(files: any) => {
-            onReject?.(files);
-            close();
-          }}
-          onDragLeave={(event: any) => {
-            onDragLeave?.(event);
-            close();
-          }}
-        />
-      </Box>
-    </OptionalPortal>
-  );
-});
 
 _Dropzone.displayName = '@mantine/dropzone/Dropzone';
 _Dropzone.Accept = DropzoneAccept;
