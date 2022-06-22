@@ -212,6 +212,7 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
     active,
     onDrop,
     onReject,
+    onDragLeave,
     ...others
   } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
@@ -226,14 +227,7 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
   useEffect(() => {
     if (active) {
       document.addEventListener('dragover', open, false);
-      document.addEventListener('dragleave', close, false);
-      document.addEventListener('drop', close, false);
-
-      return () => {
-        document.removeEventListener('dragover', open, false);
-        document.removeEventListener('dragleave', close, false);
-        document.removeEventListener('drop', close, false);
-      };
+      return () => document.removeEventListener('dragover', open, false);
     }
 
     return undefined;
@@ -258,6 +252,10 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
         }}
         onReject={(files: any) => {
           onReject?.(files);
+          close();
+        }}
+        onDragLeave={(event: any) => {
+          onDragLeave?.(event);
           close();
         }}
       />
