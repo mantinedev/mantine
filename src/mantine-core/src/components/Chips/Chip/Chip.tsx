@@ -130,7 +130,7 @@ export const Chip = forwardRef<HTMLInputElement, ChipProps>((props: ChipProps, r
       >
         {value && (
           <span className={classes.iconWrapper}>
-            <CheckboxIcon indeterminate={false} className={classes.checkIcon} />
+            <CheckboxIcon indeterminate={false} className={classes.checkIcon} width={(size === "xs" && 10) || (size === "sm" && 12) || (size === "md" && 14) || (size === "lg" && 16) || (size === "xl" && 18)} />
           </span>
         )}
         {children}
