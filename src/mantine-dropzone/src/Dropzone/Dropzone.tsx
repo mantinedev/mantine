@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useDropzone, FileRejection, Accept } from 'react-dropzone';
 import {
   DefaultProps,
@@ -8,7 +8,7 @@ import {
   Box,
   useComponentDefaultProps,
 } from '@mantine/core';
-import { assignRef } from '@mantine/hooks';
+import { assignRef, useDisclosure } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { DropzoneProvider } from './Dropzone.context';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
@@ -207,9 +207,20 @@ const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
 };
 
 const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((props, ref) => {
-  const { classNames, styles, sx, className, style, unstyled, ...others } =
-    useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
+  const {
+    classNames,
+    styles,
+    sx,
+    className,
+    style,
+    unstyled,
+    active,
+    onDrop,
+    onReject,
+    ...others
+  } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
+  const [visible, { open, close }] = useDisclosure(false);
   const { classes, cx } = useFullScreenStyles(null, {
     name: 'FullScreenDropzone',
     classNames,
@@ -217,8 +228,28 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
     unstyled,
   });
 
+  useEffect(() => {
+    if (active) {
+      document.addEventListener('dragover', open, false);
+      document.addEventListener('dragleave', close, false);
+      document.addEventListener('drop', close, false);
+
+      return () => {
+        document.removeEventListener('dragover', open, false);
+        document.removeEventListener('dragleave', close, false);
+        document.removeEventListener('drop', close, false);
+      };
+    }
+
+    return undefined;
+  }, [active]);
+
   return (
-    <Box className={cx(classes.wrapper, className)} sx={sx} style={style}>
+    <Box
+      className={cx(classes.wrapper, className)}
+      sx={sx}
+      style={{ ...style, opacity: visible ? 1 : 0, pointerEvents: visible ? 'all' : 'none' }}
+    >
       <_Dropzone
         {...others}
         classNames={classNames}
@@ -226,6 +257,14 @@ const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenProps>((
         unstyled={unstyled}
         ref={ref}
         className={classes.dropzone}
+        onDrop={(files: any) => {
+          onDrop?.(files);
+          close();
+        }}
+        onReject={(files: any) => {
+          onReject?.(files);
+          close();
+        }}
       />
     </Box>
   );
