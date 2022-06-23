@@ -151,6 +151,21 @@ function Demo() {
 }
 ```
 
+## Styles API
+
+`Dropzone` root element has the following data attributes to change styles based on current status:
+
+- `data-loading` – when `loading` prop is `true`
+- `data-accept` – when user drags files that can be accepted over the dropzone
+- `data-reject` – when user drags files that cannot be accepted over the dropzone
+- `data-idle` – default state – user does not drag any files over dropzone
+
+<Demo data={DropzoneDemos.stylesApi} />
+
+## Images previews
+
+<Demo data={DropzoneDemos.preview} />
+
 ## Get ref
 
 ```tsx
