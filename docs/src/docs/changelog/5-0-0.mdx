@@ -267,6 +267,7 @@ manage lists with just regular arrays. Other changes:
 
 ## Other breaking changes
 
+- [Select](https://mantine.dev/core/select/) and [MultiSelect](https://mantine.dev/core/multi-select/) component now require returning created item from `onCreate` handler
 - [Portal](https://mantine.dev/core/portal/) component no longer accepts `position` and `zIndex` props – it is now required to add these styles to Portal children
 - FloatingTooltip component was renamed to [Tooltip.Floating](https://mantine.dev/core/tooltip/#floating-tooltip)
 - Most components with dropdowns (Tooltip, Popover, ColorPicker, DatePicker, Select, etc.) are no longer using Portal by default, it is now required to set `withinPortal` if you need this feature
