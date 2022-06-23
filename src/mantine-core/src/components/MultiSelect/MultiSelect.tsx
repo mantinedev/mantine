@@ -69,13 +69,13 @@ export interface MultiSelectProps
   creatable?: boolean;
 
   /** Function to get create Label */
-  getCreateLabel?: (query: string) => React.ReactNode;
+  getCreateLabel?(query: string): React.ReactNode;
 
   /** Function to determine if create label should be displayed */
-  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+  shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?: (query: string) => void;
+  onCreate?(query: string): SelectItem;
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: any;
@@ -310,10 +310,17 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const handleItemSelect = (item: SelectItem) => {
     clearSearchOnChange && handleSearchChange('');
+
     if (_value.includes(item.value)) {
       handleValueRemove(item.value);
     } else {
-      setValue([..._value, item.value]);
+      if (item.creatable && typeof onCreate === 'function') {
+        const createdItem = onCreate(item.value);
+        setValue([..._value, createdItem.value]);
+      } else {
+        setValue([..._value, item.value]);
+      }
+
       if (_value.length === maxSelectedValues - 1) {
         valuesOverflow.current = true;
         setDropdownOpened(false);
@@ -322,9 +329,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         setHovered(filteredData.length - 2);
       }
     }
-    if (item.creatable) {
-      typeof onCreate === 'function' && onCreate(item.value);
-    }
+
+    // if (item.creatable) {
+    //   typeof onCreate === 'function' && onCreate(item.value);
+    // }
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MANTINE_SIZES } from '@mantine/styles';
+import { randomId } from '@mantine/hooks';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Group } from '../Group/Group';
 import { Stack } from '../Stack';
@@ -57,6 +58,33 @@ function Controlled() {
         Set value
       </button>
     </div>
+  );
+}
+
+function Creatable() {
+  const [value, setValue] = useState(['react']);
+  const [creatableData, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
+
+  return (
+    <MultiSelect
+      value={value}
+      onChange={setValue}
+      label="Creatable Select"
+      data={creatableData}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      onCreate={(query) => {
+        const item = { value: randomId(), label: query };
+        setData((c) => [...c, item]);
+        return item;
+      }}
+      getCreateLabel={(query) => `+ Create ${query}`}
+    />
   );
 }
 
@@ -326,5 +354,10 @@ storiesOf('MultiSelect', module)
         error="Error"
         inputWrapperOrder={['input', 'error', 'description', 'label']}
       />
+    </div>
+  ))
+  .add('Creatable', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Creatable />
     </div>
   ));
