@@ -4,3 +4,4 @@ export { disabled } from './Dropzone.demo.disabled';
 export { manual } from './Dropzone.demo.manual';
 export { fullScreen } from './Dropzone.demo.fullScreen';
 export { stylesApi } from './Dropzone.demo.stylesApi';
+export { preview } from './Dropzone.demo.preview';
