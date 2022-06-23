@@ -101,13 +101,13 @@ export interface SelectProps
   creatable?: boolean;
 
   /** Function to get create Label */
-  getCreateLabel?: (query: string) => React.ReactNode;
+  getCreateLabel?(query: string): React.ReactNode;
 
   /** Function to determine if create label should be displayed */
-  shouldCreate?: (query: string, data: SelectItem[]) => boolean;
+  shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?: (query: string) => void;
+  onCreate?(query: string): SelectItem;
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
@@ -290,15 +290,17 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       handleChange(null);
       setDropdownOpened(false);
     } else {
-      handleChange(item.value);
-
-      if (item.creatable) {
-        typeof onCreate === 'function' && onCreate(item.value);
+      if (item.creatable && typeof onCreate === 'function') {
+        const createdItem = onCreate(item.value);
+        handleChange(createdItem.value);
+      } else {
+        handleChange(item.value);
       }
 
       if (!controlled) {
         handleSearchChange(item.label);
       }
+
       setHovered(-1);
       setDropdownOpened(false);
       inputRef.current.focus();

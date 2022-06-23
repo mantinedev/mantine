@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { SubmitForm } from '@mantine/storybook';
+import { randomId } from '@mantine/hooks';
 import { Select, SelectProps } from './Select';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -63,17 +64,27 @@ const content = Array(10)
   .map((_, index) => <p key={index}>{paragraph}</p>);
 
 function Creatable() {
-  const [creatableData, setData] = useState(stringData);
+  const [value, setValue] = useState('react');
+  const [creatableData, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
 
   return (
     <Select
+      value={value}
+      onChange={setValue}
       label="Creatable Select"
       data={creatableData}
       placeholder="Select items"
       nothingFound="Nothing found"
       searchable
       creatable
-      onCreate={(query) => setData((c) => [...c, query])}
+      onCreate={(query) => {
+        const item = { value: randomId(), label: query };
+        setData((c) => [...c, item]);
+        return item;
+      }}
       getCreateLabel={(query) => `+ Create ${query}`}
     />
   );
