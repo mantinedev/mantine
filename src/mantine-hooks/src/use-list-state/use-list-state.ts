@@ -16,6 +16,7 @@ export interface UseListStateHandlers<T> {
   reorder: ({ from, to }: { from: number; to: number }) => void;
   setItem: (index: number, item: T) => void;
   setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+  filter: (fn: (item: T) => boolean) => void;
 }
 
 export type UseListState<T> = [T[], UseListStateHandlers<T>];
@@ -82,6 +83,13 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
       current.map((item, index) => (condition(item, index) ? fn(item, index) : item))
     );
 
+  const filter = (fn: (item: T) => boolean) => {
+    setState((current) => {
+      const cloned = [...current];
+      return cloned.filter(fn);
+    });
+  };
+
   return [
     state,
     {
@@ -97,6 +105,7 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
       reorder,
       setItem,
       setItemProp,
+      filter,
     },
   ];
 }
