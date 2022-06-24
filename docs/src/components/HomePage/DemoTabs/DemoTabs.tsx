@@ -6,6 +6,7 @@ import { SectionTitle } from '../SectionTitle/SectionTitle';
 import useStyles from './DemoTabs.styles';
 
 interface DemoTabsProps {
+  title: string;
   data: {
     demo: React.FC<any>;
     icon: typeof IconForms;
@@ -14,7 +15,7 @@ interface DemoTabsProps {
   }[];
 }
 
-export function DemoTabs({ data }: DemoTabsProps) {
+export function DemoTabs({ data, title }: DemoTabsProps) {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { classes, theme } = useStyles({ shouldAnimate });
   const animationTimeout = useRef<number>();
@@ -54,7 +55,7 @@ export function DemoTabs({ data }: DemoTabsProps) {
   return (
     <div className={classes.root}>
       <Container size={1100}>
-        <SectionTitle>100+ components</SectionTitle>
+        <SectionTitle>{title}</SectionTitle>
         <Grid gutter={0} mt="md">
           <Grid.Col md={4}>
             <div className={classes.controls}>

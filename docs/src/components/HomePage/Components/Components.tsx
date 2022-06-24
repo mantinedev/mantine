@@ -40,5 +40,5 @@ const data = [
 ];
 
 export function Components() {
-  return <DemoTabs data={data} />;
+  return <DemoTabs data={data} title="100+ components" />;
 }

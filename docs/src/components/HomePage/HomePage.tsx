@@ -28,11 +28,12 @@ export function HomePage() {
         <Waves height={28} width={200} flip />
         <CustomizeWithProps />
         <Waves height={36} width={110} alt />
+
         <Customize />
+
         <Waves height={44} width={148} />
         <Theming />
 
-        <Waves height={44} width={148} alt flip />
         <Hooks />
         <Banner />
         <Usage />
