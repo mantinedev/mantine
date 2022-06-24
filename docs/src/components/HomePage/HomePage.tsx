@@ -32,6 +32,7 @@ export function HomePage() {
         <Theming />
         <Banner />
         <Usage />
+        <Waves height={42} width={150} alt />
         <JoinCommunity />
       </div>
       <Footer />
