@@ -15,18 +15,18 @@ export default createStyles((theme) => ({
   },
 
   discord: {
-    backgroundColor: '#5865f2',
+    backgroundColor: theme.fn.darken('#5865f2', theme.colorScheme === 'dark' ? 0.25 : 0),
     color: theme.white,
     ...theme.fn.hover({
-      backgroundColor: theme.fn.lighten('#5865f2', 0.1),
+      backgroundColor: theme.fn.lighten('#5865f2', theme.colorScheme === 'dark' ? -0.1 : 0.1),
     }),
   },
 
   twitter: {
-    backgroundColor: '#1C8CD8',
+    backgroundColor: theme.fn.darken('#1C8CD8', theme.colorScheme === 'dark' ? 0.15 : 0),
     color: theme.white,
     ...theme.fn.hover({
-      backgroundColor: theme.fn.lighten('#1C8CD8', 0.1),
+      backgroundColor: theme.fn.lighten('#1C8CD8', theme.colorScheme === 'dark' ? -0.1 : 0.1),
     }),
   },
 
@@ -34,7 +34,7 @@ export default createStyles((theme) => ({
     backgroundColor: '#000',
     color: theme.white,
     ...theme.fn.hover({
-      backgroundColor: theme.fn.lighten('#000', 0.1),
+      backgroundColor: theme.fn.lighten('#000', theme.colorScheme === 'dark' ? 0.05 : 0.1),
     }),
   },
 }));
