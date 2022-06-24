@@ -1,7 +1,7 @@
 {
   "name": "@mantine/form",
   "description": "Mantine form management library",
-  "version": "5.0.0-alpha.12",
+  "version": "5.0.0-alpha.13",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
