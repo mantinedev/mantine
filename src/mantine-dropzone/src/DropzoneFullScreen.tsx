@@ -8,8 +8,7 @@ import {
   getDefaultZIndex,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-// eslint-disable-next-line import/no-cycle
-import { defaultProps, DropzoneStylesNames, DropzoneProps, _Dropzone } from './Dropzone';
+import { DropzoneStylesNames, DropzoneProps, _Dropzone } from './Dropzone';
 import useFullScreenStyles from './DropzoneFullScreen.styles';
 
 export type DropzoneFullScreenStylesName =
@@ -30,7 +29,15 @@ export interface DropzoneFullScreenProps
 }
 
 const fullScreenDefaultProps: Partial<DropzoneFullScreenProps> = {
-  ...defaultProps,
+  padding: 'md',
+  loading: false,
+  multiple: true,
+  maxSize: Infinity,
+  autoFocus: false,
+  activateOnClick: true,
+  activateOnDrag: true,
+  dragEventsBubbling: true,
+  activateOnKeyboard: true,
   active: true,
   zIndex: getDefaultZIndex('max'),
   withinPortal: true,
@@ -110,3 +117,5 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
 );
 
 DropzoneFullScreen.displayName = '@mantine/dropzone/DropzoneFullScreen';
+
+export type DropzoneFullScreenType = typeof DropzoneFullScreen;

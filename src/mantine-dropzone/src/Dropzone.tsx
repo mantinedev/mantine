@@ -12,15 +12,10 @@ import { assignRef } from '@mantine/hooks';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { DropzoneProvider } from './Dropzone.context';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import type { DropzoneFullScreenType } from './DropzoneFullScreen';
 import useStyles from './Dropzone.styles';
-import useFullScreenStyles from './DropzoneFullScreen.styles';
-// eslint-disable-next-line import/no-cycle
-import { DropzoneFullScreen } from './DropzoneFullScreen';
 
 export type DropzoneStylesNames = Selectors<typeof useStyles>;
-export type DropzoneFullScreenStylesName =
-  | DropzoneStylesNames
-  | Exclude<Selectors<typeof useFullScreenStyles>, 'dropzone'>;
 
 export interface DropzoneProps
   extends DefaultProps<DropzoneStylesNames>,
@@ -194,19 +189,10 @@ export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
   }
 );
 
-export interface DropzoneFullScreenProps
-  extends Omit<DropzoneProps, 'styles' | 'classNames'>,
-    DefaultProps<DropzoneFullScreenStylesName> {
-  active?: boolean;
-  zIndex?: React.CSSProperties['zIndex'];
-  withinPortal?: boolean;
-}
-
 _Dropzone.displayName = '@mantine/dropzone/Dropzone';
 _Dropzone.Accept = DropzoneAccept;
 _Dropzone.Reject = DropzoneReject;
 _Dropzone.Idle = DropzoneIdle;
-_Dropzone.FullScreen = DropzoneFullScreen;
 
 export const Dropzone: ForwardRefWithStaticComponents<
   DropzoneProps,
@@ -214,6 +200,6 @@ export const Dropzone: ForwardRefWithStaticComponents<
     Accept: typeof DropzoneAccept;
     Reject: typeof DropzoneReject;
     Idle: typeof DropzoneIdle;
-    FullScreen: typeof DropzoneFullScreen;
+    FullScreen: DropzoneFullScreenType;
   }
 > = _Dropzone;

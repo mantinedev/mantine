@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Dropzone } from './Dropzone';
+import { Dropzone } from './index';
+
+console.log(Dropzone.FullScreen);
 
 export default { title: 'Dropzone' };
 
