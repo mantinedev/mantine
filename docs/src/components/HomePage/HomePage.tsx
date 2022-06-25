@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineTheme } from '@mantine/core';
+import { Box } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Components } from './Components/Components';
@@ -16,11 +16,10 @@ import { Styles } from './Styles/Styles';
 import { Waves } from './Waves/Waves';
 
 export function HomePage() {
-  const theme = useMantineTheme();
   return (
-    <div>
+    <>
       <Head title="Mantine" disableTitleTemplate />
-      <div style={{ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm }}>
+      <Box sx={(theme) => ({ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm })}>
         <Jumbotron />
         <Waves height={40} width={150} />
         <Components />
@@ -29,9 +28,7 @@ export function HomePage() {
         <Waves height={28} width={200} flip />
         <CustomizeWithProps />
         <Waves height={36} width={110} alt />
-
         <Customize />
-
         <Waves height={44} width={148} />
         <Theming />
         <Waves height={30} width={134} alt />
@@ -42,8 +39,8 @@ export function HomePage() {
         <Usage />
         <Waves height={42} width={150} alt />
         <JoinCommunity />
-      </div>
+      </Box>
       <Footer />
-    </div>
+    </>
   );
 }
