@@ -6,6 +6,7 @@ import { CreateStylesDemo } from './demos/CreateStylesDemo';
 import { ThemeDemo } from './demos/ThemeDemo';
 import { FunctionsDemo } from './demos/FunctionsDemo';
 import { ContextStylesDemo } from './demos/ContextStylesDemo';
+import { getGradient } from '../get-gradient';
 
 export function Styles() {
   return (
@@ -29,6 +30,10 @@ export function Styles() {
 
             [theme.fn.smallerThan('sm')]: {
               fontSize: 14,
+            },
+
+            '&[data-active]': {
+              backgroundImage: getGradient(theme, 'bg'),
             },
           },
 

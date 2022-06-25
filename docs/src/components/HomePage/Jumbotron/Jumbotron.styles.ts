@@ -1,4 +1,5 @@
 import { createStyles } from '@mantine/core';
+import { getGradient } from '../get-gradient';
 
 const BREAKPOINT = '@media (max-width: 960px)';
 
@@ -56,9 +57,7 @@ export default createStyles((theme) => ({
   controlPrimary: {
     border: 0,
     fontWeight: 700,
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    backgroundImage: getGradient(theme, 'bg'),
   },
 
   githubControl: {
@@ -104,9 +103,7 @@ export default createStyles((theme) => ({
     alignItems: 'center',
     minWidth: 50,
     height: 50,
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    backgroundImage: getGradient(theme, 'bg'),
 
     '& svg': {
       display: 'block',

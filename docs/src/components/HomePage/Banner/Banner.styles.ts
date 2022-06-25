@@ -1,4 +1,5 @@
 import { createStyles } from '@mantine/core';
+import { getGradient } from '../get-gradient';
 import banner from './banner.webp';
 
 export default createStyles((theme) => ({
@@ -40,9 +41,7 @@ export default createStyles((theme) => ({
 
   highlight: {
     color: theme.colorScheme === 'dark' ? theme.colors.yellow[4] : theme.colors.cyan[6],
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    backgroundImage: getGradient(theme, 'text'),
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
   },
@@ -99,8 +98,6 @@ export default createStyles((theme) => ({
   },
 
   control: {
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    backgroundImage: getGradient(theme, 'bg'),
   },
 }));

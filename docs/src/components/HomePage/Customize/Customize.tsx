@@ -6,6 +6,7 @@ import { Prism } from '@mantine/prism';
 import { Slider as SliderStylesApi } from '@mantine/styles-api';
 import DataTable from '../../MdxPage/MdxProvider/DataTable/DataTable';
 import { PageSection } from '../PageSection/PageSection';
+import { getGradient } from '../get-gradient';
 
 const code = `
 function Demo() {
@@ -133,11 +134,7 @@ export function Customize() {
             to="/styles/styles-api"
             rightIcon={<IconArrowRight size={16} />}
             variant="gradient"
-            sx={(theme) => ({
-              backgroundImage: `linear-gradient(52deg, ${
-                theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-              } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
-            })}
+            sx={(theme) => ({ backgroundImage: getGradient(theme, 'bg') })}
           >
             View more examples
           </Button>
