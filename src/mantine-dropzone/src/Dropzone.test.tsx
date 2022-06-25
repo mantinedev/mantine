@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { itSupportsSystemProps } from '@mantine/tests';
-import { Dropzone, DropzoneProps } from './Dropzone';
+import { Dropzone, DropzoneProps } from './index';
 import { DropzoneAccept, DropzoneReject, DropzoneIdle } from './DropzoneStatus';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
 
