@@ -30,12 +30,12 @@
   "peerDependencies": {
     "@mantine/core": "5.0.0-alpha.13",
     "@mantine/hooks": "5.0.0-alpha.13",
-    "@mantine/utils": "5.0.0-alpha.13",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "4.4.2",
+    "@mantine/utils": "5.0.0-alpha.13"
   },
   "devDependencies": {}
 }

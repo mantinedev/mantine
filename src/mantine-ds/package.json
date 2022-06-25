@@ -20,10 +20,11 @@
   "peerDependencies": {
     "@mantine/core": "5.0.0-alpha.13",
     "@mantine/hooks": "5.0.0-alpha.13",
-    "@mantine/utils": "5.0.0-alpha.13",
     "@tabler/icons": "*",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@mantine/utils": "5.0.0-alpha.13"
+  }
 }
