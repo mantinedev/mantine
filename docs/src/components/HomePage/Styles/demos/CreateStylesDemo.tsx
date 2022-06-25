@@ -46,7 +46,17 @@ export function CreateStylesDemo() {
         </Anchor>{' '}
         to separate styles from markup:
       </Text>
-      <Prism language="tsx" radius="md" noCopy>
+      <Prism
+        language="tsx"
+        radius="md"
+        noCopy
+        styles={(theme) => ({
+          code: {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+          },
+        })}
+      >
         {code}
       </Prism>
     </Box>

@@ -47,7 +47,17 @@ export function ContextStylesDemo() {
         </Anchor>{' '}
         that will be applied to every component:
       </Text>
-      <Prism language="tsx" radius="md" noCopy>
+      <Prism
+        language="tsx"
+        radius="md"
+        noCopy
+        styles={(theme) => ({
+          code: {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+          },
+        })}
+      >
         {code}
       </Prism>
     </Box>

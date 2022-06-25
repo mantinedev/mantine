@@ -34,7 +34,17 @@ export function ThemeDemo() {
         </Anchor>{' '}
         in sx prop or createStyles function to use theme tokens in component styles:
       </Text>
-      <Prism language="tsx" radius="md" noCopy>
+      <Prism
+        language="tsx"
+        radius="md"
+        noCopy
+        styles={(theme) => ({
+          code: {
+            backgroundColor:
+              theme.colorScheme === 'dark' ? `${theme.colors.dark[7]} !important` : undefined,
+          },
+        })}
+      >
         {code}
       </Prism>
     </Box>
