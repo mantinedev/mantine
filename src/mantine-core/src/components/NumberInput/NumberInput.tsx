@@ -257,11 +257,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       isIncrement: boolean
     ) => {
       event.preventDefault();
+      inputRef.current.focus();
       onStepHandleChange(isIncrement);
       if (shouldUseStepInterval) {
         onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
       }
-      inputRef.current.focus();
     };
 
     useEffect(() => {
