@@ -12,6 +12,7 @@ import { Customize } from './Customize/Customize';
 import { DarkTheme } from './DarkTheme/DarkTheme';
 import { Theming } from './Theming/Theming';
 import { Hooks } from './Hooks/Hooks';
+import { Styles } from './Styles/Styles';
 import { Waves } from './Waves/Waves';
 
 export function HomePage() {
@@ -33,7 +34,9 @@ export function HomePage() {
 
         <Waves height={44} width={148} />
         <Theming />
-
+        <Waves height={30} width={134} alt />
+        <Styles />
+        <Waves height={22} width={120} flip />
         <Hooks />
         <Banner />
         <Usage />
