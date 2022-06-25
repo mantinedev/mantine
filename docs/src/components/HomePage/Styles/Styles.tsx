@@ -21,16 +21,20 @@ export function Styles() {
         mt="xl"
         mb="xl"
         radius="md"
-        styles={{
+        styles={(theme) => ({
           tab: {
             fontWeight: 600,
             fontSize: 16,
+
+            [theme.fn.smallerThan('sm')]: {
+              fontSize: 14,
+            },
           },
 
           tabsList: {
             flexWrap: 'wrap',
           },
-        }}
+        })}
       >
         <Tabs.List>
           <Tabs.Tab value="sx">sx prop</Tabs.Tab>
