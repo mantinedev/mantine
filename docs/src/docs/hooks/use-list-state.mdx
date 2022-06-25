@@ -63,6 +63,10 @@ const setItem = () => handlers.setItem(0, { a: 8 });
 // set item property at given position
 const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
 // values -> [{ a: 8 }, { a: 'new-prop' }]
+
+// remove objects that have a = 'new-prop'
+const filter = () => handlers.filter((item) => item.a === 'new-prop');
+// values -> [{ a: 8 }]
 ```
 
 ## API
@@ -83,6 +87,7 @@ Hook provides handlers to work with array data:
 - `setItem` – replace item at given index
 - `setItemProp` – set item property at given index
 - `setState` – set list state with react action
+- `filter` - filter values with callback function
 
 ## Indeterminate state checkbox example
 
@@ -111,6 +116,7 @@ function useListState<T>(initialValue: T[] = []): [
     reorder: ({ from, to }: { from: number; to: number }) => void;
     setItem: (index: number, item: T) => void;
     setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
+    filter: (fn: (item: T) => boolean) => void;
   }
 ];
 ```
