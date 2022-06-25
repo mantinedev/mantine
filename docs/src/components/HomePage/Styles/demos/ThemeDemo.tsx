@@ -9,17 +9,14 @@ import { Text } from '@mantine/core';
 function Demo() {
   return (
     <Text
-      sx={{
-        fontSize: 18,
-
-        '&:hover': {
-          backgroundColor: '#eee',
-        },
+      sx={(theme) => ({
+        backgroundColor: theme.colors.gray[0],
+        fontSize: theme.fontSizes.sm,
 
         '@media (max-width: 755px)': {
-          fontSize: 14,
-        },
-      }}
+          fontSize: theme.fontSizes.xs,
+        }
+      })}
     >
       My custom text
     </Text>
@@ -27,14 +24,15 @@ function Demo() {
 }
 `;
 
-export function SxDemo() {
+export function ThemeDemo() {
   return (
     <Box pt="xl">
       <Text mb="sm">
-        Add inline styles to any component with{' '}
-        <Anchor component={Link} to="/styles/sx/">
-          sx prop:
-        </Anchor>
+        Subscribe to{' '}
+        <Anchor component={Link} to="/theming/theme-object/">
+          theme object
+        </Anchor>{' '}
+        in sx prop or createStyles function to use theme tokens in component styles:
       </Text>
       <Prism language="tsx" radius="md" noCopy>
         {code}

@@ -9,17 +9,13 @@ import { Text } from '@mantine/core';
 function Demo() {
   return (
     <Text
-      sx={{
-        fontSize: 18,
+      sx={(theme) => ({
+        background: theme.fn.linearGradient(24, '#000', '#fff'),
 
-        '&:hover': {
-          backgroundColor: '#eee',
+        [theme.fn.smallerThan('sm)]: {
+          color: theme.fn.rgba('#fff', 0.5),
         },
-
-        '@media (max-width: 755px)': {
-          fontSize: 14,
-        },
-      }}
+      })}
     >
       My custom text
     </Text>
@@ -27,14 +23,15 @@ function Demo() {
 }
 `;
 
-export function SxDemo() {
+export function FunctionsDemo() {
   return (
     <Box pt="xl">
       <Text mb="sm">
-        Add inline styles to any component with{' '}
-        <Anchor component={Link} to="/styles/sx/">
-          sx prop:
-        </Anchor>
+        You can use{' '}
+        <Anchor component={Link} to="/theming/functions/">
+          theme functions
+        </Anchor>{' '}
+        anywhere where Mantine theme is available:
       </Text>
       <Prism language="tsx" radius="md" noCopy>
         {code}

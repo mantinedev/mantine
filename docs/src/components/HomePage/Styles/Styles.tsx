@@ -2,6 +2,9 @@ import React from 'react';
 import { Tabs } from '@mantine/core';
 import { PageSection } from '../PageSection/PageSection';
 import { SxDemo } from './demos/SxDemo';
+import { CreateStylesDemo } from './demos/CreateStylesDemo';
+import { ThemeDemo } from './demos/ThemeDemo';
+import { FunctionsDemo } from './demos/FunctionsDemo';
 
 export function Styles() {
   return (
@@ -16,6 +19,7 @@ export function Styles() {
         defaultValue="sx"
         variant="pills"
         mt="xl"
+        mb="xl"
         radius="md"
         styles={{
           tab: {
@@ -37,6 +41,15 @@ export function Styles() {
 
         <Tabs.Panel value="sx">
           <SxDemo />
+        </Tabs.Panel>
+        <Tabs.Panel value="createStyles">
+          <CreateStylesDemo />
+        </Tabs.Panel>
+        <Tabs.Panel value="theme">
+          <ThemeDemo />
+        </Tabs.Panel>
+        <Tabs.Panel value="functions">
+          <FunctionsDemo />
         </Tabs.Panel>
       </Tabs>
     </PageSection>
