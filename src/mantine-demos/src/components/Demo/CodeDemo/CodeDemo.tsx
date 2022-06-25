@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
 import { IconCode } from '@tabler/icons';
-import { useMantineTheme, Paper, Stack, ActionIcon, Tooltip } from '@mantine/core';
+import { Paper, Stack, ActionIcon, Tooltip, Box, MantineNumberSize } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import useStyles from './CodeDemo.styles';
 
@@ -14,6 +14,7 @@ interface CodeDemoProps {
   toggle?: boolean;
   inline?: boolean;
   spacing?: boolean;
+  radius?: MantineNumberSize;
   zIndex?: React.CSSProperties['zIndex'];
 }
 
@@ -27,20 +28,21 @@ export default function CodeDemo({
   inline = false,
   spacing = true,
   zIndex = 3,
+  radius = 'sm',
 }: CodeDemoProps) {
-  const { classes, cx } = useStyles();
+  const { classes, cx, theme } = useStyles({ radius }, { name: 'CodeDemo' });
   const [visible, setVisible] = useState(!toggle);
-  const theme = useMantineTheme();
 
   if (inline) {
     return <div>{children}</div>;
   }
 
   return (
-    <div style={{ marginBottom: theme.spacing.xl, marginTop: theme.spacing.md }}>
+    <Box className={classes.root} mb="xl" mt="md">
       <Paper
         p={spacing ? 'md' : 0}
         className={cx(classes.demo, { [classes.withToggle]: toggle })}
+        radius={radius}
         style={{
           backgroundColor:
             demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
@@ -70,10 +72,15 @@ export default function CodeDemo({
       </Paper>
 
       {code && visible && (
-        <Prism language={language} className={classes.prism} classNames={{ code: classes.code }}>
+        <Prism
+          language={language}
+          className={classes.prism}
+          classNames={{ code: classes.code }}
+          radius={radius}
+        >
           {code}
         </Prism>
       )}
-    </div>
+    </Box>
   );
 }
