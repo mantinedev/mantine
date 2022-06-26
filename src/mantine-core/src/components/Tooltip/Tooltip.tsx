@@ -119,8 +119,7 @@ export function Tooltip(props: TooltipProps) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  const target = children as React.ReactElement;
-  const targetRef = useMergedRef(tooltip.reference, (target as any).ref);
+  const targetRef = useMergedRef(tooltip.reference, (children as any).ref);
 
   return (
     <>
@@ -160,7 +159,10 @@ export function Tooltip(props: TooltipProps) {
         </Transition>
       </OptionalPortal>
 
-      {cloneElement(target, tooltip.getReferenceProps({ [refProp]: targetRef, ...target.props }))}
+      {cloneElement(
+        children,
+        tooltip.getReferenceProps({ [refProp]: targetRef, ...children.props })
+      )}
     </>
   );
 }

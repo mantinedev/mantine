@@ -18,26 +18,25 @@ export function MenuTarget({ children, refProp = 'ref' }: MenuTargetProps) {
   }
 
   const ctx = useMenuContext();
-  const target = children as React.ReactElement;
 
   const onClick = createEventHandler(
-    target.props.onClick,
+    children.props.onClick,
     () => ctx.trigger === 'click' && ctx.toggleDropdown()
   );
 
   const onMouseEnter = createEventHandler(
-    target.props.onMouseEnter,
+    children.props.onMouseEnter,
     () => ctx.trigger === 'hover' && ctx.openDropdown()
   );
 
   const onMouseLeave = createEventHandler(
-    target.props.onMouseLeave,
+    children.props.onMouseLeave,
     () => ctx.trigger === 'hover' && ctx.closeDropdown()
   );
 
   return (
     <Popover.Target refProp={refProp} popupType="menu">
-      {cloneElement(target, {
+      {cloneElement(children, {
         onClick,
         onMouseEnter,
         onMouseLeave,

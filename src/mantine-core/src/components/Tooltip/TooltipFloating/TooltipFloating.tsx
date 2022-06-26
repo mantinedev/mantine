@@ -58,17 +58,16 @@ export function TooltipFloating(props: TooltipFloatingProps) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  const target = children as React.ReactElement;
-  const targetRef = useMergedRef(boundaryRef, (target as any).ref);
+  const targetRef = useMergedRef(boundaryRef, (children as any).ref);
 
   const onMouseEnter = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    target.props.onMouseEnter?.(event);
+    children.props.onMouseEnter?.(event);
     handleMouseMove(event);
     setOpened(true);
   };
 
   const onMouseLeave = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    target.props.onMouseLeave?.(event);
+    children.props.onMouseLeave?.(event);
     setOpened(false);
   };
 
@@ -91,8 +90,8 @@ export function TooltipFloating(props: TooltipFloatingProps) {
         </Box>
       </OptionalPortal>
 
-      {cloneElement(target, {
-        ...target.props,
+      {cloneElement(children, {
+        ...children.props,
         [refProp]: targetRef,
         onMouseEnter,
         onMouseLeave,

@@ -12,9 +12,8 @@ export function HoverCardTarget({ children, refProp }: HoverCardTargetProps) {
   }
 
   const ctx = useHoverCardContext();
-  const target = children as React.ReactElement;
-  const onMouseEnter = createEventHandler(target.props.onMouseEnter, ctx.openDropdown);
-  const onMouseLeave = createEventHandler(target.props.onMouseLeave, ctx.closeDropdown);
+  const onMouseEnter = createEventHandler(children.props.onMouseEnter, ctx.openDropdown);
+  const onMouseLeave = createEventHandler(children.props.onMouseLeave, ctx.closeDropdown);
 
   return (
     <Popover.Target refProp={refProp}>

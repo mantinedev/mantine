@@ -25,8 +25,7 @@ export function PopoverTarget({
   }
 
   const ctx = usePopoverContext();
-  const target = children as React.ReactElement;
-  const targetRef = useMergedRef(ctx.reference, (target as any).ref);
+  const targetRef = useMergedRef(ctx.reference, (children as any).ref);
 
   const accessibleProps = ctx.withRoles
     ? {
@@ -37,7 +36,7 @@ export function PopoverTarget({
       }
     : {};
 
-  return cloneElement(target, {
+  return cloneElement(children, {
     ...accessibleProps,
     ...ctx.targetProps,
     [refProp]: targetRef,

@@ -28,8 +28,8 @@ export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
 
     const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'Breadcrumbs' });
 
-    const items = React.Children.toArray(children).reduce(
-      (acc: React.ReactNode[], child: React.ReactElement, index, array) => {
+    const items = React.Children.toArray(children).reduce<React.ReactNode[]>(
+      (acc, child, index, array) => {
         const item = isElement(child) ? (
           React.cloneElement(child, {
             className: cx(classes.breadcrumb, child.props?.className),
