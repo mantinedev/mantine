@@ -10,7 +10,7 @@ export interface LogoProps extends React.ComponentPropsWithoutRef<'svg'> {
 }
 
 export function useMantineLogoColors(
-  color: MantineColor = 'blue',
+  color: MantineColor,
   variant: MantineLogoVariant = 'mantine.dev',
   inverted: boolean = false
 ) {
@@ -18,8 +18,8 @@ export function useMantineLogoColors(
 
   if (variant === 'mantine.dev') {
     return {
-      background: inverted ? theme.white : theme.fn.themeColor(color, 5),
-      color: inverted ? theme.fn.themeColor(color, 5) : theme.white,
+      background: inverted ? theme.white : theme.fn.themeColor(color || theme.primaryColor, 5),
+      color: inverted ? theme.fn.themeColor(color || theme.primaryColor, 5) : theme.white,
     };
   }
 
