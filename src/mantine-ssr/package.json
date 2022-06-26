@@ -1,7 +1,7 @@
 {
   "name": "@mantine/ssr",
   "description": "Mantine server side rendering utils",
-  "version": "5.0.0-alpha.14",
+  "version": "5.0.0-alpha.15",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@emotion/server": "11.4.0",
-    "@mantine/styles": "5.0.0-alpha.14",
+    "@mantine/styles": "5.0.0-alpha.15",
     "@emotion/cache": "11.9.3",
     "@emotion/react": "11.9.3",
     "@emotion/serialize": "1.0.4",
