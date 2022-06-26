@@ -56,6 +56,9 @@ export interface MonthSettings {
   /** Remove outside dates */
   hideOutsideDates?: boolean;
 
+  /** Indices of weekend days */
+  weekendDays?: number[];
+
   /** Should date be displayed as in range */
   isDateInRange?(date: Date, modifiers: DayModifiers): boolean;
 
@@ -104,9 +107,6 @@ export interface MonthProps
 
   /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
-
-  /** Indices of weekend days */
-  weekendDays?: number[];
 }
 
 const noop = () => false;

@@ -115,6 +115,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       type,
       openDropdownOnClear,
       unstyled,
+      weekendDays,
       ...others
     } = useComponentDefaultProps('DatePicker', defaultProps, props);
 
@@ -294,6 +295,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
           unstyled={unstyled}
+          weekendDays={weekendDays}
         />
       </DatePickerBase>
     );

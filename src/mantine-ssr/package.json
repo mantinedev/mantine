@@ -1,7 +1,11 @@
 {
   "name": "@mantine/ssr",
   "description": "Mantine server side rendering utils",
+<<<<<<< HEAD
   "version": "5.0.0-alpha.14",
+=======
+  "version": "4.2.11",
+>>>>>>> 6784330c8d7c5bbd19a9c044a3a9c8e036495979
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
