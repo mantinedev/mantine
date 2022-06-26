@@ -12,3 +12,8 @@ export const Single = () => {
   const [value, setValue] = useState<Date>(new Date());
   return <Calendar value={value} onChange={setValue} />;
 };
+
+export const WeekendDays = () => {
+  const [value, setValue] = useState<Date>(new Date());
+  return <Calendar value={value} onChange={setValue} weekendDays={[1, 4]} />;
+};

@@ -159,4 +159,9 @@ storiesOf('DatePicker', module)
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePicker placeholder="Submit with enter" label="Event date" clearButtonTabIndex={-1} />
     </div>
+  ))
+  .add('Weekend days', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePicker placeholder="Submit with enter" label="Event date" weekendDays={[1, 3]} />
+    </div>
   ));

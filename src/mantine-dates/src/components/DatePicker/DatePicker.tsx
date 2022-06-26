@@ -114,6 +114,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       renderDay,
       type,
       openDropdownOnClear,
+      weekendDays,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
@@ -292,6 +293,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
+          weekendDays={weekendDays}
         />
       </DatePickerBase>
     );
