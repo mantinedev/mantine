@@ -26,9 +26,7 @@ export function Statues() {
         <Dropzone.Reject>
           <div>Rejected files</div>
         </Dropzone.Reject>
-        <Dropzone.Idle>
-          <div>Idling</div>
-        </Dropzone.Idle>
+        <Dropzone.Idle>Idling</Dropzone.Idle>
       </Dropzone>
     </div>
   );

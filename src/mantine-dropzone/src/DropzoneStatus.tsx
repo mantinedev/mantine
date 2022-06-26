@@ -1,5 +1,6 @@
+import React, { cloneElement } from 'react';
 import { upperFirst } from '@mantine/hooks';
-import React, { cloneElement, Children } from 'react';
+import { isElement } from '@mantine/utils';
 import { DropzoneContextValue, useDropzoneContext } from './Dropzone.context';
 
 export interface DropzoneStatusProps {
@@ -9,8 +10,10 @@ export interface DropzoneStatusProps {
 function createDropzoneStatus(status: keyof DropzoneContextValue) {
   const Component = ({ children, ...others }: DropzoneStatusProps): JSX.Element => {
     const ctx = useDropzoneContext();
+    const _children = isElement(children) ? children : <span>{children}</span>;
+
     if (ctx[status]) {
-      return cloneElement(Children.only(children) as React.ReactElement, others);
+      return cloneElement(_children, others);
     }
 
     return null;
