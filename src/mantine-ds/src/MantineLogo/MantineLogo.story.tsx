@@ -17,7 +17,7 @@ export function Rounded() {
 }
 export function TextLogo() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: 40, backgroundColor: 'silver' }}>
       <MantineLogoText size={30} />
       <MantineLogoText size={30} inverted />
       <MantineLogoText size={30} color="cyan" />
