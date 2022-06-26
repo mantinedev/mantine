@@ -1,6 +1,6 @@
 {
   "name": "@mantine/utils",
-  "version": "5.0.0-alpha.15",
+  "version": "5.0.0-alpha.16",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",

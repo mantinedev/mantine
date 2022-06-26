@@ -1,7 +1,7 @@
 {
   "name": "@mantine/ds",
   "description": "Internal Mantine components used on *.mantine.dev websites",
-  "version": "5.0.0-alpha.15",
+  "version": "5.0.0-alpha.16",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -18,8 +18,8 @@
     "react"
   ],
   "peerDependencies": {
-    "@mantine/core": "5.0.0-alpha.15",
-    "@mantine/hooks": "5.0.0-alpha.15",
+    "@mantine/core": "5.0.0-alpha.16",
+    "@mantine/hooks": "5.0.0-alpha.16",
     "@tabler/icons": "*",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
