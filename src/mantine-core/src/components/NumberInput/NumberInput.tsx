@@ -159,8 +159,10 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number | undefined) => {
-    typeof onChange === 'function' && onChange(val);
-    setValue(val);
+    if (val !== _value) {
+      typeof onChange === 'function' && onChange(val);
+      setValue(val);
+    }
   };
 
   const formatNum = (val: string | number = '') => {
