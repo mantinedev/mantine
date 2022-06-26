@@ -1,7 +1,7 @@
 {
   "name": "@mantine/labs",
   "description": "Experimental unstable Mantine components",
-  "version": "5.0.0-alpha.16",
+  "version": "5.0.0-alpha.17",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -15,8 +15,8 @@
     "directory": "src/mantine-labs"
   },
   "peerDependencies": {
-    "@mantine/core": "5.0.0-alpha.16",
-    "@mantine/hooks": "5.0.0-alpha.16",
+    "@mantine/core": "5.0.0-alpha.17",
+    "@mantine/hooks": "5.0.0-alpha.17",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
