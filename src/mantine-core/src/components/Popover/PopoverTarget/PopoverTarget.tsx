@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { isElement } from '@mantine/utils';
+import { clsx } from '@mantine/styles';
 import { usePopoverContext } from '../Popover.context';
 import { POPOVER_ERRORS } from '../Popover.errors';
 
@@ -39,6 +40,7 @@ export function PopoverTarget({
   return cloneElement(children, {
     ...accessibleProps,
     ...ctx.targetProps,
+    className: clsx(ctx.targetProps.className, children.props.className),
     [refProp]: targetRef,
     ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });
