@@ -42,6 +42,9 @@ export interface NumberInputProps
   /** Minimal possible value */
   min?: number;
 
+  /** First value if no initial value was set and increment/decrement is triggered using controls or up/down arrows */
+  startValue?: number;
+
   /** Number by which value will be incremented/decremented with controls and up/down arrows */
   step?: number;
 
@@ -120,6 +123,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     decimalSeparator,
     min,
     max,
+    startValue,
     step,
     stepHoldInterval,
     stepHoldDelay,
@@ -191,8 +195,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
     if (_value === undefined) {
-      handleValueChange(min ?? 0);
-      setTempValue(min?.toFixed(precision) ?? '0');
+      handleValueChange(startValue ?? min ?? 0);
+      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
     } else {
       const result = clamp(_value + step, _min, _max).toFixed(precision);
 
@@ -204,8 +208,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
     if (_value === undefined) {
-      handleValueChange(min ?? 0);
-      setTempValue(min?.toFixed(precision) ?? '0');
+      handleValueChange(startValue ?? min ?? 0);
+      setTempValue(startValue?.toFixed(precision) ?? min?.toFixed(precision) ?? '0');
     } else {
       const result = clamp(_value - step, _min, _max).toFixed(precision);
       handleValueChange(parseFloat(result));
