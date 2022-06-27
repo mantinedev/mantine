@@ -174,4 +174,11 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('{arrowdown}');
     expect(spy).toBeCalledTimes(1);
   });
+
+  it('uses startValue as first value when no initial value was set', async () => {
+    const spy = jest.fn();
+    render(<NumberInput startValue={3} onChange={spy} />);
+    await enterText('{arrowup}');
+    expect(getInput()).toHaveValue('3');
+  });
 });
