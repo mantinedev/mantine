@@ -129,6 +129,34 @@ All styles defined there will be added to each component rendered inside provide
 
 <Demo data={ThemeDemos.providerStyles} />
 
+## root selector
+
+If component does not specify Styles API selectors, then in most cases you can add styles using `root` selector:
+
+```tsx
+import { MantineProvider, Text } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          Text: {
+            styles: {
+              root: { fontSize: 20 },
+            },
+          },
+        },
+      }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
+      <Text>20px text</Text>
+    </MantineProvider>
+  );
+}
+```
+
 ## Inputs Styles API on MantineProvider
 
 Most of input components are based on [Input](/core/input/) and `Input.Wrapper`
