@@ -6,6 +6,7 @@ import {
   useMantineTheme,
   useComponentDefaultProps,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 import useStyles, { ScrollAreaStylesParams } from './ScrollArea.styles';
 
@@ -43,7 +44,7 @@ const defaultProps: Partial<ScrollAreaProps> = {
   offsetScrollbars: false,
 };
 
-export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, ref) => {
+export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, ref) => {
   const {
     children,
     className,
@@ -113,6 +114,58 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, re
       </Box>
     </RadixScrollArea.Root>
   );
+}) as any;
+
+export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
+  maxHeight: React.CSSProperties['maxHeight'];
+}
+
+const ScrollAreaAutosize = forwardRef<HTMLDivElement, ScrollAreaAutosizeProps>((props, ref) => {
+  const {
+    maxHeight,
+    children,
+    classNames,
+    styles,
+    scrollbarSize,
+    scrollHideDelay,
+    type,
+    dir,
+    offsetScrollbars,
+    viewportRef,
+    onScrollPositionChange,
+    unstyled,
+    sx,
+    ...others
+  } = useComponentDefaultProps<ScrollAreaAutosizeProps>('ScrollAreaAutosize', defaultProps, props);
+  return (
+    <Box {...others} ref={ref} sx={[{ display: 'flex', maxHeight }, ...packSx(sx)]}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <_ScrollArea
+          classNames={classNames}
+          styles={styles}
+          scrollHideDelay={scrollHideDelay}
+          scrollbarSize={scrollbarSize}
+          type={type}
+          dir={dir}
+          offsetScrollbars={offsetScrollbars}
+          viewportRef={viewportRef}
+          onScrollPositionChange={onScrollPositionChange}
+          unstyled={unstyled}
+        >
+          {children}
+        </_ScrollArea>
+      </Box>
+    </Box>
+  );
 });
 
-ScrollArea.displayName = '@mantine/core/ScrollArea';
+ScrollAreaAutosize.displayName = '@mantine/core/ScrollAreaAutosize';
+_ScrollArea.displayName = '@mantine/core/ScrollArea';
+_ScrollArea.Autosize = ScrollAreaAutosize;
+
+export const ScrollArea: ForwardRefWithStaticComponents<
+  ScrollAreaProps,
+  {
+    Autosize: typeof ScrollAreaAutosize;
+  }
+> = _ScrollArea;

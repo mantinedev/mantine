@@ -13,3 +13,14 @@ describe('@mantine/core/ScrollArea', () => {
     providerName: 'ScrollArea',
   });
 });
+
+describe('@mantine/core/ScrollArea.Autosize', () => {
+  itRendersChildren(ScrollArea.Autosize, defaultProps);
+  itSupportsSystemProps({
+    component: ScrollArea.Autosize,
+    props: defaultProps,
+    displayName: '@mantine/core/ScrollAreaAutosize',
+    refType: HTMLDivElement,
+    providerName: 'ScrollAreaAutosize',
+  });
+});
