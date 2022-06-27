@@ -36,7 +36,7 @@
     "@mantine/styles": "5.0.0-alpha.17",
     "@radix-ui/react-scroll-area": "0.1.4",
     "react-textarea-autosize": "8.3.4",
-    "@floating-ui/react-dom-interactions": "0.3.1"
+    "@floating-ui/react-dom-interactions": "0.6.6"
   },
   "devDependencies": {}
 }

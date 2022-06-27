@@ -25,6 +25,6 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
-    "@mantine/utils": "5.0.0-alpha.13"
+    "@mantine/utils": "5.0.0-alpha.17"
   }
 }

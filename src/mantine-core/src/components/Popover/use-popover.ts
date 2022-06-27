@@ -68,9 +68,9 @@ export function usePopover(options: UsePopoverOptions) {
       ...(options.width === 'target'
         ? [
             size({
-              apply({ reference }) {
+              apply({ rects }) {
                 Object.assign(floating.refs.floating.current?.style ?? {}, {
-                  width: `${reference.width}px`,
+                  width: `${rects.reference.width}px`,
                 });
               },
             }),
@@ -90,7 +90,7 @@ export function usePopover(options: UsePopoverOptions) {
   }, [floating.placement]);
 
   return {
-    ...floating,
+    floating,
     controlled: typeof options.opened === 'boolean',
     opened: _opened,
     onClose,

@@ -130,7 +130,7 @@
     "@emotion/serialize": "1.0.4",
     "@emotion/server": "11.4.0",
     "@emotion/utils": "1.1.0",
-    "@floating-ui/react-dom-interactions": "0.3.1",
+    "@floating-ui/react-dom-interactions": "0.6.6",
     "@radix-ui/react-scroll-area": "0.1.4",
     "@tabler/icons": "^1.68.0",
     "clsx": "1.1.1",

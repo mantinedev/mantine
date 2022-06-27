@@ -191,8 +191,8 @@ export function Popover(props: PopoverProps) {
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    popover.refs.floating.current,
-    popover.refs.reference.current as any,
+    popover.floating.refs.floating.current,
+    popover.floating.refs.reference.current as any,
   ]);
 
   return (
@@ -205,10 +205,10 @@ export function Popover(props: PopoverProps) {
       <PopoverContextProvider
         value={{
           controlled: popover.controlled,
-          reference: popover.reference,
-          floating: popover.floating,
-          x: popover.x,
-          y: popover.y,
+          reference: popover.floating.reference,
+          floating: popover.floating.floating,
+          x: popover.floating.x,
+          y: popover.floating.y,
           opened: popover.opened,
           transition,
           transitionDuration,
@@ -217,7 +217,7 @@ export function Popover(props: PopoverProps) {
           withArrow,
           arrowSize,
           arrowOffset,
-          placement: popover.placement,
+          placement: popover.floating.placement,
           trapFocus,
           withinPortal,
           zIndex,
