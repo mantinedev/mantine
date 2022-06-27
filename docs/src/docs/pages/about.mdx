@@ -11,6 +11,29 @@ Mantine is a React components library focused on providing great user and develo
 Mantine development was started in January 2021 and 1.0 version was published on [May 3rd, 2021](https://github.com/mantinedev/mantine/releases/tag/1.0.0),
 and since then [more than 100 releases were published](https://github.com/mantinedev/mantine/releases).
 
+## Browser support
+
+Mantine is tested on real devices in the following browsers before each minor and major release: Chrome, Safari, Firefox,
+Edge, Safari for iOS, Chrome for Android. Testing in other browsers is not performed.
+
+All Mantine components and hooks were tested to work in the following browsers:
+
+- Firefox 63+ (released `October 2018`)
+- Chromium browsers 84+ – Chrome, Edge, Chrome for Android, etc. (released `July 2020`)
+- Safari 14.1+ (released `April 2021`)
+- Safari for iOS 14.5+ (released `April 2021`)
+- **IE (any version) is not supported**
+
+In most cases Mantine components and hooks will work in any browser that is supported
+by your `react` version that you are using. But you may experience some minor visual bugs
+caused by unsupported CSS properties (for example [flexbox gap](https://caniuse.com/flexbox-gap)).
+
+If you need to support older browsers you should:
+
+- check component `Browser support` section before usage and decide whether this component will work for your case
+- install corresponding polyfills that are required for hook/component to work in older browsers
+- check that component works in those browsers on your side (we do not test Mantine in browsers that are older than those that are listed above)
+
 ## Releases cycle
 
 All `@mantine/*` packages follow [semver](https://semver.org/):
