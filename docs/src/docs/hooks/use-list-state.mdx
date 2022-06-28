@@ -116,7 +116,7 @@ function useListState<T>(initialValue: T[] = []): [
     reorder: ({ from, to }: { from: number; to: number }) => void;
     setItem: (index: number, item: T) => void;
     setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
-    filter: (fn: (item: T) => boolean) => void;
+    filter: (fn: (item: T, i: number) => boolean) => void;
   }
 ];
 ```
