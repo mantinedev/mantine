@@ -49,6 +49,9 @@ export interface NotificationProviderProps
 
   /** Notifications container z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** Your application */
+  children?: React.ReactNode;
 }
 
 export function NotificationsProvider({
