@@ -159,54 +159,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
 
     const daysPerRow = 6;
 
-    // const focusOnSameDayInNextOrPreviousRow = (
-    //   nextOrPrevious: 'next' | 'previous',
-    //   monthIndex: number,
-    //   payload: DayKeydownPayload,
-    //   n = 1
-    // ) => {
-    //   const dayInNextOrPreviousRow =
-    //     daysRefs.current[monthIndex][payload.rowIndex + (nextOrPrevious === 'next' ? n : -n)][
-    //       payload.cellIndex
-    //     ];
-
-    //   if (!dayInNextOrPreviousRow) {
-    //     return;
-    //   }
-
-    //   if (dayInNextOrPreviousRow.disabled) {
-    //     // Day is disabled, call this function recursively until
-    //     // we find a non-disabled day or there are no more days
-    //     focusOnSameDayInNextOrPreviousRow(nextOrPrevious, monthIndex, payload, n + 1);
-    //   } else {
-    //     dayInNextOrPreviousRow.focus();
-    //   }
-    // };
-
-    // const focusOnNextOrPreviousDayInRow = (
-    //   nextOrPrevious: 'next' | 'previous',
-    //   monthIndex: number,
-    //   payload: DayKeydownPayload,
-    //   n = 1
-    // ) => {
-    //   const nextOrPreviousDay =
-    //     daysRefs.current[monthIndex][payload.rowIndex][
-    //       payload.cellIndex + (nextOrPrevious === 'next' ? n : -n)
-    //     ];
-
-    //   if (!nextOrPreviousDay) {
-    //     return;
-    //   }
-
-    //   if (nextOrPreviousDay.disabled) {
-    //     // Day is disabled, call this function recursively until
-    //     // we find a non-disabled day or there are no more days
-    //     focusOnNextOrPreviousDayInRow(nextOrPrevious, monthIndex, payload, n + 1);
-    //   } else {
-    //     nextOrPreviousDay.focus();
-    //   }
-    // };
-
     const focusOnNextFocusableDay = (
       direction: 'down' | 'up' | 'left' | 'right',
       monthIndex: number,
