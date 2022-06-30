@@ -32,7 +32,7 @@ function Demo() {
   const [tab, setTab] = useState('first');
 
   return (
-    <Tabs value={activeTab} onTabChange={onChange}>
+    <Tabs value={activeTab} onTabChange={setTab}>
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>
