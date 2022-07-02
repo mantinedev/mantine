@@ -120,7 +120,8 @@ interface Heading {
 
 ## Usage
 
-Pass theme object to [MantineProvider](/theming/mantine-provider/):
+To customize theme, pass theme override object to [MantineProvider](/theming/mantine-provider/) `theme` prop.
+Theme override will be deeply merged with [default theme](https://github.com/mantinedev/mantine/blob/master/src/mantine-styles/src/theme/default-theme.ts).
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -131,17 +132,15 @@ function Demo() {
       withGlobalStyles
       withNormalizeCSS
       theme={{
-        // Theme is deeply merged with default theme
         colorScheme: 'light',
         colors: {
           // Add your color
-          'deep-blue': ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
+          deepBlue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
           // or replace default theme color
           blue: ['#E9EDFC', '#C1CCF6', '#99ABF0' /* ... */],
         },
 
         shadows: {
-          // other shadows (xs, sm, lg) will be merged from default theme
           md: '1px 1px 3px rgba(0, 0, 0, .25)',
           xl: '5px 5px 3px rgba(0, 0, 0, .25)',
         },
@@ -166,7 +165,7 @@ function Demo() {
 
 `theme.colorScheme` determines which color scheme will be used in your application.
 It can be either `light` or `dark`, default value is `light`. See [dark theme guide](/guides/dark-theme/) to
-learn how to setup dark color scheme in your application.
+learn how to setup dark theme in your application.
 
 ### focusRing
 
@@ -185,12 +184,13 @@ It accepts `'xs' | 'sm' | 'md' | 'lg' | 'xl'` (key of `theme.radius`) or a numbe
 For example, to remove border-radius from all elements set `defaultRadius: 0`:
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, Button } from '@mantine/core';
 
 function Demo() {
   return (
     <MantineProvider theme={{ defaultRadius: 0 }}>
-      <App />
+      <Button>With 0px border-radius</Button>
+      <Button radius="xl">Default radius can be overridden with radius prop</Button>
     </MantineProvider>
   );
 }
@@ -252,7 +252,7 @@ Note that you should also import `dayjs/locale/[locale]` to load localization fi
 
 ### dir
 
-Controls direction, you will need to set it if you need RTL support, follow [RTL guide](/guides/rtl/) to get started.
+`theme.dir` controls text direction, you will need to set it if you need RTL support, follow [RTL guide](/guides/rtl/) to get started.
 
 ### other
 
@@ -330,8 +330,7 @@ function Demo() {
 
 ## MantineTheme type
 
-In most cases theme will already have the correct type, but in some cases you will need to
-assign `MantineTheme` manually:
+You can import `MantineTheme` type from `@mantine/core` package:
 
 ```tsx
 import { useMantineTheme, MantineTheme } from '@mantine/core';
