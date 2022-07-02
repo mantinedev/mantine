@@ -1,6 +1,6 @@
 import React from 'react';
 import { ClassNames, MantineShadow, Styles } from '@mantine/styles';
-import { ScrollArea } from '../../ScrollArea';
+import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
 import { MantineTransition } from '../../Transition';
@@ -34,7 +34,7 @@ function SelectPopoverDropdown({
           aria-labelledby={`${id}-label`}
           role="listbox"
           onMouseDown={(event) => event.preventDefault()}
-          style={{ flex: 1, overflowY: component !== ScrollArea ? 'auto' : undefined }}
+          style={{ flex: 1, overflowY: component !== SelectScrollArea ? 'auto' : undefined }}
           data-combobox-popover
           ref={innerRef}
         >
