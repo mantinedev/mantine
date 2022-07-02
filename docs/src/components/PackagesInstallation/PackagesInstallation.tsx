@@ -37,7 +37,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
     <Box
       component="tr"
       key={item.package}
-      sx={{ cursor: 'pointer' }}
+      sx={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
       onClick={() => toggleSelection(item.package)}
     >
       <td>
@@ -46,7 +46,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
       <td>
         <Code>{item.package}</Code>
       </td>
-      <td>
+      <td data-mobile>
         <Text size="sm">{item.description}</Text>
       </td>
     </Box>
@@ -55,7 +55,16 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
   return (
     <>
       <Box mb="sm">Choose packages that you will use in your application:</Box>
-      <Table highlightOnHover>
+      <Table
+        highlightOnHover
+        sx={(theme) => ({
+          [theme.fn.smallerThan('sm')]: {
+            '& [data-mobile]': {
+              display: 'none',
+            },
+          },
+        })}
+      >
         <thead>
           <tr>
             <th>
@@ -66,7 +75,7 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
               />
             </th>
             <th>Package</th>
-            <th>Description</th>
+            <th data-mobile>Description</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
