@@ -6,7 +6,7 @@ A navigation progress bar
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/nprogress @mantine/core @mantine/hooks
 

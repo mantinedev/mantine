@@ -6,7 +6,7 @@ Capture files from user
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/dropzone @mantine/core @mantine/hooks
 

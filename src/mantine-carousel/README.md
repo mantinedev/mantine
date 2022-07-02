@@ -6,7 +6,7 @@ Embla based carousel
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/core @mantine/hooks @mantine/carousel
 

@@ -6,7 +6,7 @@ A set of utils used in Mantine packages
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/utils
 
