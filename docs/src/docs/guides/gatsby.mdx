@@ -6,6 +6,7 @@ search: 'Setup SSR with Gatsby.js and gatsby-plugin-mantine'
 ---
 
 import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
 
 # Usage with Gatsby.js
 
@@ -27,11 +28,7 @@ Init new application:
 npm init gatsby
 ```
 
-Install dependencies:
-
-```sh
-yarn add @mantine/hooks @mantine/core gatsby-plugin-mantine
-```
+<PackagesInstallation extraPackages={['gatsby-plugin-mantine']} />
 
 Add `gatsby-plugin-mantine` in your `gatsby.config.js` file:
 
@@ -58,11 +55,7 @@ Init new application:
 npm init gatsby
 ```
 
-Install dependencies:
-
-```sh
-yarn add @mantine/hooks @mantine/core @mantine/ssr
-```
+<PackagesInstallation extraPackages={['@mantine/ssr']} />
 
 Create `gatsby-ssr.js` file with following code:
 

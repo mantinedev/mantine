@@ -6,6 +6,7 @@ search: 'Get started with create-react-app'
 ---
 
 import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
 
 # Usage with create-react-app
 
@@ -27,11 +28,7 @@ Init new application:
 npx create-react-app my-mantine-app --template typescript
 ```
 
-Install dependencies:
-
-```sh
-yarn add @mantine/core @mantine/hooks
-```
+<PackagesInstallation />
 
 Replace `App.tsx` with:
 

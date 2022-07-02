@@ -6,6 +6,7 @@ search: 'Get started with Vite'
 ---
 
 import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
 
 # Usage with Vite
 
@@ -27,11 +28,7 @@ Init new application:
 yarn create vite mantine-vite --template react-ts
 ```
 
-Install dependencies:
-
-```sh
-yarn add @mantine/core @mantine/hooks
-```
+<PackagesInstallation />
 
 Replace `App.tsx` with:
 
@@ -49,7 +46,7 @@ export default function App() {
 
 All set! Start development server:
 
-```sh
+```bash
 npm start
 ```
 

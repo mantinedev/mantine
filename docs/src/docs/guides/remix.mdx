@@ -6,6 +6,7 @@ search: 'Get started with Remix'
 ---
 
 import { NextSteps } from '../../components/NextSteps/NextSteps.tsx';
+import { PackagesInstallation } from '../../components/PackagesInstallation/PackagesInstallation.tsx';
 
 # Usage with Remix
 
@@ -27,11 +28,7 @@ Init new application:
 npx create-remix@latest my-mantine-app
 ```
 
-Install dependencies:
-
-```sh
-yarn add @mantine/core @mantine/hooks @mantine/ssr
-```
+<PackagesInstallation extraPackages={['@mantine/ssr']} />
 
 Replace your `entry.server.tsx` file with
 
