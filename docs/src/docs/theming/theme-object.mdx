@@ -125,7 +125,7 @@ Pass theme object to [MantineProvider](/theming/mantine-provider/):
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       withGlobalStyles
@@ -154,7 +154,7 @@ function App() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -305,10 +305,10 @@ const myTheme: MantineThemeOverride = {
   defaultRadius: 0,
 };
 
-function App() {
+function Demo() {
   return (
     <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
