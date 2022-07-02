@@ -6,7 +6,6 @@ const sizes = {
   md: 440,
   lg: 620,
   xl: 780,
-  full: '100%',
 };
 
 export interface ModalStylesParams {
