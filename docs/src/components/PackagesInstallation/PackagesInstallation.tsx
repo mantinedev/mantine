@@ -13,7 +13,9 @@ function getInstallationCommand(
     return acc;
   }, []);
 
-  const unique = Array.from(new Set([...packages, ...extraPackages]));
+  const unique = Array.from(
+    new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages])
+  );
   const prefix = type === 'yarn' ? 'yarn add' : 'npm install';
   return `${prefix} ${unique.join(' ')}`;
 }

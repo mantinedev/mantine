@@ -40,13 +40,23 @@ export const PACKAGES_DATA = [
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dropzone'],
   },
   {
-    package: '@mantine/modals',
-    description: 'Centralized modals manager',
-    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/modals'],
+    package: '@mantine/carousel',
+    description: 'Embla based carousel component',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/carousel', 'embla-carousel-react'],
   },
   {
     package: '@mantine/spotlight',
     description: 'Overlay command center',
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/spotlight'],
+  },
+  {
+    package: '@mantine/modals',
+    description: 'Centralized modals manager',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/modals'],
+  },
+  {
+    package: '@mantine/nprogress',
+    description: 'Navigation progress',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/nprogress'],
   },
 ];
