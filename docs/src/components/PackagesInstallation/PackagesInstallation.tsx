@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
+import { Prism } from '@mantine/prism';
 import { PACKAGES_DATA } from './data';
 
-export function PackagesInstallation() {
+function getInstallationCommand(
+  selection: string[],
+  extraPackages: string[],
+  type: 'yarn' | 'npm'
+) {
+  const packages = selection.reduce<string[]>((acc, item) => {
+    acc.push(...PACKAGES_DATA.find((i) => i.package === item).dependencies);
+    return acc;
+  }, []);
+
+  const unique = Array.from(new Set([...packages, ...extraPackages]));
+  const prefix = type === 'yarn' ? 'yarn add' : 'npm install';
+  return `${prefix} ${unique.join(' ')}`;
+}
+
+interface PackagesInstallationProps {
+  extraPackages?: string[];
+}
+
+export function PackagesInstallation({ extraPackages = [] }: PackagesInstallationProps) {
   const [selection, setSelection] = useState(['@mantine/core', '@mantine/hooks']);
   const toggleSelection = (item: string) =>
     setSelection((current) =>
@@ -33,21 +53,42 @@ export function PackagesInstallation() {
   ));
 
   return (
-    <Table highlightOnHover>
-      <thead>
-        <tr>
-          <th>
-            <Checkbox
-              onChange={selectAll}
-              checked={selection.length > 0}
-              indeterminate={selection.length < PACKAGES_DATA.length && selection.length > 0}
-            />
-          </th>
-          <th>Package</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <>
+      <Box mb="sm">Choose packages that you will use in your application:</Box>
+      <Table highlightOnHover>
+        <thead>
+          <tr>
+            <th>
+              <Checkbox
+                onChange={selectAll}
+                checked={selection.length > 0}
+                indeterminate={selection.length < PACKAGES_DATA.length && selection.length > 0}
+              />
+            </th>
+            <th>Package</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+
+      <Box mb="sm" mt="xl">
+        Install dependencies:
+      </Box>
+
+      <Prism.Tabs defaultValue="yarn">
+        <Prism.TabsList>
+          <Prism.Tab value="yarn">yarn</Prism.Tab>
+          <Prism.Tab value="npm">npm</Prism.Tab>
+        </Prism.TabsList>
+
+        <Prism.Panel value="yarn" language="bash">
+          {getInstallationCommand(selection, extraPackages, 'yarn')}
+        </Prism.Panel>
+        <Prism.Panel value="npm" language="bash">
+          {getInstallationCommand(selection, extraPackages, 'npm')}
+        </Prism.Panel>
+      </Prism.Tabs>
+    </>
   );
 }
