@@ -58,11 +58,9 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
       {...others}
       component="table"
       ref={ref}
-      className={cx(
-        classes.root,
-        { [classes.striped]: striped, [classes.hover]: highlightOnHover },
-        className
-      )}
+      className={cx(classes.root, className)}
+      data-striped={striped || undefined}
+      data-hover={highlightOnHover || undefined}
     >
       {children}
     </Box>
