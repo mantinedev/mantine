@@ -1,4 +1,4 @@
-export { createPolymorphicComponent } from '@mantine/utils';
+export { createPolymorphicComponent, packSx } from '@mantine/utils';
 export * from '@mantine/styles';
 
 export * from './components/Accordion';
