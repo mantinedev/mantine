@@ -94,7 +94,7 @@ interface ThemeComponent {
   classNames?: Record<string, string>;
   styles?:
     | Record<string, CSSObject>
-    | ((theme: MantineTheme, params: unknown) => Record<string, CSSObject>);
+    | ((theme: MantineTheme, params: any) => Record<string, CSSObject>);
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
