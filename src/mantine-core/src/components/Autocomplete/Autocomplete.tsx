@@ -109,6 +109,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [IMEOpen, setIMEOpen] = useState(false);
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
@@ -136,6 +137,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   const filteredData = filterData({ data: formattedData, value: _value, limit, filter });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (IMEOpen) {
+      return;
+    }
+
     typeof onKeyDown === 'function' && onKeyDown(event);
 
     const isColumn = direction === 'column';
@@ -246,6 +251,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
               onClick={handleInputClick}
+              onCompositionStart={() => setIMEOpen(true)}
+              onCompositionEnd={() => setIMEOpen(false)}
               aria-autocomplete="list"
               aria-controls={shouldRenderDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}

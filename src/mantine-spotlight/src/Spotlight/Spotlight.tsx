@@ -135,6 +135,7 @@ export function Spotlight({
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
+  const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(
     { centered, maxWidth, topOffset, radius, zIndex },
     { classNames, styles, name: 'Spotlight' }
@@ -164,6 +165,10 @@ export function Spotlight({
   }, [groupedActions.length]);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (IMEOpen) {
+      return;
+    }
+
     switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
@@ -234,11 +239,14 @@ export function Spotlight({
                   value={query}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
+                  onCompositionStart={() => setIMEOpen(true)}
+                  onCompositionEnd={() => setIMEOpen(false)}
                   classNames={{ input: classes.searchInput }}
                   size="lg"
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
+                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                 />
                 <ActionsWrapper>
                   <ActionsList

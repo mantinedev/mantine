@@ -358,7 +358,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.repeat && shouldUseStepInterval) {
+    if (
+      event.repeat &&
+      shouldUseStepInterval &&
+      (event.key === 'ArrowUp' || event.key === 'ArrowDown')
+    ) {
       event.preventDefault();
       return;
     }

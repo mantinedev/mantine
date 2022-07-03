@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import {
   DefaultProps,
   Text,
@@ -187,6 +187,52 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     dayjs(value).isAfter(dayjs(month).startOf('month')) &&
     dayjs(value).isBefore(dayjs(month).endOf('month'));
 
+  const firstDayOfMonth = useMemo(() => {
+    let actualFirstDayDisabled = false;
+    let firstDay;
+
+    for (let i = 0; i < days.length; i += 1) {
+      if (firstDay) {
+        break;
+      }
+
+      const dates = days[i];
+      for (let j = 0; j < dates.length; j += 1) {
+        const date = dates[j];
+        const dayProps = getDayProps({
+          date,
+          month,
+          hasValue,
+          minDate,
+          maxDate,
+          value,
+          excludeDate,
+          disableOutsideEvents,
+          range,
+          weekendDays,
+        });
+
+        if (actualFirstDayDisabled && !dayProps.disabled) {
+          firstDay = date;
+          break;
+        }
+
+        const first = hideOutsideDates
+          ? isSameDate(date, dayjs(month).startOf('month').toDate())
+          : j === 0 && i === 0;
+
+        if (first && !dayProps.disabled) {
+          firstDay = date;
+          break;
+        } else if (first && dayProps.disabled) {
+          actualFirstDayDisabled = true;
+        }
+      }
+    }
+
+    return firstDay;
+  }, []);
+
   const rows = days.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const dayProps = getDayProps({
@@ -227,11 +273,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             inRange={dayProps.inRange || isDateInRange(date, dayProps)}
             firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
             lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
-            firstInMonth={
-              hideOutsideDates
-                ? isSameDate(date, dayjs(month).startOf('month').toDate())
-                : cellIndex === 0 && rowIndex === 0
-            }
+            firstInMonth={isSameDate(date, firstDayOfMonth)}
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={(event) =>
