@@ -88,8 +88,38 @@ interface MyButtonProps {
   sx?: Sx;
 }
 
-function MyButton({ sx }) {
+function MyButton({ sx }: MyButtonProps) {
   return <Button sx={[{ color: 'red' }, sx]}>My Button</Button>;
+}
+```
+
+If you want to keep `sx` array syntax support for child component use `packSx` function:
+
+```tsx
+import { Button, packSx, Sx } from '@mantine/core';
+
+interface MyButtonProps {
+  sx?: Sx | Sx[];
+}
+
+function MyButton({ sx }: MyButtonProps) {
+  return <Button sx={[{ color: 'red' }, ...packSx(sx)]}>My Button</Button>;
+}
+```
+
+You will also need to use `packSx` function if you are extending [DefaultProps](/guides/custom-components/#defaultprops-type) type:
+
+```tsx
+import { Button, packSx, DefaultProps } from '@mantine/core';
+
+interface MyButtonProps extends DefaultProps {}
+
+function MyButton({ sx, ...others }: MyButtonProps) {
+  return (
+    <Button sx={[{ color: 'red' }, ...packSx(sx)]} {...others}>
+      My Button
+    </Button>
+  );
 }
 ```
 
