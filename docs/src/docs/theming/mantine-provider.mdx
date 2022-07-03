@@ -3,14 +3,14 @@ group: 'theming'
 title: MantineProvider
 slug: /theming/mantine-provider/
 order: 1
-search: 'Theme object, useMantineTheme, default props, normalize.css, emotionOptions'
+search: 'Theme context, CSS reset, CSS variables, context classes and styles'
 ---
 
 import { ThemeDemos } from '@mantine/demos';
 
 # MantineProvider
 
-MantineProvider component can be used to change theme globally. It is not required if you decide to use default theme.
+MantineProvider component can be used to change theme. It is not required if you decide to use the default theme.
 
 ## Usage
 
@@ -22,7 +22,7 @@ function App() {
 }
 
 // Custom theme is applied to all components in App
-function WithProvider() {
+function Demo() {
   return (
     <MantineProvider theme={{ fontFamily: 'Open Sans' }} withGlobalStyles withNormalizeCSS>
       <App />
@@ -33,23 +33,23 @@ function WithProvider() {
 
 ## CSS reset and global styles
 
-MantineProvider has an option to add css reset similar to [normalize.css](https://necolas.github.io/normalize.css/)
-and some extra global styles:
+`MantineProvider` has an option to add css reset similar to [normalize.css](https://necolas.github.io/normalize.css/) (`withNormalizeCSS`)
+and global styles (`withGlobalStyles`). It is recommended to enable these options.
+
+`withGlobalStyles` prop will add the following styles:
 
 - background-color to `theme.colors.dark[7]` in dark color scheme and `theme.white` in light
 - color to `theme.colors.dark[0]` in dark color scheme and `theme.black` in light
 - font-family and font-smoothing based on theme
 - font-size to `theme.fontSize.md`
 
-To enable these global styles, set `withNormalizeCSS` and `withGlobalStyles` props:
-
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider withNormalizeCSS withGlobalStyles>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -58,15 +58,15 @@ function App() {
 ## CSS variables
 
 If you prefer to style components with CSS/SCSS or other styling solutions that do not have access to Mantine theme
-context, then you can use Mantine CSS variables. To add css variables set `withCSSVariables` prop on MantineProvider:
+context, then you can use Mantine CSS variables. To add CSS variables to the `:root` set `withCSSVariables` prop on `MantineProvider`:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -82,7 +82,7 @@ Then you will be able to use variables anywhere in your CSS:
 }
 ```
 
-Mantine exposes the following CSS variables based on `theme` you provide:
+Mantine exposes the following CSS variables based on [theme](/theming/theme-object/) you provide:
 
 - `--mantine-color-white`
 - `--mantine-color-black`
@@ -102,12 +102,11 @@ Mantine exposes the following CSS variables based on `theme` you provide:
 
 ## Nested MantineProviders
 
-If some parts of your application require different theme settings, you can wrap them with another MantineProvider:
+If some parts of your application require different theme settings, you can wrap them with another `MantineProvider`:
 
 <Demo data={ThemeDemos.nestedProviders} />
 
-Nested MantineProviders will inherit `theme` override, `emotionOptions`, `defaultProps` and `styles` from
-parent provider if `inherit` prop is set:
+Note that nested `MantineProvider` will inherit `theme` override from parent provider only if `inherit` prop is set:
 
 ```tsx
 import { MantineProvider, Button } from '@mantine/core';
@@ -115,20 +114,13 @@ import { MantineProvider, Button } from '@mantine/core';
 function App() {
   return (
     // Parent MantineProvider
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={{ colorScheme: 'dark' }}
-      styles={{ Button: { root: { fontWeight: 400 } } }}
-      defaultProps={{ Badge: { variant: 'outline' } }}
-      emotionOptions={{ key: 'custom-cache' }}
-    >
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'dark' }}>
       <Button>Affected only by parent provider</Button>
-
       {/*
-        Child MantineProvider, inherits theme, emotionOptions, defaultProps and styles
-        from parent MantineProvider. Other properties specified on child provider will override parent props.
-        For example, theme override will be: { colorScheme: 'dark', primaryColor: 'red' }
+        Child MantineProvider, inherits theme from parent MantineProvider.
+        Other properties specified on child provider will override parent props.
+        For example, in this case theme override will be:
+        { colorScheme: 'dark', primaryColor: 'red' }
       */}
       <MantineProvider theme={{ primaryColor: 'red' }} inherit>
         <Button>Affected only by child provider</Button>
@@ -153,9 +145,17 @@ import { MantineProvider, Text } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
-      styles={{ Text: { root: { fontSize: 20 } } }}
       withGlobalStyles
       withNormalizeCSS
+      theme={{
+        components: {
+          Text: {
+            styles: {
+              root: { fontSize: 20 },
+            },
+          },
+        },
+      }}
     >
       <Text>20px text</Text>
     </MantineProvider>
@@ -165,7 +165,8 @@ function App() {
 
 ## Classes on MantineProvider
 
-Same as with `styles` you can add classes to all components with `classNames` prop on MantineProvider:
+Same as with `styles` you can add classes to all components with `classNames`.
+This approach is useful when you want to styles components with utility based CSS libraries.
 
 ```tsx
 import { MantineProvider, Button } from '@mantine/core';
@@ -173,14 +174,18 @@ import { MantineProvider, Button } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
-      classNames={{ Button: { root: 'button-root', label: 'button-label' } }}
       withGlobalStyles
       withNormalizeCSS
+      theme={{
+        components: {
+          Button: {
+            classNames: { root: 'button-root', label: 'button-label' },
+          },
+        },
+      }}
     >
       <Button>All Button components will have the classes above</Button>
     </MantineProvider>
   );
 }
 ```
-
-This approach is useful when you want to styles components with utility based CSS libraries.
