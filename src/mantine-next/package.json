@@ -1,7 +1,7 @@
 {
   "name": "@mantine/next",
   "description": "Mantine integration for Next.js",
-  "version": "5.0.0-alpha.18",
+  "version": "5.0.0-alpha.19",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -25,8 +25,8 @@
     "next": "*"
   },
   "dependencies": {
-    "@mantine/ssr": "5.0.0-alpha.18",
-    "@mantine/styles": "5.0.0-alpha.18"
+    "@mantine/ssr": "5.0.0-alpha.19",
+    "@mantine/styles": "5.0.0-alpha.19"
   },
   "devDependencies": {}
 }
