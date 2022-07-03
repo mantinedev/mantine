@@ -157,11 +157,28 @@ describe('@mantine/core/NumberInput', () => {
     const spy = jest.fn();
     render(<NumberInput onChange={spy} />);
     await enterText('-');
-    expect(spy).toHaveBeenLastCalledWith(undefined);
+    expect(getInput()).toHaveValue('-');
     blurInput();
     expect(getInput()).toHaveValue('');
-    expect(spy).toHaveBeenLastCalledWith(undefined);
     await enterText('-1');
     expect(spy).toHaveBeenLastCalledWith(-1);
+  });
+
+  it('only triggers onChange when value really changes', async () => {
+    const spy = jest.fn();
+    render(<NumberInput min={-3} onChange={spy} />);
+    await enterText('-');
+    expect(spy).not.toBeCalled();
+    await enterText('3');
+    expect(spy).toHaveBeenLastCalledWith(-3);
+    await enterText('{arrowdown}');
+    expect(spy).toBeCalledTimes(1);
+  });
+
+  it('uses startValue as first value when no initial value was set', async () => {
+    const spy = jest.fn();
+    render(<NumberInput startValue={3} onChange={spy} />);
+    await enterText('{arrowup}');
+    expect(getInput()).toHaveValue('3');
   });
 });
