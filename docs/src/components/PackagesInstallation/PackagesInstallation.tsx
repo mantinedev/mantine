@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Checkbox, Code, Text, Box } from '@mantine/core';
 import { Prism } from '@mantine/prism';
+import { NpmIcon, YarnIcon } from '@mantine/ds';
 import { PACKAGES_DATA } from './data';
 
 function getInstallationCommand(
@@ -87,10 +88,14 @@ export function PackagesInstallation({ extraPackages = [] }: PackagesInstallatio
         Install dependencies:
       </Box>
 
-      <Prism.Tabs defaultValue="yarn">
+      <Prism.Tabs defaultValue="yarn" styles={{ tabIcon: { marginRight: '12px !important' } }}>
         <Prism.TabsList>
-          <Prism.Tab value="yarn">yarn</Prism.Tab>
-          <Prism.Tab value="npm">npm</Prism.Tab>
+          <Prism.Tab value="yarn" icon={<YarnIcon size={16} />}>
+            yarn
+          </Prism.Tab>
+          <Prism.Tab value="npm" icon={<NpmIcon size={16} />}>
+            npm
+          </Prism.Tab>
         </Prism.TabsList>
 
         <Prism.Panel value="yarn" language="bash">
