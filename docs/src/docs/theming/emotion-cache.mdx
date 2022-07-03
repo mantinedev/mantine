@@ -28,10 +28,10 @@ import { MantineProvider, createEmotionCache } from '@mantine/core';
 
 const myCache = createEmotionCache({ key: 'mantine' });
 
-function App() {
+function Demo() {
   return (
     <MantineProvider emotionCache={myCache} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -48,10 +48,10 @@ import { MantineProvider, createEmotionCache } from '@mantine/core';
 
 const appendCache = createEmotionCache({ key: 'mantine', prepend: false });
 
-function App() {
+function Demo() {
   return (
     <MantineProvider emotionCache={appendCache} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -66,10 +66,10 @@ import { MantineProvider, createEmotionCache } from '@mantine/core';
 
 const myCache = createEmotionCache({ key: 'my-prefix' });
 
-function App() {
+function Demo() {
   return (
     <MantineProvider emotionCache={myCache} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
