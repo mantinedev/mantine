@@ -1,13 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useInterval(fn: () => void, interval: number) {
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number>();
+  const fnRef = useRef<() => void>();
+
+  useEffect(() => {
+    fnRef.current = fn;
+  }, [fn]);
 
   const start = () => {
     setActive((old) => {
       if (!old) {
-        intervalRef.current = window.setInterval(fn, interval);
+        intervalRef.current = window.setInterval(fnRef.current, interval);
       }
       return true;
     });

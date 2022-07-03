@@ -157,6 +157,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     const wrapperRef = useRef<HTMLDivElement>();
     const uuid = useUuid(id);
     const [inputValue, setInputValue] = useState('');
+    const [IMEOpen, setIMEOpen] = useState(false);
 
     const [_value, setValue] = useUncontrolled({
       value,
@@ -225,6 +226,10 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (IMEOpen) {
+        return;
+      }
+
       switch (event.nativeEvent.code) {
         case 'Enter': {
           if (inputValue) {
@@ -369,6 +374,8 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
                 value={inputValue}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
+                onCompositionStart={() => setIMEOpen(true)}
+                onCompositionEnd={() => setIMEOpen(false)}
                 onBlur={handleInputBlur}
                 readOnly={valuesOverflow.current}
                 placeholder={_value.length === 0 ? placeholder : undefined}
