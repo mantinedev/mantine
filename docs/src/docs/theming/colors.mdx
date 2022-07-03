@@ -58,7 +58,7 @@ it should only reference value from `theme.colors`:
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function DemoWithError() {
   return (
     <MantineProvider
       withGlobalStyles
@@ -68,7 +68,7 @@ function App() {
         primaryColor: '#EC45EE',
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }

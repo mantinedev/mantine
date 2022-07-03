@@ -47,7 +47,7 @@ MantineProvider uses `Record<string, any>` type for default props types to impro
 If you need more strict type checks or want to have IDE autocomplete, you should define default props separately:
 
 ```tsx
-import { MantineProvider, Group, Button, Switch, ButtonProps, SwitchProps } from '@mantine/core';
+import { MantineProvider, ButtonProps, SwitchProps } from '@mantine/core';
 
 const ButtonDefaultProps: Partial<ButtonProps> = {
   size: 'xs',
@@ -70,7 +70,7 @@ function Demo() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
