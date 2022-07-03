@@ -9,12 +9,13 @@ search: 'Inline styles with emotion'
 # sx prop
 
 All Mantine components support `sx` prop. With `sx` you can add styles to component **root** element.
-If you need to customize other elements within component use [Styles API](/styles/styles-api/).
+If you need to customize styles of other elements within component use [Styles API](/styles/styles-api/).
 
 ## sx object
 
-With `sx` prop, you can add inline styles to any component the same way you would do it as with [createStyles](/styles/create-styles/)
-function. Styles added with `sx` will be parsed by [emotion](https://emotion.sh) and added to page head or specified target container in [MantineProvider](/theming/mantine-provider/).
+With `sx` prop, you can add inline styles to any component.
+Styles added with `sx` will be parsed by [emotion](https://emotion.sh)
+and added to the `head` or specified target container in [emotion cache](/theming/emotion-cache/).
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -52,7 +53,7 @@ function Demo() {
 
 ## Subscribe to theme
 
-Use a function instead of an object to subscribe to Mantine theme:
+Use function instead of an object to subscribe to the [theme](/theming/theme-object/):
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -94,7 +95,8 @@ function MyButton({ sx }) {
 
 ## Box component
 
-[Box](/core/box/) is an utility polymorphic component that can be used to style non Mantine components or elements with sx:
+[Box](/core/box/) is an utility [polymorphic](/guides/polymorphic/) component
+that can be used to style non Mantine components or elements with `sx` prop:
 
 ```tsx
 import { Box } from '@mantine/core';
