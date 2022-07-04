@@ -2,7 +2,7 @@
 group: 'theming'
 title: Dark theme
 slug: /theming/dark-theme/
-order: 2
+order: 3
 search: 'ColorSchemeProvider, useMantineColorScheme'
 ---
 
@@ -19,7 +19,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -40,6 +40,8 @@ import { MantineProvider } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         colorScheme: 'dark',
         colors: {
@@ -75,7 +77,7 @@ import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -98,7 +100,7 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
@@ -124,6 +126,7 @@ function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
+    getInitialValueInEffect: true,
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -133,7 +136,7 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
@@ -169,10 +172,53 @@ function App() {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme }}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
         <YourApp />
       </MantineProvider>
     </ColorSchemeProvider>
   );
 }
 ```
+
+## Save color scheme in cookie
+
+Saving color scheme in cookie is the easiest way to prevent color scheme mismatch.
+This strategy can be applied to any framework/library that has server side rendering support.
+The following example shows how to store color scheme in cookie with Next.js:
+
+```tsx
+// _app.tsx file
+import { GetServerSidePropsContext } from 'next';
+import { useState } from 'react';
+import { AppProps } from 'next/app';
+// install cookies-next package to manage cookies
+import { getCookie, setCookies } from 'cookies-next';
+import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
+
+export default function App(props: AppProps & { colorScheme: ColorScheme }) {
+  const { Component, pageProps } = props;
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(props.colorScheme);
+
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
+    setColorScheme(nextColorScheme);
+    // when color scheme is updated save it to cookie
+    setCookies('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+  };
+
+  return (
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <Component {...pageProps} />
+      </MantineProvider>
+    </ColorSchemeProvider>
+  );
+}
+
+App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
+  // get color scheme from cookie
+  colorScheme: getCookie('mantine-color-scheme', ctx) || 'light',
+});
+```
+
+Full code is available in [Mantine Next.js template](https://github.com/mantinedev/mantine-next-template).

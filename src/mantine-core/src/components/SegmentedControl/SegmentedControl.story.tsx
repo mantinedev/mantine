@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { MantineProvider } from '@mantine/styles';
+import { Button } from '../Button/Button';
 import { SegmentedControl, SegmentedControlProps } from './SegmentedControl';
 
 const stringData = ['React', 'Angular', 'Vue', 'Very long label'];
@@ -37,13 +38,61 @@ function Scaled() {
   );
 }
 
+function Conditional(props: Partial<SegmentedControlProps>) {
+  const [visible, setVisible] = useState<Boolean>(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setVisible(!visible)}>
+        {!visible ? 'Show' : 'Hide'} Segmented Control
+      </Button>
+      <div
+        style={{
+          paddingTop: 20,
+        }}
+      >
+        {visible && <SegmentedControl {...props} data={stringData} defaultValue="Vue" />}
+      </div>
+    </div>
+  );
+}
+
+function DisabledStates() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div>
+        <SegmentedControl
+          disabled
+          data={[
+            { label: 'React', value: 'react' },
+            { label: 'Angular', value: 'ng' },
+            { label: 'Vue', value: 'vue' },
+            { label: 'Very long label', value: 'svelte' },
+          ]}
+        />
+      </div>
+
+      <div style={{ marginTop: 20 }}>
+        <SegmentedControl
+          data={[
+            { label: 'React', value: 'react', disabled: true },
+            { label: 'Angular', value: 'ng' },
+            { label: 'Vue', value: 'vue', disabled: true },
+            { label: 'Very long label', value: 'svelte' },
+          ]}
+        />
+      </div>
+    </div>
+  );
+}
+
 const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
   <div key={size}>
     <Controlled size={size} mt="md" disabled />
   </div>
 ));
 
-storiesOf('@mantine/core/SegmentedControl/stories', module)
+storiesOf('SegmentedControl', module)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('String data', () => (
     <div style={{ padding: 40 }}>
@@ -51,6 +100,7 @@ storiesOf('@mantine/core/SegmentedControl/stories', module)
     </div>
   ))
   .add('Scaled', () => <Scaled />)
+  .add('Disabled', () => <DisabledStates />)
   .add('Default props on MantineProvider', () => (
     <MantineProvider defaultProps={{ SegmentedControl: { color: 'orange' } }}>
       <Controlled />
@@ -59,5 +109,10 @@ storiesOf('@mantine/core/SegmentedControl/stories', module)
   .add('Default radius on MantineProvider', () => (
     <MantineProvider theme={{ defaultRadius: 0 }}>
       <Controlled />
+    </MantineProvider>
+  ))
+  .add('Conditional Rendering without initial transition', () => (
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <Conditional />
     </MantineProvider>
   ));

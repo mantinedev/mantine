@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { QuoteIcon } from './QuoteIcon';
 import useStyles from './Blockquote.styles';
 
-export type BlockquoteStylesNames = ClassNames<typeof useStyles>;
+export type BlockquoteStylesNames = Selectors<typeof useStyles>;
 
 export interface BlockquoteProps
   extends DefaultProps<BlockquoteStylesNames>,

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useLocation } from '@reach/router';
+import { navigate } from 'gatsby';
 import { Tabs, Tab, Title, TextInput } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@modulz/radix-icons';
 import { useMediaQuery } from '@mantine/hooks';
@@ -11,10 +13,40 @@ import { StylesApi } from './StylesApi/StylesApi';
 import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageTabs.styles';
 
+function getInitialTab(query: string) {
+  if (query === 'docs') {
+    return 0;
+  }
+
+  if (query === 'props') {
+    return 1;
+  }
+
+  if (query === 'styles') {
+    return 2;
+  }
+
+  return 0;
+}
+
+function getTabQuery(index: number) {
+  if (index === 1) {
+    return 'props';
+  }
+
+  if (index === 2) {
+    return 'styles';
+  }
+
+  return undefined;
+}
+
 export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPageProps) {
   const [query, setQuery] = useState('');
   const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
+  const location = useLocation();
+  const initialTab = getInitialTab(location.search.replace('?t=', '') || 'docs');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);
 
@@ -37,6 +69,13 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
     <MdxPageBase>
       <Tabs
         variant="outline"
+        initialTab={initialTab}
+        onTabChange={(index) => {
+          const q = getTabQuery(index);
+          navigate(q ? `${location.pathname}?t=${q}` : location.pathname, {
+            replace: true,
+          });
+        }}
         classNames={{ tabsList: classes.tabsList, tabsListWrapper: classes.tabsWrapper }}
       >
         <Tab label="Documentation" className={classes.tab}>

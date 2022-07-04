@@ -21,4 +21,4 @@ function Example() {
   );
 }
 
-storiesOf('@mantine/hooks/use-page-leave', module).add('Usage', () => <Example />);
+storiesOf('Hooks/use-page-leave', module).add('Usage', () => <Example />);

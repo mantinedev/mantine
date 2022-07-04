@@ -1,10 +1,10 @@
 import React from 'react';
-import { ClassNames, DefaultProps } from '@mantine/styles';
+import { Selectors, DefaultProps } from '@mantine/styles';
 import { SharedTextProps, Text } from '../../Text/Text';
 import { useMenuContext } from '../Menu.context';
 import useStyles from './MenuLabel.styles';
 
-export type MenuLabelStylesNames = ClassNames<typeof useStyles>;
+export type MenuLabelStylesNames = Selectors<typeof useStyles>;
 
 export interface MenuLabelProps
   extends DefaultProps,
@@ -21,7 +21,7 @@ export interface MenuLabelType {
 }
 
 export function MenuLabel(props: MenuLabelProps) {
-  const { classNames, styles } = useMenuContext('Label');
+  const { classNames, styles } = useMenuContext('Menu.Label');
   const { classes } = useStyles(null, { name: 'Menu', classNames, styles });
   return <Text className={classes.label} {...props} />;
 }

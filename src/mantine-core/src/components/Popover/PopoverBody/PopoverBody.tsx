@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, MantineShadow, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineShadow, Selectors } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { CloseButton } from '../../ActionIcon/CloseButton/CloseButton';
 import useStyles from './PopoverBody.styles';
 
-export type PopoverBodyStylesNames = ClassNames<typeof useStyles>;
+export type PopoverBodyStylesNames = Selectors<typeof useStyles>;
 
 export interface PopoverBodyProps
   extends DefaultProps<PopoverBodyStylesNames>,

@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   MantineNumberSize,
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -11,15 +11,21 @@ import { Box } from '../Box';
 import { AppShellProvider } from './AppShell.context';
 import useStyles from './AppShell.styles';
 
-export type AppShellStylesNames = ClassNames<typeof useStyles>;
+export type AppShellStylesNames = Selectors<typeof useStyles>;
 
 export interface AppShellProps
   extends Omit<DefaultProps<AppShellStylesNames>, MantineStyleSystemSize> {
   /** <Navbar /> component */
   navbar?: React.ReactElement;
 
+  /** <Aside /> component */
+  aside?: React.ReactElement;
+
   /** <Header /> component */
   header?: React.ReactElement;
+
+  /** <Footer /> component */
+  footer?: React.ReactElement;
 
   /** zIndex prop passed to Navbar and Header components */
   zIndex?: number;
@@ -35,6 +41,9 @@ export interface AppShellProps
 
   /** Breakpoint at which Navbar component should no longer be offset with padding-left, applicable only for fixed position */
   navbarOffsetBreakpoint?: MantineNumberSize;
+
+  /** Breakpoint at which Aside component should no longer be offset with padding-right, applicable only for fixed position */
+  asideOffsetBreakpoint?: MantineNumberSize;
 }
 
 const defaultProps: Partial<AppShellProps> = {
@@ -48,17 +57,20 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     children,
     navbar,
     header,
-    fixed = false,
-    zIndex = getDefaultZIndex('app'),
-    padding = 'md',
+    footer,
+    aside,
+    fixed,
+    zIndex,
+    padding,
     navbarOffsetBreakpoint,
+    asideOffsetBreakpoint,
     className,
     styles,
     classNames,
     ...others
   } = useMantineDefaultProps('AppShell', defaultProps, props);
   const { classes, cx } = useStyles(
-    { padding, fixed, navbarOffsetBreakpoint },
+    { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
     { styles, classNames, name: 'AppShell' }
   );
 
@@ -70,7 +82,10 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
         <div className={classes.body}>
           {navbar}
           <main className={classes.main}>{children}</main>
+          {aside}
         </div>
+
+        {footer}
       </Box>
     </AppShellProvider>
   );

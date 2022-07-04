@@ -10,6 +10,15 @@ function hidden(element: HTMLElement) {
 }
 
 function visible(element: HTMLElement) {
+  const isHidden =
+    element.getAttribute('aria-hidden') ||
+    element.getAttribute('hidden') ||
+    element.getAttribute('type') === 'hidden';
+
+  if (isHidden) {
+    return false;
+  }
+
   let parentElement: HTMLElement = element;
   while (parentElement) {
     if (parentElement === document.body) {

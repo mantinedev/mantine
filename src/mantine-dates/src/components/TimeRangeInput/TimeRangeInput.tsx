@@ -8,7 +8,7 @@ import {
   Input,
   InputWrapper,
   MantineSize,
-  ClassNames,
+  Selectors,
   CloseButton,
   extractSystemStyles,
   useMantineDefaultProps,
@@ -18,7 +18,7 @@ import useStyles from './TimeRangeInput.styles';
 import { TimeInput } from '../TimeInput';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'disabled'>
+  | Exclude<Selectors<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
@@ -130,6 +130,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       labelSeparator,
       disabled,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
     } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
 
@@ -201,6 +204,9 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         __staticSelector="TimeRangeInput"
         id={uuid}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

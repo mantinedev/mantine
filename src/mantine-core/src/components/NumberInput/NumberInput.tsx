@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useMergedRef, assignRef, clamp } from '@mantine/hooks';
-import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { useMergedRef, assignRef, clamp, useOs } from '@mantine/hooks';
+import { DefaultProps, Selectors, useMantineDefaultProps } from '@mantine/styles';
+import { getInputMode } from '../../utils';
 import { TextInput } from '../TextInput/TextInput';
 import { InputStylesNames } from '../Input/Input';
 import { InputWrapperStylesNames } from '../InputWrapper/InputWrapper';
 import useStyles, { CONTROL_SIZES } from './NumberInput.styles';
 
-export type InnerNumberInputStylesNames = ClassNames<typeof useStyles>;
+export type InnerNumberInputStylesNames = Selectors<typeof useStyles>;
 export type NumberInputStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
@@ -24,7 +25,7 @@ export interface NumberInputProps
   extends DefaultProps<NumberInputStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<typeof TextInput>,
-      'onChange' | 'value' | 'classNames' | 'styles'
+      'onChange' | 'value' | 'classNames' | 'styles' | 'type'
     > {
   /** onChange input handler for controlled variant, note that input event is not exposed. It will return undefined if the input is empty, otherwise it'll return a number */
   onChange?(value: number | undefined): void;
@@ -68,13 +69,23 @@ export interface NumberInputProps
   /** Formats the number into the input */
   formatter?: Formatter;
 
-  /** Parsers the value from formatter, should be used with formatter at the same time */
+  /** Parses the value from formatter, should be used with formatter at the same time */
   parser?: Parser;
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
 const defaultParser: Parser = (num) => {
-  const parsedNum = parseFloat(num);
+  if (num === '-') {
+    return num;
+  }
+
+  let tempNum = num;
+
+  if (tempNum[0] === '.') {
+    tempNum = `0${num}`;
+  }
+
+  const parsedNum = parseFloat(tempNum);
 
   if (Number.isNaN(parsedNum)) {
     return undefined;
@@ -118,6 +129,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       styles,
       size,
       rightSection,
+      rightSectionWidth,
       formatter,
       parser,
       ...others
@@ -245,11 +257,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       isIncrement: boolean
     ) => {
       event.preventDefault();
+      inputRef.current.focus();
       onStepHandleChange(isIncrement);
       if (shouldUseStepInterval) {
         onStepTimeoutRef.current = window.setTimeout(() => onStepLoop(isIncrement), stepHoldDelay);
       }
-      inputRef.current.focus();
     };
 
     useEffect(() => {
@@ -292,7 +304,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
       setTempValue(parsed);
 
-      if (val === '') {
+      if (val === '' || val === '-') {
         handleValueChange(undefined);
       } else {
         val.trim() !== '' && !Number.isNaN(parsed) && handleValueChange(parseFloat(parsed));
@@ -304,7 +316,17 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         setTempValue('');
         handleValueChange(undefined);
       } else {
-        const parsedVal = parseNum(event.target.value);
+        let newNumber = event.target.value;
+
+        /** Unshifting zero to handle the following case -
+         * parseFloat('....1212') -> NaN
+         * parseFloat('0....1212') -> 0
+         */
+        if (newNumber[0] === `${decimalSeparator}` || newNumber[0] === '.') {
+          newNumber = `0${newNumber}`;
+        }
+
+        const parsedVal = parseNum(newNumber);
         const val = clamp({ value: parseFloat(parsedVal), min: _min, max: _max });
 
         if (!Number.isNaN(val)) {
@@ -327,7 +349,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.repeat && shouldUseStepInterval) {
+      if (
+        event.repeat &&
+        shouldUseStepInterval &&
+        (event.key === 'ArrowUp' || event.key === 'ArrowDown')
+      ) {
         event.preventDefault();
         return;
       }
@@ -361,7 +387,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         rightSection={
           rightSection || (disabled || hideControls || variant === 'unstyled' ? null : controls)
         }
-        rightSectionWidth={theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
+        rightSectionWidth={rightSectionWidth || theme.fn.size({ size, sizes: CONTROL_SIZES }) + 1}
         radius={radius}
         max={max}
         min={min}
@@ -369,7 +395,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         size={size}
         styles={styles}
         classNames={classNames}
-        inputMode={Number.isInteger(step) && precision === 0 ? 'numeric' : 'decimal'}
+        inputMode={getInputMode(step, precision, useOs())}
         __staticSelector="NumberInput"
       />
     );

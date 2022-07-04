@@ -119,7 +119,7 @@ function DynamicLabels(props: Partial<SelectProps>) {
   );
 }
 
-storiesOf('@mantine/core/Select/stories', module)
+storiesOf('Select', module)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
@@ -222,7 +222,13 @@ storiesOf('@mantine/core/Select/stories', module)
   ))
   .add('Within form', () => (
     <SubmitForm>
-      <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
+      <Select
+        label="Submit with enter"
+        data={data}
+        placeholder="Select items"
+        searchable
+        name="test"
+      />
     </SubmitForm>
   ))
   .add('Out of viewport', () => (
@@ -307,4 +313,44 @@ storiesOf('@mantine/core/Select/stories', module)
         <Select data={data} value={value} onChange={setValue} disabled clearable />
       </div>
     );
-  });
+  })
+  .add('Filter searchable data', () => (
+    <div style={{ padding: 40 }}>
+      <Select
+        filterDataOnExactSearchMatch
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Filter"
+        searchable
+      />
+      <Select
+        mt="md"
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Do not filter (default)"
+        searchable
+      />
+    </div>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Search in first select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <Select
+        label="Tab directly to next select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+    </div>
+  ));

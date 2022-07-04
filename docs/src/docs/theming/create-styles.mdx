@@ -3,7 +3,7 @@ group: 'theming'
 title: createStyles
 slug: /theming/create-styles/
 order: 2
-search: 'Global styles, cx, media queries, responsive styles, keyframes'
+search: 'cx function, media queries, responsive styles, keyframes'
 ---
 
 import { TabsDemos, CreateStylesDemos } from '@mantine/demos';
@@ -67,33 +67,6 @@ defined via [MantineProvider](/theming/extend-theme/#breakpoints) or just static
 ## Keyframes
 
 <Demo data={CreateStylesDemos.createStylesKeyframes} />
-
-## Global styles
-
-To set global styles use `Global` component:
-
-```tsx
-import { Global } from '@mantine/core';
-
-export function Demo() {
-  return (
-    <Global
-      styles={(theme) => ({
-        '*, *::before, *::after': {
-          boxSizing: 'border-box',
-        },
-
-        body: {
-          ...theme.fn.fontStyles(),
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          lineHeight: theme.lineHeight,
-        },
-      })}
-    />
-  );
-}
-```
 
 ## Inline styles
 

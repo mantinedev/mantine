@@ -1,0 +1,25 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: Stack
+order: 1
+slug: /core/stack/
+category: 'layout'
+description: 'Compose elements and components in vertical flex container'
+props: ['Stack']
+import: "import { Stack } from '@mantine/core';"
+source: 'mantine-core/src/components/Stack/Stack.tsx'
+docs: 'core/Stack.mdx'
+styles: ['Stack', 'single-node']
+---
+
+import { StackDemos } from '@mantine/demos';
+
+## Usage
+
+<Demo data={StackDemos.configurator} />
+
+## Browser support
+
+Stack uses [flexbox gap](https://caniuse.com/flexbox-gap) to add spacing between children.
+In older browsers Stack children will not have spacing.

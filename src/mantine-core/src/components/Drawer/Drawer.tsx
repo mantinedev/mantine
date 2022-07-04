@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -18,7 +18,7 @@ import { CloseButton } from '../ActionIcon';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
-export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'withOverlay'>;
+export type DrawerStylesNames = Exclude<Selectors<typeof useStyles>, 'withOverlay'>;
 
 export interface DrawerProps
   extends Omit<DefaultProps<DrawerStylesNames>, MantineStyleSystemSize>,
@@ -68,11 +68,14 @@ export interface DrawerProps
   /** Removes overlay entirely */
   withOverlay?: boolean;
 
-  /** Sets overlay opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity, number from 0 to 1 */
   overlayOpacity?: number;
 
-  /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color, for example, #000 */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
 
   /** Drawer title, displayed in header before close button */
   title?: React.ReactNode;
@@ -119,6 +122,7 @@ const defaultProps: Partial<DrawerProps> = {
   withOverlay: true,
   withCloseButton: true,
   withinPortal: true,
+  overlayBlur: 0,
 };
 
 export function Drawer(props: DrawerProps) {
@@ -149,6 +153,7 @@ export function Drawer(props: DrawerProps) {
     styles,
     target,
     withinPortal,
+    overlayBlur,
     ...others
   } = useMantineDefaultProps('Drawer', defaultProps, props);
 
@@ -185,7 +190,7 @@ export function Drawer(props: DrawerProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0 });
+  useFocusReturn({ opened, transitionDuration: 0, shouldReturnFocus: trapFocus });
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
@@ -193,6 +198,7 @@ export function Drawer(props: DrawerProps) {
         onExited={() => _lockScroll(false)}
         onEntered={() => _lockScroll(lockScroll && true)}
         mounted={opened}
+        timingFunction={transitionTimingFunction}
         transitions={{
           overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
           drawer: {
@@ -210,7 +216,6 @@ export function Drawer(props: DrawerProps) {
             {...others}
           >
             <Paper<'div'>
-              onMouseDown={(event) => event.stopPropagation()}
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}
               style={transitionStyles.drawer}
@@ -245,6 +250,7 @@ export function Drawer(props: DrawerProps) {
             {withOverlay && (
               <div style={transitionStyles.overlay}>
                 <Overlay
+                  blur={overlayBlur}
                   onMouseDown={() => closeOnClickOutside && onClose()}
                   className={classes.overlay}
                   opacity={_overlayOpacity}

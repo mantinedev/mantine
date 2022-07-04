@@ -5,11 +5,9 @@ import {
   PolymorphicRef,
   extractSystemStyles,
 } from '@mantine/styles';
-import { useSx, BoxSx } from './use-sx/use-sx';
+import { useSx } from './use-sx/use-sx';
 
-interface _BoxProps extends Omit<DefaultProps, 'sx'> {
-  sx?: BoxSx;
-}
+interface _BoxProps extends DefaultProps {}
 
 export type BoxProps<C> = PolymorphicComponentProps<C, _BoxProps>;
 
@@ -18,16 +16,13 @@ type BoxComponent = (<C = 'div'>(props: BoxProps<C>) => React.ReactElement) & {
 };
 
 export const Box: BoxComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { className, component, style, sx, ...others }: BoxProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  ({ className, component, style, sx, ...others }: BoxProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { systemStyles, rest } = extractSystemStyles(others);
     const Element = component || 'div';
     return (
       <Element ref={ref} className={useSx(sx, systemStyles, className)} style={style} {...rest} />
     );
   }
-);
+) as any;
 
 Box.displayName = '@mantine/core/Box';

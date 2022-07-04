@@ -36,7 +36,7 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   </Group>
 ));
 
-storiesOf('@mantine/labs/TagInput/stories', module)
+storiesOf('TagInput', module)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">

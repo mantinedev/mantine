@@ -26,7 +26,7 @@ Add `dir="rtl"` to `html` element:
 <html dir="rtl">...</html>
 ```
 
-Add `stylis-plugin-rtl` to your [MantineProvider](/theming/mantine-provider/):
+Add `stylis-plugin-rtl` and `theme.dir` to your [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -34,7 +34,12 @@ import rtlPlugin from 'stylis-plugin-rtl';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      emotionOptions={{ key: 'mantine', stylisPlugins: [rtlPlugin] }}
+      theme={{ dir: 'rtl' }}
+    >
       <YourApp />
     </MantineProvider>
   );
@@ -54,6 +59,8 @@ function App() {
   const [rtl, setRtl] = useState(false);
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ dir: rtl ? 'rtl' : 'ltr' }}
       emotionOptions={
         rtl
@@ -63,9 +70,11 @@ function App() {
             { key: 'mantine' }
       }
     >
-      <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
+      <div dir={rtl ? 'rtl' : 'ltr'}>
+        <Button onClick={() => setRtl((c) => !c)}>Toggle rtl/ltr</Button>
 
-      <YourApp />
+        <YourApp />
+      </div>
     </MantineProvider>
   );
 }
@@ -124,6 +133,8 @@ export default function App(props: AppProps) {
 
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ dir: 'rtl' }}
       emotionOptions={{ key: 'rtl', stylisPlugins: [rtlPlugin] }}
     >

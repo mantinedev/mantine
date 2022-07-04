@@ -5,7 +5,7 @@ import {
   useMantineTheme,
   Tooltip,
   DefaultProps,
-  ClassNames,
+  Selectors,
   Box,
   Tabs,
   TabProps,
@@ -20,7 +20,7 @@ import { PrismSharedProps } from './types';
 import useStyles from './Prism.styles';
 import useTabsStyles from './PrismTabs.styles';
 
-export type PrismStylesNames = ClassNames<typeof useStyles>;
+export type PrismStylesNames = Selectors<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
@@ -62,11 +62,16 @@ export const Prism: PrismComponent = forwardRef<HTMLDivElement, PrismProps>(
       ...others
     } = useMantineDefaultProps('Prism', prismDefaultProps, props);
     const code = trim && typeof children === 'string' ? children.trim() : children;
+    const maxLineSize = code.split('\n').length.toString().length;
 
     const theme = useMantineTheme();
     const clipboard = useClipboard();
     const { classes, cx } = useStyles(
-      { colorScheme: colorScheme || theme.colorScheme, native: ScrollAreaComponent !== ScrollArea },
+      {
+        colorScheme: colorScheme || theme.colorScheme,
+        native: ScrollAreaComponent !== ScrollArea,
+        maxLineSize,
+      },
       { classNames, styles, name: 'Prism' }
     );
 
@@ -194,7 +199,7 @@ export function PrismTab(_props: PrismTabProps) {
   return null;
 }
 
-export type PrismTabsStylesNames = ClassNames<typeof useTabsStyles> | PrismStylesNames;
+export type PrismTabsStylesNames = Selectors<typeof useTabsStyles> | PrismStylesNames;
 export interface PrismTabsProps
   extends DefaultProps<PrismTabsStylesNames>,
     Omit<TabsProps, 'classNames' | 'styles'> {}

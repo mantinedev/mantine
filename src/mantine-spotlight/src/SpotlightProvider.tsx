@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { useDisclosure } from '@mantine/hooks';
+import { useDidUpdate, useDisclosure } from '@mantine/hooks';
 import { useActionsState } from './use-actions-state/use-actions-state';
 import { useSpotlightShortcuts } from './use-spotlight-shortcuts/use-spotlight-shortcuts';
 import { Spotlight, InnerSpotlightProps } from './Spotlight/Spotlight';
+import { useSpotlightEvents } from './events';
 import type { SpotlightAction } from './types';
 import { SpotlightContext } from './Spotlight.context';
 
@@ -42,10 +43,12 @@ export function SpotlightProvider({
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
   const [query, setQuery] = useState('');
-  const [actions, { registerActions, removeActions, triggerAction }] = useActionsState(
-    initialActions,
-    query
-  );
+  const [actions, { registerActions, updateActions, removeActions, triggerAction }] =
+    useActionsState(initialActions, query);
+
+  useDidUpdate(() => {
+    updateActions(initialActions);
+  }, [initialActions]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -67,22 +70,23 @@ export function SpotlightProvider({
     },
   });
 
+  const ctx = {
+    openSpotlight: open,
+    closeSpotlight: close,
+    toggleSpotlight: toggle,
+    registerActions,
+    removeActions,
+    triggerAction,
+    opened,
+    actions,
+    query,
+  };
+
   useSpotlightShortcuts(shortcut, open);
+  useSpotlightEvents(ctx);
 
   return (
-    <SpotlightContext.Provider
-      value={{
-        openSpotlight: open,
-        closeSpotlight: close,
-        toggleSpotlight: toggle,
-        registerActions,
-        removeActions,
-        triggerAction,
-        opened,
-        actions,
-        query,
-      }}
-    >
+    <SpotlightContext.Provider value={ctx}>
       <Spotlight
         actions={actions}
         onClose={close}

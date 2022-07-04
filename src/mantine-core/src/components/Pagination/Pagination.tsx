@@ -4,14 +4,14 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Group, GroupProps } from '../Group/Group';
 import { DefaultItem, PaginationItemProps } from './DefaultItem/DefaultItem';
 import useStyles from './Pagination.styles';
 
-export type PaginationStylesNames = ClassNames<typeof useStyles>;
+export type PaginationStylesNames = Selectors<typeof useStyles>;
 
 export interface PaginationProps
   extends DefaultProps<PaginationStylesNames>,
@@ -114,6 +114,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
         key={index}
         page={pageNumber}
         active={pageNumber === active}
+        aria-current={pageNumber === active ? 'page' : undefined}
         aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
         tabIndex={pageNumber === 'dots' ? -1 : 0}
         className={cx(classes.item, {
@@ -126,6 +127,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(
 
     return (
       <Group
+        role="navigation"
         spacing={spacing || theme.fn.size({ size, sizes: theme.spacing }) / 2}
         ref={ref}
         sx={sx}

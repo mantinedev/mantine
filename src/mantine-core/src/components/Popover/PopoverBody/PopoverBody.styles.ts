@@ -9,9 +9,8 @@ interface PopoverBodyStyles {
 
 export default createStyles((theme, { radius, shadow, spacing, width }: PopoverBodyStyles) => ({
   title: {},
-
   wrapper: {
-    ...theme.fn.focusStyles(),
+    outline: 0,
   },
 
   popover: {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { Divider } from '../../Divider/Divider';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
-export type SelectItemsStylesNames = ClassNames<typeof useStyles>;
+export type SelectItemsStylesNames = Selectors<typeof useStyles>;
 
 export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];
@@ -58,6 +58,7 @@ export function SelectItems({
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"
+        data-ignore-outside-clicks
         tabIndex={-1}
         aria-selected={hovered === index}
         ref={(node: HTMLDivElement) => {
@@ -90,7 +91,7 @@ export function SelectItems({
       if (groupName !== item.group) {
         groupName = item.group;
         groupedItems.push(
-          <div className={classes.separator} key={index}>
+          <div className={classes.separator} key={`__mantine-divider-${index}`}>
             <Divider classNames={{ label: classes.separatorLabel }} label={item.group} />
           </div>
         );

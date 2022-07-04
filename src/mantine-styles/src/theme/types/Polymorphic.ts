@@ -13,7 +13,9 @@ type ComponentProp<C extends React.ElementType> = {
 
 type InheritedProps<C extends React.ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
 
-export type PolymorphicRef<C extends React.ElementType> = React.ComponentPropsWithRef<C>['ref'];
+export type PolymorphicRef<C> = C extends React.ElementType
+  ? React.ComponentPropsWithRef<C>['ref']
+  : never;
 
 export type PolymorphicComponentProps<C, Props = {}> = C extends React.ElementType
   ? InheritedProps<C, Props & ComponentProp<C>> & { ref?: PolymorphicRef<C> }

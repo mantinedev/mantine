@@ -17,7 +17,7 @@ export function GettingStarted() {
       <Head title="Getting started" />
 
       <div className={classes.wrapper}>
-        <Container className={classes.container} size={1100}>
+        <Container px={null} className={classes.container} size={1100}>
           <Installation setDependencies={setDependencies} />
           <Guides dependencies={dependencies} />
           <NextSteps />

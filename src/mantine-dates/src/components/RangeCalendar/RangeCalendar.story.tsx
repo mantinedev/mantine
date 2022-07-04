@@ -11,7 +11,7 @@ function WrappedRangeCalendar(props: Partial<RangeCalendarProps>) {
   );
 }
 
-storiesOf('@mantine/dates/RangeCalendar/stories', module)
+storiesOf('RangeCalendar', module)
   .add('First day of the week sunday', () => <WrappedRangeCalendar firstDayOfWeek="sunday" />)
   .add('2 months', () => <WrappedRangeCalendar amountOfMonths={2} />)
   .add('3 months', () => <WrappedRangeCalendar amountOfMonths={3} />)

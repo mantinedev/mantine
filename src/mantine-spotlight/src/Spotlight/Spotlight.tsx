@@ -6,12 +6,13 @@ import {
   Overlay,
   Paper,
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineShadow,
   TextInput,
   getDefaultZIndex,
   getGroupedOptions,
   MantineNumberSize,
+  MantineColor,
 } from '@mantine/core';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
@@ -20,7 +21,7 @@ import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionsListStylesNames;
+export type SpotlightStylesNames = Selectors<typeof useStyles> | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
@@ -87,6 +88,9 @@ export interface InnerSpotlightProps
 
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;
+
+  /** The highlight color */
+  highlightColor?: MantineColor;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -116,6 +120,7 @@ export function Spotlight({
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
+  highlightColor,
   maxWidth = 600,
   topOffset = 120,
   className,
@@ -130,6 +135,7 @@ export function Spotlight({
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
+  const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(
     { centered, maxWidth, topOffset, radius },
     { classNames, styles, name: 'Spotlight' }
@@ -159,6 +165,10 @@ export function Spotlight({
   }, [groupedActions.length]);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (IMEOpen) {
+      return;
+    }
+
     switch (event.code) {
       case 'ArrowDown': {
         event.preventDefault();
@@ -229,15 +239,19 @@ export function Spotlight({
                   value={query}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
+                  onCompositionStart={() => setIMEOpen(true)}
+                  onCompositionEnd={() => setIMEOpen(false)}
                   classNames={{ input: classes.searchInput }}
                   size="lg"
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
+                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                 />
                 <ActionsWrapper>
                   <ActionsList
                     highlightQuery={highlightQuery}
+                    highlightColor={highlightColor}
                     actions={groupedWithLabels}
                     actionComponent={actionComponent}
                     hovered={hovered}

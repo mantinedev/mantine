@@ -26,6 +26,7 @@ export interface CheckboxStylesParams {
 export default createStyles(
   (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
     const _size = theme.fn.size({ size, sizes });
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       icon: {
@@ -82,14 +83,13 @@ export default createStyles(
         height: _size,
         borderRadius: theme.fn.radius(radius),
         padding: 0,
-        outline: 0,
         display: 'block',
         margin: 0,
         transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
 
         '&:checked': {
-          backgroundColor: theme.fn.themeColor(color, 6),
-          borderColor: theme.fn.themeColor(color, 6),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,

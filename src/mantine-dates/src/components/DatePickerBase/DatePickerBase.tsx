@@ -14,7 +14,7 @@ import {
   Modal,
   CloseButton,
   MantineShadow,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
 } from '@mantine/core';
@@ -29,7 +29,7 @@ import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | CalendarBaseStylesNames
   | InputStylesNames
   | InputWrapperStylesNames;
@@ -72,13 +72,16 @@ export interface DatePickerBaseSharedProps
   /** Where to show calendar in modal or popover */
   dropdownType?: 'popover' | 'modal';
 
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom' | 'top' | 'flip';
+
   /** Allow to clear value */
   clearable?: boolean;
 
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 
   /** Popper zIndex */
@@ -101,6 +104,9 @@ export interface DatePickerBaseSharedProps
 
   /** Modal z-index */
   modalZIndex?: number;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -161,6 +167,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       dropdownOpened,
       setDropdownOpened,
       dropdownType = 'popover',
+      dropdownPosition = 'flip',
       clearable = true,
       clearButtonLabel,
       onClear,
@@ -178,6 +185,10 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onDropdownOpen,
       clickOutsideEvents = ['mousedown', 'touchstart'],
       modalZIndex,
+      errorProps,
+      labelProps,
+      descriptionProps,
+      clearButtonTabIndex = 0,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -231,6 +242,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         aria-label={clearButtonLabel}
         onClick={onClear}
         size={size}
+        tabIndex={clearButtonTabIndex}
       />
     ) : null;
 
@@ -271,6 +283,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         __staticSelector={__staticSelector}
         sx={sx}
         ref={setReferenceElement}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -316,7 +331,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               forceUpdateDependencies={positionDependencies}
               transition={transition}
               mounted={dropdownOpened}
-              position="bottom"
+              position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
               placement="start"
               gutter={10}
               withinPortal={withinPortal}
@@ -324,6 +339,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               arrowSize={3}
               zIndex={zIndex}
               arrowClassName={classes.arrow}
+              modifiers={[
+                {
+                  name: 'flip',
+                  enabled: dropdownPosition === 'flip',
+                },
+              ]}
             >
               <div
                 className={classes.dropdownWrapper}

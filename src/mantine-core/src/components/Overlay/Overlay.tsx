@@ -45,7 +45,7 @@ const defaultProps: Partial<OverlayProps<any>> = {
 };
 
 export const Overlay: OverlayComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: OverlayProps<C>, ref: PolymorphicRef<C>) => {
+  (props: OverlayProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { opacity, blur, color, gradient, zIndex, component, radius, sx, ...others } =
       useMantineDefaultProps('Overlay', defaultProps, props);
     const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
@@ -70,7 +70,7 @@ export const Overlay: OverlayComponent = forwardRef(
             opacity,
             borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
           }),
-          sx,
+          ...(Array.isArray(sx) ? sx : [sx]),
         ]}
         {...otherProps}
       />
@@ -84,7 +84,7 @@ export const Overlay: OverlayComponent = forwardRef(
               ...baseStyles,
               backdropFilter: `blur(${blur}px)`,
             }),
-            sx,
+            ...(Array.isArray(sx) ? sx : [sx]),
           ]}
           {...others}
         >
@@ -95,6 +95,6 @@ export const Overlay: OverlayComponent = forwardRef(
 
     return innerOverlay(others);
   }
-);
+) as any;
 
 Overlay.displayName = '@mantine/core/Overlay';

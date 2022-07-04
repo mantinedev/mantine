@@ -1,5 +1,5 @@
 import { useMediaQuery } from '../use-media-query/use-media-query';
 
-export function useReducedMotion() {
-  return useMediaQuery('(prefers-reduced-motion: reduce)');
+export function useReducedMotion(initialValue?: boolean) {
+  return useMediaQuery('(prefers-reduced-motion: reduce)', initialValue);
 }

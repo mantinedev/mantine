@@ -1,10 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  MantineSize,
-  getSharedColorScheme,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineSize, MantineColor } from '@mantine/styles';
 
 export const sizes = {
   xs: 24,
@@ -74,9 +68,9 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     ref: getRef('outline'),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
 
-    '&:hover': {
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-    },
+    }),
   },
 
   filled: {
@@ -84,14 +78,14 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
     borderColor: 'transparent',
 
-    '&:hover': {
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
+    }),
   },
 
   iconWrapper: {
     ref: getRef('iconWrapper'),
-    color: theme.fn.themeColor(color, 6),
+    color: theme.fn.variant({ variant: 'filled', color }).background,
     width:
       theme.fn.size({ size, sizes: iconSizes }) +
       theme.fn.size({ size, sizes: theme.spacing }) / 1.5,
@@ -114,9 +108,9 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
     cursor: 'not-allowed',
 
-    '&:hover': {
+    ...theme.fn.hover({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
-    },
+    }),
 
     [`& .${getRef('iconWrapper')}`]: {
       color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
@@ -128,15 +122,12 @@ export default createStyles((theme, { radius, size, color }: ChipStylesParams, g
     paddingRight: theme.fn.size({ size, sizes: checkedPadding }),
 
     [`&.${getRef('outline')}`]: {
-      border: `1px solid ${theme.fn.themeColor(color, 6)}`,
+      border: `1px solid ${theme.fn.variant({ variant: 'filled', color }).background}`,
     },
 
     [`&.${getRef('filled')}`]: {
       '&, &:hover': {
-        backgroundColor:
-          theme.colorScheme === 'dark'
-            ? getSharedColorScheme({ color, theme, variant: 'light' }).background
-            : theme.fn.themeColor(color, 1),
+        backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
       },
     },
   },

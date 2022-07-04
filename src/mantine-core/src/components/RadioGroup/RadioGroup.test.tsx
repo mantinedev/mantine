@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsWrapperProps,
+  itSupportsInputWrapperProps,
   itSupportsSystemProps,
   itFiltersChildren,
 } from '@mantine/tests';
@@ -18,7 +18,7 @@ const defaultProps: RadioGroupProps = {
 };
 
 describe('@mantine/core/RadioGroup', () => {
-  itSupportsWrapperProps(RadioGroup, defaultProps);
+  itSupportsInputWrapperProps(RadioGroup, defaultProps, 'RadioGroup');
   itSupportsSystemProps({
     component: RadioGroup,
     props: defaultProps,
@@ -48,6 +48,18 @@ describe('@mantine/core/RadioGroup', () => {
       withoutName.querySelector('input[type="radio"]').getAttribute('name').includes('mantine-')
     ).toBe(true);
     expect(withName.querySelector('input[type="radio"]').getAttribute('name')).toBe('test-name');
+  });
+
+  it('has an accessible label', () => {
+    const radioGroup = render(
+      <RadioGroup label="Select a Framework">
+        <Radio value="mantine" label="Mantine" />
+        <Radio value="mui" label="MUI" />
+        <Radio value="chakra" label="ChakraUI" />
+      </RadioGroup>
+    );
+
+    expect(radioGroup.queryByLabelText('Select a Framework')).not.toEqual(null);
   });
 
   it('supports uncontrolled state', () => {

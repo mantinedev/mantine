@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { getPosition } from '../utils/get-position/get-position';
 import { isMarkFilled } from './is-mark-filled';
 import useStyles from './Marks.styles';
 
-export type MarksStylesNames = ClassNames<typeof useStyles>;
+export type MarksStylesNames = Selectors<typeof useStyles>;
 
 export interface MarksProps extends DefaultProps<MarksStylesNames> {
   marks: { value: number; label?: React.ReactNode }[];
@@ -16,6 +16,7 @@ export interface MarksProps extends DefaultProps<MarksStylesNames> {
   value: number;
   onChange(value: number): void;
   offset?: number;
+  disabled: boolean;
 }
 
 export function Marks({
@@ -29,8 +30,12 @@ export function Marks({
   styles,
   offset,
   onChange,
+  disabled,
 }: MarksProps) {
-  const { classes, cx } = useStyles({ size, color }, { classNames, styles, name: 'Slider' });
+  const { classes, cx } = useStyles(
+    { size, color, disabled },
+    { classNames, styles, name: 'Slider' }
+  );
 
   const items = marks.map((mark, index) => (
     <Box

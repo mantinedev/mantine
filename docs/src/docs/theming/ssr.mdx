@@ -27,7 +27,7 @@ import { Button, MantineProvider } from '@mantine/core';
 export function App() {
   return (
     {/* Setup MantineProvider with your theme */}
-    <MantineProvider theme={{ colorScheme: 'dark' }}>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
       <Button>My awesome app</Button>
     </MantineProvider>
   );

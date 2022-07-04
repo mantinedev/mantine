@@ -22,10 +22,10 @@ type CenterComponent = (<C = 'div'>(props: CenterProps<C>) => React.ReactElement
 };
 
 export const Center: CenterComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: CenterProps<C>, ref: PolymorphicRef<C>) => {
+  (props: CenterProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { inline, sx, ...others } = useMantineDefaultProps('Center', {}, props);
     return (
-      <Box<any>
+      <Box
         ref={ref}
         sx={[
           {
@@ -33,12 +33,12 @@ export const Center: CenterComponent = forwardRef(
             alignItems: 'center',
             justifyContent: 'center',
           },
-          sx,
+          ...(Array.isArray(sx) ? sx : [sx]),
         ]}
         {...others}
       />
     );
   }
-);
+) as any;
 
 Center.displayName = '@mantine/core/Center';

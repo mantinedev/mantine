@@ -8,7 +8,7 @@ const getColors = (props?: any) =>
     <Divider key={color} color={color} style={{ marginTop: 15 }} {...props} />
   ));
 
-storiesOf('@mantine/core/Divider/stories', module)
+storiesOf('Divider', module)
   .add('Colors', () => <div style={{ padding: 20 }}>{getColors()}</div>)
   .add('Vertical', () => (
     <div style={{ padding: 20, height: 200 }}>
@@ -19,4 +19,13 @@ storiesOf('@mantine/core/Divider/stories', module)
     <MantineProvider defaultProps={{ Divider: { color: 'red' } }}>
       <Divider />
     </MantineProvider>
+  ))
+  .add('Label props', () => (
+    <Divider
+      labelPosition="center"
+      label="test label"
+      color="#000"
+      size="xs"
+      labelProps={{ color: '#000', size: 'xl' }}
+    />
   ));

@@ -150,7 +150,11 @@ export default createStyles(
       },
 
       '& .ql-clipboard': {
-        display: 'none',
+        left: '-100000px',
+        height: '1px',
+        overflowY: 'hidden',
+        position: 'fixed',
+        top: '50%',
       },
 
       '& .ql-align-center': {
@@ -315,6 +319,16 @@ export default createStyles(
 
       '& .ql-image-uploading img': {
         filter: 'blur(10px)',
+      },
+
+      '& .ql-blank': {
+        '&::before': {
+          content: 'attr(data-placeholder)',
+          position: 'absolute',
+          left: theme.spacing.md,
+          right: theme.spacing.md,
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
       },
     },
   })

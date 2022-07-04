@@ -1,15 +1,16 @@
 interface CreateAmPmHandler {
+  amLabel: string;
+  pmLabel: string;
   onChange(value: string): void;
   nextRef?: React.RefObject<HTMLInputElement>;
 }
 
-const testRegex = /(^(a|p)m?$)|(^$)/;
-
-export function createAmPmHandler({ onChange, nextRef }: CreateAmPmHandler) {
+export function createAmPmHandler({ amLabel, pmLabel, onChange, nextRef }: CreateAmPmHandler) {
   return (value: string, triggerShift: boolean) => {
+    const testRegex = new RegExp(`(^(${amLabel}|${pmLabel})?$)`);
     const valLower = value.toLowerCase();
 
-    if (valLower === 'am' || valLower === 'pm') {
+    if (valLower === amLabel || valLower === pmLabel) {
       onChange(valLower);
       triggerShift && nextRef?.current?.focus();
       triggerShift && nextRef?.current?.select();

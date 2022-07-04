@@ -15,6 +15,8 @@ export const sizes = {
 };
 
 export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },
@@ -34,7 +36,6 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
   label: {
     display: 'flex',
     alignItems: 'center',
-    color: color === 'dark' ? theme.colors.dark[1] : theme.fn.themeColor(color, 6),
 
     '&::before': {
       content: '""',
@@ -42,7 +43,8 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
       height: 1,
       borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
         color,
-        theme.colorScheme === 'dark' ? 3 : 4
+        theme.colorScheme === 'dark' ? 3 : 4,
+        false
       )}`,
       marginRight: theme.spacing.xs,
     },
@@ -52,16 +54,28 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
       flex: 1,
       borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
         color,
-        theme.colorScheme === 'dark' ? 3 : 4
+        theme.colorScheme === 'dark' ? 3 : 4,
+        false
       )}`,
       marginLeft: theme.spacing.xs,
     },
   },
 
+  labelDefaultStyles: {
+    color:
+      color === 'dark'
+        ? theme.colors.dark[1]
+        : theme.fn.themeColor(
+            color,
+            theme.colorScheme === 'dark' ? 5 : theme.fn.primaryShade(),
+            false
+          ),
+  },
+
   horizontal: {
     border: 0,
     borderTopWidth: theme.fn.size({ size, sizes }),
-    borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4),
+    borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4, false),
     borderTopStyle: variant,
     margin: 0,
   },
@@ -71,7 +85,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     alignSelf: 'stretch',
     height: '100%',
     borderLeftWidth: theme.fn.size({ size, sizes }),
-    borderLeftColor: theme.fn.themeColor(color, 4),
+    borderLeftColor: theme.fn.themeColor(color, 4, false),
     borderLeftStyle: variant,
   },
 }));

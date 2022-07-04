@@ -4,6 +4,19 @@ import { storiesOf } from '@storybook/react';
 import { Button, Text, Group } from '@mantine/core';
 import { ModalsProvider, useModals, ContextModalProps } from './index';
 
+function DemoWithoutLabels() {
+  const modals = useModals();
+
+  const showConfirmModal = () =>
+    modals.openConfirmModal({
+      title: 'Oh no! No labels!',
+      onCancel: () => console.log('Single confirm modal cancelled'),
+      onConfirm: () => console.log('Single confirm modal confirmed'),
+      onClose: () => console.log('Single confirm modal closed'),
+    });
+  return <Button onClick={showConfirmModal}>Open confirm modal w/o labels</Button>;
+}
+
 function Demo() {
   const modals = useModals();
 
@@ -68,11 +81,14 @@ function Demo() {
       <Button onClick={showContentModal} color="violet">
         Open content modal
       </Button>
+      <ModalsProvider>
+        <DemoWithoutLabels />
+      </ModalsProvider>
     </Group>
   );
 }
 
-storiesOf('@mantine/modals', module).add('Custom modal', () => (
+storiesOf('Modals Manager', module).add('Custom modal', () => (
   <ModalsProvider
     modals={{
       hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {

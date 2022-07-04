@@ -18,6 +18,7 @@ const defaultProps: ThumbProps = {
   labelTransitionTimingFunction: 'ease',
   labelAlwaysOn: true,
   thumbLabel: 'test-label',
+  disabled: false,
 };
 
 describe('@mantine/core/Thumb', () => {

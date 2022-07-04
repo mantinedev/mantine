@@ -17,8 +17,6 @@ import { NotificationDemos, NotificationsDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [@mantine/core](https://www.npmjs.com/package/@mantine/core).
-
 Install with npm:
 
 ```sh
@@ -37,8 +35,7 @@ yarn add @mantine/notifications @mantine/core @mantine/hooks
 
 ## Usage
 
-Wrap your application with NotificationsProvider.
-**Important:** if you use MantineProvider, NotificationsProvider must be placed inside:
+Wrap your application with NotificationsProvider:
 
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
@@ -54,31 +51,191 @@ function App() {
 }
 ```
 
-Then use use-notifications hook at any place in your application:
+Then use `showNotification` function anywhere in your application:
 
 <Demo data={NotificationsDemos.base} />
 
+## Functions
+
+Notifications system is based on [custom events](https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events),
+`@mantine/notifications` package exports the following functions:
+
+- **showNotification** – adds given notification to notifications list or queue depending on current state and limit
+- **updateNotification** – updates notification that was previously added to the state or queue
+- **hideNotification** – removes notification with given id from notifications state and queue
+- **cleanNotifications** – removes all notifications from notifications state and queue
+- **cleanNotificationsQueue** – removes all notifications from queue
+
+All functions can be imported from `@mantine/notifications` package and can be used in any part of your application:
+
+```tsx
+import { showNotification } from '@mantine/notifications';
+```
+
+## Notification props
+
+Notification state item can have these properties:
+
+- **id** – notification id, it is used to update and remove notification, by default id is randomly generated
+- **disallowClose** – removes close button, notification can be closed only programmatically
+- **onClose** – calls when notification is unmounted
+- **onOpen** – calls when notification is mounted
+- **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
+- **message** – required notification body
+- **color, icon, title, radius, className, style, sx, loading** – props spread to [Notification](/core/notification/) component
+
+All properties except **message** are optional.
+
+```tsx
+import { showNotification } from '@mantine/notifications';
+
+// Bare minimum – message is required for all notifications
+showNotification({ message: 'Hello' });
+
+// Most used notification props
+showNotification({
+  id: 'hello-there',
+  disallowClose: true,
+  onClose: () => console.log('unmounted'),
+  onOpen: () => console.log('mounted'),
+  autoClose: 5000,
+  title: "You've been compromised",
+  message: 'Leave the building immediately',
+  color: 'red',
+  icon: <Cross1Icon />,
+  className: 'my-notification-class',
+  style: { backgroundColor: 'red' },
+  sx: { backgroundColor: 'red' },
+  loading: false,
+});
+```
+
+Notifications preview (`message` prop used as `children`):
+
+<Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
+
+## Customize notification styles
+
+You can use `sx`, `style`, `className` or [Styles API](/theming/styles-api/) `classNames`, `styles` props to customize notification styles:
+
+<Demo data={NotificationsDemos.customize} />
+
+## Notifications container position
+
+NotificationsProvider renders notifications container with fixed position inside [Portal](/core/portal/).
+Position cannot be changed per notification. NotificationsProvider supports the following positions:
+
+- `top-left`
+- `top-right`
+- `top-center`
+- `bottom-left`
+- `bottom-right`
+- `bottom-center`
+
+```tsx
+import { NotificationsProvider } from '@mantine/notifications';
+
+function App() {
+  return (
+    <NotificationsProvider position="top-right" zIndex={2077}>
+      <YourApp />
+    </NotificationsProvider>
+  );
+}
+```
+
+## Limit and queue
+
+NotificationsProvider uses [use-queue](/hooks/use-queue/) hook to manage state.
+You can limit maximum amount of notifications that can be displayed by setting
+`limit` prop on NotificationsProvider:
+
+```tsx
+import { NotificationsProvider } from '@mantine/notifications';
+
+function App() {
+  return (
+    <NotificationsProvider limit={5}>
+      <YourApp />
+    </NotificationsProvider>
+  );
+}
+```
+
+All notifications added after limit was reached will be added into queue
+and displayed when notification from current state is closed.
+
+<Demo data={NotificationsDemos.limit} />
+
+## Remove notifications from state and queue
+
+To remove specific notification from state or queue use `hideNotification` function:
+
+```tsx
+import { showNotification, hideNotification } from '@mantine/notifications';
+
+showNotification({ id: 'hello', message: 'Hello!' });
+hideNotification('hello');
+```
+
+Use `cleanNotificationsQueue` function to remove all notifications that are not currently displayed and
+`cleanNotifications` function to remove all notifications from state and queue:
+
+<Demo data={NotificationsDemos.clean} />
+
+## Update notification
+
+<Demo data={NotificationsDemos.update} />
+
+## Auto close
+
+You can configure auto close timeout with NotificationsProvider:
+
+```tsx
+import { NotificationsProvider } from '@mantine/notifications';
+
+// All notifications will be closed automatically in 4000ms
+function App() {
+  return (
+    <NotificationsProvider autoClose={4000}>
+      <YourApp />
+    </NotificationsProvider>
+  );
+}
+```
+
+Or in `showNotification`/`updateNotification` functions:
+
+```tsx
+import { showNotification, updateNotification } from '@mantine/notifications';
+
+showNotification({
+  message: 'I will close in 500ms seconds',
+  autoClose: 500,
+});
+
+updateNotification({
+  id: 'hello',
+  message: 'I will never close',
+  autoClose: false,
+});
+```
+
+`showNotification` and `updateNotification` functions `autoClose` prop always has higher priority.
+
+<Demo data={NotificationsDemos.autoclose} />
+
 ## use-notifications hook
 
-Hook returns object with properties:
+To subscribe to notifications state use `useNotifications` hook, it returns object with the following properties:
 
-- **notifications** – list of notifications that are currently displayed
-- **queue** – list of notifications in queue
-- **showNotification** – adds given notification to notifications list or queue depending on current state and limit, returns notification id
-- **updateNotification** – updates notification with given id
-- **hideNotification** – removes notification with given id from notifications list and queue
-- **clean** – removes all notifications from notifications list and queue
-- **cleanQueue** – removes all notifications from queue
+- **notifications** – array of notifications that are currently displayed
+- **queue** – array of notifications in queue
 
 ```tsx
 function useNotifications(): {
   notifications: NotificationProps[];
   queue: NotificationProps[];
-  showNotification(props: NotificationProps): string;
-  updateNotification(id: string, props: NotificationProps): void;
-  hideNotification(id: string): void;
-  clean(): void;
-  cleanQueue(): void;
 };
 
 interface NotificationProps {
@@ -97,124 +254,3 @@ interface NotificationProps {
   onOpen?(props: NotificationProps): void;
 }
 ```
-
-## Notification props
-
-Notification state item can have these properties:
-
-- **id** – notification id, it is used to update and remove notification, by default id is randomly generated
-- **disallowClose** – removes close button, notification can be closed only programmatically
-- **onClose** – calls when notification is unmounted
-- **onOpen** – calls when notification is mounted
-- **autoClose** – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
-- **message** – required notification body
-- **color, icon, title, radius, className, style, loading** – props spread to [Notification](/core/notification/) component
-
-All properties except **message** are optional.
-
-```tsx
-const notifications = useNotifications();
-
-// Bare minimum – message is required for all notifications
-notifications.showNotification({ message: 'Hello' });
-
-// All possible notification props
-const id = notifications.showNotification({
-  id: 'hello-there',
-  disallowClose: true,
-  onClose: () => console.log('unmounted'),
-  onOpen: () => console.log('mounted'),
-  autoClose: 5000,
-  title: "You've been compromised",
-  message: 'Leave the building immediately',
-  color: 'red',
-  icon: <Cross1Icon />,
-  className: 'my-notification-class',
-  style: { backgroundColor: 'red' },
-  loading: false,
-});
-```
-
-Notifications preview (message prop used as children):
-
-<Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
-
-## Notifications container position
-
-NotificationsProvider renders notifications container with fixed position inside [Portal](/core/portal/).
-Position cannot be changed per notification.
-
-```tsx
-<NotificationsProvider position="top-right" zIndex={2077}>
-  <YourApp />
-</NotificationsProvider>
-```
-
-## Limit and queue
-
-NotificationsProvider uses [use-queue](/hooks/use-queue/) hook to manage state.
-You can limit maximum amount of notifications that can be displayed by setting
-`limit` prop on NotificationsProvider:
-
-```tsx
-<NotificationsProvider limit={5}>
-  <YourApp />
-</NotificationsProvider>
-```
-
-All notifications added after limit was reached will be added into queue
-and displayed when notification from current state is closed.
-
-<Demo data={NotificationsDemos.limit} />
-
-## Remove notifications from state and queue
-
-To remove specific notification from state or queue use `hideNotification` handler:
-
-```tsx
-const notifications = useNotifications();
-
-const id = notifications.showNotification({ message: 'Hello!' });
-notifications.hideNotification(id);
-```
-
-Use `cleanQueue` handler to remove all notifications that are not currently displayed and
-`clean` handler to remove all notifications from state and queue:
-
-<Demo data={NotificationsDemos.clean} />
-
-## Update notification
-
-showNotification handler returns notification id, you can use it to update notification:
-
-<Demo data={NotificationsDemos.update} />
-
-## Auto close
-
-You can configure auto close timeout in NotificationsProvider:
-
-```tsx
-// All notifications will be closed automatically in 4000ms
-<NotificationsProvider autoClose={4000}>
-  <YourApp />
-</NotificationsProvider>
-```
-
-Or in use-notifications hook handlers:
-
-```tsx
-notifications.showNotification({
-  message: 'I will close in 500ms seconds',
-  autoClose: 500,
-});
-
-notifications.updateNotification('hello', {
-  id: 'hello',
-  message: 'I will never close',
-  autoClose: false,
-});
-```
-
-showNotification and updateNotification have higher priority.
-
-<Demo data={NotificationsDemos.autoclose} />

@@ -93,7 +93,7 @@ function ViteGuide({ dependencies }: GuideProps) {
   return (
     <Guide
       dependencies={dependencies}
-      initScript="yarn create @vitejs/app mantine-vite --template react-ts"
+      initScript="yarn create vite mantine-vite --template react-ts"
       withDone
     />
   );
@@ -134,8 +134,8 @@ function GatsbyGuide({ dependencies }: GuideProps) {
 }
 
 const remixCode = `import { renderToString } from 'react-dom/server';
-import { RemixServer } from 'remix';
-import type { EntryContext } from 'remix';
+import { RemixServer } from '@remix-run/react';
+import type { EntryContext } from '@remix-run/node';
 import { injectStylesIntoStaticMarkup } from '@mantine/ssr';
 
 export default function handleRequest(

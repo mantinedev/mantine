@@ -122,7 +122,7 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   </Group>
 ));
 
-storiesOf('@mantine/core/MultiSelect/stories', module)
+storiesOf('MultiSelect', module)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
@@ -287,6 +287,7 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         defaultValue={['react', 'ng']}
         placeholder="Select items"
         searchable
+        name="test"
       />
     </SubmitForm>
   ))
@@ -294,4 +295,35 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
     <MantineProvider defaultProps={{ MultiSelect: { radius: 0, label: 'Default label' } }}>
       <MultiSelect data={data} placeholder="Select items" />
     </MantineProvider>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+      />
+    </div>
+  ))
+  .add('Styles API', () => (
+    <div style={{ padding: 40, maxWidth: 320 }}>
+      <MultiSelect
+        data={['react', 'angular']}
+        label="pick"
+        defaultValue={['react']}
+        styles={{ label: { color: 'red' } }}
+      />
+    </div>
   ));

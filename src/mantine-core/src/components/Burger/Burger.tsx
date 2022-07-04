@@ -4,13 +4,13 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { Box } from '../Box';
+import { UnstyledButton } from '../Button';
 import useStyles from './Burger.styles';
 
-export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Exclude<Selectors<typeof useStyles>, 'opened'>;
 
 export interface BurgerProps
   extends DefaultProps<BurgerStylesNames>,
@@ -47,15 +47,9 @@ export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerP
   );
 
   return (
-    <Box
-      component="button"
-      type="button"
-      className={cx(classes.root, className)}
-      ref={ref}
-      {...others}
-    >
+    <UnstyledButton className={cx(classes.root, className)} ref={ref} {...others}>
       <div className={cx(classes.burger, { [classes.opened]: opened })} />
-    </Box>
+    </UnstyledButton>
   );
 });
 

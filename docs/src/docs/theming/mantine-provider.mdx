@@ -22,7 +22,7 @@ function App() {
 // Custom theme is applied to all components in App
 function WithProvider() {
   return (
-    <MantineProvider theme={{ fontFamily: 'Open Sans' }}>
+    <MantineProvider theme={{ fontFamily: 'Open Sans' }} withGlobalStyles withNormalizeCSS>
       <App />
     </MantineProvider>
   );
@@ -54,8 +54,11 @@ interface MantineTheme {
   // Object of arrays with 10 colors
   colors: Record<string, Tuple<string, 10>>;
 
-  // Should be key of theme.colors, cannot be actual color value
+  // Key of theme.colors
   primaryColor: string;
+
+  // Index of color from theme.colors that is considered primary, Shade type is 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  primaryShade: Shade | { light: Shade; dark: Shade };
 
   // font-family and line-height used in most components
   fontFamily: string;
@@ -120,6 +123,8 @@ import { MantineProvider } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{
         // Theme is deeply merged with default theme
         colorScheme: 'light',
@@ -165,7 +170,7 @@ const myTheme: MantineThemeOverride = {
 
 function App() {
   return (
-    <MantineProvider theme={myTheme}>
+    <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -202,6 +207,8 @@ function App() {
   return (
     // Parent MantineProvider
     <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
       theme={{ colorScheme: 'dark' }}
       styles={{ Button: { root: { fontWeight: 400 } } }}
       defaultProps={{ Badge: { variant: 'outline' } }}
@@ -224,7 +231,7 @@ function App() {
 
 ## Styles on MantineProvider
 
-You can add context styles to components which support [Styles API](/theming/styles-api/) with MantineProvider.
+You can add context styles to components that support [Styles API](/theming/styles-api/) with MantineProvider.
 All components that are rendered inside MantineProvider will inherit those styles:
 
 <Demo data={ThemeDemos.providerStyles} />
@@ -236,12 +243,83 @@ import { MantineProvider, Text } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider styles={{ Text: { root: { fontSize: 20 } } }}>
+    <MantineProvider
+      styles={{ Text: { root: { fontSize: 20 } } }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Text>20px text</Text>
     </MantineProvider>
   );
 }
 ```
+
+## Classes on MantineProvider
+
+Same as with `styles` you can add classes to all components with `classNames` prop on MantineProvider:
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      classNames={{ Button: { root: 'button-root', label: 'button-label' } }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
+      <Button>All Button components will have the classes above</Button>
+    </MantineProvider>
+  );
+}
+```
+
+This approach is useful when you want to styles components with utility based CSS libraries.
+
+## Mantine CSS variables
+
+If you prefer to style components with CSS/SCSS or other styling solutions that do not have access to Mantine theme
+context, then you can use Mantine CSS variables. To add css variables set `withCSSVariables` prop on MantineProvider:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider withCSSVariables withGlobalStyles withNormalizeCSS>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+Then you will be able to use variables anywhere in your CSS:
+
+```css
+.my-button {
+  background-color: var(--mantine-color-blue-6);
+  font-family: var(--mantine-font-family);
+  line-height: var(--mantine-line-height);
+}
+```
+
+Mantine exposes the following CSS variables based on `theme` you provide:
+
+- `--mantine-color-white`
+- `--mantine-color-black`
+- `--mantine-transition-timing-function`
+- `--mantine-line-height`
+- `--mantine-font-family`
+- `--mantine-font-family-monospace`
+- `--mantine-font-family-headings`
+- `--mantine-heading-font-weight`
+- `--mantine-shadow-{size}`, e.g. `--mantine-shadow-sm`, `--mantine-shadow-xl`
+- `--mantine-radius-{size}`, e.g. `--mantine-radius-sm`, `--mantine-radius-xl`
+- `--mantine-spacing-{size}`, e.g. `--mantine-spacing-sm`, `--mantine-spacing-xl`
+- `--mantine-font-size-{size}`, e.g. `--mantine-font-size-sm`, `--mantine-font-size-xl`
+- `--mantine-color-{color}-{shade}`, e.g. `--mantine-color-blue-6`, `--mantine-color-gray-0`
+- `--mantine-{heading}-font-size`, e.g. `--mantine-h1-font-size`
+- `--mantine-{heading}-line-height`, e.g, `--mantine-h3-line-height`
 
 ## Default props on MantineProvider
 
@@ -253,6 +331,8 @@ import { MantineProvider, Button, Badge } from '@mantine/core';
 function App() {
   return (
     <MantineProvider
+      withNormalizeCSS
+      withGlobalStyles
       defaultProps={{
         Button: { color: 'red' },
         Badge: { size: 'xl', radius: 0 },
@@ -309,7 +389,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine' }}>
+    <MantineProvider emotionOptions={{ key: 'mantine' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );
@@ -319,7 +399,7 @@ function App() {
 ## Change styles insertion point
 
 By default, Mantine components styles are prepended to head to allow overrides.
-To make Mantine styles override other styles, set `propend` to `false`.
+To make Mantine styles override other styles, set `prepend` to `false`.
 With this option styles will be added at the end of `head` element:
 
 ```tsx
@@ -327,7 +407,11 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'mantine', prepend: false }}>
+    <MantineProvider
+      emotionOptions={{ key: 'mantine', prepend: false }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <YourApp />
     </MantineProvider>
   );
@@ -343,7 +427,7 @@ import { MantineProvider } from '@mantine/core';
 
 function App() {
   return (
-    <MantineProvider emotionOptions={{ key: 'custom-key' }}>
+    <MantineProvider emotionOptions={{ key: 'custom-key' }} withGlobalStyles withNormalizeCSS>
       <YourApp />
     </MantineProvider>
   );

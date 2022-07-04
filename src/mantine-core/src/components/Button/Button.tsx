@@ -3,10 +3,9 @@ import {
   DefaultProps,
   MantineSize,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineGradient,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -15,7 +14,7 @@ import { Box } from '../Box';
 import useStyles, { heights, ButtonVariant } from './Button.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ButtonStylesNames = ClassNames<typeof useStyles>;
+export type ButtonStylesNames = Selectors<typeof useStyles>;
 
 export interface SharedButtonProps extends DefaultProps<ButtonStylesNames> {
   /** Predefined button size */
@@ -82,7 +81,7 @@ const defaultProps: Partial<ButtonProps<any>> = {
 };
 
 export const Button: ButtonComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(props: ButtonProps<C>, ref: PolymorphicRef<C>) => {
+  (props: ButtonProps<'button'>, ref: PolymorphicRef<'button'>) => {
     const {
       className,
       size,
@@ -120,7 +119,7 @@ export const Button: ButtonComponent = forwardRef(
       },
       { classNames, styles, name: 'Button' }
     );
-    const colors = getSharedColorScheme({ color, theme, variant });
+    const colors = theme.fn.variant({ color, variant });
     const loader = (
       <Loader
         color={colors.color}
@@ -130,7 +129,7 @@ export const Button: ButtonComponent = forwardRef(
     );
 
     return (
-      <Box<any>
+      <Box
         component={component || 'button'}
         className={cx(classes[variant], { [classes.loading]: loading }, classes.root, className)}
         type={type}
@@ -162,6 +161,6 @@ export const Button: ButtonComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Button.displayName = '@mantine/core/Button';

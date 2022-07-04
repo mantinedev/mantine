@@ -4,19 +4,25 @@ package: '@mantine/dates'
 title: DatePicker
 order: 1
 slug: /dates/date-picker/
-description: 'Capture date input from user'
-props: ['DatePicker']
-import: "import { DatePicker } from '@mantine/dates';"
+description: 'Capture date or dates range from user'
+props: ['DatePicker', 'DateRangePicker']
+import: "import { DatePicker, DateRangePicker } from '@mantine/dates';"
 source: 'mantine-dates/src/components/DatePicker/DatePicker.tsx'
 docs: 'dates/DatePicker.mdx'
-styles: ['DatePicker']
+styles: ['DatePicker', 'DateRangePicker']
 ---
 
-import { DatePickerDemos } from '@mantine/demos';
+import { DatePickerDemos, DateRangePickerDemos } from '@mantine/demos';
 
 ## Usage
 
+DatePicker component:
+
 <Demo data={DatePickerDemos.usage} />
+
+DateRangePicker component (supports the same props as DatePicker component):
+
+<Demo data={DateRangePickerDemos.usage} />
 
 ## Controlled
 
@@ -44,6 +50,13 @@ Then set `locale` prop in component:
 
 <Demo data={DatePickerDemos.localization} />
 
+## Custom day renderer
+
+You can provide your own day renderer function with `renderDay` prop.
+For example, it can be used to wrap day with [Indicator](/core/indicator/):
+
+<Demo data={DatePickerDemos.renderDay} />
+
 ## Level change
 
 DatePicker supports three levels: date, month and year. User can access next level by clicking label between next/previous controls.
@@ -57,7 +70,7 @@ Change first day of week with `firstDayOfWeek` prop. It accepts either `sunday` 
 
 <Demo data={DatePickerDemos.firstDaySunday} />
 
-## Open calendal within modal
+## Open calendar within modal
 
 You can change the way calendar pop up on the page.
 Default variant is `popover`, set it to `modal` to display calendar in modal:
@@ -106,6 +119,14 @@ function Demo() {
 
 `dateParser` function should always return Date object.
 If parsed date is invalid when input is blurred value will be restored to last valid value.
+
+Note that if you use the default dayjs parser, you will need to import and configure the
+`customParseFormat` dayjs plugin:
+
+```tsx
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+```
 
 ## Exclude dates
 
@@ -201,6 +222,13 @@ Component supports all props from [Input](/core/input/) and [InputWrapper](/core
 ## Disabled state
 
 <Demo data={DatePickerDemos.disabled} />
+
+## Dropdown position
+
+By default, dropdown is placed below the input and when there is not enough space, it flips to be above the input.
+To change this behavior, set `dropdownPosition` prop:
+
+<Demo data={DatePickerDemos.flip} />
 
 ## Get input ref
 

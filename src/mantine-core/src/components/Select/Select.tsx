@@ -87,6 +87,9 @@ export interface SelectSharedProps<Item, Value> {
 
   /** Whether to switch item order and keyboard navigation on dropdown position flip */
   switchDirectionOnFlip?: boolean;
+
+  /** useEffect dependencies to force update dropdown position */
+  positionDependencies?: any[];
 }
 
 export interface SelectProps
@@ -128,6 +131,12 @@ export interface SelectProps
 
   /** Allow deselecting items on click */
   allowDeselect?: boolean;
+
+  /** Should data be filtered when search value exactly matches selected item */
+  filterDataOnExactSearchMatch?: boolean;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export function defaultFilter(value: string, item: SelectItem) {
@@ -156,7 +165,10 @@ const defaultProps: Partial<SelectProps> = {
   shouldCreate: defaultShouldCreate,
   selectOnBlur: false,
   switchDirectionOnFlip: false,
+  filterDataOnExactSearchMatch: false,
   zIndex: getDefaultZIndex('popover'),
+  clearButtonTabIndex: 0,
+  positionDependencies: [],
 };
 
 export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
@@ -211,6 +223,14 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     name,
     dropdownPosition,
     allowDeselect,
+    errorProps,
+    descriptionProps,
+    labelProps,
+    placeholder,
+    filterDataOnExactSearchMatch,
+    clearButtonTabIndex,
+    form,
+    positionDependencies,
     ...others
   } = useMantineDefaultProps('Select', defaultProps, props);
 
@@ -318,6 +338,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
     limit,
     searchValue: inputValue,
     filter,
+    filterDataOnExactSearchMatch,
+    value: _value,
   });
 
   if (isCreatable && shouldCreate(inputValue, filteredData)) {
@@ -416,6 +438,36 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
         break;
       }
 
+      case 'Home': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const firstItemIndex = filteredData.findIndex((item) => !item.disabled);
+          setHovered(firstItemIndex);
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        }
+        break;
+      }
+
+      case 'End': {
+        if (!searchable) {
+          event.preventDefault();
+
+          if (!dropdownOpened) {
+            setDropdownOpened(true);
+          }
+
+          const lastItemIndex = filteredData.map((item) => !!item.disabled).lastIndexOf(false);
+          setHovered(lastItemIndex);
+          scrollIntoView({ alignment: isColumn ? 'end' : 'start' });
+        }
+        break;
+      }
+
       case 'Escape': {
         event.preventDefault();
         setDropdownOpened(false);
@@ -429,7 +481,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
-            setDropdownOpened(!dropdownOpened);
+            setDropdownOpened(true);
             setHovered(selectedItemIndex);
             scrollSelectedItemIntoView();
           }
@@ -439,15 +491,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       }
 
       case 'Enter': {
-        event.preventDefault();
+        if (!searchable) {
+          event.preventDefault();
+        }
 
         if (filteredData[hovered] && dropdownOpened) {
           event.preventDefault();
           handleItemSelect(filteredData[hovered]);
-        } else {
-          setDropdownOpened(true);
-          setHovered(selectedItemIndex);
-          scrollSelectedItemIntoView();
         }
       }
     }
@@ -498,8 +548,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
   };
 
   const shouldShowDropdown =
-    dropdownOpened &&
-    (searchable && !creatable ? filteredData.length > 0 || !!nothingFound : dropdownOpened);
+    filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
   return (
     <InputWrapper
@@ -515,22 +564,27 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
       styles={styles}
       __staticSelector="Select"
       sx={sx}
+      errorProps={errorProps}
+      descriptionProps={descriptionProps}
+      labelProps={labelProps}
       {...systemStyles}
       {...wrapperProps}
     >
       <div
         role="combobox"
         aria-haspopup="listbox"
-        aria-owns={`${uuid}-items`}
+        aria-owns={shouldShowDropdown ? `${uuid}-items` : null}
         aria-controls={uuid}
         aria-expanded={shouldShowDropdown}
         onMouseLeave={() => setHovered(-1)}
         tabIndex={-1}
       >
+        <input type="hidden" name={name} value={_value || ''} form={form} />
+
         <Input<'input'>
-          autoComplete="nope"
+          autoComplete="off"
+          type="search"
           {...rest}
-          type="text"
           required={required}
           ref={useMergedRef(ref, inputRef)}
           id={uuid}
@@ -539,17 +593,18 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           onKeyDown={handleInputKeydown}
           __staticSelector="Select"
           value={inputValue}
+          placeholder={placeholder}
           onChange={handleInputChange}
           aria-autocomplete="list"
           aria-controls={shouldShowDropdown ? `${uuid}-items` : null}
-          aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+          aria-activedescendant={hovered >= 0 ? `${uuid}-${hovered}` : null}
           onClick={handleInputClick}
           onBlur={handleInputBlur}
           onFocus={handleInputFocus}
           readOnly={!searchable}
           disabled={disabled}
           data-mantine-stop-propagation={shouldShowDropdown}
-          name={name}
+          name={null}
           classNames={{
             ...classNames,
             input: cx({ [classes.input]: !searchable }, classNames?.input),
@@ -564,6 +619,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             clearButtonLabel,
             onClear: handleClear,
             error,
+            clearButtonTabIndex,
           })}
         />
 
@@ -587,6 +643,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
           withinPortal={withinPortal}
           zIndex={zIndex}
           dropdownPosition={dropdownPosition}
+          positionDependencies={positionDependencies}
         >
           <SelectItems
             data={filteredData}
@@ -604,6 +661,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectPr
             nothingFound={nothingFound}
             creatable={isCreatable && !!createLabel}
             createLabel={createLabel}
+            aria-label={label}
           />
         </SelectDropdown>
       </div>

@@ -5,6 +5,8 @@ describe('@mantine/styles/rgba', () => {
     expect(rgba('#228BE6', 0.74)).toBe('rgba(34, 139, 230, 0.74)');
     expect(rgba('96f2d7', 0.945)).toBe('rgba(150, 242, 215, 0.945)');
     expect(rgba('#000000', 0.333)).toBe('rgba(0, 0, 0, 0.333)');
+    expect(rgba('#000', 0.333)).toBe('rgba(0, 0, 0, 0.333)');
+    expect(rgba('fff', 1)).toBe('rgba(255, 255, 255, 1)');
     expect(rgba('#ffffff', 1)).toBe('rgba(255, 255, 255, 1)');
   });
 

@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { useDropzone, FileRejection } from 'react-dropzone';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineNumberSize,
   LoadingOverlay,
   Box,
@@ -11,7 +11,7 @@ import {
 import { assignRef } from '@mantine/hooks';
 import useStyles from './Dropzone.styles';
 
-export type DropzoneStylesNames = ClassNames<typeof useStyles>;
+export type DropzoneStylesNames = Selectors<typeof useStyles>;
 
 export interface DropzoneStatus {
   accepted: boolean;
@@ -51,6 +51,9 @@ export interface DropzoneProps extends DefaultProps<DropzoneStylesNames> {
 
   /** Set maximum file size in bytes */
   maxSize?: number;
+
+  /** Name of the form control. Submitted with the form as part of a name/value pair. */
+  name?: string;
 }
 
 const defaultProps: Partial<DropzoneProps> = {
@@ -76,14 +79,15 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
     onDrop,
     onReject,
     openRef,
+    name,
     ...others
   } = useMantineDefaultProps('Dropzone', defaultProps, props);
 
   const { classes, cx } = useStyles({ radius, padding }, { classNames, styles, name: 'Dropzone' });
 
   const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-    onDropAccepted: (files) => onDrop(files),
-    onDropRejected: (fileRejections) => onReject(fileRejections),
+    onDropAccepted: onDrop,
+    onDropRejected: onReject,
     disabled: disabled || loading,
     accept,
     multiple,
@@ -107,7 +111,7 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>((props: Dropzo
       )}
     >
       <LoadingOverlay visible={loading} radius={radius} />
-      <input {...getInputProps()} />
+      <input {...getInputProps()} name={name} />
       {children({ accepted: isDragAccept, rejected: isDragReject })}
     </Box>
   );

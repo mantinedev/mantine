@@ -41,7 +41,7 @@ export async function buildPackage(packageName: string, options?: BuildOptions) 
     }
 
     logger.info(
-      `Package ${chalk.cyan(packageName)} was build in ${chalk.green(
+      `Package ${chalk.cyan(packageName)} was built in ${chalk.green(
         `${((Date.now() - startTime) / 1000).toFixed(2)}s`
       )}`
     );

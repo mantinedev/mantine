@@ -9,7 +9,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/core/JsonInput/stories', module).add('Controlled', () => (
+storiesOf('JsonInput', module).add('Controlled', () => (
   <div style={{ padding: 40, maxWidth: 400 }}>
     <Controlled />
   </div>

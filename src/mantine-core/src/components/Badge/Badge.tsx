@@ -5,7 +5,7 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -14,7 +14,7 @@ import { Box } from '../Box';
 import useStyles from './Badge.styles';
 
 export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
-export type BadgeStylesNames = ClassNames<typeof useStyles>;
+export type BadgeStylesNames = Selectors<typeof useStyles>;
 
 interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   /** Badge color from theme */
@@ -59,7 +59,7 @@ const defaultProps: Partial<BadgeProps<any>> = {
 };
 
 export const Badge: BadgeComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: BadgeProps<C>, ref: PolymorphicRef<C>) => {
+  (props: BadgeProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const {
       component,
       className,
@@ -91,7 +91,7 @@ export const Badge: BadgeComponent = forwardRef(
     );
 
     return (
-      <Box<any>
+      <Box
         component={component || 'div'}
         className={cx(classes[variant], classes.root, className)}
         ref={ref}
@@ -103,6 +103,6 @@ export const Badge: BadgeComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Badge.displayName = '@mantine/core/Badge';

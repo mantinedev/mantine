@@ -104,6 +104,13 @@ export function useFullscreen<T extends HTMLElement = any>() {
       });
     }
 
+    if (_ref.current) {
+      return addEvents(_ref.current, {
+        onFullScreen: handleFullscreenChange,
+        onError: handleFullscreenError,
+      });
+    }
+
     return undefined;
   }, []);
 

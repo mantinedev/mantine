@@ -11,7 +11,12 @@ export default createStyles((theme) => ({
   container: {
     paddingTop: 50,
     paddingBottom: 50,
-    paddingLeft: theme.spacing.xl,
-    paddingRight: theme.spacing.xl,
+    paddingLeft: theme.spacing.xl * 2,
+    paddingRight: theme.spacing.xl * 2,
+
+    [theme.fn.smallerThan('sm')]: {
+      paddingLeft: theme.spacing.md,
+      paddingRight: theme.spacing.md,
+    },
   },
 }));

@@ -3,7 +3,7 @@ import {
   useMantineTheme,
   DefaultProps,
   MantineNumberSize,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -14,7 +14,7 @@ import { Affix } from '../Affix';
 import { Paper, PaperProps } from '../Paper/Paper';
 import useStyles from './Dialog.styles';
 
-export type DialogStylesNames = ClassNames<typeof useStyles>;
+export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
   extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,

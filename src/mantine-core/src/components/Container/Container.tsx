@@ -20,7 +20,6 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
 }
 
 const defaultProps: Partial<ContainerProps> = {
-  px: 'md',
   sizes: {
     xs: 540,
     sm: 720,

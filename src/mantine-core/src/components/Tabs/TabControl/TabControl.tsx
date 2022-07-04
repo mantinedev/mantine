@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors } from '@mantine/styles';
 import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../../Box';
 import type { TabsVariant } from '../Tabs';
 import useStyles from './TabControl.styles';
 
-export type TabControlStylesNames = Exclude<ClassNames<typeof useStyles>, TabsVariant>;
+export type TabControlStylesNames = Exclude<Selectors<typeof useStyles>, TabsVariant>;
 
 export interface TabControlProps
   extends DefaultProps<TabControlStylesNames>,

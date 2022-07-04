@@ -9,17 +9,25 @@ const classes = {
 describe('@mantine/tss/merge-class-names', () => {
   it('merges classNames correctly', () => {
     expect(
-      mergeClassNames(cx, classes, { root: 'root-test', title: 'title-test' }, 'alert')
+      mergeClassNames(
+        cx,
+        classes,
+        { root: 'root-provider' },
+        { root: 'root-test', title: 'title-test' },
+        'alert'
+      )
     ).toStrictEqual({
-      root: 'root-1 root-test mantine-alert-root',
+      root: 'root-1 root-provider root-test mantine-alert-root',
       title: 'title-1 title-test mantine-alert-title',
     });
   });
 
   it('merges classNames partial correctly', () => {
-    expect(mergeClassNames(cx, classes, { root: 'root-test' }, 'alert')).toStrictEqual({
+    expect(
+      mergeClassNames(cx, classes, { title: 'title-provider' }, { root: 'root-test' }, 'alert')
+    ).toStrictEqual({
       root: 'root-1 root-test mantine-alert-root',
-      title: 'title-1 mantine-alert-title',
+      title: 'title-1 title-provider mantine-alert-title',
     });
   });
 });

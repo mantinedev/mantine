@@ -1,12 +1,12 @@
 import React, { forwardRef, useRef } from 'react';
-import { ClassNames, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
+import { Selectors, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
 import { mergeRefs } from '@mantine/hooks';
 import { Box } from '../../Box';
 import { useMenuContext } from '../Menu.context';
 import { getContextItemIndex } from '../../../utils';
 import useStyles from './MenuItem.styles';
 
-export type MenuItemStylesNames = ClassNames<typeof useStyles>;
+export type MenuItemStylesNames = Selectors<typeof useStyles>;
 
 export interface SharedMenuItemProps extends DefaultProps {
   /** Item label */
@@ -48,7 +48,7 @@ export const _MenuItem = forwardRef(
   ) => {
     const itemRef = useRef<HTMLButtonElement>();
     const { hovered, onItemHover, radius, onItemKeyDown, classNames, styles, onItemClick } =
-      useMenuContext();
+      useMenuContext('Menu.Item');
     const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
     const itemIndex = getContextItemIndex(
       { elementSelector: '.mantine-Menu-item', parentClassName: 'mantine-Menu-body' },

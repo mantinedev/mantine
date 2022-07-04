@@ -32,6 +32,18 @@ export default createStyles((theme) => {
 
       ...headings,
 
+      '& .ql-align-center': {
+        textAlign: 'center',
+      },
+
+      '& .ql-align-right': {
+        textAlign: 'right',
+      },
+
+      '& .ql-align-left': {
+        textAlign: 'left',
+      },
+
       '& img': {
         maxWidth: '100%',
         marginBottom: theme.spacing.xs,
@@ -76,7 +88,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: `1px ${theme.spacing.xs / 1}`,
+        padding: `1px ${theme.spacing.xs / 1}px`,
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],

@@ -27,7 +27,7 @@ export default createStyles((theme, { color }: BlockquoteStylesParams) => ({
   },
 
   icon: {
-    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 6 : 7),
+    color: theme.fn.variant({ variant: 'filled', color }).background,
     marginRight: theme.spacing.lg,
     marginTop: 2,
     width: 22,

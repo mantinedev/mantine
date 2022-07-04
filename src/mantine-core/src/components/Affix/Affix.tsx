@@ -39,7 +39,11 @@ export const Affix = forwardRef<HTMLDivElement, AffixProps>((props: AffixProps, 
   );
   return (
     <Portal zIndex={zIndex} target={target}>
-      <Box sx={[{ position: 'fixed', ...position }, sx]} ref={ref} {...others} />
+      <Box
+        sx={[{ position: 'fixed', ...position }, ...(Array.isArray(sx) ? sx : [sx])]}
+        ref={ref}
+        {...others}
+      />
     </Portal>
   );
 });

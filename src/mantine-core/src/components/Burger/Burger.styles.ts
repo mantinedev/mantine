@@ -15,20 +15,17 @@ export const sizes = {
 
 export default createStyles((theme, { size, color }: BurgerStylesParams, getRef) => {
   const sizeValue = theme.fn.size({ size, sizes });
-  const opened = { ref: getRef('opened') } as const;
 
   return {
-    opened,
+    opened: {
+      ref: getRef('opened'),
+    },
 
     root: {
-      ...theme.fn.focusStyles(),
-      WebkitTapHighlightColor: 'transparent',
       borderRadius: theme.radius.sm,
       width: sizeValue + theme.spacing.xs,
       height: sizeValue + theme.spacing.xs,
       padding: theme.spacing.xs / 2,
-      backgroundColor: 'transparent',
-      border: 0,
       cursor: 'pointer',
     },
 
@@ -65,7 +62,7 @@ export default createStyles((theme, { size, color }: BurgerStylesParams, getRef)
         top: sizeValue / 3,
       },
 
-      [`&.${opened.ref}`]: {
+      [`&.${getRef('opened')}`]: {
         backgroundColor: 'transparent',
 
         '&:before': {

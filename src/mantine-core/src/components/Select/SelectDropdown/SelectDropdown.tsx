@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef } from 'react';
-import { DefaultProps, MantineShadow, ClassNames, getDefaultZIndex } from '@mantine/styles';
+import { DefaultProps, MantineShadow, Selectors, getDefaultZIndex } from '@mantine/styles';
 import type { Placement } from '@popperjs/core';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { MantineTransition } from '../../Transition';
@@ -7,7 +7,7 @@ import { Paper } from '../../Paper';
 import useStyles from './SelectDropdown.styles';
 import { Popper } from '../../Popper';
 
-export type SelectDropdownStylesNames = ClassNames<typeof useStyles>;
+export type SelectDropdownStylesNames = Selectors<typeof useStyles>;
 
 interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   mounted: boolean;
@@ -27,6 +27,7 @@ interface SelectDropdownProps extends DefaultProps<SelectDropdownStylesNames> {
   switchDirectionOnFlip?: boolean;
   zIndex?: number;
   dropdownPosition?: 'bottom' | 'top' | 'flip';
+  positionDependencies?: any[];
 }
 
 export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
@@ -51,6 +52,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
       zIndex = getDefaultZIndex('popover'),
       dropdownPosition = 'flip',
       __staticSelector,
+      positionDependencies = [],
     }: SelectDropdownProps,
     ref
   ) => {
@@ -71,6 +73,7 @@ export const SelectDropdown = forwardRef<HTMLDivElement, SelectDropdownProps>(
         transitionTimingFunction={transitionTimingFunction}
         position={dropdownPosition === 'flip' ? 'bottom' : dropdownPosition}
         withinPortal={withinPortal}
+        forceUpdateDependencies={positionDependencies}
         zIndex={zIndex}
         modifiers={[
           {

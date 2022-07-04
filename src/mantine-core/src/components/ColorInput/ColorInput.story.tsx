@@ -34,11 +34,14 @@ function ControlledInput() {
       <button type="button" onClick={() => setValue('rgba(242, 165, 201, 0.54)')}>
         Set value
       </button>
+      <button type="button" onClick={() => setValue('')}>
+        Set empty
+      </button>
     </div>
   );
 }
 
-storiesOf('@mantine/core/ColorInput/stories', module)
+storiesOf('ColorInput', module)
   .add('Controlled', () => <ControlledInput />)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Within overlays', () => (

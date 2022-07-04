@@ -1,10 +1,10 @@
 import React, { useState, forwardRef } from 'react';
 import * as RadixScrollArea from '@radix-ui/react-scroll-area';
-import { DefaultProps, ClassNames, useMantineTheme, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useMantineTheme, useMantineDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles from './ScrollArea.styles';
 
-export type ScrollAreaStylesNames = ClassNames<typeof useStyles>;
+export type ScrollAreaStylesNames = Selectors<typeof useStyles>;
 
 export interface ScrollAreaProps
   extends DefaultProps<ScrollAreaStylesNames>,

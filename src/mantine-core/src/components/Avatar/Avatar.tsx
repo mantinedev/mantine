@@ -3,7 +3,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   useMantineDefaultProps,
@@ -12,7 +12,7 @@ import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import useStyles from './Avatar.styles';
 
-export type AvatarStylesNames = ClassNames<typeof useStyles>;
+export type AvatarStylesNames = Selectors<typeof useStyles>;
 
 interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Image url */
@@ -49,7 +49,7 @@ const defaultProps: Partial<AvatarProps<any>> = {
 };
 
 export const Avatar: AvatarComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: AvatarProps<C>, ref: PolymorphicRef<C>) => {
+  (props: AvatarProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const {
       component,
       className,
@@ -75,7 +75,7 @@ export const Avatar: AvatarComponent = forwardRef(
     }, [src]);
 
     return (
-      <Box<any>
+      <Box
         component={component || 'div'}
         className={cx(classes.root, className)}
         ref={ref}
@@ -97,6 +97,6 @@ export const Avatar: AvatarComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Avatar.displayName = '@mantine/core/Avatar';

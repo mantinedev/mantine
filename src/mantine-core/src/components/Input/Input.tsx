@@ -4,7 +4,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  ClassNames,
+  Selectors,
   PolymorphicComponentProps,
   PolymorphicRef,
   extractSystemStyles,
@@ -13,7 +13,7 @@ import {
 import { Box } from '../Box';
 import useStyles, { InputVariant } from './Input.styles';
 
-export type InputStylesNames = ClassNames<typeof useStyles>;
+export type InputStylesNames = Selectors<typeof useStyles>;
 
 export interface InputBaseProps {
   /** Adds icon on the left side of input */
@@ -74,7 +74,7 @@ const defaultProps: Partial<InputProps<any>> = {
 };
 
 export const Input: InputComponent = forwardRef(
-  <C extends React.ElementType = 'input'>(props: InputProps<C>, ref: PolymorphicRef<C>) => {
+  (props: InputProps<'input'>, ref: PolymorphicRef<'input'>) => {
     const {
       component,
       className,
@@ -148,6 +148,6 @@ export const Input: InputComponent = forwardRef(
       </Box>
     );
   }
-);
+) as any;
 
 Input.displayName = '@mantine/core/Input';

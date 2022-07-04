@@ -1,5 +1,5 @@
 export type { ColorScheme } from './ColorScheme';
-export type { DefaultProps } from './DefaultProps';
+export type { DefaultProps, Sx } from './DefaultProps';
 export type {
   MantineColor,
   MantineThemeColors,

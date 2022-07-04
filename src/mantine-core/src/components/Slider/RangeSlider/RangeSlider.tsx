@@ -48,6 +48,9 @@ export interface RangeSliderProps
   /** Number by which value will be incremented/decremented with thumb drag and arrows */
   step?: number;
 
+  /** Amount of digits after the decimal point */
+  precision?: number;
+
   /** Current value for controlled slider */
   value?: Value;
 
@@ -92,6 +95,9 @@ export interface RangeSliderProps
 
   /** Thumbs children, can be used to add icons */
   thumbChildren?: React.ReactNode;
+
+  /** Disables slider */
+  disabled?: boolean;
 }
 
 const defaultProps: Partial<RangeSliderProps> = {
@@ -109,6 +115,7 @@ const defaultProps: Partial<RangeSliderProps> = {
   thumbFromLabel: '',
   thumbToLabel: '',
   showLabelOnHover: true,
+  disabled: false,
 };
 
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
@@ -126,6 +133,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       max,
       minRange,
       step,
+      precision,
       defaultValue,
       name,
       marks,
@@ -138,6 +146,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       thumbToLabel,
       showLabelOnHover,
       thumbChildren,
+      disabled,
       ...others
     } = useMantineDefaultProps('RangeSlider', defaultProps, props);
 
@@ -192,10 +201,11 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           clone[0] = Math.max(val - minRange, min);
         }
 
-        if (val < (minRange || min)) {
+        if (val < clone[0] + minRange) {
           clone[index] = valueRef.current[index];
         }
       }
+
       _setValue(clone);
 
       if (triggerChangeEnd) {
@@ -204,8 +214,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     };
 
     const handleChange = (val: number) => {
-      const nextValue = getChangeValue({ value: val, min, max, step });
-      setRangedValue(nextValue, thumbIndex.current, false);
+      if (!disabled) {
+        const nextValue = getChangeValue({ value: val, min, max, step, precision });
+        setRangedValue(nextValue, thumbIndex.current, false);
+      }
     };
 
     const { ref: container, active } = useMove(
@@ -261,71 +273,73 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     };
 
     const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      switch (event.nativeEvent.code) {
-        case 'ArrowUp': {
-          event.preventDefault();
-          const focusedIndex = getFocusedThumbIndex();
-          thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max),
-            focusedIndex,
-            true
-          );
-          break;
-        }
-        case 'ArrowRight': {
-          event.preventDefault();
-          const focusedIndex = getFocusedThumbIndex();
-          thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            Math.min(
-              Math.max(
-                theme.dir === 'rtl'
-                  ? valueRef.current[focusedIndex] - step
-                  : valueRef.current[focusedIndex] + step,
-                min
+      if (!disabled) {
+        switch (event.nativeEvent.code) {
+          case 'ArrowUp': {
+            event.preventDefault();
+            const focusedIndex = getFocusedThumbIndex();
+            thumbs.current[focusedIndex].focus();
+            setRangedValue(
+              Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max),
+              focusedIndex,
+              true
+            );
+            break;
+          }
+          case 'ArrowRight': {
+            event.preventDefault();
+            const focusedIndex = getFocusedThumbIndex();
+            thumbs.current[focusedIndex].focus();
+            setRangedValue(
+              Math.min(
+                Math.max(
+                  theme.dir === 'rtl'
+                    ? valueRef.current[focusedIndex] - step
+                    : valueRef.current[focusedIndex] + step,
+                  min
+                ),
+                max
               ),
-              max
-            ),
-            focusedIndex,
-            true
-          );
-          break;
-        }
+              focusedIndex,
+              true
+            );
+            break;
+          }
 
-        case 'ArrowDown': {
-          event.preventDefault();
-          const focusedIndex = getFocusedThumbIndex();
-          thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max),
-            focusedIndex,
-            true
-          );
-          break;
-        }
-        case 'ArrowLeft': {
-          event.preventDefault();
-          const focusedIndex = getFocusedThumbIndex();
-          thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            Math.min(
-              Math.max(
-                theme.dir === 'rtl'
-                  ? valueRef.current[focusedIndex] + step
-                  : valueRef.current[focusedIndex] - step,
-                min
+          case 'ArrowDown': {
+            event.preventDefault();
+            const focusedIndex = getFocusedThumbIndex();
+            thumbs.current[focusedIndex].focus();
+            setRangedValue(
+              Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max),
+              focusedIndex,
+              true
+            );
+            break;
+          }
+          case 'ArrowLeft': {
+            event.preventDefault();
+            const focusedIndex = getFocusedThumbIndex();
+            thumbs.current[focusedIndex].focus();
+            setRangedValue(
+              Math.min(
+                Math.max(
+                  theme.dir === 'rtl'
+                    ? valueRef.current[focusedIndex] + step
+                    : valueRef.current[focusedIndex] - step,
+                  min
+                ),
+                max
               ),
-              max
-            ),
-            focusedIndex,
-            true
-          );
-          break;
-        }
+              focusedIndex,
+              true
+            );
+            break;
+          }
 
-        default: {
-          break;
+          default: {
+            break;
+          }
         }
       }
     };
@@ -362,9 +376,11 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         onKeyDownCapture={handleTrackKeydownCapture}
         styles={styles}
         classNames={classNames}
+        disabled={disabled}
       >
         <Track
           offset={positions[0]}
+          marksOffset={_value[0]}
           filled={positions[1] - positions[0]}
           marks={marks}
           size={size}
@@ -383,6 +399,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             clone[nearestValue] = val;
             _setValue(clone);
           }}
+          disabled={disabled}
         >
           <Thumb
             {...sharedThumbProps}
@@ -397,6 +414,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             onMouseDown={(event) => handleThumbMouseDown(event, 0)}
             onFocus={() => setFocused(0)}
             showLabelOnHover={showLabelOnHover && hovered}
+            disabled={disabled}
           >
             {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
           </Thumb>
@@ -414,6 +432,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             onMouseDown={(event) => handleThumbMouseDown(event, 1)}
             onFocus={() => setFocused(1)}
             showLabelOnHover={showLabelOnHover && hovered}
+            disabled={disabled}
           >
             {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
           </Thumb>

@@ -168,7 +168,10 @@ export function Popper<T extends HTMLElement = HTMLDivElement>({
           <PopperContainer withinPortal={withinPortal} zIndex={zIndex}>
             <div
               ref={setPopperElement}
-              style={{ ...styles.popper, pointerEvents: 'none' }}
+              style={{
+                ...styles.popper,
+                pointerEvents: 'none',
+              }}
               {...attributes.popper}
             >
               <div style={transitionStyles}>

@@ -14,7 +14,7 @@ Thank you for showing interest in contributing to Mantine. All of your contribut
 
 - After deciding which [GitHub issue](https://github.com/mantinedev/mantine/labels/help%20wanted) or feature you'd like to work on, create a local branch to track your changes
 - If applicable, add unit tests while implementing your code
-- Ensure that all commits follow our [commit convention](##commit-convention)
+- Ensure that all commits follow our [commit convention](#commit-convention)
 - It is highly recommended that you run the `npm test` command to ensure new contributions integrate with the old before initiating a merge request
 - Create a merge request and keep up-to-date with any feedback you receive from a maintainer
 
@@ -43,8 +43,8 @@ Examples:
 
 ## Git branches
 
-- **master**: the current version, or alternatively, patches for current *minor* version (1.0.x)
-- **next-minor**: contains the next minor version (1.x.0) (more often than not, you'll want to create a PR directly to this branch)
+- **master**: the current version, or alternatively, patches for current _minor_ version (1.0.x)
+- **dev**: contains the next minor version (1.x.0) (more often than not, you'll want to create a PR directly to this branch)
 
 ## Get started with Mantine locally
 
@@ -56,7 +56,7 @@ Examples:
 ## npm scripts
 
 All npm scripts are located inside the [package.json](https://github.com/mantinedev/mantine/blob/master/package.json) file.
-Individual packages *do not* have dedicated scripts.
+Individual packages _do not_ have dedicated scripts.
 
 ### Development scripts
 

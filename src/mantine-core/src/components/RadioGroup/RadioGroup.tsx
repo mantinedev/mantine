@@ -61,6 +61,7 @@ const defaultProps: Partial<RadioGroupProps> = {
 export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   (props: RadioGroupProps, ref) => {
     const {
+      id,
       name,
       children,
       value,
@@ -73,9 +74,13 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       classNames,
       styles,
       wrapperProps,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('RadioGroup', defaultProps, props);
 
+    const rootId = useUuid(id);
     const uuid = useUuid(name);
     const [_value, setValue] = useUncontrolled({
       value,
@@ -102,17 +107,22 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 
     return (
       <InputWrapper
+        id={rootId}
         labelElement="div"
         size={size}
         __staticSelector="RadioGroup"
         classNames={classNames}
         styles={styles}
         ref={ref}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...wrapperProps}
         {...others}
       >
         <Group
           role="radiogroup"
+          aria-labelledby={`${rootId}-label`}
           spacing={spacing}
           direction={orientation === 'horizontal' ? 'row' : 'column'}
           style={{ paddingTop: 5 }}

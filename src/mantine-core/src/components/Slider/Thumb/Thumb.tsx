@@ -1,10 +1,10 @@
 import React, { useState, forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, MantineColor, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, MantineColor, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Transition, MantineTransition } from '../../Transition';
 import useStyles from './Thumb.styles';
 
-export type ThumbStylesNames = ClassNames<typeof useStyles>;
+export type ThumbStylesNames = Selectors<typeof useStyles>;
 
 export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   max: number;
@@ -25,6 +25,7 @@ export interface ThumbProps extends DefaultProps<ThumbStylesNames> {
   onBlur?(): void;
   showLabelOnHover?: boolean;
   children?: React.ReactNode;
+  disabled: boolean;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
@@ -50,11 +51,12 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
       onBlur,
       showLabelOnHover,
       children = null,
+      disabled,
     }: ThumbProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, size },
+      { color, size, disabled },
       { classNames, styles, name: 'Slider' }
     );
     const [focused, setFocused] = useState(false);
@@ -81,7 +83,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
         onClick={(event) => event.stopPropagation()}
-        sx={{ left: `${position}%` }}
+        style={{ [theme.dir === 'rtl' ? 'right' : 'left']: `${position}%` }}
       >
         {children}
         <Transition

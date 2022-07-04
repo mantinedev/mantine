@@ -35,7 +35,7 @@ export default createStyles(
         [`& .${getRef('thumb')}`]: {
           backgroundColor:
             theme.colorScheme === 'dark'
-              ? theme.fn.rgba('#ffffff', 0.5)
+              ? theme.fn.rgba(theme.white, 0.5)
               : theme.fn.rgba(theme.black, 0.5),
         },
       },
@@ -50,6 +50,7 @@ export default createStyles(
       },
 
       '&[data-state="hidden"]': {
+        display: 'none',
         opacity: 0,
       },
     },
@@ -59,7 +60,7 @@ export default createStyles(
       flex: 1,
       backgroundColor:
         theme.colorScheme === 'dark'
-          ? theme.fn.rgba('#ffffff', 0.4)
+          ? theme.fn.rgba(theme.white, 0.4)
           : theme.fn.rgba(theme.black, 0.4),
       borderRadius: scrollbarSize,
       position: 'relative',

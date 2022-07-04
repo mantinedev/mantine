@@ -21,7 +21,7 @@ const defaultProps: Partial<CardProps<any>> = {
 };
 
 export const Card: CardComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: CardProps<C>, ref: PolymorphicRef<C>) => {
+  (props: CardProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { component, className, p, radius, children, classNames, styles, ...others } =
       useMantineDefaultProps('Card', defaultProps, props);
     const { classes, cx } = useStyles(null, { name: 'Card', classNames, styles });
@@ -44,7 +44,7 @@ export const Card: CardComponent = forwardRef(
         className={cx(classes.root, className)}
         radius={radius}
         p={p}
-        component={component as any}
+        component={component || 'div'}
         ref={ref}
         {...others}
       >

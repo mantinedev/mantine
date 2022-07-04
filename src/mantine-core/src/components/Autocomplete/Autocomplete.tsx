@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -12,6 +12,7 @@ import { Input, InputBaseProps, InputStylesNames } from '../Input';
 import { SelectDropdown, SelectDropdownStylesNames } from '../Select/SelectDropdown/SelectDropdown';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
+import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
 import { SelectSharedProps } from '../Select/Select';
@@ -20,7 +21,7 @@ export type AutocompleteStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectDropdownStylesNames
-  | ClassNames<typeof useStyles>;
+  | Selectors<typeof useStyles>;
 
 export interface AutocompleteItem {
   value: string;
@@ -33,6 +34,12 @@ export interface AutocompleteProps
     InputWrapperBaseProps,
     SelectSharedProps<AutocompleteItem, string>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
+  /** Maximum dropdown height */
+  maxDropdownHeight?: number | string;
+
+  /** Change dropdown component, can be used to add native scrollbars */
+  dropdownComponent?: any;
+
   /** Called when item from dropdown was selected */
   onItemSubmit?(item: AutocompleteItem): void;
 }
@@ -53,7 +60,9 @@ const defaultProps: Partial<AutocompleteProps> = {
   filter: defaultFilter,
   switchDirectionOnFlip: false,
   zIndex: getDefaultZIndex('popover'),
-  dropdownPosition: 'bottom',
+  dropdownPosition: 'flip',
+  maxDropdownHeight: 'auto',
+  positionDependencies: [],
 };
 
 export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
@@ -94,7 +103,13 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
       withinPortal,
       switchDirectionOnFlip = false,
       zIndex = getDefaultZIndex('popover'),
-      dropdownPosition = 'bottom',
+      dropdownPosition,
+      maxDropdownHeight,
+      dropdownComponent,
+      errorProps,
+      labelProps,
+      descriptionProps,
+      positionDependencies,
       ...others
     } = useMantineDefaultProps('Autocomplete', defaultProps, props);
     const { classes } = useStyles({ size }, { classNames, styles, name: 'Autocomplete' });
@@ -104,6 +119,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
     const inputRef = useRef<HTMLInputElement>(null);
     const uuid = useUuid(id);
+    const [IMEOpen, setIMEOpen] = useState(false);
     const [_value, handleChange] = useUncontrolled({
       value,
       defaultValue,
@@ -132,6 +148,10 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
     const filteredData = filterData({ data: formattedData, value: _value, limit, filter });
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (IMEOpen) {
+        return;
+      }
+
       typeof onKeyDown === 'function' && onKeyDown(event);
 
       const isColumn = direction === 'column';
@@ -158,11 +178,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         }
 
         case 'Enter': {
-          if (dropdownOpened) {
-            event.preventDefault();
-          }
-
           if (filteredData[hovered] && dropdownOpened) {
+            event.preventDefault();
             handleChange(filteredData[hovered].value);
             typeof onItemSubmit === 'function' && onItemSubmit(filteredData[hovered]);
             setDropdownOpened(false);
@@ -211,6 +228,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
         __staticSelector="Autocomplete"
         sx={sx}
         style={style}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -218,19 +238,20 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
           className={classes.wrapper}
           role="combobox"
           aria-haspopup="listbox"
-          aria-owns={`${uuid}-items`}
+          aria-owns={shouldRenderDropdown ? `${uuid}-items` : null}
           aria-controls={uuid}
           aria-expanded={shouldRenderDropdown}
           onMouseLeave={() => setHovered(-1)}
           tabIndex={-1}
         >
           <Input<'input'>
+            type="search"
+            autoComplete="off"
             {...rest}
             data-mantine-stop-propagation={dropdownOpened}
             required={required}
             ref={useMergedRef(ref, inputRef)}
             id={uuid}
-            type="string"
             invalid={!!error}
             size={size}
             onKeyDown={handleInputKeydown}
@@ -243,12 +264,13 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
               setDropdownOpened(true);
             }}
             onFocus={handleInputFocus}
+            onCompositionStart={() => setIMEOpen(true)}
+            onCompositionEnd={() => setIMEOpen(false)}
             onBlur={handleInputBlur}
             onClick={handleInputClick}
-            autoComplete="nope"
             aria-autocomplete="list"
             aria-controls={shouldRenderDropdown ? `${uuid}-items` : null}
-            aria-activedescendant={hovered !== -1 ? `${uuid}-${hovered}` : null}
+            aria-activedescendant={hovered >= 0 ? `${uuid}-${hovered}` : null}
           />
 
           <SelectDropdown
@@ -258,7 +280,8 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             transitionTimingFunction={transitionTimingFunction}
             uuid={uuid}
             shadow={shadow}
-            maxDropdownHeight="auto"
+            maxDropdownHeight={maxDropdownHeight}
+            dropdownComponent={dropdownComponent || SelectScrollArea}
             classNames={classNames}
             styles={styles}
             __staticSelector="Autocomplete"
@@ -269,6 +292,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>(
             withinPortal={withinPortal}
             zIndex={zIndex}
             dropdownPosition={dropdownPosition}
+            positionDependencies={positionDependencies}
           >
             <SelectItems
               data={filteredData}

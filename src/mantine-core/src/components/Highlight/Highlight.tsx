@@ -36,7 +36,7 @@ const defaultProps: Partial<HighlightProps<any>> = {
 };
 
 export const Highlight: HighlightComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: HighlightProps<C>, ref: PolymorphicRef<C>) => {
+  (props: HighlightProps<'div'>, ref: PolymorphicRef<'div'>) => {
     const { children, highlight, highlightColor, component, highlightStyles, ...others } =
       useMantineDefaultProps('Highlight', defaultProps, props);
     const highlightChunks = highlighter(children, highlight);
@@ -55,6 +55,6 @@ export const Highlight: HighlightComponent = forwardRef(
       </Text>
     );
   }
-);
+) as any;
 
 Highlight.displayName = '@mantine/core/Highlight';

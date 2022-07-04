@@ -19,7 +19,7 @@
 
 ## Packages
 
-- `@mantine/hooks` – collection of 30+ hooks for state and UI management
+- `@mantine/hooks` – collection of 40+ hooks for state and UI management
 - [`@mantine/styles`](https://mantine.dev/theming/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
 - `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
 - [`@mantine/form`](https://mantine.dev/form/use-form/) – forms management library
@@ -38,7 +38,7 @@
 
 Mantine has a very friendly community, we are always happy to help you get started:
 
-- [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is an easiest way to get help, all questions are usually answered in about 30 minutes
+- [Join Discord community](https://discord.gg/eUZpPbpxb4) – it is the easiest way to get help, all questions are usually answered in about 30 minutes
 - [GitHub Discussions](https://github.com/mantinedev/mantine/discussions) – ask anything about the project or give feedback
 
 ## Contributors

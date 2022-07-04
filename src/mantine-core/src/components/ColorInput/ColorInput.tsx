@@ -2,7 +2,7 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import { useUncontrolled, useDidUpdate, useUuid } from '@mantine/hooks';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -25,7 +25,7 @@ export type ColorInputStylesNames =
   | InputWrapperStylesNames
   | InputStylesNames
   | ColorPickerStylesNames
-  | ClassNames<typeof useStyles>;
+  | Selectors<typeof useStyles>;
 
 export interface ColorInputProps
   extends InputWrapperBaseProps,
@@ -120,6 +120,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       style,
       swatches,
       sx,
+      errorProps,
+      labelProps,
+      descriptionProps,
       ...others
     } = useMantineDefaultProps('ColorInput', defaultProps, props);
 
@@ -136,7 +139,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       value,
       defaultValue,
       finalValue: '',
-      rule: (val) => !!val && val.trim().length > 0,
+      rule: (val) => typeof val === 'string',
       onChange,
     });
 
@@ -152,7 +155,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     };
 
     useEffect(() => {
-      if (isColorValid(_value)) {
+      if (isColorValid(_value) || _value.trim() === '') {
         setLastValidValue(_value);
       }
     }, [_value]);
@@ -177,6 +180,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
         style={style}
         __staticSelector="ColorInput"
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >

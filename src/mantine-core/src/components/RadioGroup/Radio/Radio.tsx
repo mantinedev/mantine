@@ -4,14 +4,15 @@ import {
   DefaultProps,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
   useMantineDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../../Box';
+import { RadioIcon } from './RadioIcon';
 import useStyles from './Radio.styles';
 
-export type RadioStylesNames = Exclude<ClassNames<typeof useStyles>, 'labelDisabled'>;
+export type RadioStylesNames = Exclude<Selectors<typeof useStyles>, 'labelDisabled'>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames>,
@@ -30,10 +31,18 @@ export interface RadioProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Replace default icon */
+  icon?: React.FC<React.ComponentPropsWithoutRef<'svg'>>;
+
+  /** Animation duration in ms */
+  transitionDuration?: number;
 }
 
 const defaultProps: Partial<RadioProps> = {
   __staticSelector: 'Radio',
+  icon: RadioIcon,
+  transitionDuration: 100,
 };
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps, ref) => {
@@ -50,11 +59,13 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
     styles,
     __staticSelector,
     sx,
+    icon: Icon,
+    transitionDuration,
     ...others
   } = useMantineDefaultProps('Radio', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { color, size },
+    { color, size, transitionDuration },
     { classNames, styles, name: __staticSelector }
   );
   const { systemStyles, rest } = extractSystemStyles(others);
@@ -68,7 +79,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
       sx={sx}
       {...systemStyles}
     >
-      <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+      <div className={classes.inner}>
         <input
           ref={ref}
           className={classes.radio}
@@ -77,8 +88,14 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props: RadioProps
           disabled={disabled}
           {...rest}
         />
-        {label && <span>{label}</span>}
-      </label>
+        <Icon className={classes.icon} aria-hidden />
+      </div>
+
+      {label && (
+        <label className={cx(classes.label, { [classes.labelDisabled]: disabled })} htmlFor={uuid}>
+          {label}
+        </label>
+      )}
     </Box>
   );
 });

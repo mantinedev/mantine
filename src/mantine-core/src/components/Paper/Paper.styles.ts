@@ -8,7 +8,7 @@ export interface PaperStylesParams {
 
 export default createStyles((theme, { radius, shadow, withBorder }: PaperStylesParams) => ({
   root: {
-    ...theme.fn.focusStyles(),
+    outline: 0,
     WebkitTapHighlightColor: 'transparent',
     display: 'block',
     textDecoration: 'none',

@@ -5,7 +5,7 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
   useMantineDefaultProps,
@@ -19,7 +19,7 @@ import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles from './Modal.styles';
 
-export type ModalStylesNames = ClassNames<typeof useStyles>;
+export type ModalStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalProps
   extends Omit<DefaultProps<ModalStylesNames>, MantineStyleSystemSize>,
@@ -42,11 +42,14 @@ export interface ModalProps
   /** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
   withCloseButton?: boolean;
 
-  /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity */
   overlayOpacity?: number;
 
-  /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
 
   /** Modal radius */
   radius?: MantineNumberSize;
@@ -106,6 +109,7 @@ const defaultProps: Partial<ModalProps> = {
   trapFocus: true,
   withCloseButton: true,
   withinPortal: true,
+  overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
 };
 
@@ -137,6 +141,8 @@ export function Modal(props: ModalProps) {
     target,
     withinPortal,
     zIndex,
+    overlayBlur,
+    transitionTimingFunction,
     ...others
   } = useMantineDefaultProps('Modal', defaultProps, props);
   const baseId = useUuid(id);
@@ -171,7 +177,7 @@ export function Modal(props: ModalProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0 });
+  useFocusReturn({ opened, transitionDuration: 0, shouldReturnFocus: trapFocus });
 
   return (
     <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
@@ -179,6 +185,9 @@ export function Modal(props: ModalProps) {
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
         mounted={opened}
+        duration={transitionDuration}
+        exitDuration={transitionDuration}
+        timingFunction={transitionTimingFunction}
         transitions={{
           modal: { duration: transitionDuration, transition },
           overlay: {
@@ -189,7 +198,7 @@ export function Modal(props: ModalProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box className={cx(classes.root, className)} {...others}>
+          <Box id={baseId} className={cx(classes.root, className)} {...others}>
             <div
               className={classes.inner}
               onKeyDownCapture={(event) => {
@@ -238,6 +247,7 @@ export function Modal(props: ModalProps) {
                   sx={{ position: 'fixed' }}
                   zIndex={0}
                   onMouseDown={() => closeOnClickOutside && onClose()}
+                  blur={overlayBlur}
                   color={
                     overlayColor ||
                     (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)

@@ -1,10 +1,10 @@
 import React from 'react';
-import { DefaultProps, ClassNames, Text, MantineNumberSize } from '@mantine/core';
+import { DefaultProps, Selectors, Text, MantineNumberSize, MantineColor } from '@mantine/core';
 import type { SpotlightAction } from '../types';
 import type { DefaultActionProps, DefaultActionStylesNames } from '../DefaultAction/DefaultAction';
 import useStyles from './ActionsList.styles';
 
-export type ActionsListStylesNames = ClassNames<typeof useStyles> | DefaultActionStylesNames;
+export type ActionsListStylesNames = Selectors<typeof useStyles> | DefaultActionStylesNames;
 type GetGroupOptionsItem<T extends any[]> = { type: 'item'; item: T[number]; index: number };
 type GetGroupOptionsLabel = { type: 'label'; label: string };
 
@@ -17,6 +17,7 @@ export interface ActionsListProps extends DefaultProps<ActionsListStylesNames> {
   onActionHover(index: number): void;
   onActionTrigger(action: SpotlightAction): void;
   highlightQuery: boolean;
+  highlightColor: MantineColor;
   radius: MantineNumberSize;
 }
 
@@ -31,6 +32,7 @@ export function ActionsList({
   query,
   nothingFoundMessage,
   highlightQuery,
+  highlightColor,
   radius,
 }: ActionsListProps) {
   const { classes } = useStyles(null, { classNames, styles, name: 'Spotlight' });
@@ -49,6 +51,7 @@ export function ActionsList({
           radius={radius}
           onTrigger={() => onActionTrigger(item.item)}
           highlightQuery={highlightQuery}
+          highlightColor={highlightColor}
         />
       );
     }

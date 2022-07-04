@@ -37,6 +37,7 @@ export default createStyles(
     getRef
   ) => {
     const vertical = orientation === 'vertical';
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       label: {
@@ -118,7 +119,7 @@ export default createStyles(
       root: {
         position: 'relative',
         display: fullWidth || vertical ? 'flex' : 'inline-flex',
-        width: vertical && !fullWidth ? 'max-content' : 'inherit',
+        width: vertical && !fullWidth ? 'max-content' : 'auto',
         flexDirection: vertical ? 'column' : 'row',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[1],
         borderRadius: theme.fn.radius(radius),
@@ -134,6 +135,19 @@ export default createStyles(
           borderLeftColor: 'transparent !important',
           borderTopColor: 'transparent !important',
         },
+        borderRadius: theme.fn.radius(radius),
+        boxShadow: shouldAnimate
+          ? color || theme.colorScheme === 'dark'
+            ? 'none'
+            : theme.shadows.xs
+          : undefined,
+        backgroundColor: shouldAnimate
+          ? color in theme.colors
+            ? colors.background
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[5]
+            : theme.white
+          : undefined,
       },
 
       labelActive: {
@@ -145,6 +159,7 @@ export default createStyles(
       disabled: {
         '&, &:hover': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+          cursor: 'not-allowed',
         },
       },
 
@@ -161,7 +176,7 @@ export default createStyles(
         }`,
         backgroundColor:
           color in theme.colors
-            ? theme.fn.themeColor(color, 6)
+            ? colors.background
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[5]
             : theme.white,

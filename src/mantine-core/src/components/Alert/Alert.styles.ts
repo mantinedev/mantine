@@ -43,16 +43,12 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   },
 
   light: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.fn.themeColor(color, 0),
-    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7),
+    backgroundColor: theme.fn.variant({ variant: 'light', color }).background,
+    color: theme.fn.variant({ variant: 'light', color }).color,
   },
 
   filled: {
-    backgroundColor: theme.fn.rgba(
-      theme.fn.themeColor(color, 8),
-      theme.colorScheme === 'dark' ? 0.65 : 1
-    ),
+    backgroundColor: theme.fn.variant({ variant: 'filled', color }).background,
     color: theme.white,
 
     [`& .${getRef('closeButton')}`]: {
@@ -61,8 +57,8 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   },
 
   outline: {
-    color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 6),
-    borderColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 6),
+    color: theme.fn.variant({ variant: 'outline', color }).color,
+    borderColor: theme.fn.variant({ variant: 'outline', color }).border,
   },
 
   icon: {
@@ -86,7 +82,9 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
       variant === 'filled'
         ? theme.white
         : theme.colorScheme === 'dark'
-        ? theme.colors.dark[0]
+        ? variant === 'light'
+          ? theme.white
+          : theme.colors.dark[0]
         : theme.black,
   },
 

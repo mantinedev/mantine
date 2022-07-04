@@ -90,7 +90,7 @@ function WrappedItems() {
   );
 }
 
-storiesOf('@mantine/core/Menu/stories', module)
+storiesOf('Menu', module)
   .add('Focus behavior', () => (
     <div style={{ padding: 40 }}>
       <TextInput placeholder="Focus me when menu is opened" mb="xl" />

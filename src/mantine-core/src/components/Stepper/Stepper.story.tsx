@@ -78,7 +78,7 @@ const verticalSizes = MANTINE_SIZES.map((size, index) => (
   <Wrapper key={size} size={size} mt={index !== 0 ? 60 : 0} orientation="vertical" />
 ));
 
-storiesOf('@mantine/core/Stepper/stories', module)
+storiesOf('Stepper', module)
   .add('General usage', () => (
     <div style={{ padding: 40 }}>
       <Wrapper color="teal" />
@@ -99,7 +99,7 @@ storiesOf('@mantine/core/Stepper/stories', module)
     <div style={{ padding: 40 }}>
       <Stepper active={0}>
         <Stepper.Step label="First" />
-        <Stepper.Step label="Second" loading />
+        <Stepper.Step color="orange" label="Second" loading />
         <Stepper.Step label="Third" />
       </Stepper>
     </div>

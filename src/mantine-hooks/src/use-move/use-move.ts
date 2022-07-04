@@ -78,9 +78,11 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     const stopScrubbing = () => {
       if (isSliding.current && mounted.current) {
         isSliding.current = false;
-        typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
         setActive(false);
         unbindEvents();
+        setTimeout(() => {
+          typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
+        }, 0);
       }
     };
 
@@ -103,7 +105,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     };
 
     ref.current.addEventListener('mousedown', onMouseDown);
-    ref.current.addEventListener('touchstart', onTouchStart);
+    ref.current.addEventListener('touchstart', onTouchStart, { passive: false });
 
     return () => {
       if (ref.current) {
@@ -111,7 +113,7 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
         ref.current.removeEventListener('touchstart', onTouchStart);
       }
     };
-  }, [ref.current, dir]);
+  }, [dir, onChange]);
 
   return { ref, active };
 }

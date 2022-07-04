@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useBooleanToggle, useUuid } from '@mantine/hooks';
 import {
-  ClassNames,
+  Selectors,
   DefaultProps,
   extractSystemStyles,
   useMantineTheme,
@@ -14,7 +14,7 @@ import { InputWrapper } from '../InputWrapper';
 import { PasswordToggleIcon } from './PasswordToggleIcon';
 import useStyles from './PasswordInput.styles';
 
-export type PasswordInputStylesNames = ClassNames<typeof useStyles> | TextInputStylesNames;
+export type PasswordInputStylesNames = Selectors<typeof useStyles> | TextInputStylesNames;
 
 export interface PasswordInputProps
   extends DefaultProps<PasswordInputStylesNames>,
@@ -51,7 +51,6 @@ const rightSectionSizes = {
 };
 
 const defaultProps: Partial<PasswordInputProps> = {
-  radius: 'sm',
   size: 'sm',
   toggleTabIndex: -1,
   visibilityToggleIcon: PasswordToggleIcon,
@@ -83,12 +82,18 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       rightSectionWidth: _rightSectionWidth,
       rightSectionProps: _rightSectionProps,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
       ...others
     } = useMantineDefaultProps('PasswordInput', defaultProps, props);
 
     const theme = useMantineTheme();
     const rightSectionWidth = theme.fn.size({ size, sizes: rightSectionSizes });
-    const { classes, cx } = useStyles({ size, rightSectionWidth }, { name: 'PasswordInput' });
+    const { classes, cx } = useStyles(
+      { size, rightSectionWidth },
+      { name: 'PasswordInput', classNames, styles }
+    );
     const uuid = useUuid(id);
     const { systemStyles, rest } = extractSystemStyles(others);
     const [reveal, toggle] = useBooleanToggle(false);
@@ -129,6 +134,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         styles={styles}
         __staticSelector={__staticSelector}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -137,7 +145,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           invalid={!!error}
           icon={icon}
           size={size}
-          classNames={{ ...classNames, input: cx(classes.input, classNames?.input) }}
+          classNames={{ ...classNames, input: classes.input }}
           styles={styles}
           radius={radius}
           disabled={disabled}
@@ -149,7 +157,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <input
             type={reveal ? 'text' : 'password'}
             required={required}
-            className={cx(classes.innerInput, classNames?.innerInput, {
+            className={cx(classes.innerInput, {
               [classes.withIcon]: icon,
               [classes.invalid]: !!error,
             })}

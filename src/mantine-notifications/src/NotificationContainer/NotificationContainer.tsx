@@ -11,14 +11,14 @@ export interface NotificationContainerProps extends DefaultProps {
 }
 
 export default function NotificationContainer({
-  className,
-  sx,
   notification,
   autoClose,
   onHide,
   innerRef,
+  ...others
 }: NotificationContainerProps) {
-  const autoCloseTimeout = getAutoClose(autoClose, notification);
+  const { autoClose: notificationAutoClose, ...notificationProps } = notification;
+  const autoCloseTimeout = getAutoClose(autoClose, notificationAutoClose);
   const hideTimeout = useRef<number>();
 
   const handleHide = () => {
@@ -49,15 +49,9 @@ export default function NotificationContainer({
 
   return (
     <Notification
-      sx={sx}
-      className={className}
-      title={notification.title}
+      {...notificationProps}
+      {...others}
       onClose={handleHide}
-      color={notification.color}
-      radius={notification.radius}
-      icon={notification.icon}
-      loading={notification.loading}
-      disallowClose={notification.disallowClose}
       onMouseEnter={cancelDelayedHide}
       onMouseLeave={handleDelayedHide}
       ref={innerRef}

@@ -21,13 +21,13 @@ type CardSectionComponent = (<C = 'div'>(props: CardSectionProps<C>) => React.Re
 };
 
 export const CardSection: CardSectionComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { className, padding = 0, component, first, last, ...others }: CardSectionProps<C>,
-    ref: PolymorphicRef<C>
+  (
+    { className, padding = 0, component, first, last, ...others }: CardSectionProps<'div'>,
+    ref: PolymorphicRef<'div'>
   ) => {
     const { classes, cx } = useStyles({ padding, first, last }, { name: 'Card' });
     return (
-      <Box<any>
+      <Box
         component={component || 'div'}
         className={cx(classes.cardSection, className)}
         ref={ref}
@@ -35,6 +35,6 @@ export const CardSection: CardSectionComponent = forwardRef(
       />
     );
   }
-);
+) as any;
 
 CardSection.displayName = '@mantine/core/CardSection';

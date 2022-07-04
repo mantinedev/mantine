@@ -9,7 +9,7 @@ import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/Dat
 
 export interface DatePickerProps
   extends Omit<DatePickerBaseSharedProps, 'onChange'>,
-    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles'> {
+    Omit<CalendarSharedProps, 'size' | 'classNames' | 'styles' | 'onMonthChange'> {
   /** Selected date, required with controlled input */
   value?: Date | null;
 
@@ -21,6 +21,9 @@ export interface DatePickerProps
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
+
+  /** Set to true to open dropdown on clear */
+  openDropdownOnClear?: boolean;
 
   /** dayjs input format */
   inputFormat?: string;
@@ -39,6 +42,9 @@ export interface DatePickerProps
 
   /** Allow free input */
   allowFreeInput?: boolean;
+
+  /** Render day based on the date */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 const defaultProps: Partial<DatePickerProps> = {
@@ -50,14 +56,16 @@ const defaultProps: Partial<DatePickerProps> = {
   name: 'date',
   size: 'sm',
   dropdownType: 'popover',
+  dropdownPosition: 'flip',
   clearable: true,
   disabled: false,
   fixOnBlur: true,
   withinPortal: true,
   firstDayOfWeek: 'monday',
+  openDropdownOnClear: true,
 };
 
-export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
   (props: DatePickerProps, ref) => {
     const {
       value,
@@ -85,6 +93,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       name,
       size,
       dropdownType,
+      dropdownPosition,
       clearable,
       disabled,
       clearButtonLabel,
@@ -102,12 +111,16 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       onDropdownOpen,
       hideOutsideDates,
       hideWeekdays,
+      renderDay,
+      type,
+      openDropdownOnClear,
+      weekendDays,
       ...others
     } = useMantineDefaultProps('DatePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
-    const dateFormat = inputFormat || theme.dateFormat;
+    const dateFormat = type === 'date' ? 'YYYY-MM-DD' : inputFormat || theme.dateFormat;
     const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
     const calendarSize = size === 'lg' || size === 'xl' ? 'md' : 'sm';
     const inputRef = useRef<HTMLInputElement>();
@@ -157,7 +170,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       setValue(null);
       setLastValidValue(null);
       setInputState('');
-      openDropdown();
+      openDropdownOnClear && openDropdown();
       inputRef.current?.focus();
     };
 
@@ -239,7 +252,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         inputLabel={inputState}
         __staticSelector="DatePicker"
         dropdownType={dropdownType}
-        clearable={clearable && !!_value && !disabled}
+        dropdownPosition={dropdownPosition}
+        clearable={type === 'date' ? false : clearable && !!_value && !disabled}
         clearButtonLabel={clearButtonLabel}
         onClear={handleClear}
         disabled={disabled}
@@ -247,6 +261,7 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        type={type}
         {...others}
       >
         <Calendar
@@ -277,6 +292,8 @@ export const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           initialLevel={initialLevel}
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
+          renderDay={renderDay}
+          weekendDays={weekendDays}
         />
       </DatePickerBase>
     );

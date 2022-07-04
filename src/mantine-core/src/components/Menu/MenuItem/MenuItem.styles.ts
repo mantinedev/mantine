@@ -35,10 +35,7 @@ export default createStyles((theme, { radius, color }: MenuItemStylesParams) => 
 
   itemHovered: {
     backgroundColor: color
-      ? theme.fn.rgba(
-          theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 9 : 0),
-          theme.colorScheme === 'dark' ? 0.2 : 1
-        )
+      ? theme.fn.variant({ variant: 'light', color }).background
       : theme.colorScheme === 'dark'
       ? theme.fn.rgba(theme.colors.dark[3], 0.35)
       : theme.colors.gray[0],
