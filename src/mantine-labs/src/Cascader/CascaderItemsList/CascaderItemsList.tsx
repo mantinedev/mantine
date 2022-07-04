@@ -1,10 +1,10 @@
-import { ClassNames, DefaultProps, MantineSize } from '@mantine/core';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/core';
 import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 import React, { forwardRef } from 'react';
 import { CascaderItem } from '../types';
 import { useStyles } from './CascaderItemsList.styles';
 
-export type CascaderMenuStyles = ClassNames<typeof useStyles>;
+export type CascaderMenuStyles = Selectors<typeof useStyles>;
 
 export interface CascaderMenuProps extends DefaultProps<CascaderMenuStyles> {
   data: CascaderItem[];
@@ -49,7 +49,7 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
     if (!itemsRefs.current[nesting]) itemsRefs.current[nesting] = {};
 
     return (
-      <SelectScrollArea style={{ height: maxDropdownHeight }} ref={ref}>
+      <SelectScrollArea style={{ maxHeight: maxDropdownHeight }} ref={ref}>
         <MenuComponent
           style={{
             display: 'flex',

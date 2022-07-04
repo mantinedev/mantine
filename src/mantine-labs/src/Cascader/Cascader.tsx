@@ -10,7 +10,6 @@ import {
 import { getSelectRightSectionProps } from '@mantine/core/src/components/Select/SelectRightSection/get-select-right-section-props';
 import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 import { useStyles } from './Cascader.styles';
 import { CascaderPopover } from './CascaderPopover/CascaderPopover';
 import { CascaderItems } from './CascaderItems/CascaderItems';
@@ -534,7 +533,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         </CascaderPopover.Target>
 
         <CascaderPopover.Dropdown
-          component={dropdownComponent || SelectScrollArea}
+          component={dropdownComponent}
           maxHeight={maxDropdownHeight}
           direction={direction}
           id={inputProps.id}

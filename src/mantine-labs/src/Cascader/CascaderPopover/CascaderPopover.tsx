@@ -1,7 +1,6 @@
 import React from 'react';
 import { ClassNames, MantineShadow, Styles } from '@mantine/styles';
 import { Box, Popover, MantineTransition } from '@mantine/core';
-import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 
 export type CascaderPopoverStylesNames = 'dropdown';
 
@@ -24,7 +23,7 @@ function CascaderPopoverDropdown({
   ...others
 }: CascaderPopoverDropdownProps) {
   return (
-    <Popover.Dropdown p={0} onMouseDown={(event) => event.preventDefault()} {...others}>
+    <Popover.Dropdown p={4} onMouseDown={(event) => event.preventDefault()} {...others}>
       <div style={{ maxHeight, display: 'flex' }}>
         <Box<'div'>
           component={(component || 'div') as any}
@@ -32,11 +31,11 @@ function CascaderPopoverDropdown({
           aria-labelledby={`${id}-label`}
           role="listbox"
           onMouseDown={(event) => event.preventDefault()}
-          style={{ flex: 1, overflowY: component !== SelectScrollArea ? 'auto' : undefined }}
+          style={{ flex: 1 }}
           data-combobox-popover
           ref={innerRef}
         >
-          <div style={{ display: 'flex', flexDirection: direction, width: '100%', padding: 4 }}>
+          <div style={{ display: 'flex', flexDirection: direction, width: '100%' }}>
             {children}
           </div>
         </Box>
