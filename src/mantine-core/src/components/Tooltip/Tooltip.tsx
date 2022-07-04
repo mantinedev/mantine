@@ -7,7 +7,7 @@ import {
   MantineNumberSize,
   useMantineDefaultProps,
 } from '@mantine/styles';
-import { mergeRefs } from '@mantine/hooks';
+import { useMergedRef } from '@mantine/hooks';
 import { Box } from '../Box';
 import { Popper, SharedPopperProps } from '../Popper';
 import useStyles from './Tooltip.styles';
@@ -130,6 +130,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipP
   const [_opened, setOpened] = useState(false);
   const visible = (typeof opened === 'boolean' ? opened : _opened) && !disabled;
   const [referenceElement, setReferenceElement] = useState(null);
+  const mergedRefs = useMergedRef(ref, setReferenceElement);
 
   const handleOpen = () => {
     window.clearTimeout(closeTimeoutRef.current);
@@ -176,7 +177,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props: TooltipP
       }}
       onFocusCapture={handleOpen}
       onBlurCapture={handleClose}
-      ref={mergeRefs(setReferenceElement, ref)}
+      ref={mergedRefs}
       {...others}
     >
       <Popper

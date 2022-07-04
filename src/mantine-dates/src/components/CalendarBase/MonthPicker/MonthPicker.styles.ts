@@ -15,7 +15,9 @@ const sizes = {
 export default createStyles((theme, { size }: MonthPickerStyles) => {
   const colors = getSharedColorScheme({ color: theme.primaryColor, theme, variant: 'filled' });
   return {
-    monthPicker: {},
+    monthPicker: {
+      width: '100%',
+    },
 
     monthPickerControls: {
       display: 'flex',

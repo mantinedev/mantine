@@ -1,6 +1,10 @@
 import React from 'react';
-import { DefaultProps } from '@mantine/styles';
-import { SharedTextProps } from '../../Text/Text';
+import { ClassNames, DefaultProps } from '@mantine/styles';
+import { SharedTextProps, Text } from '../../Text/Text';
+import { useMenuContext } from '../Menu.context';
+import useStyles from './MenuLabel.styles';
+
+export type MenuLabelStylesNames = ClassNames<typeof useStyles>;
 
 export interface MenuLabelProps
   extends DefaultProps,
@@ -16,12 +20,10 @@ export interface MenuLabelType {
   ref?: React.RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement) => void);
 }
 
-export function MenuLabel(
-  // Props should be kept for ts integration
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: MenuLabelProps
-) {
-  return null;
+export function MenuLabel(props: MenuLabelProps) {
+  const { classNames, styles } = useMenuContext('Label');
+  const { classes } = useStyles(null, { name: 'Menu', classNames, styles });
+  return <Text className={classes.label} {...props} />;
 }
 
 MenuLabel.displayName = '@mantine/core/MenuLabel';

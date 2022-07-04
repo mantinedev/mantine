@@ -70,13 +70,18 @@ export default createStyles((theme, { size, color }: RadioStylesParams, getRef) 
     label: {
       ...theme.fn.fontStyles(),
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       fontSize: theme.fontSizes[size] || theme.fontSizes.md,
       lineHeight: `${theme.fn.size({ sizes, size })}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
       [`&.${labelDisabled.ref}`]: {
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
+
+      '& > span': {
+        flexGrow: 1,
+        flexBasis: 0,
       },
     },
   };

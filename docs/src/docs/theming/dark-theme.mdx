@@ -112,16 +112,16 @@ And then consume `ColorSchemeProvider` context with `useMantineColorScheme` hook
 
 ## Save to localStorage and add keyboard shortcut
 
-If you want to replicate dark theme behavior of Mantine docs website use [use-local-storage-value](/hooks/use-local-storage-value/)
+If you want to replicate dark theme behavior of Mantine docs website use [use-local-storage](/hooks/use-local-storage/)
 hook to store theme state in localStorage and sync it across all opened tabs and [use-hotkeys](/hooks/use-hotkeys/)
 to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 
 ```tsx
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
-import { useHotkeys, useLocalStorageValue } from '@mantine/hooks';
+import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 
 function App() {
-  const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
   });

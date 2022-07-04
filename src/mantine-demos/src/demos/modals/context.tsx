@@ -11,8 +11,10 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      modalBody:
-        'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      innerProps: {
+        modalBody:
+          'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      }
     });
 
   return <Button onClick={openContextModal}>Open demonstration context modal</Button>;
@@ -25,8 +27,10 @@ function Demo() {
   const openContextModal = () =>
     modals.openContextModal('demonstration', {
       title: 'Test modal from context',
-      modalBody:
-        'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      innerProps: {
+        modalBody:
+          'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+      },
     });
 
   return (

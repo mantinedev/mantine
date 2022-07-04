@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button, Group, Box, ButtonProps, GroupProps } from '@mantine/core';
-import { modalsContext, ConfirmLabels } from './context';
+import { ConfirmLabels } from './context';
+import { useModals } from './use-modals/use-modals';
 
 export interface ConfirmModalProps {
   id?: string;
@@ -27,18 +28,18 @@ export function ConfirmModal({
   onConfirm,
   children,
 }: ConfirmModalProps) {
-  const ctx = useContext(modalsContext);
+  const ctx = useModals();
 
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof cancelProps?.onClick === 'function' && cancelProps?.onClick(event);
     typeof onCancel === 'function' && onCancel();
-    closeOnCancel && ctx?.closeModal(id);
+    closeOnCancel && ctx.closeModal(id);
   };
 
   const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof confirmProps?.onClick === 'function' && confirmProps?.onClick(event);
     typeof onConfirm === 'function' && onConfirm();
-    closeOnConfirm && ctx?.closeModal(id);
+    closeOnConfirm && ctx.closeModal(id);
   };
 
   return (

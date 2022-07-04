@@ -1,9 +1,9 @@
 import React from 'react';
 import { renderWithAct } from './render-with-act';
 
-export function itFiltersChildren(
-  Component: React.ElementType,
-  requiredProps: Record<string, any>,
+export function itFiltersChildren<P>(
+  Component: React.ComponentType<P>,
+  requiredProps: P,
   childSelector: string,
   children: React.ReactElement[]
 ) {

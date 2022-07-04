@@ -1,5 +1,5 @@
 import { createStyles, MantineNumberSize } from '@mantine/styles';
-import { getSortedBreakpoints } from '../utils';
+import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
 
 export type NavbarWidth = Partial<Record<string, string | number>>;
 
@@ -37,8 +37,9 @@ export default createStyles(
       root: {
         ...theme.fn.fontStyles(),
         ...position,
+        top: position?.top || 'var(--mantine-header-height)',
         zIndex,
-        height,
+        height: height || 'calc(100vh - var(--mantine-header-height, 0px))',
         width: width?.base || '100%',
         position: fixed ? 'fixed' : 'static',
         boxSizing: 'border-box',
