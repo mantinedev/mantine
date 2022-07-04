@@ -43,32 +43,34 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
     }: CascaderMenuProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+    const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector });
 
     // eslint-disable-next-line no-param-reassign
     if (!itemsRefs.current[nesting]) itemsRefs.current[nesting] = {};
 
     return (
-      <SelectScrollArea style={{ maxHeight: maxDropdownHeight }} ref={ref}>
+      <SelectScrollArea
+        style={{ maxHeight: maxDropdownHeight, width: 'auto' }}
+        ref={ref}
+      >
         <MenuComponent
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'stretch',
           }}
         >
           {data.map((item, index) => {
             const selected = isItemSelected(item.value, nesting);
+            const isHovered = hovered[nesting] === index;
             return (
               <Item
                 key={item.value}
                 size={size}
                 hasChildren={item.children && item.children.length > 0}
-                className={cx(classes.item, {
-                  [classes.hovered]: !item.disabled && hovered[nesting] === index,
-                  [classes.selected]: !item.disabled && selected && hovered[nesting] === index,
-                  [classes.disabled]: item.disabled,
-                })}
+                className={classes.item}
+                data-disabled={item.disabled || undefined}
+                data-hovered={(!item.disabled && isHovered) || undefined}
+                data-selected={(!item.disabled && selected) || undefined}
                 onMouseEnter={() =>
                   onItemHover(
                     (prev) =>
@@ -79,7 +81,7 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
                         : [...prev.slice(0, prev.length - (nesting + 2)), index] // lower nesting level
                   )
                 }
-                id={`${uuid}-${index}`}
+                id={`${uuid}-${nesting}-${index}`}
                 role="option"
                 tabIndex={-1}
                 aria-selected={hovered[nesting] === index}

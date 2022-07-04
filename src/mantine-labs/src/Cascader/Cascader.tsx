@@ -258,7 +258,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
       i = nextItem(i);
       if (
         !getItem(formattedData, indexes.length - 1, [...indexes.slice(0, indexes.length - 1), i])
-          .disabled
+          ?.disabled
       ) {
         return [...indexes.slice(0, indexes.length - 1), i];
       }
@@ -544,7 +544,9 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             hovered={hovered}
             classNames={classNames}
             styles={styles}
-            isItemSelected={(val) => val === _value}
+            isItemSelected={(val, nesting) =>
+              selectedValue && getItem(formattedData, nesting, selectedValue)?.value === val
+            }
             uuid={inputProps.id}
             __staticSelector="Cascader"
             onItemHover={setHovered}

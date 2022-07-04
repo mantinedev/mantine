@@ -8,6 +8,7 @@ export const useStyles = createStyles((theme, { size }: CascaderMenuStylesProps)
   item: {
     boxSizing: 'border-box',
     textAlign: 'left',
+    width: '100%',
     padding: `${theme.fn.size({ size, sizes: theme.spacing }) / 1.5}px ${theme.fn.size({
       size,
       sizes: theme.spacing,
@@ -16,21 +17,23 @@ export const useStyles = createStyles((theme, { size }: CascaderMenuStylesProps)
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     borderRadius: theme.radius.sm,
-    inlineSize: 'max-content',
-  },
 
-  selected: {
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors[theme.primaryColor][0],
-    color: theme.colorScheme === 'dark' ? theme.white : theme.colors[theme.primaryColor][9],
-  },
+    '&[data-hovered]': {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
+    },
 
-  hovered: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[1],
-  },
+    '&[data-selected]': {
+      backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
+      color: theme.fn.variant({ variant: 'filled' }).color,
+    },
 
-  disabled: {
-    cursor: 'default',
-    color: theme.colors.dark[2],
+    '&[data-selected][data-hovered]': {
+      backgroundColor: theme.fn.variant({ variant: 'filled' }).hover,
+    },
+
+    '&[data-disabled]': {
+      cursor: 'default',
+      color: theme.colors.dark[2],
+    },
   },
 }));

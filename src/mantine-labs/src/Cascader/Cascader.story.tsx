@@ -56,7 +56,7 @@ storiesOf('@mantine/labs/Cascader/stories', module)
           ...Array.from(Array(10).keys()).map((_, i) => ({ value: `item ${i}` })),
           { value: 'i' },
         ]}
-        defaultValue="I love, react"
+        defaultValue="i"
       />
     </Wrapper>
   ));
