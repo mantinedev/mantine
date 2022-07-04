@@ -81,6 +81,10 @@ function Demo() {
 
 <Demo data={AutocompleteDemos.dynamic} />
 
+## Group options
+
+<Demo data={AutocompleteDemos.group} />
+
 ## Custom item component
 
 Autocomplete item component and filtering logic can be changed. To do so:
@@ -138,7 +142,7 @@ import { useRef } from 'react';
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Autocomplete ref={ref} data={[]} />;
 }
 ```

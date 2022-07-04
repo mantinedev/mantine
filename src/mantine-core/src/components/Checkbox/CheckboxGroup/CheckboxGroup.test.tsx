@@ -3,28 +3,28 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
-  itSupportsWrapperProps,
+  itSupportsInputWrapperProps,
   itSupportsSystemProps,
-  itFiltersChildren,
 } from '@mantine/tests';
-import { CheckboxGroup, Checkbox, CheckboxGroupProps } from '../index';
+import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
+import { Checkbox } from '../Checkbox';
 
 const defaultProps: CheckboxGroupProps = {
   children: [
-    <Checkbox value="test-value-1" label="test-label-1" />,
-    <Checkbox value="test-value-2" label="test-label-2" />,
-    <Checkbox value="test-value-3" label="test-label-3" />,
+    <Checkbox value="test-value-1" label="test-label-1" key={1} />,
+    <Checkbox value="test-value-2" label="test-label-2" key={2} />,
+    <Checkbox value="test-value-3" label="test-label-3" key={3} />,
   ],
 };
 
 describe('@mantine/core/CheckboxGroup', () => {
-  itSupportsWrapperProps(CheckboxGroup, defaultProps);
+  itSupportsInputWrapperProps(CheckboxGroup, defaultProps, 'CheckboxGroup');
   itSupportsSystemProps({
     component: CheckboxGroup,
     props: defaultProps,
     displayName: '@mantine/core/CheckboxGroup',
-    excludeOthers: true,
     refType: HTMLDivElement,
+    providerName: 'CheckboxGroup',
   });
 
   checkAccessibility([
@@ -35,23 +35,18 @@ describe('@mantine/core/CheckboxGroup', () => {
     </CheckboxGroup>,
   ]);
 
-  itFiltersChildren(CheckboxGroup, defaultProps, '.mantine-CheckboxGroup-input', [
-    <Checkbox value="test-value-1" label="test-label-1" />,
-    <Checkbox value="test-value-2" label="test-label-2" />,
-  ]);
-
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<CheckboxGroup {...defaultProps} defaultValue={['test-value-1']} />);
     expect(screen.getAllByRole('checkbox')[0]).toBeChecked();
-    userEvent.click(screen.getAllByRole('checkbox')[1]);
+    await userEvent.click(screen.getAllByRole('checkbox')[1]);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<CheckboxGroup {...defaultProps} value={['test-value-2']} onChange={spy} />);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
-    userEvent.click(screen.getAllByRole('checkbox')[0]);
+    await userEvent.click(screen.getAllByRole('checkbox')[0]);
     expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith(['test-value-2', 'test-value-1']);

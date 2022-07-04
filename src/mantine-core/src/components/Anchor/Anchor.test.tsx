@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Anchor, AnchorProps } from './Anchor';
 
-const defaultProps: AnchorProps<'a'> = {};
+const defaultProps: AnchorProps = {};
 
 describe('@mantine/core/Anchor', () => {
   itRendersChildren(Anchor, defaultProps);
@@ -13,6 +13,7 @@ describe('@mantine/core/Anchor', () => {
     props: defaultProps,
     displayName: '@mantine/core/Anchor',
     refType: HTMLAnchorElement,
+    providerName: 'Anchor',
   });
 
   it('adds type="button" attribute if component prop is button', () => {

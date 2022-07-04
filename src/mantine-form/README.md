@@ -6,7 +6,7 @@ Form management library
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/form
 

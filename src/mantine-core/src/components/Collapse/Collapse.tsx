@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { extractSystemStyles, DefaultProps, useMantineDefaultProps } from '@mantine/styles';
+import {
+  extractSystemStyles,
+  DefaultProps,
+  useComponentDefaultProps,
+  useMantineTheme,
+} from '@mantine/styles';
 import { Box } from '../Box';
 import { useCollapse } from './use-collapse';
 
@@ -30,7 +35,7 @@ const defaultProps: Partial<CollapseProps> = {
   animateOpacity: true,
 };
 
-export function Collapse(props: CollapseProps) {
+export const Collapse = forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const {
     children,
     in: opened,
@@ -40,9 +45,12 @@ export function Collapse(props: CollapseProps) {
     onTransitionEnd,
     animateOpacity,
     ...others
-  } = useMantineDefaultProps('Collapse', defaultProps, props);
+  } = useComponentDefaultProps('Collapse', defaultProps, props);
+  const theme = useMantineTheme();
 
-  const reduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
+
   const duration = reduceMotion ? 0 : transitionDuration;
   const { systemStyles, rest } = extractSystemStyles(others);
   const getCollapseProps = useCollapse({
@@ -57,7 +65,7 @@ export function Collapse(props: CollapseProps) {
   }
 
   return (
-    <Box {...getCollapseProps({ style, ...rest, ...systemStyles })}>
+    <Box {...getCollapseProps({ style, ref, ...rest, ...systemStyles })}>
       <div
         style={{
           opacity: opened || !animateOpacity ? 1 : 0,
@@ -68,6 +76,6 @@ export function Collapse(props: CollapseProps) {
       </div>
     </Box>
   );
-}
+});
 
 Collapse.displayName = '@mantine/core/Collapse';

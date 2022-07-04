@@ -1,22 +1,16 @@
-import React, { cloneElement, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../../utils';
-import {
-  InputWrapper,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-} from '../../InputWrapper/InputWrapper';
-import { Checkbox, CheckboxStylesNames } from '../Checkbox';
-import { Group } from '../../Group/Group';
+import { Input, InputWrapperBaseProps, InputWrapperStylesNames } from '../../Input';
+import { InputsGroup } from './InputsGroup';
+import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
-export type CheckboxGroupStylesNames = InputWrapperStylesNames | CheckboxStylesNames;
+export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
 export interface CheckboxGroupProps
   extends DefaultProps<CheckboxGroupStylesNames>,
@@ -40,14 +34,11 @@ export interface CheckboxGroupProps
   /** Spacing between checkboxes in horizontal orientation */
   spacing?: MantineNumberSize;
 
-  /** Activated checkbox color from theme.colors */
-  color?: MantineColor;
-
   /** Predefined label fontSize, checkbox width, height and border-radius */
   size?: MantineSize;
 
   /** Props spread to InputWrapper */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 }
 
 const defaultProps: Partial<CheckboxGroupProps> = {
@@ -65,61 +56,56 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       onChange,
       orientation,
       spacing,
-      color,
       size,
       classNames,
       styles,
       wrapperProps,
+      errorProps,
+      labelProps,
+      descriptionProps,
+      inputContainer,
+      inputWrapperOrder,
       ...others
-    } = useMantineDefaultProps('CheckboxGroup', defaultProps, props);
+    } = useComponentDefaultProps('CheckboxGroup', defaultProps, props);
 
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
       finalValue: [],
       onChange,
-      rule: (val) => Array.isArray(val),
     });
 
-    const checkboxes = filterChildrenByType(children, Checkbox).map((checkbox, index) =>
-      cloneElement(checkbox, {
-        key: index,
-        checked: _value.includes(checkbox.props.value),
-        color,
-        size,
-        classNames,
-        styles,
-        __staticSelector: 'CheckboxGroup',
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          const itemValue = event.currentTarget.value;
-          setValue(
-            _value.includes(itemValue)
-              ? _value.filter((item) => item !== itemValue)
-              : [..._value, itemValue]
-          );
-        },
-      })
-    );
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const itemValue = event.currentTarget.value;
+      setValue(
+        _value.includes(itemValue)
+          ? _value.filter((item) => item !== itemValue)
+          : [..._value, itemValue]
+      );
+    };
 
     return (
-      <InputWrapper
-        labelElement="div"
-        size={size}
-        __staticSelector="CheckboxGroup"
-        classNames={classNames}
-        styles={styles}
-        ref={ref}
-        {...wrapperProps}
-        {...others}
-      >
-        <Group
-          spacing={spacing}
-          direction={orientation === 'horizontal' ? 'row' : 'column'}
-          sx={{ paddingTop: 5 }}
+      <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+        <Input.Wrapper
+          labelElement="div"
+          size={size}
+          __staticSelector="CheckboxGroup"
+          classNames={classNames}
+          styles={styles}
+          ref={ref}
+          errorProps={errorProps}
+          descriptionProps={descriptionProps}
+          labelProps={labelProps}
+          inputContainer={inputContainer}
+          inputWrapperOrder={inputWrapperOrder}
+          {...wrapperProps}
+          {...others}
         >
-          {checkboxes}
-        </Group>
-      </InputWrapper>
+          <InputsGroup spacing={spacing} orientation={orientation}>
+            {children}
+          </InputsGroup>
+        </Input.Wrapper>
+      </CheckboxGroupProvider>
     );
   }
 );

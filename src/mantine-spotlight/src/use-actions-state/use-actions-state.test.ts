@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { useActionsState } from './use-actions-state';
 import type { SpotlightAction } from '../types';
 
@@ -88,6 +88,21 @@ describe('@mantine/spotlight/use-actions-state', () => {
 
     expect(hook.result.current[0]).toStrictEqual([
       ...ACTIONS,
+      { id: 'action-4', title: 'Action 4', onTrigger },
+      { id: 'action-5', title: 'Action 5', onTrigger },
+    ]);
+  });
+
+  it('update actions', () => {
+    const hook = renderHook(() => useActionsState(ACTIONS, ''));
+    act(() =>
+      hook.result.current[1].updateActions([
+        { id: 'action-4', title: 'Action 4', onTrigger },
+        { id: 'action-5', title: 'Action 5', onTrigger },
+      ])
+    );
+
+    expect(hook.result.current[0]).toStrictEqual([
       { id: 'action-4', title: 'Action 4', onTrigger },
       { id: 'action-5', title: 'Action 5', onTrigger },
     ]);

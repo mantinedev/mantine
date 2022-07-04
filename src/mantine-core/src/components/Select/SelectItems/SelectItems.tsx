@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { Text } from '../../Text/Text';
 import { Divider } from '../../Divider/Divider';
 import { SelectItem } from '../types';
 import useStyles from './SelectItems.styles';
 
-export type SelectItemsStylesNames = ClassNames<typeof useStyles>;
+export type SelectItemsStylesNames = Selectors<typeof useStyles>;
 
 export interface SelectItemsProps extends DefaultProps<SelectItemsStylesNames> {
   data: SelectItem[];
@@ -39,8 +39,9 @@ export function SelectItems({
   nothingFound,
   creatable,
   createLabel,
+  unstyled,
 }: SelectItemsProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes } = useStyles({ size }, { classNames, styles, unstyled, name: __staticSelector });
   const unGroupedItems: React.ReactElement<any>[] = [];
   const groupedItems: React.ReactElement<any>[] = [];
   let creatableDataIndex = null;
@@ -50,14 +51,14 @@ export function SelectItems({
     return (
       <Item
         key={item.value}
-        className={cx(classes.item, {
-          [classes.hovered]: !item.disabled && hovered === index,
-          [classes.selected]: !item.disabled && selected,
-          [classes.disabled]: item.disabled,
-        })}
+        className={classes.item}
+        data-disabled={item.disabled || undefined}
+        data-hovered={(!item.disabled && hovered === index) || undefined}
+        data-selected={(!item.disabled && selected) || undefined}
         onMouseEnter={() => onItemHover(index)}
         id={`${uuid}-${index}`}
         role="option"
+        data-ignore-outside-clicks
         tabIndex={-1}
         aria-selected={hovered === index}
         ref={(node: HTMLDivElement) => {
@@ -90,7 +91,7 @@ export function SelectItems({
       if (groupName !== item.group) {
         groupName = item.group;
         groupedItems.push(
-          <div className={classes.separator} key={index}>
+          <div className={classes.separator} key={`__mantine-divider-${index}`}>
             <Divider classNames={{ label: classes.separatorLabel }} label={item.group} />
           </div>
         );
@@ -107,10 +108,9 @@ export function SelectItems({
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         key={creatableDataItem.value}
-        className={cx(classes.item, {
-          [classes.hovered]: hovered === creatableDataIndex,
-          [classes.selected]: selected,
-        })}
+        className={classes.item}
+        data-selected={selected || undefined}
+        data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
           event.preventDefault();
@@ -143,7 +143,7 @@ export function SelectItems({
       {unGroupedItems}
     </>
   ) : (
-    <Text size={size} className={classes.nothingFound}>
+    <Text size={size} unstyled={unstyled} className={classes.nothingFound}>
       {nothingFound}
     </Text>
   );

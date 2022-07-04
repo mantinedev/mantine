@@ -206,7 +206,7 @@ import { useRef } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Select ref={ref} data={[]} />;
 }
 ```

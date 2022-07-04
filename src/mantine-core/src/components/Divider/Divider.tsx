@@ -1,10 +1,9 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import useStyles from './Divider.styles';
 import { Text } from '../Text';
@@ -56,24 +55,26 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
     variant,
     styles,
     classNames,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Divider', defaultProps, props);
+  } = useComponentDefaultProps('Divider', defaultProps, props);
 
-  const theme = useMantineTheme();
-  const _color = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
   const { classes, cx } = useStyles(
-    { color: _color, size, variant },
-    { classNames, styles, name: 'Divider' }
+    { color, size, variant },
+    { classNames, styles, unstyled, name: 'Divider' }
   );
 
   const vertical = orientation === 'vertical';
-  const horizontal = !vertical;
+  const horizontal = orientation === 'horizontal';
   const withLabel = !!label && horizontal;
+
+  const useLabelDefaultStyles = !labelProps?.color;
 
   return (
     <Box
       ref={ref}
       className={cx(
+        classes.root,
         {
           [classes.vertical]: vertical,
           [classes.horizontal]: horizontal,
@@ -83,13 +84,14 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
       )}
       {...others}
     >
-      {!!label && horizontal && (
+      {withLabel && (
         <Text
           {...labelProps}
-          color={_color}
           size={labelProps?.size || 'xs'}
           sx={{ marginTop: 2 }}
-          className={cx(classes.label, classes[labelPosition])}
+          className={cx(classes.label, classes[labelPosition], {
+            [classes.labelDefaultStyles]: useLabelDefaultStyles,
+          })}
         >
           {label}
         </Text>

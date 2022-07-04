@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Skeleton.styles';
+import useStyles, { SkeletonStylesParams } from './Skeleton.styles';
 
-export interface SkeletonProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SkeletonProps
+  extends DefaultProps<never, SkeletonStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Should skeleton overlay be displayed */
   visible?: boolean;
 
@@ -30,23 +32,13 @@ const defaultProps: Partial<SkeletonProps> = {
   animate: true,
 };
 
-export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props: SkeletonProps, ref) => {
-  const {
-    height,
-    width,
-    visible,
-    animate,
-    className,
-    circle,
-    radius,
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Skeleton', defaultProps, props);
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>((props, ref) => {
+  const { height, width, visible, animate, className, circle, radius, unstyled, ...others } =
+    useComponentDefaultProps('Skeleton', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { height, width, circle, radius, animate },
-    { classNames, styles, name: 'Skeleton' }
+    { unstyled, name: 'Skeleton' }
   );
 
   return (

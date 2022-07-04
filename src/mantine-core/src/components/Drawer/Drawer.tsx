@@ -4,21 +4,21 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
 import { OptionalPortal } from '../Portal';
 import { Text } from '../Text';
 import { Box } from '../Box';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { GroupedTransition, MantineTransition } from '../Transition';
 import useStyles, { DrawerPosition } from './Drawer.styles';
 
-export type DrawerStylesNames = Exclude<ClassNames<typeof useStyles>, 'withOverlay'>;
+export type DrawerStylesNames = Exclude<Selectors<typeof useStyles>, 'withOverlay'>;
 
 export interface DrawerProps
   extends Omit<DefaultProps<DrawerStylesNames>, MantineStyleSystemSize>,
@@ -42,7 +42,7 @@ export interface DrawerProps
   padding?: MantineNumberSize;
 
   /** Drawer z-index property */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Disables focus trap */
   trapFocus?: boolean;
@@ -50,10 +50,10 @@ export interface DrawerProps
   /** Disables scroll lock */
   lockScroll?: boolean;
 
-  /** Disable onClock trigger for outside events */
+  /** Disable onMouseDown trigger for outside events */
   closeOnClickOutside?: boolean;
 
-  /** Disable onClock trigger for escape key press */
+  /** Disable onKeyDownCapture trigger for escape key press */
   closeOnEscape?: boolean;
 
   /** Drawer appear and disappear transition, see Transition component for full documentation */
@@ -68,11 +68,14 @@ export interface DrawerProps
   /** Removes overlay entirely */
   withOverlay?: boolean;
 
-  /** Sets overlay opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity, number from 0 to 1 */
   overlayOpacity?: number;
 
-  /** Sets overlay color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color, for example, #000 */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
 
   /** Drawer title, displayed in header before close button */
   title?: React.ReactNode;
@@ -119,6 +122,7 @@ const defaultProps: Partial<DrawerProps> = {
   withOverlay: true,
   withCloseButton: true,
   withinPortal: true,
+  overlayBlur: 0,
 };
 
 export function Drawer(props: DrawerProps) {
@@ -149,12 +153,14 @@ export function Drawer(props: DrawerProps) {
     styles,
     target,
     withinPortal,
+    overlayBlur,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Drawer', defaultProps, props);
+  } = useComponentDefaultProps('Drawer', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { size, position, zIndex },
-    { classNames, styles, name: 'Drawer' }
+    { classNames, styles, unstyled, name: 'Drawer' }
   );
 
   const focusTrapRef = useFocusTrap(trapFocus && opened);
@@ -171,7 +177,7 @@ export function Drawer(props: DrawerProps) {
       : 0.75;
 
   const _closeOnEscape = (event: KeyboardEvent) => {
-    if (event.code === 'Escape' && closeOnEscape) {
+    if (event.key === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
@@ -185,14 +191,15 @@ export function Drawer(props: DrawerProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0 });
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
       <GroupedTransition
         onExited={() => _lockScroll(false)}
         onEntered={() => _lockScroll(lockScroll && true)}
         mounted={opened}
+        timingFunction={transitionTimingFunction}
         transitions={{
           overlay: { duration: transitionDuration / 2, transition: 'fade', timingFunction: 'ease' },
           drawer: {
@@ -203,14 +210,8 @@ export function Drawer(props: DrawerProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box
-            className={cx(classes.root, { [classes.noOverlay]: !withOverlay }, className)}
-            role="dialog"
-            aria-modal
-            {...others}
-          >
+          <Box className={cx(classes.root, className)} role="dialog" aria-modal {...others}>
             <Paper<'div'>
-              onMouseDown={(event) => event.stopPropagation()}
               className={cx(classes.drawer, className)}
               ref={focusTrapRef}
               style={transitionStyles.drawer}
@@ -220,14 +221,17 @@ export function Drawer(props: DrawerProps) {
                 const shouldTrigger =
                   (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
 
-                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+                shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
               }}
               shadow={shadow}
               p={padding}
+              unstyled={unstyled}
             >
               {(title || withCloseButton) && (
                 <div className={classes.header}>
-                  <Text className={classes.title}>{title}</Text>
+                  <Text className={classes.title} unstyled={unstyled}>
+                    {title}
+                  </Text>
 
                   {withCloseButton && (
                     <CloseButton
@@ -235,6 +239,7 @@ export function Drawer(props: DrawerProps) {
                       onClick={onClose}
                       aria-label={closeButtonLabel}
                       className={classes.closeButton}
+                      unstyled={unstyled}
                     />
                   )}
                 </div>
@@ -245,6 +250,8 @@ export function Drawer(props: DrawerProps) {
             {withOverlay && (
               <div style={transitionStyles.overlay}>
                 <Overlay
+                  unstyled={unstyled}
+                  blur={overlayBlur}
                   onMouseDown={() => closeOnClickOutside && onClose()}
                   className={classes.overlay}
                   opacity={_overlayOpacity}

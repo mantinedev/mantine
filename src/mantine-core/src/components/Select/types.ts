@@ -1,7 +1,11 @@
-import type { InputStylesNames, InputBaseProps } from '../Input/Input';
-import type { InputWrapperStylesNames, InputWrapperBaseProps } from '../InputWrapper/InputWrapper';
-import type { SelectDropdownStylesNames } from './SelectDropdown/SelectDropdown';
+import type {
+  InputStylesNames,
+  InputSharedProps,
+  InputWrapperStylesNames,
+  InputWrapperBaseProps,
+} from '../Input';
 import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
+import type { SelectPopoverStylesNames } from './SelectPopover/SelectPopover';
 
 export interface SelectItem {
   value: string;
@@ -15,8 +19,8 @@ export type BaseSelectStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
   | SelectItemsStylesNames
-  | SelectDropdownStylesNames;
+  | SelectPopoverStylesNames;
 
 export type BaseSelectProps = InputWrapperBaseProps &
-  InputBaseProps &
+  InputSharedProps &
   Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size' | 'defaultValue'>;

@@ -2,23 +2,22 @@ import React, { forwardRef } from 'react';
 import {
   useMantineTheme,
   DefaultProps,
-  MantineNumberSize,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Transition, MantineTransition } from '../Transition';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { Affix } from '../Affix';
-import { Paper, PaperProps } from '../Paper/Paper';
-import useStyles from './Dialog.styles';
+import { Paper, PaperProps } from '../Paper';
+import useStyles, { DialogStylesParams } from './Dialog.styles';
 
-export type DialogStylesNames = ClassNames<typeof useStyles>;
+export type DialogStylesNames = Selectors<typeof useStyles>;
 
 export interface DialogProps
-  extends Omit<DefaultProps<DialogStylesNames>, MantineStyleSystemSize>,
-    Omit<PaperProps<'div'>, 'classNames' | 'styles'> {
+  extends Omit<DefaultProps<DialogStylesNames, DialogStylesParams>, MantineStyleSystemSize>,
+    Omit<PaperProps, 'classNames' | 'styles'> {
   /** Display close button at the top right corner */
   withCloseButton?: boolean;
 
@@ -37,7 +36,7 @@ export interface DialogProps
   children?: React.ReactNode;
 
   /** Dialog container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Opened state */
   opened: boolean;
@@ -52,7 +51,7 @@ export interface DialogProps
   transitionTimingFunction?: string;
 
   /** Predefined dialog width or number to set width in px */
-  size?: MantineNumberSize;
+  size?: string | number;
 }
 
 const defaultProps: Partial<DialogProps> = {
@@ -64,7 +63,7 @@ const defaultProps: Partial<DialogProps> = {
   transitionDuration: 200,
 };
 
-export function MantineDialog(props: DialogProps) {
+export function DialogBody(props: DialogProps) {
   const {
     withCloseButton,
     onClose,
@@ -81,10 +80,11 @@ export function MantineDialog(props: DialogProps) {
     transition,
     transitionDuration,
     transitionTimingFunction,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Dialog', defaultProps, props);
+  } = useComponentDefaultProps('Dialog', defaultProps, props);
 
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: 'Dialog' });
+  const { classes, cx } = useStyles({ size }, { classNames, styles, unstyled, name: 'Dialog' });
 
   return (
     <Transition
@@ -99,6 +99,7 @@ export function MantineDialog(props: DialogProps) {
           style={{ ...style, ...transitionStyles }}
           shadow={shadow}
           withBorder={withBorder}
+          unstyled={unstyled}
           {...others}
         >
           {withCloseButton && <CloseButton onClick={onClose} className={classes.closeButton} />}
@@ -109,23 +110,20 @@ export function MantineDialog(props: DialogProps) {
   );
 }
 
-type DialogComponent = (props: DialogProps) => React.ReactElement;
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
+  ({ zIndex = getDefaultZIndex('modal'), ...props }: DialogProps, ref) => {
+    const theme = useMantineTheme();
 
-export const Dialog: DialogComponent & { displayName?: string } = forwardRef<
-  HTMLDivElement,
-  DialogProps
->(({ zIndex = getDefaultZIndex('modal'), ...props }: DialogProps, ref) => {
-  const theme = useMantineTheme();
-
-  return (
-    <Affix
-      zIndex={zIndex}
-      position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
-      ref={ref}
-    >
-      <MantineDialog {...props} />
-    </Affix>
-  );
-});
+    return (
+      <Affix
+        zIndex={zIndex}
+        position={props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl }}
+        ref={ref}
+      >
+        <DialogBody {...props} />
+      </Affix>
+    );
+  }
+);
 
 Dialog.displayName = '@mantine/core/Dialog';

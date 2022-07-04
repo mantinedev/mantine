@@ -4,12 +4,14 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { ThemeIconVariant } from './ThemeIcon.styles';
+import useStyles, { ThemeIconVariant, ThemeIconStylesParams } from './ThemeIcon.styles';
 
-export interface ThemeIconProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface ThemeIconProps
+  extends DefaultProps<never, ThemeIconStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Icon */
   children: React.ReactNode;
 
@@ -35,30 +37,20 @@ const defaultProps: Partial<ThemeIconProps> = {
   gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
-export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>(
-  (props: ThemeIconProps, ref) => {
-    const { className, size, radius, variant, color, children, gradient, ...others } =
-      useMantineDefaultProps('ThemeIcon', defaultProps, props);
+export const ThemeIcon = forwardRef<HTMLDivElement, ThemeIconProps>((props, ref) => {
+  const { className, size, radius, variant, color, children, gradient, unstyled, ...others } =
+    useComponentDefaultProps('ThemeIcon', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      {
-        variant,
-        radius,
-        color,
-        size,
-        gradientFrom: gradient.from,
-        gradientTo: gradient.to,
-        gradientDeg: gradient.deg,
-      },
-      { name: 'ThemeIcon' }
-    );
+  const { classes, cx } = useStyles(
+    { variant, radius, color, size, gradient },
+    { name: 'ThemeIcon', unstyled }
+  );
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {children}
-      </Box>
-    );
-  }
-);
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {children}
+    </Box>
+  );
+});
 
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

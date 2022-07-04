@@ -3,9 +3,10 @@ import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
 export interface BurgerStylesParams {
   size: MantineNumberSize;
   color: MantineColor;
+  transitionDuration: number;
 }
 
-export const sizes = {
+const sizes = {
   xs: 12,
   sm: 18,
   md: 24,
@@ -13,22 +14,16 @@ export const sizes = {
   xl: 42,
 };
 
-export default createStyles((theme, { size, color }: BurgerStylesParams, getRef) => {
+export default createStyles((theme, { size, color, transitionDuration }: BurgerStylesParams) => {
   const sizeValue = theme.fn.size({ size, sizes });
-  const opened = { ref: getRef('opened') } as const;
+  const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
 
   return {
-    opened,
-
     root: {
-      ...theme.fn.focusStyles(),
-      WebkitTapHighlightColor: 'transparent',
       borderRadius: theme.radius.sm,
       width: sizeValue + theme.spacing.xs,
       height: sizeValue + theme.spacing.xs,
       padding: theme.spacing.xs / 2,
-      backgroundColor: 'transparent',
-      border: 0,
       cursor: 'pointer',
     },
 
@@ -41,13 +36,13 @@ export default createStyles((theme, { size, color }: BurgerStylesParams, getRef)
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
-        backgroundColor: color,
+        backgroundColor: _color,
         outline: '1px solid transparent',
         transitionProperty: 'background-color, transform',
-        transitionDuration: '300ms',
+        transitionDuration: `${transitionDuration}ms`,
 
         '@media (prefers-reduced-motion)': {
-          transitionDuration: '0ms',
+          transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
         },
       },
 
@@ -65,7 +60,7 @@ export default createStyles((theme, { size, color }: BurgerStylesParams, getRef)
         top: sizeValue / 3,
       },
 
-      [`&.${opened.ref}`]: {
+      '&[data-opened]': {
         backgroundColor: 'transparent',
 
         '&:before': {

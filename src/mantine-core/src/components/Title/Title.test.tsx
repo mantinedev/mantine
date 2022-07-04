@@ -10,5 +10,6 @@ describe('@mantine/core/Title', () => {
     props: defaultProps,
     displayName: '@mantine/core/Title',
     refType: HTMLHeadingElement,
+    providerName: 'Title',
   });
 });

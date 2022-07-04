@@ -1,10 +1,10 @@
 import { createStyles } from '@mantine/styles';
 
-interface AspectRatioStyles {
+export interface AspectRatioStylesParams {
   ratio: number;
 }
 
-export default createStyles((theme, { ratio }: AspectRatioStyles) => ({
+export default createStyles((theme, { ratio }: AspectRatioStylesParams) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',

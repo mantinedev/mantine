@@ -11,7 +11,7 @@ import { TextInput, TextInputProps } from './TextInput';
 
 const defaultProps: TextInputProps = {};
 
-describe('@mantine/core/Input', () => {
+describe('@mantine/core/TextInput', () => {
   checkAccessibility([<TextInput label="test-input" />, <TextInput aria-label="test-input" />]);
   itSupportsInputProps(TextInput, defaultProps, 'TextInput');
   itSupportsFocusEvents(TextInput, defaultProps, 'input');
@@ -20,21 +20,22 @@ describe('@mantine/core/Input', () => {
     props: defaultProps,
     displayName: '@mantine/core/TextInput',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'TextInput',
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<TextInput {...defaultProps} />);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    await userEvent.type(screen.getByRole('textbox'), 'test-value');
     expect(screen.getByRole('textbox')).toHaveValue('test-value');
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<TextInput {...defaultProps} value="" onChange={spy} />);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    userEvent.type(screen.getByRole('textbox'), 'test-value');
+    await userEvent.type(screen.getByRole('textbox'), 'test-value');
     expect(spy).toHaveBeenCalled();
     expect(screen.getByRole('textbox')).toHaveValue('');
   });

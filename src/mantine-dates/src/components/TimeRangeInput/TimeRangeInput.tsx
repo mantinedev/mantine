@@ -1,30 +1,29 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import {
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
   InputStylesNames,
   InputWrapperStylesNames,
   DefaultProps,
   Input,
-  InputWrapper,
   MantineSize,
-  ClassNames,
+  Selectors,
   CloseButton,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
-import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import useStyles from './TimeRangeInput.styles';
 import { TimeInput } from '../TimeInput';
 
 export type TimeRangeInputStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'disabled'>
+  | Exclude<Selectors<typeof useStyles>, 'disabled'>
   | InputStylesNames
   | InputWrapperStylesNames;
 
 export interface TimeRangeInputProps
   extends DefaultProps<TimeRangeInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
@@ -130,16 +129,20 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
       labelSeparator,
       disabled,
       sx,
+      labelProps,
+      descriptionProps,
+      errorProps,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('TimeRangeInput', defaultProps, props);
+    } = useComponentDefaultProps('TimeRangeInput', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size },
-      { classNames, styles, name: 'TimeRangeInput' }
+      { classNames, styles, unstyled, name: 'TimeRangeInput' }
     );
 
     const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
+    const uuid = useId(id);
 
     const fromTimeRef = useRef<HTMLInputElement>();
     const toTimeRef = useRef<HTMLInputElement>();
@@ -171,6 +174,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           aria-label={clearButtonLabel}
           onClick={handleClear}
           size={size}
+          unstyled={unstyled}
         />
       ) : null;
 
@@ -188,7 +192,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
     };
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         label={label}
         error={error}
@@ -201,6 +205,10 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
         __staticSelector="TimeRangeInput"
         id={uuid}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -219,6 +227,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
           disabled={disabled}
           rightSection={rightSection}
           rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+          unstyled={unstyled}
           {...rest}
         >
           <div className={classes.inputWrapper}>
@@ -230,6 +239,7 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               name={name}
               nextRef={toTimeRef}
               id={uuid}
+              unstyled={unstyled}
               {...forwardProps}
             />
 
@@ -247,11 +257,12 @@ export const TimeRangeInput = forwardRef<HTMLInputElement, TimeRangeInputProps>(
               variant="unstyled"
               value={_value[1]}
               onChange={(date) => setValue([_value[0], date])}
+              unstyled={unstyled}
               {...forwardProps}
             />
           </div>
         </Input>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

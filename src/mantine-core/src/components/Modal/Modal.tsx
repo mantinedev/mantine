@@ -1,28 +1,27 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 import React, { useEffect } from 'react';
-import { useScrollLock, useFocusTrap, useFocusReturn, useUuid } from '@mantine/hooks';
+import { useScrollLock, useFocusTrap, useFocusReturn, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineShadow,
-  ClassNames,
+  Selectors,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { CloseButton } from '../ActionIcon';
+import { CloseButton } from '../CloseButton';
 import { Text } from '../Text';
 import { Paper } from '../Paper';
 import { Overlay } from '../Overlay';
 import { OptionalPortal } from '../Portal';
 import { Box } from '../Box';
 import { GroupedTransition, MantineTransition } from '../Transition';
-import useStyles from './Modal.styles';
+import useStyles, { ModalStylesParams } from './Modal.styles';
 
-export type ModalStylesNames = ClassNames<typeof useStyles>;
+export type ModalStylesNames = Selectors<typeof useStyles>;
 
 export interface ModalProps
-  extends Omit<DefaultProps<ModalStylesNames>, MantineStyleSystemSize>,
+  extends Omit<DefaultProps<ModalStylesNames, ModalStylesParams>, MantineStyleSystemSize>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Mounts modal if true */
   opened: boolean;
@@ -34,7 +33,7 @@ export interface ModalProps
   title?: React.ReactNode;
 
   /** Modal z-index property */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Control vertical overflow behavior */
   overflow?: 'outside' | 'inside';
@@ -42,11 +41,17 @@ export interface ModalProps
   /** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
   withCloseButton?: boolean;
 
-  /** Overlay below modal opacity, defaults to 0.75 in light theme and to 0.85 in dark theme */
+  /** Overlay opacity */
   overlayOpacity?: number;
 
-  /** Overlay below modal color, defaults to theme.black in light theme and to theme.colors.dark[9] in dark theme */
+  /** Overlay color */
   overlayColor?: string;
+
+  /** Overlay blur in px */
+  overlayBlur?: number;
+
+  /** Determines whether the modal should take the entire screen */
+  fullScreen?: boolean;
 
   /** Modal radius */
   radius?: MantineNumberSize;
@@ -87,6 +92,9 @@ export interface ModalProps
   /** Controls if modal should be centered */
   centered?: boolean;
 
+  /** Determines whether scroll should be locked when modal is opened, defaults to true */
+  lockScroll?: boolean;
+
   /** Target element or selector where modal portal should be rendered */
   target?: HTMLElement | string;
 
@@ -98,7 +106,6 @@ const defaultProps: Partial<ModalProps> = {
   size: 'md',
   transitionDuration: 250,
   overflow: 'outside',
-  transition: 'pop',
   padding: 'lg',
   shadow: 'lg',
   closeOnClickOutside: true,
@@ -106,6 +113,8 @@ const defaultProps: Partial<ModalProps> = {
   trapFocus: true,
   withCloseButton: true,
   withinPortal: true,
+  lockScroll: true,
+  overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
 };
 
@@ -137,14 +146,19 @@ export function Modal(props: ModalProps) {
     target,
     withinPortal,
     zIndex,
+    overlayBlur,
+    transitionTimingFunction,
+    fullScreen,
+    unstyled,
+    lockScroll: shouldLockScroll,
     ...others
-  } = useMantineDefaultProps('Modal', defaultProps, props);
-  const baseId = useUuid(id);
+  } = useComponentDefaultProps('Modal', defaultProps, props);
+  const baseId = useId(id);
   const titleId = `${baseId}-title`;
   const bodyId = `${baseId}-body`;
   const { classes, cx, theme } = useStyles(
-    { size, overflow, centered, zIndex },
-    { classNames, styles, name: 'Modal' }
+    { size, overflow, centered, zIndex, fullScreen },
+    { unstyled, classNames, styles, name: 'Modal' }
   );
   const focusTrapRef = useFocusTrap(trapFocus && opened);
   const _overlayOpacity =
@@ -157,7 +171,7 @@ export function Modal(props: ModalProps) {
   const [, lockScroll] = useScrollLock();
 
   const closeOnEscapePress = (event: KeyboardEvent) => {
-    if (!trapFocus && event.code === 'Escape' && closeOnEscape) {
+    if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
       onClose();
     }
   };
@@ -171,16 +185,22 @@ export function Modal(props: ModalProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, transitionDuration: 0 });
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus });
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex} target={target}>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
       <GroupedTransition
-        onExited={() => lockScroll(false)}
-        onEntered={() => lockScroll(true)}
+        onExited={() => shouldLockScroll && lockScroll(false)}
+        onEntered={() => shouldLockScroll && lockScroll(true)}
         mounted={opened}
+        duration={transitionDuration}
+        exitDuration={transitionDuration}
+        timingFunction={transitionTimingFunction}
         transitions={{
-          modal: { duration: transitionDuration, transition },
+          modal: {
+            duration: transitionDuration,
+            transition: transition || (fullScreen ? 'fade' : 'pop'),
+          },
           overlay: {
             duration: transitionDuration / 2,
             transition: 'fade',
@@ -189,13 +209,13 @@ export function Modal(props: ModalProps) {
         }}
       >
         {(transitionStyles) => (
-          <Box className={cx(classes.root, className)} {...others}>
+          <Box id={baseId} className={cx(classes.root, className)} {...others}>
             <div
               className={classes.inner}
               onKeyDownCapture={(event) => {
                 const shouldTrigger =
                   (event.target as any)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-                shouldTrigger && event.nativeEvent.code === 'Escape' && closeOnEscape && onClose();
+                shouldTrigger && event.key === 'Escape' && closeOnEscape && onClose();
               }}
               ref={focusTrapRef}
             >
@@ -210,6 +230,7 @@ export function Modal(props: ModalProps) {
                 aria-modal
                 tabIndex={-1}
                 style={transitionStyles.modal}
+                unstyled={unstyled}
               >
                 {(title || withCloseButton) && (
                   <div className={classes.header}>
@@ -238,11 +259,13 @@ export function Modal(props: ModalProps) {
                   sx={{ position: 'fixed' }}
                   zIndex={0}
                   onMouseDown={() => closeOnClickOutside && onClose()}
+                  blur={overlayBlur}
                   color={
                     overlayColor ||
                     (theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.black)
                   }
                   opacity={_overlayOpacity}
+                  unstyled={unstyled}
                 />
               </div>
             </div>

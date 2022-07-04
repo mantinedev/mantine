@@ -1,27 +1,14 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  extractSystemStyles,
-} from '@mantine/styles';
-import { useSx, BoxSx } from './use-sx/use-sx';
+import { DefaultProps, extractSystemStyles } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
+import { useSx } from './use-sx/use-sx';
 
-interface _BoxProps extends Omit<DefaultProps, 'sx'> {
-  sx?: BoxSx;
+export interface BoxProps extends DefaultProps {
+  children?: React.ReactNode;
 }
 
-export type BoxProps<C> = PolymorphicComponentProps<C, _BoxProps>;
-
-type BoxComponent = (<C = 'div'>(props: BoxProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-export const Box: BoxComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { className, component, style, sx, ...others }: BoxProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+export const _Box = forwardRef<HTMLDivElement, BoxProps & { component: any }>(
+  ({ className, component, style, sx, ...others }, ref) => {
     const { systemStyles, rest } = extractSystemStyles(others);
     const Element = component || 'div';
     return (
@@ -30,4 +17,6 @@ export const Box: BoxComponent = forwardRef(
   }
 );
 
-Box.displayName = '@mantine/core/Box';
+_Box.displayName = '@mantine/core/Box';
+
+export const Box = createPolymorphicComponent<'div', BoxProps>(_Box);

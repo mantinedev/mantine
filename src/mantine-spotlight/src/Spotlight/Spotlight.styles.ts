@@ -5,13 +5,15 @@ export interface SpotlightStylesParams {
   maxWidth: number;
   topOffset: number;
   radius: MantineNumberSize;
+  zIndex: React.CSSProperties['zIndex'];
 }
 
 export default createStyles(
-  (theme, { centered, maxWidth, topOffset, radius }: SpotlightStylesParams) => ({
+  (theme, { centered, maxWidth, topOffset, radius, zIndex }: SpotlightStylesParams) => ({
     root: {
       ...theme.fn.cover(),
       position: 'fixed',
+      zIndex,
     },
 
     spotlight: {

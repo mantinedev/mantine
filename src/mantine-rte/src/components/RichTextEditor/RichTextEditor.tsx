@@ -1,14 +1,15 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react';
 import Editor, { Quill } from 'react-quill';
+import type { Delta, Sources } from 'quill';
 import 'quill-mention';
 import {
   DefaultProps,
-  ClassNames,
+  Selectors,
   Box,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
-import { useUuid, mergeRefs } from '@mantine/hooks';
+import { useId, mergeRefs } from '@mantine/hooks';
 import { Toolbar, ToolbarStylesNames } from '../Toolbar/Toolbar';
 import { DEFAULT_CONTROLS } from './default-control';
 import useStyles from './RichTextEditor.styles';
@@ -18,7 +19,7 @@ import { createImageBlot, ImageUploader } from '../../modules/image-uploader';
 import { replaceIcons } from '../../modules/icons';
 import { attachShortcuts } from '../../modules/shortcuts';
 
-export type RichTextEditorStylesNames = ToolbarStylesNames | ClassNames<typeof useStyles>;
+export type RichTextEditorStylesNames = ToolbarStylesNames | Selectors<typeof useStyles>;
 
 export type { RichTextEditorLabels };
 
@@ -44,10 +45,10 @@ export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
-  value: string;
+  value: string | Delta;
 
   /** Called each time value changes */
-  onChange(value: string): void;
+  onChange(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
 
   /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;
@@ -105,10 +106,11 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       mentions,
       readOnly,
       modules: externalModules,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('RichTextEditor', defaultProps, props);
+    } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
 
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const editorRef = useRef<Editor>();
     const { classes, cx } = useStyles(
       {
@@ -118,7 +120,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         radius,
         readOnly,
       },
-      { classNames, styles, name: 'RichTextEditor' }
+      { classNames, styles, unstyled, name: 'RichTextEditor' }
     );
 
     const modules = useMemo(
@@ -130,7 +132,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           upload: (file: File) => onImageUpload(file),
         },
       }),
-      [uuid, mentions, externalModules]
+      [uuid, mentions, externalModules, onImageUpload]
     );
 
     useEffect(() => {
@@ -150,16 +152,18 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           styles={styles}
           id={uuid}
           className={classes.toolbar}
+          unstyled={unstyled}
         />
 
         <Editor
           theme="snow"
           modules={modules}
-          value={value}
+          defaultValue={value}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
+          scrollingContainer="html"
         />
       </Box>
     );

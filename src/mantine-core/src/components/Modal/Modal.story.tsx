@@ -11,24 +11,6 @@ import { Menu } from '../Menu/Menu';
 import { Modal } from './Modal';
 import { MultiSelect } from '../MultiSelect/MultiSelect';
 
-function PopoverWrapper() {
-  const [opened, setOpened] = useState(false);
-  return (
-    <Popover
-      opened={opened}
-      onClose={() => setOpened(false)}
-      target={<Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>}
-      styles={{ body: { width: 260 } }}
-      position="bottom"
-      withArrow
-    >
-      <div style={{ display: 'flex' }}>
-        <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
-      </div>
-    </Popover>
-  );
-}
-
 function WrappedModal(
   props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
 ) {
@@ -42,7 +24,7 @@ function WrappedModal(
   );
 }
 
-storiesOf('@mantine/core/Modal/stories', module)
+storiesOf('Modal', module)
   .add('Without portal', () => <WrappedModal withinPortal={false}>test</WrappedModal>)
   .add('Content overflow', () => (
     <WrappedModal title="This title is so large that there is no space to fit it all on single line and it will wrap on the second one or may be even on the third one">
@@ -58,12 +40,19 @@ storiesOf('@mantine/core/Modal/stories', module)
         ))}
     </WrappedModal>
   ))
-  .add('With popper components', () => (
+  .add('With popover components', () => (
     <WrappedModal title="Modal with overlay items">
       <Select data={['react', 'ng']} placeholder="Select" />
       <Autocomplete data={['react', 'ng']} mt="md" placeholder="Autocomplete" />
       <MultiSelect data={['react', 'ng']} mt="md" mb="md" placeholder="MultiSelect" />
-      <PopoverWrapper />
+      <Popover position="bottom" withArrow>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
+        </Popover.Dropdown>
+      </Popover>
       <ColorInput mt="md" mb="md" placeholder="Color input" />
       <Menu>
         <Menu.Item>Hello</Menu.Item>
@@ -91,4 +80,5 @@ storiesOf('@mantine/core/Modal/stories', module)
     <MantineProvider theme={{ defaultRadius: 0 }} inherit>
       <WrappedModal title="Modal with default radius">default radius</WrappedModal>
     </MantineProvider>
-  ));
+  ))
+  .add('Fullscreen', () => <WrappedModal fullScreen>Full screen modal</WrappedModal>);

@@ -9,17 +9,20 @@ import {
 } from '@mantine/tests';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
-const defaultProps: ActionIconProps<'button'> = { children: <div /> };
+const defaultProps: ActionIconProps = {
+  children: '$',
+};
 
 describe('@mantine/core/ActionIcon', () => {
   itIsPolymorphic(ActionIcon, defaultProps);
   itRendersChildren(ActionIcon, defaultProps);
-  itSupportsFocusEvents(ActionIcon, defaultProps, '.mantine-ActionIcon-root');
+  itSupportsFocusEvents(ActionIcon, defaultProps, 'button');
   itSupportsSystemProps({
     component: ActionIcon,
     props: defaultProps,
     displayName: '@mantine/core/ActionIcon',
     refType: HTMLButtonElement,
+    providerName: 'ActionIcon',
   });
 
   checkAccessibility([
@@ -30,6 +33,16 @@ describe('@mantine/core/ActionIcon', () => {
   it('supports changing button type', () => {
     render(<ActionIcon type="submit">$</ActionIcon>);
     expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
+  });
+
+  it('sets data-disabled attribute when disabled={true}', () => {
+    render(<ActionIcon disabled />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
+  });
+
+  it('sets data-loading attribute when loading={true}', () => {
+    render(<ActionIcon loading />);
+    expect(screen.getByRole('button')).toHaveAttribute('data-loading');
   });
 
   it('replaces icon with Loader when loading is set to true', () => {
@@ -46,9 +59,9 @@ describe('@mantine/core/ActionIcon', () => {
     );
 
     expect(notLoading.querySelectorAll('.test-icon')).toHaveLength(1);
-    expect(notLoading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(0);
+    expect(notLoading.querySelectorAll('svg')).toHaveLength(0);
 
     expect(loading.querySelectorAll('.test-icon')).toHaveLength(0);
-    expect(loading.querySelectorAll('.mantine-ActionIcon-loading')).toHaveLength(1);
+    expect(loading.querySelectorAll('svg')).toHaveLength(1);
   });
 });

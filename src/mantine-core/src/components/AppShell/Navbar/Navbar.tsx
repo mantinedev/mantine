@@ -1,53 +1,20 @@
 import React, { forwardRef } from 'react';
+import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import {
-  ClassNames,
-  DefaultProps,
-  MantineNumberSize,
-  getDefaultZIndex,
-  ForwardRefWithStaticComponents,
-  useMantineDefaultProps,
-  Global,
-} from '@mantine/styles';
-import { Box } from '../../Box';
-import { useAppShellContext } from '../AppShell.context';
-import { getSortedBreakpoints } from './get-sorted-breakpoints/get-sorted-breakpoints';
-import { NavbarSection } from './NavbarSection/NavbarSection';
-import useStyles, { NavbarPosition, NavbarWidth } from './Navbar.styles';
-
-export type NavbarStylesNames = ClassNames<typeof useStyles>;
+  HorizontalSection,
+  HorizontalSectionSharedProps,
+} from '../HorizontalSection/HorizontalSection';
+import { Section } from '../HorizontalSection/Section/Section';
 
 export interface NavbarProps
-  extends DefaultProps<NavbarStylesNames>,
+  extends HorizontalSectionSharedProps,
     React.ComponentPropsWithRef<'nav'> {
-  /** Navbar width with breakpoints */
-  width?: NavbarWidth;
-
-  /** Navbar height */
-  height?: string | number;
-
   /** Navbar content */
   children: React.ReactNode;
-
-  /** Set position to fixed */
-  fixed?: boolean;
-
-  /** Position for fixed Navbar */
-  position?: NavbarPosition;
-
-  /** Breakpoint at which navbar will be hidden if hidden prop is true */
-  hiddenBreakpoint?: MantineNumberSize;
-
-  /** Set to true to hide breakpoint at hiddenBreakpoint */
-  hidden?: boolean;
-
-  /** z-index */
-  zIndex?: number;
 }
 
-type NavbarComponent = ForwardRefWithStaticComponents<
-  NavbarProps,
-  { Section: typeof NavbarSection }
->;
+type NavbarComponent = ForwardRefWithStaticComponents<NavbarProps, { Section: typeof Section }>;
 
 const defaultProps: Partial<NavbarProps> = {
   fixed: false,
@@ -59,66 +26,10 @@ const defaultProps: Partial<NavbarProps> = {
 
 export const Navbar: NavbarComponent = forwardRef<HTMLElement, NavbarProps>(
   (props: NavbarProps, ref) => {
-    const {
-      width,
-      height,
-      fixed,
-      position,
-      zIndex,
-      hiddenBreakpoint,
-      hidden,
-      className,
-      classNames,
-      styles,
-      children,
-      ...others
-    } = useMantineDefaultProps('Navbar', defaultProps, props);
-    const ctx = useAppShellContext();
-
-    const { classes, cx, theme } = useStyles(
-      {
-        width,
-        height,
-        fixed: ctx.fixed || fixed,
-        position,
-        hiddenBreakpoint,
-        zIndex: ctx.zIndex || zIndex,
-      },
-      { classNames, styles, name: 'Navbar' }
-    );
-
-    const breakpoints = getSortedBreakpoints(width, theme).reduce(
-      (acc, [breakpoint, breakpointSize]) => {
-        acc[`@media (min-width: ${breakpoint + 1}px)`] = {
-          '--mantine-navbar-width': `${breakpointSize}px`,
-        };
-
-        return acc;
-      },
-      {}
-    );
-
-    return (
-      <Box
-        component="nav"
-        ref={ref}
-        className={cx(classes.root, { [classes.hidden]: hidden }, className)}
-        {...others}
-      >
-        {children}
-
-        <Global
-          styles={() => ({
-            ':root': {
-              '--mantine-navbar-width': width?.base || '0px',
-              ...breakpoints,
-            },
-          })}
-        />
-      </Box>
-    );
+    const _props = useComponentDefaultProps('Navbar', defaultProps, props);
+    return <HorizontalSection section="navbar" __staticSelector="Navbar" ref={ref} {..._props} />;
   }
 ) as any;
 
-Navbar.Section = NavbarSection;
+Navbar.Section = Section;
 Navbar.displayName = '@mantine/core/Navbar';

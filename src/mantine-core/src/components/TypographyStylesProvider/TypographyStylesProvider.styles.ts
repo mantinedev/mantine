@@ -1,18 +1,21 @@
 import { createStyles } from '@mantine/styles';
+import { keys } from '@mantine/utils';
 
 export default createStyles((theme) => {
-  const headings = Object.keys(theme.headings.sizes).reduce((acc, h) => {
+  const headings = keys(theme.headings.sizes).reduce((acc, h) => {
+    const values = theme.headings.sizes[h];
     acc[`& ${h}`] = {
       fontFamily: theme.headings.fontFamily,
-      fontWeight: theme.headings.fontWeight,
-      marginTop: theme.spacing.xl * theme.headings.sizes[h].lineHeight,
+      fontWeight: values.fontWeight || theme.headings.fontWeight,
+      marginTop:
+        typeof values.lineHeight === 'number'
+          ? theme.spacing.xl * values.lineHeight
+          : theme.spacing.xl,
       marginBottom: theme.spacing.sm,
-      ...theme.headings.sizes[h],
+      ...values,
 
       '@media (max-width: 755px)': {
-        fontSize:
-          typeof theme.headings.sizes[h].fontSize === 'number' &&
-          (theme.headings.sizes[h].fontSize as number) / 1.3,
+        fontSize: typeof values.fontSize === 'number' && (values.fontSize as number) / 1.3,
       },
     };
 
@@ -31,6 +34,18 @@ export default createStyles((theme) => {
       },
 
       ...headings,
+
+      '& .ql-align-center': {
+        textAlign: 'center',
+      },
+
+      '& .ql-align-right': {
+        textAlign: 'right',
+      },
+
+      '& .ql-align-left': {
+        textAlign: 'left',
+      },
 
       '& img': {
         maxWidth: '100%',
@@ -76,7 +91,7 @@ export default createStyles((theme) => {
 
       '& code': {
         lineHeight: theme.lineHeight,
-        padding: `1px ${theme.spacing.xs / 1}`,
+        padding: `1px ${theme.spacing.xs / 1}px`,
         borderRadius: theme.radius.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[0],

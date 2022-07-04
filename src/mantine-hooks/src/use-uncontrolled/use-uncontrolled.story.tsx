@@ -17,7 +17,6 @@ function CustomInput({ label, value, defaultValue, onChange }: CustomInputProps)
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => typeof val === 'string',
   });
 
   return (
@@ -41,4 +40,4 @@ function Example() {
   );
 }
 
-storiesOf('@mantine/hooks/use-uncontrolled', module).add('Usage', () => <Example />);
+storiesOf('Hooks/use-uncontrolled', module).add('Usage', () => <Example />);

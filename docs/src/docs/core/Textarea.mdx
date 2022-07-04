@@ -49,7 +49,7 @@ import { useRef } from 'react';
 import { Textarea } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLTextAreaElement>();
+  const ref = useRef<HTMLTextAreaElement>(null);
   return <Textarea ref={ref} />;
 }
 ```

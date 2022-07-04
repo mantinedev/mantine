@@ -1,19 +1,18 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import {
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
   InputStylesNames,
   InputWrapperStylesNames,
   DefaultProps,
   Input,
-  InputWrapper,
   MantineSize,
-  ClassNames,
+  Selectors,
   CloseButton,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
-import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -23,13 +22,13 @@ import { getDate } from '../TimeInputBase/get-date/get-date';
 import { getTimeValues } from '../TimeInputBase/get-time-values/get-time-value';
 
 export type TimeInputStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | InputStylesNames
   | InputWrapperStylesNames;
 
 export interface TimeInputProps
   extends DefaultProps<TimeInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
@@ -55,6 +54,12 @@ export interface TimeInputProps
 
   /** Time format */
   format?: '12' | '24';
+
+  /** Label for 'am' */
+  amLabel?: string;
+
+  /** Label for 'pm' */
+  pmLabel?: string;
 
   /** Uncontrolled input name */
   name?: string;
@@ -97,6 +102,8 @@ const defaultProps: Partial<TimeInputProps> = {
   withSeconds: false,
   clearable: false,
   format: '24',
+  amLabel: 'am',
+  pmLabel: 'pm',
   timePlaceholder: '--',
   amPmPlaceholder: 'am',
   disabled: false,
@@ -123,6 +130,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       clearable,
       clearButtonLabel,
       format,
+      amLabel,
+      pmLabel,
       name,
       hoursLabel,
       minutesLabel,
@@ -133,12 +142,19 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       disabled,
       sx,
       nextRef,
+      labelProps,
+      descriptionProps,
+      errorProps,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('TimeInput', defaultProps, props);
+    } = useComponentDefaultProps('TimeInput', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
+    const { classes, cx, theme } = useStyles(
+      { size },
+      { classNames, styles, unstyled, name: 'TimeInput' }
+    );
     const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
+    const uuid = useId(id);
 
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
@@ -149,12 +165,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minutes: string;
       seconds: string;
       amPm: string;
-    }>(getTimeValues(value || defaultValue, format));
+    }>(getTimeValues(value || defaultValue, format, amLabel, pmLabel));
     const [_value, setValue] = useState<Date | null>(value || defaultValue);
 
     useDidUpdate(() => {
-      setTime(getTimeValues(_value, format));
-    }, [_value, format]);
+      setTime(getTimeValues(_value, format, amLabel, pmLabel));
+    }, [_value, format, amLabel, pmLabel]);
 
     // Allow controlled value prop to override internal _value
     useDidUpdate(() => {
@@ -170,6 +186,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         timeWithChange.minutes,
         timeWithChange.seconds,
         format,
+        pmLabel,
         timeWithChange.amPm
       );
       setValue(newDate);
@@ -212,6 +229,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     });
 
     const handleAmPmChange = createAmPmHandler({
+      amLabel,
+      pmLabel,
       onChange: (val) => {
         setDate({ amPm: val });
       },
@@ -221,6 +240,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const handleClear = () => {
       setTime({ hours: '', minutes: '', seconds: '', amPm: '' });
       setValue(null);
+      onChange?.(null);
       hoursRef.current.focus();
     };
 
@@ -231,11 +251,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           aria-label={clearButtonLabel}
           onClick={handleClear}
           size={size}
+          unstyled={unstyled}
         />
       ) : null;
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         label={label}
         error={error}
@@ -248,6 +269,10 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         __staticSelector="TimeInput"
         id={uuid}
         sx={sx}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -264,6 +289,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           disabled={disabled}
           rightSection={rightSection}
           rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+          unstyled={unstyled}
           {...rest}
         >
           <div className={classes.controls}>
@@ -281,6 +307,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               aria-label={hoursLabel}
               disabled={disabled}
               name={name}
+              unstyled={unstyled}
             />
             <TimeField
               ref={minutesRef}
@@ -294,6 +321,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               placeholder={timePlaceholder}
               aria-label={minutesLabel}
               disabled={disabled}
+              unstyled={unstyled}
             />
             {withSeconds && (
               <TimeField
@@ -307,6 +335,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 placeholder={timePlaceholder}
                 aria-label={secondsLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
             {format === '12' && (
@@ -315,14 +344,17 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 value={time.amPm}
                 onChange={handleAmPmChange}
                 placeholder={amPmPlaceholder}
+                amLabel={amLabel}
+                pmLabel={pmLabel}
                 size={size}
                 aria-label={amPmLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
           </div>
         </Input>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

@@ -2,27 +2,26 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  getSharedColorScheme,
   MantineColor,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  ClassNames,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { Box } from '../Box';
-import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
+import { createPolymorphicComponent } from '@mantine/utils';
+import { UnstyledButton } from '../UnstyledButton';
+import useStyles, { sizes, ActionIconVariant, ActionIconStylesParams } from './ActionIcon.styles';
 import { Loader, LoaderProps } from '../Loader';
 
-export type ActionIconStylesNames = ClassNames<typeof useStyles>;
+export type ActionIconStylesNames = Selectors<typeof useStyles>;
 
-interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
-  /** Icon rendered inside button */
+export interface ActionIconProps
+  extends DefaultProps<ActionIconStylesNames, ActionIconStylesParams> {
+  /** Icon */
   children?: React.ReactNode;
 
   /** Controls appearance */
   variant?: ActionIconVariant;
 
-  /** Button hover, active and icon colors from theme, defaults to gray */
+  /** Key of theme.colors */
   color?: MantineColor;
 
   /** Button border-radius from theme or number to set border-radius in px */
@@ -34,65 +33,60 @@ interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
   /** Props spread to Loader component */
   loaderProps?: LoaderProps;
 
-  /** Indicate loading state */
+  /** Indicates loading state */
   loading?: boolean;
+
+  /** Indicates disabled state */
+  disabled?: boolean;
 }
 
-export type ActionIconProps<C> = PolymorphicComponentProps<C, _ActionIconProps>;
-
-type ActionIconComponent = (<C = 'button'>(props: ActionIconProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<ActionIconProps<any>> = {
+const defaultProps: Partial<ActionIconProps> = {
   color: 'gray',
   size: 'md',
-  variant: 'hover',
-  disabled: false,
+  variant: 'subtle',
   loading: false,
 };
 
-export const ActionIcon: ActionIconComponent = forwardRef(
-  <C extends React.ElementType = 'button'>(props: ActionIconProps<C>, ref: PolymorphicRef<C>) => {
-    const {
-      className,
-      color,
-      children,
-      radius,
-      size,
-      variant,
-      disabled,
-      loaderProps,
-      loading,
-      component,
-      styles,
-      classNames,
-      ...others
-    } = useMantineDefaultProps('ActionIcon', defaultProps, props);
+export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props, ref) => {
+  const {
+    className,
+    color,
+    children,
+    radius,
+    size,
+    variant,
+    disabled,
+    loaderProps,
+    loading,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('ActionIcon', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles(
-      { size, radius, color },
-      { name: 'ActionIcon', classNames, styles }
-    );
-    const colors = getSharedColorScheme({ color, theme, variant: 'light' });
+  const { classes, cx, theme } = useStyles(
+    { size, radius, color, variant },
+    { name: 'ActionIcon', unstyled }
+  );
+  const colors = theme.fn.variant({ color, variant: 'light' });
 
-    const loader = (
-      <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
-    );
+  const loader = (
+    <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />
+  );
 
-    return (
-      <Box<any>
-        component={component || 'button'}
-        className={cx(classes[variant], classes.root, { [classes.loading]: loading }, className)}
-        type="button"
-        ref={ref}
-        disabled={disabled || loading}
-        {...others}
-      >
-        {loading ? loader : children}
-      </Box>
-    );
-  }
-);
+  return (
+    <UnstyledButton
+      className={cx(classes.root, className)}
+      ref={ref}
+      disabled={disabled || loading}
+      data-disabled={disabled ? true : undefined}
+      data-loading={loading ? true : undefined}
+      unstyled={unstyled}
+      {...others}
+    >
+      {loading ? loader : children}
+    </UnstyledButton>
+  );
+});
 
-ActionIcon.displayName = '@mantine/core/ActionIcon';
+_ActionIcon.displayName = '@mantine/core/ActionIcon';
+
+export const ActionIcon = createPolymorphicComponent<'button', ActionIconProps>(_ActionIcon);

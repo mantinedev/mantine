@@ -17,5 +17,6 @@ describe('@mantine/core/Spoiler', () => {
     props: defaultProps,
     displayName: '@mantine/core/Spoiler',
     refType: HTMLDivElement,
+    providerName: 'Spoiler',
   });
 });

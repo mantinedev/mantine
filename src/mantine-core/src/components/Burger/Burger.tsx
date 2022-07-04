@@ -1,19 +1,18 @@
 import React, { forwardRef } from 'react';
 import {
-  useMantineTheme,
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { Box } from '../Box';
-import useStyles from './Burger.styles';
+import { UnstyledButton } from '../UnstyledButton';
+import useStyles, { BurgerStylesParams } from './Burger.styles';
 
-export type BurgerStylesNames = Exclude<ClassNames<typeof useStyles>, 'opened'>;
+export type BurgerStylesNames = Selectors<typeof useStyles>;
 
 export interface BurgerProps
-  extends DefaultProps<BurgerStylesNames>,
+  extends DefaultProps<BurgerStylesNames, BurgerStylesParams>,
     React.ComponentPropsWithoutRef<'button'> {
   /** Burger state: true for cross, false for burger */
   opened: boolean;
@@ -23,39 +22,29 @@ export interface BurgerProps
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;
+
+  /** Transition duration in ms */
+  transitionDuration?: number;
 }
 
 const defaultProps: Partial<BurgerProps> = {
   size: 'md',
+  transitionDuration: 300,
 };
 
 export const Burger = forwardRef<HTMLButtonElement, BurgerProps>((props: BurgerProps, ref) => {
-  const {
-    className,
-    opened,
-    color,
-    size = 'md',
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Burger', defaultProps, props);
-  const theme = useMantineTheme();
-  const _color = color || (theme.colorScheme === 'dark' ? theme.white : theme.black);
+  const { className, opened, color, size, classNames, styles, transitionDuration, ...others } =
+    useComponentDefaultProps('Burger', defaultProps, props);
+
   const { classes, cx } = useStyles(
-    { color: _color, size },
+    { color, size, transitionDuration },
     { classNames, styles, name: 'Burger' }
   );
 
   return (
-    <Box
-      component="button"
-      type="button"
-      className={cx(classes.root, className)}
-      ref={ref}
-      {...others}
-    >
-      <div className={cx(classes.burger, { [classes.opened]: opened })} />
-    </Box>
+    <UnstyledButton className={cx(classes.root, className)} ref={ref} {...others}>
+      <div data-opened={opened || undefined} className={classes.burger} />
+    </UnstyledButton>
   );
 });
 

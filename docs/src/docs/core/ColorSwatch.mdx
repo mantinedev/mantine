@@ -10,7 +10,6 @@ props: ['ColorSwatch']
 import: "import { ColorSwatch } from '@mantine/core';"
 source: 'mantine-core/src/components/ColorSwatch/ColorSwatch.tsx'
 docs: 'core/ColorSwatch.mdx'
-styles: ['ColorSwatch', 'single-node']
 ---
 
 import { ColorSwatchDemos } from '@mantine/demos';
@@ -28,7 +27,7 @@ Color swatch has checkers background – you can use it to show transparency in 
 ## Size and radius
 
 ColorSwatch does not have predefined size values, use number to set width and height in px,
-radius has predefined xs, sm, md, lg, xl values from [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows):
+radius has predefined xs, sm, md, lg, xl values from `theme.radius`:
 
 ```tsx
 <ColorSwatch size={50} /> // -> { width: 50, height: 50 }

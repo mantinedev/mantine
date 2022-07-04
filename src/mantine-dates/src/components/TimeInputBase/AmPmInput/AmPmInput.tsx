@@ -5,16 +5,37 @@ import useStyles from '../TimeInputBase.styles';
 
 interface AmPmSelectProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'size'> {
+  /** Label for 'am' */
+  amLabel?: string;
+
+  /** Label for 'pm' */
+  pmLabel?: string;
+
   /** Called with onChange event */
   onChange(value: string, triggerShift: boolean): void;
 
   /** Colon text size */
   size?: MantineSize;
+
+  unstyled?: boolean;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
-  ({ className, onChange, onFocus, size = 'sm', value, ...others }: AmPmSelectProps, ref) => {
-    const { classes, cx } = useStyles({ size, hasValue: !!value });
+  (
+    {
+      className,
+      onChange,
+      onFocus,
+      size = 'sm',
+      value,
+      unstyled,
+      amLabel,
+      pmLabel,
+      ...others
+    }: AmPmSelectProps,
+    ref
+  ) => {
+    const { classes, cx } = useStyles({ size, hasValue: !!value }, { name: 'AmPmInput', unstyled });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -28,26 +49,27 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp' || event.nativeEvent.code === 'ArrowDown') {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
-        onChange(value === 'am' ? 'pm' : 'am', true);
-      }
-
-      if (event.key === 'p' || event.nativeEvent.code === 'KeyP') {
-        onChange('pm', false);
-      }
-
-      if (event.key === 'a' || event.nativeEvent.code === 'KeyA') {
-        onChange('am', false);
+        onChange(value === amLabel ? pmLabel : amLabel, true);
       }
     };
 
-    /*
-      If the field change is triggered onKeyDown, the keyUp event seems to steal focus back from the nextRef
-      This way, all key presses focus nextRef and don't steal it back
-      Anything beside a or p will leave the value and just move to the next field
-    */
-    const handleChange = () => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const lastInputVal = event.target.value.slice(-1).toLowerCase();
+
+      if (lastInputVal === 'p') {
+        event.preventDefault();
+        onChange(pmLabel, true);
+        return;
+      }
+
+      if (lastInputVal === 'a') {
+        event.preventDefault();
+        onChange(amLabel, true);
+        return;
+      }
+
       onChange(value.toString(), true);
     };
 
@@ -60,7 +82,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
         onKeyDown={handleKeyDown}
         onChange={handleChange}
         value={value}
-        className={cx(classes.timeInput, className)}
+        className={cx(classes.timeInput, classes.amPmInput)}
         {...others}
       />
     );

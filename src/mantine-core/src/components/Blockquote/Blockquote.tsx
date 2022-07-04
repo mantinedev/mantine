@@ -1,13 +1,13 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { QuoteIcon } from './QuoteIcon';
-import useStyles from './Blockquote.styles';
+import useStyles, { BlockquoteStylesParams } from './Blockquote.styles';
 
-export type BlockquoteStylesNames = ClassNames<typeof useStyles>;
+export type BlockquoteStylesNames = Selectors<typeof useStyles>;
 
 export interface BlockquoteProps
-  extends DefaultProps<BlockquoteStylesNames>,
+  extends DefaultProps<BlockquoteStylesNames, BlockquoteStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'blockquote'>, 'cite'> {
   /** Icon color from theme */
   color?: MantineColor;
@@ -26,9 +26,12 @@ const defaultProps: Partial<BlockquoteProps> = {
 
 export const Blockquote = forwardRef<HTMLQuoteElement, BlockquoteProps>(
   (props: BlockquoteProps, ref) => {
-    const { className, color, icon, cite, children, classNames, styles, ...others } =
-      useMantineDefaultProps('Blockquote', defaultProps, props);
-    const { classes, cx } = useStyles({ color }, { classNames, styles, name: 'Blockquote' });
+    const { className, color, icon, cite, children, classNames, styles, unstyled, ...others } =
+      useComponentDefaultProps('Blockquote', defaultProps, props);
+    const { classes, cx } = useStyles(
+      { color },
+      { classNames, styles, unstyled, name: 'Blockquote' }
+    );
 
     return (
       <Box component="blockquote" className={cx(classes.root, className)} ref={ref} {...others}>

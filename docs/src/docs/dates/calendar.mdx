@@ -4,19 +4,38 @@ package: '@mantine/dates'
 title: Calendar
 order: 1
 slug: /dates/calendar/
-description: 'Display calendar with selected date'
-props: ['Calendar']
-import: "import { Calendar } from '@mantine/dates';"
+description: 'Display inline calendar to pick single date or dates range'
+props: ['Calendar', 'RangeCalendar']
+import: "import { Calendar, RangeCalendar } from '@mantine/dates';"
 source: 'mantine-dates/src/components/Calendar/Calendar.tsx'
 docs: 'dates/Calendar.mdx'
-styles: ['Calendar']
+styles: ['Calendar', 'RangeCalendar']
 ---
 
-import { CalendarDemos } from '@mantine/demos';
+import { CalendarDemos, RangeCalendarDemos } from '@mantine/demos';
 
 ## Usage
 
+Calendar component:
+
 <Demo data={CalendarDemos.usage} />
+
+RangeCalendar component (supports the same props as Calendar component):
+
+<Demo data={RangeCalendarDemos.usage} />
+
+## Multiple selected dates
+
+Set `multiple` on Calendar component to allow multiple dates selection:
+
+<Demo data={CalendarDemos.multiple} />
+
+## Custom day renderer
+
+You can provide your own day renderer function with `renderDay` prop.
+For example, it can be used to wrap day with [Indicator](/core/indicator/):
+
+<Demo data={CalendarDemos.renderDay} />
 
 ## Controlled month
 
@@ -90,6 +109,13 @@ To exclude dates set `excludeDate` prop with function that receives date as an a
 
 <Demo data={CalendarDemos.exclude} />
 
+## Render day as props
+
+You can render a custom component with `renderDay`.
+The function receives one argument:
+
+- `date` – date object which is used to render day component
+
 ## Add styles to days
 
 You can apply styles to any day with `dayStyle` or `dayClassName` callbacks.
@@ -142,6 +168,6 @@ In this example, we will hide all outside dates and change color of weekends bas
 
 ## Customize with styles API
 
-To customize any part of the calendar use [Styles API](/theming/styles-api/):
+To customize any part of the calendar use [Styles API](/styles/styles-api/):
 
 <Demo data={CalendarDemos.stylesApi} />

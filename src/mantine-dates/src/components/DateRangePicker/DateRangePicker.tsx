@@ -1,15 +1,18 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
 export interface DateRangePickerProps
-  extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange'>,
-    Omit<CalendarSharedProps, 'size' | 'styles' | 'classNames' | 'value' | 'onChange'> {
+  extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
+    Omit<
+      CalendarSharedProps,
+      'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
+    > {
   /** Selected date, required with controlled input */
   value?: [Date | null, Date | null];
 
@@ -21,6 +24,9 @@ export interface DateRangePickerProps
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
+
+  /** Set to true to open dropdown on clear */
+  openDropdownOnClear?: boolean;
 
   /** dayjs input format */
   inputFormat?: string;
@@ -42,6 +48,9 @@ export interface DateRangePickerProps
 
   /** Allows to show multiple months */
   amountOfMonths?: number;
+
+  /** Render day based on the date */
+  renderDay?(date: Date): React.ReactNode;
 }
 
 const validationRule = (val: any) =>
@@ -64,9 +73,10 @@ const defaultProps: Partial<DateRangePickerProps> = {
   allowSingleDateInRange: false,
   amountOfMonths: 1,
   withinPortal: true,
+  openDropdownOnClear: true,
 };
 
-export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProps>(
+export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
   (props: DateRangePickerProps, ref) => {
     const {
       value,
@@ -97,6 +107,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       clearable,
       clearButtonLabel,
       firstDayOfWeek,
+      allowLevelChange,
       allowSingleDateInRange,
       amountOfMonths,
       withinPortal,
@@ -105,8 +116,12 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       onDropdownOpen,
       hideOutsideDates,
       hideWeekdays,
+      renderDay,
+      openDropdownOnClear,
+      unstyled,
+      weekendDays,
       ...others
-    } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
+    } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
@@ -119,7 +134,6 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {
@@ -145,7 +159,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
     const handleClear = () => {
       setValue([null, null]);
       setDropdownOpened(true);
-      onDropdownOpen?.();
+      openDropdownOnClear && onDropdownOpen?.();
       inputRef.current?.focus();
     };
 
@@ -153,8 +167,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
       if (!isOpened && firstValueValid && _value[1] === null) {
         handleClear();
       }
-      setDropdownOpened(!dropdownOpened);
-      !dropdownOpened ? onDropdownOpen?.() : onDropdownClose?.();
+      setDropdownOpened(isOpened);
     };
 
     return (
@@ -177,6 +190,7 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        unstyled={unstyled}
         {...others}
       >
         <RangeCalendar
@@ -199,11 +213,15 @@ export const DateRangePicker = forwardRef<HTMLButtonElement, DateRangePickerProp
           fullWidth={dropdownType === 'modal'}
           firstDayOfWeek={firstDayOfWeek}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
+          allowLevelChange={allowLevelChange}
           allowSingleDateInRange={allowSingleDateInRange}
           amountOfMonths={amountOfMonths}
           initialLevel={initialLevel}
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
+          renderDay={renderDay}
+          unstyled={unstyled}
+          weekendDays={weekendDays}
         />
       </DatePickerBase>
     );

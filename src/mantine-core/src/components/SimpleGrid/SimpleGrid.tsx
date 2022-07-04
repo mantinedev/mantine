@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles, { SimpleGridBreakpoint } from './SimpleGrid.styles';
+import useStyles, { SimpleGridBreakpoint, SimpleGridStylesParams } from './SimpleGrid.styles';
 
-export interface SimpleGridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface SimpleGridProps
+  extends DefaultProps<never, SimpleGridStylesParams>,
+    React.ComponentPropsWithoutRef<'div'> {
   /** Breakpoints data to change items per row and spacing based on max-width */
   breakpoints?: SimpleGridBreakpoint[];
 
@@ -20,22 +22,20 @@ const defaultProps: Partial<SimpleGridProps> = {
   spacing: 'md',
 };
 
-export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>(
-  (props: SimpleGridProps, ref) => {
-    const { className, breakpoints, cols, spacing, children, classNames, styles, ...others } =
-      useMantineDefaultProps('SimpleGrid', defaultProps, props);
+export const SimpleGrid = forwardRef<HTMLDivElement, SimpleGridProps>((props, ref) => {
+  const { className, breakpoints, cols, spacing, children, unstyled, ...others } =
+    useComponentDefaultProps('SimpleGrid', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { breakpoints, cols, spacing },
-      { classNames, styles, name: 'SimpleGrid' }
-    );
+  const { classes, cx } = useStyles(
+    { breakpoints, cols, spacing },
+    { unstyled, name: 'SimpleGrid' }
+  );
 
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {children}
-      </Box>
-    );
-  }
-);
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {children}
+    </Box>
+  );
+});
 
 SimpleGrid.displayName = '@mantine/core/SimpleGrid';

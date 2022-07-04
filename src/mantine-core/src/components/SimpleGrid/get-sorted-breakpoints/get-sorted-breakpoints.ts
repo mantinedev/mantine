@@ -1,7 +1,9 @@
 import { MantineTheme } from '@mantine/styles';
-import type { SimpleGridBreakpoint } from '../SimpleGrid.styles';
 
-export function getSortedBreakpoints(theme: MantineTheme, breakpoints: SimpleGridBreakpoint[]) {
+export function getSortedBreakpoints<T extends Record<string, any>>(
+  theme: MantineTheme,
+  breakpoints: T[]
+) {
   if (breakpoints.length === 0) {
     return breakpoints;
   }

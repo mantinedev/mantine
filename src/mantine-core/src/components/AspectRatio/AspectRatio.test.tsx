@@ -12,5 +12,6 @@ describe('@mantine/core/AspectRatio', () => {
     props: defaultProps,
     displayName: '@mantine/core/AspectRatio',
     refType: HTMLDivElement,
+    providerName: 'AspectRatio',
   });
 });

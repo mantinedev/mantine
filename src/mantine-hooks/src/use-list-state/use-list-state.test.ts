@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useListState } from './use-list-state';
 
 const TEST_STATE = [
@@ -231,5 +231,18 @@ describe('@mantine/hooks/use-list-state', () => {
 
     const [state] = hook.result.current;
     expect(state).toStrictEqual(['test-2', 'test-3']);
+  });
+
+  it('filter items with handlers.filter', () => {
+    const hook = renderHook(() => useListState(TEST_STATE));
+    const filterFn = (item: any) => item.name !== 'Bill';
+
+    act(() => {
+      const [, handlers] = hook.result.current;
+      handlers.filter(filterFn);
+    });
+
+    const [state] = hook.result.current;
+    expect(state).toEqual(TEST_STATE.filter(filterFn));
   });
 });

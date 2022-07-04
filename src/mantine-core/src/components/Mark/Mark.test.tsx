@@ -12,5 +12,6 @@ describe('@mantine/core/Mark', () => {
     props: defaultProps,
     displayName: '@mantine/core/Mark',
     refType: HTMLElement,
+    providerName: 'Mark',
   });
 });

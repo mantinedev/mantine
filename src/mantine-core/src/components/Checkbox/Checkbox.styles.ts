@@ -1,6 +1,6 @@
 import { createStyles, MantineSize, MantineColor, MantineNumberSize } from '@mantine/styles';
 
-export const sizes = {
+const sizes = {
   xs: 16,
   sm: 20,
   md: 24,
@@ -26,6 +26,7 @@ export interface CheckboxStylesParams {
 export default createStyles(
   (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
     const _size = theme.fn.size({ size, sizes });
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       icon: {
@@ -47,7 +48,7 @@ export default createStyles(
         margin: 'auto',
 
         '@media (prefers-reduced-motion)': {
-          transitionDuration: '0ms',
+          transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
         },
       },
 
@@ -69,12 +70,13 @@ export default createStyles(
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        cursor: theme.cursorType,
       },
 
       input: {
         ...theme.fn.focusStyles(),
         appearance: 'none',
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
         }`,
@@ -82,14 +84,14 @@ export default createStyles(
         height: _size,
         borderRadius: theme.fn.radius(radius),
         padding: 0,
-        outline: 0,
         display: 'block',
         margin: 0,
         transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
+        cursor: theme.cursorType,
 
         '&:checked': {
-          backgroundColor: theme.fn.themeColor(color, 6),
-          borderColor: theme.fn.themeColor(color, 6),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,

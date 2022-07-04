@@ -1,15 +1,8 @@
-export { createAccordionState } from './use-accordion-state/use-accordion-state';
-
 export { Accordion } from './Accordion';
-export { AccordionItem } from './AccordionItem/AccordionItem';
-export { ChevronIcon } from './AccordionItem/ChevronIcon';
-export { useAccordionState } from './use-accordion-state/use-accordion-state';
+export { ChevronIcon } from './ChevronIcon';
 
-export type { AccordionState } from './use-accordion-state/use-accordion-state';
-export type { AccordionProps } from './Accordion';
-export type {
-  PublicAccordionItemProps as AccordionItemProps,
-  AccordionItemStylesNames as AccordionStylesNames,
-  AccordionIconPosition,
-} from './AccordionItem/AccordionItem';
-export type { AccordionStylesParams } from './AccordionItem/AccordionItem.styles';
+export type { AccordionProps, AccordionStylesNames } from './Accordion';
+export type { AccordionControlProps } from './AccordionControl/AccordionControl';
+export type { AccordionItemProps } from './AccordionItem/AccordionItem';
+export type { AccordionPanelProps } from './AccordionPanel/AccordionPanel';
+export type { AccordionStylesParams } from './Accordion.types';

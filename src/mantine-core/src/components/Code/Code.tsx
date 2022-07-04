@@ -1,14 +1,11 @@
 import React, { forwardRef } from 'react';
-import {
-  useMantineTheme,
-  DefaultProps,
-  MantineColor,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, MantineColor, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Code.styles';
+import useStyles, { CodeStylesParams } from './Code.styles';
 
-export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<'code'> {
+export interface CodeProps
+  extends DefaultProps<never, CodeStylesParams>,
+    React.ComponentPropsWithoutRef<'code'> {
   /** Code content */
   children: React.ReactNode;
 
@@ -20,11 +17,12 @@ export interface CodeProps extends DefaultProps, React.ComponentPropsWithoutRef<
 }
 
 export const Code = forwardRef<HTMLElement, CodeProps>((props: CodeProps, ref) => {
-  const { className, children, block, color, styles, classNames, ...others } =
-    useMantineDefaultProps('Code', {}, props);
-  const theme = useMantineTheme();
-  const themeColor = color || (theme.colorScheme === 'dark' ? 'dark' : 'gray');
-  const { classes, cx } = useStyles({ color: themeColor }, { name: 'Code', styles, classNames });
+  const { className, children, block, color, unstyled, ...others } = useComponentDefaultProps(
+    'Code',
+    {},
+    props
+  );
+  const { classes, cx } = useStyles({ color }, { name: 'Code', unstyled });
 
   if (block) {
     return (

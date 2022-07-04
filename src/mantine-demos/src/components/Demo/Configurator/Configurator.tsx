@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMantineTheme } from '@mantine/core';
+import { MantineNumberSize, useMantineTheme } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import controls, { ControlProps } from './controls';
 import { propsToString } from './props-to-string';
@@ -14,6 +14,8 @@ interface ConfiguratorProps {
   center?: boolean;
   props: ControlProps[];
   filter?: string[];
+  radius?: MantineNumberSize;
+  background?: string;
 }
 
 export default function Configurator({
@@ -24,10 +26,12 @@ export default function Configurator({
   multiline = false,
   includeCode = true,
   center = true,
+  radius,
   filter = [],
+  background,
 }: ConfiguratorProps) {
   const theme = useMantineTheme();
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles({ radius, background });
   const initialState = componentProps.reduce((acc, prop) => {
     acc[prop.name] = prop.initialValue || controls[prop.type].initialValue;
     return acc;

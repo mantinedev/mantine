@@ -18,10 +18,15 @@ describe('@mantine/core/Modal', () => {
   itSupportsSystemProps({ component: Modal, props: defaultProps });
   itRendersChildren(Modal, defaultProps);
 
-  it('calls onClose when close button is clicked', () => {
+  it('uses the provided id prop on the root element', () => {
+    const { container } = render(<Modal {...defaultProps} id="my-modal" />);
+    expect(container.querySelectorAll('#my-modal')).toHaveLength(1);
+  });
+
+  it('calls onClose when close button is clicked', async () => {
     const spy = jest.fn();
     render(<Modal {...defaultProps} onClose={spy} />);
-    userEvent.click(screen.getByLabelText('test-close'));
+    await userEvent.click(screen.getByLabelText('test-close'));
     expect(spy).toHaveBeenCalled();
   });
 

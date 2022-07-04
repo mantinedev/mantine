@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
-import { filterFalsyChildren } from '../../utils';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
+import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 import useStyles, { GroupPosition } from './Group.styles';
 
 export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -17,9 +17,6 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
   /** Space between elements */
   spacing?: MantineNumberSize;
 
-  /** Defines flex-direction property, row for horizontal, column for vertical */
-  direction?: 'row' | 'column';
-
   /** Defines align-items css property */
   align?: React.CSSProperties['alignItems'];
 }
@@ -27,23 +24,11 @@ export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef
 const defaultProps: Partial<GroupProps> = {
   position: 'left',
   spacing: 'md',
-  direction: 'row',
 };
 
 export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, ref) => {
-  const {
-    className,
-    position,
-    align,
-    children,
-    noWrap,
-    grow,
-    spacing,
-    direction,
-    classNames,
-    styles,
-    ...others
-  } = useMantineDefaultProps('Group', defaultProps, props);
+  const { className, position, align, children, noWrap, grow, spacing, unstyled, ...others } =
+    useComponentDefaultProps('Group', defaultProps, props);
 
   const filteredChildren = filterFalsyChildren(children);
   const { classes, cx } = useStyles(
@@ -53,10 +38,9 @@ export const Group = forwardRef<HTMLDivElement, GroupProps>((props: GroupProps, 
       noWrap,
       spacing,
       position,
-      direction,
       count: filteredChildren.length,
     },
-    { classNames, styles, name: 'Group' }
+    { unstyled, name: 'Group' }
   );
 
   const items = filteredChildren.map((child) => {

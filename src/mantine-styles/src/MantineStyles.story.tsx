@@ -37,16 +37,20 @@ function MantineProviderConsumer({ color }: { color: string }) {
   return <div className={classes.element}>element</div>;
 }
 
-storiesOf('@mantine/styles/createStyles', module)
+storiesOf('Styles', module)
   .add('Refs', () => <UseRefStyles />)
   .add('MantineProvider styles', () => (
     <MantineProvider
-      styles={{
-        Consumer: (_, params) => ({
-          element: {
-            background: params.color === 'red' ? 'black' : 'orange',
+      theme={{
+        components: {
+          Consumer: {
+            styles: (_, params: { color: string }) => ({
+              element: {
+                background: params.color === 'red' ? 'black' : 'orange',
+              },
+            }),
           },
-        }),
+        },
       }}
     >
       <MantineProviderConsumer color="red" />

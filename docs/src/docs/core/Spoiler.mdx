@@ -39,7 +39,7 @@ import { useRef } from 'react';
 import { Spoiler } from '@mantine/core';
 
 function Demo() {
-  const spoilerControlRef = useRef<HTMLButtonElement>();
+  const spoilerControlRef = useRef<HTMLButtonElement>(null);
   return <Spoiler controlRef={spoilerControlRef} />;
 }
 ```

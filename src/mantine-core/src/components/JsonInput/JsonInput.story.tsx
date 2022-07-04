@@ -5,11 +5,17 @@ import { JsonInput } from './JsonInput';
 function Controlled() {
   const [value, onChange] = useState('');
   return (
-    <JsonInput value={value} onChange={onChange} label="Controlled" placeholder="Controlled" />
+    <JsonInput
+      value={value}
+      onChange={onChange}
+      label="Controlled"
+      placeholder="Controlled"
+      formatOnBlur
+    />
   );
 }
 
-storiesOf('@mantine/core/JsonInput/stories', module).add('Controlled', () => (
+storiesOf('JsonInput', module).add('Controlled', () => (
   <div style={{ padding: 40, maxWidth: 400 }}>
     <Controlled />
   </div>

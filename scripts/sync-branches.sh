@@ -1,8 +1,12 @@
 git checkout master
 git pull
-git checkout next-minor
+
+git checkout dev
+git pull
 git merge master
 git push
-git checkout dev
-git merge next-minor
+
+git checkout v5
+git pull
+git merge dev
 git push

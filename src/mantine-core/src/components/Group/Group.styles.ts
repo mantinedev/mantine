@@ -8,12 +8,11 @@ export interface GroupStylesParams {
   noWrap: boolean;
   grow: boolean;
   spacing: MantineNumberSize;
-  direction: 'row' | 'column';
   align: React.CSSProperties['alignItems'];
   count: number;
 }
 
-const POSITIONS = {
+export const GROUP_POSITIONS = {
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
@@ -21,34 +20,25 @@ const POSITIONS = {
 };
 
 export default createStyles(
-  (theme, { spacing, position, noWrap, direction, grow, align, count }: GroupStylesParams) => ({
+  (theme, { spacing, position, noWrap, grow, align, count }: GroupStylesParams) => ({
     root: {
       boxSizing: 'border-box',
       display: 'flex',
-      flexDirection: direction,
-      alignItems:
-        align ||
-        (direction === 'row'
-          ? 'center'
-          : grow
-          ? 'stretch'
-          : position === 'apart'
-          ? 'flex-start'
-          : POSITIONS[position]),
+      flexDirection: 'row',
+      alignItems: align || 'center',
       flexWrap: noWrap ? 'nowrap' : 'wrap',
-      justifyContent: direction === 'row' ? POSITIONS[position] : undefined,
+      justifyContent: GROUP_POSITIONS[position],
       gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
     },
 
     child: {
       boxSizing: 'border-box',
-      maxWidth:
-        grow && direction === 'row'
-          ? `calc(${100 / count}% - ${
-              theme.fn.size({ size: spacing, sizes: theme.spacing }) -
-              theme.fn.size({ size: spacing, sizes: theme.spacing }) / count
-            }px)`
-          : undefined,
+      maxWidth: grow
+        ? `calc(${100 / count}% - ${
+            theme.fn.size({ size: spacing, sizes: theme.spacing }) -
+            theme.fn.size({ size: spacing, sizes: theme.spacing }) / count
+          }px)`
+        : undefined,
       flexGrow: grow ? 1 : 0,
     },
   })

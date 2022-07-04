@@ -1,17 +1,9 @@
-import type { MantineColor, MantineNumberSize } from '@mantine/core';
+import type { NotificationProps as NotificationComponentProps } from '@mantine/core';
 
-export interface NotificationProps {
+export interface NotificationProps extends Omit<NotificationComponentProps, 'onClose'> {
   id?: string;
-  color?: MantineColor;
-  radius?: MantineNumberSize;
-  className?: string;
-  style?: React.CSSProperties;
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  loading?: boolean;
   message: React.ReactNode;
   autoClose?: boolean | number;
-  disallowClose?: boolean;
   onClose?(props: NotificationProps): void;
   onOpen?(props: NotificationProps): void;
 }
@@ -19,11 +11,6 @@ export interface NotificationProps {
 export interface NotificationsContextProps {
   notifications: NotificationProps[];
   queue: NotificationProps[];
-  showNotification(props: NotificationProps): string;
-  updateNotification(id: string, props: NotificationProps): void;
-  hideNotification(id: string): void;
-  clean(): void;
-  cleanQueue(): void;
 }
 
 export type NotificationsProviderPositioning = ['top' | 'bottom', 'left' | 'right' | 'center'];

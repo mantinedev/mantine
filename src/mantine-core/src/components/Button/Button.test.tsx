@@ -8,8 +8,9 @@ import {
   itSupportsFocusEvents,
 } from '@mantine/tests';
 import { Button, ButtonProps } from './Button';
+import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 
-const defaultProps: ButtonProps<'button'> = {};
+const defaultProps: ButtonProps = {};
 
 describe('@mantine/core/Button', () => {
   checkAccessibility([<Button>Mantine button</Button>]);
@@ -21,6 +22,8 @@ describe('@mantine/core/Button', () => {
     props: defaultProps,
     displayName: '@mantine/core/Button',
     refType: HTMLButtonElement,
+    providerName: 'Button',
+    excludePadding: true,
   });
 
   it('passes type to button component', () => {
@@ -37,5 +40,16 @@ describe('@mantine/core/Button', () => {
   it('sets disabled attribute based on prop', () => {
     render(<Button disabled />);
     expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByRole('button')).toHaveAttribute('data-disabled');
+  });
+
+  it('sets data-loading attribute based on loading prop', () => {
+    render(<Button loading />);
+    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByRole('button')).toHaveAttribute('data-loading');
+  });
+
+  it('exposes ButtonGroup as static component', () => {
+    expect(Button.Group).toBe(ButtonGroup);
   });
 });

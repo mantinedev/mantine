@@ -3,18 +3,19 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
-import useStyles from './Avatar.styles';
+import { AvatarGroup } from './AvatarGroup/AvatarGroup';
+import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
+import useStyles, { AvatarStylesParams } from './Avatar.styles';
 
-export type AvatarStylesNames = ClassNames<typeof useStyles>;
+export type AvatarStylesNames = Selectors<typeof useStyles>;
 
-interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
+export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStylesParams> {
   /** Image url */
   src?: string | null;
 
@@ -30,73 +31,68 @@ interface _AvatarProps extends DefaultProps<AvatarStylesNames> {
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
 
-  /** `img` element attributes */
-  imageProps?: React.ComponentPropsWithoutRef<'img'>;
+  /** img element attributes */
+  imageProps?: Record<string, any>;
 
   /** Custom placeholder */
   children?: React.ReactNode;
 }
 
-export type AvatarProps<C> = PolymorphicComponentProps<C, _AvatarProps>;
-
-type AvatarComponent = (<C = 'div'>(props: AvatarProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<AvatarProps<any>> = {
+const defaultProps: Partial<AvatarProps> = {
   size: 'md',
   color: 'gray',
 };
 
-export const Avatar: AvatarComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: AvatarProps<C>, ref: PolymorphicRef<C>) => {
-    const {
-      component,
-      className,
-      size,
-      src,
-      alt,
-      radius,
-      children,
-      color,
-      classNames,
-      styles,
-      imageProps,
-      ...others
-    } = useMantineDefaultProps('Avatar', defaultProps, props);
-    const { classes, cx } = useStyles(
-      { color, radius, size },
-      { classNames, styles, name: 'Avatar' }
-    );
-    const [error, setError] = useState(!src);
+export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
+  const {
+    className,
+    size,
+    src,
+    alt,
+    radius,
+    children,
+    color,
+    classNames,
+    styles,
+    imageProps,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('Avatar', defaultProps, props);
 
-    useEffect(() => {
-      !src ? setError(true) : setError(false);
-    }, [src]);
+  const ctx = useAvatarGroupContext();
+  const [error, setError] = useState(!src);
 
-    return (
-      <Box<any>
-        component={component || 'div'}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        {error ? (
-          <div className={classes.placeholder} title={alt}>
-            {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
-          </div>
-        ) : (
-          <img
-            {...imageProps}
-            className={classes.image}
-            src={src}
-            alt={alt}
-            onError={() => setError(true)}
-          />
-        )}
-      </Box>
-    );
-  }
+  const { classes, cx } = useStyles(
+    { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing },
+    { classNames, styles, unstyled, name: 'Avatar' }
+  );
+
+  useEffect(() => {
+    !src ? setError(true) : setError(false);
+  }, [src]);
+
+  return (
+    <Box component="div" className={cx(classes.root, className)} ref={ref} {...others}>
+      {error ? (
+        <div className={classes.placeholder} title={alt}>
+          {children || <AvatarPlaceholderIcon className={classes.placeholderIcon} />}
+        </div>
+      ) : (
+        <img
+          {...imageProps}
+          className={classes.image}
+          src={src}
+          alt={alt}
+          onError={() => setError(true)}
+        />
+      )}
+    </Box>
+  );
+}) as any;
+
+_Avatar.displayName = '@mantine/core/Avatar';
+_Avatar.Group = AvatarGroup;
+
+export const Avatar = createPolymorphicComponent<'div', AvatarProps, { Group: typeof AvatarGroup }>(
+  _Avatar
 );
-
-Avatar.displayName = '@mantine/core/Avatar';

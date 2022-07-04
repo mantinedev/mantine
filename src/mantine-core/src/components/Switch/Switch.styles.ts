@@ -40,15 +40,11 @@ const labelFontSizes = {
   xl: 11,
 };
 
-export const sizes = Object.keys(switchHeight).reduce((acc, size) => {
-  acc[size] = { width: switchWidth[size], height: switchHeight[size] };
-  return acc;
-}, {} as Record<MantineSize, { width: number; height: number }>);
-
 export default createStyles(
   (theme, { size, radius, color, offLabel, onLabel }: SwitchStylesParams) => {
     const handleSize = theme.fn.size({ size, sizes: handleSizes });
     const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
+    const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       root: {
@@ -62,7 +58,7 @@ export default createStyles(
         WebkitTapHighlightColor: 'transparent',
         position: 'relative',
         borderRadius,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
         border: `1px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]
         }`,
@@ -79,6 +75,7 @@ export default createStyles(
         alignItems: 'center',
         fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
         fontWeight: 600,
+        cursor: theme.cursorType,
 
         '&::before': {
           zIndex: 1,
@@ -94,7 +91,7 @@ export default createStyles(
           transform: `translateX(${size === 'xs' ? 1 : 2}px)`,
 
           '@media (prefers-reduced-motion)': {
-            transitionDuration: '0ms',
+            transitionDuration: theme.respectReducedMotion ? '0ms' : false,
           },
         },
 
@@ -113,8 +110,8 @@ export default createStyles(
         },
 
         '&:checked': {
-          backgroundColor: theme.fn.themeColor(color, 6),
-          borderColor: theme.fn.themeColor(color, 6),
+          backgroundColor: colors.background,
+          borderColor: colors.background,
 
           '&::before': {
             transform: `translateX(${
@@ -126,9 +123,17 @@ export default createStyles(
           },
 
           '&::after': {
-            transform: 'translateX(-200%)',
+            position: 'absolute',
+            zIndex: 0,
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center',
+            lineHeight: 0,
+            left: '10%',
+            transform: 'translateX(0)',
             content: onLabel ? `'${onLabel}'` : "''",
             color: theme.white,
+            transition: `color 150ms ${theme.transitionTimingFunction}`,
           },
         },
 
@@ -153,6 +158,7 @@ export default createStyles(
         fontFamily: theme.fontFamily,
         paddingLeft: theme.spacing.sm,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        cursor: theme.cursorType,
       },
     };
   }

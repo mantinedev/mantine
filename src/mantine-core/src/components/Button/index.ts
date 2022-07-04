@@ -1,7 +1,7 @@
 export { Button } from './Button';
-export { UnstyledButton } from './UnstyledButton/UnstyledButton';
-export { heights as BUTTON_SIZES } from './Button.styles';
 
-export type { ButtonProps, ButtonStylesNames, SharedButtonProps } from './Button';
+export type { ButtonProps, ButtonStylesNames } from './Button';
 export type { ButtonVariant, ButtonStylesParams } from './Button.styles';
-export type { UnstyledButtonProps } from './UnstyledButton/UnstyledButton';
+
+export type { ButtonGroupProps } from './ButtonGroup/ButtonGroup';
+export type { ButtonGroupStylesParams } from './ButtonGroup/ButtonGroup.styles';

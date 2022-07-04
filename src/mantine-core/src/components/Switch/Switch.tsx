@@ -1,21 +1,21 @@
 import React, { forwardRef } from 'react';
-import { useUuid } from '@mantine/hooks';
+import { useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
   MantineSize,
   MantineColor,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Switch.styles';
+import useStyles, { SwitchStylesParams } from './Switch.styles';
 
-export type SwitchStylesNames = ClassNames<typeof useStyles>;
+export type SwitchStylesNames = Selectors<typeof useStyles>;
 
 export interface SwitchProps
-  extends DefaultProps<SwitchStylesNames>,
+  extends DefaultProps<SwitchStylesNames, SwitchStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
@@ -39,7 +39,7 @@ export interface SwitchProps
   radius?: MantineNumberSize;
 
   /** Props spread to wrapper element */
-  wrapperProps?: { [key: string]: any };
+  wrapperProps?: Record<string, any>;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -49,7 +49,7 @@ const defaultProps: Partial<SwitchProps> = {
   radius: 'xl',
 };
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchProps, ref) => {
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
     className,
     color,
@@ -62,19 +62,18 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props: SwitchPr
     radius,
     wrapperProps,
     children,
-    classNames,
-    styles,
+    unstyled,
     sx,
     ...others
-  } = useMantineDefaultProps('Switch', defaultProps, props);
+  } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size, color, radius, offLabel, onLabel },
-    { classNames, styles, name: 'Switch' }
+    { unstyled, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
-  const uuid = useUuid(id);
+  const uuid = useId(id);
 
   return (
     <Box

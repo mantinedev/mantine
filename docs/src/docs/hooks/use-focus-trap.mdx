@@ -15,8 +15,8 @@ import { ModalDemos, MenuDemos } from '@mantine/demos';
 
 ## Usage
 
-Use use-focus-trap hook to trap focus at given node, for example in modal, drawer or menu.
-Node must include at least one focusable element. When node unmounts, focus trap automatically disabled.
+use-focus-trap traps focus at given node, for example in modal, drawer or menu.
+Node must include at least one focusable element. When node unmounts, focus trap is automatically disabled.
 
 ```tsx
 import { useFocusTrap } from '@mantine/hooks';
@@ -43,7 +43,7 @@ useFocusTrap(true); // -> focus trap active
 useFocusTrap(false); // -> focus trap disabled
 ```
 
-Hook returns ref that should be passed to dom node:
+Hook returns `ref` that should be passed to dom node:
 
 ```tsx
 const focusTrapRef = useFocusTrap();

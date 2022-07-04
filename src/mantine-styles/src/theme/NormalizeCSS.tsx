@@ -158,8 +158,7 @@ const styles = {
   },
 
   '[type=search]': {
-    appearance: 'textfield',
-    outlineOffset: '-2px',
+    appearance: 'none',
   },
 
   '[type=search]::-webkit-search-cancel-button, [type=search]::-webkit-search-decoration': {

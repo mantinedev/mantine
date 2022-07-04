@@ -10,6 +10,7 @@ const defaultProps = {
   excludeDate: () => false,
   disableOutsideEvents: false,
   range: [null, null] as [Date, Date],
+  weekendDays: [0, 6],
 };
 
 const defaultResult = {

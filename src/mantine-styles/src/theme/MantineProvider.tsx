@@ -1,117 +1,85 @@
 import React, { createContext, useContext } from 'react';
-import type { Options as EmotionCacheOptions } from '@emotion/cache';
-import { Global } from '@emotion/react';
+import type { EmotionCache } from '@emotion/cache';
 import { DEFAULT_THEME } from './default-theme';
+import { GlobalStyles } from './GlobalStyles';
+import { MantineCssVariables } from './MantineCssVariables';
 import type { MantineThemeOverride, MantineTheme } from './types';
-import type { CSSObject } from '../tss';
 import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
 import { filterProps } from './utils/filter-props/filter-props';
 import { NormalizeCSS } from './NormalizeCSS';
 
-type ProviderStyles = Record<
-  string,
-  | Record<string, CSSObject>
-  | ((theme: MantineTheme, params: Record<string, any>) => Record<string, CSSObject>)
->;
-
-type MantineDefaultProps = Record<string, Record<string, any>>;
-
 interface MantineProviderContextType {
   theme: MantineTheme;
-  styles: ProviderStyles;
-  emotionOptions: EmotionCacheOptions;
-  defaultProps: MantineDefaultProps;
+  emotionCache?: EmotionCache;
 }
 
 const MantineProviderContext = createContext<MantineProviderContextType>({
   theme: DEFAULT_THEME,
-  styles: {},
-  emotionOptions: { key: 'mantine', prepend: true },
-  defaultProps: {},
 });
 
 export function useMantineTheme() {
   return useContext(MantineProviderContext)?.theme || DEFAULT_THEME;
 }
 
-export function useMantineThemeStyles() {
-  return useContext(MantineProviderContext)?.styles || {};
+export function useMantineProviderStyles(component: string | string[]) {
+  const theme = useMantineTheme();
+
+  const getStyles = (name: string) => ({
+    styles: theme.components[name]?.styles || {},
+    classNames: theme.components[name]?.classNames || {},
+  });
+
+  if (Array.isArray(component)) {
+    return component.map(getStyles);
+  }
+
+  return [getStyles(component)];
 }
 
-export function useMantineEmotionOptions(): EmotionCacheOptions {
-  return useContext(MantineProviderContext)?.emotionOptions || { key: 'mantine', prepend: true };
+export function useMantineEmotionCache() {
+  return useContext(MantineProviderContext)?.emotionCache;
 }
 
-export function useMantineDefaultProps<T extends Record<string, any>>(
+export function useComponentDefaultProps<T extends Record<string, any>>(
   component: string,
   defaultProps: Partial<T>,
   props: T
 ): T {
-  const contextProps = useContext(MantineProviderContext)?.defaultProps?.[component] || {};
-  return { ...defaultProps, ...contextProps, ...filterProps(props) };
-}
-
-function GlobalStyles() {
   const theme = useMantineTheme();
-  return (
-    <Global
-      styles={{
-        '*, *::before, *::after': {
-          boxSizing: 'border-box',
-        },
-
-        body: {
-          ...(theme.fn.fontStyles() as any),
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-          lineHeight: theme.lineHeight,
-          fontSize: theme.fontSizes.md,
-        },
-      }}
-    />
-  );
+  const contextProps = theme.components[component]?.defaultProps;
+  return { ...defaultProps, ...contextProps, ...filterProps(props) };
 }
 
 export interface MantineProviderProps {
   theme?: MantineThemeOverride;
-  styles?: ProviderStyles;
-  defaultProps?: MantineDefaultProps;
-  emotionOptions?: EmotionCacheOptions;
+  emotionCache?: EmotionCache;
   withNormalizeCSS?: boolean;
   withGlobalStyles?: boolean;
+  withCSSVariables?: boolean;
   children: React.ReactNode;
   inherit?: boolean;
 }
 
 export function MantineProvider({
   theme,
-  styles = {},
-  defaultProps = {},
-  emotionOptions,
+  emotionCache,
   withNormalizeCSS = false,
   withGlobalStyles = false,
+  withCSSVariables = false,
   inherit = false,
   children,
 }: MantineProviderProps) {
   const ctx = useContext(MantineProviderContext);
-  const overrides = {
-    themeOverride: inherit ? { ...ctx.theme, ...theme } : theme,
-    emotionOptions: inherit ? { ...ctx.emotionOptions, ...emotionOptions } : emotionOptions,
-    styles: inherit ? { ...ctx.styles, ...styles } : styles,
-    defaultProps: inherit ? { ...ctx.defaultProps, ...defaultProps } : defaultProps,
-  };
+  const mergedTheme = mergeThemeWithFunctions(
+    DEFAULT_THEME,
+    inherit ? { ...ctx.theme, ...theme } : theme
+  );
 
   return (
-    <MantineProviderContext.Provider
-      value={{
-        theme: mergeThemeWithFunctions(DEFAULT_THEME, overrides.themeOverride),
-        styles: overrides.styles,
-        emotionOptions: overrides.emotionOptions,
-        defaultProps: overrides.defaultProps,
-      }}
-    >
+    <MantineProviderContext.Provider value={{ theme: mergedTheme, emotionCache }}>
       {withNormalizeCSS && <NormalizeCSS />}
-      {withGlobalStyles && <GlobalStyles />}
+      {withGlobalStyles && <GlobalStyles theme={mergedTheme} />}
+      {withCSSVariables && <MantineCssVariables theme={mergedTheme} />}
       {children}
     </MantineProviderContext.Provider>
   );

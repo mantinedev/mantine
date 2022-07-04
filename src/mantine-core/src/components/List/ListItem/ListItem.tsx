@@ -1,10 +1,10 @@
 import React from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, Selectors, useContextStylesApi } from '@mantine/styles';
 import { Box } from '../../Box';
 import { useListContext } from '../List.context';
 import useStyles from './ListItem.styles';
 
-export type ListItemStylesNames = ClassNames<typeof useStyles>;
+export type ListItemStylesNames = Selectors<typeof useStyles>;
 
 export interface ListItemProps
   extends DefaultProps<ListItemStylesNames>,
@@ -17,9 +17,13 @@ export interface ListItemProps
 }
 
 export function ListItem({ className, children, icon, ...others }: ListItemProps) {
-  const { classNames, styles, icon: ctxIcon, spacing, center } = useListContext();
+  const { icon: ctxIcon, spacing, center } = useListContext();
+  const { classNames, styles, unstyled } = useContextStylesApi();
   const _icon = icon || ctxIcon;
-  const { classes, cx } = useStyles({ spacing, center }, { classNames, styles, name: 'List' });
+  const { classes, cx } = useStyles(
+    { spacing, center },
+    { classNames, styles, unstyled, name: 'List' }
+  );
 
   return (
     <Box

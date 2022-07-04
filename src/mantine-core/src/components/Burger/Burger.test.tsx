@@ -16,12 +16,13 @@ describe('@mantine/core/Burger', () => {
     props: defaultProps,
     displayName: '@mantine/core/Burger',
     refType: HTMLButtonElement,
+    providerName: 'Burger',
   });
 
   it('renders cross when opened prop is true', () => {
     const { container: opened } = render(<Burger opened />);
     const { container: closed } = render(<Burger opened={false} />);
-    expect(opened.querySelectorAll('.mantine-Burger-opened')).toHaveLength(1);
-    expect(closed.querySelectorAll('.mantine-Burger-opened')).toHaveLength(0);
+    expect(opened.querySelectorAll('[data-opened]')).toHaveLength(1);
+    expect(closed.querySelectorAll('[data-opened]')).toHaveLength(0);
   });
 });

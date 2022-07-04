@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect, forwardRef } from 'react';
-import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Anchor } from '../Anchor';
 import { Box } from '../Box';
-import useStyles from './Spoiler.styles';
+import useStyles, { SpoilerStylesParams } from './Spoiler.styles';
 
-export type SpoilerStylesNames = ClassNames<typeof useStyles>;
+export type SpoilerStylesNames = Selectors<typeof useStyles>;
 
 export interface SpoilerProps
-  extends DefaultProps<SpoilerStylesNames>,
+  extends DefaultProps<SpoilerStylesNames, SpoilerStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Max height of visible content, when this point is reached spoiler appears */
   maxHeight: number;
@@ -34,7 +34,7 @@ const defaultProps: Partial<SpoilerProps> = {
   initialState: false,
 };
 
-export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props: SpoilerProps, ref) => {
+export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => {
   const {
     className,
     children,
@@ -46,12 +46,13 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props: SpoilerP
     initialState,
     classNames,
     styles,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Spoiler', defaultProps, props);
+  } = useComponentDefaultProps('Spoiler', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { transitionDuration },
-    { classNames, styles, name: 'Spoiler' }
+    { classNames, styles, unstyled, name: 'Spoiler' }
   );
 
   const [show, setShowState] = useState(initialState);

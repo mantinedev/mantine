@@ -14,4 +14,4 @@ function Demo() {
   );
 }
 
-storiesOf('@mantine/hooks/use-hot-keys', module).add('Usage', () => <Demo />);
+storiesOf('Hooks/use-hot-keys', module).add('Usage', () => <Demo />);

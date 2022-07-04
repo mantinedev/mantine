@@ -1,5 +1,5 @@
 import { createStyles } from '@mantine/core';
-import { HEADER_HEIGHT } from './Header/Header.styles';
+import { HEADER_HEIGHT } from './Header/HeaderDesktop.styles';
 import { NAVBAR_WIDTH, NAVBAR_BREAKPOINT } from './Navbar/Navbar.styles';
 
 interface LayoutStyles {

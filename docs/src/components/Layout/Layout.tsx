@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
-import { MantineProvider, ColorSchemeProvider, ColorScheme, Global } from '@mantine/core';
+import {
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+  Global,
+  createEmotionCache,
+} from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import rtlPlugin from 'stylis-plugin-rtl';
 import { LayoutInner, LayoutProps } from './LayoutInner';
 import { DirectionContext } from './DirectionContext';
-import '../../fonts/GreycliffCF/styles.css';
+import { GreycliffCF } from '../../fonts/GreycliffCF/GreycliffCF';
 
 const THEME_KEY = 'mantine-color-scheme';
+
+const rtlCache = createEmotionCache({
+  key: 'mantine-rtl',
+  prepend: true,
+  stylisPlugins: [rtlPlugin],
+});
 
 export default function Layout({ children, location }: LayoutProps) {
   const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: THEME_KEY,
     defaultValue: 'light',
+    getInitialValueInEffect: true,
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>
@@ -28,6 +41,7 @@ export default function Layout({ children, location }: LayoutProps) {
   return (
     <DirectionContext.Provider value={{ dir, toggleDirection }}>
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <GreycliffCF />
         <MantineProvider
           withGlobalStyles
           withNormalizeCSS
@@ -36,9 +50,7 @@ export default function Layout({ children, location }: LayoutProps) {
             colorScheme,
             headings: { fontFamily: 'Greycliff CF, sans serif' },
           }}
-          emotionOptions={
-            dir === 'rtl' ? { key: 'mantine-rtl', stylisPlugins: [rtlPlugin] } : { key: 'mantine' }
-          }
+          emotionCache={dir === 'rtl' ? rtlCache : undefined}
         >
           <Global
             styles={(theme) => ({

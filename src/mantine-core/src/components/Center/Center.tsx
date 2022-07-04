@@ -1,13 +1,9 @@
 import React, { forwardRef } from 'react';
-import {
-  DefaultProps,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
+import { packSx, createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 
-export interface _CenterProps extends DefaultProps {
+export interface CenterProps extends DefaultProps {
   /** Content that should be centered vertically and horizontally */
   children: React.ReactNode;
 
@@ -15,30 +11,24 @@ export interface _CenterProps extends DefaultProps {
   inline?: boolean;
 }
 
-export type CenterProps<C> = PolymorphicComponentProps<C, _CenterProps>;
+export const _Center = forwardRef<HTMLDivElement, CenterProps>((props, ref) => {
+  const { inline, sx, ...others } = useComponentDefaultProps('Center', {}, props);
+  return (
+    <Box
+      ref={ref}
+      sx={[
+        {
+          display: inline ? 'inline-flex' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        ...packSx(sx),
+      ]}
+      {...others}
+    />
+  );
+});
 
-type CenterComponent = (<C = 'div'>(props: CenterProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
+_Center.displayName = '@mantine/core/Center';
 
-export const Center: CenterComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: CenterProps<C>, ref: PolymorphicRef<C>) => {
-    const { inline, sx, ...others } = useMantineDefaultProps('Center', {}, props);
-    return (
-      <Box<any>
-        ref={ref}
-        sx={[
-          {
-            display: inline ? 'inline-flex' : 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          sx,
-        ]}
-        {...others}
-      />
-    );
-  }
-);
-
-Center.displayName = '@mantine/core/Center';
+export const Center = createPolymorphicComponent<'div', CenterProps>(_Center);

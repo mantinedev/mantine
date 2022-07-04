@@ -1,10 +1,4 @@
-import type { AvatarStylesNames, AvatarsGroupStylesNames } from '@mantine/core';
-
-export const AvatarsGroup: Record<AvatarsGroupStylesNames, string> = {
-  root: 'Root element',
-  child: 'Child Avatar component',
-  truncated: 'Truncated avatars count label',
-};
+import type { AvatarStylesNames } from '@mantine/core';
 
 export const Avatar: Record<AvatarStylesNames, string> = {
   root: 'Root element',

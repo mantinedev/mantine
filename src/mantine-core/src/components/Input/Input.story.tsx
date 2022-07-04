@@ -1,14 +1,14 @@
 import React from 'react';
-import { useBooleanToggle } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { MANTINE_SIZES } from '@mantine/styles';
+import { IconSearch } from '@tabler/icons';
 import Textarea from 'react-textarea-autosize';
 import { ActionIcon } from '../ActionIcon/ActionIcon';
 import { Input } from './Input';
 
 function ValidInvalid() {
-  const [valid, toggle] = useBooleanToggle();
+  const [valid, { toggle }] = useDisclosure(false);
   return (
     <div style={{ padding: 40 }}>
       <Input invalid={valid} placeholder="Hello there" />
@@ -23,7 +23,7 @@ function ValidInvalid() {
 
 const actionIcon = (
   <ActionIcon size="sm">
-    <MagnifyingGlassIcon />
+    <IconSearch />
   </ActionIcon>
 );
 
@@ -41,18 +41,13 @@ const getStates = (props?: any) => (
     <Input placeholder="Url" type="url" {...props} style={{ marginTop: 15 }} />
     <Input
       placeholder="Invalid"
-      icon={<MagnifyingGlassIcon />}
+      icon={<IconSearch />}
       invalid
       style={{ marginTop: 15 }}
       {...props}
     />
     <Input placeholder="Disabled" disabled style={{ marginTop: 15 }} {...props} />
-    <Input
-      placeholder="With icon"
-      icon={<MagnifyingGlassIcon />}
-      style={{ marginTop: 15 }}
-      {...props}
-    />
+    <Input placeholder="With icon" icon={<IconSearch />} style={{ marginTop: 15 }} {...props} />
     <Input
       style={{ marginTop: 15 }}
       placeholder="With right section"
@@ -69,7 +64,7 @@ const getStates = (props?: any) => (
   </div>
 );
 
-storiesOf('@mantine/core/Input/stories', module)
+storiesOf('Input', module)
   .add('Sizes', () => <div style={{ maxWidth: 400, padding: 50 }}>{sizes}</div>)
   .add('Default variant', () => <>{getStates({ variant: 'default' })}</>)
   .add('Filled variant', () => <>{getStates({ variant: 'filled' })}</>)
@@ -104,14 +99,4 @@ storiesOf('@mantine/core/Input/stories', module)
       })}
     </>
   ))
-  .add('Invalid toggle', () => <ValidInvalid />)
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ Input: { variant: 'filled', size: 'xl' } }}>
-      <Input placeholder="Default props" />
-    </MantineProvider>
-  ))
-  .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 'xl' }}>
-      <Input placeholder="Default radius" />
-    </MantineProvider>
-  ));
+  .add('Invalid toggle', () => <ValidInvalid />);

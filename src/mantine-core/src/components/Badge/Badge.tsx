@@ -5,31 +5,29 @@ import {
   MantineNumberSize,
   MantineGradient,
   MantineColor,
-  ClassNames,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles from './Badge.styles';
+import useStyles, { BadgeStylesParams, BadgeVariant } from './Badge.styles';
 
-export type BadgeVariant = 'light' | 'filled' | 'outline' | 'dot' | 'gradient';
-export type BadgeStylesNames = ClassNames<typeof useStyles>;
+export type BadgeStylesNames = Selectors<typeof useStyles>;
 
-interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
-  /** Badge color from theme */
+export interface BadgeProps extends DefaultProps<BadgeStylesNames, BadgeStylesParams> {
+  /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Controls badge background, color and border styles */
+  /** Controls appearance */
   variant?: BadgeVariant;
 
-  /** Controls gradient settings in gradient variant only */
+  /** Controls gradient, applied to gradient variant only */
   gradient?: MantineGradient;
 
-  /** Defines badge height and font-size */
+  /** Badge height and font size */
   size?: MantineSize;
 
-  /** Predefined border-radius value from theme.radius or number for border-radius in px */
+  /** Key of theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 
   /** Sets badge width to 100% of parent element, hides overflow text with text-overflow: ellipsis */
@@ -45,64 +43,51 @@ interface _BadgeProps extends DefaultProps<BadgeStylesNames> {
   children?: React.ReactNode;
 }
 
-export type BadgeProps<C> = PolymorphicComponentProps<C, _BadgeProps>;
-
-type BadgeComponent = (<C = 'div'>(props: BadgeProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<BadgeProps<any>> = {
+const defaultProps: Partial<BadgeProps> = {
   variant: 'light',
   size: 'md',
   radius: 'xl',
-  gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
-export const Badge: BadgeComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: BadgeProps<C>, ref: PolymorphicRef<C>) => {
-    const {
-      component,
-      className,
-      color,
-      variant,
-      fullWidth,
-      children,
+export const _Badge = forwardRef<HTMLDivElement, BadgeProps>((props, ref) => {
+  const {
+    className,
+    color,
+    variant,
+    fullWidth,
+    children,
+    size,
+    leftSection,
+    rightSection,
+    radius,
+    gradient,
+    classNames,
+    styles,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('Badge', defaultProps, props);
+
+  const { classes, cx } = useStyles(
+    {
       size,
-      leftSection,
-      rightSection,
+      fullWidth,
+      color,
       radius,
+      variant,
       gradient,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Badge', defaultProps, props);
+    },
+    { classNames, styles, name: 'Badge', unstyled }
+  );
 
-    const { classes, cx } = useStyles(
-      {
-        size,
-        fullWidth,
-        color,
-        radius,
-        gradientFrom: gradient.from,
-        gradientTo: gradient.to,
-        gradientDeg: gradient.deg,
-      },
-      { classNames, styles, name: 'Badge' }
-    );
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      {leftSection && <span className={classes.leftSection}>{leftSection}</span>}
+      <span className={classes.inner}>{children}</span>
+      {rightSection && <span className={classes.rightSection}>{rightSection}</span>}
+    </Box>
+  );
+});
 
-    return (
-      <Box<any>
-        component={component || 'div'}
-        className={cx(classes[variant], classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        {leftSection && <span className={classes.leftSection}>{leftSection}</span>}
-        <span className={classes.inner}>{children}</span>
-        {rightSection && <span className={classes.rightSection}>{rightSection}</span>}
-      </Box>
-    );
-  }
-);
+_Badge.displayName = '@mantine/core/Badge';
 
-Badge.displayName = '@mantine/core/Badge';
+export const Badge = createPolymorphicComponent<'div', BadgeProps>(_Badge);

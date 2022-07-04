@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { SubmitForm } from '@mantine/storybook';
+import { randomId } from '@mantine/hooks';
 import { Select, SelectProps } from './Select';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -63,17 +64,27 @@ const content = Array(10)
   .map((_, index) => <p key={index}>{paragraph}</p>);
 
 function Creatable() {
-  const [creatableData, setData] = useState(stringData);
+  const [value, setValue] = useState('react');
+  const [creatableData, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
 
   return (
     <Select
+      value={value}
+      onChange={setValue}
       label="Creatable Select"
       data={creatableData}
       placeholder="Select items"
       nothingFound="Nothing found"
       searchable
       creatable
-      onCreate={(query) => setData((c) => [...c, query])}
+      onCreate={(query) => {
+        const item = { value: randomId(), label: query };
+        setData((c) => [...c, item]);
+        return item;
+      }}
       getCreateLabel={(query) => `+ Create ${query}`}
     />
   );
@@ -119,7 +130,7 @@ function DynamicLabels(props: Partial<SelectProps>) {
   );
 }
 
-storiesOf('@mantine/core/Select/stories', module)
+storiesOf('Select', module)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Controlled />
@@ -222,7 +233,13 @@ storiesOf('@mantine/core/Select/stories', module)
   ))
   .add('Within form', () => (
     <SubmitForm>
-      <Select label="Submit with enter" data={data} placeholder="Select items" searchable />
+      <Select
+        label="Submit with enter"
+        data={data}
+        placeholder="Select items"
+        searchable
+        name="test"
+      />
     </SubmitForm>
   ))
   .add('Out of viewport', () => (
@@ -235,14 +252,19 @@ storiesOf('@mantine/core/Select/stories', module)
       />
     </div>
   ))
-  .add('Popper flip', () => (
+  .add('Dropdown flip', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
-      <Select label="Dropdown flip" data={data} placeholder="Select items" />
+      <Select
+        label="Dropdown flip"
+        data={data}
+        placeholder="Select items"
+        dropdownPosition="flip"
+      />
       {content}
     </div>
   ))
-  .add('Popper flip (with direction switch)', () => (
+  .add('Dropdown flip (with direction switch)', () => (
     <div style={{ maxWidth: 600, margin: 'auto' }}>
       {content}
       <Select label="Dropdown flip" data={data} placeholder="Select items" switchDirectionOnFlip />
@@ -307,4 +329,44 @@ storiesOf('@mantine/core/Select/stories', module)
         <Select data={data} value={value} onChange={setValue} disabled clearable />
       </div>
     );
-  });
+  })
+  .add('Filter searchable data', () => (
+    <div style={{ padding: 40 }}>
+      <Select
+        filterDataOnExactSearchMatch
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Filter"
+        searchable
+      />
+      <Select
+        mt="md"
+        clearable
+        data={['React', 'Angular']}
+        defaultValue="React"
+        label="Do not filter (default)"
+        searchable
+      />
+    </div>
+  ))
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Select
+        label="Search in first select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <Select
+        label="Tab directly to next select"
+        placeholder="Choose value"
+        data={stringData}
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+    </div>
+  ));

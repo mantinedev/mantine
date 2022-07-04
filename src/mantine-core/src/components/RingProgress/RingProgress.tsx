@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
-export type RingProgressStylesNames = ClassNames<typeof useStyles>;
+export type RingProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface RingProgressProps
   extends DefaultProps<RingProgressStylesNames>,
@@ -31,61 +31,60 @@ const defaultProps: Partial<RingProgressProps> = {
   thickness: 12,
 };
 
-export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>(
-  (props: RingProgressProps, ref) => {
-    const {
-      className,
-      style,
-      label,
-      sections,
-      size,
-      thickness,
-      classNames,
-      styles,
-      roundCaps,
-      ...others
-    } = useMantineDefaultProps('RingProgress', defaultProps, props);
+export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props, ref) => {
+  const {
+    className,
+    style,
+    label,
+    sections,
+    size,
+    thickness,
+    classNames,
+    styles,
+    roundCaps,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('RingProgress', defaultProps, props);
 
-    const { classes, cx } = useStyles(null, { classNames, styles, name: 'RingProgress' });
+  const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'RingProgress' });
 
-    const curves = getCurves({
-      size,
-      thickness,
-      sections,
-      renderRoundedLineCaps: roundCaps,
-    }).map((curve, index) => (
-      <Curve
-        key={index}
-        value={curve.data?.value}
-        size={size}
-        thickness={thickness}
-        sum={curve.sum}
-        offset={curve.offset}
-        color={curve.data?.color}
-        root={curve.root}
-        lineRoundCaps={curve.lineRoundCaps}
-      />
-    ));
+  const curves = getCurves({
+    size,
+    thickness,
+    sections,
+    renderRoundedLineCaps: roundCaps,
+  }).map((curve, index) => (
+    <Curve
+      key={index}
+      value={curve.data?.value}
+      size={size}
+      thickness={thickness}
+      sum={curve.sum}
+      offset={curve.offset}
+      color={curve.data?.color}
+      root={curve.root}
+      lineRoundCaps={curve.lineRoundCaps}
+    />
+  ));
 
-    return (
-      <Box
-        style={{ width: size, height: size, ...style }}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-          {curves}
-        </svg>
+  return (
+    <Box
+      style={{ width: size, height: size, ...style }}
+      className={cx(classes.root, className)}
+      ref={ref}
+      {...others}
+    >
+      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+        {curves}
+      </svg>
 
-        {label && (
-          <div className={classes.label} style={{ right: thickness * 2, left: thickness * 2 }}>
-            {label}
-          </div>
-        )}
-      </Box>
-    );
-  }
-);
+      {label && (
+        <div className={classes.label} style={{ right: thickness * 2, left: thickness * 2 }}>
+          {label}
+        </div>
+      )}
+    </Box>
+  );
+});
 
 RingProgress.displayName = '@mantine/core/RingProgress';

@@ -6,7 +6,7 @@ order: 1
 slug: /core/accordion/
 category: 'data-display'
 description: 'Divide content into collapsible sections'
-props: ['Accordion']
+props: ['Accordion', 'AccordionControl', 'AccordionItem', 'AccordionPanel']
 import: "import { Accordion } from '@mantine/core';"
 source: 'mantine-core/src/components/Accordion/Accordion.tsx'
 docs: 'core/Accordion.mdx'
@@ -19,19 +19,17 @@ import { AccordionDemos } from '@mantine/demos';
 
 <Demo data={AccordionDemos.configurator} />
 
-## Change labels
+## Custom control label
 
-<Demo data={AccordionDemos.label} />
+<Demo data={AccordionDemos.label} demoProps={{ toggle: true }} />
 
-## Change icons
+## Change chevron
 
-To change icon for all items set `icon` prop on Accordion component:
+<Demo data={AccordionDemos.chevron} />
 
-<Demo data={AccordionDemos.icon} />
+## With icons
 
-To change icon individually for each item, set `icon` prop on `Accordion.Item` component:
-
-<Demo data={AccordionDemos.icons} />
+<Demo data={AccordionDemos.icons} demoProps={{ toggle: true }} />
 
 ## Change transition
 
@@ -43,60 +41,161 @@ To disable transitions, set `transitionDuration` to 0:
 
 <Demo data={AccordionDemos.disableTransitions} />
 
-## Customize styles
-
-By default, Accordion has bare minimum styles to make customization simple,
-add additional styles with [Styles API](/theming/styles-api/):
-
-<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
-
 ## Control state
 
-In most cases, Accordion can be uncontrolled, to change initial opened item use `initialItem` prop:
+When `multiple={false}`, set `value` as string:
 
 ```tsx
-// -> Third element will be opened initially
-<Accordion initialItem={2} />;
-
-// -> No element will be opened initially (default)
-<Accordion initialItem={-1} />;
-```
-
-In more advanced cases, Accordion state can be controlled with `useAccordionState` hook:
-
-<Demo data={AccordionDemos.form} demoProps={{ toggle: true }} />
-
-## Get control ref
-
-Use `controlRef` prop on Accordion.Item component to get control button ref:
-
-```tsx
-import { useRef } from 'react';
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLButtonElement>();
+  const [value, setValue] = useState<string | null>(null);
+
   return (
-    <Accordion>
-      <Accordion.Item label="First item" controlRef={ref} />
+    <Accordion value={value} onChange={setValue}>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
     </Accordion>
   );
 }
 ```
 
-## Accessibility
-
-Accordion component is accessible by default, it follows [WAI ARIA guidelines](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html):
-
-- All controls are included in `Tab` sequence
-- `Up` and `Down` arrows move focus to previous/next control
-- Item body has `role="region"` attribute
-- Item control has `aria-expanded`, `aria-controls`, `aria-labelledby` attributes
-- When user prefers to reduce motion, `transitionDuration` is automatically set to 0
-
-To make the component visible for screen reader, include descriptive in `Accordion.Item` label:
+When `multiple={true}`, set `value` as an array of stings:
 
 ```tsx
-<Accordion.Item label={<div />}>Content</Accordion.Item> // -> not ok
-<Accordion.Item label="First item">Content</Accordion.Item> // -> ok
-<Accordion.Item label={<div>First item</div>}>Content</Accordion.Item> // -> ok
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Accordion multiple value={value} onChange={setValue}>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>control-1</Accordion.Control>
+        <Accordion.Panel>panel-1</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="item-2">
+        <Accordion.Control>control-2</Accordion.Control>
+        <Accordion.Panel>panel-2</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
 ```
+
+## Compose controls
+
+You can add any additional elements that will be displayed next to `Accordion.Control`,
+for example, you can add [ActionIcon](/core/action-icon/) or [Menu](/core/menu/):
+
+<Demo data={AccordionDemos.sideControls} />
+
+## Disabled items
+
+Set `disabled` prop on `Accordion.Control` component to disable it.
+Disabled items cannot be activated with mouse or keyboard, will be skipped when user navigates with arrow keys:
+
+<Demo data={AccordionDemos.disabled} demoProps={{ toggle: true }} />
+
+## Unstyled Accordion
+
+Set `unstyled` prop on Accordion component to remove all non-essential library styles.
+It can be used to style component with [Styles API](/styles/styles-api/) without overriding any styles.
+
+<Demo data={AccordionDemos.unstyled} demoProps={{ toggle: true }} />
+
+## Styles API
+
+Use [Styles API](/styles/styles-api/) to customize Accordion styles:
+
+<Demo data={AccordionDemos.stylesApi} demoProps={{ toggle: true }} />
+
+## Data attributes
+
+Accordion elements have `data-` attributes that can be used with [Styles API](/styles/styles-api/):
+
+- `data-active` attribute is added to `Accordion.Item` root element when associated panel is expanded
+- `data-rotate` attribute is added to chevron icon when icon should rotate (controlled by `disableChevronRotation` and expanded state of associated panel)
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion
+      styles={{
+        item: {
+          // styles added to all items
+          backgroundColor: '#fff',
+          border: '1px solid #ededed',
+
+          // styles added to expanded item
+          '&[data-active]': {
+            backgroundColor: '#ccc',
+          },
+        },
+
+        chevron: {
+          // styles added to chevron when it should rotate
+          '&[data-rotate]': {
+            transform: 'rotate(-90deg)',
+          },
+        },
+      }}
+    >
+      {/* ... Accordion items */}
+    </Accordion>
+  );
+}
+```
+
+## TypeScript
+
+`AccordionProps` type exported from `@mantine/core` is a generic, it accepts boolean type that
+describes `multiple` state:
+
+```tsx
+import type { AccordionProps } from '@mantine/core';
+
+type MultipleAccordionProps = AccordionProps<true>;
+type DefaultAccordionProps = AccordionProps<false>;
+```
+
+## Accessibility
+
+Accordion component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html) on accessibility.
+
+### Notes
+
+Set `order` on `Accordion` component to wrap accordion controls with h2-h6 heading.
+The following example will wrap controls with h3 tag:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return <Accordion order={3}>{/* ...items */}</Accordion>;
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowDown', description: 'Moves focus to next item' },
+    { key: 'ArrowUp', description: 'Moves focus to previous item' },
+    { key: 'Home', description: 'Moves focus to first item' },
+    { key: 'End', description: 'Moves focus to last item' },
+    { key: 'Space/Enter', description: 'Toggles focused item opened state' },
+  ]}
+/>

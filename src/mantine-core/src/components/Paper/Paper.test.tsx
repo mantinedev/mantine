@@ -1,7 +1,7 @@
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Paper, PaperProps } from './Paper';
 
-const defaultProps: PaperProps<'div'> = {};
+const defaultProps: PaperProps = {};
 
 describe('@mantine/core/Paper', () => {
   itRendersChildren(Paper, defaultProps);
@@ -11,9 +11,6 @@ describe('@mantine/core/Paper', () => {
     props: defaultProps,
     displayName: '@mantine/core/Paper',
     refType: HTMLDivElement,
-  });
-
-  it('has correct displayName', () => {
-    expect(Paper.displayName).toStrictEqual('@mantine/core/Paper');
+    providerName: 'Paper',
   });
 });

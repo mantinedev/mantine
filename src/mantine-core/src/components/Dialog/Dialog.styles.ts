@@ -1,7 +1,7 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
 
 export interface DialogStylesParams {
-  size: MantineNumberSize;
+  size: string | number;
 }
 
 const sizes = {
@@ -20,7 +20,6 @@ export default createStyles((theme, { size }: DialogStylesParams) => ({
     width: theme.fn.size({ size, sizes }),
     maxWidth: '100%',
     minHeight: 50,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
   },
 
   closeButton: {

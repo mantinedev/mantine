@@ -30,7 +30,7 @@ interface GetCollapseProps {
   style?: React.CSSProperties;
   onTransitionEnd?: (e: TransitionEvent) => void;
   refKey?: string;
-  ref?: (node: React.ReactNode) => void | null | undefined;
+  ref?: React.MutableRefObject<HTMLDivElement> | ((node: HTMLDivElement) => void);
 }
 
 export function useCollapse({

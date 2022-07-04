@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
+import { MANTINE_SIZES } from '@mantine/styles';
+import { randomId } from '@mantine/hooks';
 import { WithinOverlays, SubmitForm } from '@mantine/storybook';
 import { Group } from '../Group/Group';
+import { Stack } from '../Stack';
 import { TextInput } from '../TextInput/TextInput';
 import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
 import { MultiSelect } from './MultiSelect';
@@ -59,6 +61,33 @@ function Controlled() {
   );
 }
 
+function Creatable() {
+  const [value, setValue] = useState(['react']);
+  const [creatableData, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
+
+  return (
+    <MultiSelect
+      value={value}
+      onChange={setValue}
+      label="Creatable Select"
+      data={creatableData}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      onCreate={(query) => {
+        const item = { value: randomId(), label: query };
+        setData((c) => [...c, item]);
+        return item;
+      }}
+      getCreateLabel={(query) => `+ Create ${query}`}
+    />
+  );
+}
+
 function DynamicLabels() {
   const [value, setValue] = useState([]);
   const [dynamicData, setDynamicData] = useState(data);
@@ -95,7 +124,7 @@ function DynamicLabels() {
 }
 
 const sizes = MANTINE_SIZES.map((size) => (
-  <Group grow key={size} style={{ marginTop: 30 }} direction="column">
+  <Stack key={size} mt="xl">
     <MultiSelect
       size={size}
       variant="unstyled"
@@ -106,11 +135,11 @@ const sizes = MANTINE_SIZES.map((size) => (
       nothingFound="Nothing found"
     />
     <TextInput label="Text input" placeholder="Text input" size={size} />
-  </Group>
+  </Stack>
 ));
 
 const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
-  <Group grow key={variant} style={{ marginTop: 30 }} direction="column">
+  <Stack key={variant} mt="xl">
     <MultiSelect
       variant={variant}
       label="Multi select"
@@ -119,10 +148,10 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
       nothingFound="Nothing found"
     />
     <TextInput label="Text input" placeholder="Text input" variant={variant} />
-  </Group>
+  </Stack>
 ));
 
-storiesOf('@mantine/core/MultiSelect/stories', module)
+storiesOf('MultiSelect', module)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">
@@ -287,11 +316,48 @@ storiesOf('@mantine/core/MultiSelect/stories', module)
         defaultValue={['react', 'ng']}
         placeholder="Select items"
         searchable
+        name="test"
       />
     </SubmitForm>
   ))
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ MultiSelect: { radius: 0, label: 'Default label' } }}>
-      <MultiSelect data={data} placeholder="Select items" />
-    </MantineProvider>
+  .add('Clearable button not in tab index', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        searchable
+        clearable
+        clearButtonTabIndex={-1}
+      />
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+      />
+    </div>
+  ))
+  .add('inputWrapperOrder', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <MultiSelect
+        label="Multi select"
+        data={data}
+        defaultValue={['react', 'ng']}
+        placeholder="Select items"
+        nothingFound="Nothing found"
+        required
+        description="Description"
+        error="Error"
+        inputWrapperOrder={['input', 'error', 'description', 'label']}
+      />
+    </div>
+  ))
+  .add('Creatable', () => (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Creatable />
+    </div>
   ));

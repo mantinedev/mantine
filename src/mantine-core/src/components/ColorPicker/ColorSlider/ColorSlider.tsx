@@ -6,13 +6,13 @@ import {
   UseMovePosition,
   useMergedRef,
 } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { Box } from '../../Box';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './ColorSlider.styles';
 
 export type ColorSliderStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'sliderThumb'>
+  | Exclude<Selectors<typeof useStyles>, 'sliderThumb'>
   | ThumbStylesNames;
 
 export interface BaseColorSliderProps
@@ -47,11 +47,15 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       classNames,
       styles,
       className,
+      unstyled,
       ...others
     }: ColorSliderProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+    const { classes, cx } = useStyles(
+      { size },
+      { classNames, styles, name: __staticSelector, unstyled }
+    );
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
     const { ref: sliderRef } = useMove(({ x }) => onChange(getChangeValue(x)));
@@ -67,7 +71,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      switch (event.nativeEvent.code) {
+      switch (event.key) {
         case 'ArrowRight': {
           handleArrow(event, { x: position.x + 0.05, y: position.y });
           break;

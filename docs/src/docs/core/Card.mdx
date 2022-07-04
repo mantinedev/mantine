@@ -10,7 +10,6 @@ props: ['Card']
 import: "import { Card } from '@mantine/core';"
 source: 'mantine-core/src/components/Card/Card.tsx'
 docs: 'core/Card.mdx'
-styles: ['Card', 'single-node']
 ---
 
 import { CardDemos } from '@mantine/demos';
@@ -26,7 +25,7 @@ Card component is a wrapper around [Paper](/core/paper/) component with context 
 Card.Section is a special component that is used to remove Card padding from its children while other elements still have horizontal spacing.
 Card.Section works the following way:
 
-- It component is a first child in Card then it has negative top, left and right margins
+- If component is a first child in Card then it has negative top, left and right margins
 - If it is a last child in Card then it has negative bottom, left and right margins
 - If it is in the middle then only left and right margins will be negative
 
@@ -62,6 +61,19 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 </Card>
 ```
 
+### Custom Card.Section root element
+
+`Card.Section` root element can be changed the same way as with Card:
+
+<Demo data={CardDemos.linkSection} />
+
+### withBorder and inheritPadding props
+
+- `withBorder` prop will add top and bottom border to `Card.Section` depending on its position relative to other content and sections
+- `inheritPadding` prop will add the same left and right padding to `Card.Section` as set in `Card` component
+
+<Demo data={CardDemos.section} />
+
 ## Custom root element
 
 You can set `component` prop on Card to use provide custom root element,
@@ -95,9 +107,3 @@ function Demo() {
   );
 }
 ```
-
-## Custom Card.Section root element
-
-`Card.Section` root element can be changed the same way as with Card:
-
-<Demo data={CardDemos.linkSection} />

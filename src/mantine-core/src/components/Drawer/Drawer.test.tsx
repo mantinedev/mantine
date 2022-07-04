@@ -24,10 +24,10 @@ describe('@mantine/core/Drawer', () => {
     </Drawer>,
   ]);
 
-  it('calls onClose when close button is clicked', () => {
+  it('calls onClose when close button is clicked', async () => {
     const spy = jest.fn();
     render(<Drawer {...defaultProps} onClose={spy} />);
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalled();
   });
 

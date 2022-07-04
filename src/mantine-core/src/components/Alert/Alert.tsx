@@ -2,19 +2,20 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   MantineNumberSize,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
+import { useId } from '@mantine/hooks';
+import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
-import { CloseButton } from '../ActionIcon';
-import useStyles from './Alert.styles';
+import useStyles, { AlertStylesParams } from './Alert.styles';
 
 export type AlertVariant = 'filled' | 'outline' | 'light';
-export type AlertStylesNames = ClassNames<typeof useStyles>;
+export type AlertStylesNames = Selectors<typeof useStyles>;
 
 export interface AlertProps
-  extends DefaultProps<AlertStylesNames>,
+  extends DefaultProps<AlertStylesNames, AlertStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /** Alert title */
   title?: React.ReactNode;
@@ -50,6 +51,7 @@ const defaultProps: Partial<AlertProps> = {
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, ref) => {
   const {
+    id,
     className,
     title,
     variant,
@@ -62,28 +64,43 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
     radius,
     withCloseButton,
     closeButtonLabel,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Alert', defaultProps, props);
+  } = useComponentDefaultProps('Alert', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { color, radius, variant },
-    { classNames, styles, name: 'Alert' }
+    { classNames, styles, unstyled, name: 'Alert' }
   );
 
+  const rootId = useId(id);
+  const titleId = title && `${rootId}-title`;
+  const bodyId = `${rootId}-body`;
+
   return (
-    <Box className={cx(classes.root, classes[variant], className)} ref={ref} {...others}>
+    <Box
+      id={rootId}
+      role="alert"
+      aria-labelledby={titleId}
+      aria-describedby={bodyId}
+      className={cx(classes.root, classes[variant], className)}
+      ref={ref}
+      {...others}
+    >
       <div className={classes.wrapper}>
         {icon && <div className={classes.icon}>{icon}</div>}
 
         <div className={classes.body}>
           {title && (
             <div className={classes.title}>
-              <span className={classes.label}>{title}</span>
+              <span id={titleId} className={classes.label}>
+                {title}
+              </span>
 
               {withCloseButton && (
                 <CloseButton
                   className={classes.closeButton}
-                  onClick={() => onClose?.()}
+                  onClick={onClose}
                   variant="transparent"
                   size={16}
                   iconSize={16}
@@ -93,7 +110,9 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
             </div>
           )}
 
-          <div className={classes.message}>{children}</div>
+          <div id={bodyId} className={classes.message}>
+            {children}
+          </div>
         </div>
       </div>
     </Box>

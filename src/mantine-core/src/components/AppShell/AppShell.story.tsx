@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, useMantineTheme, MantineProvider } from '@mantine/styles';
+import { DEFAULT_THEME, useMantineTheme } from '@mantine/styles';
 import { Burger } from '../Burger';
 import { Text } from '../Text';
 import { MediaQuery } from '../MediaQuery';
 import { Header } from './Header/Header';
 import { Navbar } from './Navbar/Navbar';
+import { Footer } from './Footer/Footer';
+import { Aside } from './Aside/Aside';
 import { AppShell } from './AppShell';
 
 const content = Array(30)
   .fill(0)
   .map(() => (
-    <p>
+    <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus officiis labore alias nam,
       voluptate aperiam non quidem consequuntur enim unde corrupti quaerat possimus facilis. Ipsa
       quos alias doloremque at veniam?
-    </p>
+    </div>
   ));
 
 function NavbarToggle() {
@@ -31,10 +33,10 @@ function NavbarToggle() {
       }}
       navbarOffsetBreakpoint="sm"
       fixed
-      navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
-          <Text>Application navbar</Text>
-        </Navbar>
+      aside={
+        <Aside p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, md: 300 }}>
+          <Text>Application aside</Text>
+        </Aside>
       }
       header={
         <Header height={50} p="md">
@@ -107,7 +109,7 @@ function WrappedAppShell() {
   );
 }
 
-storiesOf('@mantine/core/AppShell/stories/AppShell', module)
+storiesOf('AppShell/AppShell', module)
   .add('Static', () => (
     <AppShell
       header={<Header height={50}>Header</Header>}
@@ -126,6 +128,7 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
     <AppShell
       fixed
       header={<Header height={50}>Header</Header>}
+      footer={<Footer height={50}>Footer</Footer>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
     >
       {content}
@@ -156,17 +159,6 @@ storiesOf('@mantine/core/AppShell/stories/AppShell', module)
     </AppShell>
   ))
   .add('With navbar toggle', () => <NavbarToggle />)
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ AppShell: { sx: { background: 'silver' } } }}>
-      <AppShell
-        fixed
-        navbarOffsetBreakpoint="sm"
-        navbar={<Navbar width={{ md: 350, lg: 400 }}>Navbar</Navbar>}
-      >
-        {content}
-      </AppShell>
-    </MantineProvider>
-  ))
   .add('Layout padding', () => (
     <AppShell
       padding={0}

@@ -2,18 +2,18 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ClassNames,
+  Selectors,
   MantineSize,
   MantineNumberSize,
 } from '@mantine/styles';
 import { Text } from '../../Text';
 import { Loader } from '../../Loader';
 import { CheckboxIcon } from '../../Checkbox';
-import { UnstyledButton } from '../../Button';
+import { UnstyledButton } from '../../UnstyledButton';
 import { Transition } from '../../Transition';
 import useStyles from './Step.styles';
 
-export type StepStylesNames = ClassNames<typeof useStyles>;
+export type StepStylesNames = Selectors<typeof useStyles>;
 
 export interface StepProps
   extends DefaultProps<StepStylesNames>,
@@ -65,6 +65,9 @@ export interface StepProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Component orientation */
+  orientation?: 'vertical' | 'horizontal';
 }
 
 const defaultIconSizes = {
@@ -97,13 +100,15 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       __staticSelector = 'Step',
       classNames,
       styles,
+      unstyled,
+      orientation,
       ...others
     }: StepProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, iconSize, size, radius, allowStepClick, iconPosition },
-      { name: __staticSelector, classNames, styles }
+      { color, iconSize, size, radius, allowStepClick, iconPosition, orientation },
+      { name: __staticSelector, classNames, styles, unstyled }
     );
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
@@ -117,28 +122,37 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
         {...others}
       >
         {withIcon && (
-          <div className={classes.stepIcon}>
-            <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
-              {(transitionStyles) => (
-                <div className={classes.stepCompletedIcon} style={transitionStyles}>
-                  {loading ? (
-                    <Loader color="#fff" size={_iconSize} className={classes.stepLoader} />
-                  ) : (
-                    completedIcon || (
-                      <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
-                    )
-                  )}
-                </div>
-              )}
-            </Transition>
+          <div className={classes.stepWrapper}>
+            <div className={classes.stepIcon}>
+              <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
+                {(transitionStyles) => (
+                  <div className={classes.stepCompletedIcon} style={transitionStyles}>
+                    {loading ? (
+                      <Loader color="#fff" size={_iconSize} className={classes.stepLoader} />
+                    ) : (
+                      completedIcon || (
+                        <CheckboxIcon indeterminate={false} width={_iconSize} height={_iconSize} />
+                      )
+                    )}
+                  </div>
+                )}
+              </Transition>
 
-            {state !== 'stepCompleted' ? (
-              loading ? (
-                <Loader size={_iconSize} />
-              ) : (
-                _icon || icon
-              )
-            ) : null}
+              {state !== 'stepCompleted' ? (
+                loading ? (
+                  <Loader size={_iconSize} color={color} />
+                ) : (
+                  _icon || icon
+                )
+              ) : null}
+            </div>
+            {orientation === 'vertical' && (
+              <div
+                className={cx(classes.verticalSeparator, {
+                  [classes.verticalSeparatorActive]: state === 'stepCompleted',
+                })}
+              />
+            )}
           </div>
         )}
 

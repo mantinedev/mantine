@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { DEFAULT_THEME, MANTINE_SIZES, MantineProvider } from '@mantine/styles';
+import { DEFAULT_THEME, MANTINE_SIZES } from '@mantine/styles';
 import { WithinOverlays } from '@mantine/storybook';
 import { ColorInput } from './ColorInput';
 
@@ -34,11 +34,14 @@ function ControlledInput() {
       <button type="button" onClick={() => setValue('rgba(242, 165, 201, 0.54)')}>
         Set value
       </button>
+      <button type="button" onClick={() => setValue('')}>
+        Set empty
+      </button>
     </div>
   );
 }
 
-storiesOf('@mantine/core/ColorInput/stories', module)
+storiesOf('ColorInput', module)
   .add('Controlled', () => <ControlledInput />)
   .add('Sizes', () => <div style={{ padding: 40 }}>{sizes}</div>)
   .add('Within overlays', () => (
@@ -54,9 +57,4 @@ storiesOf('@mantine/core/ColorInput/stories', module)
         withinPortal={false}
       />
     </WithinOverlays>
-  ))
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ ColorInput: { format: 'rgba' } }}>
-      <ColorInput />
-    </MantineProvider>
   ));

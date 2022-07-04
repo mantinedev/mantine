@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMove, clampUseMovePosition, UseMovePosition } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames } from '@mantine/styles';
+import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
 import { HsvaColor } from '../types';
 import { Thumb, ThumbStylesNames } from '../Thumb/Thumb';
 import useStyles from './Saturation.styles';
 import { convertHsvaTo } from '../converters';
 
 export type SaturationStylesNames =
-  | Exclude<ClassNames<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
+  | Exclude<Selectors<typeof useStyles>, 'saturationOverlay' | 'saturationThumb'>
   | ThumbStylesNames;
 
 interface SaturationProps extends DefaultProps<SaturationStylesNames> {
@@ -30,8 +30,9 @@ export function Saturation({
   saturationLabel,
   classNames,
   styles,
+  unstyled,
 }: SaturationProps) {
-  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector, unstyled });
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
 
   const { ref } = useMove(({ x, y }) => {
@@ -49,7 +50,7 @@ export function Saturation({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    switch (event.nativeEvent.code) {
+    switch (event.key) {
       case 'ArrowUp': {
         handleArrow(event, { y: position.y - 0.05, x: position.x });
         break;

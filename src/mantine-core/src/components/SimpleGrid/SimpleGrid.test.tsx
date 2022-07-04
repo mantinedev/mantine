@@ -14,5 +14,6 @@ describe('@mantine/core/SimpleGrid', () => {
     props: defaultProps,
     displayName: '@mantine/core/SimpleGrid',
     refType: HTMLDivElement,
+    providerName: 'SimpleGrid',
   });
 });

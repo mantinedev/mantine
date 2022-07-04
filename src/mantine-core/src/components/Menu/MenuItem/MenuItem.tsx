@@ -1,93 +1,100 @@
-import React, { forwardRef, useRef } from 'react';
-import { ClassNames, PolymorphicComponentProps, DefaultProps, MantineColor } from '@mantine/styles';
-import { mergeRefs } from '@mantine/hooks';
+import React, { useRef, forwardRef } from 'react';
+import { DefaultProps, MantineColor, Selectors, useContextStylesApi } from '@mantine/styles';
+import {
+  createEventHandler,
+  createPolymorphicComponent,
+  createScopedKeydownHandler,
+} from '@mantine/utils';
+import { useMergedRef } from '@mantine/hooks';
 import { Box } from '../../Box';
 import { useMenuContext } from '../Menu.context';
-import { getContextItemIndex } from '../../../utils';
 import useStyles from './MenuItem.styles';
 
-export type MenuItemStylesNames = ClassNames<typeof useStyles>;
+export type MenuItemStylesNames = Selectors<typeof useStyles>;
 
-export interface SharedMenuItemProps extends DefaultProps {
+export interface MenuItemProps extends DefaultProps {
   /** Item label */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
-  /** Icon rendered on the left side of label */
-  icon?: React.ReactNode;
-
-  /** Any color from theme.colors */
+  /** Key of theme.colors */
   color?: MantineColor;
 
-  /** Any react node to render on the right side of item, for example, keyboard shortcut or badge */
+  /** Determines whether menu should be closed when item is clicked, overrides closeOnItemClick prop on Menu component */
+  closeMenuOnClick?: boolean;
+
+  /** Icon rendered on the left side of the label */
+  icon?: React.ReactNode;
+
+  /** Section rendered on the right side of the label */
   rightSection?: React.ReactNode;
-
-  /** Is item disabled */
-  disabled?: boolean;
 }
 
-interface _MenuItemProps
-  extends SharedMenuItemProps,
-    Omit<React.ComponentPropsWithoutRef<'button'>, keyof SharedMenuItemProps> {
-  component: any;
-}
-
-export const _MenuItem = forwardRef(
+export const _MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
   (
-    {
-      className,
-      children,
-      icon,
-      color,
-      disabled,
-      rightSection,
-      component,
-      onClick,
-      ...others
-    }: _MenuItemProps,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    { children, className, color, closeMenuOnClick, icon, rightSection, ...others }: MenuItemProps,
+    ref
   ) => {
+    const ctx = useMenuContext();
+    const { classNames, styles, unstyled } = useContextStylesApi();
+    const { classes, cx, theme } = useStyles(
+      { radius: ctx.radius, color },
+      { name: 'Menu', classNames, styles, unstyled }
+    );
     const itemRef = useRef<HTMLButtonElement>();
-    const { hovered, onItemHover, radius, onItemKeyDown, classNames, styles, onItemClick } =
-      useMenuContext();
-    const { classes, cx } = useStyles({ color, radius }, { classNames, styles, name: 'Menu' });
-    const itemIndex = getContextItemIndex(
-      { elementSelector: '.mantine-Menu-item', parentClassName: 'mantine-Menu-body' },
-      itemRef.current
+
+    const itemIndex = ctx.getItemIndex(itemRef.current);
+    const _others: any = others;
+
+    const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
+    const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
+      ctx.setHovered(ctx.getItemIndex(itemRef.current))
+    );
+
+    const handleClick = createEventHandler(_others.onClick, () => {
+      if (typeof closeMenuOnClick === 'boolean') {
+        closeMenuOnClick && ctx.closeDropdownImmediately();
+      } else {
+        ctx.closeOnItemClick && ctx.closeDropdownImmediately();
+      }
+    });
+
+    const handleFocus = createEventHandler(_others.onFocus, () =>
+      ctx.setHovered(ctx.getItemIndex(itemRef.current))
     );
 
     return (
       <Box
-        component={component || 'button'}
-        type="button"
-        role="menuitem"
-        className={cx(classes.item, { [classes.itemHovered]: hovered === itemIndex }, className)}
-        onMouseEnter={() => !disabled && onItemHover(itemIndex)}
-        onMouseLeave={() => onItemHover(-1)}
-        onKeyDown={onItemKeyDown}
-        ref={mergeRefs(ref, itemRef)}
-        disabled={disabled}
-        onClick={(event: React.MouseEvent<any, MouseEvent>) => {
-          typeof onClick === 'function' && onClick(event);
-          onItemClick();
-        }}
+        component="button"
         {...others}
+        type="button"
+        tabIndex={-1}
+        onFocus={handleFocus}
+        className={cx(classes.item, className)}
+        ref={useMergedRef(itemRef, ref)}
+        role="menuitem"
+        data-menu-item
+        data-hovered={ctx.hovered === itemIndex ? true : undefined}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        onKeyDown={createScopedKeydownHandler({
+          siblingSelector: '[data-menu-item]',
+          parentSelector: '[data-menu-dropdown]',
+          activateOnFocus: false,
+          loop: ctx.loop,
+          dir: theme.dir,
+          orientation: 'vertical',
+          onKeyDown: _others.onKeydown,
+        })}
       >
-        <div className={classes.itemInner}>
-          {icon && <div className={classes.itemIcon}>{icon}</div>}
-
-          <div className={classes.itemBody}>
-            <div className={classes.itemLabel}>{children}</div>
-            {rightSection}
-          </div>
-        </div>
+        {icon && <div className={classes.itemIcon}>{icon}</div>}
+        {children && <div className={classes.itemLabel}>{children}</div>}
+        {rightSection && <div className={classes.itemRightSection}>{rightSection}</div>}
       </Box>
     );
   }
 );
 
-export type MenuItemProps<C> = PolymorphicComponentProps<C, SharedMenuItemProps>;
-type MenuItemComponent = <C = 'button'>(props: MenuItemProps<C>) => React.ReactElement;
+_MenuItem.displayName = '@mantine/core/MenuItem';
 
-export const MenuItem: MenuItemComponent & { displayName?: string } = _MenuItem as any;
-
-MenuItem.displayName = '@mantine/core/MenuItem';
+export const MenuItem = createPolymorphicComponent<'button', MenuItemProps>(_MenuItem);

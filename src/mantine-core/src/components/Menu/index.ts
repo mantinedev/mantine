@@ -1,9 +1,8 @@
 export { Menu } from './Menu';
-export { MenuItem } from './MenuItem/MenuItem';
-export { MenuLabel } from './MenuLabel/MenuLabel';
 
 export type { MenuProps, MenuStylesNames } from './Menu';
+export type { MenuDividerProps } from './MenuDivider/MenuDivider';
 export type { MenuItemProps } from './MenuItem/MenuItem';
+export type { MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 export type { MenuLabelProps } from './MenuLabel/MenuLabel';
-export type { MenuStylesParams } from './Menu.styles';
-export type { MenuItemStylesParams } from './MenuItem/MenuItem.styles';
+export type { MenuTargetProps } from './MenuTarget/MenuTarget';

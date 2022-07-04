@@ -1,12 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import {
-  CheckIcon,
-  Cross2Icon,
-  FaceIcon,
-  ExclamationTriangleIcon,
-  BookmarkIcon,
-} from '@modulz/radix-icons';
+import { IconMoodSmile, IconCheck, IconX, IconExclamationMark, IconBookmark } from '@tabler/icons';
 import { Notification } from './Notification';
 
 const demo = (
@@ -43,7 +37,7 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Muted notification with icon"
-        icon={<FaceIcon />}
+        icon={<IconMoodSmile size={18} />}
       >
         Something generic happened but with icon
       </Notification>
@@ -53,7 +47,7 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Success notification with icon"
-        icon={<CheckIcon />}
+        icon={<IconCheck size={18} />}
       >
         Your action was a complete success!
       </Notification>
@@ -63,7 +57,7 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Danger notification with icon"
-        icon={<Cross2Icon />}
+        icon={<IconX size={18} />}
       >
         You have done something wrong, too bad
       </Notification>
@@ -73,7 +67,7 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Warning notification with icon"
-        icon={<ExclamationTriangleIcon />}
+        icon={<IconExclamationMark size={18} />}
       >
         This action will not work very soon
       </Notification>
@@ -83,7 +77,7 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Primary notification with icon"
-        icon={<BookmarkIcon />}
+        icon={<IconBookmark size={18} />}
       >
         You have achieved something important
       </Notification>
@@ -139,22 +133,47 @@ const demo = (
         onClose={() => {}}
         mt="xl"
         title="Icon notification with a lot of content"
-        icon={<FaceIcon />}
+        icon={<IconMoodSmile size={18} />}
       >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nam cumque natus ea aliquid
         quo illo enim totam sunt voluptatum, dolorum blanditiis sint, porro aut asperiores ut maxime
         doloremque. Cumque.
       </Notification>
 
+      <Notification
+        color="orange"
+        onClose={() => {}}
+        mt="xl"
+        icon={<IconMoodSmile size={18} />}
+        title="NotificationWithIconAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
+      >
+        NotificationWithIconAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
+      </Notification>
+
+      <Notification
+        color="pink"
+        onClose={() => {}}
+        disallowClose
+        mt="xl"
+        icon={<IconMoodSmile size={18} />}
+        title="NotificationWithIconDisallowCloseAndTitleSoLargeThatItWillUseOverflowEllipsisOption"
+      >
+        NotificationWithIconDisallowCloseAndDescriptionSoLargeThatItShouldUseOverflowEllipsis
+      </Notification>
+
       <Notification color="grape" onClose={() => {}} mt="xl">
         Notification without title
       </Notification>
 
-      <Notification color="pink" onClose={() => {}} mt="xl" icon={<CheckIcon />}>
+      <Notification color="grape" onClose={() => {}} mt="xl">
+        NotificationWithoutTitleAndTheDescriptionSoLargeThatItShouldUseOverflowEllipsis
+      </Notification>
+
+      <Notification color="pink" onClose={() => {}} mt="xl" icon={<IconCheck size={18} />}>
         Notification without title but with icon
       </Notification>
     </div>
   </div>
 );
 
-storiesOf('@mantine/core/Notification/stories', module).add('All variants', () => demo);
+storiesOf('Notification', module).add('All variants', () => demo);

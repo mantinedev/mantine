@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, ClassNames } from '@mantine/styles';
+import { DefaultProps, Selectors } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
 import { parseColor } from '../converters/parsers';
 import { HsvaColor } from '../types';
 import useStyles from './Swatches.styles';
 
-export type SwatchesStylesNames = ClassNames<typeof useStyles>;
+export type SwatchesStylesNames = Selectors<typeof useStyles>;
 
 export interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,
@@ -25,9 +25,13 @@ export function Swatches({
   classNames,
   styles,
   __staticSelector = 'color-picker',
+  unstyled,
   ...others
 }: SwatchesProps) {
-  const { classes } = useStyles({ swatchesPerRow }, { classNames, styles, name: __staticSelector });
+  const { classes } = useStyles(
+    { swatchesPerRow },
+    { classNames, styles, name: __staticSelector, unstyled }
+  );
 
   const colors = data.map((color, index) => (
     <ColorSwatch

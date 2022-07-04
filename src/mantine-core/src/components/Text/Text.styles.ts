@@ -1,31 +1,29 @@
 import {
   createStyles,
   MantineTheme,
-  MantineSize,
-  getSharedColorScheme,
-  MantineColor,
   CSSObject,
+  MantineColor,
+  MantineGradient,
+  MantineNumberSize,
 } from '@mantine/styles';
 
 export interface TextStylesParams {
-  color: MantineColor;
+  color: 'dimmed' | MantineColor;
   variant: 'text' | 'link' | 'gradient';
-  size: MantineSize;
+  size: MantineNumberSize;
   lineClamp: number;
   inline: boolean;
   inherit: boolean;
   underline: boolean;
-  gradientFrom: string;
-  gradientTo: string;
-  gradientDeg: number;
-  transform: 'capitalize' | 'uppercase' | 'lowercase' | 'none';
-  align: 'left' | 'center' | 'right' | 'justify';
+  gradient: MantineGradient;
+  transform: React.CSSProperties['textTransform'];
+  align: React.CSSProperties['textAlign'];
   weight: React.CSSProperties['fontWeight'];
 }
 
 interface GetTextColor {
   theme: MantineTheme;
-  color: MantineColor;
+  color: 'dimmed' | MantineColor;
   variant: TextStylesParams['variant'];
 }
 
@@ -35,7 +33,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
   }
 
   return color in theme.colors
-    ? theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7]
+    ? theme.fn.variant({ variant: 'filled', color }).background
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
     : color || 'inherit';
@@ -66,19 +64,13 @@ export default createStyles(
       inline,
       inherit,
       underline,
-      gradientDeg,
-      gradientTo,
-      gradientFrom,
+      gradient,
       weight,
       transform,
       align,
     }: TextStylesParams
   ) => {
-    const colors = getSharedColorScheme({
-      theme,
-      variant: 'gradient',
-      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
-    });
+    const colors = theme.fn.variant({ variant: 'gradient', gradient });
 
     return {
       root: {
@@ -87,7 +79,7 @@ export default createStyles(
         ...getLineClamp(lineClamp),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
-        fontSize: inherit ? 'inherit' : theme.fontSizes[size],
+        fontSize: inherit ? 'inherit' : theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',
@@ -95,12 +87,13 @@ export default createStyles(
         textTransform: transform,
         textAlign: align,
 
-        '&:hover':
+        ...theme.fn.hover(
           variant === 'link' && underline === undefined
             ? {
                 textDecoration: 'underline',
               }
-            : undefined,
+            : undefined
+        ),
       },
 
       gradient: {

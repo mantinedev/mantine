@@ -19,8 +19,9 @@ describe('@mantine/core/NativeSelect', () => {
     component: NativeSelect,
     props: defaultProps,
     displayName: '@mantine/core/NativeSelect',
-    excludeOthers: true,
     refType: HTMLSelectElement,
+    othersSelector: '.mantine-NativeSelect-input',
+    providerName: 'NativeSelect',
   });
 
   checkAccessibility([

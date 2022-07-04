@@ -1,12 +1,9 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 import {
   DefaultProps,
   Input,
-  InputWrapper,
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
-  Paper,
-  Popper,
   MantineTransition,
   InputStylesNames,
   InputWrapperStylesNames,
@@ -14,35 +11,30 @@ import {
   Modal,
   CloseButton,
   MantineShadow,
-  ClassNames,
+  Selectors,
   extractSystemStyles,
-  getDefaultZIndex,
+  Popover,
 } from '@mantine/core';
-import {
-  useClickOutside,
-  useFocusTrap,
-  useMergedRef,
-  useWindowEvent,
-  useUuid,
-} from '@mantine/hooks';
+import { useMergedRef, useId } from '@mantine/hooks';
 import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
 import useStyles from './DatePickerBase.styles';
 
 export type DatePickerStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | CalendarBaseStylesNames
   | InputStylesNames
-  | InputWrapperStylesNames;
+  | InputWrapperStylesNames
+  | 'dropdown';
 
 export interface DatePickerBaseSharedProps
-  extends InputBaseProps,
+  extends InputSharedProps,
     InputWrapperBaseProps,
     DefaultProps<DatePickerStylesNames>,
     Omit<
       React.ComponentPropsWithoutRef<'input'>,
       'value' | 'defaultValue' | 'placeholder' | 'size'
     > {
-  /** Props spread to root element (InputWrapper) */
+  /** Props spread to root element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'>;
 
   /** Placeholder, displayed when date is not selected */
@@ -63,14 +55,14 @@ export interface DatePickerBaseSharedProps
   /** Input name, useful fon uncontrolled variant to capture data with native form */
   name?: string;
 
-  /** Set to true to disable dropdown closing on scroll */
-  closeDropdownOnScroll?: boolean;
-
   /** Input size */
   size?: MantineSize;
 
   /** Where to show calendar in modal or popover */
   dropdownType?: 'popover' | 'modal';
+
+  /** Dropdown positioning behavior */
+  dropdownPosition?: 'bottom-start' | 'top-start' | 'flip';
 
   /** Allow to clear value */
   clearable?: boolean;
@@ -78,11 +70,11 @@ export interface DatePickerBaseSharedProps
   /** aria-label for clear button */
   clearButtonLabel?: string;
 
-  /** useEffect dependencies to force update tooltip position */
+  /** useEffect dependencies to force update dropdown position */
   positionDependencies?: any[];
 
-  /** Popper zIndex */
-  zIndex?: number;
+  /** Dropdown zIndex */
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** call onChange with last valid value onBlur */
   fixOnBlur?: boolean;
@@ -100,7 +92,10 @@ export interface DatePickerBaseSharedProps
   clickOutsideEvents?: string[];
 
   /** Modal z-index */
-  modalZIndex?: number;
+  modalZIndex?: React.CSSProperties['zIndex'];
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
 export interface DatePickerBaseProps extends DatePickerBaseSharedProps {
@@ -134,6 +129,13 @@ const RIGHT_SECTION_WIDTH = {
   xl: 44,
 };
 
+const defaultTransition: MantineTransition = {
+  in: { opacity: 1, transform: 'translateY(0) scale(1)' },
+  out: { opacity: 0, transform: 'translateY(-25px) scale(0.93)' },
+  common: { transformOrigin: 'top left' },
+  transitionProperty: 'opacity, transform',
+};
+
 export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
   (
     {
@@ -149,11 +151,10 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       id,
       description,
       placeholder,
-      shadow = 'sm',
-      transition = 'pop-top-left',
-      transitionDuration = 200,
+      shadow,
+      transition = defaultTransition,
+      transitionDuration = 100,
       transitionTimingFunction,
-      closeDropdownOnScroll = false,
       size = 'sm',
       children,
       inputLabel,
@@ -161,11 +162,12 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       dropdownOpened,
       setDropdownOpened,
       dropdownType = 'popover',
+      dropdownPosition = 'flip',
       clearable = true,
       clearButtonLabel,
       onClear,
       positionDependencies = [],
-      zIndex = getDefaultZIndex('popover'),
+      zIndex,
       withinPortal = true,
       onBlur,
       onFocus,
@@ -178,21 +180,25 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onDropdownOpen,
       clickOutsideEvents = ['mousedown', 'touchstart'],
       modalZIndex,
+      errorProps,
+      labelProps,
+      descriptionProps,
+      clearButtonTabIndex = 0,
+      unstyled,
+      inputContainer,
+      inputWrapperOrder,
       ...others
     }: DatePickerBaseProps,
     ref
   ) => {
-    const { classes, cx, theme } = useStyles(
-      { size, invalid: !!error },
-      { classNames, styles, name: __staticSelector }
-    );
+    const { classes, cx, theme } = useStyles(null, {
+      classNames,
+      styles,
+      unstyled,
+      name: __staticSelector,
+    });
     const { systemStyles, rest } = extractSystemStyles(others);
-    const [dropdownElement, setDropdownElement] = useState<HTMLDivElement>(null);
-    const [rootElement, setRootElement] = useState<HTMLDivElement>(null);
-    const [referenceElement, setReferenceElement] = useState<HTMLDivElement>(null);
-    const uuid = useUuid(id);
-
-    const focusTrapRef = useFocusTrap(!allowFreeInput && dropdownOpened);
+    const uuid = useId(id);
     const inputRef = useRef<HTMLButtonElement>();
 
     const closeDropdown = () => {
@@ -211,19 +217,11 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
     };
 
     const closeOnEscape = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (event.nativeEvent.code === 'Escape') {
+      if (event.key === 'Escape') {
         closeDropdown();
         window.setTimeout(() => inputRef.current?.focus(), 0);
       }
     };
-
-    useClickOutside(
-      () => dropdownType === 'popover' && !allowFreeInput && closeDropdown(),
-      clickOutsideEvents,
-      [dropdownElement, rootElement]
-    );
-
-    useWindowEvent('scroll', () => closeDropdownOnScroll && closeDropdown());
 
     const rightSection = clearable ? (
       <CloseButton
@@ -231,6 +229,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         aria-label={clearButtonLabel}
         onClick={onClear}
         size={size}
+        tabIndex={clearButtonTabIndex}
+        unstyled={unstyled}
       />
     ) : null;
 
@@ -250,14 +250,14 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       typeof onKeyDown === 'function' && onKeyDown(event);
-      if ((event.code === 'Space' || event.code === 'Enter') && !allowFreeInput) {
+      if ((event.key === 'Space' || event.key === 'Enter') && !allowFreeInput) {
         event.preventDefault();
         openDropdown();
       }
     };
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         id={uuid}
         label={label}
@@ -270,73 +270,81 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         size={size}
         __staticSelector={__staticSelector}
         sx={sx}
-        ref={setReferenceElement}
+        errorProps={errorProps}
+        descriptionProps={descriptionProps}
+        labelProps={labelProps}
+        inputContainer={inputContainer}
+        inputWrapperOrder={inputWrapperOrder}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
-        <div ref={setRootElement}>
-          <div className={classes.wrapper}>
-            <Input<'input'>
-              classNames={{
-                ...classNames,
-                input: cx(
-                  classes.input,
-                  { [classes.freeInput]: allowFreeInput },
-                  classNames?.input
-                ),
-              }}
-              styles={styles}
-              onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
-              onKeyDown={handleKeyDown}
-              id={uuid}
-              ref={useMergedRef(ref, inputRef)}
-              __staticSelector={__staticSelector}
-              size={size}
-              name={name}
-              placeholder={placeholder}
-              value={inputLabel}
-              required={required}
-              invalid={!!error}
-              readOnly={!allowFreeInput}
-              rightSection={rightSection}
-              rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
-              onBlur={handleInputBlur}
-              onFocus={handleInputFocus}
-              onChange={onChange}
-              autoComplete="off"
-              {...rest}
-            />
-          </div>
+        <Popover
+          __staticSelector={__staticSelector}
+          withinPortal={withinPortal}
+          offset={10}
+          opened={dropdownOpened}
+          transitionDuration={transitionDuration}
+          transition={transition}
+          positionDependencies={positionDependencies}
+          middlewares={{ flip: dropdownPosition === 'flip', shift: false }}
+          position={dropdownPosition === 'flip' ? 'bottom-start' : dropdownPosition}
+          shadow={shadow}
+          onClose={closeDropdown}
+          trapFocus={!allowFreeInput}
+          withRoles={false}
+          clickOutsideEvents={clickOutsideEvents}
+          zIndex={zIndex}
+          classNames={classNames}
+          styles={styles}
+          unstyled={unstyled}
+        >
+          <Popover.Target>
+            <div className={classes.wrapper}>
+              <Input<'input'>
+                classNames={{
+                  ...classNames,
+                  input: cx(
+                    classes.input,
+                    { [classes.freeInput]: allowFreeInput },
+                    classNames?.input
+                  ),
+                }}
+                styles={styles}
+                onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
+                onKeyDown={handleKeyDown}
+                id={uuid}
+                ref={useMergedRef(ref, inputRef)}
+                __staticSelector={__staticSelector}
+                size={size}
+                name={name}
+                placeholder={placeholder}
+                value={inputLabel}
+                required={required}
+                invalid={!!error}
+                readOnly={!allowFreeInput}
+                rightSection={rightSection}
+                rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+                onBlur={handleInputBlur}
+                onFocus={handleInputFocus}
+                onChange={onChange}
+                autoComplete="off"
+                unstyled={unstyled}
+                {...rest}
+              />
+            </div>
+          </Popover.Target>
 
           {dropdownType === 'popover' ? (
-            <Popper
-              referenceElement={referenceElement}
-              transitionDuration={transitionDuration}
-              transitionTimingFunction={transitionTimingFunction}
-              forceUpdateDependencies={positionDependencies}
-              transition={transition}
-              mounted={dropdownOpened}
-              position="bottom"
-              placement="start"
-              gutter={10}
-              withinPortal={withinPortal}
-              withArrow
-              arrowSize={3}
-              zIndex={zIndex}
-              arrowClassName={classes.arrow}
-            >
+            <Popover.Dropdown>
               <div
-                className={classes.dropdownWrapper}
-                ref={setDropdownElement}
                 data-mantine-stop-propagation={dropdownOpened}
                 onKeyDownCapture={closeOnEscape}
                 aria-hidden={allowFreeInput || undefined}
               >
-                <Paper className={classes.dropdown} shadow={shadow} ref={focusTrapRef}>
-                  {children}
-                </Paper>
+                {children}
               </div>
-            </Popper>
+            </Popover.Dropdown>
           ) : (
             <Modal
               opened={dropdownOpened}
@@ -344,12 +352,13 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               withCloseButton={false}
               size={amountOfMonths * 400}
               zIndex={modalZIndex}
+              unstyled={unstyled}
             >
               {children}
             </Modal>
           )}
-        </div>
-      </InputWrapper>
+        </Popover>
+      </Input.Wrapper>
     );
   }
 );

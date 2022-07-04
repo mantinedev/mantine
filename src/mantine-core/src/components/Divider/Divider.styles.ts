@@ -1,4 +1,4 @@
-import { createStyles, MantineNumberSize, MantineColor } from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, MantineTheme } from '@mantine/styles';
 
 export interface DividerStylesParams {
   size: MantineNumberSize;
@@ -6,7 +6,7 @@ export interface DividerStylesParams {
   color: MantineColor;
 }
 
-export const sizes = {
+const sizes = {
   xs: 1,
   sm: 2,
   md: 3,
@@ -14,7 +14,21 @@ export const sizes = {
   xl: 5,
 };
 
+function getColor(theme: MantineTheme, color: MantineColor) {
+  const themeColor = theme.fn.variant({ variant: 'outline', color }).border;
+
+  return color in theme.colors
+    ? themeColor
+    : color === undefined
+    ? theme.colorScheme === 'dark'
+      ? theme.colors.dark[4]
+      : theme.colors.gray[4]
+    : color;
+}
+
 export default createStyles((theme, { size, variant, color }: DividerStylesParams) => ({
+  root: {},
+
   withLabel: {
     borderTop: '0 !important',
   },
@@ -34,34 +48,38 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
   label: {
     display: 'flex',
     alignItems: 'center',
-    color: color === 'dark' ? theme.colors.dark[1] : theme.fn.themeColor(color, 6),
 
     '&::before': {
       content: '""',
       flex: 1,
       height: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
-        color,
-        theme.colorScheme === 'dark' ? 3 : 4
-      )}`,
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
       marginRight: theme.spacing.xs,
     },
 
     '&::after': {
       content: '""',
       flex: 1,
-      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${theme.fn.themeColor(
-        color,
-        theme.colorScheme === 'dark' ? 3 : 4
-      )}`,
+      borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
       marginLeft: theme.spacing.xs,
     },
+  },
+
+  labelDefaultStyles: {
+    color:
+      color === 'dark'
+        ? theme.colors.dark[1]
+        : theme.fn.themeColor(
+            color,
+            theme.colorScheme === 'dark' ? 5 : theme.fn.primaryShade(),
+            false
+          ),
   },
 
   horizontal: {
     border: 0,
     borderTopWidth: theme.fn.size({ size, sizes }),
-    borderTopColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 4),
+    borderTopColor: getColor(theme, color),
     borderTopStyle: variant,
     margin: 0,
   },
@@ -71,7 +89,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     alignSelf: 'stretch',
     height: '100%',
     borderLeftWidth: theme.fn.size({ size, sizes }),
-    borderLeftColor: theme.fn.themeColor(color, 4),
+    borderLeftColor: getColor(theme, color),
     borderLeftStyle: variant,
   },
 }));

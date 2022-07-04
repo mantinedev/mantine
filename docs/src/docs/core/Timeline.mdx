@@ -34,3 +34,30 @@ Control timeline appearance with the following props:
 ## Bullet as React node
 
 <Demo data={TimelineDemos.bullet} />
+
+## Wrap Timeline.Item
+
+`Timeline` component relies on `Timeline.Item` order, if you want to wrap `Timeline.Item` component you will
+need to spread wrapper component props:
+
+```tsx
+import { Timeline, TimelineItemProps } from '@mantine/core';
+
+function SecondItem(props: TimelineItemProps) {
+  return (
+    <Timeline.Item title="Wrapped item" {...props}>
+      Second item
+    </Timeline.Item>
+  );
+}
+
+function Demo() {
+  return (
+    <Timeline>
+      <Timeline.Item title="Regular item">First item</Timeline.Item>
+      <SecondItem />
+      <Timeline.Item title="Regular item">Third item</Timeline.Item>>
+    </Timeline>
+  );
+}
+```

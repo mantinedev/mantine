@@ -5,7 +5,9 @@ export function useNotifications() {
   const context = useContext(NotificationsContext);
 
   if (!context) {
-    throw new Error('@mantine/notifications: NotificationsProvider was not found in tree');
+    throw new Error(
+      '@mantine/notifications: use-notifications hook was called outside of NotificationsProvider context'
+    );
   }
 
   return context;

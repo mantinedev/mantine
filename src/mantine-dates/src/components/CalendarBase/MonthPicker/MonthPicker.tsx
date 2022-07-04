@@ -1,11 +1,11 @@
 import React from 'react';
-import { DefaultProps, ClassNames, UnstyledButton, MantineSize } from '@mantine/core';
+import { DefaultProps, Selectors, UnstyledButton, MantineSize } from '@mantine/core';
 import { getMonthsNames } from '../../../utils';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
 import { isMonthInRange } from './is-month-in-range/is-month-in-range';
 import useStyles from './MonthPicker.styles';
 
-export type MonthPickerStylesNames = ClassNames<typeof useStyles> | CalendarHeaderStylesNames;
+export type MonthPickerStylesNames = Selectors<typeof useStyles> | CalendarHeaderStylesNames;
 
 export interface MonthPickerProps
   extends DefaultProps<MonthPickerStylesNames>,
@@ -42,16 +42,21 @@ export function MonthPicker({
   nextYearLabel,
   previousYearLabel,
   preventFocus,
+  unstyled,
   ...others
 }: MonthPickerProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, unstyled, name: __staticSelector }
+  );
   const range = getMonthsNames(locale);
   const minYear = minDate instanceof Date ? minDate.getFullYear() : undefined;
   const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : undefined;
 
   const months = range.map((month, index) => (
-    <UnstyledButton
+    <UnstyledButton<'button'>
       key={month}
+      unstyled={unstyled}
       onClick={() => onChange(index)}
       className={cx(classes.monthPickerControl, {
         [classes.monthPickerControlActive]: index === value.month && year === value.year,
@@ -79,6 +84,7 @@ export function MonthPicker({
         nextLabel={nextYearLabel}
         previousLabel={previousYearLabel}
         preventFocus={preventFocus}
+        unstyled={unstyled}
       />
       <div className={classes.monthPickerControls}>{months}</div>
     </div>

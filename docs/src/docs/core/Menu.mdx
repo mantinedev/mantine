@@ -6,7 +6,7 @@ order: 1
 slug: /core/menu/
 category: 'overlay'
 description: 'Combine a list of secondary actions into single interactive area'
-props: ['Menu']
+props: ['Menu', 'MenuItem', 'MenuDropdown', 'MenuTarget']
 import: "import { Menu } from '@mantine/core';"
 source: 'mantine-core/src/components/Menu/Menu.tsx'
 docs: 'core/Menu.mdx'
@@ -21,16 +21,17 @@ import { MenuDemos } from '@mantine/demos';
 
 ## Controlled
 
+Dropdown opened state can be controlled with `opened` and `onChange` props:
+
 ```tsx
-import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
 import { Menu } from '@mantine/core';
 
 function Demo() {
-  const [opened, handlers] = useDisclosure(false);
-
+  const [opened, setOpened] = useState(false);
   return (
-    <Menu opened={opened} onOpen={handlers.open} onClose={handlers.close}>
-      {/* Menu items... */}
+    <Menu opened={opened} onChange={setOpened}>
+      {/* Menu content */}
     </Menu>
   );
 }
@@ -38,118 +39,49 @@ function Demo() {
 
 ## Show menu on hover
 
-To show menu on hover set props:
+Set `trigger="hover"` to reveal dropdown when hovers over menu target and dropdown.
+`closeDelay` and `openDelay` props can be used to control open and close delay in ms.
+Note that:
 
-- `trigger` to hover
-- `delay` to number in ms (defaults to 0)
-
-In this case, menu will use `onMouseEnter` and `onFocus` events instead of `onClick`:
+- If you set `closeDelay={0}` then menu will close before user will reach dropdown, set `offset={0}` to remove space between target element and dropdown
+- Menu with `trigger="hover"` is not accessible – users that navigate with keyboard will not be able to use it
 
 <Demo data={MenuDemos.hover} />
 
-## Menu.Item component
-
-Menu.Item renders button and accepts following props:
-
-- `icon` – icon on the left
-- `children` – item label
-- `rightSection` – react node, rendered on the right, for example, [Badge](/core/badge/) or keyboard shortcut
-- `disabled` – disables item
-- `...others` – Menu.Item produces button element, all other props will be spread to it, for example, `onClick`, `style`, `sx`, `className`
-
-```tsx
-import { Menu, Text } from '@mantine/core';
-import { Settings } from 'tabler-icons-react';
-
-function Demo() {
-  return (
-    <Menu>
-      <Menu.Item
-        icon={<Settings size={16} />}
-        onClick={() => console.log('Hello')}
-        rightSection={
-          <Text size="sm" color="gray">
-            ⌘K
-          </Text>
-        }
-      >
-        Label
-      </Menu.Item>
-    </Menu>
-  );
-}
-```
-
-## Disabled item
+## Disabled items
 
 <Demo data={MenuDemos.disabled} />
 
-## Custom control
-
-By default, menu button uses [ActionIcon](/core/action-icon/) with horizontal dots.
-You can change it by setting `control` and `controlRefProp` props.
-`controlRefProp` is a prop name with which element ref can be accessed.
-It defaults to `ref`, to change that set `controlRefProp="customRefProp"`.
-
-<Demo data={MenuDemos.controls} />
-
-## Custom control with component
-
-<Demo data={MenuDemos.customControl} demoProps={{ toggle: true }} />
-
-## Change menu position
-
-Menu is rendered inside [Portal](/core/portal/) and its position is controlled with the following props:
-
-- `position` – left, right, bottom, top
-- `placement` – start, center, end
-- `gutter` – spacing between menu body and target element in px
-- `withArrow` – displays arrow, arrow position is calculated by `position` and `placement` props
-
-Note that in most cases you will need to change [Transition](/core/transition/) to match your position:
+## Dropdown position
 
 <Demo data={MenuDemos.positionConfigurator} />
 
-## Change transition
+## Transitions
 
-Menu is built with [Transition](/core/transition/) component.
-You can customize transition, timing function and duration:
+Menu dropdown can be animated with any of premade transitions from [Transition](/core/transition/) component:
 
 <Demo data={MenuDemos.transitions} />
 
-## Size and shadow
-
-You can use predefined shadows defined in [theme.shadows](/theming/extend-theme/#spacing-radius-and-shadows) or your own:
-
-```tsx
-<Menu shadow="sm" /> // -> predefined small shadow
-<Menu shadow="1px 1px 3px rgba(0, 0, 0, .1)" /> // -> custom shadow
-```
-
-<Demo data={MenuDemos.configurator} />
-
-Menu has predefined sizes: xs, sm, md, lg, xl. Size prop controls menu width.
-You can also use number value to set width in px:
-
-```tsx
-<Menu size="sm" /> // -> predefined small width
-<Menu size={200} /> // -> 200px width
-```
-
 ## Custom component as Menu.Item
 
-By default, menu items render as button, to change that set `component` prop on Menu.Item component:
-
-```tsx
-// Regular anchor as Menu.Item root element
-<Menu.Item component="a" href="https://mantine/dev" target="_blank" />
-
-// react-router-dom Link as Menu.Item root element
-// !important: This approach cannot be used with Next.js Link component
-<Menu.Item component={Link} to="/hello" />
-```
+By default, `Menu.Item` renders as button element, to change that set `component` prop:
 
 <Demo data={MenuDemos.component} />
+
+## Menu.Item with react-router Link
+
+```tsx
+import { Menu } from '@mantine/core';
+import { Link } from 'react-router-dom';
+
+function Demo() {
+  return (
+    <Menu.Item component={Link} to="/hello">
+      Hello
+    </Menu.Item>
+  );
+}
+```
 
 ## Menu.Item as Next.js Link
 
@@ -159,46 +91,77 @@ import { NextLink } from '@mantine/next';
 
 function Demo() {
   return (
-    <Menu>
-      <Menu.Item component={NextLink} href="/hello">
-        Hello
-      </Menu.Item>
-    </Menu>
+    <Menu.Item component={NextLink} href="/hello">
+      Hello
+    </Menu.Item>
   );
 }
 ```
 
-## Add your styles with styles API
+## Custom component as target
 
-You can customize add styles to any part of Menu with [Styles API](/theming/styles-api/),
-for example, change hovered item color:
+<Demo data={MenuDemos.customControl} />
+
+## Styles API
+
+You can use the following data- attributes to customize menu styles:
+
+- `data-expanded` – added to target element when menu is opened (see previous demo)
+- `data-hovered` – added to item when it is hovered with mouse or selected with up/down arrows
 
 <Demo data={MenuDemos.stylesApi} />
 
-## Get control element ref
+## Accessibility
 
-```tsx
-import { useRef } from 'react';
-import { Menu } from '@mantine/core';
+Menu follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/menu-button/menu-button-links.html):
 
-function Demo() {
-  const menuControlRef = useRef<HTMLButtonElement>();
-  return <Menu ref={menuControlRef} />;
-}
-```
+- Dropdown element has `role="menu"` and `aria-labelledby="target-id"` attributes
+- Target element has `aria-haspopup="menu"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
+- Menu item has `role="menuitem"` attribute
 
-## Accessibility and usability
+### Supported target elements
 
-To make component more accessible for users with screen readers set `menuButtonLabel` prop.
-Set it in case you use a control which does not include text, for example, default ActionIcon with horizontal dots icon.
+Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
+Other elements will not support `Space` and `Enter` key presses.
 
-Component behavior and properties:
+### Hover menu
 
-- When menu is opened, focus is trapped inside
-- When menu is closed, focus is moved back to menu control
-- Focus inside menu is controlled with up and down arrows, tab key has no effect
-- By default, when menu item is clicked, menu closes, change it with `closeOnItemClick` prop
-- Menu is closed when user clicks outside or presses escape
-- Menu control has `aria-haspopup`, `aria-expanded`, `aria-controls` and `aria-label` attributes, `aria-label` is defined by `menuButtonLabel` prop
-- Menu body has `menu` role, `aria-orientation` is always set to `vertical`
-- Menu item has `menuitem` role
+Menu with `trigger="hover"` is not accessible – it cannot be accessed with keyboard,
+use it only if you do not care about accessibility.
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'Escape',
+      description: 'Closes dropdown',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Space/Enter',
+      description: 'Opens/closes dropdown',
+      condition: 'Focus on target element',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Moves focus to previous menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Moves focus to next menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Home',
+      description: 'Moves focus to first menu item',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'End',
+      description: 'Moves focus to last menu item',
+      condition: 'Focus within dropdown',
+    },
+  ]}
+/>

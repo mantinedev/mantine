@@ -3,17 +3,17 @@ import {
   DefaultProps,
   MantineNumberSize,
   MantineColor,
-  ClassNames,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Progress.styles';
 import { Text } from '../Text';
+import useStyles, { ProgressStylesParams } from './Progress.styles';
 
-export type ProgressStylesNames = ClassNames<typeof useStyles>;
+export type ProgressStylesNames = Selectors<typeof useStyles>;
 
 export interface ProgressProps
-  extends DefaultProps<ProgressStylesNames>,
+  extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Percent of filled bar (0-100) */
   value?: number;
@@ -61,7 +61,7 @@ const defaultProps: Partial<ProgressProps> = {
   label: '',
 };
 
-export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: ProgressProps, ref) => {
+export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) => {
   const {
     className,
     value,
@@ -75,12 +75,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: Progre
     classNames,
     styles,
     sections,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Progress', defaultProps, props);
+  } = useComponentDefaultProps('Progress', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { color, size, radius, striped: striped || animate, animate },
-    { classNames, styles, name: 'Progress' }
+    { classNames, styles, unstyled, name: 'Progress' }
   );
 
   const segments = Array.isArray(sections)
@@ -91,7 +92,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props: Progre
           sx={{
             width: `${section.value}%`,
             left: `${section.accumulated}%`,
-            backgroundColor: theme.fn.themeColor(section.color, 6, false),
+            backgroundColor: theme.fn.themeColor(section.color, theme.fn.primaryShade(), false),
           }}
         >
           {section.label && <Text className={classes.label}>{section.label}</Text>}

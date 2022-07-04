@@ -1,17 +1,11 @@
 import React, { forwardRef } from 'react';
-import {
-  MantineColor,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  MantineTheme,
-  CSSObject,
-  useMantineDefaultProps,
-} from '@mantine/styles';
-import { Text, SharedTextProps } from '../Text/Text';
+import { MantineColor, MantineTheme, CSSObject, useComponentDefaultProps } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
+import { Text, TextProps } from '../Text/Text';
 import { Mark } from '../Mark/Mark';
 import { highlighter } from './highlighter/highlighter';
 
-interface _HighlightProps extends SharedTextProps {
+export interface HighlightProps extends TextProps {
   /** Substring or an array of substrings to highlight in children */
   highlight: string | string[];
 
@@ -25,36 +19,30 @@ interface _HighlightProps extends SharedTextProps {
   children: string;
 }
 
-export type HighlightProps<C> = PolymorphicComponentProps<C, _HighlightProps>;
-
-type HighlightComponent = (<C = 'div'>(props: HighlightProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<HighlightProps<any>> = {
+const defaultProps: Partial<HighlightProps> = {
   highlightColor: 'yellow',
 };
 
-export const Highlight: HighlightComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: HighlightProps<C>, ref: PolymorphicRef<C>) => {
-    const { children, highlight, highlightColor, component, highlightStyles, ...others } =
-      useMantineDefaultProps('Highlight', defaultProps, props);
-    const highlightChunks = highlighter(children, highlight);
+export const _Highlight = forwardRef<HTMLDivElement, HighlightProps>((props, ref) => {
+  const { children, highlight, highlightColor, highlightStyles, unstyled, ...others } =
+    useComponentDefaultProps('Highlight', defaultProps, props);
+  const highlightChunks = highlighter(children, highlight);
 
-    return (
-      <Text component={component as any} ref={ref} {...others}>
-        {highlightChunks.map(({ chunk, highlighted }, i) =>
-          highlighted ? (
-            <Mark key={i} color={highlightColor} sx={highlightStyles}>
-              {chunk}
-            </Mark>
-          ) : (
-            <span key={i}>{chunk}</span>
-          )
-        )}
-      </Text>
-    );
-  }
-);
+  return (
+    <Text unstyled={unstyled} ref={ref} {...others}>
+      {highlightChunks.map(({ chunk, highlighted }, i) =>
+        highlighted ? (
+          <Mark unstyled={unstyled} key={i} color={highlightColor} sx={highlightStyles}>
+            {chunk}
+          </Mark>
+        ) : (
+          <span key={i}>{chunk}</span>
+        )
+      )}
+    </Text>
+  );
+});
 
-Highlight.displayName = '@mantine/core/Highlight';
+_Highlight.displayName = '@mantine/core/Highlight';
+
+export const Highlight = createPolymorphicComponent<'div', HighlightProps>(_Highlight);

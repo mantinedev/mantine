@@ -9,16 +9,6 @@ describe('@mantine/core/Portal', () => {
     expect(portal.textContent).toBe('test-portal');
   });
 
-  it('adds z-index styles from prop', () => {
-    render(
-      <Portal className="test-portal" zIndex={1543}>
-        test-portal
-      </Portal>
-    );
-    const portal = document.querySelector('.test-portal');
-    expect(window.getComputedStyle(portal).zIndex).toBe('1543');
-  });
-
   it('renders portal inside given target element', () => {
     const element = document.createElement('div');
     render(

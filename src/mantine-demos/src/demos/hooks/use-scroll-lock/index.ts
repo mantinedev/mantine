@@ -1,1 +1,0 @@
-export { useScrollLockDemo } from './usage';

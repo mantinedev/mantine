@@ -4,6 +4,7 @@ import { DefaultProps, Portal, MantineStyleSystemSize, getDefaultZIndex, Box } f
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
+import { useNotificationsEvents } from '../events';
 import getPositionStyles from './get-position-styles/get-position-styles';
 import getNotificationStateStyles from './get-notification-state-styles/get-notification-state-styles';
 import NotificationContainer from '../NotificationContainer/NotificationContainer';
@@ -47,7 +48,10 @@ export interface NotificationProviderProps
   limit?: number;
 
   /** Notifications container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
+
+  /** Your application */
+  children?: React.ReactNode;
 }
 
 export function NotificationsProvider({
@@ -75,9 +79,11 @@ export function NotificationsProvider({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
-  const reduceMotion = useReducedMotion();
+
+  const { classes, cx, theme } = useStyles({ zIndex });
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
-  const { classes, cx, theme } = useStyles();
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;
@@ -88,6 +94,14 @@ export function NotificationsProvider({
     }
     previousLength.current = notifications.length;
   }, [notifications]);
+
+  useNotificationsEvents({
+    show: showNotification,
+    hide: hideNotification,
+    update: updateNotification,
+    clean,
+    cleanQueue,
+  });
 
   const items = notifications.map((notification) => (
     <Transition
@@ -105,32 +119,25 @@ export function NotificationsProvider({
           onHide={hideNotification}
           className={classes.notification}
           autoClose={autoClose}
-          sx={{
-            ...getNotificationStateStyles({
-              state,
-              positioning,
-              transitionDuration: duration,
-              maxHeight: notificationMaxHeight,
-            }),
-          }}
+          sx={[
+            {
+              ...getNotificationStateStyles({
+                state,
+                positioning,
+                transitionDuration: duration,
+                maxHeight: notificationMaxHeight,
+              }),
+            },
+            ...(Array.isArray(notification.sx) ? notification.sx : [notification.sx]),
+          ]}
         />
       )}
     </Transition>
   ));
 
   return (
-    <NotificationsContext.Provider
-      value={{
-        notifications,
-        queue,
-        showNotification,
-        hideNotification,
-        updateNotification,
-        clean,
-        cleanQueue,
-      }}
-    >
-      <Portal zIndex={zIndex}>
+    <NotificationsContext.Provider value={{ notifications, queue }}>
+      <Portal>
         <Box
           className={cx(classes.notifications, className)}
           style={style}

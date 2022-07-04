@@ -1,13 +1,12 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Children } from 'react';
 import {
   DefaultProps,
   MantineColor,
-  ForwardRefWithStaticComponents,
   MantineNumberSize,
   CSSObject,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { filterChildrenByType } from '../../utils';
+import { ForwardRefWithStaticComponents, packSx } from '@mantine/utils';
 import { Box } from '../Box';
 import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineItem';
 
@@ -54,7 +53,7 @@ const defaultProps: Partial<TimelineProps> = {
 };
 
 export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelineProps>(
-  (props: TimelineProps, ref) => {
+  (props, ref) => {
     const {
       children,
       active,
@@ -67,10 +66,11 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
       styles,
       sx,
       reverseActive,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('Timeline', defaultProps, props);
+    } = useComponentDefaultProps('Timeline', defaultProps, props);
 
-    const _children = filterChildrenByType(children, TimelineItem);
+    const _children = Children.toArray(children);
     const items = _children.map((item: React.ReactElement, index) =>
       React.cloneElement(item, {
         classNames,
@@ -80,6 +80,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         radius: item.props.radius || radius,
         color: item.props.color || color,
         bulletSize: item.props.bulletSize || bulletSize,
+        unstyled,
         active:
           item.props.active ||
           (reverseActive ? active >= _children.length - index - 1 : active >= index),
@@ -95,7 +96,7 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         : { paddingRight: bulletSize / 2 + lineWidth / 2 };
 
     return (
-      <Box ref={ref} sx={[offset, sx]} {...others}>
+      <Box ref={ref} sx={[offset, ...packSx(sx)]} {...others}>
         {items}
       </Box>
     );

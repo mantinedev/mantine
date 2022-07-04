@@ -19,6 +19,7 @@ describe('@mantine/core/Alert', () => {
     props: defaultProps,
     displayName: '@mantine/core/Alert',
     refType: HTMLDivElement,
+    providerName: 'Alert',
   });
 
   it('renders close button based on withCloseButton prop', () => {
@@ -31,7 +32,7 @@ describe('@mantine/core/Alert', () => {
     expect(withoutCloseButton.querySelectorAll('.mantine-Alert-closeButton')).toHaveLength(0);
   });
 
-  it('calls onClose when CloseButton is clicked', () => {
+  it('calls onClose when CloseButton is clicked', async () => {
     const spy = jest.fn();
     render(
       <Alert title="test" withCloseButton onClose={spy}>
@@ -39,7 +40,7 @@ describe('@mantine/core/Alert', () => {
       </Alert>
     );
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -51,5 +52,21 @@ describe('@mantine/core/Alert', () => {
   it('does not render title if title prop was not passed', () => {
     const { container } = render(<Alert>test-alert</Alert>);
     expect(container.querySelectorAll('.mantine-Alert-title')).toHaveLength(0);
+  });
+
+  it('renders with the alert role', () => {
+    const rendered = render(
+      <Alert id="my-alert" title="My Alert">
+        test-alert
+      </Alert>
+    );
+    const alert = rendered.getByRole('alert');
+    expect(alert).toHaveAccessibleName('My Alert');
+  });
+
+  it('has an accessible name even when not having an ID', () => {
+    const rendered = render(<Alert title="My Alert">test-alert</Alert>);
+    const alert = rendered.getByRole('alert');
+    expect(alert).toHaveAccessibleName('My Alert');
   });
 });

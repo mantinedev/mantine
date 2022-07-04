@@ -1,5 +1,5 @@
 import React, { Children } from 'react';
-import { MantineNumberSize, CSSObject, useMantineDefaultProps } from '@mantine/styles';
+import { MantineNumberSize, CSSObject, useComponentDefaultProps } from '@mantine/styles';
 import useStyles from './MediaQuery.styles';
 
 export interface MediaQueryProps {
@@ -22,7 +22,7 @@ export interface MediaQueryProps {
 }
 
 export function MediaQuery(props: MediaQueryProps) {
-  const { children, smallerThan, largerThan, query, styles, className } = useMantineDefaultProps(
+  const { children, smallerThan, largerThan, query, styles, className } = useComponentDefaultProps(
     'MediaQuery',
     {},
     props

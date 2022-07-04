@@ -9,7 +9,7 @@ function Controlled(props: Partial<TextareaProps>) {
   );
 }
 
-storiesOf('@mantine/core/Textarea/stories', module)
+storiesOf('Textarea', module)
   .add('Controlled', () => (
     <div style={{ width: 300, padding: 20 }}>
       <Controlled label="text" placeholder="text" />

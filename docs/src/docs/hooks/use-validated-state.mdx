@@ -11,9 +11,11 @@ docs: 'hooks/use-validated-state.mdx'
 source: 'mantine-hooks/src/use-validated-state/use-validated-state.ts'
 ---
 
+import { HooksDemos } from '@mantine/demos';
+
 ## Usage
 
-Hook validates state with a given rule each time state is set. It returns an object with current validation state, last valid value and current value:
+use-validated-state validates state with a given rule each time state is set. It returns an object with current validation state, last valid value and current value:
 
 ```tsx
 const [{ lastValidValue, value, valid }, setValue] = useValidatedState(
@@ -32,13 +34,18 @@ value; // -> invalid
 valid; // -> false
 ```
 
+## Example
+
+<Demo data={HooksDemos.useValidatedStateDemo} />
+
 ## Definition
 
 ```tsx
 function useValidatedState<T>(
   initialValue: T,
-  validation: (value: T) => boolean
-): readonly [
+  validation: (value: T) => boolean,
+  initialValidationState?: boolean
+): [
   {
     value: T;
     lastValidValue: T;

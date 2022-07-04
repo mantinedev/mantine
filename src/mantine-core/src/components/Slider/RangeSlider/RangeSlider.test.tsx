@@ -21,6 +21,7 @@ describe('@mantine/core/RangeSlider', () => {
     props: defaultProps,
     displayName: '@mantine/core/RangeSlider',
     refType: HTMLDivElement,
+    providerName: 'RangeSlider',
   });
 
   it('provides name and value to hidden inputs', () => {

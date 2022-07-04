@@ -5,7 +5,7 @@ import {
   MantineColor,
   MantineTheme,
   useMantineTheme,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Bars } from './loaders/Bars';
@@ -16,9 +16,9 @@ const LOADERS = {
   bars: Bars,
   oval: Oval,
   dots: Dots,
-} as const;
+};
 
-export const LOADER_SIZES = {
+const sizes = {
   xs: 18,
   sm: 22,
   md: 36,
@@ -42,13 +42,11 @@ const defaultProps: Partial<LoaderProps> = {
 };
 
 export function Loader(props: LoaderProps) {
-  const {
-    size = 'md',
-    color,
-    variant,
-    ...others
-  } = useMantineDefaultProps('Loader', defaultProps, props);
-
+  const { size, color, variant, ...others } = useComponentDefaultProps(
+    'Loader',
+    defaultProps,
+    props
+  );
   const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
   const _color = color || theme.primaryColor;
@@ -57,12 +55,8 @@ export function Loader(props: LoaderProps) {
     <Box
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
-      size={theme.fn.size({ size, sizes: LOADER_SIZES })}
-      color={
-        _color in theme.colors
-          ? theme.fn.themeColor(_color, theme.colorScheme === 'dark' ? 4 : 6)
-          : color
-      }
+      size={theme.fn.size({ size, sizes })}
+      color={_color in theme.colors ? theme.fn.themeColor(_color, theme.fn.primaryShade()) : color}
       {...others}
     />
   );

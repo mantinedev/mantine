@@ -3,10 +3,11 @@ import {
   DefaultProps,
   MantineStyleSystemSize,
   getDefaultZIndex,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/styles';
+import { packSx } from '@mantine/utils';
 import { Box } from '../Box';
-import { Portal } from '../Portal/Portal';
+import { OptionalPortal } from '../Portal';
 
 export interface AffixProps
   extends Omit<DefaultProps, MantineStyleSystemSize>,
@@ -15,7 +16,10 @@ export interface AffixProps
   target?: HTMLDivElement;
 
   /** Root element z-index property */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
+
+  /** Determines whether component should be rendered within portal, defaults to true */
+  withinPortal?: boolean;
 
   /** Fixed position in px, defaults to { bottom: 0, right: 0 } */
   position?: {
@@ -29,18 +33,20 @@ export interface AffixProps
 const defaultProps: Partial<AffixProps> = {
   position: { bottom: 0, right: 0 },
   zIndex: getDefaultZIndex('modal'),
+  withinPortal: true,
 };
 
 export const Affix = forwardRef<HTMLDivElement, AffixProps>((props: AffixProps, ref) => {
-  const { target, position, zIndex, sx, ...others } = useMantineDefaultProps(
+  const { target, position, zIndex, sx, withinPortal, ...others } = useComponentDefaultProps(
     'Affix',
     defaultProps,
     props
   );
+
   return (
-    <Portal zIndex={zIndex} target={target}>
-      <Box sx={[{ position: 'fixed', ...position }, sx]} ref={ref} {...others} />
-    </Portal>
+    <OptionalPortal withinPortal={withinPortal} target={target}>
+      <Box sx={[{ position: 'fixed', zIndex, ...position }, ...packSx(sx)]} ref={ref} {...others} />
+    </OptionalPortal>
   );
 });
 

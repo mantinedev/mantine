@@ -1,9 +1,4 @@
-import {
-  createStyles,
-  MantineNumberSize,
-  getSharedColorScheme,
-  MantineColor,
-} from '@mantine/styles';
+import { createStyles, MantineNumberSize, MantineColor, MantineGradient } from '@mantine/styles';
 
 export type ThemeIconVariant = 'filled' | 'light' | 'gradient' | 'outline';
 
@@ -12,12 +7,10 @@ export interface ThemeIconStylesParams {
   size: MantineNumberSize;
   radius: MantineNumberSize;
   variant: ThemeIconVariant;
-  gradientFrom: string;
-  gradientTo: string;
-  gradientDeg: number;
+  gradient: MantineGradient;
 }
 
-export const sizes = {
+const sizes = {
   xs: 16,
   sm: 20,
   md: 26,
@@ -26,15 +19,12 @@ export const sizes = {
 };
 
 export default createStyles(
-  (
-    theme,
-    { color, size, radius, gradientFrom, gradientTo, gradientDeg, variant }: ThemeIconStylesParams
-  ) => {
-    const colors = getSharedColorScheme({
-      theme,
-      color,
+  (theme, { color, size, radius, gradient, variant }: ThemeIconStylesParams) => {
+    const colors = theme.fn.variant({
       variant,
-      gradient: { from: gradientFrom, to: gradientTo, deg: gradientDeg },
+      color: color || theme.primaryColor,
+      gradient,
+      primaryFallback: false,
     });
 
     const iconSize = theme.fn.size({ size, sizes });
@@ -53,8 +43,8 @@ export default createStyles(
         borderRadius: theme.fn.radius(radius),
         backgroundColor: colors.background,
         color: colors.color,
-        backgroundImage: variant === 'gradient' ? colors.background : null,
-        border: `1px solid ${colors.border}`,
+        backgroundImage: variant === 'gradient' ? colors.background : undefined,
+        border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
       },
     };
   }

@@ -2,14 +2,17 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  PolymorphicComponentProps,
-  PolymorphicRef,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
+  Selectors,
 } from '@mantine/styles';
+import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
-import useStyles from './ColorSwatch.styles';
+import useStyles, { ColorSwatchStylesParams } from './ColorSwatch.styles';
 
-interface _ColorSwatchProps extends DefaultProps {
+export type ColorSwatchStylesNames = Selectors<typeof useStyles>;
+
+export interface ColorSwatchProps
+  extends DefaultProps<ColorSwatchStylesNames, ColorSwatchStylesParams> {
   /** Swatch color value in any css valid format (hex, rgb, etc.) */
   color: string;
 
@@ -23,41 +26,29 @@ interface _ColorSwatchProps extends DefaultProps {
   children?: React.ReactNode;
 }
 
-export type ColorSwatchProps<C> = PolymorphicComponentProps<C, _ColorSwatchProps>;
-
-type ColorSwatchComponent = (<C = 'div'>(props: ColorSwatchProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<ColorSwatchProps<any>> = {
+const defaultProps: Partial<ColorSwatchProps> = {
   size: 25,
   radius: 25,
 };
 
-export const ColorSwatch: ColorSwatchComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: ColorSwatchProps<C>, ref: PolymorphicRef<C>) => {
-    const { component, color, size, radius, className, children, classNames, styles, ...others } =
-      useMantineDefaultProps('ColorSwatch', defaultProps, props);
+export const _ColorSwatch = forwardRef<HTMLDivElement, ColorSwatchProps>((props, ref) => {
+  const { color, size, radius, className, children, classNames, styles, unstyled, ...others } =
+    useComponentDefaultProps('ColorSwatch', defaultProps, props);
+  const { classes, cx } = useStyles(
+    { radius, size },
+    { classNames, styles, unstyled, name: 'ColorSwatch' }
+  );
 
-    const { classes, cx } = useStyles(
-      { radius, size },
-      { classNames, styles, name: 'ColorSwatch' }
-    );
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <div className={cx(classes.alphaOverlay, classes.overlay)} />
+      <div className={cx(classes.shadowOverlay, classes.overlay)} />
+      <div className={classes.overlay} style={{ backgroundColor: color }} />
+      <div className={cx(classes.children, classes.overlay)}>{children}</div>
+    </Box>
+  );
+});
 
-    return (
-      <Box<any>
-        component={component || 'div'}
-        className={cx(classes.root, className)}
-        ref={ref}
-        {...others}
-      >
-        <div className={cx(classes.alphaOverlay, classes.overlay)} />
-        <div className={cx(classes.shadowOverlay, classes.overlay)} />
-        <div className={classes.overlay} style={{ backgroundColor: color }} />
-        <div className={cx(classes.children, classes.overlay)}>{children}</div>
-      </Box>
-    );
-  }
-);
+_ColorSwatch.displayName = '@mantine/core/ColorSwatch';
 
-ColorSwatch.displayName = '@mantine/core/ColorSwatch';
+export const ColorSwatch = createPolymorphicComponent<'div', ColorSwatchProps>(_ColorSwatch);

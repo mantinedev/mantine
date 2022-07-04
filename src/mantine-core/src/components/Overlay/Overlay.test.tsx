@@ -1,7 +1,7 @@
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Overlay, OverlayProps } from './Overlay';
 
-const defaultProps: OverlayProps<'div'> = {};
+const defaultProps: OverlayProps = {};
 
 describe('@mantine/core/Overlay', () => {
   itIsPolymorphic(Overlay, defaultProps);
@@ -11,5 +11,6 @@ describe('@mantine/core/Overlay', () => {
     props: defaultProps,
     displayName: '@mantine/core/Overlay',
     refType: HTMLDivElement,
+    providerName: 'Overlay',
   });
 });

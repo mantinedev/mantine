@@ -25,7 +25,8 @@ describe('@mantine/core/Switch', () => {
     props: defaultProps,
     displayName: '@mantine/core/Switch',
     refType: HTMLInputElement,
-    excludeOthers: true,
+    othersSelector: 'input',
+    providerName: 'Switch',
   });
 
   it('renders label based on label prop', () => {

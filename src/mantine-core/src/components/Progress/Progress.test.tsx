@@ -14,6 +14,7 @@ describe('@mantine/core/Progress', () => {
     props: defaultProps,
     displayName: '@mantine/core/Progress',
     refType: HTMLDivElement,
+    providerName: 'Progress',
   });
 
   it('renders given amount of sections', () => {

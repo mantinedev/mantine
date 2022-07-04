@@ -20,12 +20,18 @@ export default createStyles((theme, { radius, size }: NumberInputStylesParams) =
     height: 'calc(100% - 2px)',
     margin: 1,
     marginRight: 1,
+    overflow: 'hidden',
+    borderTopRightRadius: theme.fn.radius(radius),
+    borderBottomRightRadius: theme.fn.radius(radius),
   },
 
   control: {
     margin: 0,
     position: 'relative',
     flex: '0 0 50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     boxSizing: 'border-box',
     width: theme.fn.size({ size, sizes: CONTROL_SIZES }),
     padding: 0,
@@ -40,51 +46,16 @@ export default createStyles((theme, { radius, size }: NumberInputStylesParams) =
     borderRight: 0,
     backgroundColor: 'transparent',
     marginRight: 1,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
     '&:not(:disabled):hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    },
-
-    '&::after': {
-      position: 'absolute',
-      top: 'calc(50% - 2.5px)',
-      left: 'calc(50% - 4.5px)',
-      content: '""',
-      display: 'block',
-      width: 0,
-      height: 0,
-      borderStyle: 'solid',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[0],
     },
   },
 
-  controlUp: {
-    borderTopRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
-
-    '&::after': {
-      borderWidth: '0 5px 5px 5px',
-      borderColor: `transparent transparent ${
-        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black
-      } transparent`,
-    },
-
-    '&:disabled::after': {
-      borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
-    },
-  },
+  controlUp: {},
 
   controlDown: {
-    borderBottomRightRadius: theme.fn.size({ size: radius, sizes: theme.radius }) - 1,
     borderBottom: 0,
-
-    '&::after': {
-      borderWidth: '5px 5px 0 5px',
-      borderColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black
-      } transparent transparent transparent`,
-    },
-
-    '&:disabled::after': {
-      borderTopColor: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[5],
-    },
   },
 }));

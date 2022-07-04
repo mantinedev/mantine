@@ -1,12 +1,9 @@
-import React, { Children, forwardRef } from 'react';
-import {
-  DefaultProps,
-  MantineNumberSize,
-  ForwardRefWithStaticComponents,
-  useMantineDefaultProps,
-} from '@mantine/styles';
+import React, { forwardRef } from 'react';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { Col } from './Col/Col';
+import { GridProvider } from './Grid.context';
 import useStyles from './Grid.styles';
 
 export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
@@ -38,44 +35,19 @@ const defaultProps: Partial<GridProps> = {
   columns: 12,
 };
 
-export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>(
-  (props: GridProps, ref) => {
-    const {
-      gutter,
-      children,
-      grow,
-      justify,
-      align,
-      columns,
-      className,
-      classNames,
-      styles,
-      id,
-      ...others
-    } = useMantineDefaultProps('Grid', defaultProps, props);
+export const Grid: GridComponent = forwardRef<HTMLDivElement, GridProps>((props, ref) => {
+  const { gutter, children, grow, justify, align, columns, className, id, unstyled, ...others } =
+    useComponentDefaultProps('Grid', defaultProps, props);
+  const { classes, cx } = useStyles({ gutter, justify, align }, { unstyled, name: 'Grid' });
 
-    const { classes, cx } = useStyles(
-      { gutter, justify, align },
-      { classNames, styles, name: 'Grid' }
-    );
-
-    const cols = (Children.toArray(children) as React.ReactElement[]).map((col, index) =>
-      React.cloneElement(col, {
-        gutter,
-        grow,
-        columns,
-        span: col.props.span || columns,
-        key: index,
-      })
-    );
-
-    return (
+  return (
+    <GridProvider value={{ gutter, grow, columns }}>
       <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        {cols}
+        {children}
       </Box>
-    );
-  }
-) as any;
+    </GridProvider>
+  );
+}) as any;
 
 Grid.Col = Col;
 Grid.displayName = '@mantine/core/Grid';

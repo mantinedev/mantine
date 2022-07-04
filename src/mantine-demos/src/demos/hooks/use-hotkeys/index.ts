@@ -1,1 +1,0 @@
-export { useHotkeysDemo } from './usage';

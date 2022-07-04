@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
-import { useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { DefaultProps, MantineSize, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import React, { useState, useRef, forwardRef } from 'react';
+import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { DefaultProps, MantineSize, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { ColorSwatch } from '../ColorSwatch/ColorSwatch';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
@@ -14,7 +14,7 @@ import { HsvaColor } from './types';
 import useStyles from './ColorPicker.styles';
 
 export type ColorPickerStylesNames =
-  | ClassNames<typeof useStyles>
+  | Selectors<typeof useStyles>
   | ColorSliderStylesNames
   | SwatchesStylesNames
   | SaturationStylesNames
@@ -105,46 +105,48 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       className,
       styles,
       classNames,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('ColorPicker', defaultProps, props);
+    } = useComponentDefaultProps('ColorPicker', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
       { size, fullWidth },
-      { classNames, styles, name: __staticSelector }
+      { classNames, styles, name: __staticSelector, unstyled }
     );
     const formatRef = useRef(format);
     const valueRef = useRef<string>(null);
+    const updateRef = useRef(true);
     const withAlpha = format === 'rgba' || format === 'hsla';
 
-    const [shouldSkip, setShouldSkip] = useState(false);
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
       finalValue: '#FFFFFF',
-      rule: (val) => isColorValid(val),
       onChange,
     });
 
     const [parsed, setParsed] = useState(parseColor(_value));
 
     const handleChange = (color: Partial<HsvaColor>) => {
-      // This is required for useEffect to work, it's dirty but works fine
-      setShouldSkip(true);
-
+      updateRef.current = false;
       setParsed((current) => {
         const next = { ...current, ...color };
         valueRef.current = convertHsvaTo(formatRef.current, next);
         return next;
       });
 
-      Promise.resolve()
-        .then(() => setValue(valueRef.current))
-        .then(() => setShouldSkip(false));
+      setValue(valueRef.current);
+
+      // Does not work any other way
+      setTimeout(() => {
+        updateRef.current = true;
+      }, 0);
     };
 
-    useEffect(() => {
-      if (isColorValid(value) && !shouldSkip) {
+    useDidUpdate(() => {
+      if (isColorValid(value) && updateRef.current) {
         setParsed(parseColor(value));
+        updateRef.current = true;
       }
     }, [value]);
 

@@ -1,7 +1,7 @@
 import { itRendersChildren, itIsPolymorphic, itSupportsSystemProps } from '@mantine/tests';
 import { Center, CenterProps } from './Center';
 
-const defaultProps: CenterProps<'div'> = {
+const defaultProps: CenterProps = {
   children: 'test-center',
 };
 
@@ -13,5 +13,6 @@ describe('@mantine/core/Center', () => {
     props: defaultProps,
     displayName: '@mantine/core/Center',
     refType: HTMLDivElement,
+    providerName: 'Center',
   });
 });

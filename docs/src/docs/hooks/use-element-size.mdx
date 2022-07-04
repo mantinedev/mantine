@@ -8,7 +8,7 @@ slug: /hooks/use-element-size/
 description: 'Get element width and height and subscribe to changes'
 import: "import { useElementSize } from '@mantine/hooks';"
 docs: 'hooks/use-element-size.mdx'
-source: 'mantine-hooks/src/use-element-size/use-element-size'
+source: 'mantine-hooks/src/use-resize-observer/use-resize-observer.ts'
 ---
 
 import { HooksDemos } from '@mantine/demos';
@@ -19,9 +19,9 @@ import { HooksDemos } from '@mantine/demos';
 
 ## API
 
-use-element-size is a simpler version of [use-resize-observer](https://mantine.dev/core/) hook.
-Hook returns ref object that should be passed to the observed element, and the element's height and width.
-On the first render (as well as during SSR), or when no element is being observed, width and height properties are equal to `0`.
+use-element-size is a simpler version of [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) hook.
+Hook returns `ref` object that should be passed to the observed element, and the element's `height` and `width`.
+On the first render (as well as during SSR), or when no element is being observed, `width` and `height` properties are equal to `0`.
 
 ```tsx
 const { ref, width, height } = useElementSize();

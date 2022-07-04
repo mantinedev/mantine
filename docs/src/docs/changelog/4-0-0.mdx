@@ -13,7 +13,7 @@ import {
   TooltipDemos,
   SliderDemos,
   CheckboxDemos,
-  ImageDemos,
+  BackgroundImageDemos,
   SpotlightDemos,
   OverlayDemos,
   FormDemos,
@@ -43,9 +43,9 @@ Some props were renamed to make Mantine components more consistent:
   - `padding` → `p`
 - [Container](https://mantine.dev/core/container/)
   - `padding` → `px`
-- [Radio](https://mantine.dev/core/radio-group/)
+- [Radio](https://mantine.dev/core/radio/)
   - `children` → `label`
-- [RadioGroup](https://mantine.dev/core/radio-group/):
+- [RadioGroup](https://mantine.dev/core/radio/):
   - `variant` → `orientation`
 - [Tooltip](https://mantine.dev/core/tooltip):
   - `delay` → `closeDelay`
@@ -96,7 +96,7 @@ function App() {
 ## Styles params on MantineProvider
 
 You can now get component styles params in [MantineProvider](https://mantine.dev/theming/mantine-provider/) `styles` prop.
-Each component that has [Styles API](https://mantine.dev/theming/styles-api/) now exports type that can be assigned to params
+Each component that has [Styles API](https://mantine.dev/styles/styles-api/) now exports type that can be assigned to params
 `ComponentNameStylesParams`, for example, `ButtonStylesParams`. This feature can be used to add more complex context styles that were not possible before:
 
 ```tsx
@@ -215,7 +215,7 @@ function Demo() {
 
 ## createStyles references changes
 
-[createStyles](https://mantine.dev/theming/create-styles/) function now works differently with references.
+[createStyles](https://mantine.dev/styles/create-styles/) function now works differently with references.
 Instead of generating unique identifiers with each `getRef` call it returns the same value for given argument:
 
 ```tsx
@@ -276,9 +276,9 @@ New [CheckboxGroup](https://mantine.dev/core/checkbox/#checkboxgroup) component
 
 ### BackgroundImage
 
-New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component) component
+New [BackgroundImage](https://mantine.dev/core/background-image/) component
 
-<Demo data={ImageDemos.background} />
+<Demo data={BackgroundImageDemos.usage} />
 
 ## New features
 
@@ -304,8 +304,8 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 - [Text](https://mantine.dev/core/text/) component now inherits color from parent element
 - [Input](https://mantine.dev/core/input/) component now handles `required` prop differently to support native browser validation
 - [RichTextEditor](https://mantine.dev/others/rte/) now supports providing extra quill modules via `modules` prop
-- [DateRangePicker](https://mantine.dev/dates/date-range-picker/) now displays first selected date
-- [RangeCalendar](https://mantine.dev/dates/range-calendar/) now calls onChange with first selected date
+- [DateRangePicker](https://mantine.dev/dates/date-picker/) now displays first selected date
+- [RangeCalendar](https://mantine.dev/dates/calendar/) now calls onChange with first selected date
 - [SegmentedControl](https://mantine.dev/core/segmented-control/) component now supports vertical orientation and disabled state
 - [ThemeIcon](https://mantine.dev/core/theme-icon/) component now supports outline variant
 - [Text](https://mantine.dev/core/text/), [Anchor](https://mantine.dev/core/anchor/) and [Highlight](https://mantine.dev/core/highlight/) components now support `underline` prop
@@ -328,8 +328,8 @@ New [BackgroundImage](https://mantine.dev/core/image/#backgroundimage-component)
 - [Improve TypeScript performance](https://github.com/mantinedev/mantine/issues/812) for polymorphic components (~ 2x increase in compilation time)
 - Fix incorrect [RichTextEditor](https://mantine.dev/others/rte/) white space handling in Firefox
 - Add additional filtering to [Group](https://mantine.dev/core/group/) and [MediaQuery](https://mantine.dev/core/media-query/) children to avoid error when components are used with elements that do not support props (numbers, string, fragments)
-- Fix incorrect modal size for multiple months in [DatePicker](https://mantine.dev/dates/date-picker/) and [DateRangePicker](https://mantine.dev/dates/date-range-picker/) components
+- Fix incorrect modal size for multiple months in [DatePicker](https://mantine.dev/dates/date-picker/) and [DateRangePicker](https://mantine.dev/dates/date-picker/) components
 - Add missing right and bottom padding to [AppShell](https://mantine.dev/core/app-shell/) component
-- Fix `initialLevel` prop not working in [DateRangePicker](https://mantine.dev/dates/date-range-picker/) component
+- Fix `initialLevel` prop not working in [DateRangePicker](https://mantine.dev/dates/date-picker/) component
 - Add correct input mode to [NumberInput](https://mantine.dev/core/number-input/) – mobile devices will display correct keyboard now
 - Fix `findDomNode` warning in [@mantine/notifications](https://mantine.dev/others/notifications/) while using strict react mode

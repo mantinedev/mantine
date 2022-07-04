@@ -12,6 +12,7 @@ function Controlled() {
   const [value, onChange] = useState(new Date());
   return (
     <>
+      <p>Time value: {value?.toISOString()}</p>
       <TimeInput value={value} onChange={onChange} label="Controlled" />
       <button type="button" onClick={() => onChange(dayjs(new Date()).add(30, 'minutes').toDate())}>
         set date
@@ -20,7 +21,7 @@ function Controlled() {
   );
 }
 
-storiesOf('@mantine/dates/TimeInput/stories', module)
+storiesOf('TimeInput', module)
   .add('Controlled', () => (
     <div style={{ width: 400, padding: 40 }}>
       <Controlled />

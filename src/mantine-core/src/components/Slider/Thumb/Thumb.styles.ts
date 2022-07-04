@@ -4,9 +4,11 @@ import { sizes } from '../SliderRoot/SliderRoot.styles';
 interface ThumbStyles {
   color: MantineColor;
   size: MantineNumberSize;
+  disabled: boolean;
+  thumbSize: number;
 }
 
-export default createStyles((theme, { color, size }: ThumbStyles) => ({
+export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbStyles) => ({
   label: {
     position: 'absolute',
     top: -36,
@@ -23,18 +25,26 @@ export default createStyles((theme, { color, size }: ThumbStyles) => ({
     ...theme.fn.focusStyles(),
     boxSizing: 'border-box',
     position: 'absolute',
-    height: theme.fn.size({ sizes, size }) * 2,
-    width: theme.fn.size({ sizes, size }) * 2,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.fn.themeColor(color, 6) : theme.white,
+    display: disabled ? 'none' : 'flex',
+    height: thumbSize || theme.fn.size({ sizes, size }) * 2,
+    width: thumbSize || theme.fn.size({ sizes, size }) * 2,
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.fn.themeColor(color, theme.fn.primaryShade())
+        : theme.white,
     border: `4px solid ${
-      theme.colorScheme === 'dark' ? theme.white : theme.fn.themeColor(color, 6)
+      theme.colorScheme === 'dark'
+        ? theme.white
+        : theme.fn.themeColor(color, theme.fn.primaryShade())
     }`,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.fn.themeColor(color, 6),
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.white
+        : theme.fn.themeColor(color, theme.fn.primaryShade()),
     transform: 'translate(-50%, -50%)',
     top: '50%',
     cursor: 'pointer',
     borderRadius: 1000,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     transitionDuration: '100ms',

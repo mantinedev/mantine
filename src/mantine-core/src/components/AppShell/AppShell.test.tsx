@@ -16,6 +16,7 @@ describe('@mantine/core/AppShell', () => {
     props: defaultProps,
     displayName: '@mantine/core/AppShell',
     refType: HTMLDivElement,
+    providerName: 'AppShell',
   });
 
   it('sets fixed position and z-index on Header and Navbar components based on props', () => {

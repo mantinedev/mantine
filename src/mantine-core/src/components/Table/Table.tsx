@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineNumberSize, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
-import useStyles from './Table.styles';
+import useStyles, { TableStylesParams } from './Table.styles';
 
-export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef<'table'> {
+export interface TableProps
+  extends DefaultProps<never, TableStylesParams>,
+    React.ComponentPropsWithoutRef<'table'> {
   /** If true every odd row of table will have gray background color */
   striped?: boolean;
 
@@ -18,6 +20,9 @@ export interface TableProps extends DefaultProps, React.ComponentPropsWithoutRef
 
   /** Vertical cells spacing from theme.spacing or number to set value in px */
   verticalSpacing?: MantineNumberSize;
+
+  /** Sets font size of all text inside table */
+  fontSize?: MantineNumberSize;
 }
 
 const defaultProps: Partial<TableProps> = {
@@ -25,10 +30,11 @@ const defaultProps: Partial<TableProps> = {
   highlightOnHover: false,
   captionSide: 'top',
   horizontalSpacing: 'xs',
+  fontSize: 'sm',
   verticalSpacing: 7,
 };
 
-export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps, ref) => {
+export const Table = forwardRef<HTMLTableElement, TableProps>((props, ref) => {
   const {
     className,
     children,
@@ -37,12 +43,14 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps
     captionSide,
     horizontalSpacing,
     verticalSpacing,
+    fontSize,
+    unstyled,
     ...others
-  } = useMantineDefaultProps('Table', defaultProps, props);
+  } = useComponentDefaultProps('Table', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { captionSide, verticalSpacing, horizontalSpacing },
-    { name: 'Table' }
+    { captionSide, verticalSpacing, horizontalSpacing, fontSize },
+    { unstyled, name: 'Table' }
   );
 
   return (
@@ -50,11 +58,9 @@ export const Table = forwardRef<HTMLTableElement, TableProps>((props: TableProps
       {...others}
       component="table"
       ref={ref}
-      className={cx(
-        classes.root,
-        { [classes.striped]: striped, [classes.hover]: highlightOnHover },
-        className
-      )}
+      className={cx(classes.root, className)}
+      data-striped={striped || undefined}
+      data-hover={highlightOnHover || undefined}
     >
       {children}
     </Box>

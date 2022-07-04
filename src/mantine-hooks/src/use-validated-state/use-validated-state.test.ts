@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useValidatedState } from './use-validated-state';
 
 describe('@mantine/hooks/use-validated-state', () => {

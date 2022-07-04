@@ -8,6 +8,7 @@ import {
   itSupportsInputIcon,
   itConnectsLabelAndInput,
   itSupportsFocusEvents,
+  itSupportsInputWrapperProps,
 } from '@mantine/tests';
 import { TimeInput, TimeInputProps } from './TimeInput';
 
@@ -20,6 +21,7 @@ const defaultProps: TimeInputProps = {
 
 describe('@mantine/dates/TimeInput', () => {
   itSupportsInputRightSection(TimeInput, defaultProps);
+  itSupportsInputWrapperProps(TimeInput, defaultProps, 'TimeInput');
   itSupportsInputIcon(TimeInput, defaultProps);
   itConnectsLabelAndInput(TimeInput, defaultProps);
   itSupportsFocusEvents(TimeInput, defaultProps, 'input');
@@ -59,12 +61,12 @@ describe('@mantine/dates/TimeInput', () => {
     expect(format24.container.querySelectorAll('input')[0].value).toBe('15');
   });
 
-  it('automatically moves to the next field', () => {
+  it('automatically moves to the next field', async () => {
     const format24 = render(<TimeInput format="24" />);
     const inputs = format24.container.querySelectorAll('input');
 
-    userEvent.click(inputs[0]);
-    userEvent.keyboard('00');
+    await userEvent.click(inputs[0]);
+    await userEvent.keyboard('00');
     expect(inputs[1]).toHaveFocus();
   });
 });

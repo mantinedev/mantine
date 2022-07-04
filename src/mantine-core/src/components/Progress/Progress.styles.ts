@@ -1,6 +1,6 @@
 import { createStyles, MantineNumberSize, MantineColor, keyframes } from '@mantine/styles';
 
-export const sizes = {
+const sizes = {
   xs: 3,
   sm: 5,
   md: 8,
@@ -40,7 +40,11 @@ export default createStyles(
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: theme.fn.themeColor(color || theme.primaryColor, 6, false),
+      backgroundColor: theme.fn.themeColor(
+        color || theme.primaryColor,
+        theme.fn.primaryShade(),
+        false
+      ),
       transition: 'width 100ms linear',
       animation: animate ? `${stripesAnimation} 1000ms linear infinite` : 'none',
       backgroundSize: '20px 20px',
@@ -59,7 +63,7 @@ export default createStyles(
       },
 
       '@media (prefers-reduced-motion)': {
-        transitionDuration: '0ms',
+        transitionDuration: theme.respectReducedMotion ? '0ms' : undefined,
       },
     },
 

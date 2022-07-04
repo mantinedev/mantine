@@ -6,13 +6,14 @@ import {
   Overlay,
   Paper,
   DefaultProps,
-  ClassNames,
+  Selectors,
   MantineShadow,
   TextInput,
   getDefaultZIndex,
-  getGroupedOptions,
   MantineNumberSize,
+  MantineColor,
 } from '@mantine/core';
+import { getGroupedOptions } from '@mantine/utils';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
 import { DefaultAction, DefaultActionProps } from '../DefaultAction/DefaultAction';
 import { ActionsList, ActionsListStylesNames } from '../ActionsList/ActionsList';
@@ -20,7 +21,7 @@ import type { SpotlightAction } from '../types';
 import { filterActions } from './filter-actions/filter-actions';
 import useStyles from './Spotlight.styles';
 
-export type SpotlightStylesNames = ClassNames<typeof useStyles> | ActionsListStylesNames;
+export type SpotlightStylesNames = Selectors<typeof useStyles> | ActionsListStylesNames;
 
 export interface InnerSpotlightProps
   extends DefaultProps<SpotlightStylesNames>,
@@ -83,10 +84,13 @@ export interface InnerSpotlightProps
   actionsWrapperComponent?: React.FC<{ children: React.ReactNode }> | string;
 
   /** Spotlight z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
 
   /** Should user query be highlighted in actions title */
   highlightQuery?: boolean;
+
+  /** The highlight color */
+  highlightColor?: MantineColor;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -116,6 +120,7 @@ export function Spotlight({
   centered = false,
   closeOnActionTrigger = true,
   highlightQuery = false,
+  highlightColor,
   maxWidth = 600,
   topOffset = 120,
   className,
@@ -126,12 +131,13 @@ export function Spotlight({
   limit = 10,
   actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
-  zIndex = getDefaultZIndex('modal'),
+  zIndex = getDefaultZIndex('max'),
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
+  const [IMEOpen, setIMEOpen] = useState(false);
   const { classes, cx } = useStyles(
-    { centered, maxWidth, topOffset, radius },
+    { centered, maxWidth, topOffset, radius, zIndex },
     { classNames, styles, name: 'Spotlight' }
   );
 
@@ -144,7 +150,7 @@ export function Spotlight({
     onClose();
   };
 
-  useFocusReturn({ transitionDuration: 0, opened });
+  useFocusReturn({ opened });
 
   const filteredActions = filter(query, actions).slice(0, limit);
   const groupedWithLabels = getGroupedOptions(filteredActions).items;
@@ -159,7 +165,11 @@ export function Spotlight({
   }, [groupedActions.length]);
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (event.code) {
+    if (IMEOpen) {
+      return;
+    }
+
+    switch (event.key) {
       case 'ArrowDown': {
         event.preventDefault();
         setHovered((current) => (current < groupedActions.length - 1 ? current + 1 : 0));
@@ -197,7 +207,7 @@ export function Spotlight({
   };
 
   return (
-    <OptionalPortal withinPortal={withinPortal} zIndex={zIndex}>
+    <OptionalPortal withinPortal={withinPortal}>
       <GroupedTransition
         onExited={() => lockScroll(false)}
         onEntered={() => lockScroll(true)}
@@ -229,15 +239,19 @@ export function Spotlight({
                   value={query}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}
+                  onCompositionStart={() => setIMEOpen(true)}
+                  onCompositionEnd={() => setIMEOpen(false)}
                   classNames={{ input: classes.searchInput }}
                   size="lg"
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
+                  autoComplete="chrome-please-just-do-not-show-it-thanks"
                 />
                 <ActionsWrapper>
                   <ActionsList
                     highlightQuery={highlightQuery}
+                    highlightColor={highlightColor}
                     actions={groupedWithLabels}
                     actionComponent={actionComponent}
                     hovered={hovered}

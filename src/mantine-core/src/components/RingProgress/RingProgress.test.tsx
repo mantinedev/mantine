@@ -14,6 +14,7 @@ describe('@mantine/core/RingProgress', () => {
     props: defaultProps,
     displayName: '@mantine/core/RingProgress',
     refType: HTMLDivElement,
+    providerName: 'RingProgress',
   });
 
   it('renders given amount of curves', () => {

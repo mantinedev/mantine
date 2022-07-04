@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import {
   DefaultProps,
   Text,
   Box,
   MantineSize,
-  ClassNames,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -56,6 +56,9 @@ export interface MonthSettings {
   /** Remove outside dates */
   hideOutsideDates?: boolean;
 
+  /** Indices of weekend days */
+  weekendDays?: number[];
+
   /** Should date be displayed as in range */
   isDateInRange?(date: Date, modifiers: DayModifiers): boolean;
 
@@ -66,7 +69,7 @@ export interface MonthSettings {
   isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
 }
 
-export type MonthStylesNames = ClassNames<typeof useStyles> | DayStylesNames;
+export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
 
 export interface MonthProps
   extends DefaultProps<MonthStylesNames>,
@@ -78,8 +81,8 @@ export interface MonthProps
   /** Locale is used to get weekdays names with dayjs format */
   locale?: string;
 
-  /** Selected date */
-  value?: Date;
+  /** Selected date or an array of selected dates */
+  value?: Date | Date[];
 
   /** Selected range */
   range?: [Date, Date];
@@ -98,9 +101,15 @@ export interface MonthProps
 
   /** Called when keydown event is registered on day */
   onDayKeyDown?(payload: DayKeydownPayload, event: React.KeyboardEvent<HTMLButtonElement>): void;
+
+  /** Render day based on the date */
+  renderDay?(date: Date): React.ReactNode;
+
+  /** dayjs label format for weekday heading */
+  weekdayLabelFormat?: string;
 }
 
-const no = () => false;
+const noop = () => false;
 
 const defaultProps: Partial<MonthProps> = {
   disableOutsideEvents: false,
@@ -112,9 +121,10 @@ const defaultProps: Partial<MonthProps> = {
   focusable: true,
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
+  weekendDays: [0, 6],
 };
 
-export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
+export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
     className,
     month,
@@ -141,32 +151,87 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     onDayKeyDown,
     daysRefs,
     hideOutsideDates,
-    isDateInRange = no,
-    isDateFirstInRange = no,
-    isDateLastInRange = no,
+    isDateInRange = noop,
+    isDateFirstInRange = noop,
+    isDateLastInRange = noop,
+    renderDay,
+    weekdayLabelFormat,
+    unstyled,
+    weekendDays,
     ...others
-  } = useMantineDefaultProps('Month', defaultProps, props);
+  } = useComponentDefaultProps('Month', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { fullWidth },
-    { classNames, styles, name: __staticSelector }
+    { classNames, styles, unstyled, name: __staticSelector }
   );
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
 
-  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek).map((weekday) => (
-    <th className={classes.weekdayCell} key={weekday}>
-      <Text size={size} className={classes.weekday}>
-        {upperFirst(weekday)}
-      </Text>
-    </th>
-  ));
+  const weekdays = getWeekdaysNames(finalLocale, firstDayOfWeek, weekdayLabelFormat).map(
+    (weekday) => (
+      <th className={classes.weekdayCell} key={weekday}>
+        <Text size={size} className={classes.weekday}>
+          {weekday.length >= 2 ? upperFirst(weekday) : weekday}
+        </Text>
+      </th>
+    )
+  );
 
-  const hasValue = value instanceof Date;
+  const hasValue = Array.isArray(value)
+    ? value.every((item) => item instanceof Date)
+    : value instanceof Date;
+
   const hasValueInMonthRange =
-    hasValue &&
+    value instanceof Date &&
     dayjs(value).isAfter(dayjs(month).startOf('month')) &&
     dayjs(value).isBefore(dayjs(month).endOf('month'));
+
+  const firstDayOfMonth = useMemo(() => {
+    let actualFirstDayDisabled = false;
+    let firstDay;
+
+    for (let i = 0; i < days.length; i += 1) {
+      if (firstDay) {
+        break;
+      }
+
+      const dates = days[i];
+      for (let j = 0; j < dates.length; j += 1) {
+        const date = dates[j];
+        const dayProps = getDayProps({
+          date,
+          month,
+          hasValue,
+          minDate,
+          maxDate,
+          value,
+          excludeDate,
+          disableOutsideEvents,
+          range,
+          weekendDays,
+        });
+
+        if (actualFirstDayDisabled && !dayProps.disabled) {
+          firstDay = date;
+          break;
+        }
+
+        const first = hideOutsideDates
+          ? isSameDate(date, dayjs(month).startOf('month').toDate())
+          : j === 0 && i === 0;
+
+        if (first && !dayProps.disabled) {
+          firstDay = date;
+          break;
+        } else if (first && dayProps.disabled) {
+          actualFirstDayDisabled = true;
+        }
+      }
+    }
+
+    return firstDay;
+  }, []);
 
   const rows = days.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
@@ -180,6 +245,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
         excludeDate,
         disableOutsideEvents,
         range,
+        weekendDays,
       });
 
       const onKeyDownPayload = { rowIndex, cellIndex, date };
@@ -187,6 +253,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
       return (
         <td className={classes.cell} key={cellIndex}>
           <Day
+            unstyled={unstyled}
             ref={(button) => {
               if (daysRefs) {
                 if (!Array.isArray(daysRefs[rowIndex])) {
@@ -206,11 +273,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             inRange={dayProps.inRange || isDateInRange(date, dayProps)}
             firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
             lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
-            firstInMonth={
-              hideOutsideDates
-                ? isSameDate(date, dayjs(month).startOf('month').toDate())
-                : cellIndex === 0 && rowIndex === 0
-            }
+            firstInMonth={isSameDate(date, firstDayOfMonth)}
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={(event) =>
@@ -219,7 +282,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             disabled={dayProps.disabled}
-            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
+            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
             fullWidth={fullWidth}
             focusable={focusable}
@@ -227,6 +290,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             __staticSelector={__staticSelector}
             styles={styles}
             classNames={classNames}
+            renderDay={renderDay}
           />
         </td>
       );

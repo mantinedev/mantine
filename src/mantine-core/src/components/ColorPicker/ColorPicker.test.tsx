@@ -13,7 +13,9 @@ describe('@mantine/core/ColorPicker', () => {
     props: defaultProps,
     displayName: '@mantine/core/ColorPicker',
     refType: HTMLDivElement,
+    providerName: 'ColorPicker',
   });
+
   checkAccessibility([
     <ColorPicker
       swatches={swatches}

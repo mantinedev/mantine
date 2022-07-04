@@ -14,6 +14,7 @@ describe('@mantine/core/Code', () => {
     props: defaultProps,
     displayName: '@mantine/core/Code',
     refType: HTMLElement,
+    providerName: 'Code',
   });
 
   it('renders code element for inline code and pre element for block', () => {

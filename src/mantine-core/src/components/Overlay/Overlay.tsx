@@ -1,16 +1,15 @@
 import React, { forwardRef } from 'react';
 import {
-  PolymorphicComponentProps,
-  PolymorphicRef,
   MantineNumberSize,
   DefaultProps,
   getDefaultZIndex,
-  useMantineDefaultProps,
-  CSSObject,
+  useComponentDefaultProps,
 } from '@mantine/styles';
+import { createPolymorphicComponent, packSx } from '@mantine/utils';
 import { Box } from '../Box';
+import useStyles, { OverlayStylesParams } from './Overlay.styles';
 
-interface _OverlayProps extends DefaultProps {
+export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
   /** Overlay opacity */
   opacity?: React.CSSProperties['opacity'];
 
@@ -30,13 +29,7 @@ interface _OverlayProps extends DefaultProps {
   radius?: MantineNumberSize;
 }
 
-export type OverlayProps<C> = PolymorphicComponentProps<C, _OverlayProps>;
-
-type OverlayComponent = (<C = 'div'>(props: OverlayProps<C>) => React.ReactElement) & {
-  displayName?: string;
-};
-
-const defaultProps: Partial<OverlayProps<any>> = {
+const defaultProps: Partial<OverlayProps> = {
   opacity: 0.6,
   color: '#fff',
   zIndex: getDefaultZIndex('modal'),
@@ -44,57 +37,43 @@ const defaultProps: Partial<OverlayProps<any>> = {
   blur: 0,
 };
 
-export const Overlay: OverlayComponent = forwardRef(
-  <C extends React.ElementType = 'div'>(props: OverlayProps<C>, ref: PolymorphicRef<C>) => {
-    const { opacity, blur, color, gradient, zIndex, component, radius, sx, ...others } =
-      useMantineDefaultProps('Overlay', defaultProps, props);
-    const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
+export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
+  const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, className, ...others } =
+    useComponentDefaultProps('Overlay', defaultProps, props);
+  const { classes, cx } = useStyles({ zIndex }, { name: 'Overlay', unstyled });
+  const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
-    const baseStyles: CSSObject = {
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      zIndex,
-    };
+  const innerOverlay = (otherProps?: Record<string, any>) => (
+    <Box
+      ref={ref}
+      className={cx(classes.root, className)}
+      sx={[
+        (theme) => ({
+          ...background,
+          opacity,
+          borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        }),
+        ...packSx(sx),
+      ]}
+      {...otherProps}
+    />
+  );
 
-    const innerOverlay = (otherProps?: Record<string, any>) => (
-      <Box<any>
-        component={component || 'div'}
-        ref={ref}
-        sx={[
-          (theme) => ({
-            ...background,
-            ...baseStyles,
-            opacity,
-            borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-          }),
-          sx,
-        ]}
-        {...otherProps}
-      />
+  if (blur) {
+    return (
+      <Box
+        className={cx(classes.root, className)}
+        sx={[{ backdropFilter: `blur(${blur}px)` }, ...packSx(sx)]}
+        {...others}
+      >
+        {innerOverlay()}
+      </Box>
     );
-
-    if (blur) {
-      return (
-        <Box
-          sx={[
-            () => ({
-              ...baseStyles,
-              backdropFilter: `blur(${blur}px)`,
-            }),
-            sx,
-          ]}
-          {...others}
-        >
-          {innerOverlay()}
-        </Box>
-      );
-    }
-
-    return innerOverlay(others);
   }
-);
 
-Overlay.displayName = '@mantine/core/Overlay';
+  return innerOverlay(others);
+});
+
+_Overlay.displayName = '@mantine/core/Overlay';
+
+export const Overlay = createPolymorphicComponent<'div', OverlayProps>(_Overlay);

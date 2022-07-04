@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, ClassNames, useMantineDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { isElement } from '@mantine/utils';
 import { Text } from '../Text';
 import { Box } from '../Box';
 import useStyles from './Breadcrumbs.styles';
 
-export type BreadcrumbsStylesNames = ClassNames<typeof useStyles>;
+export type BreadcrumbsStylesNames = Selectors<typeof useStyles>;
 
 export interface BreadcrumbsProps
   extends DefaultProps<BreadcrumbsStylesNames>,
@@ -22,14 +23,25 @@ const defaultProps: Partial<BreadcrumbsProps> = {
 
 export const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (props: BreadcrumbsProps, ref) => {
-    const { className, children, separator, classNames, styles, ...others } =
-      useMantineDefaultProps('Breadcrumbs', defaultProps, props);
+    const { className, children, separator, classNames, styles, unstyled, ...others } =
+      useComponentDefaultProps('Breadcrumbs', defaultProps, props);
 
-    const { classes, cx } = useStyles(null, { classNames, styles, name: 'Breadcrumbs' });
+    const { classes, cx } = useStyles(null, { classNames, styles, unstyled, name: 'Breadcrumbs' });
 
-    const items = React.Children.toArray(children).reduce(
-      (acc: any[], child: any, index, array) => {
-        acc.push(React.cloneElement(child, { className: classes.breadcrumb, key: index }));
+    const items = React.Children.toArray(children).reduce<React.ReactNode[]>(
+      (acc, child, index, array) => {
+        const item = isElement(child) ? (
+          React.cloneElement(child, {
+            className: cx(classes.breadcrumb, child.props?.className),
+            key: index,
+          })
+        ) : (
+          <div className={classes.breadcrumb} key={index}>
+            {child}
+          </div>
+        );
+
+        acc.push(item);
 
         if (index !== array.length - 1) {
           acc.push(

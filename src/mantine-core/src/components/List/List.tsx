@@ -2,16 +2,17 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  ClassNames,
-  ForwardRefWithStaticComponents,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
+  StylesApiProvider,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import { ListContext } from './List.context';
 import useStyles from './List.styles';
 
-export type ListStylesNames = ListItemStylesNames | ClassNames<typeof useStyles>;
+export type ListStylesNames = ListItemStylesNames | Selectors<typeof useStyles>;
 
 export interface ListProps
   extends DefaultProps<ListStylesNames>,
@@ -63,25 +64,28 @@ export const List: ListComponent = forwardRef<HTMLUListElement, ListProps>(
       className,
       styles,
       classNames,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('List', defaultProps, props);
+    } = useComponentDefaultProps('List', defaultProps, props);
 
     const { classes, cx } = useStyles(
       { withPadding, size, listStyleType },
-      { classNames, styles, name: 'List' }
+      { classNames, styles, name: 'List', unstyled }
     );
 
     return (
-      <ListContext.Provider value={{ classNames, styles, spacing, center, icon }}>
-        <Box<any>
-          component={type === 'unordered' ? 'ul' : 'ol'}
-          className={cx(classes.root, className)}
-          ref={ref}
-          {...others}
-        >
-          {children}
-        </Box>
-      </ListContext.Provider>
+      <StylesApiProvider classNames={classNames} styles={styles} unstyled={unstyled}>
+        <ListContext.Provider value={{ spacing, center, icon }}>
+          <Box<any>
+            component={type === 'unordered' ? 'ul' : 'ol'}
+            className={cx(classes.root, className)}
+            ref={ref}
+            {...others}
+          >
+            {children}
+          </Box>
+        </ListContext.Provider>
+      </StylesApiProvider>
     );
   }
 ) as any;

@@ -14,7 +14,7 @@ function Controlled(
   return <NumberInput value={value} onChange={(val) => setValue(val)} {...props} />;
 }
 
-storiesOf('@mantine/core/NumberInput/stories', module)
+storiesOf('NumberInput', module)
   .add('Sizes', () => <div style={{ padding: 40, maxWidth: 400 }}>{sizes}</div>)
   .add('Controlled', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -50,6 +50,15 @@ storiesOf('@mantine/core/NumberInput/stories', module)
     <>
       <div style={{ padding: 40, maxWidth: 400 }}>
         <NumberInput label="Step on hold" stepHoldDelay={750} stepHoldInterval={100} />
+      </div>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <NumberInput
+          label="With max value"
+          min={0}
+          max={10}
+          stepHoldDelay={500}
+          stepHoldInterval={100}
+        />
       </div>
       <div style={{ padding: 40, maxWidth: 400 }}>
         <NumberInput

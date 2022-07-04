@@ -9,15 +9,7 @@ interface NumberControlProps {
 }
 
 export function NumberControl({ value, label, onChange, ...others }: NumberControlProps) {
-  return (
-    <NumberInput
-      {...others}
-      type="number"
-      label={upperFirst(label)}
-      value={value}
-      onChange={onChange}
-    />
-  );
+  return <NumberInput {...others} label={upperFirst(label)} value={value} onChange={onChange} />;
 }
 
 NumberControl.initialValue = 0;

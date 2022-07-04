@@ -1,134 +1,177 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { MantineProvider } from '@mantine/styles';
-import { TextInput } from '../TextInput';
-import { Button } from '../Button';
-import { Group } from '../Group';
-import { Accordion, AccordionProps } from './Accordion';
-import { useAccordionState } from './use-accordion-state/use-accordion-state';
+import { IconPictureInPicture } from '@tabler/icons';
+import { Accordion } from './Accordion';
 
-const paragraph =
-  'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates quisquam quaerat dolore ex. Dicta voluptate sit corrupti dignissimos, eius reprehenderit! Veritatis unde ad tenetur officiis consequatur qui quasi eum atque!';
+export default { title: 'Accordion' };
 
-const form = (
+const _items = (
   <>
-    <TextInput label="Email" placeholder="Email" />
-    <TextInput label="Name" placeholder="Name" mt="md" />
+    <Accordion.Item value="customize">
+      <Accordion.Control>Customization</Accordion.Control>
+      <Accordion.Panel>
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="flex">
+      <Accordion.Control>Flexibility</Accordion.Control>
+      <Accordion.Panel>
+        Configure components appearance and behavior with vast amount of settings or overwrite any
+        part of component styles
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="focus">
+      <Accordion.Control>No annoying focus ring</Accordion.Control>
+      <Accordion.Panel>
+        With new :focus-visible pseudo-class focus ring appears only when user navigates with
+        keyboard
+      </Accordion.Panel>
+    </Accordion.Item>
   </>
 );
 
-function Controlled(props: Partial<AccordionProps>) {
-  const [state, handlers] = useAccordionState({ total: 3, multiple: props.multiple || false });
+export const Variants = () => (
+  <>
+    <Accordion
+      defaultValue="flex"
+      sx={{ maxWidth: 400 }}
+      mx="auto"
+      mt="xl"
+      variant="default"
+      radius="md"
+    >
+      {_items}
+    </Accordion>
 
+    <Accordion
+      defaultValue="flex"
+      sx={{ maxWidth: 400 }}
+      mx="auto"
+      mt={50}
+      variant="contained"
+      radius="md"
+    >
+      {_items}
+    </Accordion>
+
+    <Accordion
+      defaultValue="flex"
+      sx={{ maxWidth: 400 }}
+      mx="auto"
+      mt={50}
+      variant="filled"
+      radius="md"
+    >
+      {_items}
+    </Accordion>
+
+    <Accordion
+      defaultValue="flex"
+      sx={{ maxWidth: 400 }}
+      mx="auto"
+      mt={50}
+      variant="separated"
+      radius="md"
+    >
+      {_items}
+    </Accordion>
+  </>
+);
+
+export const Multiple = () => (
+  <Accordion multiple defaultValue={['flex']} sx={{ maxWidth: 400 }} mx="auto">
+    {_items}
+  </Accordion>
+);
+
+export const ControlledSingle = () => {
+  const [value, setValue] = useState<string | null>(null);
   return (
-    <>
-      <Group position="center" mt="xl">
-        <Button variant="outline" onClick={() => handlers.toggle(0)}>
-          Toggle 0
-        </Button>
-        <Button variant="outline" onClick={() => handlers.toggle(1)}>
-          Toggle 1
-        </Button>
-        <Button variant="outline" onClick={() => handlers.toggle(2)}>
-          Toggle 2
-        </Button>
-      </Group>
-      <Accordion
-        mt="xl"
-        mx="auto"
-        sx={{ maxWidth: 400 }}
-        state={state}
-        onChange={handlers.setState}
-        {...props}
-      >
-        <Accordion.Item label="First tab">First tab content</Accordion.Item>
-        <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
-        <Accordion.Item label="Third tab">Third tab content</Accordion.Item>
-      </Accordion>
-    </>
+    <Accordion value={value} onChange={setValue} sx={{ maxWidth: 400 }} mx="auto">
+      {_items}
+    </Accordion>
   );
-}
+};
 
-function Dynamic() {
-  const [count, setCount] = useState(2);
-  const items = Array(count)
-    .fill(0)
-    .map((_, index) => (
-      <Accordion.Item key={index} label={`Item ${index + 1}`}>
-        Content {index + 1}
-      </Accordion.Item>
-    ));
-
+export const ControlledMultiple = () => {
+  const [value, setValue] = useState<string[]>([]);
   return (
-    <>
-      <Group position="center" mt="xl">
-        <Button
-          variant="outline"
-          color="red"
-          onClick={() => setCount((c) => (c - 1 > 0 ? c - 1 : 0))}
-        >
-          Remove item
-        </Button>
-        <Button variant="outline" onClick={() => setCount((c) => c + 1)}>
-          Add item
-        </Button>
-      </Group>
-      <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
-        {items}
-      </Accordion>
-    </>
+    <Accordion multiple value={value} onChange={setValue} sx={{ maxWidth: 400 }} mx="auto">
+      {_items}
+    </Accordion>
   );
-}
+};
 
-storiesOf('@mantine/core/Accordion/stories', module)
-  .add('With form', () => (
-    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
-      <Accordion.Item label="First tab">{form}</Accordion.Item>
-      <Accordion.Item label="Second tab">{form}</Accordion.Item>
-    </Accordion>
-  ))
-  .add('With different heading level', () => (
-    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }} order={2}>
-      <Accordion.Item label="First tab">First tab content</Accordion.Item>
-      <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
-    </Accordion>
-  ))
-  .add('Dynamic children', () => <Dynamic />)
-  .add('Controlled single', () => <Controlled />)
-  .add('Controlled multiple', () => <Controlled multiple />)
-  .add('Multiline label', () => (
-    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
-      <Accordion.Item label="First item with a large label that will collapse to second line">
-        {paragraph}
+export const NoLoop = () => (
+  <Accordion loop={false} sx={{ maxWidth: 400 }} mx="auto">
+    {_items}
+  </Accordion>
+);
+
+export const Disabled = () => (
+  <Accordion loop={false} sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion.Item value="customize">
+      <Accordion.Control>Customization</Accordion.Control>
+      <Accordion.Panel>
+        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="flex">
+      <Accordion.Control disabled>Flexibility</Accordion.Control>
+      <Accordion.Panel>
+        Configure components appearance and behavior with vast amount of settings or overwrite any
+        part of component styles
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="focus">
+      <Accordion.Control>No annoying focus ring</Accordion.Control>
+      <Accordion.Panel>
+        With new :focus-visible pseudo-class focus ring appears only when user navigates with
+        keyboard
+      </Accordion.Panel>
+    </Accordion.Item>
+  </Accordion>
+);
+
+export const Unstyled = () => (
+  <Accordion unstyled sx={{ maxWidth: 400 }} mx="auto">
+    {_items}
+  </Accordion>
+);
+
+export const Nested = () => (
+  <Accordion multiple sx={{ maxWidth: 400 }} mx="auto">
+    <Accordion.Item value="item-1">
+      <Accordion.Control>Nested 1</Accordion.Control>
+      <Accordion.Panel>
+        <Accordion>{_items}</Accordion>
+      </Accordion.Panel>
+    </Accordion.Item>
+
+    <Accordion.Item value="item-2">
+      <Accordion.Control>Nested 2</Accordion.Control>
+      <Accordion.Panel>
+        <Accordion>{_items}</Accordion>
+      </Accordion.Panel>
+    </Accordion.Item>
+  </Accordion>
+);
+
+export const WithIcon = () => (
+  <>
+    <Accordion sx={{ maxWidth: 400 }} mx="auto">
+      <Accordion.Item value="flex">
+        <Accordion.Control icon={<IconPictureInPicture size={18} />}>Flexibility</Accordion.Control>
       </Accordion.Item>
-      <Accordion.Item label="Second item with even larger label that will also collapse to second line or maybe even on third line, who knows">
-        {paragraph}
+    </Accordion>
+
+    <Accordion sx={{ maxWidth: 400 }} mx="auto" chevronPosition="left">
+      <Accordion.Item value="flex">
+        <Accordion.Control icon={<IconPictureInPicture size={18} />}>Flexibility</Accordion.Control>
       </Accordion.Item>
     </Accordion>
-  ))
-  .add('Overflow label', () => (
-    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }} initialItem={0}>
-      <Accordion.Item label="SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere">
-        SomeonePutContentWithoutLineBreaksOrEvenWhiteSpaceHere
-      </Accordion.Item>
-    </Accordion>
-  ))
-  .add('Default props on MantineProvider', () => (
-    <MantineProvider defaultProps={{ Accordion: { icon: '$' } }}>
-      <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
-        <Accordion.Item label="First tab">First tab content</Accordion.Item>
-        <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
-      </Accordion>
-    </MantineProvider>
-  ))
-  .add('Nested', () => (
-    <Accordion mt="xl" mx="auto" sx={{ maxWidth: 400 }}>
-      <Accordion.Item label="First tab">
-        <Accordion>
-          <Accordion.Item label="Nested First tab">Nested First tab content</Accordion.Item>
-          <Accordion.Item label="Nested Second tab">Nested Second tab content</Accordion.Item>
-        </Accordion>
-      </Accordion.Item>
-      <Accordion.Item label="Second tab">Second tab content</Accordion.Item>
-    </Accordion>
-  ));
+  </>
+);

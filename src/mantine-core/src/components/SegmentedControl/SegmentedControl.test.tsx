@@ -20,20 +20,21 @@ describe('@mantine/core/SegmentedControl', () => {
     props: defaultProps,
     displayName: '@mantine/core/SegmentedControl',
     refType: HTMLDivElement,
+    providerName: 'SegmentedControl',
   });
 
-  it('supports uncontrolled state', () => {
+  it('supports uncontrolled state', async () => {
     render(<SegmentedControl {...defaultProps} />);
     expect(screen.getAllByRole('radio')[0]).toBeChecked();
-    userEvent.click(screen.getAllByRole('radio')[1]);
+    await userEvent.click(screen.getAllByRole('radio')[1]);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
   });
 
-  it('supports controlled state', () => {
+  it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<SegmentedControl {...defaultProps} value="test-value-2" onChange={spy} />);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
-    userEvent.click(screen.getAllByRole('radio')[0]);
+    await userEvent.click(screen.getAllByRole('radio')[0]);
     expect(screen.getAllByRole('radio')[1]).toBeChecked();
     expect(screen.getAllByRole('radio')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith('test-value-1');

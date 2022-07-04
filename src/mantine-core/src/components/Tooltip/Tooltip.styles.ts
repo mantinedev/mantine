@@ -1,47 +1,51 @@
-import { createStyles, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  CSSObject,
+  MantineColor,
+  MantineNumberSize,
+  MantineTheme,
+} from '@mantine/styles';
 
 export interface TooltipStylesParams {
   color: MantineColor;
   radius: MantineNumberSize;
+  width: number | 'auto';
+  multiline: boolean;
 }
 
-export default createStyles((theme, { color, radius }: TooltipStylesParams) => ({
+function getColors(theme: MantineTheme, color?: MantineColor): CSSObject {
+  if (!color) {
+    return {
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[9],
+      color: theme.white,
+    };
+  }
+
+  const colors = theme.fn.variant({ variant: 'filled', color, primaryFallback: false });
+
+  return {
+    backgroundColor: colors.background,
+    color: colors.color,
+  };
+}
+
+export default createStyles((theme, { color, radius, width, multiline }: TooltipStylesParams) => ({
   root: {
-    position: 'relative',
-    display: 'inline-block',
-  },
-
-  wrapper: {
-    background: 'transparent',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    pointerEvents: 'none',
-  },
-
-  body: {
     ...theme.fn.fontStyles(),
-    backgroundColor: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
+    ...getColors(theme, color),
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.fn.radius(radius),
     padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.white,
-    position: 'relative',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-
-  tooltip: {
-    display: 'inline-block',
     position: 'absolute',
+    whiteSpace: multiline ? 'unset' : 'nowrap',
+    pointerEvents: 'none',
+    width,
   },
 
   arrow: {
+    backgroundColor: 'inherit',
     border: 0,
-    background: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 3 : 9),
     zIndex: 1,
   },
 }));

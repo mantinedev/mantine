@@ -1,19 +1,19 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Children, cloneElement } from 'react';
 import {
   MantineColor,
   DefaultProps,
   MantineNumberSize,
   MantineSize,
-  ClassNames,
-  useMantineDefaultProps,
+  Selectors,
+  useComponentDefaultProps,
 } from '@mantine/styles';
-import { findChildByType, filterChildrenByType } from '../../utils';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import { Step, StepStylesNames } from './Step/Step';
 import { StepCompleted } from './StepCompleted/StepCompleted';
 import useStyles from './Stepper.styles';
 
-export type StepperStylesNames = ClassNames<typeof useStyles> | StepStylesNames;
+export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,
@@ -58,11 +58,13 @@ export interface StepperProps
   breakpoint?: MantineNumberSize;
 }
 
-type StepperComponent = ((props: StepperProps) => React.ReactElement) & {
-  displayName: string;
-  Step: typeof Step;
-  Completed: typeof StepCompleted;
-};
+type StepperComponent = ForwardRefWithStaticComponents<
+  StepperProps,
+  {
+    Step: typeof Step;
+    Completed: typeof StepCompleted;
+  }
+>;
 
 const defaultProps: Partial<StepperProps> = {
   contentPadding: 'md',
@@ -72,91 +74,89 @@ const defaultProps: Partial<StepperProps> = {
   iconPosition: 'left',
 };
 
-export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>(
-  (props: StepperProps, ref) => {
-    const {
-      className,
-      children,
-      onStepClick,
-      active,
-      completedIcon,
-      progressIcon,
-      color,
-      iconSize,
-      contentPadding,
-      size,
-      radius,
-      orientation,
-      breakpoint,
-      iconPosition,
-      classNames,
-      styles,
-      ...others
-    } = useMantineDefaultProps('Stepper', defaultProps, props);
+export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps>((props, ref) => {
+  const {
+    className,
+    children,
+    onStepClick,
+    active,
+    completedIcon,
+    progressIcon,
+    color,
+    iconSize,
+    contentPadding,
+    size,
+    radius,
+    orientation,
+    breakpoint,
+    iconPosition,
+    classNames,
+    styles,
+    unstyled,
+    ...others
+  } = useComponentDefaultProps('Stepper', defaultProps, props);
 
-    const { classes, cx } = useStyles(
-      { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
-      { classNames, styles, name: 'Stepper' }
+  const { classes, cx } = useStyles(
+    { contentPadding, color, orientation, iconPosition, size, iconSize, breakpoint },
+    { classNames, styles, unstyled, name: 'Stepper' }
+  );
+
+  const convertedChildren = Children.toArray(children) as React.ReactElement[];
+  const _children = convertedChildren.filter((child) => child.type !== StepCompleted);
+  const completedStep = convertedChildren.find((item) => item.type === StepCompleted);
+
+  const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
+    const shouldAllowSelect =
+      typeof item.props.allowStepSelect === 'boolean'
+        ? item.props.allowStepSelect
+        : typeof onStepClick === 'function';
+
+    acc.push(
+      cloneElement(item, {
+        __staticSelector: 'Stepper',
+        icon: item.props.icon || index + 1,
+        key: index,
+        state:
+          active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive',
+        onClick: () => shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index),
+        allowStepClick: shouldAllowSelect && typeof onStepClick === 'function',
+        completedIcon: item.props.completedIcon || completedIcon,
+        progressIcon: item.props.progressIcon || progressIcon,
+        color: item.props.color || color,
+        iconSize,
+        size,
+        radius,
+        classNames,
+        styles,
+        iconPosition: item.props.iconPosition || iconPosition,
+        orientation,
+        unstyled,
+      })
     );
 
-    const filteredChildren = filterChildrenByType(children, Step);
-    const completedStep = findChildByType(children, StepCompleted);
-
-    const items = filteredChildren.reduce<React.ReactNode[]>((acc, item, index, array) => {
-      const shouldAllowSelect =
-        typeof item.props.allowStepSelect === 'boolean'
-          ? item.props.allowStepSelect
-          : typeof onStepClick === 'function';
-
+    if (orientation === 'horizontal' && index !== _children.length - 1) {
       acc.push(
-        <Step
-          {...item.props}
-          __staticSelector="Stepper"
-          icon={item.props.icon || index + 1}
-          key={index}
-          state={
-            active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive'
-          }
-          onClick={() =>
-            shouldAllowSelect && typeof onStepClick === 'function' && onStepClick(index)
-          }
-          allowStepClick={shouldAllowSelect && typeof onStepClick === 'function'}
-          completedIcon={item.props.completedIcon || completedIcon}
-          progressIcon={item.props.progressIcon || progressIcon}
-          color={item.props.color || color}
-          iconSize={iconSize}
-          size={size}
-          radius={radius}
-          classNames={classNames}
-          styles={styles}
-          iconPosition={item.props.iconPosition || iconPosition}
+        <div
+          className={cx(classes.separator, { [classes.separatorActive]: index < active })}
+          key={`separator-${index}`}
         />
       );
+    }
 
-      if (index !== array.length - 1) {
-        acc.push(
-          <div
-            className={cx(classes.separator, { [classes.separatorActive]: index < active })}
-            key={`separator-${index}`}
-          />
-        );
-      }
+    return acc;
+  }, []);
 
-      return acc;
-    }, []);
+  const stepContent = _children[active]?.props?.children;
+  const completedContent = completedStep?.props?.children;
+  const content = active > _children.length - 1 ? completedContent : stepContent;
 
-    const stepContent = filteredChildren[active]?.props?.children;
-    const completedContent = completedStep?.props?.children;
-    const content = active > filteredChildren.length - 1 ? completedContent : stepContent;
-
-    return (
-      <Box className={cx(classes.root, className)} ref={ref} {...others}>
-        <div className={classes.steps}>{items}</div>
-        {content && <div className={classes.content}>{content}</div>}
-      </Box>
-    );
-  }
-) as any;
+  return (
+    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+      <div className={classes.steps}>{items}</div>
+      {content && <div className={classes.content}>{content}</div>}
+    </Box>
+  );
+}) as any;
 
 Stepper.Step = Step;
 Stepper.Completed = StepCompleted;

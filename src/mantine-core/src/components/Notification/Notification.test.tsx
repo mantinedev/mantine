@@ -6,7 +6,6 @@ import { Notification, NotificationProps } from './Notification';
 const defaultProps: NotificationProps = {
   icon: 'test-icon',
   title: 'test-notification',
-  onClose: () => {},
   closeButtonProps: { title: 'test-close' },
 };
 
@@ -18,6 +17,7 @@ describe('@mantine/core/Notification', () => {
     props: defaultProps,
     displayName: '@mantine/core/Notification',
     refType: HTMLDivElement,
+    providerName: 'Notification',
   });
 
   it('does not render close button if disallowClose is true', () => {

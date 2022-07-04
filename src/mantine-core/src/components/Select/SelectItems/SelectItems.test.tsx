@@ -56,10 +56,10 @@ describe('@mantine/core/Select/SelectItems', () => {
     expect(container.querySelectorAll('[data-item]')).toHaveLength(defaultProps.data.length);
   });
 
-  it('calls onItemSelect with mouse down event on item', () => {
+  it('calls onItemSelect with mouse down event on item', async () => {
     const spy = jest.fn();
     render(<SelectItems {...defaultProps} onItemSelect={spy} />);
-    userEvent.click(screen.getAllByRole('option')[2]);
+    await userEvent.click(screen.getAllByRole('option')[2]);
     expect(spy).toHaveBeenCalledWith(defaultProps.data[2]);
   });
 
