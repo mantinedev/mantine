@@ -20,6 +20,8 @@ export interface CascaderItemsProps extends DefaultProps {
   maxDropdownHeight: number;
   menuComponent: React.FC<any>;
   itemComponent: React.FC<any>;
+  nothingFound: React.ReactNode;
+  __staticSelector: string;
 }
 
 export function CascaderItems({
@@ -39,6 +41,8 @@ export function CascaderItems({
   size,
   menuComponent,
   itemComponent,
+  nothingFound,
+  __staticSelector,
 }: CascaderItemsProps) {
   return (
     <>
@@ -49,7 +53,7 @@ export function CascaderItems({
         styles={styles}
         isItemSelected={isItemSelected}
         uuid={uuid}
-        __staticSelector="Cascader"
+        __staticSelector={__staticSelector}
         onItemHover={onItemHover}
         onItemSelect={onItemSelect}
         itemsRefs={itemsRefs}
@@ -60,30 +64,32 @@ export function CascaderItems({
         menuComponent={menuComponent}
         maxDropdownHeight={maxDropdownHeight}
       />
-      {(expandOnHover ? hovered : hovered.slice(0, hovered.length - 1))?.map((selected, i) => {
-        const hoveredItem = getItem(data, i, hovered);
-        if (!hoveredItem?.children) return <></>;
-        return (
-          <CascaderItemsList
-            data={hoveredItem.children}
-            hovered={hovered}
-            classNames={classNames}
-            styles={styles}
-            isItemSelected={isItemSelected}
-            uuid={uuid}
-            __staticSelector="Cascader"
-            onItemHover={onItemHover}
-            onItemSelect={onItemSelect}
-            itemsRefs={itemsRefs}
-            itemComponent={itemComponent}
-            size={size}
-            nesting={i + 1}
-            ref={mergeRefs({ current: menuRefs.current[i + 1] }, scrollableRef)}
-            maxDropdownHeight={maxDropdownHeight}
-            menuComponent={menuComponent}
-          />
-        );
-      })}
+      {data.length > 0
+        ? (expandOnHover ? hovered : hovered.slice(0, hovered.length - 1))?.map((selected, i) => {
+            const hoveredItem = getItem(data, i, hovered);
+            if (!hoveredItem?.children) return <></>;
+            return (
+              <CascaderItemsList
+                data={hoveredItem.children}
+                hovered={hovered}
+                classNames={classNames}
+                styles={styles}
+                isItemSelected={isItemSelected}
+                uuid={uuid}
+                __staticSelector={__staticSelector}
+                onItemHover={onItemHover}
+                onItemSelect={onItemSelect}
+                itemsRefs={itemsRefs}
+                itemComponent={itemComponent}
+                size={size}
+                nesting={i + 1}
+                ref={mergeRefs({ current: menuRefs.current[i + 1] }, scrollableRef)}
+                maxDropdownHeight={maxDropdownHeight}
+                menuComponent={menuComponent}
+              />
+            );
+          })
+        : nothingFound}
     </>
   );
 }

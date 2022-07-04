@@ -1,25 +1,18 @@
 import {
   DefaultProps,
-  extractSystemStyles,
   getDefaultZIndex,
   Input,
-  InputWrapper,
   MantineShadow,
   MantineSize,
   MantineTransition,
-  useMantineDefaultProps,
+  useInputProps,
 } from '@mantine/core';
 import { getSelectRightSectionProps } from '@mantine/core/src/components/Select/SelectRightSection/get-select-right-section-props';
-import {
-  useDidUpdate,
-  useMergedRef,
-  useScrollIntoView,
-  useUncontrolled,
-  useUuid,
-} from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
 import { useStyles } from './Cascader.styles';
-import { CascaderDropdown } from './CascaderDropdown/CascaderDropdown';
+import { CascaderPopover } from './CascaderPopover/CascaderPopover';
 import { CascaderItems } from './CascaderItems/CascaderItems';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { findSelectedValue } from './findSelectedValue';
@@ -27,9 +20,7 @@ import { getItem } from './getItem';
 import { getValuesFromIndexes } from './getValuesFromIndexes';
 import { BaseCascaderProps, CascaderStylesNames, CascaderItem } from './types';
 
-export interface SharedCascaderProps<Item, CascaderValue>
-  extends DefaultProps<CascaderStylesNames>,
-    BaseCascaderProps {
+export interface SharedCascaderProps<Item, CascaderValue> {
   /** Select data used to renderer items in dropdown */
   data: (string | Item)[];
 
@@ -113,9 +104,21 @@ export interface SharedCascaderProps<Item, CascaderValue>
 
   /** Where the dropdown is placed along the input (left, center, or right) */
   placement?: 'start' | 'center' | 'end';
+
+  /** useEffect dependencies to force update dropdown position */
+  positionDependencies?: any[];
+
+  /** Nothing found label */
+  nothingFound?: React.ReactNode;
+
+  /** Set the clear button tab index to disabled or default after input field */
+  clearButtonTabIndex?: -1 | 0;
 }
 
-export interface CascaderProps extends SharedCascaderProps<CascaderItem, string | null> {}
+export interface CascaderProps
+  extends DefaultProps<CascaderStylesNames>,
+    BaseCascaderProps,
+    SharedCascaderProps<CascaderItem, string | null> {}
 
 const defaultProps: Partial<CascaderProps> = {
   required: false,
@@ -136,18 +139,14 @@ const defaultProps: Partial<CascaderProps> = {
   separator: ', ',
   menuComponent: ({ children, ...props }) => <div {...props}>{children}</div>,
   itemComponent: DefaultItem,
+  positionDependencies: [],
+  clearButtonTabIndex: 0,
 };
 
 export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref) => {
   const {
-    className,
-    style,
-    required,
-    label,
-    id,
-    error,
-    description,
-    size,
+    inputProps,
+    positionDependencies,
     shadow,
     data,
     value,
@@ -173,7 +172,9 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     rightSection,
     rightSectionWidth,
     selectOnBlur,
-    sx,
+    unstyled,
+    clearButtonTabIndex,
+    placeholder,
     dropdownComponent,
     onDropdownClose,
     onDropdownOpen,
@@ -186,19 +187,18 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     menuComponent,
     separator,
     expandOnHover,
+    form,
+    nothingFound,
     ...others
-  } = useMantineDefaultProps('Cascader', defaultProps, props);
+  } = useInputProps('Cascader', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles();
-  const { systemStyles, rest } = extractSystemStyles(others);
+  const { theme } = useStyles();
   const [dropdownOpened, _setDropdownOpened] = useState(true);
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
-  const dropdownRef = useRef<HTMLDivElement>();
   const menuRefs = useRef<Record<number, HTMLDivElement>>({});
   const itemsRefs = useRef<Record<number, Record<number, HTMLDivElement>>>({});
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('row');
-  const uuid = useUuid(id);
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
     offset: 5,
@@ -218,12 +218,11 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     typeof item === 'string' ? { label: item, value: item } : item
   );
 
-  const [_value, handleChange, inputMode] = useUncontrolled({
+  const [_value, handleChange, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => typeof val === 'string' || val === null,
   });
 
   const selectedValue = findSelectedValue(formattedData, separator, _value);
@@ -233,7 +232,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
 
   const handleClear = () => {
     handleChange(null);
-    if (inputMode === 'uncontrolled') {
+    if (!controlled) {
       setInputValue('');
     }
     inputRef.current?.focus();
@@ -283,7 +282,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     } else {
       handleChange(getValuesFromIndexes(formattedData, hovered, separator));
 
-      if (inputMode === 'uncontrolled') {
+      if (!controlled) {
         setInputValue(getValuesFromIndexes(formattedData, hovered, separator));
       }
       setHovered((prev) => [...prev, index]);
@@ -322,10 +321,12 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         current,
         (index) => index + 1,
         (index) =>
-          index < (current.length > 1
+          index <
+          (current.length > 1
             ? getItem(formattedData, current.length - 2, [...current.slice(0, current.length - 1)])
                 ?.children.length || 0
-            : formattedData.length) - 1
+            : formattedData.length) -
+            1
       );
 
       targetRef.current = itemsRefs.current[current.length - 1][current[current.length - 1]];
@@ -464,115 +465,105 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     }
   };
 
-  return (
-    <InputWrapper
-      required={required}
-      id={uuid}
-      label={label}
-      error={error}
-      description={description}
-      size={size}
-      className={className}
-      style={style}
-      classNames={classNames}
-      styles={styles}
-      __staticSelector="Cascader"
-      sx={sx}
-      {...systemStyles}
-      {...wrapperProps}
-    >
-      <div
-        role="combobox"
-        aria-haspopup="listbox"
-        aria-owns={`${uuid}-items`}
-        aria-controls={uuid}
-        aria-expanded={dropdownOpened}
-        tabIndex={-1}
-      >
-        <Input<'input'>
-          autoComplete="nope"
-          {...rest}
-          type="text"
-          required={required}
-          ref={useMergedRef(ref, inputRef)}
-          id={uuid}
-          invalid={!!error}
-          size={size}
-          onKeyDown={handleInputKeydown}
-          __staticSelector="Cascader"
-          value={inputValue}
-          onChange={handleInputChange}
-          aria-autocomplete="list"
-          aria-controls={dropdownOpened ? `${uuid}-items` : null}
-          aria-activedescendant={hovered.length !== 0 ? `${uuid}-${hovered}` : null}
-          onClick={handleInputClick}
-          onBlur={handleInputBlur}
-          onFocus={handleInputFocus}
-          disabled={disabled}
-          data-mantine-stop-propagation={dropdownOpened}
-          name={name}
-          classNames={{
-            ...classNames,
-            input: cx(classes.input, classNames?.input),
-          }}
-          {...getSelectRightSectionProps({
-            theme,
-            rightSection,
-            rightSectionWidth,
-            styles,
-            size,
-            shouldClear: clearable && !!selectedValue,
-            clearButtonLabel,
-            onClear: handleClear,
-            error,
-          })}
-        />
+  const shouldShowDropdown = data.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
 
-        <CascaderDropdown
-          referenceElement={inputRef.current}
-          mounted={dropdownOpened}
-          transition={transition}
-          placement={placement}
-          preventOverflow={preventOverflow}
-          transitionDuration={transitionDuration}
-          transitionTimingFunction={transitionTimingFunction}
-          uuid={uuid}
-          shadow={shadow}
-          maxDropdownHeight={maxDropdownHeight}
-          classNames={classNames}
-          styles={styles}
-          ref={useMergedRef(dropdownRef, scrollableRef)}
-          __staticSelector="Cascader"
-          dropdownComponent={dropdownComponent}
+  return (
+    <Input.Wrapper {...wrapperProps} __staticSelector="Cascader">
+      <CascaderPopover
+        opened={dropdownOpened}
+        transition={transition}
+        transitionDuration={transitionDuration}
+        shadow="sm"
+        withinPortal={withinPortal}
+        __staticSelector="Cascader"
+        onDirectionChange={setDirection}
+        switchDirectionOnFlip={switchDirectionOnFlip}
+        zIndex={zIndex}
+        dropdownPosition={dropdownPosition}
+        positionDependencies={positionDependencies}
+        classNames={classNames}
+        styles={styles}
+        unstyled={unstyled}
+      >
+        <CascaderPopover.Target>
+          <div
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-owns={shouldShowDropdown ? `${inputProps.id}-items` : null}
+            aria-controls={inputProps.id}
+            aria-expanded={shouldShowDropdown}
+            tabIndex={-1}
+          >
+            <input type="hidden" name={name} value={_value || ''} form={form} />
+
+            <Input<'input'>
+              autoComplete="off"
+              type="search"
+              {...inputProps}
+              {...others}
+              ref={useMergedRef(ref, inputRef)}
+              onKeyDown={handleInputKeydown}
+              __staticSelector="Select"
+              value={inputValue}
+              placeholder={placeholder}
+              onChange={handleInputChange}
+              aria-autocomplete="list"
+              aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
+              aria-activedescendant={hovered.length >= 0 ? `${inputProps.id}-${hovered}` : null}
+              onClick={handleInputClick}
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+              disabled={disabled}
+              data-mantine-stop-propagation={shouldShowDropdown}
+              name={null}
+              classNames={classNames}
+              {...getSelectRightSectionProps({
+                theme,
+                rightSection,
+                rightSectionWidth,
+                styles,
+                size: inputProps.size,
+                shouldClear: clearable && !!selectedValue,
+                clearButtonLabel,
+                onClear: handleClear,
+                error: wrapperProps.error,
+                clearButtonTabIndex,
+              })}
+            />
+          </div>
+        </CascaderPopover.Target>
+
+        <CascaderPopover.Dropdown
+          component={dropdownComponent || SelectScrollArea}
+          maxHeight={maxDropdownHeight}
           direction={direction}
-          onDirectionChange={setDirection}
-          switchDirectionOnFlip={switchDirectionOnFlip}
-          withinPortal={withinPortal}
-          zIndex={zIndex}
-          dropdownPosition={dropdownPosition}
+          id={inputProps.id}
+          innerRef={scrollableRef}
         >
           <CascaderItems
             data={formattedData}
             hovered={hovered}
             classNames={classNames}
-            expandOnHover={expandOnHover}
             styles={styles}
-            isItemSelected={(val, nesting) =>
-              selectedValue && getItem(formattedData, nesting, selectedValue)?.value === val
-            }
-            uuid={uuid}
-            maxDropdownHeight={maxDropdownHeight}
+            isItemSelected={(val) => val === _value}
+            uuid={inputProps.id}
+            __staticSelector="Cascader"
             onItemHover={setHovered}
             onItemSelect={handleItemSelect}
             itemsRefs={itemsRefs}
+            itemComponent={itemComponent}
+            size={inputProps.size}
+            nothingFound={nothingFound}
+            aria-label={wrapperProps.label}
+            unstyled={unstyled}
             menuRefs={menuRefs}
             scrollableRef={scrollableRef}
-            itemComponent={itemComponent}
+            expandOnHover={expandOnHover}
+            maxDropdownHeight={maxDropdownHeight}
             menuComponent={menuComponent}
-            size={size}
           />
-        </CascaderDropdown>
-      </div>
-    </InputWrapper>
+        </CascaderPopover.Dropdown>
+      </CascaderPopover>
+    </Input.Wrapper>
   );
 });

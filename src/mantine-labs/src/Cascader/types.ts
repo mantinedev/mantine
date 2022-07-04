@@ -1,10 +1,10 @@
 import {
-  InputBaseProps,
+  InputSharedProps,
   InputStylesNames,
   InputWrapperBaseProps,
   InputWrapperStylesNames,
 } from '@mantine/core';
-import { CascaderDropdownStyles } from './CascaderDropdown/CascaderDropdown';
+import type { CascaderPopoverStylesNames } from './CascaderPopover/CascaderPopover';
 
 export interface CascaderItem {
   value: string;
@@ -18,8 +18,8 @@ export interface CascaderItem {
 export type CascaderStylesNames =
   | InputStylesNames
   | InputWrapperStylesNames
-  | CascaderDropdownStyles;
+  | CascaderPopoverStylesNames;
 
-export type BaseCascaderProps = InputBaseProps &
+export type BaseCascaderProps = InputSharedProps &
   InputWrapperBaseProps &
   Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange' | 'size' | 'defaultValue'>;
