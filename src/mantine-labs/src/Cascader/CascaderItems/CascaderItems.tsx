@@ -1,5 +1,4 @@
 import { DefaultProps, MantineSize } from '@mantine/core';
-import { mergeRefs } from '@mantine/hooks';
 import React from 'react';
 import { getItem } from '../getItem';
 import { CascaderItemsList } from '../CascaderItemsList/CascaderItemsList';
@@ -10,9 +9,8 @@ export interface CascaderItemsProps extends DefaultProps {
   hovered: number[];
   isItemSelected?(itemValue: string, nesting: number): boolean;
   uuid: string;
-  itemsRefs?: React.MutableRefObject<Record<number, Record<number, HTMLDivElement>>>;
-  menuRefs?: React.MutableRefObject<Record<number, HTMLDivElement>>;
-  scrollableRef: React.MutableRefObject<null>;
+  itemsRefs?: React.MutableRefObject<HTMLElement[][]>;
+  menuRefs?: React.MutableRefObject<HTMLDivElement[]>;
   onItemHover: React.Dispatch<React.SetStateAction<number[]>>;
   onItemSelect(item: CascaderItem, index: number): void;
   size: MantineSize;
@@ -32,7 +30,6 @@ export function CascaderItems({
   uuid,
   itemsRefs,
   menuRefs,
-  scrollableRef,
   isItemSelected,
   onItemHover,
   maxDropdownHeight,
@@ -60,7 +57,10 @@ export function CascaderItems({
         itemComponent={itemComponent}
         size={size}
         nesting={0}
-        ref={mergeRefs({ current: menuRefs.current[0] }, scrollableRef)}
+        ref={(node) => {
+          // eslint-disable-next-line no-param-reassign
+          menuRefs.current[0] = node;
+        }}
         menuComponent={menuComponent}
         maxDropdownHeight={maxDropdownHeight}
       />
@@ -83,7 +83,10 @@ export function CascaderItems({
                 itemComponent={itemComponent}
                 size={size}
                 nesting={i + 1}
-                ref={mergeRefs({ current: menuRefs.current[i + 1] }, scrollableRef)}
+                ref={(node) => {
+                  // eslint-disable-next-line no-param-reassign
+                  menuRefs.current[i + 1] = node;
+                }}
                 maxDropdownHeight={maxDropdownHeight}
                 menuComponent={menuComponent}
               />

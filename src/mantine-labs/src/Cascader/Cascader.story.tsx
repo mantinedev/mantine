@@ -12,6 +12,14 @@ const DEFAULT_DATA: CascaderItem[] = [
   },
 ];
 
+const genItems = ({ num = 10, depth = 1 } = {}) =>
+  depth > 0
+    ? Array.from(Array(num).keys()).map((i) => ({
+        value: `item ${i}`,
+        children: genItems({ num, depth: depth - 1 }),
+      }))
+    : undefined;
+
 function Wrapper({ children }) {
   return <div style={{ padding: 40, maxWidth: 400 }}>{children}</div>;
 }
@@ -34,7 +42,7 @@ function Controlled() {
         <Button variant="outline" onClick={() => setValue(null)}>
           Set null
         </Button>
-        <Button variant="outline" onClick={() => setValue('react')}>
+        <Button variant="outline" onClick={() => setValue(['react'])}>
           Set value
         </Button>
       </Group>
@@ -53,10 +61,13 @@ storiesOf('@mantine/labs/Cascader/stories', module)
       <Cascader
         data={[
           ...DEFAULT_DATA,
-          ...Array.from(Array(10).keys()).map((_, i) => ({ value: `item ${i}` })),
+          ...Array.from(Array(10).keys()).map((_, i) => ({
+            value: `item ${i}`,
+            children: genItems({ depth: 3 }),
+          })),
           { value: 'i' },
         ]}
-        defaultValue="i"
+        defaultValue={['i']}
       />
     </Wrapper>
   ));

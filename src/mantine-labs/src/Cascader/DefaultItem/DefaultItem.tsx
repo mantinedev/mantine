@@ -3,10 +3,10 @@ import React, { forwardRef } from 'react';
 import { ArrowIcon } from './ArrowIcon';
 
 interface DefaultItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'value'> {
-  label: React.ReactNode;
+  label?: React.ReactNode;
   hasChildren: boolean;
   size: MantineSize;
-  value?: string;
+  value: string;
 }
 
 export const DefaultItem = forwardRef<HTMLDivElement, DefaultItemProps>(

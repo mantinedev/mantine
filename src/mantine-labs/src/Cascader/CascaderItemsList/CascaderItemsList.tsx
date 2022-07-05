@@ -12,7 +12,7 @@ export interface CascaderMenuProps extends DefaultProps<CascaderMenuStyles> {
   __staticSelector: string;
   isItemSelected?(itemValue: string, nesting: number): boolean;
   uuid: string;
-  itemsRefs?: React.MutableRefObject<Record<number, Record<number, HTMLDivElement>>>;
+  itemsRefs?: React.MutableRefObject<HTMLElement[][]>;
   onItemHover: React.Dispatch<React.SetStateAction<number[]>>;
   onItemSelect(item: CascaderItem, index: number): void;
   size: MantineSize;
@@ -46,13 +46,10 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
     const { classes } = useStyles({ size }, { classNames, styles, name: __staticSelector });
 
     // eslint-disable-next-line no-param-reassign
-    if (!itemsRefs.current[nesting]) itemsRefs.current[nesting] = {};
+    if (!itemsRefs.current[nesting]) itemsRefs.current[nesting] = [];
 
     return (
-      <SelectScrollArea
-        style={{ maxHeight: maxDropdownHeight, width: 'auto' }}
-        ref={ref}
-      >
+      <SelectScrollArea style={{ maxHeight: maxDropdownHeight, width: 'auto' }} ref={ref}>
         <MenuComponent
           style={{
             display: 'flex',

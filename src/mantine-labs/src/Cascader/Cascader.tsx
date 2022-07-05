@@ -16,7 +16,7 @@ import { CascaderItems } from './CascaderItems/CascaderItems';
 import { DefaultItem } from './DefaultItem/DefaultItem';
 import { findSelectedValue } from './findSelectedValue';
 import { getItem } from './getItem';
-import { getValuesFromIndexes } from './getValuesFromIndexes';
+import { getValueFromIndexes } from './getValueFromIndexes';
 import { BaseCascaderProps, CascaderStylesNames, CascaderItem } from './types';
 
 export interface SharedCascaderProps<Item, CascaderValue> {
@@ -117,7 +117,7 @@ export interface SharedCascaderProps<Item, CascaderValue> {
 export interface CascaderProps
   extends DefaultProps<CascaderStylesNames>,
     BaseCascaderProps,
-    SharedCascaderProps<CascaderItem, string | null> {}
+    SharedCascaderProps<CascaderItem, string[] | null> {}
 
 const defaultProps: Partial<CascaderProps> = {
   required: false,
@@ -195,8 +195,8 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   const [dropdownOpened, _setDropdownOpened] = useState(true);
   const [hovered, setHovered] = useState<number[]>([0]);
   const inputRef = useRef<HTMLInputElement>();
-  const menuRefs = useRef<Record<number, HTMLDivElement>>({});
-  const itemsRefs = useRef<Record<number, Record<number, HTMLDivElement>>>({});
+  const menuRefs = useRef<HTMLDivElement[]>([]);
+  const itemsRefs = useRef<HTMLElement[][]>([]);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('row');
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
     duration: 0,
@@ -224,27 +224,27 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     onChange,
   });
 
-  const selectedValue = findSelectedValue(formattedData, separator, _value);
+  const selectedValue = findSelectedValue(formattedData, _value);
   const [inputValue, setInputValue] = useState(
-    getValuesFromIndexes(formattedData, selectedValue, separator)
+    getValueFromIndexes(formattedData, selectedValue)
   );
 
   const handleClear = () => {
     handleChange(null);
     if (!controlled) {
-      setInputValue('');
+      setInputValue(null);
     }
     inputRef.current?.focus();
   };
 
   useEffect(() => {
-    const newSelectedValue = findSelectedValue(formattedData, separator, _value);
+    const newSelectedValue = findSelectedValue(formattedData, _value);
     newSelectedValue && setHovered(newSelectedValue);
 
     if (newSelectedValue) {
-      setInputValue(getValuesFromIndexes(formattedData, newSelectedValue, separator));
+      setInputValue(getValueFromIndexes(formattedData, newSelectedValue));
     } else if (!_value) {
-      setInputValue('');
+      setInputValue(null);
     }
   }, [_value]);
 
@@ -279,10 +279,10 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         )
       );
     } else {
-      handleChange(getValuesFromIndexes(formattedData, hovered, separator));
+      handleChange(getValueFromIndexes(formattedData, hovered));
 
       if (!controlled) {
-        setInputValue(getValuesFromIndexes(formattedData, hovered, separator));
+        setInputValue(getValueFromIndexes(formattedData, hovered));
       }
       setHovered((prev) => [...prev, index]);
       setDropdownOpened(false);
@@ -334,10 +334,20 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     });
   };
 
-  const scrollSelectedItemIntoView = () =>
+  const scrollSelectedItemsIntoView = () =>
     window.setTimeout(() => {
-      targetRef.current = itemsRefs.current[hovered.length - 1][hovered[hovered.length - 1]];
-      scrollIntoView({ alignment: 'center' });
+      hovered.forEach((item, i) => {
+        // get menu the item is in
+        const menu = menuRefs.current[i];
+
+        // set menu scroll area as scrollable ref
+        // @ts-expect-error
+        scrollableRef.current = menu;
+
+        // set target ref to currently selected item
+        targetRef.current = itemsRefs.current[i][item];
+        scrollIntoView({ alignment: 'center' });
+      });
     }, 0);
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -350,7 +360,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         if (!dropdownOpened) {
           setHovered(selectedValue);
           setDropdownOpened(true);
-          scrollSelectedItemIntoView();
+          scrollSelectedItemsIntoView();
         } else {
           handlePrevious();
         }
@@ -364,7 +374,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         if (!dropdownOpened) {
           setHovered(selectedValue);
           setDropdownOpened(true);
-          scrollSelectedItemIntoView();
+          scrollSelectedItemsIntoView();
         } else {
           handleNext();
         }
@@ -378,7 +388,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         if (!dropdownOpened) {
           setHovered(selectedValue);
           setDropdownOpened(true);
-          scrollSelectedItemIntoView();
+          scrollSelectedItemsIntoView();
         } else {
           const hoveredItem = getItem(formattedData, hovered.length - 1, hovered);
           if (hoveredItem && hoveredItem.children && hoveredItem.children.length > 0) {
@@ -401,7 +411,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         if (!dropdownOpened) {
           setHovered(selectedValue);
           setDropdownOpened(true);
-          scrollSelectedItemIntoView();
+          scrollSelectedItemsIntoView();
         } else if (hovered.length > 1) {
           setHovered((prev) => [...prev.slice(0, prev.length - 1)]);
         }
@@ -426,7 +436,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         } else {
           setDropdownOpened(true);
           setHovered(selectedValue || [0]);
-          scrollSelectedItemIntoView();
+          scrollSelectedItemsIntoView();
         }
       }
     }
@@ -460,7 +470,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
 
     if (_value) {
       setHovered(selectedValue);
-      scrollSelectedItemIntoView();
+      scrollSelectedItemsIntoView();
     }
   };
 
@@ -558,7 +568,6 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             aria-label={wrapperProps.label}
             unstyled={unstyled}
             menuRefs={menuRefs}
-            scrollableRef={scrollableRef}
             expandOnHover={expandOnHover}
             maxDropdownHeight={maxDropdownHeight}
             menuComponent={menuComponent}
