@@ -14,6 +14,17 @@ const defaultProps = {
   ],
 };
 
+const manualActiveStates = {
+  children: [
+    <Timeline.Item key="1" title="Hello" bullet="$">
+      1
+    </Timeline.Item>,
+    <Timeline.Item key="2">2</Timeline.Item>,
+    <Timeline.Item key="3" active={false} lineActive={false}>3</Timeline.Item>,
+    <Timeline.Item key="4" active={true}>4</Timeline.Item>,
+  ],
+};
+
 describe('@mantine/core/Timeline', () => {
   itSupportsSystemProps({
     component: Timeline,
@@ -28,7 +39,7 @@ describe('@mantine/core/Timeline', () => {
     <Timeline.Item>Child 2</Timeline.Item>,
   ]);
 
-  it('handles active item correctly', () => {
+  it('handles active item correctly on Timeline', () => {
     const { container: secondActive } = render(<Timeline {...defaultProps} active={1} />);
     const { container: thirdActive } = render(<Timeline {...defaultProps} active={2} />);
 
@@ -37,6 +48,21 @@ describe('@mantine/core/Timeline', () => {
 
     expect(thirdActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
     expect(thirdActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(2);
+  });
+
+  it('handles active item correctly on Timeline.Item', () => {
+    const { container: fourthActive } = render(<Timeline {...manualActiveStates} active={-1} />);
+    const { container: toSecondAndFourthActive } = render(<Timeline {...manualActiveStates} active={1} />);
+    const { container: thirdNotActive } = render(<Timeline {...manualActiveStates} active={3} />);
+
+    expect(fourthActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(1);
+    expect(fourthActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(0);
+
+    expect(toSecondAndFourthActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
+    expect(toSecondAndFourthActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(1);
+
+    expect(thirdNotActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
+    expect(thirdNotActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(2);
   });
 
   it('exposes TimelineItem as Timeline.Item', () => {

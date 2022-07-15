@@ -81,10 +81,10 @@ export const Timeline: TimelineComponent = forwardRef<HTMLDivElement, TimelinePr
         color: item.props.color || color,
         bulletSize: item.props.bulletSize || bulletSize,
         active:
-          item.props.active ||
+          item.props.active ??
           (reverseActive ? active >= _children.length - index - 1 : active >= index),
         lineActive:
-          item.props.lineActive ||
+          item.props.lineActive ??
           (reverseActive ? active >= _children.length - index - 1 : active - 1 >= index),
       })
     );
