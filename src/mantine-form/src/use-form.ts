@@ -45,7 +45,7 @@ export function useForm<Values = Record<string, unknown>>({
   const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
-  }, []);
+  }, [initialValues]);
 
   const setFieldError: SetFieldError<Values> = useCallback(
     (path, error) => setErrors((current) => ({ ...current, [path]: error })),
