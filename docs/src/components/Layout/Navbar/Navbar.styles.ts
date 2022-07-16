@@ -47,4 +47,10 @@ export default createStyles((theme: MantineTheme) => ({
   docs: {
     marginTop: theme.spacing.xl,
   },
+
+  search: {
+    [`@media (min-width: ${NAVBAR_BREAKPOINT}px)`]: {
+      display: 'none',
+    },
+  },
 }));
