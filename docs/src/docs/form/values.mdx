@@ -44,6 +44,13 @@ With `form.setValues` you can set all form values, for example you can set value
 
 <Demo data={FormDemos.reset} />
 
+## isDirty handler
+
+`form.isDirty` handler returns `true` if form values are different from `initialValues`
+Useful if you want to warn users that they have unsaved changes.:
+
+<Demo data={FormDemos.isDirty} />
+
 ## Get values type
 
 ```tsx
@@ -59,6 +66,7 @@ function Demo() {
   const handleSubmit = (values: FormValues) => console.log(values);
 }
 ```
+
 
 ## Set values type
 
