@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@mantine/form';
+import { openConfirmModal } from '@mantine/modals';
 import { IconLock, IconAt } from '@tabler/icons';
 import {
   TextInput,
@@ -32,11 +33,6 @@ export function AuthenticationForm({
   const [error, setError] = useState<string>(null);
   const theme = useMantineTheme();
 
-  const toggleFormType = () => {
-    setFormType((current) => (current === 'register' ? 'login' : 'register'));
-    setError(null);
-  };
-
   const form = useForm({
     initialValues: {
       firstName: '',
@@ -47,6 +43,25 @@ export function AuthenticationForm({
       termsOfService: true,
     },
   });
+
+  const toggleFormType = () => {
+    if (form.isDirty() && formType === 'register') {
+      return openConfirmModal({
+        title: 'You have unsaved changes',
+        children: 'All changes will be lost, Are you sure you want to switch?',
+        withinPortal: true,
+        zIndex: 300,
+        onConfirm: () => {
+          form.reset();
+          setFormType((current) => (current === 'register' ? 'login' : 'register'));
+          setError(null);
+        },
+      });
+    }
+
+    setFormType((current) => (current === 'register' ? 'login' : 'register'));
+    return setError(null);
+  };
 
   const handleSubmit = () => {
     setLoading(true);
