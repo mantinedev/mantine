@@ -53,6 +53,8 @@ export type OnSubmit<Values> = (
 
 export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
+export type IsDirty = () => boolean;
+
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   options?: { type?: GetInputPropsType; withError?: boolean }
@@ -118,4 +120,5 @@ export interface UseFormReturnType<Values> {
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values>;
   onReset: OnReset;
+  isDirty: IsDirty;
 }

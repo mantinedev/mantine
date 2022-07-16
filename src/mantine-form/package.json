@@ -18,7 +18,8 @@
     "react": ">=16.8.0"
   },
   "dependencies": {
-    "lodash.clonedeep": "4.5.0"
+    "lodash.clonedeep": "4.5.0",
+    "lodash.isequal": "4.5.0"
   },
   "devDependencies": {}
 }

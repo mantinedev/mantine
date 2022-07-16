@@ -1,3 +1,4 @@
+import isEqual from 'lodash.isequal';
 import { useState, useCallback } from 'react';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
@@ -21,6 +22,7 @@ import {
   GetInputProps,
   OnSubmit,
   OnReset,
+  IsDirty,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
@@ -149,6 +151,8 @@ export function useForm<Values = Record<string, unknown>>({
     reset();
   }, []);
 
+  const isDirty: IsDirty = () => isEqual(values, initialValues) === false;
+
   return {
     values,
     errors,
@@ -167,5 +171,6 @@ export function useForm<Values = Record<string, unknown>>({
     getInputProps,
     onSubmit,
     onReset,
+    isDirty,
   };
 }
