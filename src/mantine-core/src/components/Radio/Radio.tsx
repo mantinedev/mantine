@@ -19,7 +19,7 @@ export type RadioStylesNames = Selectors<typeof useStyles>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames, RadioStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
   /** Radio label */
   label?: React.ReactNode;
 
