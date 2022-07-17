@@ -20,7 +20,8 @@ import { Slider as SliderStylesApi, Button as ButtonStylesApi } from '@mantine/s
 
 # Styles API
 
-All Mantine components support styling of each component part with inline styles or by passing classes.
+With Styles API you can overwrite styles of inner elements in Mantine components with `classNames` or
+`styles` props.
 
 ## Styling with classNames
 
@@ -84,7 +85,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function MyCustomSlider() {
+function Demo() {
   const { classes } = useStyles();
 
   return (
