@@ -36,6 +36,34 @@ function Demo() {
 }
 ```
 
+## Where to render
+
+Usually global styles depend on theme, you can render `Global` component anywhere within [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { Global, MantineProvider } from '@mantine/core';
+
+function MyGlobalStyles() {
+  return (
+    <Global
+      styles={(theme) => ({
+        '*, *::before, *::after': { boxSizing: 'border-box' },
+        // ...other global styles
+      })}
+    />
+  );
+}
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <MyGlobalStyles />
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## Load fonts
 
 To load use array syntax. The following example shows how Mantine docs website loads GreycliffCF font:
@@ -67,34 +95,6 @@ function Demo() {
         },
       ]}
     />
-  );
-}
-```
-
-## Where to render
-
-Usually global styles depend on theme, you can render `Global` component anywhere within [MantineProvider](/theming/mantine-provider/):
-
-```tsx
-import { Global, MantineProvider } from '@mantine/core';
-
-function MyGlobalStyles() {
-  return (
-    <Global
-      styles={(theme) => ({
-        '*, *::before, *::after': { boxSizing: 'border-box' },
-        // ...other global styles
-      })}
-    />
-  );
-}
-
-function Demo() {
-  return (
-    <MantineProvider>
-      <MyGlobalStyles />
-      <App />
-    </MantineProvider>
   );
 }
 ```
