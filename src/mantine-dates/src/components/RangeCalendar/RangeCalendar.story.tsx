@@ -14,7 +14,7 @@ function WrappedRangeCalendar(props: Partial<RangeCalendarProps>) {
 storiesOf('RangeCalendar', module)
   .add('First day of the week sunday', () => <WrappedRangeCalendar firstDayOfWeek="sunday" />)
   .add('2 months', () => <WrappedRangeCalendar amountOfMonths={2} />)
-  .add('3 months', () => <WrappedRangeCalendar amountOfMonths={3} />)
+  .add('3 months', () => <WrappedRangeCalendar amountOfMonths={3} paginateBy={1} />)
   .add('Range styles', () => (
     <WrappedRangeCalendar
       month={new Date(2021, 11)}

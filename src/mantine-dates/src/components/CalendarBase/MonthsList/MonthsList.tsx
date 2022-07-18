@@ -12,6 +12,7 @@ export interface MonthsListProps
   extends DefaultProps<MonthsListStylesNames>,
     Omit<MonthProps, 'styles' | 'classNames' | 'daysRefs' | 'onDayKeyDown'> {
   amountOfMonths: number;
+  paginateBy: number;
   month: Date;
   locale: string;
   allowLevelChange: boolean;
@@ -33,6 +34,7 @@ export interface MonthsListProps
 
 export function MonthsList({
   amountOfMonths,
+  paginateBy,
   month,
   locale,
   minDate,
@@ -69,9 +71,9 @@ export function MonthsList({
             }
             hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
             label={formatMonthLabel({ month: monthDate, locale, format: labelFormat })}
-            onNext={() => onMonthChange(dayjs(month).add(amountOfMonths, 'months').toDate())}
+            onNext={() => onMonthChange(dayjs(month).add(paginateBy, 'months').toDate())}
             onPrevious={() =>
-              onMonthChange(dayjs(month).subtract(amountOfMonths, 'months').toDate())
+              onMonthChange(dayjs(month).subtract(paginateBy, 'months').toDate())
             }
             onNextLevel={onNextLevel}
             nextLevelDisabled={!allowLevelChange}

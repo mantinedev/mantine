@@ -32,6 +32,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       __staticSelector,
       allowSingleDateInRange,
       amountOfMonths,
+      paginateBy,
       ...others
     } = useMantineDefaultProps('RangeCalendar', defaultProps, props);
 
@@ -115,10 +116,12 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         ref={ref}
         __staticSelector={__staticSelector}
         amountOfMonths={amountOfMonths}
+        paginateBy={paginateBy || amountOfMonths}
         hideOutsideDates={amountOfMonths > 1}
         isDateInRange={shouldHighlightDate}
         isDateFirstInRange={isPickedDateFirstInRange}
         isDateLastInRange={isPickedDateLastInRange}
+
         {...others}
       />
     );
