@@ -16,10 +16,10 @@ To use dark color scheme, wrap your application in MantineProvider and specify `
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -36,7 +36,7 @@ You can customize these values the same way as other colors:
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       withGlobalStyles
@@ -60,7 +60,7 @@ function App() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -77,7 +77,7 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -92,7 +92,7 @@ help you set up color scheme context:
 import { useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 
-function App() {
+function Demo() {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -100,7 +100,7 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <YourApp />
+        <App />
       </MantineProvider>
     </ColorSchemeProvider>
   );
@@ -121,7 +121,7 @@ to add `Ctrl/⌘ + J` keyboard shortcut for theme toggle:
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 
-function App() {
+function Demo() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
@@ -136,7 +136,7 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <YourApp />
+        <App />
       </MantineProvider>
     </ColorSchemeProvider>
   );
@@ -161,7 +161,7 @@ import { useState } from 'react';
 import { MantineProvider, ColorSchemeProvider, ColorScheme } from '@mantine/core';
 import { useColorScheme } from '@mantine/hooks';
 
-function App() {
+function Demo() {
   // hook will return either 'dark' or 'light' on client
   // and always 'light' during ssr as window.matchMedia is not available
   const preferredColorScheme = useColorScheme();
@@ -172,7 +172,7 @@ function App() {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-        <YourApp />
+        <App />
       </MantineProvider>
     </ColorSchemeProvider>
   );
@@ -191,7 +191,7 @@ import { GetServerSidePropsContext } from 'next';
 import { useState } from 'react';
 import { AppProps } from 'next/app';
 // install cookies-next package to manage cookies
-import { getCookie, setCookies } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
@@ -202,7 +202,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
     const nextColorScheme = value || (colorScheme === 'dark' ? 'light' : 'dark');
     setColorScheme(nextColorScheme);
     // when color scheme is updated save it to cookie
-    setCookies('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
+    setCookie('mantine-color-scheme', nextColorScheme, { maxAge: 60 * 60 * 24 * 30 });
   };
 
   return (
