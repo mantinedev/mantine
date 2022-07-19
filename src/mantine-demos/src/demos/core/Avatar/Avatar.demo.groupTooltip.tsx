@@ -10,13 +10,13 @@ function Demo() {
     <Tooltip.Group openDelay={300} closeDelay={100}>
       <Avatar.Group spacing="sm">
         <Tooltip label="Salazar Troop" withArrow>
-          <Avatar src={avatars[0]} radius="xl" />
+          <Avatar src="image.png" radius="xl" />
         </Tooltip>
         <Tooltip label="Bandit Crimes" withArrow>
-          <Avatar src={avatars[1]} radius="xl" />
+          <Avatar src="image.png" radius="xl" />
         </Tooltip>
         <Tooltip label="Jane Rata" withArrow>
-          <Avatar src={avatars[2]} radius="xl" />
+          <Avatar src="image.png" radius="xl" />
         </Tooltip>
         <Tooltip
           withArrow
