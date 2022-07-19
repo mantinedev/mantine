@@ -108,30 +108,6 @@ function Demo() {
 }
 ```
 
-## Change root element
-
-You can use Button component both as `button` and `a` elements:
-
-<Demo data={ButtonDemos.component} />
-
-## Usage with react-router and other libraries
-
-You can use Button component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
-or other similar libraries by passing `Link` as component to Button:
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Button component={Link} to="/react-router">
-      React router link
-    </Button>
-  );
-}
-```
-
 ## data- attributes
 
 Button has the following attributes on the root element:
@@ -152,6 +128,42 @@ function Demo() {
         '&[data-loading]': { backgroundColor: 'red' },
       }}
     />
+  );
+}
+```
+
+## Polymorphic component
+
+Button is a [polymorphic component](/guides/polymorphic/), you can change root element:
+
+<Demo data={ButtonDemos.component} />
+
+### Usage with react-router
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} to="/react-router">
+      React router link
+    </Button>
+  );
+}
+```
+
+### Usage with Next.js
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link</Button>
+    </Link>
   );
 }
 ```

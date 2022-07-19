@@ -52,7 +52,9 @@ function Demo() {
 }
 ```
 
-## Change root element
+## Polymorphic component
+
+ActionIcon is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
 import { ActionIcon } from '@mantine/core';
@@ -66,7 +68,7 @@ function Demo() {
 }
 ```
 
-## Usage with react-router
+### Usage with react-router
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -77,6 +79,21 @@ function Demo() {
     <ActionIcon component={Link} to="/react-router">
       React router link
     </ActionIcon>
+  );
+}
+```
+
+### Usage with Next.js
+
+```tsx
+import Link from 'next/link';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <ActionIcon component="a">Next link</ActionIcon>
+    </Link>
   );
 }
 ```
