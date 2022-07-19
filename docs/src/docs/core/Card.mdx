@@ -61,9 +61,9 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 </Card>
 ```
 
-### Custom Card.Section root element
+### Polymorphic Card.Section
 
-`Card.Section` root element can be changed the same way as with Card:
+`Card.Section` is a [polymorphic component](/guides/polymorphic/) component, you can change root element:
 
 <Demo data={CardDemos.linkSection} />
 
@@ -74,36 +74,8 @@ Note that Card relies on mapping direct children and you cannot use fragments or
 
 <Demo data={CardDemos.section} />
 
-## Custom root element
+## Polymorphic component
 
-You can set `component` prop on Card to use provide custom root element,
-for example, you can make whole card a link:
+Card is a [polymorphic component](/guides/polymorphic/) component, you can change root element:
 
 <Demo data={CardDemos.link} />
-
-You can also use React component instead of an element, for example, Link from react-router-dom:
-
-```tsx
-import { Link } from 'react-router-dom';
-import { Card } from '@mantine/core';
-
-function Demo() {
-  return <Card component={Link} to="/my-route/" />;
-}
-```
-
-To use custom component with TypeScript provide type:
-
-```tsx
-import { Card } from '@mantine/core';
-import { Link } from 'react-router-dom';
-
-function Demo() {
-  return (
-    <>
-      <Card<'a'> component="a" href="#" />
-      <Card<typeof Link> component={Link} to="/hello" />
-    </>
-  );
-}
-```
