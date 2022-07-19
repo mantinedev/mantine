@@ -21,19 +21,23 @@ Box itself does not include any styles.
 
 <Demo data={BoxDemos.usage} />
 
-## Custom component
+## Polymorphic component
 
-To use Box with custom component or element set `component` prop to tag name or react component:
+Box is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
-import { ActionIcon } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 function Demo() {
   return (
     <>
-      <ActionIcon<'a'> component="a" href="#" />
-      <ActionIcon<typeof Link> component={Link} to="/hello" />
+      <Box component="a" href="#">
+        Box as anchor
+      </Box>
+      <Box component={Link} to="/hello">
+        Box as react-router-dom link
+      </Box>
     </>
   );
 }
