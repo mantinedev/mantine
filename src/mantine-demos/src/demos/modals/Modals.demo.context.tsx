@@ -4,7 +4,7 @@ import { openContextModal } from '@mantine/modals';
 
 const code = `
 import { Button, Group } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openContextModal } from '@mantine/modals';
 
 function Demo() {
   return (

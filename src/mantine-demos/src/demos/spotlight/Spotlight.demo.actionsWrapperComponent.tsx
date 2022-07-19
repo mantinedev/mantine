@@ -40,7 +40,7 @@ function Demo() {
       actionsWrapperComponent={ActionsWrapper}
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

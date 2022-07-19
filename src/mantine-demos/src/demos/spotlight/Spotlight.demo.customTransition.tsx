@@ -13,7 +13,7 @@ function Demo() {
       transition="slide-down"
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

@@ -12,7 +12,7 @@ function Demo() {
       highlightQuery
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

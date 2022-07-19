@@ -49,7 +49,7 @@ import { SpotlightProvider } from '@mantine/spotlight';
 function Demo() {
   return (
     <MantineProvider>
-      <SpotlightProvider>
+      <SpotlightProvider actions={[]}>
         <App />
       </SpotlightProvider>
     </MantineProvider>
@@ -70,7 +70,7 @@ import { SpotlightProvider } from '@mantine/spotlight';
 
 function Demo() {
   return (
-    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']}>
+    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']} actions={[]}>
       <App />
     </SpotlightProvider>
   );
@@ -99,7 +99,7 @@ import { SpotlightProvider } from '@mantine/spotlight';
 
 function Demo() {
   return (
-    <SpotlightProvider shortcut={null}>
+    <SpotlightProvider shortcut={null} actions={[]}>
       <App />
     </SpotlightProvider>
   );

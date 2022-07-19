@@ -38,11 +38,12 @@ yarn add @mantine/notifications @mantine/core @mantine/hooks
 Wrap your application with NotificationsProvider:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 
 function Demo() {
   return (
-    <MantineProvider>
+    <MantineProvider withNormalizeCSS withGlobalStyles>
       <NotificationsProvider>
         <App />
       </NotificationsProvider>
@@ -87,6 +88,7 @@ Notification state item can have these properties:
 All properties except **message** are optional.
 
 ```tsx
+import { IconX } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
 
 // Bare minimum – message is required for all notifications
@@ -102,7 +104,7 @@ showNotification({
   title: "You've been compromised",
   message: 'Leave the building immediately',
   color: 'red',
-  icon: <Cross1Icon />,
+  icon: <IconX />,
   className: 'my-notification-class',
   style: { backgroundColor: 'red' },
   sx: { backgroundColor: 'red' },

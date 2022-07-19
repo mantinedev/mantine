@@ -15,7 +15,7 @@ function Demo() {
       }
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

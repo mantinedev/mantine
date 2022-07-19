@@ -37,7 +37,6 @@ const actions: SpotlightAction[] = [
   },
 ];
 
-
 function Demo() {
   return (
     <SpotlightProvider

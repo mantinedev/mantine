@@ -12,7 +12,7 @@ function Demo() {
       transitionDuration={0}
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

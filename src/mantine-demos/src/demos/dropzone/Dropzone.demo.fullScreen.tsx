@@ -6,12 +6,13 @@ import { DropzoneDemoChildren } from './_base';
 
 const code = `
 import { useState } from 'react';
-import { Group, Text, useMantineTheme } from '@mantine/core';
+import { Group, Text, useMantineTheme, Button } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
   const [active, setActive] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <>
