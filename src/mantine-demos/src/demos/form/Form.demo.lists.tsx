@@ -25,7 +25,10 @@ function Demo() {
         sx={{ flex: 1 }}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
-      <Switch label="Active" {...form.getInputProps(\`employees.\${index}.active\`)} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
+      />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
         <IconTrash size={16} />
       </ActionIcon>
@@ -85,7 +88,10 @@ function Demo() {
         sx={{ flex: 1 }}
         {...form.getInputProps(`employees.${index}.name`)}
       />
-      <Switch label="Active" {...form.getInputProps(`employees.${index}.active`)} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
+      />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
         <IconTrash size={16} />
       </ActionIcon>

@@ -30,7 +30,11 @@ function Demo() {
         mt="md"
         {...form.getInputProps('user.lastName')}
       />
-      <Checkbox label="I accepts terms & conditions" {...form.getInputProps('terms')} mt="sm" />
+      <Checkbox
+        label="I accepts terms & conditions"
+        mt="sm"
+        {...form.getInputProps('terms', { type: 'checkbox' })}
+      />
 
       <Text size="sm" weight={500} mt="xl">
         Form values:
@@ -67,7 +71,11 @@ function Demo() {
         mt="md"
         {...form.getInputProps('user.lastName')}
       />
-      <Checkbox label="I accepts terms & conditions" {...form.getInputProps('terms')} mt="sm" />
+      <Checkbox
+        label="I accepts terms & conditions"
+        mt="sm"
+        {...form.getInputProps('terms', { type: 'checkbox' })}
+      />
 
       <Text size="sm" weight={500} mt="xl">
         Form values:

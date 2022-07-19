@@ -115,6 +115,8 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 ## List values validation
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({
   initialValues: {
     users: [

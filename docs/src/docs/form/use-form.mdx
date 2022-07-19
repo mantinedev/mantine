@@ -68,6 +68,7 @@ Hook returns an object with the following properties:
 `UseFormReturnType` can be used when you want to pass `form` as a prop to another component:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 import { useForm, UseFormReturnType } from '@mantine/form';
 
 interface FormValues {
@@ -83,7 +84,7 @@ function OccupationInput({ form }: { form: UseFormReturnType<FormValues> }) {
   return <TextInput {...form.getInputProps('name')} />;
 }
 
-function Parent() {
+function Demo() {
   const form = useForm<FormValues>({ initialValues: { name: '', occupation: '' } });
   return (
     <>
