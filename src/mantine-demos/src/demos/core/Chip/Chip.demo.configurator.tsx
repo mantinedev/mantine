@@ -33,7 +33,6 @@ export const configurator: MantineDemo = {
       initialValue: 'outline',
       defaultValue: 'outline',
     },
-    { name: 'spacing', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
   ],
