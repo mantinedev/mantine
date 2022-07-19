@@ -2,7 +2,7 @@ import { DatePicker } from '@mantine/dates';
 import React from 'react';
 
 const codeTemplate = (props: string) => `
-import { Autocomplete } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return <DatePicker placeholder="Pick date" label="Event date"${props} />;
