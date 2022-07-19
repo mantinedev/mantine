@@ -28,8 +28,7 @@ function Demo() {
       description={item.description}
       rightSection={item.rightSection}
       icon={<item.icon size={16} stroke={1.5} />}
-      onClick={() => setActive(index)}
-     ${props}
+      onClick={() => setActive(index)}${props.length === 0 ? '' : `\n     ${props}`}
     />
   ));
 
