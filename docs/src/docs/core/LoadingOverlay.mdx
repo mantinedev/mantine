@@ -52,6 +52,7 @@ function Demo() {
       loaderProps={{ size: 'sm', color: 'pink', variant: 'bars' }}
       overlayOpacity={0.3}
       overlayColor="#c5c5c5"
+      visible
     />
   );
 }
@@ -68,7 +69,7 @@ import { MantineProvider } from '@mantine/core';
 function Demo() {
   return (
     <MantineProvider theme={{ loader: 'bars' }}>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }

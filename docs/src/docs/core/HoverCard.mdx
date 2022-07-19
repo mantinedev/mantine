@@ -48,20 +48,24 @@ function Demo() {
         <button>Native button – ok</button>
       </HoverCard.Target>
 
-      <HoverCard.Target label="OK">
+      {/* OK */}
+      <HoverCard.Target>
         <Badge>Mantine component – ok</Badge>
       </HoverCard.Target>
 
-      <HoverCard.Target label="Throws">Raw string, NOT OK – will throw error</HoverCard.Target>
+      {/* String, NOT OK – will throw error */}
+      <HoverCard.Target>Raw string</HoverCard.Target>
 
       {/* Number, NOT OK – will throw error */}
-      <HoverCard.Target label="Throws">{2}</HoverCard.Target>
+      <HoverCard.Target>{2}</HoverCard.Target>
 
-      <HoverCard.Target label="Throws">
+      {/* Fragment, NOT OK – will throw error */}
+      <HoverCard.Target>
         <>Fragment, NOT OK, will throw error</>
       </HoverCard.Target>
 
-      <HoverCard.Target label="Throws">
+      {/* Multiple nodes, NOT OK – will throw error */}
+      <HoverCard.Target>
         <div>More that one node</div>
         <div>NOT OK, will throw error</div>
       </HoverCard.Target>

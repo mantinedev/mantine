@@ -11,7 +11,7 @@ function Demo() {
         <Button variant="outline">Default arrow</Button>
       </Tooltip>
 
-      <Tooltip label="Arrow with size" withArrow arrowSize={3}>
+      <Tooltip label="Arrow with size" withArrow arrowSize={6}>
         <Button variant="outline">With size</Button>
       </Tooltip>
     </>
@@ -26,7 +26,7 @@ export function Demo() {
       <Tooltip label="Default arrow" withArrow>
         <Button variant="outline">Default arrow</Button>
       </Tooltip>
-      <Tooltip label="Arrow with size" withArrow arrowSize={3}>
+      <Tooltip label="Arrow with size" withArrow arrowSize={6}>
         <Button variant="outline">With size</Button>
       </Tooltip>
     </Group>

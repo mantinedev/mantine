@@ -62,7 +62,7 @@ function Demo() {
             email="hspoonlicker@outlook.com"
           />
         </Menu.Target>
-        <DemoMenuItems withTarget={false} />
+        {/* ...Menu.Items */}
       </Menu>
     </Group>
   );

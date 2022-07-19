@@ -148,9 +148,10 @@ This logic is applied to Tooltip and Tooltip.Floating components:
 
 ```tsx
 import React, { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
 
 // forwardRef function will allow to get root element ref
-const MyBadge = forwardRef<HTMLDivElement, { color: string }>((props, ref) => (
+const MyBadge = forwardRef<HTMLDivElement, { color: string }>(({ color }, ref) => (
   <div ref={ref} color={color}>
     Badge
   </div>
@@ -162,7 +163,7 @@ function MyOtherBadge({
   innerRef,
 }: {
   color: string;
-  innerRef: React.ForwardedRef<HTMLDivElement>;
+  innerRef?: React.ForwardedRef<HTMLDivElement>;
 }) {
   return (
     <div ref={innerRef} color={color}>
@@ -175,11 +176,11 @@ function Demo() {
   return (
     <>
       <Tooltip label="Can be used as is">
-        <MyBadge />
+        <MyBadge color="red" />
       </Tooltip>
 
       <Tooltip label="refProp is required" refProp="innerRef">
-        <MyOtherBadge />
+        <MyOtherBadge color="orange" />
       </Tooltip>
     </>
   );

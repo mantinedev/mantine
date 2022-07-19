@@ -82,7 +82,7 @@ strings, fragments, numbers and multiple elements/components are not supported a
 Custom components must provide a prop to get root element ref, all Mantine components support ref out of the box.
 
 ```tsx
-import { Popover, Badge } from '@mantine/core';
+import { Popover, Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -91,20 +91,24 @@ function Demo() {
         <button>Native button – ok</button>
       </Popover.Target>
 
-      <Popover.Target label="OK">
-        <Badge>Mantine component – ok</Badge>
+      {/* OK */}
+      <Popover.Target>
+        <Button>Mantine component – ok</Button>
       </Popover.Target>
 
-      <Popover.Target label="Throws">Raw string, NOT OK – will throw error</Popover.Target>
+      {/* String, NOT OK – will throw error */}
+      <Popover.Target>Raw string</Popover.Target>
 
       {/* Number, NOT OK – will throw error */}
-      <Popover.Target label="Throws">{2}</Popover.Target>
+      <Popover.Target>{2}</Popover.Target>
 
-      <Popover.Target label="Throws">
+      {/* Fragment, NOT OK – will throw error */}
+      <Popover.Target>
         <>Fragment, NOT OK, will throw error</>
       </Popover.Target>
 
-      <Popover.Target label="Throws">
+      {/* Multiple nodes, NOT OK – will throw error */}
+      <Popover.Target>
         <div>More that one node</div>
         <div>NOT OK, will throw error</div>
       </Popover.Target>
