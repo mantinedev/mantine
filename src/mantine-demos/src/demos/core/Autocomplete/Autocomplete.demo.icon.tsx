@@ -7,7 +7,7 @@ import { Autocomplete } from '@mantine/core';
 import { IconHash } from '@tabler/icons';
 
 function Demo() {
-  return <Autocomplete icon={<IconHash />} />;
+  return <Autocomplete icon={<IconHash />} data={['React', 'Angular', 'Svelte', 'Vue']} />;
 }
 `;
 
