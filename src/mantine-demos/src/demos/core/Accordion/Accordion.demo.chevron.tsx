@@ -9,7 +9,7 @@ import { IconPlus } from '@tabler/icons';
 function Demo() {
   return (
     <Accordion
-      icon={<IconPlus size={16} />}
+      chevron={<IconPlus size={16} />}
       styles={{
         chevron: {
           '&[data-rotate]': {
