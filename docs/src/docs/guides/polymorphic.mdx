@@ -82,6 +82,7 @@ function Demo() {
       component="a"
       href="#"
       // events and ref types cannot be inferred when component prop is set
+      // unless you set type explicitly
       onClick={(event) => console.log(event)}
       ref={(node) => console.log(node)}
     >
@@ -109,6 +110,7 @@ const _Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...other
   <Box
     // define default component, you will be able to override it with `component` prop from ...others
     component="button"
+    ref={ref}
     {...others}
   >
     {children}
