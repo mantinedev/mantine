@@ -37,7 +37,7 @@ const rtlCache = createEmotionCache({
   stylisPlugins: [rtlPlugin],
 });
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       withGlobalStyles
@@ -45,7 +45,7 @@ function App() {
       emotionCache={rtlCache}
       theme={{ dir: 'rtl' }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -65,7 +65,7 @@ const rtlCache = createEmotionCache({
   stylisPlugins: [rtlPlugin],
 });
 
-function App() {
+function Demo() {
   const [rtl, setRtl] = useState(false);
   return (
     <MantineProvider
@@ -76,7 +76,7 @@ function App() {
     >
       <div dir={rtl ? 'rtl' : 'ltr'}>
         <Button onClick={() => setRtl((c) => !c)}>Toggle direction</Button>
-        <YourApp />
+        <App />
       </div>
     </MantineProvider>
   );

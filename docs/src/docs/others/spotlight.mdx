@@ -46,11 +46,11 @@ Note that if you are using [MantineProvider](/theming/mantine-provider/), `Spotl
 import { MantineProvider } from '@mantine/core';
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
       <SpotlightProvider>
-        <YourApp />
+        <App />
       </SpotlightProvider>
     </MantineProvider>
   );
@@ -68,10 +68,10 @@ You can setup multiple shortcuts, for example, Mantine documentation uses the fo
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
     <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']}>
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }
@@ -97,10 +97,10 @@ To disabled keyboard shortcuts set `shortcut={null}`:
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
     <SpotlightProvider shortcut={null}>
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

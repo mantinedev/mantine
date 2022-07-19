@@ -40,11 +40,11 @@ Wrap your application with NotificationsProvider:
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
       <NotificationsProvider>
-        <YourApp />
+        <App />
       </NotificationsProvider>
     </MantineProvider>
   );
@@ -135,10 +135,10 @@ Position cannot be changed per notification. NotificationsProvider supports the 
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
     <NotificationsProvider position="top-right" zIndex={2077}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }
@@ -153,10 +153,10 @@ You can limit maximum amount of notifications that can be displayed by setting
 ```tsx
 import { NotificationsProvider } from '@mantine/notifications';
 
-function App() {
+function Demo() {
   return (
     <NotificationsProvider limit={5}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }
@@ -195,10 +195,10 @@ You can configure auto close timeout with NotificationsProvider:
 import { NotificationsProvider } from '@mantine/notifications';
 
 // All notifications will be closed automatically in 4000ms
-function App() {
+function Demo() {
   return (
     <NotificationsProvider autoClose={4000}>
-      <YourApp />
+      <App />
     </NotificationsProvider>
   );
 }

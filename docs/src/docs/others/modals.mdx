@@ -39,11 +39,11 @@ Wrap your app with `ModalsProvider` component:
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
       <ModalsProvider>
-        <YourApp />
+        <App />
       </ModalsProvider>
     </MantineProvider>
   );
@@ -106,10 +106,10 @@ const TestModal = ({ context, id, innerProps }: ContextModalProps<{ modalBody: s
   </>
 );
 
-function App() {
+function Demo() {
   return (
     <ModalsProvider modals={{ demonstration: TestModal /* ...other modals */ }}>
-      <YourApp />
+      <App />
     </ModalsProvider>
   );
 }
