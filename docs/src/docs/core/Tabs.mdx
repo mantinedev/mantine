@@ -29,10 +29,10 @@ import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [tab, setTab] = useState('first');
+  const [activeTab, setActiveTab] = useState('first');
 
   return (
-    <Tabs value={activeTab} onTabChange={setTab}>
+    <Tabs value={activeTab} onTabChange={setActiveTab}>
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>
@@ -186,7 +186,10 @@ function Demo() {
   const router = useRouter();
 
   return (
-    <Tabs value={router.query.activeTab} onTabChange={(value) => router.push(`/tabs/${value}`)}>
+    <Tabs
+      value={router.query.activeTab as string}
+      onTabChange={(value) => router.push(`/tabs/${value}`)}
+    >
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>
