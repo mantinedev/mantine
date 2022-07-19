@@ -23,7 +23,6 @@ const useStyles = createStyles((_theme, _params, getRef) => ({
   },
 }));
 
-
 function Demo() {
   const { classes } = useStyles();
   return (
