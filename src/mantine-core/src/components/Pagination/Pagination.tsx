@@ -95,7 +95,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
 
-  const { classes, cx, theme } = useStyles(
+  const { classes, theme } = useStyles(
     { color, size, radius },
     { classNames, styles, unstyled, name: 'Pagination' }
   );
@@ -117,10 +117,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
       aria-current={pageNumber === active ? 'page' : undefined}
       aria-label={typeof getItemAriaLabel === 'function' ? getItemAriaLabel(pageNumber) : null}
       tabIndex={pageNumber === 'dots' ? -1 : 0}
-      className={cx(classes.item, {
-        [classes.active]: pageNumber === active,
-        [classes.dots]: pageNumber === 'dots',
-      })}
+      data-dots={pageNumber === 'dots' || undefined}
+      data-active={pageNumber === active || undefined}
+      className={classes.item}
       onClick={pageNumber !== 'dots' ? () => setPage(pageNumber) : undefined}
     />
   ));

@@ -14,7 +14,7 @@ const sizes = {
   xl: 44,
 };
 
-export default createStyles((theme, { size, radius, color }: PaginationStylesParams, getRef) => {
+export default createStyles((theme, { size, radius, color }: PaginationStylesParams) => {
   const colors = theme.fn.variant({ color, variant: 'filled' });
 
   return {
@@ -38,26 +38,25 @@ export default createStyles((theme, { size, radius, color }: PaginationStylesPar
       lineHeight: 1,
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
-      [`&:active:not(:disabled):not(.${getRef('dots')})`]: theme.activeStyles,
+      '&:active:not(:disabled):not([data-dots])': theme.activeStyles,
 
       '&:disabled': {
         opacity: 0.6,
         cursor: 'not-allowed',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
       },
-    },
 
-    active: {
-      borderColor: 'transparent',
-      color: colors.color,
-      backgroundColor: colors.background,
-    },
+      '&[data-dots]': {
+        cursor: 'default',
+        borderColor: 'transparent',
+        backgroundColor: 'transparent',
+      },
 
-    dots: {
-      ref: getRef('dots'),
-      cursor: 'default',
-      borderColor: 'transparent',
-      backgroundColor: 'transparent',
+      '&[data-active]': {
+        borderColor: 'transparent',
+        color: colors.color,
+        backgroundColor: colors.background,
+      },
     },
   };
 });
