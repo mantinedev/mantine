@@ -309,12 +309,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               <Input<'input'>
                 classNames={{
                   ...classNames,
-                  input: cx(
-                    classes.input,
-                    { [classes.freeInput]: allowFreeInput },
-                    classNames?.input
-                  ),
+                  input: cx(classes.input, classNames?.input),
                 }}
+                data-free-input={allowFreeInput || undefined}
                 styles={styles}
                 onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
                 onKeyDown={handleKeyDown}

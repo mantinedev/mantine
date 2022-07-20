@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core';
 
-export default createStyles((theme, _params, getRef) => ({
+export default createStyles((theme) => ({
   wrapper: {
     ...theme.fn.fontStyles(),
     position: 'relative',
@@ -11,13 +11,12 @@ export default createStyles((theme, _params, getRef) => ({
     cursor: 'pointer',
     whiteSpace: 'nowrap',
 
-    [`&:not(.${getRef('freeInput')})::selection`]: {
+    '&:not([data-free-input])::selection': {
       backgroundColor: 'transparent',
     },
-  },
 
-  freeInput: {
-    ref: getRef('freeInput'),
-    cursor: 'text',
+    '&[data-free-input]': {
+      cursor: 'text',
+    },
   },
 }));

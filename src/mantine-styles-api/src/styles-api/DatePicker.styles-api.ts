@@ -6,7 +6,6 @@ import { Calendar } from './Calendar.styles-api';
 export const DatePicker: Record<DatePickerStylesNames, string> = {
   wrapper: 'Wrapper around input and dropdown',
   dropdown: 'Dropdown with calendar',
-  freeInput: 'Input modifier when free input is allowed',
   ...Input,
   ...InputWrapper,
   ...Calendar,
