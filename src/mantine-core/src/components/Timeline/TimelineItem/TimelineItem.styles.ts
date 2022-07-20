@@ -10,26 +10,14 @@ interface TimelineItemStyles {
 }
 
 export default createStyles(
-  (
-    theme,
-    { bulletSize, color, radius, align, lineVariant, lineWidth }: TimelineItemStyles,
-    getRef
-  ) => {
+  (theme, { bulletSize, color, radius, align, lineVariant, lineWidth }: TimelineItemStyles) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
       itemBody: {},
       itemContent: {},
 
-      itemBulletWithChild: {
-        ref: getRef('itemBulletWithChild'),
-        borderWidth: 1,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      },
-
       itemBullet: {
-        ref: getRef('itemBullet'),
         boxSizing: 'border-box',
         width: bulletSize,
         height: bulletSize,
@@ -46,6 +34,23 @@ export default createStyles(
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.white,
+
+        '&[data-with-child]': {
+          borderWidth: 1,
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3],
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+        },
+
+        '&[data-active]': {
+          borderColor: colors.background,
+          backgroundColor: theme.white,
+
+          '&[data-with-child]': {
+            backgroundColor: colors.background,
+            color: theme.white,
+          },
+        },
       },
 
       item: {
@@ -77,23 +82,11 @@ export default createStyles(
           content: '""',
           display: 'none',
         },
-      },
 
-      itemLineActive: {
-        '&::before': {
-          borderLeftColor: colors.background,
-        },
-      },
-
-      itemActive: {
-        [`& .${getRef('itemBullet')}`]: {
-          borderColor: colors.background,
-          backgroundColor: theme.white,
-        },
-
-        [`& .${getRef('itemBulletWithChild')}`]: {
-          backgroundColor: colors.background,
-          color: theme.white,
+        '&[data-line-active]': {
+          '&::before': {
+            borderLeftColor: colors.background,
+          },
         },
       },
 

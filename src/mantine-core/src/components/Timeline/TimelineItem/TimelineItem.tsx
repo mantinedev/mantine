@@ -68,14 +68,16 @@ export function TimelineItem({
 
   return (
     <Box
-      className={cx(
-        classes.item,
-        { [classes.itemLineActive]: lineActive, [classes.itemActive]: active },
-        className
-      )}
+      className={cx(classes.item, className)}
+      data-line-active={lineActive || undefined}
+      data-active={active || undefined}
       {...others}
     >
-      <div className={cx(classes.itemBullet, { [classes.itemBulletWithChild]: bullet })}>
+      <div
+        className={classes.itemBullet}
+        data-with-child={!!bullet || undefined}
+        data-active={active || undefined}
+      >
         {bullet}
       </div>
 
