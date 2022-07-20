@@ -14,6 +14,7 @@ import {
   Selectors,
   extractSystemStyles,
   Popover,
+  ModalProps,
 } from '@mantine/core';
 import { useMergedRef, useId } from '@mantine/hooks';
 import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
@@ -90,6 +91,9 @@ export interface DatePickerBaseSharedProps
 
   /** Events that should trigger outside clicks */
   clickOutsideEvents?: string[];
+
+  /** Props spread to Modal component */
+  modalProps?: Partial<ModalProps>;
 
   /** Modal z-index */
   modalZIndex?: React.CSSProperties['zIndex'];
@@ -187,6 +191,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       unstyled,
       inputContainer,
       inputWrapperOrder,
+      modalProps,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -347,6 +352,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
             </Popover.Dropdown>
           ) : (
             <Modal
+              {...modalProps}
               opened={dropdownOpened}
               onClose={closeDropdown}
               withCloseButton={false}
