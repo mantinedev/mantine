@@ -26,6 +26,7 @@ export interface DayProps
   focusable?: boolean;
   hideOutsideDates?: boolean;
   renderDay?(date: Date): React.ReactNode;
+  stopPropagation?: boolean;
 }
 
 export const Day = forwardRef<HTMLButtonElement, DayProps>(
@@ -52,6 +53,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
       renderDay,
       unstyled,
       disabled,
+      stopPropagation,
       ...others
     }: DayProps,
     ref
@@ -70,6 +72,7 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         onMouseEnter={(event) => onMouseEnter(value, event)}
         tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
         data-autofocus={getDayAutofocus({ hasValue, selected, firstInMonth })}
+        data-mantine-stop-propagation={stopPropagation || undefined}
         data-outside={(outside && !disabled) || undefined}
         data-weekend={(weekend && !disabled) || undefined}
         data-selected={(selected && !disabled) || undefined}

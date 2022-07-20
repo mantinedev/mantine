@@ -67,6 +67,9 @@ export interface MonthSettings {
 
   /** Should date be displayed as last in range */
   isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
+
+  /** Internal: determines whether propagation in Modal and Drawer should be stopped, defaults to true */
+  __stopPropagation?: boolean;
 }
 
 export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
@@ -122,6 +125,7 @@ const defaultProps: Partial<MonthProps> = {
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
   weekendDays: [0, 6],
+  __stopPropagation: true,
 };
 
 export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
@@ -158,6 +162,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
     weekdayLabelFormat,
     unstyled,
     weekendDays,
+    __stopPropagation,
     ...others
   } = useComponentDefaultProps('Month', defaultProps, props);
 
@@ -291,6 +296,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
             styles={styles}
             classNames={classNames}
             renderDay={renderDay}
+            stopPropagation={__stopPropagation}
           />
         </td>
       );

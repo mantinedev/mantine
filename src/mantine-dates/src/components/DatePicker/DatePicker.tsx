@@ -285,6 +285,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           excludeDate={excludeDate}
           __staticSelector="DatePicker"
           fullWidth={dropdownType === 'modal'}
+          __stopPropagation={dropdownType !== 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}

@@ -129,6 +129,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       renderDay,
       unstyled,
       weekendDays,
+      __stopPropagation,
       ...others
     }: CalendarBaseProps,
     ref
@@ -330,6 +331,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             isDateLastInRange={isDateLastInRange}
             unstyled={unstyled}
             weekendDays={weekendDays}
+            __stopPropagation={__stopPropagation}
           />
         )}
       </Box>
