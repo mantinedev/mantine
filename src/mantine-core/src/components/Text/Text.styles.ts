@@ -79,7 +79,10 @@ export default createStyles(
         ...getLineClamp(lineClamp),
         color: getTextColor({ color, theme, variant }),
         fontFamily: inherit ? 'inherit' : theme.fontFamily,
-        fontSize: inherit ? 'inherit' : theme.fn.size({ size, sizes: theme.fontSizes }),
+        fontSize:
+          inherit || size === undefined
+            ? 'inherit'
+            : theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
         textDecoration: underline ? 'underline' : 'none',
         WebkitTapHighlightColor: 'transparent',

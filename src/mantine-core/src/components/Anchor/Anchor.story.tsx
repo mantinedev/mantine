@@ -26,3 +26,11 @@ export function WithTextProps() {
     </div>
   );
 }
+
+export function InheritFontSize() {
+  return (
+    <div style={{ padding: 40, fontSize: 50 }}>
+      <Anchor href="https://mantine.dev/">Should be 50px</Anchor>
+    </div>
+  );
+}

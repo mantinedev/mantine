@@ -49,7 +49,6 @@ export interface TextProps extends DefaultProps {
 }
 
 const defaultProps: Partial<TextProps> = {
-  size: 'md',
   variant: 'text',
 };
 
