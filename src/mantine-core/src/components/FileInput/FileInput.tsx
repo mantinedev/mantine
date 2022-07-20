@@ -27,13 +27,13 @@ export interface FileInputProps<Multiple extends boolean = false>
   wrapperProps?: Record<string, any>;
 
   /** Called when user picks files */
-  onChange?(payload: Multiple extends true ? File[] : File): void;
+  onChange?(payload: Multiple extends true ? File[] : File | null): void;
 
   /** Controlled input value */
-  value?: Multiple extends true ? File[] : File;
+  value?: Multiple extends true ? File[] : File | null;
 
   /** Uncontrolled input default value */
-  defaultValue?: Multiple extends true ? File[] : File;
+  defaultValue?: Multiple extends true ? File[] : File | null;
 
   /** Input size */
   size?: MantineSize;
@@ -51,7 +51,7 @@ export interface FileInputProps<Multiple extends boolean = false>
   form?: string;
 
   /** Current value renderer */
-  valueComponent?: React.FC<{ value: File | File[] }>;
+  valueComponent?: React.FC<{ value: null | File | File[] }>;
 
   /** Allow to clear value */
   clearable?: boolean;
@@ -64,7 +64,7 @@ export interface FileInputProps<Multiple extends boolean = false>
 }
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
-  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value.name}</span>
+  <span>{Array.isArray(value) ? value.map((file) => file.name).join(', ') : value?.name}</span>
 );
 
 const defaultProps: Partial<FileInputProps> = {
