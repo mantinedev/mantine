@@ -109,17 +109,22 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
 
     const _iconSize = theme.fn.size({ size, sizes: defaultIconSizes });
     const _icon = state === 'stepCompleted' ? null : state === 'stepProgress' ? progressIcon : icon;
+    const dataAttributes = {
+      'data-progress': state === 'stepProgress' || undefined,
+      'data-completed': state === 'stepCompleted' || undefined,
+    };
 
     return (
       <UnstyledButton
-        className={cx(classes.step, classes[state], className)}
+        className={cx(classes.step, className)}
         tabIndex={allowStepClick ? 0 : -1}
         ref={ref}
+        {...dataAttributes}
         {...others}
       >
         {withIcon && (
           <div className={classes.stepWrapper}>
-            <div className={classes.stepIcon}>
+            <div className={classes.stepIcon} {...dataAttributes}>
               <Transition mounted={state === 'stepCompleted'} transition="pop" duration={200}>
                 {(transitionStyles) => (
                   <div className={classes.stepCompletedIcon} style={transitionStyles}>

@@ -18,11 +18,7 @@ export const iconSizes = {
 };
 
 export default createStyles(
-  (
-    theme,
-    { color, iconSize, size, radius, allowStepClick, iconPosition }: StepStylesParams,
-    getRef
-  ) => {
+  (theme, { color, iconSize, size, radius, allowStepClick, iconPosition }: StepStylesParams) => {
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
@@ -47,7 +43,6 @@ export default createStyles(
       },
 
       stepIcon: {
-        ref: getRef('stepIcon'),
         boxSizing: 'border-box',
         height: _iconSize,
         width: _iconSize,
@@ -65,6 +60,16 @@ export default createStyles(
         fontWeight: 700,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+
+        '&[data-progress]': {
+          borderColor: colors.background,
+        },
+
+        '&[data-completed]': {
+          backgroundColor: colors.background,
+          borderColor: colors.background,
+          color: theme.white,
+        },
       },
 
       stepCompletedIcon: {
@@ -73,20 +78,6 @@ export default createStyles(
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.white,
-      },
-
-      stepProgress: {
-        [`& .${getRef('stepIcon')}`]: {
-          borderColor: colors.background,
-        },
-      },
-
-      stepCompleted: {
-        [`& .${getRef('stepIcon')}`]: {
-          backgroundColor: colors.background,
-          borderColor: colors.background,
-          color: theme.white,
-        },
       },
 
       stepBody: {
