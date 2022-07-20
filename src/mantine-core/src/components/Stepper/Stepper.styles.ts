@@ -43,7 +43,7 @@ export default createStyles(
         marginLeft: iconPosition === 'left' ? separatorOffset : 0,
         marginRight: iconPosition === 'right' ? separatorOffset : 0,
         marginTop: theme.spacing.xs / 2,
-        marginBottom: theme.spacing.xs / 2,
+        marginBottom: theme.spacing.xs - 2,
       },
     } as const;
 
