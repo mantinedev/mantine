@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Slugger from 'github-slugger';
 import { navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
-import { Text, useMantineTheme } from '@mantine/core';
+import { Text, ScrollArea, useMantineTheme } from '@mantine/core';
 import { IconList } from '@tabler/icons';
 import useStyles from './TableOfContents.styles';
 
@@ -97,7 +97,9 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
             <IconList size={20} stroke={1.5} />
             <Text className={classes.title}>Table of contents</Text>
           </div>
-          <div className={classes.items}>{items}</div>
+          <ScrollArea.Autosize maxHeight="calc(100vh - 140px)" type="scroll">
+            <div className={classes.items}>{items}</div>
+          </ScrollArea.Autosize>
         </div>
       </div>
     </nav>
