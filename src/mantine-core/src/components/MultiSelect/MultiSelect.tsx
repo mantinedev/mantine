@@ -75,7 +75,7 @@ export interface MultiSelectProps
   shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?(query: string): SelectItem;
+  onCreate?(query: string): SelectItem | string;
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: any;
@@ -316,7 +316,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     } else {
       if (item.creatable && typeof onCreate === 'function') {
         const createdItem = onCreate(item.value);
-        setValue([..._value, createdItem.value]);
+        if (typeof createdItem === 'string') {
+          setValue([..._value, createdItem]);
+        } else {
+          setValue([..._value, createdItem.value]);
+        }
       } else {
         setValue([..._value, item.value]);
       }
@@ -329,10 +333,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         setHovered(filteredData.length - 2);
       }
     }
-
-    // if (item.creatable) {
-    //   typeof onCreate === 'function' && onCreate(item.value);
-    // }
   };
 
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {

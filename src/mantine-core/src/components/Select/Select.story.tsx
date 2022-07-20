@@ -90,6 +90,29 @@ function Creatable() {
   );
 }
 
+function CreatableString() {
+  const [value, setValue] = useState('react');
+  const [creatableData, setData] = useState(['React', 'Angular']);
+
+  return (
+    <Select
+      value={value}
+      onChange={setValue}
+      label="Creatable Select"
+      data={creatableData}
+      placeholder="Select items"
+      nothingFound="Nothing found"
+      searchable
+      creatable
+      onCreate={(query) => {
+        setData((c) => [...c, query]);
+        return query;
+      }}
+      getCreateLabel={(query) => `+ Create ${query}`}
+    />
+  );
+}
+
 function DynamicLabels(props: Partial<SelectProps>) {
   const [value, setValue] = useState(null);
   const [dynamicData, setDynamicData] = useState(data);
@@ -192,6 +215,7 @@ storiesOf('Select', module)
   .add('Creatable', () => (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <Creatable />
+      <CreatableString />
     </div>
   ))
   .add('Deselect item', () => (
