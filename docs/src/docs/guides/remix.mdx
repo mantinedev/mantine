@@ -28,7 +28,7 @@ Init new application:
 npx create-remix@latest my-mantine-app
 ```
 
-<PackagesInstallation extraPackages={['@mantine/ssr']} />
+<PackagesInstallation extraPackages={['@mantine/remix', '@emotion/server']} />
 
 Replace your `entry.server.tsx` file with
 
@@ -36,7 +36,9 @@ Replace your `entry.server.tsx` file with
 import { renderToString } from 'react-dom/server';
 import { RemixServer } from '@remix-run/react';
 import type { EntryContext } from '@remix-run/node';
-import { injectStylesIntoStaticMarkup } from '@mantine/ssr';
+import { injectStyles, createStylesServer } from '@mantine/remix';
+
+const server = createStylesServer();
 
 export default function handleRequest(
   request: Request,
@@ -44,22 +46,23 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
+  let markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
   responseHeaders.set('Content-Type', 'text/html');
 
-  return new Response(`<!DOCTYPE html>${injectStylesIntoStaticMarkup(markup)}`, {
+  return new Response(`<!DOCTYPE html>${injectStyles(markup, server)}`, {
     status: responseStatusCode,
     headers: responseHeaders,
   });
 }
 ```
 
-Add [MantineProvider](/theming/mantine-provider/) to the `root.tsx` file:
+Add [MantineProvider](/theming/mantine-provider/) and `StylesPlaceholder` to the `root.tsx` file:
 
 ```tsx
 import type { MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import { MantineProvider } from '@mantine/core';
+import { StylesPlaceholder } from '@mantine/remix';
 import { theme } from './theme';
 
 export const meta: MetaFunction = () => ({
@@ -75,6 +78,7 @@ export default function App() {
         <head>
           <Meta />
           <Links />
+          <StylesPlaceholder />
         </head>
         <body>
           <Outlet />
@@ -86,6 +90,21 @@ export default function App() {
     </MantineProvider>
   );
 }
+```
+
+Replace `entry.client.tsx` with
+
+```tsx
+import { RemixBrowser } from '@remix-run/react';
+import { hydrate } from 'react-dom';
+import { ClientProvider } from '@mantine/remix';
+
+hydrate(
+  <ClientProvider>
+    <RemixBrowser />
+  </ClientProvider>,
+  document
+);
 ```
 
 All set! Start development server:
