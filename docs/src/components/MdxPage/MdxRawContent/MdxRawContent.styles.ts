@@ -20,7 +20,7 @@ export default createStyles((theme, { withToc }: { withToc: boolean }) => ({
   container: {
     marginTop: theme.spacing.xl,
     width: withToc ? `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)` : '100%',
-    maxWidth: withToc ? CONTENT_WIDTH : '100%',
+    maxWidth: withToc ? CONTENT_WIDTH : CONTENT_WIDTH + TABLE_OF_CONTENTS_WIDTH,
     marginLeft: 'auto',
     marginRight: 'auto',
 
