@@ -4,12 +4,13 @@ export interface ScrollAreaStylesParams {
   scrollbarSize: number;
   offsetScrollbars: boolean;
   scrollbarHovered: boolean;
+  hidden: boolean;
 }
 
 export default createStyles(
   (
     theme,
-    { scrollbarSize, offsetScrollbars, scrollbarHovered }: ScrollAreaStylesParams,
+    { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden }: ScrollAreaStylesParams,
     getRef
   ) => ({
     root: {
@@ -23,7 +24,7 @@ export default createStyles(
     },
 
     scrollbar: {
-      display: 'flex',
+      display: hidden ? 'none' : 'flex',
       userSelect: 'none',
       touchAction: 'none',
       boxSizing: 'border-box',
@@ -65,6 +66,7 @@ export default createStyles(
       borderRadius: scrollbarSize,
       position: 'relative',
       transition: 'background-color 150ms ease',
+      display: hidden ? 'none' : undefined,
 
       '&::before': {
         content: '""',
@@ -83,6 +85,7 @@ export default createStyles(
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
       transition: 'opacity 150ms ease',
       opacity: scrollbarHovered ? 1 : 0,
+      display: hidden ? 'none' : undefined,
     },
   })
 );

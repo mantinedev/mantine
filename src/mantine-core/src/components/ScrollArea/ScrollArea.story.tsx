@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import { ScrollArea } from './ScrollArea';
+
+export default { title: 'ScrollArea' };
 
 const content = Array(10)
   .fill(0)
@@ -12,34 +13,24 @@ const content = Array(10)
     </p>
   ));
 
-function OnScrollChange() {
+export function OnScrollChange() {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
   return (
-    <>
+    <div style={{ padding: 40, maxWidth: 300 }}>
       <ScrollArea style={{ height: 200 }} onScrollPositionChange={onScrollPositionChange}>
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>
       <div>
         scroll position x: {scrollPosition.x}, y: {scrollPosition.y}
       </div>
-    </>
+    </div>
   );
 }
 
-storiesOf('ScrollArea', module)
-  .add('Max height', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
-      <div style={{ maxHeight: 300, display: 'flex' }}>
-        <ScrollArea style={{ backgroundColor: 'red' }}>{content}</ScrollArea>
-      </div>
-
-      <div style={{ maxHeight: 300, display: 'flex', marginTop: 30 }}>
-        <ScrollArea style={{ backgroundColor: 'red', flex: 1 }}>Not scrollable</ScrollArea>
-      </div>
-    </div>
-  ))
-  .add('On scroll position change', () => (
-    <div style={{ padding: 40, maxWidth: 300 }}>
-      <OnScrollChange />
-    </div>
-  ));
+export function NeverType() {
+  return (
+    <ScrollArea style={{ height: 200 }} type="never">
+      <div style={{ width: 600 }}>{content}</div>
+    </ScrollArea>
+  );
+}

@@ -19,7 +19,7 @@ export interface ScrollAreaProps
   scrollbarSize?: number;
 
   /** Scrollbars type */
-  type?: 'auto' | 'always' | 'scroll' | 'hover';
+  type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
   /** Scroll hide delay in ms, for scroll and hover types only */
   scrollHideDelay?: number;
@@ -64,13 +64,13 @@ export const _ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>((props, r
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
   const theme = useMantineTheme();
   const { classes, cx } = useStyles(
-    { scrollbarSize, offsetScrollbars, scrollbarHovered },
+    { scrollbarSize, offsetScrollbars, scrollbarHovered, hidden: type === 'never' },
     { name: 'ScrollArea', classNames, styles, unstyled }
   );
 
   return (
     <RadixScrollArea.Root
-      type={type}
+      type={type === 'never' ? 'always' : type}
       scrollHideDelay={scrollHideDelay}
       dir={dir || theme.dir}
       ref={ref}
