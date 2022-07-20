@@ -125,11 +125,8 @@
     "yargs": "^17.0.1"
   },
   "dependencies": {
-    "@emotion/cache": "11.9.3",
     "@emotion/react": "11.9.3",
-    "@emotion/serialize": "1.0.4",
     "@emotion/server": "11.4.0",
-    "@emotion/utils": "1.1.0",
     "@floating-ui/react-dom-interactions": "0.6.6",
     "@radix-ui/react-scroll-area": "0.1.4",
     "@tabler/icons": "^1.68.0",

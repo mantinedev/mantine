@@ -28,16 +28,12 @@
   ],
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@emotion/react": ">=11.9.0",
+    "@emotion/server": ">=11.4.0"
   },
   "dependencies": {
-    "@emotion/server": "11.4.0",
     "@mantine/styles": "5.0.0-alpha.19",
-    "@emotion/cache": "11.9.3",
-    "@emotion/react": "11.9.3",
-    "@emotion/serialize": "1.0.4",
-    "@emotion/utils": "1.1.0",
-    "csstype": "3.0.9",
     "html-react-parser": "1.4.12"
   },
   "devDependencies": {}

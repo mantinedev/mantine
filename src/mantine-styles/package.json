@@ -27,14 +27,11 @@
   ],
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@emotion/react": ">=11.9.0"
   },
   "dependencies": {
     "clsx": "1.1.1",
-    "@emotion/cache": "11.9.3",
-    "@emotion/react": "11.9.3",
-    "@emotion/serialize": "1.0.4",
-    "@emotion/utils": "1.1.0",
     "csstype": "3.0.9"
   },
   "devDependencies": {}
