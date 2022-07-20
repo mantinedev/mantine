@@ -29,7 +29,7 @@ Add `dir="rtl"` to `html` element:
 Add `stylis-plugin-rtl` and `theme.dir` to your [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, createEmotionCache } from '@mantine/core';
 import rtlPlugin from 'stylis-plugin-rtl';
 
 const rtlCache = createEmotionCache({
