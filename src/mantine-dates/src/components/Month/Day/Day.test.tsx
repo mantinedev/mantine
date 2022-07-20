@@ -42,11 +42,6 @@ describe('@mantine/core/Month/Day', () => {
     expect(spy).toHaveBeenCalledWith(defaultProps.value, expect.anything());
   });
 
-  it('sets data-mantine-stop-propagation attribute', () => {
-    render(<Day {...defaultProps} />);
-    expect(screen.getByRole('button')).toHaveAttribute('data-mantine-stop-propagation', 'true');
-  });
-
   it('render correct label with given date value', () => {
     render(<Day {...defaultProps} />);
     expect(screen.getByRole('button').textContent).toBe(defaultProps.value.getDate().toString());

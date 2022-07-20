@@ -70,7 +70,6 @@ export const Day = forwardRef<HTMLButtonElement, DayProps>(
         onMouseEnter={(event) => onMouseEnter(value, event)}
         tabIndex={getDayTabIndex({ focusable, hasValue, selected, firstInMonth })}
         data-autofocus={getDayAutofocus({ hasValue, selected, firstInMonth })}
-        data-mantine-stop-propagation
         data-outside={(outside && !disabled) || undefined}
         data-weekend={(weekend && !disabled) || undefined}
         data-selected={(selected && !disabled) || undefined}
