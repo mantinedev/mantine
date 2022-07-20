@@ -28,11 +28,15 @@ describe('@mantine/core/Timeline', () => {
     const { container: secondActive } = render(<Timeline {...defaultProps} active={1} />);
     const { container: thirdActive } = render(<Timeline {...defaultProps} active={2} />);
 
-    expect(secondActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(2);
-    expect(secondActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(1);
+    expect(secondActive.querySelectorAll('.mantine-Timeline-item[data-active]')).toHaveLength(2);
+    expect(secondActive.querySelectorAll('.mantine-Timeline-item[data-line-active]')).toHaveLength(
+      1
+    );
 
-    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemActive')).toHaveLength(3);
-    expect(thirdActive.querySelectorAll('.mantine-Timeline-itemLineActive')).toHaveLength(2);
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-item[data-active]')).toHaveLength(3);
+    expect(thirdActive.querySelectorAll('.mantine-Timeline-item[data-line-active]')).toHaveLength(
+      2
+    );
   });
 
   it('exposes TimelineItem as Timeline.Item', () => {
