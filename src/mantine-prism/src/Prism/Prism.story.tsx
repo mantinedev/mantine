@@ -36,7 +36,9 @@ export const WithTabs = () => (
       </Prism.TabsList>
 
       <Prism.Panel language="tsx" value="react">
-        import React from
+        Line that is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur,
+        adipisicing elit. Porro vel sunt sint ex id magni eaque excepturi, officiis sapiente magnam
+        tenetur assumenda blanditiis non, ea provident eos nemo reiciendis sequi.
       </Prism.Panel>
       <Prism.Panel language="css" value="css">
         hello
