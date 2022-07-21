@@ -8,11 +8,11 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "sideEffects": false,
-  "homepage": "https://mantine.dev/others/prism/",
+  "homepage": "https://mantine.dev/others/dropzone/",
   "repository": {
     "url": "https://github.com/mantinedev/mantine.git",
     "type": "git",
-    "directory": "src/mantine-prism"
+    "directory": "src/mantine-dropzone"
   },
   "keywords": [
     "react",
