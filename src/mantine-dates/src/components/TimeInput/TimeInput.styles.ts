@@ -9,7 +9,6 @@ export default createStyles((theme, { size }: TimeInputStylesParams) => ({
   amPmInput: {},
 
   disabled: {
-    opacity: 0.6,
     cursor: 'not-allowed',
   },
 
