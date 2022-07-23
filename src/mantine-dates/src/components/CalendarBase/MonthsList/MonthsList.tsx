@@ -72,9 +72,7 @@ export function MonthsList({
             hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
             label={formatMonthLabel({ month: monthDate, locale, format: labelFormat })}
             onNext={() => onMonthChange(dayjs(month).add(paginateBy, 'months').toDate())}
-            onPrevious={() =>
-              onMonthChange(dayjs(month).subtract(paginateBy, 'months').toDate())
-            }
+            onPrevious={() => onMonthChange(dayjs(month).subtract(paginateBy, 'months').toDate())}
             onNextLevel={onNextLevel}
             nextLevelDisabled={!allowLevelChange}
             size={size}

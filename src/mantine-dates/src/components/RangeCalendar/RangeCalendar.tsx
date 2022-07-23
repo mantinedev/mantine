@@ -121,7 +121,6 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         isDateInRange={shouldHighlightDate}
         isDateFirstInRange={isPickedDateFirstInRange}
         isDateLastInRange={isPickedDateLastInRange}
-
         {...others}
       />
     );
