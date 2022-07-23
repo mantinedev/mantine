@@ -12,7 +12,10 @@ export const { getCache } = (() => {
 
   function _getCache(options?: Options) {
     if (cache === undefined || _key !== options?.key) {
-      _key = options?.key || 'mantine';
+      if (process.env.NODE_ENV === 'development' && options && !options.key) {
+        console.error('`key` is required for `emotionOptions`');
+      }
+      _key = options?.key;
       cache = createCache(options?.key ? options : defaultCacheOptions);
     }
 
