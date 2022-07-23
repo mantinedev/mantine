@@ -21,7 +21,7 @@ export function useDebouncedValue<T = any>(value: T, wait: number, options = { l
         }, wait);
       }
     }
-  }, [value, options.leading]);
+  }, [value, options.leading, wait]);
 
   useEffect(() => {
     mountedRef.current = true;
