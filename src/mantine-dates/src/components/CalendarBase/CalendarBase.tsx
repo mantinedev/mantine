@@ -99,7 +99,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       onMonthChange,
       locale,
       amountOfMonths = 1,
-      paginateBy,
+      paginateBy = amountOfMonths,
       size = 'sm',
       allowLevelChange = true,
       initialLevel = 'date',
