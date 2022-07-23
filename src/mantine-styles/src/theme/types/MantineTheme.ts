@@ -37,7 +37,7 @@ interface MantineThemeFunctions {
   largerThan(breakpoint: MantineNumberSize): string;
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
-  radius(size: MantineNumberSize | (string & {})): string | number;
+  radius(size?: MantineNumberSize | (string & {})): string | number;
   variant(payload: VariantInput): VariantOutput;
   primaryShade(colorScheme?: ColorScheme): Shade;
   hover(hoverStyle: CSSObject): any;
