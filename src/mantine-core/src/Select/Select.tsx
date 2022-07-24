@@ -589,6 +589,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
                 onClear: handleClear,
                 error: wrapperProps.error,
                 clearButtonTabIndex,
+                disabled,
               })}
             />
           </div>
