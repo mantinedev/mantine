@@ -6,6 +6,7 @@ import { MonthsList, MonthsListProps } from './MonthsList';
 
 const defaultProps: MonthsListProps = {
   amountOfMonths: 1,
+  paginateBy: 1,
   month: new Date(2021, 11, 1),
   locale: 'en',
   allowLevelChange: true,

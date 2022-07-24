@@ -32,6 +32,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
       __staticSelector,
       allowSingleDateInRange,
       amountOfMonths,
+      paginateBy,
       ...others
     } = useComponentDefaultProps('RangeCalendar', defaultProps, props);
 
@@ -115,6 +116,7 @@ export const RangeCalendar = forwardRef<HTMLDivElement, RangeCalendarProps>(
         ref={ref}
         __staticSelector={__staticSelector}
         amountOfMonths={amountOfMonths}
+        paginateBy={paginateBy || amountOfMonths}
         hideOutsideDates={amountOfMonths > 1}
         isDateInRange={shouldHighlightDate}
         isDateFirstInRange={isPickedDateFirstInRange}

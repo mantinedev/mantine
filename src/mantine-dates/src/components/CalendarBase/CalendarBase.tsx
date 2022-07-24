@@ -29,6 +29,9 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Amount of months */
   amountOfMonths?: number;
 
+  /** Paginate by amount of months */
+  paginateBy?: number;
+
   /** Selected value */
   value?: Date | Date[] | null;
 
@@ -96,6 +99,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       onMonthChange,
       locale,
       amountOfMonths = 1,
+      paginateBy = amountOfMonths,
       size = 'sm',
       allowLevelChange = true,
       initialLevel = 'date',
@@ -295,6 +299,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         {selectionState === 'date' && (
           <MonthsList
             amountOfMonths={amountOfMonths}
+            paginateBy={paginateBy}
             month={_month}
             locale={finalLocale}
             minDate={minDate}
