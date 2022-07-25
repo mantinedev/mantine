@@ -1,7 +1,7 @@
 {
   "name": "@mantine/storybook",
   "private": true,
-  "version": "5.0.0-alpha.22",
+  "version": "4.2.12",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",

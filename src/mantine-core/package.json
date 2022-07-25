@@ -1,7 +1,7 @@
 {
   "name": "@mantine/core",
   "description": "React components library focused on usability, accessibility and developer experience",
-  "version": "5.0.0-alpha.22",
+  "version": "4.2.12",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -27,13 +27,13 @@
     "emotion"
   ],
   "peerDependencies": {
-    "@mantine/hooks": "5.0.0-alpha.22",
+    "@mantine/hooks": "4.2.12",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/utils": "5.0.0-alpha.22",
-    "@mantine/styles": "5.0.0-alpha.22",
+    "@mantine/utils": "4.2.12",
+    "@mantine/styles": "4.2.12",
     "@radix-ui/react-scroll-area": "1.0.0",
     "react-textarea-autosize": "8.3.4",
     "@floating-ui/react-dom-interactions": "0.6.6"
