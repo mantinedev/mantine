@@ -2,8 +2,6 @@
 import React from 'react';
 import { Dropzone } from './index';
 
-console.log(Dropzone.FullScreen);
-
 export default { title: 'Dropzone' };
 
 export function Usage() {
