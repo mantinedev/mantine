@@ -1,7 +1,7 @@
 {
   "name": "@mantine/remix",
   "description": "Mantine integration for Remix",
-  "version": "4.2.12",
+  "version": "5.0.0",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -20,14 +20,14 @@
     "remix"
   ],
   "peerDependencies": {
-    "@mantine/core": "4.2.12",
-    "@mantine/hooks": "4.2.12",
+    "@mantine/core": "5.0.0",
+    "@mantine/hooks": "5.0.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/ssr": "4.2.12",
-    "@mantine/styles": "4.2.12"
+    "@mantine/ssr": "5.0.0",
+    "@mantine/styles": "5.0.0"
   },
   "devDependencies": {}
 }
