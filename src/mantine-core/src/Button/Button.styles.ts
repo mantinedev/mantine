@@ -94,7 +94,6 @@ function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles)
   return {
     border: `1px solid ${colors.border}`,
     backgroundColor: colors.background,
-    backgroundImage: colors.background,
     color: colors.color,
     ...theme.fn.hover({
       backgroundColor: colors.hover,
