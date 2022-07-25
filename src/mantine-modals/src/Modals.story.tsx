@@ -2,13 +2,18 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Text, Group } from '@mantine/core';
-import { ModalsProvider, useModals, ContextModalProps } from './index';
+import {
+  ModalsProvider,
+  openConfirmModal,
+  openContextModal,
+  openModal,
+  closeAllModals,
+  ContextModalProps,
+} from './index';
 
 function DemoWithoutLabels() {
-  const modals = useModals();
-
   const showConfirmModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Oh no! No labels!',
       onCancel: () => console.log('Single confirm modal cancelled'),
       onConfirm: () => console.log('Single confirm modal confirmed'),
@@ -18,10 +23,9 @@ function DemoWithoutLabels() {
 }
 
 function Demo() {
-  const modals = useModals();
-
   const showContextModal = () =>
-    modals.openContextModal('hello', {
+    openContextModal({
+      modal: 'hello',
       title: 'Context modal',
       onClose: () => console.log('context modal closed'),
       innerProps: {
@@ -30,14 +34,14 @@ function Demo() {
     });
 
   const showContentModal = () =>
-    modals.openModal({
+    openModal({
       title: 'Hello there',
       children: <Text color="blue">My content modal</Text>,
       onClose: () => console.log('content modal 1 closed'),
     });
 
   const showSingleConfirmModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Just confirm',
       onCancel: () => console.log('Single confirm modal cancelled'),
       onConfirm: () => console.log('Single confirm modal confirmed'),
@@ -45,15 +49,15 @@ function Demo() {
     });
 
   const showNestedModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Are you really sure?',
       closeOnConfirm: false,
-      onConfirm: () => modals.closeAll(),
+      onConfirm: closeAllModals,
       onClose: () => console.log('confirm modal 2 closed'),
     });
 
   const showConfirmModal = () =>
-    modals.openConfirmModal({
+    openConfirmModal({
       title: 'Please confirm this action',
       confirmProps: { color: 'red' },
       closeOnConfirm: false,

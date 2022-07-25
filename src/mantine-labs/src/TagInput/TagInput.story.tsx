@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { MANTINE_SIZES, Group, TextInput } from '@mantine/core';
+import { MANTINE_SIZES, Group, Stack, TextInput } from '@mantine/core';
 import { SubmitForm } from '@mantine/storybook';
 import { TagInput } from './TagInput';
 
@@ -17,7 +17,7 @@ function Controlled() {
 }
 
 const sizes = MANTINE_SIZES.map((size) => (
-  <Group grow key={size} style={{ marginTop: 30 }} direction="column">
+  <Stack key={size} style={{ marginTop: 30 }}>
     <TagInput
       size={size}
       variant="unstyled"
@@ -26,11 +26,11 @@ const sizes = MANTINE_SIZES.map((size) => (
       placeholder="Input Tag"
     />
     <TextInput label="Text input" placeholder="Text input" size={size} />
-  </Group>
+  </Stack>
 ));
 
 const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
-  <Group grow key={variant} style={{ marginTop: 30 }} direction="column">
+  <Group grow key={variant} style={{ marginTop: 30 }}>
     <TagInput variant={variant} label="Tag Input" placeholder="Input Tag" />
     <TextInput label="Text input" placeholder="Text input" variant={variant} />
   </Group>
@@ -71,8 +71,3 @@ storiesOf('TagInput', module)
       <TagInput label="Submit with enter" defaultValue={['react', 'ng']} placeholder="Input tag" />
     </SubmitForm>
   ));
-// .add('RTL', () => (
-//   <RtlProvider>
-//     <TagInput label="Tag Input" defaultValue={['react', 'ng']} placeholder="Input tag" />
-//   </RtlProvider>
-// ));

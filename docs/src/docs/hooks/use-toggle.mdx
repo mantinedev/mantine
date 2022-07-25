@@ -29,7 +29,7 @@ Hook accepts two arguments:
 Hook returns an array with state value and toggle function:
 
 ```tsx
-const [value, toggle] = useToggle('dark', ['light', 'dark']);
+const [value, toggle] = useToggle(['light', 'dark']);
 
 toggle(); // -> value == 'light'
 toggle(); // -> value == 'dark'
@@ -45,15 +45,12 @@ toggle('dark'); // -> value == 'dark'
 By default, TypeScript will guess your type, but in most cases it's better to set type manually:
 
 ```tsx
-const [value, toggle] = useToggle('dark', ['light', 'dark']); // value is string
-const [value, toggle] = useToggle<'dark' | 'light'>('dark', ['light', 'dark']); // value is 'dark' | 'light'
+const [value, toggle] = useToggle(['light', 'dark']); // value is string
+const [value, toggle] = useToggle<'dark' | 'light'>(['light', 'dark']); // value is 'dark' | 'light'
 ```
 
 ### Definition
 
 ```tsx
-function useToggle<T>(
-  initialValue: T,
-  options: [T, T]
-): readonly [T, (value?: React.SetStateAction<T>) => void];
+function useToggle<T>(options: [T, T]): readonly [T, (value?: React.SetStateAction<T>) => void];
 ```

@@ -54,13 +54,13 @@ describe('@mantine/dates/Month', () => {
       />
     );
 
-    expect(withRange.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(1);
-    expect(withRange.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(1);
-    expect(withRange.querySelectorAll('.mantine-Month-inRange')).toHaveLength(11);
+    expect(withRange.querySelectorAll('[data-first-in-range]')).toHaveLength(1);
+    expect(withRange.querySelectorAll('[data-last-in-range]')).toHaveLength(1);
+    expect(withRange.querySelectorAll('[data-in-range]')).toHaveLength(11);
 
-    expect(withoutRange.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(0);
-    expect(withoutRange.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(withoutRange.querySelectorAll('.mantine-Month-inRange')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('[data-first-in-range]')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('[data-last-in-range]')).toHaveLength(0);
+    expect(withoutRange.querySelectorAll('[data-in-range]')).toHaveLength(0);
   });
 
   it('does not add styles when month days outside of range', () => {
@@ -71,9 +71,9 @@ describe('@mantine/dates/Month', () => {
       />
     );
 
-    expect(container.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(0);
-    expect(container.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(container.querySelectorAll('.mantine-Month-inRange')).toHaveLength(0);
+    expect(container.querySelectorAll('[data-first-in-range]')).toHaveLength(0);
+    expect(container.querySelectorAll('[data-last-in-range]')).toHaveLength(0);
+    expect(container.querySelectorAll('[data-in-range]')).toHaveLength(0);
   });
 
   it('adds partial range styles', () => {
@@ -84,22 +84,22 @@ describe('@mantine/dates/Month', () => {
       />
     );
 
-    expect(container.querySelectorAll('.mantine-Month-firstInRange')).toHaveLength(1);
-    expect(container.querySelectorAll('.mantine-Month-lastInRange')).toHaveLength(0);
-    expect(container.querySelectorAll('.mantine-Month-inRange')).toHaveLength(9);
+    expect(container.querySelectorAll('[data-first-in-range]')).toHaveLength(1);
+    expect(container.querySelectorAll('[data-last-in-range]')).toHaveLength(0);
+    expect(container.querySelectorAll('[data-in-range]')).toHaveLength(9);
   });
 
-  it('calls onChange with Date object when Day is clicked', () => {
+  it('calls onChange with Date object when Day is clicked', async () => {
     const spy = jest.fn();
     render(<Month month={new Date(2021, 11, 1)} onChange={spy} />);
-    userEvent.click(screen.getAllByRole('button')[0]);
+    await userEvent.click(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29));
   });
 
-  it('handles mouseenter events correctly on Day', () => {
+  it('handles mouseenter events correctly on Day', async () => {
     const spy = jest.fn();
     render(<Month month={new Date(2021, 11, 1)} onDayMouseEnter={spy} />);
-    userEvent.hover(screen.getAllByRole('button')[0]);
+    await userEvent.hover(screen.getAllByRole('button')[0]);
     expect(spy).toHaveBeenCalledWith(new Date(2021, 10, 29), expect.anything());
   });
 
@@ -116,9 +116,9 @@ describe('@mantine/dates/Month', () => {
   it('displays selected date', () => {
     render(<Month month={new Date(2021, 11, 1)} value={new Date(2021, 11, 5)} />);
     const days = screen.getAllByRole('button');
-    expect(days[6]).toHaveClass('mantine-Month-selected');
-    expect(days[7]).not.toHaveClass('mantine-Month-selected');
-    expect(days[5]).not.toHaveClass('mantine-Month-selected');
+    expect(days[6]).toHaveAttribute('data-selected');
+    expect(days[7]).not.toHaveAttribute('data-selected');
+    expect(days[5]).not.toHaveAttribute('data-selected');
   });
 
   it('changes first day of week based on prop', () => {

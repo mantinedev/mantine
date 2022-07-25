@@ -1,26 +1,32 @@
 import React from 'react';
-import { ExternalLink } from 'tabler-icons-react';
-import { Menu, Group } from '@mantine/core';
+import { IconExternalLink } from '@tabler/icons';
+import { Menu, Group, Button } from '@mantine/core';
 
 const code = `
-import { Menu } from '@mantine/core';
-import { ExternalLink } from 'tabler-icons-react';
+import { Menu, Button } from '@mantine/core';
+import { IconExternalLink } from '@tabler/icons';
 
 function Demo() {
   return (
-    <Menu>
-      <Menu.Item component="a" href="https://mantine.dev">
-        Mantine website
-      </Menu.Item>
+    <Menu width={200} shadow="md">
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
 
-      <Menu.Item
-        icon={<ExternalLink size={14} />}
-        component="a"
-        href="https://mantine.dev"
-        target="_blank"
-      >
-        External link
-      </Menu.Item>
+      <Menu.Dropdown>
+        <Menu.Item component="a" href="https://mantine.dev">
+          Mantine website
+        </Menu.Item>
+
+        <Menu.Item
+          icon={<IconExternalLink size={14} />}
+          component="a"
+          href="https://mantine.dev"
+          target="_blank"
+        >
+          External link
+        </Menu.Item>
+      </Menu.Dropdown>
     </Menu>
   );
 }
@@ -29,18 +35,24 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu>
-        <Menu.Item component="a" href="https://mantine.dev">
-          Mantine website
-        </Menu.Item>
-        <Menu.Item
-          icon={<ExternalLink size={14} />}
-          component="a"
-          href="https://mantine.dev"
-          target="_blank"
-        >
-          External link
-        </Menu.Item>
+      <Menu width={200} shadow="md">
+        <Menu.Target>
+          <Button>Toggle menu</Button>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item component="a" href="https://mantine.dev">
+            Mantine website
+          </Menu.Item>
+          <Menu.Item
+            icon={<IconExternalLink size={14} />}
+            component="a"
+            href="https://mantine.dev"
+            target="_blank"
+          >
+            External link
+          </Menu.Item>
+        </Menu.Dropdown>
       </Menu>
     </Group>
   );

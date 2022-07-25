@@ -10,7 +10,6 @@ props: ['Paper']
 import: "import { Paper } from '@mantine/core';"
 source: 'mantine-core/src/components/Paper/Paper.tsx'
 docs: 'core/Paper.mdx'
-styles: ['Paper', 'single-node']
 ---
 
 import { PaperDemos } from '@mantine/demos';
@@ -22,45 +21,60 @@ background with shadow, border-radius and padding from theme.
 
 <Demo data={PaperDemos.configurator} />
 
-## Shadow
+## Polymorphic component
 
-You can use predefined shadows defined in [theme](/theming/extend-theme/#spacing-radius-and-shadows) or your own:
-
-```tsx
-<Paper shadow="xs" />
-<Paper shadow="13px 18px 25px #e5e5e5, 1px 3px 3px #e5e5e5, -1px 3px 3px #e5e5e5" />
-```
-
-## Padding
-
-Paper has predefined padding: xs, sm, md, lg, xl defined in [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, you can use a number to set padding in px:
+Paper is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
-<Paper p="sm" /> // -> theme predefined small spacing
-<Paper p={20} /> // -> { padding: '20px' }
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Paper component="a" href="https://mantine.dev/core/">
+      Anchor element
+    </Paper>
+  );
+}
 ```
 
-## Radius
-
-xs, sm, md, lg, xl radius values are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, you can use a number to set radius in px:
+### Usage with react-router
 
 ```tsx
-<Paper radius="lg" /> // -> theme predefined large radius
-<Paper radius={0} /> // -> { borderRadius: 0 }
+import { Link } from 'react-router-dom';
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Paper component={Link} to="/react-router">
+      React router link
+    </Paper>
+  );
+}
 ```
 
-## Get root element ref
+### Usage with Next.js
 
-You can get root element ref with `ref` prop:
+```tsx
+import Link from 'next/link';
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Paper component="a">Next link</Paper>
+    </Link>
+  );
+}
+```
+
+## Get ref
 
 ```tsx
 import { useRef } from 'react';
 import { Paper } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   return <Paper ref={ref} />;
 }
 ```

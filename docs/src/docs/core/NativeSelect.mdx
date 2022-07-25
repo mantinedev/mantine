@@ -64,7 +64,7 @@ import { useRef } from 'react';
 import { NativeSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLSelectElement>();
+  const ref = useRef<HTMLSelectElement>(null);
   return <NativeSelect ref={ref} data={[]} />;
 }
 ```

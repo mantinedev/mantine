@@ -12,6 +12,7 @@ export interface MonthsListProps
   extends DefaultProps<MonthsListStylesNames>,
     Omit<MonthProps, 'styles' | 'classNames' | 'daysRefs' | 'onDayKeyDown'> {
   amountOfMonths: number;
+  paginateBy: number;
   month: Date;
   locale: string;
   allowLevelChange: boolean;
@@ -33,6 +34,7 @@ export interface MonthsListProps
 
 export function MonthsList({
   amountOfMonths,
+  paginateBy,
   month,
   locale,
   minDate,
@@ -52,6 +54,7 @@ export function MonthsList({
   weekdayLabelFormat,
   preventFocus,
   renderDay,
+  unstyled,
   ...others
 }: MonthsListProps) {
   const nextMonth = dayjs(month).add(amountOfMonths, 'months').toDate();
@@ -69,10 +72,8 @@ export function MonthsList({
             }
             hasPrevious={index === 0 && isMonthInRange({ date: previousMonth, minDate, maxDate })}
             label={formatMonthLabel({ month: monthDate, locale, format: labelFormat })}
-            onNext={() => onMonthChange(dayjs(month).add(amountOfMonths, 'months').toDate())}
-            onPrevious={() =>
-              onMonthChange(dayjs(month).subtract(amountOfMonths, 'months').toDate())
-            }
+            onNext={() => onMonthChange(dayjs(month).add(paginateBy, 'months').toDate())}
+            onPrevious={() => onMonthChange(dayjs(month).subtract(paginateBy, 'months').toDate())}
             onNextLevel={onNextLevel}
             nextLevelDisabled={!allowLevelChange}
             size={size}
@@ -83,6 +84,7 @@ export function MonthsList({
             previousLabel={previousMonthLabel}
             preventLevelFocus={index > 0}
             preventFocus={preventFocus}
+            unstyled={unstyled}
           />
 
           <Month
@@ -100,6 +102,7 @@ export function MonthsList({
             preventFocus={preventFocus}
             renderDay={renderDay}
             weekdayLabelFormat={weekdayLabelFormat}
+            unstyled={unstyled}
             {...others}
           />
         </div>

@@ -10,7 +10,6 @@ props: ['ColorSwatch']
 import: "import { ColorSwatch } from '@mantine/core';"
 source: 'mantine-core/src/components/ColorSwatch/ColorSwatch.tsx'
 docs: 'core/ColorSwatch.mdx'
-styles: ['ColorSwatch', 'single-node']
 ---
 
 import { ColorSwatchDemos } from '@mantine/demos';
@@ -25,19 +24,8 @@ Color swatch has checkers background – you can use it to show transparency in 
 
 <Demo data={ColorSwatchDemos.transparent} />
 
-## Size and radius
+## Polymorphic component
 
-ColorSwatch does not have predefined size values, use number to set width and height in px,
-radius has predefined xs, sm, md, lg, xl values from [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows):
-
-```tsx
-<ColorSwatch size={50} /> // -> { width: 50, height: 50 }
-<ColorSwatch radius="lg" /> // -> theme predefined large radius
-<ColorSwatch radius={10} /> // -> { borderRadius: 10 }
-```
-
-## Custom component
-
-Use any component or element with ColorSwatch by setting `component` prop:
+ColorSwatch is a [polymorphic component](/guides/polymorphic/) component, you can change root element:
 
 <Demo data={ColorSwatchDemos.component} />

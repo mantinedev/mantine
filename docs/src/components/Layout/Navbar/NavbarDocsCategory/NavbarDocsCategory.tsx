@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'gatsby';
-import { ChevronDownIcon } from '@modulz/radix-icons';
+import { IconChevronDown } from '@tabler/icons';
 import { Text } from '@mantine/core';
-import { useViewportSize } from '@mantine/hooks';
 import { useLocation } from '@reach/router';
 import { getDocsData } from '../../get-docs-data';
 import useStyles from './NavbarDocsCategory.styles';
-import { HEADER_HEIGHT } from '../../Header/Header.styles';
+import { HEADER_HEIGHT } from '../../Header/HeaderDesktop.styles';
 
 interface NavbarDocsCategoryProps {
   group: ReturnType<typeof getDocsData>[number];
@@ -95,7 +94,7 @@ export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCat
   return (
     <div className={cx(classes.category, { [classes.categoryCollapsed]: collapsed })}>
       <button className={classes.header} type="button" onClick={() => setCollapsed((c) => !c)}>
-        <ChevronDownIcon className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
+        <IconChevronDown className={cx(classes.icon, { [classes.iconCollapsed]: collapsed })} />
         <Text className={classes.title} weight={700} size="xs" transform="uppercase">
           {group.group.replace('-', ' ')}
         </Text>

@@ -37,7 +37,6 @@ export function usePagination({
     onChange,
     defaultValue: initialPage,
     finalValue: initialPage,
-    rule: (_page) => typeof _page === 'number' && _page <= total,
   });
 
   const setPage = (pageNumber: number) => {
@@ -56,13 +55,7 @@ export function usePagination({
   const last = () => setPage(total);
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
-    // Pages count is determined as siblings (left/right) + boundaries(left/right) + currentPage + 2*DOTS
     const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
-
-    /*
-     * If the number of pages is less than the page numbers we want to show in our
-     * paginationComponent, we return the range [1..total]
-     */
     if (totalPageNumbers >= total) {
       return range(1, total);
     }
@@ -70,11 +63,6 @@ export function usePagination({
     const leftSiblingIndex = Math.max(activePage - siblings, boundaries);
     const rightSiblingIndex = Math.min(activePage + siblings, total - boundaries);
 
-    /*
-     * We do not want to show dots if there is only one position left
-     * after/before the left/right page count as that would lead to a change if our Pagination
-     * component size which we do not want
-     */
     const shouldShowLeftDots = leftSiblingIndex > boundaries + 2;
     const shouldShowRightDots = rightSiblingIndex < total - (boundaries + 1);
 

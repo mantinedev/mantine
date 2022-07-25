@@ -6,11 +6,12 @@ order: 1
 slug: /core/input/
 category: 'inputs'
 description: 'Base component to create custom inputs'
-props: ['Input']
+componentPrefix: 'Input'
+props: ['Input', 'InputWrapper', 'InputLabel', 'InputDescription', 'InputError']
 import: "import { Input } from '@mantine/core';"
 source: 'mantine-core/src/components/Input/Input.tsx'
 docs: 'core/Input.mdx'
-styles: ['Input']
+styles: ['Input', 'Input.Wrapper']
 ---
 
 import { InputDemos } from '@mantine/demos';
@@ -22,69 +23,95 @@ Input component is a base for other inputs and was not designed to be used direc
 
 ```tsx
 // Incorrect usage, input is not accessible
-<InputWrapper label="Input label">
+<Input.Wrapper label="Input label">
   <Input />
-</InputWrapper>
+</Input.Wrapper>
 
 // Use TextInput instead of Input everywhere you want to use Input,
-// it is accessible by default and includes InputWrapper
+// it is accessible by default and includes Input.Wrapper
 <TextInput label="Input label" description="Input description" />
 ```
 
 ## Usage
 
-Input component is used as base for all other inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/) and others).
-The single purpose of Input is to provide shared styles and features to other inputs.
-Use other components listed above to build forms (as they provide better accessibility)
-and Input component as base for your own custom inputs with Mantine theme.
+`Input` component is used as base for some other inputs ([Select](/core/select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/), etc.).
+The purpose of `Input` is to provide shared styles and features to other inputs:
 
 <Demo data={InputDemos.configurator} />
-
-## Variants
-
-Input has 3 variants, all of which are available on all Mantine inputs.
-Note that unstyled input variant may significantly impact usability, use it wisely.
-
-<Demo data={InputDemos.variants} />
 
 ## Icon and right section
 
 <Demo data={InputDemos.icon} />
 
-Right section with [Tooltip](/core/tooltip/):
-
-<Demo data={InputDemos.tooltip} />
-
-## Sizes
-
-Component has 5 premade sizes: xs, sm, md, lg, xl, use `size` prop to control input height, padding and font-size:
-
-<Demo data={InputDemos.sizes} />
-
 ## Custom component
 
-As Input component is intended to be a base for all other inputs,
-you can pass `component` prop which will define root element:
+Input is a polymorphic component, you can change the root element with `component` prop:
 
 <Demo data={InputDemos.component} />
 
-## Headless variant
+You can use `Input` and `Input.Wrapper` components to build custom inputs with third-party
+libraries, example with [react-input-mask](https://github.com/sanniassin/react-input-mask):
 
-If you want to add your own styles to input it's better to start from scratch rather than overriding Mantine styles,
-use special `headless` variant which does not include any Mantine styles but still supports all other features: icon, right section, etc.:
+<Demo data={InputDemos.mask} />
 
-<Demo data={InputDemos.headless} />
+## Input.Wrapper component
+
+`Input.Wrapper` component is used in all other inputs ([TextInput](/core/text-input/), [Autocomplete](/core/autocomplete/), [MultiSelect](/core/multi-select/), etc.)
+under the hood, you **do not need to wrap your inputs with it, as it is already included in all of them**.
+Use `Input.Wrapper` only when you want to create custom inputs.
+
+<Demo data={InputDemos.wrapperConfigurator} />
+
+### inputContainer
+
+With `inputContainer` prop you can enhance inputs that use `Input.Wrapper` under the hood,
+for example, you can add [Tooltip](/core/tooltip/) to [TextInput](/core/text-input/) when
+the input is focused:
+
+<Demo data={InputDemos.inputContainer} />
+
+### inputWrapperOrder
+
+`inputWrapperOrder` prop allows to define the order of `Input.Wrapper` parts:
+
+<Demo data={InputDemos.order} />
+
+### Input.Label, Input.Error and Input.Description
+
+`Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom
+form layouts if default `Input.Wrapper` layout does not fit your requirements.
+
+<Demo data={InputDemos.helpers} />
+
+## InputBase component
+
+`InputBase` component combines `Input` and `Input.Wrapper` components and supports `component` prop:
+
+<Demo data={InputDemos.inputBase} />
+
+## Default props on MantineProvider
+
+You can add [default props](/theming/default-props/) on [MantineProvider](/theming/mantine-provider/)
+to `Input` and `Input.Wrapper` components. These default props will be inherited by all inputs
+that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-input/), [Autocomplete](/core/autocomplete/), [MultiSelect](/core/multi-select/), etc.):
+
+<Demo data={InputDemos.providerDefault} />
+
+## Styles on MantineProvider
+
+Same as with default props you can use `Input` and `Input.Wrapper` [Styles API](/styles/styles-api/)
+on [MantineProvider](/theming/mantine-provider/) to add styles to all Inputs:
+
+<Demo data={InputDemos.providerStyles} />
 
 ## Get input ref
-
-You can get input ref by passing `ref` prop to Input component:
 
 ```tsx
 import { useRef } from 'react';
 import { Input } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Input ref={ref} />;
 }
 ```

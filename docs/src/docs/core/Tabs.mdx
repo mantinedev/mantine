@@ -6,7 +6,8 @@ order: 1
 slug: /core/tabs/
 category: 'navigation'
 description: 'Switch between different views'
-props: ['Tabs']
+componentPrefix: 'Tabs'
+props: ['Tabs', 'Tab', 'TabsList', 'TabsPanel']
 import: "import { Tabs } from '@mantine/core';"
 source: 'mantine-core/src/components/Tabs/Tabs.tsx'
 docs: 'core/Tabs.mdx'
@@ -17,93 +18,114 @@ import { TabsDemos } from '@mantine/demos';
 
 ## Usage
 
-<Demo data={TabsDemos.colorsConfigurator} />
+<Demo data={TabsDemos.configurator} />
 
 ## Controlled Tabs
 
-```tsx
-import { useState } from 'react';
-import { Tabs } from '@mantine/core';
-
-function Demo() {
-  const [activeTab, setActiveTab] = useState(1);
-
-  return (
-    <Tabs active={activeTab} onTabChange={setActiveTab}>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
-      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
-      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
-    </Tabs>
-  );
-}
-```
-
-`Tabs.Tab` accepts an optional `tabKey` prop, if included the `tabKey` will be included as second argument in the `onTabChange` callback:
+To control Tabs state provide `value` and `onTabChange` props:
 
 ```tsx
 import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [activeTab, setActiveTab] = useState(1);
-  const onChange = (active: number, tabKey: string) => {
-    setActiveTab(active);
-    console.log('tabKey', tabKey);
-  };
+  const [activeTab, setActiveTab] = useState('first');
 
   return (
-    <Tabs active={activeTab} onTabChange={onChange}>
-      <Tabs.Tab label="First" tabKey="First">
-        First tab content
-      </Tabs.Tab>
-      <Tabs.Tab label="Second" tabKey="Second">
-        Second tab content
-      </Tabs.Tab>
-      <Tabs.Tab label="Third" tabKey="Third">
-        Third tab content
-      </Tabs.Tab>
+    <Tabs value={activeTab} onTabChange={setActiveTab}>
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
     </Tabs>
   );
 }
 ```
 
-## Tabs with icons
+## Uncontrolled Tabs
 
-Add any React node as icon by setting `icon` prop on `Tabs.Tab` component.
-If `icon` prop is set, it is not necessary to pass `label`:
+If you do need to subscribe to Tabs state changes use `defaultValue`:
 
-<Demo data={TabsDemos.icons} />
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
+## Icon and right section
+
+You can use any React node as `icon` and `rightSection` in `Tabs.Tab` component:
+
+<Demo data={TabsDemos.icons} demoProps={{ toggle: true }} />
+
+<Demo data={TabsDemos.rightSection} demoProps={{ toggle: true }} />
 
 ## Change colors
 
-Change color of individual tab by setting `color` property to `Tabs.Tab` component,
-or change color of all tabs by setting `color` on `Tabs` component.
-Color that you pass to these components should be defined in [theme.colors](/theming/extend-theme/#default-colors).
+To change colors of all tabs set `color` on `Tabs` component, to change color of the individual tab set `color` on `Tabs.Tab`.
+`color` should be a key of `theme.colors`:
 
 <Demo data={TabsDemos.colors} />
 
 ## Tabs position
 
-Tabs controls position is controlled with `grow` and `position` props.
-If `grow` property is set to true, controls will take 100% of available space
-and `position` property is ignored.
-
 <Demo data={TabsDemos.positionConfigurator} />
 
-## Tab component props
+To display tab on the opposite side, set margin-left to auto with `ml="auto"` prop:
 
-In addition to `icon` and `label` props shown before,
-`Tab` component accepts `color`, `disabled` and any other props from regular button (e.g. style, title, aria-, data-).
-`color` prop will override `color` defined in `Tabs` component.
+<Demo data={TabsDemos.pull} />
 
-<Demo data={TabsDemos.tabProps} />
+## Inverted tabs
 
-## Add your styles with styles API
+To make tabs inverted, place `Tabs.Panel` components before `Tabs.List` and add `inverted` prop to `Tabs` component:
 
-You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements.
-To remove all default styles set `variant` prop to `unstyled`:
+<Demo data={TabsDemos.inverted} />
 
-<Demo data={TabsDemos.stylesApi} />
+## Disabled tabs
+
+Set `disabled` prop on `Tabs.Tab` component to disable tab.
+Disabled tab cannot be activated with mouse or keyboard, will be skipped when user navigates with arrow keys:
+
+<Demo data={TabsDemos.disabled} />
+
+## Activation mode
+
+By default, tabs are activated when user presses arrows and Home/End keys.
+To disable that set `activateTabWithKeyboard={false}` on `Tabs` component,
+then user will be able to deactivate active tab by clicking on it:
+
+<Demo data={TabsDemos.keyboardActivation} demoProps={{ toggle: true }} />
+
+## Tab deactivation
+
+By default, active cannot be deactivated. To allow that set `allowTabDeactivation` on `Tabs` component:
+
+<Demo data={TabsDemos.deactivate} demoProps={{ toggle: true }} />
+
+## Unstyled Tabs
+
+Set `unstyled` prop on Tabs component to remove all non-essential library styles.
+
+<Demo data={TabsDemos.unstyled} demoProps={{ toggle: true }} />
+
+By doing so, you will be able to keep component behavior while providing your own styles with [Styles API](/styles/styles-api/):
+
+<Demo data={TabsDemos.stylesApi} demoProps={{ toggle: true }} />
 
 ## Get tab control ref
 
@@ -112,26 +134,142 @@ import { useRef } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const secondTabRef = useRef<HTMLButtonElement>();
+  const secondTabRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <Tabs>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
-      <Tabs.Tab label="Second" ref={secondTabRef}>
-        Second tab content
-      </Tabs.Tab>
-      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
+    <Tabs defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="Second" ref={secondTabRef}>
+          Second tab
+        </Tabs.Tab>
+        <Tabs.Tab value="third">Third tab</Tabs.Tab>
+      </Tabs.List>
     </Tabs>
   );
 }
 ```
 
-## Accessibility and usability
+## Usage with react-router
 
-Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility:
+```tsx
+<Route path="/tabs/:tabValue" element={<Demo />} />
+```
 
-- Use right and left arrow keys to change tabs when orientation is horizontal
-- Use down and up arrow keys to change tabs when orientation is vertical
-- Only selected tab control can be focused
-- All elements have correct roles: tab, tablist and tabpanel
-- aria-orientation is set based off `orientation` prop (default is horizontal)
+```tsx
+import { useNavigate } from 'react-router-dom';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const navigate = useNavigate();
+  const { tabValue } = useParams();
+
+  return (
+    <Tabs value={tabValue} onTabChange={(value) => navigate(`/tabs/${value}`)}>
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Usage with Next.js router
+
+```tsx
+// For file /tabs/[activeTab].tsx
+import { useRouter } from 'next/router';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const router = useRouter();
+
+  return (
+    <Tabs
+      value={router.query.activeTab as string}
+      onTabChange={(value) => router.push(`/tabs/${value}`)}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+## Accessibility
+
+Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
+
+### Notes
+
+If you use `Tabs.Tab` without text content, for example, only with icon, then set `aria-label`:
+
+```tsx
+import { Tabs } from '@mantine/core';
+import { IconCoin } from '@tabler/icon';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="chat">
+      <Tabs.List>
+        {/* aria-label is not required, tab is labelled by children */}
+        <Tabs.Tab value="chat">Chat</Tabs.Tab>
+
+        {/* aria-label is required, tab is not labelled by children */}
+        <Tabs.Tab icon={<IconCoin size={14} />} value="money" aria-label="Get money" />
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+To set tabs list label, set `aria-label` on `Tabs.List` component, it will be announced by screen reader:
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="recent">
+      {/* Tabs.List aria-label will be announced when tab is focused for the first time */}
+      <Tabs.List aria-label="Chats">
+        <Tabs.Tab value="recent">Most recent</Tabs.Tab>
+        <Tabs.Tab value="recent">Unanswered</Tabs.Tab>
+        <Tabs.Tab value="archived">Archived</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses and activates next tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses and activates previous tab that is not disabled',
+      condition: 'orientation="vertical"',
+    },
+    { key: 'Home', description: 'Focuses and activates first tab' },
+    { key: 'End', description: 'Focuses and activates last tab' },
+  ]}
+/>

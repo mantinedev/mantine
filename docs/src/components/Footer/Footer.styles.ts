@@ -121,17 +121,11 @@ export default createStyles((theme) => ({
   },
 
   socialButton: {
-    '& + &': {
-      marginLeft: theme.spacing.md,
-    },
-
     '@media (max-width: 640px)': {
       flex: 1,
       width: '100%',
-      '& + &': {
-        marginLeft: 0,
-        marginTop: theme.spacing.md,
-      },
+      marginLeft: 0,
+      marginTop: theme.spacing.md,
     },
   },
 }));

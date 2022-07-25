@@ -37,6 +37,7 @@ export const configurator: MantineDemo = {
         { value: 'auto', label: 'Auto' },
         { value: 'always', label: 'Always' },
         { value: 'scroll', label: 'Scroll' },
+        { value: 'never', label: 'Never' },
       ],
       initialValue: 'hover',
       defaultValue: 'hover',

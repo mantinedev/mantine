@@ -229,7 +229,7 @@ import { useRef } from 'react';
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <MultiSelect ref={ref} data={[]} />;
 }
 ```

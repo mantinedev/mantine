@@ -1,0 +1,84 @@
+---
+group: 'mantine-core'
+package: '@mantine/core'
+title: NavLink
+order: 1
+slug: /core/nav-link/
+category: 'navigation'
+description: 'Navigation link'
+props: ['NavLink']
+import: "import { NavLink } from '@mantine/core';"
+source: 'mantine-core/src/components/NavLink/NavLink.tsx'
+docs: 'core/NavLink.mdx'
+styles: ['NavLink']
+---
+
+import { NavLinkDemos } from '@mantine/demos';
+
+## Usage
+
+<Demo data={NavLinkDemos.usage} />
+
+## Active
+
+Set `active` prop to add active styles to `NavLink`. You can customize active styles with `color` and `variant` props:
+
+<Demo data={NavLinkDemos.active} />
+
+## Nested NavLinks
+
+To create nested links put `NavLink` as children of another `NavLink`:
+
+<Demo data={NavLinkDemos.nested} />
+
+## Polymorphic component
+
+`NavLink` is a [polymorphic component](/guide/polymorphic/), by default, its root element is `button`
+you can change that by setting `component` prop:
+
+```tsx
+import { NavLink } from '@mantine/core';
+
+function Demo() {
+  return <NavLink component="a" href="/home" target="_blank" />;
+}
+```
+
+### Usage with Next.js Link
+
+```tsx
+import Link from 'next/router';
+import { useRouter } from 'next/router';
+
+function Demo() {
+  const router = useRouter();
+  return (
+    <>
+      <Link href="/home" passHref>
+        <NavLink component="a" label="Home" active={router.pathname == '/home'} />
+      </Link>
+      <Link href="/about" passHref>
+        <NavLink component="a" label="About" active={router.pathname == '/about'} />
+      </Link>
+    </>
+  );
+}
+```
+
+### Usage with react-router
+
+This guide can also be applied to all libraries that work the same way as `react-router-dom`:
+
+```tsx
+import { Link, useLocation } from 'react-router-dom';
+
+function Demo() {
+  const location = useLocation();
+  return (
+    <>
+      <NavLink label="Home" component={Link} to="/home" active={location.pathname == '/home'} />
+      <NavLink label="About" component={Link} to="/about" active={location.pathname == '/about'} />
+    </>
+  );
+}
+```

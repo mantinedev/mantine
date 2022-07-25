@@ -41,24 +41,8 @@ If badge cannot fit in its container, overflow content will be hidden with ellip
 
 <Demo data={BadgeDemos.sections} />
 
-## Custom component
+## Polymorphic component
 
-To change badge root element pass React element to `component` prop:
+Badge is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 <Demo data={BadgeDemos.component} />
-
-To use custom component with TypeScript provide type:
-
-```tsx
-import { Badge } from '@mantine/core';
-import { Link } from 'react-router-dom';
-
-function Demo() {
-  return (
-    <>
-      <Badge<'a'> component="a" href="#" />
-      <Badge<typeof Link> component={Link} to="/hello" />
-    </>
-  );
-}
-```

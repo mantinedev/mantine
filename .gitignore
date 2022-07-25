@@ -31,6 +31,7 @@ docs/.docgen/
 *.tsbuildinfo
 
 # project
+.eslintcache
 docs/.cache
 docs/public
 storybook-static

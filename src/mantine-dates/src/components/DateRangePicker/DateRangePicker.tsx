@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
@@ -118,9 +118,10 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       hideWeekdays,
       renderDay,
       openDropdownOnClear,
+      unstyled,
       weekendDays,
       ...others
-    } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
+    } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
@@ -133,7 +134,6 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {
@@ -190,6 +190,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        unstyled={unstyled}
         {...others}
       >
         <RangeCalendar
@@ -219,6 +220,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
+          unstyled={unstyled}
           weekendDays={weekendDays}
         />
       </DatePickerBase>

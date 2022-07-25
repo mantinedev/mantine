@@ -6,7 +6,7 @@ Overlay command center for your application
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/spotlight @mantine/core @mantine/hooks
 

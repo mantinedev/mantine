@@ -10,7 +10,6 @@ props: ['Text']
 import: "import { Text } from '@mantine/core';"
 source: 'mantine-core/src/components/Text/Text.tsx'
 docs: 'core/Text.mdx'
-styles: ['Text', 'single-node']
 ---
 
 import { TextDemos } from '@mantine/demos';
@@ -65,20 +64,48 @@ styles set `inherit` prop. For example, highlight part of [Title](/core/title/):
 
 <Demo data={TextDemos.inherit} />
 
-## Custom component
+## Polymorphic component
 
-By default, text is rendered as div element, to change it by set `component` prop:
+Text is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
 import { Text } from '@mantine/core';
-import { Link } from 'react-router-dom';
 
 function Demo() {
   return (
-    <>
-      <Text<'a'> component="a" href="#" />
-      <Text<typeof Link> component={Link} to="/hello" />
-    </>
+    <Text component="a" href="https://mantine.dev/core/">
+      Anchor element
+    </Text>
+  );
+}
+```
+
+### Usage with react-router
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text component={Link} to="/react-router">
+      React router link
+    </Text>
+  );
+}
+```
+
+### Usage with Next.js
+
+```tsx
+import Link from 'next/link';
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Text component="a">Next link</Text>
+    </Link>
   );
 }
 ```

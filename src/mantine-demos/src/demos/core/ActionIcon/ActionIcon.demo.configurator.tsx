@@ -1,5 +1,5 @@
 import React from 'react';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
 const iconSizes = {
@@ -10,11 +10,11 @@ const iconSizes = {
   xl: 34,
 };
 
-function Wrapper(props: ActionIconProps<'button'>) {
+function Wrapper(props: ActionIconProps) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
-        <Adjustments size={iconSizes[props.size]} />
+        <IconAdjustments size={iconSizes[props.size]} />
       </ActionIcon>
     </Group>
   );
@@ -22,12 +22,12 @@ function Wrapper(props: ActionIconProps<'button'>) {
 
 const codeTemplate = (props: string) => `
 import { ActionIcon } from '@mantine/core';
-import { Adjustments } from 'tabler-icons-react';
+import { IconAdjustments } from '@tabler/icons';
 
 function Demo() {
   return (
     <ActionIcon${props}>
-      <Adjustments />
+      <IconAdjustments />
     </ActionIcon>
   );
 }
@@ -46,14 +46,14 @@ export const configurator: MantineDemo = {
       type: 'select',
       data: [
         { label: 'transparent', value: 'transparent' },
-        { label: 'hover', value: 'hover' },
+        { label: 'subtle', value: 'subtle' },
         { label: 'filled', value: 'filled' },
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
         { label: 'default', value: 'default' },
       ],
-      initialValue: 'hover',
-      defaultValue: 'hover',
+      initialValue: 'subtle',
+      defaultValue: 'subtle',
     },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'loading', type: 'boolean', initialValue: false, defaultValue: false },

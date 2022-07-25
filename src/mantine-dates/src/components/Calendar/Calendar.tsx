@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMantineDefaultProps } from '@mantine/core';
+import { useComponentDefaultProps } from '@mantine/core';
 import { CalendarBase, CalendarBaseProps } from '../CalendarBase/CalendarBase';
 import { isSameDate } from '../../utils';
 
@@ -21,7 +21,7 @@ export function Calendar<Multiple extends boolean = false>(props: CalendarProps<
     value,
     onChange,
     ...others
-  } = useMantineDefaultProps('Calendar', defaultProps, props as any);
+  } = useComponentDefaultProps('Calendar', defaultProps, props as any);
 
   const handleChange = (date: Date) => {
     if (!multiple) {

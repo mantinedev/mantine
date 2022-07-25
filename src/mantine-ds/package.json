@@ -1,0 +1,30 @@
+{
+  "name": "@mantine/ds",
+  "description": "Internal Mantine components used on *.mantine.dev websites",
+  "version": "5.0.0-alpha.22",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-ds"
+  },
+  "keywords": [
+    "react"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "5.0.0-alpha.22",
+    "@mantine/hooks": "5.0.0-alpha.22",
+    "@tabler/icons": "*",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@mantine/utils": "5.0.0-alpha.22"
+  }
+}

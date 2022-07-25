@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
-import { Tabs, Tab, Title, TextInput } from '@mantine/core';
-import { MagnifyingGlassIcon } from '@modulz/radix-icons';
+import { Tabs, Title, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { MdxSiblings } from '../MdxSiblings/MdxSiblings';
@@ -13,72 +13,65 @@ import { StylesApi } from './StylesApi/StylesApi';
 import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageTabs.styles';
 
-function getInitialTab(query: string) {
-  if (query === 'docs') {
-    return 0;
-  }
-
-  if (query === 'props') {
-    return 1;
-  }
-
-  if (query === 'styles') {
-    return 2;
-  }
-
-  return 0;
-}
-
-function getTabQuery(index: number) {
-  if (index === 1) {
-    return 'props';
-  }
-
-  if (index === 2) {
-    return 'styles';
-  }
-
-  return undefined;
-}
-
 export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPageProps) {
   const [query, setQuery] = useState('');
   const { classes } = useStyles();
   const mobile = useMediaQuery('(max-width: 500px)');
   const location = useLocation();
-  const initialTab = getInitialTab(location.search.replace('?t=', '') || 'docs');
+  const [activeTab, setActiveTab] = useState('docs');
   const hasProps = Array.isArray(frontmatter.props);
   const hasStyles = Array.isArray(frontmatter.styles);
+
+  useEffect(() => {
+    setActiveTab(location.search.replace('?t=', '') || 'docs');
+  }, []);
 
   if (!hasProps && !hasStyles) {
     return null;
   }
 
   const propsTables = hasProps
-    ? frontmatter.props.map((component) => (
-        <div key={component}>
-          <Title order={2} sx={{ fontWeight: 600 }} mb={20}>
-            {component} component props
-          </Title>
-          <PropsTable key={component} component={component} query={query} />
-        </div>
-      ))
+    ? frontmatter.props.map((component) => {
+        const prefix = frontmatter.componentPrefix;
+        const componentName = prefix
+          ? prefix === component
+            ? component
+            : `${prefix}.${component.replace(prefix, '')}`
+          : component;
+        return (
+          <div key={component}>
+            <Title order={2} sx={{ fontWeight: 600 }} mb={20} className={classes.title}>
+              {componentName} component props
+            </Title>
+            <PropsTable key={component} component={component} query={query} />
+          </div>
+        );
+      })
     : null;
 
   return (
     <MdxPageBase>
       <Tabs
         variant="outline"
-        initialTab={initialTab}
-        onTabChange={(index) => {
-          const q = getTabQuery(index);
-          navigate(q ? `${location.pathname}?t=${q}` : location.pathname, {
-            replace: true,
-          });
+        value={activeTab}
+        onTabChange={(value) => {
+          const nextPath = value === 'docs' ? location.pathname : `${location.pathname}?t=${value}`;
+          navigate(nextPath, { replace: true });
+          setActiveTab(value);
         }}
-        classNames={{ tabsList: classes.tabsList, tabsListWrapper: classes.tabsWrapper }}
+        classNames={{ tabsList: classes.tabsList, tab: classes.tab }}
       >
-        <Tab label="Documentation" className={classes.tab}>
+        <div className={classes.tabsWrapper}>
+          <Tabs.List>
+            <Tabs.Tab value="docs">Documentation</Tabs.Tab>
+            {hasProps && <Tabs.Tab value="props">{mobile ? 'Props' : 'Component props'}</Tabs.Tab>}
+            {hasStyles && (
+              <Tabs.Tab value="styles-api">{mobile ? 'Styles' : 'Styles API'}</Tabs.Tab>
+            )}
+          </Tabs.List>
+        </div>
+
+        <Tabs.Panel value="docs">
           <div
             className={classes.tabContent}
             style={{
@@ -96,37 +89,33 @@ export function MdxPageTabs({ body, frontmatter, headings, siblings }: MdxPagePr
               <TableOfContents headings={headings} withTabs />
             </div>
           </div>
-        </Tab>
+        </Tabs.Panel>
 
-        {hasProps && (
-          <Tab label={mobile ? 'Props' : 'Component props'} className={classes.tab}>
-            <div
-              style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
-              className={classes.tabContent}
-            >
-              <TextInput
-                autoFocus
-                icon={<MagnifyingGlassIcon />}
-                placeholder="Search props"
-                mb={20}
-                value={query}
-                onChange={(event) => setQuery(event.currentTarget.value)}
-              />
-              {propsTables}
-            </div>
-          </Tab>
-        )}
+        <Tabs.Panel value="props">
+          <div
+            style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
+            className={classes.tabContent}
+          >
+            <TextInput
+              autoFocus
+              icon={<IconSearch size={16} stroke={1.5} />}
+              placeholder="Search props"
+              mb={20}
+              value={query}
+              onChange={(event) => setQuery(event.currentTarget.value)}
+            />
+            {propsTables}
+          </div>
+        </Tabs.Panel>
 
-        {hasStyles && (
-          <Tab label={mobile ? 'Styles' : 'Styles API'} className={classes.tab}>
-            <div
-              style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
-              className={classes.tabContent}
-            >
-              <StylesApi components={frontmatter.styles} />
-            </div>
-          </Tab>
-        )}
+        <Tabs.Panel value="styles-api">
+          <div
+            style={{ maxWidth: 1178, marginLeft: 'auto', marginRight: 'auto', marginTop: 24 }}
+            className={classes.tabContent}
+          >
+            <StylesApi components={frontmatter.styles} />
+          </div>
+        </Tabs.Panel>
       </Tabs>
     </MdxPageBase>
   );

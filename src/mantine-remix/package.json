@@ -1,0 +1,33 @@
+{
+  "name": "@mantine/remix",
+  "description": "Mantine integration for Remix",
+  "version": "5.0.0-alpha.22",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "sideEffects": false,
+  "homepage": "https://mantine.dev",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-remix"
+  },
+  "keywords": [
+    "react",
+    "remix.run",
+    "remix"
+  ],
+  "peerDependencies": {
+    "@mantine/core": "5.0.0-alpha.22",
+    "@mantine/hooks": "5.0.0-alpha.22",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "@mantine/ssr": "5.0.0-alpha.22",
+    "@mantine/styles": "5.0.0-alpha.22"
+  },
+  "devDependencies": {}
+}

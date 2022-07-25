@@ -5,6 +5,7 @@ import locatePackage from './locate-package';
 import compile from './compile';
 import generateDts from './generate-dts';
 import { Logger } from './Logger';
+import { getPackageName } from './get-package-name';
 
 const logger = new Logger('build-package');
 
@@ -15,7 +16,8 @@ export interface BuildOptions {
   formats: string[];
 }
 
-export async function buildPackage(packageName: string, options?: BuildOptions) {
+export async function buildPackage(_packageName: string, options?: BuildOptions) {
+  const packageName = getPackageName(_packageName);
   const packagePath = await locatePackage(packageName || '');
 
   if (!packagePath) {

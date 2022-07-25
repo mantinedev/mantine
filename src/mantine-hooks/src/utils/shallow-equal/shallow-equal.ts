@@ -10,17 +10,21 @@ export function shallowEqual(a: any, b: any) {
   const keys = Object.keys(a);
   const { length } = keys;
 
+  if (length !== Object.keys(b).length) {
+    return false;
+  }
+
   for (let i = 0; i < length; i += 1) {
-    if (!(keys[i] in b)) {
+    const key = keys[i];
+
+    if (!(key in b)) {
+      return false;
+    }
+
+    if (a[key] !== b[key]) {
       return false;
     }
   }
 
-  for (let i = 0; i < length; i += 1) {
-    if (a[keys[i]] !== b[keys[i]]) {
-      return false;
-    }
-  }
-
-  return length === Object.keys(b).length;
+  return true;
 }

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { usePagination } from './use-pagination';
 
 describe('@mantine/hooks/use-pagination', () => {
@@ -48,11 +48,11 @@ describe('@mantine/hooks/use-pagination', () => {
     const spy = jest.fn();
     const { result } = renderHook(() =>
       usePagination({
+        page: 7,
         onChange: spy,
         total: 20,
         siblings: 2,
         boundaries: 2,
-        initialPage: 7,
       })
     );
 

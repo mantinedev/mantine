@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, ChevronLeft } from 'tabler-icons-react';
+import { IconChevronRight, IconChevronLeft } from '@tabler/icons';
 import { UnstyledButton, Group, Avatar, Text, Box, useMantineTheme } from '@mantine/core';
 
 export function User() {
@@ -42,7 +42,7 @@ export function User() {
             </Text>
           </Box>
 
-          {theme.dir === 'ltr' ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          {theme.dir === 'ltr' ? <IconChevronRight size={18} /> : <IconChevronLeft size={18} />}
         </Group>
       </UnstyledButton>
     </Box>

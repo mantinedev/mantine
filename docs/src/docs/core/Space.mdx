@@ -10,7 +10,6 @@ props: ['Space']
 import: "import { Space } from '@mantine/core';"
 source: 'mantine-core/src/components/Space/Space.tsx'
 docs: 'core/Space.mdx'
-styles: ['Space', 'single-node']
 ---
 
 import { SpaceDemos } from '@mantine/demos';
@@ -20,6 +19,8 @@ import { SpaceDemos } from '@mantine/demos';
 Use Space component to add horizontal or vertical spacing between elements:
 
 <Demo data={SpaceDemos.horizontal} />
+
+<br />
 
 <Demo data={SpaceDemos.vertical} />
 
@@ -45,7 +46,7 @@ Space component to skip direct theme subscription:
 
 ## h and w props
 
-`h` and `w` are shortcuts for height and width, you can use values from [theme.spacing](/theming/extend-theme/#spacing-radius-and-shadows)
+`h` and `w` are shortcuts for height and width, you can use values from `theme.spacing`
 (xs, sm, md, lg, xl) or number to set width or height in px:
 
 ```tsx

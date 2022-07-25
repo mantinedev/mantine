@@ -30,7 +30,7 @@ Mantine is a monorepo, so it is important to write the correct commit messages t
 
 The commit message consists of 3 parts:
 
-```sh
+```bash
 [area] Optional title: Message
 ```
 

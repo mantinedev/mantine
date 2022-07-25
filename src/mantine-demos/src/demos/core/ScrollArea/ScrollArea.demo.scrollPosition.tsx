@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Group, Code, Text, ScrollArea } from '@mantine/core';
+import { Stack, Code, Text, ScrollArea } from '@mantine/core';
 import { Content } from './_content';
 
 const code = `
@@ -32,7 +32,7 @@ function Demo() {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
 
   return (
-    <Group position="center" direction="column">
+    <Stack align="center">
       <ScrollArea
         style={{ width: 300, height: 200 }}
         onScrollPositionChange={onScrollPositionChange}
@@ -44,7 +44,7 @@ function Demo() {
       <Text>
         Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>
       </Text>
-    </Group>
+    </Stack>
   );
 }
 

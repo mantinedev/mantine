@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextProps } from '@mantine/core';
 
-function Wrapper(props: TextProps<'div'>) {
+function Wrapper(props: TextProps) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Text {...props}>

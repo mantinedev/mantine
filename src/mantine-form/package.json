@@ -1,7 +1,7 @@
 {
   "name": "@mantine/form",
   "description": "Mantine form management library",
-  "version": "4.2.12",
+  "version": "5.0.0-alpha.22",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -17,6 +17,8 @@
   "peerDependencies": {
     "react": ">=16.8.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash.clonedeep": "4.5.0"
+  },
   "devDependencies": {}
 }

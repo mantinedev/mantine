@@ -142,7 +142,7 @@ import { useRef } from 'react';
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Autocomplete ref={ref} data={[]} />;
 }
 ```

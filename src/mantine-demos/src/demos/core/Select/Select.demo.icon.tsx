@@ -1,10 +1,10 @@
 import React from 'react';
-import { Hash } from 'tabler-icons-react';
+import { IconHash } from '@tabler/icons';
 import { Select } from '@mantine/core';
 
 const code = `
 import { Select } from '@mantine/core';
-import { Hash } from 'tabler-icons-react';
+import { IconHash } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -12,7 +12,7 @@ function Demo() {
       label="Pick a hashtag"
       placeholder="Pick a hashtag"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      icon={<Hash size={14} />}
+      icon={<IconHash size={14} />}
     />
   );
 }
@@ -25,7 +25,7 @@ function Demo() {
         label="Pick a hashtag"
         placeholder="Pick a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<Hash size={14} />}
+        icon={<IconHash size={14} />}
       />
     </div>
   );

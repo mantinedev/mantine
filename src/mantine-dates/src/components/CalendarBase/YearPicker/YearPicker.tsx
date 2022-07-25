@@ -33,15 +33,20 @@ export function YearPicker({
   nextDecadeLabel,
   previousDecadeLabel,
   preventFocus,
+  unstyled,
   ...others
 }: YearPickerProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, unstyled, name: __staticSelector }
+  );
   const [decade, setDecade] = useState(value);
   const range = getDecadeRange(decade);
 
   const years = range.map((year) => (
-    <UnstyledButton
+    <UnstyledButton<'button'>
       key={year}
+      unstyled={unstyled}
       onClick={() => onChange(year)}
       disabled={year < minYear || year > maxYear}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
@@ -56,6 +61,7 @@ export function YearPicker({
   return (
     <div className={cx(classes.yearPicker, className)} {...others}>
       <CalendarHeader
+        unstyled={unstyled}
         label={`${range[0]} – ${range[range.length - 1]}`}
         hasPrevious={typeof minYear === 'number' ? minYear < range[0] : true}
         hasNext={typeof maxYear === 'number' ? maxYear > range[range.length - 1] : true}

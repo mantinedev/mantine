@@ -1,11 +1,11 @@
 import React from 'react';
-import { Check, X } from 'tabler-icons-react';
+import { IconCheck, IconX } from '@tabler/icons';
 import { Notification } from '@mantine/core';
 import { demoBase } from './_demo-base';
 
 const code = `
 import { Notification } from '@mantine/core';
-import { Check, X } from 'tabler-icons-react';
+import { IconCheck, IconX } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -14,11 +14,11 @@ function Demo() {
         This is default notification with title and body
       </Notification>
 
-      <Notification icon={<Check size={18} />} color="teal" title="Teal notification">
+      <Notification icon={<IconCheck size={18} />} color="teal" title="Teal notification">
         This is teal notification with icon
       </Notification>
 
-      <Notification icon={<X size={18} />} color="red">
+      <Notification icon={<IconX size={18} />} color="red">
         Bummer! Notification without title
       </Notification>
 
@@ -43,7 +43,7 @@ function Demo() {
 
       <Notification
         style={{ marginTop: 15 }}
-        icon={<Check size={18} />}
+        icon={<IconCheck size={18} />}
         color="teal"
         title="Teal notification"
         onClose={() => {}}
@@ -51,7 +51,12 @@ function Demo() {
         This is teal notification with icon
       </Notification>
 
-      <Notification style={{ marginTop: 15 }} icon={<X size={18} />} color="red" onClose={() => {}}>
+      <Notification
+        style={{ marginTop: 15 }}
+        icon={<IconX size={18} />}
+        color="red"
+        onClose={() => {}}
+      >
         Bummer! Notification without title
       </Notification>
 

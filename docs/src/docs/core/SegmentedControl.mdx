@@ -5,7 +5,7 @@ title: SegmentedControl
 order: 1
 slug: /core/segmented-control/
 category: 'inputs'
-description: 'Horizontal control made of multiple segments, alternative to RadioGroup'
+description: 'Horizontal control with multiple segments'
 props: ['SegmentedControl']
 import: "import { SegmentedControl } from '@mantine/core';"
 source: 'mantine-core/src/components/SegmentedControl/SegmentedControl.tsx'
@@ -16,12 +16,6 @@ styles: ['SegmentedControl']
 import { SegmentedControlDemos } from '@mantine/demos';
 
 ## Usage
-
-SegmentedControl is usually used as an alternative to:
-
-- [Tabs](/core/tabs/) to switch views
-- [RadioGroup](/core/radio-group/) to capture user feedback limited to certain
-  options
 
 <Demo data={SegmentedControlDemos.usage} />
 
@@ -119,7 +113,7 @@ Default theme radius values from xs to xl with lg size:
 ## Color
 
 By default, segmented control uses `theme.white` with shadow in light color scheme and `theme.colors.dark[6]` background color for active element.
-You can choose any color defined in [theme.colors](/theming/extend-theme/#default-colors) in case you need colored variant:
+You can choose any color defined in `theme.colors` in case you need colored variant:
 
 <Demo data={SegmentedControlDemos.configurator} />
 

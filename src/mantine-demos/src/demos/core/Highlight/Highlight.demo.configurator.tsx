@@ -1,7 +1,7 @@
 import React from 'react';
 import { Highlight, HighlightProps } from '@mantine/core';
 
-function Wrapper(props: HighlightProps<'div'>) {
+function Wrapper(props: HighlightProps) {
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Highlight {...props} />

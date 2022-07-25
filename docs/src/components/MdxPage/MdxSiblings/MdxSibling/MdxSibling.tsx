@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { Text } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { ArrowLeftIcon, ArrowRightIcon } from '@modulz/radix-icons';
+import { IconArrowLeft, IconArrowRight } from '@tabler/icons';
 import { Frontmatter } from '../../../../types';
 import useStyles from './MdxSibling.styles';
 
@@ -14,11 +14,10 @@ interface MdxSiblingProps {
 
 export function MdxSibling({ data, type, className }: MdxSiblingProps) {
   const { classes, cx } = useStyles();
-  const iconStyle = { width: 22, height: 22 };
 
   return (
     <Link to={data.slug} className={cx(classes.control, classes[type], className)}>
-      {type === 'prev' && <ArrowLeftIcon style={iconStyle} />}
+      {type === 'prev' && <IconArrowLeft size={22} stroke={1.5} />}
 
       <div className={classes.body}>
         <Text size="lg" align={type === 'next' ? 'left' : 'right'}>
@@ -29,7 +28,7 @@ export function MdxSibling({ data, type, className }: MdxSiblingProps) {
         </Text>
       </div>
 
-      {type === 'next' && <ArrowRightIcon style={iconStyle} />}
+      {type === 'next' && <IconArrowRight size={22} stroke={1.5} />}
     </Link>
   );
 }

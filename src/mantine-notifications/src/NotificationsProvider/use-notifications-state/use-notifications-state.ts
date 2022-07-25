@@ -21,9 +21,9 @@ export default function useNotificationsState({ limit }: { limit: number }) {
     return id;
   };
 
-  const updateNotification = (id: string, notification: NotificationProps) =>
+  const updateNotification = (notification: NotificationProps) =>
     update((notifications) => {
-      const index = notifications.findIndex((n) => n.id === id);
+      const index = notifications.findIndex((n) => n.id === notification.id);
 
       if (index === -1) {
         return notifications;

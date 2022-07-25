@@ -1,1 +1,0 @@
-export { useColorSchemeDemo } from './usage';
