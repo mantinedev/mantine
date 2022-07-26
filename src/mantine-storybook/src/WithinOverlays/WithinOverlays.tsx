@@ -6,20 +6,13 @@ interface WithinOverlayProps {
 }
 
 function WithinPopover({ children }: WithinOverlayProps) {
-  const [opened, setOpened] = useState(false);
   return (
     <Group position="center" mt="xl">
-      <Popover
-        opened={opened}
-        onClose={() => setOpened(false)}
-        target={<Button onClick={() => setOpened((o) => !o)}>Within popover</Button>}
-        position="bottom"
-        placement="start"
-        withArrow
-        withCloseButton
-        styles={{ body: { width: 300 } }}
-      >
-        {children}
+      <Popover position="bottom" withArrow>
+        <Popover.Target>
+          <Button>Within popover</Button>
+        </Popover.Target>
+        <Popover.Dropdown>{children}</Popover.Dropdown>
       </Popover>
     </Group>
   );

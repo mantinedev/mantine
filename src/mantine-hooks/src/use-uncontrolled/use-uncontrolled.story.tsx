@@ -17,7 +17,6 @@ function CustomInput({ label, value, defaultValue, onChange }: CustomInputProps)
     defaultValue,
     finalValue: null,
     onChange,
-    rule: (val) => typeof val === 'string',
   });
 
   return (

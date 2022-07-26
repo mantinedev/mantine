@@ -49,7 +49,7 @@ import { useRef } from 'react';
 import { Burger } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLButtonElement>();
+  const ref = useRef<HTMLButtonElement>(null);
   return <Burger ref={ref} opened={false} />;
 }
 ```

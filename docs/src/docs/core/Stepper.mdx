@@ -6,8 +6,9 @@ order: 1
 slug: /core/stepper/
 category: 'navigation'
 description: 'Display content divided into a steps sequence'
+componentPrefix: 'Stepper'
 props: ['Stepper', 'Step']
-import: "import { Stepper, Step } from '@mantine/core';"
+import: "import { Stepper } from '@mantine/core';"
 source: 'mantine-core/src/components/Stepper/Stepper.tsx'
 docs: 'core/Stepper.mdx'
 styles: ['Stepper']
@@ -69,8 +70,7 @@ than `theme.breakpoints.md`:
 <Stepper breakpoint="md">{/* ...steps */}</Stepper>
 ```
 
-You can [configure breakpoints](/theming/extend-theme/#breakpoints) in MantineProvider or use
-number to set breakpoint in px:
+You can configure breakpoints with [MantineProvider](/theming/mantine-provider) or use number to set breakpoint in px:
 
 ```tsx
 <Stepper breakpoint={755}>{/* ...steps */}</Stepper>
@@ -92,7 +92,7 @@ Loader will replace step icon. You can configure default loader in [MantineProvi
 
 ## Customize with Styles API
 
-You can change Stepper styles using [Styles API](/theming/styles-api/)
+You can change Stepper styles using [Styles API](/styles/styles-api/)
 
 <Demo data={StepperDemos.stylesApi} demoProps={{ toggle: true }} />
 
@@ -107,13 +107,67 @@ import { useRef } from 'react';
 import { Stepper } from '@mantine/core';
 
 function MyStepper() {
-  const firstStep = useRef<HTMLButtonElement>();
-  const stepper = useRef<HTMLDivElement>();
+  const firstStep = useRef<HTMLButtonElement>(null);
+  const stepper = useRef<HTMLDivElement>(null);
 
   return (
     <Stepper ref={stepper} active={0}>
       <Stepper.Step label="First step" ref={firstStep} />
       <Stepper.Step label="Second step" />
+    </Stepper>
+  );
+}
+```
+
+## Wrap Stepper.Step
+
+`Stepper` component relies on `Stepper.Step` order, if you want to wrap `Stepper.Step` component you will
+need to spread wrapper component props:
+
+```tsx
+import { Stepper, StepProps } from '@mantine/core';
+
+function SecondStep(props: StepProps) {
+  return (
+    <Stepper.Step label="Second" description="Second description" {...props}>
+      Second step content here
+    </Stepper.Step>
+  );
+}
+
+function Demo() {
+  return (
+    <Stepper active={1}>
+      <Stepper.Step label="Regular step">Fist step</Stepper.Step>
+      <SecondStep />
+      <Stepper.Step label="Regular step">Third step</Stepper.Step>
+    </Stepper>
+  );
+}
+```
+
+Note that:
+
+- `Stepper.Completed` component **cannot be wrapped with other components**
+- Any additional nodes rendered within `Stepper` will output unexpected separators
+
+```tsx
+import { Stepper } from '@mantine/core';
+
+// Do not wrap Stepper.Completed with any components,
+// create a component that will be rendered within it instead.
+function Completed() {
+  return <div>Completed</div>;
+}
+
+function Demo() {
+  return (
+    <Stepper active={1}>
+      <Stepper.Step>Fist step</Stepper.Step>
+      <Stepper.Step>Second step</Stepper.Step>
+      <Stepper.Completed>
+        <Completed />
+      </Stepper.Completed>
     </Stepper>
   );
 }

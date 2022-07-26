@@ -29,6 +29,9 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Amount of months */
   amountOfMonths?: number;
 
+  /** Paginate by amount of months */
+  paginateBy?: number;
+
   /** Selected value */
   value?: Date | Date[] | null;
 
@@ -96,6 +99,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       onMonthChange,
       locale,
       amountOfMonths = 1,
+      paginateBy = amountOfMonths,
       size = 'sm',
       allowLevelChange = true,
       initialLevel = 'date',
@@ -127,7 +131,9 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       isDateFirstInRange,
       isDateLastInRange,
       renderDay,
+      unstyled,
       weekendDays,
+      __stopPropagation,
       ...others
     }: CalendarBaseProps,
     ref
@@ -135,7 +141,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
     const [selectionState, setSelectionState] = useState(initialLevel);
     const { classes, cx, theme } = useStyles(
       { size, fullWidth, amountOfMonths: selectionState === 'date' ? amountOfMonths : 1 },
-      { name: __staticSelector, styles, classNames }
+      { name: __staticSelector, styles, classNames, unstyled }
     );
     const finalLocale = locale || theme.datesLocale;
 
@@ -150,7 +156,6 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       defaultValue: initialMonth,
       finalValue: new Date(),
       onChange: onMonthChange,
-      rule: (val) => val instanceof Date,
     });
 
     const [yearSelection, setYearSelection] = useState(_month.getFullYear());
@@ -195,7 +200,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       payload: DayKeydownPayload,
       event: React.KeyboardEvent<HTMLButtonElement>
     ) => {
-      switch (event.code) {
+      switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
 
@@ -263,6 +268,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             nextDecadeLabel={nextDecadeLabel}
             previousDecadeLabel={previousDecadeLabel}
             preventFocus={preventFocus}
+            unstyled={unstyled}
           />
         )}
 
@@ -286,12 +292,14 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             nextYearLabel={nextYearLabel}
             previousYearLabel={previousYearLabel}
             preventFocus={preventFocus}
+            unstyled={unstyled}
           />
         )}
 
         {selectionState === 'date' && (
           <MonthsList
             amountOfMonths={amountOfMonths}
+            paginateBy={paginateBy}
             month={_month}
             locale={finalLocale}
             minDate={minDate}
@@ -326,7 +334,9 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             isDateInRange={isDateInRange}
             isDateFirstInRange={isDateFirstInRange}
             isDateLastInRange={isDateLastInRange}
+            unstyled={unstyled}
             weekendDays={weekendDays}
+            __stopPropagation={__stopPropagation}
           />
         )}
       </Box>

@@ -6,7 +6,8 @@ order: 1
 slug: /core/popover/
 category: 'overlay'
 description: 'Display popover section relative to given target element'
-props: ['Popover']
+componentPrefix: 'Popover'
+props: ['Popover', 'PopoverTarget', 'PopoverDropdown']
 import: "import { Popover } from '@mantine/core';"
 source: 'mantine-core/src/components/Popover/Popover.tsx'
 docs: 'core/Popover.mdx'
@@ -19,111 +20,128 @@ import { PopoverDemos, PasswordInputDemos } from '@mantine/demos';
 
 <Demo data={PopoverDemos.usage} />
 
-## Examples
+## Controlled
 
-### Show on focus
-
-This example uses `onFocusCapture` and `onBlurCapture` events on Popover component
-to determine if any element inside has focus:
-
-<Demo data={PasswordInputDemos.strengthMeter} demoProps={{ zIndex: 5 }} />
-
-### With form
-
-By default, focus trap inside popover is active,
-you can place forms inside and focus will be kept inside popover:
-
-<Demo data={PopoverDemos.form} demoProps={{ zIndex: 4 }} />
-
-### Show on hover
-
-To show popover on hover add `onMouseEnter` and `onMouseLeave` handlers to
-element that should trigger popover. Note that in this case you have to disable
-focus trap with `trapFocus={false}`:
-
-<Demo data={PopoverDemos.hover} />
-
-## Position and placement
-
-Popover position relative to target element is defined by:
-
-- **position** – popover side – top, bottom, right or left, defaults to top
-- **placement** – popover placement relative to position – start, center or end, defaults to center
-- **gutter** – space between popover and target element in px, defaults to 10px
+You can control Popover state with `opened` and `onChange` props:
 
 ```tsx
-<Popover position="bottom" placement="end" gutter={10} />
+import { useState } from 'react';
+import { Popover, Button } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Popover opened={opened} onChange={setOpened}>
+      <Popover.Target>
+        <Button onClick={() => setOpened((o) => !o)}>Toggle popover</Button>
+      </Popover.Target>
+
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
 ```
 
-All positions and placement:
+Controlled example with mouse events:
 
-<Demo data={PopoverDemos.positions} />
+<Demo data={PopoverDemos.hover} demoProps={{ toggle: false }} />
 
-## Control behavior
+Controlled example with focus events:
 
-By default, popover:
+<Demo data={PasswordInputDemos.strengthMeter} demoProps={{ toggle: false }} />
 
-- has focus trap
-- closes when escape key is pressed
-- closes when outside click is registered
+## Focus trap
 
-Usually it is a good idea to turn these settings off, if you show popover on
-focus or hover:
+If you need to use any interactive elements within Popover, set `trapFocus` prop:
 
-```tsx
-<Popover
-  trapFocus={false} // -> disable focus trap
-  closeOnEscape={false} // -> disable escape key press handling
-  closeOnClickOutside={false} // -> disable outside click handling
-/>
-```
+<Demo data={PopoverDemos.form} />
 
-## Close button and title
+## Same width
 
-Popover includes optional close button and title:
+Set `width="target"` prop to make Popover dropdown take the same width as target element:
 
-- set `withCloseButton` prop to show close button, add `closeButtonLabel` to set aria-label attribute on close button
-- set `title` prop to add title at the top of popover
-
-```tsx
-<Popover title="Popover title" withCloseButton closeButtonLabel="Close popover" />
-```
-
-## Control appearance
-
-To change popover appearance use:
-
-- `radius` – applies border-radius from `theme.radius`
-- `spacing` – adds padding to all sides of popover from `theme.spacing`
-- `shadow` – add box-shadow from `theme.shadows`
-
-<Demo data={PopoverDemos.configurator} />
+<Demo data={PopoverDemos.sameWidth} />
 
 ## Initial focus
 
-Popover uses [use-focus-trap](/hooks/use-focus-trap/) to manage focus.
-To specify initial focus element add `data-autofocus` attribute:
+Popover uses [FocusTrap](/core/focus-trap/) component to manage focus.
+Add `data-autofocus` attribute to element that should receive initial focus:
 
 ```tsx
 <Popover>
   <input />
-  {/* Second input in modal will have initial focus */}
   <input data-autofocus />
   <input />
 </Popover>
 ```
 
-## Usage with other overlays
+## Popover.Target children
 
-Popover listens for outside clicks with [use-click-outside](/hooks/use-click-outside/) hook.
-This means that it is not possible to use elements that render overlays within [Portal](/core/portal/)
-inside Popover. To use components like [Autocomplete](/core/autocomplete/),
-[Menu](/core/menu/), [DatePicker](/dates/date-picker/) portal feature should be disabled for these components:
+`Popover.Target` requires an element or a component as a single child –
+strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
+Custom components must provide a prop to get root element ref, all Mantine components support ref out of the box.
 
 ```tsx
-<Popover>
-  <Menu withinPortal={false} />
-  <Autocomplete withinPortal={false} />
-  <DatePicker withinPortal={false} />
-</Popover>
+import { Popover, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Popover.Target>
+        <button>Native button – ok</button>
+      </Popover.Target>
+
+      {/* OK */}
+      <Popover.Target>
+        <Button>Mantine component – ok</Button>
+      </Popover.Target>
+
+      {/* String, NOT OK – will throw error */}
+      <Popover.Target>Raw string</Popover.Target>
+
+      {/* Number, NOT OK – will throw error */}
+      <Popover.Target>{2}</Popover.Target>
+
+      {/* Fragment, NOT OK – will throw error */}
+      <Popover.Target>
+        <>Fragment, NOT OK, will throw error</>
+      </Popover.Target>
+
+      {/* Multiple nodes, NOT OK – will throw error */}
+      <Popover.Target>
+        <div>More that one node</div>
+        <div>NOT OK, will throw error</div>
+      </Popover.Target>
+    </>
+  );
+}
 ```
+
+## Accessibility
+
+Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.2/#dialog_modal):
+
+- Dropdown element has `role="dialog"` and `aria-labelledby="target-id"` attributes
+- Target element has `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
+
+### Supported target elements
+
+Uncontrolled Popover will be accessible only when used with `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
+Other elements will not support `Space` and `Enter` key presses.
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'Escape',
+      description: 'Closes dropdown',
+      condition: 'Focus within dropdown',
+    },
+    {
+      key: 'Space/Enter',
+      description: 'Opens/closes dropdown',
+      condition: 'Focus on target element',
+    },
+  ]}
+/>

@@ -12,7 +12,7 @@ docs: 'dates/Month.mdx'
 styles: ['Month']
 ---
 
-import { MonthDemos } from '@mantine/demos';
+import { MonthDemos, RangeCalendarDemos } from '@mantine/demos';
 
 ## Usage
 
@@ -124,3 +124,19 @@ In this example, we will add red background to each Friday 13th based on date (f
 In this example, we will hide all outside dates and change color of weekends based on modifiers (second argument):
 
 <Demo data={MonthDemos.modifiers} />
+
+## Add styles to days with Styles API
+
+All components that use `Month` under the hood also support day styles customization
+with [Styles API](/styles/styles-api/). `day` selector has the following `data-` attributes:
+
+- `data-outside`
+- `data-weekend`
+- `data-selected`
+- `data-in-range`
+- `data-first-in-range`
+- `data-last-in-range`
+
+[RangeCalendar](/dates/calendar/) example:
+
+<Demo data={RangeCalendarDemos.stylesApi} />

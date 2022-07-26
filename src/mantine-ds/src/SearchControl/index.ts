@@ -1,0 +1,1 @@
+export { SearchControl } from './SearchControl';

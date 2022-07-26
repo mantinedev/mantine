@@ -1,7 +1,7 @@
 import { createStyles } from '@mantine/core';
 import { BREAKPOINT, TABLE_OF_CONTENTS_WIDTH, CONTENT_WIDTH } from '../settings';
 
-export default createStyles((theme) => ({
+export default createStyles((theme, { withToc }: { withToc: boolean }) => ({
   wrapper: {
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
     zIndex: 1,
@@ -19,8 +19,8 @@ export default createStyles((theme) => ({
 
   container: {
     marginTop: theme.spacing.xl,
-    width: `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)`,
-    maxWidth: CONTENT_WIDTH,
+    width: withToc ? `calc(100% - ${TABLE_OF_CONTENTS_WIDTH}px)` : '100%',
+    maxWidth: withToc ? CONTENT_WIDTH : CONTENT_WIDTH + TABLE_OF_CONTENTS_WIDTH,
     marginLeft: 'auto',
     marginRight: 'auto',
 

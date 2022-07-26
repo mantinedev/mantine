@@ -20,7 +20,7 @@
 ## Packages
 
 - `@mantine/hooks` – collection of 40+ hooks for state and UI management
-- [`@mantine/styles`](https://mantine.dev/theming/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
+- [`@mantine/styles`](https://mantine.dev/styles/create-styles/) – [emotion](https://emotion.sh/) based css-in-js library that is used in all Mantine components
 - `@mantine/core` – core components library – 100+ components, exports everything from `@mantine/styles`
 - [`@mantine/form`](https://mantine.dev/form/use-form/) – forms management library
 - [`@mantine/notifications`](https://mantine.dev/others/notifications/) – a fully featured notifications system
@@ -28,10 +28,13 @@
 - [`@mantine/prism`](https://mantine.dev/others/prism/) – code highlight built with [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
 - [`@mantine/rte`](https://mantine.dev/others/rte/) – a Quill based rich text editor
 - [`@mantine/dropzone`](https://mantine.dev/others/dropzone/) – manages files drag 'n' drop to an area or entire screen
+- [`@mantine/carousel`](https://mantine.dev/others/carousel/) – Carousel component
+- [`@mantine/nprogress`](https://mantine.dev/others/nprogress/) – navigation progress
 - [`@mantine/modals`](https://mantine.dev/others/modals/) – centralized modals manager
-- [`@mantine/ssr`](https://mantine.dev/theming/ssr/) – server side rendering utilities
-- [`@mantine/next`](https://mantine.dev/theming/next/) – server side rendering utilities for Next.js
-- [`gatsby-plugin-mantine`](https://mantine.dev/theming/gatsby/) – Gatsby plugin to setup server side rendering
+- [`@mantine/ssr`](https://mantine.dev/guides/ssr/) – server side rendering utilities
+- [`@mantine/next`](https://mantine.dev/guides/next/) – server side rendering utilities for Next.js
+- [`@mantine/remix`](https://mantine.dev/guides/remix/) – server side rendering utilities for Remix
+- [`gatsby-plugin-mantine`](https://mantine.dev/guides/gatsby/) – Gatsby plugin to setup server side rendering
 - [`eslint-config-mantine`](https://www.npmjs.com/package/eslint-config-mantine) – ESLint and Prettier configuration that is used in all Mantine projects
 
 ## Getting help

@@ -7,6 +7,7 @@ import { Group, Avatar, Text, Accordion } from '@mantine/core';
 
 const charactersList = [
   {
+    id: 'bender',
     image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
     label: 'Bender Bending Rodríguez',
     description: 'Fascinated with cooking, though has no sense of taste',
@@ -14,24 +15,21 @@ const charactersList = [
   },
 
   {
+    id: 'carol',
     image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
     label: 'Carol Miller',
     description: 'One of the richest people on Earth',
     content: "Carol Miller (born January 30, 2880), better known as Mom, is the evil chief executive officer and shareholder of 99.7% of Momcorp, one of the largest industrial conglomerates in the universe and the source of most of Earth's robots. She is also one of the main antagonists of the Futurama series.",
   },
+
   {
+    id: 'homer',
     image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
     label: 'Homer Simpson',
     description: 'Overweight, lazy, and often ignorant',
     content: 'Homer Jay Simpson (born May 12) is the main protagonist and one of the five main characters of The Simpsons series(or show). He is the spouse of Marge Simpson and father of Bart, Lisa and Maggie Simpson.',
   },
-  {
-    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
-    label: 'Spongebob Squarepants',
-    description: 'Not just a sponge',
-    content: 'SpongeBob is a childish and joyful sea sponge who lives in a pineapple with his pet snail Gary in the underwater city of Bikini Bottom. He works as a fry cook at the Krusty Krab, a job which he is exceptionally skilled at and enjoys thoroughly. ',
-  },
-]
+];
 
 interface AccordionLabelProps {
   label: string;
@@ -55,16 +53,17 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 
 function Demo() {
   const items = charactersList.map((item) => (
-    <Accordion.Item label={<AccordionLabel {...item} />} key={item.label}>
-      <Text size="sm">{item.content}</Text>
+    <Accordion.Item value={item.id} key={item.label}>
+      <Accordion.Control>
+        <AccordionLabel {...item} />
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Text size="sm">{item.content}</Text>
+      </Accordion.Panel>
     </Accordion.Item>
   ));
 
-  return (
-    <Accordion initialItem={-1} iconPosition="right">
-      {items}
-    </Accordion>
-  );
+  return <Accordion chevronPosition="right" variant="contained">{items}</Accordion>;
 }
 `;
 
@@ -90,13 +89,18 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 
 export function AccordionDemo(props: Partial<AccordionProps>) {
   const items = charactersList.map((item) => (
-    <Accordion.Item label={<AccordionLabel {...item} />} key={item.label}>
-      <Text size="sm">{item.content}</Text>
+    <Accordion.Item value={item.id} key={item.label}>
+      <Accordion.Control>
+        <AccordionLabel {...item} />
+      </Accordion.Control>
+      <Accordion.Panel>
+        <Text size="sm">{item.content}</Text>
+      </Accordion.Panel>
     </Accordion.Item>
   ));
 
   return (
-    <Accordion initialItem={-1} iconPosition="right" {...props}>
+    <Accordion chevronPosition="right" variant="contained" {...props}>
       {items}
     </Accordion>
   );

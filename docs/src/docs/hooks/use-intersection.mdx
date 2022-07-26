@@ -52,5 +52,8 @@ const [ref, ioEntry] = useIntersection();
 ```tsx
 function useIntersection<T extends HTMLElement = any>(
   options?: ConstructorParameters<typeof IntersectionObserver>[1]
-): readonly [(element: T | null) => void, IntersectionObserverEntry];
+): {
+  ref: (element: T | null) => void;
+  entry: IntersectionObserverEntry;
+};
 ```

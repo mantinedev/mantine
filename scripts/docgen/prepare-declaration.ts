@@ -25,6 +25,12 @@ export function prepareDeclaration(declaration: ComponentDoc) {
     if (data.props[prop].type.name in replace) {
       data.props[prop].type.name = replace[data.props[prop].type.name];
     }
+
+    if (data.props[prop].type.name === 'enum') {
+      data.props[prop].type.name = data.props[prop].type.value
+        .map((val: { value: string }) => val.value)
+        .join(' | ');
+    }
   });
 
   // This sorts the props object in ascending order

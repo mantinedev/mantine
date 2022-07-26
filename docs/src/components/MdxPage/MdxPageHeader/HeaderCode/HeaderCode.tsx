@@ -23,11 +23,10 @@ export function HeaderCode({ code, icon, language }: ImportStatementProps) {
       <Tooltip
         label={clipboard.copied ? 'Copied' : 'Copy'}
         position="right"
-        placement="center"
         transition="fade"
         withArrow
-        arrowSize={4}
-        gutter={15}
+        arrowSize={6}
+        offset={10}
         color={clipboard.copied ? 'teal' : undefined}
         sx={{ flex: 1 }}
         disabled={mobile}

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import { NotificationProps } from '../../types';
 import useNotificationsState from './use-notifications-state';
 
@@ -86,7 +86,7 @@ describe('@mantine/notifications/use-notifications-state', () => {
     expect(hook.result.current.notifications).toHaveLength(2);
 
     act(() =>
-      hook.result.current.updateNotification(TEST_NOTIFICATION.id, {
+      hook.result.current.updateNotification({
         ...TEST_NOTIFICATION,
         message: 'update-test',
       })

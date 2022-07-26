@@ -4,9 +4,10 @@ package: '@mantine/core'
 title: Button
 order: 1
 slug: /core/button/
-category: 'inputs'
+category: 'buttons'
 description: 'Render button or link with button styles from mantine theme'
-props: ['Button']
+componentPrefix: 'Button'
+props: ['Button', 'ButtonGroup']
 import: "import { Button } from '@mantine/core';"
 source: 'mantine-core/src/components/Button/Button.tsx'
 docs: 'core/Button.mdx'
@@ -21,16 +22,7 @@ import { ButtonDemos } from '@mantine/demos';
 
 ## Variants
 
-Button supports the following variants: default, subtle, white, gradient, filled, light and outline:
-
 <Demo data={ButtonDemos.variants} />
-
-Default Button color is `theme.primaryColor`, to change color and variant pass `color` and `variant` props:
-
-```tsx
-<Button color="red" /> // filled button with red color
-<Button variant="outline" /> // outline button with theme.primaryColor color
-```
 
 ### Gradient variant
 
@@ -62,23 +54,9 @@ You can control loading state and [Loader](/core/loader/) component with followi
 
 <Demo data={ButtonDemos.loadingConfigurator} />
 
-## Customize
-
-You can change styles of any element in button component with [Styles API](/theming/styles-api/) to match your design requirements:
+## Styles API
 
 <Demo data={ButtonDemos.customize} />
-
-## Size and radius
-
-Control button font-size, height and padding with `size` and border-radius with `radius` props.
-Both props have predefined values: xs, sm, md, lg, xl.
-Alternatively, you can use a number to set radius in px:
-
-```tsx
-<Button radius="lg" /> // -> theme predefined large radius
-<Button radius={10} /> // -> { borderRadius: '10px' }
-<Button size="sm" /> // -> predefined small size
-```
 
 ## Compact
 
@@ -91,23 +69,76 @@ If button is too large for its container, overflow content will be hidden:
 
 <Demo data={ButtonDemos.overflow} />
 
-## Change root element
+## Button.Group
 
-You can use Button component both as `button` and `a` elements:
+<Demo data={ButtonDemos.group} />
+
+Note that you cannot wrap child `Button` components with any additional elements:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button.Group>
+      <div>
+        <Button>This will not work</Button>
+      </div>
+      <Button>Buttons will have incorrect borders</Button>
+    </Button.Group>
+  );
+}
+```
+
+If you want to use [Tooltip](/core/tooltip/), [Popover](/core/popover/) or other overlay component,
+it is required to set `withinPortal` prop:
+
+```tsx
+import { Button, Tooltip } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button.Group>
+      <Tooltip label="Working as expected" withinPortal>
+        <Button>With Tooltip</Button>
+      </Tooltip>
+      <Button>Regular button</Button>
+    </Button.Group>
+  );
+}
+```
+
+## data- attributes
+
+Button has the following attributes on the root element:
+
+- `data-disabled` when `disabled` prop is `true`
+- `data-loading` when `loading` prop is `true`
+
+You can customize disabled and loading styles with these attributes:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      sx={{
+        '&[data-disabled]': { opacity: 0.4 },
+        '&[data-loading]': { backgroundColor: 'red' },
+      }}
+    />
+  );
+}
+```
+
+## Polymorphic component
+
+Button is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 <Demo data={ButtonDemos.component} />
 
-## Unstyled button
-
-To create custom buttons not related to Button component, use UnstyledButton component,
-it renders regular button without default browser styles and with Mantine focus styles:
-
-<Demo data={ButtonDemos.unstyled} />
-
-## Usage with react-router and other libraries
-
-You can use Button component with [react-router-dom](https://reactrouter.com/web/guides/quick-start)
-or other similar libraries by passing `Link` as component to Button:
+### Usage with react-router
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -122,30 +153,29 @@ function Demo() {
 }
 ```
 
-Provide type to use custom element with TypeScript:
+### Usage with Next.js
 
 ```tsx
+import Link from 'next/link';
 import { Button } from '@mantine/core';
-import { Link } from 'react-router-dom';
 
 function Demo() {
   return (
-    <>
-      <Button<'a'> component="a" href="#" />
-      <Button<typeof Link> component={Link} to="/hello" />
-    </>
+    <Link href="/hello" passHref>
+      <Button component="a">Next link</Button>
+    </Link>
   );
 }
 ```
 
-## Get button ref
+## Get ref
 
 ```tsx
 import { useRef } from 'react';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLButtonElement>();
+  const ref = useRef<HTMLButtonElement>(null);
   return <Button ref={ref} />;
 }
 ```

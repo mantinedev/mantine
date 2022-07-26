@@ -1,0 +1,92 @@
+---
+group: 'mantine-form'
+package: '@mantine/form'
+title: 'Form values'
+order: 1
+slug: /form/values/
+description: 'Manipulate form values with use-form'
+docs: 'form/values.mdx'
+source: 'mantine-form/src'
+---
+
+import { FormDemos } from '@mantine/demos';
+
+## Initial values
+
+In most cases you should set `initialValues`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+  },
+});
+```
+
+## setValues handler
+
+With `form.setValues` you can set all form values, for example you can set values after you have received a response from the backend API:
+
+<Demo data={FormDemos.setValues} />
+
+## setFieldValue handler
+
+`form.setFieldValue` handler allows to set value of the field at given path:
+
+<Demo data={FormDemos.setFieldValue} />
+
+## reset handler
+
+`form.reset` handler sets values to `initialValues` and clear all errors:
+
+<Demo data={FormDemos.reset} />
+
+## Get values type
+
+```tsx
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { name: '', age: 0 } });
+
+  // Get inferred form values type, will be `{ name: string; age: number }`
+  type FormValues = typeof form.values;
+
+  // Use values type in handleSubmit function or anywhere else
+  const handleSubmit = (values: FormValues) => console.log(values);
+}
+```
+
+## Set values type
+
+By default, form values types will be inferred from `initialValues`.
+To avoid that, you can pass type to `useForm` hook, this approach is useful when
+types cannot be correctly inferred or when you want to provide more specific types:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string; // regular field, same as inferred type
+  role: 'user' | 'admin'; // union, more specific than inferred string type
+
+  // values that may be undefined or null
+  // cannot be correctly inferred in strict mode
+  age: number | undefined;
+  registeredAt: Date | null;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    initialValues: {
+      name: '',
+      role: 'user',
+      age: undefined,
+      registeredAt: null,
+    },
+  });
+}
+```

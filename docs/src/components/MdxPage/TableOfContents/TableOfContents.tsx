@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import Slugger from 'github-slugger';
 import { navigate } from 'gatsby';
 import { useLocation } from '@reach/router';
-import { Text, useMantineTheme } from '@mantine/core';
-import { ActivityLogIcon } from '@modulz/radix-icons';
+import { Text, ScrollArea, useMantineTheme } from '@mantine/core';
+import { IconList } from '@tabler/icons';
 import useStyles from './TableOfContents.styles';
 
 interface Heading {
@@ -94,10 +94,12 @@ export default function TableOfContents({ headings, withTabs }: TableOfContentsP
       <div className={classes.inner}>
         <div>
           <div className={classes.header}>
-            <ActivityLogIcon />
+            <IconList size={20} stroke={1.5} />
             <Text className={classes.title}>Table of contents</Text>
           </div>
-          <div className={classes.items}>{items}</div>
+          <ScrollArea.Autosize maxHeight="calc(100vh - 140px)" type="scroll" offsetScrollbars>
+            <div className={classes.items}>{items}</div>
+          </ScrollArea.Autosize>
         </div>
       </div>
     </nav>

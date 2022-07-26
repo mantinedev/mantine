@@ -89,7 +89,7 @@ import { useRef } from 'react';
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <ColorInput ref={ref} />;
 }
 ```

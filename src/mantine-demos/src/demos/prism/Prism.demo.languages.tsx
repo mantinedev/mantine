@@ -67,19 +67,26 @@ values (2, 'D''artagnian');
 
 function Demo() {
   return (
-    <Prism.Tabs>
-      <Prism.Tab label="Go" language="go">
+    <Prism.Tabs defaultValue="go">
+      <Prism.TabsList>
+        <Prism.Tab value="go">Go</Prism.Tab>
+        <Prism.Tab value="python">Python</Prism.Tab>
+        <Prism.Tab value="css">CSS</Prism.Tab>
+        <Prism.Tab value="sql">SQL</Prism.Tab>
+      </Prism.TabsList>
+
+      <Prism.Panel value="go" language="go">
         {go}
-      </Prism.Tab>
-      <Prism.Tab label="Python" language="python">
+      </Prism.Panel>
+      <Prism.Panel value="python" language="python">
         {py}
-      </Prism.Tab>
-      <Prism.Tab label="CSS" language="css">
+      </Prism.Panel>
+      <Prism.Panel value="css" language="css">
         {css}
-      </Prism.Tab>
-      <Prism.Tab label="SQL" language="sql">
+      </Prism.Panel>
+      <Prism.Panel value="sql" language="sql">
         {sql}
-      </Prism.Tab>
+      </Prism.Panel>
     </Prism.Tabs>
   );
 }

@@ -8,8 +8,7 @@ date: 'March 29th, 2022'
 ---
 
 import { NotificationsDemos, StackDemos, SliderDemos, TooltipDemos } from '@mantine/demos';
-import { ExternalLinkIcon } from '@modulz/radix-icons';
-import { Anchor, Center } from '@mantine/core';
+import { Anchor } from '@mantine/core';
 
 ## @mantine/notifications improvements
 
@@ -62,10 +61,10 @@ This option is useful when you want to use Mantine theme values with CSS/SCSS or
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider withCSSVariables>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -83,7 +82,7 @@ Then you will be able to use variables anywhere in your CSS:
 
 ## sx array syntax
 
-All components now support arrays in [sx prop](https://mantine.dev/theming/sx/). It can be to simultaneously use `sx` prop and add it from props:
+All components now support arrays in [sx prop](https://mantine.dev/styles/sx/). It can be to simultaneously use `sx` prop and add it from props:
 
 ```tsx
 import { Button, Sx } from '@mantine/core';
@@ -115,10 +114,7 @@ New [FloatingTooltip](https://mantine.dev/core/tooltip/#floatingtooltip-componen
 they work the same way as `Navbar` and `Header` component but render content on the opposite side:
 
 <Anchor href="/app-shell-demo/" target="_blank" mb="xl" style={{ display: 'block' }}>
-  <Center inline>
-    <span style={{ marginRight: 7 }}>Open responsive example in new tab</span>
-    <ExternalLinkIcon width={18} height={18} />
-  </Center>
+  Open responsive example in new tab
 </Anchor>
 
 ```tsx
@@ -199,10 +195,10 @@ export default function AppShellDemo() {
 
 - [@mantine/spotlight](https://mantine.dev/others/spotlight/) now exports event based functions to open/close spotlight and perform other actions from anywhere in your application (not only in components)
 - [Button](https://mantine.dev/core/button/), [Badge](https://mantine.dev/core/badge/), [ThemeIcon](https://mantine.dev/core/theme-icon/) and [Text](https://mantine.dev/core/text/) components now support hex color values in `gradient` prop
-- [Radio](https://mantine.dev/core/radio-group/) now supports setting transition duration and icon customization via props
+- [Radio](https://mantine.dev/core/radio/) now supports setting transition duration and icon customization via props
 - [Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `precision` prop
 - [Menu](https://mantine.dev/core/menu/), [List](https://mantine.dev/core/list/) and [Grid](https://mantine.dev/core/grid/) components were migrated to context, associated components (`Menu.Item`, `List.Item`, `Grid.Col`, etc.) can now be wrapper with other components and fragments
 - `useLocalStorageValue` hook was renamed to `useLocalStorage` (old hook is still exported from `@mantine/hooks`)
 - [AppShell](https://mantine.dev/core/app-shell/) no longer parses props of Navbar and Header components, AppShell positioning logic was migrated to context and CSS variables, Navbar and Header components can now be wrapped with other components
 - NextLink component was added to `@mantine/next` package to simplify Next.js Link usage with [Menu](https://mantine.dev/core/menu/#menuitem-as-nextjs-link)
-- [Global](https://mantine.dev/theming/global-styles/#global-component) component now supports array syntax for `styles`
+- [Global](https://mantine.dev/styles/global-styles/#global-component) component now supports array syntax for `styles`

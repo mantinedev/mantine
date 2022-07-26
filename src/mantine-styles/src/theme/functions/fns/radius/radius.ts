@@ -1,7 +1,7 @@
 import type { MantineThemeBase, MantineNumberSize } from '../../../types';
 
 export function radius(theme: MantineThemeBase) {
-  return (size: MantineNumberSize | (string & {})): string | number => {
+  return (size?: MantineNumberSize | (string & {})): string | number => {
     if (typeof size === 'number') {
       return size;
     }

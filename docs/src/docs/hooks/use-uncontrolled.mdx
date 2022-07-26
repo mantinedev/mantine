@@ -13,7 +13,7 @@ source: 'mantine-hooks/src/use-uncontrolled/use-uncontrolled.ts'
 
 ## Usage
 
-use-uncontrolled allows you to manage state for both controlled and uncontrolled components:
+`use-uncontrolled` hook allows you to manage state for both controlled and uncontrolled components:
 
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
@@ -23,7 +23,6 @@ function CustomInput({ value, defaultValue, onChange }) {
     value,
     defaultValue,
     finalValue: 'Final',
-    rule: (val) => typeof val === 'string',
     onChange,
   });
 
@@ -37,34 +36,6 @@ function CustomInput({ value, defaultValue, onChange }) {
 }
 ```
 
-In the example above `rule` function is used to determine which value should be used initially:
-
-```tsx
-// defaultValue and finalValue are ignored for controlled components
-// _value === 'Hello'
-<CustomInput value="Hello" defaultValue="There" onChange={() => {}} />
-
-// Since value prop does not meet requirements default value will be used instead
-// _value === 'There'
-<CustomInput value={null} defaultValue="There" />
-
-// When both value and defaultValue fail to meet requirements, finalValue will be used
-// _value === 'Final'
-<CustomInput value={null} defaultValue={null} />
-```
-
-Now you can use your component as controlled and uncontrolled input:
-
-```tsx
-// Uncontrolled
-<CustomInput />
-<CustomInput defaultValue="hello" />
-<CustomInput onChange={() => {}} /> // still possible since value is stored in internal state
-
-// Controlled
-<CustomInput value="Hello" onChange={() => {}} />
-```
-
 ## TypeScript
 
 ### Set value type
@@ -76,7 +47,6 @@ useUncontrolled<number>({
   value: 10,
   defaultValue: 5,
   finalValue: 20,
-  rule: (val) => val >= 10,
   onChange: (val) => console.log(val > 10),
 });
 ```
@@ -84,12 +54,23 @@ useUncontrolled<number>({
 ### Definition
 
 ```tsx
-function useUncontrolled<T>(configuration: {
-  value: T;
-  defaultValue: T;
-  finalValue: T;
-  onChange(value: T): void;
-  onValueUpdate?(value: T): void;
-  rule: (value: T) => boolean;
-}): readonly [T, (val: T) => void, 'controlled' | 'uncontrolled'];
+interface UseUncontrolledInput<T> {
+  /** Value for controlled state */
+  value?: T;
+
+  /** Initial value for uncontrolled state */
+  defaultValue?: T;
+
+  /** Final value for uncontrolled state when value and defaultValue are not provided */
+  finalValue?: T;
+
+  /** Controlled state onChange handler */
+  onChange?(value: T): void;
+}
+
+function useUncontrolled<T>(input: UseUncontrolledInput<T>): [
+  T, // current value
+  (value: T) => void, // onChange function
+  boolean // value that indicates if input is controlled or not
+];
 ```

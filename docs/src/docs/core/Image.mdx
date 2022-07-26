@@ -53,37 +53,17 @@ You can add figcaption to an image with `caption` prop:
 
 <Demo data={ImageDemos.caption} />
 
-## Radius
-
-Radius is applied both to the image and placeholder. Radius has predefined values: xs, sm, md, lg, xl
-which are defined in [theme.radius](/theming/extend-theme/#spacing-radius-and-shadows).
-Alternatively, you can use a number to set border-radius in px:
-
-```tsx
-<Image radius={0} /> // -> default – image has no radius
-<Image radius="lg" /> // -> theme predefined large radius
-<Image radius={10} /> // -> { borderRadius: 10 }
-```
-
 ## Get refs
 
-You can get both image and root element (div) refs with `ref` and `imageRef` props:
+You can get both image and root element (`div`) refs with `ref` and `imageRef` props:
 
 ```tsx
 import { useRef } from 'react';
 import { Image } from '@mantine/core';
 
 function Demo() {
-  const imageRef = useRef<HTMLImageElement>();
-  const rootRef = useRef<HTMLDivElement>();
+  const imageRef = useRef<HTMLImageElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   return <Image ref={rootRef} imageRef={imageRef} />;
 }
 ```
-
-## BackgroundImage component
-
-Use BackgroundImage component when you need to display the image below any content.
-Component sets background-image to given `src`, background-size to `cover` and background-position to `center`.
-It can be used for cards, hero headers and similar components:
-
-<Demo data={ImageDemos.background} />

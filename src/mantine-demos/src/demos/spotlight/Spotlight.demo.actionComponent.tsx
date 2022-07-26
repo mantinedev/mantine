@@ -106,7 +106,7 @@ function Demo() {
       searchPlaceholder="Search..."
       shortcut="mod + shift + I"
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

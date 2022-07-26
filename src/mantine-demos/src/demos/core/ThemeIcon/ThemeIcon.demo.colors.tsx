@@ -1,5 +1,5 @@
 import React from 'react';
-import { Photo } from 'tabler-icons-react';
+import { IconPhoto } from '@tabler/icons';
 import { MANTINE_COLORS, Group, ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const getThemes = (props?: ThemeIconProps) =>
@@ -9,15 +9,15 @@ function Demo() {
   return (
     <>
       <Group position="center">
-        {getThemes({ children: <Photo size={16} />, variant: 'outline' })}
+        {getThemes({ children: <IconPhoto size={16} />, variant: 'outline' })}
       </Group>
 
       <Group position="center" mt="md">
-        {getThemes({ children: <Photo size={16} />, variant: 'light' })}
+        {getThemes({ children: <IconPhoto size={16} />, variant: 'light' })}
       </Group>
 
       <Group position="center" mt="md">
-        {getThemes({ children: <Photo size={16} />, variant: 'filled' })}
+        {getThemes({ children: <IconPhoto size={16} />, variant: 'filled' })}
       </Group>
     </>
   );

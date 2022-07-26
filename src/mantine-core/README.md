@@ -6,7 +6,7 @@ Mantine core components library.
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/core @mantine/hooks
 

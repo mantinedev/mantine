@@ -1,66 +1,67 @@
 import React from 'react';
-import { Palette, CircleDashed, Bulb } from 'tabler-icons-react';
-import { ThemeIcon, Accordion, AccordionProps } from '@mantine/core';
-import { baseAccordionMockdata } from './_mockdata';
+import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
+import { Accordion, AccordionProps, useMantineTheme } from '@mantine/core';
 
 const code = `
-import { ThemeIcon, Accordion } from '@mantine/core';
-import { Palette } from 'tabler-icons-react';
+import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
+import { Accordion, useMantineTheme } from '@mantine/core';
 
 function Demo() {
+  const theme = useMantineTheme();
+  const getColor = (color: string) => theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7];
+
   return (
-    <Accordion disableIconRotation>
-      <Accordion.Item
-        label="Customization"
-        icon={
-          <ThemeIcon color="violet" variant="light">
-            <Palette size={14} />
-          </ThemeIcon>
-        }
-      >
-        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+    <Accordion variant="contained">
+      <Accordion.Item value="photos">
+        <Accordion.Control icon={<IconPhoto size={20} color={getColor('red')} />}>
+          Recent photos
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
-      {/* ...other <Accordion.Item /> */}
+      <Accordion.Item value="print">
+        <Accordion.Control icon={<IconPrinter size={20} color={getColor('blue')} />}>
+          Print photos
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
+      </Accordion.Item>
+
+      <Accordion.Item value="camera">
+        <Accordion.Control icon={<IconCameraSelfie size={20} color={getColor('teal')} />}>
+          Camera settings
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
+      </Accordion.Item>
     </Accordion>
-  )
+  );
 }
 `;
 
 export function IconsReplacementDemo(props: Partial<AccordionProps>) {
+  const theme = useMantineTheme();
+  const getColor = (color: string) => theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7];
+
   return (
-    <Accordion disableIconRotation {...props}>
-      <Accordion.Item
-        label={baseAccordionMockdata[0].label}
-        icon={
-          <ThemeIcon color="violet" variant="light" size={28} radius="xl">
-            <Palette size={14} />
-          </ThemeIcon>
-        }
-      >
-        {baseAccordionMockdata[0].content}
+    <Accordion variant="contained" {...props}>
+      <Accordion.Item value="photos">
+        <Accordion.Control icon={<IconPhoto size={20} color={getColor('red')} />}>
+          Recent photos
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
-      <Accordion.Item
-        label={baseAccordionMockdata[1].label}
-        icon={
-          <ThemeIcon color="orange" variant="light" size={28} radius="xl">
-            <CircleDashed size={14} />
-          </ThemeIcon>
-        }
-      >
-        {baseAccordionMockdata[1].content}
+      <Accordion.Item value="print">
+        <Accordion.Control icon={<IconPrinter size={20} color={getColor('blue')} />}>
+          Print photos
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
 
-      <Accordion.Item
-        label={baseAccordionMockdata[2].label}
-        icon={
-          <ThemeIcon color="blue" variant="light" size={28} radius="xl">
-            <Bulb size={14} />
-          </ThemeIcon>
-        }
-      >
-        {baseAccordionMockdata[2].content}
+      <Accordion.Item value="camera">
+        <Accordion.Control icon={<IconCameraSelfie size={20} color={getColor('teal')} />}>
+          Camera settings
+        </Accordion.Control>
+        <Accordion.Panel>Content</Accordion.Panel>
       </Accordion.Item>
     </Accordion>
   );
@@ -68,7 +69,7 @@ export function IconsReplacementDemo(props: Partial<AccordionProps>) {
 
 function Demo() {
   return (
-    <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
+    <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
       <IconsReplacementDemo />
     </div>
   );

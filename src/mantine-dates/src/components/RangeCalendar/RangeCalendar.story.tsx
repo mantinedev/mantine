@@ -14,49 +14,53 @@ function WrappedRangeCalendar(props: Partial<RangeCalendarProps>) {
 storiesOf('RangeCalendar', module)
   .add('First day of the week sunday', () => <WrappedRangeCalendar firstDayOfWeek="sunday" />)
   .add('2 months', () => <WrappedRangeCalendar amountOfMonths={2} />)
-  .add('3 months', () => <WrappedRangeCalendar amountOfMonths={3} />)
+  .add('3 months', () => <WrappedRangeCalendar amountOfMonths={3} paginateBy={1} />)
   .add('Range styles', () => (
     <WrappedRangeCalendar
       month={new Date(2021, 11)}
       styles={(theme) => ({
-        selected: {
-          backgroundColor: `${theme.colors.cyan[4]} !important`,
-          borderRadius: '100px !important',
-          position: 'relative',
-        },
-
-        firstInRange: {
-          backgroundColor: `${theme.colors.cyan[4]} !important`,
-          borderRadius: '100px !important',
-          position: 'relative',
-
-          '&::after': {
-            content: '""',
-            backgroundColor: theme.colors.cyan[0],
-            position: 'absolute',
-            right: -1,
-            left: 20,
-            top: -1,
-            bottom: -1,
-            zIndex: -1,
+        day: {
+          '&[data-selected]': {
+            backgroundColor: `${theme.colors.cyan[4]}`,
+            borderRadius: '100px',
+            position: 'relative',
           },
-        },
-        lastInRange: {
-          backgroundColor: `${theme.colors.cyan[4]} !important`,
-          borderRadius: '100px !important',
-          '&::after': {
-            content: '""',
-            backgroundColor: theme.colors.cyan[0],
-            position: 'absolute',
-            left: -1,
-            right: 20,
-            top: -1,
-            bottom: -1,
-            zIndex: -1,
+
+          '&[data-in-range]': {
+            backgroundColor: `${theme.colors.cyan[0]} !important`,
           },
-        },
-        inRange: {
-          backgroundColor: `${theme.colors.cyan[0]} !important`,
+
+          '&[data-first-in-range]': {
+            backgroundColor: `${theme.colors.cyan[4]} !important`,
+            borderRadius: '100px !important',
+            position: 'relative',
+
+            '&::after': {
+              content: '""',
+              backgroundColor: theme.colors.cyan[0],
+              position: 'absolute',
+              right: -1,
+              left: 20,
+              top: -1,
+              bottom: -1,
+              zIndex: -1,
+            },
+          },
+
+          '&[data-last-in-range]': {
+            backgroundColor: `${theme.colors.cyan[4]} !important`,
+            borderRadius: '100px !important',
+            '&::after': {
+              content: '""',
+              backgroundColor: theme.colors.cyan[0],
+              position: 'absolute',
+              left: -1,
+              right: 20,
+              top: -1,
+              bottom: -1,
+              zIndex: -1,
+            },
+          },
         },
       })}
     />

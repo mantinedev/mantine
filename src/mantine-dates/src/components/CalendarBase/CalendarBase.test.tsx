@@ -47,14 +47,18 @@ describe('@mantine/core/CalendarBase', () => {
     expect(yearLevel.querySelectorAll('.mantine-CalendarBase-yearPicker')).toHaveLength(1);
   });
 
-  it('calls onMonthChange when month changes', () => {
+  it('calls onMonthChange when month changes', async () => {
     const spy = jest.fn();
     const { container } = render(
       <CalendarBase onMonthChange={spy} month={new Date(2021, 11, 1)} />
     );
-    userEvent.click(container.querySelectorAll('.mantine-CalendarBase-calendarHeaderControl')[0]);
+    await userEvent.click(
+      container.querySelectorAll('.mantine-CalendarBase-calendarHeaderControl')[0]
+    );
     expect(spy).toHaveBeenLastCalledWith(new Date(2021, 10, 1));
-    userEvent.click(container.querySelectorAll('.mantine-CalendarBase-calendarHeaderControl')[1]);
+    await userEvent.click(
+      container.querySelectorAll('.mantine-CalendarBase-calendarHeaderControl')[1]
+    );
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 0, 1));
   });
 });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Language } from 'prism-react-renderer';
-import { CodeIcon } from '@modulz/radix-icons';
-import { useMantineTheme, Paper, Group, ActionIcon, Tooltip } from '@mantine/core';
+import { IconCode } from '@tabler/icons';
+import { Paper, Stack, ActionIcon, Tooltip, Box, MantineNumberSize } from '@mantine/core';
 import { Prism } from '@mantine/prism';
 import useStyles from './CodeDemo.styles';
 
@@ -14,7 +14,8 @@ interface CodeDemoProps {
   toggle?: boolean;
   inline?: boolean;
   spacing?: boolean;
-  zIndex?: number;
+  radius?: MantineNumberSize;
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export default function CodeDemo({
@@ -27,20 +28,21 @@ export default function CodeDemo({
   inline = false,
   spacing = true,
   zIndex = 3,
+  radius = 'sm',
 }: CodeDemoProps) {
-  const { classes, cx } = useStyles();
+  const { classes, cx, theme } = useStyles({ radius }, { name: 'CodeDemo' });
   const [visible, setVisible] = useState(!toggle);
-  const theme = useMantineTheme();
 
   if (inline) {
     return <div>{children}</div>;
   }
 
   return (
-    <div style={{ marginBottom: theme.spacing.xl, marginTop: theme.spacing.md }}>
+    <Box className={classes.root} mb="xl" mt="md">
       <Paper
         p={spacing ? 'md' : 0}
         className={cx(classes.demo, { [classes.withToggle]: toggle })}
+        radius={radius}
         style={{
           backgroundColor:
             demoBackground || (theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white),
@@ -51,34 +53,34 @@ export default function CodeDemo({
         {children}
 
         {!!code && toggle && (
-          <Group position="center" direction="column" spacing={5} className={classes.controls}>
+          <Stack justify="center" spacing={5} className={classes.controls}>
             <Tooltip
               label={`${visible ? 'Hide' : 'Show'} code`}
               position="left"
-              placement="center"
               transition="fade"
               withArrow
-              arrowSize={4}
-              gutter={8}
+              arrowSize={6}
+              offset={6}
               positionDependencies={[visible]}
             >
-              <ActionIcon
-                variant="hover"
-                onClick={() => setVisible((v) => !v)}
-                aria-label="Toggle code"
-              >
-                <CodeIcon />
+              <ActionIcon onClick={() => setVisible((v) => !v)} aria-label="Toggle code">
+                <IconCode size={16} />
               </ActionIcon>
             </Tooltip>
-          </Group>
+          </Stack>
         )}
       </Paper>
 
       {code && visible && (
-        <Prism language={language} className={classes.prism} classNames={{ code: classes.code }}>
+        <Prism
+          language={language}
+          className={classes.prism}
+          classNames={{ code: classes.code }}
+          radius={radius}
+        >
           {code}
         </Prism>
       )}
-    </div>
+    </Box>
   );
 }

@@ -17,6 +17,10 @@ export default createStyles((theme) => ({
     textTransform: 'uppercase',
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
+    [theme.fn.smallerThan('sm')]: {
+      marginBottom: theme.spacing.md,
+    },
+
     '&::before, &::after': {
       content: '""',
       position: 'absolute',
@@ -40,7 +44,6 @@ export default createStyles((theme) => ({
 
     '@media (max-width: 600px)': {
       fontSize: 28,
-      marginBottom: theme.spacing.xl * 2,
       marginLeft: 0,
 
       '&::before, &::after': {

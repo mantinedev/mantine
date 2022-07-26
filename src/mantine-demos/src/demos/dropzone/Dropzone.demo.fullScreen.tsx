@@ -1,60 +1,90 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { Button, Group, useMantineTheme } from '@mantine/core';
-import { FullScreenDropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { dropzoneChildren } from './_base';
+import { Button, Group } from '@mantine/core';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { DropzoneDemoChildren } from './_base';
 
 const code = `
 import { useState } from 'react';
-import { Button } from '@mantine/core';
-import { FullScreenDropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Group, Text, useMantineTheme, Button } from '@mantine/core';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
-  const [disabled, setDisabled] = useState(true);
+  const [active, setActive] = useState(false);
+  const theme = useMantineTheme();
 
   return (
     <>
-      <Button color={disabled ? 'blue' : 'red'} onClick={() => setDisabled((d) => !d)}>
-        {disabled ? 'Enable' : 'Disable'} full screen dropzone
-      </Button>
+      <Group position="center">
+        <Button color={active ? 'red' : 'blue'} onClick={() => setActive((d) => !d)}>
+          {active ? 'Disable' : 'Enable'} full screen dropzone
+        </Button>
+      </Group>
 
-      <FullScreenDropzone
-        disabled={disabled}
+      <Dropzone.FullScreen
+        active={active}
         accept={IMAGE_MIME_TYPE}
         onDrop={(files) => {
           console.log(files);
-          setDisabled(true);
+          setActive(false);
         }}
       >
-        {/* See dropzone children in previous demo */}
-      </FullScreenDropzone>
+        <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
+          <Dropzone.Accept>
+            <IconUpload
+              size={50}
+              stroke={1.5}
+              color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
+            />
+          </Dropzone.Accept>
+          <Dropzone.Reject>
+            <IconX
+              size={50}
+              stroke={1.5}
+              color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]}
+            />
+          </Dropzone.Reject>
+          <Dropzone.Idle>
+            <IconPhoto size={50} stroke={1.5} />
+          </Dropzone.Idle>
+
+          <div>
+            <Text size="xl" inline>
+              Drag images here or click to select files
+            </Text>
+            <Text size="sm" color="dimmed" inline mt={7}>
+              Attach as many files as you like, each file should not exceed 5mb
+            </Text>
+          </div>
+        </Group>
+      </Dropzone.FullScreen>
     </>
   );
 }
 `;
 
 function Demo() {
-  const [disabled, setDisabled] = useState(true);
-  const theme = useMantineTheme();
+  const [active, setActive] = useState(false);
 
   return (
     <>
       <Group position="center">
-        <Button color={disabled ? 'blue' : 'red'} onClick={() => setDisabled((d) => !d)}>
-          {disabled ? 'Enable' : 'Disable'} full screen dropzone
+        <Button color={active ? 'red' : 'blue'} onClick={() => setActive((d) => !d)}>
+          {active ? 'Deactivate' : 'Activate'} full screen dropzone
         </Button>
       </Group>
 
-      <FullScreenDropzone
-        disabled={disabled}
+      <Dropzone.FullScreen
+        active={active}
         accept={IMAGE_MIME_TYPE}
         onDrop={(files) => {
           console.log(files);
-          setDisabled(true);
+          setActive(false);
         }}
       >
-        {(status) => dropzoneChildren(status, theme)}
-      </FullScreenDropzone>
+        <DropzoneDemoChildren />
+      </Dropzone.FullScreen>
     </>
   );
 }

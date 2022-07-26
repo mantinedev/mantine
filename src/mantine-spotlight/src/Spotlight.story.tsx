@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, Box } from '@mantine/core';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import {
   SpotlightProvider,
   useSpotlight,
@@ -121,37 +121,39 @@ const defaultProps: Omit<SpotlightProviderProps, 'children'> = {
 storiesOf('Spotlight', module)
   .add('Default', () => <Wrapper {...defaultProps} />)
   .add('Centered', () => <Wrapper {...defaultProps} centered />)
-  .add('With search icon', () => <Wrapper {...defaultProps} searchIcon={<Search size={18} />} />)
+  .add('With search icon', () => (
+    <Wrapper {...defaultProps} searchIcon={<IconSearch size={18} />} />
+  ))
   .add('With action icon', () => (
     <Wrapper
       {...defaultProps}
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       actions={[
-        { title: 'Search', icon: <Search size={18} />, onTrigger: () => console.log('Search') },
+        { title: 'Search', icon: <IconSearch size={18} />, onTrigger: () => console.log('Search') },
         {
           title: 'Search',
           description: 'Search action with description',
-          icon: <Search size={18} />,
+          icon: <IconSearch size={18} />,
           onTrigger: () => console.log('Search'),
         },
         {
           title: 'Search',
           description:
             'Action description that may collapse to next line and may break the icon, bu who know how it will turn out',
-          icon: <Search size={18} />,
+          icon: <IconSearch size={18} />,
           onTrigger: () => console.log('Search'),
         },
         {
           title:
             'Action title that will overflow to next line and may collapse the icon or maybe not, who knows',
           description: 'Search action with description',
-          icon: <Search size={18} />,
+          icon: <IconSearch size={18} />,
           onTrigger: () => console.log('Search'),
         },
         {
           title: 'Icon that has really huge icon',
           description: 'This is user fault, will not be handled on library side',
-          icon: <Search size={100} />,
+          icon: <IconSearch size={100} />,
           onTrigger: () => console.log('Search'),
         },
       ]}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckIcon } from '@modulz/radix-icons';
+import { IconCheck } from '@tabler/icons';
 import { storiesOf } from '@storybook/react';
 import { Button, Group, MantineProvider } from '@mantine/core';
 import { showNotification, updateNotification } from './events';
@@ -28,7 +28,7 @@ function NotificationsDemo() {
             color: 'teal',
             title: 'You did great',
             message: 'Data was saved',
-            icon: <CheckIcon />,
+            icon: <IconCheck size={16} />,
           })
         }
       >
@@ -98,7 +98,7 @@ function NotificationsDemo() {
               color: 'teal',
               title: 'Data was loaded',
               message: 'Notification will close in 3 seconds, you can close this notification now',
-              icon: <CheckIcon />,
+              icon: <IconCheck size={16} />,
               autoClose: 3000,
             });
           }, 3000);
@@ -113,7 +113,7 @@ function NotificationsDemo() {
 storiesOf('Notifications System', module)
   .add('bottom-right (default)', () => (
     <React.StrictMode>
-      <MantineProvider>
+      <MantineProvider inherit>
         <NotificationsProvider>
           <NotificationsDemo />
         </NotificationsProvider>
@@ -121,35 +121,35 @@ storiesOf('Notifications System', module)
     </React.StrictMode>
   ))
   .add('top-right', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-right" limit={2}>
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('top-left', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-left', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="bottom-left">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('bottom-center', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="bottom-center">
         <NotificationsDemo />
       </NotificationsProvider>
     </MantineProvider>
   ))
   .add('top-center', () => (
-    <MantineProvider>
+    <MantineProvider inherit>
       <NotificationsProvider position="top-center">
         <NotificationsDemo />
       </NotificationsProvider>

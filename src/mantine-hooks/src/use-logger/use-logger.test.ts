@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { useLogger } from './use-logger';
 
 describe('@mantine/hooks/use-logger', () => {

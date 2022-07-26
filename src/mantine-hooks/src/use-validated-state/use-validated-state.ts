@@ -1,11 +1,17 @@
 import { useState } from 'react';
 
-export function useValidatedState<T>(initialValue: T, validation: (value: T) => boolean) {
+export function useValidatedState<T>(
+  initialValue: T,
+  validation: (value: T) => boolean,
+  initialValidationState?: boolean
+) {
   const [value, setValue] = useState<T>(initialValue);
   const [lastValidValue, setLastValidValue] = useState<T>(
     validation(initialValue) ? initialValue : undefined
   );
-  const [valid, setValid] = useState<boolean>(validation(initialValue));
+  const [valid, setValid] = useState<boolean>(
+    typeof initialValidationState === 'boolean' ? initialValidationState : validation(initialValue)
+  );
 
   const onChange = (val: T) => {
     if (validation(val)) {

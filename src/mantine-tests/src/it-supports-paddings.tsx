@@ -1,17 +1,17 @@
 import React from 'react';
 import { DEFAULT_THEME } from '@mantine/styles';
-import { renderWithAct } from './render-with-act';
+import { render } from '@testing-library/react';
 
 export function itSupportsPaddings<P>(Component: React.ComponentType<P>, requiredProps: P) {
-  it('supports p, px, py, pt, pb, pr and pl props', async () => {
-    const { container: p } = await renderWithAct(<Component {...requiredProps} p={45} />);
-    const { container: theme } = await renderWithAct(<Component {...requiredProps} p="xl" />);
-    const { container: px } = await renderWithAct(<Component {...requiredProps} px={34} />);
-    const { container: py } = await renderWithAct(<Component {...requiredProps} py={22} />);
-    const { container: pt } = await renderWithAct(<Component {...requiredProps} pt={13} />);
-    const { container: pb } = await renderWithAct(<Component {...requiredProps} pb={43} />);
-    const { container: pr } = await renderWithAct(<Component {...requiredProps} pr={98} />);
-    const { container: pl } = await renderWithAct(<Component {...requiredProps} pl={11} />);
+  it('supports p, px, py, pt, pb, pr and pl props', () => {
+    const { container: p } = render(<Component {...requiredProps} p={45} />);
+    const { container: theme } = render(<Component {...requiredProps} p="xl" />);
+    const { container: px } = render(<Component {...requiredProps} px={34} />);
+    const { container: py } = render(<Component {...requiredProps} py={22} />);
+    const { container: pt } = render(<Component {...requiredProps} pt={13} />);
+    const { container: pb } = render(<Component {...requiredProps} pb={43} />);
+    const { container: pr } = render(<Component {...requiredProps} pr={98} />);
+    const { container: pl } = render(<Component {...requiredProps} pl={11} />);
 
     expect(p.firstChild).toHaveStyle({ padding: '45px' });
     expect(theme.firstChild).toHaveStyle({ padding: `${DEFAULT_THEME.spacing.xl}px` });

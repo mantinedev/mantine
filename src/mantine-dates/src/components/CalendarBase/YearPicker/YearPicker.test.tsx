@@ -32,11 +32,11 @@ describe('@mantine/dates/YearPicker', () => {
     expect(screen.getByText('2029 – 2040')).toBeInTheDocument();
   });
 
-  it('changes decade when next/previous buttons are clicked', () => {
+  it('changes decade when next/previous buttons are clicked', async () => {
     render(<YearPicker {...defaultProps} value={2031} />);
-    userEvent.click(screen.getByLabelText('test-next'));
+    await userEvent.click(screen.getByLabelText('test-next'));
     expect(screen.getByText('2039 – 2050')).toBeInTheDocument();
-    userEvent.click(screen.getByLabelText('test-previous'));
+    await userEvent.click(screen.getByLabelText('test-previous'));
     expect(screen.getByText('2029 – 2040')).toBeInTheDocument();
   });
 
@@ -53,10 +53,10 @@ describe('@mantine/dates/YearPicker', () => {
     expect(container.querySelector(ACTIVE_CONTROL_SELECTOR).textContent).toBe('2021');
   });
 
-  it('calls onChange when year control button is clicked', () => {
+  it('calls onChange when year control button is clicked', async () => {
     const spy = jest.fn();
     render(<YearPicker {...defaultProps} onChange={spy} />);
-    userEvent.click(screen.getByText('2019'));
+    await userEvent.click(screen.getByText('2019'));
     expect(spy).toHaveBeenCalledWith(2019);
   });
 

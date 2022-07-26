@@ -91,23 +91,19 @@ const useStyles = createStyles((theme, params, getRef) => ({
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,
+
+    '&[data-completed]': {
+      borderWidth: 0,
+      backgroundColor: 'transparent',
+      backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6]),
+    },
   },
 
   step: {
     transition: 'transform 150ms ease',
-  },
 
-  stepProgress: {
-    transform: 'scale(1.05)',
-
-    [`& .${getRef('stepIcon')}`]: {},
-  },
-
-  stepCompleted: {
-    [`& .${getRef('stepIcon')}`]: {
-      borderWidth: 0,
-      backgroundColor: 'transparent',
-      backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6]),
+    '&[data-progress]': {
+      transform: 'scale(1.05)',
     },
   },
 }));
