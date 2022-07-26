@@ -11,7 +11,7 @@ function Demo() {
   const form = useForm({
     initialValues: {
       password: 'secret',
-      confirmPassword: 'sevret',
+      confirmPassword: 'secret',
     },
 
     validate: {
