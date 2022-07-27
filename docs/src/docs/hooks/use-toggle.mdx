@@ -42,15 +42,15 @@ toggle('dark'); // -> value == 'dark'
 
 ### Set type
 
-By default, TypeScript will guess your type, but in most cases it's better to set type manually:
+By default, TypeScript will guess your type, but in most cases it's better to use const assertion to prevent type widening:
 
 ```tsx
 const [value, toggle] = useToggle(['light', 'dark']); // value is string
-const [value, toggle] = useToggle<'dark' | 'light'>(['light', 'dark']); // value is 'dark' | 'light'
+const [value, toggle] = useToggle(['light', 'dark'] as const); // value is 'dark' | 'light'
 ```
 
 ### Definition
 
 ```tsx
-function useToggle<T>(options: [T, T]): readonly [T, (value?: React.SetStateAction<T>) => void];
+function useToggle<T>(options: readonly [T, T]): readonly [T, (value?: React.SetStateAction<T>) => void];
 ```
