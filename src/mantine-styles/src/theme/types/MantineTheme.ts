@@ -9,6 +9,7 @@ import type { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
+export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
@@ -86,7 +87,7 @@ export interface MantineTheme {
   other: MantineThemeOther;
   activeStyles: CSSObject;
   datesLocale: string;
-  components: Record<string, ThemeComponent>;
+  components: MantineThemeComponents;
 }
 
 interface ThemeComponent {
@@ -98,9 +99,6 @@ interface ThemeComponent {
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
-export type MantineThemeOverride = DeepPartial<
-  Omit<MantineThemeBase, 'fn' | 'other' | 'components'>
-> & {
-  other?: MantineThemeOther;
-  components?: Record<string, ThemeComponent>;
-};
+
+export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'other' | 'components'>> &
+  Partial<Pick<MantineThemeBase, 'other' | 'components'>>;
