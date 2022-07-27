@@ -25,6 +25,10 @@ If you do not provide `ref` mouse position will be captured relative to document
 
 Hook accepts one optional argument `options` in which `resetOnExit` option is defined (defaults to `false`)
 
+```tsx
+useMouse({ resetOnExit: true }); // Will reset mouse position to 0,0 when mouse leaves the element
+```
+
 Hook returns object with `ref` and `x`, `y` mouse coordinates:
 
 ```tsx
