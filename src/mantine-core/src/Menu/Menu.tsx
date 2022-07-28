@@ -108,12 +108,12 @@ export function Menu(props: MenuProps) {
 
   const close = () => {
     setOpened(false);
-    onClose?.();
+    _opened && onClose?.();
   };
 
   const open = () => {
     setOpened(true);
-    onOpen?.();
+    !_opened && onOpen?.();
   };
 
   const toggleDropdown = () => (_opened ? close() : open());
@@ -156,6 +156,8 @@ export function Menu(props: MenuProps) {
         classNames={classNames}
         styles={styles}
         unstyled={unstyled}
+        onClose={close}
+        onOpen={open}
       >
         {children}
       </Popover>
