@@ -11,6 +11,7 @@ import { MenuLabel, MenuLabelStylesName } from './MenuLabel/MenuLabel';
 import { MenuTarget } from './MenuTarget/MenuTarget';
 import { MenuContextProvider } from './Menu.context';
 import { MenuTriggerEvent } from './Menu.types';
+import useStyles from './Menu.styles';
 
 export type MenuStylesNames =
   | MenuItemStylesNames
@@ -97,6 +98,7 @@ export function Menu(props: MenuProps) {
     radius,
     ...others
   } = useComponentDefaultProps('Menu', defaultProps, props);
+  const { classes, cx } = useStyles();
 
   const [hovered, { setHovered, resetHovered }] = useHovered();
   const [_opened, setOpened] = useUncontrolled({
@@ -153,7 +155,7 @@ export function Menu(props: MenuProps) {
         trapFocus={trigger === 'click'}
         closeOnEscape={closeOnEscape && trigger === 'click'}
         __staticSelector="Menu"
-        classNames={classNames}
+        classNames={{ ...classNames, dropdown: cx(classes.dropdown, classNames?.dropdown) }}
         styles={styles}
         unstyled={unstyled}
         onClose={close}
