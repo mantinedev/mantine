@@ -159,7 +159,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
     });
 
     const [yearSelection, setYearSelection] = useState(_month.getFullYear());
-    const minYear = minDate instanceof Date ? minDate.getFullYear() : 0;
+    const minYear = minDate instanceof Date ? minDate.getFullYear() : 100;
     const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000;
 
     const daysPerRow = 6;
