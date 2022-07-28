@@ -10,11 +10,7 @@ export function isElement(value: any): value is React.ReactElement {
   }
 
   if (typeof value === 'object') {
-    if (value.type === React.Fragment) {
-      return false;
-    }
-
-    return true;
+    return value.type !== React.Fragment;
   }
 
   return false;

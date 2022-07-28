@@ -60,15 +60,11 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
     return false;
   }
 
-  if (
+  return (
     key &&
     (pressedKey.toLowerCase() === key.toLowerCase() ||
       event.code.replace('Key', '').toLowerCase() === key.toLowerCase())
-  ) {
-    return true;
-  }
-
-  return false;
+  );
 }
 
 export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
