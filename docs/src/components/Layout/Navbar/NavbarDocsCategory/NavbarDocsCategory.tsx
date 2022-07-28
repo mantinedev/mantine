@@ -17,11 +17,7 @@ function hasActiveLink(group: ReturnType<typeof getDocsData>[number], pathname: 
     return true;
   }
 
-  if (group.groups.some((_group) => _group.pages.some((link) => link.slug === pathname))) {
-    return true;
-  }
-
-  return false;
+  return group.groups.some((_group) => _group.pages.some((link) => link.slug === pathname));
 }
 
 export default function NavbarDocsCategory({ group, onLinkClick }: NavbarDocsCategoryProps) {
