@@ -29,7 +29,7 @@ import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [activeTab, setActiveTab] = useState('first');
+  const [activeTab, setActiveTab] = useState<string | null>('first');
 
   return (
     <Tabs value={activeTab} onTabChange={setActiveTab}>
