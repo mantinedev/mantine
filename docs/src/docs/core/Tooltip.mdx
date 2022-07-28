@@ -59,6 +59,47 @@ function Demo() {
 }
 ```
 
+## Required ref prop
+
+Custom components that are rendered inside `Tooltip` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { Tooltip } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <Tooltip label="Does not work">
+      <MyComponent />
+    </Tooltip>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
+
+const MyComponent = forwardRef((props, ref) => <div ref={ref}>My component</div>);
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <Tooltip label="Works fine">
+      <MyComponent />
+    </Tooltip>
+  );
+}
+```
+
 ## Position and color
 
 <Demo data={TooltipDemos.configurator} />

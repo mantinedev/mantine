@@ -117,6 +117,51 @@ function Demo() {
 }
 ```
 
+## Required ref prop
+
+Custom components that are rendered inside `Popover.Target` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { Popover } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <MyComponent />
+      </Popover.Target>
+    </Popover>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { Popover } from '@mantine/core';
+
+const MyComponent = forwardRef((props, ref) => <div ref={ref}>My component</div>);
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <MyComponent />
+      </Popover.Target>
+    </Popover>
+  );
+}
+```
+
 ## Accessibility
 
 Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.2/#dialog_modal):
