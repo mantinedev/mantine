@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Stepper, StepperProps, createStyles } from '@mantine/core';
+import { Stepper, createStyles } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { Stepper, StepperProps, createStyles } from '@mantine/core';
+import { Stepper, createStyles } from '@mantine/core';
 
-const useStyles = createStyles((theme, params, getRef) => ({
+const useStyles = createStyles((theme, _params, getRef) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -28,45 +28,37 @@ const useStyles = createStyles((theme, params, getRef) => ({
     borderColor: 'transparent',
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
     borderWidth: 0,
-  },
 
-  step: {
-    transition: 'transform 150ms ease',
-  },
-
-  stepProgress: {
-    transform: 'scale(1.05)',
-
-    [\`& .\${getRef('stepIcon')}\`]: {},
-  },
-
-  stepCompleted: {
-    [\`& .\${getRef('stepIcon')}\`]: {
+    '&[data-completed]': {
       borderWidth: 0,
       backgroundColor: 'transparent',
       backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6]),
     },
   },
+
+  step: {
+    transition: 'transform 150ms ease',
+
+    '&[data-progress]': {
+      transform: 'scale(1.05)',
+    },
+  },
 }));
 
-function StyledStepper(props: StepperProps) {
-  const { classes } = useStyles();
-  return <Stepper classNames={classes} {...props} />;
-}
-
 function Demo() {
+  const { classes } = useStyles();
   const [active, setActive] = useState(1);
   return (
-    <StyledStepper active={active} onStepClick={setActive}>
+    <Stepper classNames={classes} active={active} onStepClick={setActive} breakpoint="sm">
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
       <Stepper.Step label="Step 3" description="Get full access" />
-    </StyledStepper>
+    </Stepper>
   );
 }
 `;
 
-const useStyles = createStyles((theme, params, getRef) => ({
+const useStyles = createStyles((theme, _params, getRef) => ({
   root: {
     padding: theme.spacing.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -108,19 +100,15 @@ const useStyles = createStyles((theme, params, getRef) => ({
   },
 }));
 
-function StyledStepper(props: StepperProps) {
-  const { classes } = useStyles();
-  return <Stepper classNames={classes} {...props} />;
-}
-
 function Demo() {
+  const { classes } = useStyles();
   const [active, setActive] = useState(1);
   return (
-    <StyledStepper active={active} onStepClick={setActive} breakpoint="sm">
+    <Stepper classNames={classes} active={active} onStepClick={setActive} breakpoint="sm">
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
       <Stepper.Step label="Step 3" description="Get full access" />
-    </StyledStepper>
+    </Stepper>
   );
 }
 

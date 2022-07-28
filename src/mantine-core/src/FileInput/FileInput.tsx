@@ -143,6 +143,7 @@ export const _FileInput = forwardRef<HTMLButtonElement, FileInputProps>((props, 
             {...inputProps}
             {...others}
             component="button"
+            type="button"
             ref={ref}
             __staticSelector="FileInput"
             rightSection={_rightSection}

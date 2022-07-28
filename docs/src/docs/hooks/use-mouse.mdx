@@ -23,6 +23,12 @@ If you do not provide `ref` mouse position will be captured relative to document
 
 ## API
 
+Set `resetOnExit` option to reset mouse position to `0, 0` when mouse leaves the element
+
+```tsx
+const { ref, x, y } = useMouse({ resetOnExit: true });
+```
+
 Hook returns object with `ref` and `x`, `y` mouse coordinates:
 
 ```tsx
@@ -38,7 +44,9 @@ On the first render (as well as during SSR), both `x` and `y` values are equal t
 ## Definition
 
 ```tsx
-function useMouse<T extends HTMLElement = any>(): {
+function useMouse<T extends HTMLElement = any>(options?: {
+  resetOnExit?: boolean;
+}): {
   x: number;
   y: number;
   ref: React.MutableRefObject<T>;

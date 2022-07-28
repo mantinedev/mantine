@@ -5,23 +5,31 @@ import { Stack } from '../../Stack/Stack';
 
 interface InputsGroupProps {
   spacing: MantineNumberSize;
+  offset: MantineNumberSize;
   orientation: 'horizontal' | 'vertical';
   role?: string;
   children: React.ReactNode;
   unstyled?: boolean;
 }
 
-export function InputsGroup({ spacing, orientation, children, role, unstyled }: InputsGroupProps) {
+export function InputsGroup({
+  spacing,
+  offset,
+  orientation,
+  children,
+  role,
+  unstyled,
+}: InputsGroupProps) {
   if (orientation === 'horizontal') {
     return (
-      <Group pt="xs" spacing={spacing} role={role} unstyled={unstyled}>
+      <Group pt={offset} spacing={spacing} role={role} unstyled={unstyled}>
         {children}
       </Group>
     );
   }
 
   return (
-    <Stack pt="xs" spacing={spacing} role={role} unstyled={unstyled}>
+    <Stack pt={offset} spacing={spacing} role={role} unstyled={unstyled}>
       {children}
     </Stack>
   );

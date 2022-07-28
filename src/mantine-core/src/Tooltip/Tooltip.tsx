@@ -134,7 +134,7 @@ export function Tooltip(props: TooltipProps) {
               {...others}
               {...tooltip.getFloatingProps({
                 ref: tooltip.floating,
-                className: cx(classes.root, className),
+                className: classes.tooltip,
                 style: {
                   ...style,
                   ...transitionStyles,
@@ -161,7 +161,11 @@ export function Tooltip(props: TooltipProps) {
 
       {cloneElement(
         children,
-        tooltip.getReferenceProps({ [refProp]: targetRef, ...children.props })
+        tooltip.getReferenceProps({
+          [refProp]: targetRef,
+          className: cx(className, children.props.className),
+          ...children.props,
+        })
       )}
     </>
   );

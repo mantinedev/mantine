@@ -49,6 +49,7 @@ export const groupConfigurator: MantineDemo = {
     { name: 'description', type: 'string', initialValue: 'This is anonymous' },
     { name: 'error', type: 'string', initialValue: '' },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'offset', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'required', type: 'boolean', initialValue: true, defaultValue: false },
   ],

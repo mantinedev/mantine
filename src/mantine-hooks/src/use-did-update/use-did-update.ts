@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, EffectCallback } from 'react';
 
-export function useDidUpdate(fn: () => void, dependencies?: any[]) {
+export function useDidUpdate(fn: EffectCallback, dependencies?: any[]) {
   const mounted = useRef(false);
 
   useEffect(() => {

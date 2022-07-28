@@ -7,6 +7,8 @@ import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
+export type DateRangePickerValue = [Date | null, Date | null];
+
 export interface DateRangePickerProps
   extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
     Omit<
@@ -14,13 +16,13 @@ export interface DateRangePickerProps
       'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
     > {
   /** Selected date, required with controlled input */
-  value?: [Date | null, Date | null];
+  value?: DateRangePickerValue;
 
   /** Called when date range changes */
-  onChange?(value: [Date | null, Date | null]): void;
+  onChange?(value: DateRangePickerValue): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: [Date | null, Date | null];
+  defaultValue?: DateRangePickerValue;
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;

@@ -5,7 +5,7 @@ import { useMergedRef } from '@mantine/hooks';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
   /** Called when files are picked */
-  onChange(payload: Multiple extends true ? File[] : File): void;
+  onChange(payload: Multiple extends true ? File[] : File | null): void;
 
   /** Function that receives button props and returns react node that should be rendered */
   children(props: { onClick(): void }): React.ReactNode;
@@ -46,7 +46,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
       if (multiple) {
         onChange(Array.from(event.currentTarget.files) as any);
       } else {
-        onChange(event.currentTarget.files[0]);
+        onChange(event.currentTarget.files[0] || null);
       }
     };
 

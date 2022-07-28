@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tooltip } from './Tooltip';
 import { Button } from '../Button';
+import { Group } from '../Group';
 
 export default { title: 'Tooltip' };
 
@@ -92,4 +93,13 @@ export const HexColor = () => (
   <Tooltip label="Tooltip 2" color="#F0F">
     <button type="button">Button 2</button>
   </Tooltip>
+);
+
+export const WithinGroup = () => (
+  <Group grow>
+    <Button>Regular button</Button>
+    <Tooltip label="tooltip">
+      <Button>Tooltip button</Button>
+    </Tooltip>
+  </Group>
 );

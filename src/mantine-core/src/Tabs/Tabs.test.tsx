@@ -77,7 +77,7 @@ describe('@mantine/core/Tabs', () => {
     await clickTab('tab-2');
     expectActiveTab('tab-2');
 
-    expect(spy).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith('tab-2');
   });
 
   it('handles arrow events correctly (default)', async () => {
