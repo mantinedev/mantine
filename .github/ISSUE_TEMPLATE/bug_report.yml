@@ -22,6 +22,8 @@ body:
         - '@mantine/modals'
         - '@mantine/dropzone'
         - '@mantine/spotlight'
+        - '@mantine/nprogress'
+        - '@mantine/carousel'
     validations:
       required: true
   - type: textarea
@@ -31,9 +33,9 @@ body:
     validations:
       required: true
   - type: input
-    id: browser
+    id: version
     attributes:
-      label: In which browser did the problem occur
+      label: What version of @mantine/hooks page do you have in package.json?
     validations:
       required: true
   - type: input
