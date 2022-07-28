@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { DateRangePicker } from '@mantine/dates';
+import { DateRangePicker, DateRangePickerValue } from '@mantine/dates';
 
 const code = `
 import { useState } from 'react';
-import { DateRangePicker } from '@mantine/dates';
+import { DateRangePicker, DateRangePickerValue } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date | null, Date | null]>([
+  const [value, setValue] = useState<DateRangePickerValue>([
     new Date(2021, 11, 1),
     new Date(2021, 11, 5),
   ]);
@@ -23,7 +23,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<[Date | null, Date | null]>([
+  const [value, setValue] = useState<DateRangePickerValue>([
     new Date(2021, 11, 1),
     new Date(2021, 11, 5),
   ]);
