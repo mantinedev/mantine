@@ -17,14 +17,18 @@ export default function DataTable({ data, head }: DataTableProps) {
 
   return (
     <DocsSection>
-      <Table>
-        {ths && (
-          <thead>
-            <tr>{ths}</tr>
-          </thead>
-        )}
-        <tbody>{rows}</tbody>
-      </Table>
+      <div style={{ overflowX: 'auto' }}>
+        <div style={{ minWidth: 400 }}>
+          <Table>
+            {ths && (
+              <thead>
+                <tr>{ths}</tr>
+              </thead>
+            )}
+            <tbody>{rows}</tbody>
+          </Table>
+        </div>
+      </div>
     </DocsSection>
   );
 }
