@@ -158,7 +158,7 @@ storiesOf('MultiSelect', module)
         <MultiSelect
           label="Multi select"
           data={data}
-          defaultValue={['react', 'ng']}
+          // defaultValue={['react', 'ng']}
           placeholder="Select items"
           nothingFound="Nothing found"
         />
@@ -169,7 +169,7 @@ storiesOf('MultiSelect', module)
         <MultiSelect
           label="Multi select with separator and disabled items"
           data={[...data, { label: 'Lit', value: 'lit', disabled: true }]}
-          defaultValue={['react', 'ng']}
+          // defaultValue={['react', 'ng']}
           placeholder="Select items"
           nothingFound="Nothing found"
         />
