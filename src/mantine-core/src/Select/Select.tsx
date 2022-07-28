@@ -551,7 +551,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
           >
-            <input type="hidden" name={name} value={_value || ''} form={form} />
+            <input type="hidden" name={name} value={_value || ''} form={form} disabled={disabled} />
 
             <Input<'input'>
               autoComplete="off"

@@ -594,7 +594,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
             tabIndex={-1}
             ref={wrapperRef}
           >
-            <input type="hidden" name={name} value={_value.join(',')} form={form} />
+            <input
+              type="hidden"
+              name={name}
+              value={_value.join(',')}
+              form={form}
+              disabled={disabled}
+            />
 
             <Input<'div'>
               __staticSelector="MultiSelect"
