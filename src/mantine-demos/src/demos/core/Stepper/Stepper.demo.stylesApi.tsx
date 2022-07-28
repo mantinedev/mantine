@@ -32,19 +32,17 @@ const useStyles = createStyles((theme, params, getRef) => ({
 
   step: {
     transition: 'transform 150ms ease',
-  },
+    ["&[data-progress]"]: {
+      transform: 'scale(1.05)',
 
-  stepProgress: {
-    transform: 'scale(1.05)',
-
-    [\`& .\${getRef('stepIcon')}\`]: {},
-  },
-
-  stepCompleted: {
-    [\`& .\${getRef('stepIcon')}\`]: {
-      borderWidth: 0,
-      backgroundColor: 'transparent',
-      backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6]),
+      [\`& .\${getRef('stepIcon')}\`]: {},
+    },
+    ["&[data-completed]"]: {
+      [\`& .\${getRef('stepIcon')}\`]: {
+        borderWidth: 0,
+        backgroundColor: 'transparent',
+        backgroundImage: theme.fn.linearGradient(45, theme.colors.blue[6], theme.colors.cyan[6]),
+      },
     },
   },
 }));
