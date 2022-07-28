@@ -155,7 +155,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       }
 
       if (value instanceof Date && !focused) {
-        setInputState(dayjs(value).locale(finalLocale).format(dateFormat));
+        setInputState(upperFirst(dayjs(value).locale(finalLocale).format(dateFormat)));
       }
     }, [value, focused]);
 
