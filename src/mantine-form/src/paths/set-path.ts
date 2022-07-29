@@ -1,4 +1,4 @@
-import clone from 'lodash.clonedeep';
+import { klona } from 'klona';
 import { getSplittedPath } from './get-splitted-path';
 
 export function setPath<T>(path: unknown, value: unknown, values: T) {
@@ -8,7 +8,7 @@ export function setPath<T>(path: unknown, value: unknown, values: T) {
     return values;
   }
 
-  const cloned = clone(values);
+  const cloned = klona(values);
 
   if (splittedPath.length === 1) {
     cloned[splittedPath[0]] = value;
