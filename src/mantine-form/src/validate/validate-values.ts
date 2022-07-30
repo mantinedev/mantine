@@ -21,19 +21,23 @@ function validateRulesRecord<T>(
     const rule = rules[ruleKey];
     const rulePath = `${path === '' ? '' : `${path}.`}${ruleKey}`;
     const value = getPath(rulePath, values);
+    let arrayValidation = false;
 
     if (typeof rule === 'function') {
       acc[rulePath] = rule(value, values);
     }
 
     if (typeof rule === 'object' && Array.isArray(value)) {
+      arrayValidation = true;
       value.forEach((_item, index) =>
         validateRulesRecord(rule, values, `${rulePath}.${index}`, acc)
       );
     }
 
     if (typeof rule === 'object' && typeof value === 'object' && value !== null) {
-      validateRulesRecord(rule, values, rulePath, acc);
+      if (!arrayValidation) {
+        validateRulesRecord(rule, values, rulePath, acc);
+      }
     }
 
     return acc;

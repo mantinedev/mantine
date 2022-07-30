@@ -8,7 +8,8 @@ export default { title: 'Form' };
 export function NestedObject() {
   const form = useForm({
     initialValues: {
-      user: { name: '', terms: false },
+      user: { name: '' },
+      terms: false,
     },
     validate: {
       user: {
