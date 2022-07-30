@@ -11,6 +11,9 @@ export interface VerticalSectionSharedProps extends DefaultProps {
   /** Section height */
   height: number | string;
 
+  /** Border */
+  withBorder?: boolean;
+
   /** Changes position to fixed, controlled by AppShell component if rendered inside */
   fixed?: boolean;
 
@@ -37,6 +40,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
       styles,
       height,
       fixed = false,
+      withBorder = true,
       position,
       zIndex = getDefaultZIndex('app'),
       section,
@@ -54,7 +58,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         fixed: ctx.fixed || fixed,
         position,
         zIndex: ctx.zIndex || zIndex,
-        borderPosition: section === 'header' ? 'bottom' : 'top',
+        borderPosition: withBorder && section === 'header' ? 'bottom' : 'top',
       },
       { name: __staticSelector, classNames, styles, unstyled }
     );

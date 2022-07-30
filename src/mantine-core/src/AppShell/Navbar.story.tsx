@@ -42,4 +42,12 @@ storiesOf('AppShell/Navbar', module)
     <Navbar style={{ background: 'silver' }} width={{ sm: 300, lg: 400 }}>
       This is navbar
     </Navbar>
+  ))
+  .add('Fixed without Border', () => (
+    <Navbar fixed position={{ top: 60, left: 0 }} width={{ base: 100, sm: 300 }} withBorder={false}>
+      <Navbar.Section>First section</Navbar.Section>
+      <Navbar.Section>Second section</Navbar.Section>
+      <Navbar.Section grow>Grow section</Navbar.Section>
+      <Navbar.Section>Last section</Navbar.Section>
+    </Navbar>
   ));
