@@ -9,7 +9,11 @@ export default { title: 'Form' };
 export function Lists() {
   const form = useForm({
     initialValues: {
-      employees: [{ name: '', active: false, key: randomId() }],
+      employees: [
+        { name: '', active: false, key: randomId() },
+        { name: '', active: false, key: randomId() },
+        { name: '', active: false, key: randomId() },
+      ],
     },
 
     validate: {
