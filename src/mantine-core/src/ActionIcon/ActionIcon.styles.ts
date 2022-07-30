@@ -35,6 +35,10 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
       border: '1px solid transparent',
       color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
       backgroundColor: 'transparent',
+      '&[data-disabled]': {
+        backgroundColor: theme.fn.themeColor('gray', -1),
+        borderColor: theme.fn.themeColor('gray', -1),
+      },
     };
   }
 
@@ -74,6 +78,7 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
       '&:active': {
         transform: 'none',
       },
+      ...getVariantStyles({ variant, theme, color })['&[data-disabled]'],
     },
 
     '&[data-loading]': {
