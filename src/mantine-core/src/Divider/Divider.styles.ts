@@ -78,9 +78,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
 
   horizontal: {
     border: 0,
-    borderTopWidth: theme.fn.size({ size, sizes }),
-    borderTopColor: getColor(theme, color),
-    borderTopStyle: variant,
+    borderTop: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
     margin: 0,
   },
 
@@ -88,8 +86,6 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
     border: 0,
     alignSelf: 'stretch',
     height: '100%',
-    borderLeftWidth: theme.fn.size({ size, sizes }),
-    borderLeftColor: getColor(theme, color),
-    borderLeftStyle: variant,
+    borderLeft: `${theme.fn.size({ size, sizes })}px ${variant} ${getColor(theme, color)}`,
   },
 }));
