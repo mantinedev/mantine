@@ -81,7 +81,7 @@ export default createStyles(
           zIndex: 1,
           borderRadius,
           boxSizing: 'border-box',
-          content: "''",
+          content: '""',
           display: 'block',
           backgroundColor: theme.white,
           height: handleSize,
