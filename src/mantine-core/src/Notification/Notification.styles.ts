@@ -54,7 +54,7 @@ export default createStyles((theme, { color, radius }: NotificationStylesParams,
       }`,
 
       '&::before': {
-        content: "''",
+        content: '""',
         display: 'block',
         position: 'absolute',
         width: 6,
