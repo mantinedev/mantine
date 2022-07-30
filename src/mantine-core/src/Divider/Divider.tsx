@@ -82,6 +82,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>((props: DividerP
         },
         className
       )}
+      role="separator"
       {...others}
     >
       {withLabel && (
