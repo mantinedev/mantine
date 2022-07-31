@@ -130,6 +130,24 @@ function Demo() {
 }
 ```
 
+## NextLink component
+
+`@mantine/next` package exports `NextLink` component that can be used when it is not possible to
+use `Link` component, for example, with [Tooltip](/core/tooltip/) component:
+
+```tsx
+import { NextLink } from '@mantine/next';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={NextLink} href="/hello">
+      Next link button
+    </Button>
+  );
+}
+```
+
 ## Server side rendering with custom emotion cache
 
 Follow [custom emotion cache guide](/theming/emotion-cache/#server-side-rendering-with-custom-cache)
