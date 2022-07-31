@@ -75,7 +75,7 @@ const defaultProps: Partial<DateRangePickerProps> = {
   allowSingleDateInRange: false,
   amountOfMonths: 1,
   withinPortal: true,
-  openDropdownOnClear: true,
+  openDropdownOnClear: false,
 };
 
 export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
