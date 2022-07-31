@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Accordion } from '@mantine/core';
 import { RichTextEditor } from './RichTextEditor';
 
 export default { title: 'RichTextEditor' };
@@ -61,5 +62,21 @@ export function Placeholder() {
         stickyOffset={0}
       />
     </div>
+  );
+}
+
+export function WithinAccordion() {
+  const defaultValue = '<p>Try and apply a link to this sentence</p>';
+  const [value, setValue] = useState(defaultValue);
+
+  return (
+    <Accordion defaultValue="rte">
+      <Accordion.Item value="rte">
+        <Accordion.Control>RTE Panel</Accordion.Control>
+        <Accordion.Panel>
+          <RichTextEditor value={value} onChange={setValue} />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
   );
 }

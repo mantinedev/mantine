@@ -66,6 +66,7 @@ export default createStyles(
         content: `"${editLabel}"`,
         cursor: 'pointer',
         display: 'block',
+        whiteSpace: 'nowrap',
         height: 28,
         lineHeight: '28px',
         backgroundColor: theme.colors[theme.primaryColor][6],
