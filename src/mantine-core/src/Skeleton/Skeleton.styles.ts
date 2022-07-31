@@ -19,6 +19,7 @@ export default createStyles(
       height,
       width: circle ? height : width,
       borderRadius: circle ? height : theme.fn.radius(radius),
+      WebkitTransform: 'translateZ(0)',
       position: 'relative',
       overflow: 'hidden',
     },
