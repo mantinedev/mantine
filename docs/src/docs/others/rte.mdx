@@ -236,3 +236,9 @@ function MyPage() {
   return <RichTextEditor />;
 }
 ```
+
+## React strict mode limitations
+
+`RichTextEditor` component is not compatible with React strict mode. You will experience
+the following error if strict mode is enabled: `TypeError: Cannot read properties of null (reading 'index')`.
+To fix it, disable strict mode.
