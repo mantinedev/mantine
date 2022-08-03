@@ -35,7 +35,7 @@ export default createStyles(
         },
 
         '& + [data-button]': {
-          [orientation === 'vertical' ? 'marginTop' : 'marginLeft']: -1,
+          [orientation === 'vertical' ? 'marginTop' : 'marginLeft']: -buttonBorderWidth,
         },
       },
     },
