@@ -101,6 +101,20 @@ export function defaultShouldCreate(query: string, data: SelectItem[]) {
   return !!query && !data.some((item) => item.value.toLowerCase() === query.toLowerCase());
 }
 
+function filterValue(value: string[], data: (string | SelectItem)[]): string[] {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  if (data.length === 0) {
+    return [];
+  }
+
+  const flatData: string[] =
+    typeof data[0] === 'object' ? data.map((item) => (item as any).value) : data;
+  return value.filter((val) => flatData.includes(val));
+}
+
 const defaultProps: Partial<MultiSelectProps> = {
   size: 'sm',
   valueComponent: DefaultValue,
@@ -240,8 +254,8 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const sortedData = groupOptions({ data: formattedData });
 
   const [_value, setValue] = useUncontrolled({
-    value,
-    defaultValue,
+    value: filterValue(value, data),
+    defaultValue: filterValue(defaultValue, data),
     finalValue: [],
     onChange,
   });
