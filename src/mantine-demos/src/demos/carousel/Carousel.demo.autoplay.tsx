@@ -9,7 +9,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }, (emblaRoot) => emblaRoot.parentElement));
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
   return (
     <Carousel
       sx={{ maxWidth: 320 }}
@@ -30,7 +30,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }, (emblaRoot) => emblaRoot.parentElement));
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   return (
     <Carousel
