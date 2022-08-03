@@ -74,6 +74,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     styles,
     caption,
     unstyled,
+    style,
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
   const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
@@ -87,7 +88,12 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
   }, [src]);
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box
+      className={cx(classes.root, className)}
+      ref={ref}
+      style={{ width, height, ...style }}
+      {...others}
+    >
       <figure className={classes.figure}>
         <div className={classes.imageWrapper}>
           <img
