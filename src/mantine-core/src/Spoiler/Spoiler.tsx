@@ -57,12 +57,16 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
 
   const [show, setShowState] = useState(initialState);
   const [spoiler, setSpoilerState] = useState(initialState);
+  const [contentHeight, setContentHeight] = useState<number>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const spoilerMoreContent = show ? hideLabel : showLabel;
 
   useEffect(() => {
-    setSpoilerState(maxHeight < contentRef.current.clientHeight);
+    if (contentRef.current) {
+      setSpoilerState(maxHeight < contentRef.current.offsetHeight);
+      setContentHeight(contentRef.current.offsetHeight);
+    }
   }, [maxHeight, children]);
 
   return (
@@ -70,7 +74,7 @@ export const Spoiler = forwardRef<HTMLDivElement, SpoilerProps>((props, ref) => 
       <div
         className={classes.content}
         style={{
-          maxHeight: !show ? maxHeight : contentRef.current && contentRef.current.clientHeight,
+          maxHeight: !show ? maxHeight : contentHeight || undefined,
         }}
       >
         <div ref={contentRef}>{children}</div>
