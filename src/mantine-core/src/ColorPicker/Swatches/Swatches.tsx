@@ -1,8 +1,6 @@
 import React from 'react';
 import { DefaultProps, Selectors } from '@mantine/styles';
 import { ColorSwatch } from '../../ColorSwatch/ColorSwatch';
-import { parseColor } from '../converters/parsers';
-import { HsvaColor } from '../types';
 import useStyles from './Swatches.styles';
 
 export type SwatchesStylesNames = Selectors<typeof useStyles>;
@@ -11,21 +9,21 @@ export interface SwatchesProps
   extends DefaultProps<SwatchesStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onSelect'> {
   data: string[];
-  onSelect(color: HsvaColor): void;
   swatchesPerRow?: number;
   focusable?: boolean;
   __staticSelector?: string;
+  setValue(value: string): void;
 }
 
 export function Swatches({
   data,
-  onSelect,
   swatchesPerRow = 10,
   focusable = true,
   classNames,
   styles,
   __staticSelector = 'color-picker',
   unstyled,
+  setValue,
   ...others
 }: SwatchesProps) {
   const { classes } = useStyles(
@@ -41,7 +39,7 @@ export function Swatches({
       color={color}
       key={index}
       radius="sm"
-      onClick={() => onSelect(parseColor(color))}
+      onClick={() => setValue(color)}
       style={{ cursor: 'pointer' }}
       aria-label={color}
       tabIndex={focusable ? 0 : -1}

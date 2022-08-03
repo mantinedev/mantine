@@ -3,19 +3,18 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { Swatches, SwatchesProps } from './Swatches';
-import { parseColor } from '../converters';
 
 const defaultProps: SwatchesProps = {
   data: [...DEFAULT_THEME.colors.red],
-  onSelect: () => {},
+  setValue: () => {},
 };
 
 describe('@mantine/core/Swatches', () => {
   it('calls onSelect when color is clicked', async () => {
     const spy = jest.fn();
-    render(<Swatches {...defaultProps} onSelect={spy} />);
+    render(<Swatches {...defaultProps} setValue={spy} />);
     await userEvent.click(screen.getAllByRole('button')[4]);
-    expect(spy).toHaveBeenCalledWith(parseColor(defaultProps.data[4]));
+    expect(spy).toHaveBeenCalledWith(defaultProps.data[4]);
   });
 
   it('sets swatch tabIndex to -1 if component is not focusable', () => {

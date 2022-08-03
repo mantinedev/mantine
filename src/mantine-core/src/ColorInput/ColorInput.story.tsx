@@ -26,7 +26,7 @@ function ControlledInput() {
         onChange={setValue}
         swatches={[
           ...Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6]),
-          'transparent',
+          'rgba(0, 0, 0, 0)',
         ]}
         mb="md"
       />
@@ -50,7 +50,7 @@ storiesOf('ColorInput', module)
         format="rgba"
         swatches={[
           ...Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6]),
-          'transparent',
+          'rgba(0, 0, 0, 0)',
         ]}
         label="Color"
         placeholder="Color"
