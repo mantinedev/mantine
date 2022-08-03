@@ -3,6 +3,8 @@ export { useClickOutsideUsage } from './use-click-outside.demo.usage';
 export { useClipboardDemo } from './use-clipboard.usage.demo';
 export { useColorSchemeDemo } from './use-color-scheme.demo.usage';
 export { useCounterDemo } from './use-counter.demo.usage';
+export { useDebouncedStateUsage } from './use-debounced-state.demo.usage';
+export { useDebouncedStateLeading } from './use-debounced-state.demo.leading';
 export { useDebouncedValueUsage } from './use-debounced-value.demo.usage';
 export { useDebouncedValueCancel } from './use-debounced-value.demo.cancel';
 export { useDebouncedValueLeading } from './use-debounced-value.demo.leading';
