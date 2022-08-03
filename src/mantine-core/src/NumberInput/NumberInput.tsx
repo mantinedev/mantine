@@ -176,14 +176,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
       parsedStr = parsedStr.replace(/\./g, decimalSeparator);
     }
 
-    if (typeof document !== 'undefined') {
-      // save the current selection position to restore it after the formatting
-      const selectionStart = inputRef.current?.selectionStart;
-      requestAnimationFrame(() => {
-        inputRef.current?.setSelectionRange(selectionStart, selectionStart);
-      });
-    }
-
     return formatter(parsedStr);
   };
 

@@ -77,6 +77,9 @@ interface FormValues {
   // cannot be correctly inferred in strict mode
   age: number | undefined;
   registeredAt: Date | null;
+
+  // Arrays that are empty cannot be inferred correctly
+  jobs: string[];
 }
 
 function Demo() {
@@ -86,6 +89,7 @@ function Demo() {
       role: 'user',
       age: undefined,
       registeredAt: null,
+      jobs: [],
     },
   });
 }
