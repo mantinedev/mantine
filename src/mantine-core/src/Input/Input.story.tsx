@@ -99,4 +99,9 @@ storiesOf('Input', module)
       })}
     </>
   ))
-  .add('Invalid toggle', () => <ValidInvalid />);
+  .add('Invalid toggle', () => <ValidInvalid />)
+  .add('Unstyled InputWrapper', () => (
+    <Input.Wrapper label="label" description="description" error="error" p={50} unstyled>
+      {' '}
+    </Input.Wrapper>
+  ));

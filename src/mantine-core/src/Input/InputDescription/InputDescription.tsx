@@ -27,7 +27,13 @@ export const InputDescription = forwardRef<HTMLDivElement, InputDescriptionProps
       { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
     );
     return (
-      <Text color="dimmed" className={cx(classes.description, className)} ref={ref} {...others}>
+      <Text
+        color="dimmed"
+        className={cx(classes.description, className)}
+        ref={ref}
+        unstyled={unstyled}
+        {...others}
+      >
         {children}
       </Text>
     );
