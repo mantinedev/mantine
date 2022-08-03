@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useMemo } from 'react';
 import { useMergedRef, assignRef, useOs, clamp } from '@mantine/hooks';
 import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { TextInput } from '../TextInput';
@@ -169,15 +169,23 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     }
   };
 
-  const formatNum = (val: string | number = '') => {
-    let parsedStr = typeof val === 'number' ? String(val) : val;
+  const formatNum = useMemo(() => {
+    let parsedStr = typeof tempValue === 'number' ? String(tempValue) : tempValue;
+
+    // save the current selection position
+    const selectionStart = inputRef.current?.selectionStart;
 
     if (decimalSeparator) {
       parsedStr = parsedStr.replace(/\./g, decimalSeparator);
     }
 
+    // restore the current selection position
+    setTimeout(() => {
+      inputRef.current?.setSelectionRange(selectionStart, selectionStart);
+    });
+
     return formatter(parsedStr);
-  };
+  }, [tempValue, decimalSeparator, inputMode, formatter]);
 
   const parseNum = (val: string): string | undefined => {
     let num = val;
@@ -386,7 +394,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     <TextInput
       {...others}
       variant={variant}
-      value={formatNum(tempValue)}
+      value={formatNum}
       disabled={disabled}
       ref={useMergedRef(inputRef, ref)}
       type="text"
