@@ -5,6 +5,10 @@ on:
     branches:
       - '**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
