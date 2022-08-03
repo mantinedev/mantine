@@ -48,7 +48,7 @@ export default createStyles((theme, { size, color, transitionDuration }: BurgerS
 
       '&::before, &::after': {
         position: 'absolute',
-        content: '""',
+        content: "''",
         left: 0,
       },
 
