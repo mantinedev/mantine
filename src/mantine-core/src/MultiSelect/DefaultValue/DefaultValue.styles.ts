@@ -4,6 +4,7 @@ interface DefaultLabelStyles {
   size: MantineSize;
   radius: MantineNumberSize;
   disabled: boolean;
+  readOnly: boolean;
 }
 
 const sizes = {
@@ -22,7 +23,7 @@ const fontSizes = {
   xl: 18,
 };
 
-export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyles) => ({
+export default createStyles((theme, { size, disabled, radius, readOnly }: DefaultLabelStyles) => ({
   defaultValue: {
     display: 'flex',
     alignItems: 'center',
@@ -42,7 +43,7 @@ export default createStyles((theme, { size, disabled, radius }: DefaultLabelStyl
       : theme.colors.gray[7],
     height: theme.fn.size({ size, sizes }),
     paddingLeft: theme.fn.size({ size, sizes: theme.spacing }),
-    paddingRight: disabled ? theme.fn.size({ size, sizes: theme.spacing }) : 0,
+    paddingRight: disabled || readOnly ? theme.fn.size({ size, sizes: theme.spacing }) : 0,
     fontWeight: 500,
     fontSize: theme.fn.size({ size, sizes: fontSizes }),
     borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
