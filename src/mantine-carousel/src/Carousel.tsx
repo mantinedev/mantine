@@ -184,7 +184,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   const [selected, setSelected] = useState(0);
   const [slidesCount, setSlidesCount] = useState(0);
 
-  const handleScroll = useCallback((index) => embla && embla.scrollTo(index), [embla]);
+  const handleScroll = useCallback((index: number) => embla && embla.scrollTo(index), [embla]);
 
   const handleSelect = useCallback(() => {
     if (!embla) return;
@@ -200,6 +200,21 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     embla?.scrollNext();
     onNextSlide?.();
   }, [embla]);
+
+  const handleKeydown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        handleNext();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        handlePrevious();
+      }
+    },
+    [embla]
+  );
 
   useEffect(() => {
     if (embla) {
@@ -237,7 +252,12 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
       <CarouselProvider
         value={{ slideGap, slideSize, embla, orientation, includeGapInSize, breakpoints }}
       >
-        <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        <Box
+          className={cx(classes.root, className)}
+          ref={ref}
+          onKeyDownCapture={handleKeydown}
+          {...others}
+        >
           <div className={classes.viewport} ref={emblaRefElement}>
             <div className={classes.container}>{children}</div>
           </div>
