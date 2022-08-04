@@ -70,4 +70,9 @@ describe('@mantine/form/get-path', () => {
     expect(getPath('name.random.path', values)).toBe(undefined);
     expect(getPath('duties.3.title', values)).toBe(undefined);
   });
+
+  it('correctly handles undefined and null values', () => {
+    expect(getPath('a.b.c', undefined)).toBe(undefined);
+    expect(getPath('a.b.c', null)).toBe(undefined);
+  });
 });

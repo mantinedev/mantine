@@ -3,7 +3,7 @@ import { getSplittedPath } from './get-splitted-path';
 export function getPath(path: unknown, values: unknown): unknown {
   const splittedPath = getSplittedPath(path);
 
-  if (splittedPath.length === 0) {
+  if (splittedPath.length === 0 || typeof values !== 'object' || values === null) {
     return undefined;
   }
 

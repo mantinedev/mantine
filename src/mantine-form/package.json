@@ -18,7 +18,8 @@
     "react": ">=16.8.0"
   },
   "dependencies": {
-    "klona": "^2.0.5"
+    "klona": "^2.0.5",
+    "fast-deep-equal": "^3.1.3"
   },
   "devDependencies": {}
 }

@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react';
+import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
 import { filterErrors, clearListErrors } from './filter-errors';
 import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
+import { getStatus } from './get-status';
 import {
   UseFormReturnType,
   UseFormInput,
@@ -21,15 +23,20 @@ import {
   GetInputProps,
   OnSubmit,
   OnReset,
+  IsDirty,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
   initialValues = {} as Values,
   initialErrors = {},
+  initialDirty = {},
+  initialTouched = {},
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
   validate: rules,
 }: UseFormInput<Values> = {}): UseFormReturnType<Values> {
+  const [touched, setTouched] = useState(initialTouched);
+  const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
@@ -67,13 +74,20 @@ export function useForm<Values = Record<string, unknown>>({
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
     const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
     _setValues((current) => {
+      const initialValue = getPath(path, initialValues);
+      const isFieldDirty = !isEqual(initialValue, value);
+      setDirty((currentDirty) => ({ ...currentDirty, [path]: isFieldDirty }));
+      setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
+
       const result = setPath(path, value, current);
+
       if (shouldValidate) {
         const validationResults = validateFieldValue(path, rules, result);
         validationResults.hasError
           ? setFieldError(path, validationResults.error)
           : clearFieldError(path);
       }
+
       return result;
     });
 
@@ -117,20 +131,26 @@ export function useForm<Values = Record<string, unknown>>({
 
   const getInputProps: GetInputProps<Values> = (
     path,
-    { type = 'input', withError = type === 'input' } = {}
+    { type = 'input', withError = type === 'input', withFocus = true } = {}
   ) => {
     const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
-    const withOptionalError = (payload: Record<string, unknown>) => {
-      if (withError) {
-        // eslint-disable-next-line no-param-reassign
-        payload.error = errors[path];
-      }
-      return payload;
-    };
+    const payload: Record<string, any> = { onChange };
 
-    return type === 'checkbox'
-      ? withOptionalError({ checked: getPath(path, values), onChange })
-      : withOptionalError({ value: getPath(path, values), onChange });
+    if (withError) {
+      payload.error = errors[path];
+    }
+
+    if (type === 'checkbox') {
+      payload.checked = getPath(path, values);
+    } else {
+      payload.value = getPath(path, values);
+    }
+
+    if (withFocus) {
+      payload.onFocus = () => setTouched((current) => ({ ...current, [path]: true }));
+    }
+
+    return payload;
   };
 
   const onSubmit: OnSubmit<Values> = (handleSubmit, handleValidationFailure) => (event) => {
@@ -148,6 +168,9 @@ export function useForm<Values = Record<string, unknown>>({
     event.preventDefault();
     reset();
   }, []);
+
+  const isDirty: IsDirty<Values> = useCallback((path) => getStatus(dirty, path), [dirty]);
+  const isTouched: IsDirty<Values> = useCallback((path) => getStatus(touched, path), [touched]);
 
   return {
     values,
@@ -167,5 +190,9 @@ export function useForm<Values = Record<string, unknown>>({
     getInputProps,
     onSubmit,
     onReset,
+    isDirty,
+    isTouched,
+    setTouched,
+    setDirty,
   };
 }
