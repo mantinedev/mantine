@@ -68,6 +68,7 @@ export const AccordionControl = forwardRef<HTMLButtonElement, AccordionControlPr
           ctx.onChange(value);
         }}
         type="button"
+        data-active={isActive || undefined}
         aria-expanded={isActive}
         aria-controls={ctx.getRegionId(value)}
         id={ctx.getControlId(value)}
