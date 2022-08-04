@@ -80,6 +80,23 @@ function Demo() {
 }
 ```
 
+### span prop
+
+Use `span` prop as a shorthand for `component="span"`:
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text span>Same as below</Text>
+      <Text component="span">Same as above</Text>
+    </>
+  );
+}
+```
+
 ### Usage with react-router
 
 ```tsx
