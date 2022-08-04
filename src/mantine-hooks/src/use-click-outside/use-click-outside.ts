@@ -11,11 +11,13 @@ export function useClickOutside<T extends HTMLElement = any>(
 
   useEffect(() => {
     const listener = (event: any) => {
+      const { target } = event ?? {};
       if (Array.isArray(nodes)) {
-        const shouldIgnore = event?.target?.hasAttribute('data-ignore-outside-clicks');
-        const shouldTrigger = nodes.every((node) => !!node && !node.contains(event.target));
+        const shouldIgnore =
+          target?.hasAttribute('data-ignore-outside-clicks') || !document.body.contains(target);
+        const shouldTrigger = nodes.every((node) => !!node && !node.contains(target));
         shouldTrigger && !shouldIgnore && handler();
-      } else if (ref.current && !ref.current.contains(event.target)) {
+      } else if (ref.current && !ref.current.contains(target)) {
         handler();
       }
     };
