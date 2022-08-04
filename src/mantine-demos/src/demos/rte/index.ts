@@ -4,3 +4,4 @@ export { simple } from './RichTextEditor.demo.simple';
 export { embeds } from './RichTextEditor.demo.embeds';
 export { mentions } from './RichTextEditor.demo.mentions';
 export { readOnly } from './RichTextEditor.demo.readOnly';
+export { formats } from './RichTextEditor.demo.formats';

@@ -7,6 +7,18 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.1.0
 date: 'April 27th, 2022'
 ---
 
+import { RichTextEditorDemos } from '@mantine/demos';
+
+## RichTextEditor formats
+
+[RichTextEditor](https://mantine.dev/others/rte/) component now supports `formats` prop to restrict formats
+that user can use in the editor.
+In the following example three formats are enabled: `bold`, `italic` and `underline`,
+toolbar includes `italic` and `underline` controls, `bold` format can be added with `Ctrl + B` keyboard
+shortcut, other formats are not available:
+
+<Demo data={RichTextEditorDemos.formats} />
+
 ## Other changes
 
 - [New theme functions](https://mantine.dev/theming/functions/): `theme.fn.primaryShade` and `theme.fn.primaryColor`
@@ -14,3 +26,4 @@ date: 'April 27th, 2022'
 - [Text](https://mantine.dev/core/text/) component now supports `span` prop as a shorthand for `component="span"`.
 - [Carousel](https://mantine.dev/others/carousel/) component now support keyboard events (switching slides with right/left arrows)
 - [Accordion.Control](https://mantine.dev/core/accordion/) component now has `data-active` attribute when `Accordion.Item` is expanded
+- [RichTextEditor](https://mantine.dev/others/rte/) now uses `value` instead of `defaultValue` to manage state, note that component does not support react strict mode
