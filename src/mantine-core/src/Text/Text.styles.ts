@@ -15,6 +15,8 @@ export interface TextStylesParams {
   inline: boolean;
   inherit: boolean;
   underline: boolean;
+  strikethrough: boolean;
+  italic: boolean;
   gradient: MantineGradient;
   transform: React.CSSProperties['textTransform'];
   align: React.CSSProperties['textAlign'];
@@ -25,6 +27,25 @@ interface GetTextColor {
   theme: MantineTheme;
   color: 'dimmed' | MantineColor;
   variant: TextStylesParams['variant'];
+}
+
+function getTextDecoration({
+  underline,
+  strikethrough,
+}: {
+  underline: boolean;
+  strikethrough: boolean;
+}) {
+  const styles = [];
+  if (underline) {
+    styles.push('underline');
+  }
+
+  if (strikethrough) {
+    styles.push('line-through');
+  }
+
+  return styles.length > 0 ? styles.join(' ') : 'none';
 }
 
 function getTextColor({ theme, color, variant }: GetTextColor) {
@@ -68,6 +89,8 @@ export default createStyles(
       weight,
       transform,
       align,
+      strikethrough,
+      italic,
     }: TextStylesParams
   ) => {
     const colors = theme.fn.variant({ variant: 'gradient', gradient });
@@ -84,11 +107,12 @@ export default createStyles(
             ? 'inherit'
             : theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-        textDecoration: underline ? 'underline' : 'none',
+        textDecoration: getTextDecoration({ underline, strikethrough }),
         WebkitTapHighlightColor: 'transparent',
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
+        fontStyle: italic ? 'italic' : undefined,
 
         ...theme.fn.hover(
           variant === 'link' && underline === undefined

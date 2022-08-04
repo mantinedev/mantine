@@ -41,6 +41,12 @@ export interface TextProps extends DefaultProps {
   /** Underline the text */
   underline?: boolean;
 
+  /** Add strikethrough styles */
+  strikethrough?: boolean;
+
+  /** Adds font-style: italic style */
+  italic?: boolean;
+
   /** Inherit font properties from parent element */
   inherit?: boolean;
 
@@ -66,6 +72,8 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     inline,
     inherit,
     underline,
+    strikethrough,
+    italic,
     classNames,
     styles,
     unstyled,
@@ -81,6 +89,8 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       inline,
       inherit,
       underline,
+      strikethrough,
+      italic,
       weight,
       transform,
       align,
