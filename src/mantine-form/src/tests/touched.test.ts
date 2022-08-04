@@ -29,6 +29,14 @@ describe('@mantine/form/touched', () => {
     expect(hook.result.current.isTouched('a')).toBe(true);
   });
 
+  it('resets status with resetTouched handler', () => {
+    const hook = renderHook(() => useForm({ initialTouched: { a: true } }));
+    expect(hook.result.current.isTouched()).toBe(true);
+
+    act(() => hook.result.current.resetTouched());
+    expect(hook.result.current.isTouched()).toBe(false);
+  });
+
   it('sets field as touched with getInputProps onFocus', () => {
     const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
     expect(hook.result.current.isTouched()).toBe(false);

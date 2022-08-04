@@ -95,8 +95,8 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
   index: number
 ) => void;
 
-export type IsDirty<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
-export type IsTouched<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+export type ResetStatus = () => void;
 
 export interface UseFormInput<Values> {
   initialValues?: Values;
@@ -126,8 +126,10 @@ export interface UseFormReturnType<Values> {
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values>;
   onReset: OnReset;
-  isDirty: IsDirty<Values>;
-  isTouched: IsTouched<Values>;
+  isDirty: GetFieldStatus<Values>;
+  isTouched: GetFieldStatus<Values>;
   setTouched: SetFormStatus;
   setDirty: SetFormStatus;
+  resetTouched: ResetStatus;
+  resetDirty: ResetStatus;
 }

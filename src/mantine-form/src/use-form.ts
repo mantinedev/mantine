@@ -23,7 +23,7 @@ import {
   GetInputProps,
   OnSubmit,
   OnReset,
-  IsDirty,
+  GetFieldStatus,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
@@ -40,6 +40,9 @@ export function useForm<Values = Record<string, unknown>>({
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
 
+  const resetTouched = useCallback(() => setTouched({}), []);
+  const resetDirty = useCallback(() => setDirty({}), []);
+
   const setErrors: SetErrors = useCallback(
     (errs) =>
       _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
@@ -50,6 +53,8 @@ export function useForm<Values = Record<string, unknown>>({
   const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
+    resetDirty();
+    resetTouched();
   }, []);
 
   const setFieldError: SetFieldError<Values> = useCallback(
@@ -169,8 +174,11 @@ export function useForm<Values = Record<string, unknown>>({
     reset();
   }, []);
 
-  const isDirty: IsDirty<Values> = useCallback((path) => getStatus(dirty, path), [dirty]);
-  const isTouched: IsDirty<Values> = useCallback((path) => getStatus(touched, path), [touched]);
+  const isDirty: GetFieldStatus<Values> = useCallback((path) => getStatus(dirty, path), [dirty]);
+  const isTouched: GetFieldStatus<Values> = useCallback(
+    (path) => getStatus(touched, path),
+    [touched]
+  );
 
   return {
     values,
@@ -194,5 +202,7 @@ export function useForm<Values = Record<string, unknown>>({
     isTouched,
     setTouched,
     setDirty,
+    resetTouched,
+    resetDirty,
   };
 }

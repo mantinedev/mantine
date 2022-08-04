@@ -32,4 +32,12 @@ describe('@mantine/form/dirty', () => {
     expect(hook.result.current.isDirty()).toBe(true);
     expect(hook.result.current.isDirty('a')).toBe(true);
   });
+
+  it('resets status with resetDirty handler', () => {
+    const hook = renderHook(() => useForm({ initialDirty: { a: true } }));
+    expect(hook.result.current.isDirty()).toBe(true);
+
+    act(() => hook.result.current.resetDirty());
+    expect(hook.result.current.isDirty()).toBe(false);
+  });
 });
