@@ -22,7 +22,9 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "next": "*"
+    "next": "*",
+    "@emotion/react": ">=11.9.0",
+    "@emotion/server": ">=11.4.0"
   },
   "dependencies": {
     "@mantine/ssr": "5.0.2",
