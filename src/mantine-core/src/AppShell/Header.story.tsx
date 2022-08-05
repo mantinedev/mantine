@@ -26,4 +26,12 @@ storiesOf('AppShell/Header', module)
       </Header>
       <div style={{ paddingTop: 50 }}>{content}</div>
     </>
+  ))
+  .add('Header: Fixed Without border', () => (
+    <>
+      <Header height={50} withBorder={false} fixed>
+        Just a header
+      </Header>
+      <div>{content}</div>
+    </>
   ));

@@ -197,12 +197,11 @@ export default createStyles(
       },
 
       '& .mention': {
+        display: 'inline-block',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor:
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
         padding: '3px 5px',
-        height: 24,
-        width: 65,
         marginRight: 2,
         borderRadius: theme.radius.sm,
         userSelect: 'all',
