@@ -29,7 +29,8 @@
   "peerDependencies": {
     "@mantine/hooks": "5.0.2",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@emotion/react": ">=11.9.0"
   },
   "dependencies": {
     "@mantine/utils": "5.0.2",
