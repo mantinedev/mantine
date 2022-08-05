@@ -27,7 +27,7 @@ interface MantineThemeFunctions {
   fontStyles(): any;
   focusStyles(): any;
   cover(offset?: number | string): any;
-  themeColor(color: string, shade: number, primaryFallback?: boolean): string;
+  themeColor(color: string, shade?: number, primaryFallback?: boolean): string;
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
