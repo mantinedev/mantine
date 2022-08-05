@@ -8,5 +8,5 @@ export function WithNumberAsSize() {
 }
 
 export function ColorIndex() {
-  return <Text color="red.1">Red 1 text</Text>;
+  return <Text color="violet.9">Red 1 text</Text>;
 }

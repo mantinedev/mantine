@@ -23,3 +23,11 @@ export function Disabled() {
     </div>
   );
 }
+
+export function ColorsIndex() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ActionIcon color="violet.1">$</ActionIcon>
+    </div>
+  );
+}

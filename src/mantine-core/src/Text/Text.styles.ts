@@ -53,7 +53,7 @@ function getTextColor({ theme, color, variant }: GetTextColor) {
     return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
   }
 
-  return color in theme.colors
+  return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? theme.fn.variant({ variant: 'filled', color }).background
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]

@@ -33,7 +33,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   if (variant === 'transparent') {
     return {
       border: '1px solid transparent',
-      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+      color: theme.fn.variant({ variant: 'subtle', color }).color,
       backgroundColor: 'transparent',
     };
   }
@@ -68,8 +68,8 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     '&[data-disabled]': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
-      backgroundColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
-      borderColor: theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
+      backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 8 : 1],
+      borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 8 : 1],
 
       '&:active': {
         transform: 'none',

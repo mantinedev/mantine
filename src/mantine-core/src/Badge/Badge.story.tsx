@@ -45,3 +45,13 @@ export function CustomComponent() {
     </div>
   );
 }
+
+export function ColorsIndex() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge color="violet.2" variant="dot">
+        Anchor
+      </Badge>
+    </div>
+  );
+}

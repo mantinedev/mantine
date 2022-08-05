@@ -17,7 +17,7 @@ const sizes = {
 function getColor(theme: MantineTheme, color: MantineColor) {
   const themeColor = theme.fn.variant({ variant: 'outline', color }).border;
 
-  return color in theme.colors
+  return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? themeColor
     : color === undefined
     ? theme.colorScheme === 'dark'
