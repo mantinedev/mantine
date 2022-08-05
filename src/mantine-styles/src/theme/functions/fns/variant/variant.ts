@@ -50,7 +50,7 @@ export function variant(theme: MantineThemeBase) {
       return {
         border: 'transparent',
         background: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.2 : 1
         ),
         color:
@@ -60,7 +60,7 @@ export function variant(theme: MantineThemeBase) {
               : theme.colors.dark[9]
             : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.25 : 0.65
         ),
       };
@@ -91,8 +91,8 @@ export function variant(theme: MantineThemeBase) {
         color: getThemeColor(color, theme.colorScheme === 'dark' ? 5 : getPrimaryShade('light')),
         hover:
           theme.colorScheme === 'dark'
-            ? rgba(getThemeColor(color, 5), 0.05)
-            : rgba(getThemeColor(color, 0), 0.35),
+            ? rgba(getThemeColor(color, 5, primaryFallback, false), 0.05)
+            : rgba(getThemeColor(color, 0, primaryFallback, false), 0.35),
       };
     }
 
@@ -116,7 +116,7 @@ export function variant(theme: MantineThemeBase) {
               : theme.colors.dark[9]
             : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.2 : 1
         ),
       };
