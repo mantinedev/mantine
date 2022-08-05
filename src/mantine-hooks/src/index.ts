@@ -49,6 +49,7 @@ export { useDisclosure } from './use-disclosure/use-disclosure';
 export { useFocusWithin } from './use-focus-within/use-focus-within';
 export { useNetwork } from './use-network/use-network';
 export { useTimeout } from './use-timeout/use-timeout';
+export { useTextSelection } from './use-text-selection/use-text-selection';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
