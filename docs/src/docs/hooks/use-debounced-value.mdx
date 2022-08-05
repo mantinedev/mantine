@@ -17,7 +17,8 @@ import { HooksDemos } from '@mantine/demos';
 
 `use-debounced-value` hook debounces value changes.
 This can be useful in case you want to perform a heavy operation based on react state,
-for example, send search request.
+for example, send search request. Unlike [use-debounced-state](/hooks/use-debounced-state/) it
+is designed to work with controlled components.
 
 <Demo data={HooksDemos.useDebouncedValueUsage} />
 

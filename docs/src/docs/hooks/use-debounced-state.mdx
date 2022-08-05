@@ -17,13 +17,12 @@ import { HooksDemos } from '@mantine/demos';
 
 `use-debounced-state` hook debounces value changes.
 This can be useful in case you want to perform a heavy operation based on react state,
-for example, send search request.
+for example, send search request. Unlike [use-debounced-value](/hooks/use-debounced-value/) it
+is designed to work with uncontrolled components.
 
 <Demo data={HooksDemos.useDebouncedStateUsage} />
 
-## Differences to useDebouncedValue
-
-This hook differs slightly from the [useDebouncedValue](/hooks/use-debounced-value/) hook.
+## Differences to use-debounce-value
 
 - You do not have direct access to the non-debounced value.
 - It is used for uncontrolled inputs (`defaultValue` prop instead of `value`), e.g. does not render with every state change like a character typed in an input.
