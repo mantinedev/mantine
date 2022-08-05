@@ -47,7 +47,7 @@ function Demo() {
 ### Usage with Next.js Link
 
 ```tsx
-import Link from 'next/router';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 function Demo() {
@@ -55,10 +55,10 @@ function Demo() {
   return (
     <>
       <Link href="/home" passHref>
-        <NavLink component="a" label="Home" active={router.pathname == '/home'} />
+        <NavLink component="a" label="Home" active={router.pathname === '/home'} />
       </Link>
       <Link href="/about" passHref>
-        <NavLink component="a" label="About" active={router.pathname == '/about'} />
+        <NavLink component="a" label="About" active={router.pathname === '/about'} />
       </Link>
     </>
   );
@@ -76,8 +76,8 @@ function Demo() {
   const location = useLocation();
   return (
     <>
-      <NavLink label="Home" component={Link} to="/home" active={location.pathname == '/home'} />
-      <NavLink label="About" component={Link} to="/about" active={location.pathname == '/about'} />
+      <NavLink label="Home" component={Link} to="/home" active={location.pathname === '/home'} />
+      <NavLink label="About" component={Link} to="/about" active={location.pathname === '/about'} />
     </>
   );
 }
