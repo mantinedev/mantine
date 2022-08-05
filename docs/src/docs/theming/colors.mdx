@@ -99,6 +99,25 @@ function Demo() {
 }
 ```
 
+## Colors index reference
+
+When you use `color` prop in any Mantine component, it will reference `theme.primaryShade` to get
+value from `theme.colors`:
+
+```tsx
+import { Button } from '@mantine/core';
+
+// the following button will have theme.colors.orange[theme.primaryShade] background
+function Demo() {
+  return <Button color="orange">Orange button</Button>;
+}
+```
+
+To reference specific index of color instead of primary shade, include it in `color` prop
+separated with `.`, for example `pink.3`:
+
+<Demo data={ThemeDemos.colorsIndex} />
+
 ## Default colors
 
 <ThemeColors />
