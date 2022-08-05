@@ -82,3 +82,11 @@ export function Groups() {
     </div>
   );
 }
+
+export function ColorsIndex() {
+  return (
+    <Button m={50} color="violet.3">
+      Violet 3 button
+    </Button>
+  );
+}

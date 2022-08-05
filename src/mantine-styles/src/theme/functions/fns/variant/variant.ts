@@ -18,6 +18,25 @@ export interface VariantOutput {
   hover: string;
 }
 
+interface ColorInfo {
+  isSplittedColor: boolean;
+  key?: string;
+  shade?: number;
+}
+
+function getColorIndexInfo(color: string, theme: MantineThemeBase): ColorInfo {
+  if (typeof color === 'string' && color.includes('.')) {
+    const [splittedColor, _splittedShade] = color.split('.');
+    const splittedShade = parseInt(_splittedShade, 10);
+
+    if (splittedColor in theme.colors && splittedShade >= 0 && splittedShade < 10) {
+      return { isSplittedColor: true, key: splittedColor, shade: splittedShade };
+    }
+  }
+
+  return { isSplittedColor: false };
+}
+
 export function variant(theme: MantineThemeBase) {
   const getThemeColor = themeColor(theme);
   const getPrimaryShade = primaryShade(theme);
@@ -25,6 +44,8 @@ export function variant(theme: MantineThemeBase) {
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   return ({ variant, color, gradient, primaryFallback }: VariantInput): VariantOutput => {
+    const colorInfo = getColorIndexInfo(color, theme);
+
     if (variant === 'light') {
       return {
         border: 'transparent',
@@ -101,11 +122,15 @@ export function variant(theme: MantineThemeBase) {
       };
     }
 
+    const _primaryShade = getPrimaryShade();
+    const _shade = colorInfo.isSplittedColor ? colorInfo.shade : _primaryShade;
+    const _color = colorInfo.isSplittedColor ? colorInfo.key : color;
+
     return {
       border: 'transparent',
-      background: getThemeColor(color, getPrimaryShade(), primaryFallback),
+      background: getThemeColor(_color, _shade, primaryFallback),
       color: theme.white,
-      hover: getThemeColor(color, getPrimaryShade() === 9 ? 8 : getPrimaryShade() + 1),
+      hover: getThemeColor(_color, _shade === 9 ? 8 : _shade + 1),
     };
   };
 }
