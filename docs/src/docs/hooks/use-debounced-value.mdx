@@ -21,6 +21,14 @@ for example, send search request.
 
 <Demo data={HooksDemos.useDebouncedValueUsage} />
 
+## Differences to useDebouncedState
+
+This hook differs slightly from the [useDebouncedState](/hooks/use-debounced-state/) hook.
+
+- You have direct access to the non-debounced value.
+- It is used for controlled inputs (`value` prop instead of `defaultValue`), e.g. renders on every state change like a character typed in an input.
+- It works with props or other state providers, and it does not force use of `useState`.
+
 ## Leading update
 
 You can immediately update value with first call with `{ leading: true }` options:

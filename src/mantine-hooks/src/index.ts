@@ -4,6 +4,7 @@ export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useCounter } from './use-counter/use-counter';
+export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
