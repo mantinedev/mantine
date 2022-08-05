@@ -21,6 +21,7 @@ export default createStyles(
       borderRadius: circle ? height : theme.fn.radius(radius),
       position: 'relative',
       overflow: 'hidden',
+      WebkitTransform: 'translateZ(0)',
     },
 
     visible: {

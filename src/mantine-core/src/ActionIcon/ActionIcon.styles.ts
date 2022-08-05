@@ -68,8 +68,14 @@ export default createStyles((theme, { color, size, radius, variant }: ActionIcon
     '&[data-disabled]': {
       color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
       cursor: 'not-allowed',
-      backgroundColor: theme.colors.gray[theme.colorScheme === 'dark' ? 8 : 1],
-      borderColor: theme.colors.gray[theme.colorScheme === 'dark' ? 8 : 1],
+      backgroundColor:
+        variant === 'transparent'
+          ? undefined
+          : theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
+      borderColor:
+        variant === 'transparent'
+          ? undefined
+          : theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
 
       '&:active': {
         transform: 'none',
