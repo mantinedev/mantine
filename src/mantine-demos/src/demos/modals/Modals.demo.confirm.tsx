@@ -28,6 +28,7 @@ function Demo() {
 function Demo() {
   const openModal = () =>
     openConfirmModal({
+      modalId: 'test-id',
       title: 'Please confirm your action',
       children: (
         <Text size="sm">
