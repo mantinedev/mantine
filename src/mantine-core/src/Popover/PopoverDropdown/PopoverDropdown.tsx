@@ -67,6 +67,7 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,
               })}
+              data-position={ctx.placement}
               {...others}
             >
               {children}
