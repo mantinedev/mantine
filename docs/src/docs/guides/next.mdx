@@ -20,7 +20,13 @@ The easiest way to get started is to use [the template on GitHub](https://github
 4. Install dependencies: `yarn`
 5. Start development server: `npm run dev`
 
-## Add to existing Next.js project
+## Generate new application
+
+Init new application:
+
+```bash
+yarn create next-app --typescript
+```
 
 <PackagesInstallation extraPackages={['@mantine/next', '@emotion/server']} />
 
@@ -79,6 +85,12 @@ export default function App(props: AppProps) {
     </>
   );
 }
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
 ```
 
 ## Create your own getInitialProps
