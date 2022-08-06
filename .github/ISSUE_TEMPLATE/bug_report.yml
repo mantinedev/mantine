@@ -8,7 +8,7 @@ body:
         ## Thanks for reaching out!
         Before submitting an issue please make sure that you use latest version of all @mantine/ packages.
   - type: dropdown
-    id: version
+    id: package
     attributes:
       label: What package has an issue
       options:

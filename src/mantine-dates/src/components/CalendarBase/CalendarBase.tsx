@@ -77,8 +77,11 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Previous decade control aria-label */
   previousDecadeLabel?: string;
 
-  /** dayjs label format */
+  /** dayjs Calendar month label format */
   labelFormat?: string;
+
+  /** dayjs Calendar year label format */
+  yearLabelFormat?: string;
 
   /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
@@ -134,6 +137,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       unstyled,
       weekendDays,
       __stopPropagation,
+      yearLabelFormat = 'YYYY',
       ...others
     }: CalendarBaseProps,
     ref
@@ -269,6 +273,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             previousDecadeLabel={previousDecadeLabel}
             preventFocus={preventFocus}
             unstyled={unstyled}
+            yearLabelFormat={yearLabelFormat}
           />
         )}
 
@@ -293,6 +298,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             previousYearLabel={previousYearLabel}
             preventFocus={preventFocus}
             unstyled={unstyled}
+            yearLabelFormat={yearLabelFormat}
           />
         )}
 

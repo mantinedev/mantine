@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react';
 import {
   DefaultProps,
   MantineNumberSize,
-  MantineColor,
   Selectors,
   useComponentDefaultProps,
 } from '@mantine/styles';
@@ -18,7 +17,7 @@ export interface BurgerProps
   opened: boolean;
 
   /** Burger color value, not connected to theme.colors, defaults to theme.black with light color scheme and theme.white with dark */
-  color?: MantineColor;
+  color?: string;
 
   /** Predefined burger size or number to set width and height in px */
   size?: MantineNumberSize;

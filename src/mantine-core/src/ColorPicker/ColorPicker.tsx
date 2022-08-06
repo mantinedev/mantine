@@ -215,13 +215,13 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
         {Array.isArray(swatches) && (
           <Swatches
             data={swatches}
-            onSelect={handleChange}
             style={{ marginTop: 5 }}
             swatchesPerRow={swatchesPerRow}
             focusable={focusable}
             classNames={classNames}
             styles={styles}
             __staticSelector={__staticSelector}
+            setValue={setValue}
           />
         )}
       </Box>

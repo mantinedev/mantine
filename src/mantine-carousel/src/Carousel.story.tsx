@@ -54,9 +54,7 @@ export function Vertical() {
 }
 
 export function AutoPlay() {
-  const autoplay = useRef(
-    Autoplay({ delay: 500, stopOnInteraction: false }, (emblaRoot) => emblaRoot.parentElement)
-  );
+  const autoplay = useRef(Autoplay({ delay: 500, stopOnInteraction: false }));
 
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>

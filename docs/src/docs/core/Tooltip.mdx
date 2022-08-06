@@ -228,6 +228,31 @@ function Demo() {
 }
 ```
 
+## Usage with Next.js Link
+
+Tooltip will not work with native Next.js `Link`, instead you should use [NextLink](/guides/next/) component:
+
+```tsx
+import { Tooltip, Button } from '@mantine/core';
+import { NextLink } from '@mantine/next';
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="Plain NextLink">
+        <NextLink href="/">Next.js link</NextLink>
+      </Tooltip>
+
+      <Tooltip label="NextLink as another component">
+        <Button component={NextLink} href="/">
+          Next.js link
+        </Button>
+      </Tooltip>
+    </>
+  );
+}
+```
+
 ## Accessibility
 
 Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):

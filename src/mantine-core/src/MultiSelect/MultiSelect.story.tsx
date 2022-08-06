@@ -151,7 +151,25 @@ const variants = (['default', 'filled', 'unstyled'] as const).map((variant) => (
   </Stack>
 ));
 
+function UnknownValues() {
+  const [value, setValue] = useState(['unknown']);
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        data={['react', 'ng']}
+        value={value}
+        onChange={setValue}
+        placeholder="test-placeholder"
+      />
+      <button type="button" onClick={() => setValue(['unknown'])}>
+        Set unknown
+      </button>
+    </div>
+  );
+}
+
 storiesOf('MultiSelect', module)
+  .add('Unknown value', () => <UnknownValues />)
   .add('Alignment', () => (
     <>
       <Group style={{ padding: 40, paddingBottom: 0 }} grow align="flex-start">

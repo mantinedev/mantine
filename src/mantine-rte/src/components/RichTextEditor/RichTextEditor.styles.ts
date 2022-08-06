@@ -66,9 +66,10 @@ export default createStyles(
         content: `"${editLabel}"`,
         cursor: 'pointer',
         display: 'block',
-        height: 28,
-        lineHeight: '28px',
-        backgroundColor: theme.colors[theme.primaryColor][6],
+        whiteSpace: 'nowrap',
+        height: 32,
+        lineHeight: '32px',
+        backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
         color: theme.white,
         borderRadius: theme.radius.sm,
         fontWeight: 500,
@@ -83,8 +84,8 @@ export default createStyles(
         color: theme.colors.red[theme.colorScheme === 'dark' ? 5 : 7],
         fontSize: theme.fontSizes.sm,
         display: 'block',
-        height: 34,
-        lineHeight: '34px',
+        height: 32,
+        lineHeight: '32px',
       },
 
       '& .ql-hidden': {
@@ -119,9 +120,6 @@ export default createStyles(
 
       '& .ql-tooltip input': {
         display: 'none',
-        border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
-        }`,
         WebkitTapHighlightColor: 'transparent',
         height: 34,
         appearance: 'none',
@@ -135,7 +133,10 @@ export default createStyles(
         paddingRight: theme.spacing.sm,
         borderRadius: theme.radius.sm,
         marginRight: theme.spacing.md,
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.white,
+        border: `1px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+        }`,
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
 
         '&::placeholder': {
           opacity: 1,
@@ -196,12 +197,11 @@ export default createStyles(
       },
 
       '& .mention': {
+        display: 'inline-block',
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         backgroundColor:
           theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors[theme.primaryColor][0],
         padding: '3px 5px',
-        height: 24,
-        width: 65,
         marginRight: 2,
         borderRadius: theme.radius.sm,
         userSelect: 'all',

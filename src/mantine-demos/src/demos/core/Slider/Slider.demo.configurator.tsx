@@ -2,18 +2,19 @@ import React from 'react';
 import { Slider, RangeSlider } from '@mantine/core';
 
 function Wrapper(props: any) {
-  const Component = props.type === 'range' ? RangeSlider : Slider;
+  const { type, ...others } = props;
+  const Component = type === 'range' ? RangeSlider : Slider;
 
   return (
     <div style={{ maxWidth: 400, margin: 'auto' }}>
       <Component
-        defaultValue={40}
+        defaultValue={type === 'range' ? [20, 80] : 40}
         marks={[
           { value: 20, label: '20%' },
           { value: 50, label: '50%' },
           { value: 80, label: '80%' },
         ]}
-        {...props}
+        {...others}
       />
     </div>
   );

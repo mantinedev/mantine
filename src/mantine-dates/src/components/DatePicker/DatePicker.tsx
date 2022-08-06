@@ -62,7 +62,7 @@ const defaultProps: Partial<DatePickerProps> = {
   fixOnBlur: true,
   withinPortal: true,
   firstDayOfWeek: 'monday',
-  openDropdownOnClear: true,
+  openDropdownOnClear: false,
 };
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(

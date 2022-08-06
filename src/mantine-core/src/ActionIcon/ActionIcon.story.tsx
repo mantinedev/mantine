@@ -16,7 +16,9 @@ export function AsLink() {
 export function Disabled() {
   return (
     <div style={{ padding: 40 }}>
-      <ActionIcon disabled>$</ActionIcon>
+      <ActionIcon disabled variant="transparent">
+        $
+      </ActionIcon>
       <ActionIcon loading color="blue">
         $
       </ActionIcon>

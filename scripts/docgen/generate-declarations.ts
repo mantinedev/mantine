@@ -4,6 +4,14 @@ import { getDeclarationsList, DeclarationPath } from './get-declarations-list';
 import { prepareDeclaration } from './prepare-declaration';
 import { docgenParser } from './docgen-parser';
 
+function replaceName(name: string) {
+  if (name === 'ScrollAreaAutosize') {
+    return 'ScrollArea';
+  }
+
+  return name;
+}
+
 export function generateDeclarations(paths: DeclarationPath[]) {
   const componentsPaths = getDeclarationsList(paths);
 
@@ -15,7 +23,7 @@ export function generateDeclarations(paths: DeclarationPath[]) {
   });
 
   return docgenParser.parse(componentsPaths).reduce((acc, declaration) => {
-    const componentName = declaration.displayName.replace(/@mantine\/([^\s]+)\//, '');
+    const componentName = replaceName(declaration.displayName.replace(/@mantine\/([^\s]+)\//, ''));
     acc[componentName] = prepareDeclaration(declaration);
     return acc;
   }, {});

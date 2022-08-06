@@ -163,7 +163,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number | undefined) => {
-    if (val !== _value) {
+    if (val !== _value && !Number.isNaN(val)) {
       typeof onChange === 'function' && onChange(val);
       setValue(val);
     }
@@ -174,14 +174,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
     if (decimalSeparator) {
       parsedStr = parsedStr.replace(/\./g, decimalSeparator);
-    }
-
-    if (typeof document !== 'undefined') {
-      // save the current selection position to restore it after the formatting
-      const selectionStart = inputRef.current?.selectionStart;
-      requestAnimationFrame(() => {
-        inputRef.current?.setSelectionRange(selectionStart, selectionStart);
-      });
     }
 
     return formatter(parsedStr);
@@ -345,10 +337,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     } else {
       let newNumber = event.target.value;
 
-      /** Unshifting zero to handle the following case -
-       * parseFloat('....1212') -> NaN
-       * parseFloat('0....1212') -> 0
-       */
       if (newNumber[0] === `${decimalSeparator}` || newNumber[0] === '.') {
         newNumber = `0${newNumber}`;
       }
