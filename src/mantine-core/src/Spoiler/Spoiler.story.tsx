@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Accordion } from '../Accordion/Accordion';
 import { Spoiler } from './Spoiler';
 
 export default { title: 'Spoiler' };
@@ -24,6 +25,23 @@ export function ContentChanges() {
       <Spoiler maxHeight={120} showLabel="Show more" hideLabel="Hide">
         {content}
       </Spoiler>
+    </div>
+  );
+}
+
+export function InsideAccordion() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Accordion>
+        <Accordion.Item value="first">
+          <Accordion.Control>Expand me</Accordion.Control>
+          <Accordion.Panel>
+            <Spoiler showLabel="Show 2" hideLabel="Hide 2" maxHeight={4}>
+              Hidden information 2
+            </Spoiler>
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
     </div>
   );
 }
