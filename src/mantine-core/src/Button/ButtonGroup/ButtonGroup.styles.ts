@@ -36,8 +36,8 @@ export default createStyles(
 
         '& + [data-button]': {
           [orientation === 'vertical' ? 'marginTop' : 'marginLeft']: -buttonBorderWidth,
-          '@media (min-resolution: 300dpi)': {
-            [orientation === 'vertical' ? 'marginTop' : 'marginLeft']: -buttonBorderWidth / 2,
+          '@media (min-resolution: 192dpi)': {
+            [orientation === 'vertical' ? 'marginTop' : 'marginLeft']: 0,
           },
         },
       },
