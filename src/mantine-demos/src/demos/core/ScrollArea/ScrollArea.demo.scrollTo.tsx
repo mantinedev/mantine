@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
-import { ScrollArea, Button, Group } from '@mantine/core';
+import { ScrollArea, Button, Stack, Group } from '@mantine/core';
 import { Content } from './_content';
 
 const code = `
 import { useRef } from 'react';
-import { ScrollArea, Button, Group } from '@mantine/core';
+import { ScrollArea, Button, Stack, Group } from '@mantine/core';
 
 function Demo() {
   const viewport = useRef<HTMLDivElement>();
@@ -18,12 +18,12 @@ function Demo() {
   const scrollToTop = () => viewport.current.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Group position="center" direction="column">
+    <Stack align="center">
       <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
         {/* ... content */}
       </ScrollArea>
 
-      <Group>
+      <Group position="center">
         <Button onClick={scrollToBottom} variant="outline">
           Scroll to bottom
         </Button>
@@ -34,7 +34,7 @@ function Demo() {
           Scroll to top
         </Button>
       </Group>
-    </Group>
+    </Stack>
   );
 }
 `;
@@ -48,11 +48,11 @@ function Demo() {
   const scrollToTop = () => viewport.current.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Group position="center" direction="column">
+    <Stack align="center">
       <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
         <Content />
       </ScrollArea>
-      <Group>
+      <Group position="center">
         <Button onClick={scrollToBottom} variant="outline">
           Scroll to bottom
         </Button>
@@ -63,7 +63,7 @@ function Demo() {
           Scroll to top
         </Button>
       </Group>
-    </Group>
+    </Stack>
   );
 }
 

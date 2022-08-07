@@ -1,13 +1,13 @@
 import React from 'react';
-import { Hash } from 'tabler-icons-react';
+import { IconHash } from '@tabler/icons';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
 import { Autocomplete } from '@mantine/core';
-import { Hash } from 'tabler-icons-react';
+import { IconHash } from '@tabler/icons';
 
 function Demo() {
-  return <Autocomplete icon={<Hash />} />;
+  return <Autocomplete icon={<IconHash />} data={['React', 'Angular', 'Svelte', 'Vue']} />;
 }
 `;
 
@@ -18,7 +18,7 @@ function Demo() {
         label="Enter a hashtag"
         placeholder="Enter a hashtag"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        icon={<Hash size={14} />}
+        icon={<IconHash size={14} />}
       />
     </div>
   );

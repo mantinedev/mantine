@@ -1,10 +1,10 @@
 import React from 'react';
-import { EyeCheck, EyeOff } from 'tabler-icons-react';
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons';
 import { PasswordInput } from '@mantine/core';
 
 const code = `
 import { PasswordInput } from '@mantine/core';
-import { EyeCheck, EyeOff } from 'tabler-icons-react';
+import { IconEyeCheck, IconEyeOff } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -13,7 +13,7 @@ function Demo() {
       placeholder="Change visibility toggle icon"
       defaultValue="secret"
       visibilityToggleIcon={({ reveal, size }) =>
-        reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />
+        reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
       }
     />
   );
@@ -28,7 +28,7 @@ function Demo() {
         placeholder="Change visibility toggle icon"
         defaultValue="secret"
         visibilityToggleIcon={({ reveal, size }) =>
-          reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />
+          reveal ? <IconEyeOff size={size} /> : <IconEyeCheck size={size} />
         }
       />
     </div>

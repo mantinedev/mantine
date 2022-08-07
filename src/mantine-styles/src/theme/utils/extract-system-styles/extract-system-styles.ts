@@ -1,6 +1,8 @@
 import type { MantineStyleSystemProps } from '../../types';
 
-export function extractSystemStyles(others: MantineStyleSystemProps & { [key: string]: any }) {
+export function extractSystemStyles<T extends Record<string, any>>(
+  others: MantineStyleSystemProps & T
+) {
   const { m, mx, my, mt, mb, ml, mr, p, px, py, pt, pb, pl, pr, ...rest } = others;
   const systemStyles = { m, mx, my, mt, mb, ml, mr, p, px, py, pt, pb, pl, pr };
 

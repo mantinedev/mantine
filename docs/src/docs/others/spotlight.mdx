@@ -20,16 +20,16 @@ import { SpotlightDemos } from '@mantine/demos';
 
 Package depends on `@mantine/core` and `@mantine/hooks`.
 
-Install with npm:
-
-```sh
-npm install @mantine/spotlight @mantine/core @mantine/hooks
-```
-
 Install with yarn:
 
-```sh
-yarn add @mantine/spotlight @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/spotlight
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/spotlight
 ```
 
 ## Usage
@@ -46,11 +46,11 @@ Note that if you are using [MantineProvider](/theming/mantine-provider/), `Spotl
 import { MantineProvider } from '@mantine/core';
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
-      <SpotlightProvider>
-        <YourApp />
+      <SpotlightProvider actions={[]}>
+        <App />
       </SpotlightProvider>
     </MantineProvider>
   );
@@ -68,10 +68,10 @@ You can setup multiple shortcuts, for example, Mantine documentation uses the fo
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
-    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']}>
-      <YourApp />
+    <SpotlightProvider shortcut={['mod + P', 'mod + K', '/']} actions={[]}>
+      <App />
     </SpotlightProvider>
   );
 }
@@ -97,10 +97,10 @@ To disabled keyboard shortcuts set `shortcut={null}`:
 ```tsx
 import { SpotlightProvider } from '@mantine/spotlight';
 
-function App() {
+function Demo() {
   return (
-    <SpotlightProvider shortcut={null}>
-      <YourApp />
+    <SpotlightProvider shortcut={null} actions={[]}>
+      <App />
     </SpotlightProvider>
   );
 }

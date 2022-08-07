@@ -1,19 +1,18 @@
 import React, { useState, useRef, forwardRef } from 'react';
 import {
-  InputBaseProps,
+  InputSharedProps,
   InputWrapperBaseProps,
   InputStylesNames,
   InputWrapperStylesNames,
   DefaultProps,
   Input,
-  InputWrapper,
   MantineSize,
   Selectors,
   CloseButton,
   extractSystemStyles,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
-import { useDidUpdate, useMergedRef, useUuid } from '@mantine/hooks';
+import { useDidUpdate, useMergedRef, useId } from '@mantine/hooks';
 import { TimeField } from '../TimeInputBase/TimeField/TimeField';
 import { createTimeHandler } from '../TimeInputBase/create-time-handler/create-time-handler';
 import useStyles from './TimeInput.styles';
@@ -29,7 +28,7 @@ export type TimeInputStylesNames =
 
 export interface TimeInputProps
   extends DefaultProps<TimeInputStylesNames>,
-    InputBaseProps,
+    InputSharedProps,
     InputWrapperBaseProps,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Input size */
@@ -146,12 +145,16 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       labelProps,
       descriptionProps,
       errorProps,
+      unstyled,
       ...others
-    } = useMantineDefaultProps('TimeInput', defaultProps, props);
+    } = useComponentDefaultProps('TimeInput', defaultProps, props);
 
-    const { classes, cx, theme } = useStyles({ size }, { classNames, styles, name: 'TimeInput' });
+    const { classes, cx, theme } = useStyles(
+      { size },
+      { classNames, styles, unstyled, name: 'TimeInput' }
+    );
     const { systemStyles, rest } = extractSystemStyles(others);
-    const uuid = useUuid(id);
+    const uuid = useId(id);
 
     const hoursRef = useRef<HTMLInputElement>();
     const minutesRef = useRef<HTMLInputElement>();
@@ -248,11 +251,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           aria-label={clearButtonLabel}
           onClick={handleClear}
           size={size}
+          unstyled={unstyled}
         />
       ) : null;
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         label={label}
         error={error}
@@ -268,6 +272,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         errorProps={errorProps}
         descriptionProps={descriptionProps}
         labelProps={labelProps}
+        unstyled={unstyled}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -284,6 +289,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           disabled={disabled}
           rightSection={rightSection}
           rightSectionWidth={theme.fn.size({ size, sizes: RIGHT_SECTION_WIDTH })}
+          unstyled={unstyled}
           {...rest}
         >
           <div className={classes.controls}>
@@ -301,6 +307,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               aria-label={hoursLabel}
               disabled={disabled}
               name={name}
+              unstyled={unstyled}
             />
             <TimeField
               ref={minutesRef}
@@ -314,6 +321,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               placeholder={timePlaceholder}
               aria-label={minutesLabel}
               disabled={disabled}
+              unstyled={unstyled}
             />
             {withSeconds && (
               <TimeField
@@ -327,6 +335,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 placeholder={timePlaceholder}
                 aria-label={secondsLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
             {format === '12' && (
@@ -340,11 +349,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
                 size={size}
                 aria-label={amPmLabel}
                 disabled={disabled}
+                unstyled={unstyled}
               />
             )}
           </div>
         </Input>
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

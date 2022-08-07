@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrandTwitter } from 'tabler-icons-react';
+import { IconBrandTwitter } from '@tabler/icons';
 import { Button, Group } from '@mantine/core';
 
 const code = `
 import { Button } from '@mantine/core';
-import { BrandTwitter } from 'tabler-icons-react';
+import { IconBrandTwitter } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -13,7 +13,7 @@ function Demo() {
       target="_blank"
       rel="noopener noreferrer"
       href="https://twitter.com/mantinedev"
-      leftIcon={<BrandTwitter size={18} />}
+      leftIcon={<IconBrandTwitter size={18} />}
       styles={(theme) => ({
         root: {
           backgroundColor: '#00acee',
@@ -46,7 +46,7 @@ function Demo() {
         target="_blank"
         rel="noopener noreferrer"
         href="https://twitter.com/mantinedev"
-        leftIcon={<BrandTwitter size={18} />}
+        leftIcon={<IconBrandTwitter size={18} />}
         styles={(theme) => ({
           root: {
             backgroundColor: '#00acee',

@@ -6,12 +6,22 @@ import { Tabs } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tabs color="teal">
-      <Tabs.Tab label="Teal tab">Teal tab content</Tabs.Tab>
-      <Tabs.Tab label="Still teal">Teal tab #2</Tabs.Tab>
-      <Tabs.Tab label="Pink tab" color="pink">
-        Pink tab content
-      </Tabs.Tab>
+    <Tabs color="teal" defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">Teal tab</Tabs.Tab>
+        <Tabs.Tab value="second" color="blue">
+          Blue tab
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first" pt="xs">
+        First tab color is teal, it gets this value from context
+      </Tabs.Panel>
+
+      <Tabs.Panel value="second" pt="xs">
+        Second tab color is blue, it gets this value from props, props have the priority and will
+        override context value
+      </Tabs.Panel>
     </Tabs>
   );
 }
@@ -19,12 +29,22 @@ function Demo() {
 
 function Demo() {
   return (
-    <Tabs color="teal">
-      <Tabs.Tab label="Teal tab">Teal tab content</Tabs.Tab>
-      <Tabs.Tab label="Still teal">Teal tab #2</Tabs.Tab>
-      <Tabs.Tab label="Pink tab" color="pink">
-        Pink tab content
-      </Tabs.Tab>
+    <Tabs color="teal" defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">Teal tab</Tabs.Tab>
+        <Tabs.Tab value="second" color="blue">
+          Blue tab
+        </Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first" pt="xs">
+        First tab color is teal, it gets this value from context
+      </Tabs.Panel>
+
+      <Tabs.Panel value="second" pt="xs">
+        Second tab color is blue, it gets this value from props, props have the priority and will
+        override context value
+      </Tabs.Panel>
     </Tabs>
   );
 }

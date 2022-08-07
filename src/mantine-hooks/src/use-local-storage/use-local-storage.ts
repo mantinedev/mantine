@@ -97,5 +97,3 @@ export function useLocalStorage<T = string>({
 
   return [value === undefined ? defaultValue : value, setLocalStorageValue] as const;
 }
-
-export const useLocalStorageValue = useLocalStorage;

@@ -6,7 +6,7 @@ A set of react hooks for state and UI management
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/hooks
 

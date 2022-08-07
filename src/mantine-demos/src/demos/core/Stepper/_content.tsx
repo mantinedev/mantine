@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, BoxProps } from '@mantine/core';
 
-export function Content(props: BoxProps<'div'>) {
+export function Content(props: BoxProps) {
   return (
     <Box
       sx={(theme) => ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 import { AppShell, Navbar, Header, Group, ActionIcon, useMantineColorScheme } from '@mantine/core';
 import { MainLinks } from './_mainLinks';
 import { User } from './_user';
@@ -30,6 +30,7 @@ function Demo() {
   return (
     <AppShell
       padding="md"
+      fixed={false}
       navbar={
         <Navbar width={{ base: 300 }} height={500} p="xs">
           <Navbar.Section grow mt="xs">
@@ -45,7 +46,7 @@ function Demo() {
           <Group sx={{ height: '100%' }} px={20} position="apart">
             <Logo colorScheme={colorScheme} />
             <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
-              {colorScheme === 'dark' ? <Sun size={16} /> : <MoonStars size={16} />}
+              {colorScheme === 'dark' ? <IconSun size={16} /> : <IconMoonStars size={16} />}
             </ActionIcon>
           </Group>
         </Header>

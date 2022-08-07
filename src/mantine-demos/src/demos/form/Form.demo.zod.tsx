@@ -14,7 +14,7 @@ const schema = z.object({
 
 function Demo() {
   const form = useForm({
-    schema: zodResolver(schema),
+    validate: zodResolver(schema),
     initialValues: {
       name: '',
       email: '',

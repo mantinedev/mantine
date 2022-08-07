@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Autocomplete user input with any list of options'
 props: ['Autocomplete']
 import: "import { Autocomplete } from '@mantine/core';"
-source: 'mantine-core/src/components/Autocomplete/Autocomplete.tsx'
+source: 'mantine-core/src/Autocomplete/Autocomplete.tsx'
 docs: 'core/Autocomplete.mdx'
 styles: ['Autocomplete']
 ---
@@ -142,7 +142,7 @@ import { useRef } from 'react';
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
   return <Autocomplete ref={ref} data={[]} />;
 }
 ```

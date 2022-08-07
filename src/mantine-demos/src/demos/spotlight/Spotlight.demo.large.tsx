@@ -22,7 +22,7 @@ function Demo() {
       searchPlaceholder="Search..."
       shortcut="mod + shift + H"
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

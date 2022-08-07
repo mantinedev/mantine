@@ -22,7 +22,7 @@ interface MantineDemoControlProps {
 
 interface MantineDemoBase {
   component?: React.FC;
-  wrapper?: React.FC;
+  wrapper?: React.FC<{ children: React.ReactNode }>;
   code?: string;
   background?: (colorScheme: 'light' | 'dark') => string;
 }

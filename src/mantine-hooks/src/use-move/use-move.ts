@@ -8,8 +8,8 @@ export interface UseMovePosition {
 }
 
 export const clampUseMovePosition = (position: UseMovePosition) => ({
-  x: clamp({ min: 0, max: 1, value: position.x }),
-  y: clamp({ min: 0, max: 1, value: position.y }),
+  x: clamp(position.x, 0, 1),
+  y: clamp(position.y, 0, 1),
 });
 
 interface useMoveHandlers {
@@ -42,10 +42,10 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
           const rect = ref.current.getBoundingClientRect();
 
           if (rect.width && rect.height) {
-            const _x = clamp({ value: (x - rect.left) / rect.width, min: 0, max: 1 });
+            const _x = clamp((x - rect.left) / rect.width, 0, 1);
             onChange({
               x: dir === 'ltr' ? _x : 1 - _x,
-              y: clamp({ value: (y - rect.top) / rect.height, min: 0, max: 1 }),
+              y: clamp((y - rect.top) / rect.height, 0, 1),
             });
           }
         }

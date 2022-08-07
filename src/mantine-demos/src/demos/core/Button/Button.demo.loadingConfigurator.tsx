@@ -1,11 +1,11 @@
 import React from 'react';
-import { Database } from 'tabler-icons-react';
+import { IconDatabase } from '@tabler/icons';
 import { Button, Group, ButtonProps } from '@mantine/core';
 
-function Wrapper(props: ButtonProps<'button'>) {
+function Wrapper(props: ButtonProps) {
   return (
     <Group position="center">
-      <Button leftIcon={<Database size={14} />} {...props}>
+      <Button leftIcon={<IconDatabase size={14} />} {...props}>
         Connect to database
       </Button>
     </Group>
@@ -13,12 +13,12 @@ function Wrapper(props: ButtonProps<'button'>) {
 }
 
 const codeTemplate = (props: string) => `
-import { Database } from 'tabler-icons-react';
+import { IconDatabase } from '@tabler/icons';
 import { Button } from '@mantine/core';
 
 function Demo() {
   return (
-    <Button leftIcon={<Database size={14} />}${props}>
+    <Button leftIcon={<IconDatabase size={14} />}${props}>
       Connect to database
     </Button>
   );

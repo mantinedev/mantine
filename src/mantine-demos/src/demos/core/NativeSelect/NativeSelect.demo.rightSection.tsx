@@ -1,10 +1,10 @@
 import React from 'react';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 import { NativeSelect } from '@mantine/core';
 
 const code = `
 import { NativeSelect } from '@mantine/core';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -12,7 +12,7 @@ function Demo() {
       label="Your favorite library/framework"
       placeholder="Your favorite library/framework"
       data={['React', 'Angular', 'Svelte', 'Vue']}
-      rightSection={<ChevronDown size={14} />}
+      rightSection={<IconChevronDown size={14} />}
       rightSectionWidth={40}
     />
   );
@@ -26,7 +26,7 @@ function Demo() {
         label="Your favorite library/framework"
         placeholder="Your favorite library/framework"
         data={['React', 'Angular', 'Svelte', 'Vue']}
-        rightSection={<ChevronDown size={14} />}
+        rightSection={<IconChevronDown size={14} />}
         rightSectionWidth={30}
       />
     </div>

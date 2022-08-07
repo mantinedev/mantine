@@ -6,6 +6,7 @@ export default createStyles((theme) => ({
   title: {
     fontWeight: 600,
     marginBottom: 15,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
   },
 
   codeSections: {
@@ -26,6 +27,12 @@ export default createStyles((theme) => ({
       [`@media (max-width: ${BREAKPOINT}px)`]: {
         marginLeft: 0,
       },
+    },
+  },
+
+  root: {
+    '& + &': {
+      marginTop: theme.spacing.xl * 2,
     },
   },
 }));

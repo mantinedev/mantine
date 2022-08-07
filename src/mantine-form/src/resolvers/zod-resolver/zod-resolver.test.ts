@@ -8,6 +8,12 @@ describe('@mantine/form zod resolver', () => {
       z.object({
         name: z.string().min(2, { message: RESOLVER_ERROR_MESSAGES.name }),
         age: z.number().min(10, { message: RESOLVER_ERROR_MESSAGES.age }),
+        nested: z.object({
+          object: z.string(),
+          array: z.array(
+            z.object({ item: z.number().min(3, { message: RESOLVER_ERROR_MESSAGES.nestedArray }) })
+          ),
+        }),
         fruits: z.array(
           z.object({
             name: z.string().min(2, { message: RESOLVER_ERROR_MESSAGES.fruitName }),

@@ -2,22 +2,17 @@ import { useState, useEffect, useCallback } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface NetworkStatus {
-  downlink: number;
-  effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
-  saveData: boolean;
-  rtt: number;
+  downlink?: number;
+  downlinkMax?: number;
+  effectiveType?: 'slow-2g' | '2g' | '3g' | '4g';
+  rtt?: number;
+  saveData?: boolean;
+  type?: 'bluetooth' | 'cellular' | 'ethernet' | 'wifi' | 'wimax' | 'none' | 'other' | 'unknown';
 }
-
-const defaultValue: NetworkStatus = {
-  downlink: 10,
-  effectiveType: '4g',
-  saveData: false,
-  rtt: 50,
-};
 
 function getConnection(): NetworkStatus {
   if (typeof navigator === 'undefined') {
-    return defaultValue;
+    return {};
   }
 
   const _navigator = navigator as any;
@@ -25,14 +20,16 @@ function getConnection(): NetworkStatus {
     _navigator.connection || _navigator.mozConnection || _navigator.webkitConnection;
 
   if (!connection) {
-    return defaultValue;
+    return {};
   }
 
   return {
     downlink: connection?.downlink,
+    downlinkMax: connection?.downlinkMax,
     effectiveType: connection?.effectiveType,
-    saveData: connection?.saveData,
     rtt: connection?.rtt,
+    saveData: connection?.saveData,
+    type: connection?.type,
   };
 }
 

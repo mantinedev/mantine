@@ -11,7 +11,7 @@ function Demo() {
       closeOnActionTrigger={false}
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

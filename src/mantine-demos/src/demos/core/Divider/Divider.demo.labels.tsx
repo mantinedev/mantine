@@ -1,10 +1,10 @@
 import React from 'react';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import { Divider, Box } from '@mantine/core';
 
 const code = `
 import { Divider, Box } from '@mantine/core';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -18,7 +18,7 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <Search size={12} />
+            <IconSearch size={12} />
             <Box ml={5}>Search results</Box>
           </>
         }
@@ -45,7 +45,7 @@ function Demo() {
         labelPosition="center"
         label={
           <>
-            <Search size={12} />
+            <IconSearch size={12} />
             <Box ml={5}>Search results</Box>
           </>
         }

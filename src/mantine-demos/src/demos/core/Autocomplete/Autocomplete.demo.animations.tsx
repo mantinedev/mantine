@@ -7,6 +7,7 @@ import { Autocomplete } from '@mantine/core';
 function Demo() {
   return (
     <Autocomplete
+      data={['React', 'Angular', 'Svelte', 'Vue']}
       transition="pop-top-left"
       transitionDuration={80}
       transitionTimingFunction="ease"

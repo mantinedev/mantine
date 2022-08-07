@@ -1,81 +1,41 @@
-import React, { useState } from 'react';
-import { Popover, Text, Badge, Group, Image } from '@mantine/core';
+import React from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import { Popover, Text, Button } from '@mantine/core';
 
 const code = `
-import { useState } from 'react';
-import { Popover, Badge, Image, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Popover, Text, Button } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
-
+  const [opened, { close, open }] = useDisclosure(false);
   return (
-    <Popover
-      opened={opened}
-      onClose={() => setOpened(false)}
-      position="bottom"
-      placement="center"
-      withArrow
-      trapFocus={false}
-      closeOnEscape={false}
-      transition="pop-top-left"
-      width={260}
-      styles={{ body: { pointerEvents: 'none' } }}
-      target={
-        <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
-          Hover badge to see popover
-        </Badge>
-      }
-    >
-      <div style={{ display: 'flex' }}>
-        <Image
-          src="./logo.svg"
-          width={30}
-          height={30}
-          sx={{ minWidth: 30 }}
-          mr="md"
-        />
-        <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
-      </div>
+    <Popover width={200} position="bottom" withArrow shadow="md" opened={opened}>
+      <Popover.Target>
+        <Button onMouseEnter={open} onMouseLeave={close}>
+          Hover to see popover
+        </Button>
+      </Popover.Target>
+      <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+        <Text size="sm">This popover is shown when user hovers the target element</Text>
+      </Popover.Dropdown>
     </Popover>
   );
-}`;
+}
+`;
 
 function Demo() {
-  const [opened, setOpened] = useState(false);
-
+  const [opened, { close, open }] = useDisclosure(false);
   return (
-    <Group position="center">
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Popover
-          opened={opened}
-          onClose={() => setOpened(false)}
-          position="bottom"
-          placement="center"
-          withArrow
-          trapFocus={false}
-          closeOnEscape={false}
-          width={260}
-          styles={{ body: { pointerEvents: 'none' } }}
-          transition="pop-top-left"
-          target={
-            <Badge onMouseEnter={() => setOpened(true)} onMouseLeave={() => setOpened(false)}>
-              Hover badge to see popover
-            </Badge>
-          }
-        >
-          <div style={{ display: 'flex' }}>
-            <Image
-              src="https://raw.githubusercontent.com/mantinedev/mantine/e630956424828b4103372d781cc64f0a54eebb33/docs/src/images/favicon.svg"
-              width={30}
-              height={30}
-              sx={{ minWidth: 30 }}
-              mr="md"
-            />
-            <Text size="sm">Thanks for stopping by and checking Mantine, you are awesome!</Text>
-          </div>
-        </Popover>
-      </div>
-    </Group>
+    <Popover width={200} position="bottom" withArrow shadow="md" opened={opened}>
+      <Popover.Target>
+        <Button onMouseEnter={open} onMouseLeave={close}>
+          Hover to see popover
+        </Button>
+      </Popover.Target>
+      <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+        <Text size="sm">This popover is shown when user hovers the target element</Text>
+      </Popover.Dropdown>
+    </Popover>
   );
 }
 

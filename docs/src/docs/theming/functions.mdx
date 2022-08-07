@@ -6,16 +6,19 @@ order: 3
 search: 'rgba, lighten, darken, smallerThan, gradient'
 ---
 
+import { ThemeDemos } from '@mantine/demos';
+
 # Theme functions
 
 Mantine theme provides several functions that can be used to simplify writing styles.
-All functions available at fn object: `theme.fn.functionName()`.
+All functions available at `theme.fn` object, for example `theme.fn.cover()`.
 
 ## Accessing theme functions
 
-You can use theme functions wherever Mantine theme is available. There are 4 main ways to work with theme:
+You can use theme functions everywhere Mantine [theme](/theming/theme-object/) is available.
+There are 4 main ways to work with theme:
 
-- [createStyles](/theming/create-styles) function
+- [createStyles](/styles/create-styles) function
 
 ```tsx
 import { createStyles } from '@mantine/core';
@@ -27,7 +30,7 @@ const useStyles = createStyles((theme) => ({
 }));
 ```
 
-- `sx` component prop
+- [sx prop](/styles/sx/)
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -76,7 +79,7 @@ function Demo() {
 
 All Mantine components have custom focus ring styles which are based on [:focus-visible](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible)
 pseudo-class. It is important to keep styles consistent across all of your application components and you should
-include Mantine focus styles to your custom interactive elements. `focusStyles` function lets you spread Mantine focus styles
+include Mantine focus styles to your custom interactive elements. `theme.fn.focusStyles` function lets you spread Mantine focus styles
 without providing any additional parameters:
 
 ```tsx
@@ -100,7 +103,7 @@ function MyCustomButton() {
 
 ## fontStyles
 
-With `fontStyles` function you can add font styles from your Mantine theme to any element.
+With `theme.fn.fontStyles` function you can add font styles from your Mantine theme to any element.
 Function returns font-family and font-smoothing styles:
 
 ```tsx
@@ -120,7 +123,7 @@ function MyCustomText() {
 
 ## smallerThan and largerThan
 
-`smallerThan` and `largerThan` function can help you write responsive styles with `theme.breakpoints`:
+`theme.fn.smallerThan` and `theme.fn.largerThan` function can help you write responsive styles with `theme.breakpoints`:
 
 ```tsx
 theme.fn.smallerThan(700); // -> `@media (max-width: 700px)`
@@ -149,7 +152,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function MyResponsiveText() {
+function Demo() {
   const { classes } = useStyles();
   return <div className={classes.myResponsiveText}>My responsive text</div>;
 }
@@ -157,7 +160,7 @@ function MyResponsiveText() {
 
 ## linearGradient and radialGradient
 
-`linearGradient` and `radialGradient` can be used to generate simple gradients with equal colors distributions.
+`theme.fn.linearGradient` and `theme.fn.radialGradient` can be used to generate simple gradients with equal colors distributions.
 If you need anything more complex – you will need to write it from scratch:
 
 ```tsx
@@ -169,6 +172,13 @@ theme.fn.radialGradient('#000', '#fff'); // -> radial-gradient(circle, #000 0%, 
 theme.fn.radialGradient('blue', 'red', 'orange', 'cyan', 'white');
 // -> radial-gradient(circle, blue 0%, red 25%, orange 50%, cyan 75%, white 100%)
 ```
+
+## gradient
+
+`theme.fn.gradient` function returns string value with given gradient or with `theme.defaultGradient`
+if argument is not provided:
+
+<Demo data={ThemeDemos.gradientFn} />
 
 ## cover
 
@@ -184,7 +194,7 @@ theme.fn.cover(10);
 
 ## lighten and darken
 
-`lighten` and `darken` functions can be used to lighten or darken a color by a given percentage.
+`theme.fn.lighten` and `theme.fn.darken` functions can be used to lighten or darken a color by a given percentage.
 Both functions work with hex, rgb and rgba formats and always return color in rgba format:
 
 ```tsx
@@ -200,7 +210,7 @@ theme.fn.darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
 
 ## rgba
 
-`rgba` function converts color to rgba format with given alpha channel:
+`theme.fn.rgba` function converts color to rgba format with given alpha channel:
 
 ```tsx
 theme.fn.rgba('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)

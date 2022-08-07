@@ -3,6 +3,7 @@ import { DefaultProps, Selectors, UnstyledButton, MantineSize } from '@mantine/c
 import { getMonthsNames } from '../../../utils';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
 import { isMonthInRange } from './is-month-in-range/is-month-in-range';
+import { formatYear } from '../format-year';
 import useStyles from './MonthPicker.styles';
 
 export type MonthPickerStylesNames = Selectors<typeof useStyles> | CalendarHeaderStylesNames;
@@ -23,6 +24,7 @@ export interface MonthPickerProps
   nextYearLabel?: string;
   previousYearLabel?: string;
   preventFocus?: boolean;
+  yearLabelFormat?: string;
 }
 
 export function MonthPicker({
@@ -42,16 +44,22 @@ export function MonthPicker({
   nextYearLabel,
   previousYearLabel,
   preventFocus,
+  unstyled,
+  yearLabelFormat = 'YYYY',
   ...others
 }: MonthPickerProps) {
-  const { classes, cx } = useStyles({ size }, { classNames, styles, name: __staticSelector });
+  const { classes, cx } = useStyles(
+    { size },
+    { classNames, styles, unstyled, name: __staticSelector }
+  );
   const range = getMonthsNames(locale);
   const minYear = minDate instanceof Date ? minDate.getFullYear() : undefined;
   const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : undefined;
 
   const months = range.map((month, index) => (
-    <UnstyledButton
+    <UnstyledButton<'button'>
       key={month}
+      unstyled={unstyled}
       onClick={() => onChange(index)}
       className={cx(classes.monthPickerControl, {
         [classes.monthPickerControlActive]: index === value.month && year === value.year,
@@ -66,7 +74,7 @@ export function MonthPicker({
   return (
     <div className={cx(classes.monthPicker, className)} {...others}>
       <CalendarHeader
-        label={year.toString()}
+        label={formatYear(year, yearLabelFormat)}
         hasNext={typeof maxYear === 'number' ? year < maxYear : true}
         hasPrevious={typeof minYear === 'number' ? year > minYear : true}
         onNext={() => onYearChange(year + 1)}
@@ -79,6 +87,7 @@ export function MonthPicker({
         nextLabel={nextYearLabel}
         previousLabel={previousYearLabel}
         preventFocus={preventFocus}
+        unstyled={unstyled}
       />
       <div className={classes.monthPickerControls}>{months}</div>
     </div>

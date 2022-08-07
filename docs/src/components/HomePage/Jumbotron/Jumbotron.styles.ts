@@ -1,4 +1,5 @@
 import { createStyles } from '@mantine/core';
+import { getGradient } from '../get-gradient';
 
 const BREAKPOINT = '@media (max-width: 960px)';
 
@@ -43,7 +44,7 @@ export default createStyles((theme) => ({
     height: 64,
     paddingLeft: 46,
     paddingRight: 46,
-    fontSize: 22,
+    fontSize: 20,
 
     [BREAKPOINT]: {
       height: 54,
@@ -55,20 +56,19 @@ export default createStyles((theme) => ({
 
   controlPrimary: {
     border: 0,
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    fontWeight: 700,
+    backgroundImage: getGradient(theme, 'bg'),
   },
 
   githubControl: {
-    borderWidth: 2,
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.dark[9],
-    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+    backgroundColor: theme.colors.dark[6],
+    color: theme.white,
+    fontWeight: 700,
 
     '&:hover': {
-      backgroundColor: `${
-        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0]
-      } !important`,
+      backgroundColor: theme.colors.dark[5],
+      color: theme.white,
     },
   },
 
@@ -103,9 +103,7 @@ export default createStyles((theme) => ({
     alignItems: 'center',
     minWidth: 50,
     height: 50,
-    backgroundImage: `linear-gradient(52deg, ${
-      theme.colors.blue[theme.colorScheme === 'dark' ? 5 : 7]
-    } 3%, ${theme.colors.cyan[theme.colorScheme === 'dark' ? 4 : 5]} 97%)`,
+    backgroundImage: getGradient(theme, 'bg'),
 
     '& svg': {
       display: 'block',

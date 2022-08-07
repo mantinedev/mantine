@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { Button, Collapse } from '@mantine/core';
 
 function Demo() {
-  const [opened, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen((o) => !o)}>
+      <Button onClick={() => setOpened((o) => !o)}>
         Toggle with linear transition
       </Button>
 
@@ -23,12 +23,12 @@ function Demo() {
 `;
 
 function Demo() {
-  const [opened, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   return (
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
       <Group position="center" style={{ marginBottom: 5 }}>
-        <Button onClick={() => setOpen((o) => !o)}>Toggle with linear transition</Button>
+        <Button onClick={() => setOpened((o) => !o)}>Toggle with linear transition</Button>
       </Group>
 
       <Collapse in={opened} transitionDuration={1000} transitionTimingFunction="linear">

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import { useQueue } from './use-queue';
 
 describe('@mantine/hooks/use-queue', () => {

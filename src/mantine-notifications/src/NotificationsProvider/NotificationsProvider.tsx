@@ -48,7 +48,10 @@ export interface NotificationProviderProps
   limit?: number;
 
   /** Notifications container z-index */
-  zIndex?: number;
+  zIndex?: React.CSSProperties['zIndex'];
+
+  /** Your application */
+  children?: React.ReactNode;
 }
 
 export function NotificationsProvider({
@@ -76,22 +79,14 @@ export function NotificationsProvider({
     clean,
     cleanQueue,
   } = useNotificationsState({ limit });
-  const reduceMotion = useReducedMotion();
+
+  const { classes, cx, theme } = useStyles({ zIndex });
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 1 : transitionDuration;
-  const { classes, cx, theme } = useStyles();
   const positioning = (POSITIONS.includes(position) ? position : 'bottom-right').split(
     '-'
   ) as NotificationsProviderPositioning;
-
-  const ctx = {
-    notifications,
-    queue,
-    showNotification,
-    hideNotification,
-    updateNotification,
-    clean,
-    cleanQueue,
-  };
 
   useDidUpdate(() => {
     if (notifications.length > previousLength.current) {
@@ -100,7 +95,13 @@ export function NotificationsProvider({
     previousLength.current = notifications.length;
   }, [notifications]);
 
-  useNotificationsEvents(ctx);
+  useNotificationsEvents({
+    show: showNotification,
+    hide: hideNotification,
+    update: updateNotification,
+    clean,
+    cleanQueue,
+  });
 
   const items = notifications.map((notification) => (
     <Transition
@@ -135,8 +136,8 @@ export function NotificationsProvider({
   ));
 
   return (
-    <NotificationsContext.Provider value={ctx}>
-      <Portal zIndex={zIndex}>
+    <NotificationsContext.Provider value={{ notifications, queue }}>
+      <Portal>
         <Box
           className={cx(classes.notifications, className)}
           style={style}

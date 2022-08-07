@@ -1,11 +1,11 @@
 import React from 'react';
-import { Star } from 'tabler-icons-react';
+import { IconStar } from '@tabler/icons';
 import { Avatar, Group } from '@mantine/core';
 import { avatars } from './_mockdata';
 
 const code = `
 import { Avatar } from '@mantine/core';
-import { Star } from 'tabler-icons-react';
+import { IconStar } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -21,7 +21,7 @@ function Demo() {
 
       {/* Custom placeholder icon */}
       <Avatar color="blue" radius="sm">
-        <Star size={24} />
+        <IconStar size={24} />
       </Avatar>
     </>
   );
@@ -38,7 +38,7 @@ function Demo() {
         MK
       </Avatar>
       <Avatar color="blue" radius="xl">
-        <Star size={24} />
+        <IconStar size={24} />
       </Avatar>
     </Group>
   );

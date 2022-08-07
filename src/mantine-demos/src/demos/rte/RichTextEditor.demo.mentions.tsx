@@ -2,9 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { SSRWrapper } from './_SSRWrapper';
 
 const code = `
-import { useState } from 'react;
+import { useState, useMemo } from 'react';
 import { RichTextEditor } from '@mantine/rte';
-
 
 const people = [
   { id: 1, value: 'Bill Horsefighter' },

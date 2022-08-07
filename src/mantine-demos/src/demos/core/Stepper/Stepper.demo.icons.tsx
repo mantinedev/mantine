@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { UserCheck, MailOpened, ShieldCheck, CircleCheck } from 'tabler-icons-react';
+import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons';
 import { Stepper } from '@mantine/core';
 
 const code = `
 import { useState } from 'react';
-import { UserCheck, MailOpened, ShieldCheck, CircleCheck } from 'tabler-icons-react';
+import { IconUserCheck, IconMailOpened, IconShieldCheck, IconCircleCheck } from '@tabler/icons';
 import { Stepper } from '@mantine/core';
 
 function Demo() {
   const [active, setActive] = useState(1);
 
   return (
-    <Stepper active={active} onStepClick={setActive} completedIcon={<CircleCheck />}>
-      <Stepper.Step icon={<UserCheck size={18} />} label="Step 1" description="Create an account" />
-      <Stepper.Step icon={<MailOpened size={18} />} label="Step 2" description="Verify email" />
-      <Stepper.Step icon={<ShieldCheck size={18} />} label="Step 3" description="Get full access" />
+    <Stepper active={active} onStepClick={setActive} completedIcon={<IconCircleCheck />}>
+      <Stepper.Step icon={<IconUserCheck size={18} />} label="Step 1" description="Create an account" />
+      <Stepper.Step icon={<IconMailOpened size={18} />} label="Step 2" description="Verify email" />
+      <Stepper.Step icon={<IconShieldCheck size={18} />} label="Step 3" description="Get full access" />
     </Stepper>
   );
 }
@@ -26,12 +26,20 @@ function Demo() {
     <Stepper
       active={active}
       onStepClick={setActive}
-      completedIcon={<CircleCheck />}
+      completedIcon={<IconCircleCheck />}
       breakpoint="sm"
     >
-      <Stepper.Step icon={<UserCheck size={18} />} label="Step 1" description="Create an account" />
-      <Stepper.Step icon={<MailOpened size={18} />} label="Step 2" description="Verify email" />
-      <Stepper.Step icon={<ShieldCheck size={18} />} label="Step 3" description="Get full access" />
+      <Stepper.Step
+        icon={<IconUserCheck size={18} />}
+        label="Step 1"
+        description="Create an account"
+      />
+      <Stepper.Step icon={<IconMailOpened size={18} />} label="Step 2" description="Verify email" />
+      <Stepper.Step
+        icon={<IconShieldCheck size={18} />}
+        label="Step 3"
+        description="Get full access"
+      />
     </Stepper>
   );
 }

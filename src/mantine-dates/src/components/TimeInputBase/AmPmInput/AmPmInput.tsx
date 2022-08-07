@@ -16,6 +16,8 @@ interface AmPmSelectProps
 
   /** Colon text size */
   size?: MantineSize;
+
+  unstyled?: boolean;
 }
 
 export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
@@ -25,14 +27,15 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
       onChange,
       onFocus,
       size = 'sm',
+      value,
+      unstyled,
       amLabel,
       pmLabel,
-      value,
       ...others
     }: AmPmSelectProps,
     ref
   ) => {
-    const { classes, cx } = useStyles({ size, hasValue: !!value });
+    const { classes, cx } = useStyles({ size, hasValue: !!value }, { name: 'AmPmInput', unstyled });
     const inputRef = useRef<HTMLInputElement>();
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -46,7 +49,7 @@ export const AmPmInput = forwardRef<HTMLInputElement, AmPmSelectProps>(
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.nativeEvent.code === 'ArrowUp' || event.nativeEvent.code === 'ArrowDown') {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
         event.preventDefault();
         onChange(value === amLabel ? pmLabel : amLabel, true);
       }

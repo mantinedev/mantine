@@ -14,7 +14,7 @@ function Demo() {
   return (
     <>
       <div style={{ width: 400, position: 'relative' }}>
-        <LoadingOverlay visible={visible} />
+        <LoadingOverlay visible={visible} overlayBlur={2} />
         {/* ...other content */}
       </div>
 
@@ -38,7 +38,12 @@ export function Demo() {
           margin: 'auto',
         }}
       >
-        <LoadingOverlay visible={visible} zIndex={1000} style={{ borderRadius: 4 }} />
+        <LoadingOverlay
+          visible={visible}
+          zIndex={1000}
+          style={{ borderRadius: 4 }}
+          overlayBlur={2}
+        />
         <AuthenticationForm noSubmit noShadow={theme.colorScheme === 'dark'} />
       </div>
 

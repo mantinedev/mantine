@@ -4,6 +4,7 @@ module.exports = {
   rules: {
     'jest/no-export': 'off',
     'jest/expect-expect': 'off',
+    'react/jsx-pascal-case': 'off',
   },
   parserOptions: {
     project: './tsconfig.json',

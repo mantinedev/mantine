@@ -1,9 +1,9 @@
 import React from 'react';
-import { Paint } from 'tabler-icons-react';
+import { IconPaint } from '@tabler/icons';
 import { ColorInput } from '@mantine/core';
 
 const code = `
-import { Paint } from 'tabler-icons-react';
+import { IconPaint } from '@tabler/icons';
 import { ColorInput } from '@mantine/core';
 
 function Demo() {
@@ -18,7 +18,7 @@ function Demo() {
 
       {/* Replace color preview with any React node */}
       <ColorInput
-        icon={<Paint size={16} />}
+        icon={<IconPaint size={16} />}
         label="With icon"
         placeholder="With icon"
       />
@@ -32,7 +32,12 @@ function Demo() {
     <div style={{ maxWidth: 320, marginLeft: 'auto', marginRight: 'auto' }}>
       <ColorInput label="Without preview" placeholder="No color preview" withPreview={false} />
 
-      <ColorInput mt="md" icon={<Paint size={16} />} label="With icon" placeholder="With icon" />
+      <ColorInput
+        mt="md"
+        icon={<IconPaint size={16} />}
+        label="With icon"
+        placeholder="With icon"
+      />
     </div>
   );
 }

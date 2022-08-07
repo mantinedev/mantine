@@ -90,18 +90,28 @@ function TsIcon(props: React.ComponentProps<'svg'>) {
 
 function Demo() {
   return (
-    <Prism.Tabs>
-      <Prism.Tab label="styles.css" language="css" icon={<CSSIcon />}>
-        {/* ...cssCode */}
-      </Prism.Tab>
+    <Prism.Tabs defaultValue="styles.css">
+      <Prism.TabsList>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+          styles.css
+        </Prism.Tab>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+          decorator.py
+        </Prism.Tab>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+          component.tsx
+        </Prism.Tab>
+      </Prism.TabsList>
 
-      <Prism.Tab label="decorator.py" language="python" icon={<PythonIcon />}>
-        {/* ...pythonCode */}
-      </Prism.Tab>
-
-      <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon />}>
-        {/* ...tsCode */}
-      </Prism.Tab>
+      <Prism.Panel language="css" value="styles.css">
+        {/* css code */}
+      </Prism.Panel>
+      <Prism.Panel language="python" value="decorator.py">
+        {/* python code */}
+      </Prism.Panel>
+      <Prism.Panel language="tsx" value="component.tsx">
+        {/* typescript code */}
+      </Prism.Panel>
     </Prism.Tabs>
   );
 }
@@ -109,20 +119,28 @@ function Demo() {
 
 function Demo() {
   return (
-    <Prism.Tabs>
-      <Prism.Tab label="styles.css" language="css" icon={<CSSIcon width={16} height={16} />}>
+    <Prism.Tabs defaultValue="styles.css">
+      <Prism.TabsList>
+        <Prism.Tab value="styles.css" icon={<CSSIcon width={16} height={16} />}>
+          styles.css
+        </Prism.Tab>
+        <Prism.Tab value="decorator.py" icon={<PythonIcon width={16} height={16} />}>
+          decorator.py
+        </Prism.Tab>
+        <Prism.Tab value="component.tsx" icon={<TsIcon width={16} height={16} />}>
+          component.tsx
+        </Prism.Tab>
+      </Prism.TabsList>
+
+      <Prism.Panel language="css" value="styles.css">
         {css}
-      </Prism.Tab>
-      <Prism.Tab
-        label="decorator.py"
-        language="python"
-        icon={<PythonIcon width={16} height={16} />}
-      >
+      </Prism.Panel>
+      <Prism.Panel language="python" value="decorator.py">
         {py}
-      </Prism.Tab>
-      <Prism.Tab label="component.tsx" language="tsx" icon={<TsIcon width={16} height={16} />}>
+      </Prism.Panel>
+      <Prism.Panel language="tsx" value="component.tsx">
         {demoCode}
-      </Prism.Tab>
+      </Prism.Panel>
     </Prism.Tabs>
   );
 }

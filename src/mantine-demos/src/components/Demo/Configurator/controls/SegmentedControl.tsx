@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputWrapper, SegmentedControl as MantineSegmentedControl } from '@mantine/core';
+import { Input, SegmentedControl as MantineSegmentedControl } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 interface SizeControlProps {
@@ -11,7 +11,7 @@ interface SizeControlProps {
 
 export function SegmentedControl({ value, label, onChange, data, ...others }: SizeControlProps) {
   return (
-    <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
+    <Input.Wrapper labelElement="div" label={upperFirst(label)} {...others}>
       <MantineSegmentedControl
         data={data.map((item) => ({ value: item.value, label: upperFirst(item.label) }))}
         value={value}
@@ -20,7 +20,7 @@ export function SegmentedControl({ value, label, onChange, data, ...others }: Si
         transitionDuration={150}
         transitionTimingFunction="ease"
       />
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 

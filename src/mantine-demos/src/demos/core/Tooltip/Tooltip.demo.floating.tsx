@@ -1,28 +1,42 @@
 import React from 'react';
-import { FloatingTooltip, FloatingTooltipProps, Group, Button } from '@mantine/core';
+import { TooltipFloatingProps, Group, Tooltip, Box } from '@mantine/core';
 
-const Wrapper = (props: FloatingTooltipProps) => (
+const Wrapper = (props: TooltipFloatingProps) => (
   <div style={{ padding: 30 }}>
     <Group position="center">
-      <FloatingTooltip {...props}>
-        <Button variant="outline" color="gray" size="xl">
-          With floating tooltip
-        </Button>
-      </FloatingTooltip>
+      <Tooltip.Floating label="Tooltip" {...props}>
+        <Box
+          sx={(theme) => ({
+            padding: theme.spacing.xl * 1.5,
+            cursor: 'default',
+            backgroundColor:
+              theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+          })}
+        >
+          Hover over the box to see tooltip
+        </Box>
+      </Tooltip.Floating>
     </Group>
   </div>
 );
 
 const codeTemplate = (props: string) => `
-import { FloatingTooltip, Button } from '@mantine/core';
+import { Tooltip, Box } from '@mantine/core';
 
 function Demo() {
   return (
-    <FloatingTooltip${props}>
-      <Button variant="outline" color="gray" size="xl">
-        With tooltip
-      </Button>
-    </FloatingTooltip>
+    <Tooltip.Floating label="Tooltip"${props}>
+      <Box
+        sx={(theme) => ({
+          padding: theme.spacing.xl * 1.5,
+          cursor: 'default',
+          backgroundColor:
+            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+        })}
+      >
+        Hover over the box to see tooltip
+      </Box>
+    </Tooltip.Floating>
   );
 }
 `;
@@ -33,28 +47,10 @@ export const floating: MantineDemo = {
   codeTemplate,
   configurator: [
     {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Tooltip',
-    },
-    {
       name: 'color',
       type: 'color',
-      initialValue: 'gray',
-      defaultValue: 'gray',
+      initialValue: 'blue',
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    {
-      name: 'position',
-      type: 'select',
-      data: [
-        { label: 'top', value: 'top' },
-        { label: 'left', value: 'left' },
-        { label: 'right', value: 'right' },
-        { label: 'bottom', value: 'bottom' },
-      ],
-      initialValue: 'right',
-      defaultValue: 'right',
-    },
   ],
 };

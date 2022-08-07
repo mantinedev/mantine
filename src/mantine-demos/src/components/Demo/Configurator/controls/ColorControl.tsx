@@ -1,7 +1,6 @@
 import React from 'react';
-import { Group, InputWrapper, useMantineTheme, ColorSwatch } from '@mantine/core';
+import { Group, Input, useMantineTheme, ColorSwatch, CheckIcon } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
-import { CheckIcon } from '@modulz/radix-icons';
 
 interface ColorControlProps {
   value: string;
@@ -19,7 +18,7 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
       key={color}
       onClick={() => onChange(color)}
       radius="sm"
-      style={{
+      sx={{
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
@@ -28,16 +27,16 @@ export function ColorControl({ value, label, onChange, ...others }: ColorControl
         flex: '1 0 calc(15% - 4px)',
       }}
     >
-      {value === color && <CheckIcon style={{ width: 18, height: 18 }} />}
+      {value === color && <CheckIcon width={12} height={12} />}
     </ColorSwatch>
   ));
 
   return (
-    <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
-      <Group spacing={2} style={{ marginTop: 5 }}>
+    <Input.Wrapper labelElement="div" label={upperFirst(label)} {...others}>
+      <Group spacing={2} mt={5}>
         {colors}
       </Group>
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 

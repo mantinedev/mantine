@@ -83,7 +83,7 @@ export function SpotlightProvider({
   };
 
   useSpotlightShortcuts(shortcut, open);
-  useSpotlightEvents(ctx);
+  useSpotlightEvents({ open, close, toggle, registerActions, removeActions, triggerAction });
 
   return (
     <SpotlightContext.Provider value={ctx}>

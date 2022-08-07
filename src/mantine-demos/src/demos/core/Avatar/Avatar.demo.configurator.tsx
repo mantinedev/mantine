@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, AvatarProps, Group } from '@mantine/core';
 import { avatars } from './_mockdata';
 
-function Wrapper(props: AvatarProps<'div'>) {
+function Wrapper(props: AvatarProps) {
   return (
     <Group position="center">
       <Avatar {...props} />

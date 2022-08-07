@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
 import React, { useState, useRef, forwardRef } from 'react';
 import { useUncontrolled, useMergedRef, upperFirst } from '@mantine/hooks';
-import { useMantineTheme, useMantineDefaultProps } from '@mantine/core';
+import { useMantineTheme, useComponentDefaultProps } from '@mantine/core';
 import { FirstDayOfWeek } from '../../types';
 import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
+
+export type DateRangePickerValue = [Date | null, Date | null];
 
 export interface DateRangePickerProps
   extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
@@ -14,13 +16,13 @@ export interface DateRangePickerProps
       'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
     > {
   /** Selected date, required with controlled input */
-  value?: [Date | null, Date | null];
+  value?: DateRangePickerValue;
 
   /** Called when date range changes */
-  onChange?(value: [Date | null, Date | null]): void;
+  onChange?(value: DateRangePickerValue): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: [Date | null, Date | null];
+  defaultValue?: DateRangePickerValue;
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
@@ -73,7 +75,7 @@ const defaultProps: Partial<DateRangePickerProps> = {
   allowSingleDateInRange: false,
   amountOfMonths: 1,
   withinPortal: true,
-  openDropdownOnClear: true,
+  openDropdownOnClear: false,
 };
 
 export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
@@ -118,9 +120,10 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       hideWeekdays,
       renderDay,
       openDropdownOnClear,
+      unstyled,
       weekendDays,
       ...others
-    } = useMantineDefaultProps('DateRangePicker', defaultProps, props);
+    } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
     const theme = useMantineTheme();
     const finalLocale = locale || theme.datesLocale;
@@ -133,7 +136,6 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       defaultValue,
       finalValue: [null, null],
       onChange,
-      rule: isFirstDateSet,
     });
 
     const handleValueChange = (range: [Date, Date]) => {
@@ -190,6 +192,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
         amountOfMonths={amountOfMonths}
         onDropdownClose={onDropdownClose}
         onDropdownOpen={onDropdownOpen}
+        unstyled={unstyled}
         {...others}
       >
         <RangeCalendar
@@ -219,6 +222,7 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           hideOutsideDates={hideOutsideDates}
           hideWeekdays={hideWeekdays}
           renderDay={renderDay}
+          unstyled={unstyled}
           weekendDays={weekendDays}
         />
       </DatePickerBase>

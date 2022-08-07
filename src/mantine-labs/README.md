@@ -6,7 +6,7 @@ Experimental Mantine components, use at your own risk
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/hooks @mantine/core @mantine/labs
 

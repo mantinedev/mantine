@@ -29,6 +29,9 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Amount of months */
   amountOfMonths?: number;
 
+  /** Paginate by amount of months */
+  paginateBy?: number;
+
   /** Selected value */
   value?: Date | Date[] | null;
 
@@ -74,8 +77,11 @@ export interface CalendarSharedProps extends DefaultProps<CalendarBaseStylesName
   /** Previous decade control aria-label */
   previousDecadeLabel?: string;
 
-  /** dayjs label format */
+  /** dayjs Calendar month label format */
   labelFormat?: string;
+
+  /** dayjs Calendar year label format */
+  yearLabelFormat?: string;
 
   /** dayjs label format for weekday heading */
   weekdayLabelFormat?: string;
@@ -96,6 +102,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       onMonthChange,
       locale,
       amountOfMonths = 1,
+      paginateBy = amountOfMonths,
       size = 'sm',
       allowLevelChange = true,
       initialLevel = 'date',
@@ -127,7 +134,10 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       isDateFirstInRange,
       isDateLastInRange,
       renderDay,
+      unstyled,
       weekendDays,
+      __stopPropagation,
+      yearLabelFormat = 'YYYY',
       ...others
     }: CalendarBaseProps,
     ref
@@ -135,7 +145,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
     const [selectionState, setSelectionState] = useState(initialLevel);
     const { classes, cx, theme } = useStyles(
       { size, fullWidth, amountOfMonths: selectionState === 'date' ? amountOfMonths : 1 },
-      { name: __staticSelector, styles, classNames }
+      { name: __staticSelector, styles, classNames, unstyled }
     );
     const finalLocale = locale || theme.datesLocale;
 
@@ -150,24 +160,57 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
       defaultValue: initialMonth,
       finalValue: new Date(),
       onChange: onMonthChange,
-      rule: (val) => val instanceof Date,
     });
 
     const [yearSelection, setYearSelection] = useState(_month.getFullYear());
-    const minYear = minDate instanceof Date ? minDate.getFullYear() : 0;
+    const minYear = minDate instanceof Date ? minDate.getFullYear() : 100;
     const maxYear = maxDate instanceof Date ? maxDate.getFullYear() : 10000;
+
+    const daysPerRow = 6;
+
+    const focusOnNextFocusableDay = (
+      direction: 'down' | 'up' | 'left' | 'right',
+      monthIndex: number,
+      payload: DayKeydownPayload,
+      n = 1
+    ) => {
+      const changeRow = ['down', 'up'].includes(direction);
+
+      const rowIndex = changeRow
+        ? payload.rowIndex + (direction === 'down' ? n : -n)
+        : payload.rowIndex;
+
+      const cellIndex = changeRow
+        ? payload.cellIndex
+        : payload.cellIndex + (direction === 'right' ? n : -n);
+
+      const dayToFocus = daysRefs.current[monthIndex][rowIndex][cellIndex];
+
+      if (!dayToFocus) {
+        return;
+      }
+
+      if (dayToFocus.disabled) {
+        // Day is disabled, call this function recursively until
+        // we find a non-disabled day or there are no more days
+        focusOnNextFocusableDay(direction, monthIndex, payload, n + 1);
+      } else {
+        dayToFocus.focus();
+      }
+    };
 
     const handleDayKeyDown = (
       monthIndex: number,
       payload: DayKeydownPayload,
       event: React.KeyboardEvent<HTMLButtonElement>
     ) => {
-      switch (event.code) {
+      switch (event.key) {
         case 'ArrowDown': {
           event.preventDefault();
 
-          if (payload.rowIndex + 1 < daysRefs.current[monthIndex].length) {
-            daysRefs.current[monthIndex][payload.rowIndex + 1][payload.cellIndex].focus();
+          const hasRowBelow = payload.rowIndex + 1 < daysRefs.current[monthIndex].length;
+          if (hasRowBelow) {
+            focusOnNextFocusableDay('down', monthIndex, payload);
           }
           break;
         }
@@ -175,8 +218,9 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         case 'ArrowUp': {
           event.preventDefault();
 
-          if (payload.rowIndex > 0) {
-            daysRefs.current[monthIndex][payload.rowIndex - 1][payload.cellIndex].focus();
+          const hasRowAbove = payload.rowIndex > 0;
+          if (hasRowAbove) {
+            focusOnNextFocusableDay('up', monthIndex, payload);
           }
           break;
         }
@@ -184,8 +228,9 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         case 'ArrowRight': {
           event.preventDefault();
 
-          if (payload.cellIndex !== 6) {
-            daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex + 1].focus();
+          const isNotLastCell = payload.cellIndex !== daysPerRow;
+          if (isNotLastCell) {
+            focusOnNextFocusableDay('right', monthIndex, payload);
           } else if (monthIndex + 1 < amountOfMonths) {
             if (daysRefs.current[monthIndex + 1][payload.rowIndex]) {
               daysRefs.current[monthIndex + 1][payload.rowIndex][0]?.focus();
@@ -199,10 +244,10 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
           event.preventDefault();
 
           if (payload.cellIndex !== 0) {
-            daysRefs.current[monthIndex][payload.rowIndex][payload.cellIndex - 1].focus();
+            focusOnNextFocusableDay('left', monthIndex, payload);
           } else if (monthIndex > 0) {
             if (daysRefs.current[monthIndex - 1][payload.rowIndex]) {
-              daysRefs.current[monthIndex - 1][payload.rowIndex][6].focus();
+              daysRefs.current[monthIndex - 1][payload.rowIndex][daysPerRow].focus();
             }
           }
         }
@@ -227,6 +272,8 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             nextDecadeLabel={nextDecadeLabel}
             previousDecadeLabel={previousDecadeLabel}
             preventFocus={preventFocus}
+            unstyled={unstyled}
+            yearLabelFormat={yearLabelFormat}
           />
         )}
 
@@ -250,12 +297,15 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             nextYearLabel={nextYearLabel}
             previousYearLabel={previousYearLabel}
             preventFocus={preventFocus}
+            unstyled={unstyled}
+            yearLabelFormat={yearLabelFormat}
           />
         )}
 
         {selectionState === 'date' && (
           <MonthsList
             amountOfMonths={amountOfMonths}
+            paginateBy={paginateBy}
             month={_month}
             locale={finalLocale}
             minDate={minDate}
@@ -290,7 +340,9 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
             isDateInRange={isDateInRange}
             isDateFirstInRange={isDateFirstInRange}
             isDateLastInRange={isDateLastInRange}
+            unstyled={unstyled}
             weekendDays={weekendDays}
+            __stopPropagation={__stopPropagation}
           />
         )}
       </Box>

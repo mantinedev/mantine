@@ -31,4 +31,8 @@ export default createStyles((theme: MantineTheme) => ({
     flexWrap: 'wrap',
     margin: -theme.spacing.xs / 2,
   },
+
+  colorName: {
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
 }));

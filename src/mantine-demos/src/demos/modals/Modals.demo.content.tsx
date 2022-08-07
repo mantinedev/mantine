@@ -1,52 +1,56 @@
 import React from 'react';
 import { TextInput, Button, Group } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openModal, closeAllModals } from '@mantine/modals';
 
 const code = `
-import { TextInput, Button } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { TextInput, Button, Group } from '@mantine/core';
+import { openModal, closeAllModals } from '@mantine/modals';
 
 function Demo() {
-  const modals = useModals();
-
-  const openContentModal = () => {
-    const id = modals.openModal({
-      title: 'Subscribe to newsletter',
-      children: (
-        <>
-          <TextInput label="Your email" placeholder="Your email" data-autofocus />
-          <Button fullWidth onClick={() => modals.closeModal(id)} mt="md">
-            Submit
-          </Button>
-        </>
-      ),
-    });
-  };
-
-  return <Button onClick={openContentModal}>Open content modal</Button>;
+  return (
+    <Group position="center">
+      <Button
+        onClick={() => {
+          openModal({
+            title: 'Subscribe to newsletter',
+            children: (
+              <>
+                <TextInput label="Your email" placeholder="Your email" data-autofocus />
+                <Button fullWidth onClick={closeAllModals} mt="md">
+                  Submit
+                </Button>
+              </>
+            ),
+          });
+        }}
+      >
+        Open content modal
+      </Button>
+    </Group>
+  );
 }
 `;
 
 function Demo() {
-  const modals = useModals();
-
-  const openContentModal = () => {
-    const id = modals.openModal({
-      title: 'Subscribe to newsletter',
-      children: (
-        <>
-          <TextInput label="Your email" placeholder="Your email" data-autofocus />
-          <Button fullWidth onClick={() => modals.closeModal(id)} mt="md">
-            Submit
-          </Button>
-        </>
-      ),
-    });
-  };
-
   return (
     <Group position="center">
-      <Button onClick={openContentModal}>Open content modal</Button>
+      <Button
+        onClick={() => {
+          openModal({
+            title: 'Subscribe to newsletter',
+            children: (
+              <>
+                <TextInput label="Your email" placeholder="Your email" data-autofocus />
+                <Button fullWidth onClick={closeAllModals} mt="md">
+                  Submit
+                </Button>
+              </>
+            ),
+          });
+        }}
+      >
+        Open content modal
+      </Button>
     </Group>
   );
 }

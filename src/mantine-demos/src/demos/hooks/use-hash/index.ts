@@ -1,1 +1,0 @@
-export { useHashDemo } from './usage';

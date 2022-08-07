@@ -6,7 +6,7 @@ General purpose utilities for Mantine server side rendering
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/hooks @mantine/core @mantine/ssr
 

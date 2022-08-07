@@ -6,7 +6,7 @@ Calendars, date and time pickers
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/core @mantine/hooks @mantine/dates dayjs
 

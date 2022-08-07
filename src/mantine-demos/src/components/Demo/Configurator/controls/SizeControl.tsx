@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, InputWrapper } from '@mantine/core';
+import { Slider, Input } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 
 const MARKS = [
@@ -22,7 +22,7 @@ export function SizeControl({ label, value, onChange, step = 25, ...others }: Si
   const handleChange = (val: number) => onChange(MARKS.find((mark) => mark.value === val).label);
 
   return (
-    <InputWrapper labelElement="div" label={upperFirst(label)} {...others}>
+    <Input.Wrapper labelElement="div" label={upperFirst(label)} {...others}>
       <Slider
         value={_value}
         onChange={handleChange}
@@ -31,7 +31,7 @@ export function SizeControl({ label, value, onChange, step = 25, ...others }: Si
         marks={MARKS}
         styles={{ markLabel: { display: 'none' } }}
       />
-    </InputWrapper>
+    </Input.Wrapper>
   );
 }
 

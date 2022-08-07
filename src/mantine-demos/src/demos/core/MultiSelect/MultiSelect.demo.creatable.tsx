@@ -6,7 +6,10 @@ import { useState } from 'react';
 import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
+  const [data, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
 
   return (
     <MultiSelect
@@ -16,14 +19,21 @@ function Demo() {
       searchable
       creatable
       getCreateLabel={(query) => \`+ Create \${query}\`}
-      onCreate={(query) => setData((current) => [...current, query])}
+      onCreate={(query) => {
+        const item = { value: query, label: query };
+        setData((current) => [...current, item]);
+        return item;
+      }}
     />
   );
 }
 `;
 
 export function Demo() {
-  const [data, setData] = useState(['React', 'Angular', 'Svelte', 'Vue']);
+  const [data, setData] = useState([
+    { value: 'react', label: 'React' },
+    { value: 'ng', label: 'Angular' },
+  ]);
 
   return (
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -34,7 +44,11 @@ export function Demo() {
         searchable
         creatable
         getCreateLabel={(query) => `+ Create ${query}`}
-        onCreate={(query) => setData((current) => [...current, query])}
+        onCreate={(query) => {
+          const item = { value: query, label: query };
+          setData((current) => [...current, item]);
+          return item;
+        }}
       />
     </div>
   );

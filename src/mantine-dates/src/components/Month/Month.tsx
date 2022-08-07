@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { useMemo, forwardRef } from 'react';
 import {
   DefaultProps,
   Text,
   Box,
   MantineSize,
   Selectors,
-  useMantineDefaultProps,
+  useComponentDefaultProps,
 } from '@mantine/core';
 import { upperFirst } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -67,6 +67,9 @@ export interface MonthSettings {
 
   /** Should date be displayed as last in range */
   isDateLastInRange?(date: Date, modifiers: DayModifiers): boolean;
+
+  /** Internal: determines whether propagation in Modal and Drawer should be stopped, defaults to true */
+  __stopPropagation?: boolean;
 }
 
 export type MonthStylesNames = Selectors<typeof useStyles> | DayStylesNames;
@@ -109,7 +112,7 @@ export interface MonthProps
   weekdayLabelFormat?: string;
 }
 
-const no = () => false;
+const noop = () => false;
 
 const defaultProps: Partial<MonthProps> = {
   disableOutsideEvents: false,
@@ -122,9 +125,10 @@ const defaultProps: Partial<MonthProps> = {
   firstDayOfWeek: 'monday',
   hideOutsideDates: false,
   weekendDays: [0, 6],
+  __stopPropagation: true,
 };
 
-export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps, ref) => {
+export const Month = forwardRef<HTMLTableElement, MonthProps>((props, ref) => {
   const {
     className,
     month,
@@ -151,18 +155,20 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     onDayKeyDown,
     daysRefs,
     hideOutsideDates,
-    isDateInRange = no,
-    isDateFirstInRange = no,
-    isDateLastInRange = no,
+    isDateInRange = noop,
+    isDateFirstInRange = noop,
+    isDateLastInRange = noop,
     renderDay,
     weekdayLabelFormat,
+    unstyled,
     weekendDays,
+    __stopPropagation,
     ...others
-  } = useMantineDefaultProps('Month', defaultProps, props);
+  } = useComponentDefaultProps('Month', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
     { fullWidth },
-    { classNames, styles, name: __staticSelector }
+    { classNames, styles, unstyled, name: __staticSelector }
   );
   const finalLocale = locale || theme.datesLocale;
   const days = getMonthDays(month, firstDayOfWeek);
@@ -186,6 +192,29 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
     dayjs(value).isAfter(dayjs(month).startOf('month')) &&
     dayjs(value).isBefore(dayjs(month).endOf('month'));
 
+  const firstIncludedDay = useMemo(
+    () =>
+      days
+        .flatMap((_) => _)
+        .find((date) => {
+          const dayProps = getDayProps({
+            date,
+            month,
+            hasValue,
+            minDate,
+            maxDate,
+            value,
+            excludeDate,
+            disableOutsideEvents,
+            range,
+            weekendDays,
+          });
+
+          return !dayProps.disabled && !dayProps.outside;
+        }) || dayjs(month).startOf('month').toDate(),
+    []
+  );
+
   const rows = days.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
       const dayProps = getDayProps({
@@ -206,6 +235,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
       return (
         <td className={classes.cell} key={cellIndex}>
           <Day
+            unstyled={unstyled}
             ref={(button) => {
               if (daysRefs) {
                 if (!Array.isArray(daysRefs[rowIndex])) {
@@ -225,11 +255,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             inRange={dayProps.inRange || isDateInRange(date, dayProps)}
             firstInRange={dayProps.firstInRange || isDateFirstInRange(date, dayProps)}
             lastInRange={dayProps.lastInRange || isDateLastInRange(date, dayProps)}
-            firstInMonth={
-              hideOutsideDates
-                ? isSameDate(date, dayjs(month).startOf('month').toDate())
-                : cellIndex === 0 && rowIndex === 0
-            }
+            firstInMonth={isSameDate(date, firstIncludedDay)}
             selected={dayProps.selected || dayProps.selectedInRange}
             hasValue={hasValueInMonthRange}
             onKeyDown={(event) =>
@@ -238,7 +264,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             className={typeof dayClassName === 'function' ? dayClassName(date, dayProps) : null}
             style={typeof dayStyle === 'function' ? dayStyle(date, dayProps) : null}
             disabled={dayProps.disabled}
-            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : no}
+            onMouseEnter={typeof onDayMouseEnter === 'function' ? onDayMouseEnter : noop}
             size={size}
             fullWidth={fullWidth}
             focusable={focusable}
@@ -247,6 +273,7 @@ export const Month = forwardRef<HTMLTableElement, MonthProps>((props: MonthProps
             styles={styles}
             classNames={classNames}
             renderDay={renderDay}
+            stopPropagation={__stopPropagation}
           />
         </td>
       );

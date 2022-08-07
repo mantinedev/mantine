@@ -60,6 +60,8 @@ export const query = graphql`
         styles
         release
         date
+        componentPrefix
+        hideToc
       }
       body
     }

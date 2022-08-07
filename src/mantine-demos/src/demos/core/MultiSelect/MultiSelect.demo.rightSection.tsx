@@ -1,11 +1,11 @@
 import React from 'react';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 import { MultiSelect } from '@mantine/core';
 import { data } from './_data';
 
 const code = `
 import { MultiSelect } from '@mantine/core';
-import { ChevronDown } from 'tabler-icons-react';
+import { IconChevronDown } from '@tabler/icons';
 
 function Demo() {
   return (
@@ -13,7 +13,7 @@ function Demo() {
       data={['React', 'Angular', 'Svelte', 'Vue', 'Riot', 'Next.js', 'Blitz.js']}
       label="Your favorite frameworks/libraries"
       placeholder="Pick all that you like"
-      rightSection={<ChevronDown size={14} />}
+      rightSection={<IconChevronDown size={14} />}
       styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSectionWidth={40}
     />
@@ -28,7 +28,7 @@ function Demo() {
         data={data}
         label="Your favorite frameworks/libraries"
         placeholder="Pick all that you like"
-        rightSection={<ChevronDown size={14} />}
+        rightSection={<IconChevronDown size={14} />}
         styles={{ rightSection: { pointerEvents: 'none' } }}
         rightSectionWidth={40}
       />

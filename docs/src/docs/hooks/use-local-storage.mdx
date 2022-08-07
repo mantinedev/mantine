@@ -38,7 +38,7 @@ Mantine docs website uses this hook to store color scheme information:
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
 import { ActionIcon, ColorScheme } from '@mantine/core';
-import { Sun, MoonStars } from 'tabler-icons-react';
+import { IconSun, IconMoonStars } from '@tabler/icons';
 
 function ColorSchemeToggle() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -51,7 +51,7 @@ function ColorSchemeToggle() {
 
   return (
     <ActionIcon onClick={toggleColorScheme}>
-      {colorScheme === 'dark' ? <Sun /> : <MoonStars />}
+      {colorScheme === 'dark' ? <IconSun /> : <IconMoonStars />}
     </ActionIcon>
   );
 }

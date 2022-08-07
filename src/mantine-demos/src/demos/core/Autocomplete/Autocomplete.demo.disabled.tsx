@@ -5,7 +5,7 @@ const code = `
 import { Autocomplete } from '@mantine/core';
 
 function Demo() {
-  return <Autocomplete disabled />;
+  return <Autocomplete disabled data={['React', 'Angular', 'Svelte', 'Vue']} />;
 }
 `;
 

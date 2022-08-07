@@ -26,6 +26,13 @@ export const _DEFAULT_THEME: MantineThemeBase = {
   fontFamilyMonospace:
     'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
   primaryColor: 'blue',
+  respectReducedMotion: true,
+  cursorType: 'default',
+  defaultGradient: {
+    from: 'indigo',
+    to: 'cyan',
+    deg: 45,
+  },
 
   shadows: {
     xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
@@ -72,16 +79,18 @@ export const _DEFAULT_THEME: MantineThemeBase = {
       '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: 700,
     sizes: {
-      h1: { fontSize: 34, lineHeight: 1.3 },
-      h2: { fontSize: 26, lineHeight: 1.35 },
-      h3: { fontSize: 22, lineHeight: 1.4 },
-      h4: { fontSize: 18, lineHeight: 1.45 },
-      h5: { fontSize: 16, lineHeight: 1.5 },
-      h6: { fontSize: 14, lineHeight: 1.5 },
+      h1: { fontSize: 34, lineHeight: 1.3, fontWeight: undefined },
+      h2: { fontSize: 26, lineHeight: 1.35, fontWeight: undefined },
+      h3: { fontSize: 22, lineHeight: 1.4, fontWeight: undefined },
+      h4: { fontSize: 18, lineHeight: 1.45, fontWeight: undefined },
+      h5: { fontSize: 16, lineHeight: 1.5, fontWeight: undefined },
+      h6: { fontSize: 14, lineHeight: 1.5, fontWeight: undefined },
     },
   },
 
   other: {},
+  components: {},
+  activeStyles: { transform: 'translateY(1px)' },
   datesLocale: 'en',
 };
 

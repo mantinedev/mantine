@@ -5,7 +5,7 @@ import { NotificationsProvider } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
 import { Text, Button } from '@mantine/core';
-import { Search } from 'tabler-icons-react';
+import { IconSearch } from '@tabler/icons';
 import MdxProvider from '../MdxPage/MdxProvider/MdxProvider';
 import Navbar from './Navbar/Navbar';
 import Header from './Header/Header';
@@ -103,7 +103,7 @@ export function LayoutInner({ children, location }: LayoutProps) {
   return (
     <SpotlightProvider
       actions={getActions(data)}
-      searchIcon={<Search size={18} />}
+      searchIcon={<IconSearch size={18} />}
       searchPlaceholder="Search documentation"
       shortcut={['mod + K', 'mod + P', '/']}
       highlightQuery

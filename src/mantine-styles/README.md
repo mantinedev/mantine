@@ -6,7 +6,7 @@ Mantine CSS-in-JS library built on top of emotion
 
 ## Installation
 
-```sh
+```bash
 # With yarn
 yarn add @mantine/styles
 

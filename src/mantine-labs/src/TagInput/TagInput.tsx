@@ -1,17 +1,16 @@
 import React, { useState, useRef, forwardRef } from 'react';
-import { useUncontrolled, useMergedRef, useUuid } from '@mantine/hooks';
+import { useUncontrolled, useMergedRef, useId } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineSize,
   Selectors,
-  InputWrapper,
   InputWrapperStylesNames,
   Input,
   InputStylesNames,
   CloseButton,
   extractSystemStyles,
+  BaseSelectProps,
 } from '@mantine/core';
-import { BaseSelectProps } from '@mantine/core/src/components/Select/types';
 import useStyles, { RIGHT_SECTION_WIDTH } from './TagInput.styles';
 import { DefaultValue, DefaultValueStylesNames } from './DefaultValue/DefaultValue';
 
@@ -27,8 +26,8 @@ export interface TagInputProps extends DefaultProps<TagInputStylesNames>, BaseSe
   /** Input size */
   size?: MantineSize;
 
-  /** Properties spread to root element (InputWrapper component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & { [key: string]: any };
+  /** Properties spread to root element */
+  wrapperProps?: Record<string, any>;
 
   /** Controlled input value */
   value?: string[];
@@ -155,14 +154,14 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
 
     const inputRef = useRef<HTMLInputElement>();
     const wrapperRef = useRef<HTMLDivElement>();
-    const uuid = useUuid(id);
+    const uuid = useId(id);
     const [inputValue, setInputValue] = useState('');
+    const [IMEOpen, setIMEOpen] = useState(false);
 
     const [_value, setValue] = useUncontrolled({
       value,
       defaultValue,
       finalValue: [],
-      rule: (val) => Array.isArray(val),
       onChange,
     });
 
@@ -225,7 +224,10 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      switch (event.nativeEvent.code) {
+      if (IMEOpen) {
+        return;
+      }
+      switch (event.key) {
         case 'Enter': {
           if (inputValue) {
             event.preventDefault();
@@ -296,7 +298,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     return (
-      <InputWrapper
+      <Input.Wrapper
         required={required}
         id={uuid}
         label={label}
@@ -369,6 +371,8 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
                 value={inputValue}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
+                onCompositionStart={() => setIMEOpen(true)}
+                onCompositionEnd={() => setIMEOpen(false)}
                 onBlur={handleInputBlur}
                 readOnly={valuesOverflow.current}
                 placeholder={_value.length === 0 ? placeholder : undefined}
@@ -381,7 +385,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
         </div>
 
         {name && <input type="hidden" name={name} value={_value.join(',')} />}
-      </InputWrapper>
+      </Input.Wrapper>
     );
   }
 );

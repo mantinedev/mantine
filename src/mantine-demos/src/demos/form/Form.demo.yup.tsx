@@ -14,7 +14,7 @@ const schema = Yup.object().shape({
 
 function Demo() {
   const form = useForm({
-    schema: yupResolver(schema),
+    validate: yupResolver(schema),
     initialValues: {
       name: '',
       email: '',

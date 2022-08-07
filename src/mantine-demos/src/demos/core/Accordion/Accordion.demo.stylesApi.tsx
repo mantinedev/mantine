@@ -1,118 +1,100 @@
 import React from 'react';
-import { Plus } from 'tabler-icons-react';
-import { Accordion, AccordionProps, createStyles } from '@mantine/core';
+import { Accordion, createStyles } from '@mantine/core';
 import { baseDemoItems } from './_base';
 
 const code = `
-import { Accordion, AccordionProps, createStyles } from '@mantine/core';
-import { Plus } from 'tabler-icons-react';
+import { Accordion, createStyles } from '@mantine/core';
 
-const useStyles = createStyles((theme, _params, getRef) => ({
-  icon: { ref: getRef('icon') },
-
-  control: {
-    ref: getRef('control'),
-    border: 0,
-    opacity: 0.6,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-
-    '&:hover': {
-      backgroundColor: 'transparent',
-      opacity: 1,
-    },
-  },
-
-  item: {
-    borderBottom: 0,
-    overflow: 'hidden',
-    transition: \`box-shadow 150ms \${theme.transitionTimingFunction}\`,
-    border: '1px solid transparent',
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     borderRadius: theme.radius.sm,
   },
 
-  itemOpened: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
+  item: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    border: '1px solid transparent',
+    position: 'relative',
+    zIndex: 0,
+    transition: 'transform 150ms ease',
 
-    [\`& .\${getRef('control')}\`]: {
-      opacity: 1,
-    },
-
-    [\`& .\${getRef('icon')}\`]: {
-      transform: 'rotate(45deg)',
+    '&[data-active]': {
+      transform: 'scale(1.03)',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      boxShadow: theme.shadows.md,
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      borderRadius: theme.radius.md,
+      zIndex: 1,
     },
   },
 
-  content: {
-    paddingLeft: 0,
+  chevron: {
+    '&[data-rotate]': {
+      transform: 'rotate(-90deg)',
+    },
   },
 }));
 
-function StyledAccordion(props: AccordionProps) {
-  const { classes } = useStyles();
-  return <Accordion classNames={classes} icon={<Plus size={16} />} {...props} />;
-}
-
 function Demo() {
+  const { classes } = useStyles();
   return (
-    <StyledAccordion initialItem={0}>
-      {/* <Accordion.Item /> components */}
-    </StyledAccordion>
+    <Accordion
+      sx={{ maxWidth: 420 }}
+      mx="auto"
+      variant="filled"
+      defaultValue="customization"
+      classNames={classes}
+      className={classes.root}
+    >
+      {/* ... Accordion items */}
+    </Accordion>
   );
 }
 `;
 
-const useStyles = createStyles((theme, _params, getRef) => ({
-  icon: { ref: getRef('icon') },
-
-  control: {
-    ref: getRef('control'),
-    border: 0,
-    opacity: 0.6,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
-
-    '&:hover': {
-      backgroundColor: 'transparent',
-      opacity: 1,
-    },
-  },
-
-  item: {
-    borderBottom: 0,
-    overflow: 'hidden',
-    transition: `box-shadow 150ms ${theme.transitionTimingFunction}`,
-    border: '1px solid transparent',
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     borderRadius: theme.radius.sm,
   },
 
-  itemOpened: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
-    borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[3],
+  item: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+    border: '1px solid transparent',
+    position: 'relative',
+    zIndex: 0,
+    transition: 'transform 150ms ease',
 
-    [`& .${getRef('control')}`]: {
-      opacity: 1,
-    },
-
-    [`& .${getRef('icon')}`]: {
-      transform: 'rotate(45deg)',
+    '&[data-active]': {
+      transform: 'scale(1.03)',
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+      boxShadow: theme.shadows.md,
+      borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+      borderRadius: theme.radius.md,
+      zIndex: 1,
     },
   },
 
-  content: {
-    paddingLeft: 0,
+  chevron: {
+    '&[data-rotate]': {
+      transform: 'rotate(-90deg)',
+    },
   },
 }));
 
-export function StyledAccordion(props: AccordionProps) {
-  const { classes } = useStyles();
-  return <Accordion classNames={classes} icon={<Plus size={16} />} {...props} />;
-}
-
 function Demo() {
+  const { classes } = useStyles();
   return (
-    <div style={{ maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
-      <StyledAccordion initialItem={0}>{baseDemoItems}</StyledAccordion>
-    </div>
+    <Accordion
+      sx={{ maxWidth: 420 }}
+      mx="auto"
+      variant="filled"
+      defaultValue="customization"
+      classNames={classes}
+      className={classes.root}
+    >
+      {baseDemoItems}
+    </Accordion>
   );
 }
 

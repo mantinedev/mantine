@@ -8,7 +8,7 @@ category: 'misc'
 description: 'Render component outside of current context'
 props: ['Portal']
 import: "import { Portal } from '@mantine/core';"
-source: 'mantine-core/src/components/Portal/Portal.tsx'
+source: 'mantine-core/src/Portal/Portal.tsx'
 docs: 'core/Portal.mdx'
 ---
 
@@ -32,7 +32,7 @@ function Demo() {
   return (
     <main style={{ position: 'relative', zIndex: 1 }}>
       {opened && (
-        <Portal zIndex={5}>
+        <Portal>
           <div>Your modal content</div>
         </Portal>
       )}

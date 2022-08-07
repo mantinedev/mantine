@@ -1,7 +1,6 @@
 import type { TooltipStylesNames } from '@mantine/core';
 
 export const Tooltip: Record<TooltipStylesNames, string> = {
-  root: 'Root element',
+  tooltip: 'Tooltip body',
   arrow: 'Tooltip arrow',
-  body: 'Tooltip body',
 };

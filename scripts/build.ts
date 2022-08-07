@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 
@@ -40,6 +42,8 @@ const { argv }: { argv: any } = yargs(hideBin(process.argv))
   if (argv._[0] === 'all' || argv.all) {
     await buildAllPackages(argv as BuildOptions);
   } else if (argv._[0] || argv.project) {
-    await buildPackage((argv._[0] || argv.project) as string, argv as BuildOptions);
+    for (const item of argv._) {
+      await buildPackage((item || argv.project) as string, argv as BuildOptions);
+    }
   }
 })();

@@ -11,7 +11,8 @@
     "./src/use-form.test",
     "**/styles.api.ts",
     "src/components/*/demos/*",
-    "src/demos.ts"
+    "src/demos.ts",
+    "./src/stories/*"
   ],
   "compilerOptions": {
     "rootDir": "src",

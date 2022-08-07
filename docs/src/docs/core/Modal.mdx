@@ -8,7 +8,7 @@ category: 'overlay'
 description: 'Modal with optional header'
 props: ['Modal']
 import: "import { Modal } from '@mantine/core';"
-source: 'mantine-core/src/components/Modal/Modal.tsx'
+source: 'mantine-core/src/Modal/Modal.tsx'
 docs: 'core/Modal.mdx'
 styles: ['Modal']
 ---
@@ -44,6 +44,25 @@ Size controls modal width, max-width is set to 100% with spacing on left and rig
 ```
 
 <Demo data={ModalDemos.sizes} />
+
+## Fullscreen
+
+Fullscreen modal will take the entire screen:
+
+<Demo data={ModalDemos.fullScreen} />
+
+To switch Modal to fullscreen on devices with small screens only use [use-media-query](/hooks/use-media-query/) hook.
+`size` prop is ignored if `fullScreen` prop is set:
+
+```tsx
+import { Modal } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  return <Modal size="md" fullScreen={isMobile} />;
+}
+```
 
 ## Customize overlay
 

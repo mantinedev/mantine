@@ -3,10 +3,12 @@ import { Tabs, TabsProps } from '@mantine/core';
 
 function Wrapper(props: TabsProps) {
   return (
-    <Tabs {...props} styles={{ body: { paddingTop: 5 } }}>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
-      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
-      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
+    <Tabs defaultValue="first">
+      <Tabs.List {...props}>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+        <Tabs.Tab value="third">Third tab</Tabs.Tab>
+      </Tabs.List>
     </Tabs>
   );
 }
@@ -16,10 +18,12 @@ import { Tabs } from '@mantine/core';
 
 function Demo() {
   return (
-    <Tabs${props}>
-      <Tabs.Tab label="First">First tab content</Tabs.Tab>
-      <Tabs.Tab label="Second">Second tab content</Tabs.Tab>
-      <Tabs.Tab label="Third">Third tab content</Tabs.Tab>
+    <Tabs defaultValue="first">
+      <Tabs.List${props}>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+        <Tabs.Tab value="third">Third tab</Tabs.Tab>
+      </Tabs.List>
     </Tabs>
   );
 }
@@ -41,17 +45,6 @@ export const positionConfigurator: MantineDemo = {
         { label: 'right', value: 'right' },
         { label: 'center', value: 'center' },
         { label: 'apart', value: 'apart' },
-      ],
-    },
-    {
-      name: 'variant',
-      type: 'segmented',
-      initialValue: 'default',
-      defaultValue: 'default',
-      data: [
-        { value: 'default', label: 'Default' },
-        { value: 'outline', label: 'Outline' },
-        { value: 'pills', label: 'Pills' },
       ],
     },
   ],

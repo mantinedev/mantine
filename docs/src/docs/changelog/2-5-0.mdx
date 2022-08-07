@@ -11,7 +11,7 @@ import {
   TimelineDemos,
   DialogDemos,
   ListDemos,
-  ChipsDemos,
+  ChipDemos,
   PaginationDemos,
   TimeRangeInputDemos,
   RichTextEditorDemos,
@@ -26,7 +26,7 @@ This change will simplify tree shacking for Webpack and should not affect your N
 
 All `@mantine/` packages no longer require react-jss installation as peer dependency – it will be installed automatically as @mantine/core dependency.
 Instead of direct react-jss usage @mantine/core now exports [createStyles](https://mantine.dev/theming/react-jss/) function
-and a [set of components](https://mantine.dev/theming/next/) to implement server side rendering.
+and a [set of components](https://mantine.dev/guides/next/) to implement server side rendering.
 
 ### createStyles function
 
@@ -54,7 +54,7 @@ Note that it will only work if your application is wrapped with MantineProvider.
 ### Builtin server side rendering
 
 @mantine/core package now comes with components to simplify server side rendering setup with Next.js and any other environment.
-Checkout [Next.js guide](https://mantine.dev/theming/next/) to learn more.
+Checkout [Next.js guide](https://mantine.dev/guides/next/) to learn more.
 
 ## New package @mantine/rte
 
@@ -73,9 +73,9 @@ Navigate between multiple pages with new [Pagination](https://mantine.dev/core/p
 
 <Demo data={PaginationDemos.configurator} />
 
-[Chips](https://mantine.dev/core/chips/) component is an inline alternative to [RadioGroup](https://mantine.dev/core/radio-group/) and [MultiSelect](https://mantine.dev/core/multi-select/) components:
+[Chip](https://mantine.dev/core/chip/) component is an inline alternative to [RadioGroup](https://mantine.dev/core/radio/) and [MultiSelect](https://mantine.dev/core/multi-select/) components:
 
-<Demo data={ChipsDemos.configurator} />
+<Demo data={ChipDemos.configurator} />
 
 With [Dialog](https://mantine.dev/core/dialog/) component you can display fixed overlay at any side of the screen:
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Tooltip, TooltipProps, Group, Button } from '@mantine/core';
+import { FLOATING_POSITION_DATA } from '../../../shared/floating-position-data';
 
 const Wrapper = (props: TooltipProps) => (
   <div style={{ padding: 30 }}>
     <Group position="center">
-      <Tooltip opened {...props}>
-        <Button variant="outline" color="gray" size="xl">
+      <Tooltip label="Tooltip" {...props}>
+        <Button variant="outline" size="xl">
           With tooltip
         </Button>
       </Tooltip>
@@ -19,10 +20,10 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <Tooltip
-      opened
+      label="Tooltip"
      ${props}
     >
-      <Button variant="outline" color="gray" size="xl">
+      <Button variant="outline" size="xl">
         With tooltip
       </Button>
     </Tooltip>
@@ -37,39 +38,16 @@ export const configurator: MantineDemo = {
   configuratorProps: { multiline: 3 },
   configurator: [
     {
-      name: 'label',
-      type: 'string',
-      initialValue: 'Tooltip',
-    },
-    {
       name: 'color',
       type: 'color',
-      initialValue: 'gray',
-      defaultValue: 'gray',
+      initialValue: 'blue',
     },
-    { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     {
       name: 'position',
       type: 'select',
-      data: [
-        { label: 'top', value: 'top' },
-        { label: 'left', value: 'left' },
-        { label: 'right', value: 'right' },
-        { label: 'bottom', value: 'bottom' },
-      ],
+      data: FLOATING_POSITION_DATA,
       initialValue: 'top',
       defaultValue: 'top',
-    },
-    {
-      name: 'placement',
-      type: 'segmented',
-      data: [
-        { label: 'start', value: 'start' },
-        { label: 'center', value: 'center' },
-        { label: 'end', value: 'end' },
-      ],
-      initialValue: 'center',
-      defaultValue: 'center',
     },
     { name: 'withArrow', type: 'boolean', initialValue: true, defaultValue: false },
   ],

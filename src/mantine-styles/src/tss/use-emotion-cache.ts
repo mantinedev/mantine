@@ -1,28 +1,9 @@
-import createCache, { EmotionCache, Options } from '@emotion/cache';
-import { useMantineEmotionOptions } from '../theme/MantineProvider';
+import createCache from '@emotion/cache';
+import { useMantineEmotionCache } from '../theme/MantineProvider';
 
-const defaultCacheOptions: Options = {
-  key: 'mantine',
-  prepend: true,
-};
-
-export const { getCache } = (() => {
-  let cache: EmotionCache;
-  let _key = defaultCacheOptions.key;
-
-  function _getCache(options?: Options) {
-    if (cache === undefined || _key !== options?.key) {
-      _key = options?.key || 'mantine';
-      cache = createCache(options?.key ? options : defaultCacheOptions);
-    }
-
-    return cache;
-  }
-
-  return { getCache: _getCache };
-})();
+export const defaultMantineEmotionCache = createCache({ key: 'mantine', prepend: true });
 
 export function useEmotionCache() {
-  const options = useMantineEmotionOptions();
-  return getCache(options);
+  const cache = useMantineEmotionCache();
+  return cache || defaultMantineEmotionCache;
 }

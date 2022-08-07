@@ -1,22 +1,22 @@
 import React from 'react';
-import { BrandTwitter } from 'tabler-icons-react';
-import { Input, Badge } from '@mantine/core';
+import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons';
+import { Input, Tooltip } from '@mantine/core';
 
 const code = `
-import { Input, Badge } from '@mantine/core';
-import { BrandTwitter } from 'tabler-icons-react';
+import { Input, Tooltip } from '@mantine/core';
+import { IconBrandTwitter, IconAlertCircle } from '@tabler/icons';
 
 function Demo() {
   return (
     <Input
-      icon={<BrandTwitter size={16} />}
+      icon={<IconBrandTwitter size={16} />}
       placeholder="Your twitter"
-      rightSectionWidth={70}
-      styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSection={
-        <Badge color="blue" variant="filled">
-          new
-        </Badge>
+        <Tooltip label="This is public" position="top-end" withArrow>
+          <div>
+            <IconAlertCircle size={18} style={{ display: 'block', opacity: 0.5 }} />
+          </div>
+        </Tooltip>
       }
     />
   );
@@ -26,14 +26,14 @@ function Demo() {
 function Demo() {
   return (
     <Input
-      icon={<BrandTwitter size={16} />}
+      icon={<IconBrandTwitter size={16} stroke={1.5} />}
       placeholder="Your twitter"
-      rightSectionWidth={70}
-      styles={{ rightSection: { pointerEvents: 'none' } }}
       rightSection={
-        <Badge color="blue" variant="filled">
-          new
-        </Badge>
+        <Tooltip label="This is public" position="top-end" withArrow>
+          <div>
+            <IconAlertCircle size={18} stroke={1.5} style={{ display: 'block', opacity: 0.5 }} />
+          </div>
+        </Tooltip>
       }
     />
   );

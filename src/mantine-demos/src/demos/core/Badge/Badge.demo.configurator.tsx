@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, BadgeProps, Group } from '@mantine/core';
 
-function Wrapper(props: BadgeProps<'div'>) {
+function Wrapper(props: BadgeProps) {
   return (
     <Group position="center">
       <Badge {...props}>Badge</Badge>

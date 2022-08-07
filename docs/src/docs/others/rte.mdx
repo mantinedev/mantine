@@ -18,18 +18,18 @@ import { RichTextEditorDemos } from '@mantine/demos';
 
 ## Installation
 
-Package has peer dependencies: [react](https://www.npmjs.com/package/react), [react-dom](https://www.npmjs.com/package/react-dom), [@mantine/hooks](https://www.npmjs.com/package/@mantine/hooks) and [@mantine/core](https://www.npmjs.com/package/@mantine/core):.
-
-Install with npm:
-
-```sh
-npm install @mantine/rte @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
-```sh
-yarn add @mantine/rte @mantine/core @mantine/hooks
+```bash
+yarn add @mantine/rte
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/rte
 ```
 
 ## Demo
@@ -90,27 +90,31 @@ RichTextEditor will handle images upload in following situations:
 To set up images upload add `onImageUpload` function:
 
 ```tsx
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { RichTextEditor } from '@mantine/rte';
 
-// Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
-// Function must return a promise that resolves with uploaded image url
-// After promise is resolved blurred image placeholder with be replaced with uploaded
-const handleImageUpload = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const formData = new FormData();
-    formData.append('image', file);
-
-    fetch('https://api.imgbb.com/1/upload?key=api_key', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error('Upload failed')));
-  });
-
 function Demo() {
+  // Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
+  // Function must return a promise that resolves with uploaded image url
+  // After promise is resolved blurred image placeholder with be replaced with uploaded
+  // Note that useCallback is required
+  const handleImageUpload = useCallback(
+    (file: File): Promise<string> =>
+      new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('https://api.imgbb.com/1/upload?key=api_key', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((result) => resolve(result.data.url))
+          .catch(() => reject(new Error('Upload failed')));
+      }),
+    []
+  );
+
   const [value, onChange] = useState('');
   return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
 }
@@ -178,6 +182,11 @@ function Demo() {
 }
 ```
 
+## Render HTML content
+
+You can use [TypographyStylesProvider](/core/typography-styles-provider/) component
+to render `RichTextEditor` value.
+
 ## Server side rendering
 
 Quill does not support server side rendering as it relies on browser API.
@@ -187,7 +196,6 @@ General strategy:
 
 ```tsx
 // Create a separate component which will load RichTextEditor only in browser
-import React from 'react';
 import type { RichTextEditorProps } from '@mantine/rte';
 
 export function RichText(props: RichTextEditorProps) {
@@ -228,3 +236,9 @@ function MyPage() {
   return <RichTextEditor />;
 }
 ```
+
+## React strict mode limitations
+
+`RichTextEditor` component is not compatible with React strict mode. You will experience
+the following error if strict mode is enabled: `TypeError: Cannot read properties of null (reading 'index')`.
+To fix it, disable strict mode.

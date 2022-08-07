@@ -1,12 +1,12 @@
 import React from 'react';
 import { Menu, MenuProps, Group } from '@mantine/core';
-import { menuItems } from './_menu-items';
+import { DemoMenuItems } from './_menu-items';
 
 function Wrapper(props: MenuProps) {
   return (
     <Group position="center">
-      <Menu opened trapFocus={false} {...props}>
-        {menuItems}
+      <Menu opened trigger="hover" {...props}>
+        <DemoMenuItems />
       </Menu>
     </Group>
   );
@@ -35,25 +35,22 @@ export const positionConfigurator: MantineDemo = {
       initialValue: 'bottom',
       defaultValue: 'bottom',
       data: [
-        { label: 'Bottom', value: 'bottom' },
-        { label: 'Top', value: 'top' },
-        { label: 'Right', value: 'right' },
-        { label: 'Left', value: 'left' },
+        { label: 'bottom', value: 'bottom' },
+        { label: 'bottom-start', value: 'bottom-start' },
+        { label: 'bottom-end', value: 'bottom-end' },
+        { label: 'top', value: 'top' },
+        { label: 'top-start', value: 'top-start' },
+        { label: 'top-end', value: 'top-end' },
+        { label: 'left', value: 'left' },
+        { label: 'left-start', value: 'left-start' },
+        { label: 'left-end', value: 'left-end' },
+        { label: 'right', value: 'right' },
+        { label: 'right-start', value: 'right-start' },
+        { label: 'right-end', value: 'right-end' },
       ],
     },
     {
-      name: 'placement',
-      type: 'select',
-      initialValue: 'start',
-      defaultValue: 'start',
-      data: [
-        { label: 'Start', value: 'start' },
-        { label: 'Center', value: 'center' },
-        { label: 'End', value: 'end' },
-      ],
-    },
-    {
-      name: 'gutter',
+      name: 'offset',
       type: 'number',
       initialValue: 5,
       defaultValue: 5,

@@ -20,7 +20,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
 function Demo() {
   const { classes, cx } = useStyles();
 

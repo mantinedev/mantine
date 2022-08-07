@@ -28,6 +28,7 @@
       "@mantine/dropzone": ["../mantine-dropzone/src"],
       "@mantine/notifications": ["../mantine-notifications/src"],
       "@mantine/modals": ["../mantine-modals/src"],
+      "@mantine/carousel": ["../mantine-carousel/src"],
       "@mantine/rte": ["../mantine-rte/src"],
       "@mantine/labs": ["../mantine-labs/src"]
     }
@@ -38,6 +39,7 @@
     { "path": "../mantine-hooks" },
     { "path": "../mantine-prism" },
     { "path": "../mantine-dropzone" },
+    { "path": "../mantine-carousel" },
     { "path": "../mantine-notifications" },
     { "path": "../mantine-modals" },
     { "path": "../mantine-rte" },

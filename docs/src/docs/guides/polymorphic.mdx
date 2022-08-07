@@ -1,0 +1,123 @@
+---
+group: 'guides'
+title: Polymorphic components
+slug: /guides/polymorphic/
+search: 'Create custom polymorphic components with Box'
+---
+
+import { ButtonDemos } from '@mantine/demos';
+
+# Polymorphic components
+
+Some of the Mantine components ([Button](/core/button/), [Text](/core/text/), etc.) accept special `component` prop that lets you
+change to root element. This guide will explain
+
+## With HTML elements
+
+You can use any HTML element in `component` prop, for example, `a` tag will render an anchor:
+
+<Demo data={ButtonDemos.component} />
+
+## With other components
+
+You can also use polymorphic components with any other component, for example,
+with `react-router-dom` Link:
+
+```tsx
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={Link} to="/react-router">
+      React router link
+    </Button>
+  );
+}
+```
+
+## With Next.js Link
+
+Next.js link does not work the say way as other similar components, you will need to either
+wrap your component with it or use `NextLink` component exported from `@mantine/next` package:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <Button component="a">Next link button</Button>
+    </Link>
+  );
+}
+```
+
+```tsx
+// Same as above
+import { NextLink } from '@mantine/next';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component={NextLink} href="/hello">
+      Next link button
+    </Button>
+  );
+}
+```
+
+## With TypeScript
+
+Polymorphic components cannot infer ref and events correctly in some cases,
+when this happens – provide generic component type:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button<'a'>
+      component="a"
+      href="#"
+      // events and ref types cannot be inferred when component prop is set
+      // unless you set type explicitly
+      onClick={(event) => console.log(event)}
+      ref={(node) => console.log(node)}
+    >
+      Open in new tab
+    </Button>
+  );
+}
+```
+
+## Create your own polymorphic components
+
+You can create your own polymorphic components using `createPolymorphicComponent` function
+and [Box](/core/box/) component:
+
+```tsx
+import { forwardRef } from 'react';
+import { Box, createPolymorphicComponent } from '@mantine/core';
+
+interface ButtonProps {
+  children: React.ReactNode;
+}
+
+// Create intermediate component with default ref type and props
+const _Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...others }, ref) => (
+  <Box
+    // define default component, you will be able to override it with `component` prop from ...others
+    component="button"
+    ref={ref}
+    {...others}
+  >
+    {children}
+  </Box>
+));
+
+// createPolymorphicComponent accepts two types: default element and component props
+// all other props will be added to component type automatically
+export const Button = createPolymorphicComponent<'button', ButtonProps>(_Button);
+```
