@@ -266,7 +266,7 @@ export function Spotlight({
                     onActionHover={setHovered}
                     onActionTrigger={(action) => {
                       action.onTrigger(action);
-                      closeOnActionTrigger && handleClose();
+                      (action.closeOnTrigger ?? closeOnActionTrigger) && handleClose();
                     }}
                     styles={styles}
                     classNames={classNames}

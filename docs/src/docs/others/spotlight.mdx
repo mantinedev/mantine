@@ -296,6 +296,13 @@ To change this behavior set `closeOnActionTrigger={false}` prop on `SpotlightPro
 
 <Demo data={SpotlightDemos.closeOnTrigger} />
 
+## Close spotlight on specific action trigger
+
+Other than with the global `closeOnActionTrigger` property, the `closeOnTrigger` property can be defined
+for specific actions. The action will then ignore the closeOnActionTrigger property and use its own definition.
+
+<Demo data={SpotlightDemos.actionsCloseOnTrigger} />
+
 ## Highlight query
 
 Default action component supports highlighting search query with [Highlight](/core/highlight/) component.
