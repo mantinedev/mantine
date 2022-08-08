@@ -61,7 +61,8 @@ function getVariantStyles({ theme, variant, color, size, gradient }: GetVariantS
         borderRadius: dotSize,
         backgroundColor: theme.fn.themeColor(
           color,
-          theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light')
+          theme.colorScheme === 'dark' ? 4 : theme.fn.primaryShade('light'),
+          true
         ),
         marginRight: dotSize,
       },

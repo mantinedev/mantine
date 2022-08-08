@@ -12,15 +12,21 @@ import { PackagesInstallation } from '../../components/PackagesInstallation/Pack
 
 ## Get started with template
 
-The easiest way to get started is to use [the template on GitHub](https://github.com/mantinedev/mantine-next-template):
+The easiest way to get started is to use [default](https://github.com/mantinedev/mantine-next-template) or [minimal template](https://github.com/mantinedev/mantine-minimal-next-template) on GitHub:
 
-1. Open [template page on GitHub](https://github.com/mantinedev/mantine-next-template)
+1. Open [default template](https://github.com/mantinedev/mantine-next-template) or [minimal template](https://github.com/mantinedev/mantine-minimal-next-template)
 2. Click `Use this template` button
 3. Clone or download the repository
 4. Install dependencies: `yarn`
 5. Start development server: `npm run dev`
 
-## Add to existing Next.js project
+## Generate new application
+
+Init new application:
+
+```bash
+yarn create next-app --typescript
+```
 
 <PackagesInstallation extraPackages={['@mantine/next', '@emotion/server']} />
 
@@ -79,6 +85,12 @@ export default function App(props: AppProps) {
     </>
   );
 }
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
 ```
 
 ## Create your own getInitialProps

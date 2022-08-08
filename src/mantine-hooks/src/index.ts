@@ -4,6 +4,7 @@ export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
 export { useCounter } from './use-counter/use-counter';
+export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';
 export { useDocumentTitle } from './use-document-title/use-document-title';
 export { useDocumentVisibility } from './use-document-visibility/use-document-visibility';
@@ -49,6 +50,7 @@ export { useDisclosure } from './use-disclosure/use-disclosure';
 export { useFocusWithin } from './use-focus-within/use-focus-within';
 export { useNetwork } from './use-network/use-network';
 export { useTimeout } from './use-timeout/use-timeout';
+export { useTextSelection } from './use-text-selection/use-text-selection';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';

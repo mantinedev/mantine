@@ -49,14 +49,13 @@ export function Loader(props: LoaderProps) {
   );
   const theme = useMantineTheme();
   const defaultLoader = variant in LOADERS ? variant : theme.loader;
-  const _color = color || theme.primaryColor;
 
   return (
     <Box
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
       size={theme.fn.size({ size, sizes })}
-      color={_color in theme.colors ? theme.fn.themeColor(_color, theme.fn.primaryShade()) : color}
+      color={theme.fn.variant({ variant: 'filled', primaryFallback: false, color }).background}
       {...others}
     />
   );

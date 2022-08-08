@@ -87,11 +87,8 @@ export default createStyles(
       paddingLeft: withLabel ? theme.spacing.xs / 2 : 0,
       paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-      backgroundColor: theme.fn.themeColor(
-        color || theme.primaryColor,
-        theme.fn.primaryShade(),
-        false
-      ),
+      backgroundColor: theme.fn.variant({ variant: 'filled', primaryFallback: false, color })
+        .background,
       border: withBorder
         ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
         : undefined,

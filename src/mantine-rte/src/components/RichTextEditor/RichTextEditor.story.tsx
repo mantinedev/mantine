@@ -74,7 +74,7 @@ export function WithinAccordion() {
       <Accordion.Item value="rte">
         <Accordion.Control>RTE Panel</Accordion.Control>
         <Accordion.Panel>
-          <RichTextEditor value={value} onChange={setValue} />
+          <RichTextEditor value={value} onChange={setValue} formats={['bold']} />
         </Accordion.Panel>
       </Accordion.Item>
     </Accordion>

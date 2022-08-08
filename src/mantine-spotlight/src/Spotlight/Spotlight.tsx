@@ -12,6 +12,7 @@ import {
   getDefaultZIndex,
   MantineNumberSize,
   MantineColor,
+  TextInputProps,
 } from '@mantine/core';
 import { getGroupedOptions } from '@mantine/utils';
 import { useScrollLock, useFocusTrap, useDidUpdate, useFocusReturn } from '@mantine/hooks';
@@ -91,6 +92,9 @@ export interface InnerSpotlightProps
 
   /** The highlight color */
   highlightColor?: MantineColor;
+
+  /** Props spread to search input */
+  searchInputProps?: TextInputProps;
 }
 
 interface SpotlightProps extends InnerSpotlightProps {
@@ -132,6 +136,7 @@ export function Spotlight({
   actionComponent = DefaultAction,
   actionsWrapperComponent: ActionsWrapper = 'div',
   zIndex = getDefaultZIndex('max'),
+  searchInputProps,
   ...others
 }: SpotlightProps) {
   const [hovered, setHovered] = useState(-1);
@@ -236,6 +241,7 @@ export function Spotlight({
                 onMouseLeave={resetHovered}
               >
                 <TextInput
+                  {...searchInputProps}
                   value={query}
                   onChange={handleInputChange}
                   onKeyDown={handleInputKeyDown}

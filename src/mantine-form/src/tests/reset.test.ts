@@ -18,4 +18,17 @@ describe('@mantine/form/reset', () => {
     expect(hook.result.current.errors).toStrictEqual({});
     expect(hook.result.current.values).toStrictEqual({ c: 3, d: 4 });
   });
+
+  it('resets touched and dirty state', () => {
+    const hook = renderHook(() =>
+      useForm({ initialValues: { a: 1 }, initialDirty: { a: true }, initialTouched: { a: true } })
+    );
+
+    expect(hook.result.current.isDirty()).toBe(true);
+    expect(hook.result.current.isTouched()).toBe(true);
+
+    act(() => hook.result.current.reset());
+    expect(hook.result.current.isDirty()).toBe(false);
+    expect(hook.result.current.isTouched()).toBe(false);
+  });
 });

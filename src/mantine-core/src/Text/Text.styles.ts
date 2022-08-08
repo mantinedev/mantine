@@ -15,6 +15,8 @@ export interface TextStylesParams {
   inline: boolean;
   inherit: boolean;
   underline: boolean;
+  strikethrough: boolean;
+  italic: boolean;
   gradient: MantineGradient;
   transform: React.CSSProperties['textTransform'];
   align: React.CSSProperties['textAlign'];
@@ -27,12 +29,31 @@ interface GetTextColor {
   variant: TextStylesParams['variant'];
 }
 
+function getTextDecoration({
+  underline,
+  strikethrough,
+}: {
+  underline: boolean;
+  strikethrough: boolean;
+}) {
+  const styles = [];
+  if (underline) {
+    styles.push('underline');
+  }
+
+  if (strikethrough) {
+    styles.push('line-through');
+  }
+
+  return styles.length > 0 ? styles.join(' ') : 'none';
+}
+
 function getTextColor({ theme, color, variant }: GetTextColor) {
   if (color === 'dimmed') {
     return theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6];
   }
 
-  return color in theme.colors
+  return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? theme.fn.variant({ variant: 'filled', color }).background
     : variant === 'link'
     ? theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7]
@@ -68,6 +89,8 @@ export default createStyles(
       weight,
       transform,
       align,
+      strikethrough,
+      italic,
     }: TextStylesParams
   ) => {
     const colors = theme.fn.variant({ variant: 'gradient', gradient });
@@ -84,11 +107,12 @@ export default createStyles(
             ? 'inherit'
             : theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: inherit ? 'inherit' : inline ? 1 : theme.lineHeight,
-        textDecoration: underline ? 'underline' : 'none',
+        textDecoration: getTextDecoration({ underline, strikethrough }),
         WebkitTapHighlightColor: 'transparent',
         fontWeight: inherit ? 'inherit' : weight,
         textTransform: transform,
         textAlign: align,
+        fontStyle: italic ? 'italic' : undefined,
 
         ...theme.fn.hover(
           variant === 'link' && underline === undefined

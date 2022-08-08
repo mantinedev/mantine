@@ -33,7 +33,7 @@ function getVariantStyles({ variant, theme, color }: GetVariantStyles) {
   if (variant === 'transparent') {
     return {
       border: '1px solid transparent',
-      color: theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 4 : 7),
+      color: theme.fn.variant({ variant: 'subtle', color }).color,
       backgroundColor: 'transparent',
     };
   }

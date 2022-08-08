@@ -15,6 +15,7 @@ const defaultProps: MultiSelectValueProps = {
   disabled: false,
   size: 'sm',
   radius: 'sm',
+  readOnly: false,
 };
 
 describe('@mantine/core/MultiSelect/DefaultValue', () => {
