@@ -55,7 +55,13 @@ export function Loader(props: LoaderProps) {
       role="presentation"
       component={LOADERS[defaultLoader] || LOADERS.bars}
       size={theme.fn.size({ size, sizes })}
-      color={theme.fn.variant({ variant: 'filled', primaryFallback: false, color }).background}
+      color={
+        theme.fn.variant({
+          variant: 'filled',
+          primaryFallback: false,
+          color: color || theme.primaryColor,
+        }).background
+      }
       {...others}
     />
   );
