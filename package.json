@@ -34,7 +34,7 @@
     "docs:docgen": "esno scripts/docgen",
     "docs:clean": "cd docs && npm run clean",
     "docs:build": "npm run docs:docgen && npm run build:private && cd docs && npm run build",
-    "docs:serve": "npm run docs:build && cd docs && npm run serve",
+    "docs:serve": "cd docs && npm run serve",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/public",
     "_release:no-test": "esno scripts/release",
     "_release": "npm run release:prepare && esno scripts/release",
