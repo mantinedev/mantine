@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, MantineNumberSize, useComponentDefaultProps } from '@mantine/styles';
-import { Box } from '../Box';
+import { Box, BoxProps } from '../Box';
 import { filterFalsyChildren } from './filter-falsy-children/filter-falsy-children';
 import useStyles, { GroupPosition } from './Group.styles';
 
-export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'> {
+export interface GroupProps extends DefaultProps, React.ComponentPropsWithoutRef<'div'>, BoxProps {
   /** Defines justify-content property */
   position?: GroupPosition;
 
