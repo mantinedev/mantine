@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 function dispatchEvent<T>(type: string, detail?: T) {
   window.dispatchEvent(new CustomEvent(type, { detail }));
@@ -13,17 +13,20 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
       return acc;
     }, {});
 
-    useEffect(() => {
+    useMemo(() => {
       Object.keys(handlers).forEach((eventKey) => {
+        window.removeEventListener(eventKey, handlers[eventKey]);
         window.addEventListener(eventKey, handlers[eventKey]);
       });
+    }, []);
 
-      return () => {
+    useEffect(
+      () => () =>
         Object.keys(handlers).forEach((eventKey) => {
           window.removeEventListener(eventKey, handlers[eventKey]);
-        });
-      };
-    }, []);
+        }),
+      []
+    );
   }
 
   function createEvent<EventKey extends keyof Handlers>(event: EventKey) {
