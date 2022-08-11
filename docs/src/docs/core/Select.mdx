@@ -33,7 +33,7 @@ import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string | null>(null);
   return <Select value={value} onChange={setValue} data={[]} />;
 }
 ```
