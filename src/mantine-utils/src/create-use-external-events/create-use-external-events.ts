@@ -14,10 +14,12 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
     }, {});
 
     useMemo(() => {
-      Object.keys(handlers).forEach((eventKey) => {
-        window.removeEventListener(eventKey, handlers[eventKey]);
-        window.addEventListener(eventKey, handlers[eventKey]);
-      });
+      if (typeof window !== 'undefined') {
+        Object.keys(handlers).forEach((eventKey) => {
+          window.removeEventListener(eventKey, handlers[eventKey]);
+          window.addEventListener(eventKey, handlers[eventKey]);
+        });
+      }
     }, []);
 
     useEffect(
