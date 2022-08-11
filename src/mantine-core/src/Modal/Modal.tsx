@@ -100,6 +100,9 @@ export interface ModalProps
 
   /** Determines whether modal should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
+
+  /** Determines whether focus should be returned to the last active element when drawer is closed */
+  withFocusReturn?: boolean;
 }
 
 const defaultProps: Partial<ModalProps> = {
@@ -114,6 +117,7 @@ const defaultProps: Partial<ModalProps> = {
   withCloseButton: true,
   withinPortal: true,
   lockScroll: true,
+  withFocusReturn: true,
   overlayBlur: 0,
   zIndex: getDefaultZIndex('modal'),
 };
@@ -151,6 +155,7 @@ export function Modal(props: ModalProps) {
     fullScreen,
     unstyled,
     lockScroll: shouldLockScroll,
+    withFocusReturn,
     ...others
   } = useComponentDefaultProps('Modal', defaultProps, props);
   const baseId = useId(id);
@@ -185,7 +190,7 @@ export function Modal(props: ModalProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, shouldReturnFocus: trapFocus });
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus && withFocusReturn });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>
