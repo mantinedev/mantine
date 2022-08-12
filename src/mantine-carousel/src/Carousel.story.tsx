@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Button } from '@mantine/core';
+import { Button, Modal } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from './Carousel';
+import { useAnimationOffsetEffect } from './use-animation-offset-effect';
 
 export default { title: 'Carousel' };
 
@@ -91,5 +92,51 @@ export function DynamicSlides() {
       <Button onClick={() => setCount((c) => c + 1)}>Increment</Button>
       <Button onClick={() => setCount((c) => c - 1)}>Decrement</Button>
     </div>
+  );
+}
+
+export function AnimationOffsetEffect() {
+  const TRANSITION_DURATION = 200;
+  const [opened, setOpened] = useState(false);
+  const [embla, setEmbla] = useState(null);
+
+  useAnimationOffsetEffect(embla, TRANSITION_DURATION);
+
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open Modal</Button>
+      <Modal
+        opened={opened}
+        size="300px"
+        padding={0}
+        transitionDuration={TRANSITION_DURATION}
+        withCloseButton={false}
+        onClose={() => setOpened(false)}
+      >
+        <Carousel loop getEmblaApi={setEmbla}>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat/cute"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat/angry"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+        </Carousel>
+      </Modal>
+    </>
   );
 }

@@ -138,3 +138,18 @@ Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/)
 ### Cards carousel
 
 <Demo data={CarouselDemos.cards} demoProps={{ toggle: true }} />
+
+## Carousel container animation offset
+
+Embla carousel only reads slides positions and sizes upon initialization. When you are using Carousel
+component inside animated component you may experience an issue with incorrect slides offset after
+animation finishes.
+
+Example of incorrect slides offset calculation (scroll though slides):
+
+<Demo data={CarouselDemos.brokenAnimation} demoProps={{ toggle: true }} />
+
+To solve this issue use `useAnimationOffsetEffect` hook exported from `@mantine/carousel` package.
+It accepts embla instance as first argument and transition duration as second:
+
+<Demo data={CarouselDemos.animationOffset} />
