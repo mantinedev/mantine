@@ -191,7 +191,7 @@ export function Spotlight({
         event.preventDefault();
         const action = groupedActions[hovered];
         action?.onTrigger?.(action);
-        if (closeOnActionTrigger && action?.onTrigger) {
+        if ((action?.closeOnTrigger ?? closeOnActionTrigger) && action?.onTrigger) {
           handleClose();
         }
         break;
