@@ -34,7 +34,9 @@ function getConnection(): NetworkStatus {
 }
 
 export function useNetwork() {
-  const [status, setStatus] = useState({ online: true, ...getConnection() });
+  const [status, setStatus] = useState<{ online: boolean } & NetworkStatus>({
+    online: true,
+  });
   const handleConnectionChange = useCallback(
     () => setStatus((current) => ({ ...current, ...getConnection() })),
     []
@@ -45,6 +47,7 @@ export function useNetwork() {
 
   useEffect(() => {
     if (navigator.connection) {
+      setStatus({ online: true, ...getConnection() });
       navigator.connection.addEventListener('change', handleConnectionChange);
       return () => navigator.connection.removeEventListener('change', handleConnectionChange);
     }
