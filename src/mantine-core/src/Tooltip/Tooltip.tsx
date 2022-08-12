@@ -96,6 +96,9 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     zIndex,
     disabled,
     positionDependencies,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
@@ -131,6 +134,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
         >
           {(transitionStyles) => (
             <Box
+              {...others}
               {...tooltip.getFloatingProps({
                 ref: tooltip.floating,
                 className: classes.tooltip,
@@ -161,7 +165,9 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
       {cloneElement(
         children,
         tooltip.getReferenceProps({
-          ...others,
+          onClick,
+          onMouseEnter,
+          onMouseLeave,
           [refProp]: targetRef,
           className: cx(className, children.props.className),
           ...children.props,
