@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 const eventListerOptions = {
@@ -17,6 +17,7 @@ export function useViewportSize() {
 
   useWindowEvent('resize', setSize, eventListerOptions);
   useWindowEvent('orientationchange', setSize, eventListerOptions);
+  useEffect(setSize, []);
 
   return windowSize;
 }
