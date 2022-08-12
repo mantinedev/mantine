@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 
+export interface UseMediaQueryOptions {
+  getInitialValueInEffect: boolean;
+}
+
 type MediaQueryCallback = (event: { matches: boolean; media: string }) => void;
 
 /**
@@ -31,7 +35,7 @@ function getInitialValue(query: string, initialValue?: boolean) {
 export function useMediaQuery(
   query: string,
   initialValue?: boolean,
-  { getInitialValueInEffect }: { getInitialValueInEffect: boolean } = {
+  { getInitialValueInEffect }: UseMediaQueryOptions = {
     getInitialValueInEffect: true,
   }
 ) {
