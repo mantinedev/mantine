@@ -1,5 +1,5 @@
 import React, { cloneElement, forwardRef } from 'react';
-import { isElement } from '@mantine/utils';
+import { isElement, ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
@@ -66,7 +66,7 @@ const defaultProps: Partial<TooltipProps> = {
   positionDependencies: [],
 };
 
-export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
+const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
   const {
     children,
     position,
@@ -171,7 +171,12 @@ export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
   );
 }) as any;
 
-Tooltip.Group = TooltipGroup;
-Tooltip.Floating = TooltipFloating;
+_Tooltip.Group = TooltipGroup;
+_Tooltip.Floating = TooltipFloating;
 
-Tooltip.displayName = '@mantine/core/Tooltip';
+_Tooltip.displayName = '@mantine/core/Tooltip';
+
+export const Tooltip: ForwardRefWithStaticComponents<
+  TooltipProps,
+  { Group: typeof TooltipGroup; Floating: typeof TooltipFloating }
+> = _Tooltip;

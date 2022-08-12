@@ -85,7 +85,7 @@ export function WithinGroup() {
 export function PopoverTargetWithTooltip() {
   return (
     <div style={{ padding: 40 }}>
-      {/* <Popover>
+      <Popover>
         <Tooltip label="Tooltip first">
           <Popover.Target>
             <Button>Tooltip first</Button>
@@ -93,7 +93,7 @@ export function PopoverTargetWithTooltip() {
         </Tooltip>
 
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
-      </Popover> */}
+      </Popover>
 
       <Popover>
         <Popover.Target>
