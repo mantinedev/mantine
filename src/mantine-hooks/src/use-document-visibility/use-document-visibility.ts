@@ -1,21 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const getVisibility = () => {
-  if (typeof document === 'undefined') return 'visible';
-
-  return document.visibilityState;
-};
-
 export function useDocumentVisibility(): DocumentVisibilityState {
-  const [documentVisibility, setDocumentVisibility] = useState<DocumentVisibilityState>(
-    getVisibility()
-  );
+  const [documentVisibility, setDocumentVisibility] = useState<DocumentVisibilityState>('visible');
 
   useEffect(() => {
-    const listener = () => setDocumentVisibility(getVisibility());
-
+    const listener = () => setDocumentVisibility(document.visibilityState);
     document.addEventListener('visibilitychange', listener);
-
     return () => document.removeEventListener('visibilitychange', listener);
   }, []);
 
