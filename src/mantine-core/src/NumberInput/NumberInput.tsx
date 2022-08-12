@@ -314,6 +314,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const evt = event.nativeEvent as InputEvent;
+    if (evt.isComposing) {
+      return;
+    }
+
     const val = event.target.value;
     const parsed = parseNum(val);
 
