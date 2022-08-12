@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { Button } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from './Carousel';
 
@@ -67,6 +68,28 @@ export function AutoPlay() {
       >
         {slides}
       </Carousel>
+    </div>
+  );
+}
+
+export function DynamicSlides() {
+  const [count, setCount] = useState(1);
+
+  const _slides = Array(count)
+    .fill(0)
+    .map((_, index) => (
+      <Carousel.Slide key={index} style={{ height: 200, background: 'pink', width: '100%' }}>
+        {index}
+      </Carousel.Slide>
+    ));
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Carousel height={200} withIndicators>
+        {_slides}
+      </Carousel>
+      <Button onClick={() => setCount((c) => c + 1)}>Increment</Button>
+      <Button onClick={() => setCount((c) => c - 1)}>Decrement</Button>
     </div>
   );
 }
