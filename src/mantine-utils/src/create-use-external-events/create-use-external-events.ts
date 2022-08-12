@@ -1,8 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 function dispatchEvent<T>(type: string, detail?: T) {
   window.dispatchEvent(new CustomEvent(type, { detail }));
 }
+
+const useIsomorphicEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function createUseExternalEvents<Handlers extends Record<string, (detail: any) => void>>(
   prefix: string
@@ -13,22 +15,17 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
       return acc;
     }, {});
 
-    useMemo(() => {
-      if (typeof window !== 'undefined') {
-        Object.keys(handlers).forEach((eventKey) => {
-          window.removeEventListener(eventKey, handlers[eventKey]);
-          window.addEventListener(eventKey, handlers[eventKey]);
-        });
-      }
-    }, []);
+    useIsomorphicEffect(() => {
+      Object.keys(handlers).forEach((eventKey) => {
+        window.removeEventListener(eventKey, handlers[eventKey]);
+        window.addEventListener(eventKey, handlers[eventKey]);
+      });
 
-    useEffect(
-      () => () =>
+      return () =>
         Object.keys(handlers).forEach((eventKey) => {
           window.removeEventListener(eventKey, handlers[eventKey]);
-        }),
-      []
-    );
+        });
+    }, []);
   }
 
   function createEvent<EventKey extends keyof Handlers>(event: EventKey) {
