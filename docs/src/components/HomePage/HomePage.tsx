@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, MultiSelect } from '@mantine/core';
+import { Box } from '@mantine/core';
 import Head from '../Head/Head';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Components } from './Components/Components';
@@ -20,16 +20,6 @@ export function HomePage() {
     <>
       <Head title="Mantine" disableTitleTemplate />
       <Box sx={(theme) => ({ position: 'relative', zIndex: 1, boxShadow: theme.shadows.sm })}>
-        <MultiSelect
-          label="Your favorite Rick and Morty character"
-          placeholder="Pick all that you like"
-          data={[
-            { value: 'rick', label: 'Rick', group: 'Used to be a pickle' },
-            { value: 'morty', label: 'Morty', group: '' },
-            { value: 'beth', label: 'Beth', group: 'Never was a pickle' },
-            { value: 'summer', label: 'Summer', group: 'Never was a pickle' },
-          ]}
-        />
         <Jumbotron />
         <Waves height={40} width={150} />
         <Components />

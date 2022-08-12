@@ -103,14 +103,11 @@ export function SelectItems({
 
   if (creatable) {
     const creatableDataItem = data[creatableDataIndex];
-    const selected =
-      typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
     unGroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         key={randomId()}
         className={classes.item}
-        data-selected={selected || undefined}
         data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {

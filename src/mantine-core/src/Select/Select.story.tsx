@@ -12,3 +12,18 @@ export function ReadOnly() {
     </div>
   );
 }
+
+export function CreatableWithNoFilter() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        creatable
+        searchable
+        getCreateLabel={() => 'createLabel'}
+        shouldCreate={() => true}
+        data={['8.0.0', '8.1.0']}
+        value="8.0.0"
+      />
+    </div>
+  );
+}
