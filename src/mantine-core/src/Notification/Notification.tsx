@@ -64,7 +64,7 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
   } = useComponentDefaultProps('Notification', {}, props);
 
   const { classes, cx } = useStyles(
-    { color, radius },
+    { color, radius, withTitle: !!title },
     { classNames, styles, unstyled, name: 'Notification' }
   );
   const withIcon = icon || loading;
