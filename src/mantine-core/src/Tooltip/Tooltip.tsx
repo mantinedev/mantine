@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 import { isElement } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
@@ -66,7 +66,7 @@ const defaultProps: Partial<TooltipProps> = {
   positionDependencies: [],
 };
 
-export function Tooltip(props: TooltipProps) {
+export const Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
   const {
     children,
     position,
@@ -119,7 +119,7 @@ export function Tooltip(props: TooltipProps) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  const targetRef = useMergedRef(tooltip.reference, (children as any).ref);
+  const targetRef = useMergedRef(tooltip.reference, (children as any).ref, ref);
 
   return (
     <>
@@ -131,7 +131,6 @@ export function Tooltip(props: TooltipProps) {
         >
           {(transitionStyles) => (
             <Box
-              {...others}
               {...tooltip.getFloatingProps({
                 ref: tooltip.floating,
                 className: classes.tooltip,
@@ -162,6 +161,7 @@ export function Tooltip(props: TooltipProps) {
       {cloneElement(
         children,
         tooltip.getReferenceProps({
+          ...others,
           [refProp]: targetRef,
           className: cx(className, children.props.className),
           ...children.props,
@@ -169,7 +169,7 @@ export function Tooltip(props: TooltipProps) {
       )}
     </>
   );
-}
+}) as any;
 
 Tooltip.Group = TooltipGroup;
 Tooltip.Floating = TooltipFloating;
