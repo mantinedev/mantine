@@ -52,6 +52,7 @@ export default createStyles(
         ...theme.fn.fontStyles(),
         ...position,
         top: position?.top || 'var(--mantine-header-height)',
+        bottom: 0,
         zIndex,
         height:
           height ||
