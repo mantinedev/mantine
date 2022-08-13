@@ -101,7 +101,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
   );
 
   return (
-    <Box className={cx(classes.root, className)} ref={ref} {...others}>
+    <Box className={cx(classes.root, className)} ref={ref} {...others} translate="no">
       {!noCopy && (
         <Tooltip
           label={clipboard.copied ? copiedLabel : copyLabel}

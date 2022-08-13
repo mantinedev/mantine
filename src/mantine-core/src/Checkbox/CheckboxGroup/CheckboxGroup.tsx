@@ -34,6 +34,9 @@ export interface CheckboxGroupProps
   /** Spacing between checkboxes in horizontal orientation */
   spacing?: MantineNumberSize;
 
+  /** Space between label and inputs */
+  offset?: MantineNumberSize;
+
   /** Predefined label fontSize, checkbox width, height and border-radius */
   size?: MantineSize;
 
@@ -45,6 +48,7 @@ const defaultProps: Partial<CheckboxGroupProps> = {
   orientation: 'horizontal',
   spacing: 'lg',
   size: 'sm',
+  offset: 'xs',
 };
 
 export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
@@ -65,6 +69,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       descriptionProps,
       inputContainer,
       inputWrapperOrder,
+      offset,
       ...others
     } = useComponentDefaultProps('CheckboxGroup', defaultProps, props);
 
@@ -101,7 +106,7 @@ export const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
           {...wrapperProps}
           {...others}
         >
-          <InputsGroup spacing={spacing} orientation={orientation}>
+          <InputsGroup spacing={spacing} orientation={orientation} offset={offset}>
             {children}
           </InputsGroup>
         </Input.Wrapper>

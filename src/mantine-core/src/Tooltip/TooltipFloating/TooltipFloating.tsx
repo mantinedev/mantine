@@ -77,7 +77,7 @@ export function TooltipFloating(props: TooltipFloatingProps) {
         <Box
           {...others}
           ref={floating}
-          className={cx(classes.root, className)}
+          className={cx(classes.tooltip, className)}
           style={{
             ...style,
             zIndex,

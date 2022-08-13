@@ -22,6 +22,9 @@ export interface SpotlightAction {
   /** Function that is called when action is triggered */
   onTrigger(action: SpotlightAction): void;
 
+  /** If the spotlight is closed after clicking on this action */
+  closeOnTrigger?: boolean;
+
   /** Any other properties that will be consumed by SpotlightProvider */
   [key: string]: any;
 }

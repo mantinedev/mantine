@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { useInterval } from '@mantine/hooks';
+import { Container } from '../Container';
 import { Image } from './Image';
 
 const images = [
@@ -30,4 +31,9 @@ storiesOf('Image', module)
       <Image mt="xl" height={200} caption="This is caption" withPlaceholder />
     </>
   ))
-  .add('src changes over time', () => <ImageChangesOverTime />);
+  .add('src changes over time', () => <ImageChangesOverTime />)
+  .add('Placeholder with custom size', () => (
+    <Container size={60}>
+      <Image radius="sm" src={null} withPlaceholder width={50} height={50} />
+    </Container>
+  ));

@@ -5,10 +5,22 @@ import useStyles from './PrismTabs.styles';
 
 export function PrismTabs(props: TabsProps) {
   const { classes } = useStyles({ radius: props.radius });
-  return <Tabs {...props} variant="outline" classNames={{ tab: classes.tab }} />;
+  return <Tabs {...props} variant="outline" classNames={{ tab: classes.tab }} translate="no" />;
 }
 
-export function PrismPanel({ language, children, radius, ...others }: PrismProps & TabsPanelProps) {
+export function PrismPanel({
+  language,
+  children,
+  radius,
+  noCopy,
+  copyLabel,
+  copiedLabel,
+  withLineNumbers,
+  highlightLines,
+  scrollAreaComponent,
+  trim,
+  ...others
+}: PrismProps & TabsPanelProps) {
   const { classes } = useStyles({ radius });
 
   return (
@@ -17,6 +29,13 @@ export function PrismPanel({ language, children, radius, ...others }: PrismProps
         language={language}
         classNames={{ root: classes.prism, code: classes.code }}
         radius={radius}
+        noCopy={noCopy}
+        copyLabel={copyLabel}
+        copiedLabel={copiedLabel}
+        withLineNumbers={withLineNumbers}
+        highlightLines={highlightLines}
+        scrollAreaComponent={scrollAreaComponent}
+        trim={trim}
       >
         {children}
       </Prism>

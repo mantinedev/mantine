@@ -36,4 +36,33 @@ describe('@mantine/form/removeListItem', () => {
       a: [{ b: [{ c: [{ d: 1 }, { d: 2 }, { d: 3 }] }, { c: [{ d: 1 }, { d: 3 }] }] }],
     });
   });
+
+  it('clears errors of associated fields when list item is removed', () => {
+    const hook = renderHook(() =>
+      useForm({
+        initialValues: {
+          name: '',
+          a: [{ b: 1 }, { b: 2 }, { b: 3 }],
+        },
+        initialErrors: {
+          name: 'name-error',
+          'a.0.b': 'error-1',
+          'a.1.b': 'error-2',
+          'a.2.b': 'error-3',
+        },
+      })
+    );
+
+    expect(hook.result.current.errors).toStrictEqual({
+      name: 'name-error',
+      'a.0.b': 'error-1',
+      'a.1.b': 'error-2',
+      'a.2.b': 'error-3',
+    });
+
+    act(() => hook.result.current.removeListItem('a', 1));
+    expect(hook.result.current.errors).toStrictEqual({
+      name: 'name-error',
+    });
+  });
 });

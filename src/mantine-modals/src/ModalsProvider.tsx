@@ -80,8 +80,9 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     dispatch({ type: 'CLOSE_ALL' });
   };
 
-  const openModal = (props: ModalSettings) => {
-    const id = props.id || randomId();
+  const openModal = ({ modalId, ...props }: ModalSettings) => {
+    const id = modalId || randomId();
+
     dispatch({
       type: 'OPEN',
       payload: {
@@ -93,8 +94,8 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     return id;
   };
 
-  const openConfirmModal = (props: OpenConfirmModal) => {
-    const id = props.id || randomId();
+  const openConfirmModal = ({ modalId, ...props }: OpenConfirmModal) => {
+    const id = modalId || randomId();
     dispatch({
       type: 'OPEN',
       payload: {
@@ -106,8 +107,8 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     return id;
   };
 
-  const openContextModal = (modal: string, props: OpenContextModal) => {
-    const id = props.id || randomId();
+  const openContextModal = (modal: string, { modalId, ...props }: OpenContextModal) => {
+    const id = modalId || randomId();
     dispatch({
       type: 'OPEN',
       payload: {

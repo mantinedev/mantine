@@ -63,13 +63,15 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     wrapperProps,
     children,
     unstyled,
+    styles,
+    classNames,
     sx,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
     { size, color, radius, offLabel, onLabel },
-    { unstyled, name: 'Switch' }
+    { unstyled, styles, classNames, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);

@@ -41,11 +41,20 @@ export interface TextProps extends DefaultProps {
   /** Underline the text */
   underline?: boolean;
 
+  /** Add strikethrough styles */
+  strikethrough?: boolean;
+
+  /** Adds font-style: italic style */
+  italic?: boolean;
+
   /** Inherit font properties from parent element */
   inherit?: boolean;
 
   /** Controls gradient settings in gradient variant only */
   gradient?: MantineGradient;
+
+  /** Shorthand for component="span" */
+  span?: boolean;
 }
 
 const defaultProps: Partial<TextProps> = {
@@ -66,9 +75,12 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     inline,
     inherit,
     underline,
+    strikethrough,
+    italic,
     classNames,
     styles,
     unstyled,
+    span,
     ...others
   } = useComponentDefaultProps('Text', defaultProps, props);
 
@@ -81,6 +93,8 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
       inline,
       inherit,
       underline,
+      strikethrough,
+      italic,
       weight,
       transform,
       align,
@@ -93,6 +107,7 @@ export const _Text = forwardRef<HTMLDivElement, TextProps>((props, ref) => {
     <Box
       ref={ref}
       className={cx(classes.root, { [classes.gradient]: variant === 'gradient' }, className)}
+      component={span ? 'span' : 'div'}
       {...others}
     />
   );

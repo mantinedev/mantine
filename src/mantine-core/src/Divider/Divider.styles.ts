@@ -17,7 +17,7 @@ const sizes = {
 function getColor(theme: MantineTheme, color: MantineColor) {
   const themeColor = theme.fn.variant({ variant: 'outline', color }).border;
 
-  return color in theme.colors
+  return typeof color === 'string' && (color in theme.colors || color.split('.')[0] in theme.colors)
     ? themeColor
     : color === undefined
     ? theme.colorScheme === 'dark'
@@ -87,7 +87,7 @@ export default createStyles((theme, { size, variant, color }: DividerStylesParam
   vertical: {
     border: 0,
     alignSelf: 'stretch',
-    height: '100%',
+    height: 'auto',
     borderLeftWidth: theme.fn.size({ size, sizes }),
     borderLeftColor: getColor(theme, color),
     borderLeftStyle: variant,

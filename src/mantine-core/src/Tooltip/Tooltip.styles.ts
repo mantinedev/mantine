@@ -30,7 +30,7 @@ function getColors(theme: MantineTheme, color?: MantineColor): CSSObject {
 }
 
 export default createStyles((theme, { color, radius, width, multiline }: TooltipStylesParams) => ({
-  root: {
+  tooltip: {
     ...theme.fn.fontStyles(),
     ...getColors(theme, color),
     lineHeight: theme.lineHeight,

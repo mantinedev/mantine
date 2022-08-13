@@ -76,6 +76,9 @@ export interface RichTextEditorProps
 
   /** Extra modules for react-quill */
   modules?: Record<string, any>;
+
+  /** List of formats that should be supported by the editor */
+  formats?: string[];
 }
 
 const defaultProps: Partial<RichTextEditorProps> = {
@@ -107,6 +110,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       readOnly,
       modules: externalModules,
       unstyled,
+      formats,
       ...others
     } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
 
@@ -158,12 +162,13 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         <Editor
           theme="snow"
           modules={modules}
-          defaultValue={value}
+          value={value}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
           scrollingContainer="html"
+          formats={formats}
         />
       </Box>
     );

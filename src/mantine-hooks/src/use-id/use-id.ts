@@ -19,7 +19,7 @@ function useClientId() {
 
 function getReactId() {
   const id = useReactId();
-  return id ? `mantine-${id.replaceAll(':', '')}` : '';
+  return id ? `mantine-${id.replace(/:/g, '')}` : '';
 }
 
 export function useId(staticId?: string) {

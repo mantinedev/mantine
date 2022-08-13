@@ -18,15 +18,19 @@ export function KeyboardEventsTable({ data }: KeyboardEventsTableProps) {
   ));
 
   return (
-    <Table verticalSpacing="md">
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Description</th>
-          {hasCondition && <th>Condition</th>}
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <div style={{ overflowX: 'auto' }}>
+      <div style={{ minWidth: 500 }}>
+        <Table verticalSpacing="md">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Description</th>
+              {hasCondition && <th>Condition</th>}
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </div>
+    </div>
   );
 }

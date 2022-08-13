@@ -124,4 +124,12 @@ describe('@mantine/form/get-input-props', () => {
       ],
     });
   });
+
+  it('returns onFocus if withFocus is true', () => {
+    const hook = renderHook(() => useForm({ initialValues: { a: 1 } }));
+    expect(typeof hook.result.current.getInputProps('a').onFocus).toBe('function');
+    expect(typeof hook.result.current.getInputProps('a', { withFocus: false }).onFocus).toBe(
+      'undefined'
+    );
+  });
 });

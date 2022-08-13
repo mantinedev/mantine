@@ -30,6 +30,15 @@ describe('use-uncontrolled', () => {
     expect(view.result.current[0]).toBe('change-value');
   });
 
+  it('calls onChange with uncontrolled state', () => {
+    const spy = jest.fn();
+    const view = renderHook(() =>
+      useUncontrolled({ defaultValue: 'default-value', onChange: spy })
+    );
+    act(() => view.result.current[1]('change-value'));
+    expect(spy).toHaveBeenCalledWith('change-value');
+  });
+
   it('supports controlled state', () => {
     const spy = jest.fn();
     const view = renderHook(() => useUncontrolled({ value: 'controlled-value', onChange: spy }));

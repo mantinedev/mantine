@@ -10,7 +10,7 @@ export function Usage() {
     <div style={{ padding: 20 }}>
       <Radio label="React" value="react" name="hello" />
       <Radio label="Angular" value="nu" name="hello" mt="xs" />
-      <Radio label="Svelte" value="sv" disabled name="hello" mt="xs" />
+      <Radio label="Svelte" value="sv" disabled={false} name="hello" mt="xs" />
     </div>
   );
 }

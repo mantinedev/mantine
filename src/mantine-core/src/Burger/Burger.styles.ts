@@ -32,7 +32,7 @@ export default createStyles((theme, { size, color, transitionDuration }: BurgerS
       userSelect: 'none',
       boxSizing: 'border-box',
 
-      '&, &:before, &:after': {
+      '&, &::before, &::after': {
         display: 'block',
         width: sizeValue,
         height: Math.ceil(sizeValue / 12),
@@ -46,28 +46,28 @@ export default createStyles((theme, { size, color, transitionDuration }: BurgerS
         },
       },
 
-      '&:before, &:after': {
+      '&::before, &::after': {
         position: 'absolute',
         content: '""',
         left: 0,
       },
 
-      '&:before': {
+      '&::before': {
         top: (sizeValue / 3) * -1,
       },
 
-      '&:after': {
+      '&::after': {
         top: sizeValue / 3,
       },
 
       '&[data-opened]': {
         backgroundColor: 'transparent',
 
-        '&:before': {
+        '&::before': {
           transform: `translateY(${sizeValue / 3}px) rotate(45deg)`,
         },
 
-        '&:after': {
+        '&::after': {
           transform: `translateY(-${sizeValue / 3}px) rotate(-45deg)`,
         },
       },

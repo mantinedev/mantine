@@ -12,6 +12,8 @@ export default createStyles((theme, { transitionDuration }: SpoilerStylesParams)
   },
 
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     overflow: 'hidden',
     transitionProperty: 'max-height',
     transitionTimingFunction: theme.transitionTimingFunction,

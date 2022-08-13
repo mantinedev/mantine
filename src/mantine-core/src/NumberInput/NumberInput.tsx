@@ -163,7 +163,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
   const inputRef = useRef<HTMLInputElement>();
   const handleValueChange = (val: number | undefined) => {
-    if (val !== _value) {
+    if (val !== _value && !Number.isNaN(val)) {
       typeof onChange === 'function' && onChange(val);
       setValue(val);
     }
@@ -314,6 +314,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const evt = event.nativeEvent as InputEvent;
+    if (evt.isComposing) {
+      return;
+    }
+
     const val = event.target.value;
     const parsed = parseNum(val);
 
@@ -333,10 +338,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     } else {
       let newNumber = event.target.value;
 
-      /** Unshifting zero to handle the following case -
-       * parseFloat('....1212') -> NaN
-       * parseFloat('0....1212') -> 0
-       */
       if (newNumber[0] === `${decimalSeparator}` || newNumber[0] === '.') {
         newNumber = `0${newNumber}`;
       }

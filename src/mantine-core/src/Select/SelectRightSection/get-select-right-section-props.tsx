@@ -7,6 +7,7 @@ interface GetRightSectionProps extends SelectRightSectionProps {
   rightSectionWidth?: number;
   styles: Record<string, any>;
   theme: MantineTheme;
+  readOnly: boolean;
 }
 
 const RIGHT_SECTION_WIDTH = {
@@ -32,7 +33,9 @@ export function getSelectRightSectionProps({
 
   return {
     rightSectionWidth: theme.fn.size({ size: props.size, sizes: RIGHT_SECTION_WIDTH }) as number,
-    rightSection: !(props.disabled && props.shouldClear) && <SelectRightSection {...props} />,
+    rightSection: !props.readOnly && !(props.disabled && props.shouldClear) && (
+      <SelectRightSection {...props} />
+    ),
     styles: {
       ..._styles,
       rightSection: {

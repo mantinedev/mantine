@@ -34,6 +34,9 @@ export interface RadioGroupProps
   /** Spacing between radios in horizontal orientation */
   spacing?: MantineNumberSize;
 
+  /** Space between label and inputs */
+  offset?: MantineNumberSize;
+
   /** Predefined label fontSize, radio width, height and border-radius */
   size?: MantineSize;
 
@@ -44,6 +47,7 @@ export interface RadioGroupProps
 const defaultProps: Partial<RadioGroupProps> = {
   orientation: 'horizontal',
   spacing: 'lg',
+  offset: 'xs',
   size: 'sm',
 };
 
@@ -66,6 +70,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       inputContainer,
       inputWrapperOrder,
       unstyled,
+      offset,
       ...others
     } = useComponentDefaultProps('RadioGroup', defaultProps, props);
 
@@ -102,6 +107,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
             orientation={orientation}
             unstyled={unstyled}
             role="radiogroup"
+            offset={offset}
           >
             {children}
           </InputsGroup>

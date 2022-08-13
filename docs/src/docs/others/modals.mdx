@@ -60,7 +60,7 @@ information about action. Use `openConfirmModal` function to open a confirm moda
 
 `openConfirmModal` function accepts one argument with following properties:
 
-- `id` – modal id, defaults to random id, can be used to close modal programmatically
+- `modalId` – modal id, defaults to random id, can be used to close modal programmatically
 - `children` – additional modal content displayed before actions
 - `onCancel` – called when cancel button is clicked
 - `onConfirm` – called when confirm button is clicked
@@ -122,7 +122,7 @@ And then open one of these modals with `openContextModal` function.
 
 ## Content modals
 
-With `modals.openModal` function you can open a modal with any content:
+With `openModal` function you can open a modal with any content:
 
 <Demo data={ModalsDemos.content} />
 

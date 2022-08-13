@@ -38,7 +38,6 @@ export function MenuDropdown({
 
   return (
     <Popover.Dropdown
-      p={4}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       role="menu"

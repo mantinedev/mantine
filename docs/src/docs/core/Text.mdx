@@ -8,7 +8,7 @@ category: 'typography'
 description: 'Display text and links with theme styles'
 props: ['Text']
 import: "import { Text } from '@mantine/core';"
-source: 'mantine-core/src/components/Text/Text.tsx'
+source: 'mantine-core/src/Text/Text.tsx'
 docs: 'core/Text.mdx'
 ---
 
@@ -76,6 +76,23 @@ function Demo() {
     <Text component="a" href="https://mantine.dev/core/">
       Anchor element
     </Text>
+  );
+}
+```
+
+### span prop
+
+Use `span` prop as a shorthand for `component="span"`:
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text span>Same as below</Text>
+      <Text component="span">Same as above</Text>
+    </>
   );
 }
 ```

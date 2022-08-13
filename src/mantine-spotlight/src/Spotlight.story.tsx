@@ -214,4 +214,21 @@ storiesOf('Spotlight', module)
     <Wrapper {...defaultProps}>
       <RegisterInEffect />
     </Wrapper>
+  ))
+  .add('Actions with closeOnTrigger', () => (
+    <Wrapper
+      {...defaultProps}
+      actions={[
+        {
+          title: 'Should stay open',
+          onTrigger: () => console.log('Should stay open'),
+          closeOnTrigger: false,
+        },
+        {
+          title: 'Should close',
+          onTrigger: () => console.log('Should close'),
+          closeOnTrigger: true,
+        },
+      ]}
+    />
   ));

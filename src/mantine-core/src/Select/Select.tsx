@@ -208,6 +208,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     clearButtonTabIndex,
     form,
     positionDependencies,
+    readOnly,
     ...others
   } = useInputProps('Select', defaultProps, props);
 
@@ -262,11 +263,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   };
 
   const handleClear = () => {
-    handleChange(null);
-    if (!controlled) {
-      handleSearchChange('');
+    if (!readOnly) {
+      handleChange(null);
+      if (!controlled) {
+        handleSearchChange('');
+      }
+      inputRef.current?.focus();
     }
-    inputRef.current?.focus();
   };
 
   useEffect(() => {
@@ -286,28 +289,30 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   }, [selectedValue?.label]);
 
   const handleItemSelect = (item: SelectItem) => {
-    if (isDeselectable && selectedValue?.value === item.value) {
-      handleChange(null);
-      setDropdownOpened(false);
-    } else {
-      if (item.creatable && typeof onCreate === 'function') {
-        const createdItem = onCreate(item.value);
-        if (typeof createdItem === 'string') {
-          handleChange(createdItem);
-        } else {
-          handleChange(createdItem.value);
-        }
+    if (!readOnly) {
+      if (isDeselectable && selectedValue?.value === item.value) {
+        handleChange(null);
+        setDropdownOpened(false);
       } else {
-        handleChange(item.value);
-      }
+        if (item.creatable && typeof onCreate === 'function') {
+          const createdItem = onCreate(item.value);
+          if (typeof createdItem === 'string') {
+            handleChange(createdItem);
+          } else {
+            handleChange(createdItem.value);
+          }
+        } else {
+          handleChange(item.value);
+        }
 
-      if (!controlled) {
-        handleSearchChange(item.label);
-      }
+        if (!controlled) {
+          handleSearchChange(item.label);
+        }
 
-      setHovered(-1);
-      setDropdownOpened(false);
-      inputRef.current.focus();
+        setHovered(-1);
+        setDropdownOpened(false);
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -495,33 +500,37 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchChange(event.currentTarget.value);
+    if (!readOnly) {
+      handleSearchChange(event.currentTarget.value);
 
-    if (clearable && event.currentTarget.value === '') {
-      handleChange(null);
+      if (clearable && event.currentTarget.value === '') {
+        handleChange(null);
+      }
+
+      setHovered(-1);
+      setDropdownOpened(true);
     }
-
-    setHovered(-1);
-    setDropdownOpened(true);
   };
 
   const handleInputClick = () => {
-    let dropdownOpen = true;
+    if (!readOnly) {
+      let dropdownOpen = true;
 
-    if (!searchable) {
-      dropdownOpen = !dropdownOpened;
-    }
+      if (!searchable) {
+        dropdownOpen = !dropdownOpened;
+      }
 
-    setDropdownOpened(dropdownOpen);
+      setDropdownOpened(dropdownOpen);
 
-    if (_value && dropdownOpen) {
-      setHovered(selectedItemIndex);
-      scrollSelectedItemIntoView();
+      if (_value && dropdownOpen) {
+        setHovered(selectedItemIndex);
+        scrollSelectedItemIntoView();
+      }
     }
   };
 
   const shouldShowDropdown =
-    filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
+    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
 
   return (
     <Input.Wrapper {...wrapperProps} __staticSelector="Select">
@@ -551,7 +560,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
             onMouseLeave={() => setHovered(-1)}
             tabIndex={-1}
           >
-            <input type="hidden" name={name} value={_value || ''} form={form} />
+            <input type="hidden" name={name} value={_value || ''} form={form} disabled={disabled} />
 
             <Input<'input'>
               autoComplete="off"
@@ -570,7 +579,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               onClick={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
-              readOnly={!searchable}
+              readOnly={!searchable || readOnly}
               disabled={disabled}
               data-mantine-stop-propagation={shouldShowDropdown}
               name={null}
@@ -589,6 +598,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
                 onClear: handleClear,
                 error: wrapperProps.error,
                 clearButtonTabIndex,
+                disabled,
+                readOnly,
               })}
             />
           </div>

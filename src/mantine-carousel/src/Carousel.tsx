@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback, useState } from 'react';
+import React, { forwardRef, useEffect, useCallback, useState, Children } from 'react';
 import {
   useComponentDefaultProps,
   Box,
@@ -10,6 +10,7 @@ import {
   StylesApiProvider,
   Selectors,
 } from '@mantine/core';
+import { clamp } from '@mantine/hooks';
 import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
@@ -184,7 +185,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   const [selected, setSelected] = useState(0);
   const [slidesCount, setSlidesCount] = useState(0);
 
-  const handleScroll = useCallback((index) => embla && embla.scrollTo(index), [embla]);
+  const handleScroll = useCallback((index: number) => embla && embla.scrollTo(index), [embla]);
 
   const handleSelect = useCallback(() => {
     if (!embla) return;
@@ -201,6 +202,21 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
     onNextSlide?.();
   }, [embla]);
 
+  const handleKeydown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        handleNext();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        handlePrevious();
+      }
+    },
+    [embla]
+  );
+
   useEffect(() => {
     if (embla) {
       getEmblaApi?.(embla);
@@ -215,6 +231,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
     return undefined;
   }, [embla]);
+
+  useEffect(() => {
+    if (embla) {
+      embla.reInit();
+      setSlidesCount(embla.scrollSnapList().length);
+      setSelected((currentSelected) =>
+        clamp(currentSelected, 0, Children.toArray(children).length - 1)
+      );
+    }
+  }, [Children.toArray(children).length]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;
@@ -237,7 +263,12 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
       <CarouselProvider
         value={{ slideGap, slideSize, embla, orientation, includeGapInSize, breakpoints }}
       >
-        <Box className={cx(classes.root, className)} ref={ref} {...others}>
+        <Box
+          className={cx(classes.root, className)}
+          ref={ref}
+          onKeyDownCapture={handleKeydown}
+          {...others}
+        >
           <div className={classes.viewport} ref={emblaRefElement}>
             <div className={classes.container}>{children}</div>
           </div>

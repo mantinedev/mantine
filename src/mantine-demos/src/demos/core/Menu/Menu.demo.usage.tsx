@@ -39,7 +39,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu shadow="md" width={200}>
+      <Menu shadow="md" width={200} withinPortal>
         <DemoMenuItems />
       </Menu>
     </Group>

@@ -40,11 +40,11 @@ export default createStyles(
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: theme.fn.themeColor(
-        color || theme.primaryColor,
-        theme.fn.primaryShade(),
-        false
-      ),
+      backgroundColor: theme.fn.variant({
+        variant: 'filled',
+        primaryFallback: false,
+        color: color || theme.primaryColor,
+      }).background,
       transition: 'width 100ms linear',
       animation: animate ? `${stripesAnimation} 1000ms linear infinite` : 'none',
       backgroundSize: '20px 20px',

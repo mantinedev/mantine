@@ -8,23 +8,14 @@ import {
   openContextModal,
   openModal,
   closeAllModals,
+  closeModal,
   ContextModalProps,
 } from './index';
-
-function DemoWithoutLabels() {
-  const showConfirmModal = () =>
-    openConfirmModal({
-      title: 'Oh no! No labels!',
-      onCancel: () => console.log('Single confirm modal cancelled'),
-      onConfirm: () => console.log('Single confirm modal confirmed'),
-      onClose: () => console.log('Single confirm modal closed'),
-    });
-  return <Button onClick={showConfirmModal}>Open confirm modal w/o labels</Button>;
-}
 
 function Demo() {
   const showContextModal = () =>
     openContextModal({
+      modalId: 'context-modal',
       modal: 'hello',
       title: 'Context modal',
       onClose: () => console.log('context modal closed'),
@@ -35,8 +26,13 @@ function Demo() {
 
   const showContentModal = () =>
     openModal({
+      modalId: 'content-modal',
       title: 'Hello there',
-      children: <Text color="blue">My content modal</Text>,
+      children: (
+        <Text color="blue" onClick={() => closeModal('content-modal')}>
+          My content modal
+        </Text>
+      ),
       onClose: () => console.log('content modal 1 closed'),
     });
 
@@ -85,9 +81,6 @@ function Demo() {
       <Button onClick={showContentModal} color="violet">
         Open content modal
       </Button>
-      <ModalsProvider>
-        <DemoWithoutLabels />
-      </ModalsProvider>
     </Group>
   );
 }
@@ -96,7 +89,7 @@ storiesOf('Modals Manager', module).add('Custom modal', () => (
   <ModalsProvider
     modals={{
       hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
-        console.log(innerProps);
+        console.log(innerProps, id, context);
         return (
           <div>
             <div>Test custom modal: {innerProps.contextProp}</div>

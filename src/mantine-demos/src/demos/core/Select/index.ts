@@ -15,3 +15,5 @@ export { rightSection } from './Select.demo.rightSection';
 export { group } from './Select.demo.group';
 export { scrollbars } from './Select.demo.scrollbars';
 export { deselect } from './Select.demo.deselect';
+export { stylesApi } from './Select.demo.stylesApi';
+export { readOnly } from './Select.demo.readOnly';

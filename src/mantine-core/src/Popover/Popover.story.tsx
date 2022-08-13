@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Popover } from './Popover';
 import { Button } from '../Button';
+import { Tooltip } from '../Tooltip';
 import { Group } from '../Group';
 
 export default { title: 'Popover' };
@@ -78,5 +79,31 @@ export function WithinGroup() {
       </Popover>
       <Button>Regular button</Button>
     </Group>
+  );
+}
+
+export function PopoverTargetWithTooltip() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover>
+        <Tooltip label="Tooltip first">
+          <Popover.Target>
+            <Button>Tooltip first</Button>
+          </Popover.Target>
+        </Tooltip>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+
+      <Popover>
+        <Popover.Target>
+          <Tooltip label="Tooltip last">
+            <Button ml="xl">Tooltip last</Button>
+          </Tooltip>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
   );
 }

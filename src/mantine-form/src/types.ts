@@ -1,5 +1,7 @@
 export type GetInputPropsType = 'input' | 'checkbox';
 
+export type FormStatus = Record<string, boolean>;
+
 export interface FormFieldValidationResult {
   hasError: boolean;
   error: React.ReactNode;
@@ -41,6 +43,7 @@ export type LooseKeys<Values> = keyof Values | (string & {});
 
 export type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
+export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
 export type OnSubmit<Values> = (
   handleSubmit: (values: Values, event: React.FormEvent<HTMLFormElement>) => void,
@@ -55,7 +58,7 @@ export type OnReset = (event: React.FormEvent<HTMLFormElement>) => void;
 
 export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  options?: { type?: GetInputPropsType; withError?: boolean }
+  options?: { type?: GetInputPropsType; withError?: boolean; withFocus?: boolean }
 ) => any;
 
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
@@ -92,9 +95,14 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
   index: number
 ) => void;
 
+export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+export type ResetStatus = () => void;
+
 export interface UseFormInput<Values> {
   initialValues?: Values;
   initialErrors?: FormErrors;
+  initialTouched?: FormStatus;
+  initialDirty?: FormStatus;
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
@@ -118,4 +126,10 @@ export interface UseFormReturnType<Values> {
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values>;
   onReset: OnReset;
+  isDirty: GetFieldStatus<Values>;
+  isTouched: GetFieldStatus<Values>;
+  setTouched: SetFormStatus;
+  setDirty: SetFormStatus;
+  resetTouched: ResetStatus;
+  resetDirty: ResetStatus;
 }

@@ -9,7 +9,7 @@ description: 'Renders tooltip at given element on mouse over or other event'
 componentPrefix: 'Tooltip'
 props: ['Tooltip', 'TooltipFloating', 'TooltipGroup']
 import: "import { Tooltip } from '@mantine/core';"
-source: 'mantine-core/src/components/Tooltip/Tooltip.tsx'
+source: 'mantine-core/src/Tooltip/Tooltip.tsx'
 docs: 'core/Tooltip.mdx'
 styles: ['Tooltip']
 ---
@@ -55,6 +55,51 @@ function Demo() {
         <div>NOT OK, will throw error</div>
       </Tooltip>
     </>
+  );
+}
+```
+
+## Required ref prop
+
+Custom components that are rendered inside `Tooltip` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { Tooltip } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <Tooltip label="Does not work">
+      <MyComponent />
+    </Tooltip>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
+
+const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <Tooltip label="Works fine">
+      <MyComponent />
+    </Tooltip>
   );
 }
 ```
@@ -142,7 +187,7 @@ You can delay tooltip open/close events by setting `openDelay` and `closeDelay` 
 
 ## Custom components with Tooltip
 
-If you want to build a component that can used with Tooltip use
+If you want to build a component that can be used with Tooltip use
 [forwardRef](https://reactjs.org/docs/forwarding-refs.html) or other prop that will allow to get root element ref.
 This logic is applied to Tooltip and Tooltip.Floating components:
 
@@ -181,6 +226,31 @@ function Demo() {
 
       <Tooltip label="refProp is required" refProp="innerRef">
         <MyOtherBadge color="orange" />
+      </Tooltip>
+    </>
+  );
+}
+```
+
+## Usage with Next.js Link
+
+Tooltip will not work with native Next.js `Link`, instead you should use [NextLink](/guides/next/) component:
+
+```tsx
+import { Tooltip, Button } from '@mantine/core';
+import { NextLink } from '@mantine/next';
+
+function Demo() {
+  return (
+    <>
+      <Tooltip label="Plain NextLink">
+        <NextLink href="/">Next.js link</NextLink>
+      </Tooltip>
+
+      <Tooltip label="NextLink as another component">
+        <Button component={NextLink} href="/">
+          Next.js link
+        </Button>
       </Tooltip>
     </>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { DefaultProps, MantineSize, Selectors } from '@mantine/styles';
+import { randomId } from '@mantine/hooks';
 import { Text } from '../../Text/Text';
 import { Divider } from '../../Divider/Divider';
 import { SelectItem } from '../types';
@@ -102,14 +103,11 @@ export function SelectItems({
 
   if (creatable) {
     const creatableDataItem = data[creatableDataIndex];
-    const selected =
-      typeof isItemSelected === 'function' ? isItemSelected(data[creatableDataIndex].value) : false;
     unGroupedItems.push(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
-        key={creatableDataItem.value}
+        key={randomId()}
         className={classes.item}
-        data-selected={selected || undefined}
         data-hovered={hovered === creatableDataIndex || undefined}
         onMouseEnter={() => onItemHover(creatableDataIndex)}
         onMouseDown={(event: React.MouseEvent<HTMLDivElement>) => {
@@ -131,7 +129,7 @@ export function SelectItems({
 
   if (groupedItems.length > 0 && unGroupedItems.length > 0) {
     unGroupedItems.unshift(
-      <div className={classes.separator}>
+      <div className={classes.separator} key="empty-group-separator">
         <Divider />
       </div>
     );

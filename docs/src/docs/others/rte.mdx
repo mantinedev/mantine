@@ -79,6 +79,15 @@ To configure sticky toolbar properties set following props:
 
 <Demo data={RichTextEditorDemos.embeds} />
 
+## Restrict formats
+
+To restrict formats that user case use, set `formats` prop. Note that you will also need to remove toolbar
+buttons. In the following example three formats are enabled: `bold`, `italic` and `underline`,
+toolbar includes `italic` and `underline` controls, `bold` format can be added with `Ctrl + B` keyboard
+shortcut, other formats are not available:
+
+<Demo data={RichTextEditorDemos.formats} />
+
 ## Images upload
 
 RichTextEditor will handle images upload in following situations:
@@ -90,27 +99,31 @@ RichTextEditor will handle images upload in following situations:
 To set up images upload add `onImageUpload` function:
 
 ```tsx
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { RichTextEditor } from '@mantine/rte';
 
-// Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
-// Function must return a promise that resolves with uploaded image url
-// After promise is resolved blurred image placeholder with be replaced with uploaded
-const handleImageUpload = (file: File): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const formData = new FormData();
-    formData.append('image', file);
-
-    fetch('https://api.imgbb.com/1/upload?key=api_key', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((result) => resolve(result.data.url))
-      .catch(() => reject(new Error('Upload failed')));
-  });
-
 function Demo() {
+  // Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
+  // Function must return a promise that resolves with uploaded image url
+  // After promise is resolved blurred image placeholder with be replaced with uploaded
+  // Note that useCallback is required
+  const handleImageUpload = useCallback(
+    (file: File): Promise<string> =>
+      new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        fetch('https://api.imgbb.com/1/upload?key=api_key', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((result) => resolve(result.data.url))
+          .catch(() => reject(new Error('Upload failed')));
+      }),
+    []
+  );
+
   const [value, onChange] = useState('');
   return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
 }
@@ -232,3 +245,9 @@ function MyPage() {
   return <RichTextEditor />;
 }
 ```
+
+## React strict mode limitations
+
+`RichTextEditor` component is not compatible with React strict mode. You will experience
+the following error if strict mode is enabled: `TypeError: Cannot read properties of null (reading 'index')`.
+To fix it, disable strict mode.

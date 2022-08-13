@@ -91,6 +91,7 @@ export const NativeSelect = forwardRef<HTMLSelectElement, NativeSelectProps>((pr
           shouldClear: false,
           size: inputProps.size,
           error: wrapperProps.error,
+          readOnly: false,
         })}
       >
         {options}
