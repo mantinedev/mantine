@@ -7,6 +7,7 @@ export interface StepStylesParams {
   radius: MantineNumberSize;
   allowStepClick: boolean;
   iconPosition: 'right' | 'left';
+  orientation: 'vertical' | 'horizontal';
 }
 
 export const iconSizes = {
@@ -18,12 +19,31 @@ export const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { color, iconSize, size, radius, allowStepClick, iconPosition }: StepStylesParams) => {
+  (
+    theme,
+    { color, iconSize, size, radius, allowStepClick, iconPosition, orientation }: StepStylesParams
+  ) => {
     const _iconSize = iconSize || theme.fn.size({ size, sizes: iconSizes });
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
     const colors = theme.fn.variant({ variant: 'filled', color });
     const separatorDistanceFromIcon = theme.spacing.xs / 2;
+
+    const verticalOrientationStyles = {
+      step: {
+        justifyContent: 'flex-start',
+        minHeight: `${_iconSize + theme.spacing.xl + separatorDistanceFromIcon}px`,
+
+        '&:last-child': {
+          marginBottom: 0,
+        },
+
+        '&:last-of-type': {
+          minHeight: 'auto',
+          overflow: 'hidden',
+        },
+      },
+    } as const;
 
     return {
       stepLoader: {},
@@ -32,7 +52,11 @@ export default createStyles(
         display: 'flex',
         flexDirection: iconPosition === 'left' ? 'row' : 'row-reverse',
         cursor: allowStepClick ? 'pointer' : 'default',
-        alignItems: 'center',
+        ...(orientation === 'vertical'
+          ? verticalOrientationStyles.step
+          : {
+              alignItems: 'center',
+            }),
       },
 
       stepWrapper: {
@@ -40,6 +64,20 @@ export default createStyles(
         overflow: 'hidden',
         flexShrink: 0,
         marginBottom: separatorDistanceFromIcon,
+      },
+
+      verticalSeparator: {
+        top: `${_iconSize + separatorDistanceFromIcon}px`,
+        left: `${_iconSize / 2}px`,
+        height: '100%',
+        position: 'absolute',
+        borderLeft: `2px solid ${
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
+        }`,
+      },
+
+      verticalSeparatorActive: {
+        borderColor: theme.fn.variant({ variant: 'filled', color }).background,
       },
 
       stepIcon: {

@@ -134,7 +134,7 @@ export const Stepper: StepperComponent = forwardRef<HTMLDivElement, StepperProps
       })
     );
 
-    if (index !== _children.length - 1) {
+    if (orientation === 'horizontal' && index !== _children.length - 1) {
       acc.push(
         <div
           className={cx(classes.separator, { [classes.separatorActive]: index < active })}
