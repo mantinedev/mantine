@@ -123,6 +123,15 @@ export default createStyles(
         flexDirection: 'column',
         marginLeft: iconPosition === 'left' ? iconMargin : undefined,
         marginRight: iconPosition === 'right' ? iconMargin : undefined,
+
+        ...(orientation === 'vertical'
+          ? {
+              marginTop:
+                _iconSize > theme.fn.size({ size, sizes: theme.fontSizes }) * 4
+                  ? _iconSize / 4
+                  : _iconSize / 12,
+            }
+          : null),
       },
 
       stepLabel: {
