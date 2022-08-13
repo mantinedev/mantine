@@ -79,6 +79,15 @@ To configure sticky toolbar properties set following props:
 
 <Demo data={RichTextEditorDemos.embeds} />
 
+## Restrict formats
+
+To restrict formats that user case use, set `formats` prop. Note that you will also need to remove toolbar
+buttons. In the following example three formats are enabled: `bold`, `italic` and `underline`,
+toolbar includes `italic` and `underline` controls, `bold` format can be added with `Ctrl + B` keyboard
+shortcut, other formats are not available:
+
+<Demo data={RichTextEditorDemos.formats} />
+
 ## Images upload
 
 RichTextEditor will handle images upload in following situations:

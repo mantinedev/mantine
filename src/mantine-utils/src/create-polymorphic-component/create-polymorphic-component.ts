@@ -35,7 +35,9 @@ export function createPolymorphicComponent<
     props: ComponentProps<C>
   ) => React.ReactElement;
 
-  type PolymorphicComponent = _PolymorphicComponent & StaticComponents;
+  type ComponentProperties = Omit<React.FunctionComponent<ComponentProps<any>>, never>;
+
+  type PolymorphicComponent = _PolymorphicComponent & ComponentProperties & StaticComponents;
 
   return component as PolymorphicComponent;
 }

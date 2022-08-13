@@ -11,6 +11,7 @@ import { lighten } from './lighten/lighten';
 import { radius } from './radius/radius';
 import { variant } from './variant/variant';
 import { primaryShade } from './primary-shade/primary-shade';
+import { primaryColor } from './primary-color/primary-color';
 import { hover } from './hover/hover';
 
 export const fns = {
@@ -31,4 +32,5 @@ export const fns = {
   primaryShade,
   hover,
   gradient,
+  primaryColor,
 } as const;

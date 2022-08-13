@@ -75,6 +75,10 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     fontWeight: 700,
+
+    '&[data-with-close-button]': {
+      paddingRight: theme.spacing.md,
+    },
   },
 
   label: {
@@ -111,7 +115,9 @@ export default createStyles((theme, { color, radius, variant }: AlertStylesParam
   },
 
   closeButton: {
-    marginTop: 2,
+    position: 'absolute',
+    top: theme.spacing.sm,
+    right: theme.spacing.sm,
     color: 'inherit',
   },
 }));

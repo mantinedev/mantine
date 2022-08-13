@@ -21,7 +21,7 @@ export default createStyles((theme, { color, radius }: MenuItemStylesParams) => 
     cursor: 'pointer',
     borderRadius: theme.fn.radius(radius),
     color: color
-      ? theme.fn.themeColor(color, theme.colorScheme === 'dark' ? 5 : 7)
+      ? theme.fn.variant({ variant: 'filled', primaryFallback: false, color }).background
       : theme.colorScheme === 'dark'
       ? theme.colors.dark[0]
       : theme.black,

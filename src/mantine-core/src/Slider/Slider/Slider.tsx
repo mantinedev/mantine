@@ -175,10 +175,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
   const handleThumbMouseDown = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    if (event.cancelable) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    event.stopPropagation();
   };
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {

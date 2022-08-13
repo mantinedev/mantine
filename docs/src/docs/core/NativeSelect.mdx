@@ -19,6 +19,15 @@ import { NativeSelectDemos } from '@mantine/demos';
 
 <Demo data={NativeSelectDemos.configurator} />
 
+## Data prop
+
+NativeSelect component accepts data in the following formats:
+
+- Array of strings (when item value is the same as label): `['React', 'Angular']`
+- Array of objects (when item value different label): `[{ value: '1', label: 'React' }, { value: '2', label: 'Angular' }]`
+
+Note that item value should always be a string, other data formats (numbers, boolean, etc.) are not supported.
+
 ## Controlled
 
 ```tsx

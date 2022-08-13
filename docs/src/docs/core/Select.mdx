@@ -33,7 +33,7 @@ import { useState } from 'react';
 import { Select } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string | null>(null);
   return <Select value={value} onChange={setValue} data={[]} />;
 }
 ```
@@ -193,6 +193,10 @@ Use `data-selected` and `data-hovered` attributes to add styles to items dependi
 ## Disabled state
 
 <Demo data={SelectDemos.disabled} />
+
+## Read only
+
+<Demo data={SelectDemos.readOnly} />
 
 ## Right section
 

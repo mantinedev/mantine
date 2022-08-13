@@ -20,6 +20,7 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
     userSelect: 'none',
+    touchAction: 'none',
   },
 
   thumb: {
@@ -53,6 +54,7 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     transitionTimingFunction: theme.transitionTimingFunction,
     zIndex: 3,
     userSelect: 'none',
+    touchAction: 'none',
   },
 
   dragging: {

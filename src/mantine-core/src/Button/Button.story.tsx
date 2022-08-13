@@ -82,3 +82,26 @@ export function Groups() {
     </div>
   );
 }
+
+export function ColorsIndex() {
+  return (
+    <Group m={50}>
+      <Button color="green.6">Filled</Button>
+      <Button color="green.6" variant="default">
+        Default
+      </Button>
+      <Button color="green.6" variant="white">
+        White
+      </Button>
+      <Button color="green.6" variant="light">
+        Light
+      </Button>
+      <Button color="green.6" variant="outline">
+        Outline
+      </Button>
+      <Button color="green.6" variant="gradient">
+        Gradient
+      </Button>
+    </Group>
+  );
+}

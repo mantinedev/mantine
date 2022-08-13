@@ -1,4 +1,4 @@
-import { clearListErrors } from './clear-list-errors';
+import { clearListState } from './clear-list-state';
 
 const TEST_ERRORS = {
   name: 'name-error',
@@ -20,9 +20,9 @@ const TEST_ERRORS = {
   'nested.0.inner.5.check': 'nested-error-4',
 };
 
-describe('@mantine/form/clear-list-errors', () => {
+describe('@mantine/form/clear-list-state', () => {
   it('clears list errors of given field', () => {
-    expect(clearListErrors('fruits', TEST_ERRORS)).toStrictEqual({
+    expect(clearListState('fruits', TEST_ERRORS)).toStrictEqual({
       name: 'name-error',
       'nested.0.inner.1.name': 'nested-error-1',
       'nested.0.inner.2.name': 'nested-error-2',
@@ -35,7 +35,7 @@ describe('@mantine/form/clear-list-errors', () => {
   });
 
   it('clears deeply nested errors', () => {
-    expect(clearListErrors('nested.0.inner', TEST_ERRORS)).toStrictEqual({
+    expect(clearListState('nested.0.inner', TEST_ERRORS)).toStrictEqual({
       name: 'name-error',
 
       'fruits.0.name': 'fruit-error-1',

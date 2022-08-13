@@ -18,3 +18,4 @@ export { stepper } from './Form.demo.stepper';
 export { setFieldValue } from './Form.demo.setFieldValue';
 export { setValues } from './Form.demo.setValues';
 export { reset } from './Form.demo.reset';
+export { status } from './Form.demo.status';

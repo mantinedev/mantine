@@ -11,6 +11,7 @@ export interface MultiSelectValueProps
   label: string;
   onRemove(): void;
   disabled: boolean;
+  readOnly: boolean;
   size: MantineSize;
   radius: MantineNumberSize;
 }
@@ -30,12 +31,13 @@ export function DefaultValue({
   className,
   onRemove,
   disabled,
+  readOnly,
   size,
   radius = 'sm',
   ...others
 }: MultiSelectValueProps) {
   const { classes, cx } = useStyles(
-    { size, disabled, radius },
+    { size, disabled, readOnly, radius },
     { classNames, styles, name: 'MultiSelect' }
   );
 
@@ -43,7 +45,7 @@ export function DefaultValue({
     <div className={cx(classes.defaultValue, className)} {...others}>
       <span className={classes.defaultValueLabel}>{label}</span>
 
-      {!disabled && (
+      {!disabled && !readOnly && (
         <CloseButton
           aria-hidden
           onMouseDown={onRemove}

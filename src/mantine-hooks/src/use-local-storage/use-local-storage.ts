@@ -37,7 +37,7 @@ function deserializeJSON(value: string) {
 export function useLocalStorage<T = string>({
   key,
   defaultValue = undefined,
-  getInitialValueInEffect = false,
+  getInitialValueInEffect = true,
   deserialize = deserializeJSON,
   serialize = serializeJSON,
 }: UseLocalStorage<T>) {

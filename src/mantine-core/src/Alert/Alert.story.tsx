@@ -14,7 +14,13 @@ export function Variants() {
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>
-      <Alert withCloseButton title="Bummer!" color="red" variant="outline" mt="xl">
+      <Alert
+        withCloseButton
+        title="Something terrible happened! You made a mistake and there is no going back, your data was lost forever!"
+        color="red"
+        variant="outline"
+        mt="xl"
+      >
         Something terrible happened! You made a mistake and there is no going back, your data was
         lost forever!
       </Alert>

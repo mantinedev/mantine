@@ -18,6 +18,25 @@ export interface VariantOutput {
   hover: string;
 }
 
+interface ColorInfo {
+  isSplittedColor: boolean;
+  key?: string;
+  shade?: number;
+}
+
+function getColorIndexInfo(color: string, theme: MantineThemeBase): ColorInfo {
+  if (typeof color === 'string' && color.includes('.')) {
+    const [splittedColor, _splittedShade] = color.split('.');
+    const splittedShade = parseInt(_splittedShade, 10);
+
+    if (splittedColor in theme.colors && splittedShade >= 0 && splittedShade < 10) {
+      return { isSplittedColor: true, key: splittedColor, shade: splittedShade };
+    }
+  }
+
+  return { isSplittedColor: false };
+}
+
 export function variant(theme: MantineThemeBase) {
   const getThemeColor = themeColor(theme);
   const getPrimaryShade = primaryShade(theme);
@@ -25,11 +44,13 @@ export function variant(theme: MantineThemeBase) {
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   return ({ variant, color, gradient, primaryFallback }: VariantInput): VariantOutput => {
+    const colorInfo = getColorIndexInfo(color, theme);
+
     if (variant === 'light') {
       return {
         border: 'transparent',
         background: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.2 : 1
         ),
         color:
@@ -39,7 +60,7 @@ export function variant(theme: MantineThemeBase) {
               : theme.colors.dark[9]
             : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 7 : 1, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.25 : 0.65
         ),
       };
@@ -70,8 +91,8 @@ export function variant(theme: MantineThemeBase) {
         color: getThemeColor(color, theme.colorScheme === 'dark' ? 5 : getPrimaryShade('light')),
         hover:
           theme.colorScheme === 'dark'
-            ? rgba(getThemeColor(color, 5), 0.05)
-            : rgba(getThemeColor(color, 0), 0.35),
+            ? rgba(getThemeColor(color, 5, primaryFallback, false), 0.05)
+            : rgba(getThemeColor(color, 0, primaryFallback, false), 0.35),
       };
     }
 
@@ -95,17 +116,21 @@ export function variant(theme: MantineThemeBase) {
               : theme.colors.dark[9]
             : getThemeColor(color, theme.colorScheme === 'dark' ? 2 : getPrimaryShade('light')),
         hover: rgba(
-          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0),
+          getThemeColor(color, theme.colorScheme === 'dark' ? 8 : 0, primaryFallback, false),
           theme.colorScheme === 'dark' ? 0.2 : 1
         ),
       };
     }
 
+    const _primaryShade = getPrimaryShade();
+    const _shade = colorInfo.isSplittedColor ? colorInfo.shade : _primaryShade;
+    const _color = colorInfo.isSplittedColor ? colorInfo.key : color;
+
     return {
       border: 'transparent',
-      background: getThemeColor(color, getPrimaryShade(), primaryFallback),
+      background: getThemeColor(_color, _shade, primaryFallback),
       color: theme.white,
-      hover: getThemeColor(color, getPrimaryShade() === 9 ? 8 : getPrimaryShade() + 1),
+      hover: getThemeColor(_color, _shade === 9 ? 8 : _shade + 1),
     };
   };
 }

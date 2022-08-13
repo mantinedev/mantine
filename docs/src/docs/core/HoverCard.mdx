@@ -105,7 +105,11 @@ Use `forwardRef` function to forward ref to root element:
 import { forwardRef } from 'react';
 import { HoverCard } from '@mantine/core';
 
-const MyComponent = forwardRef((props, ref) => <div ref={ref}>My component</div>);
+const MyComponent = forwardRef((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
 
 // Works correctly – ref is forwarded
 function Demo() {

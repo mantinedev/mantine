@@ -208,6 +208,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     unstyled,
     inputContainer,
     inputWrapperOrder,
+    readOnly,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -263,11 +264,13 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const valuesOverflow = useRef(!!maxSelectedValues && maxSelectedValues < _value.length);
 
   const handleValueRemove = (_val: string) => {
-    const newValue = _value.filter((val) => val !== _val);
-    setValue(newValue);
+    if (!readOnly) {
+      const newValue = _value.filter((val) => val !== _val);
+      setValue(newValue);
 
-    if (!!maxSelectedValues && newValue.length < maxSelectedValues) {
-      valuesOverflow.current = false;
+      if (!!maxSelectedValues && newValue.length < maxSelectedValues) {
+        valuesOverflow.current = false;
+      }
     }
   };
 
@@ -323,28 +326,30 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   }, [_value]);
 
   const handleItemSelect = (item: SelectItem) => {
-    clearSearchOnChange && handleSearchChange('');
+    if (!readOnly) {
+      clearSearchOnChange && handleSearchChange('');
 
-    if (_value.includes(item.value)) {
-      handleValueRemove(item.value);
-    } else {
-      if (item.creatable && typeof onCreate === 'function') {
-        const createdItem = onCreate(item.value);
-        if (typeof createdItem === 'string') {
-          setValue([..._value, createdItem]);
-        } else {
-          setValue([..._value, createdItem.value]);
-        }
+      if (_value.includes(item.value)) {
+        handleValueRemove(item.value);
       } else {
-        setValue([..._value, item.value]);
-      }
+        if (item.creatable && typeof onCreate === 'function') {
+          const createdItem = onCreate(item.value);
+          if (typeof createdItem === 'string') {
+            setValue([..._value, createdItem]);
+          } else {
+            setValue([..._value, createdItem.value]);
+          }
+        } else {
+          setValue([..._value, item.value]);
+        }
 
-      if (_value.length === maxSelectedValues - 1) {
-        valuesOverflow.current = true;
-        setDropdownOpened(false);
-      }
-      if (hovered === filteredData.length - 1) {
-        setHovered(filteredData.length - 2);
+        if (_value.length === maxSelectedValues - 1) {
+          valuesOverflow.current = true;
+          setDropdownOpened(false);
+        }
+        if (hovered === filteredData.length - 1) {
+          setHovered(filteredData.length - 2);
+        }
       }
     }
   };
@@ -364,6 +369,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     }
 
     onKeyDown?.(event);
+
+    if (readOnly) {
+      return;
+    }
 
     if (event.key !== 'Backspace' && !!maxSelectedValues && valuesOverflow.current) {
       return;
@@ -524,6 +533,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         {...item}
         disabled={disabled}
         className={classes.value}
+        readOnly={readOnly}
         onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
           if (dropdownOpened) {
             event.preventDefault();
@@ -555,7 +565,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   }
 
   const shouldRenderDropdown =
-    filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound;
+    !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
 
   return (
     <Input.Wrapper
@@ -650,6 +660,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                 error,
                 disabled,
                 clearButtonTabIndex,
+                readOnly,
               })}
             >
               <div className={classes.values}>
@@ -670,7 +681,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                   onBlur={handleInputBlur}
-                  readOnly={!searchable || valuesOverflow.current}
+                  readOnly={!searchable || valuesOverflow.current || readOnly}
                   placeholder={_value.length === 0 ? placeholder : undefined}
                   disabled={disabled}
                   data-mantine-stop-propagation={dropdownOpened}

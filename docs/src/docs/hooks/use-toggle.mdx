@@ -35,6 +35,14 @@ toggle(); // -> value == 'dark'
 toggle('dark'); // -> value == 'dark'
 ```
 
+If you do not provide an array with options, then `use-toggle` will use boolean values with `false` as default:
+
+```tsx
+const [value, toggle] = useToggle();
+// -> value === false
+toggle(); // -> value === true
+```
+
 ## TypeScript
 
 ### Set type

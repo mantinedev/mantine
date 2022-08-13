@@ -22,5 +22,6 @@ export default createStyles((theme, { size, disabled }: SliderRootStyles) => ({
     display: 'flex',
     alignItems: 'center',
     cursor: disabled ? 'not-allowed' : 'pointer',
+    touchAction: 'none',
   },
 }));

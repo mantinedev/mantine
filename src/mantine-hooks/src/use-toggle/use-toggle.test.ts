@@ -32,4 +32,11 @@ describe('@mantine/hooks/use-toggle', () => {
     act(() => hook.result.current[1]((v) => v));
     expect(hook.result.current[0]).toBe('dark');
   });
+
+  it('allows to use hook without options', () => {
+    const hook = renderHook(() => useToggle());
+    expect(hook.result.current[0]).toBe(false);
+    act(() => hook.result.current[1]());
+    expect(hook.result.current[0]).toBe(true);
+  });
 });

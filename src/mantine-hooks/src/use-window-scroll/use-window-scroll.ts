@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 interface ScrollPosition {
@@ -29,10 +29,14 @@ function scrollTo({ x, y }: Partial<ScrollPosition>) {
 }
 
 export function useWindowScroll() {
-  const [position, setPosition] = useState(getScrollPosition());
+  const [position, setPosition] = useState<ScrollPosition>({ x: 0, y: 0 });
 
   useWindowEvent('scroll', () => setPosition(getScrollPosition()));
   useWindowEvent('resize', () => setPosition(getScrollPosition()));
+
+  useEffect(() => {
+    setPosition(getScrollPosition());
+  }, []);
 
   return [position, scrollTo] as const;
 }

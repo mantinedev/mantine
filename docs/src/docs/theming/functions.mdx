@@ -216,3 +216,27 @@ theme.fn.darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
 theme.fn.rgba('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
 theme.fn.rgba(theme.colors.gray[1], 0.25); // rgba(241, 243, 245, 0.25)
 ```
+
+## primaryShade
+
+`theme.fn.primaryShade` function returns primary shade for current or given color scheme:
+
+```tsx
+theme.fn.primaryShade(); // -> returns primary shade index depending on theme.colorScheme
+theme.fn.primaryShade('dark'); // -> returns primary shade for dark color scheme
+theme.fn.primaryShade('light'); // -> returns primary shade for light color scheme
+
+// Use function to dynamically get values from theme.colors
+theme.colors.red[theme.fn.primaryShade()];
+```
+
+## primaryColor
+
+`theme.fn.primaryColor` function returns primary color based on current or given color scheme:
+
+```tsx
+theme.fn.primaryColor();
+
+// Same as
+theme.colors[theme.primaryColor][theme.fn.primaryShade()];
+```
