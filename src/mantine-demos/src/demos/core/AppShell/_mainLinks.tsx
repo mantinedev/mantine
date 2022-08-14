@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconGitPullRequest, IconAlertCircle, IconMessages, IconDatabase } from '@tabler/icons';
-import { ThemeIcon, UnstyledButton, Group, Text } from '@mantine/core';
+import { ThemeIcon, NavLink } from '@mantine/core';
 
 interface MainLinkProps {
   icon: React.ReactNode;
@@ -10,28 +10,16 @@ interface MainLinkProps {
 
 function MainLink({ icon, color, label }: MainLinkProps) {
   return (
-    <UnstyledButton
-      sx={(theme) => ({
-        display: 'block',
-        width: '100%',
-        padding: theme.spacing.xs,
-        borderRadius: theme.radius.sm,
-        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-        '&:hover': {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-        },
-      })}
-    >
-      <Group>
+    <NavLink
+      key={link.label}
+      active={router.pathname === link.href}
+      label={label}
+      icon={
         <ThemeIcon color={color} variant="light">
           {icon}
         </ThemeIcon>
-
-        <Text size="sm">{label}</Text>
-      </Group>
-    </UnstyledButton>
+       }
+      />
   );
 }
 
