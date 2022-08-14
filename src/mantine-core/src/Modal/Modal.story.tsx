@@ -11,6 +11,16 @@ import { Menu } from '../Menu/Menu';
 import { Modal } from './Modal';
 import { MultiSelect } from '../MultiSelect/MultiSelect';
 
+const content = Array(20)
+  .fill(0)
+  .map((_, index) => (
+    <p key={index}>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit, eum nihil odit, voluptatem
+      quae quibusdam sint omnis corporis beatae quod sunt magni sequi consequatur rem necessitatibus
+      quia eos! Accusamus, doloribus!
+    </p>
+  ));
+
 function WrappedModal(
   props: Omit<React.ComponentPropsWithoutRef<typeof Modal>, 'opened' | 'onClose'>
 ) {
@@ -81,4 +91,9 @@ storiesOf('Modal', module)
       <WrappedModal title="Modal with default radius">default radius</WrappedModal>
     </MantineProvider>
   ))
-  .add('Fullscreen', () => <WrappedModal fullScreen>Full screen modal</WrappedModal>);
+  .add('Fullscreen', () => (
+    <>
+      <WrappedModal fullScreen>Full screen modal</WrappedModal>
+      {content}
+    </>
+  ));
