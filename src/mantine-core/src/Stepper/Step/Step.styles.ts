@@ -33,14 +33,11 @@ export default createStyles(
       step: {
         justifyContent: 'flex-start',
         minHeight: `${_iconSize + theme.spacing.xl + separatorDistanceFromIcon}px`,
-
-        '&:last-child': {
-          marginBottom: 0,
-        },
+        marginTop: `${separatorDistanceFromIcon}px`,
+        overflow: 'hidden',
 
         '&:last-of-type': {
           minHeight: 'auto',
-          overflow: 'hidden',
         },
       },
     } as const;
@@ -61,15 +58,12 @@ export default createStyles(
 
       stepWrapper: {
         position: 'relative',
-        overflow: 'hidden',
-        flexShrink: 0,
-        marginBottom: separatorDistanceFromIcon,
       },
 
       verticalSeparator: {
         top: `${_iconSize + separatorDistanceFromIcon}px`,
         left: `${_iconSize / 2}px`,
-        height: '100%',
+        height: '100vh',
         position: 'absolute',
         borderLeft: `2px solid ${
           theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
