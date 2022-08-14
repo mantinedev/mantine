@@ -11,8 +11,6 @@ interface MainLinkProps {
 function MainLink({ icon, color, label }: MainLinkProps) {
   return (
     <NavLink
-      key={link.label}
-      active={router.pathname === link.href}
       label={label}
       icon={
         <ThemeIcon color={color} variant="light">
