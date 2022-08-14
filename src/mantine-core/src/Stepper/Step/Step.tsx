@@ -65,6 +65,9 @@ export interface StepProps
 
   /** Static selector base */
   __staticSelector?: string;
+
+  /** Component orientation */
+  orientation?: 'vertical' | 'horizontal';
 }
 
 const defaultIconSizes = {
@@ -98,12 +101,13 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
       classNames,
       styles,
       unstyled,
+      orientation,
       ...others
     }: StepProps,
     ref
   ) => {
     const { classes, cx, theme } = useStyles(
-      { color, iconSize, size, radius, allowStepClick, iconPosition },
+      { color, iconSize, size, radius, allowStepClick, iconPosition, orientation },
       { name: __staticSelector, classNames, styles, unstyled }
     );
 
@@ -147,6 +151,13 @@ export const Step = forwardRef<HTMLButtonElement, StepProps>(
                 )
               ) : null}
             </div>
+            {orientation === 'vertical' && (
+              <div
+                className={cx(classes.verticalSeparator, {
+                  [classes.verticalSeparatorActive]: state === 'stepCompleted',
+                })}
+              />
+            )}
           </div>
         )}
 
