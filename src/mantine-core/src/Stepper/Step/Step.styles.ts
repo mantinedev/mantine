@@ -36,6 +36,10 @@ export default createStyles(
         marginTop: `${separatorDistanceFromIcon}px`,
         overflow: 'hidden',
 
+        '&:first-of-type': {
+          marginTop: 0,
+        },
+
         '&:last-of-type': {
           minHeight: 'auto',
         },
