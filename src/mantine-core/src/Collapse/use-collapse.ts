@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { flushSync } from 'react-dom';
-import { useDidUpdate, useMergedRef } from '@mantine/hooks';
+import { useDidUpdate, mergeRefs } from '@mantine/hooks';
 
 function getAutoHeightDuration(height: number | string) {
   if (!height || typeof height === 'string') {
@@ -108,7 +108,7 @@ export function useCollapse({
     return {
       'aria-hidden': !opened,
       ...rest,
-      [refKey]: useMergedRef(el, theirRef),
+      [refKey]: mergeRefs(el, theirRef),
       onTransitionEnd: handleTransitionEnd,
       style: { boxSizing: 'border-box', ...style, ...styles },
     };
