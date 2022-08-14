@@ -24,8 +24,9 @@ Set `multiple` prop to enable picking multiple files:
 
 <Demo data={FileButtonDemos.multiple} />
 
-## Reset File
+## Reset file
 
-You can use the `resetRef` to reset the currently selected file:
+`resetRef` should be used to fix issue with stale value on hidden input element as input type file cannot be controlled.
+Call `resetRef` when user selection is cleared:
 
 <Demo data={FileButtonDemos.reset} />
