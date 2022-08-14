@@ -122,6 +122,11 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       openDropdownOnClear,
       unstyled,
       weekendDays,
+      yearLabelFormat,
+      nextDecadeLabel,
+      nextYearLabel,
+      previousDecadeLabel,
+      previousYearLabel,
       ...others
     } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -224,6 +229,11 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           renderDay={renderDay}
           unstyled={unstyled}
           weekendDays={weekendDays}
+          yearLabelFormat={yearLabelFormat}
+          nextDecadeLabel={nextDecadeLabel}
+          nextYearLabel={nextYearLabel}
+          previousDecadeLabel={previousDecadeLabel}
+          previousYearLabel={previousYearLabel}
         />
       </DatePickerBase>
     );
