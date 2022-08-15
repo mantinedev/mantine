@@ -8,5 +8,6 @@ export const ActionIcon: Record<ActionIconStylesNames, string> = {
   default: 'Default variant modifier for root element',
   hover: 'Hover variant modifier for root element',
   filled: 'Filled variant modifier for root element',
+  gradient: 'Gradient variant modifier for root element',
   loading: 'Loading variant modifier for root element, controlled by loading prop',
 };
