@@ -13,16 +13,16 @@ const SYSTEM_PROPS = {
 
 const NEGATIVE_VALUES = ['-xs', '-sm', '-md', '-lg', '-xl'];
 
-function isValidSizeValue(margin: any) {
-  return typeof margin === 'string' || typeof margin === 'number';
+function isValidSizeValue(size: any) {
+  return typeof size === 'string' || typeof size === 'number';
 }
 
-function getSizeValue(margin: any, theme: MantineTheme) {
-  if (NEGATIVE_VALUES.includes(margin)) {
-    return theme.fn.size({ size: margin.replace('-', ''), sizes: theme.spacing }) * -1;
+function getSizeValue(size: any, theme: MantineTheme) {
+  if (NEGATIVE_VALUES.includes(size)) {
+    return theme.fn.size({ size: size.replace('-', ''), sizes: theme.spacing }) * -1;
   }
 
-  return theme.fn.size({ size: margin, sizes: theme.spacing });
+  return theme.fn.size({ size, sizes: theme.spacing });
 }
 
 export function getSystemStyles(systemStyles: MantineStyleSystemProps, theme: MantineTheme) {

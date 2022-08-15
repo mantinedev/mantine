@@ -1,6 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { Button, Modal } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from './Carousel';
+import { useAnimationOffsetEffect } from './use-animation-offset-effect';
 
 export default { title: 'Carousel' };
 
@@ -68,5 +70,73 @@ export function AutoPlay() {
         {slides}
       </Carousel>
     </div>
+  );
+}
+
+export function DynamicSlides() {
+  const [count, setCount] = useState(1);
+
+  const _slides = Array(count)
+    .fill(0)
+    .map((_, index) => (
+      <Carousel.Slide key={index} style={{ height: 200, background: 'pink', width: '100%' }}>
+        {index}
+      </Carousel.Slide>
+    ));
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Carousel height={200} withIndicators>
+        {_slides}
+      </Carousel>
+      <Button onClick={() => setCount((c) => c + 1)}>Increment</Button>
+      <Button onClick={() => setCount((c) => c - 1)}>Decrement</Button>
+    </div>
+  );
+}
+
+export function AnimationOffsetEffect() {
+  const TRANSITION_DURATION = 200;
+  const [opened, setOpened] = useState(false);
+  const [embla, setEmbla] = useState(null);
+
+  useAnimationOffsetEffect(embla, TRANSITION_DURATION);
+
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open Modal</Button>
+      <Modal
+        opened={opened}
+        size="300px"
+        padding={0}
+        transitionDuration={TRANSITION_DURATION}
+        withCloseButton={false}
+        onClose={() => setOpened(false)}
+      >
+        <Carousel loop getEmblaApi={setEmbla}>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat/cute"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+          <Carousel.Slide>
+            <img
+              src="https://cataas.com/cat/angry"
+              alt=""
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
+            />
+          </Carousel.Slide>
+        </Carousel>
+      </Modal>
+    </>
   );
 }

@@ -47,11 +47,20 @@ export default createStyles(
           }, {})
         : null;
 
+    const borderStyles = withBorder
+      ? {
+          [section === 'navbar' ? 'borderRight' : 'borderLeft']: `1px solid ${
+            theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
+          }`,
+        }
+      : {};
+
     return {
       root: {
         ...theme.fn.fontStyles(),
         ...position,
         top: position?.top || 'var(--mantine-header-height)',
+        bottom: 0,
         zIndex,
         height:
           height ||
@@ -62,9 +71,7 @@ export default createStyles(
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-        [withBorder && section === 'navbar' ? 'borderRight' : 'borderLeft']: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-        }`,
+        ...borderStyles,
         ...breakpoints,
 
         '&[data-hidden]': {

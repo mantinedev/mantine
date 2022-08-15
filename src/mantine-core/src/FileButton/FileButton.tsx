@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { useRef, forwardRef } from 'react';
 import { useComponentDefaultProps } from '@mantine/styles';
-import { useMergedRef } from '@mantine/hooks';
+import { assignRef, useMergedRef } from '@mantine/hooks';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
   /** Called when files are picked */
@@ -21,6 +21,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
 
   /** Input form attribute */
   form?: string;
+
+  /** Function that should be called when value changes to null or empty array */
+  resetRef?: React.ForwardedRef<() => void>;
 }
 
 const defaultProps: Partial<FileButtonProps> = {
@@ -33,7 +36,7 @@ type FileButtonComponent = (<Multiple extends boolean = false>(
 
 export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
   (props, ref) => {
-    const { onChange, children, multiple, accept, name, form, ...others } =
+    const { onChange, children, multiple, accept, name, form, resetRef, ...others } =
       useComponentDefaultProps('FileButton', defaultProps, props);
 
     const inputRef = useRef<HTMLInputElement>();
@@ -49,6 +52,12 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
         onChange(event.currentTarget.files[0] || null);
       }
     };
+
+    const reset = () => {
+      inputRef.current.value = '';
+    };
+
+    assignRef(resetRef, reset);
 
     return (
       <>

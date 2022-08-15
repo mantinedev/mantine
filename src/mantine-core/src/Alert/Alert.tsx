@@ -92,22 +92,22 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>((props: AlertProps, 
 
         <div className={classes.body}>
           {title && (
-            <div className={classes.title}>
+            <div className={classes.title} data-with-close-button={withCloseButton || undefined}>
               <span id={titleId} className={classes.label}>
                 {title}
               </span>
-
-              {withCloseButton && (
-                <CloseButton
-                  className={classes.closeButton}
-                  onClick={onClose}
-                  variant="transparent"
-                  size={16}
-                  iconSize={16}
-                  aria-label={closeButtonLabel}
-                />
-              )}
             </div>
+          )}
+
+          {withCloseButton && (
+            <CloseButton
+              className={classes.closeButton}
+              onClick={onClose}
+              variant="transparent"
+              size={16}
+              iconSize={16}
+              aria-label={closeButtonLabel}
+            />
           )}
 
           <div id={bodyId} className={classes.message}>

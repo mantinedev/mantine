@@ -2,9 +2,10 @@ import { useState, useCallback } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
-import { filterErrors, clearListErrors } from './filter-errors';
+import { filterErrors } from './filter-errors';
 import { validateValues, validateFieldValue, shouldValidateOnChange } from './validate';
 import { getStatus } from './get-status';
+import { clearListState } from './clear-list-state';
 import {
   UseFormReturnType,
   UseFormInput,
@@ -111,7 +112,8 @@ export function useForm<Values = Record<string, unknown>>({
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
     _setValues((current) => removePath(path, index, current));
-    _setErrors((errs) => clearListErrors(path, errs));
+    _setErrors((errs) => clearListState(path, errs));
+    setDirty((current) => clearListState(`${String(path)}.${index}`, current));
   }, []);
 
   const insertListItem: InsertListItem<Values> = useCallback(

@@ -3,6 +3,7 @@ import { IconTable, IconSearch } from '@tabler/icons';
 import { WithinOverlays } from '@mantine/storybook';
 import { Menu } from './Menu';
 import { Button } from '../Button';
+import { Tooltip } from '../Tooltip';
 import { Text } from '../Text';
 
 export default { title: 'Menu' };
@@ -52,5 +53,37 @@ export function _WithinOverlays() {
     <WithinOverlays>
       <Usage />
     </WithinOverlays>
+  );
+}
+
+export function MenuTargetWithTooltip() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Menu>
+        <Tooltip label="Tooltip first">
+          <Menu.Target>
+            <Button>Tooltip first</Button>
+          </Menu.Target>
+        </Tooltip>
+
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+
+      <Menu>
+        <Menu.Target>
+          <Tooltip label="Tooltip last">
+            <Button ml="xl">Tooltip last</Button>
+          </Tooltip>
+        </Menu.Target>
+
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Item>Item 2</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </div>
   );
 }

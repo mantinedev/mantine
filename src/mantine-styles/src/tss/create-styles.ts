@@ -1,6 +1,5 @@
 import type { MantineTheme } from '../theme';
 import type { CSSObject } from './types';
-import { fromEntries } from './utils/from-entries/from-entries';
 import { useCss } from './use-css';
 import { useMantineTheme, useMantineProviderStyles } from '../theme/MantineProvider';
 import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
@@ -67,7 +66,7 @@ export function createStyles<Key extends string = string, Params = void>(
     const componentStyles = getStyles(options?.styles, theme, params);
     const providerStyles = getStyles(context, theme, params);
 
-    const classes = fromEntries(
+    const classes = Object.fromEntries(
       Object.keys(cssObject).map((key) => {
         const mergedStyles = cx(
           { [css(cssObject[key])]: !options?.unstyled },

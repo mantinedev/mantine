@@ -91,6 +91,9 @@ export interface DrawerProps
 
   /** Determines whether drawer should be rendered within Portal, defaults to true */
   withinPortal?: boolean;
+
+  /** Determines whether focus should be returned to the last active element when drawer is closed */
+  withFocusReturn?: boolean;
 }
 
 const transitions: Record<DrawerPosition, MantineTransition> = {
@@ -122,6 +125,7 @@ const defaultProps: Partial<DrawerProps> = {
   withOverlay: true,
   withCloseButton: true,
   withinPortal: true,
+  withFocusReturn: true,
   overlayBlur: 0,
 };
 
@@ -155,6 +159,7 @@ export function Drawer(props: DrawerProps) {
     withinPortal,
     overlayBlur,
     unstyled,
+    withFocusReturn,
     ...others
   } = useComponentDefaultProps('Drawer', defaultProps, props);
 
@@ -191,7 +196,7 @@ export function Drawer(props: DrawerProps) {
     return undefined;
   }, [trapFocus]);
 
-  useFocusReturn({ opened, shouldReturnFocus: trapFocus });
+  useFocusReturn({ opened, shouldReturnFocus: trapFocus && withFocusReturn });
 
   return (
     <OptionalPortal withinPortal={withinPortal} target={target}>

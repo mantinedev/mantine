@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef, useEffect, useCallback, useState } from 'react';
+import React, { forwardRef, useEffect, useCallback, useState, Children } from 'react';
 import {
   useComponentDefaultProps,
   Box,
@@ -10,6 +10,7 @@ import {
   StylesApiProvider,
   Selectors,
 } from '@mantine/core';
+import { clamp } from '@mantine/hooks';
 import useEmblaCarousel, { EmblaPluginType } from 'embla-carousel-react';
 import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { CarouselSlide, CarouselSlideStylesNames } from './CarouselSlide/CarouselSlide';
@@ -230,6 +231,16 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
 
     return undefined;
   }, [embla]);
+
+  useEffect(() => {
+    if (embla) {
+      embla.reInit();
+      setSlidesCount(embla.scrollSnapList().length);
+      setSelected((currentSelected) =>
+        clamp(currentSelected, 0, Children.toArray(children).length - 1)
+      );
+    }
+  }, [Children.toArray(children).length]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;

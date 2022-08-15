@@ -1,5 +1,5 @@
-import React, { cloneElement } from 'react';
-import { isElement } from '@mantine/utils';
+import React, { cloneElement, forwardRef } from 'react';
+import { isElement, ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
@@ -66,7 +66,7 @@ const defaultProps: Partial<TooltipProps> = {
   positionDependencies: [],
 };
 
-export function Tooltip(props: TooltipProps) {
+const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
   const {
     children,
     position,
@@ -96,6 +96,9 @@ export function Tooltip(props: TooltipProps) {
     zIndex,
     disabled,
     positionDependencies,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
     ...others
   } = useComponentDefaultProps('Tooltip', defaultProps, props);
 
@@ -119,7 +122,7 @@ export function Tooltip(props: TooltipProps) {
     throw new Error(TOOLTIP_ERRORS.children);
   }
 
-  const targetRef = useMergedRef(tooltip.reference, (children as any).ref);
+  const targetRef = useMergedRef(tooltip.reference, (children as any).ref, ref);
 
   return (
     <>
@@ -162,6 +165,9 @@ export function Tooltip(props: TooltipProps) {
       {cloneElement(
         children,
         tooltip.getReferenceProps({
+          onClick,
+          onMouseEnter,
+          onMouseLeave,
           [refProp]: targetRef,
           className: cx(className, children.props.className),
           ...children.props,
@@ -169,9 +175,14 @@ export function Tooltip(props: TooltipProps) {
       )}
     </>
   );
-}
+}) as any;
 
-Tooltip.Group = TooltipGroup;
-Tooltip.Floating = TooltipFloating;
+_Tooltip.Group = TooltipGroup;
+_Tooltip.Floating = TooltipFloating;
 
-Tooltip.displayName = '@mantine/core/Tooltip';
+_Tooltip.displayName = '@mantine/core/Tooltip';
+
+export const Tooltip: ForwardRefWithStaticComponents<
+  TooltipProps,
+  { Group: typeof TooltipGroup; Floating: typeof TooltipFloating }
+> = _Tooltip;

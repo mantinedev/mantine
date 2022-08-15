@@ -27,7 +27,7 @@ export const InputError = forwardRef<HTMLDivElement, InputErrorProps>(
       { name: ['InputWrapper', __staticSelector], classNames, styles, unstyled }
     );
     return (
-      <Text className={cx(classes.error, className)} ref={ref} {...others}>
+      <Text className={cx(classes.error, className)} ref={ref} role="alert" {...others}>
         {children}
       </Text>
     );

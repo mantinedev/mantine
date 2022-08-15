@@ -16,7 +16,6 @@ export const Usage = () => {
         multiline
         events={{ focus: true, hover: true, touch: false }}
         withinPortal={false}
-        opened={opened}
       >
         <Button fullWidth onClick={() => setOpened(!opened)}>
           target

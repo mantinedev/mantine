@@ -1,6 +1,7 @@
 import React from 'react';
 import { itSupportsSystemProps, checkAccessibility, patchConsoleError } from '@mantine/tests';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Tooltip, TooltipProps } from './Tooltip';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
@@ -57,6 +58,20 @@ describe('@mantine/core/Tooltip', () => {
       </Tooltip>
     );
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+  });
+
+  it('shows tooltip when target element is hovered', async () => {
+    render(
+      <Tooltip label="test-tooltip" transitionDuration={0}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    await userEvent.hover(screen.getByRole('button'));
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
+
+    await userEvent.unhover(screen.getByRole('button'));
+    expect(screen.queryAllByText('test-tooltip')).toHaveLength(0);
   });
 
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {

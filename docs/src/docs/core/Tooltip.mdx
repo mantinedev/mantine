@@ -88,7 +88,11 @@ Use `forwardRef` function to forward ref to root element:
 import { forwardRef } from 'react';
 import { Tooltip } from '@mantine/core';
 
-const MyComponent = forwardRef<HTMLDivElement>((props, ref) => <div ref={ref}>My component</div>);
+const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
 
 // Works correctly – ref is forwarded
 function Demo() {

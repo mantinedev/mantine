@@ -122,10 +122,50 @@ storiesOf('Stepper', module)
             volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
             mi consectetur, pharetra urna et, volutpat nibh. Integer sit amet diam ligula.
             Phasellus ex purus, dictum non purus ut, viverra maximus sem. Sed luctus eget massa
-            vitae dapibus. Sed ante tortor, viverra at urna et, feugiat scelerisque dolor.`}
-            loading
+            vitae dapibus. Sed ante tortor, viverra at urna et, feugiat scelerisque dolor. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh.`}
           />
           <Stepper.Step label="Step 3" description="Get full access" />
+          <Stepper.Step
+            label="Step 4"
+            description={`Curabitur in neque dignissim, accumsan ante et, aliquam ex. Mauris nibh tortor,
+            blandit sit amet eleifend sed, convallis in erat. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. In hac habitasse platea dictumst. Integer feugiat elit
+            vel neque tincidunt semper. Pellentesque euismod dignissim massa, ac venenatis ipsum
+            vulputate mattis. Integer a efficitur ligula. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh. Integer sit amet diam ligula.
+            Phasellus ex purus, dictum non purus ut, viverra maximus sem. Sed luctus eget massa
+            vitae dapibus. Sed ante tortor, viverra at urna et, feugiat scelerisque dolor. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh.`}
+          />
+          <Stepper.Step
+            label="Step 5"
+            description={`Curabitur in neque dignissim, accumsan ante et, aliquam ex. Mauris nibh tortor,
+            blandit sit amet eleifend sed, convallis in erat. Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit. In hac habitasse platea dictumst. Integer feugiat elit
+            vel neque tincidunt semper. Pellentesque euismod dignissim massa, ac venenatis ipsum
+            vulputate mattis. Integer a efficitur ligula. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh. Integer sit amet diam ligula.
+            Phasellus ex purus, dictum non purus ut, viverra maximus sem. Sed luctus eget massa
+            vitae dapibus. Sed ante tortor, viverra at urna et, feugiat scelerisque dolor. Fusce lacinia lacus at sem luctus
+            accumsan nec nec turpis. Fusce interdum, orci id porta viverra, sem lorem porta
+            nibh, eget bibendum ligula sapien sit amet orci. Maecenas lobortis lorem dui, a
+            volutpat nunc accumsan at. Curabitur ac auctor ante, et convallis diam. Donec eget
+            mi consectetur, pharetra urna et, volutpat nibh.`}
+          />
+          <Stepper.Step label="Step 6" description="Get full access" />
         </Stepper>
       </div>
     </div>

@@ -233,21 +233,13 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
     index: number
   ) {
-    if (event.cancelable) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
+    event.stopPropagation();
     thumbIndex.current = index;
   }
 
   const handleTrackMouseDownCapture = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    if (event.cancelable) {
-      event.preventDefault();
-    }
-
     container.current.focus();
     const rect = container.current.getBoundingClientRect();
     const changePosition = getClientPosition(event.nativeEvent);
