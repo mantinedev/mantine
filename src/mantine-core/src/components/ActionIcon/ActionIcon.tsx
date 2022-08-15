@@ -7,6 +7,7 @@ import {
   PolymorphicRef,
   Selectors,
   useMantineDefaultProps,
+  MantineGradient,
 } from '@mantine/styles';
 import { Box } from '../Box';
 import useStyles, { sizes, ActionIconVariant } from './ActionIcon.styles';
@@ -20,6 +21,9 @@ interface _ActionIconProps extends DefaultProps<ActionIconStylesNames> {
 
   /** Controls appearance */
   variant?: ActionIconVariant;
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
 
   /** Button hover, active and icon colors from theme, defaults to gray */
   color?: MantineColor;
@@ -47,6 +51,7 @@ const defaultProps: Partial<ActionIconProps<any>> = {
   color: 'gray',
   size: 'md',
   variant: 'hover',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
   disabled: false,
   loading: false,
 };
@@ -60,6 +65,7 @@ export const ActionIcon: ActionIconComponent = forwardRef(
       radius,
       size,
       variant,
+      gradient,
       disabled,
       loaderProps,
       loading,
@@ -70,7 +76,14 @@ export const ActionIcon: ActionIconComponent = forwardRef(
     } = useMantineDefaultProps('ActionIcon', defaultProps, props);
 
     const { classes, cx, theme } = useStyles(
-      { size, radius, color },
+      {
+        size,
+        radius,
+        color,
+        gradientFrom: gradient.from,
+        gradientTo: gradient.to,
+        gradientDeg: gradient.deg,
+      },
       { name: 'ActionIcon', classNames, styles }
     );
     const colors = theme.fn.variant({ color, variant: 'light' });
