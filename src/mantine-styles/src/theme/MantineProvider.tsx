@@ -7,7 +7,7 @@ import { MantineCssVariables } from './MantineCssVariables';
 import type { MantineThemeOverride, MantineTheme } from './types';
 import { mergeThemeWithFunctions } from './utils/merge-theme/merge-theme';
 import { filterProps } from './utils/filter-props/filter-props';
-import { defaultMantineEmotionCache } from '../tss';
+import { defaultMantineEmotionCache } from '../tss/default-emotion-cache';
 import { NormalizeCSS } from './NormalizeCSS';
 
 interface MantineProviderContextType {
