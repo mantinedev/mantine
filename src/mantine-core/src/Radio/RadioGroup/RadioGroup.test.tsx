@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
   itSupportsInputWrapperProps,
+  itSupportsInputAsterisk,
   itSupportsSystemProps,
 } from '@mantine/tests';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
@@ -21,6 +22,7 @@ const defaultProps: RadioGroupProps = {
 
 describe('@mantine/core/RadioGroup', () => {
   itSupportsInputWrapperProps(RadioGroup, defaultProps, 'RadioGroup');
+  itSupportsInputAsterisk(RadioGroup, defaultProps, 'RadioGroup');
   itSupportsSystemProps({
     component: RadioGroup,
     props: defaultProps,

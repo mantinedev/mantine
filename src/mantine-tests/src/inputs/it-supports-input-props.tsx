@@ -7,12 +7,14 @@ import { itSupportsInputWrapperProps } from './it-supports-input-wrapper-props';
 import { itSupportsInputStylesApi } from './it-supports-input-styles-api';
 import { itSupportsInputContainer } from './it-supports-input-container';
 import { itSupportsInputWrapperOrder } from './it-supports-input-wrapper-order';
+import { itSupportsInputAsterisk } from './it-supports-input-asterisk';
 
 export function itSupportsInputProps<P>(
   Component: React.ComponentType<P>,
   requiredProps: P,
   name: string
 ) {
+  itSupportsInputAsterisk(Component, requiredProps, name);
   itSupportsInputWrapperProps(Component, requiredProps, name);
   itSupportsInputContainer(Component, requiredProps, name);
   itSupportsInputWrapperOrder(Component, requiredProps, name);
