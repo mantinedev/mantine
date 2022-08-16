@@ -7,6 +7,18 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.2.0
 date: 'August 8th, 2022'
 ---
 
+import { StyledDemos } from '@mantine/demos';
+
+## Styled components support
+
+You can now use [styled components syntax](https://mantine.dev/styles/styled) with [@emotion/styled](https://emotion.sh/docs/styled) package:
+
+- It is fully compatible with Mantine server side rendering (`@mantine/next`, `@mantine/remix` and `gatsby-plugin-mantine` packages)
+- Mantine [theme](https://mantine.dev/theming/theme-object/) can now be used in component styles with no extra setup
+- Components created with `@emotion/styled` will use Mantine's [emotion cache](https://mantine.dev/theming/emotion-cache/)
+
+<Demo data={StyledDemos.usage} />
+
 ## withAsterisk prop
 
 All inputs that are based on [Input and Input.Wrapper](https://mantine.dev/core/input/) components now
