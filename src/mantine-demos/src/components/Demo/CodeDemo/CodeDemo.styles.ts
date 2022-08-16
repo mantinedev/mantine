@@ -38,9 +38,8 @@ export default createStyles((theme: MantineTheme, { radius }: CodeDemoStylesPara
   },
 
   controls: {
-    position: 'absolute',
-    bottom: theme.spacing.xs - 1,
-    right: theme.spacing.xs - 1,
+    marginTop: theme.spacing.xs - 1,
+    alignItems: 'flex-end',
   },
 
   withToggle: {
