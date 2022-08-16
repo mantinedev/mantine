@@ -7,6 +7,27 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.2.0
 date: 'August 8th, 2022'
 ---
 
+## withAsterisk prop
+
+All inputs that are based on [Input and Input.Wrapper](https://mantine.dev/core/input/) components now
+support `withAsterisk` prop, it allows to display required asterisk without adding `required` attribute
+to the input element. It is useful when you do not need browser validation in your forms but still want
+to display the asterisk.
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+// Will display required asterisk and add `required` attribute to the input element
+function RequiredDemo() {
+  return <TextInput label="test-label" required />;
+}
+
+// Will only display the asterisk, `required` attribute is not added to the input element
+function AsteriskDemo() {
+  return <TextInput label="test-label" withAsterisk />;
+}
+```
+
 ## Other changes
 
 - [ActionIcon](https://mantine.dev/core/action-icon/) component now support `gradient` variant
