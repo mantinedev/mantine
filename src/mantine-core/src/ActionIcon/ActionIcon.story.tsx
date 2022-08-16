@@ -70,6 +70,7 @@ export function Colors() {
 
             {ACTION_ICON_VARIANTS.map((variant) => (
               <th
+                key={variant}
                 style={{
                   ...sharedStyles,
                 }}
@@ -81,7 +82,7 @@ export function Colors() {
         </thead>
         <tbody>
           {MANTINE_COLORS.map((color) => (
-            <tr>
+            <tr key={color}>
               <td
                 style={{
                   color: theme.colors[color][theme.fn.primaryShade()],
@@ -93,6 +94,7 @@ export function Colors() {
 
               {ACTION_ICON_VARIANTS.map((variant) => (
                 <td
+                  key={variant}
                   style={{
                     ...sharedStyles,
                   }}
