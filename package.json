@@ -124,6 +124,7 @@
   "dependencies": {
     "@emotion/react": "11.9.3",
     "@emotion/server": "11.4.0",
+    "@emotion/styled": "^11.10.0",
     "@floating-ui/react-dom-interactions": "0.6.6",
     "@radix-ui/react-scroll-area": "1.0.0",
     "@tabler/icons": "^1.68.0",
