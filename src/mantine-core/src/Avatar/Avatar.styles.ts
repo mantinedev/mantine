@@ -4,7 +4,12 @@ import {
   MantineColor,
   CSSObject,
   MantineTheme,
+  MantineGradient,
 } from '@mantine/styles';
+
+export const AVATAR_VARIANTS = ['filled', 'light', 'gradient', 'outline'] as const;
+
+export type AvatarVariant = typeof AVATAR_VARIANTS[number];
 
 export interface AvatarStylesParams {
   size: MantineNumberSize;
@@ -12,6 +17,8 @@ export interface AvatarStylesParams {
   color: MantineColor;
   withinGroup: boolean;
   spacing: MantineNumberSize;
+  variant: AvatarVariant;
+  gradient: MantineGradient;
 }
 
 export const sizes = {
@@ -41,8 +48,8 @@ function getGroupStyles({ withinGroup, spacing, theme }: GetGroupStylesInput): C
 }
 
 export default createStyles(
-  (theme, { size, radius, color, withinGroup, spacing }: AvatarStylesParams) => {
-    const colors = theme.fn.variant({ variant: 'light', color });
+  (theme, { size, radius, color, withinGroup, spacing, variant, gradient }: AvatarStylesParams) => {
+    const colors = theme.fn.variant({ variant, color, gradient });
     return {
       root: {
         ...theme.fn.focusStyles(),
@@ -82,6 +89,9 @@ export default createStyles(
         width: '100%',
         height: '100%',
         userSelect: 'none',
+        backgroundImage: variant === 'gradient' ? colors.background : undefined,
+        border: `${variant === 'gradient' ? 0 : 1}px solid ${colors.border}`,
+        borderRadius: theme.fn.radius(radius),
       },
 
       placeholderIcon: {

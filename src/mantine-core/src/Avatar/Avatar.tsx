@@ -5,13 +5,14 @@ import {
   MantineColor,
   Selectors,
   useComponentDefaultProps,
+  MantineGradient,
 } from '@mantine/styles';
 import { createPolymorphicComponent } from '@mantine/utils';
 import { Box } from '../Box';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
-import useStyles, { AvatarStylesParams } from './Avatar.styles';
+import useStyles, { AvatarStylesParams, AvatarVariant } from './Avatar.styles';
 
 export type AvatarStylesNames = Selectors<typeof useStyles>;
 
@@ -31,6 +32,12 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStyle
   /** Color from theme.colors used for letter and icon placeholders */
   color?: MantineColor;
 
+  /** Controls appearance */
+  variant?: AvatarVariant;
+
+  /** Controls gradient settings in gradient variant only */
+  gradient?: MantineGradient;
+
   /** img element attributes */
   imageProps?: Record<string, any>;
 
@@ -41,6 +48,8 @@ export interface AvatarProps extends DefaultProps<AvatarStylesNames, AvatarStyle
 const defaultProps: Partial<AvatarProps> = {
   size: 'md',
   color: 'gray',
+  variant: 'light',
+  gradient: { from: 'blue', to: 'cyan', deg: 45 },
 };
 
 export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
@@ -52,6 +61,8 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
     radius,
     children,
     color,
+    variant,
+    gradient,
     classNames,
     styles,
     imageProps,
@@ -63,7 +74,7 @@ export const _Avatar = forwardRef<HTMLDivElement, AvatarProps>((props, ref) => {
   const [error, setError] = useState(!src);
 
   const { classes, cx } = useStyles(
-    { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing },
+    { color, radius, size, withinGroup: ctx.withinGroup, spacing: ctx.spacing, variant, gradient },
     { classNames, styles, unstyled, name: 'Avatar' }
   );
 
