@@ -17,6 +17,7 @@
   },
   "peerDependencies": {
     "react": "*",
+    "@emotion/styled": "*",
     "@mantine/core": "5.1.6",
     "@mantine/hooks": "5.1.6",
     "@mantine/dates": "5.1.6",
