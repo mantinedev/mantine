@@ -192,6 +192,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       inputContainer,
       inputWrapperOrder,
       modalProps,
+      withAsterisk,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -281,6 +282,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         inputContainer={inputContainer}
         inputWrapperOrder={inputWrapperOrder}
         unstyled={unstyled}
+        withAsterisk={withAsterisk}
         {...systemStyles}
         {...wrapperProps}
       >

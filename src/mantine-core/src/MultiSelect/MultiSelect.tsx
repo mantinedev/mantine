@@ -209,6 +209,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     inputContainer,
     inputWrapperOrder,
     readOnly,
+    withAsterisk,
     ...others
   } = useComponentDefaultProps('MultiSelect', defaultProps, props);
 
@@ -587,6 +588,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       inputContainer={inputContainer}
       inputWrapperOrder={inputWrapperOrder}
       unstyled={unstyled}
+      withAsterisk={withAsterisk}
       {...systemStyles}
       {...wrapperProps}
     >

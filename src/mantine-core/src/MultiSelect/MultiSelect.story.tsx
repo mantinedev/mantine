@@ -27,3 +27,14 @@ export function EmptyGroup() {
     />
   );
 }
+
+export function Asterisk() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <MultiSelect data={data} label="With required asterisk" withAsterisk />
+      <MultiSelect data={data} label="Just required" required />
+      <MultiSelect data={data} label="Required asterisk off" required withAsterisk={false} />
+      <MultiSelect data={data} label="Required false asterisk on" required={false} withAsterisk />
+    </div>
+  );
+}

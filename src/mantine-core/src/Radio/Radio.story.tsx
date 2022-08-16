@@ -63,3 +63,22 @@ export function CursorPointer() {
     </MantineProvider>
   );
 }
+
+export function Asterisk() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <Radio.Group label="With required asterisk" withAsterisk>
+        <Radio value="1" />
+      </Radio.Group>
+      <Radio.Group label="Just required" required>
+        <Radio value="1" />
+      </Radio.Group>
+      <Radio.Group label="Required asterisk off" required withAsterisk={false}>
+        <Radio value="1" />
+      </Radio.Group>
+      <Radio.Group label="Required false asterisk on" required={false} withAsterisk>
+        <Radio value="1" />
+      </Radio.Group>
+    </div>
+  );
+}
