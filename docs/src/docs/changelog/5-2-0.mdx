@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.2.0
 date: 'August 8th, 2022'
 ---
 
-import { StyledDemos, TitleDemos } from '@mantine/demos';
+import { StyledDemos, TitleDemos, RingProgressDemos, ProgressDemos } from '@mantine/demos';
 
 ## Styled components support
 
@@ -39,6 +39,15 @@ function AsteriskDemo() {
   return <TextInput label="test-label" withAsterisk />;
 }
 ```
+
+## Progress and RingProgress tooltips
+
+[Progress](https://mantine.dev/core/progress/) and [RingProgress](https://mantine.dev/core/ring-progress/) components
+now support floating tooltips in sections:
+
+<Demo data={RingProgressDemos.tooltip} />
+
+<Demo data={ProgressDemos.tooltip} />
 
 ## Title component changes
 
