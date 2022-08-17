@@ -44,3 +44,19 @@ export function IndividualFontWeightOnProvider() {
     </MantineProvider>
   );
 }
+
+export function TextProps() {
+  return (
+    <>
+      <Title>Default</Title>
+      <Title weight={100}>weight 100</Title>
+      <Title size={100}>Size 100px</Title>
+      <Title order={3} size="h6">
+        Size h6
+      </Title>
+      <Title color="blue.4" align="center">
+        Blue color
+      </Title>
+    </>
+  );
+}
