@@ -33,7 +33,7 @@ export function ListItem({ className, children, icon, ...others }: ListItemProps
     >
       <div className={classes.itemWrapper}>
         {_icon && <span className={classes.itemIcon}>{_icon}</span>}
-        <span>{children}</span>
+        {children}
       </div>
     </Box>
   );
