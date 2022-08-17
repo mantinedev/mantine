@@ -25,3 +25,17 @@ export function ColorsIndex() {
     </div>
   );
 }
+
+export function WithTooltips() {
+  return (
+    <div style={{ padding: 40 }}>
+      <RingProgress
+        sections={[
+          { value: 40, color: 'cyan', tooltip: 'Hello' },
+          { value: 20, color: 'blue', tooltip: 'There' },
+          { value: 15, color: 'indigo', tooltip: 'You' },
+        ]}
+      />
+    </div>
+  );
+}
