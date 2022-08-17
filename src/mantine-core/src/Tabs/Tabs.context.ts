@@ -17,6 +17,7 @@ interface TabsContext {
   color: MantineColor;
   radius: MantineNumberSize;
   inverted: boolean;
+  keepMounted?: boolean;
 }
 
 export const [TabsContextProvider, useTabsContext] = createSafeContext<TabsContext>(

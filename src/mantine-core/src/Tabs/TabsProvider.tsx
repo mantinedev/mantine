@@ -45,6 +45,9 @@ export interface TabsProviderProps {
 
   /** Determines whether tabs should have inverted styles */
   inverted?: boolean;
+
+  /** If set to false, Tabs.Panel content will not stay mounted when tab is not active */
+  keepMounted?: boolean;
 }
 
 export function TabsProvider({
@@ -61,6 +64,7 @@ export function TabsProvider({
   color,
   radius,
   inverted,
+  keepMounted,
 }: TabsProviderProps) {
   const uid = useId(id);
 
@@ -87,6 +91,7 @@ export function TabsProvider({
         color,
         radius,
         inverted,
+        keepMounted,
       }}
     >
       {children}
