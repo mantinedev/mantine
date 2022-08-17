@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.2.0
 date: 'August 8th, 2022'
 ---
 
-import { StyledDemos } from '@mantine/demos';
+import { StyledDemos, TitleDemos } from '@mantine/demos';
 
 ## Styled components support
 
@@ -39,6 +39,16 @@ function AsteriskDemo() {
   return <TextInput label="test-label" withAsterisk />;
 }
 ```
+
+## Title component changes
+
+[Title](https://mantine.dev/core/title/) now supports setting `size` different from `order`:
+
+<Demo data={TitleDemos.size} />
+
+It also now supports all [Text](https://mantine.dev/core/text/) component props:
+
+<Demo data={TitleDemos.textProps} />
 
 ## Other changes
 
