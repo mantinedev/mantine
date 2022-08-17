@@ -64,7 +64,7 @@ export function TabsProvider({
   color,
   radius,
   inverted,
-  keepMounted,
+  keepMounted = true,
 }: TabsProviderProps) {
   const uid = useId(id);
 
