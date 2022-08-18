@@ -23,7 +23,7 @@ function Demo() {
     <Box sx={{ maxWidth: 300 }} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
-          required
+          withAsterisk
           label="Email"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
@@ -60,7 +60,7 @@ function Demo() {
     <Box sx={{ maxWidth: 300 }} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
-          required
+          withAsterisk
           label="Email"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
