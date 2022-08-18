@@ -276,12 +276,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleSearchChange(event.currentTarget.value);
-    setDropdownOpened(true);
+    !disabled && !valuesOverflow.current && searchable && setDropdownOpened(true);
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     typeof onFocus === 'function' && onFocus(event);
-    searchable && setDropdownOpened(true);
+    !disabled && !valuesOverflow.current && searchable && setDropdownOpened(true);
   };
 
   const filteredData = filterData({
@@ -311,7 +311,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   }, [searchValue]);
 
   useDidUpdate(() => {
-    if (!disabled && _value.length >= data.length) {
+    if (!disabled && _value.length > data.length) {
       setDropdownOpened(false);
     }
 
