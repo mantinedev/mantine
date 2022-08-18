@@ -98,6 +98,8 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
 export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type ResetStatus = () => void;
 
+export type ResetDirty<Values> = (values?: Values) => void;
+
 export interface UseFormInput<Values> {
   initialValues?: Values;
   initialErrors?: FormErrors;
@@ -131,5 +133,5 @@ export interface UseFormReturnType<Values> {
   setTouched: SetFormStatus;
   setDirty: SetFormStatus;
   resetTouched: ResetStatus;
-  resetDirty: ResetStatus;
+  resetDirty: ResetDirty<Values>;
 }

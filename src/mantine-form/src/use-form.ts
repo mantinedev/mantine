@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from './get-input-on-change';
 import { setPath, reorderPath, insertPath, getPath, removePath } from './paths';
@@ -25,6 +25,7 @@ import {
   OnSubmit,
   OnReset,
   GetFieldStatus,
+  ResetDirty,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
@@ -40,9 +41,16 @@ export function useForm<Values = Record<string, unknown>>({
   const [dirty, setDirty] = useState(initialDirty);
   const [values, _setValues] = useState(initialValues);
   const [errors, _setErrors] = useState(filterErrors(initialErrors));
+  const _dirtyValues = useRef<Values>(initialValues);
+  const _setDirtyValues = (_values: Values) => {
+    _dirtyValues.current = _values;
+  };
 
   const resetTouched = useCallback(() => setTouched({}), []);
-  const resetDirty = useCallback(() => setDirty({}), []);
+  const resetDirty: ResetDirty<Values> = (_values) => {
+    _setDirtyValues(_values || values);
+    setDirty({});
+  };
 
   const setErrors: SetErrors = useCallback(
     (errs) =>
@@ -54,7 +62,7 @@ export function useForm<Values = Record<string, unknown>>({
   const reset: Reset = useCallback(() => {
     _setValues(initialValues);
     clearErrors();
-    resetDirty();
+    resetDirty(initialValues);
     resetTouched();
   }, []);
 
@@ -80,7 +88,7 @@ export function useForm<Values = Record<string, unknown>>({
   const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
     const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
     _setValues((current) => {
-      const initialValue = getPath(path, initialValues);
+      const initialValue = getPath(path, _dirtyValues.current);
       const isFieldDirty = !isEqual(initialValue, value);
       setDirty((currentDirty) => ({ ...currentDirty, [path]: isFieldDirty }));
       setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
