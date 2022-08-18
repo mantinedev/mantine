@@ -59,6 +59,29 @@ It also now supports all [Text](https://mantine.dev/core/text/) component props:
 
 <Demo data={TitleDemos.textProps} />
 
+## @mantine/form changes
+
+`form.resetDirty` will now memoize form values and compare all next changes with stored values instead of `initialValues`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ initialValues: { a: 1 } });
+
+form.setFieldValue('a', 2);
+form.isDirty(); // -> true
+
+form.setFieldValue('a', 1);
+form.isDirty(); // -> false
+
+form.setFieldValue('a', 3);
+form.resetDirty();
+form.isDirty(); // -> false
+
+form.setFieldValue('a', 3);
+form.isDirty(); // -> true
+```
+
 ## Other changes
 
 - [ActionIcon](https://mantine.dev/core/action-icon/) component now support `gradient` variant
