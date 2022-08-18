@@ -179,4 +179,18 @@ describe('@mantine/form/validate-values', () => {
       },
     });
   });
+
+  it('validates values based their path', () => {
+    expect(
+      validateValues(
+        { a: { b: { c: (_value, _values, path) => (path === 'a.b.0.c' ? 'error' : null) } } },
+        { a: { b: [{ c: 1 }, { c: 2 }] } }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: {
+        'a.b.0.c': 'error',
+      },
+    });
+  });
 });

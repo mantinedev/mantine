@@ -19,7 +19,7 @@ export interface ReorderPayload {
   to: number;
 }
 
-type Rule<Value, Values> = (value: Value, values: Values) => React.ReactNode;
+type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
 type FormRule<Value, Values> = Value extends Array<infer ListValue>
   ?

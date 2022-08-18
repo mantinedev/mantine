@@ -82,6 +82,22 @@ form.setFieldValue('a', 3);
 form.isDirty(); // -> true
 ```
 
+Form rules now receive rule path as third argument:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { a: [{ b: 1 }, { b: 2 }] },
+  validate: {
+    a: {
+      // path can be used to get field position relative to other fields
+      b: (value, values, path) => (path === 'a.0.b' ? 'error' : null),
+    },
+  },
+});
+```
+
 ## Other changes
 
 - [ActionIcon](https://mantine.dev/core/action-icon/) component now support `gradient` variant
