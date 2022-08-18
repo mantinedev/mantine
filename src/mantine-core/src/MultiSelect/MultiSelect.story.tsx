@@ -1,4 +1,6 @@
 import React from 'react';
+import { Stack } from '../Stack';
+import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
 
 export default { title: 'MultiSelect' };
@@ -28,13 +30,21 @@ export function EmptyGroup() {
   );
 }
 
-export function Asterisk() {
+export function SizeXSLineHeight() {
   return (
-    <div style={{ width: 300, padding: 20 }}>
-      <MultiSelect data={data} label="With required asterisk" withAsterisk />
-      <MultiSelect data={data} label="Just required" required />
-      <MultiSelect data={data} label="Required asterisk off" required withAsterisk={false} />
-      <MultiSelect data={data} label="Required false asterisk on" required={false} withAsterisk />
-    </div>
+    <Stack style={{ padding: 20 }}>
+      <TextInput
+        error="Font styles should be identical"
+        size="xs"
+        placeholder="Placeholder Textinput"
+      />
+
+      <MultiSelect
+        error="Placeholder should be centered correctly"
+        size="xs"
+        data={['One', 'Two', 'Three']}
+        placeholder="Placeholder Multiselect"
+      />
+    </Stack>
   );
 }
