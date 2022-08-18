@@ -99,6 +99,7 @@ export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Fi
 export type ResetStatus = () => void;
 
 export type ResetDirty<Values> = (values?: Values) => void;
+export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 
 export interface UseFormInput<Values> {
   initialValues?: Values;
@@ -134,4 +135,5 @@ export interface UseFormReturnType<Values> {
   setDirty: SetFormStatus;
   resetTouched: ResetStatus;
   resetDirty: ResetDirty<Values>;
+  isValid: IsValid<Values>;
 }

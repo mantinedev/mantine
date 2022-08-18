@@ -114,3 +114,26 @@ You can use `handleErrors` function to perform certain actions when user tries t
 for example, you can show a notification:
 
 <Demo data={FormDemos.onSubmitErrors} />
+
+## isValid handler
+
+`form.isValid` performs form validation with given validation functions, rules object or schema, but unlike
+`form.validate` it does not set `form.errors` and just returns boolean value that indicates whether form is valid.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { name: '', age: 0 },
+  validate: {
+    name: (value) => (value.trim().length < 2 ? 'Too short' : null),
+    age: (value) => (value < 18 ? 'Too young' : null),
+  },
+});
+
+// get validation status of all values
+form.isValid(); // -> false
+
+// get validation status of field
+form.isValid('name'); // -> false
+```

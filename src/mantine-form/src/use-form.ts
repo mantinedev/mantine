@@ -26,6 +26,7 @@ import {
   OnReset,
   GetFieldStatus,
   ResetDirty,
+  IsValid,
 } from './types';
 
 export function useForm<Values = Record<string, unknown>>({
@@ -190,6 +191,14 @@ export function useForm<Values = Record<string, unknown>>({
     [touched]
   );
 
+  const isValid: IsValid<Values> = useCallback(
+    (path) =>
+      path
+        ? !validateFieldValue(path, rules, values).hasError
+        : !validateValues(rules, values).hasErrors,
+    [values, rules]
+  );
+
   return {
     values,
     errors,
@@ -214,5 +223,6 @@ export function useForm<Values = Record<string, unknown>>({
     setDirty,
     resetTouched,
     resetDirty,
+    isValid,
   };
 }
