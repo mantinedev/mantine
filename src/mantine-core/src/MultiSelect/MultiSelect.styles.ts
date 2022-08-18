@@ -17,8 +17,6 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
     alignItems: 'center',
     flexWrap: 'wrap',
     marginLeft: -theme.spacing.xs / 2,
-    paddingTop: theme.spacing.xs / 2 - 2,
-    paddingBottom: theme.spacing.xs / 2 - 2,
     boxSizing: 'border-box',
   },
 
@@ -27,6 +25,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
   },
 
   searchInput: {
+    ...theme.fn.fontStyles(),
     flex: 1,
     minWidth: 60,
     backgroundColor: 'transparent',
@@ -34,9 +33,10 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
     outline: 0,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     padding: 0,
-    margin: theme.spacing.xs / 2,
+    marginLeft: theme.spacing.xs / 2,
     appearance: 'none',
     color: 'inherit',
+    lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 2}px`,
 
     '&::placeholder': {
       opacity: 1,
