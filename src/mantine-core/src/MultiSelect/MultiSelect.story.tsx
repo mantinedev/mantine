@@ -1,4 +1,6 @@
 import React from 'react';
+import { Stack } from '../Stack';
+import { TextInput } from '../TextInput';
 import { MultiSelect } from './MultiSelect';
 
 export default { title: 'MultiSelect' };
@@ -25,5 +27,24 @@ export function EmptyGroup() {
         { value: 'summer', label: 'Summer', group: 'Never was a pickle' },
       ]}
     />
+  );
+}
+
+export function SizeXSLineHeight() {
+  return (
+    <Stack style={{ padding: 20 }}>
+      <TextInput
+        error="Font styles should be identical"
+        size="xs"
+        placeholder="Placeholder Textinput"
+      />
+
+      <MultiSelect
+        error="Placeholder should be centered correctly"
+        size="xs"
+        data={['One', 'Two', 'Three']}
+        placeholder="Placeholder Multiselect"
+      />
+    </Stack>
   );
 }
