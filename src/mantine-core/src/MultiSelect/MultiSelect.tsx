@@ -75,7 +75,7 @@ export interface MultiSelectProps
   shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?(query: string): SelectItem | string;
+  onCreate?(query: string): SelectItem | string | null | undefined;
 
   /** Change dropdown component, can be used to add custom scrollbars */
   dropdownComponent?: any;
@@ -334,10 +334,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       } else {
         if (item.creatable && typeof onCreate === 'function') {
           const createdItem = onCreate(item.value);
-          if (typeof createdItem === 'string') {
-            setValue([..._value, createdItem]);
-          } else {
-            setValue([..._value, createdItem.value]);
+          if (typeof createdItem !== 'undefined' && createdItem !== null) {
+            if (typeof createdItem === 'string') {
+              setValue([..._value, createdItem]);
+            } else {
+              setValue([..._value, createdItem.value]);
+            }
           }
         } else {
           setValue([..._value, item.value]);

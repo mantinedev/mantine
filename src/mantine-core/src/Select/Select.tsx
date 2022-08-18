@@ -107,7 +107,7 @@ export interface SelectProps
   shouldCreate?(query: string, data: SelectItem[]): boolean;
 
   /** Called when create option is selected */
-  onCreate?(query: string): SelectItem | string;
+  onCreate?(query: string): SelectItem | string | null | undefined;
 
   /** Change dropdown component, can be used to add native scrollbars */
   dropdownComponent?: any;
@@ -296,10 +296,12 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
       } else {
         if (item.creatable && typeof onCreate === 'function') {
           const createdItem = onCreate(item.value);
-          if (typeof createdItem === 'string') {
-            handleChange(createdItem);
-          } else {
-            handleChange(createdItem.value);
+          if (typeof createdItem !== 'undefined' && createdItem !== null) {
+            if (typeof createdItem === 'string') {
+              handleChange(createdItem);
+            } else {
+              handleChange(createdItem.value);
+            }
           }
         } else {
           handleChange(item.value);
