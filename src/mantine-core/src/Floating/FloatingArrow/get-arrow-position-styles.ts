@@ -68,8 +68,8 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'right' : 'left']: arrowPosition,
-      [dir === 'ltr' ? 'borderLeft' : 'borderRight']: 0,
+      right: arrowPosition,
+      borderLeft: 0,
       borderBottom: 0,
     };
   }
@@ -78,8 +78,8 @@ export function getArrowPositionStyles({
     return {
       ...baseStyles,
       ...horizontalSide(placement, arrowSize, arrowOffset),
-      [dir === 'ltr' ? 'left' : 'right']: arrowPosition,
-      [dir === 'ltr' ? 'borderRight' : 'borderLeft']: 0,
+      left: arrowPosition,
+      borderRight: 0,
       borderTop: 0,
     };
   }
