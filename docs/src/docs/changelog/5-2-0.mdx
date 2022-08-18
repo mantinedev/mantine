@@ -7,7 +7,13 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.2.0
 date: 'August 8th, 2022'
 ---
 
-import { StyledDemos, TitleDemos, RingProgressDemos, ProgressDemos } from '@mantine/demos';
+import {
+  StyledDemos,
+  TitleDemos,
+  RingProgressDemos,
+  ProgressDemos,
+  PrismDemos,
+} from '@mantine/demos';
 
 ## Styled components support
 
@@ -118,6 +124,12 @@ const form = useForm({
   },
 });
 ```
+
+## Custom prism themes
+
+[Prism](https://mantine.dev/others/prism/) component now supports custom themes with `getPrismTheme` prop:
+
+<Demo data={PrismDemos.prismTheme} />
 
 ## Other changes
 

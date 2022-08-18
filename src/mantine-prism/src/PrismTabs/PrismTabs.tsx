@@ -19,6 +19,7 @@ export function PrismPanel({
   highlightLines,
   scrollAreaComponent,
   trim,
+  getPrismTheme,
   ...others
 }: PrismProps & TabsPanelProps) {
   const { classes } = useStyles({ radius });
@@ -36,6 +37,7 @@ export function PrismPanel({
         highlightLines={highlightLines}
         scrollAreaComponent={scrollAreaComponent}
         trim={trim}
+        getPrismTheme={getPrismTheme}
       >
         {children}
       </Prism>

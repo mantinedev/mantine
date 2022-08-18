@@ -37,7 +37,8 @@
     "embla-carousel-autoplay": "*",
     "react-input-mask": "*",
     "dayjs": "*",
-    "zod": "*"
+    "zod": "*",
+    "prism-react-renderer": "*"
   },
   "dependencies": {},
   "devDependencies": {}
