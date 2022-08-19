@@ -1,4 +1,4 @@
-import { createStyles, MantineSize } from "@mantine/core";
+import { createStyles, MantineSize } from '@mantine/core';
 
 export const inputSizes = {
   xs: 20,
