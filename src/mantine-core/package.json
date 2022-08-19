@@ -32,6 +32,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
+    "@emotion/react": ">=11.9.0",
     "@mantine/utils": "5.2.0",
     "@mantine/styles": "5.2.0",
     "@radix-ui/react-scroll-area": "1.0.0",
