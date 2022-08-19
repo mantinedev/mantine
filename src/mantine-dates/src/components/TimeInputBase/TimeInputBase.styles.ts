@@ -1,4 +1,4 @@
-import { createStyles, MantineSize } from '@mantine/core';
+import { createStyles, MantineSize } from "@mantine/core";
 
 export const inputSizes = {
   xs: 20,
@@ -43,7 +43,6 @@ export default createStyles((theme, { size, hasValue }: TimeInputBaseStyles) => 
   },
 
   amPmInput: {
-    width: 'auto',
     textAlign: 'left',
   },
 }));
