@@ -7,6 +7,7 @@ export interface TitleStylesParams {
   element: HeadingElement;
   size: TitleSize;
   weight: React.CSSProperties['fontWeight'];
+  inline: boolean;
 }
 
 function getFontSize(size: TitleSize, element: HeadingElement, theme: MantineTheme) {
@@ -19,19 +20,19 @@ function getFontSize(size: TitleSize, element: HeadingElement, theme: MantineThe
 
 function getLineHeight(size: TitleSize, element: HeadingElement, theme: MantineTheme) {
   if (typeof size !== 'undefined' && size in theme.headings.sizes) {
-    return theme.headings.sizes[element].lineHeight;
+    return theme.headings.sizes[size].lineHeight;
   }
 
   return theme.headings.sizes[element].lineHeight;
 }
 
-export default createStyles((theme, { element, weight, size }: TitleStylesParams) => ({
+export default createStyles((theme, { element, weight, size, inline }: TitleStylesParams) => ({
   root: {
     ...theme.fn.fontStyles(),
     fontFamily: theme.headings.fontFamily,
     fontWeight: weight || theme.headings.sizes[element].fontWeight || theme.headings.fontWeight,
     fontSize: getFontSize(size, element, theme),
-    lineHeight: getLineHeight(size, element, theme),
+    lineHeight: inline ? 1 : getLineHeight(size, element, theme),
     margin: 0,
   },
 }));
