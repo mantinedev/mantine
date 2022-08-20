@@ -12,7 +12,7 @@ export interface ContainerProps extends DefaultProps, React.ComponentPropsWithou
   /** Predefined container max-width or number for max-width in px */
   size?: MantineNumberSize;
 
-  /** If fluid is set to true, size prop is ignored and Container always take 100% of width */
+  /** If fluid is set to true, size prop is ignored and Container can expand to 100% of width */
   fluid?: boolean;
 
   /** Container sizes */
