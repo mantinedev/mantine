@@ -324,6 +324,10 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       valuesOverflow.current = true;
       setDropdownOpened(false);
     }
+
+    if (filteredData.length === 0) {
+      setDropdownOpened(false);
+    }
   }, [_value]);
 
   const handleItemSelect = (item: SelectItem) => {
@@ -538,12 +542,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         className={classes.value}
         readOnly={readOnly}
         onRemove={(event: React.MouseEvent<HTMLButtonElement>) => {
-          if (dropdownOpened) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
+          event.preventDefault();
+          event.stopPropagation();
           handleValueRemove(item.value);
-          setDropdownOpened(true);
         }}
         key={item.value}
         size={size}
