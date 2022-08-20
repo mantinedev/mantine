@@ -20,7 +20,7 @@ function getFontSize(size: TitleSize, element: HeadingElement, theme: MantineThe
 
 function getLineHeight(size: TitleSize, element: HeadingElement, theme: MantineTheme) {
   if (typeof size !== 'undefined' && size in theme.headings.sizes) {
-    return theme.headings.sizes[element].lineHeight;
+    return theme.headings.sizes[size].lineHeight;
   }
 
   return theme.headings.sizes[element].lineHeight;
