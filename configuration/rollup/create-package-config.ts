@@ -63,6 +63,8 @@ export default async function createPackageConfig(config: PkgConfigInput): Promi
       '@emotion/cache',
       '@emotion/utils',
       '@emotion/serialize',
+      'prism-react-renderer/themes/duotoneDark',
+      'prism-react-renderer/themes/duotoneLight',
       ...(config?.externals || []),
       ...Object.keys({
         ...packageJson.peerDependencies,

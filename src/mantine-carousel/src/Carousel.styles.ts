@@ -22,7 +22,9 @@ export default createStyles(
         height,
       },
 
-      viewport: {},
+      viewport: {
+        height,
+      },
 
       controls: {
         position: 'absolute',

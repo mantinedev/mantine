@@ -1,18 +1,20 @@
 import React, { forwardRef } from 'react';
 import { DefaultProps, useComponentDefaultProps } from '@mantine/styles';
-import { Box } from '../Box';
+import { Text, TextProps } from '../Text';
 import useStyles, { TitleStylesParams } from './Title.styles';
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
+export type TitleSize = `h${TitleOrder}` | React.CSSProperties['fontSize'];
 
 export interface TitleProps
-  extends DefaultProps<never, TitleStylesParams>,
-    React.ComponentPropsWithoutRef<'h1'> {
+  extends Omit<TextProps, 'size' | 'styles' | 'classNames'>,
+    DefaultProps<never, TitleStylesParams>,
+    Omit<React.ComponentPropsWithoutRef<'h1'>, 'color'> {
   /** Defines component and styles which will be used */
   order?: TitleOrder;
 
-  /** Defined text-align */
-  align?: React.CSSProperties['textAlign'];
+  /** Title font-size: h1-h6 or any valid CSS font-size value */
+  size?: TitleSize;
 }
 
 const defaultProps: Partial<TitleProps> = {
@@ -20,22 +22,22 @@ const defaultProps: Partial<TitleProps> = {
 };
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  const { className, order, children, align, unstyled, ...others } = useComponentDefaultProps(
-    'Title',
-    defaultProps,
-    props
-  );
+  const { className, order, children, unstyled, size, weight, ...others } =
+    useComponentDefaultProps('Title', defaultProps, props);
 
-  const { classes, cx } = useStyles({ element: `h${order}`, align }, { name: 'Title', unstyled });
+  const { classes, cx } = useStyles(
+    { element: `h${order}`, weight, size },
+    { name: 'Title', unstyled }
+  );
 
   if (![1, 2, 3, 4, 5, 6].includes(order)) {
     return null;
   }
 
   return (
-    <Box component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
+    <Text component={`h${order}`} ref={ref} className={cx(classes.root, className)} {...others}>
       {children}
-    </Box>
+    </Text>
   );
 });
 

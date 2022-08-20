@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {
   checkAccessibility,
   itSupportsInputWrapperProps,
+  itSupportsInputAsterisk,
   itSupportsSystemProps,
 } from '@mantine/tests';
 import { CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
@@ -19,6 +20,7 @@ const defaultProps: CheckboxGroupProps = {
 
 describe('@mantine/core/CheckboxGroup', () => {
   itSupportsInputWrapperProps(CheckboxGroup, defaultProps, 'CheckboxGroup');
+  itSupportsInputAsterisk(CheckboxGroup, defaultProps, 'CheckboxGroup');
   itSupportsSystemProps({
     component: CheckboxGroup,
     props: defaultProps,

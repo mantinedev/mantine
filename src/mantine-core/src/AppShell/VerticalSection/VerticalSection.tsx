@@ -58,7 +58,7 @@ export const VerticalSection = forwardRef<HTMLElement, VerticalSectionProps>(
         fixed: ctx.fixed || fixed,
         position,
         zIndex: ctx.zIndex || zIndex,
-        borderPosition: withBorder && section === 'header' ? 'bottom' : 'top',
+        borderPosition: withBorder ? (section === 'header' ? 'bottom' : 'top') : 'none',
       },
       { name: __staticSelector, classNames, styles, unstyled }
     );

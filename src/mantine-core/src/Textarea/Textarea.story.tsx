@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { Textarea, TextareaProps } from './Textarea';
+import React from 'react';
+import { Textarea } from './Textarea';
 
-function Controlled(props: Partial<TextareaProps>) {
-  const [value, onChange] = useState('');
+export default { title: 'Textarea' };
+
+export function Asterisk() {
   return (
-    <Textarea value={value} onChange={(event) => onChange(event.currentTarget.value)} {...props} />
+    <div style={{ width: 300, padding: 20 }}>
+      <Textarea label="With required asterisk" withAsterisk />
+      <Textarea label="Just required" required />
+      <Textarea label="Required asterisk off" required withAsterisk={false} />
+      <Textarea label="Required false asterisk on" required={false} withAsterisk />
+    </div>
   );
 }
-
-storiesOf('Textarea', module)
-  .add('Controlled', () => (
-    <div style={{ width: 300, padding: 20 }}>
-      <Controlled label="text" placeholder="text" />
-    </div>
-  ))
-  .add('Autosize', () => (
-    <div style={{ width: 300, padding: 20 }}>
-      <Textarea label="text" placeholder="text" autosize minRows={3} maxRows={10} />
-    </div>
-  ));

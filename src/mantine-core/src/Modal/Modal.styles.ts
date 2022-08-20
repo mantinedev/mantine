@@ -27,6 +27,8 @@ function getFullScreenStyles(fullScreen: boolean): CSSObject {
     left: 0,
     right: 0,
     bottom: 0,
+    maxHeight: '100vh',
+    overflowY: 'auto',
   };
 }
 
@@ -76,7 +78,7 @@ export default createStyles(
       marginTop: centered ? 'auto' : undefined,
       marginBottom: centered ? 'auto' : undefined,
       zIndex: 1,
-      marginLeft: 'calc(var(--removed-scroll-width, 0px) * -1)',
+      marginLeft: fullScreen ? undefined : 'calc(var(--removed-scroll-width, 0px) * -1)',
       ...getFullScreenStyles(fullScreen),
     },
 

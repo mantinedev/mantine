@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MantineProvider,
   ColorSchemeProvider,
@@ -37,6 +37,14 @@ export default function Layout({ children, location }: LayoutProps) {
     ['mod+J', () => toggleColorScheme()],
     ['mod + shift + L', () => toggleDirection()],
   ]);
+
+  useEffect(() => {
+    const gatsbyFocusWrapper = document.getElementById('gatsby-focus-wrapper');
+    if (gatsbyFocusWrapper) {
+      gatsbyFocusWrapper.removeAttribute('style');
+      gatsbyFocusWrapper.removeAttribute('tabIndex');
+    }
+  }, []);
 
   return (
     <DirectionContext.Provider value={{ dir, toggleDirection }}>

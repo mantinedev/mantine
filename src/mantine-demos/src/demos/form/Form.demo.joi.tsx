@@ -28,20 +28,20 @@ function Demo() {
     <Box sx={{ maxWidth: 340 }} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
-          required
+          withAsterisk
           label="Email"
           placeholder="example@mail.com"
           {...form.getInputProps('email')}
         />
         <TextInput
-          required
+          withAsterisk
           label="Name"
           placeholder="John Doe"
           mt="sm"
           {...form.getInputProps('name')}
         />
         <NumberInput
-          required
+          withAsterisk
           label="Age"
           placeholder="Your age"
           mt="sm"

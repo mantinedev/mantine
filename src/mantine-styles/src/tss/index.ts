@@ -8,5 +8,6 @@ export { keyframes } from '@emotion/react';
 export { createStyles } from './create-styles';
 export { Global } from './Global';
 export { useCss } from './use-css';
-export { useEmotionCache, defaultMantineEmotionCache } from './use-emotion-cache';
+export { useEmotionCache } from './use-emotion-cache';
+export { defaultMantineEmotionCache } from './default-emotion-cache';
 export { createEmotionCache };

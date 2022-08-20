@@ -96,6 +96,30 @@ You can replace default next/previous controls icons with any React nodes:
 
 <Demo data={CarouselDemos.icons} />
 
+## 100% height
+
+Set `height="100%"` to make Carousel take 100% height of the container. Note that in this case:
+
+- container element must have `display: flex` styles
+- carousel root element must have `flex: 1` styles
+- container element must have fixed height
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+export function PercentageHeight() {
+  return (
+    <div style={{ height: 400, display: 'flex' }}>
+      <Carousel withIndicators height="100%" sx={{ flex: 1 }}>
+        <Carousel.Slide>1</Carousel.Slide>
+        <Carousel.Slide>2</Carousel.Slide>
+        <Carousel.Slide>3</Carousel.Slide>
+      </Carousel>
+    </div>
+  );
+}
+```
+
 ## Get embla instance
 
 You can get [embla instance](https://www.embla-carousel.com/api/methods/) with `getEmblaApi` prop.

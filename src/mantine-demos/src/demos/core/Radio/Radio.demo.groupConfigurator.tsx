@@ -51,6 +51,6 @@ export const groupConfigurator: MantineDemo = {
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
     { name: 'offset', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
-    { name: 'required', type: 'boolean', initialValue: true, defaultValue: false },
+    { name: 'withAsterisk', type: 'boolean', initialValue: true, defaultValue: false },
   ],
 };

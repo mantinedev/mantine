@@ -24,7 +24,7 @@ function validateRulesRecord<T>(
     let arrayValidation = false;
 
     if (typeof rule === 'function') {
-      acc[rulePath] = rule(value, values);
+      acc[rulePath] = rule(value, values, rulePath);
     }
 
     if (typeof rule === 'object' && Array.isArray(value)) {

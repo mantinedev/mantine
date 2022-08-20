@@ -243,6 +243,13 @@ describe('@mantine/core/Tabs', () => {
     expect(document.body).toHaveFocus();
   });
 
+  it('unmounts Tab.Panel content if keepMounted is set to false', () => {
+    const { container } = render(
+      <Tabs {...defaultProps} keepMounted={false} defaultValue="tab-1" />
+    );
+    expect(container.querySelectorAll('.mantine-Tabs-panel')[1].textContent).toBe('');
+  });
+
   it('exposes TabsList, Tab and TabsPanel component with as static properties', () => {
     expect(Tabs.Tab).toBe(Tab);
     expect(Tabs.List).toBe(TabsList);

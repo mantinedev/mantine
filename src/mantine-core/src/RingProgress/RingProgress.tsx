@@ -23,7 +23,7 @@ export interface RingProgressProps
   roundCaps?: boolean;
 
   /** Ring sections */
-  sections: { value: number; color: MantineColor }[];
+  sections: { value: number; color: MantineColor; tooltip?: React.ReactNode }[];
 }
 
 const defaultProps: Partial<RingProgressProps> = {
@@ -64,6 +64,7 @@ export const RingProgress = forwardRef<HTMLDivElement, RingProgressProps>((props
       color={curve.data?.color}
       root={curve.root}
       lineRoundCaps={curve.lineRoundCaps}
+      tooltip={curve.data?.tooltip}
     />
   ));
 

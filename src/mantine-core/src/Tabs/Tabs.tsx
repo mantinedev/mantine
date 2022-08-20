@@ -63,6 +63,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
     styles,
     radius,
     inverted,
+    keepMounted,
     ...others
   } = useComponentDefaultProps('Tabs', defaultProps, props);
 
@@ -86,6 +87,7 @@ export const Tabs: TabsComponent = forwardRef<HTMLDivElement, TabsProps>((props,
         variant={variant}
         radius={radius}
         inverted={inverted}
+        keepMounted={keepMounted}
       >
         <Box {...others} className={cx(classes.root, className)} id={id} ref={ref}>
           {children}

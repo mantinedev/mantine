@@ -6,6 +6,7 @@ import { CreateStylesDemo } from './demos/CreateStylesDemo';
 import { ThemeDemo } from './demos/ThemeDemo';
 import { FunctionsDemo } from './demos/FunctionsDemo';
 import { ContextStylesDemo } from './demos/ContextStylesDemo';
+import { StyledDemo } from './demos/StyledDemo';
 import { getGradient } from '../get-gradient';
 
 export function Styles() {
@@ -48,6 +49,7 @@ export function Styles() {
           <Tabs.Tab value="theme">Theme subscription</Tabs.Tab>
           <Tabs.Tab value="functions">Theme functions</Tabs.Tab>
           <Tabs.Tab value="contextStyles">Context styles</Tabs.Tab>
+          <Tabs.Tab value="styled">Styled components</Tabs.Tab>
         </Tabs.List>
 
         <Tabs.Panel value="sx">
@@ -64,6 +66,9 @@ export function Styles() {
         </Tabs.Panel>
         <Tabs.Panel value="contextStyles">
           <ContextStylesDemo />
+        </Tabs.Panel>
+        <Tabs.Panel value="styled">
+          <StyledDemo />
         </Tabs.Panel>
       </Tabs>
     </PageSection>

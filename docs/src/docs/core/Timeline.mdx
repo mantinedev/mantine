@@ -37,26 +37,35 @@ Control timeline appearance with the following props:
 
 ## Wrap Timeline.Item
 
-`Timeline` component relies on `Timeline.Item` order, if you want to wrap `Timeline.Item` component you will
-need to spread wrapper component props:
+`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported,
+Instead you will need to use different approaches:
 
 ```tsx
-import { Timeline, TimelineItemProps } from '@mantine/core';
+import { Timeline } from '@mantine/core';
 
-function SecondItem(props: TimelineItemProps) {
+// This will not work, step children will not render
+function WillNotWork() {
   return (
-    <Timeline.Item title="Wrapped item" {...props}>
-      Second item
+    <Timeline.Item label="Nope" description="It will not work">
+      This part will not render
     </Timeline.Item>
   );
 }
 
+// Create a separate component for children
+function WillWork() {
+  return <div>This will work as expected!</div>;
+}
+
 function Demo() {
   return (
-    <Timeline>
+    <Timeline active={1}>
       <Timeline.Item title="Regular item">First item</Timeline.Item>
-      <SecondItem />
-      <Timeline.Item title="Regular item">Third item</Timeline.Item>>
+      <WillNotWork />
+      <Timeline.Item title="Works as expected">
+        <WillWork />
+      </Timeline.Item>
+      <Timeline.Item title="Regular item">Third item</Timeline.Item>
     </Timeline>
   );
 }

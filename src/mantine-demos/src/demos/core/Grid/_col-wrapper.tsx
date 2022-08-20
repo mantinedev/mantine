@@ -15,7 +15,7 @@ export function ColWrapper(props: ColProps) {
         }}
       >
         <Text
-          color={theme.colorScheme === 'dark' ? 'gray' : 'blue'}
+          color={theme.colorScheme === 'dark' ? 'dimmed' : 'blue'}
           size="xl"
           weight={700}
           align="center"

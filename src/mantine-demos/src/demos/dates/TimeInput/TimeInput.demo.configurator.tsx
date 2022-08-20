@@ -76,7 +76,7 @@ export const configurator: MantineDemo = {
     },
     { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     {
-      name: 'required',
+      name: 'withAsterisk',
       type: 'boolean',
       initialValue: true,
       defaultValue: false,

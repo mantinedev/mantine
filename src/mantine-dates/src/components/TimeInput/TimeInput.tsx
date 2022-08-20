@@ -146,6 +146,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       descriptionProps,
       errorProps,
       unstyled,
+      withAsterisk,
       ...others
     } = useComponentDefaultProps('TimeInput', defaultProps, props);
 
@@ -273,6 +274,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         descriptionProps={descriptionProps}
         labelProps={labelProps}
         unstyled={unstyled}
+        withAsterisk={withAsterisk}
         {...systemStyles}
         {...wrapperProps}
       >

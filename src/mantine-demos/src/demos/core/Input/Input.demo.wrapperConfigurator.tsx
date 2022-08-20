@@ -33,7 +33,7 @@ export const wrapperConfigurator: MantineDemo = {
   configuratorProps: { multiline: 3 },
   configurator: [
     {
-      name: 'required',
+      name: 'withAsterisk',
       type: 'boolean',
       initialValue: true,
       defaultValue: false,

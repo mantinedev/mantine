@@ -8,9 +8,17 @@ import {
 } from '@mantine/styles';
 import { Box } from '../Box';
 import { Text } from '../Text';
+import { Tooltip } from '../Tooltip';
 import useStyles, { ProgressStylesParams } from './Progress.styles';
 
 export type ProgressStylesNames = Selectors<typeof useStyles>;
+
+interface ProgressSection {
+  value: number;
+  color: MantineColor;
+  label?: string;
+  tooltip?: React.ReactNode;
+}
 
 export interface ProgressProps
   extends DefaultProps<ProgressStylesNames, ProgressStylesParams>,
@@ -37,12 +45,12 @@ export interface ProgressProps
   label?: string;
 
   /** Replaces value if present, renders multiple sections instead of single one */
-  sections?: { value: number; color: MantineColor; label?: string }[];
+  sections?: ProgressSection[];
 }
 
 function getCumulativeSections(
-  sections: { value: number; color: MantineColor; label?: string }[]
-): { value: number; color: MantineColor; accumulated: number; label?: string }[] {
+  sections: ProgressSection[]
+): (ProgressSection & { accumulated: number })[] {
   return sections.reduce(
     (acc, section) => {
       acc.sections.push({ ...section, accumulated: acc.accumulated });
@@ -86,21 +94,23 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
 
   const segments = Array.isArray(sections)
     ? getCumulativeSections(sections).map((section, index) => (
-        <Box
-          key={index}
-          className={classes.bar}
-          sx={{
-            width: `${section.value}%`,
-            left: `${section.accumulated}%`,
-            backgroundColor: theme.fn.variant({
-              variant: 'filled',
-              primaryFallback: false,
-              color: section.color || theme.primaryColor,
-            }).background,
-          }}
-        >
-          {section.label && <Text className={classes.label}>{section.label}</Text>}
-        </Box>
+        <Tooltip.Floating label={section.tooltip} disabled={!section.tooltip}>
+          <Box
+            key={index}
+            className={classes.bar}
+            sx={{
+              width: `${section.value}%`,
+              left: `${section.accumulated}%`,
+              backgroundColor: theme.fn.variant({
+                variant: 'filled',
+                primaryFallback: false,
+                color: section.color || theme.primaryColor,
+              }).background,
+            }}
+          >
+            {section.label && <Text className={classes.label}>{section.label}</Text>}
+          </Box>
+        </Tooltip.Floating>
       ))
     : null;
 
