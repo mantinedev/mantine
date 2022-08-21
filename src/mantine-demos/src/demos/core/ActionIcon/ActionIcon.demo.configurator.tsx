@@ -2,19 +2,19 @@ import React from 'react';
 import { IconAdjustments } from '@tabler/icons';
 import { ActionIcon, ActionIconProps, Group } from '@mantine/core';
 
-const iconSizes = {
+/* const iconSizes = {
   xs: 12,
   sm: 14,
   md: 18,
   lg: 26,
   xl: 34,
-};
+}; */
 
 function Wrapper(props: ActionIconProps) {
   return (
     <Group position="center">
       <ActionIcon {...props}>
-        <IconAdjustments size={iconSizes[props.size]} />
+        <IconAdjustments />
       </ActionIcon>
     </Group>
   );
