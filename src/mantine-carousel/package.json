@@ -24,7 +24,7 @@
   "peerDependencies": {
     "@mantine/core": "5.2.0",
     "@mantine/hooks": "5.2.0",
-    "embla-carousel-react": "7.0.0",
+    "embla-carousel-react": "^7.0.0",
     "react": ">=16.8.0"
   },
   "dependencies": {
