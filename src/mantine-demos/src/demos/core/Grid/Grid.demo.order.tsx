@@ -8,9 +8,9 @@ import { Grid } from '@mantine/core';
 function Demo() {
   return (
     <Grid>
-      <Grid.Col span={3} order={2} orderSm={1} orderLg={3}>2</Grid.Col>
-      <Grid.Col span={3} order={3} orderSm={1} orderLg={2}>3</Grid.Col>
-      <Grid.Col span={3} order={1} orderSm={3} orderLg={1}>1</Grid.Col>
+      <Col span={3} order={2} orderSm={1} orderLg={3}>2</Col>
+      <Col span={3} order={3} orderSm={1} orderLg={2}>3</Col>
+      <Col span={3} order={1} orderSm={3} orderLg={1}>1</Col>
     </Grid>
   );
 }
