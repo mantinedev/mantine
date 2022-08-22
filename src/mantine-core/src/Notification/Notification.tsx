@@ -93,9 +93,9 @@ export const Notification = forwardRef<HTMLDivElement, NotificationProps>((props
 
       {!disallowClose && (
         <CloseButton
-          {...closeButtonProps}
           iconSize={16}
           color="gray"
+          {...closeButtonProps}
           onClick={onClose}
           className={classes.closeButton}
         />
