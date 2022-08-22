@@ -50,15 +50,17 @@ function getBreakpointsStyles({
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    if (typeof sizes[size] === 'number') {
-      acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
-        order: orders[size],
-        flexBasis: getColumnWidth(sizes[size], columns),
-        flexShrink: 0,
-        maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
-        marginLeft: getColumnOffset(offsets[size], columns),
-      };
-    }
+    acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
+      order: orders[size],
+      flexBasis: typeof sizes[size] === 'number' ? getColumnWidth(sizes[size], columns) : 'auto',
+      flexShrink: 0,
+      maxWidth: grow
+        ? 'unset'
+        : typeof sizes[size] === 'number'
+        ? getColumnWidth(sizes[size], columns)
+        : 'none',
+      marginLeft: getColumnOffset(offsets[size], columns),
+    };
     return acc;
   }, {});
 }

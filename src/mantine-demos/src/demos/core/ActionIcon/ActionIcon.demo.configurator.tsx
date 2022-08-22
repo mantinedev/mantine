@@ -20,18 +20,40 @@ function Wrapper(props: ActionIconProps) {
   );
 }
 
-const codeTemplate = (props: string) => `
+function computeChildIconSizeProp(props: string) {
+  if (props.includes('size="xs"')) {
+    return 'size={12}';
+  }
+  if (props.includes('size="sm"')) {
+    return 'size={14}';
+  }
+  if (props.includes('size="md"')) {
+    return 'size={18}';
+  }
+  if (props.includes('size="lg"')) {
+    return 'size={26}';
+  }
+  if (props.includes('size="xl"')) {
+    return 'size={34}';
+  }
+  return 'size={18}';
+}
+
+const codeTemplate = (props: string) => {
+  const childIconSizeProp = computeChildIconSizeProp(props);
+  return `
 import { ActionIcon } from '@mantine/core';
 import { IconAdjustments } from '@tabler/icons';
 
 function Demo() {
   return (
     <ActionIcon${props}>
-      <IconAdjustments />
+      <IconAdjustments ${childIconSizeProp} />
     </ActionIcon>
   );
 }
 `;
+};
 
 export const configurator: MantineDemo = {
   type: 'configurator',

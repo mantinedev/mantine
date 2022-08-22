@@ -22,11 +22,11 @@ const defaultProps: Partial<TitleProps> = {
 };
 
 export const Title = forwardRef<HTMLHeadingElement, TitleProps>((props, ref) => {
-  const { className, order, children, unstyled, size, weight, ...others } =
+  const { className, order, children, unstyled, size, weight, inline, ...others } =
     useComponentDefaultProps('Title', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { element: `h${order}`, weight, size },
+    { element: `h${order}`, weight, size, inline },
     { name: 'Title', unstyled }
   );
 
