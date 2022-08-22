@@ -30,7 +30,9 @@ interface ColStyles {
   orderXl: React.CSSProperties['order'];
 }
 
-const getColumnWidth = (colSpan: number, columns: number) => `${100 / (columns / colSpan)}%`;
+const getColumnWidth = (colSpan: number, columns: number) =>
+  colSpan ? `${100 / (columns / colSpan)}%` : undefined;
+
 const getColumnOffset = (offset: number, columns: number) =>
   offset ? `${100 / (columns / offset)}%` : undefined;
 
@@ -50,15 +52,13 @@ function getBreakpointsStyles({
   columns: number;
 }) {
   return MANTINE_SIZES.reduce((acc, size) => {
-    if (typeof sizes[size] === 'number') {
-      acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
-        order: orders[size],
-        flexBasis: getColumnWidth(sizes[size], columns),
-        flexShrink: 0,
-        maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
-        marginLeft: getColumnOffset(offsets[size], columns),
-      };
-    }
+    acc[`@media (min-width: ${theme.breakpoints[size] + 1}px)`] = {
+      order: orders[size],
+      flexBasis: getColumnWidth(sizes[size], columns),
+      flexShrink: 0,
+      maxWidth: grow ? 'unset' : getColumnWidth(sizes[size], columns),
+      marginLeft: getColumnOffset(offsets[size], columns),
+    };
     return acc;
   }, {});
 }
