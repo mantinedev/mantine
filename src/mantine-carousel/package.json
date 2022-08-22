@@ -1,7 +1,7 @@
 {
   "name": "@mantine/carousel",
   "description": "Embla based carousel",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -22,13 +22,13 @@
     "slick"
   ],
   "peerDependencies": {
-    "@mantine/core": "5.2.2",
-    "@mantine/hooks": "5.2.2",
+    "@mantine/core": "5.2.3",
+    "@mantine/hooks": "5.2.3",
     "embla-carousel-react": "^7.0.0",
     "react": ">=16.8.0"
   },
   "dependencies": {
-    "@mantine/utils": "5.2.2"
+    "@mantine/utils": "5.2.3"
   },
   "devDependencies": {}
 }
