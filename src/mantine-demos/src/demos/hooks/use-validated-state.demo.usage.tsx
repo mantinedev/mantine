@@ -18,7 +18,7 @@ function Demo() {
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
-        required
+        withAsterisk
         error={!valid}
         placeholder="email@example.com"
         label="Your email"
@@ -53,7 +53,7 @@ function Demo() {
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
-        required
+        withAsterisk
         error={!valid}
         placeholder="email@example.com"
         label="Your email"
