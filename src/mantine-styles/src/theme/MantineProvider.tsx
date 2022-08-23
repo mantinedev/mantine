@@ -40,15 +40,17 @@ export function useMantineEmotionCache() {
   return useContext(MantineProviderContext)?.emotionCache;
 }
 
-export function useComponentDefaultProps<T extends Record<string, any>, U extends Partial<T>>(
+export function useComponentDefaultProps<T extends Record<string, any>, U extends Partial<T> = {}>(
   component: string,
   defaultProps: U,
   props: T
-): {
-  [Key in Exclude<keyof T, keyof U>]: T[Key];
-} & {
-  [Key in Extract<keyof T, keyof U>]-?: U[Key] & T[Key];
-} {
+): [keyof U] extends [keyof T]
+  ? T
+  : {
+      [Key in Exclude<keyof T, keyof U>]: T[Key];
+    } & {
+      [Key in Extract<keyof T, keyof U>]-?: U[Key] & T[Key];
+    } {
   const theme = useMantineTheme();
   const contextProps = theme.components[component]?.defaultProps;
   return { ...defaultProps, ...contextProps, ...filterProps(props) };

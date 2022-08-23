@@ -34,7 +34,7 @@ export function useInputProps<T extends BaseProps>(
     inputContainer,
     inputWrapperOrder,
     ...others
-  } = useComponentDefaultProps(component, defaultProps, props);
+  } = useComponentDefaultProps(component, defaultProps, props) as unknown as T;
 
   const uid = useId(id);
 
