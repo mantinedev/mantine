@@ -1,5 +1,5 @@
 import { createStorage, IStorageProperties } from '../use-local-storage/create-storage';
 
-export function useSessionStorage<T = string>(props: Omit<IStorageProperties<T>, 'hookName'>) {
-  return createStorage<T>('sessionStorage')({ ...props, hookName: 'use-session-storage' });
+export function useSessionStorage<T = string>(props: IStorageProperties<T>) {
+  return createStorage<T>('sessionStorage', 'use-session-storage')(props);
 }

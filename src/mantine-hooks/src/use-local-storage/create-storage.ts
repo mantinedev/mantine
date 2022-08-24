@@ -4,8 +4,6 @@ import { useWindowEvent } from '../use-window-event/use-window-event';
 export type StorageType = 'localStorage' | 'sessionStorage';
 
 export interface IStorageProperties<T> {
-  hookName: string;
-
   /** Storage key */
   key: string;
 
@@ -38,11 +36,10 @@ function deserializeJSON(value: string) {
   }
 }
 
-export function createStorage<T>(type: StorageType) {
+export function createStorage<T>(type: StorageType, hookName: string) {
   const eventName = type === 'localStorage' ? 'mantine-local-storage' : 'mantine-session-storage';
 
   return function useStorage({
-    hookName,
     key,
     defaultValue = undefined,
     getInitialValueInEffect = true,
