@@ -13,8 +13,8 @@ source: 'mantine-hooks/src/use-local-storage/use-local-storage.ts'
 
 ## Usage
 
-use-local-storage allows you to use value from `localStorage` as react state.
-Hook works exactly the same as `useState`, but also writes the value to local storage:
+use-local-storage allows you to use value from `localStorage` as react state. For `sessionStorage` use use-session-storage which accepts the same properties.
+Both hooks works exactly the same as `useState`, but also writes the value to local/session storage:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
