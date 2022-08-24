@@ -146,5 +146,8 @@
     "react-transition-group": "4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
     "zod": "^3.13.4"
+  },
+  "volta": {
+    "node": "14.17.0"
   }
 }
