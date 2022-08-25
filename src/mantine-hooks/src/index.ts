@@ -3,6 +3,7 @@ export * from './utils';
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
+export { useColorSchemeValue } from './use-color-scheme-value/use-color-scheme-value';
 export { useCounter } from './use-counter/use-counter';
 export { useDebouncedState } from './use-debounced-state/use-debounced-state';
 export { useDebouncedValue } from './use-debounced-value/use-debounced-value';

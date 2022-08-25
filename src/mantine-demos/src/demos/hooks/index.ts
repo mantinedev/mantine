@@ -2,6 +2,7 @@ export { useClickOutsideEvents } from './use-click-outside.demo.events';
 export { useClickOutsideUsage } from './use-click-outside.demo.usage';
 export { useClipboardDemo } from './use-clipboard.usage.demo';
 export { useColorSchemeDemo } from './use-color-scheme.demo.usage';
+export { useColorSchemeValueDemo } from './use-color-scheme-value.demo.usage';
 export { useCounterDemo } from './use-counter.demo.usage';
 export { useDebouncedStateUsage } from './use-debounced-state.demo.usage';
 export { useDebouncedStateLeading } from './use-debounced-state.demo.leading';

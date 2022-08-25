@@ -1,0 +1,28 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'dom'
+title: 'use-color-scheme-value'
+order: 1
+slug: /hooks/use-color-scheme-value/
+description: 'Returns the corresponding results according to the user system color scheme'
+import: "import { useColorSchemeValue } from '@mantine/hooks';"
+docs: 'hooks/use-color-scheme-value.mdx'
+source: 'mantine-hooks/src/use-color-scheme-value/use-color-scheme-value.ts'
+---
+
+import { HooksDemos } from '@mantine/demos';
+
+## Usage
+
+use-color-scheme-color returns the corresponding results according to the user's system color scheme:
+
+<Demo data={HooksDemos.useColorSchemeValueDemo} />
+
+Hook uses [use-color-scheme](/hooks/use-color-scheme/) hook under the hood.
+
+## Definition
+
+```tsx
+function useColorSchemeValue(light: any, dark: any): light | dark;
+```
