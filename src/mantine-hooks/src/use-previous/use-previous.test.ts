@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { usePrevious } from './use-previous';
 
 describe('@mantine/hooks/use-previous', () => {
