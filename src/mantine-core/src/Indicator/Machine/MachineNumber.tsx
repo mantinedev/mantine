@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useRef, useEffect, useMemo } from 'react';
+import React, { useState, forwardRef, useEffect, useMemo } from 'react';
 import { isUnDef, usePrevious } from '@mantine/utils';
 import useStyles from './MachineNumber.styles';
 
@@ -8,13 +8,12 @@ interface MachineNumberProps {
   oldOriginalNumber: number;
 }
 
-export const MachineNumber = forwardRef<HTMLDivElement, MachineNumberProps>((props) => {
+export const MachineNumber = forwardRef<HTMLDivElement, MachineNumberProps>((props, ref) => {
   const [oldNumber, setOldNumber] = useState(props.value);
   const [newNumber, setNewNumber] = useState(props.value);
   const [scrollAnimationDirection, setScrollAnimationDirection] = useState<'up' | 'down'>('up');
   const [isActive, setIsActive] = useState(false);
   const prevValueRef = usePrevious(props.value);
-  const numberRef = useRef();
 
   const scrollByDir = (dir: 'up' | 'down') => {
     setIsActive(true);
@@ -61,7 +60,7 @@ export const MachineNumber = forwardRef<HTMLDivElement, MachineNumberProps>((pro
     [isActive, scrollAnimationDirection]
   );
   return (
-    <span ref={numberRef} className={classes.baseNumber}>
+    <span ref={ref} className={classes.baseNumber}>
       {(oldNumber && (
         <span
           className={cx(classes.oldNumber, classes.currentNumberTop, oldNumberScrollAnimationClass)}
