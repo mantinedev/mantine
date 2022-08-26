@@ -12,7 +12,7 @@ const placements = ['start', 'center', 'end'] as const;
 export const Positions = () => {
   const items = positions.map((position) => {
     const _items = placements.map((placement) => (
-      <Indicator position={`${position}-${placement}`}>
+      <Indicator dot position={`${position}-${placement}`}>
         <Avatar radius={0} />
       </Indicator>
     ));
@@ -25,7 +25,7 @@ export const Positions = () => {
 
 export const Inline = () => (
   <Box sx={{ padding: 40 }}>
-    <Indicator inline withBorder>
+    <Indicator dot inline withBorder>
       <Avatar radius={0} />
     </Indicator>
   </Box>
@@ -33,7 +33,7 @@ export const Inline = () => (
 
 export const WithRadius = () => (
   <Box sx={{ padding: 40 }}>
-    <Indicator inline offset={12} size={20} position="bottom-end" withBorder color="red">
+    <Indicator inline dot offset={12} size={20} position="bottom-end" withBorder color="red">
       <Avatar
         radius={50000}
         size="xl"

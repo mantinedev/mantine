@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import {
   Selectors,
   DefaultProps,
@@ -8,9 +8,11 @@ import {
   useComponentDefaultProps,
   getDefaultZIndex,
 } from '@mantine/styles';
+import { isNumber, isUnDef } from '@mantine/utils';
 import { Box } from '../Box';
 import { IndicatorPosition } from './Indicator.types';
 import useStyles, { IndicatorStylesParams } from './Indicator.styles';
+import { Machine } from './Machine/Machine';
 
 export type IndicatorStylesNames = Selectors<typeof useStyles>;
 
@@ -35,6 +37,11 @@ export interface IndicatorProps
   /** Indicator label */
   label?: React.ReactNode;
 
+  /** Indicator count overflowCount */
+  overflowCount?: number;
+
+  dot?: boolean;
+
   /** border-radius from theme.radius or number value to set radius in px */
   radius?: MantineNumberSize;
 
@@ -44,8 +51,14 @@ export interface IndicatorProps
   /** Determines whether indicator should have border */
   withBorder?: boolean;
 
-  /** When component is disabled it renders children without indicator */
-  disabled?: boolean;
+  /** When isShow is false renders children without indicator */
+  isShow?: boolean;
+
+  /** When showZero is true and label is zero  renders children with indicator*/
+  showZero?: boolean;
+
+  /** Indicator processing animation */
+  processing?: boolean;
 
   /** Indicator z-index */
   zIndex?: React.CSSProperties['zIndex'];
@@ -56,8 +69,11 @@ const defaultProps: Partial<IndicatorProps> = {
   offset: 0,
   inline: false,
   withBorder: false,
-  disabled: false,
+  isShow: true,
+  showZero: false,
+  processing: false,
   size: 10,
+  overflowCount: 99,
   radius: 1000,
   zIndex: getDefaultZIndex('app'),
 };
@@ -73,12 +89,16 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     withBorder,
     className,
     color,
+    dot,
     styles,
     label,
+    overflowCount,
+    showZero,
     classNames,
-    disabled,
+    isShow,
     zIndex,
     unstyled,
+    processing,
     ...others
   } = useComponentDefaultProps('Indicator', defaultProps, props);
 
@@ -87,9 +107,24 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     { name: 'Indicator', classNames, styles, unstyled }
   );
 
+  const renderLabel = useMemo(() => {
+    if (isNumber(label)) {
+      return <Machine value={label} max={overflowCount} />;
+    }
+    return label;
+  }, [label, overflowCount]);
+
+  const isShowIndicator = useMemo(
+    () => isShow && (dot || (!isUnDef(label) && !(label <= 0 && !showZero))),
+    [isShow, label, showZero]
+  );
+
   return (
     <Box ref={ref} className={cx(classes.root, className)} {...others}>
-      {!disabled && <div className={classes.indicator}>{label}</div>}
+      {isShowIndicator && (
+        <div className={cx(classes.indicator, classes.common)}>{renderLabel}</div>
+      )}
+      {processing && <div className={cx(classes.processing, classes.common)} />}
       {children}
     </Box>
   );
