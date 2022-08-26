@@ -54,10 +54,10 @@ export const configurator: MantineDemo = {
       initialValue: 'top-end',
       defaultValue: 'top-end',
     },
-
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
     { name: 'size', type: 'number', initialValue: 10, defaultValue: 10, step: 1, min: 6, max: 30 },
     { name: 'dot', type: 'boolean', initialValue: true, defaultValue: true },
+    { name: 'disabled', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'withBorder', type: 'boolean', initialValue: false, defaultValue: false },
     { name: 'processing', type: 'boolean', initialValue: false, defaultValue: false },
   ],

@@ -51,8 +51,8 @@ export interface IndicatorProps
   /** Determines whether indicator should have border */
   withBorder?: boolean;
 
-  /** When isShow is false renders children without indicator */
-  isShow?: boolean;
+  /** When component is disabled it renders children without indicator */
+  disabled?: boolean;
 
   /** When showZero is true and label is zero  renders children with indicator*/
   showZero?: boolean;
@@ -69,7 +69,7 @@ const defaultProps: Partial<IndicatorProps> = {
   offset: 0,
   inline: false,
   withBorder: false,
-  isShow: true,
+  disabled: false,
   showZero: false,
   processing: false,
   size: 10,
@@ -95,7 +95,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
     overflowCount,
     showZero,
     classNames,
-    isShow,
+    disabled,
     zIndex,
     unstyled,
     processing,
@@ -115,8 +115,8 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
   }, [label, overflowCount]);
 
   const isShowIndicator = useMemo(
-    () => isShow && (dot || (!isUnDef(label) && !(label <= 0 && !showZero))),
-    [isShow, label, showZero]
+    () => !disabled && (dot || (!isUnDef(label) && !(label <= 0 && !showZero))),
+    [disabled, label, showZero]
   );
 
   return (
