@@ -1,0 +1,42 @@
+---
+group: 'mantine-hooks'
+package: '@mantine/hooks'
+category: 'state'
+title: 'use-previous'
+order: 1
+slug: /hooks/use-previous/
+description: 'Get the previous value of a state'
+import: "import { usePrevious } from '@mantine/hooks';"
+docs: 'hooks/use-previous.mdx'
+source: 'mantine-hooks/src/use-previous/use-previous.ts'
+---
+
+import { HooksDemos } from '@mantine/demos';
+
+## Usage
+
+`use-previous` hook stores the previous value of a state in a ref. Returns undefined on initial render and the previous value of a state after rerender.
+
+## API
+
+```tsx
+const previousValue = usePrevious(2);
+```
+
+Arguments:
+
+- `value`: The value to store in the ref.
+
+Return object:
+
+- `previousValue`: The previous value of the state.
+
+## Definition
+
+```tsx
+function usePrevious(
+  value: any
+): {
+  previousValue: any
+};
+```
