@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useDropzone, FileRejection, Accept } from 'react-dropzone';
+import { useDropzone, FileRejection, Accept, FileWithPath } from 'react-dropzone';
 import {
   DefaultProps,
   Selectors,
@@ -33,7 +33,7 @@ export interface DropzoneProps
   disabled?: boolean;
 
   /** Called when files are dropped into dropzone */
-  onDrop(files: File[]): void;
+  onDrop(files: FileWithPath[]): void;
 
   /** Called when selected files don't meet file restrictions */
   onReject?(fileRejections: FileRejection[]): void;
