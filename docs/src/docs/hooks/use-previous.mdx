@@ -11,17 +11,9 @@ docs: 'hooks/use-previous.mdx'
 source: 'mantine-hooks/src/use-previous/use-previous.ts'
 ---
 
-import { HooksDemos } from '@mantine/demos';
-
 ## Usage
 
 `use-previous` hook stores the previous value of a state in a ref. Returns undefined on initial render and the previous value of a state after rerender.
-
-## API
-
-```tsx
-const previousValue = usePrevious(2);
-```
 
 Arguments:
 
@@ -34,9 +26,5 @@ Return object:
 ## Definition
 
 ```tsx
-function usePrevious(
-  value: any
-): {
-  previousValue: any
-};
+function usePrevious<T>(value: T): T
 ```
