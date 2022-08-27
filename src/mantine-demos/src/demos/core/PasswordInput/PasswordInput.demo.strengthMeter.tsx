@@ -58,7 +58,7 @@ function Demo() {
             onBlurCapture={() => setPopoverOpened(false)}
           >
             <PasswordInput
-              required
+              withAsterisk
               label="Your password"
               placeholder="Your password"
               value={value}
@@ -128,7 +128,7 @@ function Demo() {
             onBlurCapture={() => setPopoverOpened(false)}
           >
             <PasswordInput
-              required
+              withAsterisk
               label="Your password"
               placeholder="Your password"
               value={value}

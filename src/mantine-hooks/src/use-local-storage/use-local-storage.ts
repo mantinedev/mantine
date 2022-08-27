@@ -41,11 +41,20 @@ export function useLocalStorage<T = string>({
   deserialize = deserializeJSON,
   serialize = serializeJSON,
 }: UseLocalStorage<T>) {
-  const [value, setValue] = useState<T>(
-    typeof window !== 'undefined' && 'localStorage' in window && !getInitialValueInEffect
-      ? deserialize(window.localStorage.getItem(key) ?? undefined)
-      : ((defaultValue ?? '') as T)
+  const readLocalStorageValue = useCallback(
+    (skipStorage?: boolean): T => {
+      if (typeof window === 'undefined' || !('localStorage' in window) || skipStorage) {
+        return (defaultValue ?? '') as T;
+      }
+
+      const storageValue = window.localStorage.getItem(key);
+
+      return storageValue !== null ? deserialize(storageValue) : ((defaultValue ?? '') as T);
+    },
+    [key, defaultValue]
   );
+
+  const [value, setValue] = useState<T>(readLocalStorageValue(getInitialValueInEffect));
 
   const setLocalStorageValue = useCallback(
     (val: T | ((prevState: T) => T)) => {
@@ -89,9 +98,7 @@ export function useLocalStorage<T = string>({
 
   useEffect(() => {
     if (getInitialValueInEffect) {
-      setValue(
-        deserialize(window.localStorage.getItem(key) ?? undefined) || ((defaultValue ?? '') as T)
-      );
+      setValue(readLocalStorageValue());
     }
   }, []);
 

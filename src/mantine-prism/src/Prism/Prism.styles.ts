@@ -34,6 +34,10 @@ export default createStyles(
       right: theme.dir === 'ltr' ? theme.spacing.xs : 'unset',
       left: theme.dir === 'rtl' ? theme.spacing.xs : 'unset',
       zIndex: 2,
+
+      '&, &:hover': {
+        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+      },
     },
 
     line: {

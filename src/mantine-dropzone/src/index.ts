@@ -9,3 +9,4 @@ export type { DropzoneFullScreenProps, DropzoneFullScreenStylesName } from './Dr
 export type { DropzoneStylesParams } from './Dropzone.styles';
 export type { DropzoneAcceptProps, DropzoneRejectProps, DropzoneIdleProps } from './DropzoneStatus';
 export * from './mime-types';
+export type { FileWithPath } from 'react-dropzone';
