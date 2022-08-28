@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { useForm } from '../use-form';
-import { UseFormReturnType } from '../types';
+import { UseFormReturnType, UseForm } from '../types';
 
 export interface FormProviderProps<Form> {
   form: Form;
@@ -25,5 +25,9 @@ export function createFormContext<Values>() {
     return ctx;
   }
 
-  return [FormProvider, useFormContext, useForm<Values>] as const;
+  return [FormProvider, useFormContext, useForm] as [
+    React.FC<FormProviderProps<Form>>,
+    () => Form,
+    UseForm<Values>
+  ];
 }
