@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { useForm } from '../use-form';
 import { UseFormReturnType } from '../types';
 
 export interface FormProviderProps<Form> {
@@ -6,7 +7,7 @@ export interface FormProviderProps<Form> {
   children: React.ReactNode;
 }
 
-export function createFormProvider<Values>() {
+export function createFormContext<Values>() {
   type Form = UseFormReturnType<Values>;
 
   const FormContext = createContext<Form>(null);
@@ -24,5 +25,5 @@ export function createFormProvider<Values>() {
     return ctx;
   }
 
-  return [FormProvider, useFormContext] as const;
+  return [FormProvider, useFormContext, useForm<Values>] as const;
 }

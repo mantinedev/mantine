@@ -1,6 +1,6 @@
 import { TextInput } from '@mantine/core';
 import React from 'react';
-import { useForm, createFormProvider } from '../index';
+import { createFormContext } from '../index';
 
 export default { title: 'Form' };
 
@@ -9,7 +9,7 @@ interface FormValues {
   b: string;
 }
 
-const [FormProvider, useFormContext] = createFormProvider<FormValues>();
+const [FormProvider, useFormContext, useForm] = createFormContext<FormValues>();
 
 function CustomField() {
   const form = useFormContext();
@@ -17,7 +17,7 @@ function CustomField() {
 }
 
 export function Context() {
-  const form = useForm<FormValues>({
+  const form = useForm({
     initialValues: {
       a: 0,
       b: '',
