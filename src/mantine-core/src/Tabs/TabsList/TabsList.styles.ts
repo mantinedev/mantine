@@ -44,6 +44,7 @@ export default createStyles((theme, params: TabsListStylesParams) => {
   return {
     tabsList: {
       display: 'flex',
+      flexWrap: 'wrap',
       flexDirection: vertical ? 'column' : 'row',
       justifyContent: GROUP_POSITIONS[params.position],
 

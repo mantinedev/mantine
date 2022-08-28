@@ -18,7 +18,7 @@ import { DatePickerDemos, DateRangePickerDemos } from '@mantine/demos';
 
 DatePicker component:
 
-<Demo data={DatePickerDemos.usage} />
+<Demo data={DatePickerDemos.usage} demoProps={{ zIndex: 5 }} />
 
 DateRangePicker component (supports the same props as DatePicker component):
 
@@ -62,7 +62,7 @@ For example, it can be used to wrap day with [Indicator](/core/indicator/):
 DatePicker supports three levels: date, month and year. User can access next level by clicking label between next/previous controls.
 To disable that, set `allowLevelChange` prop to false:
 
-<Demo data={DatePickerDemos.noLevel} />
+<Demo data={DatePickerDemos.noLevel} demoProps={{ zIndex: 5 }} />
 
 ## First day of the week
 
@@ -199,7 +199,7 @@ To change that provide [dayjs](https://day.js.org/docs/en/display/format) format
 
 By default, date picker can be cleared, to disable this, set `clearable` prop to `false`:
 
-<Demo data={DatePickerDemos.notClearable} />
+<Demo data={DatePickerDemos.notClearable} demoProps={{ zIndex: 5 }} />
 
 ## Multiple months
 

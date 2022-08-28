@@ -8,6 +8,7 @@ export const Autocomplete: Record<AutocompleteStylesNames, string> = {
   item: 'Item element, rendered inside dropdown',
   hovered: 'Hovered item modifier, added to item when it is selected with arrows or hovered',
   nothingFound: 'Nothing found label',
+  itemsWrapper: 'Wraps all items in dropdown',
   ...Input,
   ...InputWrapper,
 };

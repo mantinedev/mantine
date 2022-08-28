@@ -265,6 +265,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
           maxHeight={maxDropdownHeight}
           direction={direction}
           id={inputProps.id}
+          __staticSelector="Autocomplete"
+          classNames={classNames}
+          styles={styles}
         >
           <SelectItems
             data={filteredData}

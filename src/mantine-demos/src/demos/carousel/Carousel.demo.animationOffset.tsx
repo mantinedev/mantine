@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Group } from '@mantine/core';
-import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
+import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 const code = `
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
 function Demo() {
   const TRANSITION_DURATION = 200;
   const [opened, setOpened] = useState(false);
-  const [embla, setEmbla] = useState(null);
+  const [embla, setEmbla] = useState<Embla | null>(null);
 
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
 
@@ -59,7 +59,7 @@ function Demo() {
 function Demo() {
   const TRANSITION_DURATION = 200;
   const [opened, setOpened] = useState(false);
-  const [embla, setEmbla] = useState(null);
+  const [embla, setEmbla] = useState<Embla | null>(null);
 
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
 
