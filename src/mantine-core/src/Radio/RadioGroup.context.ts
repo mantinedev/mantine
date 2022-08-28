@@ -5,6 +5,7 @@ interface RadioGroupContextValue {
   size: MantineSize;
   value: string;
   onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  name: string;
 }
 
 const RadioGroupContext = createContext<RadioGroupContextValue>(null);
