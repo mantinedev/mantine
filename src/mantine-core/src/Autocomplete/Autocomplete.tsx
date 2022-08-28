@@ -1,27 +1,17 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
-import { DefaultProps, Selectors, getDefaultZIndex } from '@mantine/styles';
-import {
-  Input,
-  InputWrapperBaseProps,
-  InputWrapperStylesNames,
-  InputSharedProps,
-  InputStylesNames,
-  useInputProps,
-} from '../Input';
+import { DefaultProps, getDefaultZIndex } from '@mantine/styles';
+import { Input, InputWrapperBaseProps, InputSharedProps, useInputProps } from '../Input';
+import { SelectStylesNames } from '../Select';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
 import { DefaultItem } from '../Select/DefaultItem/DefaultItem';
-import { SelectPopover, SelectPopoverStylesNames } from '../Select/SelectPopover/SelectPopover';
+import { SelectPopover } from '../Select/SelectPopover/SelectPopover';
 import { SelectScrollArea } from '../Select/SelectScrollArea/SelectScrollArea';
 import { filterData } from './filter-data/filter-data';
 import useStyles from './Autocomplete.styles';
 import { SelectSharedProps } from '../Select/Select';
 
-export type AutocompleteStylesNames =
-  | InputStylesNames
-  | InputWrapperStylesNames
-  | SelectPopoverStylesNames
-  | Selectors<typeof useStyles>;
+export type AutocompleteStylesNames = SelectStylesNames;
 
 export interface AutocompleteItem {
   value: string;
@@ -101,10 +91,7 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
     positionDependencies,
     ...others
   } = useInputProps('Autocomplete', defaultProps, props);
-  const { classes } = useStyles(
-    { size: inputProps.size },
-    { classNames, styles, name: 'Autocomplete', unstyled }
-  );
+  const { classes } = useStyles(null, { classNames, styles, name: 'Autocomplete', unstyled });
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
