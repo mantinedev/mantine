@@ -82,3 +82,20 @@ export function Asterisk() {
     </div>
   );
 }
+
+export function WithNameAttribute() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <Radio.Group label="group1" name="group1">
+        <Radio value="1" label="1" />
+        <Radio value="2" label="2" />
+        <Radio value="3" label="3" />
+      </Radio.Group>
+      <Radio.Group label="group2" name="group2">
+        <Radio value="a" label="a" />
+        <Radio value="b" label="b" />
+        <Radio value="c" label="c" />
+      </Radio.Group>
+    </div>
+  );
+}
