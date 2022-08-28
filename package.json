@@ -118,7 +118,7 @@
     "stylis": "^4.0.10",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "4.7.4",
+    "typescript": "4.8.2",
     "yargs": "^17.0.1"
   },
   "dependencies": {
