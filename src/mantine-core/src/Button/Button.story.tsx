@@ -126,13 +126,6 @@ export function States() {
       </table>
     </div>
   );
-
-  // return (
-  //   <Group p={40}>
-  //     <Button disabled>Disabled</Button>
-  //     <Button loading>Loading</Button>
-  //   </Group>
-  // );
 }
 
 export function CustomComponent() {
