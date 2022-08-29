@@ -613,6 +613,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
           direction={direction}
           id={inputProps.id}
           innerRef={scrollableRef}
+          __staticSelector="Select"
+          classNames={classNames}
+          styles={styles}
         >
           <SelectItems
             data={filteredData}

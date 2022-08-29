@@ -40,7 +40,7 @@ export function useFocusReturn({ opened, shouldReturnFocus = true }: UseFocusRet
       window.clearTimeout(timeout);
       document.removeEventListener('keydown', clearFocusTimeout);
     };
-  }, [opened]);
+  }, [opened, shouldReturnFocus]);
 
   return returnFocus;
 }

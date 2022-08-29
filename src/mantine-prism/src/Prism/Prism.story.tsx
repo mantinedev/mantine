@@ -46,3 +46,11 @@ export const WithTabs = () => (
     </Prism.Tabs>
   </div>
 );
+
+export const LargeLine = () => (
+  <Prism language="javascript" withLineNumbers>
+    Line that is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur, Line
+    that is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur, Line that
+    is so large that it will cause overflow Lorem ipsum dolor sit amet consectetur,
+  </Prism>
+);

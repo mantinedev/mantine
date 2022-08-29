@@ -16,7 +16,7 @@ export interface PaperProps extends DefaultProps<never, PaperStylesParams> {
   /** Predefined border-radius value from theme.radius or number for border-radius in px */
   radius?: MantineNumberSize;
 
-  /** Adds 1px border with theme.colors.gray[2] color in light color scheme and theme.colors.dark[6] in dark color scheme */
+  /** Adds 1px border with theme.colors.gray[3] color in light color scheme and theme.colors.dark[4] in dark color scheme */
   withBorder?: boolean;
 
   /** Paper children */
