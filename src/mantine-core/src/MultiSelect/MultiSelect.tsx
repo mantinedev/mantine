@@ -706,6 +706,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
           direction={direction}
           id={uuid}
           innerRef={scrollableRef}
+          __staticSelector="MultiSelect"
+          classNames={classNames}
+          styles={styles}
         >
           <SelectItems
             data={filteredData}

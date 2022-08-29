@@ -94,9 +94,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>((props, ref) =
 
   const segments = Array.isArray(sections)
     ? getCumulativeSections(sections).map((section, index) => (
-        <Tooltip.Floating label={section.tooltip} disabled={!section.tooltip}>
+        <Tooltip.Floating label={section.tooltip} disabled={!section.tooltip} key={index}>
           <Box
-            key={index}
             className={classes.bar}
             sx={{
               width: `${section.value}%`,

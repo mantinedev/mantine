@@ -1,19 +1,21 @@
 import React from 'react';
-import { ClassNames, MantineShadow, Styles } from '@mantine/styles';
+import { ClassNames, MantineShadow, Styles, Selectors, DefaultProps } from '@mantine/styles';
 import { SelectScrollArea } from '../SelectScrollArea/SelectScrollArea';
 import { Popover } from '../../Popover';
 import { Box } from '../../Box';
 import { MantineTransition } from '../../Transition';
+import useStyles from './SelectPopover.styles';
 
-export type SelectPopoverStylesNames = 'dropdown';
+export type SelectPopoverStylesNames = Selectors<typeof useStyles>;
 
-interface SelectPopoverDropdownProps {
+interface SelectPopoverDropdownProps extends DefaultProps<SelectPopoverStylesNames> {
   children: React.ReactNode;
   id: string;
   component?: any;
   maxHeight?: number | string;
   direction?: React.CSSProperties['flexDirection'];
   innerRef?: React.MutableRefObject<HTMLDivElement>;
+  __staticSelector?: string;
 }
 
 function SelectPopoverDropdown({
@@ -23,8 +25,14 @@ function SelectPopoverDropdown({
   direction = 'column',
   id,
   innerRef,
+  __staticSelector,
+  styles,
+  classNames,
+  unstyled,
   ...others
 }: SelectPopoverDropdownProps) {
+  const { classes } = useStyles(null, { name: __staticSelector, styles, classNames, unstyled });
+
   return (
     <Popover.Dropdown p={0} onMouseDown={(event) => event.preventDefault()} {...others}>
       <div style={{ maxHeight, display: 'flex' }}>
@@ -38,7 +46,7 @@ function SelectPopoverDropdown({
           data-combobox-popover
           ref={innerRef}
         >
-          <div style={{ display: 'flex', flexDirection: direction, width: '100%', padding: 4 }}>
+          <div className={classes.itemsWrapper} style={{ flexDirection: direction }}>
             {children}
           </div>
         </Box>

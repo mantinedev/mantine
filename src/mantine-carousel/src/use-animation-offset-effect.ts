@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import { Embla } from './types';
 
-export function useAnimationOffsetEffect(embla: Embla, transitionDuration: number) {
+export function useAnimationOffsetEffect(
+  embla: Embla | null | undefined,
+  transitionDuration: number
+) {
   useEffect(() => {
     if (embla) {
       window.setTimeout(() => {

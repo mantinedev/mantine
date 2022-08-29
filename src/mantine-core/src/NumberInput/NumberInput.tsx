@@ -129,6 +129,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     stepHoldDelay,
     onBlur,
     onFocus,
+    onKeyDown,
+    onKeyUp,
     hideControls,
     radius,
     variant,
@@ -365,6 +367,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    typeof onKeyDown === 'function' && onKeyDown(event);
     if (
       event.repeat &&
       shouldUseStepInterval &&
@@ -382,6 +385,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    typeof onKeyUp === 'function' && onKeyUp(event);
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       onStepDone();
     }
