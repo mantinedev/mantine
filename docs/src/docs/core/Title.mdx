@@ -23,3 +23,18 @@ You can change headings font-size, font-weight and line-height properties in `th
 Set `order` prop to render specific element (h1-h6), default order is 1:
 
 <Demo data={TitleDemos.usage} />
+
+## Size
+
+You can change Title `size` independent from its `order`:
+
+- If you set size to `h1`-`h6`, then component will add corresponding font-size and line-height from [theme](/theming/theme-object/)
+- If you set size to any other value, then line-height will be calculated based on `order` – `size` will impact only font-size
+
+<Demo data={TitleDemos.size} />
+
+## Text props
+
+Title supports all [Text](/core/text/) component props:
+
+<Demo data={TitleDemos.textProps} />

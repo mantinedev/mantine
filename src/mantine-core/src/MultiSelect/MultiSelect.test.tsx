@@ -9,6 +9,7 @@ import {
   itSupportsFocusEvents,
   itSupportsInputWrapperProps,
   itSupportsInputContainer,
+  itSupportsInputAsterisk,
 } from '@mantine/tests';
 import { MultiSelect, MultiSelectProps } from './MultiSelect';
 
@@ -26,6 +27,7 @@ describe('@mantine/core/MultiSelect', () => {
   itSupportsFocusEvents(MultiSelect, defaultProps, '#test-multi-select');
   itSupportsInputIcon(MultiSelect, defaultProps);
   itSupportsInputWrapperProps(MultiSelect, defaultProps, 'MultiSelect');
+  itSupportsInputAsterisk(MultiSelect, defaultProps, 'MultiSelect');
   itSupportsInputContainer(MultiSelect, defaultProps, 'MultiSelect');
   itSupportsInputRightSection(MultiSelect, defaultProps);
   itSupportsWrapperProps(MultiSelect, defaultProps);

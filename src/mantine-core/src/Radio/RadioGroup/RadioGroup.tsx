@@ -61,14 +61,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       orientation,
       spacing,
       size,
-      classNames,
-      styles,
       wrapperProps,
-      errorProps,
-      labelProps,
-      descriptionProps,
-      inputContainer,
-      inputWrapperOrder,
       unstyled,
       offset,
       ...others
@@ -90,14 +83,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
           labelElement="div"
           size={size}
           __staticSelector="RadioGroup"
-          classNames={classNames}
-          styles={styles}
           ref={ref}
-          errorProps={errorProps}
-          descriptionProps={descriptionProps}
-          labelProps={labelProps}
-          inputContainer={inputContainer}
-          inputWrapperOrder={inputWrapperOrder}
           unstyled={unstyled}
           {...wrapperProps}
           {...others}

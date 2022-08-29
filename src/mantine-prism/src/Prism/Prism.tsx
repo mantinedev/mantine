@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
+import Highlight, { defaultProps, Language, PrismTheme } from 'prism-react-renderer';
 import {
   ActionIcon,
   useMantineTheme,
@@ -11,10 +11,11 @@ import {
   useComponentDefaultProps,
   MantineColor,
   MantineNumberSize,
+  MantineTheme,
 } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { CopyIcon } from './CopyIcon';
-import { getPrismTheme } from './prism-theme';
+import { getPrismTheme as defaultGetPrismTheme } from './prism-theme';
 import useStyles from './Prism.styles';
 
 export type PrismStylesNames = Selectors<typeof useStyles>;
@@ -54,6 +55,9 @@ export interface PrismProps
 
   /** Key of theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
+
+  /** Provide custom color scheme */
+  getPrismTheme?(theme: MantineTheme, colorScheme: 'light' | 'dark'): PrismTheme;
 }
 
 const prismDefaultProps: Partial<PrismProps> = {
@@ -64,6 +68,7 @@ const prismDefaultProps: Partial<PrismProps> = {
   trim: true,
   highlightLines: {},
   scrollAreaComponent: ScrollArea,
+  getPrismTheme: defaultGetPrismTheme,
 };
 
 export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, ref) => {
@@ -83,6 +88,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
     trim,
     unstyled,
     radius,
+    getPrismTheme,
     ...others
   } = useComponentDefaultProps('Prism', prismDefaultProps, props);
   const code = trim && typeof children === 'string' ? children.trim() : children;

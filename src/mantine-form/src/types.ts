@@ -19,7 +19,7 @@ export interface ReorderPayload {
   to: number;
 }
 
-type Rule<Value, Values> = (value: Value, values: Values) => React.ReactNode;
+type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
 type FormRule<Value, Values> = Value extends Array<infer ListValue>
   ?
@@ -98,6 +98,9 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
 export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type ResetStatus = () => void;
 
+export type ResetDirty<Values> = (values?: Values) => void;
+export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
+
 export interface UseFormInput<Values> {
   initialValues?: Values;
   initialErrors?: FormErrors;
@@ -131,5 +134,6 @@ export interface UseFormReturnType<Values> {
   setTouched: SetFormStatus;
   setDirty: SetFormStatus;
   resetTouched: ResetStatus;
-  resetDirty: ResetStatus;
+  resetDirty: ResetDirty<Values>;
+  isValid: IsValid<Values>;
 }

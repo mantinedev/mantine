@@ -33,6 +33,7 @@ export function useInputProps<T extends BaseProps>(
     style,
     inputContainer,
     inputWrapperOrder,
+    withAsterisk,
     ...others
   } = useComponentDefaultProps(component, defaultProps, props);
 
@@ -65,6 +66,7 @@ export function useInputProps<T extends BaseProps>(
       style,
       inputContainer,
       inputWrapperOrder,
+      withAsterisk,
       ...wrapperProps,
       ...systemStyles,
     },

@@ -5,14 +5,14 @@ const code = `
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  return <DatePicker allowFreeInput placeholder="Pick date" label="Event date" required />;
+  return <DatePicker allowFreeInput placeholder="Pick date" label="Event date" withAsterisk />;
 }
 `;
 
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" required allowFreeInput />
+      <DatePicker placeholder="Pick date" label="Event date" withAsterisk allowFreeInput />
     </div>
   );
 }

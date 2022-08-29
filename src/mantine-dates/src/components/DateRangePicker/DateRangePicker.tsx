@@ -74,7 +74,7 @@ const defaultProps: Partial<DateRangePickerProps> = {
   firstDayOfWeek: 'monday',
   allowSingleDateInRange: false,
   amountOfMonths: 1,
-  withinPortal: true,
+  withinPortal: false,
   openDropdownOnClear: false,
 };
 

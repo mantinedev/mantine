@@ -21,7 +21,7 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
@@ -84,7 +84,7 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
         {...form.getInputProps(`employees.${index}.name`)}
       />

@@ -5,25 +5,15 @@ import { Group } from '../Group';
 
 export default { title: 'Tooltip' };
 
-export const Usage = () => {
-  const [opened, setOpened] = useState(false);
+export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Tooltip
-        position="bottom"
-        label="Use this button to save this information in your profile, after that you will be able to access it any time and share it via email."
-        width={300}
-        multiline
-        events={{ focus: true, hover: true, touch: false }}
-        withinPortal={false}
-      >
-        <Button fullWidth onClick={() => setOpened(!opened)}>
-          target
-        </Button>
+      <Tooltip position="right" label="Tooltip label" withArrow>
+        <Button>target</Button>
       </Tooltip>
     </div>
   );
-};
+}
 
 export const TooltipGroup = () => (
   <Tooltip.Group openDelay={500}>
@@ -61,7 +51,7 @@ export const Controlled = () => {
 
 export const Floating = () => (
   <div style={{ padding: 0 }}>
-    <Tooltip.Floating label="Tooltip" disabled>
+    <Tooltip.Floating label="Tooltip">
       <button type="button" style={{ width: 200, height: 200 }}>
         target
       </button>

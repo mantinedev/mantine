@@ -76,6 +76,27 @@ the input is focused:
 
 <Demo data={InputDemos.order} />
 
+### required and withAsterisk props
+
+All components that are based on `Input.Wrapper` support `required` and `withAsterisk` props.
+When set to true, both of these props will add red asterisk to the end of the label.
+The only difference is whether input element will have `required` attribute, example with
+[TextInput](/core/text-input/) component:
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+// Will display required asterisk and add `required` attribute to the input element
+function RequiredDemo() {
+  return <TextInput label="test-label" required />;
+}
+
+// Will only display the asterisk, `required` attribute is not added to the input element
+function AsteriskDemo() {
+  return <TextInput label="test-label" withAsterisk />;
+}
+```
+
 ### Input.Label, Input.Error and Input.Description
 
 `Input.Label`, `Input.Error` and `Input.Description` components can be used to create custom

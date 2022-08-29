@@ -87,6 +87,14 @@ export default createStyles((theme) => {
         fontSize: theme.fontSizes.sm,
         borderRadius: theme.radius.sm,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+
+        '& code': {
+          backgroundColor: 'transparent',
+          padding: 0,
+          borderRadius: 0,
+          color: 'inherit',
+          border: 0,
+        },
       },
 
       '& code': {

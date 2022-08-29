@@ -23,7 +23,7 @@ export interface ImageProps
   alt?: string;
 
   /** Image object-fit property */
-  fit?: 'contain' | 'cover';
+  fit?: React.CSSProperties['objectFit'];
 
   /** Image width, defaults to 100%, cannot exceed 100% */
   width?: number | string;

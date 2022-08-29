@@ -60,7 +60,7 @@ const defaultProps: Partial<DatePickerProps> = {
   clearable: true,
   disabled: false,
   fixOnBlur: true,
-  withinPortal: true,
+  withinPortal: false,
   firstDayOfWeek: 'monday',
   openDropdownOnClear: false,
 };

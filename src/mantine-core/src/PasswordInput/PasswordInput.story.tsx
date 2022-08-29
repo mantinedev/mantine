@@ -1,33 +1,15 @@
-import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
-import { MantineProvider, MANTINE_SIZES } from '@mantine/styles';
-import { PasswordInput, PasswordInputProps } from './PasswordInput';
+import React from 'react';
+import { PasswordInput } from './PasswordInput';
 
-const sizes = MANTINE_SIZES.map((size) => (
-  <PasswordInput placeholder={size} key={size} size={size} mt={20} />
-));
+export default { title: 'PasswordInput' };
 
-function Controlled(props: Partial<PasswordInputProps>) {
-  const [value, onChange] = useState('');
+export function Asterisk() {
   return (
-    <div style={{ width: 400, padding: 20 }}>
-      <PasswordInput
-        value={value}
-        onChange={(event) => onChange(event.currentTarget.value)}
-        label="Password"
-        placeholder="Password"
-        {...props}
-      />
+    <div style={{ width: 300, padding: 20 }}>
+      <PasswordInput label="With required asterisk" withAsterisk />
+      <PasswordInput label="Just required" required />
+      <PasswordInput label="Required asterisk off" required withAsterisk={false} />
+      <PasswordInput label="Required false asterisk on" required={false} withAsterisk />
     </div>
   );
 }
-
-storiesOf('PasswordInput', module)
-  .add('Controlled', () => <Controlled />)
-  .add('Sizes', () => <div style={{ width: 400, padding: 20 }}>{sizes}</div>)
-  .add('Invalid', () => <Controlled error="error" />)
-  .add('Default radius on MantineProvider', () => (
-    <MantineProvider theme={{ defaultRadius: 'lg' }}>
-      <Controlled />
-    </MantineProvider>
-  ));

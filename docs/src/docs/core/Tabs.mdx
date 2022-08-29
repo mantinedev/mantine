@@ -117,6 +117,31 @@ By default, active cannot be deactivated. To allow that set `allowTabDeactivatio
 
 <Demo data={TabsDemos.deactivate} demoProps={{ toggle: true }} />
 
+## Unmount inactive tabs
+
+By default, inactive `Tabs.Panel` will stay mounted, to unmount inactive tabs, set `keepMounted={false}` on Tabs.
+This is useful when you want to render components that impact performance inside `Tabs.Panel`. Note that
+components that are rendered inside `Tabs.Panel` will reset their state on each mount (tab change).
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+// Second tab panel will be mounted only when user activates second tab
+function Demo() {
+  return (
+    <Tabs keepMounted={false} defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
 ## Unstyled Tabs
 
 Set `unstyled` prop on Tabs component to remove all non-essential library styles.

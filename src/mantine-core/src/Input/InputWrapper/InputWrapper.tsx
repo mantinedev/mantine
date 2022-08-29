@@ -27,8 +27,11 @@ export interface InputWrapperBaseProps {
   /** Displays error message after input */
   error?: React.ReactNode;
 
-  /** Adds red asterisk on the right side of label */
+  /** Adds required attribute to the input and red asterisk on the right side of label */
   required?: boolean;
+
+  /** Determines whether required asterisk should be rendered, overrides required prop, does not add required attribute to the input */
+  withAsterisk?: boolean;
 
   /** Props spread to label element */
   labelProps?: Record<string, any>;
@@ -93,6 +96,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     __staticSelector,
     unstyled,
     inputWrapperOrder,
+    withAsterisk,
     ...others
   } = useComponentDefaultProps('InputWrapper', defaultProps, props);
 
@@ -111,13 +115,15 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     __staticSelector,
   };
 
+  const isRequired = typeof withAsterisk === 'boolean' ? withAsterisk : required;
+
   const _label = label && (
     <InputLabel
       key="label"
       labelElement={labelElement}
       id={id ? `${id}-label` : undefined}
       htmlFor={id}
-      required={required}
+      required={isRequired}
       {...sharedProps}
       {...labelProps}
     >

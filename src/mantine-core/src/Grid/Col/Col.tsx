@@ -11,6 +11,24 @@ export interface ColProps extends DefaultProps, React.ComponentPropsWithoutRef<'
   /** Column left offset */
   offset?: number;
 
+  /** Default col order */
+  order?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.xs) */
+  orderXs?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.sm) */
+  orderSm?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.md) */
+  orderMd?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.lg) */
+  orderLg?: React.CSSProperties['order'];
+
+  /** Col order at (min-width: theme.breakpoints.xl) */
+  orderXl?: React.CSSProperties['order'];
+
   /** Column left offset at (min-width: theme.breakpoints.xs) */
   offsetXs?: number;
 
@@ -70,6 +88,12 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
     md,
     lg,
     xl,
+    order,
+    orderXs,
+    orderSm,
+    orderMd,
+    orderLg,
+    orderXl,
     className,
     id,
     unstyled,
@@ -97,6 +121,12 @@ export const Col = forwardRef<HTMLDivElement, ColProps>((props: ColProps, ref) =
       md,
       lg,
       xl,
+      order,
+      orderXs,
+      orderSm,
+      orderMd,
+      orderLg,
+      orderXl,
       grow: ctx.grow,
       columns: ctx.columns,
       span: colSpan,

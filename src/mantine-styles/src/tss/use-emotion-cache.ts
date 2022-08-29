@@ -1,7 +1,5 @@
-import createCache from '@emotion/cache';
+import { defaultMantineEmotionCache } from './default-emotion-cache';
 import { useMantineEmotionCache } from '../theme/MantineProvider';
-
-export const defaultMantineEmotionCache = createCache({ key: 'mantine', prepend: true });
 
 export function useEmotionCache() {
   const cache = useMantineEmotionCache();
