@@ -3,6 +3,7 @@ export * from './utils';
 export * from './components/Calendar';
 export * from './components/DatePicker';
 export * from './components/DateRangePicker';
+export * from './components/YearPicker';
 export * from './components/Month';
 export * from './components/RangeCalendar';
 export * from './components/TimeInput';
