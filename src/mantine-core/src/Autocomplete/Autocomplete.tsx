@@ -1,6 +1,7 @@
 import React, { useState, forwardRef, useRef } from 'react';
 import { useUncontrolled, useDidUpdate, useMergedRef } from '@mantine/hooks';
 import { DefaultProps, getDefaultZIndex } from '@mantine/styles';
+import { groupOptions } from '@mantine/utils';
 import { Input, InputWrapperBaseProps, InputSharedProps, useInputProps } from '../Input';
 import { SelectStylesNames } from '../Select';
 import { SelectItems } from '../Select/SelectItems/SelectItems';
@@ -121,7 +122,9 @@ export const Autocomplete = forwardRef<HTMLInputElement, AutocompleteProps>((pro
   };
 
   const formattedData = data.map((item) => (typeof item === 'string' ? { value: item } : item));
-  const filteredData = filterData({ data: formattedData, value: _value, limit, filter });
+  const filteredData = groupOptions({
+    data: filterData({ data: formattedData, value: _value, limit, filter }),
+  });
 
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (IMEOpen) {
