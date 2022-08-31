@@ -1,8 +1,10 @@
-import React from 'react';
-import { MANTINE_COLORS } from '@mantine/styles';
+import React, { CSSProperties } from 'react';
+import { MANTINE_COLORS, useMantineTheme } from '@mantine/styles';
 import { IconExternalLink } from '@tabler/icons';
 import { Button } from './Button';
 import { Group } from '../Group';
+import { Center } from '../Center';
+import { BUTTON_VARIANTS } from './Button.styles';
 
 export default { title: 'Button' };
 
@@ -31,12 +33,98 @@ export function Colors() {
   return <div style={{ padding: 40, backgroundColor: 'rgba(0,0,0,0.1)' }}>{items}</div>;
 }
 
-export function Disabled() {
+export function States() {
+  const theme = useMantineTheme();
+
+  const sharedStyles: CSSProperties = {
+    padding: '10px 20px',
+    border: `1px solid ${
+      theme.colorScheme === 'light' ? theme.colors.gray[1] : theme.colors.dark[6]
+    }`,
+  };
+
+  const states = [
+    {
+      name: 'enabled',
+      props: undefined,
+    },
+    {
+      name: 'disabled',
+      props: {
+        disabled: true,
+      },
+    },
+    {
+      name: 'loading',
+      props: {
+        loading: true,
+      },
+    },
+  ];
+
   return (
-    <Group p={40}>
-      <Button disabled>Disabled</Button>
-      <Button loading>Loading</Button>
-    </Group>
+    <div
+      style={{
+        padding: '40px',
+      }}
+    >
+      <table
+        style={{
+          borderCollapse: 'collapse',
+        }}
+      >
+        <thead>
+          <tr>
+            <th
+              style={{
+                ...sharedStyles,
+              }}
+            >
+              &nbsp;
+            </th>
+
+            {BUTTON_VARIANTS.map((variant) => (
+              <th
+                key={variant}
+                style={{
+                  ...sharedStyles,
+                }}
+              >
+                {variant}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {states.map((state) => (
+            <tr key={state.name}>
+              <td
+                style={{
+                  ...sharedStyles,
+                }}
+              >
+                {state.name}
+              </td>
+
+              {BUTTON_VARIANTS.map((variant) => (
+                <td
+                  key={variant}
+                  style={{
+                    ...sharedStyles,
+                  }}
+                >
+                  <Center>
+                    <Button variant={variant} {...state.props}>
+                      {state.name}
+                    </Button>
+                  </Center>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
