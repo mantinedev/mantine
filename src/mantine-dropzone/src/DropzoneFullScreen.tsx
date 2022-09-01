@@ -70,7 +70,7 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
       unstyled,
     });
 
-    const handleDragEnter = (e) => {
+    const handleDragEnter = () => {
       setCounter((prev) => prev + 1);
       open();
     };
