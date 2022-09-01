@@ -8,8 +8,8 @@ import { Grid } from '@mantine/core';
 function Demo() {
   return (
     <Grid>
-      <Col span="content">span=content</Col>
-      <Col span={6}>span=6</Col>
+      <Col span="content">fit content</Col>
+      <Col span={6}>2</Col>
     </Grid>
   );
 }
