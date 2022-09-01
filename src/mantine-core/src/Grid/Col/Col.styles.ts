@@ -79,6 +79,7 @@ function getBreakpointsStyles({
       order: orders[size],
       flexBasis: getColumnFlexBasis(sizes[size], columns),
       flexShrink: 0,
+      width: sizes[size] === 'content' ? 'auto' : undefined,
       maxWidth: getColumnMaxWidth(sizes[size], columns, grow),
       marginLeft: getColumnOffset(offsets[size], columns),
       flexGrow: getColumnFlexGrow(sizes[size], grow),
