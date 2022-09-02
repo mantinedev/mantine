@@ -129,6 +129,7 @@
     "@radix-ui/react-scroll-area": "1.0.0",
     "@tabler/icons": "^1.68.0",
     "clsx": "1.1.1",
+    "copy-to-clipboard": "^3.3.2",
     "csstype": "3.0.9",
     "dayjs": "^1.10.5",
     "embla-carousel-autoplay": "^7.0.0",

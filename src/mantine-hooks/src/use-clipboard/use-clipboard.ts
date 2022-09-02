@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import copy from 'copy-to-clipboard';
 
 export function useClipboard({ timeout = 2000 } = {}) {
   const [error, setError] = useState<Error>(null);
@@ -11,15 +12,9 @@ export function useClipboard({ timeout = 2000 } = {}) {
     setCopied(value);
   };
 
-  const copy = (valueToCopy: any) => {
-    if ('clipboard' in navigator) {
-      navigator.clipboard
-        .writeText(valueToCopy)
-        .then(() => handleCopyResult(true))
-        .catch((err) => setError(err));
-    } else {
-      setError(new Error('useClipboard: navigator.clipboard is not supported'));
-    }
+  const handleCopy = (valueToCopy: any) => {
+    copy(valueToCopy);
+    handleCopyResult(true);
   };
 
   const reset = () => {
@@ -28,5 +23,5 @@ export function useClipboard({ timeout = 2000 } = {}) {
     clearTimeout(copyTimeout);
   };
 
-  return { copy, reset, error, copied };
+  return { copy: handleCopy, reset, error, copied };
 }
