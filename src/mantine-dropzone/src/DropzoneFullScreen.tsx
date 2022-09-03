@@ -55,7 +55,6 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
       active,
       onDrop,
       onReject,
-      onDragLeave,
       zIndex,
       withinPortal,
       ...others
@@ -120,9 +119,6 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
             onReject={(files: any) => {
               onReject?.(files);
               close();
-            }}
-            onDragLeave={(event: any) => {
-              onDragLeave?.(event);
             }}
           />
         </Box>
