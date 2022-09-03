@@ -1,6 +1,6 @@
 import type { MantineColor } from '@mantine/styles';
 
-interface CurveData {
+export interface CurveData {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;

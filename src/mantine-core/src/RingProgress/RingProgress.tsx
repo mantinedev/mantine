@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react';
-import { DefaultProps, MantineColor, Selectors, useComponentDefaultProps } from '@mantine/styles';
+import { DefaultProps, Selectors, useComponentDefaultProps } from '@mantine/styles';
 import { Box } from '../Box';
 import { Curve } from './Curve/Curve';
 import { getCurves } from './get-curves/get-curves';
+import type { CurveData } from './get-curves/get-curves';
 import useStyles from './RingProgress.styles';
 
 export type RingProgressStylesNames = Selectors<typeof useStyles>;
@@ -23,7 +24,7 @@ export interface RingProgressProps
   roundCaps?: boolean;
 
   /** Ring sections */
-  sections: { value: number; color: MantineColor; tooltip?: React.ReactNode }[];
+  sections: CurveData[];
 }
 
 const defaultProps: Partial<RingProgressProps> = {
