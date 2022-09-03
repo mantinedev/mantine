@@ -42,14 +42,6 @@ interface GetVariantStyles {
 }
 
 function getVariantStyles({ variant, theme, color, gradient }: GetVariantStyles) {
-  if (variant === 'transparent') {
-    return {
-      border: '1px solid transparent',
-      color: theme.fn.variant({ variant: 'subtle', color }).color,
-      backgroundColor: 'transparent',
-    };
-  }
-
   const colors = theme.fn.variant({ color, variant, gradient });
 
   if (variant === 'gradient') {
