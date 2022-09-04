@@ -8,7 +8,7 @@ async function getChangelog() {
   const lastRelease = messages.findIndex((message) => message.includes('release'));
   const notes = messages
     .slice(0, lastRelease)
-    .filter((message) => /\[@mantine/.test(message))
+    .filter((message) => /\[@mantine/.test(message) && !message.includes('[@mantine/demos]'))
     .map((message) => message.replace('[', '- `[').replace(']', ']`'))
     .join('\n');
 
