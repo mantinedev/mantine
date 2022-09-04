@@ -106,10 +106,10 @@ export interface CarouselProps
   previousControlIcon?: React.ReactNode;
 
   /** Allow the carousel to skip scroll snaps if it's dragged vigorously. Note that this option will be ignored if the dragFree option is set to true, false by default */
-  skipSnaps?: boolean
+  skipSnaps?: boolean;
 
   /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
-  containScroll?: 'trimSnaps' | 'keepSnaps'
+  containScroll?: 'trimSnaps' | 'keepSnaps';
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -187,7 +187,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
       speed,
       inViewThreshold,
       skipSnaps,
-      containScroll
+      containScroll,
     },
     plugins
   );
