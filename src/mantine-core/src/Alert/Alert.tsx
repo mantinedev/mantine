@@ -9,9 +9,8 @@ import {
 import { useId } from '@mantine/hooks';
 import { CloseButton } from '../CloseButton';
 import { Box } from '../Box';
-import useStyles, { AlertStylesParams } from './Alert.styles';
+import useStyles, { AlertStylesParams, AlertVariant } from './Alert.styles';
 
-export type AlertVariant = 'filled' | 'outline' | 'light';
 export type AlertStylesNames = Selectors<typeof useStyles>;
 
 export interface AlertProps
