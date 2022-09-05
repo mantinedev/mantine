@@ -27,9 +27,6 @@ export interface OverlayProps extends DefaultProps<never, OverlayStylesParams> {
 
   /** Value from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
-
-  /** Determines whether overlay should be click-through */
-  clickThrough?: boolean;
 }
 
 const defaultProps: Partial<OverlayProps> = {
@@ -41,19 +38,8 @@ const defaultProps: Partial<OverlayProps> = {
 };
 
 export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) => {
-  const {
-    opacity,
-    blur,
-    color,
-    gradient,
-    zIndex,
-    radius,
-    sx,
-    unstyled,
-    className,
-    clickThrough,
-    ...others
-  } = useComponentDefaultProps('Overlay', defaultProps, props);
+  const { opacity, blur, color, gradient, zIndex, radius, sx, unstyled, className, ...others } =
+    useComponentDefaultProps('Overlay', defaultProps, props);
   const { classes, cx } = useStyles({ zIndex }, { name: 'Overlay', unstyled });
   const background = gradient ? { backgroundImage: gradient } : { backgroundColor: color };
 
@@ -66,14 +52,6 @@ export const _Overlay = forwardRef<HTMLDivElement, OverlayProps>((props, ref) =>
           ...background,
           opacity,
           borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-          ...(clickThrough
-            ? {
-                pointerEvents: 'none',
-                '& > *': {
-                  pointerEvents: 'auto',
-                },
-              }
-            : {}),
         }),
         ...packSx(sx),
       ]}
