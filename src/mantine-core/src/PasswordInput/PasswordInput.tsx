@@ -89,6 +89,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
     unstyled,
     visibilityToggleLabel,
     withAsterisk,
+    inputWrapperOrder,
     ...others
   } = useComponentDefaultProps('PasswordInput', defaultProps, props);
 
@@ -145,6 +146,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       labelProps={labelProps}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
+      inputWrapperOrder={inputWrapperOrder}
       {...systemStyles}
       {...wrapperProps}
     >
