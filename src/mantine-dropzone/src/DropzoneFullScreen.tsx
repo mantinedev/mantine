@@ -55,12 +55,12 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
       active,
       onDrop,
       onReject,
-      onDragLeave,
       zIndex,
       withinPortal,
       ...others
     } = useComponentDefaultProps('DropzoneFullScreen', fullScreenDefaultProps, props);
 
+    const [counter, setCounter] = React.useState(0);
     const [visible, { open, close }] = useDisclosure(false);
     const { classes, cx } = useFullScreenStyles(null, {
       name: 'DropzoneFullScreen',
@@ -69,15 +69,30 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
       unstyled,
     });
 
+    const handleDragEnter = () => {
+      setCounter((prev) => prev + 1);
+      open();
+    };
+
+    const handleDragLeave = () => {
+      setCounter((prev) => prev - 1);
+    };
+
     useEffect(() => {
-      if (active) {
-        document.addEventListener('dragover', open, false);
-        return () => document.removeEventListener('dragover', open, false);
-      }
+      counter === 0 && close();
+    }, [counter]);
 
-      return undefined;
+    useEffect(() => {
+      if (!active) return undefined;
+
+      document.addEventListener('dragenter', handleDragEnter, false);
+      document.addEventListener('dragleave', handleDragLeave, false);
+
+      return () => {
+        document.removeEventListener('dragover', handleDragEnter, false);
+        document.removeEventListener('dragleave', handleDragLeave, false);
+      };
     }, [active]);
-
     return (
       <OptionalPortal withinPortal={withinPortal}>
         <Box
@@ -103,10 +118,6 @@ export const DropzoneFullScreen = forwardRef<HTMLDivElement, DropzoneFullScreenP
             }}
             onReject={(files: any) => {
               onReject?.(files);
-              close();
-            }}
-            onDragLeave={(event: any) => {
-              onDragLeave?.(event);
               close();
             }}
           />

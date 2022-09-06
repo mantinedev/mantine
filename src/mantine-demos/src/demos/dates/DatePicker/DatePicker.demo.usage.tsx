@@ -12,7 +12,7 @@ function Demo() {
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" withAsterisk />
+      <DatePicker placeholder="Pick date" label="Event date" withAsterisk withinPortal />
     </div>
   );
 }

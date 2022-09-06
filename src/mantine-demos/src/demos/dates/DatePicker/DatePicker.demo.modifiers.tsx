@@ -63,6 +63,7 @@ function Demo() {
         disableOutsideEvents
         placeholder="Pick date"
         label="Event date"
+        withinPortal
         dayClassName={(date, modifiers) =>
           cx({
             [classes.outside]: modifiers.outside,

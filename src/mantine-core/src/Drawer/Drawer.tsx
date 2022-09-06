@@ -164,7 +164,7 @@ export function Drawer(props: DrawerProps) {
   } = useComponentDefaultProps('Drawer', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { size, position, zIndex },
+    { size, position, zIndex, withOverlay },
     { classNames, styles, unstyled, name: 'Drawer' }
   );
 

@@ -71,7 +71,8 @@ export const _ActionIcon = forwardRef<HTMLButtonElement, ActionIconProps>((props
     { size, radius, color, variant, gradient },
     { name: 'ActionIcon', unstyled }
   );
-  const colors = theme.fn.variant({ color, variant: 'light' });
+
+  const colors = theme.fn.variant({ color, variant });
 
   const loader = (
     <Loader color={colors.color} size={theme.fn.size({ size, sizes }) - 12} {...loaderProps} />

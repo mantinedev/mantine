@@ -6,7 +6,7 @@ import {
   MantineTheme,
 } from '@mantine/styles';
 
-type AlertVariant = 'filled' | 'outline' | 'light';
+export type AlertVariant = 'filled' | 'outline' | 'light';
 
 export interface AlertStylesParams {
   color: MantineColor;

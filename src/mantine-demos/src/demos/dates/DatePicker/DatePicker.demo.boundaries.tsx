@@ -26,6 +26,7 @@ function Demo() {
         label="Event date"
         minDate={dayjs(new Date()).startOf('month').add(5, 'days').toDate()}
         maxDate={dayjs(new Date()).endOf('month').subtract(5, 'days').toDate()}
+        withinPortal
       />
     </div>
   );

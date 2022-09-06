@@ -119,7 +119,7 @@ function SpotlightControl() {
   const spotlight = useSpotlight();
   return (
     <Group position="center">
-      <Button onClick={spotlight.openSpotlight}>Open spotlight</Button>
+      <Button onClick={() => spotlight.openSpotlight()}>Open spotlight</Button>
     </Group>
   );
 }
