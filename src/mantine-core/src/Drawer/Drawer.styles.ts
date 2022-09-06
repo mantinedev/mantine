@@ -16,6 +16,7 @@ export interface DrawerStylesParams {
   position: DrawerPosition;
   size: number | string;
   zIndex: React.CSSProperties['zIndex'];
+  withOverlay: boolean;
 }
 
 interface GetPositionStyles {
@@ -47,39 +48,43 @@ function getPositionStyles({
   }
 }
 
-export default createStyles((theme, { position, size, zIndex }: DrawerStylesParams) => ({
-  closeButton: {},
-  overlay: {},
+export default createStyles(
+  (theme, { position, size, zIndex, withOverlay }: DrawerStylesParams) => ({
+    closeButton: {},
+    overlay: {},
 
-  root: {
-    position: 'fixed',
-    zIndex,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
+    root: {
+      position: 'fixed',
+      zIndex,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      pointerEvents: withOverlay === false ? 'none' : undefined,
+    },
 
-  drawer: {
-    ...getPositionStyles({ position, size, theme }),
-    maxWidth: '100%',
-    maxHeight: '100vh',
-    position: 'fixed',
-    outline: 0,
-    zIndex: 1,
-  },
+    drawer: {
+      ...getPositionStyles({ position, size, theme }),
+      maxWidth: '100%',
+      maxHeight: '100vh',
+      position: 'fixed',
+      outline: 0,
+      zIndex: 1,
+      pointerEvents: withOverlay === false ? 'auto' : undefined,
+    },
 
-  title: {
-    marginRight: theme.spacing.md,
-    textOverflow: 'ellipsis',
-    display: 'block',
-    wordBreak: 'break-word',
-  },
+    title: {
+      marginRight: theme.spacing.md,
+      textOverflow: 'ellipsis',
+      display: 'block',
+      wordBreak: 'break-word',
+    },
 
-  header: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: theme.spacing.md,
-  },
-}));
+    header: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: theme.spacing.md,
+    },
+  })
+);
