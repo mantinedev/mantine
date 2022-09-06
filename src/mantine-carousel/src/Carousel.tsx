@@ -109,7 +109,7 @@ export interface CarouselProps
   skipSnaps?: boolean;
 
   /** Clear leading and trailing empty space that causes excessive scrolling. Use trimSnaps to only use snap points that trigger scrolling or keepSnaps to keep them. */
-  containScroll?: 'trimSnaps' | 'keepSnaps';
+  containScroll?: 'trimSnaps' | 'keepSnaps' | '';
 }
 
 const defaultProps: Partial<CarouselProps> = {
@@ -129,6 +129,8 @@ const defaultProps: Partial<CarouselProps> = {
   inViewThreshold: 0,
   withControls: true,
   withIndicators: false,
+  skipSnaps: false,
+  containScroll: '',
 };
 
 export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) => {
