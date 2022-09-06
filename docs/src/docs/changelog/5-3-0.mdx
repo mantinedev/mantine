@@ -7,6 +7,8 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.3.0
 date: 'August 18th, 2022'
 ---
 
+import { HooksDemos } from '@mantine/demos';
+
 ## Form context
 
 `@mantine/form` package now exports `createFormContext` function to create provider component,
@@ -52,6 +54,13 @@ export function Context() {
   );
 }
 ```
+
+## use-previous hook
+
+[use-previous](https://mantine.dev/hooks/use-previous/) hook stores the previous value of a state in a ref,
+it returns undefined on initial render and the previous value of a state after rerender:
+
+<Demo data={HooksDemos.usePreviousUsage} />
 
 ## Other changes
 
