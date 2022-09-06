@@ -22,6 +22,7 @@ function Demo() {
         label="Sunday as first day of week"
         placeholder="Pick date"
         firstDayOfWeek="sunday"
+        withinPortal
       />
     </div>
   );

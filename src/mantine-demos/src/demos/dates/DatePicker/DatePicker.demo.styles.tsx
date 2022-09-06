@@ -31,6 +31,7 @@ function Demo() {
       <DatePicker
         placeholder="Pick date"
         label="Event date"
+        withinPortal
         dayStyle={(date) =>
           date.getDay() === 5 && date.getDate() === 13
             ? { backgroundColor: theme.colors.red[9], color: theme.white }

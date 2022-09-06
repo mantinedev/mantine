@@ -26,6 +26,7 @@ function Demo() {
         placeholder="Выберите дату"
         label="Дата события"
         defaultValue={new Date()}
+        withinPortal
       />
     </div>
   );

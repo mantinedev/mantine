@@ -26,6 +26,7 @@ function Demo() {
         inputFormat="MM/DD/YYYY"
         labelFormat="MM/YYYY"
         defaultValue={new Date()}
+        withinPortal
       />
     </div>
   );
