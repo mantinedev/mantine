@@ -15,7 +15,7 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[9],
     fontSize: theme.fontSizes.xs,
     color: theme.white,
-    padding: theme.spacing.xs / 2,
+    padding: `calc(${theme.spacing.xs}px / 2)`,
     borderRadius: theme.radius.sm,
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
