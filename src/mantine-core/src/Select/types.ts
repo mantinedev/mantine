@@ -8,7 +8,7 @@ import type { SelectItemsStylesNames } from './SelectItems/SelectItems';
 import type { SelectPopoverStylesNames } from './SelectPopover/SelectPopover';
 
 export interface SelectItem {
-  value: string;
+  value: string | ReadonlyArray<string> | number | undefined;
   label?: string;
   disabled?: boolean;
   group?: string;
