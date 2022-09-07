@@ -24,10 +24,10 @@ export interface SwitchProps
   label?: React.ReactNode;
 
   /** Inner label when Switch is in unchecked state */
-  offLabel?: string;
+  offLabel?: React.ReactNode;
 
   /** Inner label when Switch is in checked state */
-  onLabel?: string;
+  onLabel?: React.ReactNode;
 
   /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
   color?: MantineColor;
@@ -40,6 +40,9 @@ export interface SwitchProps
 
   /** Props spread to wrapper element */
   wrapperProps?: Record<string, any>;
+
+  /** Icon inside the thumb of switch */
+  thumbIcon?: React.ReactNode;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -65,12 +68,13 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     unstyled,
     styles,
     classNames,
+    thumbIcon,
     sx,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size, color, radius, offLabel, onLabel },
+    { size, color, radius },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 
@@ -85,13 +89,20 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
       {...systemStyles}
       {...wrapperProps}
     >
-      <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
+      <label className={classes.body} htmlFor={uuid}>
+        <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
 
-      {label && (
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
-      )}
+        <div className={classes.track}>
+          <div className={classes.onLabel}>{onLabel}</div>
+          <div className={classes.thumb}>{thumbIcon}</div>
+          <div className={classes.offLabel}>{offLabel}</div>
+        </div>
+        {label && (
+          <div data-testid="label" className={classes.label}>
+            {label}
+          </div>
+        )}
+      </label>
     </Box>
   );
 });
