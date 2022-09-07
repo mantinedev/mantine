@@ -139,7 +139,7 @@ export default createStyles<Keys, SwitchStylesParams>((theme, { size, radius, co
       },
 
       '@media (prefers-reduced-motion)': {
-        transitionDuration: theme.respectReducedMotion ? '0ms' : false,
+        transitionDuration: theme.respectReducedMotion ? '0ms' : '',
       },
 
       'input:checked + * > &': {
