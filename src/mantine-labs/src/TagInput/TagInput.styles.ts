@@ -24,13 +24,13 @@ export default createStyles((theme, { size, invalid }: TagInputStyles) => ({
     alignItems: 'center',
     flexWrap: 'wrap',
     marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
-    paddingTop: `calc(${theme.spacing.xs}px / 2 - 2)`,
-    paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2)`,
+    paddingTop: `calc(${theme.spacing.xs}px / 2 - 2px)`,
+    paddingBottom: `calc(${theme.spacing.xs}px / 2 - 2px)`,
     boxSizing: 'border-box',
   },
 
   value: {
-    margin: `calc(${theme.spacing.xs}px / 2 - 2) calc(${theme.spacing.xs}px / 2)`,
+    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
   },
 
   tagInput: {

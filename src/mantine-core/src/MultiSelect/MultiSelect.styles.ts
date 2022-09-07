@@ -21,7 +21,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
   },
 
   value: {
-    margin: `calc(${theme.spacing.xs}px / 2 - 2) calc(${theme.spacing.xs}px  / 2)`,
+    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
   },
 
   searchInput: {
