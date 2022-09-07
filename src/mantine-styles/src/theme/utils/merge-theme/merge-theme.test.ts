@@ -56,6 +56,35 @@ describe('@mantine/styles/merge-theme', () => {
     });
   });
 
+  it('merges fontSizes property correctly', () => {
+    const themeBase = getThemeBase();
+    expect(
+      mergeTheme(themeBase, { fontSizes: { sm: '14px', lg: '1.25rem', xl: '1.5em' } })
+    ).toStrictEqual({
+      ...themeBase,
+      fontSizes: { ...themeBase.fontSizes, sm: 14, lg: 20, xl: 24 },
+    });
+  });
+
+  it('merges spacing, radius and breakpoint property correctly', () => {
+    const themeBase = getThemeBase();
+    expect(
+      mergeTheme(themeBase, {
+        spacing: { sm: '14px', lg: '1.25rem', xl: '1.5em' },
+        radius: { sm: '1rem' },
+        breakpoints: {
+          lg: '997px',
+          xl: 1080,
+        },
+      })
+    ).toStrictEqual({
+      ...themeBase,
+      spacing: { ...themeBase.spacing, sm: 14, lg: 20, xl: 24 },
+      radius: { ...themeBase.radius, sm: 16 },
+      breakpoints: { ...themeBase.breakpoints, lg: 997, xl: 1080 },
+    });
+  });
+
   it('merges other property correctly', () => {
     const themeBase = getThemeBase();
     expect(mergeTheme(themeBase, { other: { prop: 1, test: { nested: true } } })).toStrictEqual({

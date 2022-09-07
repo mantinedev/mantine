@@ -96,6 +96,13 @@ export interface MantineTheme {
   components: MantineThemeComponents;
 }
 
+export interface InputMantineTheme {
+  fontSizes?: Partial<MantineSizes<CSSProperties['fontSize']>>;
+  spacing?: Partial<MantineSizes<CSSProperties['padding']>>;
+  radius?: Partial<MantineSizes<CSSProperties['borderRadius']>>;
+  breakpoints?: Partial<MantineSizes<CSSProperties['width']>>;
+}
+
 interface ThemeComponent {
   defaultProps?: Record<string, any>;
   classNames?: Record<string, string>;
@@ -106,5 +113,11 @@ interface ThemeComponent {
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
 
-export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'other' | 'components'>> &
-  Partial<Pick<MantineThemeBase, 'other' | 'components'>>;
+export type MantineThemeOverride = DeepPartial<
+  Omit<
+    MantineThemeBase,
+    'other' | 'components' | 'fontSizes' | 'spacing' | 'radius' | 'breakpoints'
+  >
+> &
+  Partial<Pick<MantineThemeBase, 'other' | 'components'>> &
+  Partial<InputMantineTheme>;

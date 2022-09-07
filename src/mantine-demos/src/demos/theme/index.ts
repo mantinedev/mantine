@@ -13,6 +13,7 @@ export { datesLocale } from './Theme.demo.datesLocale';
 export { activeStyles } from './Theme.demo.activeStyles';
 export { respectReduceMotion } from './Theme.demo.respectReduceMotion';
 export { cursorType } from './Theme.demo.cursorType';
+export { customUnit } from './Theme.demo.customUnit';
 export { defaultGradient } from './Theme.demo.defaultGradient';
 export { gradientFn } from './Theme.demo.gradientFn';
 export { colorsIndex } from './Theme.demo.colorsIndex';

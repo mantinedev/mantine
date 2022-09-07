@@ -1,5 +1,6 @@
 import { MantineThemeOverride, MantineThemeBase, MantineTheme } from '../../types';
 import { attachFunctions } from '../../functions/attach-functions';
+import { toPx } from '../to-px/to-px';
 
 export function mergeTheme(
   currentTheme: MantineThemeBase,
@@ -29,6 +30,28 @@ export function mergeTheme(
           ...themeOverride.headings,
           sizes,
         },
+      };
+    }
+
+    if (['fontSizes', 'spacing', 'radius', 'breakpoints'].includes(key) && themeOverride[key]) {
+      const sizes = themeOverride[key]
+        ? Object.keys(currentTheme[key]).reduce((mantineSizesAcc, h) => {
+            let calculateSize = currentTheme[key][h];
+            if (h in themeOverride[key]) {
+              calculateSize =
+                typeof themeOverride[key][h] === 'number'
+                  ? themeOverride[key][h]
+                  : toPx(themeOverride[key][h]);
+            }
+            // eslint-disable-next-line no-param-reassign
+            mantineSizesAcc[h] = calculateSize;
+            return mantineSizesAcc;
+          }, {})
+        : currentTheme[key];
+
+      return {
+        ...acc,
+        [key]: sizes,
       };
     }
 
