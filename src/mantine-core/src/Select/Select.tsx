@@ -457,8 +457,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
       case ' ': {
         if (!searchable) {
+          event.preventDefault();
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
