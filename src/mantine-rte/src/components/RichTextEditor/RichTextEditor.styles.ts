@@ -236,32 +236,32 @@ export default createStyles(
 
       '& h1': {
         fontSize: theme.headings.sizes.h1.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h1.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h1.lineHeight})`,
       },
 
       '& h2': {
         fontSize: theme.headings.sizes.h2.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h2.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h2.lineHeight})`,
       },
 
       '& h3': {
         fontSize: theme.headings.sizes.h3.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h3.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h3.lineHeight})`,
       },
 
       '& h4': {
         fontSize: theme.headings.sizes.h4.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h4.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h4.lineHeight})`,
       },
 
       '& h5': {
         fontSize: theme.headings.sizes.h5.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h5.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h5.lineHeight})`,
       },
 
       '& h6': {
         fontSize: theme.headings.sizes.h6.fontSize,
-        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h6.lineHeight}`,
+        marginBottom: `calc(${theme.spacing.sm}px * ${theme.headings.sizes.h6.lineHeight})`,
       },
 
       '& p': {
