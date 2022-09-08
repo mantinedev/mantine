@@ -27,12 +27,12 @@ export default createStyles(
     const iconMargin = size === 'xl' || size === 'lg' ? theme.spacing.md : theme.spacing.sm;
     const _radius = theme.fn.size({ size: radius, sizes: theme.radius });
     const colors = theme.fn.variant({ variant: 'filled', color });
-    const separatorDistanceFromIcon = `calc(${theme.spacing.xs}px / 2)`;
+    const separatorDistanceFromIcon = theme.spacing.xs / 2;
 
     const verticalOrientationStyles = {
       step: {
         justifyContent: 'flex-start',
-        minHeight: `${_iconSize + theme.spacing.xl + separatorDistanceFromIcon}px`,
+        minHeight: `calc(${_iconSize}px + ${theme.spacing.xl}px + ${separatorDistanceFromIcon}px)`,
         marginTop: `${separatorDistanceFromIcon}px`,
         overflow: 'hidden',
 
