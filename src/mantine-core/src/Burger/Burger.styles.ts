@@ -21,9 +21,9 @@ export default createStyles((theme, { size, color, transitionDuration }: BurgerS
   return {
     root: {
       borderRadius: theme.radius.sm,
-      width: sizeValue + theme.spacing.xs,
-      height: sizeValue + theme.spacing.xs,
-      padding: theme.spacing.xs / 2,
+      width: `calc(${sizeValue}px + ${theme.spacing.xs}px)`,
+      height: `calc(${sizeValue}px + ${theme.spacing.xs}px)`,
+      padding: `calc(${theme.spacing.xs}px / 2)`,
       cursor: 'pointer',
     },
 

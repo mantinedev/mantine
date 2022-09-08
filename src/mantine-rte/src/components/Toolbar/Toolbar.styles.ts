@@ -10,7 +10,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    margin: theme.spacing.md / 2,
+    margin: `calc(${theme.spacing.md}px / 2)`,
   },
 
   toolbar: {
@@ -29,7 +29,7 @@ export default createStyles((theme, { sticky, stickyOffset }: ToolbarStyles) => 
   toolbarInner: {
     display: 'flex',
     flexWrap: 'wrap',
-    margin: -theme.spacing.md / 2,
+    margin: `calc(${-theme.spacing.md}px / 2)`,
   },
 
   toolbarControl: {

@@ -42,8 +42,8 @@ export default createStyles(
         minHeight: theme.spacing.xl,
         marginLeft: iconPosition === 'left' ? separatorOffset : 0,
         marginRight: iconPosition === 'right' ? separatorOffset : 0,
-        marginTop: theme.spacing.xs / 2,
-        marginBottom: theme.spacing.xs - 2,
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        marginBottom: `calc(${theme.spacing.xs}px - 2px)`,
       },
     } as const;
 

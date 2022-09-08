@@ -31,7 +31,7 @@ function getVariantStyles(
 
   if (variant === 'pills') {
     return {
-      gap: theme.spacing.sm / 2,
+      gap: `calc(${theme.spacing.sm}px / 2)`,
     };
   }
 
