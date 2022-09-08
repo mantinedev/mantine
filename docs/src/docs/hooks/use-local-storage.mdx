@@ -13,9 +13,8 @@ source: 'mantine-hooks/src/use-local-storage/use-local-storage.ts'
 
 ## Usage
 
-use-local-storage allows you to use value from `localStorage` as react state.
-For storing values in `sessionStorage` use use-session-storage (`useSessionStorage`) which accepts the same properties.
-Both hooks works exactly the same as `useState`, but also writes the value to local/session storage:
+`use-local-storage` allows you to use value from `localStorage` as react state.
+Hook works the same way as `useState`, but also writes the value to `localStorage`:
 
 ```tsx
 import { useLocalStorage } from '@mantine/hooks';
@@ -30,12 +29,6 @@ setValue('light');
 
 // You can also use callback like in useState hook to set value
 setValue((current) => (current === 'dark' ? 'light' : 'dark'));
-```
-
-```tsx
-import { useSessionStorage } from '@mantine/hooks';
-
-const [value, setValue] = useSessionStorage({ key: 'session-key', defaultValue: 'mantine' });
 ```
 
 ## Example
@@ -102,6 +95,16 @@ const [value, setValue] = useLocalStorage({
   serialize: superjson.stringify,
   deserialize: (str) => (str === undefined ? defaultValue : superjson.parse(str)),
 });
+```
+
+## use-session-storage
+
+`use-session-storage` hook works the same way as `use-local-storage` hook but uses `window.sessionStorage` instead of `window.localStorage`:
+
+```tsx
+import { useSessionStorage } from '@mantine/hooks';
+
+const [value, setValue] = useSessionStorage({ key: 'session-key', defaultValue: 'mantine' });
 ```
 
 ## TypeScript
