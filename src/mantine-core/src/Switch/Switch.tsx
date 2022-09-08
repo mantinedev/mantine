@@ -43,6 +43,9 @@ export interface SwitchProps
 
   /** Icon inside the thumb of switch */
   thumbIcon?: React.ReactNode;
+
+  /** Width of track */
+  trackWidth?: number;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -59,6 +62,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     label,
     offLabel,
     onLabel,
+    trackWidth,
     id,
     style,
     size,
@@ -74,7 +78,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size, color, radius },
+    { size, color, radius, trackWidth },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 

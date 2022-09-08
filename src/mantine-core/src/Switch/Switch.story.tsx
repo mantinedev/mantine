@@ -16,7 +16,13 @@ export function CursorPointer() {
 export function WithLabels() {
   return (
     <MantineProvider theme={{ cursorType: 'pointer' }}>
-      <Switch label="Hello" onLabel={<span>On</span>} offLabel="Off" value="1" />
+      <Switch
+        label="Hello"
+        trackWidth={52}
+        onLabel={<span>On</span>}
+        offLabel="Off Label"
+        value="1"
+      />
     </MantineProvider>
   );
 }
