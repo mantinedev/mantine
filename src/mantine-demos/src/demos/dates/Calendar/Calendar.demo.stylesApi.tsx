@@ -13,7 +13,6 @@ function Demo() {
     <Calendar
       value={value}
       onChange={setValue}
-      month={value}
       fullWidth
       size="xl"
       styles={(theme) => ({
