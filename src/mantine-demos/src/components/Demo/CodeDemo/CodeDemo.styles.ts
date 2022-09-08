@@ -38,7 +38,7 @@ export default createStyles((theme: MantineTheme, { radius }: CodeDemoStylesPara
   },
 
   controls: {
-    marginTop: theme.spacing.xs - 1,
+    marginTop: `calc(${theme.spacing.xs}px - 1px)`,
     alignItems: 'flex-end',
   },
 

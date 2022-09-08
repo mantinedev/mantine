@@ -84,8 +84,8 @@ export default createStyles(
       justifyContent: 'center',
       alignItems: 'center',
       fontSize: theme.fontSizes.xs,
-      paddingLeft: withLabel ? theme.spacing.xs / 2 : 0,
-      paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
+      paddingLeft: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
+      paddingRight: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
       borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       backgroundColor: theme.fn.variant({
         variant: 'filled',

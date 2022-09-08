@@ -111,8 +111,8 @@ export default createStyles(
     return {
       wrapper: {
         position: 'relative',
-        marginTop: offsetTop ? theme.spacing.xs / 2 : undefined,
-        marginBottom: offsetBottom ? theme.spacing.xs / 2 : undefined,
+        marginTop: offsetTop ? `calc(${theme.spacing.xs}px / 2)` : undefined,
+        marginBottom: offsetBottom ? `calc(${theme.spacing.xs}px / 2)` : undefined,
       },
 
       input: {

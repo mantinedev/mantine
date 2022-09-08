@@ -19,16 +19,16 @@ export default createStyles((theme, { reversed, native, radius }: RenderListStyl
     display: 'block',
     width: `calc(100% - ${ITEM_PADDING * 2}px)`,
     padding: ITEM_PADDING,
-    marginLeft: theme.spacing.sm - ITEM_PADDING,
-    marginRight: theme.spacing.sm - ITEM_PADDING,
+    marginLeft: `calc(${theme.spacing.sm}px - ${ITEM_PADDING}px)`,
+    marginRight: `calc(${theme.spacing.sm}px - ${ITEM_PADDING}px)`,
     borderRadius: theme.fn.radius(radius),
 
     '&:first-of-type': {
-      marginTop: theme.spacing.sm - ITEM_PADDING,
+      marginTop: `calc(${theme.spacing.sm}px - ${ITEM_PADDING}px)`,
     },
 
     '&:last-of-type': {
-      marginBottom: theme.spacing.sm - ITEM_PADDING,
+      marginBottom: `calc(${theme.spacing.sm}px - ${ITEM_PADDING}px)`,
     },
   },
 

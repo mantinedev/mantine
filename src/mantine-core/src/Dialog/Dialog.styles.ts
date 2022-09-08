@@ -24,7 +24,7 @@ export default createStyles((theme, { size }: DialogStylesParams) => ({
 
   closeButton: {
     position: 'absolute',
-    top: theme.spacing.md / 2,
-    right: theme.spacing.md / 2,
+    top: `calc(${theme.spacing.md}px / 2)`,
+    right: `calc(${theme.spacing.md}px / 2)`,
   },
 }));

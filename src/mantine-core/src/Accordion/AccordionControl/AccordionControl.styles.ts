@@ -67,7 +67,7 @@ export default createStyles(
       alignItems: 'center',
       flexDirection: chevronPosition === 'right' ? 'row-reverse' : 'row',
       padding: `${theme.spacing.md}px ${theme.spacing.md / 2}px`,
-      paddingLeft: chevronPosition === 'right' ? theme.spacing.sm + 4 : null,
+      paddingLeft: chevronPosition === 'right' ? `calc(${theme.spacing.sm}px + 4px)` : null,
       textAlign: 'left',
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
