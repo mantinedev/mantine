@@ -115,6 +115,12 @@ All set! Start development server:
 npm run dev
 ```
 
+## Server streaming support
+
+Mantine is based on [emotion](https://emotion.sh/) which currently does not support [renderToPipeableStream](https://reactjs.org/docs/react-dom-server.html#rendertopipeablestream),
+default Remix boilerplate will not support Mantine (and other component libraries based on css-in-js). It is important to replace your `entry.server.tsx`
+with code provided in this guide in order for server side rendering to work.
+
 ## Next steps
 
 <NextSteps />
