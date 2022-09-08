@@ -57,12 +57,10 @@ export default createStyles(
               }) / 2
             : 0
         }px)`,
-        '&:not(:last-of-type)': {
-          [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
-            size: gap,
-            sizes: theme.spacing,
-          }),
-        },
+        [orientation === 'horizontal' ? 'marginRight' : 'marginBottom']: theme.fn.size({
+          size: gap,
+          sizes: theme.spacing,
+        }),
 
         ...slideBreakpoints,
       },
