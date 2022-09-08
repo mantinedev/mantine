@@ -35,42 +35,192 @@ yarn add @mantine/form
 
 ## API overview
 
-`useForm` hook accepts a single argument with a configuration object that includes the following properties (all of them are optional):
+All examples below use the following example use-form hook.
 
-- `initialValues` – initial form values, form types are generated based on this value
-- `initialErrors` – initial form errors, object of React nodes
-- `initialTouched` – initial touched state
-- `initialDirty` – initial dirty state
-- `validate` – an object with validation rules, schema or a validation function that receives form values as an argument and returns object with validation errors
-- `validateInputOnChange` - boolean value that determines whether all inputs should be validated on input, false by default. Can also be an array of field paths
-- `clearInputErrorOnChange` – boolean value that determines whether input error should be clear when its value changes, true by default
+```tsx
+import { useForm } from '@mantine/form';
 
-Hook returns an object with the following properties:
+const form = useForm({
+  initialValues: {
+    path: '',
+    path2: '',
+    user: {
+      firstName: 'John',
+      lastName: 'Doe',
+    },
+    fruits: [
+      { name: 'Banana', available: true },
+      { name: 'Orange', available: false },
+    ],
+    accepted: false,
+  },
+});
+```
 
-- `values` – current form values
-- `setValues` – handler to set all form values
-- `setFieldValue` – handler to set value of the specified form field
-- `insertListItem` – inserts list item at given index
-- `removeListItem` – removes list item at given field and index
-- `reorderListItem` – reorders list item with given position at specified field
-- `reset` – resets `values` to initial state, clears all validation errors
-- `validate` – validates all fields, returns validation results
-- `validateField` – validates specified field, returns validation results
-- `isValid` - validates all fields or specified field, but does not set `form.errors`
-- `errors` – current validation errors
-- `setErrors` – sets validation errors
-- `setFieldError` – sets validation error of the specified field
-- `clearErrors` – clears all validation errors
-- `clearFieldError` – clears validation error of the specified field
-- `onSubmit` – wrapper function for form `onSubmit` event handler
-- `onReset` – wrapper function for form `onReset` event handler
-- `isTouched` – returns boolean value that indicates that user focused or modified field
-- `setTouched` – sets fields touched state
-- `resetTouched` – clears touched state
-- `isDirty` – returns boolean value that indicates that field value is not the same as specified in `initialValues`
-- `setDirty` – sets fields dirty state
-- `resetDirty` – clears dirty state
-- `getInputProps` – returns an object with value, onChange and error that should be spread on input
+### Values
+
+[Form values guide](/form/values/)
+
+```tsx
+// get current form values
+form.values;
+
+// Set all form values
+form.setValues(values);
+
+// Set value of single field
+form.setFieldValue('path', value);
+
+// Set value of nested field
+form.setFieldValue('user.firstName', 'Jane');
+
+// Resets form.values to initialValues,
+// clears all validation errors,
+// resets touched and dirty state
+form.reset();
+```
+
+### List items
+
+[Nested fields guide](/form/nested/)
+
+```tsx
+// Inserts given list item at the specified path
+form.insertListItem('fruits', { name: 'Apple', available: true });
+
+// An optional index may be provided to specify the position in a nested field.
+// If the index is passed where an item already exists, it will be replaced.
+// If the index is larger than the current list, the element is inserted at the last position.
+form.insertListItem('fruits', { name: 'Orange', available: true }, 1);
+
+// Removes the list item at the specified path and index.
+form.removeListItem('fruits', 1);
+
+// Swaps two items of the list at the specified path.
+// If no element exists at the `from` or `to` index, the list doesn't change.
+form.reorderListItem('fruits', { from: 1, to: 0 });
+```
+
+### Validation
+
+[Form validation guide](/form/validation/)
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  initialValues: {
+    email: '',
+    user: {
+      firstName: '',
+      lastName: '',
+    },
+  },
+  validate: {
+    email: (value) => (value.length < 2 ? 'Invalid email' : null),
+    user: {
+      firstName: (value) => (value.length < 2 ? 'First name must have at least 2 letters' : null),
+    },
+  },
+});
+
+// Validates all fields with specified `validate` function or schema, sets form.errors
+form.validate();
+
+// Validates single field at specified path, sets form.errors
+form.validateField('user.firstName');
+
+// Works the same way as form.validate but does not set form.errors
+form.isValid();
+form.isValid('user.firstName');
+```
+
+### Errors
+
+[Form errors guide](/form/errors/)
+
+Validation errors occur when defined validation rules were violated, `initialErrors` were specified in useForm properties
+or validation errors were set manually.
+
+```tsx
+// get current errors state
+form.errors;
+
+// Set all errors
+form.setErrors({ path: 'Error message', path2: 'Another error' });
+
+// Set error message at specified path
+form.setFieldError('user.lastName', 'No special characters allowed');
+
+// Clears all errors
+form.clearErrors();
+
+// Clears error of field at specified path
+form.clearFieldError('path');
+```
+
+### onReset and onSubmit
+
+Wrapper function for form `onSubmit` and `onReset` event handler. `onSubmit` handler accepts as second argument a function
+that will be called with errors object when validation fails.
+
+```tsx
+<form onSubmit={form.onSubmit(setFormValues)}></form>
+<form onSubmit={form.onSubmit(
+    (values, _event) => { setFormValues(values) },
+    (validationErrors, _values, _event) => { console.log(validationErrors) }
+)}></form>
+<form onReset={form.onReset}></form>
+```
+
+### Touched and dirty
+
+[Touched & dirty guide](/form/status/)
+
+```tsx
+// Returns true if user interacted with any field inside form in any way
+form.isTouched();
+
+// Returns true if user interacted with field at specified path
+form.isTouched('path');
+
+// Set all touched values
+form.setTouched({ 'user.firstName': true, 'user.lastName': false });
+
+// Clears touched status of all fields
+form.resetTouched();
+
+// Returns true if form values are not deep equal to initialValues
+form.isDirty();
+
+// Returns true if field value is not deep equal to initialValues
+form.isDirty('path');
+
+// Sets dirty status of all fields
+form.setDirty({ 'user.firstName': true, 'user.lastName': false });
+
+// Clears dirty status of all fields, saves form.values snapshot
+// After form.resetDirty is called, form.isDirty will compare
+// form.values to snapshot instead of initialValues
+form.resetDirty();
+```
+
+### getInputProps
+
+`form.getInputProps` returns an object with `value`, `onChange`, `onFocus`, `onBlur` and `error` that should be spread on input.
+
+As second parameter options can be passed.
+
+- `type`: default `input`. Needs to be configured to `checkbox` if input requires `checked` to be set instead of `value`.
+- `withError`: default `type === 'input'`. Specifies if the returned object contains an `error` property with
+  `form.errors[path]` value.
+- `withFocus`: default `true`. Specifies if the returned object contains an `onFocus` handler. If disabled, the touched state
+  of the form can only be used if all values are set with `setFieldValue`.
+
+```tsx
+<TextInput {...form.getInputProps('path')} />
+<Checkbox {...form.getInputProps('accepted', { type: 'checkbox' })} />
+```
 
 ## UseFormReturnType
 
@@ -103,202 +253,3 @@ function Demo() {
   );
 }
 ```
-
-## API reference
-
-All examples below use the following example use-form hook.
-
-```jsx
-import { useForm } from '@mantine/form';
-
-const form = useForm({
-  initialValues: {
-    path: '',
-    path2: '',
-    user: {
-      firstName: 'John',
-      lastName: 'Doe',
-    },
-    fruits: [
-      { name: 'Banana', available: true },
-      { name: 'Orange', available: false },
-    ],
-    accepted: false,
-  },
-});
-```
-
-### Values
-
-Details at [Form values](/form/values/).
-
-```jsx
-form.values;
-form.setValues(values);
-form.setFieldValue('path', value);
-form.setFieldValue('user.firstName', 'Jane');
-```
-
-Get all current form values, set all form values or set only the field value at the specified path.
-
-```jsx
-form.reset();
-```
-
-Resets `values` to initial state (`initialValues`), clears all validation errors, resets all form status flags.
-
-### List items
-
-Details at [Nested fields](/form/nested/).
-
-```jsx
-form.insertListItem('fruits', { name: 'Apple', available: true });
-form.insertListItem('fruits', { name: 'Citrus sinensis', available: true }, 1);
-```
-
-Inserts a list item at the specified path. An optional index may be provided to specify the position in a nested field. If an
-index is passed where an item already exists, it will be replaced. If the index is larger than the current list, the element is
-inserted at the last position.
-
-```jsx
-form.removeListItem('fruits', 1);
-```
-
-Removes the list item at the specified path and index.
-
-```jsx
-form.reorderListItem('fruits', { from: 1, to: 0 });
-```
-
-Swaps two items of the list at the specified path. If no element exists at the `from` or `to` index, the list doesn't change.
-
-### Validation
-
-Validation requires defined validation rules set by the `validation` prop within the useForm properties.
-
-```jsx
-import { useForm } from '@mantine/form';
-
-const form = useForm({
-  //...initialValues
-  validate: {
-    user: {
-      firstName: (value) => (value.length < 2 ? 'First name must have at least 2 letters' : null),
-    },
-    'user.lastName': (value) =>
-      value.length < 2 ? 'Last name must have at least 2 letters' : null,
-  },
-});
-```
-
-Details at [Form validation](/form/validation/)
-
-```jsx
-form.validate();
-form.validateField('user.firstName');
-```
-
-Validates all or only the field at the specified path and returns the validation results. Sets the [form errors](#validation-errors).
-
-```jsx
-form.isValid();
-form.isValid('user.firstName');
-```
-
-Similar to `validate` or `validateField` but doesn't set `form.errors` and just returns the `hasError` flag of the validation.
-
-### Validation errors
-
-Validation errors occur when defined validation rules were violated, `inititalErrors` were specified in useForm properties
-or validation errors were set manually.
-
-Details at [Form errors](/form/errors/).
-
-```jsx
-form.errors;
-form.setErrors({ path: 'Error message', path2: 'Another error' });
-form.setFieldError('user.lastName', 'No special characters allowed');
-```
-
-Get all current form validation errors, set all validation errors or set only the validation error at the specified path.
-
-```jsx
-form.clearErrors();
-form.clearFieldError('path');
-```
-
-Clears all validation errors without restoring `initialErrors` or clear only the error at the specified path.
-
-### Event handlers
-
-```jsx
-<form onSubmit={form.onSubmit(setFormValues)}></form>
-<form onSubmit={form.onSubmit(
-    (values, _event) => { setFormValues(values) },
-    (validationErrors, _values, _event) => { console.log(validationErrors) }
-)}></form>
-<form onReset={form.onReset}></form>
-```
-
-Wrapper function for form `onSubmit` and `onReset` event handler. `onSubmit` handler accepts as second argument a function
-that will be called with errors object when validation fails.
-
-### Status
-
-Details at [Touched & dirty status](/form/status/)
-
-```jsx
-form.isTouched();
-form.isTouched('path');
-form.setTouched({ 'user.firstName': true, 'user.lastName': false });
-```
-
-`isTouched` returns a boolean that indicates if the user focused or modified any or the specified field. `setTouched`can be
-used to overwrite the touched state of all fields.
-
-```jsx
-form.resetTouched();
-```
-
-Use `resetTouched` to clear all field touched states. This doesn't restore `initialTouched`.
-
-```jsx
-form.isDirty();
-form.isDirty('path');
-form.setDirty({ 'user.firstName': true, 'user.lastName': false });
-```
-
-`isDirty` returns a boolean that indicates that any or the specified field value is not the same as specified in `initialValues`.
-`setDirty`can be used to overwrite the dirty state of all fields.
-
-```jsx
-form.resetDirty();
-```
-
-Use `resetDirty` to clear all field dirty states. This doesn't restore `initialDirty`.
-
-### getInputProps
-
-Returns an object with value, onChange and error that should be spread on input.
-
-As second parameter options can be passed.
-
-- `type`: default `input`. Needs to be configured to `checkbox` if input requires `checked` to be set instead of `value`.
-- `withError`: default `type === 'input'`. Specifies if the returned object contains an `error` property with
-  `form.errors[path]` value.
-- `withFocus`: default `true`. Specifies if the returned object contains an `onFocus` handler. If disabled, the touched state
-  of the form can only be used if all values are set with `setFieldValue`.
-
-```jsx
-<TextInput {...form.getInputProps('path')} />
-<Checkbox {...form.getInputProps('accepted', { type: 'checkbox' })} />
-```
-
-## Documentation
-
-- [Form values](/form/values/)
-- [Form errors](/form/errors/)
-- [Touched & dirty status](/form/status/)
-- [Form validation](/form/validation/)
-- [Nested fields](/form/nested/)
-- [Recipes](/form/recipes/)
