@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.3.0
 date: 'August 18th, 2022'
 ---
 
-import { HooksDemos } from '@mantine/demos';
+import { HooksDemos, GridDemos } from '@mantine/demos';
 
 ## Form context
 
@@ -54,6 +54,14 @@ export function Context() {
   );
 }
 ```
+
+## Grid improvements
+
+[Grid.Col](https://mantine.dev/core/grid/) component now supports setting column span (and other related responsive props) to `auto` and `content`:
+
+<Demo data={GridDemos.auto} />
+
+<Demo data={GridDemos.content} />
 
 ## use-previous hook
 
