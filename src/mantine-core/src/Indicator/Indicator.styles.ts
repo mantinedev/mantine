@@ -98,14 +98,6 @@ export default createStyles(
         display: inline ? 'inline-block' : 'block',
       },
 
-      common: {
-        ...getPositionStyles(position, offset),
-        position: 'absolute',
-        [withLabel ? 'minWidth' : 'width']: size,
-        height: size,
-        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-      },
-
       indicator: {
         ...getPositionStyles(position, offset),
         zIndex,
@@ -133,6 +125,14 @@ export default createStyles(
 
       processing: {
         animation: `${processingAnimation(background)} 1000ms linear infinite`,
+      },
+
+      common: {
+        ...getPositionStyles(position, offset),
+        position: 'absolute',
+        [withLabel ? 'minWidth' : 'width']: size,
+        height: size,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
       },
     };
   }
