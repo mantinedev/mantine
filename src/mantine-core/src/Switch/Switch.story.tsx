@@ -16,21 +16,15 @@ export function CursorPointer() {
 
 export function WithLabels() {
   return (
-    <MantineProvider theme={{ cursorType: 'pointer' }}>
-      <Group m={4}>
-        <Switch size="lg" onLabel={<span>1</span>} offLabel="0" />
-        <Switch size="md" onLabel={<span>1</span>} offLabel="0" />
-        <Switch size="sm" onLabel={<span>1</span>} offLabel="0" />
-        <Switch size="xs" onLabel={<span>1</span>} offLabel="0" />
-      </Group>
-    </MantineProvider>
+    <Group m={4}>
+      <Switch size="lg" onLabel={<span>1</span>} offLabel="0" />
+      <Switch size="md" onLabel={<span>1</span>} offLabel="0" />
+      <Switch size="sm" onLabel={<span>1</span>} offLabel="0" />
+      <Switch size="xs" onLabel={<span>1</span>} offLabel="0" />
+    </Group>
   );
 }
 
 export function IconInsideThumb() {
-  return (
-    <MantineProvider theme={{ cursorType: 'pointer' }}>
-      <Switch size="lg" thumbIcon={<IconBadge color="black" size={12} />} label="Hello" />
-    </MantineProvider>
-  );
+  return <Switch size="lg" thumbIcon={<IconBadge color="black" size={12} />} label="Hello" />;
 }

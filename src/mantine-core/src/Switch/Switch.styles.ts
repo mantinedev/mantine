@@ -76,7 +76,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStylesParams)
 
     track: {
       ...theme.fn.focusStyles('input:focus + &'),
-      cursor: 'default',
+      cursor: theme.cursorType,
       overflow: 'hidden',
       WebkitTapHighlightColor: 'transparent',
       position: 'relative',
