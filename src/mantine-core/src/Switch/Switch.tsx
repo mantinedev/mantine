@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -24,10 +24,10 @@ export interface SwitchProps
   label?: React.ReactNode;
 
   /** Inner label when Switch is in unchecked state */
-  offLabel?: string;
+  offLabel?: React.ReactNode;
 
   /** Inner label when Switch is in checked state */
-  onLabel?: string;
+  onLabel?: React.ReactNode;
 
   /** Switch checked state color from theme.colors, defaults to theme.primaryColor */
   color?: MantineColor;
@@ -40,6 +40,9 @@ export interface SwitchProps
 
   /** Props spread to wrapper element */
   wrapperProps?: Record<string, any>;
+
+  /** Icon inside the thumb of switch */
+  thumbIcon?: React.ReactNode;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -65,17 +68,27 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     unstyled,
     styles,
     classNames,
+    thumbIcon,
     sx,
+    checked,
+    defaultChecked,
+    onChange,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size, color, radius, offLabel, onLabel },
+    { size, color, radius },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useId(id);
+
+  const [_checked, handleChange] = useUncontrolled<boolean>({
+    value: checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+  });
 
   return (
     <Box
@@ -85,13 +98,30 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
       {...systemStyles}
       {...wrapperProps}
     >
-      <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
+      <label className={classes.body} htmlFor={uuid}>
+        <input
+          {...rest}
+          checked={_checked}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            if (onChange) onChange(event);
+            handleChange(event.currentTarget.checked);
+          }}
+          id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.input}
+        />
 
-      {label && (
-        <label className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
-      )}
+        <div className={classes.track}>
+          <div className={classes.thumb}>{thumbIcon}</div>
+          <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
+        </div>
+        {label && (
+          <div data-testid="label" className={classes.label}>
+            {label}
+          </div>
+        )}
+      </label>
     </Box>
   );
 });
