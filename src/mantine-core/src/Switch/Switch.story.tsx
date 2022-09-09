@@ -1,6 +1,7 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/styles';
 import { IconBadge } from '@tabler/icons';
+import { Group } from '../Group';
 import { Switch } from './Switch';
 
 export default { title: 'Switch' };
@@ -16,13 +17,12 @@ export function CursorPointer() {
 export function WithLabels() {
   return (
     <MantineProvider theme={{ cursorType: 'pointer' }}>
-      <Switch
-        label="Hello"
-        trackWidth={52}
-        onLabel={<span>On</span>}
-        offLabel="Off Label"
-        value="1"
-      />
+      <Group m={4}>
+        <Switch size="lg" onLabel={<span>1</span>} offLabel="0" />
+        <Switch size="md" onLabel={<span>1</span>} offLabel="0" />
+        <Switch size="sm" onLabel={<span>1</span>} offLabel="0" />
+        <Switch size="xs" onLabel={<span>1</span>} offLabel="0" />
+      </Group>
     </MantineProvider>
   );
 }

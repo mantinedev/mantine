@@ -7,6 +7,5 @@ export const Switch: Record<SwitchStylesNames, string> = {
   body: 'Container Of Switch',
   track: 'Track',
   thumb: 'Thumb of Switch',
-  onLabel: 'On Label Element',
-  offLabel: 'Off Label Element',
+  trackLabel: 'onLabel and offLabel',
 };

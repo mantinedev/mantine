@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { useId } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   DefaultProps,
   MantineNumberSize,
@@ -43,9 +43,6 @@ export interface SwitchProps
 
   /** Icon inside the thumb of switch */
   thumbIcon?: React.ReactNode;
-
-  /** Width of track */
-  trackWidth?: number;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -62,7 +59,6 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     label,
     offLabel,
     onLabel,
-    trackWidth,
     id,
     style,
     size,
@@ -74,16 +70,25 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     classNames,
     thumbIcon,
     sx,
+    checked,
+    defaultChecked,
+    onChange,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const { classes, cx } = useStyles(
-    { size, color, radius, trackWidth },
+    { size, color, radius },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useId(id);
+
+  const [_checked, handleChange] = useUncontrolled<boolean>({
+    value: checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+  });
 
   return (
     <Box
@@ -94,12 +99,22 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
       {...wrapperProps}
     >
       <label className={classes.body} htmlFor={uuid}>
-        <input {...rest} id={uuid} ref={ref} type="checkbox" className={classes.input} />
+        <input
+          {...rest}
+          checked={_checked}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            if (onChange) onChange(event);
+            handleChange(event.currentTarget.checked);
+          }}
+          id={uuid}
+          ref={ref}
+          type="checkbox"
+          className={classes.input}
+        />
 
         <div className={classes.track}>
-          <div className={classes.onLabel}>{onLabel}</div>
           <div className={classes.thumb}>{thumbIcon}</div>
-          <div className={classes.offLabel}>{offLabel}</div>
+          <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
         </div>
         {label && (
           <div data-testid="label" className={classes.label}>
