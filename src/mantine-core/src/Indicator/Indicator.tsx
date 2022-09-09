@@ -70,7 +70,7 @@ const defaultProps: Partial<IndicatorProps> = {
   inline: false,
   withBorder: false,
   disabled: false,
-  showZero: false,
+  showZero: true,
   processing: false,
   size: 10,
   overflowCount: 99,
