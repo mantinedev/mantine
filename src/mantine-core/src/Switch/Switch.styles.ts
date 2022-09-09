@@ -15,11 +15,11 @@ const switchHeight = {
 };
 
 const switchWidth = {
-  xs: 30,
+  xs: 32,
   sm: 38,
   md: 46,
   lg: 56,
-  xl: 68,
+  xl: 72,
 };
 
 const handleSizes = {

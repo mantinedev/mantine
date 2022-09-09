@@ -16,6 +16,7 @@ function Demo() {
       <Switch size="sm" onLabel="ON" offLabel="OFF" />
       <Switch size="md" onLabel="ON" offLabel="OFF" />
       <Switch size="lg" onLabel="ON" offLabel="OFF" />
+      <Switch size="xl" onLabel="ON" offLabel="OFF" />
     </Group>
   );
 }
