@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useEffect, useMemo } from 'react';
-import { isUnDef, usePrevious } from '@mantine/utils';
+import { usePrevious } from '@mantine/hooks';
 import useStyles from './MachineNumber.styles';
 
 interface MachineNumberProps {
@@ -25,7 +25,11 @@ export const MachineNumber = forwardRef<HTMLDivElement, MachineNumberProps>((pro
 
   const scroll = () => {
     const { newOriginalNumber, oldOriginalNumber } = props;
-    if (isUnDef(newOriginalNumber) || isUnDef(oldOriginalNumber)) return;
+
+    if (newOriginalNumber == null || oldOriginalNumber == null) {
+      return;
+    }
+
     if (newOriginalNumber > oldOriginalNumber) {
       scrollByDir('up');
     } else if (newOriginalNumber < oldOriginalNumber) {

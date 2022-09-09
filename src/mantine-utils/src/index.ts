@@ -12,27 +12,7 @@ export { keys } from './keys/keys';
 export { useHovered } from './use-hovered/use-hovered';
 export { groupOptions, getGroupedOptions } from './group-options/group-options';
 export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
-export {
-  isArray,
-  isBoolean,
-  isString,
-  isDef,
-  isUnDef,
-  isDate,
-  isEmpty,
-  isNull,
-  isMap,
-  isNumber,
-  isFunction,
-  isObject,
-  isPromise,
-  isNullAndUnDef,
-  isNullOrUnDef,
-  isRegExp,
-  isWindow,
-  isElement,
-} from './is/is';
-export { default as usePrevious } from './use-previous/usePrevious';
+export { isElement } from './is-element/is-element';
 
 export type { PolymorphicComponentProps } from './create-polymorphic-component/create-polymorphic-component';
 export type { ForwardRefWithStaticComponents } from './ForwardRefWithStaticComponents';

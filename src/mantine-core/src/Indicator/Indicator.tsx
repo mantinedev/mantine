@@ -8,7 +8,6 @@ import {
   useComponentDefaultProps,
   getDefaultZIndex,
 } from '@mantine/styles';
-import { isNumber, isUnDef } from '@mantine/utils';
 import { Box } from '../Box';
 import { IndicatorPosition } from './Indicator.types';
 import useStyles, { IndicatorStylesParams } from './Indicator.styles';
@@ -108,14 +107,14 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
   );
 
   const renderLabel = useMemo(() => {
-    if (isNumber(label)) {
+    if (typeof label === 'number') {
       return <Machine value={label} max={overflowCount} />;
     }
     return label;
   }, [label, overflowCount]);
 
   const isShowIndicator = useMemo(
-    () => !disabled && (dot || (!isUnDef(label) && !(label <= 0 && !showZero))),
+    () => !disabled && (dot || (label != null && !(label <= 0 && !showZero))),
     [disabled, label, showZero]
   );
 

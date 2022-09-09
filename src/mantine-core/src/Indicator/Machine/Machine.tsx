@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useMemo, useEffect } from 'react';
-import { isString, isDef, usePrevious } from '@mantine/utils';
+import { usePrevious } from '@mantine/hooks';
 import { MachineNumber } from './MachineNumber';
 import useStyles from './Machine.styles';
 
@@ -14,10 +14,10 @@ export const Machine = forwardRef<HTMLDivElement, MachineNumberProps>(({ value =
   const prevValueRef = usePrevious(value);
 
   useEffect(() => {
-    if (isString(value)) {
+    if (typeof value === 'string') {
       setOldValue(undefined);
       setNewValue(undefined);
-    } else if (isString(prevValueRef)) {
+    } else if (typeof prevValueRef === 'string') {
       setOldValue(undefined);
       setNewValue(value);
     } else {
@@ -27,25 +27,34 @@ export const Machine = forwardRef<HTMLDivElement, MachineNumberProps>(({ value =
   }, [value, prevValueRef]);
 
   const numbers = useMemo(() => {
-    if (isString(value)) return [];
-    if (value < 1) return [0];
+    if (typeof value === 'string') {
+      return [];
+    }
+
+    if (value < 1) {
+      return [0];
+    }
+
     const result: number[] = [];
     let currentValue = value;
-    if (isDef(max)) {
+
+    if (typeof max === 'number') {
       currentValue = Math.min(max, currentValue);
     }
+
     while (currentValue >= 1) {
       result.push(currentValue % 10);
       currentValue /= 10;
       currentValue = Math.floor(currentValue);
     }
+
     result.reverse();
     return result;
   }, [value, max]);
 
   const { classes } = useStyles(null, { name: 'machine' });
 
-  return isString(value) ? (
+  return typeof value === 'string' ? (
     <span ref={ref}>{value}</span>
   ) : (
     <span ref={ref} className={classes.base}>
@@ -57,7 +66,7 @@ export const Machine = forwardRef<HTMLDivElement, MachineNumberProps>(({ value =
           newOriginalNumber={newValue}
         />
       ))}
-      {isDef(max) && value > max && <span>+</span>}
+      {typeof max === 'number' && value > max && <span>+</span>}
     </span>
   );
 });
