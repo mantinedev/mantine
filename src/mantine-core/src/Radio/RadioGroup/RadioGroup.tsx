@@ -43,7 +43,7 @@ export interface RadioGroupProps
   /** Props spread to root element */
   wrapperProps?: Record<string, any>;
 
-  /* Name attribute of radio inputs */
+  /** Name attribute of radio inputs */
   name?: string;
 }
 
