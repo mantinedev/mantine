@@ -115,7 +115,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     value,
     defaultValue,
     finalValue: Array.isArray(data)
-      ? data.find((item) => !item.disabled)?.value ?? data[0].value
+      ? data.find((item) => !item.disabled)?.value ?? data[0]?.value ?? null
       : null,
     onChange,
   });
@@ -205,6 +205,10 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
       </label>
     </div>
   ));
+
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
