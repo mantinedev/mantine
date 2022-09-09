@@ -26,7 +26,7 @@ export default createStyles((theme, { fullWidth }: MonthStylesParams) => ({
     boxSizing: 'border-box',
     padding: 0,
     fontWeight: 'normal',
-    paddingBottom: theme.spacing.xs / 2,
+    paddingBottom: `calc(${theme.spacing.xs}px / 2)`,
     textAlign: 'center',
     cursor: 'default',
     userSelect: 'none',

@@ -74,6 +74,9 @@ export interface NumberInputProps
 
   /** Parses the value from formatter, should be used with formatter at the same time */
   parser?: Parser;
+
+  /** Input type, defaults to text */
+  type?: 'text' | 'number';
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
@@ -113,6 +116,7 @@ const defaultProps: Partial<NumberInputProps> = {
   noClampOnBlur: false,
   formatter: defaultFormatter,
   parser: defaultParser,
+  type: 'text',
 };
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props, ref) => {
@@ -147,6 +151,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     parser,
     inputMode,
     unstyled,
+    type,
     ...others
   } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
@@ -394,11 +399,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   return (
     <TextInput
       {...others}
+      type={type}
       variant={variant}
       value={formatNum(tempValue)}
       disabled={disabled}
       ref={useMergedRef(inputRef, ref)}
-      type="text"
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}

@@ -36,7 +36,7 @@ export default createStyles((theme, { color, radius, width, multiline }: Tooltip
     lineHeight: theme.lineHeight,
     fontSize: theme.fontSizes.sm,
     borderRadius: theme.fn.radius(radius),
-    padding: `${theme.spacing.xs / 2}px ${theme.spacing.xs}px`,
+    padding: `calc(${theme.spacing.xs}px / 2) ${theme.spacing.xs}px`,
     position: 'absolute',
     whiteSpace: multiline ? 'unset' : 'nowrap',
     pointerEvents: 'none',

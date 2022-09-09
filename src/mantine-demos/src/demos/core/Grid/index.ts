@@ -6,3 +6,5 @@ export { rows } from './Grid.demo.rows';
 export { flexConfigurator } from './Grid.demo.flexConfigurator';
 export { responsive } from './Grid.demo.responsive';
 export { columns } from './Grid.demo.columns';
+export { auto } from './Grid.demo.auto';
+export { content } from './Grid.demo.content';

@@ -93,7 +93,7 @@ export default createStyles(
       itemTitle: {
         fontWeight: 500,
         lineHeight: 1,
-        marginBottom: theme.spacing.xs / 2,
+        marginBottom: `calc(${theme.spacing.xs}px / 2)`,
         textAlign: align,
       },
     };

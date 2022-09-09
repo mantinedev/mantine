@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActionIcon, Code, Group, MantineProvider, TextInput, Text, Button } from '@mantine/core';
 import { IconTrash } from '@tabler/icons';
-import { useForm } from '../index';
+import { useForm } from '../use-form';
 
 export default { title: 'Form' };
 

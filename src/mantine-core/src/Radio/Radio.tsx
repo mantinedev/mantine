@@ -82,6 +82,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
   const contextProps = ctx
     ? {
         checked: ctx.value === rest.value,
+        name: rest.name ?? ctx.name,
         onChange: ctx.onChange,
       }
     : {};

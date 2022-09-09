@@ -137,3 +137,7 @@ export interface UseFormReturnType<Values> {
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
 }
+
+export type UseForm<Values = Record<string, unknown>> = (
+  input?: UseFormInput<Values>
+) => UseFormReturnType<Values>;
