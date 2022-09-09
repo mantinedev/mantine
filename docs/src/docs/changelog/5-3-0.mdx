@@ -26,7 +26,7 @@ interface FormValues {
 
 // createFormContext returns a tuple with 3 items:
 // FormProvider is a component that sets form context
-// useFromContext hook return form object that was previously set in FormProvider
+// useFormContext hook return form object that was previously set in FormProvider
 // useForm hook works the same way as useForm exported from the package but has predefined type
 const [FormProvider, useFormContext, useForm] = createFormContext<FormValues>();
 
@@ -57,7 +57,7 @@ export function Context() {
 
 ## Indicator improvements
 
-[Indicator](https://mantine.dev/core/indicator/) component now includes more features to work with number labels and `precessing` prop:
+[Indicator](https://mantine.dev/core/indicator/) component now includes more features to work with number labels and `processing` prop:
 
 <Demo data={IndicatorDemos.overflowCount} />
 
@@ -82,7 +82,7 @@ export function Context() {
 ## use-previous hook
 
 [use-previous](https://mantine.dev/hooks/use-previous/) hook stores the previous value of a state in a ref,
-it returns undefined on initial render and the previous value of a state after rerender:
+it returns `undefined` on initial render and the previous value of a state after rerender:
 
 <Demo data={HooksDemos.usePreviousUsage} />
 
@@ -90,8 +90,8 @@ it returns undefined on initial render and the previous value of a state after r
 
 - [ColorSwatch](https://mantine.dev/core/color-swatch/) now supports `withShadow` prop
 - [MultiSelect](https://mantine.dev/core/multi-select/) dropdown is no longer opened when selected item is removed
-- [Radio.Group](https://mantine.dev/core/radio) component now supports `name` prop to set name on every child Radio component
-- [AppShell](https://mantine.dev/core/app-shell/) component now supports `hidden` prop to hide Header, Footer, Navbar and Aside components
+- [Radio.Group](https://mantine.dev/core/radio) component now supports `name` prop to set name on every child `Radio` component
+- [AppShell](https://mantine.dev/core/app-shell/) component now supports `hidden` prop to hide `Header`, `Footer`, `Navbar` and `Aside` components
 - [Carousel](https://mantine.dev/others/carousel/) component now supports `skipSnaps` and `containScroll` props
 - [NumberInput](https://mantine.dev/core/number-input/) `type` can now be changed
 - [NotificationsProvider](https://mantine.dev/others/notifications/) now supports `target` prop to set [Portal](https://mantine.dev/core/portal/) target

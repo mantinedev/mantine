@@ -25,7 +25,7 @@ interface FormValues {
 
 // createFormContext returns a tuple with 3 items:
 // FormProvider is a component that sets form context
-// useFromContext hook return form object that was previously set in FormProvider
+// useFormContext hook return form object that was previously set in FormProvider
 // useForm hook works the same way as useForm exported from the package but has predefined type
 const [FormProvider, useFormContext, useForm] = createFormContext<FormValues>();
 
