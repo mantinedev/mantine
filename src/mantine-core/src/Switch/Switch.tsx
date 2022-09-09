@@ -84,7 +84,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
   const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useId(id);
 
-  const [_checked, handleChange] = useUncontrolled<boolean>({
+  const [_checked, handleChange] = useUncontrolled({
     value: checked,
     defaultValue: defaultChecked,
     finalValue: false,
@@ -102,8 +102,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
         <input
           {...rest}
           checked={_checked}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            if (onChange) onChange(event);
+          onChange={(event) => {
+            onChange?.(event);
             handleChange(event.currentTarget.checked);
           }}
           id={uuid}
@@ -116,6 +116,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
           <div className={classes.thumb}>{thumbIcon}</div>
           <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
         </div>
+
         {label && (
           <div data-testid="label" className={classes.label}>
             {label}
