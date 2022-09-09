@@ -8,7 +8,7 @@ import { actions } from './_actions';
 const code = `
 import { useState } from 'react';
 import { Group, Button } from '@mantine/core';
-import { SpotlightProvider, useSpotlight } from '@mantine/spotlight';
+import { SpotlightProvider, registerSpotlightActions, openSpotlight, removeSpotlightActions } from '@mantine/spotlight';
 import { IconAlien, IconSearch } from '@tabler/icons';
 
 function SpotlightControls() {
@@ -17,14 +17,14 @@ function SpotlightControls() {
 
   return (
     <Group position="center">
-      <Button onClick={spotlight.openSpotlight}>Open spotlight</Button>
+      <Button onClick={() => openSpotlight()}>Open spotlight</Button>
       {registered ? (
         <Button
           variant="outline"
           color="red"
           onClick={() => {
             setRegistered(false);
-            spotlight.removeActions(['secret-action-1', 'secret-action-2']);
+            removeSpotlightActions(['secret-action-1', 'secret-action-2']);
           }}
         >
           Remove extra actions
@@ -34,7 +34,7 @@ function SpotlightControls() {
           variant="outline"
           onClick={() => {
             setRegistered(true);
-            spotlight.registerActions([
+            registerSpotlightActions([
               {
                 id: 'secret-action-1',
                 title: 'Secret action',

@@ -8,6 +8,7 @@ export const Select: Record<SelectStylesNames, string> = {
   nothingFound: 'Nothing found label',
   separator: 'Divider wrapper',
   separatorLabel: 'Separator Label',
+  itemsWrapper: 'Wraps all items in dropdown',
   ...Input,
   ...InputWrapper,
 };

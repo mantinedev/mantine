@@ -1,7 +1,11 @@
 import { createStyles } from '@mantine/styles';
 
 export default createStyles(() => ({
-  wrapper: {
-    position: 'relative',
+  dropdown: {},
+
+  itemsWrapper: {
+    padding: 4,
+    display: 'flex',
+    width: '100%',
   },
 }));

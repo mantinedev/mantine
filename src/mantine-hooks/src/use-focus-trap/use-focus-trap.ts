@@ -30,7 +30,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
           }
 
           if (focusElement) {
-            focusElement.focus();
+            focusElement.focus({ preventScroll: true });
           } else if (process.env.NODE_ENV === 'development') {
             // eslint-disable-next-line no-console
             console.warn(

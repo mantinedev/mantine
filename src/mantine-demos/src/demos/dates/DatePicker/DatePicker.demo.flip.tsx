@@ -13,7 +13,7 @@ export const flip: MantineDemo = {
   type: 'configurator',
   component: (props: any) => (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" {...props} />
+      <DatePicker placeholder="Pick date" label="Event date" {...props} withinPortal />
     </div>
   ),
   codeTemplate,

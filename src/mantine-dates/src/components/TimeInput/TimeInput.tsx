@@ -246,7 +246,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     };
 
     const rightSection =
-      clearable && _value ? (
+      clearable && _value && !disabled ? (
         <CloseButton
           variant="transparent"
           aria-label={clearButtonLabel}

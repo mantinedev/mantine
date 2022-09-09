@@ -34,6 +34,7 @@ function Demo() {
         placeholder="Pick dates range"
         value={value}
         onChange={setValue}
+        withinPortal
       />
     </div>
   );

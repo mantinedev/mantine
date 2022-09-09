@@ -19,6 +19,7 @@ export const MultiSelect: Record<MultiSelectStylesNames, string> = {
   defaultValueLabel: 'Default value label',
   separator: 'Divider wrapper',
   separatorLabel: 'Divider Label',
+  itemsWrapper: 'Wraps all items in dropdown',
   ...InputStyles,
   ...InputWrapper,
 };

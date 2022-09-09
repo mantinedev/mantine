@@ -20,6 +20,7 @@ function Demo() {
         placeholder="Your birthday"
         disabled
         value={new Date()}
+        withinPortal
       />
     </div>
   );

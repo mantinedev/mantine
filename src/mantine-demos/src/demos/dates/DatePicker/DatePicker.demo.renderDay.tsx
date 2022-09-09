@@ -30,6 +30,7 @@ function Demo() {
       <DatePicker
         placeholder="Pick date"
         label="Event date"
+        withinPortal
         renderDay={(date) => {
           const day = date.getDate();
           return (

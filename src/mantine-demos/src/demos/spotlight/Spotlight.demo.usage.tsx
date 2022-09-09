@@ -11,7 +11,7 @@ import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons
 function SpotlightControl() {
   return (
     <Group position="center">
-      <Button onClick={openSpotlight}>Open spotlight</Button>
+      <Button onClick={() => openSpotlight()}>Open spotlight</Button>
     </Group>
   );
 }

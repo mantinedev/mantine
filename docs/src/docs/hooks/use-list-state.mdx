@@ -64,9 +64,9 @@ const setItem = () => handlers.setItem(0, { a: 8 });
 const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
 // values -> [{ a: 8 }, { a: 'new-prop' }]
 
-// remove objects that have a = 'new-prop'
+// filter objects that have a = 'new-prop'
 const filter = () => handlers.filter((item) => item.a === 'new-prop');
-// values -> [{ a: 8 }]
+// values -> [{ a: 'new-prop' }]
 ```
 
 ## API

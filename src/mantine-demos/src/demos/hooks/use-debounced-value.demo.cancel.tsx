@@ -57,7 +57,7 @@ function Demo() {
         </Button>
       </div>
 
-      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15 }}>
+      <div style={{ maxWidth: 400, margin: 'auto', marginTop: 15, overflowWrap: 'break-word' }}>
         <Text>
           <Text component="span" color="dimmed" size="sm">
             Value:
