@@ -3,6 +3,7 @@ import { Avatar } from '../Avatar';
 import { Box } from '../Box';
 import { Group } from '../Group';
 import { Indicator } from './Indicator';
+import { Text } from '../Text';
 
 export default { title: 'Indicator' };
 
@@ -48,5 +49,31 @@ export const WithLabel = () => (
     <Indicator inline label="New" size={18}>
       <Avatar radius={0} />
     </Indicator>
+  </Box>
+);
+
+export const Processing = () => (
+  <Box sx={{ padding: 40 }}>
+    <Group position="center">
+      <Box>
+        <Text>Enabled</Text>
+        <Indicator inline dot processing size={12}>
+          <Avatar
+            size="lg"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+          />
+        </Indicator>
+      </Box>
+
+      <Box>
+        <Text>Disabled</Text>
+        <Indicator inline dot processing disabled size={12}>
+          <Avatar
+            size="lg"
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
+          />
+        </Indicator>
+      </Box>
+    </Group>
   </Box>
 );
