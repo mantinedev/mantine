@@ -121,9 +121,11 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>((props, ref)
   return (
     <Box ref={ref} className={cx(classes.root, className)} {...others}>
       {isShowIndicator && (
-        <div className={cx(classes.indicator, classes.common)}>{renderLabel}</div>
+        <>
+          <div className={cx(classes.indicator, classes.common)}>{renderLabel}</div>
+          {processing && <div className={cx(classes.processing, classes.common)} />}
+        </>
       )}
-      {processing && <div className={cx(classes.processing, classes.common)} />}
       {children}
     </Box>
   );
