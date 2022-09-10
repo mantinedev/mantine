@@ -154,7 +154,7 @@ export function NotificationsProvider({
           style={style}
           sx={{
             maxWidth: containerWidth,
-            ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
+            ...getPositionStyles(positioning, theme.spacing.md),
           }}
           {...others}
         >
