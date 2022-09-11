@@ -9,8 +9,11 @@ import {
   extractSystemStyles,
   useComponentDefaultProps,
 } from '@mantine/styles';
+import { ForwardRefWithStaticComponents } from '@mantine/utils';
 import { Box } from '../Box';
 import useStyles, { SwitchStylesParams } from './Switch.styles';
+import { SwitchGroup } from './SwitchGroup/SwitchGroup';
+import { useSwitchGroupContext } from './SwitchGroup.context';
 
 export type SwitchStylesNames = Selectors<typeof useStyles>;
 
@@ -52,7 +55,9 @@ const defaultProps: Partial<SwitchProps> = {
   radius: 'xl',
 };
 
-export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
+type SwitchComponent = ForwardRefWithStaticComponents<SwitchProps, { Group: typeof SwitchGroup }>;
+
+export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
     className,
     color,
@@ -76,16 +81,25 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
+  const ctx = useSwitchGroupContext();
+
   const { classes, cx } = useStyles(
-    { size, color, radius },
+    { size: ctx?.size || size, color, radius },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 
   const { systemStyles, rest } = extractSystemStyles(others);
   const uuid = useId(id);
 
+  const contextProps = ctx
+    ? {
+        checked: ctx.value.includes(rest.value as string),
+        onChange: ctx.onChange,
+      }
+    : {};
+
   const [_checked, handleChange] = useUncontrolled({
-    value: checked,
+    value: contextProps.checked ?? checked,
     defaultValue: defaultChecked,
     finalValue: false,
   });
@@ -103,7 +117,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
           {...rest}
           checked={_checked}
           onChange={(event) => {
-            onChange?.(event);
+            ctx ? contextProps.onChange(event) : onChange?.(event);
             handleChange(event.currentTarget.checked);
           }}
           id={uuid}
@@ -125,6 +139,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => 
       </label>
     </Box>
   );
-});
+}) as any;
 
 Switch.displayName = '@mantine/core/Switch';
+Switch.Group = SwitchGroup;
