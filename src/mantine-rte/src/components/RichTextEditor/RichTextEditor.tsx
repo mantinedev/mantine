@@ -45,10 +45,13 @@ export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
-  value: string | Delta;
+  value?: string | Delta;
+
+  /** Initial value of input */
+  defaultValue?: string | Delta;
 
   /** Called each time value changes */
-  onChange(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
+  onChange?(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
 
   /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;
