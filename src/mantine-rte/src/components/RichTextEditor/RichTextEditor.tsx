@@ -43,7 +43,7 @@ function defaultImageUpload(file: File): Promise<string> {
 
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
   value?: string | Delta;
 
@@ -97,6 +97,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
   (props: RichTextEditorProps, ref) => {
     const {
       value,
+      defaultValue,
       onChange,
       onImageUpload,
       sticky,
@@ -166,6 +167,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
           theme="snow"
           modules={modules}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
