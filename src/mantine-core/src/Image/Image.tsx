@@ -46,7 +46,7 @@ export interface ImageProps
   /** Get image element ref */
   imageRef?: React.ForwardedRef<HTMLImageElement>;
 
-  /** Image figcaption, displayed bellow image */
+  /** Image figcaption, displayed below image */
   caption?: React.ReactNode;
 }
 
