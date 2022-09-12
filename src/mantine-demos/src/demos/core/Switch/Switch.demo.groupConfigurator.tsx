@@ -2,19 +2,19 @@ import React from 'react';
 import { SwitchGroupProps, Switch } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
-import { Checkbox } from '@mantine/core';
+import { Switch } from '@mantine/core';
 
 function Demo() {
   return (
-    <Checkbox.Group
+    <Switch.Group
       defaultValue={['react']}
      ${props}
     >
-      <Checkbox value="react" label="React" />
-      <Checkbox value="svelte" label="Svelte" />
-      <Checkbox value="ng" label="Angular" />
-      <Checkbox value="vue" label="Vue" />
-    </Checkbox.Group>
+      <Switch value="react" label="React" />
+      <Switch value="svelte" label="Svelte" />
+      <Switch value="ng" label="Angular" />
+      <Switch value="vue" label="Vue" />
+    </Switch.Group>
   );
 }
 `;
