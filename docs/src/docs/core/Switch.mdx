@@ -43,6 +43,28 @@ function Demo() {
 
 <Demo data={SwitchDemos.thumbIcon} />
 
+## Switch.Group
+
+<Demo data={SwitchDemos.groupConfigurator} />
+
+## Controlled Switch.Group
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Switch.Group value={value} onChange={setValue}>
+      <Switch value="react" label="React" />
+      <Switch value="svelte" label="Svelte" />
+    </Switch.Group>
+  );
+}
+```
+
 ## Get input ref
 
 ```tsx
