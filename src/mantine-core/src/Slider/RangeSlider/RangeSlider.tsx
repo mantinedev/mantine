@@ -101,6 +101,12 @@ export interface RangeSliderProps
 
   /** Thumb width and height in px */
   thumbSize?: number;
+
+  /**
+   * A transformation function, to change the scale of the slider
+   * @default (value) => value
+   */
+  scale?: (value: number) => number;
 }
 
 const defaultProps: Partial<RangeSliderProps> = {
@@ -119,6 +125,7 @@ const defaultProps: Partial<RangeSliderProps> = {
   thumbToLabel: '',
   showLabelOnHover: true,
   disabled: false,
+  scale: (v) => v,
 };
 
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, ref) => {
@@ -151,6 +158,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     disabled,
     unstyled,
     thumbSize,
+    scale,
     ...others
   } = useComponentDefaultProps('RangeSlider', defaultProps, props);
 
@@ -400,10 +408,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
       >
         <Thumb
           {...sharedThumbProps}
-          value={_value[0]}
+          value={scale(_value[0])}
           position={positions[0]}
           dragging={active}
-          label={typeof label === 'function' ? label(_value[0]) : label}
+          label={typeof label === 'function' ? label(scale(_value[0])) : label}
           ref={(node) => {
             thumbs.current[0] = node;
           }}
@@ -421,10 +429,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
         <Thumb
           {...sharedThumbProps}
           thumbLabel={thumbToLabel}
-          value={_value[1]}
+          value={scale(_value[1])}
           position={positions[1]}
           dragging={active}
-          label={typeof label === 'function' ? label(_value[1]) : label}
+          label={typeof label === 'function' ? label(scale(_value[1])) : label}
           ref={(node) => {
             thumbs.current[1] = node;
           }}
