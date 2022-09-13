@@ -8,7 +8,7 @@ export interface AlphaSliderProps extends BaseColorSliderProps {
 }
 
 export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>(
-  ({ value, onChange, color, ...others }: AlphaSliderProps, ref) => {
+  ({ value, onChange, onChangeEnd, color, ...others }: AlphaSliderProps, ref) => {
     const theme = useMantineTheme();
     const _color = theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3];
 
@@ -18,6 +18,7 @@ export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>(
         ref={ref}
         value={value}
         onChange={(val) => onChange(round(val, 2))}
+        onChangeEnd={(val) => onChangeEnd(round(val, 2))}
         maxValue={1}
         round={false}
         overlays={[
