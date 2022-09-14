@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
@@ -16,4 +16,15 @@ export function Usage() {
 
 export function EmptyData() {
   return <SegmentedControl data={[]} />;
+}
+
+export function EmptyStringValue() {
+  const [value, onChange] = useState('');
+  return (
+    <SegmentedControl
+      data={[...data, { label: 'Empty string', value: '' }]}
+      value={value}
+      onChange={onChange}
+    />
+  );
 }
