@@ -71,6 +71,7 @@ const defaultProps: Partial<IndicatorProps> = {
   disabled: false,
   showZero: true,
   processing: false,
+  dot: true,
   size: 10,
   overflowCount: 99,
   radius: 1000,
