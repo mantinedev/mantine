@@ -96,9 +96,10 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
 
   const theme = useMantineTheme();
   const clipboard = useClipboard();
+  const _colorScheme = colorScheme || theme.colorScheme;
   const { classes, cx } = useStyles(
     {
-      colorScheme: colorScheme || theme.colorScheme,
+      colorScheme: _colorScheme,
       native: ScrollAreaComponent !== ScrollArea,
       maxLineSize,
       radius,
@@ -131,7 +132,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
 
       <Highlight
         {...defaultProps}
-        theme={getPrismTheme(theme, colorScheme || theme.colorScheme)}
+        theme={getPrismTheme(theme, _colorScheme)}
         code={code}
         language={language}
       >
@@ -158,7 +159,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
                   const lineProps = getLineProps({ line, key: index });
                   const shouldHighlight = lineNumber in highlightLines;
                   const lineColor =
-                    theme.colorScheme === 'dark'
+                    _colorScheme === 'dark'
                       ? theme.fn.rgba(
                           theme.fn.themeColor(highlightLines[lineNumber]?.color, 9),
                           0.25
@@ -178,7 +179,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
                             color: shouldHighlight
                               ? theme.fn.themeColor(
                                   highlightLines[lineNumber]?.color,
-                                  theme.colorScheme === 'dark' ? 5 : 8
+                                  _colorScheme === 'dark' ? 5 : 8
                                 )
                               : undefined,
                           }}
@@ -198,7 +199,7 @@ export const Prism = forwardRef<HTMLDivElement, PrismProps>((props: PrismProps, 
                                 color: shouldHighlight
                                   ? theme.fn.themeColor(
                                       highlightLines[lineNumber]?.color,
-                                      theme.colorScheme === 'dark' ? 5 : 8
+                                      _colorScheme === 'dark' ? 5 : 8
                                     )
                                   : (tokenProps?.style?.color as string),
                               }}
