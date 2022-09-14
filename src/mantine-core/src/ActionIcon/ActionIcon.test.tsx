@@ -64,4 +64,13 @@ describe('@mantine/core/ActionIcon', () => {
     expect(loading.querySelectorAll('.test-icon')).toHaveLength(0);
     expect(loading.querySelectorAll('svg')).toHaveLength(1);
   });
+
+  it('is disabled when inside fieldset disabled', () => {
+    render(
+      <fieldset disabled>
+        <ActionIcon>$</ActionIcon>
+      </fieldset>
+    );
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
 });
