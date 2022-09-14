@@ -52,4 +52,13 @@ describe('@mantine/core/Button', () => {
   it('exposes ButtonGroup as static component', () => {
     expect(Button.Group).toBe(ButtonGroup);
   });
+
+  it('is disabled when inside fieldset disabled', () => {
+    render(
+      <fieldset disabled>
+        <Button type="submit" />
+      </fieldset>
+    );
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
 });

@@ -128,6 +128,105 @@ export function States() {
   );
 }
 
+/**
+ * All buttons should be disabled
+ */
+export function StatesInFieldsetDisabled() {
+  const theme = useMantineTheme();
+
+  const sharedStyles: CSSProperties = {
+    padding: '10px 20px',
+    border: `1px solid ${
+      theme.colorScheme === 'light' ? theme.colors.gray[1] : theme.colors.dark[6]
+    }`,
+  };
+
+  const states = [
+    {
+      name: 'enabled',
+      props: undefined,
+    },
+    {
+      name: 'disabled',
+      props: {
+        disabled: true,
+      },
+    },
+    {
+      name: 'loading',
+      props: {
+        loading: true,
+      },
+    },
+  ];
+
+  return (
+    <fieldset disabled>
+      <div
+        style={{
+          padding: '40px',
+        }}
+      >
+        <table
+          style={{
+            borderCollapse: 'collapse',
+          }}
+        >
+          <thead>
+            <tr>
+              <th
+                style={{
+                  ...sharedStyles,
+                }}
+              >
+                &nbsp;
+              </th>
+
+              {BUTTON_VARIANTS.map((variant) => (
+                <th
+                  key={variant}
+                  style={{
+                    ...sharedStyles,
+                  }}
+                >
+                  {variant}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {states.map((state) => (
+              <tr key={state.name}>
+                <td
+                  style={{
+                    ...sharedStyles,
+                  }}
+                >
+                  {state.name}
+                </td>
+
+                {BUTTON_VARIANTS.map((variant) => (
+                  <td
+                    key={variant}
+                    style={{
+                      ...sharedStyles,
+                    }}
+                  >
+                    <Center>
+                      <Button variant={variant} {...state.props}>
+                        {state.name}
+                      </Button>
+                    </Center>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
+  );
+}
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>
