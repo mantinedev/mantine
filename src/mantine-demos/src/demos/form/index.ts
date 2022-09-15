@@ -19,3 +19,5 @@ export { setFieldValue } from './Form.demo.setFieldValue';
 export { setValues } from './Form.demo.setValues';
 export { reset } from './Form.demo.reset';
 export { status } from './Form.demo.status';
+export { blurValidation } from './Form.demo.blurValidation';
+export { blurFieldValidation } from './Form.demo.blurFieldValidation';

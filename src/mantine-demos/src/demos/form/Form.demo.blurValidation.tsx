@@ -9,7 +9,7 @@ import { NumberInput, TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    validateInputOnChange: ['name', 'email'],
+    validateInputOnBlur: true,
     initialValues: { name: '', email: '', age: 0 },
 
     // functions will be used to validate values at corresponding key
@@ -42,7 +42,7 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    validateInputOnChange: ['email', 'name'],
+    validateInputOnBlur: true,
     initialValues: { name: '', email: '', age: 0 },
 
     // functions will be used to validate values at corresponding key
@@ -72,7 +72,7 @@ function Demo() {
   );
 }
 
-export const liveFieldValidation: MantineDemo = {
+export const blurValidation: MantineDemo = {
   type: 'demo',
   component: Demo,
   code,

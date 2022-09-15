@@ -7,7 +7,14 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.4.0
 date: 'September 9th, 2022'
 ---
 
-import { SliderDemos, SwitchDemos, PasswordInputDemos } from '@mantine/demos';
+import { SliderDemos, SwitchDemos, PasswordInputDemos, FormDemos } from '@mantine/demos';
+
+## validateInputOnBlur
+
+[use-form](https://mantine.dev/form/use-form/) now supports `validateInputOnBlur` [option](https://mantine.dev/form/validation/#validate-fields-on-blur),
+it works similar to `validateInputOnChange`:
+
+<Demo data={FormDemos.blurFieldValidation} />
 
 ## Non-linear Slider scale
 
