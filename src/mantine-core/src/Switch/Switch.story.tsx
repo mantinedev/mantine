@@ -28,3 +28,35 @@ export function WithLabels() {
 export function IconInsideThumb() {
   return <Switch size="lg" thumbIcon={<IconBadge color="black" size={12} />} label="Hello" />;
 }
+
+export function SwitchGroup() {
+  return (
+    <>
+      <Switch.Group defaultValue={['one', 'three']} m={4} label="Switch Group">
+        <Switch value="one" size="md" />
+        <Switch value="two" size="md" />
+        <Switch value="three" size="md" />
+        <Switch value="four" size="md" />
+      </Switch.Group>
+    </>
+  );
+}
+
+export function Asterisk() {
+  return (
+    <div style={{ width: 300, padding: 20 }}>
+      <Switch.Group label="With required asterisk" withAsterisk>
+        <Switch value="1" />
+      </Switch.Group>
+      <Switch.Group label="Just required" required>
+        <Switch value="1" />
+      </Switch.Group>
+      <Switch.Group label="Required asterisk off" required withAsterisk={false}>
+        <Switch value="1" />
+      </Switch.Group>
+      <Switch.Group label="Required false asterisk on" required={false} withAsterisk>
+        <Switch value="1" />
+      </Switch.Group>
+    </div>
+  );
+}
