@@ -109,6 +109,7 @@ export interface UseFormInput<Values> {
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
+  validateInputOnBlur?: boolean | LooseKeys<Values>[];
 }
 
 export interface UseFormReturnType<Values> {
