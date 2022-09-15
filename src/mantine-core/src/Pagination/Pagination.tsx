@@ -59,6 +59,9 @@ export interface PaginationProps
 
   /** Show/hide prev/next controls */
   withControls?: boolean;
+
+  /** Determines whether all controls should be disabled */
+  disabled?: boolean;
 }
 
 const defaultProps: Partial<PaginationProps> = {
@@ -92,6 +95,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
     withControls,
     sx,
     unstyled,
+    disabled,
     ...others
   } = useComponentDefaultProps('Pagination', defaultProps, props);
 
@@ -121,6 +125,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
       data-active={pageNumber === active || undefined}
       className={classes.item}
       onClick={pageNumber !== 'dots' ? () => setPage(pageNumber) : undefined}
+      disabled={disabled}
     />
   ));
 
@@ -138,9 +143,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
           page="first"
           onClick={first}
           aria-label={getItemAriaLabel ? getItemAriaLabel('first') : undefined}
-          aria-disabled={active === 1}
+          aria-disabled={active === 1 || disabled}
           className={classes.item}
-          disabled={active === 1}
+          disabled={active === 1 || disabled}
         />
       )}
 
@@ -149,9 +154,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
           page="prev"
           onClick={previous}
           aria-label={getItemAriaLabel ? getItemAriaLabel('prev') : undefined}
-          aria-disabled={active === 1}
+          aria-disabled={active === 1 || disabled}
           className={classes.item}
-          disabled={active === 1}
+          disabled={active === 1 || disabled}
         />
       )}
 
@@ -162,9 +167,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
           page="next"
           onClick={next}
           aria-label={getItemAriaLabel ? getItemAriaLabel('next') : undefined}
-          aria-disabled={active === total}
+          aria-disabled={active === total || disabled}
           className={classes.item}
-          disabled={active === total}
+          disabled={active === total || disabled}
         />
       )}
 
@@ -173,9 +178,9 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
           page="last"
           onClick={last}
           aria-label={getItemAriaLabel ? getItemAriaLabel('last') : undefined}
-          aria-disabled={active === total}
+          aria-disabled={active === total || disabled}
           className={classes.item}
-          disabled={active === total}
+          disabled={active === total || disabled}
         />
       )}
     </Group>
