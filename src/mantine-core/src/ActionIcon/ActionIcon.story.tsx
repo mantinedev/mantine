@@ -111,6 +111,14 @@ export function States() {
   );
 }
 
+export function StatesInsideFieldsetDisabled() {
+  return (
+    <fieldset disabled>
+      <States />
+    </fieldset>
+  );
+}
+
 export function ColorsIndex() {
   return (
     <div style={{ padding: 40 }}>

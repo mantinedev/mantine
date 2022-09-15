@@ -135,12 +135,13 @@ export default createStyles(
 
       '&:active': theme.activeStyles,
 
-      '&[data-disabled]': {
+      '&:disabled, &[data-disabled]': {
         borderColor: 'transparent',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
         color: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[5],
         cursor: 'not-allowed',
         backgroundImage: 'none',
+        pointerEvents: 'none',
 
         '&:active': {
           transform: 'none',
