@@ -93,10 +93,7 @@ export interface SliderProps
   /** Thumb width and height in px */
   thumbSize?: number;
 
-  /**
-   * A transformation function, to change the scale of the slider
-   * @default (value) => value
-   */
+  /** A transformation function, to change the scale of the slider */
   scale?: (value: number) => number;
 }
 
