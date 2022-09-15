@@ -1,7 +1,11 @@
 import type { MantineTheme } from '../theme';
 import type { CSSObject } from './types';
 import { useCss } from './use-css';
-import { useMantineTheme, useMantineProviderStyles } from '../theme/MantineProvider';
+import {
+  useMantineTheme,
+  useMantineProviderStyles,
+  useMantineEmotionCache,
+} from '../theme/MantineProvider';
 import { mergeClassNames } from './utils/merge-class-names/merge-class-names';
 
 type ContextStyles = ReturnType<typeof useMantineProviderStyles>;
@@ -59,6 +63,7 @@ export function createStyles<Key extends string = string, Params = void>(
   function useStyles(params: Params, options?: UseStylesOptions<Key>) {
     const theme = useMantineTheme();
     const context = useMantineProviderStyles(options?.name);
+    const cache = useMantineEmotionCache();
 
     const { css, cx } = useCss();
     const cssObject = getCssObject(theme, params, createRef);
@@ -84,6 +89,7 @@ export function createStyles<Key extends string = string, Params = void>(
         context,
         classNames: options?.classNames,
         name: options?.name,
+        cache,
       }),
       cx,
       theme,
