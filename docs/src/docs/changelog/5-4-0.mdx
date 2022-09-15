@@ -7,7 +7,7 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.4.0
 date: 'September 9th, 2022'
 ---
 
-import { SliderDemos, SwitchDemos } from '@mantine/demos';
+import { SliderDemos, SwitchDemos, PasswordInputDemos } from '@mantine/demos';
 
 ## Non-linear Slider scale
 
@@ -20,6 +20,13 @@ import { SliderDemos, SwitchDemos } from '@mantine/demos';
 New [Switch.Group](https://mantine.dev/core/switch/) component lets you organize `Switch` components the same way as `Checkbox.Group` and `Radio.Group`:
 
 <Demo data={SwitchDemos.groupConfigurator} />
+
+## Controlled PasswordInput visibility
+
+[PasswordInput](https://mantine.dev/core/password-input/) now supports controlled visibility state with `visible` and `onVisibilityChange` props,
+for example, the props can be used to sync visibility state between two inputs:
+
+<Demo data={PasswordInputDemos.controlledVisibility} />
 
 ## Other changes
 
