@@ -57,6 +57,19 @@ function ColorSchemeToggle() {
 }
 ```
 
+## Remove value
+
+Use `removeValue` callback to clean `localStorage`/`sessionStorage`:
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+const [value, setValue, removeValue] = useLocalStorage({
+  key: 'color-scheme',
+  defaultValue: 'light',
+});
+```
+
 ## Browser tabs synchronization
 
 use-local-storage subscribes to [storage event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
@@ -135,7 +148,11 @@ function useLocalStorage<T = string>({
   deserialize,
   serialize,
   getInitialValueInEffect,
-}: UseLocalStorage<T>): readonly [T, (val: T | ((prevState: T) => T)) => void];
+}: UseLocalStorage<T>): readonly [
+  T, // current value
+  (val: T | ((prevState: T) => T)) => void, // callback to set value in storage
+  () => void // callback to remove value from storage
+];
 ```
 
 ### Set value type

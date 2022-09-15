@@ -81,6 +81,10 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       [key]
     );
 
+    const removeStorageValue = useCallback(() => {
+      window[type].removeStorageValue(key);
+    }, []);
+
     useWindowEvent('storage', (event) => {
       if (event.storageArea === window[type] && event.key === key) {
         setValue(deserialize(event.newValue ?? undefined));
@@ -105,6 +109,10 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       }
     }, []);
 
-    return [value === undefined ? defaultValue : value, setStorageValue] as const;
+    return [
+      value === undefined ? defaultValue : value,
+      setStorageValue,
+      removeStorageValue,
+    ] as const;
   };
 }
