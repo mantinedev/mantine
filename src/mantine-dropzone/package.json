@@ -34,7 +34,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "react-dropzone": "14.2.1",
+    "react-dropzone": "14.2.2",
     "@mantine/utils": "5.3.2"
   },
   "devDependencies": {}
