@@ -134,9 +134,6 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     };
 
     useEffect(() => {
-      if (isColorValid(_value)) {
-        onChangeEnd?.(convertHsvaTo(format, parseColor(_value)));
-      }
       if (isColorValid(_value) || _value.trim() === '') {
         setLastValidValue(_value);
       }
@@ -175,7 +172,13 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 onBlur={handleInputBlur}
                 spellCheck={false}
                 value={_value}
-                onChange={(event) => setValue(event.currentTarget.value)}
+                onChange={(event) => {
+                  const inputValue = event.currentTarget.value;
+                  setValue(inputValue);
+                  if (isColorValid(inputValue)) {
+                    onChangeEnd?.(convertHsvaTo(format, parseColor(inputValue)));
+                  }
+                }}
                 autoComplete="nope"
                 icon={
                   icon ||
