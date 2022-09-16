@@ -134,6 +134,9 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
     };
 
     useEffect(() => {
+      if (isColorValid(_value)) {
+        onChangeEnd?.(convertHsvaTo(format, parseColor(_value)));
+      }
       if (isColorValid(_value) || _value.trim() === '') {
         setLastValidValue(_value);
       }
