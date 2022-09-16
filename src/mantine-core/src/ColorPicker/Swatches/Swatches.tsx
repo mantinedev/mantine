@@ -42,8 +42,8 @@ export function Swatches({
       key={index}
       radius="sm"
       onClick={() => {
-        onChangeEnd(color);
         setValue(color);
+        onChangeEnd?.(color);
       }}
       style={{ cursor: 'pointer' }}
       aria-label={color}

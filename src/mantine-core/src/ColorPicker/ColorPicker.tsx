@@ -236,7 +236,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             __staticSelector={__staticSelector}
             setValue={setValue}
             onChangeEnd={(color) => {
-              onChangeEnd?.(color);
+              onChangeEnd?.(convertHsvaTo(format, parseColor(color)));
             }}
           />
         )}
