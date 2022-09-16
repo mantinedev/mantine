@@ -64,6 +64,7 @@ information about action. Use `openConfirmModal` function to open a confirm moda
 - `children` – additional modal content displayed before actions
 - `onCancel` – called when cancel button is clicked
 - `onConfirm` – called when confirm button is clicked
+- `onConfirmPending` – called when confirm button is clicked and awaits any async calls causing the button to go into a loading state untill finished
 - `closeOnConfirm` – should modal be closed when confirm button is clicked, defaults to `true`
 - `closeOnCancel` – should modal be closed when cancel button is clicked, defaults to `true`
 - `cancelProps` – cancel button props
@@ -132,3 +133,9 @@ You can open multiple layers of modals. Every opened modal is added as first ele
 To close all opened modals call `modals.closeAll()` function:
 
 <Demo data={ModalsDemos.multipleSteps} />
+
+## Waiting for Async calls
+
+The `onConfirmPending` function returns a promise causing the Confirm button to go into a loading state until the function is completed.
+
+<Demo data={ModalsDemos.confirmPending} />
