@@ -235,6 +235,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             styles={styles}
             __staticSelector={__staticSelector}
             setValue={setValue}
+            onChangeEnd={(color) => {
+              onChangeEnd?.(color);
+            }}
           />
         )}
       </Box>
