@@ -37,7 +37,7 @@ export interface SegmentedControlProps
   data: string[] | SegmentedControlItem[];
 
   /** Current selected value */
-  value?: string;
+  value?: string | null;
 
   /** Disabled input state */
   disabled?: boolean;
