@@ -25,7 +25,7 @@ export function createUseExternalEvents<Handlers extends Record<string, (detail:
         Object.keys(handlers).forEach((eventKey) => {
           window.removeEventListener(eventKey, handlers[eventKey]);
         });
-    }, []);
+    }, [handlers]);
   }
 
   function createEvent<EventKey extends keyof Handlers>(event: EventKey) {
