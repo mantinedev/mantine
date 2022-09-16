@@ -8,6 +8,7 @@ export interface ConfirmModalProps {
   children?: React.ReactNode;
   onCancel?(): void;
   onConfirm?(): void;
+  onConfirmPending?(): Promise<void>;
   closeOnConfirm?: boolean;
   closeOnCancel?: boolean;
   cancelProps?: ButtonProps & React.ComponentPropsWithoutRef<'button'>;
@@ -26,19 +27,25 @@ export function ConfirmModal({
   groupProps,
   onCancel,
   onConfirm,
+  onConfirmPending,
   children,
 }: ConfirmModalProps) {
   const { cancel: cancelLabel, confirm: confirmLabel } = labels;
   const ctx = useModals();
-
+  const [loading, setLoading] = React.useState(false);
   const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof cancelProps?.onClick === 'function' && cancelProps?.onClick(event);
     typeof onCancel === 'function' && onCancel();
     closeOnCancel && ctx.closeModal(id);
   };
 
-  const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirm = async (event: React.MouseEvent<HTMLButtonElement>) => {
     typeof confirmProps?.onClick === 'function' && confirmProps?.onClick(event);
+    if (typeof onConfirmPending === 'function') {
+      setLoading(true);
+      await onConfirmPending();
+      setLoading(false);
+    }
     typeof onConfirm === 'function' && onConfirm();
     closeOnConfirm && ctx.closeModal(id);
   };
@@ -52,7 +59,7 @@ export function ConfirmModal({
           {cancelProps?.children || cancelLabel}
         </Button>
 
-        <Button {...confirmProps} onClick={handleConfirm}>
+        <Button {...confirmProps} onClick={handleConfirm} loading={loading}>
           {confirmProps?.children || confirmLabel}
         </Button>
       </Group>

@@ -68,6 +68,29 @@ function Demo() {
       onConfirm: showNestedModal,
       onClose: () => console.log('confirm modal 1 closed'),
     });
+  const showPendingModal = () =>
+    openConfirmModal({
+      title: 'Please confirm this action',
+      children: (
+        <Text size="sm" color="dimmed">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione magnam modi vitae
+          molestias unde tempora exercitationem fugit, ex repellat doloribus maiores facilis quo
+          quis, itaque temporibus obcaecati vel iusto praesentium.
+        </Text>
+      ),
+      onCancel: () => console.log('Cancel'),
+      onConfirmPending: async () => {
+        console.log('simulating async request');
+        const wait = (ms: number) =>
+          new Promise((resolve) => {
+            setTimeout(resolve, ms);
+          });
+        await wait(1000);
+        console.log('finished async request');
+      },
+      onConfirm: () => console.log('pending modal confirmed'),
+      onClose: () => console.log('pending modal closed'),
+    });
 
   return (
     <Group sx={{ padding: 40 }}>
@@ -80,6 +103,9 @@ function Demo() {
       </Button>
       <Button onClick={showContentModal} color="violet">
         Open content modal
+      </Button>
+      <Button onClick={showPendingModal} color="green">
+        Open pending confirm modal
       </Button>
     </Group>
   );
