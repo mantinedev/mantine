@@ -4,7 +4,7 @@ import { Box } from '../Box';
 import useStyles, { SkeletonStylesParams } from './Skeleton.styles';
 
 export interface SkeletonProps
-  extends DefaultProps<never, SkeletonStylesParams>,
+  extends Omit<DefaultProps<never, SkeletonStylesParams>, 'classNames'>,
     React.ComponentPropsWithoutRef<'div'> {
   /** Should skeleton overlay be displayed */
   visible?: boolean;
