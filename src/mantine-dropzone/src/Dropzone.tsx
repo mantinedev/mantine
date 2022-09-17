@@ -91,6 +91,9 @@ export interface DropzoneProps
 
   /** If false, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
+
+  /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
+  useFsAccessApi?: boolean;
 }
 
 export const defaultProps: Partial<DropzoneProps> = {
@@ -103,6 +106,7 @@ export const defaultProps: Partial<DropzoneProps> = {
   activateOnDrag: true,
   dragEventsBubbling: true,
   activateOnKeyboard: true,
+  useFsAccessApi: true,
 };
 
 export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
@@ -136,6 +140,7 @@ export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
       onFileDialogCancel,
       onFileDialogOpen,
       preventDropOnDocument,
+      useFsAccessApi,
       ...others
     } = useComponentDefaultProps('Dropzone', defaultProps, props);
 
@@ -163,6 +168,7 @@ export const _Dropzone: any = forwardRef<HTMLDivElement, DropzoneProps>(
       onFileDialogCancel,
       onFileDialogOpen,
       preventDropOnDocument,
+      useFsAccessApi,
     });
 
     assignRef(openRef, open);
