@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { checkAccessibility, itSupportsSystemProps } from '@mantine/tests';
 import { DEFAULT_THEME } from '@mantine/styles';
 import { ColorPicker, ColorPickerProps } from './ColorPicker';
@@ -45,5 +45,17 @@ describe('@mantine/core/ColorPicker', () => {
     const { container: withoutPicker } = render(<ColorPicker withPicker={false} />);
     expect(withPicker.querySelectorAll('.mantine-ColorPicker-saturation')).toHaveLength(1);
     expect(withoutPicker.querySelectorAll('.mantine-ColorPicker-saturation')).toHaveLength(0);
+  });
+
+  it('onChangeEnd should be called if clicked on swatch', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ColorPicker onChangeEnd={spy} format="hex" swatches={['#ffffff', '#000000']} />
+    );
+    fireEvent(
+      container.querySelectorAll('.mantine-ColorSwatch-root')[0],
+      new MouseEvent('click', { bubbles: true })
+    );
+    expect(spy).toHaveBeenCalledWith('#ffffff');
   });
 });

@@ -88,6 +88,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
       inputProps,
       format,
       onChange,
+      onChangeEnd,
       onFocus,
       onBlur,
       value,
@@ -171,7 +172,13 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
                 onBlur={handleInputBlur}
                 spellCheck={false}
                 value={_value}
-                onChange={(event) => setValue(event.currentTarget.value)}
+                onChange={(event) => {
+                  const inputValue = event.currentTarget.value;
+                  setValue(inputValue);
+                  if (isColorValid(inputValue)) {
+                    onChangeEnd?.(convertHsvaTo(format, parseColor(inputValue)));
+                  }
+                }}
                 autoComplete="nope"
                 icon={
                   icon ||
@@ -196,6 +203,7 @@ export const ColorInput = forwardRef<HTMLInputElement, ColorInputProps>(
               __staticSelector="ColorInput"
               value={_value}
               onChange={setValue}
+              onChangeEnd={onChangeEnd}
               format={format}
               swatches={swatches}
               swatchesPerRow={swatchesPerRow}

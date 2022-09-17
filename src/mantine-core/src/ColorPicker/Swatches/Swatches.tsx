@@ -11,6 +11,7 @@ export interface SwatchesProps
   data: string[];
   swatchesPerRow?: number;
   focusable?: boolean;
+  onChangeEnd?: (color: string) => void;
   __staticSelector?: string;
   setValue(value: string): void;
 }
@@ -24,6 +25,7 @@ export function Swatches({
   __staticSelector = 'color-picker',
   unstyled,
   setValue,
+  onChangeEnd,
   ...others
 }: SwatchesProps) {
   const { classes } = useStyles(
@@ -39,7 +41,10 @@ export function Swatches({
       color={color}
       key={index}
       radius="sm"
-      onClick={() => setValue(color)}
+      onClick={() => {
+        setValue(color);
+        onChangeEnd?.(color);
+      }}
       style={{ cursor: 'pointer' }}
       aria-label={color}
       tabIndex={focusable ? 0 : -1}
