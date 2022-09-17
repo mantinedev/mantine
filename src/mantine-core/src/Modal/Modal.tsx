@@ -262,7 +262,7 @@ export function Modal(props: ModalProps) {
                 <Overlay
                   className={classes.overlay}
                   sx={{ position: 'fixed' }}
-                  zIndex={-1}
+                  zIndex={0}
                   onMouseDown={() => closeOnClickOutside && onClose()}
                   blur={overlayBlur}
                   color={
