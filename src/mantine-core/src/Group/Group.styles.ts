@@ -29,17 +29,16 @@ export default createStyles(
       flexWrap: noWrap ? 'nowrap' : 'wrap',
       justifyContent: GROUP_POSITIONS[position],
       gap: theme.fn.size({ size: spacing, sizes: theme.spacing }),
-    },
-
-    child: {
-      boxSizing: 'border-box',
-      maxWidth: grow
-        ? `calc(${100 / count}% - ${
-            theme.fn.size({ size: spacing, sizes: theme.spacing }) -
-            theme.fn.size({ size: spacing, sizes: theme.spacing }) / count
-          }px)`
-        : undefined,
-      flexGrow: grow ? 1 : 0,
+      '& > *': {
+        boxSizing: 'border-box',
+        maxWidth: grow
+          ? `calc(${100 / count}% - ${
+              theme.fn.size({ size: spacing, sizes: theme.spacing }) -
+              theme.fn.size({ size: spacing, sizes: theme.spacing }) / count
+            }px)`
+          : undefined,
+        flexGrow: grow ? 1 : 0,
+      },
     },
   })
 );
