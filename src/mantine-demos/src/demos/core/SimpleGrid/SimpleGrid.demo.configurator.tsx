@@ -33,5 +33,6 @@ export const configurator: MantineDemo = {
   configurator: [
     { name: 'cols', type: 'number', initialValue: 3, min: 1, max: 6, step: 1 },
     { name: 'spacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
+    { name: 'verticalSpacing', type: 'size', initialValue: 'md', defaultValue: 'md' },
   ],
 };
