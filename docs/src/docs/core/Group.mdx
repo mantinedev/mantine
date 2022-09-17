@@ -20,8 +20,8 @@ import { GroupDemos } from '@mantine/demos';
 
 ## Group children
 
-**!important** Group will work only with React elements. Strings, numbers, fragments and other parts will
-not have correct styles:
+**!important** Group works correctly only with React elements.
+Strings, numbers, fragments may have incorrect styles if `grow` prop is set:
 
 ```tsx
 // Invalid Group usage, do not do this
@@ -33,6 +33,7 @@ function InvalidDemo() {
       First string
       <>
         <div>element inside fragment</div>
+        <div>another inside fragment</div>
       </>
       {20}
     </Group>
