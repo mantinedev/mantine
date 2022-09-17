@@ -39,8 +39,8 @@ export interface PasswordInputProps
 
 const buttonSizes = {
   xs: 22,
-  sm: 28,
-  md: 26,
+  sm: 26,
+  md: 28,
   lg: 32,
   xl: 40,
 };
@@ -55,7 +55,7 @@ const iconSizes = {
 
 const rightSectionSizes = {
   xs: 28,
-  sm: 34,
+  sm: 32,
   md: 34,
   lg: 44,
   xl: 54,
