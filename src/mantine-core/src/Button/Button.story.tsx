@@ -128,6 +128,16 @@ export function States() {
   );
 }
 
+/**
+ * All buttons should be disabled
+ */
+export function StatesInFieldsetDisabled() {
+  return (
+    <fieldset disabled>
+      <States />
+    </fieldset>
+  );
+}
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>

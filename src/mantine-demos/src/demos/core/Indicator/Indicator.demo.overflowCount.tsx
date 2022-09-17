@@ -19,7 +19,7 @@ function Demo() {
           <Avatar size="lg" src="avatar.png" />
         </Indicator>
 
-        <Indicator label={count} showZero={false} overflowCount={999} inline size={22}>
+        <Indicator label={count} showZero={false} dot={false} overflowCount={999} inline size={22}>
           <Avatar size="lg" src="avatar.png" />
         </Indicator>
       </Group>
@@ -51,7 +51,7 @@ function Demo() {
         <Indicator label={count} overflowCount={10} inline size={22}>
           <Avatar size="lg" src={avatar} />
         </Indicator>
-        <Indicator label={count} showZero={false} overflowCount={999} inline size={22}>
+        <Indicator label={count} showZero={false} dot={false} overflowCount={999} inline size={22}>
           <Avatar size="lg" src={avatar} />
         </Indicator>
       </Group>

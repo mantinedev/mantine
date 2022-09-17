@@ -4,7 +4,7 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "5.3.1",
+  "version": "5.3.3",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
@@ -140,9 +140,9 @@
     "prism-react-renderer": "^1.2.1",
     "quill-mention": "^3.0.8",
     "react": "18.1.0",
-    "react-dropzone": "14.2.1",
+    "react-dropzone": "14.2.2",
     "react-input-mask": "^2.0.4",
-    "react-quill": "2.0.0-beta.4",
+    "react-quill": "2.0.0",
     "react-textarea-autosize": "8.3.4",
     "react-transition-group": "4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
