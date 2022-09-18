@@ -258,12 +258,19 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const selectedValue = sortedData.find((item) => item.value === _value);
 
-  const [inputValue, handleSearchChange] = useUncontrolled({
+  const [inputValue, setInputValue] = useUncontrolled({
     value: searchValue,
     defaultValue: selectedValue?.label || '',
     finalValue: undefined,
     onChange: onSearchChange,
   });
+
+  const handleSearchChange = (val: string) => {
+    setInputValue(val);
+    if (searchable && typeof onSearchChange === 'function') {
+      onSearchChange(val);
+    }
+  };
 
   const handleClear = () => {
     if (!readOnly) {
