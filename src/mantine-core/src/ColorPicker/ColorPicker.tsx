@@ -30,6 +30,9 @@ export interface ColorPickerBaseProps {
   /** Called when color changes */
   onChange?(color: string): void;
 
+  /** Called when user stops dragging thumb or changes value with arrows */
+  onChangeEnd?(color: string): void;
+
   /** Color format */
   format?: 'hex' | 'rgba' | 'rgb' | 'hsl' | 'hsla';
 
@@ -91,6 +94,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
       value,
       defaultValue,
       onChange,
+      onChangeEnd,
       format,
       swatches,
       swatchesPerRow,
@@ -162,6 +166,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             <Saturation
               value={parsed}
               onChange={handleChange}
+              onChangeEnd={({ s, v }) =>
+                onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, s, v }))
+              }
               color={_value}
               styles={styles}
               classNames={classNames}
@@ -176,6 +183,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                 <HueSlider
                   value={parsed.h}
                   onChange={(h) => handleChange({ h })}
+                  onChangeEnd={(h) =>
+                    onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, h }))
+                  }
                   size={size}
                   styles={styles}
                   classNames={classNames}
@@ -188,6 +198,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
                   <AlphaSlider
                     value={parsed.a}
                     onChange={(a) => handleChange({ a })}
+                    onChangeEnd={(a) => {
+                      onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, a }));
+                    }}
                     size={size}
                     color={convertHsvaTo('hex', parsed)}
                     style={{ marginTop: 6 }}
@@ -222,6 +235,9 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
             styles={styles}
             __staticSelector={__staticSelector}
             setValue={setValue}
+            onChangeEnd={(color) => {
+              onChangeEnd?.(convertHsvaTo(format, parseColor(color)));
+            }}
           />
         )}
       </Box>
