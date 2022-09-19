@@ -97,6 +97,9 @@ export interface SelectProps
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
 
+  /** Controlled search input value */
+  searchValue?: string;
+
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -187,6 +190,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     limit,
     disabled,
     onSearchChange,
+    searchValue,
     rightSection,
     rightSectionWidth,
     creatable,
@@ -253,7 +257,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   });
 
   const selectedValue = sortedData.find((item) => item.value === _value);
-  const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+
+  const [inputValue, setInputValue] = useUncontrolled({
+    value: searchValue,
+    defaultValue: selectedValue?.label || '',
+    finalValue: undefined,
+    onChange: onSearchChange,
+  });
 
   const handleSearchChange = (val: string) => {
     setInputValue(val);
