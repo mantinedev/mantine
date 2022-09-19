@@ -65,6 +65,9 @@ export interface MultiSelectProps
   /** Called each time search query changes */
   onSearchChange?(query: string): void;
 
+  /** Controlled search input value */
+  searchValue?: string;
+
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -177,6 +180,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     clearButtonLabel,
     variant,
     onSearchChange,
+    searchValue,
     disabled,
     initiallyOpened,
     radius,
@@ -225,7 +229,12 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
-  const [searchValue, setSearchValue] = useState('');
+  const [_searchValue, handleSearchChange] = useUncontrolled({
+    value: searchValue,
+    defaultValue: '',
+    finalValue: undefined,
+    onChange: onSearchChange,
+  });
   const [IMEOpen, setIMEOpen] = useState(false);
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
@@ -242,11 +251,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     _setDropdownOpened(opened);
     const handler = opened ? onDropdownOpen : onDropdownClose;
     typeof handler === 'function' && handler();
-  };
-
-  const handleSearchChange = (val: string) => {
-    typeof onSearchChange === 'function' && onSearchChange(val);
-    setSearchValue(val);
   };
 
   const formattedData = data.map((item) =>
@@ -288,7 +292,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const filteredData = filterData({
     data: sortedData,
     searchable,
-    searchValue,
+    searchValue: _searchValue,
     limit,
     filter,
     value: _value,
@@ -309,7 +313,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   useDidUpdate(() => {
     setHovered(-1);
-  }, [searchValue]);
+  }, [_searchValue]);
 
   useDidUpdate(() => {
     if (!disabled && _value.length > data.length) {
@@ -472,7 +476,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       }
 
       case 'Backspace': {
-        if (_value.length > 0 && searchValue.length === 0) {
+        if (_value.length > 0 && _searchValue.length === 0) {
           setValue(_value.slice(0, -1));
           setDropdownOpened(true);
           if (maxSelectedValues) {
@@ -563,9 +567,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
     }
   };
 
-  if (isCreatable && shouldCreate(searchValue, sortedData)) {
-    createLabel = getCreateLabel(searchValue);
-    filteredData.push({ label: searchValue, value: searchValue, creatable: true });
+  if (isCreatable && shouldCreate(_searchValue, sortedData)) {
+    createLabel = getCreateLabel(_searchValue);
+    filteredData.push({ label: _searchValue, value: _searchValue, creatable: true });
   }
 
   const shouldRenderDropdown =
@@ -682,7 +686,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
                     [classes.searchInputEmpty]: _value.length === 0,
                   })}
                   onKeyDown={handleInputKeydown}
-                  value={searchValue}
+                  value={_searchValue}
                   onChange={handleInputChange}
                   onFocus={handleInputFocus}
                   onBlur={handleInputBlur}
