@@ -67,6 +67,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       style,
       sx,
       checked,
+      disabled,
       color,
       label,
       indeterminate,
@@ -113,6 +114,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
             type="checkbox"
             className={classes.input}
             checked={indeterminate || checked}
+            disabled={disabled}
             {...rest}
             {...contextProps}
           />
@@ -121,7 +123,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         </div>
 
         {label && (
-          <label className={classes.label} htmlFor={uuid}>
+          <label data-disabled={disabled || undefined} className={classes.label} htmlFor={uuid}>
             {label}
           </label>
         )}
