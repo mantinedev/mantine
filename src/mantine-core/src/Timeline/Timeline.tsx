@@ -12,7 +12,7 @@ import { TimelineItem, TimelineItemStylesNames } from './TimelineItem/TimelineIt
 
 export interface TimelineProps
   extends DefaultProps<TimelineItemStylesNames>,
-    React.ComponentPropsWithRef<'div'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Timeline.Item /> components only */
   children: React.ReactNode;
 
@@ -39,6 +39,7 @@ export interface TimelineProps
 }
 
 type TimelineComponent = ForwardRefWithStaticComponents<
+  HTMLDivElement,
   TimelineProps,
   { Item: typeof TimelineItem }
 >;

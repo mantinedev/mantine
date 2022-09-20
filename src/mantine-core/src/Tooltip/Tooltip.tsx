@@ -183,6 +183,7 @@ _Tooltip.Floating = TooltipFloating;
 _Tooltip.displayName = '@mantine/core/Tooltip';
 
 export const Tooltip: ForwardRefWithStaticComponents<
+  HTMLElement,
   TooltipProps,
   { Group: typeof TooltipGroup; Floating: typeof TooltipFloating }
 > = _Tooltip;

@@ -20,7 +20,7 @@ export type ChipStylesNames = Selectors<typeof useStyles>;
 
 export interface ChipProps
   extends DefaultProps<ChipStylesNames, ChipStylesParams>,
-    Omit<React.ComponentPropsWithRef<'input'>, 'size' | 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'size' | 'onChange'> {
   /** Chip radius from theme or number to set value in px */
   radius?: MantineNumberSize;
 
@@ -62,7 +62,11 @@ const defaultProps: Partial<ChipProps> = {
   variant: 'outline',
 };
 
-type ChipComponent = ForwardRefWithStaticComponents<ChipProps, { Group: typeof ChipGroup }>;
+type ChipComponent = ForwardRefWithStaticComponents<
+  HTMLInputElement,
+  ChipProps,
+  { Group: typeof ChipGroup }
+>;
 
 export const Chip: ChipComponent = forwardRef<HTMLInputElement, ChipProps>((props, ref) => {
   const {
