@@ -33,7 +33,7 @@ function Demo() {
 function Demo() {
   return (
     <List listStyleType="disc">
-      <List.Item>First order item</List.Item>
+      <List.Item>First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item First order item </List.Item>
       <List.Item>First order item</List.Item>
       <List.Item>
         First order item with list
