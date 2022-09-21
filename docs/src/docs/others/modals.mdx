@@ -126,6 +126,40 @@ With `openModal` function you can open a modal with any content:
 
 <Demo data={ModalsDemos.content} />
 
+You can also provida a custom title in `openModal`
+
+```
+const useStyles = createStyles((theme, _params) => ({
+    title: {
+        color: "red"
+    }
+}));
+function CustomTitle({title}: {title: string}) {
+    const {classes} = useStyles()
+    return (
+        <h1 className={classes.title}>Custom title</h1>
+    );
+}
+```
+
+```
+openModal({
+        title:(<CustomTitle title={title}/>) ,
+        closeOnClickOutside : true,
+        children: (
+            <>
+                <p>{message}</p>
+                <Button onClick={()=>{
+                    if (callback) callback()
+                    closeAllModals()
+                }} mt="md">
+                    Submit
+                </Button>
+            </>
+        ),
+    })
+```
+
 ## Multiple opened modals
 
 You can open multiple layers of modals. Every opened modal is added as first element in modals queue.
