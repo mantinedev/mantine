@@ -108,3 +108,11 @@ export default function App(props: AppProps) {
   );
 }
 ```
+
+## Accessibility
+
+`NavigationProgress` uses `Progress` component under the hood, to pass `aria-label` use `progressLabel` props
+
+```tsx
+<NavigationProgress progressLabel="Loading Page" />
+```
