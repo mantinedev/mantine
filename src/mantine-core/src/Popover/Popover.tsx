@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -138,6 +138,7 @@ const defaultProps: Partial<PopoverProps> = {
 };
 
 export function Popover(props: PopoverProps) {
+  const arrowRef = useRef<HTMLDivElement | null>(null);
   const {
     children,
     position,
@@ -181,6 +182,7 @@ export function Popover(props: PopoverProps) {
     width,
     position: getFloatingPosition(theme.dir, position),
     offset: offset + (withArrow ? arrowSize / 2 : 0),
+    arrowRef,
     onPositionChange,
     positionDependencies,
     opened,
@@ -209,7 +211,10 @@ export function Popover(props: PopoverProps) {
           floating: popover.floating.floating,
           x: popover.floating.x,
           y: popover.floating.y,
+          arrowX: popover.floating?.middlewareData?.arrow?.x,
+          arrowY: popover.floating?.middlewareData?.arrow?.y,
           opened: popover.opened,
+          arrowRef,
           transition,
           transitionDuration,
           exitTransitionDuration,
