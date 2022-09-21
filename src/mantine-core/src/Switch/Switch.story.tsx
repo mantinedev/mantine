@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/styles';
 import { IconBadge } from '@tabler/icons';
 import { Group } from '../Group';
 import { Switch } from './Switch';
+import { Stack } from '../Stack';
 
 export default { title: 'Switch' };
 
@@ -58,5 +59,14 @@ export function Asterisk() {
         <Switch value="1" />
       </Switch.Group>
     </div>
+  );
+}
+
+export function labelPosition() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Switch labelPosition="left" label="Hello from left" value="1" />
+      <Switch labelPosition="right" label="Hello from right" value="1" />
+    </Stack>
   );
 }

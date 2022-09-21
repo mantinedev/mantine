@@ -21,10 +21,15 @@ export interface CheckboxStylesParams {
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
+  (
+    theme,
+    { size, radius, color, transitionDuration, labelPosition }: CheckboxStylesParams,
+    getRef
+  ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
 
@@ -55,22 +60,25 @@ export default createStyles(
       root: {
         display: 'flex',
         alignItems: 'center',
+
+        gap: theme.spacing.sm,
       },
 
       inner: {
         position: 'relative',
         width: _size,
         height: _size,
+        order: labelPosition === 'left' ? 2 : 1,
       },
 
       label: {
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
-        paddingLeft: theme.spacing.sm,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
+        order: labelPosition === 'left' ? 1 : 2,
       },
 
       input: {

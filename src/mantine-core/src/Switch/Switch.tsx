@@ -46,6 +46,9 @@ export interface SwitchProps
 
   /** Icon inside the thumb of switch */
   thumbIcon?: React.ReactNode;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -78,13 +81,14 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
     checked,
     defaultChecked,
     onChange,
+    labelPosition,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const ctx = useSwitchGroupContext();
 
   const { classes, cx } = useStyles(
-    { size: ctx?.size || size, color, radius },
+    { size: ctx?.size || size, color, radius, labelPosition },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 

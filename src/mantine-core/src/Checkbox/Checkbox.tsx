@@ -47,12 +47,16 @@ export interface CheckboxProps
 
   /** Icon rendered when checkbox has checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
 }
 
 const defaultProps: Partial<CheckboxProps> = {
   size: 'sm',
   transitionDuration: 100,
   icon: CheckboxIcon,
+  labelPosition: 'right',
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
@@ -80,6 +84,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       transitionDuration,
       icon: Icon,
       unstyled,
+      labelPosition,
       ...others
     } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
@@ -87,7 +92,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const uuid = useId(id);
     const { systemStyles, rest } = extractSystemStyles(others);
     const { classes, cx } = useStyles(
-      { size: ctx?.size || size, radius, color, transitionDuration },
+      { size: ctx?.size || size, radius, color, transitionDuration, labelPosition },
       { name: 'Checkbox', classNames, styles, unstyled }
     );
 

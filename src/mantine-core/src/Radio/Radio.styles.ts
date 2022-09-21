@@ -4,6 +4,7 @@ export interface RadioStylesParams {
   size: MantineSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
 }
 
 const sizes = {
@@ -23,7 +24,7 @@ const iconSizes = {
 };
 
 export default createStyles(
-  (theme, { size, color, transitionDuration }: RadioStylesParams, getRef) => {
+  (theme, { size, color, transitionDuration, labelPosition }: RadioStylesParams, getRef) => {
     const colors = theme.fn.variant({ variant: 'filled', color });
 
     return {
@@ -31,9 +32,12 @@ export default createStyles(
         display: 'flex',
         alignItems: 'center',
         WebkitTapHighlightColor: 'transparent',
+
+        gap: theme.spacing.sm,
       },
 
       inner: {
+        order: labelPosition === 'left' ? 2 : 1,
         position: 'relative',
       },
 
@@ -99,8 +103,8 @@ export default createStyles(
         fontSize: theme.fontSizes[size] || theme.fontSizes.md,
         lineHeight: `${theme.fn.size({ sizes, size })}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-        paddingLeft: theme.spacing.sm,
         cursor: theme.cursorType,
+        order: labelPosition === 'left' ? 1 : 2,
 
         '&[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],

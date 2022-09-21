@@ -4,6 +4,7 @@ export interface SwitchStylesParams {
   color: MantineColor;
   size: MantineSize;
   radius: MantineNumberSize;
+  labelPosition: 'left' | 'right';
 }
 
 const switchHeight = {
@@ -46,7 +47,7 @@ const trackLabelPaddings = {
   xl: 10,
 };
 
-export default createStyles((theme, { size, radius, color }: SwitchStylesParams) => {
+export default createStyles((theme, { size, radius, color, labelPosition }: SwitchStylesParams) => {
   const handleSize = theme.fn.size({ size, sizes: handleSizes });
   const borderRadius = theme.fn.size({ size: radius, sizes: theme.radius });
   const colors = theme.fn.variant({ variant: 'filled', color });
@@ -61,6 +62,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStylesParams)
 
     body: {
       display: 'flex',
+      gap: theme.spacing.sm,
     },
 
     input: {
@@ -97,6 +99,7 @@ export default createStyles((theme, { size, radius, color }: SwitchStylesParams)
       alignItems: 'center',
       fontSize: theme.fn.size({ size, sizes: labelFontSizes }),
       fontWeight: 600,
+      order: labelPosition === 'left' ? 2 : 1,
 
       // for disabling text selection on double click
       userSelect: 'none',
@@ -160,9 +163,9 @@ export default createStyles((theme, { size, radius, color }: SwitchStylesParams)
       WebkitTapHighlightColor: 'transparent',
       fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
       fontFamily: theme.fontFamily,
-      paddingLeft: theme.spacing.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       cursor: theme.cursorType,
+      order: labelPosition === 'left' ? 1 : 2,
     },
 
     trackLabel: {

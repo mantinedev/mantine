@@ -40,12 +40,16 @@ export interface RadioProps
 
   /** Props spread to root element */
   wrapperProps?: Record<string, any>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
 }
 
 const defaultProps: Partial<RadioProps> = {
   icon: RadioIcon,
   transitionDuration: 100,
   size: 'sm',
+  labelPosition: 'right',
 };
 
 type RadioComponent = ForwardRefWithStaticComponents<RadioProps, { Group: typeof RadioGroup }>;
@@ -67,12 +71,13 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     transitionDuration,
     wrapperProps,
     unstyled,
+    labelPosition,
     ...others
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
   const { classes, cx } = useStyles(
-    { color, size: ctx?.size || size, transitionDuration },
+    { color, size: ctx?.size || size, transitionDuration, labelPosition },
     { classNames, styles, unstyled, name: 'Radio' }
   );
 

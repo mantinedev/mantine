@@ -2,6 +2,7 @@ import React from 'react';
 import { MANTINE_SIZES, MantineProvider } from '@mantine/styles';
 import { Checkbox } from '../Checkbox';
 import { Radio } from './Radio';
+import { Stack } from '../Stack';
 
 export default { title: 'Radio' };
 
@@ -97,5 +98,14 @@ export function WithNameAttribute() {
         <Radio value="c" label="c" />
       </Radio.Group>
     </div>
+  );
+}
+
+export function labelPosition() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Radio labelPosition="left" label="Hello from left" value="1" />
+      <Radio labelPosition="right" label="Hello from right" value="1" />
+    </Stack>
   );
 }

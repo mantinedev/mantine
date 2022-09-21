@@ -1,6 +1,7 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/styles';
 import { Checkbox } from './Checkbox';
+import { Stack } from '../Stack';
 
 export default { title: 'Checkbox' };
 
@@ -48,5 +49,14 @@ export function Asterisk() {
         <Checkbox value="1" />
       </Checkbox.Group>
     </div>
+  );
+}
+
+export function labelPosition() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Checkbox labelPosition="left" label="Hello from left" value="1" />
+      <Checkbox labelPosition="right" label="Hello from right" value="1" />
+    </Stack>
   );
 }
