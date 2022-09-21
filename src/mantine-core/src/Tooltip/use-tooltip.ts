@@ -63,9 +63,14 @@ export function useTooltip(settings: UseTooltip) {
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(settings.offset), shift({ padding: 8 }), flip(), arrow({
-      element: settings.arrowRef,
-    })],
+    middleware: [
+      offset(settings.offset),
+      shift({ padding: 8 }),
+      flip(),
+      arrow({
+        element: settings.arrowRef,
+      }),
+    ],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([

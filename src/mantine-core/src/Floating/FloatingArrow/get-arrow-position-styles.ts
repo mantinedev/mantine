@@ -3,7 +3,7 @@ import type { FloatingPosition, FloatingSide, FloatingPlacement } from '../types
 function horizontalSide(
   placement: FloatingPlacement | 'center',
   arrowY: number,
-  arrowOffset: number,
+  arrowOffset: number
 ) {
   if (placement === 'center') {
     return { top: arrowY };
