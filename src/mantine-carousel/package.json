@@ -7,7 +7,7 @@
   "types": "lib/index.d.ts",
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
-  "homepage": "https://mantine.dev/dates/getting-started/",
+  "homepage": "https://mantine.dev/others/carousel/",
   "keywords": [
     "react",
     "next",
