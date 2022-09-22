@@ -20,6 +20,20 @@ export function Uncontrolled() {
   );
 }
 
+export function WithArrow() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover withArrow width={400}>
+        <Popover.Target>
+          <Button>arrow popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown with arrow</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function Usage() {
   const [opened, setState] = useState(false);
 
