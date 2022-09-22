@@ -60,3 +60,32 @@ export function labelPosition() {
     </Stack>
   );
 }
+
+export function WithDesciprtion() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Checkbox
+        description="This is left Checkbox"
+        labelPosition="left"
+        label="Hello from left "
+        value="1"
+      />
+      <Checkbox
+        description="This is right Checkbox"
+        labelPosition="right"
+        label="Hello from right"
+        value="1"
+      />
+    </Stack>
+  );
+}
+
+export function WithError() {
+  return (
+    <Stack sx={{ width: 300, padding: 20 }}>
+      <Checkbox label="Invalid Checkbox without message" value="1" error />
+      <Checkbox error="This is error" labelPosition="right" label="Hello from right" value="1" />
+      <Checkbox error="Invalid Checkbox without label" value="1" />
+    </Stack>
+  );
+}

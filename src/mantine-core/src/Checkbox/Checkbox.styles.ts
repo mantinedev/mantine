@@ -22,16 +22,18 @@ export interface CheckboxStylesParams {
   color: MantineColor;
   transitionDuration: number;
   labelPosition: 'left' | 'right';
+  error: boolean;
 }
 
 export default createStyles(
   (
     theme,
-    { size, radius, color, transitionDuration, labelPosition }: CheckboxStylesParams,
+    { size, radius, color, transitionDuration, labelPosition, error }: CheckboxStylesParams,
     getRef
   ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
+    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
       icon: {
@@ -57,11 +59,11 @@ export default createStyles(
         },
       },
 
-      root: {
-        display: 'flex',
-        alignItems: 'center',
+      root: {},
 
-        gap: theme.spacing.sm,
+      body: {
+        display: 'flex',
+        marginBlock: '5px',
       },
 
       inner: {
@@ -79,6 +81,9 @@ export default createStyles(
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
         order: labelPosition === 'left' ? 1 : 2,
+        '& *': {
+          [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+        },
       },
 
       input: {
@@ -86,7 +91,11 @@ export default createStyles(
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+          error
+            ? errorColor
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[4]
         }`,
         width: _size,
         height: _size,
@@ -99,7 +108,7 @@ export default createStyles(
 
         '&:checked': {
           backgroundColor: colors.background,
-          borderColor: colors.background,
+          borderColor: error ? errorColor : colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,
