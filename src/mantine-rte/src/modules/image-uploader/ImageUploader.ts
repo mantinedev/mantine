@@ -99,7 +99,7 @@ export class ImageUploader {
             setTimeout(() => {
               this.range = this.quill.getSelection();
               this.readAndUploadFile(file);
-            }, 0);
+            }, 1);
           }
         }
       }
