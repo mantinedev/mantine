@@ -9,6 +9,7 @@ function Demo() {
   const [value, onChange] = useState('<p>Rich text editor content</p>');
   return (
     <RichTextEditor
+      id="rte"
       value={value}
       onChange={onChange}
       formats={['bold', 'italic', 'underline']}

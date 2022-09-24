@@ -125,7 +125,9 @@ function Demo() {
   );
 
   const [value, onChange] = useState('');
-  return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
+  return (
+    <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} id="rte" />
+  );
 }
 ```
 
@@ -187,7 +189,7 @@ function Demo() {
     editorRef.current.focus();
   }, []);
 
-  return <RichTextEditor ref={editorRef} {...otherProps} />;
+  return <RichTextEditor ref={editorRef} id="rte" {...otherProps} />;
 }
 ```
 
@@ -242,7 +244,7 @@ Then when you want to use `RichTextEditor` import your component instead:
 import RichTextEditor from '../components/RichText';
 
 function MyPage() {
-  return <RichTextEditor />;
+  return <RichTextEditor id="rte" />;
 }
 ```
 
