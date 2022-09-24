@@ -71,6 +71,9 @@ export default createStyles(
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
+        '&[data-disabled]': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+        },
       },
 
       input: {
