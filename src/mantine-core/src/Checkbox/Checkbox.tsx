@@ -22,7 +22,7 @@ export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
-    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
   /** Key of theme.colors */
   color?: MantineColor;
 
@@ -68,6 +68,7 @@ const defaultProps: Partial<CheckboxProps> = {
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
+  HTMLInputElement,
   CheckboxProps,
   { Group: typeof CheckboxGroup }
 >;
@@ -79,6 +80,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       style,
       sx,
       checked,
+      disabled,
       color,
       label,
       indeterminate,
@@ -129,6 +131,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
               type="checkbox"
               className={classes.input}
               checked={indeterminate || checked}
+              disabled={disabled}
               {...rest}
               {...contextProps}
             />
@@ -138,7 +141,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
 
           <div className={classes.label}>
             {label && (
-              <label htmlFor={uuid} data-testid="label">
+              <label data-disabled={disabled || undefined} htmlFor={uuid} data-testid="label">
                 {label}
               </label>
             )}

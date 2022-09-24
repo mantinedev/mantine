@@ -39,7 +39,7 @@ export interface HorizontalSectionSharedProps extends DefaultProps {
 
 export interface HorizontalSectionProps
   extends HorizontalSectionSharedProps,
-    Omit<React.ComponentPropsWithRef<'nav'>, 'children'> {
+    Omit<React.ComponentPropsWithoutRef<'nav'>, 'children'> {
   section: 'navbar' | 'aside';
   __staticSelector: string;
 }

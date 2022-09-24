@@ -92,3 +92,12 @@ export const WithinGroup = () => (
     </Tooltip>
   </Group>
 );
+
+export const WithArrow = () => (
+  <Tooltip
+    withArrow
+    label="Tooltip button with arrow Tooltip button with arrow Tooltip button with arrow"
+  >
+    <Button type="button">Tooltip button with arrow</Button>
+  </Tooltip>
+);

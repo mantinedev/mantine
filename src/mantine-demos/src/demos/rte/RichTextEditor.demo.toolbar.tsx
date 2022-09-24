@@ -4,6 +4,7 @@ import { DEFAULT_CONTROLS, DEFAULT_LABELS, Toolbar } from '@mantine/rte';
 
 const code = `
 <RichTextEditor
+  id="rte"
   controls={[
     ['bold', 'italic', 'underline', 'link', 'image'],
     ['unorderedList', 'h1', 'h2', 'h3'],

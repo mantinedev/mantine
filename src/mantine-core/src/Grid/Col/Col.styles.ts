@@ -57,7 +57,7 @@ const getColumnFlexGrow = (colSpan: ColSpan, grow: boolean) => {
 };
 
 const getColumnOffset = (offset: number, columns: number) =>
-  offset ? `${100 / (columns / offset)}%` : undefined;
+  offset === 0 ? 0 : offset ? `${100 / (columns / offset)}%` : undefined;
 
 function getBreakpointsStyles({
   sizes,

@@ -26,7 +26,7 @@ export interface GridProps extends DefaultProps, React.ComponentPropsWithoutRef<
   columns?: number;
 }
 
-type GridComponent = ForwardRefWithStaticComponents<GridProps, { Col: typeof Col }>;
+type GridComponent = ForwardRefWithStaticComponents<HTMLDivElement, GridProps, { Col: typeof Col }>;
 
 const defaultProps: Partial<GridProps> = {
   gutter: 'md',

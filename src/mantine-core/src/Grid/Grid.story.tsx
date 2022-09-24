@@ -15,3 +15,16 @@ export function UnexpectedRowBreak() {
     </Grid>
   );
 }
+
+export function Offset0() {
+  return (
+    <Grid>
+      <Grid.Col sx={{ backgroundColor: 'pink' }} span={3} offset={2} offsetSm={0}>
+        Column 1
+      </Grid.Col>
+      <Grid.Col sx={{ backgroundColor: 'silver' }} span={7}>
+        Column 2
+      </Grid.Col>
+    </Grid>
+  );
+}

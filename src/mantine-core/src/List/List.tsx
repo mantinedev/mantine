@@ -42,7 +42,11 @@ export interface ListProps
   listStyleType?: React.CSSProperties['listStyleType'];
 }
 
-type ListComponent = ForwardRefWithStaticComponents<ListProps, { Item: typeof ListItem }>;
+type ListComponent = ForwardRefWithStaticComponents<
+  HTMLUListElement,
+  ListProps,
+  { Item: typeof ListItem }
+>;
 
 const defaultProps: Partial<ListProps> = {
   type: 'unordered',

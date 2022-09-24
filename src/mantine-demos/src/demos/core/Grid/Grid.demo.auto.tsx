@@ -8,9 +8,9 @@ import { Grid } from '@mantine/core';
 function Demo() {
   return (
     <Grid>
-      <Col span="auto">span=auto</Col>
-      <Col span={6}>span=6</Col>
-      <Col span="auto">span=auto</Col>
+      <Grid.Col span="auto">span=auto</Grid.Col>
+      <Grid.Col span={6}>span=6</Grid.Col>
+      <Grid.Col span="auto">span=auto</Grid.Col>
     </Grid>
   );
 }

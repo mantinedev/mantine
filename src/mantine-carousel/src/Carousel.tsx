@@ -344,6 +344,7 @@ _Carousel.Slide = CarouselSlide;
 _Carousel.displayName = '@mantine/carousel/Carousel';
 
 export const Carousel: ForwardRefWithStaticComponents<
+  HTMLDivElement,
   CarouselProps,
   { Slide: typeof CarouselSlide }
 > = _Carousel;

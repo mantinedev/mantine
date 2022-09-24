@@ -39,6 +39,7 @@ export interface TimelineProps
 }
 
 type TimelineComponent = ForwardRefWithStaticComponents<
+  HTMLDivElement,
   TimelineProps,
   { Item: typeof TimelineItem }
 >;

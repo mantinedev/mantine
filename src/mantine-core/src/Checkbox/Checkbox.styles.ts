@@ -84,6 +84,11 @@ export default createStyles(
         '& *': {
           [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
         },
+        
+        '&[data-disabled]': {
+          color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+
+        },
       },
 
       input: {
