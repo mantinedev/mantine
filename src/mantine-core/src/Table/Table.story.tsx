@@ -12,16 +12,16 @@ const elements = [
   { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
 ];
 
-export function Usage() {
-  const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.position}</td>
-      <td>{element.name}</td>
-      <td>{element.symbol}</td>
-      <td>{element.mass}</td>
-    </tr>
-  ));
+const rows = elements.map((element) => (
+  <tr key={element.name}>
+    <td>{element.position}</td>
+    <td>{element.name}</td>
+    <td>{element.symbol}</td>
+    <td>{element.mass}</td>
+  </tr>
+));
 
+export function Usage() {
   return (
     <MantineProvider inherit theme={{ spacing: { xs: 0, sm: 2, md: 4, lg: 8, xl: 12 } }}>
       <div style={{ padding: 40 }}>
@@ -38,5 +38,41 @@ export function Usage() {
         </Table>
       </div>
     </MantineProvider>
+  );
+}
+
+export function WithBorder() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Table withBorder>
+        <thead>
+          <tr>
+            <th>Element position</th>
+            <th>Element name</th>
+            <th>Symbol</th>
+            <th>Atomic mass</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </div>
+  );
+}
+
+export function withColumnBorders() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Table withColumnBorders>
+        <thead>
+          <tr>
+            <th>Element position</th>
+            <th>Element name</th>
+            <th>Symbol</th>
+            <th>Atomic mass</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+    </div>
   );
 }
