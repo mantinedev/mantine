@@ -26,15 +26,6 @@ describe('@mantine/core/Grid', () => {
     expect(Grid.Col).toBe(Col);
   });
 
-  it('supports getting Grid ref', () => {
-    const ref = React.createRef<HTMLDivElement>();
-    render(
-      <Grid ref={ref}>
-        <Grid.Col />
-      </Grid>
-    );
-    expect(ref.current instanceof HTMLDivElement).toBe(true);
-  });
   it('supports getting Col ref', () => {
     const ref = React.createRef<HTMLDivElement>();
     render(

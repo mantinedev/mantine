@@ -19,7 +19,7 @@ export type RadioStylesNames = Selectors<typeof useStyles>;
 
 export interface RadioProps
   extends DefaultProps<RadioStylesNames, RadioStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
   /** Radio label */
   label?: React.ReactNode;
 
@@ -48,11 +48,7 @@ const defaultProps: Partial<RadioProps> = {
   size: 'sm',
 };
 
-type RadioComponent = ForwardRefWithStaticComponents<
-  HTMLInputElement,
-  RadioProps,
-  { Group: typeof RadioGroup }
->;
+type RadioComponent = ForwardRefWithStaticComponents<RadioProps, { Group: typeof RadioGroup }>;
 
 export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const {
