@@ -22,7 +22,7 @@ export type PrismStylesNames = Selectors<typeof useStyles>;
 
 export interface PrismProps
   extends DefaultProps<PrismStylesNames>,
-    Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
   /** Code which will be highlighted */
   children: string;
 

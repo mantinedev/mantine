@@ -26,6 +26,7 @@ export interface TabsProps
     Omit<React.ComponentPropsWithoutRef<'div'>, keyof TabsProviderProps> {}
 
 type TabsComponent = ForwardRefWithStaticComponents<
+  HTMLDivElement,
   TabsProps,
   {
     List: typeof TabsList;

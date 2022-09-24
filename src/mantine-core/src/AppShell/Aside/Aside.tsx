@@ -9,12 +9,16 @@ import { Section } from '../HorizontalSection/Section/Section';
 
 export interface AsideProps
   extends HorizontalSectionSharedProps,
-    React.ComponentPropsWithRef<'nav'> {
+    React.ComponentPropsWithoutRef<'nav'> {
   /** Aside content */
   children: React.ReactNode;
 }
 
-type AsideComponent = ForwardRefWithStaticComponents<AsideProps, { Section: typeof Section }>;
+type AsideComponent = ForwardRefWithStaticComponents<
+  HTMLElement,
+  AsideProps,
+  { Section: typeof Section }
+>;
 
 const defaultProps: Partial<AsideProps> = {
   fixed: false,

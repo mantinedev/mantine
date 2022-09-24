@@ -17,7 +17,7 @@ export type StepperStylesNames = Selectors<typeof useStyles> | StepStylesNames;
 
 export interface StepperProps
   extends DefaultProps<StepperStylesNames>,
-    React.ComponentPropsWithRef<'div'> {
+    React.ComponentPropsWithoutRef<'div'> {
   /** <Stepper.Step /> components only */
   children: React.ReactNode;
 
@@ -59,6 +59,7 @@ export interface StepperProps
 }
 
 type StepperComponent = ForwardRefWithStaticComponents<
+  HTMLDivElement,
   StepperProps,
   {
     Step: typeof Step;
