@@ -132,7 +132,11 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
         </div>
 
         {label && (
-          <div data-testid="label" className={classes.label}>
+          <div
+            data-testid="label"
+            data-disabled={rest.disabled || undefined}
+            className={classes.label}
+          >
             {label}
           </div>
         )}

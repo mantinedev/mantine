@@ -163,6 +163,9 @@ export default createStyles((theme, { size, radius, color }: SwitchStylesParams)
       paddingLeft: theme.spacing.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       cursor: theme.cursorType,
+      '&[data-disabled]': {
+        color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
+      },
     },
 
     trackLabel: {
