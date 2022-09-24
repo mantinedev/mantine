@@ -33,7 +33,10 @@ function Demo() {
 function Demo() {
   return (
     <List listStyleType="disc">
-      <List.Item>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</List.Item>
+      <List.Item>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+      </List.Item>
       <List.Item>First order item</List.Item>
       <List.Item>
         First order item with list
