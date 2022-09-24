@@ -29,6 +29,6 @@ export function EmptyStringValue() {
   );
 }
 
-export function InvisibleIndicator() {
-  return <SegmentedControl color="cyan" data={data} />;
+export function ColorsIndexReference() {
+  return <SegmentedControl color="cyan.9" data={data} />;
 }
