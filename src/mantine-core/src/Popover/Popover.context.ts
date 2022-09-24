@@ -9,6 +9,9 @@ import { PopoverWidth } from './Popover.types';
 interface PopoverContext {
   x: number;
   y: number;
+  arrowX: number;
+  arrowY: number;
+  arrowRef: React.RefObject<HTMLDivElement>;
   opened: boolean;
   transition: MantineTransition;
   transitionDuration: number;
