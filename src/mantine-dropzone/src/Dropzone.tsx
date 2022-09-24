@@ -109,7 +109,7 @@ export const defaultProps: Partial<DropzoneProps> = {
   useFsAccessApi: true,
 };
 
-function _Dropzone(props: DropzoneProps) {
+export function _Dropzone(props: DropzoneProps) {
   const {
     className,
     padding,
