@@ -103,7 +103,7 @@ export default createStyles(
         },
       },
 
-      label: {
+      labelWrapper: {
         ...theme.fn.fontStyles(),
         fontSize: theme.fontSizes[size] || theme.fontSizes.md,
         lineHeight: `${theme.fn.size({ sizes, size })}px`,
@@ -114,7 +114,7 @@ export default createStyles(
           [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
         },
 
-        '&[data-disabled]': {
+        '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },

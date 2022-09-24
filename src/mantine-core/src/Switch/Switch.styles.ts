@@ -166,7 +166,7 @@ export default createStyles(
         },
       },
 
-      label: {
+      labelWrapper: {
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
@@ -177,7 +177,7 @@ export default createStyles(
         '& *': {
           [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
         },
-        '&[data-disabled]': {
+        '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },

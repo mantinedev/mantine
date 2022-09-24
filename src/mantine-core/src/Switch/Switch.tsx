@@ -150,7 +150,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
           <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
         </label>
 
-        <div className={classes.label}>
+        <div className={classes.labelWrapper}>
           {label && (
             <label data-disabled={rest.disabled || undefined} htmlFor={uuid} data-testid="label">
               {label}

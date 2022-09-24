@@ -129,7 +129,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
           <Icon className={classes.icon} aria-hidden />
         </div>
 
-        <div className={classes.label}>
+        <div className={classes.labelWrapper}>
           {label && (
             <label data-disabled={disabled || undefined} htmlFor={uuid}>
               {label}

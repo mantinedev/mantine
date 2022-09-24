@@ -139,7 +139,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
             <Icon indeterminate={indeterminate} className={classes.icon} />
           </div>
 
-          <div className={classes.label}>
+          <div className={classes.labelWrapper}>
             {label && (
               <label data-disabled={disabled || undefined} htmlFor={uuid} data-testid="label">
                 {label}
