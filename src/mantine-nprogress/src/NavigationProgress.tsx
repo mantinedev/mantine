@@ -42,6 +42,9 @@ export interface NavigationProgressProps {
 
   /** Progressbar z-index */
   zIndex?: React.CSSProperties['zIndex'];
+
+  /** aria-label for `Progress`*/
+  progressLabel?: string;
 }
 
 export function NavigationProgress({
@@ -56,6 +59,7 @@ export function NavigationProgress({
   autoReset = false,
   withinPortal = true,
   zIndex = getDefaultZIndex('max'),
+  progressLabel,
 }: NavigationProgressProps) {
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
@@ -167,6 +171,7 @@ export function NavigationProgress({
               transitionDuration: `${reducedMotion || !mounted ? 0 : transitionDuration}ms`,
             },
           }}
+          aria-label={progressLabel}
         />
       )}
     </OptionalPortal>
