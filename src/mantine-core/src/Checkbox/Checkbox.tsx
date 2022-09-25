@@ -20,7 +20,7 @@ export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
 export interface CheckboxProps
   extends DefaultProps<CheckboxStylesNames, CheckboxStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
   /** Key of theme.colors */
   color?: MantineColor;
 
@@ -56,7 +56,6 @@ const defaultProps: Partial<CheckboxProps> = {
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
-  HTMLInputElement,
   CheckboxProps,
   { Group: typeof CheckboxGroup }
 >;

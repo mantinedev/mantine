@@ -164,7 +164,6 @@ _ScrollArea.displayName = '@mantine/core/ScrollArea';
 _ScrollArea.Autosize = ScrollAreaAutosize;
 
 export const ScrollArea: ForwardRefWithStaticComponents<
-  HTMLDivElement,
   ScrollAreaProps,
   {
     Autosize: typeof ScrollAreaAutosize;

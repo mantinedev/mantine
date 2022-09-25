@@ -9,7 +9,6 @@ export type { PrismProps, PrismStylesNames } from './Prism/Prism';
 export type { PrismStylesParams } from './Prism/Prism.styles';
 
 type PrismComponent = ForwardRefWithStaticComponents<
-  HTMLDivElement,
   PrismProps,
   {
     Tabs: typeof PrismTabs;

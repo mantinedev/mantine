@@ -55,11 +55,7 @@ const defaultProps: Partial<SwitchProps> = {
   radius: 'xl',
 };
 
-type SwitchComponent = ForwardRefWithStaticComponents<
-  HTMLInputElement,
-  SwitchProps,
-  { Group: typeof SwitchGroup }
->;
+type SwitchComponent = ForwardRefWithStaticComponents<SwitchProps, { Group: typeof SwitchGroup }>;
 
 export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
