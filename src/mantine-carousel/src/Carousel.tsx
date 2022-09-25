@@ -67,7 +67,7 @@ export interface CarouselProps
   align?: 'start' | 'center' | 'end' | number;
 
   /** Number of slides that should be scrolled with next/previous buttons */
-  slidesToScroll?: number;
+  slidesToScroll?: number | 'auto';
 
   /** Determines whether gap should be treated as part of the slide size, true by default */
   includeGapInSize?: boolean;
