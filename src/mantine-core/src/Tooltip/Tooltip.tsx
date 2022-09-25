@@ -1,4 +1,4 @@
-import React, { cloneElement, forwardRef } from 'react';
+import React, { cloneElement, forwardRef, useRef } from 'react';
 import { isElement, ForwardRefWithStaticComponents } from '@mantine/utils';
 import { useMergedRef } from '@mantine/hooks';
 import { getDefaultZIndex, useComponentDefaultProps } from '@mantine/styles';
@@ -67,6 +67,7 @@ const defaultProps: Partial<TooltipProps> = {
 };
 
 const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
+  const arrowRef = useRef<HTMLDivElement | null>(null);
   const {
     children,
     position,
@@ -114,6 +115,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onPositionChange,
     opened,
     events,
+    arrowRef,
     offset: offset + (withArrow ? arrowSize / 2 : 0),
     positionDependencies: [...positionDependencies, children],
   });
@@ -150,6 +152,9 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
               {label}
 
               <FloatingArrow
+                ref={arrowRef}
+                arrowX={tooltip.arrowX}
+                arrowY={tooltip.arrowY}
                 visible={withArrow}
                 withBorder={false}
                 position={tooltip.placement}

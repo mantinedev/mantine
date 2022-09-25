@@ -3,6 +3,7 @@ import {
   useFloating,
   shift,
   flip,
+  arrow,
   offset,
   size,
   Middleware,
@@ -22,6 +23,7 @@ interface UsePopoverOptions {
   onOpen?(): void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares;
+  arrowRef: React.RefObject<HTMLDivElement>;
 }
 
 function getPopoverMiddlewares(options: UsePopoverOptions) {
@@ -34,6 +36,8 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
   if (options.middlewares.flip) {
     middlewares.push(flip());
   }
+
+  middlewares.push(arrow({ element: options.arrowRef }));
 
   return middlewares;
 }

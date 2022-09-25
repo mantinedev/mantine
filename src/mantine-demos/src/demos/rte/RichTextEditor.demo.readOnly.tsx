@@ -6,7 +6,7 @@ export const html = `
 `;
 
 const code = `
-<RichTextEditor readOnly {...otherProps} />
+<RichTextEditor readOnly id="rte" {...otherProps} />
 `;
 
 function Demo(props: any) {

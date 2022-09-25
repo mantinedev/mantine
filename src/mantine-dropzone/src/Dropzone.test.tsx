@@ -15,7 +15,6 @@ describe('@mantine/dropzone/Dropzone', () => {
     component: Dropzone,
     props: defaultProps,
     displayName: '@mantine/dropzone/Dropzone',
-    refType: HTMLDivElement,
   });
 
   it('displays LoadingOverlay based on loading prop', () => {

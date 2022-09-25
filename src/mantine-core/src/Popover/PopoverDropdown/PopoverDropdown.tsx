@@ -73,6 +73,9 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
               {children}
 
               <FloatingArrow
+                ref={ctx.arrowRef}
+                arrowX={ctx.arrowX}
+                arrowY={ctx.arrowY}
                 visible={ctx.withArrow}
                 withBorder
                 position={ctx.placement}
