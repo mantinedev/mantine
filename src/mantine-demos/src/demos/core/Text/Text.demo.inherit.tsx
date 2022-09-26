@@ -5,13 +5,7 @@ const code = `
 import { Text, Title } from '@mantine/core';
 
 function Demo() {
-  return <Title order={3}>
-      Title in which you want to
-      <Text color="blue" inherit component="span">
-        highlight
-      </Text>
-      something
-    </Title>;
+  return <Title order={3}>Title in which you want to <Text color="blue" inherit component="span">highlight</Text> something</Title>;
 }
 `;
 
