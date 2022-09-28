@@ -172,7 +172,7 @@ export const _Carousel = forwardRef<HTMLDivElement, CarouselProps>((props, ref) 
   } = useComponentDefaultProps('Carousel', defaultProps, props);
 
   const { classes, cx, theme } = useStyles(
-    { controlSize, controlsOffset, orientation, height },
+    { controlSize, controlsOffset, orientation, height, includeGapInSize, breakpoints, slideGap },
     { name: 'Carousel', classNames, styles, unstyled }
   );
 
