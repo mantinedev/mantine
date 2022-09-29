@@ -129,18 +129,16 @@ TypeScript will only autocomplete Mantine's default colors when accessing the th
 ```ts
 import { Tuple } from '@mantine/core';
 
-type CustomColors = 'primaryColorName' | 'secondaryColorName';
+type ExtendedCustomColors = 'primaryColorName' | 'secondaryColorName' | DefaultMantineColor;
 
 declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
-    colors: Record<CustomColors, Tuple<string, 10>>;
+    colors: Record<ExtendedCustomColors, Tuple<string, 10>>;
   }
 }
 
 // or if you want to "extend" standard colors
 import { Tuple, DefaultMantineColor } from '@mantine/core';
-
-type ExtendedCustomColors = 'primaryColorName' | 'secondaryColorName' | DefaultMantineColor;
 
 declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
