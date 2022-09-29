@@ -23,7 +23,7 @@ export type CarouselStylesNames = CarouselSlideStylesNames | Selectors<typeof us
 
 export interface CarouselProps
   extends DefaultProps<CarouselStylesNames, CarouselStylesParams>,
-    React.ComponentPropsWithoutRef<'div'> {
+    React.ComponentPropsWithRef<'div'> {
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
