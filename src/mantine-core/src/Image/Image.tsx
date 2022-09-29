@@ -78,7 +78,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>((props: ImageProps, 
     ...others
   } = useComponentDefaultProps('Image', defaultProps, props);
   const { classes, cx } = useStyles({ radius }, { classNames, styles, unstyled, name: 'Image' });
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(!!src);
   const [error, setError] = useState(!src);
   const isPlaceholder = withPlaceholder && (!loaded || error);
 
