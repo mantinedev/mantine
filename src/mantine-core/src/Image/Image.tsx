@@ -17,7 +17,7 @@ export interface ImageProps
   extends DefaultProps<ImageStylesNames, ImageStylesParams>,
     Omit<React.ComponentPropsWithoutRef<'div'>, 'placeholder'> {
   /** Image src */
-  src?: string;
+  src?: string | null;
 
   /** Image alt text, used as title for placeholder if image was not loaded */
   alt?: string;
