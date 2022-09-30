@@ -5,11 +5,11 @@ import { StarSymbol } from './StarSymbol';
 import { Box } from '../Box';
 import useStyles, { RatingStylesParams } from './Rating.styles';
 
-interface RatingItemProps {
+interface SymbolProps {
   getSymbolLabel: RatingProps['getSymbolLabel'];
   value: number;
   inputProps: React.ComponentPropsWithoutRef<'input'>;
-  symbolProps: React.ComponentPropsWithoutRef<'div'>;
+  symbolBodyProps: React.ComponentPropsWithoutRef<'div'>;
   labelProps: { className: string; style: React.CSSProperties };
   emptyIcon: React.ReactNode;
   fullIcon: React.ReactNode;
@@ -17,7 +17,7 @@ interface RatingItemProps {
   size: MantineSize;
   readonly: boolean;
 }
-export function RatingItem(props: RatingItemProps) {
+export function Symbol(props: SymbolProps) {
   const {
     value,
     getSymbolLabel,
@@ -27,7 +27,7 @@ export function RatingItem(props: RatingItemProps) {
     emptyIcon,
     fullIcon,
     size,
-    symbolProps,
+    symbolBodyProps,
     readonly,
   } = props;
   const id = useId();
@@ -37,7 +37,7 @@ export function RatingItem(props: RatingItemProps) {
       {!readonly && <input value={value} {...inputProps} id={id} type="radio" />}
       <Box component={readonly ? 'div' : 'label'} {...labelProps} htmlFor={id}>
         {!readonly && <div className="symbol-label">{getSymbolLabel(value)}</div>}
-        <div {...symbolProps}>
+        <div {...symbolBodyProps}>
           {isFull
             ? fullIcon || <StarSymbol size={size} type="full" />
             : emptyIcon || <StarSymbol size={size} type="empty" />}
@@ -45,6 +45,20 @@ export function RatingItem(props: RatingItemProps) {
       </Box>
     </>
   );
+}
+
+function getDecimalPrecision(num: number) {
+  const decimalPrecision = `${num}`.split('.')[1]?.length || 0;
+  return decimalPrecision;
+}
+
+function cutDecimalTo(value: number, num: number) {
+  return Number(value.toFixed(num));
+}
+
+function roundValueTo(value: number, to: number) {
+  const rounded = Math.round(value / to) * to;
+  return cutDecimalTo(rounded, getDecimalPrecision(to));
 }
 
 export type RatingStylesNames = Selectors<typeof useStyles>;
@@ -125,14 +139,14 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     onChange,
     finalValue: 0,
   });
+  const decimalUnit = 1 / fractions;
 
   const [interactiveValue, setInteractiveValue] = useState(-1);
   const [isClientOutside, setClientOutside] = useState(true);
 
-  let _value = stableValue;
+  const stableValueRounded = roundValueTo(stableValue, decimalUnit);
+  let _value = stableValueRounded;
   if (interactiveValue !== -1) _value = interactiveValue;
-
-  const decimalUnit = 1 / fractions;
 
   const handleMouseEnter = () => {
     setClientOutside(false);
@@ -146,8 +160,10 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     if (theme.dir === 'rtl') hoverPosition = right - event.clientX;
     else hoverPosition = event.clientX - left;
 
-    const hoverValue = clamp(hoverPosition / symbolWidth, decimalUnit, count);
-    const rounded = Math.ceil(hoverValue / decimalUnit) * decimalUnit;
+    const hoverValue = hoverPosition / symbolWidth;
+
+    let rounded = roundValueTo(hoverValue + decimalUnit / 2, decimalUnit);
+    rounded = clamp(rounded, decimalUnit, count);
 
     setInteractiveValue(rounded);
   };
@@ -190,7 +206,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
 
   return (
     <Box
-      aria-label={`${stableValue} star rating`}
+      aria-label={`${stableValueRounded} star rating`}
       ref={mergeRefs(rootRef, ref)}
       className={cx(classes.root, className)}
       {...(!readonly
@@ -202,49 +218,52 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
         : {})}
       {...others}
     >
-      {Array.from({ length: count }).map((_, itemIndex) => {
-        const integerValue = itemIndex + 1;
-        const fractionItems = Array.from({ length: itemIndex === 0 ? fractions + 1 : fractions });
-        const isFractionsActive = !readonly && Math.ceil(interactiveValue) === integerValue;
+      {Array.from({ length: count }).map((_, integerIndex) => {
+        const integerValue = integerIndex + 1;
+        const fractionItems = Array.from({
+          length: integerIndex === 0 ? fractions + 1 : fractions,
+        });
+        const isGroupActive = !readonly && Math.ceil(interactiveValue) === integerValue;
 
         return (
           <div
             key={integerValue}
             style={{
-              transform: isFractionsActive ? 'scale(1.25)' : undefined,
-              zIndex: isFractionsActive ? 1 : 0,
+              transform: isGroupActive ? 'scale(1.25)' : undefined,
+              zIndex: isGroupActive ? 1 : 0,
             }}
-            className={classes.fractionContainer}
+            className={classes.symbolGroup}
           >
             {fractionItems.map((__, fractionIndex) => {
-              const decimalValue =
-                decimalUnit * (itemIndex === 0 ? fractionIndex : fractionIndex + 1);
-              const itemValue = integerValue - 1 + decimalValue;
-              const isFull = itemValue <= _value;
-              const isActive = itemValue === stableValue;
-              const isCurrentActive = itemValue === _value;
+              // first symbolGroup will have one more symbol for 0 rating
+              const fractionValue =
+                decimalUnit * (integerIndex === 0 ? fractionIndex : fractionIndex + 1);
+              const symbolValue = roundValueTo(integerValue - 1 + fractionValue, decimalUnit);
+              const isFull = symbolValue <= _value;
+              const isChecked = symbolValue === stableValueRounded;
+              const isSymbolActive = symbolValue === _value;
 
               return (
-                <RatingItem
-                  key={`${integerValue}-${itemValue}`}
+                <Symbol
+                  key={`${integerValue}-${symbolValue}`}
                   size={size}
                   getSymbolLabel={getSymbolLabel}
-                  value={itemValue}
+                  value={symbolValue}
                   readonly={readonly}
                   labelProps={{
                     className: classes.label,
                     style:
-                      decimalValue === 1
+                      fractionValue === 1
                         ? {}
                         : {
-                            zIndex: isCurrentActive ? 2 : 0,
+                            zIndex: isSymbolActive ? 2 : 0,
                           },
                   }}
-                  symbolProps={{
-                    className: classes.symbol,
+                  symbolBodyProps={{
+                    className: classes.symbolBody,
                     style: {
-                      clipPath: `inset(0 ${100 - decimalValue * 100}% 0 0)`,
-                      WebkitClipPath: `inset(0 ${100 - decimalValue * 100}% 0 0)`,
+                      clipPath: `inset(0 ${100 - fractionValue * 100}% 0 0)`,
+                      WebkitClipPath: `inset(0 ${100 - fractionValue * 100}% 0 0)`,
                     },
                   }}
                   inputProps={{
@@ -252,8 +271,8 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
                     // onFocus: handleFocus,
                     onBlur: handleBlur,
                     name: name || _name,
-                    value: itemValue,
-                    checked: isActive,
+                    value: symbolValue,
+                    checked: isChecked,
                     onChange: handleChange,
                     onClick: (event) => {
                       handleClick(event);

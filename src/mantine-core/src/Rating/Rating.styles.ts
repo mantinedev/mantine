@@ -44,7 +44,7 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
       width: 'max-content',
     },
 
-    fractionContainer: {
+    symbolGroup: {
       ref: getRef('container'),
       boxSizing: 'content-box',
       height: sizeValue,
@@ -104,7 +104,7 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
       },
     },
 
-    symbol: {
+    symbolBody: {
       width: sizeValue,
       height: sizeValue,
 

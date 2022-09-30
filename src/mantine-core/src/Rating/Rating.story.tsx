@@ -33,9 +33,20 @@ export function Sizes() {
     <Stack p="md">
       <Rating size="xs" defaultValue={3} />
       <Rating defaultValue={2} size="sm" />
-      <Rating defaultValue={3.5} size="md" fractions={2} />
-      <Rating size="lg" fractions={2} defaultValue={1} />
-      <Rating size="xl" defaultValue={3} fractions={4} />
+      <Rating defaultValue={3} size="md" />
+      <Rating size="lg" defaultValue={1} />
+      <Rating size="xl" defaultValue={4} />
+    </Stack>
+  );
+}
+
+export function Fractions() {
+  return (
+    <Stack p="md">
+      <Rating size="xl" defaultValue={3} fractions={2} />
+      <Rating size="xl" defaultValue={3} fractions={3} />
+      <Rating size="xl" defaultValue={3} fractions={5} />
+      <Rating size="xl" defaultValue={3} fractions={7} />
     </Stack>
   );
 }
