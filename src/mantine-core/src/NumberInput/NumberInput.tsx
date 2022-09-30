@@ -60,8 +60,8 @@ export interface NumberInputProps
   /** Amount of digits after the decimal point  */
   precision?: number;
 
-  /** Only works if a precision is given, removes the trailing zeros */
-  removePrecisionTrailingZeros?: boolean;
+  /** Only works if a precision is given, removes the trailing zeros, false by default */
+  removeTrailingZeros?: boolean;
 
   /** Default value for uncontrolled variant only */
   defaultValue?: number | undefined;
@@ -117,7 +117,7 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
-  removePrecisionTrailingZeros: true,
+  removeTrailingZeros: true,
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
@@ -143,7 +143,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     radius,
     variant,
     precision,
-    removePrecisionTrailingZeros,
+    removeTrailingZeros,
     defaultValue,
     noClampOnBlur,
     handlersRef,
@@ -359,7 +359,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          if (removePrecisionTrailingZeros) {
+          if (removeTrailingZeros) {
             const valNoZeros = val
               .toFixed(precision)
               .replace(new RegExp(`[0]{0,${precision}}$`), '');

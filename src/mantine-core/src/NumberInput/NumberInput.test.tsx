@@ -133,7 +133,7 @@ describe('@mantine/core/NumberInput', () => {
 
   it('supports removing trailing zeros with precision', async () => {
     const spy = jest.fn();
-    render(<NumberInput precision={8} removePrecisionTrailingZeros onChange={spy} />);
+    render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
     await enterText('6.12300000');
     expect(spy).toHaveBeenLastCalledWith(6.123);
     blurInput();
