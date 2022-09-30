@@ -60,6 +60,9 @@ export interface NumberInputProps
   /** Amount of digits after the decimal point  */
   precision?: number;
 
+  /** Only works if a precision is given, removes the trailing zeros */
+  removePrecisionTrailingZeros?: boolean;
+
   /** Default value for uncontrolled variant only */
   defaultValue?: number | undefined;
 
@@ -114,6 +117,7 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
+  removePrecisionTrailingZeros: true,
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
@@ -139,6 +143,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     radius,
     variant,
     precision,
+    removePrecisionTrailingZeros,
     defaultValue,
     noClampOnBlur,
     handlersRef,
@@ -354,8 +359,22 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          setTempValue(val.toFixed(precision));
-          handleValueChange(parseFloat(val.toFixed(precision)));
+          if (removePrecisionTrailingZeros) {
+            const valNoZeros = val
+              .toFixed(precision)
+              .replace(new RegExp(`[0]{0,${precision}}$`), '');
+
+            if (valNoZeros.endsWith(decimalSeparator) || valNoZeros.endsWith('.')) {
+              setTempValue(valNoZeros.slice(0, -1));
+              handleValueChange(parseFloat(valNoZeros.slice(0, -1)));
+            } else {
+              setTempValue(valNoZeros);
+              handleValueChange(parseFloat(valNoZeros));
+            }
+          } else {
+            setTempValue(val.toFixed(precision));
+            handleValueChange(parseFloat(val.toFixed(precision)));
+          }
         }
       } else {
         setTempValue(finalValue?.toFixed(precision) ?? '');
