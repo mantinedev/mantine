@@ -8,6 +8,11 @@
   "license": "MIT",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "homepage": "https://mantine.dev/dates/getting-started/",
+  "repository": {
+    "url": "https://github.com/mantinedev/mantine.git",
+    "type": "git",
+    "directory": "src/mantine-dates"
+  },
   "keywords": [
     "react",
     "next",
