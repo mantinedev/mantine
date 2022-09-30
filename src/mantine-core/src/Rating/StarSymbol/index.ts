@@ -1,0 +1,1 @@
+export { StarSymbol } from './StarSymbol';
