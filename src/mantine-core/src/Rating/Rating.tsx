@@ -88,6 +88,9 @@ export interface RatingProps extends DefaultProps<RatingStylesNames, RatingStyle
   /** called on onChange event */
   onChange?: (value: number) => void;
 
+  /** called if hover change */
+  onChangeHover?: (value: number) => void;
+
   /** return labelText for a symbol, by default the function return the value */
   getSymbolLabel?: (value: number) => string;
 
@@ -116,6 +119,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     size,
     count,
     onChange,
+    onChangeHover,
     getSymbolLabel,
     name,
     readonly,
@@ -136,7 +140,6 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
   const [stableValue, setStableValue] = useUncontrolled({
     value,
     defaultValue,
-    onChange,
     finalValue: 0,
   });
   const decimalUnit = 1 / fractions;
@@ -166,11 +169,13 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     rounded = clamp(rounded, decimalUnit, count);
 
     setInteractiveValue(rounded);
+    if (onChangeHover && rounded !== interactiveValue) onChangeHover(rounded);
   };
 
   const handleMouseLeave = () => {
     setInteractiveValue(-1);
     setClientOutside(true);
+    if (onChangeHover && interactiveValue !== -1) onChangeHover(-1);
   };
 
   const handleBlur = () => {
@@ -195,6 +200,9 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
 
     setStableValue(0);
     setInteractiveValue(-1);
+    if (onChange && parseFloat(event.currentTarget.value) === stableValueRounded) {
+      onChange(0);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -202,6 +210,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
     if (interactiveValue !== -1) resultedValue = interactiveValue;
 
     setStableValue(resultedValue);
+    if (onChange) onChange(resultedValue);
   };
 
   return (
