@@ -49,11 +49,11 @@ export default createStyles(
 
     const responsiveStyles = {
       steps: {
-        [`@media (max-width: ${breakpointValue}px)`]: verticalOrientationStyles.steps,
+        [`@media (max-width: ${breakpointValue - 1}px)`]: verticalOrientationStyles.steps,
       },
 
       separator: {
-        [`@media (max-width: ${breakpointValue}px)`]: verticalOrientationStyles.separator,
+        [`@media (max-width: ${breakpointValue - 1}px)`]: verticalOrientationStyles.separator,
       },
     } as const;
 

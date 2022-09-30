@@ -38,7 +38,7 @@ export default createStyles(
     const breakpoints =
       typeof width === 'object' && width !== null
         ? getSortedBreakpoints(width, theme).reduce((acc, [breakpoint, breakpointSize]) => {
-            acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+            acc[`@media (min-width: ${breakpoint}px)`] = {
               width: breakpointSize,
               minWidth: breakpointSize,
             };
@@ -75,10 +75,12 @@ export default createStyles(
         ...breakpoints,
 
         '&[data-hidden]': {
-          [`@media (max-width: ${theme.fn.size({
-            size: hiddenBreakpoint,
-            sizes: theme.breakpoints,
-          })}px)`]: {
+          [`@media (max-width: ${
+            theme.fn.size({
+              size: hiddenBreakpoint,
+              sizes: theme.breakpoints,
+            }) - 1
+          }px)`]: {
             display: 'none',
           },
         },

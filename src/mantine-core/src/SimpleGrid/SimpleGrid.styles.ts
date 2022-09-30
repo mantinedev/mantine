@@ -27,7 +27,7 @@ export default createStyles(
         sizes: theme.breakpoints,
       });
 
-      acc[`@media (${property}: ${breakpointSize + (property === 'max-width' ? 0 : 1)}px)`] = {
+      acc[`@media (${property}: ${breakpointSize - (property === 'max-width' ? 1 : 0)}px)`] = {
         gridTemplateColumns: `repeat(${breakpoint.cols}, minmax(0, 1fr))`,
         gap: `${theme.fn.size({
           size: breakpoint.verticalSpacing || (hasVerticalSpacing ? verticalSpacing : spacing),

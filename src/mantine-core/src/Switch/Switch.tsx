@@ -19,7 +19,7 @@ export type SwitchStylesNames = Selectors<typeof useStyles>;
 
 export interface SwitchProps
   extends DefaultProps<SwitchStylesNames, SwitchStylesParams>,
-    Omit<React.ComponentPropsWithoutRef<'input'>, 'type' | 'size'> {
+    Omit<React.ComponentPropsWithRef<'input'>, 'type' | 'size'> {
   /** Id is used to bind input and label, if not passed unique id will be generated for each input */
   id?: string;
 
