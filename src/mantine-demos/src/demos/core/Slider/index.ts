@@ -8,3 +8,4 @@ export { disabled } from './Slider.demo.disabled';
 export { thumbSize } from './Slider.demo.thumbSize';
 export { thumbChildren } from './Slider.demo.thumbChildren';
 export { scale } from './Slider.demo.scale';
+export { inverted } from './Slider.demo.inverted';
