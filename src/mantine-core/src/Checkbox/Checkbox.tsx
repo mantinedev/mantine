@@ -149,7 +149,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
             )}
 
             {error && error !== 'boolean' && (
-              <Input.Error className={classes.description}>{error}</Input.Error>
+              <Input.Error className={classes.error}>{error}</Input.Error>
             )}
           </div>
         </Box>

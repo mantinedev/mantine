@@ -136,7 +136,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
           )}
 
           {error && error !== 'boolean' && (
-            <Input.Error className={classes.description}>{error}</Input.Error>
+            <Input.Error className={classes.error}>{error}</Input.Error>
           )}
         </div>
       </Box>
