@@ -46,9 +46,4 @@ describe('@mantine/core/Checkbox', () => {
     render(<Checkbox disabled />);
     expect(screen.getByRole('checkbox')).toBeDisabled();
   });
-
-  it('sets checked state based on indeterminate prop', () => {
-    render(<Checkbox indeterminate checked={false} onChange={() => {}} />);
-    expect(screen.getByRole('checkbox')).toBeChecked();
-  });
 });
