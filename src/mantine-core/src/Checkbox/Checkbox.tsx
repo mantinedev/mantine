@@ -15,8 +15,7 @@ import { CheckboxIcon } from './CheckboxIcon';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
-import { InputDescription } from '../Input/InputDescription/InputDescription';
-import { InputError } from '../Input/InputError/InputError';
+import { Input } from '../Input';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
@@ -144,19 +143,16 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
                 {label}
               </label>
             )}
-            {description && labelPosition === 'right' && (
-              <InputDescription pt="4px" className="description">
-                {description}
-              </InputDescription>
+
+            {description && (
+              <Input.Description className={classes.description}>{description}</Input.Description>
+            )}
+
+            {error && error !== 'boolean' && (
+              <Input.Error className={classes.description}>{error}</Input.Error>
             )}
           </div>
         </Box>
-        {description && labelPosition === 'left' && (
-          <InputDescription pb="4px" className="description">
-            {description}
-          </InputDescription>
-        )}
-        {error && error !== 'boolean' && <InputError>{error}</InputError>}
       </Box>
     );
   }

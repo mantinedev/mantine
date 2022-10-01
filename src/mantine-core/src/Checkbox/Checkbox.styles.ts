@@ -36,6 +36,14 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
       icon: {
         ref: getRef('icon'),
         color: theme.white,
@@ -111,7 +119,7 @@ export default createStyles(
 
         '&:checked': {
           backgroundColor: colors.background,
-          borderColor: error ? errorColor : colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,
