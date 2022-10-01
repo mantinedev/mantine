@@ -11,9 +11,23 @@ Mantine exports types for every component, this guide will help you understand h
 
 ## Components props types
 
+Each `@mantine/` package that exports components, exports props types for these components as well.
+You can import component props types by adding `Props` to the component name, for example, you can import
+[Button](/core/button/) and [DatePicker](/dates/date-picker/) components props like so:
+
+```tsx
+import type { ButtonProps } from '@mantine/core';
+import type { DatePickerProps } from '@mantine/dates';
+```
+
 ## Styles names
 
-## Polymorphic components
+Each component that supports [Styles API](/styles/styles-api/) exports type with selectors that can be used in `classNames` and `styles` props.
+To import these types add `StylesNames` to the component name:
+
+```tsx
+import type { SliderStylesNames } from '@mantine/core';
+```
 
 ## Theme types overriding
 
