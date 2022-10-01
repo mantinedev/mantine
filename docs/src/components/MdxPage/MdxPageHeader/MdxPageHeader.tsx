@@ -1,9 +1,11 @@
 import React from 'react';
-import { Title, Text } from '@mantine/core';
+import { Title, Text, Badge } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantine/ds';
 import { IconPencil, IconLicense, IconCalendar } from '@tabler/icons';
+import { Link } from 'gatsby';
 import { ImportStatement } from './ImportStatement/ImportStatement';
 import { LinkItem } from './LinkItem/LinkItem';
+import { getGradient } from '../../HomePage/get-gradient';
 import { MdxPageProps } from '../../../types';
 import useStyles from './MdxPageHeader.styles';
 
@@ -24,7 +26,19 @@ export function MdxPageHeader({ frontmatter }: MdxPageProps) {
   return (
     <div className={classes.wrapper}>
       <div className={cx(classes.header, { [classes.withTabs]: hasTabs })}>
-        <Title className={classes.title}>{frontmatter.pageTitle || frontmatter.title}</Title>
+        <Title className={classes.title}>
+          {frontmatter.pageTitle || frontmatter.title}
+          {frontmatter.polymorphic && (
+            <Badge
+              component={Link}
+              to="/guides/polymorphic/"
+              variant="gradient"
+              sx={(theme) => ({ backgroundImage: getGradient(theme, 'bg'), cursor: 'pointer' })}
+            >
+              polymorphic
+            </Badge>
+          )}
+        </Title>
 
         <Text size="lg" className={classes.description}>
           {frontmatter.description}
