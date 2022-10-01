@@ -79,6 +79,9 @@ export interface PopoverBaseProps {
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
+
+  /** If set, popover dropdown will not render */
+  disabled?: boolean;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -172,6 +175,7 @@ export function Popover(props: PopoverProps) {
     exitTransitionDuration,
     __staticSelector,
     withRoles,
+    disabled,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
@@ -209,6 +213,7 @@ export function Popover(props: PopoverProps) {
     >
       <PopoverContextProvider
         value={{
+          disabled,
           controlled: popover.controlled,
           reference: (node) => {
             setTargetNode(node as HTMLElement);

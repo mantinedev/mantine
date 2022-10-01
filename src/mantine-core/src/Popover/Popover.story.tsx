@@ -21,6 +21,20 @@ export function Uncontrolled() {
   );
 }
 
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover disabled>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
 export function WithArrow() {
   return (
     <div style={{ padding: 40 }}>
