@@ -140,7 +140,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
   const _error = typeof error !== 'boolean' && error && (
-    <InputError {...errorProps} key="error" {...sharedProps}>
+    <InputError key="error" {...sharedProps} {...errorProps}>
       {error}
     </InputError>
   );
