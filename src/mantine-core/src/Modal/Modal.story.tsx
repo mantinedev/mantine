@@ -35,3 +35,11 @@ export function FullScreenWithOverflow() {
     </div>
   );
 }
+
+export function SizeAuto() {
+  return (
+    <div style={{ padding: 40 }}>
+      <WrappedModal size="auto">{content}</WrappedModal>
+    </div>
+  );
+}
