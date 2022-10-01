@@ -21,12 +21,19 @@ export interface CheckboxStylesParams {
   radius: MantineNumberSize;
   color: MantineColor;
   transitionDuration: number;
+  labelPosition: 'left' | 'right';
+  error: boolean;
 }
 
 export default createStyles(
-  (theme, { size, radius, color, transitionDuration }: CheckboxStylesParams, getRef) => {
+  (
+    theme,
+    { size, radius, color, transitionDuration, labelPosition, error }: CheckboxStylesParams,
+    getRef
+  ) => {
     const _size = theme.fn.size({ size, sizes });
     const colors = theme.fn.variant({ variant: 'filled', color });
+    const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
       icon: {
@@ -52,26 +59,32 @@ export default createStyles(
         },
       },
 
-      root: {
+      root: {},
+
+      body: {
         display: 'flex',
-        alignItems: 'center',
+        marginBlock: '5px',
       },
 
       inner: {
         position: 'relative',
         width: _size,
         height: _size,
+        order: labelPosition === 'left' ? 2 : 1,
       },
 
-      label: {
+      labelWrapper: {
         ...theme.fn.fontStyles(),
         WebkitTapHighlightColor: 'transparent',
-        paddingLeft: theme.spacing.sm,
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         lineHeight: `${_size}px`,
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
-        '&[data-disabled]': {
+        order: labelPosition === 'left' ? 1 : 2,
+        '& *': {
+          [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+        },
+        '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },
       },
@@ -81,7 +94,11 @@ export default createStyles(
         appearance: 'none',
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
         border: `1px solid ${
-          theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[4]
+          error
+            ? errorColor
+            : theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[4]
         }`,
         width: _size,
         height: _size,
@@ -94,7 +111,7 @@ export default createStyles(
 
         '&:checked': {
           backgroundColor: colors.background,
-          borderColor: colors.background,
+          borderColor: error ? errorColor : colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,

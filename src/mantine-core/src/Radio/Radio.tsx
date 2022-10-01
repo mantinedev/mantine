@@ -14,6 +14,8 @@ import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
 import useStyles, { RadioStylesParams } from './Radio.styles';
+import { InputDescription } from '../Input/InputDescription/InputDescription';
+import { InputError } from '../Input/InputError/InputError';
 
 export type RadioStylesNames = Selectors<typeof useStyles>;
 
@@ -40,12 +42,22 @@ export interface RadioProps
 
   /** Props spread to root element */
   wrapperProps?: Record<string, any>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<RadioProps> = {
   icon: RadioIcon,
   transitionDuration: 100,
   size: 'sm',
+  labelPosition: 'right',
 };
 
 type RadioComponent = ForwardRefWithStaticComponents<RadioProps, { Group: typeof RadioGroup }>;
@@ -67,12 +79,15 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
     transitionDuration,
     wrapperProps,
     unstyled,
+    labelPosition,
+    description,
+    error,
     ...others
   } = useComponentDefaultProps('Radio', defaultProps, props);
   const ctx = useRadioGroupContext();
 
   const { classes, cx } = useStyles(
-    { color, size: ctx?.size || size, transitionDuration },
+    { color, size: ctx?.size || size, transitionDuration, labelPosition, error: !!error },
     { classNames, styles, unstyled, name: 'Radio' }
   );
 
@@ -89,31 +104,46 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
 
   return (
     <Box
-      className={cx(classes.radioWrapper, className)}
+      className={cx(classes.root, className)}
       style={style}
       title={title}
       sx={sx}
       {...systemStyles}
       {...wrapperProps}
     >
-      <div className={classes.inner}>
-        <input
-          ref={ref}
-          className={classes.radio}
-          type="radio"
-          id={uuid}
-          disabled={disabled}
-          {...rest}
-          {...contextProps}
-        />
-        <Icon className={classes.icon} aria-hidden />
-      </div>
+      <Box className={classes.body}>
+        <div className={classes.inner}>
+          <input
+            ref={ref}
+            className={classes.radio}
+            type="radio"
+            id={uuid}
+            disabled={disabled}
+            {...rest}
+            {...contextProps}
+          />
+          <Icon className={classes.icon} aria-hidden />
+        </div>
 
-      {label && (
-        <label data-disabled={disabled || undefined} className={classes.label} htmlFor={uuid}>
-          {label}
-        </label>
+        <div className={classes.labelWrapper}>
+          {label && (
+            <label data-disabled={disabled || undefined} htmlFor={uuid}>
+              {label}
+            </label>
+          )}
+          {description && labelPosition === 'right' && (
+            <InputDescription pt="4px" className="description">
+              {description}
+            </InputDescription>
+          )}
+        </div>
+      </Box>
+      {description && labelPosition === 'left' && (
+        <InputDescription pb="4px" className="description">
+          {description}
+        </InputDescription>
       )}
+      {error && error !== 'boolean' && <InputError>{error}</InputError>}
     </Box>
   );
 }) as any;

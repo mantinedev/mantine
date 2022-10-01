@@ -3,7 +3,7 @@ import type { SwitchStylesNames } from '@mantine/core';
 export const Switch: Record<SwitchStylesNames, string> = {
   root: 'Root element',
   input: 'Checkbox input',
-  label: 'Label element',
+  labelWrapper: 'Include label and description component',
   body: 'Container Of Switch',
   track: 'Track',
   thumb: 'Thumb of Switch',
