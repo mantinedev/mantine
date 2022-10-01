@@ -15,6 +15,8 @@ import { CheckboxIcon } from './CheckboxIcon';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import useStyles, { CheckboxStylesParams } from './Checkbox.styles';
+import { InputDescription } from '../Input/InputDescription/InputDescription';
+import { InputError } from '../Input/InputError/InputError';
 
 export type CheckboxStylesNames = Selectors<typeof useStyles>;
 
@@ -47,12 +49,22 @@ export interface CheckboxProps
 
   /** Icon rendered when checkbox has checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean; className: string }>;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<CheckboxProps> = {
   size: 'sm',
   transitionDuration: 100,
   icon: CheckboxIcon,
+  labelPosition: 'right',
 };
 
 type CheckboxComponent = ForwardRefWithStaticComponents<
@@ -81,6 +93,9 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
       transitionDuration,
       icon: Icon,
       unstyled,
+      labelPosition,
+      description,
+      error,
       ...others
     } = useComponentDefaultProps('Checkbox', defaultProps, props);
 
@@ -88,7 +103,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     const uuid = useId(id);
     const { systemStyles, rest } = extractSystemStyles(others);
     const { classes, cx } = useStyles(
-      { size: ctx?.size || size, radius, color, transitionDuration },
+      { size: ctx?.size || size, radius, color, transitionDuration, labelPosition, error: !!error },
       { name: 'Checkbox', classNames, styles, unstyled }
     );
 
@@ -102,31 +117,46 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
     return (
       <Box
         className={cx(classes.root, className)}
-        style={style}
         sx={sx}
+        style={style}
         {...systemStyles}
         {...wrapperProps}
       >
-        <div className={classes.inner}>
-          <input
-            id={uuid}
-            ref={ref}
-            type="checkbox"
-            className={classes.input}
-            checked={indeterminate || checked}
-            disabled={disabled}
-            {...rest}
-            {...contextProps}
-          />
+        <Box className={cx(classes.body)}>
+          <div className={classes.inner}>
+            <input
+              id={uuid}
+              ref={ref}
+              type="checkbox"
+              className={classes.input}
+              checked={indeterminate || checked}
+              disabled={disabled}
+              {...rest}
+              {...contextProps}
+            />
 
-          <Icon indeterminate={indeterminate} className={classes.icon} />
-        </div>
+            <Icon indeterminate={indeterminate} className={classes.icon} />
+          </div>
 
-        {label && (
-          <label data-disabled={disabled || undefined} className={classes.label} htmlFor={uuid}>
-            {label}
-          </label>
+          <div className={classes.labelWrapper}>
+            {label && (
+              <label data-disabled={disabled || undefined} htmlFor={uuid} data-testid="label">
+                {label}
+              </label>
+            )}
+            {description && labelPosition === 'right' && (
+              <InputDescription pt="4px" className="description">
+                {description}
+              </InputDescription>
+            )}
+          </div>
+        </Box>
+        {description && labelPosition === 'left' && (
+          <InputDescription pb="4px" className="description">
+            {description}
+          </InputDescription>
         )}
+        {error && error !== 'boolean' && <InputError>{error}</InputError>}
       </Box>
     );
   }

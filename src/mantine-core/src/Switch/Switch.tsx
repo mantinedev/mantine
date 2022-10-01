@@ -14,6 +14,8 @@ import { Box } from '../Box';
 import useStyles, { SwitchStylesParams } from './Switch.styles';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import { useSwitchGroupContext } from './SwitchGroup.context';
+import { InputDescription } from '../Input/InputDescription/InputDescription';
+import { InputError } from '../Input/InputError/InputError';
 
 export type SwitchStylesNames = Selectors<typeof useStyles>;
 
@@ -46,6 +48,15 @@ export interface SwitchProps
 
   /** Icon inside the thumb of switch */
   thumbIcon?: React.ReactNode;
+
+  /** Position of label */
+  labelPosition?: 'left' | 'right';
+
+  /** description, displayed after label */
+  description?: React.ReactNode;
+
+  /** Displays error message after input */
+  error?: React.ReactNode;
 }
 
 const defaultProps: Partial<SwitchProps> = {
@@ -53,6 +64,7 @@ const defaultProps: Partial<SwitchProps> = {
   onLabel: '',
   size: 'sm',
   radius: 'xl',
+  error: false,
 };
 
 type SwitchComponent = ForwardRefWithStaticComponents<SwitchProps, { Group: typeof SwitchGroup }>;
@@ -78,13 +90,16 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
     checked,
     defaultChecked,
     onChange,
+    labelPosition,
+    description,
+    error,
     ...others
   } = useComponentDefaultProps('Switch', defaultProps, props);
 
   const ctx = useSwitchGroupContext();
 
   const { classes, cx } = useStyles(
-    { size: ctx?.size || size, color, radius },
+    { size: ctx?.size || size, color, radius, labelPosition, error: !!error },
     { unstyled, styles, classNames, name: 'Switch' }
   );
 
@@ -112,7 +127,7 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
       {...systemStyles}
       {...wrapperProps}
     >
-      <label className={classes.body} htmlFor={uuid}>
+      <div className={classes.body}>
         <input
           {...rest}
           checked={_checked}
@@ -126,21 +141,30 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
           className={classes.input}
         />
 
-        <div className={classes.track}>
+        <label htmlFor={uuid} className={classes.track}>
           <div className={classes.thumb}>{thumbIcon}</div>
           <div className={classes.trackLabel}>{_checked ? onLabel : offLabel}</div>
-        </div>
+        </label>
 
-        {label && (
-          <div
-            data-testid="label"
-            data-disabled={rest.disabled || undefined}
-            className={classes.label}
-          >
-            {label}
-          </div>
-        )}
-      </label>
+        <div className={classes.labelWrapper}>
+          {label && (
+            <label data-disabled={rest.disabled || undefined} htmlFor={uuid} data-testid="label">
+              {label}
+            </label>
+          )}
+          {description && labelPosition === 'right' && (
+            <InputDescription pt="4px" className="description">
+              {description}
+            </InputDescription>
+          )}
+        </div>
+      </div>
+      {description && labelPosition === 'left' && (
+        <InputDescription pb="4px" className="description">
+          {description}
+        </InputDescription>
+      )}
+      {error && typeof error !== 'boolean' && <InputError className="error">{error}</InputError>}
     </Box>
   );
 }) as any;
