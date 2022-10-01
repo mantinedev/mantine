@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -175,6 +175,9 @@ export function Popover(props: PopoverProps) {
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
 
+  const [targetNode, setTargetNode] = useState<HTMLElement>(null);
+  const [dropdownNode, setDropdownNode] = useState<HTMLElement>(null);
+
   const uid = useId(id);
   const theme = useMantineTheme();
   const popover = usePopover({
@@ -193,8 +196,8 @@ export function Popover(props: PopoverProps) {
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    popover.floating.refs.floating.current,
-    popover.floating.refs.reference.current as any,
+    targetNode,
+    dropdownNode,
   ]);
 
   return (
@@ -207,8 +210,14 @@ export function Popover(props: PopoverProps) {
       <PopoverContextProvider
         value={{
           controlled: popover.controlled,
-          reference: popover.floating.reference,
-          floating: popover.floating.floating,
+          reference: (node) => {
+            setTargetNode(node as HTMLElement);
+            popover.floating.reference(node);
+          },
+          floating: (node) => {
+            setDropdownNode(node);
+            popover.floating.floating(node);
+          },
           x: popover.floating.x,
           y: popover.floating.y,
           arrowX: popover.floating?.middlewareData?.arrow?.x,
