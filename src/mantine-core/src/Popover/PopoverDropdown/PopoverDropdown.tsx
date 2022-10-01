@@ -36,6 +36,10 @@ export function PopoverDropdown({ style, className, children, ...others }: Popov
       }
     : {};
 
+  if (ctx.disabled) {
+    return null;
+  }
+
   return (
     <OptionalPortal withinPortal={ctx.withinPortal}>
       <Transition

@@ -104,6 +104,9 @@ export interface RangeSliderProps
 
   /** A transformation function, to change the scale of the slider */
   scale?: (value: number) => number;
+
+  /** Allows the track to be inverted */
+  inverted?: boolean;
 }
 
 const defaultProps: Partial<RangeSliderProps> = {
@@ -156,6 +159,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
     unstyled,
     thumbSize,
     scale,
+    inverted,
     ...others
   } = useComponentDefaultProps('RangeSlider', defaultProps, props);
 
@@ -384,6 +388,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>((props, 
         marksOffset={_value[0]}
         filled={positions[1] - positions[0]}
         marks={marks}
+        inverted={inverted}
         size={size}
         radius={radius}
         color={color}

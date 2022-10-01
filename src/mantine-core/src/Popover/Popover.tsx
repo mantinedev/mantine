@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useId, useClickOutside } from '@mantine/hooks';
 import {
   useMantineTheme,
@@ -79,6 +79,9 @@ export interface PopoverBaseProps {
 
   /** Key of theme.shadow or any other valid css box-shadow value */
   shadow?: MantineShadow;
+
+  /** If set, popover dropdown will not render */
+  disabled?: boolean;
 }
 
 export interface PopoverProps extends PopoverBaseProps {
@@ -172,8 +175,12 @@ export function Popover(props: PopoverProps) {
     exitTransitionDuration,
     __staticSelector,
     withRoles,
+    disabled,
     ...others
   } = useComponentDefaultProps('Popover', defaultProps, props);
+
+  const [targetNode, setTargetNode] = useState<HTMLElement>(null);
+  const [dropdownNode, setDropdownNode] = useState<HTMLElement>(null);
 
   const uid = useId(id);
   const theme = useMantineTheme();
@@ -193,8 +200,8 @@ export function Popover(props: PopoverProps) {
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    popover.floating.refs.floating.current,
-    popover.floating.refs.reference.current as any,
+    targetNode,
+    dropdownNode,
   ]);
 
   return (
@@ -206,9 +213,16 @@ export function Popover(props: PopoverProps) {
     >
       <PopoverContextProvider
         value={{
+          disabled,
           controlled: popover.controlled,
-          reference: popover.floating.reference,
-          floating: popover.floating.floating,
+          reference: (node) => {
+            setTargetNode(node as HTMLElement);
+            popover.floating.reference(node);
+          },
+          floating: (node) => {
+            setDropdownNode(node);
+            popover.floating.floating(node);
+          },
           x: popover.floating.x,
           y: popover.floating.y,
           arrowX: popover.floating?.middlewareData?.arrow?.x,

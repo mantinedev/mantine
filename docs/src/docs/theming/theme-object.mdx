@@ -107,6 +107,9 @@ interface MantineTheme {
   // defaultProps, styles and classNames for components
   components: ComponentsOverride;
 
+  // Global styles
+  globalStyles: (theme: MantineTheme) => CSSObject;
+
   // Add your own custom properties on Mantine theme
   other: Record<string, any>;
 }
@@ -253,6 +256,10 @@ Note that you should also import `dayjs/locale/[locale]` to load localization fi
 ### dir
 
 `theme.dir` controls text direction, you will need to set it if you need RTL support, follow [RTL guide](/guides/rtl/) to get started.
+
+### globalStyles
+
+`theme.globalStyles` adds global styles, see [global styles guide](/styles/global/) to learn more.
 
 ### other
 

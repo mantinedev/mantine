@@ -94,6 +94,7 @@ export interface MantineTheme {
   activeStyles: CSSObject;
   datesLocale: string;
   components: MantineThemeComponents;
+  globalStyles: (theme: MantineTheme) => CSSObject;
 }
 
 interface ThemeComponent {

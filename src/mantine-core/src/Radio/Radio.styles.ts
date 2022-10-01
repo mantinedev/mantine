@@ -32,6 +32,14 @@ export default createStyles(
     return {
       root: {},
 
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
       body: {
         display: 'flex',
         WebkitTapHighlightColor: 'transparent',
@@ -84,7 +92,7 @@ export default createStyles(
 
         '&:checked': {
           background: colors.background,
-          borderColor: error ? errorColor : colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,

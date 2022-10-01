@@ -14,8 +14,7 @@ import { Box } from '../Box';
 import useStyles, { SwitchStylesParams } from './Switch.styles';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import { useSwitchGroupContext } from './SwitchGroup.context';
-import { InputDescription } from '../Input/InputDescription/InputDescription';
-import { InputError } from '../Input/InputError/InputError';
+import { Input } from '../Input';
 
 export type SwitchStylesNames = Selectors<typeof useStyles>;
 
@@ -152,19 +151,15 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
               {label}
             </label>
           )}
-          {description && labelPosition === 'right' && (
-            <InputDescription pt="4px" className="description">
-              {description}
-            </InputDescription>
+          {description && (
+            <Input.Description className={classes.description}>{description}</Input.Description>
+          )}
+
+          {error && error !== 'boolean' && (
+            <Input.Error className={classes.error}>{error}</Input.Error>
           )}
         </div>
       </div>
-      {description && labelPosition === 'left' && (
-        <InputDescription pb="4px" className="description">
-          {description}
-        </InputDescription>
-      )}
-      {error && typeof error !== 'boolean' && <InputError className="error">{error}</InputError>}
     </Box>
   );
 }) as any;

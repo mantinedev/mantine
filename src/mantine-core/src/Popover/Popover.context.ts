@@ -36,6 +36,7 @@ interface PopoverContext {
   onToggle(): void;
   withRoles: boolean;
   targetProps: Record<string, any>;
+  disabled: boolean;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

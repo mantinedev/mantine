@@ -23,12 +23,21 @@ export interface CheckboxStylesParams {
   transitionDuration: number;
   labelPosition: 'left' | 'right';
   error: boolean;
+  indeterminate: boolean;
 }
 
 export default createStyles(
   (
     theme,
-    { size, radius, color, transitionDuration, labelPosition, error }: CheckboxStylesParams,
+    {
+      size,
+      radius,
+      color,
+      transitionDuration,
+      labelPosition,
+      error,
+      indeterminate,
+    }: CheckboxStylesParams,
     getRef
   ) => {
     const _size = theme.fn.size({ size, sizes });
@@ -36,11 +45,19 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
       icon: {
         ref: getRef('icon'),
-        color: theme.white,
-        transform: 'translateY(5px) scale(0.5)',
-        opacity: 0,
+        color: indeterminate ? 'inherit' : theme.white,
+        transform: indeterminate ? 'none' : 'translateY(5px) scale(0.5)',
+        opacity: indeterminate ? 1 : 0,
         transitionProperty: 'opacity, transform',
         transitionTimingFunction: 'ease',
         transitionDuration: `${transitionDuration}ms`,
@@ -111,10 +128,11 @@ export default createStyles(
 
         '&:checked': {
           backgroundColor: colors.background,
-          borderColor: error ? errorColor : colors.background,
+          borderColor: colors.background,
 
           [`& + .${getRef('icon')}`]: {
             opacity: 1,
+            color: theme.white,
             transform: 'translateY(0) scale(1)',
           },
         },

@@ -14,8 +14,7 @@ import { RadioIcon } from './RadioIcon';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
 import useStyles, { RadioStylesParams } from './Radio.styles';
-import { InputDescription } from '../Input/InputDescription/InputDescription';
-import { InputError } from '../Input/InputError/InputError';
+import { Input } from '../Input';
 
 export type RadioStylesNames = Selectors<typeof useStyles>;
 
@@ -131,19 +130,16 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
               {label}
             </label>
           )}
-          {description && labelPosition === 'right' && (
-            <InputDescription pt="4px" className="description">
-              {description}
-            </InputDescription>
+
+          {description && (
+            <Input.Description className={classes.description}>{description}</Input.Description>
+          )}
+
+          {error && error !== 'boolean' && (
+            <Input.Error className={classes.error}>{error}</Input.Error>
           )}
         </div>
       </Box>
-      {description && labelPosition === 'left' && (
-        <InputDescription pb="4px" className="description">
-          {description}
-        </InputDescription>
-      )}
-      {error && error !== 'boolean' && <InputError>{error}</InputError>}
     </Box>
   );
 }) as any;

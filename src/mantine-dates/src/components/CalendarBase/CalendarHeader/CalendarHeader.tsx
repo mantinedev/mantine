@@ -28,6 +28,7 @@ export interface CalendarHeaderProps
   previousLabel?: string;
   preventLevelFocus?: boolean;
   preventFocus?: boolean;
+  __stopPropagation?: boolean;
 }
 
 const iconSizes = {
@@ -56,6 +57,7 @@ export function CalendarHeader({
   preventLevelFocus = false,
   preventFocus,
   unstyled,
+  __stopPropagation,
   ...others
 }: CalendarHeaderProps) {
   const { classes, cx, theme } = useStyles(
@@ -74,6 +76,7 @@ export function CalendarHeader({
         aria-label={previousLabel}
         onMouseDown={(event) => preventFocus && event.preventDefault()}
         unstyled={unstyled}
+        data-mantine-stop-propagation={__stopPropagation || undefined}
       >
         <ArrowIcon direction="left" width={iconSize} height={iconSize} />
       </ActionIcon>
@@ -85,6 +88,7 @@ export function CalendarHeader({
         onClick={onNextLevel}
         tabIndex={preventLevelFocus ? -1 : 0}
         onMouseDown={(event) => preventFocus && event.preventDefault()}
+        data-mantine-stop-propagation={__stopPropagation || undefined}
       >
         {label}
         {!nextLevelDisabled && (
@@ -103,6 +107,7 @@ export function CalendarHeader({
         aria-label={nextLabel}
         unstyled={unstyled}
         onMouseDown={(event) => preventFocus && event.preventDefault()}
+        data-mantine-stop-propagation={__stopPropagation || undefined}
       >
         <ArrowIcon direction="right" width={iconSize} height={iconSize} />
       </ActionIcon>

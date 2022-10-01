@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Popover } from './Popover';
 import { Button } from '../Button';
+import { MultiSelect } from '../MultiSelect';
 import { Tooltip } from '../Tooltip';
 import { Group } from '../Group';
 
@@ -10,6 +11,20 @@ export function Uncontrolled() {
   return (
     <div style={{ padding: 40 }}>
       <Popover>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover disabled>
         <Popover.Target>
           <Button>Toggle popover</Button>
         </Popover.Target>
@@ -117,6 +132,22 @@ export function PopoverTargetWithTooltip() {
         </Popover.Target>
 
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function WithMultiSelect() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover width={400}>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>
+          <MultiSelect data={['react', 'ng']} defaultValue={['ng']} withinPortal />
+        </Popover.Dropdown>
       </Popover>
     </div>
   );

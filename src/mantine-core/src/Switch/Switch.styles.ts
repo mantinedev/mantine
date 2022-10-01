@@ -58,6 +58,14 @@ export default createStyles(
     const errorColor = theme.fn.variant({ variant: 'filled', color: 'red' }).background;
 
     return {
+      description: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
+      error: {
+        marginTop: `calc(${theme.spacing.xs}px / 2)`,
+      },
+
       root: {
         display: 'block',
       },
@@ -120,7 +128,7 @@ export default createStyles(
 
         'input:checked + &': {
           backgroundColor: colors.background,
-          borderColor: error ? errorColor : colors.background,
+          borderColor: colors.background,
           color: theme.white,
           transition: `color 150ms ${theme.transitionTimingFunction}`,
         },
