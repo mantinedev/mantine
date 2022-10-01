@@ -8,4 +8,6 @@ export const Switch: Record<SwitchStylesNames, string> = {
   track: 'Track',
   thumb: 'Thumb of Switch',
   trackLabel: 'onLabel and offLabel',
+  error: 'Error message',
+  description: 'Description',
 };
