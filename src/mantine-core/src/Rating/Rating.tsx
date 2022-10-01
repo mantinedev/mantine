@@ -238,7 +238,7 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
           <div
             key={integerValue}
             style={{
-              transform: isGroupActive ? 'scale(1.25)' : undefined,
+              transform: isGroupActive ? 'scale(1.2)' : undefined,
               zIndex: isGroupActive ? 1 : 0,
             }}
             className={classes.symbolGroup}
@@ -270,10 +270,17 @@ export const Rating = forwardRef<HTMLInputElement, RatingProps>((props, ref) => 
                   }}
                   symbolBodyProps={{
                     className: classes.symbolBody,
-                    style: {
-                      clipPath: `inset(0 ${100 - fractionValue * 100}% 0 0)`,
-                      WebkitClipPath: `inset(0 ${100 - fractionValue * 100}% 0 0)`,
-                    },
+                    style:
+                      fractionValue === 1
+                        ? {}
+                        : {
+                            clipPath: `inset(0 ${
+                              isSymbolActive ? 100 - fractionValue * 100 : 100
+                            }% 0 0)`,
+                            WebkitClipPath: `inset(0 ${
+                              isSymbolActive ? 100 - fractionValue * 100 : 100
+                            }% 0 0)`,
+                          },
                   }}
                   inputProps={{
                     className: classes.input,

@@ -6,23 +6,7 @@ export interface RatingStylesParams {
   readonly: boolean;
 }
 
-const sizes: Record<MantineSize, number> = {
-  xs: 14,
-  sm: 18,
-  md: 24,
-  lg: 28,
-  xl: 32,
-};
-
-const spacings: Record<MantineSize, number> = {
-  xs: 2,
-  sm: 3,
-  md: 4,
-  lg: 5,
-  xl: 6,
-};
-
-export default createStyles((theme, { size, readonly }: RatingStylesParams, getRef) => {
+export default createStyles((theme, { readonly }: RatingStylesParams, getRef) => {
   const visuallyHidden: CSSObject = {
     clip: 'rect(0, 0, 0, 0)',
     overflow: 'hidden',
@@ -35,9 +19,6 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
     clipPath: 'inset(50%)',
   };
 
-  const sizeValue = theme.fn.size({ size, sizes });
-  const spacing = theme.fn.size({ size, sizes: spacings });
-
   return {
     root: {
       display: 'flex',
@@ -46,11 +27,7 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
 
     symbolGroup: {
       ref: getRef('container'),
-      boxSizing: 'content-box',
-      height: sizeValue,
-
       position: 'relative',
-
       transition: 'transform 150ms ease-in-out',
     },
 
@@ -61,7 +38,6 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
       // input is hidden by default, these styles add focus to label when user navigates with keyboard
       '&:focus': {
         [`& + .${getRef('label')}`]: {
-          outlineOffset: size === 'sm' ? 0 : -1,
           outline:
             theme.focusRing === 'always' || theme.focusRing === 'auto'
               ? `1px solid ${
@@ -80,18 +56,16 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
 
     label: {
       ref: getRef('label'),
-      display: 'inline-block',
-
-      width: sizeValue + spacing,
-      height: sizeValue,
-      paddingInline: spacing / 2,
+      display: 'block', // this is necessary, if `inline` or `inline-block` fraction symbols with absolute position will behave weird
+      boxSizing: 'border-box',
+      marginInline: '0.12em',
 
       top: '0px',
       left: '0px',
 
       cursor: readonly ? '' : 'pointer',
       position: 'absolute',
-      zIndex: 2,
+      zIndex: 0,
 
       '&:last-of-type': {
         position: 'relative',
@@ -105,9 +79,6 @@ export default createStyles((theme, { size, readonly }: RatingStylesParams, getR
     },
 
     symbolBody: {
-      width: sizeValue,
-      height: sizeValue,
-
       overflow: 'hidden',
 
       display: 'grid',
