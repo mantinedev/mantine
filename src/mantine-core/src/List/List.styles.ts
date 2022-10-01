@@ -15,6 +15,6 @@ export default createStyles((theme, { withPadding, size, listStyleType }: ListSt
     lineHeight: theme.lineHeight,
     margin: 0,
     paddingLeft: withPadding ? theme.spacing.xl : 0,
-    listStylePosition: 'inside',
+    listStylePosition: 'outside',
   },
 }));
