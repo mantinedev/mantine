@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { graphql, useStaticQuery, navigate } from 'gatsby';
-import { useMediaQuery } from '@mantine/hooks';
+import { randomId, useMediaQuery } from '@mantine/hooks';
 import { NotificationsProvider } from '@mantine/notifications';
 import { ModalsProvider, ContextModalProps } from '@mantine/modals';
 import { SpotlightProvider, SpotlightAction } from '@mantine/spotlight';
@@ -108,8 +108,8 @@ export function LayoutInner({ children, location }: LayoutProps) {
       shortcut={['mod + K', 'mod + P', '/']}
       highlightQuery
       searchInputProps={{
-        id: 'search-mantine-docs',
-        name: 'no-autocomplete',
+        id: randomId(),
+        name: randomId(),
         autoComplete: 'nope',
       }}
       transition={{
