@@ -8,10 +8,12 @@ interface ListItemStyles {
 export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => ({
   itemWrapper: {
     ref: getRef('itemWrapper'),
-    display: 'inline',
+    display: 'inline-flex',
+    whiteSpace: 'normal',
   },
 
   item: {
+    whiteSpace: 'nowrap',
     lineHeight: center ? 1 : theme.lineHeight,
 
     '&:not(:first-of-type)': {
