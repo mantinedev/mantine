@@ -29,18 +29,47 @@ To import these types add `StylesNames` to the component name:
 import type { SliderStylesNames } from '@mantine/core';
 ```
 
-## Theme types overriding
-
-## DefaultProps type
-
 ## Selectors type
+
+`Selectors` type extracts styles names from [useStyles](/styles/create-styles/) hook:
+
+```tsx
+import { createStyles, Selectors } from '@mantine/core';
+
+const useStyles = createStyles(() => ({
+  body: {},
+  header: {},
+  footer: {},
+}));
+
+type ComponentStylesNames = Selectors<typeof useStyles>;
+// -> 'body' | 'header' | 'footer'
+```
 
 ## MantineTheme type
 
+Use `MantineTheme` type when theme type cannot be inferred, for example when you want to accept Mantine theme as an argument of a function:
+
+```tsx
+import { MantineTheme, useMantineTheme } from '@mantine/core';
+
+function getPrimaryColor(theme: MantineTheme) {
+  return theme.colors.blue[5];
+}
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ color: getPrimaryColor(theme) }} />;
+}
+```
+
 ## Other exported types
 
-- `MantineSize`
-- `MantineShadow`
-- `MantineGradient`
-- `MantineColor`
-- `ColorScheme`
+Other types exported from `@mantine/core` package:
+
+- `MantineSize` – `'xs' | 'sm' | 'md' | 'lg' | 'xl'`
+- `MantineNumberSize` – `'xs' | 'sm' | 'md' | 'lg' | 'xl' | number`
+- `MantineShadow` – `MantineSize | (string & {})`
+- `MantineGradient` – `{ from: string; to: string; deg?: number; }`
+- `MantineColor` – key of [theme.colors](/theming/colors/)
+- `ColorScheme` – `'light' | 'dark'`
