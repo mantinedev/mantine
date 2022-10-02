@@ -11,6 +11,7 @@
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "demos": "esno scripts/demo-import",
     "sync-branches": "sh scripts/sync-branches.sh",
     "changelog": "esno scripts/changelog",
     "postinstall": "npm run docs:docgen && cd docs && yarn",
