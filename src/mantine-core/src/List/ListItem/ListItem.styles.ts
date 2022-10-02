@@ -9,6 +9,7 @@ export default createStyles((theme, { spacing, center }: ListItemStyles, getRef)
   itemWrapper: {
     ref: getRef('itemWrapper'),
     display: 'inline-flex',
+    flexDirection: 'column',
     whiteSpace: 'normal',
   },
 
