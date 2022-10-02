@@ -127,7 +127,7 @@ const defaultProps: Partial<PopoverProps> = {
   positionDependencies: [],
   transition: 'fade',
   transitionDuration: 150,
-  middlewares: { flip: true, shift: true },
+  middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
   arrowOffset: 5,
   closeOnClickOutside: true,

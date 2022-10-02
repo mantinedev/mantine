@@ -152,3 +152,20 @@ export function WithMultiSelect() {
     </div>
   );
 }
+
+export function Inline() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam magni
+      quas neque{' '}
+      <Popover middlewares={{ shift: true, flip: true, inline: true }} position="top">
+        <Popover.Target>
+          <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+        </Popover.Target>
+        <Popover.Dropdown>Inline popover</Popover.Dropdown>
+      </Popover>
+      , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
+      dicta.
+    </div>
+  );
+}
