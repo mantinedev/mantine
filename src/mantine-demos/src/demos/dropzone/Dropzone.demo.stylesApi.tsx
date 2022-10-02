@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 const code = `

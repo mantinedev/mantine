@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, AvatarProps, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { avatars } from './_mockdata';
 
 function Wrapper(props: AvatarProps) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { MantineProvider, Group, Button, Switch, ButtonProps, SwitchProps } from '@mantine/core';
 
 const ButtonDefaultProps: Partial<ButtonProps> = {

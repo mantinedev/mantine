@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, MenuProps, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 function Wrapper(props: MenuProps) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel, CarouselProps } from '@mantine/carousel';
+import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 function Wrapper(props: CarouselProps) {

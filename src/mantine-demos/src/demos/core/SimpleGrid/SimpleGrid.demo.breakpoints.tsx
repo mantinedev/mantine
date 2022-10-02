@@ -1,5 +1,6 @@
 import React from 'react';
 import { SimpleGrid } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { defaultItems } from './_Item';
 
 const code = `

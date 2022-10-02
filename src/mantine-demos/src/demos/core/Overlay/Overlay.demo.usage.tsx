@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Group, Box, Overlay } from '@mantine/core';
 
 const code = `

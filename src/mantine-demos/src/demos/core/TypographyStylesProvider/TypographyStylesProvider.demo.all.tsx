@@ -1,5 +1,6 @@
 import React from 'react';
 import { TypographyStylesProvider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 
 const html = `<h1>Heading 1</h1>
 <h2>Heading 2</h2>

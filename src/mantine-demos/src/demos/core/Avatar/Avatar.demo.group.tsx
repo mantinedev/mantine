@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { avatars } from './_mockdata';
 
 const code = `

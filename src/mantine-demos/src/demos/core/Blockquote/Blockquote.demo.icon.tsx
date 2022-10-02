@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconFlame } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Blockquote } from '@mantine/core';
 
 const code = `

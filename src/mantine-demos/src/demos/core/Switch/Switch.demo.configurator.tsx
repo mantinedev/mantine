@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Switch, SwitchProps } from '@mantine/core';
 
 const codeTemplate = (props: string) => `

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, ScrollArea } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `

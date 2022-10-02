@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, MANTINE_COLORS, Badge } from '@mantine/core';
 
 function Demo() {

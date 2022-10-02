@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Stack, StackProps, Button } from '@mantine/core';
 
 function Wrapper(props: StackProps) {

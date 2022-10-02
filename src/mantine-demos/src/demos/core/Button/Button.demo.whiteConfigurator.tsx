@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconDatabase } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { DEFAULT_THEME, Button, Group, ButtonProps } from '@mantine/core';
 
 function Wrapper(props: ButtonProps) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import { TextInput, Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { randomId } from '@mantine/hooks';
 
 const code = `

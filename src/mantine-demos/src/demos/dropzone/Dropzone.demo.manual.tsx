@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 const code = `

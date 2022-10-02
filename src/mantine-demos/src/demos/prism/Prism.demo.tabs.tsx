@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
+import { MantineDemo } from '@mantine/ds';
 import { py, css } from './Prism.demo.languages';
 import { demoCode } from './Prism.demo.usage';
 

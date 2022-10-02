@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { useIntersection } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Text, Paper, useMantineTheme } from '@mantine/core';
 
 const code = `

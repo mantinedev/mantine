@@ -8,6 +8,7 @@ import {
   stopNavigationProgress,
   resetNavigationProgress,
 } from '@mantine/nprogress';
+import { MantineDemo } from '@mantine/ds';
 import React from 'react';
 
 const code = `

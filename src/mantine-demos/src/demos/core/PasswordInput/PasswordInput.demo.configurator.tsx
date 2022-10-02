@@ -1,3 +1,4 @@
+import { MantineDemo } from '@mantine/ds';
 import { PasswordInput } from '@mantine/core';
 
 const codeTemplate = (props: string) => `

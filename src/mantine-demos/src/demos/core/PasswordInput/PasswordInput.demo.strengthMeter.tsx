@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconX, IconCheck } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 const code = `

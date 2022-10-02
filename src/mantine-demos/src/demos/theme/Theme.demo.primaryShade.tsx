@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { MantineProvider, Group, Button, MantineTheme } from '@mantine/core';
 
 function Wrapper({ primaryShade }: { primaryShade: MantineTheme['primaryShade'] }) {

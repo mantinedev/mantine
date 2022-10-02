@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Autocomplete } from '@mantine/core';
 
 const codeTemplate = (props: string) => `

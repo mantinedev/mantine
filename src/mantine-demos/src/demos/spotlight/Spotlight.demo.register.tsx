@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Group, Button } from '@mantine/core';
 import { SpotlightProvider, useSpotlight } from '@mantine/spotlight';
 import { IconAlien, IconSearch } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { actions } from './_actions';
 
 const code = `

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { RangeCalendar } from '@mantine/dates';
+import { MantineDemo } from '@mantine/ds';
 import { Group } from '@mantine/core';
 
 const code = `

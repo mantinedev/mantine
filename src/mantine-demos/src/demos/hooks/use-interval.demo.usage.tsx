@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Stack, Button, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useInterval } from '@mantine/hooks';
 
 const code = `

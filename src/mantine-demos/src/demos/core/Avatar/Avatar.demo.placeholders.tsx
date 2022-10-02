@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconStar } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Avatar, Group } from '@mantine/core';
 
 const code = `

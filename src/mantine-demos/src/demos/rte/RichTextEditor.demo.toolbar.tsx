@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DEFAULT_CONTROLS, DEFAULT_LABELS, Toolbar } from '@mantine/rte';
 
 const code = `

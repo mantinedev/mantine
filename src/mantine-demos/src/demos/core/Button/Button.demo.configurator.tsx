@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Button, ButtonProps, Group } from '@mantine/core';
 
 function Wrapper(props: ButtonProps) {

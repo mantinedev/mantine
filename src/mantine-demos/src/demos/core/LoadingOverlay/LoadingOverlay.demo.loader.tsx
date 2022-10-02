@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LoadingOverlay, Button, Group, useMantineTheme, DEFAULT_THEME } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 import { demoBase } from './_demo-base';
 

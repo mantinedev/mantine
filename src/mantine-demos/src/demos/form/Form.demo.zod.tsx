@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { MantineDemo } from '@mantine/ds';
 import { SchemaBase } from './_schema-base';
 
 const code = `

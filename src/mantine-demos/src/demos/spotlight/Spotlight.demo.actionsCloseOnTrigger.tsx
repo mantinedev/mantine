@@ -1,5 +1,6 @@
 import { SpotlightAction } from '@mantine/spotlight';
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `

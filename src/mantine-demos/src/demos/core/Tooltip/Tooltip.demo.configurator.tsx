@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tooltip, TooltipProps, Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { FLOATING_POSITION_DATA } from '../../../shared/floating-position-data';
 
 const Wrapper = (props: TooltipProps) => (

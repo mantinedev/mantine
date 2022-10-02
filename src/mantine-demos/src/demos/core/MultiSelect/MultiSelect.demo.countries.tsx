@@ -7,6 +7,7 @@ import {
   SelectItemProps,
   MultiSelectValueProps,
 } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { countriesData, flags } from './_countries-data';
 
 const code = `

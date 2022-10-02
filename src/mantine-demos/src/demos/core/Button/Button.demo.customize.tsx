@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconBrandTwitter } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Group } from '@mantine/core';
 
 const code = `

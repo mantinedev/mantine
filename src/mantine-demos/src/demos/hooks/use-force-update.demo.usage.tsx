@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Text, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useForceUpdate, randomId } from '@mantine/hooks';
 
 const code = `
