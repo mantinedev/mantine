@@ -9,7 +9,7 @@ import { Modal, Button, Group, Text, Badge } from '@mantine/core';
 
 function Demo() {
   const [opened, { close, open }] = useDisclosure(false);
-  const [count, { increment, decrement }] = useCounter(3);
+  const [count, { increment, decrement }] = useCounter(3, { min: 0 });
 
   const badges = Array(count)
     .fill(0)
@@ -43,7 +43,7 @@ function Demo() {
 
 function Demo() {
   const [opened, { close, open }] = useDisclosure(false);
-  const [count, { increment, decrement }] = useCounter(3);
+  const [count, { increment, decrement }] = useCounter(3, { min: 0 });
 
   const badges = Array(count)
     .fill(0)
