@@ -7,7 +7,13 @@ release: https://github.com/mantinedev/mantine/releases/tag/5.5.0
 date: 'October 3rd, 2022'
 ---
 
-import { CollapseDemos, SliderDemos, CheckboxDemos, ModalDemos } from '@mantine/demos';
+import {
+  CollapseDemos,
+  SliderDemos,
+  CheckboxDemos,
+  ModalDemos,
+  TooltipDemos,
+} from '@mantine/demos';
 
 ## Global styles on theme
 
@@ -67,6 +73,13 @@ components now support `error`, `description` and `labelPosition` props:
 [Slider and RangeSlider](https://mantine.dev/core/slider/) components now support `inverted` prop:
 
 <Demo data={SliderDemos.inverted} />
+
+## Inline tooltips
+
+[Tooltip](https://mantine.dev/core/tooltip/) component now supports `inline` prop that makes is possible
+to position tooltip correctly when inline element is a target:
+
+<Demo data={TooltipDemos.inline} />
 
 ## Autosize Modal
 
