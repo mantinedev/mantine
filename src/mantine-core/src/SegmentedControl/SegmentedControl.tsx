@@ -206,12 +206,14 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     </div>
   ));
 
+  const mergedRef = useMergedRef(observerRef, ref);
+
   if (data.length === 0) {
     return null;
   }
 
   return (
-    <Box className={cx(classes.root, className)} ref={useMergedRef(observerRef, ref)} {...others}>
+    <Box className={cx(classes.root, className)} ref={mergedRef} {...others}>
       {typeof _value === 'string' && shouldAnimate && (
         <Box
           component="span"
