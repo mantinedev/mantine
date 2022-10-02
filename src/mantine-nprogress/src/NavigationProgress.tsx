@@ -101,9 +101,7 @@ export function NavigationProgress({
     setProgress(0);
     window.setTimeout(() => setUnmountProgress(false), 0);
   };
-  const finish = () => {
-    setProgress(100);
-  };
+  const complete = () => setProgress(100);
 
   const cancelUnmount = () => {
     if (unmountRef.current) {
@@ -142,7 +140,7 @@ export function NavigationProgress({
     }
   }, [_progress]);
 
-  useNavigationProgressEvents({ start, stop, set, increment, decrement, reset, finish });
+  useNavigationProgressEvents({ start, stop, set, increment, decrement, reset, complete });
 
   return (
     <OptionalPortal withinPortal={withinPortal}>

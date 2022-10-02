@@ -7,7 +7,7 @@ import {
   startNavigationProgress,
   stopNavigationProgress,
   resetNavigationProgress,
-  finishNavigationProgress,
+  completeNavigationProgress,
 } from '@mantine/nprogress';
 import { MantineDemo } from '@mantine/ds';
 import React from 'react';
@@ -22,6 +22,7 @@ import {
   startNavigationProgress,
   stopNavigationProgress,
   resetNavigationProgress,
+  completeNavigationProgress,
 } from '@mantine/nprogress';
 
 function Demo() {
@@ -37,7 +38,7 @@ function Demo() {
         <Button onClick={() => startNavigationProgress()}>Start</Button>
         <Button onClick={() => stopNavigationProgress()}>Stop</Button>
         <Button onClick={() => resetNavigationProgress()}>Reset</Button>
-        <Button onClick={() => finishNavigationProgress()}>Finish</Button>
+        <Button onClick={() => completeNavigationProgress()}>Finish</Button>
       </Group>
     </>
   );
@@ -67,7 +68,7 @@ function Demo() {
         <Button onClick={() => resetNavigationProgress()} variant="outline">
           Reset
         </Button>
-        <Button onClick={() => finishNavigationProgress()} variant="outline">
+        <Button onClick={() => completeNavigationProgress()} variant="outline">
           Finish
         </Button>
       </Group>
