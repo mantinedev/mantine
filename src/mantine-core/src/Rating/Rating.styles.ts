@@ -26,9 +26,12 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     },
 
     symbolGroup: {
-      ref: getRef('container'),
+      ref: getRef('symbolGroup'),
       position: 'relative',
-      transition: 'transform 150ms ease-in-out',
+      transition: 'transform 75ms ease-in-out',
+      '&[data-active="true"]': {
+        zIndex: 1,
+      },
     },
 
     input: {
@@ -58,6 +61,7 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
       ref: getRef('label'),
       display: 'block', // this is necessary, if `inline` or `inline-block` fraction symbols with absolute position will behave weird
       boxSizing: 'border-box',
+
       marginInline: '0.12em',
 
       top: '0px',
@@ -72,18 +76,19 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
         zIndex: 0,
       },
 
-      overflow: 'hidden',
       '& .symbol-label': {
         ...visuallyHidden,
       },
     },
 
     symbolBody: {
-      overflow: 'hidden',
-
       display: 'grid',
       placeContent: 'center',
       placeItems: 'center',
+      transition: 'transform 75ms ease-in-out',
+      [`.${getRef('symbolGroup')}[data-active="true"] &`]: {
+        transform: 'scale(1.2)',
+      },
     },
   };
 });
