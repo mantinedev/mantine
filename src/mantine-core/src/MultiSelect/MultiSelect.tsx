@@ -226,7 +226,7 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
   const wrapperRef = useRef<HTMLDivElement>();
   const itemsRefs = useRef<Record<string, HTMLDivElement>>({});
   const uuid = useId(id);
-  const [dropdownOpened, _setDropdownOpened] = useState(initiallyOpened);
+  const [dropdownOpened, setDropdownOpened] = useState(initiallyOpened);
   const [hovered, setHovered] = useState(-1);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('column');
   const [_searchValue, handleSearchChange] = useUncontrolled({
@@ -246,12 +246,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const isCreatable = creatable && typeof getCreateLabel === 'function';
   let createLabel = null;
-
-  const setDropdownOpened = (opened: boolean) => {
-    _setDropdownOpened(opened);
-    const handler = opened ? onDropdownOpen : onDropdownClose;
-    typeof handler === 'function' && handler();
-  };
 
   const formattedData = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
@@ -328,10 +322,6 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
       valuesOverflow.current = true;
       setDropdownOpened(false);
     }
-
-    if (filteredData.length === 0) {
-      setDropdownOpened(false);
-    }
   }, [_value]);
 
   const handleItemSelect = (item: SelectItem) => {
@@ -360,6 +350,9 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
         }
         if (hovered === filteredData.length - 1) {
           setHovered(filteredData.length - 2);
+        }
+        if (filteredData.length === 1) {
+          setDropdownOpened(false);
         }
       }
     }
@@ -574,6 +567,11 @@ export const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>((props
 
   const shouldRenderDropdown =
     !readOnly && (filteredData.length > 0 ? dropdownOpened : dropdownOpened && !!nothingFound);
+
+  useDidUpdate(() => {
+    const handler = shouldRenderDropdown ? onDropdownOpen : onDropdownClose;
+    typeof handler === 'function' && handler();
+  }, [shouldRenderDropdown]);
 
   return (
     <Input.Wrapper

@@ -526,15 +526,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleInputClick = () => {
     if (!readOnly) {
-      let dropdownOpen = true;
+      setDropdownOpened(!dropdownOpened);
 
-      if (!searchable) {
-        dropdownOpen = !dropdownOpened;
-      }
-
-      setDropdownOpened(dropdownOpen);
-
-      if (_value && dropdownOpen) {
+      if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
         scrollSelectedItemIntoView();
       }
@@ -588,7 +582,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               aria-autocomplete="list"
               aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
-              onClick={handleInputClick}
+              onMouseDown={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               readOnly={!searchable || readOnly}
