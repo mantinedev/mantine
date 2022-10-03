@@ -45,7 +45,6 @@ describe('@mantine/core/Button', () => {
 
   it('sets data-loading attribute based on loading prop', () => {
     render(<Button loading />);
-    expect(screen.getByRole('button')).toBeDisabled();
     expect(screen.getByRole('button')).toHaveAttribute('data-loading');
   });
 

@@ -10,4 +10,5 @@ export const Switch: Record<SwitchStylesNames, string> = {
   trackLabel: 'onLabel and offLabel',
   error: 'Error message',
   description: 'Description',
+  label: 'Label',
 };

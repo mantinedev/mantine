@@ -147,7 +147,12 @@ export const Switch: SwitchComponent = forwardRef<HTMLInputElement, SwitchProps>
 
         <div className={classes.labelWrapper}>
           {label && (
-            <label data-disabled={rest.disabled || undefined} htmlFor={uuid} data-testid="label">
+            <label
+              className={classes.label}
+              data-disabled={rest.disabled || undefined}
+              htmlFor={uuid}
+              data-testid="label"
+            >
               {label}
             </label>
           )}

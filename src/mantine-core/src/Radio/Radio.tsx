@@ -126,7 +126,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
 
         <div className={classes.labelWrapper}>
           {label && (
-            <label data-disabled={disabled || undefined} htmlFor={uuid}>
+            <label className={classes.label} data-disabled={disabled || undefined} htmlFor={uuid}>
               {label}
             </label>
           )}

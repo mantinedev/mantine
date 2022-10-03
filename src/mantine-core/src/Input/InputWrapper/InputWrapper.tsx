@@ -136,7 +136,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
       key="description"
       {...descriptionProps}
       {...sharedProps}
-      size={descriptionProps.size || sharedProps.size}
+      size={descriptionProps?.size || sharedProps.size}
     >
       {description}
     </InputDescription>
@@ -148,7 +148,7 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
     <InputError
       {...errorProps}
       {...sharedProps}
-      size={errorProps.size || sharedProps.size}
+      size={errorProps?.size || sharedProps.size}
       key="error"
     >
       {error}

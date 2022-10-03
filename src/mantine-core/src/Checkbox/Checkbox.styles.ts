@@ -47,10 +47,16 @@ export default createStyles(
     return {
       description: {
         marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
       },
 
       error: {
         marginTop: `calc(${theme.spacing.xs}px / 2)`,
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
+      },
+
+      label: {
+        [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
       },
 
       icon: {
@@ -98,9 +104,7 @@ export default createStyles(
         color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
         cursor: theme.cursorType,
         order: labelPosition === 'left' ? 1 : 2,
-        '& *': {
-          [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
-        },
+
         '& label[data-disabled]': {
           color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
         },

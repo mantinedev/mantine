@@ -9,4 +9,5 @@ export const Checkbox: Record<CheckboxStylesNames, string> = {
   icon: 'Checked or indeterminate state icon',
   error: 'Error message',
   description: 'Description',
+  label: 'Label',
 };
