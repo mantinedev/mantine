@@ -48,7 +48,12 @@ export function createStorage<T>(type: StorageType, hookName: string) {
   }: IStorageProperties<T>) {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
-        if (typeof window === 'undefined' || !(type in window) || skipStorage) {
+        if (
+          typeof window === 'undefined' ||
+          !(type in window) ||
+          window[type] === null ||
+          skipStorage
+        ) {
           return (defaultValue ?? '') as T;
         }
 
