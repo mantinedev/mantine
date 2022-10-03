@@ -258,3 +258,116 @@ interface NotificationProps {
   onOpen?(props: NotificationProps): void;
 }
 ```
+
+### URL-driven notification
+
+We used Remix `useSearchParams` hook, to listen to URL changes.
+
+```tsx
+import { useEffect } from "react";
+import { useSearchParams } from "@remix-run/react";
+
+import {
+  hideNotification,
+  showNotification,
+  updateNotification,
+  useNotifications,
+} from "@mantine/notifications";
+import {
+  IconAlertTriangle,
+  IconCheck,
+  IconInfoCircle,
+  IconX,
+} from "@tabler/icons";
+
+
+let error = {
+  title: "Error!",
+  color: "red",
+  icon: <IconX />,
+};
+let warning = {
+  title: "Warning!",
+  color: "yellow",
+  icon: <IconAlertTriangle />,
+};
+let success = {
+  title: "Success!",
+  color: "green",
+  icon: <IconCheck />,
+};
+let info = {
+  title: "Info!",
+  color: "primaryColor",
+  icon: <IconInfoCircle />,
+};
+let loading = {
+  loading: true,
+  title: "Loading!",
+};
+
+let body: any = {
+  error,
+  warning,
+  success,
+  info,
+  loading,
+};
+
+
+let notificationId = "status";
+
+
+function Demo() {
+  const [searchParams] = useSearchParams();
+
+  const messageFromURL = searchParams.get('message');
+  const notificationTypeFromURL = searchParams.get('type');
+
+  const { notifications } = useNotifications();
+
+  let hasNotification = notifications.find((n) => n.id === notificationId);
+
+  function onClose() {
+    searchParams.delete('message');
+    searchParams.delete('type');
+
+    window.history.replaceState(
+      null,
+      "",
+      [window.location.pathname, searchParams.toString()]
+        .filter(Boolean)
+        .join("?")
+    );
+  }
+
+  useEffect(() => {
+    if (messageFromURL && notificationTypeFromURL) {
+      if (hasNotification) {
+        return updateNotification({
+          id: notificationId,
+          onClose: onClose,
+          message: messageFromURL,
+          autoClose: false,
+          ...body[notificationTypeFromURL],
+        });
+      } else {
+        return showNotification({
+          id: notificationId,
+          onClose: onClose,
+          message: messageFromURL,
+          autoClose: false,
+          ...body[notificationTypeFromURL],
+        });
+      }
+    } else {
+      return hideNotification(notificationId);
+    }
+  }, [messageFromURL, notificationTypeFromURL]);
+
+  return null;
+}
+  
+```
+
+`autoClose` was set to false to make the URL the only variable in control.
