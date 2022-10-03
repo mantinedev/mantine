@@ -31,6 +31,7 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
       transition: 'transform 75ms ease-in-out',
       '&[data-active="true"]': {
         zIndex: 1,
+        transform: 'scale(1.2)',
       },
     },
 
@@ -82,13 +83,10 @@ export default createStyles((theme, { readonly }: RatingStylesParams, getRef) =>
     },
 
     symbolBody: {
+      ref: getRef('symbolBody'),
       display: 'grid',
       placeContent: 'center',
       placeItems: 'center',
-      transition: 'transform 75ms ease-in-out',
-      [`.${getRef('symbolGroup')}[data-active="true"] &`]: {
-        transform: 'scale(1.2)',
-      },
     },
   };
 });
