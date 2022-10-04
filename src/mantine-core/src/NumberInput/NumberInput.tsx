@@ -117,7 +117,7 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
-  removeTrailingZeros: true,
+  removeTrailingZeros: false,
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
@@ -359,7 +359,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          if (removeTrailingZeros) {
+          if (!removeTrailingZeros) {
             const valNoZeros = val
               .toFixed(precision)
               .replace(new RegExp(`[0]{0,${precision}}$`), '');
