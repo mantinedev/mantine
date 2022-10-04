@@ -359,7 +359,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          if (!removeTrailingZeros) {
+          if (removeTrailingZeros) {
             const valNoZeros = val
               .toFixed(precision)
               .replace(new RegExp(`[0]{0,${precision}}$`), '');
