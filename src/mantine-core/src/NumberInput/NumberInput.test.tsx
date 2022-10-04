@@ -137,7 +137,7 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('6.12300000');
     expect(spy).toHaveBeenLastCalledWith(6.123);
     blurInput();
-    expectValue('6.123');
+    expectValue('6.12300000');
     expect(spy).toHaveBeenLastCalledWith(6.123);
   });
 
