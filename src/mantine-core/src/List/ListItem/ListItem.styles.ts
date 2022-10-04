@@ -28,6 +28,7 @@ export default createStyles((theme, { spacing, center }: ListItemStyles, getRef)
     [`& .${getRef('itemWrapper')}`]: {
       display: 'inline-flex',
       alignItems: center ? 'center' : 'flex-start',
+      flexDirection: 'row',
     },
   },
 
