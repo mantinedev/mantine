@@ -110,7 +110,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
       {...systemStyles}
       {...wrapperProps}
     >
-      <Box className={classes.body}>
+      <div className={classes.body}>
         <div className={classes.inner}>
           <input
             ref={ref}
@@ -139,7 +139,7 @@ export const Radio: RadioComponent = forwardRef<HTMLInputElement, RadioProps>((p
             <Input.Error className={classes.error}>{error}</Input.Error>
           )}
         </div>
-      </Box>
+      </div>
     </Box>
   );
 }) as any;

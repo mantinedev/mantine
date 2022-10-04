@@ -129,7 +129,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
         {...systemStyles}
         {...wrapperProps}
       >
-        <Box className={cx(classes.body)}>
+        <div className={cx(classes.body)}>
           <div className={classes.inner}>
             <input
               id={uuid}
@@ -165,7 +165,7 @@ export const Checkbox: CheckboxComponent = forwardRef<HTMLInputElement, Checkbox
               <Input.Error className={classes.error}>{error}</Input.Error>
             )}
           </div>
-        </Box>
+        </div>
       </Box>
     );
   }

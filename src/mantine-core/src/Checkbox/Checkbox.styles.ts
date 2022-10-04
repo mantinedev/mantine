@@ -86,7 +86,6 @@ export default createStyles(
 
       body: {
         display: 'flex',
-        marginBlock: '5px',
       },
 
       inner: {

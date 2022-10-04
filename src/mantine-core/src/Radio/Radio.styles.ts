@@ -48,8 +48,6 @@ export default createStyles(
 
       body: {
         display: 'flex',
-        WebkitTapHighlightColor: 'transparent',
-        marginBlock: '5px',
       },
 
       inner: {
