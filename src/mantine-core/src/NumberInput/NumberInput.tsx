@@ -117,7 +117,7 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
-  removeTrailingZeros: true,
+  removeTrailingZeros: false,
   formatter: defaultFormatter,
   parser: defaultParser,
   type: 'text',
