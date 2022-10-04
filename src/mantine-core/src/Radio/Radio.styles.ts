@@ -43,6 +43,7 @@ export default createStyles(
       },
 
       label: {
+        cursor: theme.cursorType,
         [labelPosition === 'left' ? 'paddingRight' : 'paddingLeft']: theme.spacing.sm,
       },
 
