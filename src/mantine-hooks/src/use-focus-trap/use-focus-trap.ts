@@ -13,6 +13,10 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
         return;
       }
 
+      if (node === ref.current || node === null) {
+        return;
+      }
+
       if (restoreAria.current) {
         restoreAria.current();
       }
