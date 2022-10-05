@@ -31,7 +31,7 @@ export function PopoverDropdown({
 
   const returnFocus = useFocusReturn({
     opened: ctx.opened,
-    shouldReturnFocus: false,
+    shouldReturnFocus: ctx.returnFocus,
   });
 
   const accessibleProps = ctx.withRoles
