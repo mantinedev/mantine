@@ -1,11 +1,7 @@
-import { createStyles, MantineNumberSize } from '@mantine/styles';
+import { createStyles } from '@mantine/styles';
+import type { ListStylesParams } from '../List.styles';
 
-interface ListItemStyles {
-  spacing: MantineNumberSize;
-  center: boolean;
-}
-
-export default createStyles((theme, { spacing, center }: ListItemStyles, getRef) => ({
+export default createStyles((theme, { spacing, center }: ListStylesParams, getRef) => ({
   itemWrapper: {
     ref: getRef('itemWrapper'),
     display: 'inline-flex',
