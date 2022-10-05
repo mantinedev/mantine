@@ -118,11 +118,15 @@ Notifications preview (`message` prop used as `children`):
 
 <Demo data={NotificationDemos.configurator} configuratorProps={{ includeCode: false }} />
 
-## Customize notification styles
+## Customize notification via function call
 
 You can use `sx`, `style`, `className` or [Styles API](/styles/styles-api/) `classNames`, `styles` props to customize notification styles:
 
 <Demo data={NotificationsDemos.customize} />
+
+## Customize notification via theme
+To override the default styles of the notification component, you can use [Mantine Provider](/theming/default-props/#overriding-default-props).
+Just override the props of the `Notification` component in the `theme.components` section.
 
 ## Notifications container position
 
