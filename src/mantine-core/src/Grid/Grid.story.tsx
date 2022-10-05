@@ -19,11 +19,11 @@ export function UnexpectedRowBreak() {
 export function Offset0() {
   return (
     <Grid>
-      <Grid.Col sx={{ backgroundColor: 'pink' }} span={3} offset={2} offsetSm={0}>
-        Column 1
+      <Grid.Col span={3} offsetMd={3}>
+        <div style={{ background: 'silver' }}>Column 1</div>
       </Grid.Col>
-      <Grid.Col sx={{ backgroundColor: 'silver' }} span={7}>
-        Column 2
+      <Grid.Col span={6}>
+        <div style={{ background: 'pink' }}>Column 2</div>
       </Grid.Col>
     </Grid>
   );
