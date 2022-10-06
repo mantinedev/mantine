@@ -60,6 +60,9 @@ export interface NumberInputProps
   /** Amount of digits after the decimal point  */
   precision?: number;
 
+  /** Only works if a precision is given, removes the trailing zeros, false by default */
+  removeTrailingZeros?: boolean;
+
   /** Default value for uncontrolled variant only */
   defaultValue?: number | undefined;
 
@@ -74,6 +77,9 @@ export interface NumberInputProps
 
   /** Parses the value from formatter, should be used with formatter at the same time */
   parser?: Parser;
+
+  /** Input type, defaults to text */
+  type?: 'text' | 'number';
 }
 
 const defaultFormatter: Formatter = (value) => value || '';
@@ -111,8 +117,10 @@ const defaultProps: Partial<NumberInputProps> = {
   size: 'sm',
   precision: 0,
   noClampOnBlur: false,
+  removeTrailingZeros: false,
   formatter: defaultFormatter,
   parser: defaultParser,
+  type: 'text',
 };
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props, ref) => {
@@ -135,6 +143,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     radius,
     variant,
     precision,
+    removeTrailingZeros,
     defaultValue,
     noClampOnBlur,
     handlersRef,
@@ -147,6 +156,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     parser,
     inputMode,
     unstyled,
+    type,
     ...others
   } = useComponentDefaultProps('NumberInput', defaultProps, props);
 
@@ -349,8 +359,22 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
 
       if (!Number.isNaN(val)) {
         if (!noClampOnBlur) {
-          setTempValue(val.toFixed(precision));
-          handleValueChange(parseFloat(val.toFixed(precision)));
+          if (removeTrailingZeros) {
+            const valNoZeros = val
+              .toFixed(precision)
+              .replace(new RegExp(`[0]{0,${precision}}$`), '');
+
+            if (valNoZeros.endsWith(decimalSeparator) || valNoZeros.endsWith('.')) {
+              setTempValue(valNoZeros.slice(0, -1));
+              handleValueChange(parseFloat(valNoZeros.slice(0, -1)));
+            } else {
+              setTempValue(valNoZeros);
+              handleValueChange(parseFloat(valNoZeros));
+            }
+          } else {
+            setTempValue(val.toFixed(precision));
+            handleValueChange(parseFloat(val.toFixed(precision)));
+          }
         }
       } else {
         setTempValue(finalValue?.toFixed(precision) ?? '');
@@ -394,11 +418,11 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
   return (
     <TextInput
       {...others}
+      type={type}
       variant={variant}
       value={formatNum(tempValue)}
       disabled={disabled}
       ref={useMergedRef(inputRef, ref)}
-      type="text"
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}

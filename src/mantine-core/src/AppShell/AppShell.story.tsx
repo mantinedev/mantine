@@ -114,6 +114,7 @@ storiesOf('AppShell/AppShell', module)
     <AppShell
       header={<Header height={50}>Header</Header>}
       navbar={<Navbar width={{ base: 300 }}>Navbar</Navbar>}
+      hidden
     >
       {content}
     </AppShell>

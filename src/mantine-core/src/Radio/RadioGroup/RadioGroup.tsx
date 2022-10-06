@@ -42,6 +42,9 @@ export interface RadioGroupProps
 
   /** Props spread to root element */
   wrapperProps?: Record<string, any>;
+
+  /** Name attribute of radio inputs */
+  name?: string;
 }
 
 const defaultProps: Partial<RadioGroupProps> = {
@@ -64,6 +67,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       wrapperProps,
       unstyled,
       offset,
+      name,
       ...others
     } = useComponentDefaultProps('RadioGroup', defaultProps, props);
 
@@ -78,7 +82,7 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
       setValue(event.currentTarget.value);
 
     return (
-      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+      <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name }}>
         <Input.Wrapper
           labelElement="div"
           size={size}

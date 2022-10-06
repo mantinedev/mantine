@@ -26,7 +26,7 @@ export interface MantinePrimaryShade {
 
 interface MantineThemeFunctions {
   fontStyles(): any;
-  focusStyles(): any;
+  focusStyles(selector?: string): any;
   cover(offset?: number | string): any;
   themeColor(
     color: string,
@@ -94,6 +94,7 @@ export interface MantineTheme {
   activeStyles: CSSObject;
   datesLocale: string;
   components: MantineThemeComponents;
+  globalStyles: (theme: MantineTheme) => CSSObject;
 }
 
 interface ThemeComponent {

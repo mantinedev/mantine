@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { ScrollArea, Button, Stack, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `

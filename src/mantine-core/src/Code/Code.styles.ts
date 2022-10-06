@@ -12,7 +12,7 @@ export default createStyles((theme, { color: _color }: CodeStylesParams) => {
     root: {
       ...theme.fn.fontStyles(),
       lineHeight: theme.lineHeight,
-      padding: `2px ${theme.spacing.xs / 2}px`,
+      padding: `2px calc(${theme.spacing.xs}px / 2)`,
       borderRadius: theme.radius.sm,
       color:
         theme.colorScheme === 'dark'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconMedal } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { NumberInput } from '@mantine/core';
 
 const code = `

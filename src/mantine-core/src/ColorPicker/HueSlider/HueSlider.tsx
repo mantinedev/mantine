@@ -4,12 +4,13 @@ import { ColorSlider, BaseColorSliderProps } from '../ColorSlider/ColorSlider';
 export type HueSliderProps = BaseColorSliderProps;
 
 export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>(
-  ({ value, onChange, ...others }: HueSliderProps, ref) => (
+  ({ value, onChange, onChangeEnd, ...others }: HueSliderProps, ref) => (
     <ColorSlider
       {...others}
       ref={ref}
       value={value}
       onChange={onChange}
+      onChangeEnd={onChangeEnd}
       maxValue={360}
       thumbColor={`hsl(${value}, 100%, 50%)`}
       round

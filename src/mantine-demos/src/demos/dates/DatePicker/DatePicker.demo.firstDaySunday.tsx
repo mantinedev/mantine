@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -22,6 +23,7 @@ function Demo() {
         label="Sunday as first day of week"
         placeholder="Pick date"
         firstDayOfWeek="sunday"
+        withinPortal
       />
     </div>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Tooltip, Group, Button } from '@mantine/core';
 
 const code = `
@@ -7,6 +8,14 @@ import { Tooltip, Button } from '@mantine/core';
 function Demo() {
   return (
     <>
+      <Tooltip label="long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion" withArrow>
+        <Button variant="outline">long content arrow postion</Button>
+      </Tooltip>
+
+      <Tooltip position="left" label="long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion" withArrow>
+        <Button variant="outline">long content arrow postion left</Button>
+      </Tooltip>
+      
       <Tooltip label="Default arrow" withArrow>
         <Button variant="outline">Default arrow</Button>
       </Tooltip>
@@ -22,7 +31,20 @@ function Demo() {
 
 export function Demo() {
   return (
-    <Group position="center">
+    <Group position="left">
+      <Tooltip
+        label="long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion"
+        withArrow
+      >
+        <Button variant="outline">long content arrow postion</Button>
+      </Tooltip>
+      <Tooltip
+        position="left"
+        label="long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion long content arrow postion"
+        withArrow
+      >
+        <Button variant="outline">long content arrow postion left</Button>
+      </Tooltip>
       <Tooltip label="Default arrow" withArrow>
         <Button variant="outline">Default arrow</Button>
       </Tooltip>

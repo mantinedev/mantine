@@ -21,6 +21,7 @@ export default createStyles(
       width: '100%',
       height: '100%',
       paddingRight: offsetScrollbars ? scrollbarSize : undefined,
+      paddingBottom: offsetScrollbars ? scrollbarSize : undefined,
     },
 
     scrollbar: {
@@ -76,8 +77,6 @@ export default createStyles(
         transform: 'translate(-50%, -50%)',
         width: '100%',
         height: '100%',
-        minWidth: 44,
-        minHeight: 44,
       },
     },
 

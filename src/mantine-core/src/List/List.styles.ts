@@ -4,6 +4,8 @@ export interface ListStylesParams {
   withPadding: boolean;
   size: MantineNumberSize;
   listStyleType: string;
+  spacing: MantineNumberSize;
+  center: boolean;
 }
 
 export default createStyles((theme, { withPadding, size, listStyleType }: ListStylesParams) => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Checkbox, Stack } from '@mantine/core';
 
 const code = `
@@ -9,6 +10,7 @@ function Demo() {
     <>
       <Checkbox checked={false} label="Default checkbox" />
       <Checkbox checked={false} indeterminate label="Indeterminate checkbox" />
+      <Checkbox checked indeterminate label="Indeterminate checked checkbox" />
       <Checkbox checked label="Checked checkbox" />
       <Checkbox disabled label="Disabled checkbox" />
       <Checkbox disabled checked label="Disabled checked checkbox" />
@@ -23,6 +25,7 @@ function Demo() {
     <Stack>
       <Checkbox checked={false} label="Default checkbox" />
       <Checkbox checked={false} indeterminate label="Indeterminate checkbox" />
+      <Checkbox checked indeterminate label="Indeterminate checked checkbox" />
       <Checkbox checked label="Checked checkbox" />
       <Checkbox disabled label="Disabled checkbox" />
       <Checkbox disabled checked label="Disabled checked checkbox" />

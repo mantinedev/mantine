@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import {
   useFloating,
   flip,
+  arrow,
   offset,
   shift,
   useInteractions,
@@ -11,6 +12,7 @@ import {
   useDismiss,
   useDelayGroupContext,
   useDelayGroup,
+  inline,
 } from '@floating-ui/react-dom-interactions';
 import { useId, useDidUpdate } from '@mantine/hooks';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
@@ -23,8 +25,10 @@ interface UseTooltip {
   onPositionChange?(position: FloatingPosition): void;
   opened?: boolean;
   offset: number;
+  arrowRef?: React.RefObject<HTMLDivElement>;
   events: { hover: boolean; focus: boolean; touch: boolean };
   positionDependencies: any[];
+  inline: boolean;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -47,11 +51,27 @@ export function useTooltip(settings: UseTooltip) {
     [setCurrentId, uid]
   );
 
-  const { x, y, reference, floating, context, refs, update, placement } = useFloating({
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    context,
+    refs,
+    update,
+    placement,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+  } = useFloating({
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [offset(settings.offset), shift({ padding: 8 }), flip()],
+    middleware: [
+      offset(settings.offset),
+      shift({ padding: 8 }),
+      flip(),
+      arrow({ element: settings.arrowRef }),
+      ...(settings.inline ? [inline()] : []),
+    ],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -82,6 +102,8 @@ export function useTooltip(settings: UseTooltip) {
   return {
     x,
     y,
+    arrowX,
+    arrowY,
     reference,
     floating,
     getFloatingProps,

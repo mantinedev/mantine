@@ -39,24 +39,24 @@ npm install @mantine/rte
 ## Usage
 
 `value` and `onChange` props are required for component to work.
-Note that though component is controlled you cannot force value (limitation of Quill.js library).
+Note that even though component is controlled, you cannot force `value` (limitation of Quill.js library).
 
 <Demo data={RichTextEditorDemos.simple} />
 
 ## Configure toolbar
 
-RichTextEditor supports these controls in toolbar:
+`RichTextEditor` supports these controls in toolbar:
 
-- `bold`, `strike`, `italic`, `underline` – general inline formatting
-- `clean` – removes all inline formatting
-- `h1`, `h2`, ..., `h6` – headings, in default toolbar only h1-h4 headings are displayed
-- `link` – link editor
-- `blockquote` – blockquote
-- `sub`, `sup` – super and sub scripts
-- `video`, `image` – video and image embeds
-- `unorderedList`, `orderedList` – ul and ol tags
-- `alignCenter`, `alignLeft`, `alignRight` – controls text-align
-- `code` and `codeBlock` – inline and block code
+- `bold`, `strike`, `italic`, `underline` – general inline formatting.
+- `clean` – removes all inline formatting.
+- `h1`, `h2`, ..., `h6` – headings. Only `h1`-`h4` headings are displayed in the toolbar by default.
+- `link` – link editor.
+- `blockquote` – blockquote.
+- `sub`, `sup` – super and sub scripts.
+- `video`, `image` – video and image embeds.
+- `unorderedList`, `orderedList` – `ul` and `ol` tags.
+- `alignCenter`, `alignLeft`, `alignRight` – controls `text-align`.
+- `code` and `codeBlock` – inline and block code.
 
 You can add, remove and configure controls arrangement in toolbar with `controls` prop:
 
@@ -64,8 +64,8 @@ You can add, remove and configure controls arrangement in toolbar with `controls
 
 To configure sticky toolbar properties set following props:
 
-- `sticky` – set to false to make toolbar stay at the top
-- `stickyOffset` – top property, used with sticky position, use it to offset elements with fixed position, for example, Mantine docs website has 60px header, in this case you should set stickyOffset to 60
+- `sticky` – set to `false` to make toolbar stay at the top.
+- `stickyOffset` – `top` property, used with `sticky` position. Use it to offset elements with fixed position. For example, Mantine docs website has `60px` header. In this case you should set `stickyOffset` to `60`.
 
 ```tsx
 // Toolbar stays at the top
@@ -81,16 +81,16 @@ To configure sticky toolbar properties set following props:
 
 ## Restrict formats
 
-To restrict formats that user case use, set `formats` prop with an array of [quill formats](https://quilljs.com/docs/formats/). Note that you will also need to remove toolbar
-buttons. In the following example three formats are enabled: `bold`, `italic` and `underline`,
-toolbar includes `italic` and `underline` controls, `bold` format can be added with `Ctrl + B` keyboard
-shortcut, other formats are not available:
+To restrict the allowed formats, set `formats` prop with an array of [quill formats](https://quilljs.com/docs/formats/). Note that you will also need to remove toolbar
+buttons. In the following example three formats are enabled: `bold`, `italic` and `underline` while
+toolbar includes `italic` and `underline` controls. `bold` format can be added with `Ctrl + B` keyboard
+shortcut. Other formats are disabled:
 
 <Demo data={RichTextEditorDemos.formats} />
 
 ## Images upload
 
-RichTextEditor will handle images upload in following situations:
+`RichTextEditor` will handle images upload in following situations:
 
 - Image button click in toolbar
 - Image was pasted from clipboard into editor
@@ -103,10 +103,10 @@ import { useState, useCallback } from 'react';
 import { RichTextEditor } from '@mantine/rte';
 
 function Demo() {
-  // Example with imgbb.com, usually you would use similar logic to upload to S3 like storages
-  // Function must return a promise that resolves with uploaded image url
-  // After promise is resolved blurred image placeholder with be replaced with uploaded
-  // Note that useCallback is required
+  // Example with imgbb.com. Usually you would use similar logic to upload to S3-like storages.
+  // Function must return a promise that resolves to uploaded image url.
+  // After promise is resolved, blurred image placeholder with be replaced with the uploaded image's url.
+  // Note that useCallback is required.
   const handleImageUpload = useCallback(
     (file: File): Promise<string> =>
       new Promise((resolve, reject) => {
@@ -125,18 +125,20 @@ function Demo() {
   );
 
   const [value, onChange] = useState('');
-  return <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} />;
+  return (
+    <RichTextEditor value={value} onChange={onChange} onImageUpload={handleImageUpload} id="rte" />
+  );
 }
 ```
 
 **Important!** If you do not provide `onImageUpload` all images will be converted to
-base64 format. In most cases this is not a valid option to store images so make sure you provide `onImageUpload`
+`base64` format. In most cases this is not a valid option to store images so make sure you provide `onImageUpload`
 if you are planning to use images.
 
 ## Mentions
 
-RichTextEditor comes with [quill-mentions plugin](https://github.com/quill-mention/quill-mention).
-To add mentions support, add provide [quill-mentions](https://github.com/quill-mention/quill-mention) configuration to `mentions` prop:
+`RichTextEditor` comes with [quill-mentions plugin](https://github.com/quill-mention/quill-mention).
+To add mentions support, provide [quill-mentions](https://github.com/quill-mention/quill-mention) configuration to `mentions` prop:
 
 <Demo data={RichTextEditorDemos.mentions} />
 
@@ -162,7 +164,7 @@ function Demo() {
 
 ## Read only
 
-When editor is readonly state, user cannot edit content, toolbar is hidden:
+When editor is in readonly state, user cannot edit content and the toolbar is hidden:
 
 <Demo data={RichTextEditorDemos.readOnly} />
 
@@ -187,7 +189,7 @@ function Demo() {
     editorRef.current.focus();
   }, []);
 
-  return <RichTextEditor ref={editorRef} {...otherProps} />;
+  return <RichTextEditor ref={editorRef} id="rte" {...otherProps} />;
 }
 ```
 
@@ -236,13 +238,13 @@ export default dynamic(() => import('@mantine/rte'), {
 });
 ```
 
-Then when you want to use RichTextEditor import your component instead:
+Then when you want to use `RichTextEditor` import your component instead:
 
 ```tsx
 import RichTextEditor from '../components/RichText';
 
 function MyPage() {
-  return <RichTextEditor />;
+  return <RichTextEditor id="rte" />;
 }
 ```
 

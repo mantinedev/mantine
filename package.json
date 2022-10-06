@@ -4,13 +4,14 @@
   "workspaces": [
     "src/*"
   ],
-  "version": "5.2.5",
+  "version": "5.5.4",
   "description": "Mantine Components Monorepo",
   "main": "index.js",
   "repository": "https://github.com/mantinedev/mantine.git",
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "demos": "esno scripts/demo-import",
     "sync-branches": "sh scripts/sync-branches.sh",
     "changelog": "esno scripts/changelog",
     "postinstall": "npm run docs:docgen && cd docs && yarn",
@@ -119,14 +120,14 @@
     "stylis": "^4.0.10",
     "syncpack": "^5.7.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "4.7.4",
+    "typescript": "4.8.2",
     "yargs": "^17.0.1"
   },
   "dependencies": {
     "@emotion/react": "11.9.3",
     "@emotion/server": "11.4.0",
     "@emotion/styled": "^11.10.0",
-    "@floating-ui/react-dom-interactions": "0.6.6",
+    "@floating-ui/react-dom-interactions": "^0.10.1",
     "@radix-ui/react-scroll-area": "1.0.0",
     "@tabler/icons": "^1.68.0",
     "clsx": "1.1.1",
@@ -140,12 +141,15 @@
     "prism-react-renderer": "^1.2.1",
     "quill-mention": "^3.0.8",
     "react": "18.1.0",
-    "react-dropzone": "14.2.1",
+    "react-dropzone": "14.2.2",
     "react-input-mask": "^2.0.4",
-    "react-quill": "2.0.0-beta.4",
+    "react-quill": "2.0.0",
     "react-textarea-autosize": "8.3.4",
     "react-transition-group": "4.4.2",
     "stylis-plugin-rtl": "^2.1.1",
     "zod": "^3.13.4"
+  },
+  "volta": {
+    "node": "14.17.0"
   }
 }

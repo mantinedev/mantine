@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 export const disableTransitions: MantineDemo = {

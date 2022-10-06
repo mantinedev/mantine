@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Calendar } from '@mantine/dates';
 
 const code = `

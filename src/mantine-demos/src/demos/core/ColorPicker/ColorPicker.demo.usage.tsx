@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { ColorPicker, Text, Stack } from '@mantine/core';
 
 const code = `

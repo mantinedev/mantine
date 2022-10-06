@@ -142,7 +142,7 @@ export default createStyles(
             : theme.shadows.xs
           : undefined,
         backgroundColor: shouldAnimate
-          ? color in theme.colors
+          ? color
             ? colors.background
             : theme.colorScheme === 'dark'
             ? theme.colors.dark[5]
@@ -152,7 +152,7 @@ export default createStyles(
 
       labelActive: {
         '&, &:hover': {
-          color: color in theme.colors || theme.colorScheme === 'dark' ? theme.white : theme.black,
+          color: color || theme.colorScheme === 'dark' ? theme.white : theme.black,
         },
       },
 
@@ -174,12 +174,11 @@ export default createStyles(
         }, width ${shouldAnimate ? 0 : transitionDuration / 2}ms ${
           transitionTimingFunction || theme.transitionTimingFunction
         }`,
-        backgroundColor:
-          color in theme.colors
-            ? colors.background
-            : theme.colorScheme === 'dark'
-            ? theme.colors.dark[5]
-            : theme.white,
+        backgroundColor: color
+          ? colors.background
+          : theme.colorScheme === 'dark'
+          ? theme.colors.dark[5]
+          : theme.white,
       },
     };
   }

@@ -16,12 +16,12 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
-    marginLeft: -theme.spacing.xs / 2,
+    marginLeft: `calc(${-theme.spacing.xs}px / 2)`,
     boxSizing: 'border-box',
   },
 
   value: {
-    margin: `${theme.spacing.xs / 2 - 2}px ${theme.spacing.xs / 2}px`,
+    margin: `calc(${theme.spacing.xs}px / 2 - 2px) calc(${theme.spacing.xs}px / 2)`,
   },
 
   searchInput: {
@@ -33,7 +33,7 @@ export default createStyles((theme, { size, invalid }: MultiSelectStylesParams) 
     outline: 0,
     fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
     padding: 0,
-    marginLeft: theme.spacing.xs / 2,
+    marginLeft: `calc(${theme.spacing.xs}px / 2)`,
     appearance: 'none',
     color: 'inherit',
     lineHeight: `${theme.fn.size({ size, sizes: INPUT_SIZES }) - 2}px`,

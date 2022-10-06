@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, createStyles } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Calendar } from '@mantine/dates';
 
 const code = `

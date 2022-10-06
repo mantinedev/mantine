@@ -84,7 +84,7 @@ export default createStyles(
 
       '&:active': theme.activeStyles,
 
-      '&[data-disabled]': {
+      '&:disabled, &[data-disabled]': {
         color: theme.colors.gray[theme.colorScheme === 'dark' ? 6 : 4],
         cursor: 'not-allowed',
         backgroundColor:
@@ -96,6 +96,7 @@ export default createStyles(
             ? undefined
             : theme.fn.themeColor('gray', theme.colorScheme === 'dark' ? 8 : 1),
         backgroundImage: 'none',
+        pointerEvents: 'none',
 
         '&:active': {
           transform: 'none',

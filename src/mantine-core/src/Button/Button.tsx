@@ -127,7 +127,7 @@ export const _Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =
     <UnstyledButton
       className={cx(classes.root, className)}
       type={type}
-      disabled={disabled || loading}
+      disabled={disabled}
       data-button
       data-disabled={disabled || undefined}
       data-loading={loading || undefined}

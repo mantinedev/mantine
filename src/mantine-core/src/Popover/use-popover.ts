@@ -3,9 +3,11 @@ import {
   useFloating,
   shift,
   flip,
+  arrow,
   offset,
   size,
   Middleware,
+  inline,
 } from '@floating-ui/react-dom-interactions';
 import { FloatingPosition, useFloatingAutoUpdate } from '../Floating';
 import { PopoverWidth, PopoverMiddlewares } from './Popover.types';
@@ -22,6 +24,7 @@ interface UsePopoverOptions {
   onOpen?(): void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares;
+  arrowRef: React.RefObject<HTMLDivElement>;
 }
 
 function getPopoverMiddlewares(options: UsePopoverOptions) {
@@ -34,6 +37,12 @@ function getPopoverMiddlewares(options: UsePopoverOptions) {
   if (options.middlewares.flip) {
     middlewares.push(flip());
   }
+
+  if (options.middlewares.inline) {
+    middlewares.push(inline());
+  }
+
+  middlewares.push(arrow({ element: options.arrowRef }));
 
   return middlewares;
 }

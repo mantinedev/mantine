@@ -1,3 +1,4 @@
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const codeTemplate = (props: string) => `

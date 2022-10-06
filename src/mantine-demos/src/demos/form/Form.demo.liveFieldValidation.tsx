@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm } from '@mantine/form';
+import { MantineDemo } from '@mantine/ds';
 import { NumberInput, TextInput, Button } from '@mantine/core';
 
 const code = `
@@ -9,7 +10,7 @@ import { NumberInput, TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    validateInputOnChange: true,
+    validateInputOnChange: ['name', 'email'],
     initialValues: { name: '', email: '', age: 0 },
 
     // functions will be used to validate values at corresponding key

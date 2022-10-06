@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useRef } from 'react';
 import {
   useMove,
   clampUseMovePosition,
@@ -20,6 +20,7 @@ export interface BaseColorSliderProps
     Omit<React.ComponentPropsWithoutRef<'div'>, 'value' | 'onChange'> {
   value: number;
   onChange(value: number): void;
+  onChangeEnd(value: number): void;
   size?: MantineSize;
   focusable?: boolean;
   __staticSelector?: string;
@@ -37,6 +38,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
     {
       value,
       onChange,
+      onChangeEnd,
       maxValue,
       round,
       size = 'md',
@@ -57,8 +59,20 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       { classNames, styles, name: __staticSelector, unstyled }
     );
     const [position, setPosition] = useState({ y: 0, x: value / maxValue });
+    const positionRef = useRef(position);
     const getChangeValue = (val: number) => (round ? Math.round(val * maxValue) : val * maxValue);
-    const { ref: sliderRef } = useMove(({ x }) => onChange(getChangeValue(x)));
+    const { ref: sliderRef } = useMove(
+      ({ x, y }) => {
+        positionRef.current = { x, y };
+        onChange(getChangeValue(x));
+      },
+      {
+        onScrubEnd: () => {
+          const { x } = positionRef.current;
+          onChangeEnd(getChangeValue(x));
+        },
+      }
+    );
 
     useDidUpdate(() => {
       setPosition({ y: 0, x: value / maxValue });
@@ -68,6 +82,7 @@ export const ColorSlider = forwardRef<HTMLDivElement, ColorSliderProps>(
       event.preventDefault();
       const _position = clampUseMovePosition(pos);
       onChange(getChangeValue(_position.x));
+      onChangeEnd(getChangeValue(_position.x));
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

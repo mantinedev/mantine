@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { usePageLeave } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Text } from '@mantine/core';
 
 const code = `

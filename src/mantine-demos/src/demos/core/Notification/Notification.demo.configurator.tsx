@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons';
 import { Notification, NotificationProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { demoBase } from './_demo-base';
 
 function Wrapper(props: NotificationProps) {

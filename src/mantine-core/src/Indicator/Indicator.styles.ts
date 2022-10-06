@@ -1,4 +1,10 @@
-import { createStyles, CSSObject, MantineColor, MantineNumberSize } from '@mantine/styles';
+import {
+  createStyles,
+  CSSObject,
+  MantineColor,
+  MantineNumberSize,
+  keyframes,
+} from '@mantine/styles';
 import { IndicatorPosition } from './Indicator.types';
 
 export interface IndicatorStylesParams {
@@ -12,6 +18,18 @@ export interface IndicatorStylesParams {
   withLabel: boolean;
   zIndex: React.CSSProperties['zIndex'];
 }
+
+const processingAnimation = (color: string) =>
+  keyframes({
+    from: {
+      boxShadow: `0 0 0.5px 0 ${color}`,
+      opacity: 0.6,
+    },
+    to: {
+      boxShadow: `0 0 0.5px 4.4px ${color}`,
+      opacity: 0,
+    },
+  });
 
 function getPositionStyles(_position: IndicatorPosition, offset = 0) {
   const styles: CSSObject = {};
@@ -68,35 +86,54 @@ export default createStyles(
       withLabel,
       zIndex,
     }: IndicatorStylesParams
-  ) => ({
-    root: {
-      position: 'relative',
-      display: inline ? 'inline-block' : 'block',
-    },
+  ) => {
+    const { background } = theme.fn.variant({
+      variant: 'filled',
+      primaryFallback: false,
+      color: color || theme.primaryColor,
+    });
+    return {
+      root: {
+        position: 'relative',
+        display: inline ? 'inline-block' : 'block',
+      },
 
-    indicator: {
-      ...getPositionStyles(position, offset),
-      zIndex,
-      position: 'absolute',
-      [withLabel ? 'minWidth' : 'width']: size,
-      height: size,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontSize: theme.fontSizes.xs,
-      paddingLeft: withLabel ? theme.spacing.xs / 2 : 0,
-      paddingRight: withLabel ? theme.spacing.xs / 2 : 0,
-      borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
-      backgroundColor: theme.fn.variant({
-        variant: 'filled',
-        primaryFallback: false,
-        color: color || theme.primaryColor,
-      }).background,
-      border: withBorder
-        ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
-        : undefined,
-      color: theme.white,
-      whiteSpace: 'nowrap',
-    },
-  })
+      indicator: {
+        ...getPositionStyles(position, offset),
+        zIndex,
+        position: 'absolute',
+        [withLabel ? 'minWidth' : 'width']: size,
+        height: size,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: theme.fontSizes.xs,
+        paddingLeft: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
+        paddingRight: withLabel ? `calc(${theme.spacing.xs}px / 2)` : 0,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+        backgroundColor: theme.fn.variant({
+          variant: 'filled',
+          primaryFallback: false,
+          color: color || theme.primaryColor,
+        }).background,
+        border: withBorder
+          ? `2px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white}`
+          : undefined,
+        color: theme.white,
+        whiteSpace: 'nowrap',
+      },
+
+      processing: {
+        animation: `${processingAnimation(background)} 1000ms linear infinite`,
+      },
+
+      common: {
+        ...getPositionStyles(position, offset),
+        position: 'absolute',
+        [withLabel ? 'minWidth' : 'width']: size,
+        height: size,
+        borderRadius: theme.fn.size({ size: radius, sizes: theme.radius }),
+      },
+    };
+  }
 );

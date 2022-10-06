@@ -36,6 +36,7 @@ export function useForm<Values = Record<string, unknown>>({
   initialTouched = {},
   clearInputErrorOnChange = true,
   validateInputOnChange = false,
+  validateInputOnBlur = false,
   validate: rules,
 }: UseFormInput<Values> = {}): UseFormReturnType<Values> {
   const [touched, setTouched] = useState(initialTouched);
@@ -110,7 +111,10 @@ export function useForm<Values = Record<string, unknown>>({
   }, []);
 
   const setValues: SetValues<Values> = useCallback((payload) => {
-    _setValues(payload);
+    _setValues((currentValues) => {
+      const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
+      return { ...currentValues, ...valuesPartial };
+    });
     clearInputErrorOnChange && clearErrors();
   }, []);
 
@@ -164,6 +168,15 @@ export function useForm<Values = Record<string, unknown>>({
 
     if (withFocus) {
       payload.onFocus = () => setTouched((current) => ({ ...current, [path]: true }));
+      payload.onBlur = () => {
+        if (shouldValidateOnChange(path, validateInputOnBlur)) {
+          const validationResults = validateFieldValue(path, rules, values);
+
+          validationResults.hasError
+            ? setFieldError(path, validationResults.error)
+            : clearFieldError(path);
+        }
+      };
     }
 
     return payload;

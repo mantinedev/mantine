@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { showNotification } from '@mantine/notifications';
 
 const code = `

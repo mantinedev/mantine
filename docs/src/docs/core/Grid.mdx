@@ -31,7 +31,7 @@ Use xs, sm, md, lg, xl values to set spacing from `theme.spacing` or number to s
 
 ## Grow
 
-Set `grow` prop on Grid component to force last row take 100% of container width:
+Set `grow` prop on Grid component to force all rows to take 100% of container width:
 
 <Demo data={GridDemos.growConfigurator} />
 
@@ -69,6 +69,20 @@ You can configure breakpoint values with [MantineProvider](/theming/mantine-prov
 In this example up to `md` there will be 1 column, from `md` to `lg` there will be 2 columns and from `lg` and up, there will be 4 columns:
 
 <Demo data={GridDemos.responsive} />
+
+## Auto sized columns
+
+All columns in a row with `span` or a breakpoint of `auto` will have equal size, growing as much as they can to fill the row.
+
+In this example, the second column takes up 50% of the row while the other two columns automatically resize to fill the remaining space:
+
+<Demo data={GridDemos.auto} />
+
+## Fit column content
+
+If you set `span` or a breakpoint to `content`, the column's size will automatically adjust to match the width of its content:
+
+<Demo data={GridDemos.content} />
 
 ## Change columns count
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Popover } from './Popover';
 import { Button } from '../Button';
+import { MultiSelect } from '../MultiSelect';
 import { Tooltip } from '../Tooltip';
 import { Group } from '../Group';
 
@@ -20,7 +21,35 @@ export function Uncontrolled() {
   );
 }
 
-export function Usage() {
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover disabled>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function WithArrow() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover withArrow width={400}>
+        <Popover.Target>
+          <Button>arrow popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>Dropdown with arrow</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function Controlled() {
   const [opened, setState] = useState(false);
 
   return (
@@ -32,17 +61,15 @@ export function Usage() {
         position="bottom"
         withArrow
         trapFocus
-        width={300}
         radius="md"
+        returnFocus
       >
         <Popover.Target>
           <Button onClick={() => setState((c) => !c)}>Toggle popover</Button>
         </Popover.Target>
 
         <Popover.Dropdown>
-          <input />
-          <input data-autofocus />
-          <input />
+          <Button onClick={() => setState(false)}>Close</Button>
         </Popover.Dropdown>
       </Popover>
     </div>
@@ -104,6 +131,39 @@ export function PopoverTargetWithTooltip() {
 
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
       </Popover>
+    </div>
+  );
+}
+
+export function WithMultiSelect() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Popover width={400}>
+        <Popover.Target>
+          <Button>Toggle popover</Button>
+        </Popover.Target>
+
+        <Popover.Dropdown>
+          <MultiSelect data={['react', 'ng']} defaultValue={['ng']} withinPortal />
+        </Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}
+
+export function Inline() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam magni
+      quas neque{' '}
+      <Popover middlewares={{ shift: true, flip: true, inline: true }} position="top">
+        <Popover.Target>
+          <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+        </Popover.Target>
+        <Popover.Dropdown>Inline popover</Popover.Dropdown>
+      </Popover>
+      , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
+      dicta.
     </div>
   );
 }

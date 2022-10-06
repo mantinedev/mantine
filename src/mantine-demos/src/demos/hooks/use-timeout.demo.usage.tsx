@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Text, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { randomId, useTimeout } from '@mantine/hooks';
 
 const code = `

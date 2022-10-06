@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconChevronDown } from '@tabler/icons';
 import { MultiSelect } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { data } from './_data';
 
 const code = `

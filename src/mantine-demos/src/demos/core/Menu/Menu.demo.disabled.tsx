@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Menu, Group, Button } from '@mantine/core';
 import {
   IconSettings,

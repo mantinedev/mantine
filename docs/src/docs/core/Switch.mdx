@@ -6,7 +6,8 @@ order: 1
 slug: /core/switch/
 category: 'inputs'
 description: 'Capture boolean input from user'
-props: ['Switch']
+componentPrefix: 'Switch'
+props: ['Switch', 'SwitchGroup']
 import: "import { Switch } from '@mantine/core';"
 source: 'mantine-core/src/Switch/Switch.tsx'
 docs: 'core/Switch.mdx'
@@ -34,6 +35,36 @@ function Demo() {
 ## Inner Labels
 
 <Demo data={SwitchDemos.labels} />
+
+## Icon labels
+
+<Demo data={SwitchDemos.iconLabels} />
+
+## Thumb icon
+
+<Demo data={SwitchDemos.thumbIcon} />
+
+## Switch.Group
+
+<Demo data={SwitchDemos.groupConfigurator} />
+
+## Controlled Switch.Group
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Switch.Group value={value} onChange={setValue}>
+      <Switch value="react" label="React" />
+      <Switch value="svelte" label="Svelte" />
+    </Switch.Group>
+  );
+}
+```
 
 ## Get input ref
 

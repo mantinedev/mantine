@@ -36,7 +36,7 @@ export default createStyles(
       zIndex: 2,
 
       '&, &:hover': {
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+        backgroundColor: colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
       },
     },
 

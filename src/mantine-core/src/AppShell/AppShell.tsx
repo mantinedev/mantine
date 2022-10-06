@@ -33,6 +33,9 @@ export interface AppShellProps
   /** true to switch from static layout to fixed */
   fixed?: boolean;
 
+  /** true to hide all AppShell parts and render only children */
+  hidden?: boolean;
+
   /** AppShell content */
   children: React.ReactNode;
 
@@ -68,12 +71,17 @@ export const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props: AppShe
     styles,
     classNames,
     unstyled,
+    hidden,
     ...others
   } = useComponentDefaultProps('AppShell', defaultProps, props);
   const { classes, cx } = useStyles(
     { padding, fixed, navbarOffsetBreakpoint, asideOffsetBreakpoint },
     { styles, classNames, unstyled, name: 'AppShell' }
   );
+
+  if (hidden) {
+    return <>{children}</>;
+  }
 
   return (
     <AppShellProvider value={{ fixed, zIndex }}>

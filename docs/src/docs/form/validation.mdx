@@ -95,6 +95,24 @@ const form = useForm({ validateInputOnChange: ['name', 'email'] });
 
 <Demo data={FormDemos.liveFieldValidation} demoProps={{ toggle: true }} />
 
+## Validate fields on blur
+
+To validate all fields on blur set `validateInputOnBlur` option to `true`:
+
+```tsx
+const form = useForm({ validateInputOnBlur: true });
+```
+
+<Demo data={FormDemos.blurValidation} demoProps={{ toggle: true }} />
+
+You can also provide an array of fields paths to validate only those values:
+
+```tsx
+const form = useForm({ validateInputOnBlur: ['name', 'email'] });
+```
+
+<Demo data={FormDemos.blurFieldValidation} demoProps={{ toggle: true }} />
+
 ## Clear field error on change
 
 By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:

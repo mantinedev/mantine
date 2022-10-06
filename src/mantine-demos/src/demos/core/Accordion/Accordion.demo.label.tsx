@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Avatar, Text, Accordion, AccordionProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { charactersList } from './_mockdata';
 
 const code = `

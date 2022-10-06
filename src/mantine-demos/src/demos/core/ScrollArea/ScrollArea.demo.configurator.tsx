@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollArea, ScrollAreaProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 function Wrapper(props: ScrollAreaProps) {

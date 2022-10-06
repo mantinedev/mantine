@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMantineTheme, Text, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useElementSize } from '@mantine/hooks';
 
 const code = `

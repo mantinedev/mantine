@@ -9,6 +9,7 @@ import {
   TransferListItemComponent,
   TransferListItemComponentProps,
 } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { charactersList } from './_mockdata';
 
 const code = `

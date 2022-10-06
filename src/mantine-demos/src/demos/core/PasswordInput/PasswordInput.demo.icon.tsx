@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconLock } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { PasswordInput } from '@mantine/core';
 
 const code = `

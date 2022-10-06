@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { NumberInput, NumberInputProps } from '@mantine/core';
 
 const codeTemplate = (props: string) => `

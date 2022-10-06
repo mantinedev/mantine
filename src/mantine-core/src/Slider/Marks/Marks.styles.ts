@@ -38,7 +38,7 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
     transform: 'translate(-50%, 0)',
     fontSize: theme.fontSizes.sm,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
-    marginTop: theme.spacing.xs / 2,
+    marginTop: `calc(${theme.spacing.xs}px / 2)`,
     whiteSpace: 'nowrap',
   },
 }));

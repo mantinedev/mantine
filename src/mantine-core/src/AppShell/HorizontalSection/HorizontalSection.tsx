@@ -84,7 +84,7 @@ export const HorizontalSection = forwardRef<HTMLElement, HorizontalSectionProps>
 
     const breakpoints = getSortedBreakpoints(width, theme).reduce(
       (acc, [breakpoint, breakpointSize]) => {
-        acc[`@media (min-width: ${breakpoint + 1}px)`] = {
+        acc[`@media (min-width: ${breakpoint}px)`] = {
           [`--mantine-${section}-width`]: `${breakpointSize}px`,
         };
 

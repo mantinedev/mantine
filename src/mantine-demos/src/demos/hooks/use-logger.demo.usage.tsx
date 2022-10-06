@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLogger } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Group } from '@mantine/core';
 
 const code = `

@@ -5,6 +5,7 @@ import { AlphaSlider, AlphaSliderProps } from './AlphaSlider';
 const defaultProps: AlphaSliderProps = {
   value: 0.5,
   onChange: () => {},
+  onChangeEnd: () => {},
   color: '#FF00FF',
   size: 'sm',
 };

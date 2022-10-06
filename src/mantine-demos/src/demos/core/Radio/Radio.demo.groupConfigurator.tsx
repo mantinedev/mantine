@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { RadioGroupProps, Radio } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -7,6 +8,7 @@ import { Radio } from '@mantine/core';
 function Demo() {
   return (
     <Radio.Group
+      name="favoriteFramework"
      ${props}
     >
       <Radio value="react" label="React" />
@@ -20,7 +22,7 @@ function Demo() {
 
 function Wrapper(props: RadioGroupProps) {
   return (
-    <Radio.Group defaultValue="react" {...props}>
+    <Radio.Group defaultValue="react" name="favoriteFramework" {...props}>
       <Radio value="react" label="React" />
       <Radio value="svelte" label="Svelte" />
       <Radio value="ng" label="Angular" />

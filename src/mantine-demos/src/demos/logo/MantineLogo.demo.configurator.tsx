@@ -1,6 +1,6 @@
 import React from 'react';
 import { Group } from '@mantine/core';
-import { MantineLogo, MantineLogoProps } from '@mantine/ds';
+import { MantineDemo, MantineLogo, MantineLogoProps } from '@mantine/ds';
 
 function Wrapper(props: MantineLogoProps) {
   return (

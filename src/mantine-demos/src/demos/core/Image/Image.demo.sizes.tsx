@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Image, Group } from '@mantine/core';
 
 const image =

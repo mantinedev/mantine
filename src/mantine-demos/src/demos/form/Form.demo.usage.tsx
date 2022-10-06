@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useForm } from '@mantine/form';
 
 const code = `
@@ -50,6 +51,8 @@ function Demo() {
       email: '',
       termsOfService: false,
     },
+
+    validateInputOnBlur: ['email'],
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),

@@ -132,7 +132,12 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   );
 
   const _description = description && (
-    <InputDescription key="description" {...sharedProps} {...descriptionProps}>
+    <InputDescription
+      key="description"
+      {...descriptionProps}
+      {...sharedProps}
+      size={descriptionProps?.size || sharedProps.size}
+    >
       {description}
     </InputDescription>
   );
@@ -140,7 +145,12 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>((props
   const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
   const _error = typeof error !== 'boolean' && error && (
-    <InputError {...errorProps} key="error" {...sharedProps}>
+    <InputError
+      {...errorProps}
+      {...sharedProps}
+      size={errorProps?.size || sharedProps.size}
+      key="error"
+    >
       {error}
     </InputError>
   );

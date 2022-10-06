@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Badge } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useReducedMotion } from '@mantine/hooks';
 
 const code = `

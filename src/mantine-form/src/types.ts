@@ -41,7 +41,7 @@ export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Valu
 
 export type LooseKeys<Values> = keyof Values | (string & {});
 
-export type SetValues<Values> = React.Dispatch<React.SetStateAction<Values>>;
+export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Values>>>;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
 export type SetFormStatus = React.Dispatch<React.SetStateAction<FormStatus>>;
 
@@ -109,6 +109,7 @@ export interface UseFormInput<Values> {
   validate?: FormValidateInput<Values>;
   clearInputErrorOnChange?: boolean;
   validateInputOnChange?: boolean | LooseKeys<Values>[];
+  validateInputOnBlur?: boolean | LooseKeys<Values>[];
 }
 
 export interface UseFormReturnType<Values> {
@@ -137,3 +138,7 @@ export interface UseFormReturnType<Values> {
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
 }
+
+export type UseForm<Values = Record<string, unknown>> = (
+  input?: UseFormInput<Values>
+) => UseFormReturnType<Values>;

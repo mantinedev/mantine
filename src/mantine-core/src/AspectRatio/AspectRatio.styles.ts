@@ -4,7 +4,7 @@ export interface AspectRatioStylesParams {
   ratio: number;
 }
 
-export default createStyles((theme, { ratio }: AspectRatioStylesParams) => ({
+export default createStyles((_theme, { ratio }: AspectRatioStylesParams) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Calendar } from '@mantine/dates';
 
 const code = `
@@ -7,13 +8,12 @@ import { useState } from 'react';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState<Date | null>(new Date());
 
   return (
     <Calendar
       value={value}
       onChange={setValue}
-      month={value}
       fullWidth
       size="xl"
       styles={(theme) => ({
@@ -40,7 +40,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<Date | null>(null);
   return (
     <Group position="center">
       <Calendar

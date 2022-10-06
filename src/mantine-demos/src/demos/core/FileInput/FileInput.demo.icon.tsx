@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconUpload } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { FileInput } from '@mantine/core';
 
 const code = `

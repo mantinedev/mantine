@@ -97,6 +97,9 @@ export interface SelectProps
   /** Called each time search value changes */
   onSearchChange?(query: string): void;
 
+  /** Controlled search input value */
+  searchValue?: string;
+
   /** Allow creatable option  */
   creatable?: boolean;
 
@@ -187,6 +190,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
     limit,
     disabled,
     onSearchChange,
+    searchValue,
     rightSection,
     rightSectionWidth,
     creatable,
@@ -253,7 +257,13 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
   });
 
   const selectedValue = sortedData.find((item) => item.value === _value);
-  const [inputValue, setInputValue] = useState(selectedValue?.label || '');
+
+  const [inputValue, setInputValue] = useUncontrolled({
+    value: searchValue,
+    defaultValue: selectedValue?.label || '',
+    finalValue: undefined,
+    onChange: onSearchChange,
+  });
 
   const handleSearchChange = (val: string) => {
     setInputValue(val);
@@ -457,8 +467,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
       case ' ': {
         if (!searchable) {
+          event.preventDefault();
           if (filteredData[hovered] && dropdownOpened) {
-            event.preventDefault();
             handleItemSelect(filteredData[hovered]);
           } else {
             setDropdownOpened(true);
@@ -516,15 +526,9 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
 
   const handleInputClick = () => {
     if (!readOnly) {
-      let dropdownOpen = true;
+      setDropdownOpened(!dropdownOpened);
 
-      if (!searchable) {
-        dropdownOpen = !dropdownOpened;
-      }
-
-      setDropdownOpened(dropdownOpen);
-
-      if (_value && dropdownOpen) {
+      if (_value && !dropdownOpened) {
         setHovered(selectedItemIndex);
         scrollSelectedItemIntoView();
       }
@@ -578,7 +582,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>((props, ref) => 
               aria-autocomplete="list"
               aria-controls={shouldShowDropdown ? `${inputProps.id}-items` : null}
               aria-activedescendant={hovered >= 0 ? `${inputProps.id}-${hovered}` : null}
-              onClick={handleInputClick}
+              onMouseDown={handleInputClick}
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               readOnly={!searchable || readOnly}

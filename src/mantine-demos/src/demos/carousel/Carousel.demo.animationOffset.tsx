@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 const code = `

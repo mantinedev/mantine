@@ -11,6 +11,6 @@ export default createStyles((theme, _params: AccordionStylesParams) => ({
 
   content: {
     padding: theme.spacing.md,
-    paddingTop: theme.spacing.xs / 2,
+    paddingTop: `calc(${theme.spacing.xs}px / 2)`,
   },
 }));

@@ -51,4 +51,4 @@ interface MantineConfiguratorDemo extends MantineDemoBase {
   };
 }
 
-type MantineDemo = MantineCodeDemo | MantineConfiguratorDemo;
+export type MantineDemo = MantineCodeDemo | MantineConfiguratorDemo;

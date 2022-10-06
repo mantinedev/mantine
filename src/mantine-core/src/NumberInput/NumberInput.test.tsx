@@ -131,6 +131,26 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(6.12);
   });
 
+  it('supports removing trailing zeros with precision', async () => {
+    const spy = jest.fn();
+    render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
+    await enterText('6.12300000');
+    expect(spy).toHaveBeenLastCalledWith(6.123);
+    blurInput();
+    expectValue('6.123');
+    expect(spy).toHaveBeenLastCalledWith(6.123);
+  });
+
+  it('supports removing trailing zeros and decimal separator with precision', async () => {
+    const spy = jest.fn();
+    render(<NumberInput precision={8} removeTrailingZeros onChange={spy} />);
+    await enterText('6.00000000');
+    expect(spy).toHaveBeenLastCalledWith(6);
+    blurInput();
+    expectValue('6');
+    expect(spy).toHaveBeenLastCalledWith(6);
+  });
+
   it('sets state to min if input is empty and is incremented/decremented', async () => {
     const spy = jest.fn();
     const { container } = render(<NumberInput max={10} min={0} step={6} onChange={spy} />);

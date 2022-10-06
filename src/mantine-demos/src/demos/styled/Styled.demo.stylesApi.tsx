@@ -1,5 +1,6 @@
 import React from 'react';
 import { Slider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import styled from '@emotion/styled';
 
 const code = `

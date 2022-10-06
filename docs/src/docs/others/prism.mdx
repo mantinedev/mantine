@@ -82,10 +82,10 @@ You can force dark/light color scheme by setting `colorScheme` prop:
 
 ## Custom themes
 
-Use `getPrismTheme` prop to change prism colors, you can use premade themes from [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
+Use `getPrismTheme` prop to change prism colors. You can use premade themes from [prism-react-renderer](https://github.com/FormidableLabs/prism-react-renderer)
 package or build your own using [Mantine theme](/theming/theme-object/) colors. `getPrismTheme` prop accepts
-a function with two arguments: first is [Mantine theme object](/theming/theme-object/), second in color scheme (light or dark),
-the function must return prism theme object:
+a function with two arguments: first is [Mantine theme object](/theming/theme-object/), second is color scheme (`light` or `dark`).
+The function must return prism theme object:
 
 <Demo data={PrismDemos.prismTheme} />
 

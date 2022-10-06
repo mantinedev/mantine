@@ -32,7 +32,7 @@ export default createStyles(
     const verticalOrientationStyles = {
       step: {
         justifyContent: 'flex-start',
-        minHeight: `${_iconSize + theme.spacing.xl + separatorDistanceFromIcon}px`,
+        minHeight: `calc(${_iconSize}px + ${theme.spacing.xl}px + ${separatorDistanceFromIcon}px)`,
         marginTop: `${separatorDistanceFromIcon}px`,
         overflow: 'hidden',
 

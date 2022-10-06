@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDebouncedValue } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput, Text, Button } from '@mantine/core';
 
 const code = `
