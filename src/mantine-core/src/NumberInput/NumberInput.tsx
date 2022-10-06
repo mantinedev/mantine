@@ -169,7 +169,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>((props
     if (val === undefined) return undefined;
 
     let result = val.toFixed(precision);
-    if (removeTrailingZeros) {
+    if (removeTrailingZeros && precision > 0) {
       result = result.replace(new RegExp(`[0]{0,${precision}}$`), '');
       if (result.endsWith('.') || result.endsWith(decimalSeparator)) {
         result = result.slice(0, -1);
