@@ -35,12 +35,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>(
       () => ctx.trigger === 'hover' && ctx.closeDropdown()
     );
 
-    useEffect(
-      () => () => {
-        ctx.closeDropdown();
-      },
-      [children]
-    );
+    useEffect(() => ctx.closeDropdown(), [children]);
 
     return (
       <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
