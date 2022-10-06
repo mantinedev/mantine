@@ -184,7 +184,7 @@ export const CalendarBase = forwardRef<HTMLDivElement, CalendarBaseProps>(
         ? payload.cellIndex
         : payload.cellIndex + (direction === 'right' ? n : -n);
 
-      const dayToFocus = daysRefs.current[monthIndex][rowIndex][cellIndex];
+      const dayToFocus = daysRefs.current[monthIndex][rowIndex]?.[cellIndex];
 
       if (!dayToFocus) {
         return;
