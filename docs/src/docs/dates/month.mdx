@@ -140,3 +140,80 @@ with [Styles API](/styles/styles-api/). `day` selector has the following `data-`
 [RangeCalendar](/dates/calendar/) example:
 
 <Demo data={RangeCalendarDemos.stylesApi} />
+
+## Add styles to month with Styles API
+
+to change style of all element and style the active element: 
+```tsx
+import { DateRangePicker, DateRangePickerValue } from "@mantine/dates";
+import { IconCalendar } from "@tabler/icons";
+
+function DatePicker() {
+	const [date, setDate] = useState([new Date(), new Date()]);
+	
+  return (
+		<DateRangePicker
+			icon={<IconCalendar size={16} />}
+			label='Pick date'
+			placeholder='Pick dates range'
+			value={date}
+			onChange={setDate}
+			styles={(theme) => ({
+				monthPickerControlActive: {
+					background: theme.colors.cyan[7],
+					":hover": {
+						background: theme.colors.cyan[9]
+					}
+				},
+				monthPickerControl: {
+					background: '#eee',
+					borderRadius: 0,
+					":hover": {
+						background: theme.colors.cyan[2]
+					}
+				}
+			})}
+		/>
+	);
+}
+
+```
+
+## Add styles to year with Styles API
+
+to change style of all element and style the active element: 
+
+```tsx
+import { DateRangePicker, DateRangePickerValue } from "@mantine/dates";
+import { IconCalendar } from "@tabler/icons";
+
+function DatePicker() {
+	const [date, setDate] = useState([new Date(), new Date()]);
+	
+  return (
+		<DateRangePicker
+			icon={<IconCalendar size={16} />}
+			label='Pick date'
+			placeholder='Pick dates range'
+			value={date}
+			onChange={setDate}
+			styles={(theme) => ({
+          yearPickerControl: {
+            background: '#eee',
+            borderRadius: 0,
+            ":hover": {
+              background: theme.colors.cyan[2]
+            }
+          },
+          yearPickerControlActive: {
+            background: theme.colors.cyan[7],
+            ":hover": {
+              background: theme.colors.cyan[9]
+            }
+          }
+			})}
+		/>
+	);
+}
+
+```
