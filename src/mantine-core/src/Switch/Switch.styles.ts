@@ -178,6 +178,8 @@ export default createStyles(
 
       labelWrapper: {
         ...theme.fn.fontStyles(),
+        display: 'flex',
+        alignItems: 'flex-start',
         WebkitTapHighlightColor: 'transparent',
         fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
         fontFamily: theme.fontFamily,
