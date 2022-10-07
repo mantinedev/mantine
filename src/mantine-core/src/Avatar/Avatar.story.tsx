@@ -1,7 +1,11 @@
 import React from 'react';
+import { MantineProvider } from '@mantine/styles';
 import { Tooltip } from '../Tooltip';
+import { Center } from '../Center';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
+import { Box } from '../Box';
+import { Text } from '../Text';
 import { Avatar } from './Avatar';
 import { AVATAR_VARIANTS } from './Avatar.styles';
 
@@ -70,6 +74,51 @@ export function Variants() {
           ))}
         </Group>
       </Stack>
+    </div>
+  );
+}
+
+export function Gradient() {
+  return (
+    <div style={{ padding: '40px' }}>
+      <Group>
+        <Box>
+          <Text>MantineProvider</Text>
+          <MantineProvider
+            theme={{
+              defaultGradient: {
+                from: 'red.2',
+                to: 'orange.8',
+                deg: 45,
+              },
+            }}
+          >
+            <Center>
+              <Avatar variant="gradient" radius="md">
+                ZH
+              </Avatar>
+            </Center>
+          </MantineProvider>
+        </Box>
+
+        <Box>
+          <Text>Default</Text>
+          <Center>
+            <Avatar variant="gradient" radius="md">
+              ZH
+            </Avatar>
+          </Center>
+        </Box>
+
+        <Box>
+          <Text>Specific</Text>
+          <Center>
+            <Avatar variant="gradient" gradient={{ from: 'orange', to: 'red' }} radius="md">
+              ZH
+            </Avatar>
+          </Center>
+        </Box>
+      </Group>
     </div>
   );
 }
