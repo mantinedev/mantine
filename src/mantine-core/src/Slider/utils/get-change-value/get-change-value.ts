@@ -25,6 +25,11 @@ export function getChangeValue({
     return max;
   }
 
+  const valueIsMin = dx + min <= min;
+  if (valueIsMin) {
+    return min;
+  }
+
   const minIsNegative = min <= 0;
   const nextValue =
     dx !== 0 ? Math.round(dx / step) * step + (minIsNegative ? min : 0) : Math.min(min, 0);
