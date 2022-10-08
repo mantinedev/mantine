@@ -252,7 +252,7 @@ export function Spotlight({
                   placeholder={searchPlaceholder}
                   icon={searchIcon}
                   onMouseEnter={resetHovered}
-                  autoComplete="chrome-please-just-do-not-show-it-thanks"
+                  autoComplete="off"
                 />
                 <ActionsWrapper>
                   <ActionsList
