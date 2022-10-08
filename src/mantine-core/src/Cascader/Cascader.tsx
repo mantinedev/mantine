@@ -7,9 +7,9 @@ import {
   MantineTransition,
   useInputProps,
 } from '@mantine/core';
-import { getSelectRightSectionProps } from '@mantine/core/src/Select/SelectRightSection/get-select-right-section-props';
 import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { getSelectRightSectionProps } from '../Select/SelectRightSection/get-select-right-section-props';
 import { useStyles } from './Cascader.styles';
 import { CascaderPopover } from './CascaderPopover/CascaderPopover';
 import { CascaderItems } from './CascaderItems/CascaderItems';
