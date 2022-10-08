@@ -1,5 +1,5 @@
 import { DefaultProps, MantineSize, Selectors } from '@mantine/core';
-import { SelectScrollArea } from '@mantine/core/src/components/Select/SelectScrollArea/SelectScrollArea';
+import { SelectScrollArea } from '@mantine/core/src/Select/SelectScrollArea/SelectScrollArea';
 import React, { forwardRef } from 'react';
 import { CascaderItem } from '../types';
 import { useStyles } from './CascaderItemsList.styles';

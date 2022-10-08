@@ -7,7 +7,7 @@ import {
   MantineTransition,
   useInputProps,
 } from '@mantine/core';
-import { getSelectRightSectionProps } from '@mantine/core/src/components/Select/SelectRightSection/get-select-right-section-props';
+import { getSelectRightSectionProps } from '@mantine/core/src/Select/SelectRightSection/get-select-right-section-props';
 import { useDidUpdate, useMergedRef, useScrollIntoView, useUncontrolled } from '@mantine/hooks';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useStyles } from './Cascader.styles';
@@ -157,6 +157,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
     onKeyDown,
     onBlur,
     onFocus,
+    readOnly,
     transition,
     transitionDuration,
     initiallyOpened,
@@ -537,6 +538,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
                 onClear: handleClear,
                 error: wrapperProps.error,
                 clearButtonTabIndex,
+                readOnly,
               })}
             />
           </div>
