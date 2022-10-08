@@ -53,6 +53,7 @@ export function CascaderItems({
         __staticSelector={__staticSelector}
         onItemHover={onItemHover}
         onItemSelect={onItemSelect}
+        expandOnHover={expandOnHover}
         itemsRefs={itemsRefs}
         itemComponent={itemComponent}
         size={size}
@@ -79,6 +80,7 @@ export function CascaderItems({
                 __staticSelector={__staticSelector}
                 onItemHover={onItemHover}
                 onItemSelect={onItemSelect}
+                expandOnHover={expandOnHover}
                 itemsRefs={itemsRefs}
                 itemComponent={itemComponent}
                 size={size}

@@ -199,7 +199,10 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   const menuRefs = useRef<HTMLDivElement[]>([]);
   const itemsRefs = useRef<HTMLElement[][]>([]);
   const [direction, setDirection] = useState<React.CSSProperties['flexDirection']>('row');
-  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView({
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<
+    HTMLElement,
+    HTMLDivElement
+  >({
     duration: 0,
     offset: 5,
     cancelable: false,
@@ -308,6 +311,10 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         (index) => index > 0
       );
 
+      const menu = menuRefs.current[current.length - 1];
+
+      scrollableRef.current = menu;
+
       targetRef.current = itemsRefs.current[current.length - 1][current[current.length - 1]];
       scrollIntoView({ alignment: 'center' });
       return nextIndexes;
@@ -328,6 +335,10 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             1
       );
 
+      const menu = menuRefs.current[current.length - 1];
+
+      scrollableRef.current = menu;
+
       targetRef.current = itemsRefs.current[current.length - 1][current[current.length - 1]];
       scrollIntoView({ alignment: 'center' });
       return nextIndexes;
@@ -341,7 +352,6 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         const menu = menuRefs.current[i];
 
         // set menu scroll area as scrollable ref
-        // @ts-expect-error
         scrollableRef.current = menu;
 
         // set target ref to currently selected item
@@ -556,6 +566,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
             classNames={classNames}
             styles={styles}
             isItemSelected={(val, nesting) =>
+              // if user has same value at same nesting & same index, it will show up as selected even if not
               selectedValue && getItem(formattedData, nesting, selectedValue)?.value === val
             }
             uuid={inputProps.id}

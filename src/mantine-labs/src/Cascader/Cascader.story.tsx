@@ -70,4 +70,9 @@ storiesOf('@mantine/labs/Cascader/stories', module)
         defaultValue={['i']}
       />
     </Wrapper>
+  ))
+  .add('Expand On Hover', () => (
+    <Wrapper>
+      <Cascader data={DEFAULT_DATA} expandOnHover />
+    </Wrapper>
   ));

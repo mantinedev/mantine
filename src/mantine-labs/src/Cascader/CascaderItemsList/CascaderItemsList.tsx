@@ -15,6 +15,7 @@ export interface CascaderMenuProps extends DefaultProps<CascaderMenuStyles> {
   itemsRefs?: React.MutableRefObject<HTMLElement[][]>;
   onItemHover: React.Dispatch<React.SetStateAction<number[]>>;
   onItemSelect(item: CascaderItem, index: number): void;
+  expandOnHover: boolean;
   size: MantineSize;
   itemComponent: React.FC<any>;
   menuComponent: React.FC<any>;
@@ -35,6 +36,7 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
       itemsRefs,
       onItemHover,
       onItemSelect,
+      expandOnHover,
       size,
       nesting,
       maxDropdownHeight,
@@ -59,22 +61,28 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
           {data.map((item, index) => {
             const selected = isItemSelected(item.value, nesting);
             const isHovered = hovered[nesting] === index;
+            const hasChildren = item.children && item.children.length > 0;
             return (
               <Item
                 key={item.value}
                 size={size}
-                hasChildren={item.children && item.children.length > 0}
+                hasChildren={hasChildren}
                 className={classes.item}
                 data-disabled={item.disabled || undefined}
                 data-hovered={(!item.disabled && isHovered) || undefined}
                 data-selected={(!item.disabled && selected) || undefined}
-                onMouseEnter={() =>
-                  onItemHover((prev) =>
-                    prev.length === nesting
-                      ? [...prev, index] // higher nesting level
-                      : [...prev.slice(0, nesting), index] // lower or same nesting level
-                  )
-                }
+                onMouseEnter={() => {
+                  onItemHover(
+                    (prev) =>
+                      prev.length === nesting
+                        ? [...prev, index] // higher nesting level
+                        : [...prev.slice(0, nesting), index] // lower or same nesting level
+                  );
+                  if (expandOnHover && hasChildren) {
+                    // selects item if it has no children (expand on hover)
+                    onItemSelect(item, index);
+                  }
+                }}
                 id={`${uuid}-${nesting}-${index}`}
                 role="option"
                 tabIndex={-1}
