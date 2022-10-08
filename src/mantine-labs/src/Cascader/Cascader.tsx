@@ -226,9 +226,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
   });
 
   const selectedValue = findSelectedValue(formattedData, _value);
-  const [inputValue, setInputValue] = useState(
-    getValueFromIndexes(formattedData, selectedValue)
-  );
+  const [inputValue, setInputValue] = useState(getValueFromIndexes(formattedData, selectedValue));
 
   const handleClear = () => {
     handleChange(null);
@@ -280,10 +278,11 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
         )
       );
     } else {
-      handleChange(getValueFromIndexes(formattedData, hovered));
+      const newValue = getValueFromIndexes(formattedData, hovered);
+      handleChange(newValue);
 
       if (!controlled) {
-        setInputValue(getValueFromIndexes(formattedData, hovered));
+        setInputValue(newValue);
       }
       setHovered((prev) => [...prev, index]);
       setDropdownOpened(false);
@@ -337,7 +336,7 @@ export const Cascader = forwardRef<HTMLInputElement, CascaderProps>((props, ref)
 
   const scrollSelectedItemsIntoView = () =>
     window.setTimeout(() => {
-      hovered.forEach((item, i) => {
+      selectedValue.forEach((item, i) => {
         // get menu the item is in
         const menu = menuRefs.current[i];
 
