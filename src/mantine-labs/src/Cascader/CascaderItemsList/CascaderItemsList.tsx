@@ -69,13 +69,10 @@ export const CascaderItemsList = forwardRef<HTMLDivElement, CascaderMenuProps>(
                 data-hovered={(!item.disabled && isHovered) || undefined}
                 data-selected={(!item.disabled && selected) || undefined}
                 onMouseEnter={() =>
-                  onItemHover(
-                    (prev) =>
-                      prev.length === nesting
-                        ? [...prev, index] // higher nesting level
-                        : prev.length - 1 === nesting
-                        ? [...prev.slice(0, prev.length - 1), index] // same nesting level
-                        : [...prev.slice(0, prev.length - (nesting + 2)), index] // lower nesting level
+                  onItemHover((prev) =>
+                    prev.length === nesting
+                      ? [...prev, index] // higher nesting level
+                      : [...prev.slice(0, nesting), index] // lower or same nesting level
                   )
                 }
                 id={`${uuid}-${nesting}-${index}`}
