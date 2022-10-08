@@ -9,7 +9,7 @@ description: 'Switch between different views'
 componentPrefix: 'Tabs'
 props: ['Tabs', 'Tab', 'TabsList', 'TabsPanel']
 import: "import { Tabs } from '@mantine/core';"
-source: 'mantine-core/src/components/Tabs/Tabs.tsx'
+source: 'mantine-core/src/Tabs/Tabs.tsx'
 docs: 'core/Tabs.mdx'
 styles: ['Tabs']
 ---
@@ -29,10 +29,10 @@ import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const [tab, setTab] = useState('first');
+  const [activeTab, setActiveTab] = useState<string | null>('first');
 
   return (
-    <Tabs value={activeTab} onTabChange={setTab}>
+    <Tabs value={activeTab} onTabChange={setActiveTab}>
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>
@@ -117,6 +117,31 @@ By default, active cannot be deactivated. To allow that set `allowTabDeactivatio
 
 <Demo data={TabsDemos.deactivate} demoProps={{ toggle: true }} />
 
+## Unmount inactive tabs
+
+By default, inactive `Tabs.Panel` will stay mounted, to unmount inactive tabs, set `keepMounted={false}` on Tabs.
+This is useful when you want to render components that impact performance inside `Tabs.Panel`. Note that
+components that are rendered inside `Tabs.Panel` will reset their state on each mount (tab change).
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+// Second tab panel will be mounted only when user activates second tab
+function Demo() {
+  return (
+    <Tabs keepMounted={false} defaultValue="first">
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="first">First panel</Tabs.Panel>
+      <Tabs.Panel value="second">Second panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+
 ## Unstyled Tabs
 
 Set `unstyled` prop on Tabs component to remove all non-essential library styles.
@@ -157,7 +182,7 @@ function Demo() {
 ```
 
 ```tsx
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Tabs } from '@mantine/core';
 
 function Demo() {
@@ -186,7 +211,10 @@ function Demo() {
   const router = useRouter();
 
   return (
-    <Tabs value={router.query.activeTab} onTabChange={(value) => router.push(`/tabs/${value}`)}>
+    <Tabs
+      value={router.query.activeTab as string}
+      onTabChange={(value) => router.push(`/tabs/${value}`)}
+    >
       <Tabs.List>
         <Tabs.Tab value="first">First tab</Tabs.Tab>
         <Tabs.Tab value="second">Second tab</Tabs.Tab>

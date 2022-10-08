@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Chip, ChipProps, Group } from '@mantine/core';
 
 function Wrapper(props: ChipProps) {
@@ -33,7 +34,6 @@ export const configurator: MantineDemo = {
       initialValue: 'outline',
       defaultValue: 'outline',
     },
-    { name: 'spacing', type: 'size', initialValue: 'xs', defaultValue: 'xs' },
     { name: 'size', type: 'size', initialValue: 'sm', defaultValue: 'sm' },
     { name: 'radius', type: 'size', initialValue: 'xl', defaultValue: 'xl' },
   ],

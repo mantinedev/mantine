@@ -60,9 +60,9 @@ const defaultProps: Partial<DatePickerProps> = {
   clearable: true,
   disabled: false,
   fixOnBlur: true,
-  withinPortal: true,
+  withinPortal: false,
   firstDayOfWeek: 'monday',
-  openDropdownOnClear: true,
+  openDropdownOnClear: false,
 };
 
 export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
@@ -116,6 +116,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       openDropdownOnClear,
       unstyled,
       weekendDays,
+      yearLabelFormat,
+      nextDecadeLabel,
+      nextYearLabel,
+      previousDecadeLabel,
+      previousYearLabel,
       ...others
     } = useComponentDefaultProps('DatePicker', defaultProps, props);
 
@@ -155,7 +160,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       }
 
       if (value instanceof Date && !focused) {
-        setInputState(dayjs(value).locale(finalLocale).format(dateFormat));
+        setInputState(upperFirst(dayjs(value).locale(finalLocale).format(dateFormat)));
       }
     }, [value, focused]);
 
@@ -285,6 +290,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           excludeDate={excludeDate}
           __staticSelector="DatePicker"
           fullWidth={dropdownType === 'modal'}
+          __stopPropagation={dropdownType !== 'modal'}
           size={dropdownType === 'modal' ? 'lg' : calendarSize}
           firstDayOfWeek={firstDayOfWeek}
           preventFocus={allowFreeInput}
@@ -296,6 +302,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           renderDay={renderDay}
           unstyled={unstyled}
           weekendDays={weekendDays}
+          yearLabelFormat={yearLabelFormat}
+          nextDecadeLabel={nextDecadeLabel}
+          nextYearLabel={nextYearLabel}
+          previousDecadeLabel={previousDecadeLabel}
+          previousYearLabel={previousYearLabel}
         />
       </DatePickerBase>
     );

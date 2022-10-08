@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconCircleX } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Stepper } from '@mantine/core';
 
 const code = `

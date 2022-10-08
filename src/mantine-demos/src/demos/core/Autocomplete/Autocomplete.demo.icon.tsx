@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconHash } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
@@ -7,7 +8,7 @@ import { Autocomplete } from '@mantine/core';
 import { IconHash } from '@tabler/icons';
 
 function Demo() {
-  return <Autocomplete icon={<IconHash />} />;
+  return <Autocomplete icon={<IconHash />} data={['React', 'Angular', 'Svelte', 'Vue']} />;
 }
 `;
 

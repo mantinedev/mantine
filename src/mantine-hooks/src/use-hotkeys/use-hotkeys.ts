@@ -7,7 +7,10 @@ export type HotkeyItem = [string, (event: KeyboardEvent) => void];
 
 function shouldFireEvent(event: KeyboardEvent) {
   if (event.target instanceof HTMLElement) {
-    return !['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName);
+    return (
+      !event.target.isContentEditable &&
+      !['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)
+    );
   }
   return true;
 }

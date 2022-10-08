@@ -1,10 +1,11 @@
 import React from 'react';
 import { Group, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { openContextModal } from '@mantine/modals';
 
 const code = `
 import { Button, Group } from '@mantine/core';
-import { useModals } from '@mantine/modals';
+import { openContextModal } from '@mantine/modals';
 
 function Demo() {
   return (

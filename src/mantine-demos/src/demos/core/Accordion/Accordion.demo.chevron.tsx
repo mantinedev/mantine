@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPlus } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 const code = `
@@ -9,7 +10,7 @@ import { IconPlus } from '@tabler/icons';
 function Demo() {
   return (
     <Accordion
-      icon={<IconPlus size={16} />}
+      chevron={<IconPlus size={16} />}
       styles={{
         chevron: {
           '&[data-rotate]': {

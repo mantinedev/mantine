@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Box, NavLink, Group } from '@mantine/core';
 
 const codeTemplate = (props: string) => `
@@ -28,8 +29,7 @@ function Demo() {
       description={item.description}
       rightSection={item.rightSection}
       icon={<item.icon size={16} stroke={1.5} />}
-      onClick={() => setActive(index)}
-     ${props}
+      onClick={() => setActive(index)}${props.length === 0 ? '' : `\n     ${props}`}
     />
   ));
 

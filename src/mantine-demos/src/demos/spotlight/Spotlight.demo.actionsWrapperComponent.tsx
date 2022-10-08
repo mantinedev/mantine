@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconSearch } from '@tabler/icons';
 import { Group, Text, Anchor } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -40,7 +41,7 @@ function Demo() {
       actionsWrapperComponent={ActionsWrapper}
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

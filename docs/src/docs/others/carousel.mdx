@@ -19,18 +19,18 @@ import { CarouselDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on @mantine/core and @mantine/hooks.
-
-Install with npm:
-
-```bash
-npm install embla-carousel-react @mantine/carousel @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
 ```bash
-yarn add embla-carousel-react @mantine/carousel @mantine/core @mantine/hooks
+yarn add embla-carousel-react @mantine/carousel
+```
+
+Install with npm:
+
+```bash
+npm install embla-carousel-react @mantine/carousel
 ```
 
 ## Usage
@@ -96,6 +96,30 @@ You can replace default next/previous controls icons with any React nodes:
 
 <Demo data={CarouselDemos.icons} />
 
+## 100% height
+
+Set `height="100%"` to make Carousel take 100% height of the container. Note that in this case:
+
+- container element must have `display: flex` styles
+- carousel root element must have `flex: 1` styles
+- container element must have fixed height
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+export function PercentageHeight() {
+  return (
+    <div style={{ height: 400, display: 'flex' }}>
+      <Carousel withIndicators height="100%" sx={{ flex: 1 }}>
+        <Carousel.Slide>1</Carousel.Slide>
+        <Carousel.Slide>2</Carousel.Slide>
+        <Carousel.Slide>3</Carousel.Slide>
+      </Carousel>
+    </div>
+  );
+}
+```
+
 ## Get embla instance
 
 You can get [embla instance](https://www.embla-carousel.com/api/methods/) with `getEmblaApi` prop.
@@ -138,3 +162,18 @@ Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/)
 ### Cards carousel
 
 <Demo data={CarouselDemos.cards} demoProps={{ toggle: true }} />
+
+## Carousel container animation offset
+
+Embla carousel only reads slides positions and sizes upon initialization. When you are using Carousel
+component inside animated component you may experience an issue with incorrect slides offset after
+animation finishes.
+
+Example of incorrect slides offset calculation (scroll though slides):
+
+<Demo data={CarouselDemos.brokenAnimation} demoProps={{ toggle: true }} />
+
+To solve this issue use `useAnimationOffsetEffect` hook exported from `@mantine/carousel` package.
+It accepts embla instance as first argument and transition duration as second:
+
+<Demo data={CarouselDemos.animationOffset} />

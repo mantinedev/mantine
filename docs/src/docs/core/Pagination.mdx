@@ -8,7 +8,7 @@ category: 'navigation'
 description: 'Display active page and navigate between multiple pages'
 props: ['Pagination']
 import: "import { Pagination } from '@mantine/core';"
-source: 'mantine-core/src/components/Pagination/Pagination.tsx'
+source: 'mantine-core/src/Pagination/Pagination.tsx'
 docs: 'core/Pagination.mdx'
 styles: ['Pagination']
 ---
@@ -44,6 +44,12 @@ Control amount of active item siblings with `siblings` prop:
 Control amount of items displayed after previous and before next buttons with `boundaries` prop:
 
 <Demo data={PaginationDemos.boundaries} />
+
+## Styles API
+
+You can use `data-active` attribute on `item` selector to change styles of selected item:
+
+<Demo data={PaginationDemos.stylesApi} />
 
 ## Accessibility
 

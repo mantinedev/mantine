@@ -33,6 +33,7 @@
 - [`@mantine/modals`](https://mantine.dev/others/modals/) – centralized modals manager
 - [`@mantine/ssr`](https://mantine.dev/guides/ssr/) – server side rendering utilities
 - [`@mantine/next`](https://mantine.dev/guides/next/) – server side rendering utilities for Next.js
+- [`@mantine/remix`](https://mantine.dev/guides/remix/) – server side rendering utilities for Remix
 - [`gatsby-plugin-mantine`](https://mantine.dev/guides/gatsby/) – Gatsby plugin to setup server side rendering
 - [`eslint-config-mantine`](https://www.npmjs.com/package/eslint-config-mantine) – ESLint and Prettier configuration that is used in all Mantine projects
 

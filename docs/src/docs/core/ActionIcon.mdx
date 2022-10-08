@@ -3,12 +3,13 @@ group: 'mantine-core'
 package: '@mantine/core'
 title: ActionIcon
 order: 1
+polymorphic: true
 slug: /core/action-icon/
 category: 'buttons'
 description: 'Icon button'
 props: ['ActionIcon']
 import: "import { ActionIcon } from '@mantine/core';"
-source: 'mantine-core/src/components/ActionIcon/ActionIcon.tsx'
+source: 'mantine-core/src/ActionIcon/ActionIcon.tsx'
 docs: 'core/ActionIcon.mdx'
 ---
 
@@ -24,7 +25,7 @@ import { ActionIconDemos } from '@mantine/demos';
 
 ## Colors
 
-ActionIcon `color` prop accepts only keys of `theme.colors`, hex, rgba, hsl and other CSS colors are not supported:
+ActionIcon `color` prop accepts only keys of `theme.colors` (including colors index reference, i. e. `blue.3`). Hex, rgba, hsl and other CSS colors are not supported:
 
 <Demo data={ActionIconDemos.colors} />
 
@@ -35,7 +36,7 @@ ActionIcon has the following attributes on the root element:
 - `data-disabled` when `disabled` prop is `true`
 - `data-loading` when `loading` prop is `true`
 
-You can customize disabled and loading styles with these attributes:
+You can customize `disabled` and `loading` styles with these attributes:
 
 ```tsx
 import { ActionIcon } from '@mantine/core';
@@ -52,7 +53,9 @@ function Demo() {
 }
 ```
 
-## Change root element
+## Polymorphic component
+
+ActionIcon is a [polymorphic component](/guides/polymorphic/), you can change root element:
 
 ```tsx
 import { ActionIcon } from '@mantine/core';
@@ -66,7 +69,7 @@ function Demo() {
 }
 ```
 
-## Usage with react-router
+### Usage with react-router
 
 ```tsx
 import { Link } from 'react-router-dom';
@@ -77,6 +80,21 @@ function Demo() {
     <ActionIcon component={Link} to="/react-router">
       React router link
     </ActionIcon>
+  );
+}
+```
+
+### Usage with Next.js
+
+```tsx
+import Link from 'next/link';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Link href="/hello" passHref>
+      <ActionIcon component="a">Next link</ActionIcon>
+    </Link>
   );
 }
 ```

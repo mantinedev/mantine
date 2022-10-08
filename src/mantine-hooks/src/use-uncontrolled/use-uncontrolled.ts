@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 interface UseUncontrolledInput<T> {
   /** Value for controlled state */
@@ -20,14 +20,18 @@ export function useUncontrolled<T>({
   finalValue,
   onChange = () => {},
 }: UseUncontrolledInput<T>): [T, (value: T) => void, boolean] {
-  const controlled = useRef(value !== undefined);
   const [uncontrolledValue, setUncontrolledValue] = useState(
     defaultValue !== undefined ? defaultValue : finalValue
   );
 
-  if (controlled.current) {
+  const handleUncontrolledChange = (val: T) => {
+    setUncontrolledValue(val);
+    onChange?.(val);
+  };
+
+  if (value !== undefined) {
     return [value as T, onChange, true];
   }
 
-  return [uncontrolledValue as T, setUncontrolledValue, false];
+  return [uncontrolledValue as T, handleUncontrolledChange, false];
 }

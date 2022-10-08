@@ -1,5 +1,6 @@
 import { Accordion, Box } from '@mantine/core';
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { baseAccordionMockdata } from './_mockdata';
 
 const code = `
@@ -18,7 +19,7 @@ function Demo() {
         <Accordion.Panel>Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles</Accordion.Panel>
       </Accordion.Item>
 
-      <Accordion.Item label="No annoying focus ring" value="focus-ring">
+      <Accordion.Item value="focus-ring">
         <Accordion.Control>No annoying focus ring</Accordion.Control>
         <Accordion.Panel>With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard</Accordion.Panel>
       </Accordion.Item>

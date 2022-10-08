@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { TooltipFloatingProps, Group, Tooltip, Box } from '@mantine/core';
 
 const Wrapper = (props: TooltipFloatingProps) => (

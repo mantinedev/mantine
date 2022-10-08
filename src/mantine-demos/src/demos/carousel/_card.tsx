@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: `Greycliff CF ${theme.fontFamily}`,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontWeight: 900,
     color: theme.white,
     lineHeight: 1.2,

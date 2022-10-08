@@ -10,7 +10,7 @@ import { ButtonDemos } from '@mantine/demos';
 # Polymorphic components
 
 Some of the Mantine components ([Button](/core/button/), [Text](/core/text/), etc.) accept special `component` prop that lets you
-change to root element. This guide will explain
+change to root element. This guide will explain how to correctly use them with HTML elements, custom components, Next.js Link and TypeScript.
 
 ## With HTML elements
 
@@ -82,6 +82,7 @@ function Demo() {
       component="a"
       href="#"
       // events and ref types cannot be inferred when component prop is set
+      // unless you set type explicitly
       onClick={(event) => console.log(event)}
       ref={(node) => console.log(node)}
     >
@@ -109,6 +110,7 @@ const _Button = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...other
   <Box
     // define default component, you will be able to override it with `component` prop from ...others
     component="button"
+    ref={ref}
     {...others}
   >
     {children}

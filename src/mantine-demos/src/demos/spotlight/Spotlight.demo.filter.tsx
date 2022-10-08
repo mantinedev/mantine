@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconSearch } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -15,7 +16,7 @@ function Demo() {
       }
       {...otherProps}
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

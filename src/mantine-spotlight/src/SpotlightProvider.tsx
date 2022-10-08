@@ -28,6 +28,9 @@ export interface SpotlightProviderProps extends InnerSpotlightProps {
 
   /** Should search be cleared when spotlight closes */
   cleanQueryOnClose?: boolean;
+
+  /** Spotlight will not render if disabled is set to true */
+  disabled?: boolean;
 }
 
 export function SpotlightProvider({
@@ -39,6 +42,7 @@ export function SpotlightProvider({
   onQueryChange,
   cleanQueryOnClose = true,
   transitionDuration = 150,
+  disabled = false,
   ...others
 }: SpotlightProviderProps) {
   const timeoutRef = useRef<number>(-1);
@@ -87,15 +91,17 @@ export function SpotlightProvider({
 
   return (
     <SpotlightContext.Provider value={ctx}>
-      <Spotlight
-        actions={actions}
-        onClose={close}
-        opened={opened}
-        query={query}
-        onQueryChange={handleQueryChange}
-        transitionDuration={transitionDuration}
-        {...others}
-      />
+      {!disabled && (
+        <Spotlight
+          actions={actions}
+          onClose={close}
+          opened={opened}
+          query={query}
+          onQueryChange={handleQueryChange}
+          transitionDuration={transitionDuration}
+          {...others}
+        />
+      )}
       {children}
     </SpotlightContext.Provider>
   );

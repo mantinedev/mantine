@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Autocomplete } from '@mantine/core';
 
 const code = `
@@ -8,10 +9,10 @@ function Demo() {
   return (
     <>
       {/* Error as boolean – red border color */}
-      <Autocomplete error />
+      <Autocomplete error data={['React', 'Angular', 'Svelte', 'Vue']} />
 
       {/* Error as React node – red border color and message below input */}
-      <Autocomplete error="Field is required" />
+      <Autocomplete error="Field is required" data={['React', 'Angular', 'Svelte', 'Vue']} />
     </>
   );
 }

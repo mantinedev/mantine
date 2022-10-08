@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Box, useMantineTheme } from '@mantine/core';
-import { Demo, TimelineDemos } from '@mantine/demos';
+import { TimelineDemos } from '@mantine/demos';
+import { Demo } from '@mantine/ds';
 import { PageSection } from '../PageSection/PageSection';
 
 export function CustomizeWithProps() {

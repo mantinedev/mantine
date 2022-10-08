@@ -17,18 +17,18 @@ import { NProgressDemos } from '@mantine/demos';
 
 ## Installation
 
-Package depends on @mantine/core and @mantine/hooks.
-
-Install with npm:
-
-```bash
-npm install @mantine/nprogress @mantine/core @mantine/hooks
-```
+Package depends on `@mantine/core` and `@mantine/hooks`.
 
 Install with yarn:
 
 ```bash
 yarn add @mantine/nprogress @mantine/core @mantine/hooks
+```
+
+Install with npm:
+
+```bash
+npm install @mantine/nprogress @mantine/core @mantine/hooks
 ```
 
 ## Setup NavigationProgress
@@ -39,11 +39,11 @@ Render `NavigationProgress` anywhere in your app within [MantineProvider](/themi
 import { MantineProvider } from '@mantine/core';
 import { NavigationProgress } from '@mantine/nprogress';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider>
       <NavigationProgress />
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -63,7 +63,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   startNavigationProgress,
-  resetNavigationProgress,
+  finishNavigationProgress,
   NavigationProgress,
 } from '@mantine/nprogress';
 
@@ -72,7 +72,7 @@ export function RouterTransition() {
 
   useEffect(() => {
     const handleStart = (url: string) => url !== router.asPath && startNavigationProgress();
-    const handleComplete = () => resetNavigationProgress();
+    const handleComplete = () => finishNavigationProgress();
 
     router.events.on('routeChangeStart', handleStart);
     router.events.on('routeChangeComplete', handleComplete);
@@ -85,7 +85,7 @@ export function RouterTransition() {
     };
   }, [router.asPath]);
 
-  return <NavigationProgress />;
+  return <NavigationProgress autoReset={true} />;
 }
 ```
 
@@ -107,4 +107,12 @@ export default function App(props: AppProps) {
     </MantineProvider>
   );
 }
+```
+
+## Accessibility
+
+`NavigationProgress` uses `Progress` component under the hood, to pass `aria-label` use `progressLabel` props
+
+```tsx
+<NavigationProgress progressLabel="Loading Page" />
 ```

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IconX, IconCheck } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 const code = `
@@ -58,7 +59,7 @@ function Demo() {
             onBlurCapture={() => setPopoverOpened(false)}
           >
             <PasswordInput
-              required
+              withAsterisk
               label="Your password"
               placeholder="Your password"
               value={value}
@@ -128,7 +129,7 @@ function Demo() {
             onBlurCapture={() => setPopoverOpened(false)}
           >
             <PasswordInput
-              required
+              withAsterisk
               label="Your password"
               placeholder="Your password"
               value={value}

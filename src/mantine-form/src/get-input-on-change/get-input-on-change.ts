@@ -8,14 +8,17 @@ export function getInputOnChange<Value>(
       setValue(val);
     } else if (typeof val === 'object' && 'nativeEvent' in val) {
       const { currentTarget } = val;
-      if (currentTarget instanceof HTMLTextAreaElement) {
-        setValue(currentTarget.value as any);
-      } else if (currentTarget instanceof HTMLInputElement) {
+      if (currentTarget instanceof HTMLInputElement) {
         if (currentTarget.type === 'checkbox') {
           setValue(currentTarget.checked as any);
         } else {
           setValue(currentTarget.value as any);
         }
+      } else if (
+        currentTarget instanceof HTMLTextAreaElement ||
+        currentTarget instanceof HTMLSelectElement
+      ) {
+        setValue(currentTarget.value as any);
       }
     } else {
       setValue(val);

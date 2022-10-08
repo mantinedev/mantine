@@ -1,6 +1,7 @@
 import React from 'react';
 import { Group, Button, Text } from '@mantine/core';
 import { openConfirmModal } from '@mantine/modals';
+import { MantineDemo } from '@mantine/ds';
 import { showNotification } from '@mantine/notifications';
 
 const code = `
@@ -28,6 +29,7 @@ function Demo() {
 function Demo() {
   const openModal = () =>
     openConfirmModal({
+      modalId: 'test-id',
       title: 'Please confirm your action',
       children: (
         <Text size="sm">

@@ -38,7 +38,7 @@ See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API
 On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
 
 ```tsx
-const [ref, ioEntry] = useIntersection();
+const { ref, entry } = useIntersection();
 
 // With regular element:
 <div ref={ref}>Observed</div>

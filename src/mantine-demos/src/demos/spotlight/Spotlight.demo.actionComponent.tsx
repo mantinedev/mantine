@@ -1,6 +1,7 @@
 import React from 'react';
 import { SpotlightAction, SpotlightActionProps } from '@mantine/spotlight';
 import { createStyles, UnstyledButton, Group, Text, Image, Center, Badge } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -106,7 +107,7 @@ function Demo() {
       searchPlaceholder="Search..."
       shortcut="mod + shift + I"
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

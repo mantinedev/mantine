@@ -8,7 +8,7 @@ category: 'layout'
 description: 'Compose elements and components in a horizontal flex container'
 props: ['Group']
 import: "import { Group } from '@mantine/core';"
-source: 'mantine-core/src/components/Group/Group.tsx'
+source: 'mantine-core/src/Group/Group.tsx'
 docs: 'core/Group.mdx'
 ---
 
@@ -20,21 +20,8 @@ import { GroupDemos } from '@mantine/demos';
 
 ## Group children
 
-Group component uses `className` prop to add styles to its children, child components must accept it::
-
-```tsx
-// Will not work with Group – component does not handle className
-const MyButton = ({ label }) => <button>{label}</button>;
-
-// Will work with Group – handles className
-const MyButton = ({ label, className }) => <button className={className}>{label}</button>;
-
-// Will work with Group – handles className
-const MyButton = ({ label, ...others }) => <button {...others}>{label}</button>;
-```
-
-**!important** Group will work only with React elements. Strings, numbers, fragments and other parts will
-not have correct styles:
+**!important** Group works correctly only with React elements.
+Strings, numbers, fragments may have incorrect styles if `grow` prop is set:
 
 ```tsx
 // Invalid Group usage, do not do this
@@ -46,6 +33,7 @@ function InvalidDemo() {
       First string
       <>
         <div>element inside fragment</div>
+        <div>another inside fragment</div>
       </>
       {20}
     </Group>

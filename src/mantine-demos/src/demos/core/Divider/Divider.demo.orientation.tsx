@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Divider, Group, Text } from '@mantine/core';
 
 const code = `
@@ -9,15 +10,15 @@ function Demo() {
   return (
     <Group>
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} orientation="vertical" />
+      <Divider orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="sm" orientation="vertical" />
+      <Divider size="sm" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="md" orientation="vertical" />
+      <Divider size="md" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="lg" orientation="vertical" />
+      <Divider size="lg" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="xl" orientation="vertical" />
+      <Divider size="xl" orientation="vertical" />
       <Text>Label</Text>
     </Group>
   );
@@ -28,15 +29,15 @@ function Demo() {
   return (
     <Group>
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} orientation="vertical" />
+      <Divider orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="sm" orientation="vertical" />
+      <Divider size="sm" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="md" orientation="vertical" />
+      <Divider size="md" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="lg" orientation="vertical" />
+      <Divider size="lg" orientation="vertical" />
       <Text>Label</Text>
-      <Divider sx={{ height: '24px' }} size="xl" orientation="vertical" />
+      <Divider size="xl" orientation="vertical" />
       <Text>Label</Text>
     </Group>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPhoto } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Group, ThemeIcon } from '@mantine/core';
 
 const code = `

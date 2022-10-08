@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from '@mantine/form';
 import { TextInput, Switch, Group, ActionIcon, Box, Text, Button, Code } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { IconTrash } from '@tabler/icons';
 
 const code = `
@@ -21,11 +22,14 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
-      <Switch label="Active" {...form.getInputProps(\`employees.\${index}.active\`)} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
+      />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
         <IconTrash size={16} />
       </ActionIcon>
@@ -81,11 +85,14 @@ function Demo() {
     <Group key={item.key} mt="xs">
       <TextInput
         placeholder="John Doe"
-        required
+        withAsterisk
         sx={{ flex: 1 }}
         {...form.getInputProps(`employees.${index}.name`)}
       />
-      <Switch label="Active" {...form.getInputProps(`employees.${index}.active`)} />
+      <Switch
+        label="Active"
+        {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
+      />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
         <IconTrash size={16} />
       </ActionIcon>

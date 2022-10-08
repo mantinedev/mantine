@@ -21,7 +21,5 @@ export default createStyles((theme, { radius }: DefaultActionStylesParams) => ({
     color: theme.colorScheme === 'dark' ? theme.colors.dark[2] : theme.colors.gray[6],
   },
 
-  actionBody: {
-    flex: 1,
-  },
+  actionBody: {},
 }));

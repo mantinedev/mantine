@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel, CarouselProps } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { useMantineTheme } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Card } from './_card';
 
 const code = `
@@ -21,7 +22,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: \`Greycliff CF \${theme.fontFamily}\`,
+    fontFamily: \`Greycliff CF, \${theme.fontFamily}\`,
     fontWeight: 900,
     color: theme.white,
     lineHeight: 1.2,

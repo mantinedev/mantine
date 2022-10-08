@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconSearch } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -11,7 +12,7 @@ import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons
 function SpotlightControl() {
   return (
     <Group position="center">
-      <Button onClick={openSpotlight}>Open spotlight</Button>
+      <Button onClick={() => openSpotlight()}>Open spotlight</Button>
     </Group>
   );
 }
@@ -36,7 +37,6 @@ const actions: SpotlightAction[] = [
     icon: <IconFileText size={18} />,
   },
 ];
-
 
 function Demo() {
   return (

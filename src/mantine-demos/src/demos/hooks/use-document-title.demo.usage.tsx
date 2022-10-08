@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDocumentTitle, randomId } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Button } from '@mantine/core';
 
 const code = `

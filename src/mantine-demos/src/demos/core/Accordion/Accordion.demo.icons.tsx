@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPhoto, IconPrinter, IconCameraSelfie } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Accordion, AccordionProps, useMantineTheme } from '@mantine/core';
 
 const code = `

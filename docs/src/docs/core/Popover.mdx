@@ -9,7 +9,7 @@ description: 'Display popover section relative to given target element'
 componentPrefix: 'Popover'
 props: ['Popover', 'PopoverTarget', 'PopoverDropdown']
 import: "import { Popover } from '@mantine/core';"
-source: 'mantine-core/src/components/Popover/Popover.tsx'
+source: 'mantine-core/src/Popover/Popover.tsx'
 docs: 'core/Popover.mdx'
 styles: ['Popover']
 ---
@@ -52,9 +52,15 @@ Controlled example with focus events:
 
 ## Focus trap
 
-If you need to use any interactive elements within Popover, set `trapFocus` prop:
+If you need to use any interactive elements within `Popover`, set `trapFocus` prop:
 
 <Demo data={PopoverDemos.form} />
+
+## Inline elements
+
+Enable `inline` middleware to use `Popover` with inline elements:
+
+<Demo data={PopoverDemos.inline} />
 
 ## Same width
 
@@ -82,7 +88,7 @@ strings, fragments, numbers and multiple elements/components are not supported a
 Custom components must provide a prop to get root element ref, all Mantine components support ref out of the box.
 
 ```tsx
-import { Popover, Badge } from '@mantine/core';
+import { Popover, Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -91,24 +97,77 @@ function Demo() {
         <button>Native button – ok</button>
       </Popover.Target>
 
-      <Popover.Target label="OK">
-        <Badge>Mantine component – ok</Badge>
+      {/* OK */}
+      <Popover.Target>
+        <Button>Mantine component – ok</Button>
       </Popover.Target>
 
-      <Popover.Target label="Throws">Raw string, NOT OK – will throw error</Popover.Target>
+      {/* String, NOT OK – will throw error */}
+      <Popover.Target>Raw string</Popover.Target>
 
       {/* Number, NOT OK – will throw error */}
-      <Popover.Target label="Throws">{2}</Popover.Target>
+      <Popover.Target>{2}</Popover.Target>
 
-      <Popover.Target label="Throws">
+      {/* Fragment, NOT OK – will throw error */}
+      <Popover.Target>
         <>Fragment, NOT OK, will throw error</>
       </Popover.Target>
 
-      <Popover.Target label="Throws">
+      {/* Multiple nodes, NOT OK – will throw error */}
+      <Popover.Target>
         <div>More that one node</div>
         <div>NOT OK, will throw error</div>
       </Popover.Target>
     </>
+  );
+}
+```
+
+## Required ref prop
+
+Custom components that are rendered inside `Popover.Target` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { Popover } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <MyComponent />
+      </Popover.Target>
+    </Popover>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { Popover } from '@mantine/core';
+
+const MyComponent = forwardRef((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <MyComponent />
+      </Popover.Target>
+    </Popover>
   );
 }
 ```

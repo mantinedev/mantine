@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileInput, FileInputProps, Group, Center } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconPhoto } from '@tabler/icons';
 
 const code = `

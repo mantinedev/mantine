@@ -9,6 +9,7 @@ import type { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
 export type MantineThemeOther = Record<string, any>;
+export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
   fontSize: CSSProperties['fontSize'];
@@ -25,9 +26,14 @@ export interface MantinePrimaryShade {
 
 interface MantineThemeFunctions {
   fontStyles(): any;
-  focusStyles(): any;
+  focusStyles(selector?: string): any;
   cover(offset?: number | string): any;
-  themeColor(color: string, shade: number, primaryFallback?: boolean): string;
+  themeColor(
+    color: string,
+    shade?: number,
+    primaryFallback?: boolean,
+    useSplittedShade?: boolean
+  ): string;
   rgba(color: string, alpha: number): string;
   size(props: { size: string | number; sizes: Record<string, any> }): any;
   linearGradient(deg: number, ...colors: string[]): string;
@@ -37,10 +43,11 @@ interface MantineThemeFunctions {
   largerThan(breakpoint: MantineNumberSize): string;
   lighten(color: string, alpha: number): string;
   darken(color: string, alpha: number): string;
-  radius(size: MantineNumberSize | (string & {})): string | number;
+  radius(size?: MantineNumberSize | (string & {})): string | number;
   variant(payload: VariantInput): VariantOutput;
   primaryShade(colorScheme?: ColorScheme): Shade;
   hover(hoverStyle: CSSObject): any;
+  primaryColor(colorScheme?: ColorScheme): string;
 }
 
 export interface MantineTheme {
@@ -86,7 +93,8 @@ export interface MantineTheme {
   other: MantineThemeOther;
   activeStyles: CSSObject;
   datesLocale: string;
-  components: Record<string, ThemeComponent>;
+  components: MantineThemeComponents;
+  globalStyles: (theme: MantineTheme) => CSSObject;
 }
 
 interface ThemeComponent {
@@ -98,9 +106,6 @@ interface ThemeComponent {
 }
 
 export type MantineThemeBase = Omit<MantineTheme, 'fn'>;
-export type MantineThemeOverride = DeepPartial<
-  Omit<MantineThemeBase, 'fn' | 'other' | 'components'>
-> & {
-  other?: MantineThemeOther;
-  components?: Record<string, ThemeComponent>;
-};
+
+export type MantineThemeOverride = DeepPartial<Omit<MantineThemeBase, 'other' | 'components'>> &
+  Partial<Pick<MantineThemeBase, 'other' | 'components'>>;

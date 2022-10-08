@@ -1,5 +1,6 @@
 import React from 'react';
 import type { SpotlightAction } from '@mantine/spotlight';
+import { MantineDemo } from '@mantine/ds';
 import { Wrapper } from './_wrapper';
 
 const code = `
@@ -23,7 +24,7 @@ function Demo() {
       searchPlaceholder="Search..."
       shortcut="mod + shift + V"
     >
-      <YourApp />
+      <App />
     </SpotlightProvider>
   );
 }

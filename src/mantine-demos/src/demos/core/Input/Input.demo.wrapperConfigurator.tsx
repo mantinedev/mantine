@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { InputWrapperProps, Input } from '@mantine/core';
 
 function Wrapper(props: InputWrapperProps) {
@@ -33,7 +34,7 @@ export const wrapperConfigurator: MantineDemo = {
   configuratorProps: { multiline: 3 },
   configurator: [
     {
-      name: 'required',
+      name: 'withAsterisk',
       type: 'boolean',
       initialValue: true,
       defaultValue: false,

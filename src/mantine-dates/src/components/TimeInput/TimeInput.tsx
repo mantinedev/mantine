@@ -146,6 +146,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       descriptionProps,
       errorProps,
       unstyled,
+      withAsterisk,
       ...others
     } = useComponentDefaultProps('TimeInput', defaultProps, props);
 
@@ -245,7 +246,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     };
 
     const rightSection =
-      clearable && _value ? (
+      clearable && _value && !disabled ? (
         <CloseButton
           variant="transparent"
           aria-label={clearButtonLabel}
@@ -273,6 +274,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         descriptionProps={descriptionProps}
         labelProps={labelProps}
         unstyled={unstyled}
+        withAsterisk={withAsterisk}
         {...systemStyles}
         {...wrapperProps}
       >

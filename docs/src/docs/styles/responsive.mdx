@@ -17,13 +17,13 @@ add styles with [createStyles](/styles/create-styles/) function.
 
 ## Configure breakpoints
 
-`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are set in px (rem, em and other values are not supported).
+`theme.breakpoints` are used in all responsive Mantine components. Breakpoints are set in `px` (`rem`, `em` and other units are not supported).
 You can configure these values with [MantineProvider](/theming/mantine-provider/):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       withGlobalStyles
@@ -38,7 +38,7 @@ function App() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }

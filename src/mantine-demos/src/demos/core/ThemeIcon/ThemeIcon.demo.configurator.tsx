@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconPhoto } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, ThemeIconProps } from '@mantine/core';
 
 const iconSizes = {
@@ -40,13 +41,14 @@ export const configurator: MantineDemo = {
   configurator: [
     {
       name: 'variant',
-      type: 'segmented',
+      type: 'select',
       initialValue: 'filled',
       defaultValue: 'filled',
       data: [
         { label: 'filled', value: 'filled' },
         { label: 'light', value: 'light' },
         { label: 'outline', value: 'outline' },
+        { label: 'default', value: 'default' },
       ],
     },
     { name: 'radius', type: 'size', initialValue: 'sm', defaultValue: 'sm' },

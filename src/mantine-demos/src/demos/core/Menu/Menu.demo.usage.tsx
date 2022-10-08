@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Menu } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
@@ -39,7 +40,7 @@ function Demo() {
 function Demo() {
   return (
     <Group position="center">
-      <Menu shadow="md" width={200}>
+      <Menu shadow="md" width={200} withinPortal>
         <DemoMenuItems />
       </Menu>
     </Group>

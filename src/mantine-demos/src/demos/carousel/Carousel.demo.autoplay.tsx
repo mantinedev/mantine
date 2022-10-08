@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `
@@ -9,7 +10,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }, (emblaRoot) => emblaRoot.parentElement));
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
   return (
     <Carousel
       sx={{ maxWidth: 320 }}
@@ -30,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }, (emblaRoot) => emblaRoot.parentElement));
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
 
   return (
     <Carousel

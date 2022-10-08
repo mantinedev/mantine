@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMantineTheme, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useMove } from '@mantine/hooks';
 
 const code = `

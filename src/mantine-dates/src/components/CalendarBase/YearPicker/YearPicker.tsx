@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DefaultProps, Selectors, UnstyledButton, MantineSize } from '@mantine/core';
 import { getDecadeRange } from './get-decade-range/get-decade-range';
 import { CalendarHeader, CalendarHeaderStylesNames } from '../CalendarHeader/CalendarHeader';
+import { formatYear } from '../format-year';
 import useStyles from './YearPicker.styles';
 
 export type YearPickerStylesNames = Selectors<typeof useStyles> | CalendarHeaderStylesNames;
@@ -18,6 +19,8 @@ export interface YearPickerProps
   nextDecadeLabel?: string;
   previousDecadeLabel?: string;
   preventFocus?: boolean;
+  yearLabelFormat?: string;
+  __stopPropagation?: boolean;
 }
 
 export function YearPicker({
@@ -34,6 +37,8 @@ export function YearPicker({
   previousDecadeLabel,
   preventFocus,
   unstyled,
+  yearLabelFormat = 'YYYY',
+  __stopPropagation,
   ...others
 }: YearPickerProps) {
   const { classes, cx } = useStyles(
@@ -50,11 +55,12 @@ export function YearPicker({
       onClick={() => onChange(year)}
       disabled={year < minYear || year > maxYear}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
       className={cx(classes.yearPickerControl, {
         [classes.yearPickerControlActive]: year === value,
       })}
     >
-      {year}
+      {formatYear(year, yearLabelFormat)}
     </UnstyledButton>
   ));
 
@@ -62,7 +68,10 @@ export function YearPicker({
     <div className={cx(classes.yearPicker, className)} {...others}>
       <CalendarHeader
         unstyled={unstyled}
-        label={`${range[0]} – ${range[range.length - 1]}`}
+        label={`${formatYear(range[0], yearLabelFormat)} – ${formatYear(
+          range[range.length - 1],
+          yearLabelFormat
+        )}`}
         hasPrevious={typeof minYear === 'number' ? minYear < range[0] : true}
         hasNext={typeof maxYear === 'number' ? maxYear > range[range.length - 1] : true}
         onNext={() => setDecade((current) => current + 10)}
@@ -75,6 +84,7 @@ export function YearPicker({
         classNames={classNames}
         __staticSelector={__staticSelector}
         preventFocus={preventFocus}
+        __stopPropagation={__stopPropagation}
       />
       <div className={classes.yearPickerControls}>{years}</div>
     </div>

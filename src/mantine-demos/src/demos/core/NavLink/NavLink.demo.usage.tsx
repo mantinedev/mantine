@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Box, NavLink, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconHome2, IconGauge, IconChevronRight, IconActivity, IconCircleOff } from '@tabler/icons';
 
 const code = `

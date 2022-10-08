@@ -1,5 +1,6 @@
 import React from 'react';
 import { Slider, RangeSlider } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconHeart, IconHeartBroken } from '@tabler/icons';
 
 const code = `

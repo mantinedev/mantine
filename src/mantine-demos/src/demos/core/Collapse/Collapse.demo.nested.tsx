@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Text, Collapse, CollapseProps } from '@mantine/core';
 
 export function CollapsedDemo({
@@ -6,11 +7,11 @@ export function CollapsedDemo({
   buttonProps,
   ...others
 }: Partial<CollapseProps> & { buttonProps?: any }) {
-  const [opened, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   return (
     <div style={{ maxWidth: 400, marginLeft: 'auto', marginRight: 'auto', marginTop: 15 }}>
-      <Button onClick={() => setOpen((o) => !o)} mb={5} {...buttonProps} />
+      <Button onClick={() => setOpened((o) => !o)} mb={5} {...buttonProps} />
       <Collapse in={opened} {...others}>
         {children}
       </Collapse>

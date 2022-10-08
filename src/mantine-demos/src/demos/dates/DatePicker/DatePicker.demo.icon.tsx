@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconCalendar } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -20,7 +21,12 @@ function Demo() {
 function Demo() {
   return (
     <div style={{ maxWidth: 340, marginLeft: 'auto', marginRight: 'auto' }}>
-      <DatePicker placeholder="Pick date" label="Event date" icon={<IconCalendar size={16} />} />
+      <DatePicker
+        placeholder="Pick date"
+        label="Event date"
+        icon={<IconCalendar size={16} />}
+        withinPortal
+      />
     </div>
   );
 }

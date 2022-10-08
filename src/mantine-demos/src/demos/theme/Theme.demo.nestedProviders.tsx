@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Group, Button, Text, MantineProvider, useMantineColorScheme } from '@mantine/core';
 
 const code = `import { Button, MantineProvider, Text } from '@mantine/core';

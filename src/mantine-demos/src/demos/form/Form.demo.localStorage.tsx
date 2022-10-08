@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from '@mantine/form';
+import { MantineDemo } from '@mantine/ds';
 import { TextInput } from '@mantine/core';
 
 const code = `

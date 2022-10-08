@@ -28,7 +28,7 @@ Init new application:
 npx create-remix@latest my-mantine-app
 ```
 
-<PackagesInstallation extraPackages={['@mantine/ssr']} />
+<PackagesInstallation extraPackages={['@mantine/remix', '@emotion/server']} />
 
 Replace your `entry.server.tsx` file with
 
@@ -36,7 +36,9 @@ Replace your `entry.server.tsx` file with
 import { renderToString } from 'react-dom/server';
 import { RemixServer } from '@remix-run/react';
 import type { EntryContext } from '@remix-run/node';
-import { injectStylesIntoStaticMarkup } from '@mantine/ssr';
+import { injectStyles, createStylesServer } from '@mantine/remix';
+
+const server = createStylesServer();
 
 export default function handleRequest(
   request: Request,
@@ -44,22 +46,23 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  const markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
+  let markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
   responseHeaders.set('Content-Type', 'text/html');
 
-  return new Response(`<!DOCTYPE html>${injectStylesIntoStaticMarkup(markup)}`, {
+  return new Response(`<!DOCTYPE html>${injectStyles(markup, server)}`, {
     status: responseStatusCode,
     headers: responseHeaders,
   });
 }
 ```
 
-Add [MantineProvider](/theming/mantine-provider/) to the `root.tsx` file:
+Add [MantineProvider](/theming/mantine-provider/) and `StylesPlaceholder` to the `root.tsx` file:
 
 ```tsx
 import type { MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, createEmotionCache } from '@mantine/core';
+import { StylesPlaceholder } from '@mantine/remix';
 import { theme } from './theme';
 
 export const meta: MetaFunction = () => ({
@@ -68,11 +71,14 @@ export const meta: MetaFunction = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
+createEmotionCache({ key: 'mantine' });
+
 export default function App() {
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <html lang="en">
         <head>
+          <StylesPlaceholder />
           <Meta />
           <Links />
         </head>
@@ -88,11 +94,32 @@ export default function App() {
 }
 ```
 
+Replace `entry.client.tsx` with
+
+```tsx
+import { RemixBrowser } from '@remix-run/react';
+import { hydrate } from 'react-dom';
+import { ClientProvider } from '@mantine/remix';
+
+hydrate(
+  <ClientProvider>
+    <RemixBrowser />
+  </ClientProvider>,
+  document
+);
+```
+
 All set! Start development server:
 
 ```bash
 npm run dev
 ```
+
+## Server streaming support
+
+Mantine is based on [emotion](https://emotion.sh/) which currently does not support [renderToPipeableStream](https://reactjs.org/docs/react-dom-server.html#rendertopipeablestream),
+default Remix boilerplate will not support Mantine (and other component libraries based on css-in-js). It is important to replace your `entry.server.tsx`
+with code provided in this guide in order for server side rendering to work.
 
 ## Next steps
 

@@ -8,7 +8,7 @@ category: 'misc'
 description: 'Animate presence of component with premade animations'
 props: ['Transition']
 import: "import { Transition, GroupedTransition } from '@mantine/core';"
-source: 'mantine-core/src/components/Transition/Transition.tsx'
+source: 'mantine-core/src/Transition/Transition.tsx'
 docs: 'core/Transition.mdx'
 ---
 
@@ -16,7 +16,7 @@ import { TooltipDemos, TransitionDemos } from '@mantine/demos';
 
 ## Usage
 
-Transition and GroupedTransition components allow you to work with enter/exit animations.
+`Transition` and `GroupedTransition` components allow you to work with enter/exit animations.
 Components come with premade animations and option to create your own based on CSS properties.
 
 ### Premade transitions
@@ -41,7 +41,7 @@ function Demo({ opened }) {
 
 ### Custom transitions
 
-You can create your own transition. Transition is an object with 4 properties:
+You can create your own transition. `transition` is an object with 4 properties:
 
 - `in` – styles for mounted state
 - `out` – styles for unmounted state
@@ -52,7 +52,7 @@ You can create your own transition. Transition is an object with 4 properties:
 
 ## GroupedTransition
 
-Use GroupedTransition if you need to animate presence of more that one element at the same time but with different transitions.
+Use `GroupedTransition` if you need to animate presence of more that one element at the same time but with different transitions.
 For example, in [Modal](/core/modal/) component overlay and modal body animated differently:
 modal body slides from the top and overlay fades.
 

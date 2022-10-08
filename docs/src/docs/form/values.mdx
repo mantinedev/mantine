@@ -32,6 +32,19 @@ With `form.setValues` you can set all form values, for example you can set value
 
 <Demo data={FormDemos.setValues} />
 
+## setValues partial
+
+`form.setValues` can also be used to set multiple values at once, payload will be shallow merged with current values state:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ initialValues: { name: '', email: '', age: 0 } });
+
+form.setValues({ name: 'John', age: 21 });
+form.values; // -> { name: 'John', email: '', age: 21 }
+```
+
 ## setFieldValue handler
 
 `form.setFieldValue` handler allows to set value of the field at given path:
@@ -77,6 +90,9 @@ interface FormValues {
   // cannot be correctly inferred in strict mode
   age: number | undefined;
   registeredAt: Date | null;
+
+  // Arrays that are empty cannot be inferred correctly
+  jobs: string[];
 }
 
 function Demo() {
@@ -86,6 +102,7 @@ function Demo() {
       role: 'user',
       age: undefined,
       registeredAt: null,
+      jobs: [],
     },
   });
 }

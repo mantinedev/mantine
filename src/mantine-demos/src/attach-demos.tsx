@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@mantine/core';
-import { Demo } from './components/Demo/Demo';
+import { Demo, MantineDemo } from '@mantine/ds';
 
 export function attachDemos(stories: any, demos: Record<string, MantineDemo>) {
   Object.keys(demos).forEach((key) => {

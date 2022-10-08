@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconChevronDown } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { NativeSelect } from '@mantine/core';
 
 const code = `

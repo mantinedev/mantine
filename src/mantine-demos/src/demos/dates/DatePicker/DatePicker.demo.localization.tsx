@@ -1,5 +1,6 @@
 import 'dayjs/locale/ru';
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DatePicker } from '@mantine/dates';
 
 const code = `
@@ -26,6 +27,7 @@ function Demo() {
         placeholder="Выберите дату"
         label="Дата события"
         defaultValue={new Date()}
+        withinPortal
       />
     </div>
   );

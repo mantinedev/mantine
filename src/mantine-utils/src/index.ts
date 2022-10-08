@@ -5,7 +5,6 @@ export { findElementAncestor } from './find-element-ancestor/find-element-ancest
 export { createSafeContext } from './create-safe-context/create-safe-context';
 export { packSx } from './pack-sx/pack-sx';
 export { getSafeId } from './get-safe-id/get-safe-id';
-export { isElement } from './is-element/is-element';
 export { closeOnEscape } from './close-on-escape/close-on-escape';
 export { createEventHandler } from './create-event-handler/create-event-handler';
 export { noop } from './noop/noop';
@@ -13,6 +12,7 @@ export { keys } from './keys/keys';
 export { useHovered } from './use-hovered/use-hovered';
 export { groupOptions, getGroupedOptions } from './group-options/group-options';
 export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
+export { isElement } from './is-element/is-element';
 
 export type { PolymorphicComponentProps } from './create-polymorphic-component/create-polymorphic-component';
 export type { ForwardRefWithStaticComponents } from './ForwardRefWithStaticComponents';

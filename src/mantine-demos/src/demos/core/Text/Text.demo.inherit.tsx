@@ -1,11 +1,12 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Text, Title } from '@mantine/core';
 
 const code = `
 import { Text, Title } from '@mantine/core';
 
 function Demo() {
-  return <Title order={3}>Highlight <Text color="blue" inherit component="span">something</Text>in title</Title>;
+  return <Title order={3}>Title in which you want to <Text color="blue" inherit component="span">highlight</Text> something</Title>;
 }
 `;
 

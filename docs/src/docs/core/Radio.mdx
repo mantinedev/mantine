@@ -9,7 +9,7 @@ description: 'Wrapper for input type radio'
 componentPrefix: 'Radio'
 props: ['Radio', 'RadioGroup']
 import: "import { Radio } from '@mantine/core';"
-source: 'mantine-core/src/components/Radio/Radio.tsx'
+source: 'mantine-core/src/Radio/Radio.tsx'
 docs: 'core/Radio.mdx'
 styles: ['Radio']
 ---
@@ -49,9 +49,10 @@ function Demo() {
     <Radio.Group
       value={value}
       onChange={setValue}
+      name="favoriteFramework"
       label="Select your favorite framework/library"
       description="This is anonymous"
-      required
+      withAsterisk
     >
       <Radio value="react" label="React" />
       <Radio value="svelte" label="Svelte" />

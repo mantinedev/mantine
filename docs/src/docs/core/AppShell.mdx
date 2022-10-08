@@ -8,7 +8,7 @@ category: 'layout'
 description: 'Responsive shell for your application with header and navbar'
 props: ['AppShell', 'Navbar', 'Header', 'Aside', 'Footer']
 import: "import { AppShell, Navbar, Header, Aside, Footer } from '@mantine/core';"
-source: 'mantine-core/src/components/AppShell/AppShell.tsx'
+source: 'mantine-core/src/AppShell/AppShell.tsx'
 docs: 'core/AppShell.mdx'
 styles: ['AppShell']
 ---
@@ -30,7 +30,7 @@ AppShell, Header, Footer, Aside and Navbar components include bare minimum defau
 </Anchor>
 
 ```tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   AppShell,
   Navbar,
@@ -96,6 +96,23 @@ export default function AppShellDemo() {
 }
 ```
 
+## hidden prop
+
+To hide all AppShell components and render only children set `hidden` prop:
+
+```tsx
+import { AppShell, Navbar, Header } from '@mantine/core';
+
+function Demo() {
+  // Navbar and Header will not be rendered when hidden prop is set
+  return (
+    <AppShell navbar={<Navbar />} header={<Header />} hidden>
+      App content
+    </AppShell>
+  );
+}
+```
+
 ## Navbar and Aside components
 
 Navbar and Aside components can be used outside of AppShell context ([View full source code](https://github.com/mantinedev/mantine/tree/master/src/mantine-demos/src/demos/core/AppShell)):
@@ -143,7 +160,9 @@ function Demo() {
         // When other breakpoints do not match base width is used, defaults to 100%
         base: 100,
       }}
-    />
+    >
+      Application navbar
+    </Navbar>
   );
 }
 ```
@@ -156,7 +175,11 @@ To make Navbar or Aside static, set `fixed={false}`:
 import { Navbar } from '@mantine/core';
 
 function Demo() {
-  return <Navbar fixed={false} position={{ top: 0, left: 0 }} />;
+  return (
+    <Navbar fixed={false} position={{ top: 0, left: 0 }}>
+      Application navbar
+    </Navbar>
+  );
 }
 ```
 

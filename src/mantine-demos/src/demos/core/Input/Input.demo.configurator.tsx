@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconAt } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Input, InputProps } from '@mantine/core';
 
 const iconSizes = {

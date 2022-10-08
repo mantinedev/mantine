@@ -6,7 +6,7 @@ order: 2
 search: 'cx function, media queries, responsive styles, keyframes'
 ---
 
-import { TabsDemos, CreateStylesDemos } from '@mantine/demos';
+import { CreateStylesDemos } from '@mantine/demos';
 
 # createStyles
 
@@ -15,15 +15,7 @@ We recommend using `createStyles` to create styles for the rest of your applicat
 as it provides the most convenient way to utilize Mantine theme, but it is not required
 – you can use any other styling tools and languages.
 
-## Features
-
-- As fast and lightweight as emotion: `createStyles` extends [@emotion/react](https://emotion.sh/docs/@emotion/react)
-- Subscribes to your Mantine theming context
-- Supports all emotion features: automatic critical css extraction during server side rendering, lazy evaluation, dynamic theming, etc.
-- Server side rendering support: Next.js, Gatsby or any other environment
-- Fully featured TypeScript support
-
-## Basic usage
+## Usage
 
 <Demo data={CreateStylesDemos.createStylesBasics} />
 
@@ -67,33 +59,3 @@ defined with [MantineProvider](/theming/mantine-provider) or just static values:
 ## Keyframes
 
 <Demo data={CreateStylesDemos.createStylesKeyframes} />
-
-## Inline styles
-
-Most of Mantine components support [Styles API](/styles/styles-api/).
-You can override default component styles inline or using [MantineProvider](/theming/mantine-provider/)
-the same way as with `createStyles`:
-
-<Demo data={TabsDemos.stylesApi} />
-
-## Using createStyles without @mantine/core
-
-You can use `createStyles` and `MantineProvider` without any other Mantine packages:
-
-```bash
-yarn add @mantine/styles
-
-npm install @mantine/styles
-```
-
-After installation you can import `createStyles` and other function from `@mantine/styles` instead of `@mantine/core` and use it separately:
-
-```tsx
-import { createStyles, MantineProvider, useMantineTheme } from '@mantine/styles';
-```
-
-## Can I use other css-in-js libraries or SCSS with Mantine?
-
-Yes, you can. But please note that Mantine already uses [emotion](https://emotion.sh/) and you may
-have styles collisions and would have to overwrite styles with `!important`. Please consider
-choosing `createStyle` before picking other libraries.

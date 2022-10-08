@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconChevronDown } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { Input } from '@mantine/core';
 
 const code = `

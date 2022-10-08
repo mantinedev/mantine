@@ -15,7 +15,7 @@ function getInstallationCommand(
   }, []);
 
   const unique = Array.from(
-    new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages])
+    new Set(['@mantine/core', '@mantine/hooks', ...packages, ...extraPackages, '@emotion/react'])
   );
   const prefix = type === 'yarn' ? 'yarn add' : 'npm install';
   return `${prefix} ${unique.join(' ')}`;

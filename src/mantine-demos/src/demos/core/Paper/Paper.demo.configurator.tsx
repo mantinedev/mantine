@@ -1,4 +1,5 @@
 import React from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { Text, Paper, DEFAULT_THEME } from '@mantine/core';
 
 function Wrapper(props: any) {

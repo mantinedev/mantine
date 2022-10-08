@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { FocusTrap, TextInput, Button } from '@mantine/core';
 
 const code = `

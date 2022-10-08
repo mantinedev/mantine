@@ -9,7 +9,8 @@ import {
   IconMaximize,
   IconResize,
 } from '@tabler/icons';
-import { FormDemos, HooksDemos, Demo } from '@mantine/demos';
+import { Demo } from '@mantine/ds';
+import { FormDemos, HooksDemos } from '@mantine/demos';
 import { DemoTabs } from '../DemoTabs/DemoTabs';
 
 const data = [

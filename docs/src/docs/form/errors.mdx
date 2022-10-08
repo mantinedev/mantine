@@ -27,13 +27,13 @@ const form = useForm({
 });
 
 // Errors object is empty by default
-console.log(form.errors); // -> {}
+form.errors; // -> {}
 
 // Errors will be filled when you call form.validate manually
 // or automatically with form.onSubmit handler
 form.validate();
 
-console.log(form.errors);
+form.errors; // ->
 // {
 //   firstName: 'First name is too short',
 //   lastName: 'Last name is too short'
@@ -64,7 +64,7 @@ import { useForm } from '@mantine/form';
 const form = useForm();
 form.setErrors({ firstName: 'Too short', email: 'Invalid email' });
 
-console.log(form.errors);
+form.errors;
 // -> { firstName: 'Too short', email: 'Invalid email' }
 ```
 
@@ -78,8 +78,7 @@ import { useForm } from '@mantine/form';
 const form = useForm({ initialValues: { name: '', email: '' } });
 form.setFieldError('email', 'Invalid email');
 
-console.log(form.errors);
-// -> { email: 'Invalid email' }
+form.errors; // -> { email: 'Invalid email' }
 ```
 
 ## clearErrors handler
@@ -115,6 +114,8 @@ console.log(form.errors);
 You can use any React node as an error message:
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({
   initialValues: { name: '', email: '' },
   initialErrors: {
@@ -127,6 +128,8 @@ const form = useForm({
 Note that errors that are `false`, `null` or `undefined` will be automatically removed:
 
 ```tsx
+import { useForm } from '@mantine/form';
+
 const form = useForm({ initialErrors: { name: 'name-error', email: null } });
 form.errors; // -> { name: 'name-error' }, email error is not included in errors object
 ```

@@ -94,13 +94,19 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     const onMouseMove = (event: MouseEvent) => onScrub({ x: event.clientX, y: event.clientY });
 
     const onTouchStart = (event: TouchEvent) => {
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+
       startScrubbing();
-      event?.preventDefault();
       onTouchMove(event);
     };
 
     const onTouchMove = (event: TouchEvent) => {
-      event?.preventDefault();
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+
       onScrub({ x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY });
     };
 

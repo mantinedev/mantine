@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStyles } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
+import { MantineDemo } from '@mantine/ds';
 import { Slides } from './_slides';
 
 const code = `
@@ -22,7 +23,6 @@ const useStyles = createStyles((_theme, _params, getRef) => ({
     },
   },
 }));
-
 
 function Demo() {
   const { classes } = useStyles();

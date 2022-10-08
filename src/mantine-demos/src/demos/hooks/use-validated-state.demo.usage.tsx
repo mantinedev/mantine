@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput, Text } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useValidatedState } from '@mantine/hooks';
 
 const code = `
@@ -18,7 +19,7 @@ function Demo() {
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
-        required
+        withAsterisk
         error={!valid}
         placeholder="email@example.com"
         label="Your email"
@@ -49,11 +50,11 @@ function Demo() {
   );
 
   return (
-    <div style={{ maxWidth: 320, margin: 'auto' }}>
+    <div style={{ maxWidth: 320, margin: 'auto', overflowWrap: 'break-word' }}>
       <TextInput
         value={value}
         onChange={(event) => setEmail(event.currentTarget.value)}
-        required
+        withAsterisk
         error={!valid}
         placeholder="email@example.com"
         label="Your email"

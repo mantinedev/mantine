@@ -33,7 +33,7 @@ To configure theme, wrap your app with a [MantineProvider](/theming/mantine-prov
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       theme={{
@@ -42,7 +42,7 @@ function App() {
         spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -56,10 +56,10 @@ To learn how to implement color scheme changes via context follow [dark theme gu
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -150,7 +150,7 @@ You can [extend theme](/theming/colors/) with any amount of your colors:
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       theme={{
@@ -163,7 +163,7 @@ function App() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -201,10 +201,10 @@ To change these values set `spacing` property on [theme](/theming/theme-object/)
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider theme={{ spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 } }}>
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }
@@ -236,7 +236,7 @@ To change these values set the `shadows` property on [theme](/theming/theme-obje
 ```tsx
 import { MantineProvider } from '@mantine/core';
 
-function App() {
+function Demo() {
   return (
     <MantineProvider
       theme={{
@@ -249,7 +249,7 @@ function App() {
         },
       }}
     >
-      <YourApp />
+      <App />
     </MantineProvider>
   );
 }

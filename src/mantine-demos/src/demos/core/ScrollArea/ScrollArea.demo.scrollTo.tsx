@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { ScrollArea, Button, Stack, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { Content } from './_content';
 
 const code = `
@@ -18,7 +19,7 @@ function Demo() {
   const scrollToTop = () => viewport.current.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <Stack position="center">
+    <Stack align="center">
       <ScrollArea style={{ width: 300, height: 200 }} viewportRef={viewport}>
         {/* ... content */}
       </ScrollArea>

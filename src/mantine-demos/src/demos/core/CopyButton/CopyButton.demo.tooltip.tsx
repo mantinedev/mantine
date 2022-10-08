@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, CopyButton, ActionIcon, Tooltip } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { IconCopy, IconCheck } from '@tabler/icons';
 
 const code = `

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
+import { MantineDemo } from '@mantine/ds';
 import { Button, Text, Group, useMantineTheme } from '@mantine/core';
 
 const code = `

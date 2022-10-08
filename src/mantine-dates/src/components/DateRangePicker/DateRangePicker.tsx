@@ -7,6 +7,8 @@ import { CalendarSharedProps } from '../CalendarBase/CalendarBase';
 import { RangeCalendar } from '../RangeCalendar/RangeCalendar';
 import { DatePickerBase, DatePickerBaseSharedProps } from '../DatePickerBase/DatePickerBase';
 
+export type DateRangePickerValue = [Date | null, Date | null];
+
 export interface DateRangePickerProps
   extends Omit<DatePickerBaseSharedProps, 'value' | 'onChange' | 'fixOnBlur'>,
     Omit<
@@ -14,13 +16,13 @@ export interface DateRangePickerProps
       'size' | 'styles' | 'classNames' | 'value' | 'onChange' | 'onMonthChange'
     > {
   /** Selected date, required with controlled input */
-  value?: [Date | null, Date | null];
+  value?: DateRangePickerValue;
 
   /** Called when date range changes */
-  onChange?(value: [Date | null, Date | null]): void;
+  onChange?(value: DateRangePickerValue): void;
 
   /** Default value for uncontrolled input */
-  defaultValue?: [Date | null, Date | null];
+  defaultValue?: DateRangePickerValue;
 
   /** Set to false to force dropdown to stay open after date was selected */
   closeCalendarOnChange?: boolean;
@@ -72,8 +74,8 @@ const defaultProps: Partial<DateRangePickerProps> = {
   firstDayOfWeek: 'monday',
   allowSingleDateInRange: false,
   amountOfMonths: 1,
-  withinPortal: true,
-  openDropdownOnClear: true,
+  withinPortal: false,
+  openDropdownOnClear: false,
 };
 
 export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps>(
@@ -120,6 +122,11 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
       openDropdownOnClear,
       unstyled,
       weekendDays,
+      yearLabelFormat,
+      nextDecadeLabel,
+      nextYearLabel,
+      previousDecadeLabel,
+      previousYearLabel,
       ...others
     } = useComponentDefaultProps('DateRangePicker', defaultProps, props);
 
@@ -222,6 +229,11 @@ export const DateRangePicker = forwardRef<HTMLInputElement, DateRangePickerProps
           renderDay={renderDay}
           unstyled={unstyled}
           weekendDays={weekendDays}
+          yearLabelFormat={yearLabelFormat}
+          nextDecadeLabel={nextDecadeLabel}
+          nextYearLabel={nextYearLabel}
+          previousDecadeLabel={previousDecadeLabel}
+          previousYearLabel={previousYearLabel}
         />
       </DatePickerBase>
     );

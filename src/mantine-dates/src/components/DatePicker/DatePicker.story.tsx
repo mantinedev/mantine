@@ -108,6 +108,7 @@ storiesOf('DatePicker', module)
         placeholder="Pick date"
         label="Date picker"
         modalZIndex={4554}
+        modalProps={{ styles: { modal: { backgroundColor: 'pink' } } }}
       />
     </div>
   ))

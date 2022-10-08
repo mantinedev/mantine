@@ -1,5 +1,6 @@
 import React from 'react';
 import { Prism } from '@mantine/prism';
+import { MantineDemo } from '@mantine/ds';
 import { py, css } from './Prism.demo.languages';
 import { demoCode } from './Prism.demo.usage';
 
@@ -104,13 +105,13 @@ function Demo() {
       </Prism.TabsList>
 
       <Prism.Panel language="css" value="styles.css">
-        {css}
+        {/* css code */}
       </Prism.Panel>
       <Prism.Panel language="python" value="decorator.py">
-        {css}
+        {/* python code */}
       </Prism.Panel>
       <Prism.Panel language="tsx" value="component.tsx">
-        {demoCode}
+        {/* typescript code */}
       </Prism.Panel>
     </Prism.Tabs>
   );

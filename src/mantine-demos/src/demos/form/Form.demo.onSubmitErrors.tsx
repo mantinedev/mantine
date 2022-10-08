@@ -2,6 +2,7 @@
 import React from 'react';
 import { useForm } from '@mantine/form';
 import { TextInput, Button } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { showNotification } from '@mantine/notifications';
 
 const code = `

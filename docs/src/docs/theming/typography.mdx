@@ -20,6 +20,35 @@ You can change fonts and other text styles for headings, code and all other comp
 
 <Demo data={ThemeDemos.themeFontsExtend} />
 
+## Font sizes
+
+`theme.fontSizes` property defines font-size values for all Mantine components:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        // Font sizes in px, other units are not supported
+        fontSizes: {
+          xs: 10,
+          sm: 12,
+          md: 14,
+          lg: 16,
+          xl: 20,
+        },
+      }}
+    >
+      <App />
+    </MantineProvider>
+  );
+}
+```
+
 ## System fonts
 
 By default, Mantine uses system fonts. It means that different devices will display components based on available font,

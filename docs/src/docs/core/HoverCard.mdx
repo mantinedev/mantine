@@ -9,7 +9,7 @@ description: 'Display popover section when target element is hovered'
 componentPrefix: 'HoverCard'
 props: ['HoverCard', 'HoverCardTarget', 'HoverCardDropdown']
 import: "import { HoverCard } from '@mantine/core';"
-source: 'mantine-core/src/components/HoverCard/HoverCard.tsx'
+source: 'mantine-core/src/HoverCard/HoverCard.tsx'
 docs: 'core/HoverCard.mdx'
 ---
 
@@ -27,7 +27,7 @@ Set open and close delays in ms with `openDelay` and `closeDelay` props:
 
 ## With interactive elements
 
-HoverCard is displayed only when mouse is over target element or dropdown,
+`HoverCard` is displayed only when mouse is over target element or dropdown,
 you can use anchors and buttons within dropdowns, using inputs is not recommended:
 
 <Demo data={HoverCardDemos.profile} />
@@ -48,20 +48,24 @@ function Demo() {
         <button>Native button – ok</button>
       </HoverCard.Target>
 
-      <HoverCard.Target label="OK">
+      {/* OK */}
+      <HoverCard.Target>
         <Badge>Mantine component – ok</Badge>
       </HoverCard.Target>
 
-      <HoverCard.Target label="Throws">Raw string, NOT OK – will throw error</HoverCard.Target>
+      {/* String, NOT OK – will throw error */}
+      <HoverCard.Target>Raw string</HoverCard.Target>
 
       {/* Number, NOT OK – will throw error */}
-      <HoverCard.Target label="Throws">{2}</HoverCard.Target>
+      <HoverCard.Target>{2}</HoverCard.Target>
 
-      <HoverCard.Target label="Throws">
+      {/* Fragment, NOT OK – will throw error */}
+      <HoverCard.Target>
         <>Fragment, NOT OK, will throw error</>
       </HoverCard.Target>
 
-      <HoverCard.Target label="Throws">
+      {/* Multiple nodes, NOT OK – will throw error */}
+      <HoverCard.Target>
         <div>More that one node</div>
         <div>NOT OK, will throw error</div>
       </HoverCard.Target>
@@ -70,7 +74,56 @@ function Demo() {
 }
 ```
 
+## Required ref prop
+
+Custom components that are rendered inside `HoverCard.Target` are required to support `ref` prop:
+
+```tsx
+// Example of code that WILL NOT WORK
+import { HoverCard } from '@mantine/core';
+
+function MyComponent() {
+  return <div>My component</div>;
+}
+
+// This will not work – MyComponent does not support ref
+function Demo() {
+  return (
+    <HoverCard>
+      <HoverCard.Target>
+        <MyComponent />
+      </HoverCard.Target>
+    </HoverCard>
+  );
+}
+```
+
+Use `forwardRef` function to forward ref to root element:
+
+```tsx
+// Example of code that will work
+import { forwardRef } from 'react';
+import { HoverCard } from '@mantine/core';
+
+const MyComponent = forwardRef((props, ref) => (
+  <div ref={ref} {...props}>
+    My component
+  </div>
+));
+
+// Works correctly – ref is forwarded
+function Demo() {
+  return (
+    <HoverCard>
+      <HoverCard.Target>
+        <MyComponent />
+      </HoverCard.Target>
+    </HoverCard>
+  );
+}
+```
+
 ## Accessibility
 
-HoverCard is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
+`HoverCard` is ignored by screen readers and cannot be activated with keyboard, use it to display only additional information
 that is not required to understand the context.

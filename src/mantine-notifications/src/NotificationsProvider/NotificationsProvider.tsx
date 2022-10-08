@@ -1,6 +1,13 @@
 import React, { useRef } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
-import { DefaultProps, Portal, MantineStyleSystemSize, getDefaultZIndex, Box } from '@mantine/core';
+import {
+  DefaultProps,
+  Portal,
+  MantineStyleSystemSize,
+  getDefaultZIndex,
+  Box,
+  PortalProps,
+} from '@mantine/core';
 import { useReducedMotion, useForceUpdate, useDidUpdate } from '@mantine/hooks';
 import { NotificationsContext } from '../Notifications.context';
 import { NotificationsProviderPositioning } from '../types';
@@ -52,6 +59,9 @@ export interface NotificationProviderProps
 
   /** Your application */
   children?: React.ReactNode;
+
+  /** Target element of Portal component */
+  target?: PortalProps['target'];
 }
 
 export function NotificationsProvider({
@@ -65,6 +75,7 @@ export function NotificationsProvider({
   zIndex = getDefaultZIndex('overlay'),
   style,
   children,
+  target,
   ...others
 }: NotificationProviderProps) {
   const forceUpdate = useForceUpdate();
@@ -137,13 +148,13 @@ export function NotificationsProvider({
 
   return (
     <NotificationsContext.Provider value={{ notifications, queue }}>
-      <Portal>
+      <Portal target={target}>
         <Box
           className={cx(classes.notifications, className)}
           style={style}
           sx={{
             maxWidth: containerWidth,
-            ...getPositionStyles(positioning, containerWidth, theme.spacing.md),
+            ...getPositionStyles(positioning, theme.spacing.md),
           }}
           {...others}
         >

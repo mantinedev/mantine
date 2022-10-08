@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MantineDemo } from '@mantine/ds';
 import { DEFAULT_THEME, Text, HueSlider, HueSliderProps } from '@mantine/core';
 
 function Wrapper(props: HueSliderProps) {

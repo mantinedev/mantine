@@ -1,5 +1,6 @@
 import React from 'react';
 import { AccordionProps } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { BaseDemo } from './_base';
 
 function Wrapper(props: Partial<AccordionProps>) {
@@ -22,7 +23,7 @@ function Demo() {
         <Accordion.Panel>Configure components appearance and behavior with vast amount of settings or overwrite any part of component styles</Accordion.Panel>
       </Accordion.Item>
 
-      <Accordion.Item label="No annoying focus ring" value="focus-ring">
+      <Accordion.Item value="focus-ring">
         <Accordion.Control>No annoying focus ring</Accordion.Control>
         <Accordion.Panel>With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard</Accordion.Panel>
       </Accordion.Item>
@@ -58,15 +59,6 @@ export const configurator: MantineDemo = {
       ],
       initialValue: 'right',
       defaultValue: 'right',
-    },
-    {
-      name: 'chevronSize',
-      type: 'number',
-      initialValue: 24,
-      defaultValue: 24,
-      min: 10,
-      max: 40,
-      step: 4,
     },
     { name: 'disableChevronRotation', type: 'boolean', initialValue: false, defaultValue: false },
   ],

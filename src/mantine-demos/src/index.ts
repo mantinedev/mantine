@@ -1,6 +1,3 @@
-// Demos components
-export { Demo, CodeDemo, Configurator } from './components/Demo/Demo';
-
 // Inline demos
 export { AuthenticationForm } from './shared/AuthenticationForm/AuthenticationForm';
 export { AccordionDemo } from './demos/core/Accordion/Accordion.demo.label';
@@ -13,6 +10,7 @@ export { CarouselCardsDemos } from './demos/carousel/Carousel.demo.cards';
 // Meta demos
 export * as CreateStylesDemos from './demos/create-styles';
 export * as ThemeDemos from './demos/theme';
+export * as StyledDemos from './demos/styled';
 
 // @mantine/core
 export * as AccordionDemos from './demos/core/Accordion';

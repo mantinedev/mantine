@@ -8,7 +8,7 @@ category: 'inputs'
 description: 'Capture user feedback from a range of values'
 props: ['Slider', 'RangeSlider']
 import: "import { Slider, RangeSlider } from '@mantine/core';"
-source: 'mantine-core/src/components/Slider'
+source: 'mantine-core/src/Slider'
 docs: 'core/Slider.mdx'
 styles: ['Slider', 'RangeSlider']
 ---
@@ -86,6 +86,20 @@ Note that mark value is relative to slider value, not width:
 ## Thumb children
 
 <Demo data={SliderDemos.thumbChildren} />
+
+## Scale
+
+You can use the `scale` prop to represent the value on a different scale.
+
+In the following demo, the value `x` represents the value `2^x`. Increasing `x` by one increases the represented value by 2 to the power of `x`.
+
+<Demo data={SliderDemos.scale} />
+
+## Inverted
+
+You can invert the track with the `inverted` prop:
+
+<Demo data={SliderDemos.inverted} />
 
 ## Styles API
 

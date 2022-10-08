@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconCheck } from '@tabler/icons';
+import { MantineDemo } from '@mantine/ds';
 import { ThemeIcon, RingProgress, Group, Text, Center } from '@mantine/core';
 
 const code = `

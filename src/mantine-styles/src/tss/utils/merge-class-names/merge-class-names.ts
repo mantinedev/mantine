@@ -1,3 +1,4 @@
+import type { EmotionCache } from '@emotion/cache';
 import { useMantineProviderStyles } from '../../../theme/MantineProvider';
 
 interface Input<T extends Record<string, string>> {
@@ -6,6 +7,7 @@ interface Input<T extends Record<string, string>> {
   context: ReturnType<typeof useMantineProviderStyles>;
   classNames: Partial<T>;
   name: string | string[];
+  cache: EmotionCache;
 }
 
 export function mergeClassNames<T extends Record<string, string>>({
@@ -14,6 +16,7 @@ export function mergeClassNames<T extends Record<string, string>>({
   context,
   classNames,
   name,
+  cache,
 }: Input<T>) {
   const contextClassNames = context.reduce<Record<string, string>>((acc, item) => {
     Object.keys(item.classNames).forEach((key) => {
@@ -35,10 +38,10 @@ export function mergeClassNames<T extends Record<string, string>>({
       Array.isArray(name)
         ? name
             .filter(Boolean)
-            .map((part) => `mantine-${part}-${className}`)
+            .map((part) => `${cache?.key || 'mantine'}-${part}-${className}`)
             .join(' ')
         : name
-        ? `mantine-${name}-${className}`
+        ? `${cache?.key || 'mantine'}-${name}-${className}`
         : null
     );
     return acc;

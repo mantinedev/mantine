@@ -14,6 +14,7 @@ import {
   Selectors,
   extractSystemStyles,
   Popover,
+  ModalProps,
 } from '@mantine/core';
 import { useMergedRef, useId } from '@mantine/hooks';
 import { CalendarBaseStylesNames } from '../CalendarBase/CalendarBase';
@@ -90,6 +91,9 @@ export interface DatePickerBaseSharedProps
 
   /** Events that should trigger outside clicks */
   clickOutsideEvents?: string[];
+
+  /** Props spread to Modal component */
+  modalProps?: Partial<ModalProps>;
 
   /** Modal z-index */
   modalZIndex?: React.CSSProperties['zIndex'];
@@ -168,7 +172,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       onClear,
       positionDependencies = [],
       zIndex,
-      withinPortal = true,
+      withinPortal = false,
       onBlur,
       onFocus,
       onChange,
@@ -187,6 +191,8 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
       unstyled,
       inputContainer,
       inputWrapperOrder,
+      modalProps,
+      withAsterisk,
       ...others
     }: DatePickerBaseProps,
     ref
@@ -276,6 +282,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
         inputContainer={inputContainer}
         inputWrapperOrder={inputWrapperOrder}
         unstyled={unstyled}
+        withAsterisk={withAsterisk}
         {...systemStyles}
         {...wrapperProps}
       >
@@ -304,12 +311,9 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
               <Input<'input'>
                 classNames={{
                   ...classNames,
-                  input: cx(
-                    classes.input,
-                    { [classes.freeInput]: allowFreeInput },
-                    classNames?.input
-                  ),
+                  input: cx(classes.input, classNames?.input),
                 }}
+                data-free-input={allowFreeInput || undefined}
                 styles={styles}
                 onClick={() => (!allowFreeInput ? toggleDropdown() : openDropdown())}
                 onKeyDown={handleKeyDown}
@@ -347,6 +351,7 @@ export const DatePickerBase = forwardRef<HTMLInputElement, DatePickerBaseProps>(
             </Popover.Dropdown>
           ) : (
             <Modal
+              {...modalProps}
               opened={dropdownOpened}
               onClose={closeDropdown}
               withCloseButton={false}

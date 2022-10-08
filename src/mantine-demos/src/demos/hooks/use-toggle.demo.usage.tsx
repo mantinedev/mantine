@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Group } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useToggle, upperFirst } from '@mantine/hooks';
 
 const code = `

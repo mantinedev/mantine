@@ -43,12 +43,15 @@ function defaultImageUpload(file: File): Promise<string> {
 
 export interface RichTextEditorProps
   extends DefaultProps<RichTextEditorStylesNames>,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'onChange' | 'defaultValue'> {
   /** HTML content, value not forced as quill works in uncontrolled mode */
-  value: string | Delta;
+  value?: string | Delta;
+
+  /** Initial value of input */
+  defaultValue?: string | Delta;
 
   /** Called each time value changes */
-  onChange(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
+  onChange?(value: string, delta: Delta, sources: Sources, editor: Editor.UnprivilegedEditor): void;
 
   /** Called when image image is inserted in editor */
   onImageUpload?(image: File): Promise<string>;
@@ -76,6 +79,9 @@ export interface RichTextEditorProps
 
   /** Extra modules for react-quill */
   modules?: Record<string, any>;
+
+  /** List of formats that should be supported by the editor */
+  formats?: string[];
 }
 
 const defaultProps: Partial<RichTextEditorProps> = {
@@ -91,6 +97,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
   (props: RichTextEditorProps, ref) => {
     const {
       value,
+      defaultValue,
       onChange,
       onImageUpload,
       sticky,
@@ -107,6 +114,7 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
       readOnly,
       modules: externalModules,
       unstyled,
+      formats,
       ...others
     } = useComponentDefaultProps('RichTextEditor', defaultProps, props);
 
@@ -158,12 +166,14 @@ export const RichTextEditor = forwardRef<Editor, RichTextEditorProps>(
         <Editor
           theme="snow"
           modules={modules}
-          defaultValue={value}
+          value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
           ref={mergeRefs(editorRef, ref)}
           placeholder={placeholder}
           readOnly={readOnly}
           scrollingContainer="html"
+          formats={formats}
         />
       </Box>
     );

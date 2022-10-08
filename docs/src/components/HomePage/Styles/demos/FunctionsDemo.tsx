@@ -12,7 +12,7 @@ function Demo() {
       sx={(theme) => ({
         background: theme.fn.linearGradient(24, '#000', '#fff'),
 
-        [theme.fn.smallerThan('sm)]: {
+        [theme.fn.smallerThan('sm')]: {
           color: theme.fn.rgba('#fff', 0.5),
         },
       })}

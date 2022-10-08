@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Table } from '@mantine/core';
+import { MantineDemo } from '@mantine/ds';
 import { useNetwork } from '@mantine/hooks';
 
 const code = `

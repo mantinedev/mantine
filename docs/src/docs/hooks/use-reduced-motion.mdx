@@ -28,5 +28,10 @@ All Mantine components which use animations support it by default:
 ## Definition
 
 ```tsx
-function useReducedMotion(initialValue?: boolean): boolean;
+function useReducedMotion(
+  initialValue?: boolean,
+  options?: {
+    getInitialValueInEffect: boolean;
+  }
+): boolean;
 ```
