@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { MonthPicker, MonthPickerProps } from './MonthPicker';
 
 const CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControl';
-const ACTIVE_CONTROL_SELECTOR = '.mantine-MonthPicker-monthPickerControlActive';
 const LEVEL_SELECTOR = '.mantine-MonthPicker-calendarHeaderLevel';
 const HEADER_CONTROL_SELECTOR = '.mantine-MonthPicker-calendarHeaderControl';
 
@@ -66,11 +65,9 @@ describe('@mantine/core/MonthPicker', () => {
     expect(controls[11]).toBeDisabled();
   });
 
-  it('adds active styles to selected month', () => {
-    const { container } = render(
-      <MonthPicker {...defaultProps} value={{ year: 2021, month: 11 }} />
-    );
-    expect(container.querySelector(ACTIVE_CONTROL_SELECTOR).textContent).toBe('Dec');
+  it('add active styles to selected month', () => {
+    render(<MonthPicker {...defaultProps} value={{ year: 2021, month: 11 }} />);
+    expect(screen.getByText('Dec')).toHaveAttribute('data-selected', 'true');
   });
 
   it('calls onChange when month control button is clicked', async () => {

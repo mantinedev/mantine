@@ -56,9 +56,8 @@ export function YearPicker({
       disabled={year < minYear || year > maxYear}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
       data-mantine-stop-propagation={__stopPropagation || undefined}
-      className={cx(classes.yearPickerControl, {
-        [classes.yearPickerControlActive]: year === value,
-      })}
+      data-selected={year === value || undefined}
+      className={classes.yearPickerControl}
     >
       {formatYear(year, yearLabelFormat)}
     </UnstyledButton>

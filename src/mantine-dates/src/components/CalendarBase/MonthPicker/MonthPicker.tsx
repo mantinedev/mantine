@@ -63,9 +63,8 @@ export function MonthPicker({
       key={month}
       unstyled={unstyled}
       onClick={() => onChange(index)}
-      className={cx(classes.monthPickerControl, {
-        [classes.monthPickerControlActive]: index === value.month && year === value.year,
-      })}
+      className={classes.monthPickerControl}
+      data-selected={(index === value.month && year === value.year) || undefined}
       disabled={!isMonthInRange({ date: new Date(year, index), minDate, maxDate })}
       onMouseDown={(event) => preventFocus && event.preventDefault()}
       data-mantine-stop-propagation={__stopPropagation || undefined}

@@ -46,15 +46,15 @@ export default createStyles((theme, { size }: YearPickerStyles) => {
           backgroundColor: 'transparent',
         }),
       },
-    },
 
-    yearPickerControlActive: {
-      backgroundColor: colors.background,
-      color: colors.color,
+      '&[data-selected]': {
+        backgroundColor: colors.background,
+        color: colors.color,
 
-      ...theme.fn.hover({
-        backgroundColor: colors.hover,
-      }),
+        ...theme.fn.hover({
+          backgroundColor: colors.hover,
+        }),
+      },
     },
   };
 });

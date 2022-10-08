@@ -12,7 +12,6 @@ const defaultProps: YearPickerProps = {
 };
 
 const CONTROL_SELECTOR = '.mantine-YearPicker-yearPickerControl';
-const ACTIVE_CONTROL_SELECTOR = '.mantine-YearPicker-yearPickerControlActive';
 
 describe('@mantine/dates/YearPicker', () => {
   itSupportsClassName(YearPicker, defaultProps);
@@ -49,8 +48,8 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('adds active styles to selected year', () => {
-    const { container } = render(<YearPicker {...defaultProps} value={2021} />);
-    expect(container.querySelector(ACTIVE_CONTROL_SELECTOR).textContent).toBe('2021');
+    render(<YearPicker {...defaultProps} value={2021} />);
+    expect(screen.getByText('2021')).toHaveAttribute('data-selected', 'true');
   });
 
   it('calls onChange when year control button is clicked', async () => {

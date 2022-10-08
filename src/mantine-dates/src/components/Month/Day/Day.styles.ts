@@ -58,6 +58,10 @@ export default createStyles((theme, { size, fullWidth, hideOutsideDates }: DaySt
     '&[data-selected]': {
       backgroundColor: theme.fn.variant({ variant: 'filled' }).background,
       color: theme.white,
+
+      ...theme.fn.hover({
+        backgroundColor: theme.fn.variant({ variant: 'filled' }).hover,
+      }),
     },
 
     '&[data-first-in-range]': {
